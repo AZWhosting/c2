@@ -99,6 +99,7 @@ class Account_lines extends REST_Controller {
 				$wht_account = [];
 				if($value->wht_account_id>0){
 					$whtAccounts = new Account(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$whtAccounts->select("number, name");
 					$whtAccounts->get_by_id($value->wht_account_id);
 
 					$wht_account = array(

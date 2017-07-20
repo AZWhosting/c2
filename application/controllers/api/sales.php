@@ -536,6 +536,7 @@ class Sales extends REST_Controller {
 						"number" 			=> $value->number,
 						"issued_date" 		=> $value->issued_date,
 						"rate" 				=> $value->rate,
+						"memo"				=> $value->memo,
 						"amount" 			=> $amount
 					);
 				}else{
@@ -547,6 +548,7 @@ class Sales extends REST_Controller {
 						"number" 			=> $value->number,
 						"issued_date" 		=> $value->issued_date,
 						"rate" 				=> $value->rate,
+						"memo"				=> $value->memo,
 						"amount" 			=> $amount
 					);
 				}
@@ -688,6 +690,7 @@ class Sales extends REST_Controller {
 						"number" 			=> $value->number,
 						"issued_date" 		=> $value->issued_date,
 						"rate" 				=> $value->rate,
+						"memo" 				=> $value->memo,
 						"amount" 			=> $amount
 					);
 				}else{
@@ -699,6 +702,7 @@ class Sales extends REST_Controller {
 						"number" 			=> $value->number,
 						"issued_date" 		=> $value->issued_date,
 						"rate" 				=> $value->rate,
+						"memo" 				=> $value->memo,
 						"amount" 			=> $amount
 					);
 				}

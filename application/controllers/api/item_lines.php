@@ -107,6 +107,7 @@ class Item_lines extends REST_Controller {
 				$wht_account = [];
 				if($value->wht_account_id>0){
 					$whtAccounts = new Account(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$whtAccounts->select("number, name");
 					$whtAccounts->get_by_id($value->wht_account_id);
 
 					$wht_account = array(
@@ -128,6 +129,9 @@ class Item_lines extends REST_Controller {
 				   	"on_hand" 			=> floatval($value->on_hand),
 					"on_po" 			=> floatval($value->on_po),
 					"on_so" 			=> floatval($value->on_so),
+					"gross_weight" 		=> floatval($value->gross_weight),
+					"truck_weight" 		=> floatval($value->truck_weight),
+					"bag_weight" 		=> floatval($value->bag_weight),
 					"quantity" 			=> floatval($value->quantity),
 				   	"quantity_adjusted" => floatval($value->quantity_adjusted),
 				   	"conversion_ratio" 	=> floatval($value->conversion_ratio),
@@ -273,6 +277,9 @@ class Item_lines extends REST_Controller {
 		   	isset($value->on_hand)				? $obj->on_hand 			= $value->on_hand : "";
 		   	// isset($value->on_po)				? $obj->on_po 				= $value->on_po : "";
 		   	// isset($value->on_so)				? $obj->on_so 				= $value->on_so : "";
+		   	isset($value->gross_weight)			? $obj->gross_weight 		= $value->gross_weight : "";
+		   	isset($value->truck_weight)			? $obj->truck_weight 		= $value->truck_weight : "";
+		   	isset($value->bag_weight)			? $obj->bag_weight 			= $value->bag_weight : "";
 		   	isset($value->quantity)				? $obj->quantity 			= $value->quantity : "";
 		   	isset($value->quantity_adjusted) 	? $obj->quantity_adjusted 	= $value->quantity_adjusted : "";
 		   	// isset($value->conversion_ratio)		? $obj->conversion_ratio 	= $value->conversion_ratio : $obj->conversion_ratio = 1;
@@ -313,6 +320,9 @@ class Item_lines extends REST_Controller {
 				   	"on_hand" 			=> floatval($obj->on_hand),
 					"on_po" 			=> floatval($obj->on_po),
 					"on_so" 			=> floatval($obj->on_so),
+					"gross_weight" 		=> floatval($obj->gross_weight),
+					"truck_weight" 		=> floatval($obj->truck_weight),
+					"bag_weight" 		=> floatval($obj->bag_weight),
 					"quantity" 			=> floatval($obj->quantity),
 				   	"quantity_adjusted" => floatval($obj->quantity_adjusted),
 				   	"conversion_ratio" 		=> floatval($obj->conversion_ratio),
@@ -348,27 +358,6 @@ class Item_lines extends REST_Controller {
 			$obj = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->get_by_id($value->id);
 
-			//Updat record item: old - new
-			// if(isset($value->item_id)){
-			// 	if($value->item_id>0){
-			// 		$item = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			// 		$item->get_by_id($value->item_id);
-
-			// 		if($item->item_type_id=="1"){
-			// 			$transaction = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			// 			$transaction->get_by_id($value->transaction_id);
-
-			// 			if($transaction->type=='Invoice' || $transaction->type=='Cash_Sale' || $transaction->type=='Cash_Purchase' || $transaction->type=='Credit_Purchase'){
-			// 			    $item->on_hand += floatval($obj->quantity) - floatval($value->quantity);
-			// 			}else if($transaction->type=='Adjustment'){
-			// 			    $item->on_hand += floatval($obj->quantity) - (floatval($value->quantity) * floatval($value->movement));
-			// 			}
-
-			// 			$item->save();
-			// 		}
-			// 	}
-			// }
-
 			isset($value->transaction_id) 	? $obj->transaction_id 		= $value->transaction_id : "";
 			isset($value->item_id)			? $obj->item_id				= $value->item_id : "";
 			isset($value->assembly_id)		? $obj->assembly_id 		= $value->assembly_id : "";
@@ -379,6 +368,9 @@ class Item_lines extends REST_Controller {
 		   	// isset($value->on_hand)		? $obj->on_hand 			= $value->on_hand : "";
 		   	isset($value->on_po)			? $obj->on_po 				= $value->on_po : "";
 		   	isset($value->on_so)			? $obj->on_so 				= $value->on_so : "";
+		   	isset($value->gross_weight)		? $obj->gross_weight 		= $value->gross_weight : "";
+		   	isset($value->truck_weight)		? $obj->truck_weight 		= $value->truck_weight : "";
+		   	isset($value->bag_weight)		? $obj->bag_weight 			= $value->bag_weight : "";
 		   	isset($value->quantity)			? $obj->quantity 			= $value->quantity : "";
 		   	isset($value->quantity_adjusted)? $obj->quantity_adjusted 	= $value->quantity_adjusted : "";
 		   	// isset($value->conversion_ratio)		? $obj->conversion_ratio 			= $value->conversion_ratio : "";
@@ -419,9 +411,12 @@ class Item_lines extends REST_Controller {
 				   	"on_hand" 			=> floatval($obj->on_hand),
 					"on_po" 			=> floatval($obj->on_po),
 					"on_so" 			=> floatval($obj->on_so),
+					"gross_weight" 		=> floatval($obj->gross_weight),
+					"truck_weight" 		=> floatval($obj->truck_weight),
+					"bag_weight" 		=> floatval($obj->bag_weight),
 					"quantity" 			=> floatval($obj->quantity),
 				   	"quantity_adjusted" => floatval($obj->quantity_adjusted),
-				   	"conversion_ratio" 		=> floatval($obj->conversion_ratio),
+				   	"conversion_ratio" 	=> floatval($obj->conversion_ratio),
 				   	"cost"				=> floatval($obj->cost),
 				   	"price"				=> floatval($obj->price),
 				   	"price_avg" 		=> floatval($obj->price_avg),

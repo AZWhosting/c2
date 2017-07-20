@@ -1001,6 +1001,9 @@ input{
     content: "\e00b";
     color: #fff;
 }
+.k-grid td{
+  cursor: pointer;
+}
 
 /*Theme*/
 .widget.widget-tabs > .widget-head ul li a{
