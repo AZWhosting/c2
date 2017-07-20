@@ -23103,40 +23103,82 @@
 						    	<!-- FROM -->
 						        <div class="tab-pane active" id="tab-FROM">
 						        	
-									<table class="table table-bordered table-primary table-striped table-vertical-center">
-								        <thead>
-								            <tr>
-								                <th style="width: 1%;"><span data-bind="text: lang.lang.no_"></span></th>
-								                <th style="width: 20%;"><span data-bind="text: lang.lang.item"></span></th>
-								                <th><span data-bind="text: lang.lang.description"></span></th>
-								                <th style="width: 20%;"><span data-bind="text: lang.lang.qty"></span></th>
-								                <th style="width: 20%;"><span data-bind="text: lang.lang.cost"></span></th>               			                
-								            </tr> 
-								        </thead>
-								        <tbody data-role="listview" 
-								        		data-template="internalUsage-from-item-line-template" 
-								        		data-auto-bind="false"
-								        		data-bind="source: lineDS"></tbody>			        
-								    </table>
+						        	<!-- From Item Line -->
+									<div id="grid" data-role="grid" class="costom-grid"
+								    	 data-column-menu="true"
+								    	 data-reorderable="true"
+								    	 data-scrollable="false"
+								    	 data-resizable="true"
+								    	 data-editable="true"
+						                 data-columns="[
+										    { 
+										    	title:'NO.',
+										    	width: '50px', 
+										    	attributes: { style: 'text-align: center;' }, 
+										        template: function (dataItem) {
+										        	var rowIndex = banhji.internalUsage.lineDS.indexOf(dataItem)+1;
+										        	return '<i class=icon-trash data-bind=click:removeRow></i>' + ' ' + rowIndex;
+										      	}
+										    },
+						                 	{ field: 'item', title: 'PRODUCTS/SERVICES', editor: itemEditor, template: '#=item.name#', width: '170px' },
+				                            { field: 'description', title:'DESCRIPTION', width: '250px' },                            
+				                            {
+											    field: 'quantity',
+											    title: 'QTY',
+											    format: '{0:n}',
+											    editor: numberTextboxEditor,
+											    width: '120px',
+											    attributes: { style: 'text-align: right;' }
+											},
+				                            { field: 'measurement', title: 'UOM', editor: measurementEditor, template: '#=measurement.measurement#', width: '80px' },
+				                            {
+											    field: 'cost',
+											    title: 'COST',
+											    format: '{0:n}',
+											    editable: 'false',
+											    editor: numberTextboxEditor,
+											    width: '120px',
+											    attributes: { style: 'text-align: right;' }
+											},
+											{ field: 'amount', title:'AMOUNT', format: '{0:n}', editable: 'false', attributes: { style: 'text-align: right;' }, width: '120px' }
+				                         ]"
+				                         data-auto-bind="false"
+						                 data-bind="source: lineDS" ></div>
 						           
 									<button class="btn btn-inverse" data-bind="click: addRow"><i class="icon-plus icon-white"></i></button>
 
 									<br><br>
 						        	
-									<table class="table table-bordered table-primary table-striped table-vertical-center">
-								        <thead>
-								            <tr>
-								                <th style="width: 1%;"><span data-bind="text: lang.lang.no_"></span></th>			                
-								                <th style="width: 20%;"><span data-bind="text: lang.lang.account"></span></th>
-								                <th data-bind="text: lang.lang.description"></th>
-								                <th style="width: 20%;"><span data-bind="text: lang.lang.amount"></span></th>		                			  
-								            </tr> 
-								        </thead>
-								        <tbody data-role="listview" 
-								        		data-template="internalUsage-from-account-line-template" 
-								        		data-auto-bind="false"
-								        		data-bind="source: accountLineDS"></tbody>			        
-								    </table>
+						        	<!-- From Account Line -->
+									<div data-role="grid" class="costom-grid"
+								    	 data-column-menu="true"
+								    	 data-reorderable="true"
+								    	 data-scrollable="false"
+								    	 data-resizable="true"
+								    	 data-editable="true"
+						                 data-columns="[
+										    { 
+										    	title:'NO.',
+										    	width: '50px', 
+										    	attributes: { style: 'text-align: center;' }, 
+										        template: function (dataItem) {
+										        	var rowIndex = banhji.internalUsage.accountLineDS.indexOf(dataItem)+1;
+										        	return '<i class=icon-trash data-bind=click:removeRowAccount></i>' + ' ' + rowIndex;
+										      	}
+										    },
+						                 	{ field: 'account', title: 'ACCOUNT', editor: accountEditor, template: '#=account.name#', width: '300px' },
+				                            { field: 'description', title:'DESCRIPTION', width: '300px' },                            
+				                            {
+											    field: 'amount',
+											    title: 'AMOUNT',
+											    format: '{0:n}',
+											    editor: numberTextboxEditor,
+											    width: '150px',
+											    attributes: { style: 'text-align: right;' }
+											}
+				                         ]"
+				                         data-auto-bind="false"
+						                 data-bind="source: accountLineDS" ></div>
 								   
 									<button class="btn btn-inverse" data-bind="click: addRowAccount"><i class="icon-plus icon-white"></i></button>
 
@@ -23148,43 +23190,83 @@
 						        	
 									<div class="row-fluid">
 										
-										<table class="table table-bordered table-primary table-striped table-vertical-center">
-									        <thead>
-									            <tr>
-									            	<th style="width: 1%; background: #0B0B3B;"><span data-bind="text: lang.lang.no_"></span></th>
-									                <th style="width: 25%; background: #0B0B3B;"><span data-bind="text: lang.lang.item"></span></th>
-									                <th style="background: #0B0B3B;"><span data-bind="text: lang.lang.description"></span></th>
-									                <th style="width: 20%; background: #0B0B3B;"><span data-bind="text: lang.lang.qty"></span></th>
-									                <th style="width: 20%; background: #0B0B3B;"><span data-bind="text: lang.lang.cost"></span></th>
-									                <th style="width: 20%; background: #0B0B3B;"><span data-bind="text: lang.lang.amount"></span></th>               			                
-									            </tr> 
-									        </thead>
-									        <tbody data-role="listview" 
-									        		data-template="internalUsage-to-item-line-template" 
-									        		data-auto-bind="false"
-									        		data-bind="source: toItemLineDS"></tbody>			        
-									    </table>
+										<!-- To Item Line -->
+										<div id="grid" data-role="grid" class="costom-grid"
+									    	 data-column-menu="true"
+									    	 data-reorderable="true"
+									    	 data-scrollable="false"
+									    	 data-resizable="true"
+									    	 data-editable="true"
+							                 data-columns="[
+											    { 
+											    	title:'NO.',
+											    	width: '50px', 
+											    	attributes: { style: 'text-align: center;' }, 
+											        template: function (dataItem) {
+											        	var rowIndex = banhji.internalUsage.toItemLineDS.indexOf(dataItem)+1;
+											        	return '<i class=icon-trash data-bind=click:removeRowTo></i>' + ' ' + rowIndex;
+											      	}
+											    },
+							                 	{ field: 'item', title: 'PRODUCTS/SERVICES', editor: itemEditor, template: '#=item.name#', width: '170px' },
+					                            { field: 'description', title:'DESCRIPTION', width: '250px' },                            
+					                            {
+												    field: 'quantity',
+												    title: 'QTY',
+												    format: '{0:n}',
+												    editor: numberTextboxEditor,
+												    width: '120px',
+												    attributes: { style: 'text-align: right;' }
+												},
+					                            { field: 'measurement', title: 'UOM', editor: measurementEditor, template: '#=measurement.measurement#', width: '80px' },
+					                            {
+												    field: 'cost',
+												    title: 'COST',
+												    format: '{0:n}',
+												    editor: numberTextboxEditor,
+												    width: '120px',
+												    attributes: { style: 'text-align: right;' }
+												},
+												{ field: 'amount', title:'AMOUNT', format: '{0:n}', editable: 'false', attributes: { style: 'text-align: right;' }, width: '120px' }
+					                         ]"
+					                         data-auto-bind="false"
+							                 data-bind="source: toItemLineDS" ></div>
 
-									    <button class="btn btn-inverse" data-bind="click: addItemTo"><i class="icon-plus icon-white"></i></button>
+									    <button class="btn btn-inverse" data-bind="click: addRowTo"><i class="icon-plus icon-white"></i></button>
 
 										<br><br>
 									   
-										<table class="table table-bordered table-primary table-striped table-vertical-center">
-									        <thead>
-									            <tr>
-									            	<th style="width: 1%; background: #0B0B3B;"><span data-bind="text: lang.lang.no_"></span></th>			                
-									                <th style="width: 25%; background: #0B0B3B;"><span data-bind="text: lang.lang.account"></span></th>
-									                <th style="background: #0B0B3B;" data-bind="text: lang.lang.description"></th>
-									                <th style="width: 20%; background: #0B0B3B;"><span data-bind="text: lang.lang.amount"></span></th>		                			  
-									            </tr> 
-									        </thead>
-									        <tbody data-role="listview" 
-									        		data-template="internalUsage-to-account-line-template" 
-									        		data-auto-bind="false"
-									        		data-bind="source: toAccountLineDS"></tbody>			        
-									    </table>
+										<!-- To Account Line -->
+										<div data-role="grid" class="costom-grid"
+									    	 data-column-menu="true"
+									    	 data-reorderable="true"
+									    	 data-scrollable="false"
+									    	 data-resizable="true"
+									    	 data-editable="true"
+							                 data-columns="[
+											    { 
+											    	title:'NO.',
+											    	width: '50px', 
+											    	attributes: { style: 'text-align: center;' }, 
+											        template: function (dataItem) {
+											        	var rowIndex = banhji.internalUsage.toAccountLineDS.indexOf(dataItem)+1;
+											        	return '<i class=icon-trash data-bind=click:removeRowAccountTo></i>' + ' ' + rowIndex;
+											      	}
+											    },
+							                 	{ field: 'account', title: 'ACCOUNT', editor: toAccountEditor, template: '#=account.name#', width: '300px' },
+					                            { field: 'description', title:'DESCRIPTION', width: '300px' },                            
+					                            {
+												    field: 'amount',
+												    title: 'AMOUNT',
+												    format: '{0:n}',
+												    editor: numberTextboxEditor,
+												    width: '150px',
+												    attributes: { style: 'text-align: right;' }
+												}
+					                         ]"
+					                         data-auto-bind="false"
+							                 data-bind="source: toAccountLineDS" ></div>
 
-									    <button class="btn btn-inverse" data-bind="click: addAccountTo"><i class="icon-plus icon-white"></i></button>
+									    <button class="btn btn-inverse" data-bind="click: addRowAccountTo"><i class="icon-plus icon-white"></i></button>
 
 									</div>
 
@@ -23210,10 +23292,8 @@
 							  			<ul class="dropdown-menu addNewItem">  				  				
 							  				<li><a href='#/item'><span data-bind="text: lang.lang.add_inventory_for_sale"></span></a></li>
 							  				<li><a href='#/non_inventory_part'><span data-bind="text: lang.lang.add_noninventory_for_sale"></span></a></li>
-							  				<li><a href='#/fixed_assets'><span data-bind="text: lang.lang.add_fixed_assets"></span></a></li>
 							  				<li><a href='#/item_service'><span data-bind="text: lang.lang.add_services"></span></a></li>
-							  				<li><a href='#/txn_item'><span data-bind="text: lang.lang.add_transaction_item"></span></a></li>  				
-							  				 				
+							  				<li><a href='#/txn_item'><span data-bind="text: lang.lang.add_transaction_item"></span></a></li>
 							  			</ul>
 								  	</li>				
 								</ul>
@@ -23293,10 +23373,7 @@
 						  			</ul>
 							  	</span>
 							  	<span class="btn-btn" id="saveClose"><span data-bind="text: lang.lang.save_close"></span></span>
-							  	<span class="btn-btn" id="saveDraft"><span data-bind="text: lang.lang.save_draft"></span></span>
-								<!-- <span class="btn-btn" data-bind="invisible: isEdit"><span data-bind="text: lang.lang.save_new"></span></span>
-								<span class="btn-btn"><span data-bind="text: lang.lang.save_close"></span></span>
-								<span class="btn-btn"><span data-bind="text: lang.lang.save_print"></span></span> -->
+							  	<span class="btn-btn" id="saveDraft1" data-bind="invisible: isEdit"><span data-bind="text: lang.lang.save_draft"></span></span>
 							</div>
 						</div>
 					</div>
@@ -46469,6 +46546,31 @@
             template: kendo.template($("#account-list-tmpl").html()),
             dataSource: {
             	data: banhji.source.accountList,
+			  	sort: [
+				  	{ field: "account_type_id", dir: "asc" },
+				  	{ field: "number", dir: "asc" }
+				]
+            }
+        });
+    }
+
+    function toAccountEditor(container, options) {
+        $('<input name="' + options.field + '" />')
+        .appendTo(container)
+        .kendoDropDownList({
+        	filter: "contains",        	
+            dataTextField: "name",
+            dataValueField: "id",
+            autoWidth: true,
+            height: 200,
+            template: kendo.template($("#account-list-tmpl").html()),
+            dataSource: {
+            	data: banhji.source.accountList,
+            	filter: [
+			      	{ field: "account_type_id", operator:"neq", value: 10 },
+			      	{ field: "account_type_id", operator:"neq", value: 11 },
+			      	{ field: "account_type_id", operator:"neq", value: 12 }
+			    ],
 			  	sort: [
 				  	{ field: "account_type_id", dir: "asc" },
 				  	{ field: "number", dir: "asc" }
@@ -70066,6 +70168,14 @@
 				wht_account 		: { id:"", name:"" }
 			});
 		},
+		addExtraRowAccount 		: function(uid){
+			var row = this.accountLineDS.getByUid(uid),
+				index = this.accountLineDS.indexOf(row);
+
+			if(index==this.accountLineDS.total()-1){
+				this.addRowAccount();
+			}
+		},
 		removeRowAccount	: function(e){
 			var d = e.data;
 			
@@ -70082,7 +70192,7 @@
 
 					dataRow.set("account_id", account.id);
 
-					self.addExtraRow(dataRow.uid);
+					self.addExtraRowAccount(dataRow.uid);
 				}else if(arg.field=="amount"){
 					self.changes();
 				}else if(arg.field=="tax_item"){
@@ -80641,7 +80751,6 @@
 		recurringAccountLineDS 	: dataStore(apiUrl + "account_lines"),
     	journalLineDS			: dataStore(apiUrl + "journal_lines"),
     	attachmentDS	 		: dataStore(apiUrl + "attachments"),
-    	itemCostDS  			: dataStore(apiUrl + "items"),
 		txnTemplateDS 			: new kendo.data.DataSource({
 		  	data: banhji.source.txnTemplateList,
 		  	filter:{
@@ -80653,28 +80762,6 @@
 			      	{ field: "type", value: "Usage_Disposal" }
 			    ]
 			}
-		}),
-		itemDS  				: new kendo.data.DataSource({
-		  	data: banhji.source.itemList,
-			filter:[
-				{ field: "item_type_id", operator:"neq", value: 3 },
-				{ field: "is_catalog", value: 0 },
-				{ field: "is_assembly", value: 0 }
-			],
-			sort: [
-				{ field:"item_type_id", dir:"asc" },
-				{ field:"number", dir:"asc" }
-			]
-		}),
-		accountDS  				: banhji.source.accountList,
-		toAccountDS 			: new kendo.data.DataSource({
-		  	data: banhji.source.accountList,
-		  	filter: [
-		      	{ field: "account_type_id", operator:"neq", value: 10 },
-		      	{ field: "account_type_id", operator:"neq", value: 11 },
-		      	{ field: "account_type_id", operator:"neq", value: 12 }
-		    ],
-			sort: { field:"number", dir:"asc" }
 		}),
 		jobDS 					: new kendo.data.DataSource({
 		  	data: banhji.source.jobList,
@@ -80700,6 +80787,7 @@
 		showDay 				: false,
 		obj 					: null,
 		isEdit 					: false,
+		saveDraft 				: false,
 		saveClose 				: false,
 		savePrint 				: false,
 		saveRecurring 			: false,
@@ -80810,6 +80898,30 @@
 			rate = banhji.source.getRate(obj.locale, new Date(obj.issued_date));
 
 			obj.set("rate", rate);
+
+			//Item Lines
+			$.each(this.lineDS.data(), function(index, value){
+				var itemRate = rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));
+				value.set("rate", itemRate);
+			});
+
+			//Account Line
+			$.each(this.accountLineDS.data(), function(index, value){
+				value.set("rate", rate);
+				value.set("locale", obj.locale);
+			});
+
+			//Item Lines To
+			$.each(this.toItemLineDS.data(), function(index, value){
+				var itemRate = rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));
+				value.set("rate", itemRate);
+			});
+
+			//Account Line To
+			$.each(this.toAccountLineDS.data(), function(index, value){
+				value.set("rate", rate);
+				value.set("locale", obj.locale);
+			});
 		},
         //Segment        
         segmentChanges 			: function(e) {
@@ -80829,34 +80941,167 @@
 				}
 			}
 		},
-		//FROM
-        addRow 					: function(){
+		//From Item
+		addItem 				: function(uid){
+			var self = this,
+				row = this.lineDS.getByUid(uid),
+				obj = this.get("obj"),
+				item = row.item,
+				rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
+
+			row.set("item_id", item.id);
+			row.set("description", item.sale_description);
+			row.set("cost", item.cost * rate);
+			row.set("rate", rate);
+			row.set("locale", item.locale);
+			row.set("measurement", item.measurement);
+
+			self.changes();
+		},
+		addItemCatalog 			: function(uid){
+			var self = this,
+				row = this.lineDS.getByUid(uid),
+				obj = this.get("obj"),
+				item = row.item;
+
+			this.lineDS.remove(row);
+
+        	$.each(item.catalogs, function(index, value){
+				var catalogItem = banhji.source.itemDS.get(value);
+
+				if(catalogItem){
+					var rate = obj.rate / banhji.source.getRate(catalogItem.locale, new Date(obj.issued_date));
+
+					self.lineDS.add({
+						transaction_id 		: obj.id,
+						tax_item_id 		: 0,
+						item_id 			: catalogItem.id,
+						measurement_id 		: 0,
+						description 		: catalogItem.sale_description,
+						quantity 	 		: 1,
+						conversion_ratio 	: 1,
+						cost 				: 0,
+						price 				: 0,
+						amount 				: 0,
+						discount 			: 0,
+						rate				: rate,
+						locale				: catalogItem.locale,
+						movement 			: 1,
+
+						item 				: catalogItem,
+						measurement 		: { measurement_id:"", measurement:"" }
+					});
+				}
+			});
+		},
+		addRow 					: function(){
 			var obj = this.get("obj");
-			
+
 			this.lineDS.add({
 				transaction_id 		: obj.id,
-				tax_item_id 		: "",
 				item_id 			: "",
 				measurement_id 		: 0,
 				description 		: "",
 				quantity 	 		: 1,
+				conversion_ratio 	: 1,
 				cost 				: 0,
 				price 				: 0,
 				amount 				: 0,
 				rate				: obj.rate,
 				locale				: obj.locale,
-				movement 			: -1
+				movement 			: -1,
+
+				item 				: { id:"", name:"" },
+				measurement 		: { measurement_id:"", measurement:"" }
 			});
+		},
+		addExtraRow 			: function(uid){
+			var row = this.lineDS.getByUid(uid),
+				index = this.lineDS.indexOf(row);
+
+			if(index==this.lineDS.total()-1){
+				this.addRow();
+			}
 		},
 		removeRow 				: function(e){
 			var data = e.data;
 			if(this.lineDS.total()>1){
 				this.lineDS.remove(data);
 		        this.changes();
-	        }
+	        }        
 		},
-		addRowAccount 			: function(){
+		removeEmptyRow 			: function(){
+			var row, i;
+
+			//Item
+			var item = this.lineDS.data();
+		    for(i=item.length-1; i>=0; i--){
+		    	row = item[i];
+
+		    	if (row.item_id==0) {
+			       	this.lineDS.remove(row);
+			    }
+		    }
+
+		    //Account
+		    var account = this.accountLineDS.data();
+		    for(i=account.length-1; i>=0; i--){
+		    	row = account[i];
+
+		    	if (row.account_id==0) {
+			       	this.accountLineDS.remove(row);
+			    }
+		    }
+
+		    //Item To
+			var itemTo = this.toItemLineDS.data();
+		    for(i=itemTo.length-1; i>=0; i--){
+		    	row = itemTo[i];
+
+		    	if (row.item_id==0) {
+			       	this.toItemLineDS.remove(row);
+			    }
+		    }
+
+		    //Account To
+		    var accountTo = this.toAccountLineDS.data();
+		    for(i=accountTo.length-1; i>=0; i--){
+		    	row = accountTo[i];
+
+		    	if (row.account_id==0) {
+			       	this.toAccountLineDS.remove(row);
+			    }
+		    }
+	    },
+	    itemLineDSChanges 		: function(arg){
+			var self = banhji.internalUsage;
+
+			if(arg.field){
+				if(arg.field=="item"){
+					var dataRow = arg.items[0],
+						item = dataRow.item;
+
+					if(item.is_catalog=="1"){
+						self.addItemCatalog(dataRow.uid);
+					}else{
+						self.addItem(dataRow.uid);
+					}
+
+					self.addExtraRow(dataRow.uid);
+				}else if(arg.field=="quantity"){
+					self.changes();					
+				}else if(arg.field=="measurement"){
+					var dataRow = arg.items[0];
+					
+					dataRow.set("measurement_id", dataRow.measurement.measurement_id);
+			        dataRow.set("conversion_ratio", dataRow.measurement.conversion_ratio);
+				}
+			}
+		},
+		//From Account
+		addRowAccount			: function(){
 			var obj = this.get("obj");
+					
 			this.accountLineDS.add({
 				transaction_id 		: obj.id,
 				account_id 			: "",
@@ -80864,90 +81109,158 @@
 				amount 				: 0,
 				rate				: obj.rate,
 				locale				: obj.locale,
-				movement 			: -1 //From Account
+				movement 			: -1, //From Account
+
+				account 			: { id:"", name:"" }
 			});
 		},
-		removeRowAccount 		: function(e){
-			var data = e.data;
+		addExtraRowAccount 		: function(uid){
+			var row = this.accountLineDS.getByUid(uid),
+				index = this.accountLineDS.indexOf(row);
 
-			this.accountLineDS.remove(data);
+			if(index==this.accountLineDS.total()-1){
+				this.addRowAccount();
+			}
+		},
+		removeRowAccount		: function(e){
+			var d = e.data;
+			
+			this.accountLineDS.remove(d);
 	        this.changes();
 		},
-		itemChanges 			: function(e){
-			e.preventDefault();
+		accountLineDSChanges 	: function(arg){
+			var self = banhji.internalUsage;
 
-			var self = this, data = e.data, obj = this.get("obj");
-			
-			if(data.item_id>0){
-				this.itemCostDS.query({
-					filter:{ field:"id", value:data.item_id }
-				}).then(function(){
-					var item = self.itemCostDS.view()[0],
-					itemPriceList = [],
-		        	rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
+			if(arg.field){
+				if(arg.field=="account"){
+					var dataRow = arg.items[0],
+						account = dataRow.account;
 
-		        	$.each(banhji.source.itemPriceList, function(index, value){
-		        		if(value.item_id==data.item_id){
-		        			itemPriceList.push(value);
-		        		}
-		        	});
+					dataRow.set("account_id", account.id);
 
-		    		data.set("measurement_id", item.measurement_id);
-		    		data.set("description", item.purchase_description);
-		    		data.set("quantity", 1);
-		    		data.set("conversion_ratio", 1);
-			        data.set("cost", item.cost*rate);
-			        data.set("rate", rate);	
-			        data.set("locale", item.locale);
-			        data.set("item_prices", itemPriceList);
-
-			        self.changes();
-				});
-	        }else{
-	        	data.set("item_id", "");
-	        }
+					self.addExtraRowAccount(dataRow.uid);
+				}else if(arg.field=="amount"){
+					self.changes();
+				}
+			}
 		},
-		measurementChanges 		: function(e){
-			var data = e.data, obj = this.get("obj");
-
-			if(data.measurement_id>0){
-				$.each(banhji.source.itemPriceList, function(index, value){
-					if(value.item_id==data.item_id && value.measurement_id==data.measurement_id){
-				        data.set("conversion_ratio", value.conversion_ratio);
-
-						return false;
-					}
-				});
-	        }
-		},
-		//TO
-		addItemTo 				: function(){
+		//To Item
+		addRowTo 				: function(){
 			var obj = this.get("obj");
 			
 			this.toItemLineDS.add({
 				transaction_id 		: obj.id,
-				tax_item_id 		: "",
 				item_id 			: "",
 				measurement_id 		: 0,
 				description 		: "",
 				quantity 	 		: 1,
+				conversion_ratio 	: 1,
 				cost 				: 0,
 				price 				: 0,
 				amount 				: 0,
 				rate				: obj.rate,
 				locale				: obj.locale,
-				movement 			: 1
+				movement 			: 1,
+
+				item 				: { id:"", name:"" },
+				measurement 		: { measurement_id:"", measurement:"" }
 			});
 
 			this.changes();
 		},
-		removeItemTo 			: function(e){
+		addExtraRowTo 			: function(uid){
+			var row = this.toItemLineDS.getByUid(uid),
+				index = this.toItemLineDS.indexOf(row);
+
+			if(index==this.toItemLineDS.total()-1){
+				this.addRowTo();
+			}
+		},
+		removeRowTo 			: function(e){
 			var data = e.data;
 
 			this.toItemLineDS.remove(data);
 	        this.changes();
 		},
-		addAccountTo 			: function(){
+		addItemTo 				: function(uid){
+			var self = this,
+				row = this.toItemLineDS.getByUid(uid),
+				obj = this.get("obj"),
+				item = row.item,
+				rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
+
+			row.set("item_id", item.id);
+			row.set("description", item.sale_description);
+			row.set("cost", item.cost * rate);
+			row.set("rate", rate);
+			row.set("locale", item.locale);
+			row.set("measurement", item.measurement);
+
+			self.changes();
+		},
+		addItemCatalogTo 		: function(uid){
+			var self = this,
+				row = this.toItemLineDS.getByUid(uid),
+				obj = this.get("obj"),
+				item = row.item;
+
+			this.toItemLineDS.remove(row);
+
+        	$.each(item.catalogs, function(index, value){
+				var catalogItem = banhji.source.itemDS.get(value);
+
+				if(catalogItem){
+					var rate = obj.rate / banhji.source.getRate(catalogItem.locale, new Date(obj.issued_date));
+
+					self.lineDS.add({
+						transaction_id 		: obj.id,
+						tax_item_id 		: 0,
+						item_id 			: catalogItem.id,
+						measurement_id 		: 0,
+						description 		: catalogItem.sale_description,
+						quantity 	 		: 1,
+						conversion_ratio 	: 1,
+						cost 				: 0,
+						price 				: 0,
+						amount 				: 0,
+						discount 			: 0,
+						rate				: rate,
+						locale				: catalogItem.locale,
+						movement 			: 1,
+
+						item 				: catalogItem,
+						measurement 		: catalogItem.measurement
+					});
+				}
+			});
+		},
+		toItemLineDSChanges 	: function(arg){
+			var self = banhji.internalUsage;
+
+			if(arg.field){
+				if(arg.field=="item"){
+					var dataRow = arg.items[0],
+						item = dataRow.item;
+
+					if(item.is_catalog=="1"){
+						self.addItemCatalogTo(dataRow.uid);
+					}else{
+						self.addItemTo(dataRow.uid);
+					}
+
+					self.addExtraRowTo(dataRow.uid);
+				}else if(arg.field=="quantity"){
+					self.changes();					
+				}else if(arg.field=="measurement"){
+					var dataRow = arg.items[0];
+					
+					dataRow.set("measurement_id", dataRow.measurement.measurement_id);
+			        dataRow.set("conversion_ratio", dataRow.measurement.conversion_ratio);
+				}
+			}
+		},
+		//To Account
+		addRowAccountTo 			: function(){
 			var obj = this.get("obj");
 			this.toAccountLineDS.add({
 				transaction_id 		: obj.id,
@@ -80956,50 +81269,42 @@
 				amount 				: 0,
 				rate				: obj.rate,
 				locale				: obj.locale,
-				movement 			: 1 //To Account
+				movement 			: 1, //To Account
+
+				account 			: { id:"", name:"" }
 			});
 
 			this.changes();
 		},
-		removeAccountTo 		: function(e){
+		addExtraRowAccountTo 		: function(uid){
+			var row = this.toAccountLineDS.getByUid(uid),
+				index = this.toAccountLineDS.indexOf(row);
+
+			if(index==this.toAccountLineDS.total()-1){
+				this.addRowAccountTo();
+			}
+		},
+		removeRowAccountTo 		: function(e){
 			var data = e.data;
 
 			this.toAccountLineDS.remove(data);
 	        this.changes();
 		},
-		toItemChanges 			: function(e){
-			e.preventDefault();
+		toAccountLineDSChanges 	: function(arg){
+			var self = banhji.internalUsage;
 
-			var self = this, data = e.data, obj = this.get("obj");
-			
-			if(data.item_id>0){
-				this.itemCostDS.query({
-					filter:{ field:"id", value:data.item_id }
-				}).then(function(){
-					var item = self.itemCostDS.view()[0],
-					itemPriceList = [],
-		        	rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
+			if(arg.field){
+				if(arg.field=="account"){
+					var dataRow = arg.items[0],
+						account = dataRow.account;
 
-		        	$.each(banhji.source.itemPriceList, function(index, value){
-		        		if(value.item_id==data.item_id){
-		        			itemPriceList.push(value);
-		        		}
-		        	});
+					dataRow.set("account_id", account.id);
 
-		    		data.set("measurement_id", item.measurement_id);
-		    		data.set("description", item.purchase_description);
-		    		data.set("quantity", 1);
-		    		data.set("conversion_ratio", 1);
-			        data.set("cost", item.cost*rate);
-			        data.set("rate", rate);	
-			        data.set("locale", item.locale);
-			        data.set("item_prices", itemPriceList);
-
-			        self.changes();
-			    });
-	        }else{
-	        	data.set("item_id", "");
-	        }
+					self.addExtraRowAccountTo(dataRow.uid);
+				}else if(arg.field=="amount"){
+					self.changes();
+				}
+			}
 		},
 		//Number      	
 		checkExistingNumber 	: function(){
@@ -81092,83 +81397,45 @@
 					var view = self.dataSource.view();
 
 			    	self.set("obj", view[0]);
-			    	self.set("total", kendo.toString(view[0].amount, "c2", view[0].locale));
+			    	self.set("totalFrom", kendo.toString(view[0].amount, "c2", view[0].locale));
+			    	self.set("totalTo", kendo.toString(view[0].amount, "c2", view[0].locale));
 
 			    	self.journalLineDS.filter({ field:"transaction_id", value: id });
 
 			    	//From
+			    	self.lineDS.query({
+						filter: [
+							{ field: "transaction_id", value: id },
+							{ field: "movement", value: -1 }
+						],
+					});
 			    	self.accountLineDS.filter([
 			    		{ field:"transaction_id", value: id },
 			    		{ field:"movement", value: -1 }
 			    	]);
 
 			    	//To
+			    	self.toItemLineDS.query({
+			    		filter:[
+				    		{ field:"transaction_id", value: id },
+				    		{ field:"movement", value: 1 }
+				    	]
+			    	});
 			    	self.toAccountLineDS.filter([
 			    		{ field:"transaction_id", value: id },
 			    		{ field:"movement", value: 1 }
 			    	]);
-
-			    	self.loadLines(id);
 				});
 			}
     	},
-    	loadLines 				: function(id){
-			var self = this;
-
-			//From
-			this.lineDS.query({
-				filter: [
-					{ field: "transaction_id", value: id },
-					{ field: "movement", value: -1 }
-				],
-			}).then(function(){
-				var view = self.lineDS.view();
-
-				$.each(view, function(index, value){
-					var itemPriceList = [];
-					$.each(banhji.source.itemPriceList, function(ind, val){
-		        		if(val.item_id==value.item_id){
-		        			itemPriceList.push(val);
-		        		}
-		        	});
-					value.set("item_prices", itemPriceList);
-				});
-			});
-
-			//To
-			this.toItemLineDS.query({
-	    		filter:[
-		    		{ field:"transaction_id", value: id },
-		    		{ field:"movement", value: 1 }
-		    	],
-		    	page:1,
-		    	pageSize:1
-	    	}).then(function(){
-	    		var view = self.toItemLineDS.view();
-	    		if(view.length>0){
-	    			self.set("type", "Item");
-	    			self.set("isItemType", true);
-
-	    			$.each(view, function(index, value){
-						var itemPriceList = [];
-						$.each(banhji.source.itemPriceList, function(ind, val){
-			        		if(val.item_id==value.item_id){
-			        			itemPriceList.push(val);
-			        		}
-			        	});
-						value.set("item_prices", itemPriceList);
-					});
-	    		}
-	    	});
-		},
 		changes 				: function() {
 			var obj = this.get("obj"), sumFrom = 0, sumTo = 0;
 
 			//From
 			$.each(this.lineDS.data(), function(index, value){
 				var fromItemAmount = value.quantity * value.cost;
-				sumFrom += fromItemAmount;
 				value.set("amount", fromItemAmount);
+				sumFrom += fromItemAmount;
 			});
 			$.each(this.accountLineDS.data(), function(index, value){
 				sumFrom += value.amount;
@@ -81177,8 +81444,8 @@
 			//To
 			$.each(this.toItemLineDS.data(), function(index, value){
 				var toItemAmount = value.quantity * value.cost;
-				sumTo += toItemAmount;
 				value.set("amount", toItemAmount);
+				sumTo += toItemAmount;
 			});
 			$.each(this.toAccountLineDS.data(), function(index, value){
 				sumTo += value.amount;
@@ -81188,15 +81455,6 @@
 
 			this.set("totalFrom", kendo.toString(sumFrom, "c2", obj.locale));
 			this.set("totalTo", kendo.toString(sumTo, "c2", obj.locale));
-
-			// var toItemLine = this.toItemLineDS.at(0);
-
-			// toItemLine.set("cost", sum/toItemLine.quantity);
-			// toItemLine.set("amount", sum);
-
-			// var toAccountLine = this.toAccountLineDS.at(0);
-
-			// toAccountLine.set("amount", sum);
         },
 		addEmpty 		 		: function(){
 			this.dataSource.data([]);
@@ -81245,10 +81503,16 @@
 
 			var obj = this.dataSource.at(0);
 			this.set("obj", obj);
-
-			this.setRate();	
-			this.addRow();
+			this.setRate();
 			this.generateNumber();
+
+			//Default rows
+			for (var i = 0; i < banhji.source.defaultLines; i++) {
+				this.addRow();
+				this.addRowAccount();
+				this.addRowTo();
+				this.addRowAccountTo();
+			}
 		},	
 	    objSync 				: function(){
 	    	var dfd = $.Deferred();	        
@@ -81269,6 +81533,15 @@
 			var self = this, obj = this.get("obj");
 			obj.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
 
+			this.removeEmptyRow();
+
+	        //Save Draft
+	        if(this.get("saveDraft")){
+	        	obj.set("status", 4); //In progress
+	        	obj.set("progress", "Draft");
+	        	obj.set("is_journal", 0);//No Journal
+	        }
+
 			//Recurring
 	    	if(this.get("saveRecurring")){
 	    		this.set("saveRecurring", false);
@@ -81277,16 +81550,14 @@
 	    		obj.set("is_recurring", 1);
 	    	}
 
-			//Mode
+			//Edit Mode
 	    	if(obj.isNew()==false){
-	    		//Line has changes
-		    	if(this.lineDS.hasChanges() || this.accountLineDS.hasChanges() || this.toItemLineDS.hasChanges() || this.toAccountLineDS.hasChanges()){
-		    		$.each(this.journalLineDS.data(), function(index, value){
-						value.set("deleted", 1);
-					});
-
-					this.addJournal(obj.id);
-		    	}
+	    		//Use draft
+	    		if(obj.status==4){
+	    			obj.set("status", 0);//Open
+	    			obj.set("progress", "");
+	    			obj.set("is_journal", 1);//Add Journal
+	    		}
 	    	}
 
 			//Save Obj
@@ -81317,12 +81588,12 @@
 					$.each(self.attachmentDS.data(), function(index, value){
 			    		value.set("transaction_id", data[0].id);
 		            });
-
-		            //Journal
-					if(data[0].is_recurring==0){
-		            	self.addJournal(data[0].id);
-		        	}
 				}
+
+				//Journal
+				if(data[0].is_recurring==0 && data[0].is_journal==1){
+		            self.addJournal(data[0].id);
+	        	}
 
       			self.lineDS.sync();
       			self.accountLineDS.sync();
@@ -81337,11 +81608,11 @@
 			}).then(function(result){
 				$("#ntf1").data("kendoNotification").success(banhji.source.successMessage);
 
-				if(self.get("saveClose")){
-					//Save Close
+				if(self.get("saveDraft") || self.get("saveClose")){
+					//Save Draft or Save Close
+					self.set("saveDraft", false);
 					self.set("saveClose", false);
 					self.cancel();
-					window.history.back();
 				}else if(self.get("savePrint")){
 					//Save Print
 					self.set("savePrint", false);
@@ -81356,7 +81627,7 @@
 				}
 			});
 		},
-		cancel 					: function(){
+		clear 					: function(){
 			this.dataSource.cancelChanges();
 			this.lineDS.cancelChanges();
 			this.accountLineDS.cancelChanges();
@@ -81374,6 +81645,10 @@
 			this.attachmentDS.data([]);
 
 			banhji.userManagement.removeMultiTask("internal_usage");
+		},
+		cancel 					: function(){
+			this.clear();
+			window.history.back();
 		},
 		validating 				: function(){
 			var result = true, obj = this.get("obj");
@@ -81393,9 +81668,17 @@
 		    	raw = "",
 		    	entries = {};
 
+		    //Edit Mode
+		    if(obj.isNew()==false){
+		    	//Delete previous journal
+			    $.each(this.journalLineDS.data(), function(index, value){
+					value.set("deleted", 1);
+				});
+			}
+
 		    //To on Dr
 			$.each(this.toItemLineDS.data(), function(index, value){
-				var item = self.itemDS.get(value.item_id),
+				var item = value.item,
 					itemRate = banhji.source.getRate(item.locale, new Date(obj.issued_date));
 
 				//Inventory on Dr
@@ -81446,7 +81729,7 @@
 
 	    	//From on Cr
 			$.each(this.lineDS.data(), function(index, value){
-				var item = self.itemDS.get(value.item_id),
+				var item = value.item,
 					itemRate = banhji.source.getRate(item.locale, new Date(obj.issued_date));
 
 				//Inventory on Cr
@@ -81550,7 +81833,8 @@
 							locale				: value.locale,
 							movement 			: value.movement,
 
-							item_prices 		: value.item_prices
+							item 				: value.item,
+							measurement 		: value.measurement
 						});
 					}else{//TO
 						self.toItemLineDS.add({
@@ -81567,7 +81851,8 @@
 							locale				: value.locale,
 							movement 			: value.movement,
 
-							item_prices 		: value.item_prices
+							item 				: value.item,
+							measurement 		: value.measurement
 						});
 					}
 				});
@@ -81592,7 +81877,9 @@
 							amount 	 			: value.amount,
 							rate				: value.rate,
 							locale				: value.locale,
-							movement 			: value.movement
+							movement 			: value.movement,
+
+							account 			: value.account
 						});
 					}else{//TO
 						self.toAccountLineDS.add({
@@ -81602,7 +81889,9 @@
 							amount 	 			: value.amount,
 							rate				: value.rate,
 							locale				: value.locale,
-							movement 			: value.movement
+							movement 			: value.movement,
+
+							account 			: value.account
 						});
 					}
 				});
@@ -100991,6 +101280,11 @@
 				
 				if(banhji.pageLoaded["internal_usage"]==undefined){
 					banhji.pageLoaded["internal_usage"] = true;
+
+					vm.lineDS.bind("change", vm.itemLineDSChanges);
+					vm.accountLineDS.bind("change", vm.accountLineDSChanges);
+					vm.toItemLineDS.bind("change", vm.toItemLineDSChanges);
+					vm.toAccountLineDS.bind("change", vm.toAccountLineDSChanges);
 					
 					var validator = $("#example").kendoValidator({
 			        	rules: {
@@ -101005,6 +101299,17 @@
 					        customRule1: banhji.source.duplicateNumber
 					    }
 			        }).data("kendoValidator");
+
+					$("#saveDraft1").click(function(e){
+						e.preventDefault();
+
+						if(validator.validate() && vm.validating()){
+							vm.set("saveDraft", true);
+			            	vm.save();
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
 
 			        $("#saveNew").click(function(e){
 						e.preventDefault();

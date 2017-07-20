@@ -66,6 +66,7 @@ class Items extends REST_Controller {
 		}
 		
 		$obj->include_related("category", "name");
+		$obj->include_related("measurement", array("name"));
 		$obj->where("is_pattern", $is_pattern);
 		$obj->where("deleted <>", 1);			
 		
@@ -80,21 +81,12 @@ class Items extends REST_Controller {
 
 		if($obj->exists()){
 			foreach ($obj as $value) {
-				//Sum On Hand
-				$onHand = 0;
-				// if($value->item_type_id=="1"){					
-				// 	//Sum On Hand
-				// 	$itemMovement = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);						
-				// 	$itemMovement->where_in_related("transaction", "type", array("Cash_Purchase", "Credit_Purchase", "Commercial_Invoice", "Vat_Invoice", "Invoice", "Commercial_Cash_Sale", "Vat_Cash_Sale", "Cash_Sale", "Adjustment"));
-				// 	$itemMovement->where("item_id", $value->id);
-				// 	$itemMovement->where_related("transaction", "is_recurring <>", 1);
-				// 	$itemMovement->where_related("transaction", "deleted <>", 1);
-				// 	$itemMovement->get_iterated();
-					
-				// 	foreach ($itemMovement as $val) {
-				// 		$onHand += ($val->quantity * $val->conversion_ratio * $val->movement);
-				// 	}
-				// }
+				//Measurement
+				$measurement = array(
+					"measurement_id" 	=> $value->measurement_id,
+					"measurement"		=> $value->measurement_name ? $value->measurement_name : ""
+				);
+				
 
 				$data["results"][] = array(
 					"id" 						=> $value->id,
@@ -125,7 +117,7 @@ class Items extends REST_Controller {
 				   	"amount" 					=> floatval($value->amount),
 				   	"rate" 						=> floatval($value->rate),
 				   	"locale" 					=> $value->locale,
-				   	"on_hand" 					=> $onHand,
+				   	"on_hand" 					=> 0,
 				   	"on_po" 					=> floatval($value->on_po),
 				   	"on_so" 					=> floatval($value->on_so),
 				   	"order_point" 				=> intval($value->order_point),
@@ -142,7 +134,8 @@ class Items extends REST_Controller {
 				   	"deleted" 					=> $value->deleted,
 				   	"is_system" 				=> $value->is_system,
 
-				   	"category" 					=> $value->category_name
+				   	"category" 					=> $value->category_name,
+				   	"measurement" 				=> $measurement
 				);
 			}
 		}
