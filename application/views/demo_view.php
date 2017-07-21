@@ -12476,7 +12476,7 @@
 							    attributes: { style: 'text-align: right;' }
 							},
                             { field: 'amount', title:'AMOUNT', format: '{0:n}', editable: 'false', attributes: { style: 'text-align: right;' }, width: '120px' },
-                            { field: 'tax_item', title:'TAX', editor: taxForPurchaseEditor, template: '#=tax_item.name#', width: '90px' },
+                            { field: 'tax_item', title:'TAX', editor: taxForSaleEditor, template: '#=tax_item.name#', width: '90px' },
                          	{ field: 'required_date', title:'DELIVERY DATE', format: '{0: dd-MM-yyyy}', hidden: true, editor: dateEditor, width: '120px' }
                          ]"
                          data-auto-bind="false"
@@ -14327,7 +14327,7 @@
 											    attributes: { style: 'text-align: right;' }
 											},
 				                            { field: 'amount', title:'AMOUNT', format: '{0:n}', editable: 'false', attributes: { style: 'text-align: right;' }, width: '120px' },
-				                            { field: 'tax_item', title:'TAX', editor: taxForPurchaseEditor, template: '#=tax_item.name#', width: '120px' },
+				                            { field: 'tax_item', title:'TAX', editor: taxForSaleEditor, template: '#=tax_item.name#', width: '120px' },
 				                            { field: 'wht_account', title: 'WHT ACCOUNT', hidden: true, editor: whtAccountEditor, template: '#=wht_account.name#', width: '120px' },
 				                            { field: 'additional_cost', title:'ADD.COST', format: '{0:n}', hidden: true, editable: 'false', attributes: { style: 'text-align: right;' }, width: '120px' },
 				                            { field: 'additional_applied', title:'APPLY ADD.COST', hidden: true, editor: customBoolEditor, width: '120px' }
@@ -15050,8 +15050,7 @@
 							  		</a>
 						  			<ul class="dropdown-menu addNewItem">  				  				
 						  				<li><a href='#/item'><span data-bind="text: lang.lang.add_inventory_for_sale"></span></a></li>
-						  				<li><a href='#/non_inventory_part'><span data-bind="text: lang.lang.add_noninventory_for_sale"></span></a></li>
-						  				<li><a href='#/fixed_assets'><span data-bind="text: lang.lang.add_fixed_assets"></span></a></li>
+						  				<li><a href='#/non_inventory_part'><span data-bind="text: lang.lang.add_noninventory_for_sale"></span></a></li>						  				
 						  				<li><a href='#/item_service'><span data-bind="text: lang.lang.add_services"></span></a></li>
 						  				<li><a href='#/txn_item'><span data-bind="text: lang.lang.add_transaction_item"></span></a></li>  				
 						  				 				
@@ -46295,16 +46294,7 @@
 											      	}
 											    },
 							                 	{ field: 'item', title: 'PRODUCTS/SERVICES', editor: itemEditor, template: '#=item.name#', width: '150px' },
-					                            { field: 'description', title:'DESCRIPTION', width: '150px' },                            
-					                            {
-												    field: 'yield',
-												    title: 'YIELD %',
-												    format: '{0:p}',
-												    editable: 'false',
-												    editor: numberTextboxEditor,
-												    width: '100px',
-												    attributes: { style: 'text-align: right;' }
-												},
+					                            { field: 'description', title:'DESCRIPTION', width: '150px' },					                            
 					                            {
 												    field: 'quantity',
 												    title: 'QTY',
@@ -46314,6 +46304,17 @@
 												    attributes: { style: 'text-align: right;' }
 												},
 					                            { field: 'measurement', title: 'UOM', editor: measurementEditor, template: '#=measurement.measurement#', width: '80px' },
+					                            {
+												    field: 'yield',
+												    title: 'YIELD %',
+												    format: '{0:p}',
+												    editor: numberTextboxEditor,
+												    width: '100px',
+												    attributes: { style: 'text-align: right;' },
+												    editable: function (dataItem) {
+											        	return false;
+											      	}
+												},
 					                            {
 												    field: 'price',
 												    title: 'MARKET PRICE',
@@ -46328,7 +46329,10 @@
 												    format: '{0:p}',
 												    editor: numberTextboxEditor,
 												    width: '100px',
-												    attributes: { style: 'text-align: right;' }
+												    attributes: { style: 'text-align: right;' },
+												    editable: function (dataItem) {
+											        	return banhji.internalUsageForRiceMill.toItemLineDS.indexOf(dataItem)>0;
+											      	}
 												},
 												{
 												    field: 'cost',
@@ -46336,9 +46340,21 @@
 												    format: '{0:n}',
 												    editor: numberTextboxEditor,
 												    width: '100px',
-												    attributes: { style: 'text-align: right;' }
+												    attributes: { style: 'text-align: right;' },
+												    editable: function (dataItem) {
+											        	return banhji.internalUsageForRiceMill.toItemLineDS.indexOf(dataItem)>0;
+											      	}
 												},
-												{ field: 'amount', title:'AMOUNT', format: '{0:n}', editable: 'false', attributes: { style: 'text-align: right;' }, width: '120px' }
+												{ 
+													field: 'amount', 
+													title: 'AMOUNT', 
+													format: '{0:n}',
+													attributes: { style: 'text-align: right;' }, 
+													width: '120px',
+													editable: function (dataItem) {
+											        	return false;
+											      	}
+											    }
 					                         ]"
 					                         data-auto-bind="false"
 							                 data-bind="source: toItemLineDS" ></div>
