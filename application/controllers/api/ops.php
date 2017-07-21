@@ -68,33 +68,40 @@ class Ops extends REST_Controller {
 				 // 	$this->db->insert_batch('prefixes', $raw);
 				
 				//Add new fields
-				$fields = array(
-					// "yield" => array(
-					// 	"type" 		=> "DECIMAL",
-					// 	"constraint"=> "30,15",
-					// 	"null" 		=> FALSE,
-					// 	"default" 	=> 0
-					// ),
-					// "gross_weight" => array(
-					// 	"type" 		=> "DECIMAL",
-					// 	"constraint"=> "30,15",
-					// 	"null" 		=> FALSE,
-					// 	"default" 	=> 0
-					// )
-				);
-				$this->dbforge->add_column("item_lines", $fields);
-
-			    // Modify fields
-			 	// $fields = array(
-				// 	'unit_value' => array(
-				// 		'name' 		=> 'conversion_ratio', 
-				// 		'type'		=> 'DECIMAL',
-				// 		'constraint'=> '30,15',
-				// 		'null' 		=> FALSE,
-				// 		'default' 	=> 1
+				// $fields = array(
+				// 	"yield" => array(
+				// 		"type" 		=> "DECIMAL",
+				// 		"constraint"=> "30,15",
+				// 		"null" 		=> FALSE,
+				// 		"default" 	=> 0
+				// 	),
+				// 	"gross_weight" => array(
+				// 		"type" 		=> "DECIMAL",
+				// 		"constraint"=> "30,15",
+				// 		"null" 		=> FALSE,
+				// 		"default" 	=> 0
 				// 	)
 				// );
-				// $this->dbforge->modify_column('item_lines', $fields);
+				// $this->dbforge->add_column("item_lines", $fields);
+
+			    // Modify fields
+			 // 	$fields = array(
+				// 	// 'unit_value' => array(
+				// 	// 	'name' 		=> 'conversion_ratio',//New Field Name 
+				// 	// 	'type'		=> 'DECIMAL',
+				// 	// 	'constraint'=> '30,15',
+				// 	// 	'null' 		=> FALSE,
+				// 	// 	'default' 	=> 1
+				// 	// ),
+				// 	'description' => array(
+				// 		'name' 		=> 'description',//New Field Name 
+				// 		'type'		=> 'VARCHAR',
+				// 		'constraint'=> 255,
+				// 		'null' 		=> FALSE,
+				// 		'default' 	=> ''
+				// 	)
+				// );
+				// $this->dbforge->modify_column('journal_lines', $fields);
 
 				//Custom
 				// $dsn = 'mysql://'.$this->db->username.':'.$this->db->password.'@'.$this->db->hostname.'/'.$db;

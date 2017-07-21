@@ -1,3 +1,4 @@
+
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed'); //disallow direct access to this file
 
 require APPPATH.'/libraries/REST_Controller.php';
@@ -24,6 +25,16 @@ class Localsync extends REST_Controller {
 	//Transaction
 	function txn_post() {
 		$models = json_decode($this->post('models'));
+		$institute = new Institute();
+		$institute->where('id', $models[0]->institute_id)->get();
+		if($institute->exists()) {
+			$conn = $institute->connection->get();
+			$this->server_host = $conn->server_name;
+			$this->server_user = $conn->username;
+			$this->server_pwd = $conn->password;	
+			$this->_database = $conn->inst_database;
+			date_default_timezone_set("$conn->time_zone");
+		}
 		$data["results"] = [];
 		$data["count"] = 0;
 		foreach ($models as $value) {
@@ -110,6 +121,16 @@ class Localsync extends REST_Controller {
 	//Record
 	function record_post() {
 		$models = json_decode($this->post('models'));
+		$institute = new Institute();
+		$institute->where('id', $models[0]->institute_id)->get();
+		if($institute->exists()) {
+			$conn = $institute->connection->get();
+			$this->server_host = $conn->server_name;
+			$this->server_user = $conn->username;
+			$this->server_pwd = $conn->password;	
+			$this->_database = $conn->inst_database;
+			date_default_timezone_set("$conn->time_zone");
+		}
 		$data["results"] = array();
 		$data["count"] = 0;
 		foreach ($models as $value) {
