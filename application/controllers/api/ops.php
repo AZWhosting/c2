@@ -68,21 +68,21 @@ class Ops extends REST_Controller {
 				 // 	$this->db->insert_batch('prefixes', $raw);
 				
 				//Add new fields
-				// $fields = array(
-				// 	"lot_number" => array(
-				// 		"type" 		=> "VARCHAR",
-				// 		"constraint"=> 255,
-				// 		"null" 		=> FALSE,
-				// 		"default" 	=> ""
-				// 	)
-				// 	// "gross_weight" => array(
-				// 	// 	"type" 		=> "DECIMAL",
-				// 	// 	"constraint"=> "30,15",
-				// 	// 	"null" 		=> FALSE,
-				// 	// 	"default" 	=> 0
-				// 	// )
-				// );
-				// $this->dbforge->add_column("item_lines", $fields);
+				$fields = array(
+					// "yield" => array(
+					// 	"type" 		=> "DECIMAL",
+					// 	"constraint"=> "30,15",
+					// 	"null" 		=> FALSE,
+					// 	"default" 	=> 0
+					// ),
+					// "gross_weight" => array(
+					// 	"type" 		=> "DECIMAL",
+					// 	"constraint"=> "30,15",
+					// 	"null" 		=> FALSE,
+					// 	"default" 	=> 0
+					// )
+				);
+				$this->dbforge->add_column("item_lines", $fields);
 
 			    // Modify fields
 			 	// $fields = array(

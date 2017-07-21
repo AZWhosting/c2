@@ -10,38 +10,28 @@ class Localsync extends REST_Controller {
 	//CONSTRUCTOR
 	function __construct() {
 		parent::__construct();
-		
 		$institute = new Institute();
 		$institute->where('id', $this->input->get_request_header('Institute'))->get();
 		if($institute->exists()) {
 			$conn = $institute->connection->get();
 			$this->server_host = $conn->server_name;
 			$this->server_user = $conn->username;
-			$this->server_pwd = $conn->password;	
-			$this->_database = $conn->inst_database;
-		}
-	}
-
-	function txn_post() {
-		$models = json_decode($this->post('models'));
-		$institute = new Institute();
-		$institute->where('id', $models[0]->institute_id)->get();
-		if($institute->exists()) {
-			$conn = $institute->connection->get();
-			$this->server_host = $conn->server_name;
-			$this->server_user = $conn->username;
-			$this->server_pwd = $conn->password;	
+			$this->server_pwd = $conn->password;
 			$this->_database = $conn->inst_database;
 			date_default_timezone_set("$conn->time_zone");
 		}
-		$data["results"] = array();
+	}
+	//Transaction
+	function txn_post() {
+		$models = json_decode($this->post('models'));
+		$data["results"] = [];
 		$data["count"] = 0;
 		foreach ($models as $value) {
 			$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->location_id 		= isset($value->location_id) ? $value->location_id : "";
 			$obj->contact_id 		= isset($value->contact_id) ? $value->contact_id : "";
 			$obj->payment_term_id	= isset($value->payment_term_id) ? $value->payment_term_id : 5;
-			$obj->payment_method_id = isset($value->payment_method_id) ? $value->payment_method_id : "";
+			$obj->payment_method_id = isset($value->payment_method_id) ? $value->payment_method_id : 5;
 			$obj->reference_id 		= isset($value->reference_id) ? $value->reference_id:0;
 			$obj->account_id 		= isset($value->account_id) ? $value->account_id : "";
 			$obj->vat_id 			= isset($value->vat) ? $value->vat: 0;
@@ -64,12 +54,10 @@ class Localsync extends REST_Controller {
 		   	$obj->status 			= isset($value->status) ? $value->status: 0;
 		   	$obj->user_id 			= isset($value->user_id) ? $value->user_id: 0;
 		   	$obj->sub_total 		= isset($value->amount) ? $value->amount : "";
-
 	   		if($obj->save()){
-
 	   			$journal = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 	   			$journal->transaction_id = $obj->id;
-	   			$journal->account_id = isset($value->account_id) ? $value->account_id: "";
+	   			$journal->account_id = 10;
 	   			$journal->contact_id = $value->contact_id;
 	   			$journal->dr  		 = $obj->amount;
 	   			$journal->description = "Utility Invoice";
@@ -77,19 +65,16 @@ class Localsync extends REST_Controller {
 	   			$journal->rate 		 = $obj->rate;
 	   			$journal->locale 	 = $obj->locale;
 	   			$journal->save();
-
 	   			$journal2 = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 	   			$journal2->transaction_id = $obj->id;
-	   			$journal2->account_id = isset($value->account_id) ? $value->account_id: "";
+	   			$journal2->account_id = 71;
 	   			$journal2->contact_id = $value->contact_id;
 	   			$journal2->dr 		  = 0.00;
 	   			$journal2->cr 		  = $obj->amount;
 	   			$journal2->description = "Utility Invoice";
 	   			$journal2->rate 	  = $obj->rate;
 	   			$journal2->locale 	  = $obj->locale;
-
 	   			$journal2->save();
-
 	   			$invoice_lines = [];
 		   		foreach ($value->wline as $row) {
 		   			$line = new Winvoice_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
@@ -112,44 +97,19 @@ class Localsync extends REST_Controller {
 		   			}
 		   			//to do: add to accouting line
 		   			$updateInstallSchedule = isset($updateInstallSchedule) ? $updateInstallSchedule : "";
-		   			if($line->save()){
-		   				$invoice_lines[] = array(
-		   					"id" 				=> $line->id,
-		   					"invoice_id"		=> $line->invoice_id,
-				   			"item_id"			=> $line->item_id,
-				   			"measurement_id" 	=> isset($line->measurement_id)?$line->measurement_id:0,
-				   			"meter_record_id" 	=> $line->meter_record_id,
-				   			"description" 		=> $line->description,
-				   			"quantity"			=> $line->quantity,
-				   			"price" 			=> floatval($line->price),
-				   			"amount" 			=> floatval($line->amount),
-				   			"rate"				=> floatval($line->rate),
-				   			"locale" 			=> $line->locale,
-				   			"has_vat" 			=> $line->has_vat=="true"?true:false,
-				   			"type" 				=> $line->type,
-				   			"installment" 		=> $updateInstallSchedule
-		   				);
-		   			}
+		   			$line->save();
 		   		}
-
-				$data["results"][] = [];
+				$data["results"][] = array(
+			   		"id" 	=> $obj->id
+			   	);
 		    }
 		}
 		$data["count"] = count($data["results"]);
-		$this->response(array('results'=> $data, 'count'=> count($data)), 201);				
+		$this->response($data, 201);			
 	}
+	//Record
 	function record_post() {
 		$models = json_decode($this->post('models'));
-		$institute = new Institute();
-		$institute->where('id', $models[0]->institute_id)->get();
-		if($institute->exists()) {
-			$conn = $institute->connection->get();
-			$this->server_host = $conn->server_name;
-			$this->server_user = $conn->username;
-			$this->server_pwd = $conn->password;	
-			$this->_database = $conn->inst_database;
-			date_default_timezone_set("$conn->time_zone");
-		}
 		$data["results"] = array();
 		$data["count"] = 0;
 		foreach ($models as $value) {
@@ -191,45 +151,11 @@ class Localsync extends REST_Controller {
 			}			
 		}
 		$data["count"] = count($data["results"]);
-		
 		$this->response($data, 201);					
 	}
 	
 	function index_get(){
-		$this->backup();
-	}
-
-	public function backup()
-	{
-		$dsn = 'mysql://mightyadmin:banhji2016@banhji-db-instance.cwxbgxgq7thx.ap-southeast-1.rds.amazonaws.com/db_1495085871';
-		$DB1 = $this->load->database($dsn, TRUE);
-		// get all of the tables
-		$this->load->dbutil();
-		$this->load->helper('file');
-		$this->load->helper('download');
 		
-		$this->db = $DB1;
-		// Backup your entire database and assign it to a variable
-		$this->load->dbutil();
-
-		$prefs = array(
-			'ignore' => array(),
-			'format' => 'sql',
-			'filename' => $this->db->database .'-'. date("Y-m-d-H-i-s").'-backup.sql',  
-			'add_drop' => TRUE,
-			'add_insert' => TRUE,
-			'newline' => "\n" 
-		);
-
-		$backup = $this->dbutil->backup($prefs);
-		$dbname = $this->db->database .'-'. date("Y-m-d-H-i-s").'-backup.sql';
-		
-		if ( ! write_file('assets/backupdb/'.$dbname, $backup)){
-		    echo 'Unable to write the file';
-		}else{
-		    $data = file_get_contents("assets/backupdb/".$dbname);
-    		force_download($dbname, $backup);
-		}
 	}
 	
 }

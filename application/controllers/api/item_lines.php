@@ -132,6 +132,7 @@ class Item_lines extends REST_Controller {
 					"gross_weight" 		=> floatval($value->gross_weight),
 					"truck_weight" 		=> floatval($value->truck_weight),
 					"bag_weight" 		=> floatval($value->bag_weight),
+					"yield" 			=> floatval($value->yield),
 					"quantity" 			=> floatval($value->quantity),
 				   	"quantity_adjusted" => floatval($value->quantity_adjusted),
 				   	"conversion_ratio" 	=> floatval($value->conversion_ratio),
@@ -139,6 +140,7 @@ class Item_lines extends REST_Controller {
 				   	"price"				=> floatval($value->price),
 				   	"price_avg" 		=> floatval($value->price_avg),
 				   	"amount" 			=> floatval($value->amount),
+				   	"markup" 			=> floatval($value->markup),
 				   	"discount" 			=> floatval($value->discount),
 				   	"fine" 				=> floatval($value->fine),
 				   	"tax" 				=> floatval($value->tax),
@@ -280,13 +282,15 @@ class Item_lines extends REST_Controller {
 		   	isset($value->gross_weight)			? $obj->gross_weight 		= $value->gross_weight : "";
 		   	isset($value->truck_weight)			? $obj->truck_weight 		= $value->truck_weight : "";
 		   	isset($value->bag_weight)			? $obj->bag_weight 			= $value->bag_weight : "";
+		   	isset($value->yield)				? $obj->yield 				= $value->yield : "";
 		   	isset($value->quantity)				? $obj->quantity 			= $value->quantity : "";
 		   	isset($value->quantity_adjusted) 	? $obj->quantity_adjusted 	= $value->quantity_adjusted : "";
 		   	// isset($value->conversion_ratio)		? $obj->conversion_ratio 	= $value->conversion_ratio : $obj->conversion_ratio = 1;
 		   	isset($value->cost)					? $obj->cost 				= $value->cost : "";
 		   	isset($value->price)				? $obj->price 				= $value->price : "";
-		   	//isset($value->price_avg)			? $obj->price_avg 			= $value->price_avg : "";
+		   	//isset($value->price_avg)			? $obj->price_avg 			= $value->price_avg : "";		   	
 		   	isset($value->amount)				? $obj->amount 				= $value->amount : "";
+		   	isset($value->markup)				? $obj->markup 				= $value->markup : "";
 		   	isset($value->discount)				? $obj->discount 			= $value->discount : "";
 		   	isset($value->fine)					? $obj->fine 				= $value->fine : "";
 		   	isset($value->tax)					? $obj->tax 				= $value->tax : "";
@@ -323,13 +327,15 @@ class Item_lines extends REST_Controller {
 					"gross_weight" 		=> floatval($obj->gross_weight),
 					"truck_weight" 		=> floatval($obj->truck_weight),
 					"bag_weight" 		=> floatval($obj->bag_weight),
+					"yield" 			=> floatval($obj->yield),
 					"quantity" 			=> floatval($obj->quantity),
 				   	"quantity_adjusted" => floatval($obj->quantity_adjusted),
-				   	"conversion_ratio" 		=> floatval($obj->conversion_ratio),
+				   	"conversion_ratio" 	=> floatval($obj->conversion_ratio),
 				   	"cost"				=> floatval($obj->cost),
 				   	"price"				=> floatval($obj->price),
-				   	"price_avg" 		=> floatval($obj->price_avg),
+				   	"price_avg" 		=> floatval($obj->price_avg),				   	
 				   	"amount" 			=> floatval($obj->amount),
+				   	"markup" 			=> floatval($obj->markup),
 				   	"discount" 			=> floatval($obj->discount),
 				   	"fine" 				=> floatval($obj->fine),
 				   	"tax" 				=> floatval($obj->tax),
@@ -371,6 +377,7 @@ class Item_lines extends REST_Controller {
 		   	isset($value->gross_weight)		? $obj->gross_weight 		= $value->gross_weight : "";
 		   	isset($value->truck_weight)		? $obj->truck_weight 		= $value->truck_weight : "";
 		   	isset($value->bag_weight)		? $obj->bag_weight 			= $value->bag_weight : "";
+		   	isset($value->yield)			? $obj->yield 				= $value->yield : "";
 		   	isset($value->quantity)			? $obj->quantity 			= $value->quantity : "";
 		   	isset($value->quantity_adjusted)? $obj->quantity_adjusted 	= $value->quantity_adjusted : "";
 		   	// isset($value->conversion_ratio)		? $obj->conversion_ratio 			= $value->conversion_ratio : "";
@@ -378,6 +385,7 @@ class Item_lines extends REST_Controller {
 		   	isset($value->price)			? $obj->price 				= $value->price : "";
 		   	isset($value->price_avg)		? $obj->price_avg 			= $value->price_avg : "";
 		   	isset($value->amount)			? $obj->amount 				= $value->amount : "";
+		   	isset($value->markup)			? $obj->markup 				= $value->markup : "";
 		   	isset($value->discount)			? $obj->discount 			= $value->discount : "";
 		   	isset($value->fine)				? $obj->fine 				= $value->fine : "";
 		   	isset($value->tax)				? $obj->tax 				= $value->tax : "";
@@ -414,6 +422,7 @@ class Item_lines extends REST_Controller {
 					"gross_weight" 		=> floatval($obj->gross_weight),
 					"truck_weight" 		=> floatval($obj->truck_weight),
 					"bag_weight" 		=> floatval($obj->bag_weight),
+					"yield" 			=> floatval($obj->yield),
 					"quantity" 			=> floatval($obj->quantity),
 				   	"quantity_adjusted" => floatval($obj->quantity_adjusted),
 				   	"conversion_ratio" 	=> floatval($obj->conversion_ratio),
@@ -421,6 +430,7 @@ class Item_lines extends REST_Controller {
 				   	"price"				=> floatval($obj->price),
 				   	"price_avg" 		=> floatval($obj->price_avg),
 				   	"amount" 			=> floatval($obj->amount),
+				   	"markup" 			=> floatval($obj->markup),
 				   	"discount" 			=> floatval($obj->discount),
 				   	"fine" 				=> floatval($obj->fine),
 				   	"tax" 				=> floatval($obj->tax),
