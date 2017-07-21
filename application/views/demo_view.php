@@ -45880,7 +45880,7 @@
 		</div>
 	</div>
 </script>
-<script id="internalUsageForRiceMill" type="text/x-kendo-template">
+<script id="riceMillProduction" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background">
 			<div class="container-960">					
@@ -45891,9 +45891,9 @@
 							data-bind="click: cancel"><i></i></span>						
 					</div>
 
-			        <h2>Internal Usage For Rice Mill</h2>
+			        <h2>Rice Mill Production</h2>
 
-				    <br>				   				
+				    <br>
 					
 					<!-- Upper Part -->
 					<div class="row-fluid">
@@ -46202,7 +46202,7 @@
 										    	width: '50px', 
 										    	attributes: { style: 'text-align: center;' }, 
 										        template: function (dataItem) {
-										        	var rowIndex = banhji.internalUsageForRiceMill.lineDS.indexOf(dataItem)+1;
+										        	var rowIndex = banhji.riceMillProduction.lineDS.indexOf(dataItem)+1;
 										        	return '<i class=icon-trash data-bind=click:removeRow></i>' + ' ' + rowIndex;
 										      	}
 										    },
@@ -46248,7 +46248,7 @@
 										    	width: '50px', 
 										    	attributes: { style: 'text-align: center;' }, 
 										        template: function (dataItem) {
-										        	var rowIndex = banhji.internalUsageForRiceMill.accountLineDS.indexOf(dataItem)+1;
+										        	var rowIndex = banhji.riceMillProduction.accountLineDS.indexOf(dataItem)+1;
 										        	return '<i class=icon-trash data-bind=click:removeRowAccount></i>' + ' ' + rowIndex;
 										      	}
 										    },
@@ -46289,7 +46289,7 @@
 											    	width: '50px', 
 											    	attributes: { style: 'text-align: center;' }, 
 											        template: function (dataItem) {
-											        	var rowIndex = banhji.internalUsageForRiceMill.toItemLineDS.indexOf(dataItem)+1;
+											        	var rowIndex = banhji.riceMillProduction.toItemLineDS.indexOf(dataItem)+1;
 											        	return '<i class=icon-trash data-bind=click:removeRowTo></i>' + ' ' + rowIndex;
 											      	}
 											    },
@@ -46331,7 +46331,7 @@
 												    width: '100px',
 												    attributes: { style: 'text-align: right;' },
 												    editable: function (dataItem) {
-											        	return banhji.internalUsageForRiceMill.toItemLineDS.indexOf(dataItem)>0;
+											        	return banhji.riceMillProduction.toItemLineDS.indexOf(dataItem)>0;
 											      	}
 												},
 												{
@@ -46342,7 +46342,7 @@
 												    width: '100px',
 												    attributes: { style: 'text-align: right;' },
 												    editable: function (dataItem) {
-											        	return banhji.internalUsageForRiceMill.toItemLineDS.indexOf(dataItem)>0;
+											        	return banhji.riceMillProduction.toItemLineDS.indexOf(dataItem)>0;
 											      	}
 												},
 												{ 
@@ -46376,7 +46376,7 @@
 											    	width: '50px', 
 											    	attributes: { style: 'text-align: center;' }, 
 											        template: function (dataItem) {
-											        	var rowIndex = banhji.internalUsageForRiceMill.toAccountLineDS.indexOf(dataItem)+1;
+											        	var rowIndex = banhji.riceMillProduction.toAccountLineDS.indexOf(dataItem)+1;
 											        	return '<i class=icon-trash data-bind=click:removeRowAccountTo></i>' + ' ' + rowIndex;
 											      	}
 											    },
@@ -96563,7 +96563,7 @@
 		    return dfd;	    		    	
 	    }
 	});
-	banhji.internalUsageForRiceMill = kendo.observable({
+	banhji.riceMillProduction = kendo.observable({
     	lang 					: langVM,
     	dataSource  			: dataStore(apiUrl + "transactions"),
     	lineDS  				: dataStore(apiUrl + "item_lines"),
@@ -96901,7 +96901,7 @@
 		    }
 	    },
 	    itemLineDSChanges 		: function(arg){
-			var self = banhji.internalUsageForRiceMill;
+			var self = banhji.riceMillProduction;
 
 			if(arg.field){
 				if(arg.field=="item"){
@@ -96956,7 +96956,7 @@
 	        this.changes();
 		},
 		accountLineDSChanges 	: function(arg){
-			var self = banhji.internalUsageForRiceMill;
+			var self = banhji.riceMillProduction;
 
 			if(arg.field){
 				if(arg.field=="account"){
@@ -97019,8 +97019,7 @@
 				rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
 
 			row.set("item_id", item.id);
-			row.set("description", item.sale_description);
-			row.set("cost", item.cost * rate);
+			row.set("description", item.sale_description);			
 			row.set("rate", rate);
 			row.set("locale", item.locale);
 			row.set("measurement", item.measurement);
@@ -97064,7 +97063,7 @@
 			});
 		},
 		toItemLineDSChanges 	: function(arg){
-			var self = banhji.internalUsageForRiceMill;
+			var self = banhji.riceMillProduction;
 
 			if(arg.field){
 				if(arg.field=="item"){
@@ -97120,7 +97119,7 @@
 	        this.changes();
 		},
 		toAccountLineDSChanges 	: function(arg){
-			var self = banhji.internalUsageForRiceMill;
+			var self = banhji.riceMillProduction;
 
 			if(arg.field){
 				if(arg.field=="account"){
@@ -98995,7 +98994,7 @@
 		
 		//Rice Mill
 		receiptNote: new kendo.Layout("#receiptNote", {model: banhji.receiptNote}),
-		internalUsageForRiceMill: new kendo.Layout("#internalUsageForRiceMill", {model: banhji.internalUsageForRiceMill}),
+		riceMillProduction: new kendo.Layout("#riceMillProduction", {model: banhji.riceMillProduction}),
 
 		//Document
 		documents: new kendo.Layout("#documents", {model: banhji.fileManagement}),
@@ -107242,17 +107241,17 @@
 			vm.pageLoad(id);
 		}
 	});
-	banhji.router.route("/internal_usage_for_rice_mill(/:id)", function(id){
-		banhji.view.layout.showIn("#content", banhji.view.internalUsageForRiceMill);
+	banhji.router.route("/rice_mill_production(/:id)", function(id){
+		banhji.view.layout.showIn("#content", banhji.view.riceMillProduction);
 		banhji.view.layout.showIn('#menu', banhji.view.menu);
 		banhji.view.menu.showIn('#secondary-menu', banhji.view.inventoryMenu);
 
-		var vm = banhji.internalUsageForRiceMill;
+		var vm = banhji.riceMillProduction;
 
-		banhji.userManagement.addMultiTask("Internal Usage For Rice Mill","internal_usage_for_rice_mill",null);
+		banhji.userManagement.addMultiTask("Internal Usage For Rice Mill","rice_mill_production",null);
 		
-		if(banhji.pageLoaded["internal_usage_for_rice_mill"]==undefined){
-			banhji.pageLoaded["internal_usage_for_rice_mill"] = true;
+		if(banhji.pageLoaded["rice_mill_production"]==undefined){
+			banhji.pageLoaded["rice_mill_production"] = true;
 
 			vm.lineDS.bind("change", vm.itemLineDSChanges);
 			vm.accountLineDS.bind("change", vm.accountLineDSChanges);
