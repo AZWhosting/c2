@@ -8158,7 +8158,6 @@
 								data-bind="click: cancel"><i></i></span>
 						</div>
 						<div class="clear"></div>
-
 						<!-- Tabs -->
 						<div class="relativeWrap" data-toggle="source-code">
 							<div class="widget widget-tabs widget-tabs-double-2 widget-tabs-gray">
@@ -8188,7 +8187,7 @@
 									<div class="tab-content">
 										<!-- Tab content -->
 										<div id="Download" style="border: 1px solid #ccc; overflow: hidden;" class="tab-pane active widget-body-regular">
-										  	<form action="<?php echo base_url(); ?>backup" method="post">
+										  	<form action="<?php echo base_url(); ?>utibill_backup" method="post">
 										  		<input type="hidden" id="uinstitute" name="institute" data-bind="value: institute_id">
 										  		<input type="hidden" id="uid" name="uid" data-bind="value: user_id">
 											  	<button>
@@ -8222,10 +8221,6 @@
 							</div>
 						</div>
 						<!-- // Tabs END -->
-
-
-
-
 					</div>
 				</div>
 			</div>
@@ -12333,8 +12328,7 @@
 	     		}
 	    	});
 	  	}
-	}	
-	
+	}
 	banhji.userData = JSON.parse(localStorage.getItem('userData/user')) ? JSON.parse(localStorage.getItem('userData/user')) : "";
 	if(banhji.userData == "") {
 		banhji.companyDS.fetch(function() {

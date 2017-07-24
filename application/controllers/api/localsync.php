@@ -48,7 +48,7 @@ class Localsync extends REST_Controller {
 			$obj->vat_id 			= isset($value->vat) ? $value->vat: 0;
 			$obj->biller_id 		= isset($value->biller_id) ? $value->biller_id : "";
 		   	$obj->number 			= isset($value->number) ? $value->number : "";
-		   	$obj->type 				= isset($value->type) ? $value->type : "";
+		   	$obj->type 				= "Utility_Invoice";
 		   	$obj->amount 			= isset($value->amount) ? $value->amount : "";
 		   	$obj->vat 				= isset($value->vat) ? $value->vat : "";
 		   	$obj->rate 				= isset($value->rate) ? $value->rate : 1;

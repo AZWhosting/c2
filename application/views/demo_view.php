@@ -13747,15 +13747,17 @@
 							    <!-- Tabs Heading -->
 							    <div class="tabsbar tabsbar-2">
 							        <ul class="row-fluid row-merge">
-							        	<li class="span1 glyphicons cogwheels active"><a href="#tab1-5" data-toggle="tab"><i></i></a>
+							        	<li class="span1 glyphicons cogwheels active"><a href="#tab-1" data-toggle="tab"><i></i></a>
 							            </li>
-							            <li class="span1 glyphicons circle_info"><a href="#tab2-5" data-toggle="tab"><i></i></a>
+							            <li class="span1 glyphicons link"><a href="#tab-2" data-toggle="tab"><i></i></a>
 							            </li>
-							            <li class="span1 glyphicons adress_book"><a href="#tab3-5" data-toggle="tab"><i></i></a>
+							            <li class="span1 glyphicons circle_info"><a href="#tab-3" data-toggle="tab"><i></i></a>
+							            </li>
+							            <li class="span1 glyphicons adress_book"><a href="#tab-4" data-toggle="tab"><i></i></a>
 							            </li>						            
-							            <li class="span1 glyphicons paperclip"><a href="#tab4-5" data-toggle="tab"><i></i></a>
+							            <li class="span1 glyphicons paperclip"><a href="#tab-5" data-toggle="tab"><i></i></a>
 							            </li>						            
-							            <li class="span1 glyphicons history"><a href="#tab5-5" data-toggle="tab"><i></i></a>
+							            <li class="span1 glyphicons history"><a href="#tab-6" data-toggle="tab"><i></i></a>
 							            </li>
 							            <!-- <li class="span1 glyphicons show_liness"><a href="#tab5-6" data-toggle="tab"><i></i></a></li> -->						            								            
 							        </ul>
@@ -13765,7 +13767,7 @@
 							    <div class="tab-content">
 
 							    	<!-- Options Tab content -->
-							        <div class="tab-pane active" id="tab1-5">						            
+							        <div class="tab-pane active" id="tab-1">						            
 							            <table class="table table-borderless table-condensed cart_total">
 							            	<tr>
 							            		<td style="width: 40%">
@@ -13851,8 +13853,38 @@
 							        </div>
 							        <!-- // Options Tab content END -->
 
+							        <!-- References -->
+							        <div class="tab-pane" id="tab-2">
+							            <table style="margin-bottom: 0;" class="table table-borderless table-condensed cart_total">
+								            <tr>
+												<td style="vertical-align: top;">
+								            		<span data-bind="text: lang.lang.reference"></span>
+								            	</td>
+								            	<td>
+								            		<input data-role="dropdownlist"
+								            			   data-item-template="reference-list-tmpl"
+										                   data-auto-bind="false"
+										                   data-value-primitive="true"
+										                   data-text-field="number"
+										                   data-value-field="id"
+										                   data-bind="value: reference_id,
+										                              source: referenceDS,
+										                              events: { change: referenceChanges }"
+										                   data-option-label="Add Reference..."
+										                   style="width: 100%;" />
+										            <br>
+										            <table class="table table-bordered">
+												        <tbody data-template="invoice-reference-template"
+												        		data-bind="source: referenceList"></tbody>			        
+												    </table>
+												</td>
+											</tr>
+							            </table>
+							        </div>
+							        <!-- // References END -->
+
 							        <!-- Info Tab content -->
-							        <div class="tab-pane" id="tab2-5">
+							        <div class="tab-pane" id="tab-3">
 							        	
 										<table class="table table-borderless table-condensed cart_total">
 											<tr>
@@ -13936,7 +13968,7 @@
 							        <!-- // Info Tab content END -->
 
 							        <!-- Address Tab content -->
-							        <div class="tab-pane" id="tab3-5">
+							        <div class="tab-pane" id="tab-4">
 							        	<span data-bind="text: lang.lang.billing_address"></span>
 										<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.bill_to" placeholder="Billing to ..."></textarea>								
 										
@@ -13947,7 +13979,7 @@
 							        <!-- // Address Tab content END -->						        
 
 							        <!-- Attach Tab content -->
-							        <div class="tab-pane" id="tab4-5">
+							        <div class="tab-pane" id="tab-5">
 
 							        	<p><span data-bind="text: lang.lang.file_type"></span> [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>							            	
 							            
@@ -13978,7 +14010,7 @@
 							        <!-- // Attach Tab content END -->						        
 
 							        <!-- Recuring Tab content -->
-							        <div class="tab-pane" id="tab5-5">							            	
+							        <div class="tab-pane" id="tab-6">							            	
 							            
 							            <table style="width: 100%" class="table borderless">
 							            	<tr align="right">
@@ -14074,7 +14106,7 @@
 							        </div>
 							        <!-- // Recuring Tab content END -->						        								        
 
-							        <div class="tab-pane saleSummaryCustomer" id="tab5-6">
+							        <div class="tab-pane saleSummaryCustomer" id="tab-7">
 										<table class="table table-borderless table-condensed">
 									        <thead>
 									            <tr>
@@ -20496,7 +20528,7 @@
 								<div class="span6">
 									<!-- Group -->
 									<div class="control-group">
-										<label for="txtCost"><span data-bind="text: lang.lang.cost"></span></label>
+										<label for="txtCost"><span data-bind="text: lang.lang.average_cost"></span></label>
 							            <input id="txtCost" name="txtCost"
 							            	   type="number" class="k-textbox"
 							            	   min="0"
@@ -20510,7 +20542,7 @@
 								<div class="span6">
 									<!-- Group -->
 									<div class="control-group">
-										<label for="txtPrice"><span data-bind="text: lang.lang.price"></span></label>
+										<label for="txtPrice"><span data-bind="text: lang.lang.average_price"></span></label>
 							            <input id="txtPrice" name="txtPrice"
 							            	   type="number" class="k-textbox"
 							            	   min="0"
@@ -55469,12 +55501,6 @@
 
 				this.referenceList.push(reference);
 
-				//Remove empty line
-				var firstLine = this.lineDS.at(0);
-				if(this.lineDS.total()==1 && firstLine.item_id==0){
-					this.lineDS.data([]);
-				}
-
 			 	this.referenceLineDS.query({
 			 		filter:[
 			 			{ field:"transaction_id", value: reference_id },
@@ -55484,7 +55510,7 @@
 			 		var view = self.referenceLineDS.view();
 
 			 		$.each(view, function(index, value){
-			 			self.lineDS.add({
+			 			self.lineDS.insert(index, {
 							transaction_id 		: obj.id,
 							tax_item_id 		: value.tax_item_id,
 							item_id 			: value.item_id,
@@ -57079,12 +57105,6 @@
 
 				this.referenceList.push(reference);
 
-				//Remove empty line
-				var firstLine = this.lineDS.at(0);
-				if(this.lineDS.total()==1 && firstLine.item_id==0){
-					this.lineDS.data([]);
-				}
-
 			 	this.referenceLineDS.query({
 			 		filter:[
 			 			{ field:"transaction_id", value: reference_id },
@@ -57094,7 +57114,7 @@
 			 		var view = self.referenceLineDS.view();
 
 			 		$.each(view, function(index, value){
-			 			self.lineDS.add({
+			 			self.lineDS.insert(0, {
 							transaction_id 		: obj.id,
 							tax_item_id 		: value.tax_item_id,
 							item_id 			: value.item_id,
@@ -70204,6 +70224,7 @@
 			  	{ field: "name", dir: "asc" }
 			]
 		}),
+		referenceList 				: [],
 		statusObj 					: banhji.source.statusObj,
 		amtDueColor 				: banhji.source.amtDueColor,
 	    confirmMessage 				: banhji.source.confirmMessage,
@@ -71774,49 +71795,51 @@
 				obj.set("reference_id", "");
 			}
 		},
-		referenceChanges 	: function(){
-			var self = this, obj = this.get("obj");
-			
-			if(obj.reference_id>0){
-				var ref = this.referenceDS.get(obj.reference_id);
+		referenceChanges 	: function(e){			
+			var self = this,
+				isExisting = false, 
+				reference_id = this.get("reference_id"),
+				referenceList = this.get("referenceList");
 
-				//Deposit
-				if(obj.discount>0){
-					this.set("showDiscount", true);
-				}else{
-					this.set("showDiscount", false);
+			$.each(referenceList, function(index, value){
+				if(value.id==reference_id){
+					isExisting = true;
+
+					return false;
 				}
-				
-				obj.set("reference_no", ref.number);
-				obj.set("sub_total", ref.sub_total);
-				obj.set("discount", ref.discount);
-				obj.set("tax", ref.tax);
-				obj.set("deposit", ref.deposit);				
-								
-			 	this.referenceLineDS.query({
-			 		filter: { field:"transaction_id", value: obj.reference_id },
-			 		page: 1,
-			 		pageSize: 100
-			 	}).then(function(){
-			 		var view = self.referenceLineDS.view();					
+			});
 
-			 		self.lineDS.data([]);
+			if(reference_id>0 && isExisting==false){
+				var obj = this.get("obj"),
+					reference = this.referenceDS.get(reference_id),
+					deposit = kendo.parseFloat(reference.deposit) + kendo.parseFloat(obj.deposit);
+
+				obj.set("deposit", deposit);
+				reference.set("status", 1);
+
+				this.referenceList.push(reference);
+
+			 	this.referenceLineDS.query({
+			 		filter:{ field:"transaction_id", value: reference_id }
+			 	}).then(function(){
+			 		var view = self.referenceLineDS.view();
+
 			 		$.each(view, function(index, value){
-			 			self.lineDS.add({					
+			 			self.lineDS.insert(index, {
 							transaction_id 		: obj.id,
 							tax_item_id 		: value.tax_item_id,
 							item_id 			: value.item_id,
-							measurement_id 		: value.measurement_id,							
-							description 		: value.description,				
+							measurement_id 		: value.measurement_id,
+							description 		: value.description,
 							quantity 	 		: value.quantity,
-							cost 				: value.cost,												
+							cost 				: value.cost,
 							amount 				: value.amount,
 							discount 			: value.discount,
 							rate				: value.rate,
 							locale				: value.locale,
 							movement 			: value.movement,
 							additional_cost 	: value.additional_cost,
-							additional_applied 	: value.additional_applied,							
+							additional_applied 	: value.additional_applied,
 
 							item 				: value.item,
 							measurement 		: value.measurement,
@@ -71826,11 +71849,23 @@
 			 		});
 
 			 		self.changes();
-			 	});			 				 				 				 				
-			}else{
-				obj.set("deposit", 0);
-				this.set("showDeposit", false);
-			}								
+			 	});
+		 	}
+
+		 	this.set("reference_id", 0);
+		},
+		referenceRemoveRow 	: function(e){
+			var self = this, data = e.data,
+				obj = this.get("obj"),
+				reference = this.referenceDS.get(data.id),
+				referenceList = this.get("referenceList"),
+				index = referenceList.indexOf(data), 
+				deposit = kendo.parseFloat(obj.deposit) - kendo.parseFloat(data.deposit);
+			
+			obj.set("deposit", deposit);
+			reference.set("status", 0);
+
+			this.referenceList.splice(index, 1);
 		},
 		//Recurring	
 		loadRecurring 		: function(id){

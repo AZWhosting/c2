@@ -513,7 +513,7 @@ class Ops extends REST_Controller {
 		foreach($result->result() as $row) {
 			$data[] = array(
 				'database' => $row->table_schema,
-				'size' => ($row->data_length + $row->index_length) / 1024/1024 .' in MB'
+				'size' => ($row->data_length + $row->index_length) / 1024/1024
 			);
 		}
 		$this->response($data, 200);

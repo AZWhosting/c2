@@ -55,8 +55,9 @@ class Inventory_modules extends REST_Controller {
 		//INVENTORY VALUE
 		$inventory = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$inventory->include_related("transaction", array("rate"));
-		$inventory->where_related("account", "account_type_id", 13);		
+		$inventory->where_related("account", "account_type_id", 13);
 		$inventory->where_related("transaction", "issued_date <", $asOftoday);
+		$inventory->where_related("transaction", "status <>", 4);
 		$inventory->where_related("transaction", "is_recurring <>", 1);
 		$inventory->where_related("transaction", "deleted <>", 1);
 		$inventory->where("deleted <>", 1);
@@ -188,6 +189,7 @@ class Inventory_modules extends REST_Controller {
 		$obj->include_related("item", array("abbr", "number", "name"));
 		$obj->include_related("transaction", array("type","rate"));
 		$obj->where_in_related("transaction", "type", array("Purchase_Order", "Sale_Order", "Cash_Purchase", "Credit_Purchase", "Purchase_Return", "Payment_Refund", "Commercial_Invoice", "Vat_Invoice", "Invoice", "Commercial_Cash_Sale", "Vat_Cash_Sale", "Cash_Sale", "Sale_Return", "Cash_Refund", "Item_Adjustment", "Internal_Usage"));
+		$obj->where_related("transaction", "status <>", 4);
 		$obj->where_related("transaction", "is_recurring <>", 1);
 		$obj->where_related("transaction", "deleted <>", 1);
 		$obj->where_related("item", "item_type_id", 1);
@@ -311,6 +313,7 @@ class Inventory_modules extends REST_Controller {
 		$obj->include_related("measurement", array("name"));
 		$obj->include_related("transaction", array("number", "type", "issued_date", "rate"));
 		$obj->where_in_related("transaction", "type", array("Cash_Purchase", "Credit_Purchase", "Purchase_Return", "Payment_Refund", "Commercial_Invoice", "Vat_Invoice", "Invoice", "Commercial_Cash_Sale", "Vat_Cash_Sale", "Cash_Sale", "Sale_Return", "Cash_Refund", "Item_Adjustment", "Internal_Usage"));
+		$obj->where_related("transaction", "status <>", 4);
 		$obj->where_related("transaction", "is_recurring <>", 1);
 		$obj->where_related("transaction", "deleted <>", 1);
 		$obj->where_related("item", "item_type_id", 1);
@@ -345,6 +348,7 @@ class Inventory_modules extends REST_Controller {
 					$bf->include_related("transaction", array("type", "rate"));
 					$bf->where_in_related("transaction", "type", array("Cash_Purchase", "Credit_Purchase", "Purchase_Return", "Payment_Refund", "Commercial_Invoice", "Vat_Invoice", "Invoice", "Commercial_Cash_Sale", "Vat_Cash_Sale", "Cash_Sale", "Sale_Return", "Cash_Refund", "Item_Adjustment", "Internal_Usage"));
 					$bf->where_related("transaction", "issued_date <", $value->transaction_issued_date);
+					$bf->where_related("transaction", "status <>", 4);
 					$bf->where_related("transaction", "is_recurring <>", 1);
 					$bf->where_related("transaction", "deleted <>", 1);
 					$bf->where("item_id", $value->item_id);

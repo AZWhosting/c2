@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Backup extends CI_Controller {
+class Utibill_backup extends CI_Controller {
 
 	/**
 	 * Index Page for this controller.
@@ -58,9 +58,9 @@ class Backup extends CI_Controller {
 			$this->load->dbutil();
 
 			$prefs = array(
-				// 'tables'        => array('branches', 'contacts', 'installment_schedules', 'installments', 'locations', 'meter_records', 'meters', 'plan_items', 'plan_items_plans', 'plans', 'properties', 'transactions', 'winvoice_lines'),
+				'tables'        => array('branches', 'contacts', 'installment_schedules', 'installments', 'locations', 'meter_records', 'meters', 'plan_items', 'plan_items_plans', 'plans', 'properties', 'transactions', 'winvoice_lines'),
 				'ignore' => array(),
-				'format' => 'sql',
+				'format' => 'gzip',
 				'filename' => $this->db->database .'-'. date("Y-m-d-H-i-s").'-backup.sql',  
 				'add_drop' => TRUE,
 				'add_insert' => TRUE,
