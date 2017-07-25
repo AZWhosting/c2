@@ -44438,7 +44438,7 @@
 					        				<a href="#/rice_mill">
 					        					<div class="app-recommand " style="height: 200px; text-align: center; width: 100%">
 					        						<div class="appIcon" >
-					        							<img src="<?php echo base_url(); ?>assets/rice_mill/ricemill_logo.png" style="width: 180px; height: auto;"/>
+					        							<img src="<?php echo base_url(); ?>assets/rice_mill/ricemill.png" style="width: auto; height: 80px;"/>
 					        						</div>
 					        						<div class="bigappcard-details">
 						        						<div class="bigappcard-display-name">
@@ -45212,46 +45212,57 @@
 	<img style="margin-bottom: 5px; width: 200px;" src="<?php echo base_url(); ?>assets/rice_mill/ricemill_logo.png" >
 	<div class="row-fluid" >
 		<div class="col-xs-12 col-sm-12 col-md-5" style="padding-left: 0;">
-			<div class="cash-bg" style="margin-bottom: 10px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
+			<div class="cash-bg" style="margin-bottom: 10px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1; ">
 				
-				<div class="" style="padding-left: 0; text-align: center; width: 20%; float: left;">
-					<a href="#/purchase">
-						<img title="Add Purchase" src="<?php echo base_url(); ?>assets/rice_mill/purchase.png"  style="width:95%; float: left; "  />
-						<span data-bind="text: lang.lang.purchase" style="text-transform: uppercase; color: #000; font-weight: 600; margin-top: 8px; display: inline-block;">Readings</span>
-					</a>
-				</div>
-				<div class="" style="padding-left: 0; text-align: center; width: 20%; float: left;">
-					<a href="#/cash_payment">
-						<img title="Add Cash Payment" src="<?php echo base_url(); ?>assets/rice_mill/cash_payment.jpg" style="width: 95%; float: left;"  />
-						<span data-bind="text: lang.lang.cash_payment" style=" text-transform: uppercase; color: #000; font-weight: 600; margin-top: 8px; display: inline-block;">Run Bill</span>
-					</a>
-				</div>
-				<div class="" style="padding-left: 0; text-align: center; width: 20%; float: left;">						
-					<a href="#/invoice">
-						<img title="Add Invoice" src="<?php echo base_url(); ?>assets/rice_mill/invoice.png" style="width: 95%; float: left;"  />
-						<span data-bind="text: lang.lang.invoice" style="text-transform: uppercase; color: #000; font-weight: 600; margin-top: 8px; display: inline-block;">Print Bill</span>
-					</a>
-				</div>
-			
-				<div class="" style="padding-left: 0; text-align: center; width: 20%; float: left;">
-					<a href="#/cash_receipt">
-						<img title="Add Cash Receipt" src="<?php echo base_url(); ?>assets/rice_mill/cash_receipt.png" style="width: 95%; float: left;"  />
-						<span data-bind="text: lang.lang.cash_receipt"  style=" text-transform: uppercase; color: #000; font-weight: 600; margin-top: 8px; display: inline-block;">Receipt</span>
+				<div class="" style="padding-left: 0; text-align: center; width: 20%; float: left; margin-right: 15px">
+					<a href="#/grn">
+						<img title="Add Goods Received Note" src="<?php echo base_url();?>/assets/rice_mill/grn.png" style="width: 98%; float: left;"  />
+						<span data-bind="text: lang.lang.goods_received_note"  style=" text-transform: uppercase; color: #000; font-weight: 600; margin-top: 8px; display: inline-block; font-size: 12px;"></span>
 					</a>
 				</div>
 
-				<div class="" style="padding-left: 0; text-align: center; width: 20%; float: left;">
-					<a href="#/internal_usage">
-						<img title="Add Internal Usage" src="<?php echo base_url();?>/assets/rice_mill/internal_usage.png" style="width: 95%; float: left;"  />
-						<span data-bind="text: lang.lang.app_internal_usage"  style=" text-transform: uppercase; color: #000; font-weight: 600; margin-top: 8px; display: inline-block;"></span>
+				<div class="" style="padding-left: 0; text-align: center; width: 20%; float: left; margin-right: 15px">
+					<a href="#/purchase">
+						<img title="Add Purchase" src="<?php echo base_url(); ?>assets/rice_mill/purchase.png"  style="width:98%; float: left; "  />
+						<span data-bind="text: lang.lang.purchase" style="text-transform: uppercase; color: #000; font-weight: 600; margin-top: 8px; display: inline-block; font-size: 12px;">Readings</span>
 					</a>
 				</div>
+
+				<div class="" style="padding-left: 0; text-align: center; width: 20%; float: left; margin-right: 15px;">
+					<a href="#/cash_payment">
+						<img title="Add Cash Payment" src="<?php echo base_url(); ?>assets/rice_mill/cash_payment.jpg" style="width: 98%; float: left;"  />
+						<span data-bind="text: lang.lang.cash_payment" style=" text-transform: uppercase; color: #000; font-weight: 600; margin-top: 8px; display: inline-block; font-size: 12px;">Run Bill</span>
+					</a>
+				</div>
+
+				<div class="" style="padding-left: 0; text-align: center; width: 20%; float: left; margin-bottom: 15px;">
+					<a href="#/internal_usage">
+						<img title="Add Internal Usage" src="<?php echo base_url();?>/assets/rice_mill/internal_usage.png" style="width: 98%; float: left;"  />
+						<span data-bind="text: lang.lang.app_internal_usage"  style=" text-transform: uppercase; color: #000; font-weight: 600; margin-top: 8px; display: inline-block;font-size: 12px;"></span>
+					</a>
+				</div>
+
+				<div class="" style="padding-left: 0; text-align: center; width: 20%; float: left; margin-right: 15px;">
+					<a href="#/invoice">
+						<img title="Add Invoice" src="<?php echo base_url(); ?>assets/rice_mill/invoice.png" style="width: 98%; float: left;"  />
+						<span data-bind="text: lang.lang.invoice" style="text-transform: uppercase; color: #000; font-weight: 600; margin-top: 8px; display: inline-block;font-size: 12px;">Print Bill</span>
+					</a>
+				</div>
+			
+				<div class="" style="padding-left: 0; text-align: center; width: 20%; float: left; margin-right: 15px;">
+					<a href="#/cash_receipt">
+						<img title="Add Cash Receipt" src="<?php echo base_url(); ?>assets/rice_mill/cash_receipt.png" style="width: 98%; float: left;"  />
+						<span data-bind="text: lang.lang.cash_receipt"  style=" text-transform: uppercase; color: #000; font-weight: 600; margin-top: 8px; display: inline-block;font-size: 12px;">Receipt</span>
+					</a>
+				</div>
+
+				
 				
 			</div>
 
 			<div class="cash-bg" style="margin-bottom: 10px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
-	    		<a href="#/">
-					<div class="cash-invoice" style="background: #eac654; color: #fff;">
+	    		<a href="#/cash_movement">
+					<div class="cash-invoice" style="background: #eac654; color: #fff; margin-bottom: 0;">
 						<div class="span6" style="padding-left: 0;">
 							<span style="font-size: 20px; color: #333">Cash Position</span>
 							<br>
@@ -45292,8 +45303,8 @@
 	    	<div class="cash-bg" style="margin-bottom: 10px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
 		    	<div class="row-fluid">
 		    		<div class="col-xs-12 col-sm-6 col-md-12" style="padding: 0">
-						<div class="widget widget-3 customer-border">
-							<div class="widget-body alert alert-primary" style="min-height: 135px; background: #eac654; color: #333; padding-top: 10px; padding-bottom: 10px;">
+						<div class="widget widget-3 customer-border" style="margin-bottom: 0;">
+							<div class="widget-body alert alert-primary" style="min-height: 135px; background: #eac654; color: #333; padding-top: 10px; padding-bottom: 10px; margin-bottom: 0;">
 								<div align="center" class="text-large strong" style="font-size: 25px;">
 									<span data-bind="text: ccc"></span>
 									<br>
@@ -45323,7 +45334,7 @@
 							</div>									
 						</div>
 					</div>
-					<div class="col-xs-12 col-sm-6 col-md-12" style="padding: 0;">
+					<!-- <div class="col-xs-12 col-sm-6 col-md-12" style="padding: 0;">
 						<div class="widget widget-3 customer-border" style="margin-bottom: 0;">					
 							<div class="widget-body alert-info" style="min-height: 135px; background: #eac654; color: #333; padding-top: 10px; padding-bottom: 10px; ">
 								<div align="center" class="text-large strong" style="font-size: 25px;">
@@ -45354,7 +45365,7 @@
 								</table>
 							</div>										
 						</div>				
-					</div>
+					</div> -->
 				</div>
 	    	</div>
 		</div>
@@ -45419,24 +45430,26 @@
 					</div>
 
 					<div class="span4">
-						<div class="widget-body alert alert-primary sale-overview" style="background: #4f961f; border: none; padding: 30px 15px!important;">
-							<h2 style="color: #fff !important;" data-bind="text: lang.lang.inventory_value">Inventory Value</h2>
-							<div align="center" class="text-large strong" data-bind="text: obj.inventory_value"></div>
-							<!-- <table width="100%">
-								<tr align="center">
-									<td>
-										<span data-bind="text: obj.gross_profit_margin"></span>
-										<br>
-										<span data-bind="text: lang.lang.average_margin"></span>
-									</td>
-									<td>
-										<span data-bind="text: obj.inventory_turnover_day"></span>
-										<br>
-										<span data-bind="text: lang.lang.turnover_days"></span>
-									</td>
-								</tr>
-							</table> -->
-						</div>
+						<a href="#/inventory_position_summary">
+							<div class="widget-body alert alert-primary sale-overview" style="background: #4f961f; border: none; padding: 30px 15px!important;">
+								<h2 style="color: #fff !important;" data-bind="text: lang.lang.inventory_value">Inventory Value</h2>
+								<div align="center" class="text-large strong" data-bind="text: obj.inventory_value"></div>
+								<!-- <table width="100%">
+									<tr align="center">
+										<td>
+											<span data-bind="text: obj.gross_profit_margin"></span>
+											<br>
+											<span data-bind="text: lang.lang.average_margin"></span>
+										</td>
+										<td>
+											<span data-bind="text: obj.inventory_turnover_day"></span>
+											<br>
+											<span data-bind="text: lang.lang.turnover_days"></span>
+										</td>
+									</tr>
+								</table> -->
+							</div>
+						</a>
 					</div>
 				</div>
 				<div class="row-fluid">
@@ -45506,6 +45519,12 @@
 				</div>
 			</div>
 	   </div>
+
+
+	   <a href="https://m.me/coderexample">
+		    Message us on Facebook
+		 </a>
+
 	</div>
 </script>
 
@@ -46862,9 +46881,9 @@
 	  	<li role='presentation' class='dropdown'>
 	  		<a style="color: #fff;" class='dropdown-toggle glyphicons ' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'>CENTER<span class='caret'></span></a>
 	  		<ul class='dropdown-menu'>
-  				<li><a href='#/customer_center'><span >Customer Center</span></a></li> 
-  				<li ><a href='#/vendor_center'><span >Supplier Center</span></a></li>	
-  				<li><a href='#/tem_center'><span >Inventory Center</span></a></li>
+  				<li><a href='#/rice_customer_center'><span >Customer Center</span></a></li> 
+  				<li ><a href='#/rice_vendor_center'><span >Supplier Center</span></a></li>	
+  				<li><a href='#/rice_item_center'><span >Inventory Center</span></a></li>
   			</ul>
 	  	</li>
 	  	<li role='presentation' class='dropdown'>
@@ -92627,6 +92646,8 @@
 		obj 				: {},
 		pageLoad 			: function(){
 			this.loadData();
+
+			
 		},
 		setObj 				: function(){
 			this.set("obj", {

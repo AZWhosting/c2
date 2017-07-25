@@ -3347,6 +3347,12 @@
           if(this.get('isFiscalChange')) {
             let dd = new Date(banhji.company.get('current').fiscal_date);
             banhji.company.get('current').fiscal_date = dd.getTime();
+
+            localforage.getItem('user').then(function(item){
+              item.institute.fiscal_date = dd.getTime();
+              localforage.setItem('user', item);
+              banhji.app.get('cache').institute.fiscal_date = dd.getTime(); 
+            });
           } else {
             banhji.company.get('current').fiscal_date = banhji.app.get('cache').institute.fiscal_date;
           }
@@ -3367,6 +3373,7 @@
               let day = d.getDate() < 10 ? '0'+ d.getDate() : d.getDate();
               let mnth= (d.getMonth() +1);
               let m = mnth < 10 ? '0'+mnth : mnth;
+              banhji.app.get('cache').institute.fiscal_date = d.getTime();
               banhji.company.get('current').set('fiscal_date', day +"-"+ m);
               // var appData = JSON.parse(localStorage.getItem('userData/user'));
               // localforage.removeItem('user').then(function() {
@@ -3381,7 +3388,11 @@
               //     // console.log(err);
               // });
               $("#ntf1").data("kendoNotification").success("");
-              banhji.company.set('isFiscalChange', false);
+              localforage.getItem('user').then(function(item){
+                item.institute.name = res.results[0].name;
+                localforage.setItem('user', item);
+                banhji.app.get('cache').institute.name = res.results[0].name; 
+              });
               window.location.replace("<?php echo base_url(); ?>admin");
             } else {
               $("#ntf1").data("kendoNotification").error("Operation failed.");

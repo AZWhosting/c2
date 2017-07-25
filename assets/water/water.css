@@ -190,9 +190,9 @@ p.addItem.glyphicons.circle_remove i:before {
   height: 60px;
 }
 .navbar-brand > img {
-  height: 50px;
+  height: 40px;
   line-height: 50px;
-  margin-top: 5px;
+  margin-top: 9px;
 }
 #secondary-menu{
     margin: 0;
@@ -205,17 +205,17 @@ p.addItem.glyphicons.circle_remove i:before {
     position: relative;
     float: left;
     height: 60px;
-    width: 45px;
+    width: 60px;
     line-height: 60px;
     border-right: 1px solid #333333;
     text-transform: capitalize!important;
     list-style: none;
 }
 #secondary-menu ul li:nth-child(2){
-	width: 82px;
+	width: 94px;
 }
 #secondary-menu ul li:nth-child(4){
-  width: 90px;
+  width: 105px;
 }
 #secondary-menu ul li:nth-child(3),
 #secondary-menu ul li:nth-child(3) a{
@@ -225,23 +225,27 @@ p.addItem.glyphicons.circle_remove i:before {
     float: left;
     padding-left: 15px;
     padding-right: 15px;
-    width: 82px;
+    width: 94px;
 }
 #secondary-menu ul li:nth-child(4) a{
     float: left;
     padding-left: 15px;
     padding-right: 15px;
-    width: 90px;
+    width: 105px;
+    font-size: 17px;
+    font-weight: 600;
 }
 #secondary-menu ul li a span{
 	color: #fff;
+  font-size: 17px;
+  font-weight: 600;
 }
 #secondary-menu ul > li > a {
 	color: #999999;
 	cursor: pointer;
 	float: left;
 	height: 60px;
-	width: 45px;
+	width: 60px;
 	display: block;
 }
 #secondary-menu  ul> li > a:hover {

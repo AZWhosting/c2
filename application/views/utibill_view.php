@@ -75,12 +75,12 @@
 
                 <!--Logo-->
                 <a class="navbar-brand" href="#" data-bind="click: checkRole">
-                    <img src="<?php echo base_url();?>/assets/water/utibill.png" >
+                    <img src="<?php echo base_url();?>assets/water/utibill(v1).png" >
                 </a>
             </div>
 
             <!-- Search Desktop-->
-            <form class="navbar-form pull-left hidden-xs">
+            <form class="navbar-form pull-left hidden-xs" style="padding-right: 0;">
 			  	<input id="search-placeholder" class="span2 search-query" 
 			  		type="text" 
 			  		placeholder="Search" 
@@ -11822,7 +11822,7 @@
 </script>
 <script id="waterMenu" type="text/x-kendo-template">
 	<ul class="topnav pull-left">
-	  	<li><a href='#/' class='glyphicons show_big_thumbnails'><i></i></a></li>
+	  	<li><a href='#/' style="padding-left: 11px; padding-right: 15px;"><img src="<?php echo base_url();?>assets/water/utibill(v2).png" style="width: 37px;"></a></li>
 	  	<li><a href='#/center'><span data-bind="text: lang.lang.center"></span></a></li>
 	  	<li role='presentation' class='dropdown'>
 	  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><i class="text-t"></i> <span class='caret'></span></a>
@@ -11842,7 +11842,7 @@
   			</ul>
 	  	</li>
 	  	<li><a href="#/reports" style="color: #fff">REPORTS</a></li>
-	  	<li><a href='#/setting' class='glyphicons settings'><i class="text-t"></i></a></li>
+	  	<li style="width: 47px"><a style="width: 47px;" href='#/setting' class='glyphicons settings'><i class="text-t"></i></a></li>
 	</ul>
 </script>
 

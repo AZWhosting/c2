@@ -31,7 +31,7 @@ class Prefixes extends REST_Controller {
 		$data["results"] = [];
 		$data["count"] = 0;
 
-		$obj = new Prefix();
+		$obj = new Prefix(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
 
 		//Sort
 		if(!empty($sort) && isset($sort)){					
@@ -82,7 +82,7 @@ class Prefixes extends REST_Controller {
 		$models = json_decode($this->post('models'));
 
 		foreach ($models as $value) {
-			$obj = new Prefix();
+			$obj = new Prefix(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);			
 			
 			isset($value->type) 			? $obj->type 			= $value->type : "";
 			isset($value->abbr) 			? $obj->abbr 			= $value->abbr : "";
@@ -111,7 +111,7 @@ class Prefixes extends REST_Controller {
 		$data["count"] = 0;
 
 		foreach ($models as $value) {			
-			$obj = new Prefix();
+			$obj = new Prefix(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->get_by_id($value->id);
 
 			isset($value->type) 			? $obj->type 			= $value->type : "";
@@ -139,7 +139,7 @@ class Prefixes extends REST_Controller {
 		$models = json_decode($this->delete('models'));
 
 		foreach ($models as $key => $value) {
-			$obj = new Prefix();
+			$obj = new Prefix(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->where("id", $value->id)->get();
 			
 			$data["results"][] = array(

@@ -1463,8 +1463,8 @@ var	en_US = {
 	"change_currency": "Change",
 	"error_input": "Data Input Not Correct!",
 
-
-
+	"receipt_note":"Receipt Note",
+	"rice_mill_production":"Rice Mill Production",
 
 
 

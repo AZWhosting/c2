@@ -53,19 +53,19 @@ class Ops extends REST_Controller {
 			 	//    $this->db->update_batch('measurements', $raw, 'id');
 
 			    //Insert batch data
-			 	// 	$raw = array(
-				// 	array(
-				 // 	   		'type' 			=> 'Receipt_Note',
-				 // 	   		'abbr' 			=> 'RTN',
-				 // 	   		'name' 			=> 'Receipt Note'
-				 // 	   	),
-				 // 	   	array(
-				 // 	   		'type' 			=> 'Receipt_Note1',
-				 // 	   		'abbr' 			=> 'RTN1',
-				 // 	   		'name' 			=> 'Receipt Note1'
-				 // 	   	)
-					// );
-				 // 	$this->db->insert_batch('prefixes', $raw);
+		 		/*$raw = array(
+					array(
+			 	   		'type' 			=> 'Receipt_Note',
+			 	   		'abbr' 			=> 'RTN',
+			 	   		'name' 			=> 'Receipt Note'
+			 	   	),
+			 	   	array(
+			 	   		'type' 			=> 'Rice_Mill_Production',
+			 	   		'abbr' 			=> 'RMP',
+			 	   		'name' 			=> 'Rice Mill Production'
+			 	   	)
+				);
+			 	$this->db->insert_batch('prefixes', $raw);*/
 				
 				//Add new fields
 				// $fields = array(

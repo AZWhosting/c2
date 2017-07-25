@@ -1437,7 +1437,9 @@ var	km_KH = {
 	"change_currency": "លុយអាប់",
 	"error_input": "ទិន្ន័យបញ្ចូលមិនត្រឹមត្រូវ",
 
-	"end" : "ចប់"
+	"end" : "ចប់",
+	"receipt_note":"ប័ណ្ណថ្លឹងស្រូវ",
+	"rice_mill_production":"ផលិតអង្ករ",
 
 
 	
