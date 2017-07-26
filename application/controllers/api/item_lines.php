@@ -151,8 +151,7 @@ class Item_lines extends REST_Controller {
 				   	"movement" 			=> $value->movement,
 				   	"required_date"		=> $value->required_date,
 				   	"deleted"			=> $value->deleted,
-
-				   	"item_prices" 		=> [],
+				   	
 				   	"item" 				=> $item,
 				   	"measurement" 		=> $measurement,
 				   	"tax_item" 			=> $tax_item,

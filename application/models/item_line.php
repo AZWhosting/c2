@@ -8,7 +8,7 @@ class Item_line extends DataMapper {
 		'transaction' => array(
 			'class' => 'transaction',
 			'other_field' => 'item_line'
-		),		
+		),
 		'measurement' => array(
 			'class' => 'measurement',
 			'other_field' => 'item_line'

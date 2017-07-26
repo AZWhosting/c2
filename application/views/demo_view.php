@@ -47759,6 +47759,135 @@
 		</div>
 	</div>
 </script>
+<script id="receiptNoteReport" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content saleSummaryCustomer">		
+			    	<span class="pull-right glyphicons no-js remove_2" 
+						onclick="javascript:window.history.back()"><i></i></span>
+					<br>
+					<br>
+
+					<div class="row-fluid">
+					    <!-- Tabs -->
+						<div class="relativeWrap" data-toggle="source-code">
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+							
+								<!-- Tabs Heading -->
+								<div class="widget-head">
+									<ul>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>	
+										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.filter"></span></a></li>
+									</ul>
+								</div>
+								<!-- // Tabs Heading END -->								
+								<div class="widget-body">
+									<div class="tab-content">
+
+								        <div class="tab-pane active" id="tab-1">
+											<input data-role="dropdownlist"
+												   class="sorter"                  
+										           data-value-primitive="true"
+										           data-text-field="text"
+										           data-value-field="value"
+										           data-bind="value: sorter,
+										                      source: sortList,                              
+										                      events: { change: sorterChanges }" />
+
+											<input data-role="datepicker"
+												   class="sdate"
+												   data-format="dd-MM-yyyy"
+										           data-bind="value: sdate,
+										           			  max: edate"
+										           placeholder="From ..." >
+
+										    <input data-role="datepicker"
+										    	   class="edate"
+										    	   data-format="dd-MM-yyyy"
+										           data-bind="value: edate,
+										                      min: sdate"
+										           placeholder="To ..." >
+
+										  	<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+									    </div>
+
+									    <div class="tab-pane" id="tab-2">
+											<div class="row">
+												<div class="span5">
+													<span data-bind="text: lang.lang.name"></span>
+													<select data-role="multiselect"
+														   data-value-primitive="true"
+														   data-header-template="contact-header-tmpl"
+														   data-item-template="contact-list-tmpl"
+														   data-filter="LIKE"
+														   data-value-field="id"
+														   data-text-field="name"
+														   data-bind="value: obj.contactIds, 
+														   			source: contactDS"
+														   data-placeholder="Select Names.."
+														   style="width: 100%" /></select>
+												</div>
+												<div class="span1">											
+										  			<button style="margin-top: 20px;" type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+												</div>														
+											</div>		
+							        	</div>
+
+								    </div>
+								</div>
+							</div>
+						</div>
+						<!-- // Tabs END -->						
+					</div>
+
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="text: institute.name"></h3>
+							<h2 style="text-transform: capitalize;">Reciept Note Report</h2>
+							<p data-bind="text: displayDate"></p>
+						</div>
+
+						<div data-role="grid" class="costom-grid"
+							 data-groupable="true"
+			                 data-columns="[
+			                 	{ 
+			                 		field: 'contact', 
+			                 		title: 'CONTACT'
+			                 	},
+			                 	{ field: 'number', title: 'NUMBER' },
+			                 	{ 
+			                 		field: 'item', 
+			                 		title: 'ITEM'
+			                 	},
+		                        { 
+		                        	field: 'gross_weight', 
+		                        	title:'GROSS WEIGHT', 
+		                        	format: '{0:n}', 
+		                        	attributes: { style: 'text-align: right;' }
+		                        },
+		                        { 
+		                        	field: 'truck_weight', 
+		                        	title:'TRUCK WEIGHT', 
+		                        	format: '{0:n}', 
+		                        	attributes: { style: 'text-align: right;' }
+		                        },
+		                        { field: 'bag_weight', title:'BAG WEIGHT', format: '{0:n}', attributes: { style: 'text-align: right;' } },
+		                        { 
+		                        	field: 'quantity', 
+		                        	title:'QUANTITY'
+		                        },
+		                        { field: 'measurement', title:'UOM', format: '{0:n}', attributes: { style: 'text-align: right;' } }		                        
+							 ]"
+		                     data-auto-bind="false"
+			                 data-bind="source: dataSource" ></div>
+
+		            </div>
+				</div>		
+			</div>
+		</div>
+	</div>
+</script>
 
 
 
@@ -99406,6 +99535,162 @@
 			return result;
 		}
 	});
+	banhji.receiptNoteReport = kendo.observable({
+		lang 					: langVM,
+		dataSource 				: new kendo.data.DataSource({
+			transport: {
+				read 	: {
+					url: apiUrl + "rice_mill_modules/receipt_note",
+					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				},
+				parameterMap: function(options, operation) {
+					if(operation === 'read') {
+						return {
+							page: options.page,
+							limit: options.pageSize,
+							filter: options.filter,
+							sort: options.sort
+						};
+					} else {
+						return {models: kendo.stringify(options.models)};
+					}
+				}
+			},
+			schema 	: {
+				model: {
+					id: 'id'
+				},
+				data: 'results',
+				total: 'count'
+			},
+			serverFiltering: true,
+			serverSorting: true,
+			serverPaging: true,
+			page: 1,
+			pageSize: 100
+		}),
+		contactDS 				: new kendo.data.DataSource({
+			transport: {
+				read 	: {
+					url: apiUrl + "contacts",
+					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				},
+				parameterMap: function(options, operation) {
+					if(operation === 'read') {
+						return {
+							page: options.page,
+							limit: options.pageSize,
+							filter: options.filter,
+							sort: options.sort
+						};
+					} else {
+						return {models: kendo.stringify(options.models)};
+					}
+				}
+			},
+			schema 	: {
+				model: {
+					id: 'id'
+				},
+				data: 'results',
+				total: 'count'
+			},
+			filter:{ field:"parent_id", operator:"where_related_contact_type", value: 2 },
+			batch: true,
+			serverFiltering: true,
+			serverSorting: true,
+			serverPaging: true,
+			page: 1,
+			pageSize: 100
+		}),
+		obj 					: {},
+		sortList				: banhji.source.sortList,
+		sorter 					: "month",
+		sdate 					: "",
+		edate 					: "",
+		institute 				: banhji.institute,
+		displayDate 			: "",
+		total 					: 0,
+		pageLoad 				: function(){
+			this.search();
+		},
+		sorterChanges 			: function(){
+	        var today = new Date(),
+        	sdate = "",
+        	edate = "",
+        	sorter = this.get("sorter");
+        	
+			switch(sorter){
+				case "today":								
+					this.set("sdate", today);
+					this.set("edate", "");
+													  					
+				  	break;
+				case "week":			  	
+					var first = today.getDate() - today.getDay(),
+					last = first + 6;
+
+					this.set("sdate", new Date(today.setDate(first)));
+					this.set("edate", new Date(today.setDate(last)));						
+					
+				  	break;
+				case "month":							  	
+					this.set("sdate", new Date(today.getFullYear(), today.getMonth(), 1));
+					this.set("edate", new Date(today.getFullYear(), today.getMonth() + 1, 0));
+
+				  	break;
+				case "year":				
+				  	this.set("sdate", new Date(today.getFullYear(), 0, 1));
+				  	this.set("edate", new Date(today.getFullYear(), 11, 31));
+
+				  	break;
+				default:
+					this.set("sdate", "");
+				  	this.set("edate", "");									  
+			}
+		},
+		search					: function(){
+			var self = this, para = [], displayDate = "",
+				obj = this.get("obj"),
+				start = this.get("sdate"),
+        		end = this.get("edate");
+
+        	//Dates
+        	if(start && end){
+        		start = new Date(start);
+        		end = new Date(end);
+        		displayDate = "From " + kendo.toString(start, "dd-MM-yyyy") + " To " + kendo.toString(end, "dd-MM-yyyy");
+        		end.setDate(end.getDate()+1);
+
+            	para.push({ field:"issued_date >=", operator:"where_related_transaction", value: kendo.toString(start, "yyyy-MM-dd") });
+            	para.push({ field:"issued_date <", operator:"where_related_transaction", value: kendo.toString(end, "yyyy-MM-dd") });
+            }else if(start){
+            	start = new Date(start);
+            	displayDate = "On " + kendo.toString(start, "dd-MM-yyyy");
+
+            	para.push({ field:"issued_date", operator:"where_related_transaction", value: kendo.toString(start, "yyyy-MM-dd") });
+            }else if(end){
+            	end = new Date(end);
+            	displayDate = "As Of " + kendo.toString(end, "dd-MM-yyyy");
+        		end.setDate(end.getDate()+1);
+        		
+            	para.push({ field:"issued_date <", operator:"where_related_transaction", value: kendo.toString(end, "yyyy-MM-dd") });
+            }else{
+            	
+            }
+            this.set("displayDate", displayDate);
+
+            this.dataSource.query({
+            	filter:para
+            }).then(function(){
+            	var view = self.dataSource.view();            	
+            });
+		}
+	});
 
 
 
@@ -100558,6 +100843,7 @@
 		receiptNote: new kendo.Layout("#receiptNote", {model: banhji.receiptNote}),
 		riceMillProduction: new kendo.Layout("#riceMillProduction", {model: banhji.riceMillProduction}),
 		riceReportCenter: new kendo.Layout("#riceReportCenter", {model: banhji.riceReportCenter}),
+		receiptNoteReport: new kendo.Layout("#receiptNoteReport", {model: banhji.receiptNoteReport}),
 
 		//Document
 		documents: new kendo.Layout("#documents", {model: banhji.fileManagement}),
@@ -108921,6 +109207,23 @@
 				banhji.pageLoaded["rice_mill_report_center"] = true;
 			}
 
+			vm.pageLoad();
+		}
+	});
+	banhji.router.route("/receipt_note_report", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.receiptNoteReport);
+
+			var vm = banhji.receiptNoteReport;
+			banhji.userManagement.addMultiTask("Receipt Note Report","receipt_note_report",null);
+			
+			if(banhji.pageLoaded["receipt_note_report"]==undefined){
+				banhji.pageLoaded["receipt_note_report"] = true;
+
+				vm.sorterChanges();
+			}
 			vm.pageLoad();
 		}
 	});
