@@ -966,7 +966,9 @@ input{
 .table-primary tbody tr td.mm {
 	cursor: pointer;
 }
-
+.rice-report table tr td h3{
+  font-size: 15px;
+}
 
 
 

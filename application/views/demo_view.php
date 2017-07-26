@@ -73023,7 +73023,7 @@
 				this.referenceDS.filter([
 					{ field: "contact_id", value: obj.contact_id },
 					{ field: "status", value: 0 },
-					{ field: "type", operator:"where_in", value: ["Purchase_Order","GRN"] },
+					{ field: "type", operator:"where_in", value: ["Purchase_Order","GRN","Receipt_Note"] },
 					{ field: "due_date >=", value: kendo.toString(obj.issued_date, "yyyy-MM-dd") }
 				]);		
 			}else{
