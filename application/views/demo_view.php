@@ -12,18 +12,7 @@
 			<ul class="topnav">
 				<li><a href="#" data-bind="click: checkRole"><img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/banhji-logo.png" style="height: 40px;"></a></li>
 			</ul>
-			<form class="navbar-form pull-left">
-				<div class="btn-group">
-				  	<a class="btn btn-inverse dropdown-toggle" data-toggle="dropdown" href="#">
-				    	<i class="icon-th"></i>
-				    	<!-- <span class="caret"></span> -->
-				  	</a>
-				  	<!-- <ul class="dropdown-menu">
-				    	<li data-bind="click: searchContact"><a href="#"><i class="icon-user"></i> Contact</a></li>
-				    	<li data-bind="click: searchTransaction"><a href="#"><i class="icon-random"></i> Transaction</a></li>
-				    	<li data-bind="click: searchItem"><a href="#"><i class="icon-th-list"></i> Item</a></li>
-				  	</ul> -->
-				</div>
+			<form class="navbar-form pull-left">				
 			  	<input type="text" class="span2 search-query" placeholder="Search" id="search-placeholder" 
 			  			data-bind="value: searchText" 
 			  			style="background-color: #555555; color: #ffffff; border-color: #333333; height: 22px;">
@@ -13749,9 +13738,9 @@
 							        <ul class="row-fluid row-merge">
 							        	<li class="span1 glyphicons cogwheels active"><a href="#tab-1" data-toggle="tab"><i></i></a>
 							            </li>
-							            <li class="span1 glyphicons link"><a href="#tab-2" data-toggle="tab"><i></i></a>
+							            <li class="span1 glyphicons circle_info"><a href="#tab-2" data-toggle="tab"><i></i></a>
 							            </li>
-							            <li class="span1 glyphicons circle_info"><a href="#tab-3" data-toggle="tab"><i></i></a>
+							            <li class="span1 glyphicons link"><a href="#tab-3" data-toggle="tab"><i></i></a>
 							            </li>
 							            <li class="span1 glyphicons adress_book"><a href="#tab-4" data-toggle="tab"><i></i></a>
 							            </li>						            
@@ -13829,62 +13818,13 @@
 								              				required data-required-msg="required" 
 								              				style="width: 100%" />
 												</td>
-											</tr>																				
-											<tr>							            				
-												<td>
-								            		<span data-bind="text: lang.lang.reference"></span>	            						            		
-								            	</td>
-								            	<td>
-													<input data-role="combobox"
-															data-template="reference-list-tmpl"
-															data-value-primitive="true"
-															data-auto-bind="false"
-															data-text-field="number" 
-								              				data-value-field="id"						              				 
-								              				data-bind="value: obj.reference_id,
-								              							enabled: enableRef,
-								              							source: referenceDS,						              							
-								              							events:{change: referenceChanges}"
-								              				placeholder="Select Reference..." 
-								              				style="width: 100%" />
-												</td>
-											</tr>	
+											</tr>
 							            </table>						            
 							        </div>
 							        <!-- // Options Tab content END -->
 
-							        <!-- References -->
-							        <div class="tab-pane" id="tab-2">
-							            <table style="margin-bottom: 0;" class="table table-borderless table-condensed cart_total">
-								            <tr>
-												<td style="vertical-align: top;">
-								            		<span data-bind="text: lang.lang.reference"></span>
-								            	</td>
-								            	<td>
-								            		<input data-role="dropdownlist"
-								            			   data-item-template="reference-list-tmpl"
-										                   data-auto-bind="false"
-										                   data-value-primitive="true"
-										                   data-text-field="number"
-										                   data-value-field="id"
-										                   data-bind="value: reference_id,
-										                              source: referenceDS,
-										                              events: { change: referenceChanges }"
-										                   data-option-label="Add Reference..."
-										                   style="width: 100%;" />
-										            <br>
-										            <table class="table table-bordered">
-												        <tbody data-template="invoice-reference-template"
-												        		data-bind="source: referenceList"></tbody>			        
-												    </table>
-												</td>
-											</tr>
-							            </table>
-							        </div>
-							        <!-- // References END -->
-
 							        <!-- Info Tab content -->
-							        <div class="tab-pane" id="tab-3">
+							        <div class="tab-pane" id="tab-2">
 							        	
 										<table class="table table-borderless table-condensed cart_total">
 											<tr>
@@ -13966,6 +13906,36 @@
 												
 							        </div>
 							        <!-- // Info Tab content END -->
+
+							        <!-- References -->
+							        <div class="tab-pane" id="tab-3">
+							            <table style="margin-bottom: 0;" class="table table-borderless table-condensed cart_total">
+								            <tr>
+												<td style="vertical-align: top;">
+								            		<span data-bind="text: lang.lang.reference"></span>
+								            	</td>
+								            	<td>
+								            		<input data-role="dropdownlist"
+								            			   data-item-template="reference-list-tmpl"
+										                   data-auto-bind="false"
+										                   data-value-primitive="true"
+										                   data-text-field="number"
+										                   data-value-field="id"
+										                   data-bind="value: reference_id,
+										                              source: referenceDS,
+										                              events: { change: referenceChanges }"
+										                   data-option-label="Add Reference..."
+										                   style="width: 100%;" />
+										            <br>
+										            <table class="table table-bordered">
+												        <tbody data-template="invoice-reference-template"
+												        		data-bind="source: referenceList"></tbody>			        
+												    </table>
+												</td>
+											</tr>
+							            </table>
+							        </div>
+							        <!-- // References END -->
 
 							        <!-- Address Tab content -->
 							        <div class="tab-pane" id="tab-4">
@@ -14291,9 +14261,9 @@
 						    <!-- Tabs Heading -->
 						    <div class="tabsbar tabsbar-2">
 						        <ul class="row-fluid row-merge">
-						        	<li class="span3 glyphicons shopping_cart active" style="width: 135px;"><a href="#tab-1" data-toggle="tab"><i></i> ITEM</a>
+						        	<li class="span3 glyphicons shopping_cart active" style="width: 135px;"><a href="#tab1-2" data-toggle="tab"><i></i> ITEM</a>
 						            </li>
-						            <li class="span3 glyphicons database_plus" style="width: 135px !important;"><a href="#tab-2" data-toggle="tab"><i></i> Additional Cost</a>
+						            <li class="span3 glyphicons database_plus" style="width: 135px !important;"><a href="#tab2-2" data-toggle="tab"><i></i> Additional Cost</a>
 						            </li>
 						        </ul>
 						    </div>
@@ -14302,7 +14272,7 @@
 						    <div class="tab-content">
 
 						    	<!-- Item Line & Account Line -->
-						        <div class="tab-pane active" id="tab-1">
+						        <div class="tab-pane active" id="tab1-2">
 
 						            <!-- Item Line -->
 						            <div id="grid" data-role="grid" class="costom-grid"
@@ -14441,7 +14411,7 @@
 						        <!-- // Item Line & Account Line END -->
 
 						        <!-- Additional Cost -->
-						        <div class="tab-pane" id="tab-2">
+						        <div class="tab-pane" id="tab2-2">
 
 						        	<table class="table table-bordered table-primary table-striped table-vertical-center">
 								        <thead>
@@ -45516,6 +45486,20 @@
 						<img title="Add Cash Receipt" src="<?php echo base_url(); ?>assets/rice_mill/cash_receipt.png" style="width: 98%; float: left;"  />
 						<span data-bind="text: lang.lang.cash_receipt"  style=" text-transform: uppercase; color: #000; font-weight: 600; margin-top: 8px; display: inline-block;font-size: 12px;">Receipt</span>
 					</a>
+				</div>
+
+				<div class="" style="padding-left: 0; text-align: center; width: 20%; float: left; margin-right: 15px;">
+					<a href="#/expense">
+						<img title="Add Expense" src="<?php echo base_url(); ?>assets/rice_mill/expense.png" style="width: 98%; float: left;"  />
+						<span data-bind="text: lang.lang.expense" style="text-transform: uppercase; color: #000; font-weight: 600; margin-top: 8px; display: inline-block;font-size: 12px;">Print Bill</span>
+					</a>
+				</div>
+			
+				<div class="" style="padding-left: 0; text-align: center; width: 20%; float: left; margin-right: 15px;">
+					<a href="#/cash_transaction">
+						<img title="Add Cash Transaction" src="<?php echo base_url(); ?>assets/rice_mill/cash_transaction.png" style="width: 98%; float: left;"  />
+						<span data-bind="text: lang.lang.cash_transaction"  style=" text-transform: uppercase; color: #000; font-weight: 600; margin-top: 8px; display: inline-block;font-size: 12px;">Receipt</span>
+					</a>
 				</div>			
 				
 			</div>
@@ -48848,10 +48832,39 @@
 	  	<li><a href='#/rice_mill' class='glyphicons show_big_thumbnails'><i></i></a></li>
 	  	<li role='presentation' class='dropdown'>
 	  		<a style="color: #fff;" class='dropdown-toggle glyphicons ' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'>CENTER<span class='caret'></span></a>
-	  		<ul class='dropdown-menu'>
-  				<li><a href='#/customer_center'><span >Customer Center</span></a></li> 
-  				<li ><a href='#/vendor_center'><span >Supplier Center</span></a></li>	
-  				<li><a href='#/item_center'><span >Inventory Center</span></a></li>
+	  		<ul class='dropdown-menu' style="padding-bottom: 0;">
+	  			<div class="middle-help" style="background: #f4f4f4; padding: 20px 20px 20px; text-align: left; display: inline-block; width: 100%;">
+	  				<div class="more-help" style="border-bottom: 1px solid #ddd; margin-bottom: 10px; width: 100%; float: left; padding-bottom: 10px;">
+	  					<a href='#/customer_center'>
+	  						<div class="help-img" style="margin-right: 20px; float: left;">
+	  							<img style="width: 51px; height: 51px;" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/customers.jpg">
+	  						</div>
+	  						<div class="help-desc" style="float: left;">
+	  							<p style="margin-top: 15px;">Customer Center</p>
+	  						</div>
+	  					</a>
+  					</div>
+  					<div class="more-help" style="border-bottom: 1px solid #ddd; margin-bottom: 10px; width: 100%; float: left; padding-bottom: 10px;">
+	  					<a href='#/vendor_center'>
+	  						<div class="help-img" style="margin-right: 20px; float: left;">
+	  							<img style="width: 51px; height: 51px;" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/supplier.jpg">
+	  						</div>
+	  						<div class="help-desc" style="float: left;">
+	  							<p style="margin-top: 15px;">Supplier Center</p>
+	  						</div>
+	  					</a>
+  					</div>
+  					<div class="more-help" style="width: 100%; float: left;">
+	  					<a href='#/item_center'>
+	  						<div class="help-img" style="margin-right: 20px; float: left;">
+	  							<img style="width: 51px; height: 51px;" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/inventory.jpg">
+	  						</div>
+	  						<div class="help-desc" style="float: left;">
+	  							<p style="margin-top: 15px;">Inventory Center</p>
+	  						</div>
+	  					</a>
+  					</div>  					
+	  			</div>
   			</ul>
 	  	</li>
 	  	<li role='presentation' class='dropdown'>
@@ -48863,7 +48876,7 @@
   				<li><a href='#/item'><span data-bind="text: lang.lang.add_inventory"></span></a></li>
   				<li><a href='#/internal_usage'><span data-bind="text: lang.lang.internal_usage"></span></a></li>
   				<li> <span class="li-line"></span></li>
-  				<li ><a href='#/gdn'><span data-bind="text: lang.lang.create_goods_delivery_note"></span></a></li>
+  				<li><a href='#/gdn'><span data-bind="text: lang.lang.create_goods_delivery_note"></span></a></li>
   				<li><a href='#/cash_sale'><span data-bind="text: lang.lang.create_cash_sale"></span></a></li>
   				<li><a href='#/invoice'><span data-bind="text: lang.lang.create_invoice"></span></a></li>
   				<li><a href='#/cash_receipt'><span data-bind="text: lang.lang.create_cash_receipt"></span></a></li>

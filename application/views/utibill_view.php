@@ -1,4 +1,4 @@
-<div id="wrapperApplication" class="wrapper""></div>
+<div id="wrapperApplication" class="wrapper"></div>
 <!--load before somthing not yet done -->
 <div id="holdpageloadhide" style="display:block;text-align: center;position: fixed;top: 0; left: 0;width: 100%; height: 100%;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
 	<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 45%;left: 45%"></i>
@@ -501,7 +501,7 @@
 </script>
 
 <!--Setting-->
-<th data-bind="text: lang.lang.on_hand"></th><script id="setting" type="text/x-kendo-template">
+<script id="setting" type="text/x-kendo-template">
 	<div class="container">
 		<div class="row-fluid">
 			<div class="background">
@@ -2300,15 +2300,15 @@
 							        			<input 
 													data-role="dropdownlist" 
 													style="width: 100%;" 
-													data-option-label="Province ..." 
+													data-option-label="District ..." 
 													data-auto-bind="true" 
 													data-value-primitive="true" 
-													data-text-field="name" 
+													data-text-field="name_local" 
 													data-value-field="id" 
 													data-bind="
-														value: obj.province,
-		                              					source: provinceSelect,
-		                              					events: {change: provinceChange}">
+														value: obj.district,
+		                              					source: districtDS" style="width: 100%;">
+							        			
 							        		</div>
 							        		<div class="col-xs-12 col-sm-3">
 							        			<span data-bind="text: lang.lang.mobile">Mobile</span>
@@ -2329,14 +2329,15 @@
 							        			<input 
 													data-role="dropdownlist" 
 													style="width: 100%;" 
-													data-option-label="District ..." 
+													data-option-label="Province ..." 
 													data-auto-bind="true" 
 													data-value-primitive="true" 
-													data-text-field="name_local" 
+													data-text-field="name" 
 													data-value-field="id" 
 													data-bind="
-														value: obj.district,
-		                              					source: districtDS" style="width: 100%;">
+														value: obj.province,
+		                              					source: provinceSelect,
+		                              					events: {change: provinceChange}">
 							        		</div>
 							        		<div class="col-xs-12 col-sm-3">
 							        			<span data-bind="text: lang.lang.telephone">Telephone</span>
@@ -8474,7 +8475,7 @@
 				</div>
 			</div>
 
-			<div class="row">
+			<!-- <div class="row">
 				<div class="col-xs-12 col-sm-6">
 					<div class="cover-block" style="width: 100%; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1; padding-left: 15px;">
 						<div class="row-fluid sale-report">
@@ -8570,7 +8571,137 @@
 						</div>
 					</div>
 				</div>
+			</div> -->
+
+
+			<div class="row">
+				<div class="col-xs-12 col-sm-12">
+					<div class="box-generic" >
+					    <!-- //Tabs Heading -->
+					    <div class="tabsbar tabsbar-1" style="background: #203864 !important; color: #fff;">
+					        <ul class="row-fluid row-merge">
+					            <li class="active">
+					            	<a href="#tab1" data-toggle="tab"><span data-bind="text: lang.lang.customer"></span></a>
+					            </li>
+					            <li >
+					            	<a href="#tab2" data-toggle="tab"><span data-bind="text: lang.lang.cash"></span></a>
+					            </li>
+					        </ul>
+					    </div>
+					    <!-- // Tabs Heading END -->
+
+					    <div class="tab-content">
+
+					    	<!-- //GENERAL INFO -->
+					        <div class="tab-pane active" id="tab1">
+					        	<div class="row-fluid sale-report rice-report">
+									<h2 data-bind="text: lang.lang.customer_management_report">Customer Management Report</h2>
+									<p data-bind="text: lang.lang.these_reports_are_useful">
+										These reports are useful for customer information management, meter connections, and usage managements 
+									</p>
+									<div class="row">
+										<table class="span12" style="margin-top: 10px;">
+											<tr>
+												<td class="span4">
+													<h3 ><a href="#/sale_summary_by_customer" data-bind="text: lang.lang.sale_summary_by_customer" style="text-transform: capitalize;"></a></h3>
+												</td>
+												<td class="span4">
+													<h3><a href="#/sale_detail_by_customer" data-bind="text: lang.lang.sale_detail_by_customer" style="text-transform: capitalize;"></a></h3>
+												</td>
+												<td class="span4">
+													<h3><a href="#/customer_transaction_list" data-bind="text: lang.lang.customer_transaction_list" style="text-transform: capitalize;"></a></h3>
+												</td>
+											</tr>
+
+											<tr>
+												<td class="span4">
+													<p style="padding-right: 25px;" data-bind="text: lang.lang.summarizes_total_sales">
+														Summarizes total sales for each customer within a period 
+														of time so you can see which ones generate the most revenue for you.
+													</p>									
+												</td>
+												<td class="span4" style="vertical-align: top;">
+													<p style="padding-right: 25px;" data-bind="text: lang.lang.lists_individual_sale">
+														Lists individual sale transactions by date for each customer with a period of time.
+													</p>
+												</td>
+												<td class="span4" >
+													<p data-bind="text: lang.lang.list_of_all_transactions_related">
+														List of all transactions related to and grouped by each customer, including invoice, cash sale
+													</p>
+												</td>
+											</tr>
+
+											<tr>
+												<td class="span4">
+													<h3><a href="#/sale_summary_by_product" data-bind="text: lang.lang.sale_summary_by_product_services" style="text-transform: capitalize;"></a></h3>
+												</td>
+												<td class="span4">
+													<h3><a href="#/sale_detail_by_product" data-bind="text: lang.lang.sale_detail_by_product_services" style="text-transform: capitalize;"></a></h3>
+												</td>
+												<td class="span4">
+													<h3><a href="#/deposit_detail_by_customer" data-bind="text: lang.lang.deposit_detail_by_customer" style="text-transform: capitalize;"></a></h3>
+												</td>
+											</tr>
+
+											<tr>
+												<td class="span4">
+													<p style="padding-right: 25px;" data-bind="text: lang.lang.summarizes_total_sales_for_each_product">
+														Summarizes total sales for each product/ service within a period of time. In addition, it also includes gross profit margin, quantity, amount, cost, and average prices. 
+													</p>
+												</td>
+												<td class="span4" style="vertical-align: top;">
+													<p data-bind="text: lang.lang.lists_individual_sale_transactions">
+														Lists individual sale transactions by date for each product/ service with a period of time.
+													</p>
+												</td>
+												<td class="span4">
+													<p style="padding-right: 25px;" data-bind="text: lang.lang.provides_detailed_information_about_customer_deposit">
+														Provides detailed information about customer deposit for specific order, prepayment, or credit.
+													</p>
+												</td>
+											</tr>
+											<tr>
+												<td class="span4">
+													<h3><a href="#/sale_order_list" data-bind="text: lang.lang.sale_order_list" style="text-transform: capitalize;"></a></h3>
+												</td>
+												<td class="span4"></td>
+												<td class="span4"></td>
+											</tr>
+											<tr>
+												<td class="span4">
+													<p style="padding-right: 25px;"></p>
+												</td>
+												<td class="span4"></td>
+												<td class="span4"></td>
+											</tr>
+										</table>
+									</div>
+								</div>
+
+				        	</div>
+					        <!-- //GENERAL INFO END -->
+
+					        <!-- //ACCOUNTING -->
+					        <div class="tab-pane" id="tab2">
+					        	<div class="row-fluid">
+					        		<div class="controls">
+										<textarea 
+											class="span12" 
+											placeholder="Terms & Condition..." 
+					                      	data-bind="value: obj.term_of_condition"
+					                      	style="height: 200px;">
+						                </textarea>
+			                      	</div>							        		
+					            </div>
+				        	</div>
+					        <!-- //ACCOUNTING END -->
+
+					    </div>
+					</div>
+				</div>
 			</div>
+
 
 		</div>
 	</div>
