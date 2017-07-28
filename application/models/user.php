@@ -13,7 +13,15 @@ class User extends DataMapper {
 	);
 	public $has_many = array(
 		'module',
-		'role'
+		'role',
+		'review' => array(
+			'class' => 'module_review',
+			'other_field' => 'reviewer_id'
+		),
+		'app' => array(
+			'class' => 'module',
+			'other_field' => 'developer'
+		)
 	);
 	// protected $db_params = 
 	// public $validation = array(

@@ -47856,35 +47856,42 @@
 
 						<div data-role="grid" class="costom-grid"
 							 data-groupable="true"
-			                 data-columns="[
-			                 	{ 
-			                 		field: 'contact', 
-			                 		title: 'CONTACT'
-			                 	},
-			                 	{ field: 'number', title: 'NUMBER' },
-			                 	{ 
-			                 		field: 'item', 
-			                 		title: 'ITEM'
-			                 	},
-		                        { 
-		                        	field: 'gross_weight', 
-		                        	title:'GROSS WEIGHT', 
-		                        	format: '{0:n}', 
-		                        	attributes: { style: 'text-align: right;' }
+							 data-columns="[
+		                        { field: 'number', title: 'REFERENCE',
+		                        	groupFooterTemplate: 'Total',
+		                        	width:'120px' 
 		                        },
-		                        { 
-		                        	field: 'truck_weight', 
-		                        	title:'TRUCK WEIGHT', 
-		                        	format: '{0:n}', 
-		                        	attributes: { style: 'text-align: right;' }
+		                        { field: 'item', title: 'PRODUCTS' },		                        
+		                        { field: 'gross_weight', title: 'GROSS WEIGHT',
+		                        	format: '{0:n}',
+		                        	aggregates: ['sum'], 
+		                        	groupFooterTemplate: '<div style=text-align:right;>#=sum#</div>',
+		                        	attributes: { style: 'text-align: right;' },
+		                        	width:'130px'
 		                        },
-		                        { field: 'bag_weight', title:'BAG WEIGHT', format: '{0:n}', attributes: { style: 'text-align: right;' } },
-		                        { 
-		                        	field: 'quantity', 
-		                        	title:'QUANTITY'
+		                        { field: 'truck_weight', title: 'TRUCK WEIGHT',
+		                        	format: '{0:n}',
+		                        	aggregates: ['sum'], 
+		                        	groupFooterTemplate: '<div style=text-align:right;>#=sum#</div>',
+		                        	attributes: { style: 'text-align: right;' },
+		                        	width:'130px'
 		                        },
-		                        { field: 'measurement', title:'UOM', format: '{0:n}', attributes: { style: 'text-align: right;' } }		                        
-							 ]"
+		                        { field: 'bag_weight', title: 'BAG WEIGHT',
+		                        	format: '{0:n}',
+		                        	aggregates: ['sum'], 
+		                        	groupFooterTemplate: '<div style=text-align:right;>#=sum#</div>',
+		                        	attributes: { style: 'text-align: right;' },
+		                        	width:'130px'
+		                        },
+		                        { field: 'quantity', title: 'QUANTITY', 
+		                        	format: '{0:n}',
+		                        	aggregates: ['sum'], 
+		                        	groupFooterTemplate: '<div style=text-align:right;>#=sum#</div>',
+		                        	attributes: { style: 'text-align: right;' },
+		                        	width:'130px'
+		                       	},
+		                       	{ field: 'measurement', title: 'UOM', width:'70px' },
+		                     ]"
 		                     data-auto-bind="false"
 			                 data-bind="source: dataSource" ></div>
 
@@ -99732,6 +99739,20 @@
 				data: 'results',
 				total: 'count'
 			},
+			group: {
+                field: "name", aggregates: [
+                	{ field: "gross_weight", aggregate: "sum" },
+	              	{ field: "truck_weight", aggregate: "sum" },
+	              	{ field: "bag_weight", aggregate: "sum" },
+                    { field: "quantity", aggregate: "sum"}
+                ]
+            },
+            aggregate: [ { field: "item", aggregate: "count" },
+              	{ field: "gross_weight", aggregate: "sum" },
+              	{ field: "truck_weight", aggregate: "sum" },
+              	{ field: "bag_weight", aggregate: "sum" },
+              	{ field: "quantity", aggregate: "sum" }
+            ],
 			serverFiltering: true,
 			serverSorting: true,
 			serverPaging: true,
@@ -99851,11 +99872,12 @@
             }
             this.set("displayDate", displayDate);
 
-            this.dataSource.query({
-            	filter:para
-            }).then(function(){
-            	var view = self.dataSource.view();            	
-            });
+            this.dataSource.filter(para);
+            // this.dataSource.query({
+            // 	filter:para
+            // }).then(function(){
+            // 	var view = self.dataSource.view();
+            // });
 		}
 	});
 	banhji.riceMillProductionReport = kendo.observable({
@@ -109562,6 +109584,21 @@
 			
 			if(banhji.pageLoaded["rice_mill_production_report"]==undefined){
 				banhji.pageLoaded["rice_mill_production_report"] = true;
+
+				$("#grid").kendoGrid({
+                    dataSource: vm.dataSource,
+                    sortable: true,
+                    scrollable: false,
+                    pageable: true,
+                    columns: [
+                        { field: "item", title: "Product Name", aggregates: ["count"], footerTemplate: "Total Count: #=count#", groupFooterTemplate: "Count: #=count#" },
+                        { field: "quantity", title: "Unit Price", aggregates: ["sum"] },
+                        { field: "truck_weight", title: "Units On Order", aggregates: ["average"], footerTemplate: "Average: #=average#",
+                            groupFooterTemplate: "Average: #=average#" },
+                        { field: "gross_weight", title: "Units In Stock", aggregates: ["min", "max", "count"], footerTemplate: "<div>Min: #= min #</div><div>Max: #= max #</div>",
+                            groupHeaderTemplate: "Units In Stock: #= value # (Count: #= count#)" }
+                    ]
+                });
 
 				vm.sorterChanges();
 			}

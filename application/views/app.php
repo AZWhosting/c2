@@ -226,7 +226,7 @@
 						    			<div class="window-header">
 						    				<div class="win-logo" style="width: 60px; height: 60px; background: red; float: left; margin-right: 10px;"></div>
 						    				<div class="win-header-title" style="float: left;">
-						    					<h2>Office Online</h2>
+						    					<h2 data-bind="text: current.name"></h2>
 						    					<span class="win-header-offered-by">offered by banhji.com</span>
 						    					<p>
 						    						<span class="win-header-rate">
@@ -259,7 +259,7 @@
 															<div class="widget-head head-custom" style="height: 50px;">
 																<ul>
 																	<li class="active"><a href="#tab1-1" data-toggle="tab"><i></i><span >Overview</span></a></li>
-																	<li><a href="#tab1-2" data-toggle="tab"><i></i><span >REVIEW</span></a></li>
+																	<li><a href="#tab1-2" data-toggle="tab" data-bind="click: getReview"><i></i><span >REVIEW</span></a></li>
 																	<li><a href="#tab1-3" data-toggle="tab"><i></i><span >RELATED</span></a></li>
 																</ul>
 															</div>
@@ -321,30 +321,7 @@
 																						<p style="margin-bottom: 20px;">Compatible with your device<p>
 																					</div>
 																					<div class="win-line"></div>
-																					<p style="color: #333; font-size: 13px; font-weight: bold; word-wrap: break-word;">
-																						View, edit, and create Office files in your browser.
-																					</p>
-																					<p>
-																						Built for Chrome – Use Word, Excel, PowerPoint, OneNote, and Sway Online without needing Office installed.
-																					</p>
-																					<p>
-																						Create with confidence – Use familiar formatting and layout options to express your ideas in full fidelity.
-																					</p>
-																					<p>
-																						Work on the go – Get to your files from anywhere, thanks to integration with OneDrive and OneDrive for Business.
-																					</p>
-																					<p>
-																						Copy and paste conveniently – Use Copy and Paste buttons on the ribbon and right-click menu, or use keyboard shortcuts for copying and pasting.
-																					</p>
-																					<p>
-																						By installing the app, you agree to these terms and conditions: 
-																					</p>
-																					<p>
-																						PLEASE NOTE: Refer to your license terms for Microsoft Office Online software (the "software") to identify the entity licensing this supplement to you and for support information. You may use a copy of this supplement with each validly licensed copy of the software. You may not use the supplement if you do not have a license for the software. The license terms for the software apply to your use of this supplement.
-																					</p>
-																					<p>
-																						Privacy Policy: http://aka.ms/privacy
-																					</p>
+																					<div data-bind="html: current.discription"></div>
 																				</div>
 																				<div class="win-line"></div>
 																				<div class="win-widget-Second">
@@ -359,7 +336,7 @@
 																						Languages: See all 52
 																					</p>
 																					<div class="win-title">
-																						<p style="margin-bottom: 20px;">Developer<p>
+																						<p style="margin-bottom: 20px;">Developer <span  data-bind="text: current.developer.name"></span><p>
 																					</div>
 																					<p><a href="">Privacy Policy</a></p>
 																				</div>
@@ -2521,6 +2498,51 @@
 		pageSize: 100
 	});
 
+	banhji.reviewStore = new kendo.data.DataSource({
+		transport: {
+			read  : {
+				url: function(data) {
+					return baseUrl + 'v1/apps/reviews/' + banhji.appCenter.get('current').id;
+				},
+				type: "GET",
+				dataType: 'json',
+				headers: {
+					Uid: banhji.userData.id
+				}
+			},
+			create: {
+				url: baseUrl + 'v1/apps/reviews/',
+				type: "POST",
+				dataType: 'json',
+				headers: {
+					Uid: banhji.userData.id
+				}
+			},
+			parameterMap: function(options, operation) {
+				if(operation === 'read') {
+					return {
+					limit: options.pageSize,
+					page: options.page,
+					filter: options.filter
+					};
+				} else {
+					return {models: kendo.stringify(options.models)};
+				}
+			}
+		},
+		batch: true,
+		schema  : {
+			model: {
+			id: 'id'
+			},
+			data: 'results',
+			total: 'count'
+		},
+		serverFiltering: true,
+		serverPaging: true,
+		pageSize: 100
+	});
+
 	banhji.applicationViewModel = kendo.observable({
 		dataSource: banhji.applicationStore
 	});
@@ -2531,6 +2553,7 @@
 		lang 				: langVM,
 		applications 		: banhji.applicationViewModel,
 		dataSource 			: banhji.applicationEntityStore,
+		reviews 			: banhji.reviewStore,
 		windowVisible 		: false,
 		window1Visible 		: false,
 		windowItemVisible 	: false,
@@ -2539,10 +2562,22 @@
 		pageLoad 			: function(){
 			this.loadData();
 		},
+		getReview 			: function() {
+			this.reviews.read();
+		},
+		postReview 			: function() {
+			this.reviews.add({
+				'module_id': this.get('current').id,
+				'rating': 3.7,
+				'review': "how wonderful",
+				'reviewer': 'dawine@gmail.com'
+			});
+			this.reviews.sync();
+		},
 		openWindow			: function(e){
       		//this.addType();
 			{/* this.set('current', ); */}
-			console.log(e.data);
+			this.set('current', e.data);
          	this.set("windowVisible", true);
       	},
       	closeWindow 		: function(){

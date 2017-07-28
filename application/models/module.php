@@ -4,12 +4,12 @@ class Module extends DataMapper {
 	// protected $created_field = "created_at";
 	// protected $updated_field = "updated_at";
 
-	// public $has_one = array("company", "location", "electricity_box", "contact",
-	// 	'item' => array(
- //            'class' => 'item',
- //            'other_field' => 'meter'
- //        )
-	// );
+	public $has_one = array(
+		'developer' => array(
+			'class' => 'user',
+			'other_field' => 'app'
+		)
+	);
 	public $has_many = array(
 		"institute",
 		"user",
@@ -24,7 +24,7 @@ class Module extends DataMapper {
 		"review" => array(
 			'class' => 'module_review',
 			'other_field' => 'module'
-		)
+		),
 	);
 
 	public function __construct($id = null, $db = null) {	

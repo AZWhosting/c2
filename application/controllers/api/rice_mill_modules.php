@@ -102,7 +102,7 @@ class Rice_mill_modules extends REST_Controller {
 					"quantity" 			=> floatval($value->quantity),
 				   	"conversion_ratio" 	=> floatval($value->conversion_ratio),
 
-				   	"contact" 			=> $value->transaction_contact_name,
+				   	"name" 				=> $value->transaction_contact_name,
 				   	"item" 				=> $value->item_name,
 				   	"measurement" 		=> $value->measurement_name
 				);

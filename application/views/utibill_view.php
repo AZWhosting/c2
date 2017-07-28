@@ -272,7 +272,7 @@
 						</li>
 		  			</ul>
 			  	</li>
-			  	<li class="help">
+			  	<!-- <li class="help">
 			  		<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
 			  			<i class="icon-question icon-question1"></i>
 			  		</a>
@@ -294,7 +294,7 @@
 								</div>
 							</div>
 			  			</div>
-			  			<!-- <div class="middle-help" >
+			  			<div class="middle-help" >
 			  				<div class="more-help" style="border-bottom: 1px solid #ddd; margin-bottom: 10px; width: 100%; float: left; padding-bottom: 10px;">
 		  						<div class="help-img" style="margin-right: 20px; float: left;">
 		  							<img src="http://fpoimg.com/51x51?text=Picture%201">
@@ -313,14 +313,13 @@
 		  							<a href="" target="_blank">Learn about new product features</a>
 		  						</div>
 		  					</div>
-			  			</div> -->
+			  			</div>
 			  			<div class="bottom-help" style="background: #fff; padding: 20px 20px 20px; text-align: left; display: inline-block; width: 100%;">
 			  				<h3 style="float: left; margin-right: 10px;">Direct Chat by</h3>
-			  				<!-- 
-			  				 -->
+			  				
 			  			</div>
 			  		</ul>
-			  	</li>
+			  	</li> -->
 
 			  	<li role="presentation" class="dropdown multitasklist">
 			  		<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">

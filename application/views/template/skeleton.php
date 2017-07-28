@@ -139,6 +139,7 @@ var themerPrimaryColor = primaryColor;
 
 <!-- Kedo JS by DAWINE -->
 <!-- <script src="<?php echo base_url()?>assets/kendo/js/jszip.min.js"></script> -->
+<script src="<?php echo base_url()?>assets/kendo/js/jquery.min.js"></script>
 <script src="<?php echo base_url()?>assets/kendo/js/kendo.all.min.js"></script>
 <script src="<?php echo base_url()?>assets/kendo/examples/content/shared/js/console.js"></script>
 

@@ -8,7 +8,11 @@ class Module_review extends DataMapper {
 		'module' => array(
             'class' => 'module',
             'other_field' => 'review'
-        )
+        ),
+		'reviewer' => array(
+			'class' => 'user',
+			'other_field' => 'review'
+		)
 	);
 
 	public $has_many = array(
