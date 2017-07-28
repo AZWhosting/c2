@@ -472,14 +472,14 @@
 						    			</div>
 						    			<div class="window-content" style="width: 92%;">
 						    				<div class="row">
-							    				<h1 style="font-size: 25px; text-align: center;">Start using Gusto with QuickBooks</h1>
+							    				<h1 style="font-size: 25px; text-align: center;">Start using BanhJi</h1>
 							    				<p style="text-align: center;">Authorize the Sharing of Your Data Between Gusto and Intuit.</p>
 							    				<div class="authorizeSync">
 							    					<div id="preAuthContent">
 							    						<div class="quickbooksSyncIcon wrapText">
-							    							<img class="brandLogo" src="https://images.appcenter.intuit.com/Content/Static/7.12.0-rel-598/images/v2/logo/Logo-Intuit-Auth-0615-2016.png">
+							    							<img style="width: 90px;" class="brandLogo" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/banhji-logo.png">
 							    							<br>
-							    							<span class="smallText">Company</span>
+							    							<<!-- span class="smallText">Company</span> -->
 							    						</div>
 							    						<div class="dashLine">
 							    							<span></span>
@@ -489,9 +489,9 @@
 							    							<span></span>
 							    						</div>
 							    						<div class="quickbooksSyncIcon wrapText">
-							    							<img class="appIcon80" src="https://images.appcenter.intuit.com/Content/images/AppCards/b7pnhdevpa/Submitted46/LogoName.png">
+							    							<img class="appIcon80" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/banhji-logo.png">
 							    							<br>
-							    							<span class="smallText">Gusto</span>
+							    							<!-- <span class="smallText">Gusto</span> -->
 							    						</div>
 							    						<div class="clear"></div>
 							    					</div>
@@ -499,19 +499,19 @@
 							    				<div id="authorizeContent">
 							    					<span class="termsLinks">
 							    						By clicking Authorize, I allow Gusto and Intuit to use my information* in accordance with each company’s respective terms of service and privacy policy Gusto’s
-							    						<a target="_new" href="https://gusto.com/terms">Terms of Service</a>
+							    						<a target="_new" href="">Terms of Service</a>
 							    						and
-							    						<a target="_new" href="https://gusto.com/privacy">Privacy Policy</a>.
+							    						<a target="_new" href="">Privacy Policy</a>.
 							    						Additionally, where applicable, I give Gusto limited access to my QuickBooks Payments account to provide me payments-related services. I authorize the sharing of data between Intuit and Gusto.  *Information may include data from QuickBooks Online, QuickBooks Desktop and QuickBooks Payments.
 							    					</span>
 							    				</div>
 											</div>
 						    			</div>
 						    			<div class="window-content" style="width: 92%; margin-top: 25px;">
-						    				<a data-bind="click: closeWindow1" style="float: left; background: #ddd; color: #fff; padding: 8px 15px; border: 1px solid #333;">
+						    				<a data-bind="click: closeWindow1" style="float: left; background: #203864; color: #fff; padding: 8px 15px; border: 1px solid #333;">
 						    					No, thanks
 						    				</a>
-						    				<a style="float: right; background: blue; color: #fff; padding: 8px 15px;">
+						    				<a style="float: right; background: #203864; color: #fff; padding: 8px 15px;">
 						    					Authorize
 						    				</a>
 						    			</div>
@@ -745,9 +745,9 @@
 					<div class="bigappcard-vendor-name">
 						#=developer.name#
 					</div>
-					<div class="bigappcard-tagline">
+					<!-- <div class="bigappcard-tagline">
 						#=summary#
-					</div>
+					</div> -->
 				</div>
 				
 				<div class="ratings" style="float: left;">
@@ -778,9 +778,9 @@
 					<div class="bigappcard-vendor-name">
 						#=developer.name#
 					</div>
-					<div class="bigappcard-tagline">
+					<!-- <div class="bigappcard-tagline">
 						#=summary#
-					</div>
+					</div> -->
 				</div>
 				
 				<div class="ratings" style="float: left;">
@@ -2535,12 +2535,14 @@
 		window1Visible 		: false,
 		windowItemVisible 	: false,
 		obj 				: {},
+		current 			: null,
 		pageLoad 			: function(){
 			this.loadData();
 		},
-		openWindow			: function(){
+		openWindow			: function(e){
       		//this.addType();
-
+			{/* this.set('current', ); */}
+			console.log(e.data);
          	this.set("windowVisible", true);
       	},
       	closeWindow 		: function(){

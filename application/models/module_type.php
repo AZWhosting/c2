@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Module extends DataMapper {
+class Module_type extends DataMapper {
 	// protected $created_field = "created_at";
 	// protected $updated_field = "updated_at";
 

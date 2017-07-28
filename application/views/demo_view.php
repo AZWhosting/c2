@@ -32,7 +32,7 @@
 		  				<li><a href="#" data-bind="click: lang.changeToKh">ភាសាខ្មែរ</a></li>
     					<li><a href="#" data-bind="click: lang.changeToEn">English</a></li>
 						<li class="divider"></li>
-						<li><a href="<?php echo base_url(); ?>admin">Setting</a></li>
+					<!-- 	<li><a href="<?php echo base_url(); ?>admin">Setting</a></li> -->
 						<li><a href="#/manage" data-bind="click: logout"><i class="icon-power-off"></i> Logout</a></li> 				
 		  			</ul>
 			  	</li>				
@@ -101,18 +101,18 @@
 							</a>
 							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><h5 data-bind="text: lang.lang.tax" style="margin-top: 5px; display: inline-block;" style="margin-top: 5px; display: inline-block;"></h5></span>
 						</li>
-						<!-- <li style="text-align:center;">
+						<li style="text-align:center;">
 							<a href="<?php echo base_url(); ?>admin">
 								<img title="Admin Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/setting.jpg" alt="Admin">
 								<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><h5 data-bind="text: lang.lang.settings" style="margin-top: 5px; display: inline-block;" style="margin-top: 5px; display: inline-block;"></h5></span>
 							</a>
-						</li> -->
-						<li style="text-align:center;">
+						</li>
+						<!-- <li style="text-align:center;">
 							<a href="<?php echo base_url(); ?>app">
 								<img title="App Center" src="<?php echo base_url(); ?>assets/app_center/app_center.jpg" alt="App Center">
 								<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><h5 data-bind="text: lang.lang.app_center" style="margin-top: 5px; display: inline-block;" style="margin-top: 5px; display: inline-block;"></h5></span>
 							</a>
-						</li>											
+						</li>	 -->										
 					</ul>
 				</div>
 			</div>
