@@ -1465,7 +1465,9 @@ var	en_US = {
 
 	"receipt_note":"Receipt Note",
 	"rice_mill_production":"Rice Mill Production",
-
+	"customer_center":"Customer Center",
+	"supplier_center":"Supplier Center",
+	"inventory_center":"Inventory Center",
 
 
 

@@ -3083,7 +3083,7 @@ a.activate {
     text-overflow: ellipsis;
     overflow: hidden;
     float: left;
-    width: 100%
+    width: 82%
 }
 .app-recommand .bigappcard-details .bigappcard-display-name {
     font-size: 16px;
@@ -3462,6 +3462,12 @@ html.top-full .navbar.main .topnav .dropdown > a .caret{
     font-size: 10px;
     height: 40px;
 }
+
+.menu-right.topnav li.setting.dropdown{
+  height: 60px;
+  list-style: none;
+}
+
 
 /*Help Center*/
 .search-box-home {

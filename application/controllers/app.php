@@ -14,7 +14,7 @@ class App extends MY_Controller {
 		/*
 		 *set up title and keywords (if not the default in custom.php config file will be set) 
 		 */
-		$this->_render("app_center");	
+		$this->_render("app");	
 	}
 	
 }

@@ -1,3 +1,153 @@
+<!-- Facebook and Direct Chat -->
+<script>
+    window.fbAsyncInit = function() {
+        FB.init({
+          appId      : '387834344756149',
+          xfbml      : true,
+          version    : 'v2.7'
+        });
+        FB.AppEvents.logPageView();
+    };
+    (function(d, s, id){
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+</script>
+<style>
+    /* FeedBack */
+    a.rightfixed {
+        position: relative;
+        background: #1F4774;
+        padding: 15px 25px;
+        z-index: 99;
+        color: #fff;
+        border-radius: 3px;
+        font-size: 12px;
+        padding-left: 50px;
+        cursor: pointer;
+        -webkit-transition: all .5s;
+        transition: all .5s;
+        text-decoration: none;
+        opacity: 1;
+        margin-bottom: 1px;
+        clear: both;
+        float: none;
+        left: 0;
+    }
+    a.rightfixed:hover {
+      opacity: 1;
+    }
+    a.rightfixed i::before {
+        color: #fff;
+        top: 10px;
+        left: 7px;
+        font-size: 20px;
+    }
+    a.feedback {
+        background: #a22314;
+    }
+    a.referral {
+      background: #1b8330;
+    }
+    .popRightBlog {
+        width: 350px;
+        height: 260px;
+        left: 35%;
+        top: 10%;
+    }
+    .popRightBlog textarea{
+        height: 150px;
+        min-height: 150px;
+        max-height: 150px;
+        width: 100%;
+        min-width: 100%;
+        max-width: 100%;
+    }
+    .popRightBlog input[type=email], .popRightBlog input[type=text]{
+        width: 65%;
+        margin-bottom: 2px;
+        padding: 5px;
+        border: 1px solid #ccc;
+    }
+    .popRightBlog input[type=text] {
+      width: 34%;
+      margin-right: 2px;
+    }
+    a.feedback:hover {
+        margin-left: -66px;
+    }
+    a.enquiries {
+      background: url(//storage.googleapis.com/instapage-user-media/e315080c/8593373-0-s-bg.jpg) no-repeat 15px center #1F4774;
+        background-size: 23px;
+    }
+    a.enquiries:hover {
+        left: -95px;
+    }
+    a.referral:hover {
+        margin-left: -56px;
+    }
+    .cover-rightfixed {
+        position: fixed;
+        top: 40%;
+        right: -95px;
+        z-index: 99999;
+        text-align: left;
+    }
+    .enquiry-content {
+        background: #fff;
+        border: 1px solid #D7D7D7;
+        padding: 10px 10px 0;
+        position: absolute;
+        width: 142px;
+        right: -120px;
+        font-size: 12px;
+        text-align: center;
+        bottom: -152px;
+        -webkit-transition: all .5s;
+        transition: all .5s;
+        padding-bottom: 10px;
+        color: #444;
+        z-index: -1;
+    }
+    a.enquiries:hover .enquiry-content, .enquiry-content:hover {
+           right: 0;
+    }
+    .cover {
+        position: relative;
+        clear: both;
+    }
+    .cover img {
+        position: absolute;
+        right: 2px;
+        top: 5px;
+        display: none;
+    }
+    .cover p.msg {
+        width: 100%;
+        color: #fff;
+        padding: 5px 10px;
+        background: #a22314;
+        display: none;
+    }
+</style>
+<div class="cover-rightfixed">
+    <a class="rightfixed enquiries btn-rounded glyphicons no-js conversation" style="width: 142px;float:left;">
+        Support
+        <div class="enquiry-content">
+            <p style="font-size: 14px;">Call us by<br><span style="font-weight: bold;font-size: 16px">+855 10 413 777</span><br>Mon-Fri<br>09:00 - 18:00</p>
+            <div class="fb-messengermessageus" 
+                messenger_app_id="1301847836514973" 
+                page_id="298877880530498"
+                color="blue"
+                width="180"
+                size="standard" ></div>
+        </div>
+    </a>
+</div>
+<!-- End -->
 <div id="wrapperApplication" class="wrapper"></div>
 <!--load before somthing not yet done -->
 <div id="holdpageloadhide" style="display:block;text-align: center;position: fixed;top: 0; left: 0;width: 100%; height: 100%;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
@@ -122,7 +272,7 @@
 						</li>
 		  			</ul>
 			  	</li>
-			  	<!-- <li class="help">
+			  	<li class="help">
 			  		<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
 			  			<i class="icon-question icon-question1"></i>
 			  		</a>
@@ -144,7 +294,7 @@
 								</div>
 							</div>
 			  			</div>
-			  			<div class="middle-help" >
+			  			<!-- <div class="middle-help" >
 			  				<div class="more-help" style="border-bottom: 1px solid #ddd; margin-bottom: 10px; width: 100%; float: left; padding-bottom: 10px;">
 		  						<div class="help-img" style="margin-right: 20px; float: left;">
 		  							<img src="http://fpoimg.com/51x51?text=Picture%201">
@@ -163,18 +313,14 @@
 		  							<a href="" target="_blank">Learn about new product features</a>
 		  						</div>
 		  					</div>
-			  			</div>
+			  			</div> -->
 			  			<div class="bottom-help" style="background: #fff; padding: 20px 20px 20px; text-align: left; display: inline-block; width: 100%;">
 			  				<h3 style="float: left; margin-right: 10px;">Direct Chat by</h3>
-			  				<div class="fb-messengermessageus" 
-					            messenger_app_id="1301847836514973"
-					            page_id="862386433857166"
-					            color="blue"
-					            width="180"
-					            size="standard" style="float: left; margin-top: 6px;"></div>
+			  				<!-- 
+			  				 -->
 			  			</div>
 			  		</ul>
-			  	</li> -->
+			  	</li>
 
 			  	<li role="presentation" class="dropdown multitasklist">
 			  		<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
@@ -292,7 +438,7 @@
 <script id="wDashBoard" type="text/x-kendo-template">
 	<div class="container">
 		<!-- <img style="margin: 0 0 5px -21px;" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/water_logo/utibill_logo.png" width="300" > -->
-		<div class="row" style="margin-top: 20px;">
+		<div class="row" style="margin-top: 30px;">
 			<div class="col-md-6">
 				<div class="cash-bg" style="margin-bottom: 10px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">				
 					<div class="row-fluid" >
@@ -8233,7 +8379,7 @@
 <script id="Reports" type="text/x-kendo-template">
 	<div class="container">
 		<div class="row-fluid">
-			<h2 style="font-family: 'Open Sans', sans-serif;margin: 15px 0 5px;font-weight: 400; color: #4d4d4d; font-size: 26px; text-transform: uppercase;" data-bind="text: lang.lang.reports">Reports</h2>
+			<h2 style="font-family: 'Open Sans', sans-serif;margin: 15px 0 10px;font-weight: 400; color: #4d4d4d; font-size: 26px; text-transform: uppercase;" data-bind="text: lang.lang.reports">Reports</h2>
 			<input id="ddlCashAccount" name="ddlCashAccount" 
 				data-role="dropdownlist"
   				data-value-primitive="true"
@@ -8243,7 +8389,103 @@
   							source: licenseDS, events: {change: onLicenseChange}"
   				data-option-label="Select Licenses..." style="margin-bottom: 15px" />
 
-  			<div class="row" >
+
+  			<div class="row">
+  				<div class="col-xs-12 col-sm-6">
+					<div class="widget widget-3 customer-border" style="padding: 15px;">
+						<div class="widget-head header-custome" style="display: none;">
+							<h4 class="heading">
+								How efficient is your working capital management?
+							</h4>
+						</div>					
+						<div class="widget-body alert alert-primary" style="min-height: 178px; background: #203864; color: #fff; margin-bottom: 0; border-radius: 0;">
+							<a href="#/customer_deposit_report">
+								<div align="center" class="text-large strong" style="font-size: 35px;">
+									<span style="color: #fff;" data-bind="text: totalDeposit"></span>
+									<br>
+									<p style="font-size: 14px; color: #fff;" data-bind="text: lang.lang.total_deposit" >Total Deposit</p>
+								</div>
+							</a>
+							<table width="100%">
+								<tbody>
+									<tr align="center" style="vertical-align: top;">
+										<td width="33%">
+											<a href="#/customer_list">										
+												<span style="font-size: 18px; color: #fff;" data-bind="text: activeCustomer"></span>
+												<br>
+												<span style="font-size: 12px; color: #fff;" data-bind="text: lang.lang.active_customer_ratio">Active Customer Ratio</span>
+											</a>
+										</td>
+										<td width="33%">
+											<a href="#/customer_list">
+												<span style="font-size: 18px; color: #fff;" data-bind="text: nCustomer"></span>
+												<br>
+												<span style="font-size: 12px; color: #fff;" data-bind="text: lang.lang.total_customer_ratio">Total Customer Ratio</span>
+											</a>
+										</td>
+										<td width="33%">
+											<a href="#/customer_list">
+												<span style="font-size: 18px; color: #fff;" data-bind="text: tCustomer"></span>
+												<br>
+												<span style="font-size: 12px; color: #fff;" data-bind="text: lang.lang.total_no_of_customer">Total No. of Customer</span>
+											</a>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>									
+					</div>				
+				</div>
+
+				<div class="col-xs-12 col-sm-6">
+					<div class="widget widget-3 customer-border" style="padding: 15px;">
+						<div class="widget-head header-custome" style="display: none;">
+							<h4 class="heading">
+								How efficient is your working capital management?
+							</h4>
+						</div>					
+						<div class="widget-body alert alert-primary" style="min-height: 178px; background: #337ab7; color: #fff; margin-bottom: 0; border-radius: 0;">
+							<a href="#/sale_summary">
+								<div align="center" class="text-large strong" style="font-size: 35px;">
+									<span style="color: #fff;" data-bind="text: waterRevenue"></span>
+									<br>
+									<p style="font-size: 14px; color: #fff;" data-bind="text: lang.lang.total_water_revenue">Total Water Revenue</p>
+								</div>
+							</a>							
+							<table width="100%">
+								<tbody>
+									<tr align="center" style="vertical-align: top;">
+										<td width="33%">
+											<a href="#/sale_summary">										
+												<span style="font-size: 18px; color: #fff;" data-bind="text: avgRevenue"></span>
+												<br>
+												<span style="font-size: 12px; color: #fff;" data-bind="text: lang.lang.avarage_reveune_per_connection">Average Reveune Per Connection</span>
+											</a>
+										</td>
+										<td width="33%">
+											<a href="#/sale_summary">
+												<span style="font-size: 18px; color: #fff;" data-bind="text: avgUsage"></span>
+												<br>
+												<span style="font-size: 12px; color: #fff;" data-bind="text: lang.lang.avarage_water_usage_per_connection">Average Water Usage Per Connection</span>
+											</a>
+										</td>
+										<td width="33%">
+											<a href="#/sale_summary">
+												<span style="font-size: 18px; color: #fff;" data-bind="text: waterSold"></span>
+												<br>
+												<span style="font-size: 12px; color: #fff;" data-bind="text: lang.lang.quantity_sold">Quantity Sold</span><span style="color: #fff;"> m<sup>3</sup>/kWh</span>
+											</a>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>									
+					</div>				
+				</div>
+
+  			</div>
+
+  			<!-- <div class="row" >
 	  			<div class="col-xs-12 col-sm-4" >
 			  		<div class="cover-block ">
 			  			<div class="row-fluid">
@@ -8349,7 +8591,7 @@
 						</div>
 					</div>
 				</div>
-	  		</div>
+	  		</div> -->
 
 	  		<!-- <div class="row">
 	  			<div class="col-xs-12 col-sm-6">
@@ -12068,8 +12310,6 @@
 	<span>#=abbr##=number#</span>	
 	<span>#=name#</span>	
 </script>
-
-
 
 <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/js/libs/localforage.min.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jszip/2.4.0/jszip.js"></script>

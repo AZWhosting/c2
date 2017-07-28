@@ -1440,6 +1440,9 @@ var	km_KH = {
 	"end" : "ចប់",
 	"receipt_note":"ប័ណ្ណថ្លឹងស្រូវ",
 	"rice_mill_production":"ផលិតអង្ករ",
+	"customer_center":"អតិថិជន",
+	"supplier_center":"អ្នកផ្គត់ផ្គង់",
+	"inventory_center":"ផលិតផល និង សេវាកម្ម",
 
 
 	
