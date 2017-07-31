@@ -61,6 +61,7 @@ class Transactions extends REST_Controller {
 			}
 		}
 
+		$obj->include_related("contact", array("number","name"));
 		$obj->where("is_recurring", $is_recurring);
 		$obj->where("deleted <>", 1);
 
@@ -106,6 +107,12 @@ class Transactions extends REST_Controller {
 					$meter = $value->meter->get();
 					$meterNum = $meter->get()->number;
 				}
+
+				//Contact
+				$contact = array(
+					"id" 	=> $value->contact_id,
+					"name"	=> $value->contact_name ? $value->contact_name : ""
+				);
 
 				$data["results"][] = array(
 					"id" 						=> $value->id,
@@ -173,7 +180,9 @@ class Transactions extends REST_Controller {
 				   	"deleted" 					=> $value->deleted,
 				   	"meter"						=> $meterNum,
 				   	"meter_id"					=> $value->meter_id,
-				   	"amount_paid"				=> $amount_paid
+				   	"amount_paid"				=> $amount_paid,
+
+				   	"contact" 					=> $contact
 				);
 			}
 		}

@@ -2210,7 +2210,7 @@
 		<td>
 			<input id="ccbItem" name="ccbItem-#:uid#"
 			   data-role="combobox"
-			   data-template="item-list-tmpl"                   			   
+			   data-template="item-list-tmpl"
                data-text-field="name"
                data-auto-bind="true"
                data-value-field="id"
@@ -2229,10 +2229,10 @@
 	</tr>
 </script>
 <script id="item-list-tmpl" type="text/x-kendo-tmpl">
-	<span style="width:45%; float: left">
+	<span style="width:55%; float: left">
 		#=name#
 	</span>
-	<span style="width:35%; text-align: center; text-transform: capitalize;">#=type#</span>
+	<span style="width:15%; text-align: right; float: right; padding-right: 15px; text-transform: capitalize;">#=type#</span>
 </script>
 <script id="addLicense" type="text/x-kendo-template">
 	<div class="container">

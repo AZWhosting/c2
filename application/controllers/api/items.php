@@ -50,7 +50,9 @@ class Items extends REST_Controller {
 		if(!empty($filter["filters"]) && isset($filter["filters"])){
 	    	foreach ($filter['filters'] as $value) {
 	    		if(isset($value['operator'])) {
-	    			if($value['operator']=="contains"){
+	    			if($value['operator']=="startswith"){
+	    				$obj->like($value['field'], $value['value'], 'after');
+	    			}else if($value['operator']=="contains"){
 	    				$obj->like($value['field'], $value['value'], 'both');
 	    			}else{
 						$obj->{$value['operator']}($value['field'], $value['value']);
@@ -85,8 +87,7 @@ class Items extends REST_Controller {
 				$measurement = array(
 					"measurement_id" 	=> $value->measurement_id,
 					"measurement"		=> $value->measurement_name ? $value->measurement_name : ""
-				);
-				
+				);				
 
 				$data["results"][] = array(
 					"id" 						=> $value->id,

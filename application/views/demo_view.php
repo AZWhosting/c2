@@ -1861,7 +1861,18 @@
 									<tr>
 										<td><span data-bind="text: lang.lang.customers"></span></td>
 										<td>
-											<input id="cbbContact" name="cbbContact"
+											<input id="dropdownlist"
+												   data-role="dropdownlist"
+								                   data-auto-bind="false"
+								                   data-value-primitive="true"
+								                   data-filter="startswith"
+								                   data-text-field="name"
+								                   data-value-field="id"
+								                   data-bind="value: obj.contact_id,
+								                              source: contactDS,
+								                              events: {change: contactChanges}"
+								                   style="width: 100%;" />
+											<!-- <input id="cbbContact" name="cbbContact"
 												   data-role="combobox"
 								                   data-header-template="contact-header-tmpl"
 								                   data-template="contact-list-tmpl"
@@ -1872,7 +1883,7 @@
 								                              source: contactDS,
 								                              events:{ change: contactChanges }"
 								                   data-placeholder="Type Name.."                    
-								                   required data-required-msg="required" style="width: 100%" />
+								                   required data-required-msg="required" style="width: 100%" /> -->
 										</td>
 									</tr>																															
 								</table>
@@ -52788,11 +52799,12 @@
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),
 		assemblyDS			: dataStore(apiUrl + "item_prices"),
 		paymentTermDS 		: banhji.source.paymentTermDS,
-		contactDS  			: new kendo.data.DataSource({
-		  	data: banhji.source.customerList,
-		  	filter:{ field:"status", value:1 },
-			sort: { field:"number", dir:"asc" }
-		}),
+		// contactDS  			: new kendo.data.DataSource({
+		//   	data: banhji.source.customerList,
+		//   	filter:{ field:"status", value:1 },
+		// 	sort: { field:"number", dir:"asc" }
+		// }),
+		contactDS			: dataStore(apiUrl + "contacts"),
 		employeeDS  		: new kendo.data.DataSource({
 		  	data: banhji.source.employeeList,
 			sort: { field:"number", dir:"asc" }
@@ -52938,7 +52950,7 @@
 			var obj = this.get("obj");
 
 		    obj.set("contact_id", id);
-		    this.contactChanges();
+		    this.contactChanges();		    
 	    },
 		contactChanges 		: function(){
 			var self = this, obj = this.get("obj");
@@ -53391,7 +53403,7 @@
 				this.dataSource.query({
 					filter: para,
 					page: 1,
-					pageSize: 100
+					pageSize: 1
 				}).then(function(e){
 					var view = self.dataSource.view();
 
@@ -53411,7 +53423,25 @@
 						{ field: "assembly_id >", value: 0 }
 					]);
 					
-					self.attachmentDS.filter({ field: "transaction_id", value: id });					
+					self.attachmentDS.filter({ field: "transaction_id", value: id });
+
+					self.contactDS.filter({ field:"id", value: view[0].contact_id });
+
+					// self.loadContact(view[0].contact_id);
+					// var dropdownlist = $("#dropdownlist").data("kendoDropDownList");
+					// dropdownlist.value(view[0].contact_id);
+					// dropdownlist.trigger("change");
+
+					// self.contactDS.query({
+				 //    	filter:{ field:"id", value: view[0].contact_id },
+				 //    	page:1,
+				 //    	pageSize:1
+				 //    }).then(function(){
+				 //    	self.loadContact(view[0].contact_id);
+
+				 //    	var dropdownlist = $("#dropdownlist").data("kendoDropDownList");
+					// 	dropdownlist.refresh();
+				 //    });					
 				});
 			}				
 		},
@@ -109584,21 +109614,6 @@
 			
 			if(banhji.pageLoaded["rice_mill_production_report"]==undefined){
 				banhji.pageLoaded["rice_mill_production_report"] = true;
-
-				$("#grid").kendoGrid({
-                    dataSource: vm.dataSource,
-                    sortable: true,
-                    scrollable: false,
-                    pageable: true,
-                    columns: [
-                        { field: "item", title: "Product Name", aggregates: ["count"], footerTemplate: "Total Count: #=count#", groupFooterTemplate: "Count: #=count#" },
-                        { field: "quantity", title: "Unit Price", aggregates: ["sum"] },
-                        { field: "truck_weight", title: "Units On Order", aggregates: ["average"], footerTemplate: "Average: #=average#",
-                            groupFooterTemplate: "Average: #=average#" },
-                        { field: "gross_weight", title: "Units In Stock", aggregates: ["min", "max", "count"], footerTemplate: "<div>Min: #= min #</div><div>Max: #= max #</div>",
-                            groupHeaderTemplate: "Units In Stock: #= value # (Count: #= count#)" }
-                    ]
-                });
 
 				vm.sorterChanges();
 			}

@@ -1016,6 +1016,11 @@ input{
 	color: #fff;
 }
 
+#ccbItem-list{
+  width: 500px !important;
+}
+
+
 
 @media only screen and (-webkit-min-device-pixel-ratio: 2) and (max-device-width: 1024px) and (min-device-width: 768px){
 	.widget-body table tr td{

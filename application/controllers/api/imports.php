@@ -555,7 +555,7 @@ class Imports extends REST_Controller {
 					}
 				}
 
-				if(isset($row->balance)) {
+				if(isset($row->balance) && $row->balance > 0) {
 					$ar = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 					$ar->type = "Utility_Invoice";
 					$ar->contact_id = $customer->id;

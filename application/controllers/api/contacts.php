@@ -45,10 +45,16 @@ class Contacts extends REST_Controller {
 		}
 
 		//Filter
-		if(!empty($filter) && isset($filter)){
+		if(!empty($filter['filters']) && isset($filter['filters'])){
 	    	foreach ($filter['filters'] as $value) {
 	    		if(isset($value['operator'])) {
-					$obj->{$value['operator']}($value['field'], $value['value']);
+					if($value['operator']=="startswith"){
+	    				$obj->like($value['field'], $value['value'], 'after');
+	    			}else if($value['operator']=="contains"){
+	    				$obj->like($value['field'], $value['value'], 'both');
+	    			}else{
+						$obj->{$value['operator']}($value['field'], $value['value']);
+	    			}
 				} else {
 					if($value["field"]=="is_pattern"){
 	    				$is_pattern = $value["value"];
