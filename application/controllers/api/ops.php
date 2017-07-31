@@ -8,7 +8,7 @@ class Ops extends REST_Controller {
 		$this->load->dbutil();
 		$this->load->dbforge();
 		$dbs = $this->dbutil->list_databases();
-		$companyList = array("api","banhji","banhji_mac","information_schema","innodb","mysql","performance_schema","tmp");
+		$companyList = array("api","banhji","banhji_mac","information_schema","innodb","mysql","performance_schema","tmp", "banhji_center");
 		$data["results"] = [];
 		$data["count"] = 0;
 		

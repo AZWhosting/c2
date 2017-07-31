@@ -487,6 +487,7 @@ class Winvoices extends REST_Controller {
 		}
 		$table->where('status <>', 1);
 		$table->where('deleted', 0);
+		$table->where('journal_type <>', 'journal' );
 		$table->where('type','Utility_Invoice');
 		//Results
 		if($page && $limit){

@@ -172,6 +172,7 @@ class Meters extends REST_Controller {
 			$obj->box_id 				= isset($value->box_id)				?$value->box_id:0;
 			$obj->property_id 			= isset($value->property_id)		?$value->property_id:0;
 			$obj->activated 			= isset($value->activated)			?$value->activated:0;
+			$obj->worder 				= isset($value->worder)				?$value->worder:0;
 			$obj->reactive_status 		= isset($value->reactive_status)	?$value->reactive_status:0;
 			if($obj->save()){	
 				$data[] = array(
@@ -197,6 +198,7 @@ class Meters extends REST_Controller {
 					"longtitute" 			=> $obj->longtitute,
 					"multiplier" 			=> $obj->multiplier,
 					"reactive_id" 			=> $obj->reactive_id,
+					"worder" 				=> $obj->worder,
 					"reactive_status" 		=> $obj->reactive_status,
 					"date_used" 			=> $obj->date_used
 				);					
