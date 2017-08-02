@@ -955,7 +955,8 @@
 					<span class="results"><span data-bind="text: contactDS.total"></span> <span data-bind="text: lang.lang.found_search"></span></span>
 
 					<div class="table table-condensed" style="height: 580px;"						 
-						 data-role="grid"						 
+						 data-role="grid"
+						 data-auto-bind="false"						 
 						 data-bind="source: contactDS"
 						 data-row-template="customerCenter-customer-list-tmpl"
 						 data-columns="[{title: ''}]"
@@ -51447,6 +51448,18 @@
 					type: "GET",
 					headers: banhji.header,
 					dataType: 'json'
+				},
+				parameterMap: function(options, operation) {
+					if(operation === 'read') {
+						return {
+							page: options.page,
+							limit: options.pageSize,
+							filter: options.filter,
+							sort: options.sort
+						};
+					} else {
+						return {models: kendo.stringify(options.models)};
+					}
 				}
 			},
 			schema 	: {
@@ -51465,6 +51478,8 @@
 				{ field:"number", dir:"asc" }
 			],
 			serverFiltering: true,
+			serverSorting: true,
+			serverPaging: true,
 			page: 1,
 			pageSize: 100
 		}),
@@ -51475,6 +51490,18 @@
 					type: "GET",
 					headers: banhji.header,
 					dataType: 'json'
+				},
+				parameterMap: function(options, operation) {
+					if(operation === 'read') {
+						return {
+							page: options.page,
+							limit: options.pageSize,
+							filter: options.filter,
+							sort: options.sort
+						};
+					} else {
+						return {models: kendo.stringify(options.models)};
+					}
 				}
 			},
 			schema 	: {
@@ -51493,6 +51520,8 @@
 				{ field:"number", dir:"asc" }
 			],
 			serverFiltering: true,
+			serverSorting: true,
+			serverPaging: true,
 			page: 1,
 			pageSize: 100
 		}),
@@ -51503,6 +51532,18 @@
 					type: "GET",
 					headers: banhji.header,
 					dataType: 'json'
+				},
+				parameterMap: function(options, operation) {
+					if(operation === 'read') {
+						return {
+							page: options.page,
+							limit: options.pageSize,
+							filter: options.filter,
+							sort: options.sort
+						};
+					} else {
+						return {models: kendo.stringify(options.models)};
+					}
 				}
 			},
 			schema 	: {
@@ -51521,6 +51562,8 @@
 				{ field:"number", dir:"asc" }
 			],
 			serverFiltering: true,
+			serverSorting: true,
+			serverPaging: true,
 			page: 1,
 			pageSize: 100
 		}),
