@@ -1468,6 +1468,7 @@ var	en_US = {
 	"customer_center":"Customer Center",
 	"supplier_center":"Supplier Center",
 	"inventory_center":"Inventory Center",
+	"reading_route_management":"Reading Route Management",
 
 
 

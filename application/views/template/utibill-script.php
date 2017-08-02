@@ -5883,7 +5883,50 @@
 	        });
 	        //save the file as Excel file with extension xlsx
 	        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: this.get("licenseSelect").name+"_"+this.get("blocSelect").name+"_"+"<?php echo date('d-M-Y'); ?>.xlsx"});
-		},
+        },
+        meterOrderDS        : dataStore(apiUrl + "utibills/meter_order"),
+        onSelected          : function(e){
+            var files = e.files, self = this;
+	        $("#loadImport").css("display","block");
+	        var reader = new FileReader();
+			this.meterOrderDS.data([]);	
+			reader.onload = function() {	
+				var data = reader.result;	
+				var result = {};
+				var workbook = XLSX.read(data, {type : 'binary'});
+				workbook.SheetNames.forEach(function(sheetName) {
+					var roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+					if(roa.length > 0){
+						result[sheetName] = roa;
+						for(var i = 0; i < roa.length; i++) {
+							self.meterOrderDS.add(roa[i]);
+							$("#loadImport").css("display","none");
+						}
+					}
+				});
+			}
+			reader.readAsBinaryString(files[0].rawFile);
+        },
+        orderSave       : function(){
+            var self = this;
+			if(this.meterOrderDS.data().length > 0) {
+				$("#loadImport").css("display","block");
+				this.meterOrderDS.sync();
+				this.meterOrderDS.bind("requestEnd", function(e){
+					if(e.type != 'read') {
+				    	if(e.response){				
+				    		$("#ntf1").data("kendoNotification").success("Activated user successfully!");
+				    		self.cancel();
+							$("#loadImport").css("display","none");
+						}	
+					}			  				
+			    });
+			    this.meterOrderDS.bind("error", function(e){		    		    	
+					$("#ntf1").data("kendoNotification").error("Error activated!"); 
+					$("#loadImport").css("display","none");				
+			    });
+			}	
+        },
 		printGrid 		: function(){
 			var self = this, Win, pHeight, pWidth;
 

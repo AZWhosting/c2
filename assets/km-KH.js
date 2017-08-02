@@ -1443,6 +1443,7 @@ var	km_KH = {
 	"customer_center":"អតិថិជន",
 	"supplier_center":"អ្នកផ្គត់ផ្គង់",
 	"inventory_center":"ផលិតផល និង សេវាកម្ម",
+	"reading_route_management":"តំរៀបកុងទ័រ",
 
 
 	

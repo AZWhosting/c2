@@ -564,6 +564,173 @@ class Sales extends REST_Controller {
 		$this->response($data, 200);
 	}
 
+	//SALE BY EMPLOYEE
+	function sale_summary_by_employee_get() {
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
+		$data["count"] = 0;
+
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
+			}
+		}
+		
+		//Filter		
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value['operator'])){
+	    			$obj->{$value['operator']}($value['field'], $value['value']);	    		
+	    		} else {
+	    			$obj->where($value['field'], $value['value']);
+	    		}
+			}
+		}
+
+		//Results
+		$obj->include_related("contact", array("abbr", "number", "name"));		
+		$obj->where_in("type", array("Commercial_Invoice","Vat_Invoice","Invoice", "Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale"));
+		$obj->where("is_recurring <>", 1);
+		$obj->where("deleted <>", 1);
+		$obj->where("employee_id <>", 0);
+		$obj->order_by("issued_date", "asc");
+		$obj->get_iterated();
+		
+		if($obj->exists()){
+			$objList = [];
+			foreach ($obj as $value) {		
+				if($value->employee_id>0){
+					$employee = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$employee->where("id", $value->employee_id);
+					$employee->get();
+										
+					$amount = (floatval($value->amount) - floatval($value->deposit)) / floatval($value->rate);
+					$invoice = 0;
+					$cashSale = 0;
+					if($value->type=="Commercial_Invoice" || $value->type=="Vat_Invoice" || $value->type=="Invoice"){
+						$invoice++;
+					}else{
+						$cashSale++;
+					}
+
+					if(isset($objList[$employee->id])){
+						$objList[$value->contact_id]["invoice_count"] 	+= $invoice;
+						$objList[$value->contact_id]["cash_sale_count"] += $cashSale;
+						$objList[$value->contact_id]["amount"] 			+= $amount;
+					}else{
+						$objList[$value->contact_id]["id"] 				= $value->contact_id;
+						$objList[$value->contact_id]["name"] 			= $employee->abbr.$employee->number." ".$employee->name;
+						$objList[$value->contact_id]["invoice_count"]	= $invoice;
+						$objList[$value->contact_id]["cash_sale_count"]	= $cashSale;
+						$objList[$value->contact_id]["amount"]			= $amount;
+					}
+				}
+			}
+
+			foreach ($objList as $value) {
+				$data["results"][] = $value;
+			}
+			$data["count"] = count($data["results"]);
+		}
+
+		//Response Data
+		$this->response($data, 200);
+	}
+	function sale_detail_by_employee_get() {
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
+		$data["count"] = 0;
+
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
+			}
+		}
+		
+		//Filter		
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value['operator'])){
+	    			$obj->{$value['operator']}($value['field'], $value['value']);	    		
+	    		} else {
+	    			$obj->where($value['field'], $value['value']);
+	    		}
+			}
+		}
+
+		//Results
+		$obj->include_related("contact", array("abbr", "number", "name"));		
+		$obj->where_in("type", array("Commercial_Invoice","Vat_Invoice","Invoice", "Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale"));
+		$obj->where("is_recurring <>", 1);
+		$obj->where("deleted <>", 1);
+		$obj->where("employee_id <>", 0);
+		$obj->order_by("issued_date", "asc");
+		$obj->get_iterated();
+		
+		if($obj->exists()){
+			$objList = [];
+			foreach ($obj as $value) {	
+				if($value->employee_id>0){
+					$employee = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$employee->where("id", $value->employee_id);
+					$employee->get();							
+					$amount = (floatval($value->amount) - floatval($value->deposit)) / floatval($value->rate);
+					
+					if(isset($objList[$employee->contact_id])){
+						$objList[$value->contact_id]["line"][] = array(
+							"id" 				=> $value->id,
+							"type" 				=> $value->type,
+							"number" 			=> $value->number,
+							"issued_date" 		=> $value->issued_date,
+							"rate" 				=> $value->rate,
+							"amount" 			=> $amount
+						);
+					}else{
+						$objList[$value->contact_id]["id"] 		= $value->contact_id;
+						$objList[$value->contact_id]["name"] 	= $employee->abbr.$employee->number." ".$employee->name;
+						$objList[$value->contact_id]["line"][]	= array(
+							"id" 				=> $value->id,
+							"type" 				=> $value->type,
+							"number" 			=> $value->number,
+							"issued_date" 		=> $value->issued_date,
+							"rate" 				=> $value->rate,
+							"amount" 			=> $amount
+						);
+					}
+				}
+			}
+
+			foreach ($objList as $value) {
+				$data["results"][] = $value;
+			}
+			$data["count"] = count($data["results"]);
+		}
+
+		//Response Data
+		$this->response($data, 200);
+	}
+	
+
 	//Cash SALE BY CUSTOMER
 	function cashSale_summary_by_customer_get() {
 		$filter 	= $this->get("filter");
@@ -1652,7 +1819,86 @@ class Sales extends REST_Controller {
 		$this->response($data, 200);
 	}
 
+		//Draft List
+	function draft_list_get() {
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
+		$data["count"] = 0;
 
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
+			}
+		}
+		
+		//Filter		
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value['operator'])){
+	    			$obj->{$value['operator']}($value['field'], $value['value']);	    		
+	    		} else {
+	    			$obj->where($value['field'], $value['value']);
+	    		}
+			}
+		}
+
+		//Results
+		$obj->include_related("contact", array("abbr", "number", "name"));
+		$obj->where("is_recurring <>", 1);
+		$obj->where("deleted <>", 1);
+		$obj->where("status", 4);
+		$obj->where("progress", "draft");
+		$obj->get_iterated();
+		
+		if($obj->exists()){
+			$objList = [];
+			foreach ($obj as $value) {								
+				$amount = (floatval($value->amount) - floatval($value->deposit)) / floatval($value->rate);
+				
+				if(isset($objList[$value->contact_id])){
+					$objList[$value->contact_id]["line"][] = array(
+						"id" 				=> $value->id,
+						"type" 				=> $value->type,
+						"status" 			=> $value->status,
+						"number" 			=> $value->number,
+						"issued_date" 		=> $value->issued_date,
+						"rate" 				=> $value->rate,
+						"amount" 			=> $amount
+					);
+				}else{
+					$objList[$value->contact_id]["id"] 		= $value->contact_id;
+					$objList[$value->contact_id]["name"] 	= $value->contact_abbr.$value->contact_number." ".$value->contact_name;
+					$objList[$value->contact_id]["line"][]	= array(
+						"id" 				=> $value->id,
+						"type" 				=> $value->type,
+						"number" 			=> $value->number,
+						"status" 			=> $value->status,
+						"issued_date" 		=> $value->issued_date,
+						"rate" 				=> $value->rate,
+						"amount" 			=> $amount
+					);
+				}
+			}
+
+			foreach ($objList as $value) {
+				$data["results"][] = $value;
+			}
+			$data["count"] = count($data["results"]);
+		}
+
+		//Response Data
+		$this->response($data, 200);
+	}
 	//BY HEANG #############################################################################
 
 	function detail_customer_get() {

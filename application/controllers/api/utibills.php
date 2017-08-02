@@ -470,6 +470,25 @@ class Utibills extends REST_Controller {
 		//Response Data		
 		$this->response($data, 200);
 	}
+	//Order Meter
+	function meter_order_post(){
+		$models = json_decode($this->post('models'));
+		$data["results"] = [];
+		$data["count"] = 0;
+		$number = "";
+		foreach ($models as $value) {
+			$obj = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$obj->where("number", $value->meter_number)->order_by("id", "desc")->limit(1);
+			isset($value->order) 	? $obj->worder 		= $value->order : 0;
+	   		if($obj->save()){
+	   			$data["results"][] = array(
+			   		"id" => $obj->id
+			   	);
+		    }
+		}
+		$data["count"] = count($data["results"]);
+		$this->response($data, 201);	
+	}
 	//Generate invoice number
 	public function _generate_number($type, $date){
 		$YY = date("y");

@@ -61,7 +61,7 @@ class Transactions extends REST_Controller {
 			}
 		}
 
-		$obj->include_related("contact", array("number","name"));
+		$obj->include_related("contact", array("number","name","payment_term_id","payment_method_id","locale","bill_to","ship_to"));
 		$obj->where("is_recurring", $is_recurring);
 		$obj->where("deleted <>", 1);
 
@@ -110,8 +110,22 @@ class Transactions extends REST_Controller {
 
 				//Contact
 				$contact = array(
-					"id" 	=> $value->contact_id,
-					"name"	=> $value->contact_name ? $value->contact_name : ""
+					"id" 						=> $value->contact_id,
+					"number"					=> $value->contact_numbere ? $value->contact_number : "",
+					"name"						=> $value->contact_name ? $value->contact_name : "",
+					"payment_term_id"			=> $value->contact_payment_term_id ? $value->contact_payment_term_id : 0,
+					"payment_method_id"			=> $value->contact_payment_method_id ? $value->contact_payment_method_id : 0,
+					"credit_limit"				=> $value->contact_credit_limit ? $value->contact_credit_limit : 0,
+					"locale"					=> $value->contact_locale ? $value->contact_locale : "",
+					"bill_to"					=> $value->contact_bill_to ? $value->contact_bill_to : "",
+					"ship_to"					=> $value->contact_ship_to ? $value->contact_ship_to : "",
+					"deposit_account_id"		=> $value->contact_deposit_account_id ? $value->contact_deposit_account_id : 0,
+					"trade_discount_id"			=> $value->contact_trade_discount_id ? $value->contact_trade_discount_id : 0,
+					"settlement_discount_id"	=> $value->contact_settlement_discount_id ? $value->contact_settlement_discount_id : 0,
+					"salary_account_id"			=> $value->contact_salary_account_id ? $value->contact_salary_account_id : 0,
+					"account_id"				=> $value->contact_account_id ? $value->contact_account_id : 0,
+					"ra_id"						=> $value->contact_ra_id ? $value->contact_ra_id : 0,
+					"or_account_id"				=> $value->contact_or_account_id ? $value->contact_or_account_id : 0
 				);
 
 				$data["results"][] = array(

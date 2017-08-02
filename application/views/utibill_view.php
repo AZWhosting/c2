@@ -4390,7 +4390,7 @@
 						<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
 					</div>
 					<div id="example" class="k-content">
-						<h2 data-bind="">Reading Route Management</h2>
+						<h2 data-bind="text: lang.lang.reading_route_management"></h2>
 						<div class="hidden-print pull-right">
 				    		<span class="glyphicons no-js remove_2" 
 								data-bind="click: cancel"><i></i></span>
@@ -4400,12 +4400,14 @@
 						<div class="relativeWrap" data-toggle="source-code" style="margin-bottom: 15px;">
 							<div class="widget widget-tabs widget-tabs-gray report-tab">
 								<!-- Tabs Heading -->
-								<div class="widget-head">
+								<div class="widget-head" style="background: #203864 !important; color: #fff;">
 									<ul>
 										<li class="active">
-											<a class="glyphicons calendar" href="#tab-1" data-toggle="tab" data-bind="text: lang.lang.reorder"><i></i>Date</a>
+											<a class="glyphicons calendar" href="#tab-1" data-toggle="tab" data-bind=""><i></i>Meter Order</a>
 										</li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="text: lang.lang.export"><i></i>Export</a></li>
+										<li>
+											<a class="glyphicons print" href="#tab-2" data-toggle="tab" ><i></i>Excel</a>
+										</li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
@@ -4494,17 +4496,18 @@
 									        </div>					
 									    </div>
 										<div class="tab-pane" id="tab-2" style="border: none; padding: 15px;">
-											<form action="" method="post" accept-charset="utf-8" enctype="multipart/form-data">
-										  		<div class="fileupload fileupload-new margin-none" data-provides="fileupload" >
-													<input type="file" name="userfile" size="20" />
-												</div>
-											  	<button>
-													<span id="saveClose" class="btn btn-icon btn-success glyphicons upload" style="width: 200px!important;position: relative;margin: 0px;">
-														<i></i> 
-														<span data-bind="text: lang.lang.upload_db">Upload Database</span>
-													</span>
-												</button>
-											</form>
+											<h4 class="separator bottom" style="margin-top: 10px;" data-bind="text: lang.lang.upload">Please upload Meter file</h4>
+											
+											<div class="fileupload fileupload-new margin-none" data-provides="fileupload">
+												<input type="file"  data-role="upload" data-show-file-list="true" data-bind="events: {select: onSelected}" id="myFile"  class="margin-none" />
+											</div>
+											<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 120px!important; float: left; float: "><i></i>
+												<span data-bind="click: orderSave, text: lang.lang.upload"></span>
+											</span>
+
+											<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 120px!important; background: #0077c5; float: left; margin-left: 8px;"><i></i>
+												<span data-bind="text: lang.lang.download"></span>
+											</span>
 										</div>
 								    </div>
 								</div>
@@ -8195,7 +8198,6 @@
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->
-								
 								<div class="widget-body">
 									<div class="tab-content">
 										<!-- Tab content -->
