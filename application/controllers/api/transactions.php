@@ -124,8 +124,7 @@ class Transactions extends REST_Controller {
 					"trade_discount_id"			=> $value->contact_trade_discount_id ? $value->contact_trade_discount_id : 0,
 					"settlement_discount_id"	=> $value->contact_settlement_discount_id ? $value->contact_settlement_discount_id : 0,
 					"account_id"				=> $value->contact_account_id ? $value->contact_account_id : 0,
-					"ra_id"						=> $value->contact_ra_id ? $value->contact_ra_id : 0,
-					"or_account_id"				=> $value->contact_or_account_id ? $value->contact_or_account_id : 0
+					"ra_id"						=> $value->contact_ra_id ? $value->contact_ra_id : 0
 				);
 
 				//Employee

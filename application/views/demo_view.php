@@ -51439,7 +51439,6 @@
 		lang 						: langVM,
 		countryDS					: dataStore(apiUrl + "countries"),
 		//Contact
-		employeeList 				: [],
 		contactDS					: dataStore(apiUrl + "contacts"),
 		customerDS 					: new kendo.data.DataSource({
 			transport: {
