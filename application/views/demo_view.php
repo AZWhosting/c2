@@ -1978,17 +1978,20 @@
 											<tr>
 												<td><span data-bind="text: lang.lang.sale_rep"></span></td>
 												<td>
-													<input id="cbbEmployee" name="cbbEmployee"
-														   data-role="combobox"
-										                   data-value-primitive="true"
-										                   data-header-template="employee-header-tmpl"
+										            <input id="cbbContact" name="cbbContact"
+														   data-role="dropdownlist"
+														   data-header-template="employee-header-tmpl"
 										                   data-template="contact-list-tmpl"
+										                   data-auto-bind="false"
+										                   data-value-primitive="false"
+										                   data-filter="startswith"
 										                   data-text-field="name"
 										                   data-value-field="id"
-										                   data-bind="value: obj.employee_id,
-										                              source: employeeDS"
-										                   data-placeholder="Type Name..." 
-										                   style="width: 100%" />
+										                   data-bind="value: obj.employee,
+										                              source: employeeDS,
+										                              events: {change: employeeChanges}"
+										                   data-option-label="Select Sale Rep..."
+										                   style="width: 100%;" />
 												</td>
 											</tr>
 											<tr>
@@ -2599,17 +2602,20 @@
 											<tr>
 												<td><span data-bind="text: lang.lang.sale_rep"></span></td>
 												<td>
-													<input id="cbbEmployee" name="cbbEmployee"
-														   data-role="combobox"
-										                   data-value-primitive="true"
-										                   data-header-template="employee-header-tmpl"
+													<input id="cbbContact" name="cbbContact"
+														   data-role="dropdownlist"
+														   data-header-template="employee-header-tmpl"
 										                   data-template="contact-list-tmpl"
+										                   data-auto-bind="false"
+										                   data-value-primitive="false"
+										                   data-filter="startswith"
 										                   data-text-field="name"
 										                   data-value-field="id"
-										                   data-bind="value: obj.employee_id,
-										                              source: employeeDS"
-										                   data-placeholder="Type Name..." 
-										                   style="width: 100%" />
+										                   data-bind="value: obj.employee,
+										                              source: employeeDS,
+										                              events: {change: employeeChanges}"
+										                   data-option-label="Select Sale Rep..."
+										                   style="width: 100%;" />
 												</td>
 											</tr>
 											<tr>
@@ -3237,17 +3243,20 @@
 											<tr>
 												<td><span data-bind="text: lang.lang.sale_rep"></span></td>
 												<td>
-													<input id="cbbEmployee" name="cbbEmployee"
-														   data-role="combobox"
-										                   data-value-primitive="true"
-										                   data-header-template="employee-header-tmpl"
+													<input id="cbbContact" name="cbbContact"
+														   data-role="dropdownlist"
+														   data-header-template="employee-header-tmpl"
 										                   data-template="contact-list-tmpl"
+										                   data-auto-bind="false"
+										                   data-value-primitive="false"
+										                   data-filter="startswith"
 										                   data-text-field="name"
 										                   data-value-field="id"
-										                   data-bind="value: obj.employee_id,
-										                              source: employeeDS"
-										                   data-placeholder="Type Name..." 
-										                   style="width: 100%" />
+										                   data-bind="value: obj.employee,
+										                              source: employeeDS,
+										                              events: {change: employeeChanges}"
+										                   data-option-label="Select Sale Rep..."
+										                   style="width: 100%;" />
 												</td>
 											</tr>
 											<tr>
@@ -3835,17 +3844,20 @@
 											<tr>
 												<td><span data-bind="text: lang.lang.sale_rep"></span></td>
 												<td>
-													<input id="cbbEmployee" name="cbbEmployee"
-														   data-role="combobox"
-										                   data-value-primitive="true"
-										                   data-header-template="employee-header-tmpl"
+													<input id="cbbContact" name="cbbContact"
+														   data-role="dropdownlist"
+														   data-header-template="employee-header-tmpl"
 										                   data-template="contact-list-tmpl"
+										                   data-auto-bind="false"
+										                   data-value-primitive="false"
+										                   data-filter="startswith"
 										                   data-text-field="name"
 										                   data-value-field="id"
-										                   data-bind="value: obj.employee_id,
-										                              source: employeeDS"
-										                   data-placeholder="Type Name..." 
-										                   style="width: 100%" />
+										                   data-bind="value: obj.employee,
+										                              source: employeeDS,
+										                              events: {change: employeeChanges}"
+										                   data-option-label="Select Sale Rep..."
+										                   style="width: 100%;" />
 												</td>
 											</tr>		            	
 											<tr>
@@ -4561,17 +4573,20 @@
 								            <tr>
 												<td><span data-bind="text: lang.lang.sale_rep"></span></td>
 												<td>
-													<input id="cbbEmployee" name="cbbEmployee"
-														   data-role="combobox"
-										                   data-value-primitive="true"
-										                   data-header-template="employee-header-tmpl"
+													<input id="cbbContact" name="cbbContact"
+														   data-role="dropdownlist"
+														   data-header-template="employee-header-tmpl"
 										                   data-template="contact-list-tmpl"
+										                   data-auto-bind="false"
+										                   data-value-primitive="false"
+										                   data-filter="startswith"
 										                   data-text-field="name"
 										                   data-value-field="id"
-										                   data-bind="value: obj.employee_id,
-										                              source: employeeDS"
-										                   data-placeholder="Type Name..." 
-										                   style="width: 100%" />
+										                   data-bind="value: obj.employee,
+										                              source: employeeDS,
+										                              events: {change: employeeChanges}"
+										                   data-option-label="Select Sale Rep..."
+										                   style="width: 100%;" />
 												</td>
 											</tr>						            	
 											<tr>
@@ -16043,7 +16058,7 @@
 										</td>
 									</tr>								
 									<tr>
-										<td><span data-bind="text: lang.lang.customers"></span></td>
+										<td><span data-bind="text: lang.lang.supplier"></span></td>
 										<td>
 											<input id="cbbContact" name="cbbContact"
 												   data-role="dropdownlist"
@@ -23038,18 +23053,23 @@
 									</tr>
 									<tr>
 										<td>
-											<span data-bind="text: lang.lang.staff"></span>
+											<span data-bind="text: lang.lang.employee"></span>
 										</td>
 										<td>
-											<input id="cbbReader" name="cbbReader" 
-							    				   data-role="combobox"
-								                   data-value-primitive="true"
+											<input id="cbbContact" name="cbbContact"
+												   data-role="dropdownlist"
+												   data-header-template="employee-header-tmpl"
+								                   data-template="contact-list-tmpl"
+								                   data-auto-bind="false"
+								                   data-value-primitive="false"
+								                   data-filter="startswith"
 								                   data-text-field="name"
 								                   data-value-field="id"
-								                   data-bind="value: obj.contact_id,
-								                              source: contactDS"
-								                   data-placeholder="Select ..."
-								                   style="width: 100%" />
+								                   data-bind="value: obj.employee,
+								                              source: contactDS,
+								                              events: {change: employeeChanges}"
+								                   data-option-label="Select Employee..."
+								                   style="width: 100%;" />
 										</td>
 									</tr>
 								</table>
@@ -29049,17 +29069,19 @@
 									<td><span data-bind="text: lang.lang.employee"></span></td>
 									<td>
 										<input id="cbbContact" name="cbbContact"
-											   data-role="combobox"
-											   data-auto-bind="false"
-											   data-header-template="employee-header-tmpl"                  
-							                   data-value-primitive="true"
+											   data-role="dropdownlist"
+											   data-header-template="employee-header-tmpl"
 							                   data-template="contact-list-tmpl"
+							                   data-auto-bind="false"
+							                   data-value-primitive="false"
+							                   data-filter="startswith"
 							                   data-text-field="name"
 							                   data-value-field="id"
-							                   data-bind="value: obj.contact_id,
-							                              source: contactDS"
-							                   data-placeholder="Type Name.."                    
-							                   required data-required-msg="required" style="width: 100%" />
+							                   data-bind="value: obj.employee,
+							                              source: contactDS,
+							                              events: {change: employeeChanges}"
+							                   data-option-label="Select Employee..."
+							                   required data-required-msg="required" style="width: 100%;" />
 									</td>
 								</tr>																							
 							</table>
@@ -29568,17 +29590,19 @@
 									<td><span data-bind="text: lang.lang.employee"></span></td>
 									<td>
 										<input id="cbbContact" name="cbbContact"
-											   data-role="combobox"                   
-							                   data-value-primitive="true"
-							                   data-header-template="employee-header-tmpl"
+											   data-role="dropdownlist"
+											   data-header-template="employee-header-tmpl"
 							                   data-template="contact-list-tmpl"
+							                   data-auto-bind="false"
+							                   data-value-primitive="false"
+							                   data-filter="startswith"
 							                   data-text-field="name"
 							                   data-value-field="id"
-							                   data-bind="value: obj.contact_id,
+							                   data-bind="value: obj.employee,
 							                              source: contactDS,
-							                              events:{ change: contactChanges }"
-							                   data-placeholder="Type Name.."                    
-							                   required data-required-msg="required" style="width: 100%" />
+							                              events: {change: employeeChanges}"
+							                   data-option-label="Select Employee..."
+							                   required data-required-msg="required" style="width: 100%;" />
 									</td>
 								</tr>																							
 							</table>
@@ -51415,7 +51439,6 @@
 		lang 						: langVM,
 		countryDS					: dataStore(apiUrl + "countries"),
 		//Contact
-		contactList 				: [],
 		employeeList 				: [],
 		contactDS					: dataStore(apiUrl + "contacts"),
 		customerDS 					: new kendo.data.DataSource({
@@ -51474,7 +51497,34 @@
 			page: 1,
 			pageSize: 100
 		}),
-		employeeDS					: dataStore(apiUrl + "contacts"),
+		employeeDS 					: new kendo.data.DataSource({
+			transport: {
+				read 	: {
+					url: apiUrl + "contacts",
+					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				}
+			},
+			schema 	: {
+				model: {
+					id: 'id'
+				},
+				data: 'results',
+				total: 'count'
+			},
+			filter:[
+				{ field:"parent_id", operator:"where_related_contact_type", value:3 },//Employee
+				{ field:"status", value:1 }
+			],
+			sort:[
+				{ field:"contact_type_id", dir:"asc" },
+				{ field:"number", dir:"asc" }
+			],
+			serverFiltering: true,
+			page: 1,
+			pageSize: 100
+		}),
 		//Contact Type
 		contactTypeList 			: [],
 		contactTypeDS				: dataStore(apiUrl + "contacts/type"),
@@ -51714,7 +51764,6 @@
 			this.loadMeasurements();
 
 			this.loadContactTypes();
-			this.loadEmployees();
 		},
 		getFiscalDate 				: function(){
 			var today = new Date(),	
@@ -52001,29 +52050,6 @@
 
 				$.each(view, function(index, value){
 					raw.push(value);
-				});
-			});
-		},
-		loadEmployees 				: function(){
-			var self = this, raw = this.get("employeeList"),
-				contactList = this.get("contactList");
-
-			//Clear array
-			if(raw.length>0){
-				raw.splice(0,raw.length);
-			}
-
-			this.employeeDS.query({
-				filter:[
-					{ field:"parent_id", operator:"where_related_contact_type", value:3 },
-					{ field:"status", value:1 }
-				]
-			}).then(function(){
-				var view = self.employeeDS.view();
-
-				$.each(view, function(index, value){
-					raw.push(value);
-					contactList.push(value);
 				});
 			});
 		},
@@ -53367,10 +53393,7 @@
 		balanceDS 			: dataStore(apiUrl + "transactions/balance"),
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),
 		assemblyDS			: dataStore(apiUrl + "item_prices"),
-		employeeDS  		: new kendo.data.DataSource({
-		  	data: banhji.source.employeeList,
-			sort: { field:"number", dir:"asc" }
-		}),
+		employeeDS  		: banhji.source.employeeDS,
 		jobDS 				: new kendo.data.DataSource({
 		  	data: banhji.source.jobList,
 		  	sort: { field: "name", dir: "asc" }
@@ -53535,6 +53558,17 @@
 	    	}
 	    	
 		    this.changes();
+	    },
+	    employeeChanges 		: function(){
+			var obj = this.get("obj");
+
+	    	if(obj.employee){
+		    	var employee = obj.employee;
+		    	
+		    	obj.set("employee_id", employee.id);
+	    	}else{
+	    		obj.set("employee_id", 0);
+	    	}
 	    },
 	    loadBalance 		: function(){
 			var self = this, obj = this.get("obj");
@@ -54418,10 +54452,7 @@
 			  	{ field: "code", dir: "asc" }
 			]
 		}),
-		employeeDS  		: new kendo.data.DataSource({
-		  	data: banhji.source.employeeList,
-			sort: { field:"number", dir:"asc" }
-		}),
+		employeeDS  		: banhji.source.employeeDS,
 		contactDS  			: banhji.source.customerDS,
 		statusObj 			: banhji.source.statusObj,
 		amtDueColor 		: banhji.source.amtDueColor,
@@ -54570,6 +54601,17 @@
 	    	}
 	    	
 		    this.changes();
+	    },
+	    employeeChanges 		: function(){
+			var obj = this.get("obj");
+
+	    	if(obj.employee){
+		    	var employee = obj.employee;
+		    	
+		    	obj.set("employee_id", employee.id);
+	    	}else{
+	    		obj.set("employee_id", 0);
+	    	}
 	    },
 	    loadBalance 		: function(){
 			var self = this, obj = this.get("obj");
@@ -55546,10 +55588,7 @@
 			  	{ field: "code", dir: "asc" }
 			]
 		}),		
-		employeeDS  		: new kendo.data.DataSource({
-		  	data: banhji.source.employeeList,
-			sort: { field:"number", dir:"asc" }
-		}),
+		employeeDS  		: banhji.source.employeeDS,
 		contactDS  			: banhji.source.customerDS,
 		amtDueColor 		: banhji.source.amtDueColor,
 	    confirmMessage 		: banhji.source.confirmMessage,
@@ -55695,6 +55734,17 @@
 	    	}
 	    	
 		    this.changes();
+	    },
+	    employeeChanges 		: function(){
+			var obj = this.get("obj");
+
+	    	if(obj.employee){
+		    	var employee = obj.employee;
+		    	
+		    	obj.set("employee_id", employee.id);
+	    	}else{
+	    		obj.set("employee_id", 0);
+	    	}
 	    },
 		//Currency Rate
 		setRate 			: function(){
@@ -55859,6 +55909,7 @@
 				recurring_id 			: "",
 				reference_id	 		: "",
 				account_id 				: "",
+				employee_id 			: "",
 				user_id 				: this.get("uer_id"),
 			   	type					: "Customer_Deposit", //required
 			   	number 					: "",
@@ -56302,10 +56353,7 @@
 			  	{ field: "code", dir: "asc" }
 			]
 		}),
-		employeeDS  		: new kendo.data.DataSource({
-		  	data: banhji.source.employeeList,
-			sort: { field:"number", dir:"asc" }
-		}),
+		employeeDS  		: banhji.source.employeeDS,
 		referenceList 		: [],
 		contactDS  			: banhji.source.customerDS,
 		statusObj 			: banhji.source.statusObj,		
@@ -56525,6 +56573,17 @@
 	    	}
 	    	
 		    this.changes();
+	    },
+	    employeeChanges 		: function(){
+			var obj = this.get("obj");
+
+	    	if(obj.employee){
+		    	var employee = obj.employee;
+		    	
+		    	obj.set("employee_id", employee.id);
+	    	}else{
+	    		obj.set("employee_id", 0);
+	    	}
 	    },
 	    loadBalance 		: function(){
 			var self = this, obj = this.get("obj");
@@ -57829,10 +57888,6 @@
 			    ]
 			}
 		}),
-		employeeDS  		: new kendo.data.DataSource({
-		  	data: banhji.source.employeeList,
-			sort: { field:"number", dir:"asc" }
-		}),
 		jobDS 				: new kendo.data.DataSource({
 		  	data: banhji.source.jobList,
 		  	sort: { field: "name", dir: "asc" }
@@ -57846,6 +57901,7 @@
 		}),
 		referenceList 		: [],
 		contactDS			: banhji.source.customerDS,
+		employeeDS  		: banhji.source.employeeDS,
 		statusObj 			: banhji.source.statusObj,
 		paymentTermDS 		: banhji.source.paymentTermDS,
 		amtDueColor 		: banhji.source.amtDueColor,
@@ -58077,6 +58133,17 @@
 	    	}
 	    	
 		    this.changes();
+	    },
+	    employeeChanges 		: function(){
+			var obj = this.get("obj");
+
+	    	if(obj.employee){
+		    	var employee = obj.employee;
+		    	
+		    	obj.set("employee_id", employee.id);
+	    	}else{
+	    		obj.set("employee_id", 0);
+	    	}
 	    },
 	    loadBalance 		: function(){
 			var self = this, obj = this.get("obj");
@@ -83365,10 +83432,7 @@
     	journalLineDS			: dataStore(apiUrl + "journal_lines"),
     	attachmentDS	 		: dataStore(apiUrl + "attachments"),
 		onHandDS  				: dataStore(apiUrl + "items/on_hand"),
-		contactDS  				: new kendo.data.DataSource({
-		  	data: banhji.source.employeeList,
-			sort: { field:"number", dir:"asc" }
-		}),
+		contactDS  				: banhji.source.employeeDS,
 		accountDS  				: banhji.source.accountList,
 		jobDS 					: banhji.source.jobList,
 		segmentItemDS 			: new kendo.data.DataSource({
@@ -83499,6 +83563,18 @@
 	            	}
             	}
             });
+	    },
+	    //Employee
+	    employeeChanges 			: function(){
+			var obj = this.get("obj");
+
+	    	if(obj.employee){
+		    	var employee = obj.employee;
+		    	
+		    	obj.set("employee_id", employee.id);
+	    	}else{
+	    		obj.set("employee_id", 0);
+	    	}
 	    },
 	    //Currency Rate
 		setRate 				: function(){
@@ -88224,7 +88300,7 @@
 		recurringDS 		: dataStore(apiUrl + "transactions"),
 		recurringLineDS 	: dataStore(apiUrl + "journal_lines"),
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),
-		contactDS 			: banhji.source.contactList,
+		contactDS 			: dataStore(apiUrl + "contacts"),
 		currencyDS  		: new kendo.data.DataSource({
 		  	data: banhji.source.currencyList,
 		  	filter: { field:"status", value: 1 }
@@ -89627,10 +89703,7 @@
 		  	data: banhji.source.currencyList,
 		  	filter: { field:"status", value: 1 }
 		}),
-		contactDS 			: new kendo.data.DataSource({
-		  	data: banhji.source.employeeList,
-		  	sort: { field:"number", dir:"asc" }
-		}),
+		contactDS 			: banhji.source.employeeDS,
 		jobDS 				: new kendo.data.DataSource({
 		  	data: banhji.source.jobList,
 		  	sort: { field: "name", dir: "asc" }
@@ -89790,6 +89863,16 @@
 	        	}
 	        });
 	    },
+	    //Employee
+	    employeeChanges 		: function(){
+			var obj = this.get("obj");
+
+	    	if(obj.employee){
+		    	var employee = obj.employee;
+		    	
+		    	obj.set("employee_id", employee.id);
+	    	}
+	    },
 	    //Currency Rate
 		setRate 			: function(){
 			var obj = this.get("obj"), 
@@ -89945,6 +90028,7 @@
 				recurring_id 		: "",
 				account_id 			: 1,
 				payment_method_id 	: 1,
+				employee_id 		: "",
 				user_id 			: this.get("user_id"),
 			   	type				: "Cash_Advance", //required
 			   	number 				: "",
@@ -90196,12 +90280,13 @@
 				obj = self.get("obj");
 				
 				obj.set("recurring_id", id);
-				obj.set("contact_id", view[0].contact_id);
+				obj.set("employee_id", view[0].employee_id);
 				obj.set("locale", view[0].locale);
 				obj.set("payment_method_id", view[0].payment_method_id);
 				obj.set("account_id", view[0].account_id);
 				obj.set("segments", view[0].segments);
 				obj.set("memo", view[0].memo);
+				obj.set("employee", view[0].employee);
 			});
 
 			this.recurringLineDS.query({
@@ -90309,10 +90394,7 @@
 		  	data: banhji.source.currencyList,
 		  	filter: { field:"status", value: 1 }
 		}),
-		contactDS 			: new kendo.data.DataSource({
-		  	data: banhji.source.employeeList,
-		  	sort: { field:"number", dir:"asc" }
-		}),
+		contactDS 			: banhji.source.employeeDS,
 		jobDS 				: new kendo.data.DataSource({
 		  	data: banhji.source.jobList,
 		  	sort: { field: "name", dir: "asc" }
@@ -90507,17 +90589,19 @@
 			});
 		},
 		//Contact
-		loadContact 		: function(id){
-			var self = this, obj = self.get("obj");
-
-			obj.set("contact_id", id);
-		    this.contactChanges();
-		},
-		contactChanges 		: function(){
+		setContact 		: function(contact){
 			var obj = this.get("obj");
 
-	    	if(obj.contact_id>0){
-		    	var contact = this.contactDS.get(obj.contact_id);
+		    obj.set("employee", contact);
+		    this.employeeChanges();
+	    },
+	    employeeChanges 		: function(){
+			var obj = this.get("obj");
+
+	    	if(obj.employee){
+		    	var employee = obj.employee;
+		    	
+		    	obj.set("employee_id", employee.id);
 
 		    	this.setRate();
 		    	this.loadReference();
@@ -90740,6 +90824,7 @@
 				account_id 			: 1,
 				job_id 				: 0,
 				contact_id 			: "",
+				employee_id 		: "",
 				user_id 			: this.get("user_id"),
 			   	type				: "Direct_Expense", //required
 			   	number 				: "",
@@ -90997,7 +91082,7 @@
 
 				self.journalLineDS.add({
 					transaction_id 		: transaction_id,
-					contact_id 			: value.contact_id,
+					employee_id 		: value.employee_id,
 					account_id 			: value.account_id,
 					description 		: value.description,
 					reference_no 		: value.reference_no,
@@ -91038,7 +91123,7 @@
 						self.journalLineDS.add({
 							transaction_id 		: transaction_id,
 							account_id 			: value.id,
-							contact_id 			: value.contact_id,
+							contact_id 			: value.employee_id,
 							description 		: "",
 							reference_no 		: "",
 							segments 	 		: [],
@@ -91062,7 +91147,7 @@
 
 					this.journalLineDS.add({
 						transaction_id 		: transaction_id,
-						contact_id 			: obj.contact_id,
+						contact_id 			: obj.employee_id,
 						account_id 			: obj.account_id,
 						description 		: "",
 						reference_no 		: "",
@@ -91081,7 +91166,7 @@
 					//Cash on Cr
 					this.journalLineDS.add({
 						transaction_id 		: transaction_id,
-						contact_id 			: obj.contact_id,
+						contact_id 			: obj.employee_id,
 						account_id 			: obj.account_id,
 						description 		: "",
 						reference_no 		: "",
@@ -91096,7 +91181,7 @@
 				//Advance Account on Cr
 	    		this.journalLineDS.add({
 					transaction_id 		: transaction_id,
-					contact_id 			: reference.contact_id,
+					contact_id 			: reference.employee_id,
 					account_id 			: advance_account_id,
 					description 		: reference.memo,
 					reference_no 		: reference.number,
@@ -91110,7 +91195,7 @@
 			    //Cash on Cr
 				this.journalLineDS.add({
 					transaction_id 		: transaction_id,
-					contact_id 			: obj.contact_id,
+					contact_id 			: obj.employee_id,
 					account_id 			: obj.account_id,
 					description 		: "",
 					reference_no 		: "",
@@ -91128,9 +91213,9 @@
 		loadReference 		: function(){
 			var self = this, obj = this.get("obj");
 
-			if(obj.contact_id>0){
+			if(obj.employee_id>0){
 				this.referenceDS.filter([
-					{ field:"contact_id", value:obj.contact_id },
+					{ field:"employee_id", value:obj.employee_id },
 					{ field:"type", value:"Cash_Advance" },
 					{ field:"status", operator:"where_in", value:[0,2] }
 				]);
@@ -91162,7 +91247,7 @@
 				obj = self.get("obj");
 				
 				obj.set("recurring_id", id);
-				obj.set("contact_id", view[0].contact_id);
+				obj.set("employee_id", view[0].employee_id);
 				obj.set("type", view[0].type);
 				obj.set("locale", view[0].locale);
 				obj.set("account_id", view[0].account_id);
@@ -91170,6 +91255,7 @@
 				obj.set("job_id", view[0].job_id);
 				obj.set("memo", view[0].memo);
 				obj.set("memo2", view[0].memo2);
+				obj.set("employee", view[0].employee);
 			});
 
 			this.recurringLineDS.query({
@@ -95671,10 +95757,6 @@
 			]
 		}),
 		contactDS  			: banhji.source.customerDS,
-		employeeDS  		: new kendo.data.DataSource({
-		  	data: banhji.source.employeeList,
-			sort: { field:"number", dir:"asc" }
-		}),
 		accountDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
 		  	filter:{ field:"account_type_id", value: 10 },
@@ -96114,10 +96196,6 @@
 			]
 		}),
 		contactDS  			: banhji.source.supplierDS,
-		employeeDS  		: new kendo.data.DataSource({
-		  	data: banhji.source.employeeList,
-			sort: { field:"number", dir:"asc" }
-		}),
 		accountDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
 		  	filter:{ field:"account_type_id", value: 10 },
@@ -97360,10 +97438,7 @@
 	banhji.cashAdvanceReport =  kendo.observable({
 		lang 				: langVM,
 		dataSource 			: dataStore(apiUrl + "cashReports/cash_advance"),
-		contactDS  			: new kendo.data.DataSource({
-		  	data: banhji.source.employeeList,
-			sort: { field:"number", dir:"asc" }
-		}),
+		contactDS  			: banhji.source.employeeDS,
 		accountDS  			: banhji.source.accountList,
 		sortList			: banhji.source.sortList,
 		sorter 				: "month",

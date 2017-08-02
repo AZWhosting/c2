@@ -69,20 +69,20 @@ class Ops extends REST_Controller {
 				
 				//Add new fields
 				// $fields = array(
-				// 	"yield" => array(
-				// 		"type" 		=> "DECIMAL",
-				// 		"constraint"=> "30,15",
-				// 		"null" 		=> FALSE,
-				// 		"default" 	=> 0
-				// 	),
-				// 	"gross_weight" => array(
-				// 		"type" 		=> "DECIMAL",
-				// 		"constraint"=> "30,15",
+				// 	// "yield" => array(
+				// 	// 	"type" 		=> "DECIMAL",
+				// 	// 	"constraint"=> "30,15",
+				// 	// 	"null" 		=> FALSE,
+				// 	// 	"default" 	=> 0
+				// 	// ),
+				// 	"employee_id" => array(
+				// 		"type" 		=> "INT",
+				// 		"constraint"=> 11,
 				// 		"null" 		=> FALSE,
 				// 		"default" 	=> 0
 				// 	)
 				// );
-				// $this->dbforge->add_column("item_lines", $fields);
+				// $this->dbforge->add_column("transactions", $fields);
 
 			    // Modify fields
 			 // 	$fields = array(

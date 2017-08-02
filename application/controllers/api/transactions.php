@@ -61,7 +61,7 @@ class Transactions extends REST_Controller {
 			}
 		}
 
-		$obj->include_related("contact", array("number","name","payment_term_id","payment_method_id","locale","bill_to","ship_to"));
+		$obj->include_related("contact", array("number","name","payment_term_id","payment_method_id","credit_limit","locale","bill_to","ship_to","deposit_account_id","trade_discount_id","settlement_discount_id","account_id","ra_id","or_account_id"));
 		$obj->where("is_recurring", $is_recurring);
 		$obj->where("deleted <>", 1);
 
@@ -111,7 +111,8 @@ class Transactions extends REST_Controller {
 				//Contact
 				$contact = array(
 					"id" 						=> $value->contact_id,
-					"number"					=> $value->contact_numbere ? $value->contact_number : "",
+					"abbr"						=> $value->contact_abbr ? $value->contact_abbr : "",
+					"number"					=> $value->contact_number ? $value->contact_number : "",
 					"name"						=> $value->contact_name ? $value->contact_name : "",
 					"payment_term_id"			=> $value->contact_payment_term_id ? $value->contact_payment_term_id : 0,
 					"payment_method_id"			=> $value->contact_payment_method_id ? $value->contact_payment_method_id : 0,
@@ -122,11 +123,25 @@ class Transactions extends REST_Controller {
 					"deposit_account_id"		=> $value->contact_deposit_account_id ? $value->contact_deposit_account_id : 0,
 					"trade_discount_id"			=> $value->contact_trade_discount_id ? $value->contact_trade_discount_id : 0,
 					"settlement_discount_id"	=> $value->contact_settlement_discount_id ? $value->contact_settlement_discount_id : 0,
-					"salary_account_id"			=> $value->contact_salary_account_id ? $value->contact_salary_account_id : 0,
 					"account_id"				=> $value->contact_account_id ? $value->contact_account_id : 0,
 					"ra_id"						=> $value->contact_ra_id ? $value->contact_ra_id : 0,
 					"or_account_id"				=> $value->contact_or_account_id ? $value->contact_or_account_id : 0
 				);
+
+				//Employee
+				$employee = [];
+				if($value->employee_id>0){
+					$employees = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$employees->get_by_id($value->employee_id>0);
+
+					$employee = array(
+						"id" 				=> $value->employee_id,
+						"abbr" 				=> $employees->abbr,
+						"number" 			=> $employees->number,
+						"name" 				=> $employees->name,
+						"salary_account_id"	=> $employees->contact_salary_account_id ? $value->contact_salary_account_id : 0
+					);
+				}
 
 				$data["results"][] = array(
 					"id" 						=> $value->id,
@@ -196,7 +211,8 @@ class Transactions extends REST_Controller {
 				   	"meter_id"					=> $value->meter_id,
 				   	"amount_paid"				=> $amount_paid,
 
-				   	"contact" 					=> $contact
+				   	"contact" 					=> $contact,
+				   	"employee" 					=> $employee
 				);
 			}
 		}
