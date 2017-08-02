@@ -887,10 +887,12 @@
 	<tr data-uid="#: uid #">	
 		<td>
 			<span>
-				#if(name.length>15){#
-					#=name.substring(0, 15)#...
-				#}else{#
-					#=name#
+				#if(name){#
+					#if(name.length>15){#
+						#=name.substring(0, 15)#...
+					#}else{#
+						#=name#
+					#}#
 				#}#
 			</span>
 			<span class="pull-right">#=kendo.toString(amount, banhji.locale=="km-KH"?"c0":"c2", banhji.locale)#</span>
@@ -956,7 +958,6 @@
 
 					<div class="table table-condensed" style="height: 580px;"						 
 						 data-role="grid"
-						 data-auto-bind="false"						 
 						 data-bind="source: contactDS"
 						 data-row-template="customerCenter-customer-list-tmpl"
 						 data-columns="[{title: ''}]"
@@ -11717,10 +11718,12 @@
 	<tr data-uid="#: uid #">
 		<td>
 			<span>
-				#if(name.length>15){#
-					#=name.substring(0, 15)#...
-				#}else{#
-					#=name#
+				#if(name){#
+					#if(name.length>15){#
+						#=name.substring(0, 15)#...
+					#}else{#
+						#=name#
+					#}#
 				#}#
 			</span>
 			<span class="pull-right">#=kendo.toString(amount, banhji.locale=="km-KH"?"c0":"c2", banhji.locale)#</span>
