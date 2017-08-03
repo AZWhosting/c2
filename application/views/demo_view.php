@@ -20664,7 +20664,7 @@
 							<div class="widget-search separator bottom">
 								<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></button>
 								<div class="overflow-hidden">
-									<input type="search" placeholder="Number or Name ..." data-bind="value: searchText, events:{change: enterSearch}">
+									<input type="search" placeholder="Number or Name ..." data-bind="value: searchText">
 								</div>
 							</div>
 
@@ -51443,7 +51443,6 @@
 		lang 						: langVM,
 		countryDS					: dataStore(apiUrl + "countries"),
 		//Contact
-		contactDS					: dataStore(apiUrl + "contacts"),
 		customerDS 					: new kendo.data.DataSource({
 			transport: {
 				read 	: {
@@ -88993,7 +88992,7 @@
 		journalLineDS		: dataStore(apiUrl + "journal_lines"),
 		recurringDS 		: dataStore(apiUrl + "transactions"),
 		recurringLineDS 	: dataStore(apiUrl + "account_lines"),
-		contactDS 			: banhji.source.contactDS,
+		contactDS 			: dataStore(apiUrl + "contacts"),
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),
 		paymentMethodDS		: banhji.source.paymentMethodDS,
 		currencyDS  		: new kendo.data.DataSource({
@@ -101458,12 +101457,22 @@
 		dataSource 	  		: dataStore(apiUrl + "transactions"),
 		itemLineDS 	  		: dataStore(apiUrl + "item_lines"),
 		journalLineDS 	  	: dataStore(apiUrl + "journal_lines"),
+		contactDS 			: dataStore(apiUrl + "contacts/less"),
+		itemDS 				: dataStore(apiUrl + "items/less"),
 		txnList 			: [],
 		enableImport 		: false,
+		pageLoad 			: function(){
+			this.contactDS.query({
+				filter:[]
+			});
+			this.itemDS.query({
+				filter:[]
+			});
+		},
 		getCustomerId 		: function(name, row){
 			var id = 0, self = banhji.importTxn;
 
-			$.each(banhji.source.customerDS.data(), function(index, value){
+			$.each(this.contactDS.data(), function(index, value){
 				if(value.name.trim()==name){
 					id = value.id;
 
@@ -101482,7 +101491,7 @@
 		getSupplierId 		: function(name, row){
 			var id = 0, self = banhji.importTxn;
 
-			$.each(banhji.source.supplierDS.data(), function(index, value){
+			$.each(this.contactDS.data(), function(index, value){
 				if(value.name.trim()==name){
 					id = value.id;
 
@@ -101501,7 +101510,7 @@
 		getItemId 			: function(name, row){
 			var id = 0, self = banhji.importTxn;
 
-			$.each(banhji.source.itemList, function(index, value){
+			$.each(this.itemDS.data(), function(index, value){
 				if(value.name.trim()==name){
 					id = value.id;
 
@@ -101598,7 +101607,7 @@
 								cost = kendo.parseFloat(roa[i].cost), 
 								amount = kendo.parseFloat(roa[i].amount),
 								item_id = self.getItemId(roa[i].item.trim(), i),
-								item = banhji.source.itemDS.get(item_id);
+								item = self.itemDS.get(item_id);
 
 							if(roa[i].name!==undefined){
 								contact_id = self.getSupplierId(roa[i].name.trim(), i);
@@ -101822,7 +101831,7 @@
 								price = kendo.parseFloat(roa[i].price), 
 								amount = kendo.parseFloat(roa[i].amount),
 								item_id = self.getItemId(roa[i].item.trim(), i),
-								item = banhji.source.itemDS.get(item_id);
+								item = self.itemDS.get(item_id);
 
 							if(roa[i].name!==undefined){
 								contact_id = self.getCustomerId(roa[i].name.trim(), i);
@@ -111017,6 +111026,12 @@
 	*************************************************/
 	banhji.router.route("/imports", function(){
 		banhji.view.layout.showIn("#content", banhji.view.imports);
+
+		if(banhji.pageLoaded["imports"]==undefined){
+			banhji.pageLoaded["imports"] = true;
+
+			banhji.importTxn.pageLoad();
+		}
 	});
 
 

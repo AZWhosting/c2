@@ -146,8 +146,8 @@ class Items extends REST_Controller {
 
 		//Response Data		
 		$this->response($data, 200);	
-	}	
-	
+	}
+
 	//POST
 	function index_post() {
 		$models = json_decode($this->post('models'));				
@@ -390,6 +390,78 @@ class Items extends REST_Controller {
 		$this->response($data, 200);
 	}
 
+	//GET LESS
+	function less_get() {		
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
+		$data["count"] = 0;
+		
+		$obj = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+
+		//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
+			}
+		}
+		
+		//Filter		
+		if(!empty($filter["filters"]) && isset($filter["filters"])){
+	    	foreach ($filter['filters'] as $value) {
+	    		if(isset($value['operator'])) {
+	    			$obj->{$value['operator']}($value['field'], $value['value']);
+				} else {
+					$obj->where($value["field"], $value["value"]);
+				}
+			}
+		}
+		
+		$obj->where("is_pattern <>", 1);
+		$obj->where("deleted <>", 1);			
+		
+		//Results
+		if($page && $limit){
+			$obj->get_paged_iterated($page, $limit);
+			$data["count"] = $obj->paged->total_rows;
+		}else{
+			$obj->get_iterated();
+			$data["count"] = $obj->result_count();
+		}
+
+		if($obj->exists()){
+			foreach ($obj as $value) {
+				$data["results"][] = array(
+					"id" 						=> $value->id,
+					"item_type_id"				=> $value->item_type_id,
+					"category_id" 				=> $value->category_id,
+					"measurement_id" 			=> $value->measurement_id,
+					"abbr" 						=> $value->abbr,
+					"number" 					=> $value->number,
+				   	"name" 						=> $value->name,
+				   	"cost" 						=> floatval($value->cost),
+				   	"price" 					=> floatval($value->price),
+				   	"locale" 					=> $value->locale,
+				   	"income_account_id" 		=> $value->income_account_id,
+				   	"expense_account_id"		=> $value->expense_account_id,
+				   	"inventory_account_id"		=> $value->inventory_account_id
+				);
+			}
+		}
+		
+		$data['pageSize'] = $limit;
+		$data['skip'] = $limit * $page;	
+
+		//Response Data		
+		$this->response($data, 200);	
+	}
+
 	//GET ON HAND
 	function on_hand_get() {		
 		$filter 	= $this->get("filter");
@@ -450,8 +522,6 @@ class Items extends REST_Controller {
 		//Response Data		
 		$this->response($data, 200);	
 	}
-	
-
 
 	//GET ITEM GROUP
 	function group_get() {		

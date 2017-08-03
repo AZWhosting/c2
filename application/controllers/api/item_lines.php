@@ -58,7 +58,7 @@ class Item_lines extends REST_Controller {
 			}
 		}
 
-		$obj->include_related("item", array("abbr","number","name","cost","price","locale","income_account_id","expense_account_id","inventory_account_id"));
+		$obj->include_related("item", array("item_type_id","abbr","number","name","cost","price","locale","income_account_id","expense_account_id","inventory_account_id"));
 		$obj->include_related("measurement", array("name"));
 		$obj->include_related("tax_item", array("tax_type_id","account_id","name","rate"));
 		$obj->where("deleted <>", 1);
@@ -77,6 +77,7 @@ class Item_lines extends REST_Controller {
 				//Item
 				$item = array(
 					"id" 					=> $value->item_id,
+					"item_type_id" 			=> $value->item_item_type_id,
 					"abbr"					=> $value->item_abbr, 
 					"number" 				=> $value->item_number, 
 					"name" 					=> $value->item_name,
@@ -145,7 +146,7 @@ class Item_lines extends REST_Controller {
 				   	"fine" 				=> floatval($value->fine),
 				   	"tax" 				=> floatval($value->tax),
 				   	"additional_cost" 	=> floatval($value->additional_cost),
-				   	"additional_applied"=> intval($value->additional_applied),
+				   	"additional_applied"=> $value->additional_applied==1?true : false,
 				   	"rate"				=> floatval($value->rate),
 				   	"locale" 			=> $value->locale,
 				   	"movement" 			=> $value->movement,
@@ -209,8 +210,8 @@ class Item_lines extends REST_Controller {
 							$totalQty = 1;
 						}
 						
-						// if($transaction->status==0 || $transaction->status==1 || $transaction->status==2 || $transaction->status==3){
-							//Sale
+						//Sale
+						if($value->movement==-1){
 							if($transaction->type=="Commercial_Invoice" || $transaction->type=="Vat_Invoice" || $transaction->type=="Invoice" || $transaction->type=="Commercial_Cash_Sale" || $transaction->type=="Vat_Cash_Sale" || $transaction->type=="Cash_Sale"){
 								//Avg Price
 								$lastPrice = $onHand * floatval($item->price);
@@ -219,9 +220,11 @@ class Item_lines extends REST_Controller {
 								$item->price = ($lastPrice + $currentPrice) / $totalQty;
 								$obj->price_avg = ($lastPrice + $currentPrice) / $totalQty;
 							}
+						}
 
-							//Purchase
-							if($transaction->type=="Cash_Purchase" || $transaction->type=="Credit_Purchase" || $transaction->type=="Item_Adjustment" || $transaction->type=="Internal_Usage"){
+						//Purchase
+						if($value->movement==1){
+							if($transaction->type=="Cash_Purchase" || $transaction->type=="Credit_Purchase" || $transaction->type=="Internal_Usage"){
 								//Avg Cost
 								$additionalCost = 0;
 								if(isset($value->additional_cost)){
@@ -236,13 +239,29 @@ class Item_lines extends REST_Controller {
 									$item->cost = $currentCost / $currentQuantity;
 								}
 							}
-						// }
 
-						if($transaction->type=="Item_Adjustment" && $item->cost==0){
-							//Avg Cost
-							$item->cost = floatval($value->cost);
+							if($transaction->type=="Item_Adjustment"){
+								if($item->cost==0){
+									$item->cost = floatval($value->cost);
+								}else{
+									//Avg Cost
+									$additionalCost = 0;
+									if(isset($value->additional_cost)){
+										$additionalCost = floatval($value->additional_cost);
+									}
+									$lastCost = $onHand * floatval($item->cost);
+									$currentCost = ($currentQuantity * floatval($value->cost) + $additionalCost) / floatval($value->rate);
+
+									if($onHand>0){
+										$item->cost = ($lastCost + $currentCost) / $totalQty;
+									}else{
+										$item->cost = $currentCost / $currentQuantity;
+									}
+								}
+							}
 						}
 
+						//Update Item
 						if($item->save()){
 							$poso = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 							$poso->where_in_related("transaction", "type", array("Purchase_Order, Sale_Order"));
@@ -263,7 +282,7 @@ class Item_lines extends REST_Controller {
 							}
 							$obj->on_po = $onPO;
 							$obj->on_so = $onSO;
-						}
+						}						
 					}					
 				}
 			}
@@ -339,7 +358,7 @@ class Item_lines extends REST_Controller {
 				   	"fine" 				=> floatval($obj->fine),
 				   	"tax" 				=> floatval($obj->tax),
 				   	"additional_cost" 	=> floatval($obj->additional_cost),
-				   	"additional_applied"=> $obj->additional_applied,
+				   	"additional_applied"=> $obj->additional_applied==1?true : false,
 				   	"rate"				=> floatval($obj->rate),
 				   	"locale" 			=> $obj->locale,
 				   	"movement" 			=> $obj->movement,

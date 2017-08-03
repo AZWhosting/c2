@@ -507,6 +507,76 @@ class Contacts extends REST_Controller {
 		$this->response($data, 200);
 	}
 
+	//GET LESS
+	function less_get() {
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
+		$data["count"] = 0;
+
+		$obj = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
+			}
+		}
+
+		//Filter
+		if(!empty($filter['filters']) && isset($filter['filters'])){
+	    	foreach ($filter['filters'] as $value) {
+	    		if(isset($value['operator'])) {
+					$obj->{$value['operator']}($value['field'], $value['value']);
+				} else {
+	    			$obj->where($value["field"], $value["value"]);
+				}
+			}
+		}
+
+		$obj->where("is_pattern <>", 1);
+		$obj->where("deleted <>", 1);
+
+		//Results
+		if($page && $limit){
+			$obj->get_paged_iterated($page, $limit);
+			$data["count"] = $obj->paged->total_rows;
+		}else{
+			$obj->get_iterated();
+			$data["count"] = $obj->result_count();
+		}
+
+		if($obj->exists()){
+			foreach ($obj as $value) {
+		 		$data["results"][] = array(
+		 			"id" 						=> $value->id,
+					"contact_type_id" 			=> $value->contact_type_id,
+					// "abbr" 						=> $value->abbr,
+					"number" 					=> $value->number,
+					"name" 						=> $value->name,
+					"locale" 					=> $value->locale,
+					"payment_term_id" 			=> $value->payment_term_id,
+					"payment_method_id" 		=> $value->payment_method_id,
+					"deposit_account_id"		=> $value->deposit_account_id,
+					"trade_discount_id" 		=> $value->trade_discount_id,
+					"settlement_discount_id"	=> $value->settlement_discount_id,
+					"account_id" 				=> $value->account_id,
+					"ra_id" 					=> $value->ra_id,
+					"tax_item_id" 				=> $value->tax_item_id
+		 		);
+			}
+		}
+
+		//Response Data		
+		$this->response($data, 200);
+	}
+
 	//Generate number
 	public function _generate_number($type_id){
 		$types = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
