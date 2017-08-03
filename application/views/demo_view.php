@@ -2331,7 +2331,7 @@
 					                   data-bind="value: obj.transaction_template_id,
 					                              source: txnTemplateDS"
 					                   data-option-label="Select Template..." />
-					         	<a style="color: #fff; margin-left: 10px;">Print Preview</a>
+					         	
 							</div>
 							<div class="span8" align="right">
 								<span class="btn-btn" onclick="javascript:window.history.back()" data-bind="click: cancel"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
@@ -2956,7 +2956,7 @@
 					                   data-bind="value: obj.transaction_template_id,
 					                              source: txnTemplateDS"
 					                   data-option-label="Select Template..." />
-								<a style="color: #fff; margin-left: 10px;">Print Preview</a>
+								
 							</div>
 							<div class="span8" align="right">
 								<span class="btn-btn" onclick="javascript:window.history.back()" data-bind="click: cancel"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
@@ -3557,7 +3557,7 @@
 					                   data-bind="value: obj.transaction_template_id,
 					                              source: txnTemplateDS"
 					                   data-option-label="Select Template..." />
-								<a style="color: #fff; margin-left: 10px;">Print Preview</a>
+								
 							</div>
 							<div class="span8" align="right">
 								<span class="btn-btn" onclick="javascript:window.history.back()" data-bind="click: cancel"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
@@ -4246,7 +4246,7 @@
 					                   data-bind="value: obj.transaction_template_id,
 					                              source: txnTemplateDS"
 					                   data-option-label="Select Template..." />
-								<a style="color: #fff; margin-left: 10px;">Print Preview</a>
+								
 							</div>
 							<div class="span8" align="right">
 								<span class="btn-btn" onclick="javascript:window.history.back()" data-bind="click: cancel"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
@@ -4975,7 +4975,7 @@
 					                   data-bind="value: obj.transaction_template_id,
 					                              source: txnTemplateDS"
 					                   data-option-label="Select Template..." />
-								<a style="color: #fff; margin-left: 10px;">Print Preview</a>
+								
 							</div>
 							<div class="span8" align="right">
 								<span class="btn-btn" onclick="javascript:window.history.back()" data-bind="click: cancel"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
@@ -5481,7 +5481,7 @@
 					                   data-bind="value: obj.transaction_template_id,
 					                              source: txnTemplateDS"
 					                   data-option-label="Select Template..." />
-								<a style="color: #fff; margin-left: 10px;">Print Preview</a>
+								
 							</div>
 							<div class="span8" align="right">
 								<span class="btn-btn" onclick="javascript:window.history.back()" data-bind="click: cancel"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
@@ -6010,7 +6010,7 @@
 					                   data-bind="value: obj.transaction_template_id,
 					                              source: txnTemplateDS"
 					                   data-option-label="Select Template..." />
-								<a style="color: #fff; margin-left: 10px;">Print Preview</a>
+								
 							</div>
 							<div class="span8" align="right">
 								<span class="btn-btn" onclick="javascript:window.history.back()" data-bind="click: cancel"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
@@ -6530,7 +6530,7 @@
 					                   data-bind="value: obj.transaction_template_id,
 					                              source: txnTemplateDS"
 					                   data-option-label="Select Template..." />
-								<a style="color: #fff; margin-left: 10px;">Print Preview</a>
+								
 							</div>
 							<div class="span8" align="right">
 								<span class="btn-btn" onclick="javascript:window.history.back()" data-bind="click: cancel"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
@@ -13154,7 +13154,7 @@
 					                   data-bind="value: obj.transaction_template_id,
 					                              source: txnTemplateDS"
 					                   data-option-label="Select Template..." />
-								<a style="color: #fff; margin-left: 10px;">Print Preview</a>
+								
 							</div>
 							<div class="span8" align="right">
 								<span class="btn-btn" onclick="javascript:window.history.back()" data-bind="click: cancel"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
@@ -13665,7 +13665,7 @@
 				                   data-bind="value: obj.transaction_template_id,
 				                              source: txnTemplateDS"
 				                   data-option-label="Select Template..." />
-							<a style="color: #fff; margin-left: 10px;">Print Preview</a>
+							
 						</div>
 						<div class="span8" align="right">
 							<span class="btn-btn" onclick="javascript:window.history.back()" data-bind="click: cancel"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
@@ -14166,7 +14166,7 @@
 				                   data-bind="value: obj.transaction_template_id,
 				                              source: txnTemplateDS"
 				                   data-option-label="Select Template..." />
-							<a style="color: #fff; margin-left: 10px;">Print Preview</a>
+							
 						</div>
 						<div class="span8" align="right">
 							<span class="btn-btn" onclick="javascript:window.history.back()" data-bind="click: cancel"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
@@ -15166,7 +15166,7 @@
 					                   data-bind="value: obj.transaction_template_id,
 					                              source: txnTemplateDS"
 					                   data-option-label="Select Template..." />
-								<a style="color: #fff; margin-left: 10px;">Print Preview</a>
+								
 							</div>
 							<div class="span8" align="right">
 								<span class="btn-btn" onclick="javascript:window.history.back()" data-bind="click: cancel"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
@@ -15838,7 +15838,7 @@
 					                   data-bind="value: obj.transaction_template_id,
 					                              source: txnTemplateDS"
 					                   data-option-label="Select Template..." />
-								<a style="color: #fff; margin-left: 10px;">Print Preview</a>
+								
 							</div>
 							<div class="span8" align="right">
 								<span class="btn-btn" onclick="javascript:window.history.back()" data-bind="click: cancel"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
@@ -16368,7 +16368,7 @@
 					                   data-bind="value: obj.transaction_template_id,
 					                              source: txnTemplateDS"
 					                   data-option-label="Select Template..." />
-								<a style="color: #fff; margin-left: 10px;">Print Preview</a>
+								
 							</div>
 							<div class="span8" align="right">
 								<span class="btn-btn" onclick="javascript:window.history.back()" data-bind="click: cancel"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
@@ -23968,7 +23968,7 @@
 					                   data-bind="value: obj.transaction_template_id,
 					                              source: txnTemplateDS"
 					                   data-option-label="Select Template..." />
-								<a style="color: #fff; margin-left: 10px;">Print Preview</a>
+								
 							</div>
 							<div class="span8" align="right">
 								<span class="btn-btn" onclick="javascript:window.history.back()" data-bind="click: cancel"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
@@ -28378,7 +28378,7 @@
 					                   data-bind="value: obj.transaction_template_id,
 					                              source: txnTemplateDS"
 					                   data-option-label="Select Template..." />
-								<a style="color: #fff; margin-left: 10px;">Print Preview</a>
+								
 							</div>
 							<div class="span8" align="right">
 								<span class="btn-btn" onclick="javascript:window.history.back()" data-bind="click: cancel"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
@@ -28900,7 +28900,7 @@
 					                   data-bind="value: obj.transaction_template_id,
 					                              source: txnTemplateDS"
 					                   data-option-label="Select Template..." />
-								<a style="color: #fff; margin-left: 10px;">Print Preview</a>
+								
 							</div>
 							<div class="span8" align="right">
 								<span class="btn-btn" onclick="javascript:window.history.back()" data-bind="click: cancel"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
@@ -29448,7 +29448,7 @@
 				                   data-bind="value: obj.transaction_template_id,
 				                              source: txnTemplateDS"
 				                   data-option-label="Select Template..." />
-							<a style="color: #fff; margin-left: 10px;">Print Preview</a>
+							
 						</div>
 						<div class="span8" align="right">
 							<span class="btn-btn" onclick="javascript:window.history.back()" data-bind="click: cancel"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
@@ -30040,7 +30040,7 @@
 				                   data-bind="value: obj.transaction_template_id,
 				                              source: txnTemplateDS"
 				                   data-option-label="Select Template..." />
-							<a style="color: #fff; margin-left: 10px;">Print Preview</a>
+							
 						</div>
 						<div class="span8" align="right">
 							<span class="btn-btn" onclick="javascript:window.history.back()" data-bind="click: cancel"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
@@ -38067,7 +38067,7 @@
 					                   data-bind="value: obj.transaction_template_id,
 					                              source: txnTemplateDS"
 					                   data-option-label="Select Template..." />
-								<a style="color: #fff; margin-left: 10px;">Print Preview</a>
+								
 							</div>
 							<div class="span8" align="right">
 								<span class="btn-btn" onclick="javascript:window.history.back()" data-bind="click: cancel"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
@@ -38464,7 +38464,7 @@
 				                   data-bind="value: obj.transaction_template_id,
 				                              source: txnTemplateDS"
 				                   data-option-label="Select Template..." />
-							<a style="color: #fff; margin-left: 10px;">Print Preview</a>
+							
 						</div>
 						<div class="span8" align="right">
 							<span class="btn-btn" onclick="javascript:window.history.back()" data-bind="click: cancel"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
@@ -46841,7 +46841,7 @@
 				                   data-bind="value: obj.transaction_template_id,
 				                              source: txnTemplateDS"
 				                   data-option-label="Select Template..." />
-							<a style="color: #fff; margin-left: 10px;">Print Preview</a>
+							
 						</div>
 						<div class="span8" align="right">
 							<span class="btn-btn" onclick="javascript:window.history.back()" data-bind="click: cancel"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
@@ -47491,7 +47491,7 @@
 					                   data-bind="value: obj.transaction_template_id,
 					                              source: txnTemplateDS"
 					                   data-option-label="Select Template..." />
-								<a style="color: #fff; margin-left: 10px;">Print Preview</a>
+								
 							</div>
 							<div class="span8" align="right">
 								<span class="btn-btn" onclick="javascript:window.history.back()" data-bind="click: cancel"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
