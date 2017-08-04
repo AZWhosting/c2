@@ -29081,9 +29081,9 @@
 							                   data-filter="startswith"
 							                   data-text-field="name"
 							                   data-value-field="id"
-							                   data-bind="value: obj.employee,
+							                   data-bind="value: obj.contact,
 							                              source: contactDS,
-							                              events: {change: employeeChanges}"
+							                              events: {change: contactChanges}"
 							                   data-option-label="Select Employee..."
 							                   required data-required-msg="required" style="width: 100%;" />
 									</td>
@@ -29602,9 +29602,9 @@
 							                   data-filter="startswith"
 							                   data-text-field="name"
 							                   data-value-field="id"
-							                   data-bind="value: obj.employee,
+							                   data-bind="value: obj.contact,
 							                              source: contactDS,
-							                              events: {change: employeeChanges}"
+							                              events: {change: contactChanges}"
 							                   data-option-label="Select Employee..."
 							                   required data-required-msg="required" style="width: 100%;" />
 									</td>
@@ -89907,14 +89907,14 @@
 	        	}
 	        });
 	    },
-	    //Employee
-	    employeeChanges 		: function(){
+	    //Contact
+	    contactChanges 		: function(){
 			var obj = this.get("obj");
 
-	    	if(obj.employee){
-		    	var employee = obj.employee;
+	    	if(obj.contact){
+		    	var contact = obj.contact;
 		    	
-		    	obj.set("employee_id", employee.id);
+		    	obj.set("contact_id", contact.id);
 	    	}
 	    },
 	    //Currency Rate
@@ -90072,6 +90072,7 @@
 				recurring_id 		: "",
 				account_id 			: 1,
 				payment_method_id 	: 1,
+				contact_id 			: "",
 				employee_id 		: "",
 				user_id 			: this.get("user_id"),
 			   	type				: "Cash_Advance", //required
@@ -90324,13 +90325,13 @@
 				obj = self.get("obj");
 				
 				obj.set("recurring_id", id);
-				obj.set("employee_id", view[0].employee_id);
+				obj.set("contact_id", view[0].contact_id);
 				obj.set("locale", view[0].locale);
 				obj.set("payment_method_id", view[0].payment_method_id);
 				obj.set("account_id", view[0].account_id);
 				obj.set("segments", view[0].segments);
 				obj.set("memo", view[0].memo);
-				obj.set("employee", view[0].employee);
+				obj.set("contact", view[0].contact);
 			});
 
 			this.recurringLineDS.query({
@@ -90633,19 +90634,19 @@
 			});
 		},
 		//Contact
-		setContact 		: function(contact){
+		setContact 			: function(contact){
 			var obj = this.get("obj");
 
 		    obj.set("employee", contact);
 		    this.employeeChanges();
 	    },
-	    employeeChanges 		: function(){
+	    contactChanges 		: function(){
 			var obj = this.get("obj");
 
-	    	if(obj.employee){
-		    	var employee = obj.employee;
+	    	if(obj.contact){
+		    	var contact = obj.contact;
 		    	
-		    	obj.set("employee_id", employee.id);
+		    	obj.set("contact_id", contact.id);
 
 		    	this.setRate();
 		    	this.loadReference();
@@ -91126,7 +91127,7 @@
 
 				self.journalLineDS.add({
 					transaction_id 		: transaction_id,
-					employee_id 		: value.employee_id,
+					contact_id 			: value.contact_id,
 					account_id 			: value.account_id,
 					description 		: value.description,
 					reference_no 		: value.reference_no,
@@ -91167,7 +91168,7 @@
 						self.journalLineDS.add({
 							transaction_id 		: transaction_id,
 							account_id 			: value.id,
-							contact_id 			: value.employee_id,
+							contact_id 			: value.contact_id,
 							description 		: "",
 							reference_no 		: "",
 							segments 	 		: [],
@@ -91191,7 +91192,7 @@
 
 					this.journalLineDS.add({
 						transaction_id 		: transaction_id,
-						contact_id 			: obj.employee_id,
+						contact_id 			: obj.contact_id,
 						account_id 			: obj.account_id,
 						description 		: "",
 						reference_no 		: "",
@@ -91210,7 +91211,7 @@
 					//Cash on Cr
 					this.journalLineDS.add({
 						transaction_id 		: transaction_id,
-						contact_id 			: obj.employee_id,
+						contact_id 			: obj.contact_id,
 						account_id 			: obj.account_id,
 						description 		: "",
 						reference_no 		: "",
@@ -91225,7 +91226,7 @@
 				//Advance Account on Cr
 	    		this.journalLineDS.add({
 					transaction_id 		: transaction_id,
-					contact_id 			: reference.employee_id,
+					contact_id 			: reference.contact_id,
 					account_id 			: advance_account_id,
 					description 		: reference.memo,
 					reference_no 		: reference.number,
@@ -91239,7 +91240,7 @@
 			    //Cash on Cr
 				this.journalLineDS.add({
 					transaction_id 		: transaction_id,
-					contact_id 			: obj.employee_id,
+					contact_id 			: obj.contact_id,
 					account_id 			: obj.account_id,
 					description 		: "",
 					reference_no 		: "",
@@ -91257,9 +91258,9 @@
 		loadReference 		: function(){
 			var self = this, obj = this.get("obj");
 
-			if(obj.employee_id>0){
+			if(obj.contact_id>0){
 				this.referenceDS.filter([
-					{ field:"employee_id", value:obj.employee_id },
+					{ field:"contact_id", value:obj.contact_id },
 					{ field:"type", value:"Cash_Advance" },
 					{ field:"status", operator:"where_in", value:[0,2] }
 				]);
@@ -91291,7 +91292,7 @@
 				obj = self.get("obj");
 				
 				obj.set("recurring_id", id);
-				obj.set("employee_id", view[0].employee_id);
+				obj.set("contact_id", view[0].contact_id);
 				obj.set("type", view[0].type);
 				obj.set("locale", view[0].locale);
 				obj.set("account_id", view[0].account_id);
