@@ -61,7 +61,7 @@ class Transactions extends REST_Controller {
 			}
 		}
 
-		$obj->include_related("contact", array("number","name","payment_term_id","payment_method_id","credit_limit","locale","bill_to","ship_to","deposit_account_id","trade_discount_id","settlement_discount_id","account_id","ra_id"));
+		$obj->include_related("contact", array("abbr","number","name","payment_term_id","payment_method_id","credit_limit","locale","bill_to","ship_to","deposit_account_id","trade_discount_id","settlement_discount_id","account_id","ra_id"));
 		$obj->where("is_recurring", $is_recurring);
 		$obj->where("deleted <>", 1);
 
@@ -130,15 +130,16 @@ class Transactions extends REST_Controller {
 				//Employee
 				$employee = [];
 				if($value->employee_id>0){
-					$employees = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-					$employees->get_by_id($value->employee_id>0);
+					$employies = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$employies->select("abbr, number, name, salary_account_id");
+					$employies->get_by_id($value->employee_id);
 
 					$employee = array(
 						"id" 				=> $value->employee_id,
-						"abbr" 				=> $employees->abbr,
-						"number" 			=> $employees->number,
-						"name" 				=> $employees->name,
-						"salary_account_id"	=> $employees->contact_salary_account_id ? $value->contact_salary_account_id : 0
+						"abbr" 				=> $employies->abbr,
+						"number" 			=> $employies->number,
+						"name" 				=> $employies->name,
+						"salary_account_id"	=> $employies->salary_account_id
 					);
 				}
 

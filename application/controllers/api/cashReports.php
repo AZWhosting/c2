@@ -515,7 +515,7 @@ class Cashreports extends REST_Controller {
 		}
 
 		//Results
-		$obj->include_related("contact", array("abbr", "number", "name"));
+		// $obj->include_related("contact", array("abbr", "number", "name"));
 		$obj->where("type", "Cash_Advance");
 		$obj->where("is_recurring <>", 1);
 		$obj->where("deleted <>", 1);
@@ -527,7 +527,7 @@ class Cashreports extends REST_Controller {
 			foreach ($obj as $value) {
 				//Payments
 				$payments = [];				
-				$pmt = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);				
+				$pmt = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				$pmt->where("reference_id", $value->id);
 				$pmt->where("is_recurring <>",1);
 				$pmt->where("deleted <>",1);
@@ -547,8 +547,8 @@ class Cashreports extends REST_Controller {
 								
 				$amount = (floatval($value->amount) - floatval($value->deposit)) / floatval($value->rate);
 
-				if(isset($objList[$value->contact_id])){
-					$objList[$value->contact_id]["line"][] = array(
+				if(isset($objList[$value->employee_id])){
+					$objList[$value->employee_id]["line"][] = array(
 						"id" 				=> $value->id,
 						"type" 				=> $value->type,
 						"number" 			=> $value->number,
@@ -558,9 +558,13 @@ class Cashreports extends REST_Controller {
 						"payments" 			=> $payments
 					);
 				}else{
-					$objList[$value->contact_id]["id"] 		= $value->contact_id;
-					$objList[$value->contact_id]["name"] 	= $value->contact_abbr.$value->contact_number." ".$value->contact_name;
-					$objList[$value->contact_id]["line"][] 	= array(
+					$employee = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$employee->select("abbr, number, name");
+					$employee->get_by_id($value->employee_id);
+
+					$objList[$value->employee_id]["id"] 	= $value->employee_id;
+					$objList[$value->employee_id]["name"] 	= $employee->abbr.$employee->number." ".$employee->name;
+					$objList[$value->employee_id]["line"][] = array(
 						"id" 				=> $value->id,
 						"type" 				=> $value->type,
 						"number" 			=> $value->number,
