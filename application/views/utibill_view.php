@@ -1,4 +1,3 @@
-
 <div id="wrapperApplication" class="wrapper"></div>
 <!--load before somthing not yet done -->
 <div id="holdpageloadhide" style="display:block;text-align: center;position: fixed;top: 0; left: 0;width: 100%; height: 100%;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
@@ -8730,8 +8729,8 @@
 												<td >
 													<h3><a href="#/mini_usage_list" data-bind="text: lang.lang.minimum_water_usage_list">Minimum Water Usage List</a></h3>
 												</td>
-												<td >
-													<h3><a href="#/to_be_disconnect_list">To Be Disconnect List</a></h3>
+												<td >													
+													<h3 ><a href="#/to_be_disconnect_list" data-bind="text: lang.lang.to_be_disconnect_list"></a></h3>
 												</td>
 											</tr>
 
@@ -8824,7 +8823,7 @@
 													<h3><a href="#/connect_service_revenue" data-bind="text: lang.lang.connection_service_revenue_report">Connection Service Revenue Report</a></h3>
 												</td>
 												<td >
-													<h3><a href="#/fine_collect">Fine Collection Report</a></h3>
+													<h3><a href="#/fine_collect" data-bind="text: lang.lang.fine_collection_report">Fine Collection Report</a></h3>
 													
 												</td>
 											</tr>
@@ -8994,10 +8993,10 @@
 							<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center">
 								<thead>
 									<tr>
-										<th style="vertical-align: top;">Property</th>
-										<th style="vertical-align: top;">Meter</th>
-										<th style="vertical-align: top;">Bloc</th>
-										<th style="vertical-align: top;">License</th>
+										<th style="vertical-align: top;"><span data-bind="text: lang.lang.customer"></span></th>
+										<th style="vertical-align: top;"><span data-bind="text:lang.lang.meter_number"></span></th>
+										<th style="vertical-align: top;"><span data-bind="text:lang.lang.address"></span></th>
+										<th style="vertical-align: top;"><span data-bind="text:lang.lang.license"></span></th>
 									</tr>
 								</thead>
 								<tbody data-role="listview"
@@ -9006,6 +9005,10 @@
 											 data-template="customerList-temp"
 								></tbody>
 							</table>
+							<div id="pager" class="k-pager-wrap"
+			            		 data-role="pager"
+						    	 data-auto-bind="false"
+					             data-bind="source: dataSource"></div>
 						</div>
 					</div>
 				</div>
@@ -9022,7 +9025,7 @@
 			<td>#=line[i].property#</td>
 			<td>#=line[i].meter#</td>
 			<td>#=line[i].location#</td>
-			<td style="text-align: right;">#=line[i].branch#</td>
+			<td>#=line[i].branch#</td>
 		</tr>
 
 	#}#
@@ -9217,7 +9220,7 @@
 								<thead>
 									<tr>
 										<th style="vertical-align: top;"><span data-bind="text: lang.lang.customer_name">Customer Name</span></th>
-										<th style="vertical-align: top;"><span data-bind="">License</span></th>
+										<th style="vertical-align: top;"><span data-bind="text:lang.lang.license"></span></th>
 										<th style="vertical-align: top;"><span data-bind="text: lang.lang.number">Number</span></th>
 										<th style="vertical-align: top;"><span data-bind="text: lang.lang.phone">Phone</span></th>
 										<th style="vertical-align: top;"><span data-bind="text: lang.lang.address">Address</span></th>
@@ -9322,16 +9325,16 @@
 						<div id="invFormContent">
 							<div class="block-title">
 								<h3 data-bind="text: institute.name"></h3>
-								<h2 data-bind="">To Be Disconnect Customer List</h2>
+								<h2 data-bind="text: lang.lang.to_be_disconnect_list">To Be Disconnect Customer List</h2>
 							</div>
 							<table style="margin-bottom: 0;" class="table table-bordered table-condensed table-striped table-primary table-vertical-center">
 								<thead>
 									<tr>
 										<th style="vertical-align: top;"><span data-bind="text: lang.lang.customer_name">Customer Name</span></th>
-										<th style="vertical-align: top;"><span data-bind="">Date</span></th>
+										<th style="vertical-align: top;"><span data-bind="text: lang.lang.date"></span></th>
 										<th style="vertical-align: top;"><span data-bind="text: lang.lang.reference">Reference</span></th>										
 										<th style="vertical-align: top; text-align: center;"><span data-bind="text: lang.lang.status">Status</span></th>
-										<th style="vertical-align: top;"><span data-bind="">Location</span></th>
+										<th style="vertical-align: top;"><span data-bind="text: lang.lang.address"></span></th>
 									</tr>
 								</thead>
 								<tbody data-role="listview"
@@ -9660,7 +9663,7 @@
 		<td>#=from_date# - #=to_date#</td>
 		<td>#=license#</td>
 		<td>#=address#</td>
-		<td style="text-align: right;">#=usage#</td>
+		<td>#=usage#</td>
 	</tr>
 </script>
 <script id="saleSummary" type="text/x-kendo-template">
@@ -9985,10 +9988,10 @@
 								<thead>
 									<tr>									
 										<th style="vertical-align: top;"><span data-bind="text: lang.lang.type">Type</span></th>
-										<th style="text-align: right; vertical-align: top;"><span data-bind="text: lang.lang.data">Date</span></th>
-										<th style="text-align: right; vertical-align: top;"><span data-bind="text: lang.lang.location">Location</span></th>
-										<th style="text-align: right; vertical-align: top;"><span data-bind="text: lang.lang.reference">Reference</span></th>
-										<th style="vertical-align: top;"><span data-bind="text: lang.lang.revenue">Revenue</span></th>
+										<th style="text-align: left; vertical-align: top;"><span data-bind="text: lang.lang.date">Date</span></th>
+										<th style="text-align: left; vertical-align: top;"><span data-bind="text: lang.lang.location">Location</span></th>
+										<th style="text-align: left; vertical-align: top;"><span data-bind="text: lang.lang.reference">Reference</span></th>
+										<th style="vertical-align: top; text-align: right;"><span data-bind="text: lang.lang.revenue">Revenue</span></th>
 									</tr>
 								</thead>
 								<tbody data-role="listview"
@@ -10017,9 +10020,9 @@
 		# amount += line[i].amount;#
 		<tr>
 			<td style="padding-left: 20px !important;">#=line[i].type#</td>
-			<td style="text-align: right;">#=kendo.toString(new Date(line[i].date), "dd-MM-yyyy")#</td>
-			<td style="text-align: right;">#=line[i].location#</td>
-			<td style="text-align: right;">
+			<td style="text-align: left;">#=kendo.toString(new Date(line[i].date), "dd-MM-yyyy")#</td>
+			<td style="text-align: left;">#=line[i].location#</td>
+			<td style="text-align: left;">
 				<a href="\#/#=line[i].type.toLowerCase()#/#=line[i].id#">#=line[i].number#</a>
 			</td>		
 			<td style="text-align: right;">#=kendo.toString(line[i].amount, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#</td>
@@ -10184,8 +10187,8 @@
 										<th style="vertical-align: top;"><span data-bind="text: lang.lang.date">Date</span></th>
 										<th style="vertical-align: top;"><span data-bind="text: lang.lang.location">Location</span></th>
 										<th style="vertical-align: top;"><span data-bind="text: lang.lang.reference">Reference</span></th>
-										<th style="vertical-align: top;"><span data-bind="text: lang.lang.usage">Usage</span></th>
-										<th style="vertical-align: top;"><span data-bind="text: lang.lang.amount">Amount</span></th>
+										<th style="vertical-align: top; text-align: right;"><span data-bind="text: lang.lang.usage">Usage</span></th>
+										<th style="vertical-align: top; text-align: right;"><span data-bind="text: lang.lang.amount">Amount</span></th>
 									</tr>
 								</thead>
 								<tbody data-role="listview"
@@ -10216,7 +10219,7 @@
 			<td>#=kendo.toString(new Date(line[i].date), "dd-MM-yyyy")#</td>
 			<td>#=line[i].location#</td>
 			<td>#=line[i].number#</td>		
-			<td>#=line[i].usage#</td>	
+			<td style="text-align: right;">#=line[i].usage#</td>	
 			<td style="text-align: right;">#=kendo.toString(line[i].amount, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#</td>
 		</tr>
 	#}#
@@ -10353,7 +10356,7 @@
 						<div id="invFormContent">
 							<div class="block-title">
 								<h3 data-bind="text: company.name"></h3>
-								<h2>Fine Collection</h2>
+								<h2 data-bind="text: lang.lang.fine_collection_report">Fine Collection</h2>
 								<p data-bind="text: displayDate"></p>
 							</div>
 
@@ -10544,7 +10547,7 @@
 
 								        <!-- //Date -->
 								        <div class="tab-pane active" id="tab-1">
-									        As of:
+									        <span data-bind="text: lang.lang.as_of"></span>:
 									        <input data-role="datepicker"
 													data-format="dd-MM-yyyy"
 													data-parse-formats="yyyy-MM-dd" 
@@ -10645,8 +10648,8 @@
 										<th style="vertical-align: top;"><span data-bind="text: lang.lang.name">Name</span></th>
 										<th style="vertical-align: top;"><span data-bind="text: lang.lang.reference">Reference</span></th>
 										<th style="vertical-align: top;"><span data-bind="text: lang.lang.location">Location</span></th>
-										<th style="vertical-align: top;"><span data-bind="text: lang.lang.status">Status</span></th>	
-										<th style="vertical-align: top;"><span data-bind="text: lang.lang.amount">Amount</span></th>
+										<th style="vertical-align: top; text-align: center;"><span data-bind="text: lang.lang.status">Status</span></th>	
+										<th style="vertical-align: top; text-align: right;" ><span data-bind="text: lang.lang.amount">Amount</span></th>
 									</tr>
 								</thead>
 								<tbody data-role="listview"
@@ -10718,7 +10721,7 @@
 
 								        <!-- //Date -->
 								        <div class="tab-pane active" id="tab-1">
-									        As of:
+									        <span data-bind="text: lang.lang.as_of"></span>:
 									        <input data-role="datepicker"
 													data-format="dd-MM-yyyy"
 													data-parse-formats="yyyy-MM-dd" 
@@ -10820,7 +10823,7 @@
 										<th style="text-align: right; vertical-align: top;"><span>1-30</span></th>
 										<th style="text-align: right; vertical-align: top;"><span>31-60</span></th>
 										<th style="text-align: right; vertical-align: top;"><span>61-90</span></th>
-										<th style="text-align: right; vertical-align: top;"><span>OVER 90</span></th>
+										<th style="text-align: right; vertical-align: top;"><span data-bind="text: lang.lang.over_90"></span></th>
 										<th style="text-align: right; vertical-align: top;"><span data-bind="text: lang.lang.total">TOTAL</span></th>							
 									</tr>
 								</thead>
@@ -11069,16 +11072,20 @@
     </tr>  
 </script>
 <script id="agingDetail" type="text/x-kendo-template">
-	<div id="slide-form">
-		<div class="customer-background" style="margin-top: 20px;">
-			<div class="container-960">
-				<div id="example" class="k-content saleSummaryCustomer">		
-			    	<span class="pull-right glyphicons no-js remove_2" 
+	<div class="container">
+		<div class="row-fluid">
+			<div id="waterreport" class="background">
+				<div class="row-fluid">
+					<div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 100%;margin-top: -15px;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
+						<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
+					</div>
+					<div id="example" class="k-content">
+						<div class="hidden-print pull-right" style="margin-bottom: 15px;">
+				    		<span class="pull-right glyphicons no-js remove_2"
 						onclick="javascript:window.history.back()"><i></i></span>
-					<br>
-					<br>
-					
-					<div class="row-fluid">
+						</div>
+						<div class="clear"></div>
+
 					    <!-- Tabs -->
 						<div class="relativeWrap" data-toggle="source-code">
 							<div class="widget widget-tabs widget-tabs-gray report-tab">
@@ -11096,8 +11103,8 @@
 									<div class="tab-content">
 
 								        <!-- //Date -->
-								        <div class="tab-pane active" id="tab-1">									
-									        As of:
+								        <div class="tab-pane active" id="tab-1">
+									        <span data-bind="text: lang.lang.as_of"></span>:
 									        <input data-role="datepicker"
 													data-format="dd-MM-yyyy"
 													data-parse-formats="yyyy-MM-dd" 
@@ -11106,11 +11113,10 @@
 								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 							
 							        	</div>
-
 								    	<!-- Filter -->
 								        <div class="tab-pane" id="tab-2">
 											<div class="row">
-												<div class="span3" style="padding-left: 15px;">
+												<div class="xol-xs-12 col-sm-3">
 													<span data-bind="text: lang.lang.license">Licenses</span>
 													<input 
 														data-role="dropdownlist" 
@@ -11124,7 +11130,7 @@
 																source: licenseDS,
 																events: {change: licenseChange}" style="width: 100%">
 												</div>
-												<div class="span3">													
+												<div class="xol-xs-12 col-sm-3">
 													<span data-bind="text: lang.lang.location">Locations</span>
 														<input 
 															data-role="dropdownlist" 
@@ -11138,7 +11144,7 @@
 																enabled: haveBloc,
 																source: blocDS" style="width: 100%">
 												</div>
-												<div class="span3">
+												<div class="xol-xs-12 col-sm-3">
 													<span data-bind="text: lang.lang.customers"></span>
 													<select data-role="multiselect"
 														   data-value-primitive="true"
@@ -11151,72 +11157,69 @@
 														   data-placeholder="Select Customer.."
 														   style="width: 100%" /></select>
 												</div>
-												<div class="span1">											
+												<div class="xol-xs-12 col-sm-1">											
 										  			<button style="margin-top: 20px;" type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 												</div>														
 											</div>		
 							        	</div>
 							        	<!-- PRINT/EXPORT  -->
-								        <div class="tab-pane" id="tab-3">								        	
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
-								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		Print as PDF
-								        	</span> -->
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" style="width: 80px;">
-								        		<i class="fa fa-file-excel-o"></i>
-								        		Export to Excel
-								        	</span>
+								        <div class="tab-pane report" id="tab-3">								        	
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" ><i></i> Print</span>
+											<span id="excel" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" >
+												<i class="fa fa-file-excel-o"></i>
+												Export to Excel
+											</span>
 							        	</div>
 								    </div>
 								</div>
 							</div>
 						</div>
 						<!-- // Tabs END -->						
-					</div>
-					<div id="invFormContent">
-						<div class="block-title">
-							<h3 data-bind="text: company.name"></h3>
-							<h2 data-bind="text: lang.lang.customer_aging_detail_list">Customer Aging Detail</h2>
-							<p data-bind="text: displayDate"></p>
-						</div>
+					
+						<div id="invFormContent">
+							<div class="block-title">
+								<h3 data-bind="text: company.name"></h3>
+								<h2 data-bind="text: lang.lang.customer_aging_detail_list">Receivable Aging Summary</h2>
+								<p data-bind="text: displayDate"></p>
+							</div>
 
-						<div class="row">
-							<div class="span3" style="padding-right: 0;">
-								<div class="total-customer">									
-									<p data-bind="text: lang.lang.number_of_customer">Number of Customer</p>
-									<span data-format="n0" data-bind="text: dataSource.total"></span>
+							<div class="row">
+								<div class="col-xs-12 col-sm-3">
+									<div class="total-sale">									
+										<p data-bind="text: lang.lang.number_of_customer">Number of Customer</p>
+										<span data-format="n0" data-bind="text: dataSource.total"></span>
+									</div>
+								</div>
+								<div class="col-xs-12 col-sm-9">
+									<div class="total-sale">
+										<p data-bind="text: lang.lang.total_customer_balance">Total Customer Balance</p>
+										<span data-bind="text: totalBalance"></span>
+									</div>
 								</div>
 							</div>
-							<div class="span9">
-								<div class="total-customer">
-									<p data-bind="text: lang.lang.total_customer_balance">Total Customer Balance</p>
-									<span data-bind="text: totalBalance"></span>
-								</div>
-							</div>
-						</div>
 
-						<table class="table table-borderless table-condensed ">
-							<thead>
-								<tr>
-									<th><span data-bind="text: lang.lang.type">Type</span></th>
-									<th><span data-bind="text: lang.lang.invoice_date">Invoice Date</span></th>
-									<th><span data-bind="text: lang.lang.due_date">Due Date</span></th>
-									<th><span data-bind="text: lang.lang.reference">Reference</span></th>
-									<th><span data-bind="text: lang.lang.location">Location</span></th>
-									<th style="text-align: center;"><span data-bind="text: lang.lang.status">Status</span></th>
-									<th style="text-align: right;"><span data-bind="text: lang.lang.amount">Amount</span></th>
-									<th style="text-align: right;"><span data-bind="text: lang.lang.balance">Balance</span></th>
-								</tr>
-							</thead>
-							<tbody data-role="listview"
+							<table style="margin-bottom: 0;" class="table table-bordered table-condensed table-striped table-primary table-vertical-center">
+								<thead>
+									<tr>
+										<th><span data-bind="text: lang.lang.type">Type</span></th>
+										<th><span data-bind="text: lang.lang.invoice_date">Invoice Date</span></th>
+										<th><span data-bind="text: lang.lang.due_date">Due Date</span></th>
+										<th><span data-bind="text: lang.lang.reference">Reference</span></th>
+										<th><span data-bind="text: lang.lang.location">Location</span></th>
+										<th style="text-align: center;"><span data-bind="text: lang.lang.status">Status</span></th>
+										<th style="text-align: right;"><span data-bind="text: lang.lang.amount">Amount</span></th>
+										<th style="text-align: right;"><span data-bind="text: lang.lang.balance">Balance</span></th>
+									</tr>
+								</thead>
+								<tbody data-role="listview"
 								 data-auto-bind="false"
 								 data-bind="source: dataSource"
 								 data-template="agingDetail-template"
 							></tbody>
-						</table>
+							</table>
+						</div>
 					</div>
-				</div>		
+				</div>
 			</div>
 		</div>
 	</div>
@@ -11236,7 +11239,7 @@
 		<td>#=kendo.toString(new Date(line[i].due_date), "dd-MM-yyyy")#</td>
 		<td><a href="\#/#=line[i].type.toLowerCase()#/#=line[i].id#"><i></i> #=line[i].number#</a></td>		
 		<td>#=line[i].location#</td>
-		<td style="text-align: right;"> 
+		<td style="text-align: center;"> 
     		#if(line[i].type==="Cash_Receipt"){#
 				PMT
 			#}else if(line[i].type==="Sale_Return"){#
@@ -11351,8 +11354,8 @@
 								<thead>
 									<tr>
 										<th style="text-transform: uppercase; vertical-align: top;" data-bind="text: lang.lang.customer_name"></th>
-										<th style="text-align: right; text-transform: uppercase; vertical-align: top;" >NO. OF Invoice</th>
-										<th style="vertical-align: top;" data-bind="text: lang.lang.account_receivable_balance"></th>
+										<th style="text-align: right; text-transform: uppercase; vertical-align: top;" data-bind="text: lang.lang.No_of_invoice"></th>
+										<th style="vertical-align: top; text-align: right;" data-bind="text: lang.lang.account_receivable_balance"></th>
 									</tr>
 								</thead>
 			            		<tbody data-role="listview"
@@ -11444,11 +11447,11 @@
 								<thead>
 									<tr>
 										<th style="vertical-align: top;" data-bind="text: lang.lang.type"></th>
-										<th style="text-align: right; vertical-align: top;" data-bind="text: lang.lang.date"></th>
-										<th style="text-align: right; vertical-align: top;" data-bind="text: lang.lang.reference"></th>		
-										<th style="text-align: right; vertical-align: top;" data-bind="text: lang.lang.location"></th>	
-										<th style="text-align: right; vertical-align: top;" data-bind="text: lang.lang.status"></th>	
-										<th style="vertical-align: top;" data-bind="text: lang.lang.balance"></th>
+										<th style="text-align: left; vertical-align: top;" data-bind="text: lang.lang.date"></th>
+										<th style="text-align: left; vertical-align: top;" data-bind="text: lang.lang.reference"></th>		
+										<th style="text-align: left; vertical-align: top;" data-bind="text: lang.lang.location"></th>	
+										<th style="text-align: right; vertical-align: top; text-align: center;" data-bind="text: lang.lang.status"></th>	
+										<th style="vertical-align: top; text-align: right;" data-bind="text: lang.lang.balance"></th>
 									</tr>
 								</thead>
 								<tbody data-role="listview"
@@ -11472,12 +11475,12 @@
 	#for(var i= 0; i <line.length; i++) {#
 		# amount += kendo.parseFloat(line[i].amount);#
 		<tr>
-			<td style="padding-left: 20px !important;">
+			<td style="padding-left: 20px !important; text-align: left">
 				<a href="\#/#=line[i].type.toLowerCase()#/#=line[i].id#"><i></i> #=line[i].type#</a>
 			</td>
-			<td style="text-align: right;">#=kendo.toString(new Date(line[i].issued_date), "dd-MM-yyyy")#</td>
-			<td style="text-align: right;">#=line[i].number#</td>	
-			<td style="text-align: right;">#=line[i].location#</td>		
+			<td style="text-align: left;">#=kendo.toString(new Date(line[i].issued_date), "dd-MM-yyyy")#</td>
+			<td style="text-align: left;">#=line[i].number#</td>	
+			<td style="text-align: left;">#=line[i].location#</td>		
 			<td style="text-align: center;">
 				# var date = new Date(), dueDates = new Date(line[i].due_date).getTime(), toDay = new Date(date).getTime(); #
 				#if(dueDates < toDay) {#
@@ -11754,13 +11757,13 @@
 							<div class="row">
 								<div class="col-xs-12 col-sm-3">
 									<div class="total-sale">									
-										<p>Number of Cash Receipt</p>
+										<p data-bind="text: lang.lang.no_of_cashReceipt">Number of Cash Receipt</p>
 										<span data-format="n0" data-bind="text: cashReceipt"></span>
 									</div>
 								</div>
 								<div class="col-xs-12 col-sm-9">
 									<div class="total-sale">
-										<p>Total Amount</p>
+										<p data-bind="text: lang.lang.total_amount">Total Amount</p>
 										<span data-bind="text: total"></span>
 									</div>
 								</div>
@@ -11963,9 +11966,9 @@
 								<thead>
 									<tr>									
 										<th style="vertical-align: top;"><span data-bind="text: lang.lang.name">Name</span></th>
-										<th style="text-align: right; vertical-align: top;"><span data-bind="text: lang.lang.date">Date</span></th>									
-										<th style="text-align: right; vertical-align: top;><span data-bind="text: lang.lang.reference">Reference</span></th>
-										<th style="vertical-align: top;"><span data-bind="text: lang.lang.amount">Amount</span></th>
+										<th style="text-align: left; vertical-align: top;"><span data-bind="text: lang.lang.date">Date</span></th>									
+										<th style="text-align: left; vertical-align: top;"><span data-bind="text: lang.lang.reference">Reference</span></th>
+										<th style="vertical-align: top; text-align: right"><span data-bind="text: lang.lang.amount">Amount</span></th>
 									</tr>
 								</thead>
 								<tbody data-role="listview"
@@ -11993,8 +11996,8 @@
 		# amount += line[i].amount;#
 		<tr>
 			<td style="padding-left: 20px !important;">#=line[i].name#</td>
-			<td style="text-align: right;">#=kendo.toString(new Date(line[i].date), "dd-MM-yyyy")#</td>
-			<td style="text-align: right;">#=line[i].number#</td>		
+			<td style="text-align: left;">#=kendo.toString(new Date(line[i].date), "dd-MM-yyyy")#</td>
+			<td style="text-align: left;">#=line[i].number#</td>		
 			<td style="text-align: right;">#=kendo.toString(line[i].amount, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#</td>
 		</tr>
 	#}#

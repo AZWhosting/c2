@@ -7629,37 +7629,6 @@
 						</table>
 					</div>
 				</div>
-				
-				<div class="row-fluid recevable-report" style="margin-bottom: 20px; padding: 10px 15px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
-					<h2 data-bind="text: lang.lang.other_reports_lists">OTHER REPORTS/ LISTS</h2>
-					<div class="row-fluid">
-						<table class="table table-borderless table-condensed">
-							<tr>
-								<td style="width: 50%">
-									<h3><a href="#/customer_recurring" data-bind="text: lang.lang.recurring_customer_template_list"></a></h3>
-								</td>
-								<td >
-									<h3><a href="#/customer_setting" data-bind="text: lang.lang.payment_method_term_list"></a></h3>								
-								</td>						
-							</tr>
-							<tr>
-								<td>
-									<p></p>								
-								</td>
-								<td>
-									<p data-bind="text: lang.lang.list_the_types_of_payments_and_the_term">
-										List the types of payments and the term that determine due date for payment from customers.
-									</p>
-								</td>
-								
-							</tr>
-							<tr >
-								<td></td>														
-							</tr>
-
-						</table>
-					</div>
-				</div>
 			</div>
 			<div class="span5">
 				<div class="report-chart" style="margin-bottom: 20px; padding: 15px; margin-top: 10px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
@@ -7874,6 +7843,10 @@
 					                data-bind="source: dataSource" >
 					        </tbody>
 		            	</table>
+		            	<div id="pager" class="k-pager-wrap"
+			            		 data-role="pager"
+						    	 data-auto-bind="false"
+					             data-bind="source: dataSource"></div>
 		            </div>
 				</div>
 			</div>
@@ -7968,7 +7941,6 @@
 												</tr>
 											</table>
 							        	</div>
-							        								        								        	<!-- PRINT/EXPORT  -->
 								        <div class="tab-pane" id="tab-3">								        	
 								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
 								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
@@ -8026,6 +7998,10 @@
 									data-bind="source: dataSource">
 							</tbody>
 						</table>
+						<div id="pager" class="k-pager-wrap"
+			            		 data-role="pager"
+						    	 data-auto-bind="false"
+					             data-bind="source: dataSource"></div>
 					</div>
 				</div>
 			</div>
@@ -8526,7 +8502,7 @@
 									<th data-bind="text: lang.lang.type"></th>
 									<th data-bind="text:lang.lang.customer"></th>
 									<th style="text-align: left;" data-bind="text: lang.lang.invoice_date"></th>
-									<th style="text-align: right;" data-bind="text: lang.lang.reference"></th>
+									<th style="text-align: left;" data-bind="text: lang.lang.reference"></th>
 									<th style="text-align: right;" data-bind="text: lang.lang.qty"></th>
 									<th style="text-align: right;" data-bind="text: lang.lang.price"></th>
 									<th data-bind="text: lang.lang.amount"></th>
@@ -8557,7 +8533,7 @@
 			</td>
 			<td>#=line[i].customer#</td>
 			<td style="text-align: left;">#=kendo.toString(new Date(line[i].issued_date),"dd-MM-yyyy")#</td>
-			<td style="text-align: right;">
+			<td style="text-align: left;">
 				<a href="\#/#=line[i].type.toLowerCase()#/#=line[i].id#">#=line[i].number#</a>
 			</td>
 			<td style="text-align: right;">#=kendo.toString(line[i].quantity, "c2")# #=line[i].measurement#</td>
@@ -10804,8 +10780,89 @@
     </tr>
 </script>
 <script id="customerList" type="text/x-kendo-template">
-	<h2 align="center" data-bind="text: lang.lang.customer_list"></h2>    	
-	<div id="grid"></div>
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content saleSummaryCustomer">
+			    	<span class="pull-right glyphicons no-js remove_2"
+						onclick="javascript:window.history.back()"><i></i></span>
+					<br>
+					<br>
+					<div class="row-fluid">
+					    <!-- Tabs -->
+						<div class="relativeWrap" data-toggle="source-code">
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+							
+								<!-- Tabs Heading -->
+								<div class="widget-head">
+									<ul>									
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export">
+											
+										</span></a></li>
+									</ul>
+								</div>
+								<div class="widget-body">
+									<div class="tab-content">
+							        <!-- PRINT/EXPORT  -->
+								        <div class="tab-pane" id="tab-3">								        	
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
+								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
+								        		<i class="fa fa-file-pdf-o"></i>
+								        		Print as PDF
+								        	</span> -->
+								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" style="width: 80px;">
+								        		<i class="fa fa-file-excel-o"></i>
+								        		Export to Excel
+								        	</span>
+							        	</div>
+								    </div>
+								</div>
+							</div>
+						</div>
+						<!-- // Tabs END -->						
+					</div>
+					<br>
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="text: institute.name"></h3>
+							<h2 data-bind="text: lang.lang.customer_list"></h2>
+						</div>
+						<table class="table table-borderless table-condensed ">
+							<thead>
+								<tr>
+									<th><span>Customer ID</span></th>
+									<th><span data-bind="text: lang.lang.customer_name"></span></th>
+									<th><span data-bind="text: lang.lang.type"></span></th>
+									<th><span data-bind="text: lang.lang.address"></span></th>
+									<th><span data-bind="text: lang.lang.phone"></span></th>
+									<th><span data-bind="text: lang.lang.email"></span></th>
+								</tr>
+							</thead>
+							<tbody data-role="listview"
+										 data-bind="source: contact"
+										 data-template="customerList-temp"
+							></tbody>							
+						</table>
+						<div id="pager" class="k-pager-wrap"
+			            		 data-role="pager"
+						    	 data-auto-bind="false"
+					             data-bind="source: contact"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="customerList-temp" type="text/x-kendo-template" >
+	# kendo.culture(banhji.customerSale.locale); #
+	<tr>
+		<td>#=abbr+number#</td>
+		<td>#=name#</td>
+		<td>#=contact_type#</td>
+		<td>#=address#</td>
+		<td>#=phone#</td>
+		<td style="text-align: right;">#=email#</td>
+	</tr>
 </script>
 <script id="customerBalance" type="text/x-kendo-template">
 	<div id="slide-form">
@@ -19298,6 +19355,10 @@
 										 data-template="SupplierList-temp"
 							></tbody>
 						</table>
+						<div id="pager" class="k-pager-wrap"
+			            		 data-role="pager"
+						    	 data-auto-bind="false"
+					             data-bind="source: contact"></div>
 					</div>
 				</div>
 			</div>
@@ -19307,12 +19368,12 @@
 <script id="SupplierList-temp" type="text/x-kendo-template" >
 	# kendo.culture(banhji.customerSale.locale); #
 	<tr>
-		<td>#=number#</td>
+		<td>#=abbr+number#</td>
 		<td>#=name#</td>
 		<td>#=contact_type#</td>
 		<td>#=address#</td>
 		<td>#=phone#</td>
-		<td>#=email#</td>
+		<td style="text-align: right">#=email#</td>
 	</tr>
 </script>
 
@@ -41306,7 +41367,7 @@
 					</div>
 			        <h2 style="padding:0 15px;"" data-bind="text: lang.lang.custom_forms"></h2>
 				    <br>	
-				    <div class="row" style="margin-left:0;">			   				
+				    <div class="row" style="margin-left:0;">
 						<div class="span4">	
 							<div class="span12">
 								<select class="span12 selectType" 
@@ -41322,7 +41383,7 @@
 								<input type="text" id="formName" name="Form Name" class="k-textbox" placeholder="Form Name" required validationMessage="" data-bind="value: obj.name" style="width: 100%;" />
 							</div>
 							<div class="span12">
-								<h2 class="btn btn-block btn-primary">Form Style</h2>
+								<h2 class="btn btn-block btn-primary" style="color: #fff !important;" >Form Style</h2>
 								<div class="row formstyle">
 									<div id="formStyle"
 										 data-role="listview"
@@ -41334,7 +41395,7 @@
 						        </div>
 							</div>
 							<div class="span12" style="margin-left:0; margin-top: 10px;">
-								<h2 class="btn btn-block btn-primary">Form Color</h2>
+								<h2 class="btn btn-block btn-primary" style="color: #fff !important;">Form Color</h2>
 								<div class="colorPalatte span12">
 									<div class="" style="margin-top: 15px;">
 										<div data-selectable="true" data-bind="value: obj.color, events: { change : colorCC }" data-tile-size='{ width: 60, height: 35 }' data-role="colorpalette" data-columns="6" data-palette='[ "#ffffff", "#000000", "#eeece1", "#1f497d", "#4f81bd", "#c0504d", "#9bbb59", "#dbeef3", "#8064a2", "#f79646", "#f2f2f2", "#7f7f7f", "#ddd9c3", "#c6d9f0", "#dbe5f1", "#f2dcdb", "#ebf1dd", "#e5e0ec"]'></div>
@@ -41342,11 +41403,11 @@
                                 </div>
 							</div>
 							<div class="span12" style="margin-left:0; margin-top: 10px;padding-bottom: 30px;">
-								<h2 class="btn btn-block btn-primary">Form Appearance</h2>
+								<h2 class="btn btn-block btn-primary" style="color: #fff !important;">Form Appearance</h2>
 								<div class="colorPalatte span12">
 									<div class="" style="margin-top: 15px;">
 										<input type="text" id="formtitle" name="Form Title" class="k-textbox" placeholder="Form Title" required validationMessage="" data-bind="value: obj.title" style="width: 100%;" />
-										<textarea data-bind="value: obj.note, text: obj.note" placeholder="Note" class="span12" style="min-height: 100px;margin-top: 15px;padding-left: 10px;"></textarea>
+										<textarea data-bind="value: obj.note, text: obj.note" placeholder="Note" class="span12" style="min-height: 100px;margin-top: 15px;padding-left: 10px; resize: none;"></textarea>
                                 	</div>
                                 </div>
 							</div>
@@ -41363,8 +41424,10 @@
 								
 							</div>
 							<div class="span9" align="right">
+								<span class="btn-btn" id="saveClose" data-bind="click: save"><span data-bind="text: lang.lang.save"></span></span>
+							  	<span class="btn-btn" id="saveDraft" data-bind="click: cancel"><span data-bind="text: lang.lang.close"></span></span><!-- 
 								<span class="btn btn-icon btn-primary glyphicons ok_2" data-bind="click: save" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save"></span></span>
-								<span class="btn btn-icon btn-success glyphicons power" data-bind="click: cancel" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.close"></span></span>		
+								<span class="btn btn-icon btn-success glyphicons power" data-bind="click: cancel" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.close"></span></span> -->		
 							</div>
 						</div>
 					</div>
@@ -41393,7 +41456,7 @@
 						</div>
 					</div>
 					<!-- Form actions -->
-					<div class="box-generic" align="right" style="background-color: #0B0B3B;">
+					<div class="box-generic bg-action-button">
 						<span id="notification"></span>
 
 						<span id="savePrint" class="btn btn-icon btn-primary glyphicons print" data-bind="click: printGrid" style="width: 80px;"><i></i>Print / PDF</span>
@@ -41407,7 +41470,7 @@
 </script>
 <script id="invoiceForm1" type="text/x-kendo-template">
 	<div class="inv1">
-    	<div class="head">
+    	<div class="head" style="width: 90%">
         	<div class="logo">
             	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
             </div>
@@ -41418,8 +41481,8 @@
                 	<p>លេខ​អត្ត​សញ្ញាណ​កម្ម អតប (VATTIN)</p><span id="vat_number" data-bind="text: company.vat_number"></span>
                 </div>
                 <div class="clear">
-                	<pre>អាស័យ​ដ្ឋាន Address: <span data-bind="text: company.address"></span></pre>
-                    <pre>ទូរស័ព្ទលេខ HP <span data-bind="text: company.telephone"></span></pre>
+                	<p style="font-size: 10px;">អាស័យ​ដ្ឋាន Address: <span data-bind="text: company.address"></span></p>
+                    <p style="font-size: 10px;">ទូរស័ព្ទលេខ HP <span data-bind="text: company.telephone"></span></p>
                 </div>
             </div>
         </div>
@@ -41513,13 +41576,13 @@
                 	<p>ហត្ថលេខា និងឈ្មោះ​អ្នកលក់<br />Seller's Signature & Name</p>
                 </div>
             </div>
-            <h6>សម្គាល់៖ <span>ច្បាប់​ដើម​សម្រាប់​អ្នក​ទិញ ច្បាប់​ចម្លង​សម្រាប់​អ្នក​លក់</span><br /><span style="font-size: 10px"><strong>Note:</strong> Original invoice for customer, copied invoice for seller</span></h6>
+            <h6 style="padding-left: 35px;">សម្គាល់៖ <span>ច្បាប់​ដើម​សម្រាប់​អ្នក​ទិញ ច្បាប់​ចម្លង​សម្រាប់​អ្នក​លក់</span><br /><span style="font-size: 10px"><strong>Note:</strong> Original invoice for customer, copied invoice for seller</span></h6>
         </div>
     </div>
 </script>
 <script id="invoiceForm2" type="text/x-kendo-template">
 	<div class="inv1">
-    	<div class="head">
+    	<div class="head" style="width: 90%">
         	<div class="logo">
             	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
             </div>
@@ -41530,8 +41593,8 @@
                 	<p>លេខ​អត្ត​សញ្ញាណ​កម្ម អតប (VATTIN)</p><span id="vat_number" data-bind="text: company.vat_number"></span>
                 </div>
                 <div class="clear">
-                	<pre>អាស័យ​ដ្ឋាន Address: <span data-bind="text: company.address"></span></pre>
-                    <pre>ទូរស័ព្ទលេខ HP <span data-bind="text: company.telephone"></span></pre>
+                	<p style="font-size: 10px;">អាស័យ​ដ្ឋាន Address: <span data-bind="text: company.address"></span></p>
+                    <p style="font-size: 10px;">ទូរស័ព្ទលេខ HP <span data-bind="text: company.telephone"></span></p>
                 </div>
             </div>
         </div>
@@ -41546,7 +41609,7 @@
                     <div class="clear">
                         <div class="left dotted-ruler" style="width: 62%;">
                         	<p>ឈ្មោះ Name : <span data-bind="text: contactDS.data()[0].name"></span><br>
-		        			អស័យដ្ឋាន Address : <span data-bind="text: contactDS.data()[0].address"></span><br>
+		        			អាស័យ​ដ្ឋាន Address : <span data-bind="text: contactDS.data()[0].address"></span><br>
 		        			លេខទូរស័ព្ទ Tel : <span data-bind="text: contactDS.data()[0].phone"></span>
 		        			</p>
                         </div>
@@ -41629,7 +41692,7 @@
                 	<p>ហត្ថលេខា និងឈ្មោះ​អ្នកលក់<br />Seller's Signature & Name</p>
                 </div>
             </div>
-            <h6>សម្គាល់៖ <span>ច្បាប់​ដើម​សម្រាប់​អ្នក​ទិញ ច្បាប់​ចម្លង​សម្រាប់​អ្នក​លក់</span><br /><span style="font-size: 10px"><strong>Note:</strong> Original invoice for customer, copied invoice for seller</span></h6>
+            <h6 style="padding-left: 35px;">សម្គាល់៖ <span>ច្បាប់​ដើម​សម្រាប់​អ្នក​ទិញ ច្បាប់​ចម្លង​សម្រាប់​អ្នក​លក់</span><br /><span style="font-size: 10px"><strong>Note:</strong> Original invoice for customer, copied invoice for seller</span></h6>
         </div>
     </div>
 </script>
@@ -41985,15 +42048,15 @@
 <script id="invoiceForm6" type="text/x-kendo-template">
 	<div class="inv1 pcg">
         <div class="content clear">
-        	<div class="span5">
-        		<div class="logo" style="width: 35%">
+        	<div class="span3">
+        		<div class="logo" style="width: 97%;margin-left: -9px;">
 	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
 	            </div>
         	</div>
-        	<div class="span7">
+        	<div class="span9">
         		<div class="span5">
         			<p data-bind="text: company.name"></p>
-        			<p><b>អស័យដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
+        			<p><b>អាស័យ​ដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
         		</div>
         		<div class="span5" style="float:right">
         			<p><b>Tel: </b><span data-bind="text: company.telephone"></span></p>
@@ -42005,20 +42068,21 @@
         		<div class="span7" style="margin-right: 15px;">
         			<b style="font-size: 14px;line-height: 24px;">ព័ត៌មានអតិថិជន CUSTOMER INFO</b><br><br>
         			<p>ឈ្មោះ Name : <span data-bind="text: contactDS.data()[0].name"></span><br>
-        			អស័យដ្ឋាន Address : <span data-bind="text: contactDS.data()[0].address"></span><br>
+        			អាស័យ​ដ្ឋាន Address : <span data-bind="text: contactDS.data()[0].address"></span><br>
         			លេខទូរស័ព្ទ Tel : <span data-bind="text: contactDS.data()[0].phone"></span>
         			</p>
         		</div>
         		<div class="span4" style="float:right;">
-        			<p class="form-title" data-bind="text: obj.title"></p>
-        			<p><b>កាលបរិច្ឆេត Date : </b><span data-bind="text: obj.issued_date"></span></p>
+        			<p class="form-title" data-bind="text: obj.title" style="margin-bottom: 10px; "></p>
+        			<p class="form-title" style=" margin-bottom: 15px; font-size: 20px; margin-left: 36px; margin-top: 0; float: left; width: 100%;">បញ្ជាទិញ</p>
+        			<p><b>កាលបរិច្ឆេទ Date : </b><span data-bind="text: obj.issued_date"></span></p>
         			<p><b>លេខ No. : </b><span data-bind="text: obj.number"></span></p>
         		</div>
         	</div>
         	<div class="span12 mid-title main-color" data-bind="style: {backgroundColor: obj.color}">
-        		<div class="span6" style="text-align: left;padding-left: 10px;">ល្ខខណ្ឌ<br>TERM OF PAYMENT : <span data-bind="text: paymentMethodDS.data()[0].name"></span></div>
+        		<div class="span6" style="text-align: left;padding-left: 10px;">លក្ខខណ្ឌ<br>TERM OF PAYMENT : <span data-bind="text: paymentMethodDS.data()[0].name"></span></div>
         		
-        		<div class="span6" style="text-align: left;padding-left: 10px;">សុពលភាព <br>VALIDITY PERIOD : <span data-bind="text: obj.due_date"></span></div>
+        		<div class="span6" style="text-align: left;padding-left: 10px;"><span style="margin-left: 47px;">សុពលភាព</span> <br>VALIDITY PERIOD : <span data-bind="text: obj.due_date"></span></div>
         	</div>
         	<table class="span12" rules="rows">
         		<thead>
@@ -42081,15 +42145,15 @@
 <script id="invoiceForm7" type="text/x-kendo-template">
 	<div class="inv1 pcg pcg-border">
         <div class="content clear">
-        	<div class="span5">
-        		<div class="logo" style="width: 35%">
+        	<div class="span3">
+        		<div class="logo" style="width: 97%;margin-left: -9px;">
 	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
 	            </div>
         	</div>
-        	<div class="span7">
+        	<div class="span9">
         		<div class="span5">
         			<p data-bind="text: company.name"></p>
-        			<p><b>អស័យដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
+        			<p><b>អាស័យ​ដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
         		</div>
         		<div class="span5" style="float:right">
         			<p><b>Tel: </b><span data-bind="text: company.telephone"></span></p>
@@ -42101,20 +42165,21 @@
         		<div class="span7" style="margin-right: 15px;">
         			<b style="font-size: 14px;line-height: 24px;">ព័ត៌មានអតិថិជន CUSTOMER INFO</b><br><br>
         			<p>ឈ្មោះ Name : <span data-bind="text: contactDS.data()[0].name"></span><br>
-        			អស័យដ្ឋាន Address : <span data-bind="text: contactDS.data()[0].address"></span><br>
+        			អាស័យ​ដ្ឋាន Address : <span data-bind="text: contactDS.data()[0].address"></span><br>
         			លេខទូរស័ព្ទ Tel : <span data-bind="text: contactDS.data()[0].phone"></span>
         			</p>
         		</div>
         		<div class="span4" style="float:right;">
-        			<p class="form-title" data-bind="text: obj.title"></p>
-        			<p><b>កាលបរិច្ឆេត Date : </b><span data-bind="text: obj.issued_date"></span></p>
+        			<p class="form-title" data-bind="text: obj.title" style="margin-bottom: 10px; "></p>
+        			<p class="form-title" style=" margin-bottom: 15px; font-size: 20px; margin-left: 36px; margin-top: 0; float: left; width: 100%;">បញ្ជាទិញ</p>
+        			<p><b>កាលបរិច្ឆេទ Date : </b><span data-bind="text: obj.issued_date"></span></p>
         			<p><b>លេខ No. : </b><span data-bind="text: obj.number"></span></p>
         		</div>
         	</div>
         	<div class="span12 mid-title main-color" data-bind="style: {backgroundColor: obj.color}">
-        		<div class="span6" style="text-align: left;padding-left: 10px;">ល្ខខណ្ឌ<br>TERM OF PAYMENT : <span data-bind="text: paymentMethodDS.data()[0].name"></span></div>
+        		<div class="span6" style="text-align: left;padding-left: 10px;">លក្ខខណ្ឌ<br>TERM OF PAYMENT : <span data-bind="text: paymentMethodDS.data()[0].name"></span></div>
         		
-        		<div class="span6" style="text-align: left;padding-left: 10px;">សុពលភាព <br>VALIDITY PERIOD : <span data-bind="text: obj.due_date"></span></div>
+        		<div class="span6" style="text-align: left;padding-left: 10px;"><span style="margin-left: 47px;">សុពលភាព</span> <br>VALIDITY PERIOD : <span data-bind="text: obj.due_date"></span></div>
         	</div>
         	<table class="span12" rules="rows">
         		<thead>
@@ -42178,15 +42243,15 @@
 <script id="invoiceForm8" type="text/x-kendo-template">
 	<div class="inv1 pcg">
         <div class="content clear">
-        	<div class="span5">
-        		<div class="logo" style="width: 50%">
+        	<div class="span3">
+        		<div class="logo" style="width: 97%;margin-left: -9px;">
 	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
 	            </div>
         	</div>
-        	<div class="span7">
+        	<div class="span9">
         		<div class="span5" style="margin-right: 30px;">
         			<p data-bind="text: company.name"></p>
-        			<p><b>អស័យដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
+        			<p><b>អាស័យ​ដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
         		</div>
         		<div class="span5" >
         			<p><b>Tel: </b><span data-bind="text: company.telephone"></span></p>
@@ -42196,23 +42261,24 @@
         	</div>
         	<div class="span12 clear" style="margin: 20px 0;">
         		<div class="span4" style="margin-right:45px;">
-        			<p class="form-title" style="margin-bottom: 15px;" data-bind="text: obj.title"></p>
-        			<p><b>កាលបរិច្ឆេត Date : </b><span data-bind="text: obj.issued_date"></span></p>
+        			<p class="form-title" data-bind="text: obj.title" style="margin-bottom: 10px; "></p>
+        			<p class="form-title" style=" margin-bottom: 15px; font-size: 20px; margin-left: 36px; margin-top: 0; float: left; width: 100%;">បញ្ជាទិញ</p>
+        			<p><b>កាលបរិច្ឆេទ Date : </b><span data-bind="text: obj.issued_date"></span></p>
         			<p><b>លេខ No. : </b><span data-bind="text: obj.number"></span></p>
         			<div class="span12 main-color order-price" data-bind="style: {backgroundColor: obj.color}"><p>សរុប TOTAL <span data-bind="text: obj.amount"></span></p></div>
         		</div>
         		<div class="span7">
         			<b style="font-size: 14px;line-height: 24px;">ព័ត៌មានអតិថិជន CUSTOMER INFO</b><br><br>
         			<p>ឈ្មោះ Name : <span data-bind="text: contactDS.data()[0].name"></span><br>
-        			អស័យដ្ឋាន Address : <span data-bind="text: contactDS.data()[0].address"></span><br>
+        			អាស័យ​ដ្ឋាន Address : <span data-bind="text: contactDS.data()[0].address"></span><br>
         			លេខទូរស័ព្ទ Tel : <span data-bind="text: contactDS.data()[0].phone"></span>
         			</p>
         		</div>
         	</div>
         	<div class="span12 mid-title main-color" data-bind="style: {backgroundColor: obj.color}">
-        		<div class="span6" style="text-align: left;padding-left: 10px;">ល្ខខណ្ឌ<br>TERM OF PAYMENT : <span data-bind="text: paymentMethodDS.data()[0].name"></span></div>
+        		<div class="span6" style="text-align: left;padding-left: 10px;">លក្ខខណ្ឌ<br>TERM OF PAYMENT : <span data-bind="text: paymentMethodDS.data()[0].name"></span></div>
         		
-        		<div class="span6" style="text-align: left;padding-left: 10px;">សុពលភាព <br>VALIDITY PERIOD : <span data-bind="text: obj.due_date"></span></div>
+        		<div class="span6" style="text-align: left;padding-left: 10px;"><span style="margin-left: 47px;">សុពលភាព</span> <br>VALIDITY PERIOD : <span data-bind="text: obj.due_date"></span></div>
         	</div>
         	<table class="span12" rules="rows">
         		<thead>
@@ -42272,15 +42338,15 @@
 <script id="invoiceForm9" type="text/x-kendo-template">
 	<div class="inv1 pcg pcg-border">
         <div class="content clear">
-        	<div class="span5">
-        		<div class="logo" style="width: 50%">
+        	<div class="span3">
+        		<div class="logo" style="width: 97%;margin-left: -9px;">
 	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
 	            </div>
         	</div>
-        	<div class="span7">
+        	<div class="span9">
         		<div class="span5" style="margin-right: 30px;">
         			<p data-bind="text: company.name"></p>
-        			<p><b>អស័យដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
+        			<p><b>អាស័យ​ដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
         		</div>
         		<div class="span5" >
         			<p><b>Tel: </b><span data-bind="text: company.telephone"></span></p>
@@ -42290,23 +42356,24 @@
         	</div>
         	<div class="span12 clear" style="margin: 20px 0;">
         		<div class="span4" style="margin-right:45px;">
-        			<p class="form-title" style="margin-bottom: 15px;" data-bind="text: obj.title"></p>
-        			<p><b>កាលបរិច្ឆេត Date : </b><span data-bind="text: obj.issued_date"></span></p>
+        			<p class="form-title" data-bind="text: obj.title" style="margin-bottom: 10px; "></p>
+        			<p class="form-title" style=" margin-bottom: 15px; font-size: 20px; margin-left: 36px; margin-top: 0; float: left; width: 100%;">បញ្ជាទិញ</p>
+        			<p><b>កាលបរិច្ឆេទ Date : </b><span data-bind="text: obj.issued_date"></span></p>
         			<p><b>លេខ No. : </b><span data-bind="text: obj.number"></span></p>
         			<div class="span12 main-color order-price" data-bind="style: {backgroundColor: obj.color}"><p>សរុប TOTAL <span data-bind="text: obj.amount"></span></p></div>
         		</div>
         		<div class="span7">
         			<b style="font-size: 14px;line-height: 24px;">ព័ត៌មានអតិថិជន CUSTOMER INFO</b><br><br>
         			<p>ឈ្មោះ Name : <span data-bind="text: contactDS.data()[0].name"></span><br>
-        			អស័យដ្ឋាន Address : <span data-bind="text: contactDS.data()[0].address"></span><br>
+        			អាស័យ​ដ្ឋាន Address : <span data-bind="text: contactDS.data()[0].address"></span><br>
         			លេខទូរស័ព្ទ Tel : <span data-bind="text: contactDS.data()[0].phone"></span>
         			</p>
         		</div>
         	</div>
         	<div class="span12 mid-title main-color" data-bind="style: {backgroundColor: obj.color}">
-        		<div class="span6" style="text-align: left;padding-left: 10px;">ល្ខខណ្ឌ<br>TERM OF PAYMENT : <span data-bind="text: paymentMethodDS.data()[0].name"></span></div>
+        		<div class="span6" style="text-align: left;padding-left: 10px;">លក្ខខណ្ឌ<br>TERM OF PAYMENT : <span data-bind="text: paymentMethodDS.data()[0].name"></span></div>
         		
-        		<div class="span6" style="text-align: left;padding-left: 10px;">សុពលភាព <br>VALIDITY PERIOD : <span data-bind="text: obj.due_date"></span></div>
+        		<div class="span6" style="text-align: left;padding-left: 10px;"><span style="margin-left: 47px;">សុពលភាព</span> <br>VALIDITY PERIOD : <span data-bind="text: obj.due_date"></span></div>
         	</div>
         	<table class="span12" rules="rows">
         		<thead>
@@ -42366,15 +42433,15 @@
 <script id="invoiceForm10" type="text/x-kendo-template">
 	<div class="inv1 pcg">
         <div class="content clear">
-        	<div class="span5">
-        		<div class="logo" style="width: 35%">
+        	<div class="span3">
+        		<div class="logo" style="width: 97%;margin-left: -9px;">
 	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
 	            </div>
         	</div>
-        	<div class="span7">
+        	<div class="span9">
         		<div class="span5">
         			<p data-bind="text: company.name"></p>
-        			<p><b>អស័យដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
+        			<p><b>អាស័យ​ដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
         		</div>
         		<div class="span5" style="float:right">
         			<p><b>Tel: </b><span data-bind="text: company.telephone"></span></p>
@@ -42386,20 +42453,21 @@
         		<div class="span7" style="margin-right: 15px;">
         			<b style="font-size: 14px;line-height: 24px;">ព័ត៌មានអតិថិជន CUSTOMER INFO</b><br><br>
         			<p>ឈ្មោះ Name : <span data-bind="text: contactDS.data()[0].name"></span><br>
-        			អស័យដ្ឋាន Address : <span data-bind="text: contactDS.data()[0].address"></span><br>
+        			អាស័យ​ដ្ឋាន Address : <span data-bind="text: contactDS.data()[0].address"></span><br>
         			លេខទូរស័ព្ទ Tel : <span data-bind="text: contactDS.data()[0].phone"></span>
         			</p>
         		</div>
         		<div class="span4" style="float:right;">
-        			<p class="form-title" data-bind="text: obj.title"></p>
-        			<p><b>កាលបរិច្ឆេត Date : </b><span data-bind="text: obj.issued_date"></span></p>
+        			<p class="form-title" data-bind="text: obj.title" style="margin-bottom: 10px; "></p>
+        			<p class="form-title" style=" margin-bottom: 15px; font-size: 20px; margin-left: 36px; margin-top: 0; float: left; width: 100%;">សម្រង់តំលៃ</p>
+        			<p><b>កាលបរិច្ឆេទ Date : </b><span data-bind="text: obj.issued_date"></span></p>
         			<p><b>លេខ No. : </b><span data-bind="text: obj.number"></span></p>
         		</div>
         	</div>
         	<div class="span12 mid-title main-color" data-bind="style: {backgroundColor: obj.color}">
-        		<div class="span6" style="text-align: left;padding-left: 10px;">ល្ខខណ្ឌ<br>TERM OF PAYMENT : <span data-bind="text: paymentMethodDS.data()[0].name"></span></div>
+        		<div class="span6" style="text-align: left;padding-left: 10px;">លក្ខខណ្ឌ<br>TERM OF PAYMENT : <span data-bind="text: paymentMethodDS.data()[0].name"></span></div>
         		
-        		<div class="span6" style="text-align: left;padding-left: 10px;">សុពលភាព <br>VALIDITY PERIOD : <span data-bind="text: obj.due_date"></span></div>
+        		<div class="span6" style="text-align: left;padding-left: 10px;"><span style="margin-left: 47px;">សុពលភាព</span> <br>VALIDITY PERIOD : <span data-bind="text: obj.due_date"></span></div>
         	</div>
         	<table class="span12" rules="rows">
         		<thead>
@@ -42461,15 +42529,15 @@
 <script id="invoiceForm11" type="text/x-kendo-template">
 	<div class="inv1 pcg pcg-border">
         <div class="content clear">
-        	<div class="span5">
-        		<div class="logo" style="width: 35%">
+        	<div class="span3">
+        		<div class="logo" style="width: 97%;margin-left: -9px;">
 	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
 	            </div>
         	</div>
-        	<div class="span7">
+        	<div class="span9">
         		<div class="span5">
         			<p data-bind="text: company.name"></p>
-        			<p><b>អស័យដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
+        			<p><b>អាស័យ​ដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
         		</div>
         		<div class="span5" style="float:right">
         			<p><b>Tel: </b><span data-bind="text: company.telephone"></span></p>
@@ -42481,20 +42549,21 @@
         		<div class="span7" style="margin-right: 15px;">
         			<b style="font-size: 14px;line-height: 24px;">ព័ត៌មានអតិថិជន CUSTOMER INFO</b><br><br>
         			<p>ឈ្មោះ Name : <span data-bind="text: contactDS.data()[0].name"></span><br>
-        			អស័យដ្ឋាន Address : <span data-bind="text: contactDS.data()[0].address"></span><br>
+        			អាស័យ​ដ្ឋាន Address : <span data-bind="text: contactDS.data()[0].address"></span><br>
         			លេខទូរស័ព្ទ Tel : <span data-bind="text: contactDS.data()[0].phone"></span>
         			</p>
         		</div>
         		<div class="span4" style="float:right;">
-        			<p class="form-title" data-bind="text: obj.title"></p>
-        			<p><b>កាលបរិច្ឆេត Date : </b><span data-bind="text: obj.issued_date"></span></p>
+        			<p class="form-title" data-bind="text: obj.title" style="margin-bottom: 10px; "></p>
+        			<p class="form-title" style=" margin-bottom: 15px; font-size: 20px; margin-left: 36px; margin-top: 0; float: left; width: 100%;">សម្រង់តំលៃ</p>
+        			<p><b>កាលបរិច្ឆេទ Date : </b><span data-bind="text: obj.issued_date"></span></p>
         			<p><b>លេខ No. : </b><span data-bind="text: obj.number"></span></p>
         		</div>
         	</div>
         	<div class="span12 mid-title main-color" data-bind="style: {backgroundColor: obj.color}">
-        		<div class="span6" style="text-align: left;padding-left: 10px;">ល្ខខណ្ឌ<br>TERM OF PAYMENT : <span data-bind="text: paymentMethodDS.data()[0].name"></span></div>
+        		<div class="span6" style="text-align: left;padding-left: 10px;">លក្ខខណ្ឌ<br>TERM OF PAYMENT : <span data-bind="text: paymentMethodDS.data()[0].name"></span></div>
         		
-        		<div class="span6" style="text-align: left;padding-left: 10px;">សុពលភាព <br>VALIDITY PERIOD : <span data-bind="text: obj.due_date"></span></div>
+        		<div class="span6" style="text-align: left;padding-left: 10px;"><span style="margin-left: 47px;">សុពលភាព</span> <br>VALIDITY PERIOD : <span data-bind="text: obj.due_date"></span></div>
         	</div>
         	<table class="span12" rules="rows">
         		<thead>
@@ -42556,15 +42625,15 @@
 <script id="invoiceForm12" type="text/x-kendo-template">
 	<div class="inv1 pcg">
         <div class="content clear">
-        	<div class="span5">
-        		<div class="logo" style="width: 50%">
+        	<div class="span3">
+        		<div class="logo" style="width: 97%;margin-left: -9px;">
 	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
 	            </div>
         	</div>
-        	<div class="span7">
+        	<div class="span9">
         		<div class="span5" style="margin-right: 30px;">
         			<p data-bind="text: company.name"></p>
-        			<p><b>អស័យដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
+        			<p><b>អាស័យ​ដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
         		</div>
         		<div class="span5" >
         			<p><b>Tel: </b><span data-bind="text: company.telephone"></span></p>
@@ -42574,23 +42643,24 @@
         	</div>
         	<div class="span12 clear" style="margin: 20px 0;">
         		<div class="span4" style="margin-right:45px;">
-        			<p class="form-title" style="margin-bottom: 15px;" data-bind="text: obj.title"></p>
-        			<p><b>កាលបរិច្ឆេត Date : </b><span data-bind="text: obj.issued_date"></span></p>
+        			<p class="form-title" style="margin-bottom: 10px; " data-bind="text: obj.title"></p>
+        			<p class="form-title" style=" margin-bottom: 15px; font-size: 20px; margin-left: 36px; margin-top: 0; float: left; width: 100%;">សម្រង់តំលៃ</p>
+        			<p><b>កាលបរិច្ឆេទ Date : </b><span data-bind="text: obj.issued_date"></span></p>
         			<p><b>លេខ No. : </b><span data-bind="text: obj.number"></span></p>
         			<div class="span12 main-color order-price" data-bind="style: {backgroundColor: obj.color}"><p>សរុប TOTAL <span data-bind="text: obj.amount"></span></p></div>
         		</div>
         		<div class="span7">
         			<b style="font-size: 14px;line-height: 24px;">ព័ត៌មានអតិថិជន CUSTOMER INFO</b><br><br>
         			<p>ឈ្មោះ Name : <span data-bind="text: contactDS.data()[0].name"></span><br>
-        			អស័យដ្ឋាន Address : <span data-bind="text: contactDS.data()[0].address"></span><br>
+        			អាស័យ​ដ្ឋាន Address : <span data-bind="text: contactDS.data()[0].address"></span><br>
         			លេខទូរស័ព្ទ Tel : <span data-bind="text: contactDS.data()[0].phone"></span>
         			</p>
         		</div>
         	</div>
         	<div class="span12 mid-title main-color" data-bind="style: {backgroundColor: obj.color}">
-        		<div class="span6" style="text-align: left;padding-left: 10px;">ល្ខខណ្ឌ<br>TERM OF PAYMENT : <span data-bind="text: paymentMethodDS.data()[0].name"></span></div>
+        		<div class="span6" style="text-align: left;padding-left: 10px;">លក្ខខណ្ឌ<br>TERM OF PAYMENT : <span data-bind="text: paymentMethodDS.data()[0].name"></span></div>
         		
-        		<div class="span6" style="text-align: left;padding-left: 10px;">សុពលភាព <br>VALIDITY PERIOD <span data-bind="text: obj.due_date"></span></div>
+        		<div class="span6" style="text-align: left;padding-left: 10px;"><span style="margin-left: 47px;">សុពលភាព</span> <br>VALIDITY PERIOD <span data-bind="text: obj.due_date"></span></div>
         	</div>
         	<table class="span12" rules="rows">
         		<thead>
@@ -42652,15 +42722,15 @@
 <script id="invoiceForm13" type="text/x-kendo-template">
 	<div class="inv1 pcg pcg-border">
         <div class="content clear">
-        	<div class="span5">
-        		<div class="logo" style="width: 50%">
+        	<div class="span3">
+        		<div class="logo" style="width: 97%;margin-left: -9px;">
 	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
 	            </div>
         	</div>
-        	<div class="span7">
+        	<div class="span9">
         		<div class="span5" style="margin-right: 30px;">
         			<p data-bind="text: company.name"></p>
-        			<p><b>អស័យដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
+        			<p><b>អាស័យ​ដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
         		</div>
         		<div class="span5" >
         			<p><b>Tel: </b><span data-bind="text: company.telephone"></span></p>
@@ -42670,23 +42740,24 @@
         	</div>
         	<div class="span12 clear" style="margin: 20px 0;">
         		<div class="span4" style="margin-right:45px;">
-        			<p class="form-title" style="margin-bottom: 15px;" data-bind="text: obj.title"></p>
-        			<p><b>កាលបរិច្ឆេត Date : </b><span data-bind="text: obj.issued_date"></span></p>
+        			<p class="form-title" style="margin-bottom: 10px; " data-bind="text: obj.title"></p>
+        			<p class="form-title" style=" margin-bottom: 15px; font-size: 20px; margin-left: 36px; margin-top: 0; float: left; width: 100%;">សម្រង់តំលៃ</p>
+        			<p><b>កាលបរិច្ឆេទ Date : </b><span data-bind="text: obj.issued_date"></span></p>
         			<p><b>លេខ No. : </b><span data-bind="text: obj.number"></span></p>
         			<div class="span12 main-color order-price" data-bind="style: {backgroundColor: obj.color}"><p>សរុប TOTAL <span data-bind="text: obj.amount"></span></p></div>
         		</div>
         		<div class="span7">
         			<b style="font-size: 14px;line-height: 24px;">ព័ត៌មានអតិថិជន CUSTOMER INFO</b><br><br>
         			<p>ឈ្មោះ Name : <span data-bind="text: contactDS.data()[0].name"></span><br>
-        			អស័យដ្ឋាន Address : <span data-bind="text: contactDS.data()[0].address"></span><br>
+        			អាស័យ​ដ្ឋាន Address : <span data-bind="text: contactDS.data()[0].address"></span><br>
         			លេខទូរស័ព្ទ Tel : <span data-bind="text: contactDS.data()[0].phone"></span>
         			</p>
         		</div>
         	</div>
         	<div class="span12 mid-title main-color" data-bind="style: {backgroundColor: obj.color}">
-        		<div class="span6" style="text-align: left;padding-left: 10px;">ល្ខខណ្ឌ<br>TERM OF PAYMENT : <span data-bind="text: paymentMethodDS.data()[0].name"></span></div>
+        		<div class="span6" style="text-align: left;padding-left: 10px;">លក្ខខណ្ឌ<br>TERM OF PAYMENT : <span data-bind="text: paymentMethodDS.data()[0].name"></span></div>
         		
-        		<div class="span6" style="text-align: left;padding-left: 10px;">សុពលភាព <br>VALIDITY PERIOD <span data-bind="text: obj.due_date"></span></div>
+        		<div class="span6" style="text-align: left;padding-left: 10px;"><span style="margin-left: 47px;">សុពលភាព</span> <br>VALIDITY PERIOD <span data-bind="text: obj.due_date"></span></div>
         	</div>
         	<table class="span12" rules="rows">
         		<thead>
@@ -43379,8 +43450,8 @@
         			
         		</div>
         		<div class="span6" style="float:right;">
-        			<p class="form-title" style="font-size: 24px;margin-bottom: 5px;margin-top: 22px;line-height: 28px;" data-bind="text: obj.title"></p>
-        			<p><b>កាលបរិច្ឆេត Date : </b><span data-bind="text: obj.issued_date"></span></p>
+        			<p class="form-title" style="font-size: 24px;margin-bottom: 5px;margin-top: 22px;line-height: 28px;" data-bind="text: obj.title"></p>        			
+        			<p><b>កាលបរិច្ឆេទ Date : </b><span data-bind="text: obj.issued_date"></span></p>
         			<p><b>លេខ No. : </b><span data-bind="text: obj.number"></span></p>
         		</div>
         	</div>
@@ -43768,7 +43839,7 @@
         			<tr>
         				<td width="200" style="text-align:center;"><b>លេខសក្ខីប័ត្រ JV No.</b></td>
         				<td width="200" style="text-align:center;" data-bind="text: obj.number"></td>
-        				<td width="200" style="text-align:center;"><b>កាលបរិច្ឆេត Date<b></td>
+        				<td width="200" style="text-align:center;"><b>កាលបរិច្ឆេទ Date<b></td>
         				<td width="200" style="text-align:center;" data-bind="text: obj.issued_date"></td>
         			</tr>
         			<tr>
@@ -44062,6 +44133,7 @@
 	        		<div class="span12" style="margin-bottom: 10px;">
 	        			<h2 style="font-size: 24px;text-align: left;color:#10253f " data-bind="text: obj.title"></h2>
 	        			<!--img src="<?php echo base_url(); ?>assets/invoice/img/official-receipt.jpg" /-->
+	        			<!-- <p class="form-title" style="font-size: 20px; margin-top: 7px; float: left; width: 100%;">ប្រាក់កក់អិថិជន</p> -->
 	        		</div>
 	        		<div class="span12">
 	        			<table class="span12">
@@ -44085,7 +44157,7 @@
 							<td style="text-align: left;padding-left: 5px;" data-bind="text: contactDS.data()[0].name"></td>
 						</tr>
 						<tr>
-							<td class="light-blue-td">អស័យដ្ឋាន <br>Contact Address</td>
+							<td class="light-blue-td">អាស័យ​ដ្ឋាន <br>Contact Address</td>
 							<td style="text-align: left;padding-left: 5px;" data-bind="text: contactDS.data()[0].address"></td>
 						</tr>
 						<tr>
@@ -44138,7 +44210,7 @@
         			<td colspan="4" rowspan="2" data-bind="style: {backgroundColor: obj.color}" style="text-align:center;padding-left:0;" class="main-color">
         			ប័ណ្ណកែតម្រូវបរិមាណសន្និធិ<br>Material Adjustment Note
         			</td>
-        			<td colspan="2">កាលបរិច្ឆេត Date</td>
+        			<td colspan="2">កាលបរិច្ឆេទ Date</td>
         			<td></td>
         		</tr>
         		<tr>
@@ -44245,7 +44317,7 @@
                     <div class="clear">
                         <div class="left dotted-ruler" style="width: 62%;">
                         	<p>ឈ្មោះ Name : <span data-bind="text: contactDS.data()[0].name"></span><br>
-		        			អស័យដ្ឋាន Address : <span data-bind="text: contactDS.data()[0].address"></span><br>
+		        			អាស័យ​ដ្ឋាន Address : <span data-bind="text: contactDS.data()[0].address"></span><br>
 		        			លេខទូរស័ព្ទ Tel : <span data-bind="text: contactDS.data()[0].phone"></span>
 		        			</p>
                         </div>
@@ -44316,7 +44388,7 @@
                 	<p>ហត្ថលេខា និងឈ្មោះ​អ្នកលក់<br />Seller's Signature & Name</p>
                 </div>
             </div>
-            <h6>សម្គាល់៖ <span>ច្បាប់​ដើម​សម្រាប់​អ្នក​ទិញ ច្បាប់​ចម្លង​សម្រាប់​អ្នក​លក់</span><br /><span style="font-size: 10px"><strong>Note:</strong> Original invoice for customer, copied invoice for seller</span></h6>
+            <h6 style="padding-left: 35px;">សម្គាល់៖ <span>ច្បាប់​ដើម​សម្រាប់​អ្នក​ទិញ ច្បាប់​ចម្លង​សម្រាប់​អ្នក​លក់</span><br /><span style="font-size: 10px"><strong>Note:</strong> Original invoice for customer, copied invoice for seller</span></h6>
         </div>
     </div>
 </script>
@@ -44436,7 +44508,7 @@
                 	<p>ហត្ថលេខា និងឈ្មោះ​អ្នកលក់<br />Seller's Signature & Name</p>
                 </div>
             </div>
-            <h6>សម្គាល់៖ <span>ច្បាប់​ដើម​សម្រាប់​អ្នក​ទិញ ច្បាប់​ចម្លង​សម្រាប់​អ្នក​លក់</span><br /><span style="font-size: 10px"><strong>Note:</strong> Original invoice for customer, copied invoice for seller</span></h6>
+            <h6 style="padding-left: 35px;">សម្គាល់៖ <span>ច្បាប់​ដើម​សម្រាប់​អ្នក​ទិញ ច្បាប់​ចម្លង​សម្រាប់​អ្នក​លក់</span><br /><span style="font-size: 10px"><strong>Note:</strong> Original invoice for customer, copied invoice for seller</span></h6>
         </div>
     </div>
 </script>
@@ -44469,7 +44541,7 @@
                     <div class="clear">
                         <div class="left dotted-ruler" style="width: 62%;">
                         	<p>ឈ្មោះ Name : <span data-bind="text: contactDS.data()[0].name"></span><br>
-		        			អស័យដ្ឋាន Address : <span data-bind="text: contactDS.data()[0].address"></span><br>
+		        			អាស័យ​ដ្ឋាន Address : <span data-bind="text: contactDS.data()[0].address"></span><br>
 		        			លេខទូរស័ព្ទ Tel : <span data-bind="text: contactDS.data()[0].phone"></span>
 		        			</p>
                         </div>
@@ -44560,7 +44632,7 @@
                 	<p>ហត្ថលេខា និងឈ្មោះ​អ្នកលក់<br />Seller's Signature & Name</p>
                 </div>
             </div>
-            <h6>សម្គាល់៖ <span>ច្បាប់​ដើម​សម្រាប់​អ្នក​ទិញ ច្បាប់​ចម្លង​សម្រាប់​អ្នក​លក់</span><br /><span style="font-size: 10px"><strong>Note:</strong> Original invoice for customer, copied invoice for seller</span></h6>
+            <h6 style="padding-left: 35px;">សម្គាល់៖ <span>ច្បាប់​ដើម​សម្រាប់​អ្នក​ទិញ ច្បាប់​ចម្លង​សម្រាប់​អ្នក​លក់</span><br /><span style="font-size: 10px"><strong>Note:</strong> Original invoice for customer, copied invoice for seller</span></h6>
         </div>
     </div>
 </script>
@@ -44593,7 +44665,7 @@
                     <div class="clear">
                         <div class="left dotted-ruler" style="width: 62%;">
                         	<p>ឈ្មោះ Name : <span data-bind="text: contactDS.data()[0].name"></span><br>
-		        			អស័យដ្ឋាន Address : <span data-bind="text: contactDS.data()[0].address"></span><br>
+		        			អាស័យ​ដ្ឋាន Address : <span data-bind="text: contactDS.data()[0].address"></span><br>
 		        			លេខទូរស័ព្ទ Tel : <span data-bind="text: contactDS.data()[0].phone"></span>
 		        			</p>
                         </div>
@@ -44687,7 +44759,7 @@
                 	<p>ហត្ថលេខា និងឈ្មោះ​អ្នកលក់<br />Seller's Signature & Name</p>
                 </div>
             </div>
-            <h6>សម្គាល់៖ <span>ច្បាប់​ដើម​សម្រាប់​អ្នក​ទិញ ច្បាប់​ចម្លង​សម្រាប់​អ្នក​លក់</span><br /><span style="font-size: 10px"><strong>Note:</strong> Original invoice for customer, copied invoice for seller</span></h6>
+            <h6 style="padding-left: 35px;">សម្គាល់៖ <span>ច្បាប់​ដើម​សម្រាប់​អ្នក​ទិញ ច្បាប់​ចម្លង​សម្រាប់​អ្នក​លក់</span><br /><span style="font-size: 10px"><strong>Note:</strong> Original invoice for customer, copied invoice for seller</span></h6>
         </div>
     </div>
 </script>
@@ -44704,7 +44776,7 @@
                     <div class="clear">
                         <div class="left dotted-ruler" style="width: 62%;">
                         	<p>ឈ្មោះ Name : <span data-bind="text: contactDS.data()[0].name"></span><br>
-		        			អស័យដ្ឋាន Address : <span data-bind="text: contactDS.data()[0].address"></span><br>
+		        			អាស័យ​ដ្ឋាន Address : <span data-bind="text: contactDS.data()[0].address"></span><br>
 		        			លេខទូរស័ព្ទ Tel : <span data-bind="text: contactDS.data()[0].phone"></span>
 		        			</p>
                         </div>
@@ -44783,22 +44855,22 @@
                 	<p>ហត្ថលេខា និងឈ្មោះ​អ្នកលក់<br />Seller's Signature & Name</p>
                 </div>
             </div>
-            <h6>សម្គាល់៖ <span>ច្បាប់​ដើម​សម្រាប់​អ្នក​ទិញ ច្បាប់​ចម្លង​សម្រាប់​អ្នក​លក់</span><br /><span style="font-size: 10px"><strong>Note:</strong> Original invoice for customer, copied invoice for seller</span></h6>
+            <h6 style="padding-left: 35px;">សម្គាល់៖ <span>ច្បាប់​ដើម​សម្រាប់​អ្នក​ទិញ ច្បាប់​ចម្លង​សម្រាប់​អ្នក​លក់</span><br /><span style="font-size: 10px"><strong>Note:</strong> Original invoice for customer, copied invoice for seller</span></h6>
         </div>
     </div>
 </script>
 <script id="invoiceForm31" type="text/x-kendo-template">
 	<div class="inv1 pcg">
         <div class="content clear">
-        	<div class="span5">
-        		<div class="logo" style="width: 50%">
+        	<div class="span3">
+        		<div class="logo" style="width: 97%;margin-left: -9px;">
 	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
 	            </div>
         	</div>
-        	<div class="span7">
+        	<div class="span9">
         		<div class="span5">
         			<p data-bind="text: company.name"></p>
-        			<p><b>អស័យដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
+        			<p><b>អាស័យ​ដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
         		</div>
         		<div class="span5" style="float:right">
         			<p><b>Tel: </b><span data-bind="text: company.telephone"></span></p>
@@ -44810,13 +44882,15 @@
         		<div class="span7" style="margin-right: 15px;">
         			<b style="font-size: 14px;line-height: 24px;">ព័ត៌មានអតិថិជន CUSTOMER INFO</b><br><br>
         			<p>ឈ្មោះ Name : <span data-bind="text: contactDS.data()[0].name"></span><br>
-        			អស័យដ្ឋាន Address : <span data-bind="text: contactDS.data()[0].address"></span><br>
+        			អាស័យ​ដ្ឋាន Address : <span data-bind="text: contactDS.data()[0].address"></span><br>
         			លេខទូរស័ព្ទ Tel : <span data-bind="text: contactDS.data()[0].phone"></span>
         			</p>
         		</div>
         		<div class="span4" style="float:right;">
-        			<p class="form-title" style="font-size: 24px;" data-bind="text: obj.title"></p>
-        			<p><b>កាលបរិច្ឆេត Date : </b><span data-bind="text: obj.issued_date"></span></p>
+        			<p class="form-title" data-bind="text: obj.title" style="margin-bottom: 10px; font-size: 27px"></p>
+        			<p class="form-title" style=" margin-bottom: 15px; font-size: 20px; margin-left: 36px; margin-top: 0; float: left; width: 100%;">បណ័្ឌដឹកទំនិញ</p>
+        			<p><b>កាលបរិច្ឆេទ Date : </b><span data-bind="text: obj.issued_date"></span></p>
+        			<!-- <p><b>កាលបរិច្ឆេទ Date : </b><span data-bind="text: obj.issued_date"></span></p> -->
         			<p><b>លេខ No. : </b><span data-bind="text: obj.number"></span></p>
         		</div>
         	</div>
@@ -44827,7 +44901,7 @@
         				<th class="lside">ពិពណ៌នា<br>ITEM DESCRIPTION</th>
         				<th>ឯកតា<br>UM</th>
         				<th>ចំនួន<br>QTY</th>
-        				<th class="rside">កំណត់សំគាល់<br>REMARK</th>
+        				<!-- <th class="rside">កំណត់សំគាល់<br>REMARK</th> -->
         			</tr>
         		</thead>
         		<tbody style="margin-top: 2px" id="formListView" 
@@ -44858,22 +44932,34 @@
         			<td>តំណែង<br>POSITION</td><td width="80"></td>
         			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
         		</tr>
+        		<tr>
+        			<td>អ្នកទទួល<br>Reveived BY</td><td></td>
+        			<td>តំណែង<br>POSITION</td><td width="80"></td>
+        			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
+        		</tr>
         	</table>
+        </div>
+         <div class="foot">
+        	<div class="cover-signature">
+                <div class="singature" style="float:right">
+                	<p>អតិថិជន អ្នកទទួល និង ហត្ថលេខា<br /></p>
+                </div>
+            </div>           
         </div>
     </div>
 </script>
 <script id="invoiceForm32" type="text/x-kendo-template">
 	<div class="inv1 pcg pcg-border">
         <div class="content clear">
-        	<div class="span5">
-        		<div class="logo" style="width: 50%">
+        	<div class="span3">
+        		<div class="logo" style="width: 97%;margin-left: -9px;">
 	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
 	            </div>
         	</div>
-        	<div class="span7">
+        	<div class="span9">
         		<div class="span5">
         			<p data-bind="text: company.name"></p>
-        			<p><b>អស័យដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
+        			<p><b>អាស័យ​ដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
         		</div>
         		<div class="span5" style="float:right">
         			<p><b>Tel: </b><span data-bind="text: company.telephone"></span></p>
@@ -44889,8 +44975,9 @@
         			</p>
         		</div>
         		<div class="span4" style="float:right;">
-        			<p class="form-title" style="font-size: 24px;" data-bind="text: obj.title"></p>
-        			<p><b>កាលបរិច្ឆេត Date : </b><span data-bind="text: obj.issued_date"></span></p>
+        			<p class="form-title" data-bind="text: obj.title" style="margin-bottom: 10px; font-size: 27px"></p>
+        			<p class="form-title" style=" margin-bottom: 15px; font-size: 20px; margin-left: 36px; margin-top: 0; float: left; width: 100%;">បណ័្ឌដឹកទំនិញ</p>
+        			<p><b>កាលបរិច្ឆេទ Date : </b><span data-bind="text: obj.issued_date"></span></p>
         			<p><b>លេខ No. : </b><span data-bind="text: obj.number"></span></p>
         		</div>
         	</div>
@@ -44901,7 +44988,7 @@
         				<th class="lside">ពិពណ៌នា<br>ITEM DESCRIPTION</th>
         				<th>ឯកតា<br>UM</th>
         				<th>ចំនួន<br>QTY</th>
-        				<th class="rside">កំណត់សំគាល់<br>REMARK</th>
+        				<!-- <th class="rside">កំណត់សំគាល់<br>REMARK</th> -->
         			</tr>
         		</thead>
         		<tbody style="margin-top: 2px" id="formListView" 
@@ -44928,26 +45015,33 @@
         			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
         		</tr>
         		<tr>
-        			<td>អនុម័តដោយ<br>APPROVED BY</td><td></td>
+        			<td>អ្នកទទួល<br>Reveived BY</td><td></td>
         			<td>តំណែង<br>POSITION</td><td width="80"></td>
         			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
         		</tr>
         	</table>
+        </div>
+         <div class="foot">
+        	<div class="cover-signature">
+                <div class="singature" style="float:right">
+                	<p>អតិថិជន អ្នកទទួល និង ហត្ថលេខា<br /></p>
+                </div>
+            </div>           
         </div>
     </div>
 </script>
 <script id="invoiceForm33" type="text/x-kendo-template">
 	<div class="inv1 pcg">
         <div class="content clear">
-        	<div class="span5">
-        		<div class="logo" style="width: 50%">
+        	<div class="span3">
+        		<div class="logo" style="width: 97%;margin-left: -9px;">
 	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
 	            </div>
         	</div>
-        	<div class="span7">
+        	<div class="span9">
         		<div class="span5" style="margin-right: 30px;">
         			<p data-bind="text: company.name"></p>
-        			<p><b>អស័យដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
+        			<p><b>អាស័យ​ដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
         		</div>
         		<div class="span5" >
         			<p><b>Tel: </b><span data-bind="text: company.telephone"></span></p>
@@ -44957,8 +45051,9 @@
         	</div>
         	<div class="span12 clear" style="margin: 20px 0;">
         		<div class="span4" style="margin-right:45px;">
-        			<p class="form-title" style="margin-bottom: 15px;font-size: 24px;" data-bind="text: obj.title"></p>
-        			<p><b>កាលបរិច្ឆេត Date : </b><span data-bind="text: obj.issued_date"></span></p>
+        			<p class="form-title" data-bind="text: obj.title" style="margin-bottom: 10px; font-size: 27px"></p>
+        			<p class="form-title" style=" margin-bottom: 15px; font-size: 20px; margin-left: 36px; margin-top: 0; float: left; width: 100%;">បណ័្ឌដឹកទំនិញ</p>
+        			<p><b>កាលបរិច្ឆេទ Date : </b><span data-bind="text: obj.issued_date"></span></p>
         			<p><b>លេខ No. : </b><span data-bind="text: obj.number"></span></p>
         			
         		</div>
@@ -44976,7 +45071,7 @@
         				<th class="lside">ពិពណ៌នា<br>ITEM DESCRIPTION</th>
         				<th>ឯកតា<br>UM</th>
         				<th>ចំនួន<br>QTY</th>
-        				<th class="rside">កំណត់សំគាល់<br>REMARK</th>
+        				<!-- <th class="rside">កំណត់សំគាល់<br>REMARK</th> -->
         			</tr>
         		</thead>
         		<tbody style="margin-top: 2px" id="formListView" 
@@ -45002,26 +45097,33 @@
         			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
         		</tr>
         		<tr>
-        			<td>អនុម័តដោយ<br>APPROVED BY</td><td></td>
+        			<td>អ្នកទទួល<br>Reveived BY</td><td></td>
         			<td>តំណែង<br>POSITION</td><td width="80"></td>
         			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
         		</tr>
         	</table>
+        </div>
+         <div class="foot">
+        	<div class="cover-signature">
+                <div class="singature" style="float:right">
+                	<p>អតិថិជន អ្នកទទួល និង ហត្ថលេខា<br /></p>
+                </div>
+            </div>           
         </div>
     </div>
 </script>
 <script id="invoiceForm34" type="text/x-kendo-template">
 	<div class="inv1 pcg pcg-border">
         <div class="content clear">
-        	<div class="span5">
-        		<div class="logo" style="width: 50%">
+        	<div class="span3">
+        		<div class="logo" style="width: 97%;margin-left: -9px;">
 	            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
 	            </div>
         	</div>
-        	<div class="span7">
+        	<div class="span9">
         		<div class="span5" style="margin-right: 30px;">
         			<p data-bind="text: company.name"></p>
-        			<p><b>អស័យដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
+        			<p><b>អាស័យ​ដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
         		</div>
         		<div class="span5" >
         			<p><b>Tel: </b><span data-bind="text: company.telephone"></span></p>
@@ -45031,8 +45133,9 @@
         	</div>
         	<div class="span12 clear" style="margin: 20px 0;">
         		<div class="span4" style="margin-right:45px;">
-        			<p class="form-title" style="margin-bottom: 15px;font-size: 24px;" data-bind="text: obj.title"></p>
-        			<p><b>កាលបរិច្ឆេត Date : </b><span data-bind="text: obj.issued_date"></span></p>
+        			<p class="form-title" data-bind="text: obj.title" style="margin-bottom: 10px; font-size: 27px"></p>
+        			<p class="form-title" style=" margin-bottom: 15px; font-size: 20px; margin-left: 36px; margin-top: 0; float: left; width: 100%;">បណ័្ឌដឹកទំនិញ</p>
+        			<p><b>កាលបរិច្ឆេទ Date : </b><span data-bind="text: obj.issued_date"></span></p>
         			<p><b>លេខ No. : </b><span data-bind="text: obj.number"></span></p>
         			
         		</div>
@@ -45050,7 +45153,7 @@
         				<th class="lside">ពិពណ៌នា<br>ITEM DESCRIPTION</th>
         				<th>ឯកតា<br>UM</th>
         				<th>ចំនួន<br>QTY</th>
-        				<th class="rside">កំណត់សំគាល់<br>REMARK</th>
+        				<!-- <th class="rside">កំណត់សំគាល់<br>REMARK</th> -->
         			</tr>
         		</thead>
         		<tbody style="margin-top: 2px" id="formListView" 
@@ -45076,11 +45179,18 @@
         			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
         		</tr>
         		<tr>
-        			<td>អនុម័តដោយ<br>APPROVED BY</td><td></td>
+        			<td>អ្នកទទួល<br>Reveived BY</td><td></td>
         			<td>តំណែង<br>POSITION</td><td width="80"></td>
         			<td>កាលបរិច្ឆេទ<br>DATE</td><td width="120"></td>
         		</tr>
         	</table>
+        </div>
+         <div class="foot">
+        	<div class="cover-signature">
+                <div class="singature" style="float:right">
+                	<p>អតិថិជន អ្នកទទួល និង ហត្ថលេខា<br /></p>
+                </div>
+            </div>           
         </div>
     </div>
 </script>
@@ -45095,7 +45205,7 @@
         	<div class="span7">
         		<div class="span5">
         			<p data-bind="text: company.name"></p>
-        			<p><b>អស័យដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
+        			<p><b>អាស័យ​ដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
         		</div>
         		<div class="span5" style="float:right">
         			<p><b>Tel: </b><span data-bind="text: company.telephone"></span></p>
@@ -45112,14 +45222,14 @@
         		</div>
         		<div class="span4" style="float:right;">
         			<p class="form-title" data-bind="text: obj.title"></p>
-        			<p><b>កាលបរិច្ឆេត Date : </b><span data-bind="text: obj.issued_date"></span></p>
+        			<p><b>កាលបរិច្ឆេទ Date : </b><span data-bind="text: obj.issued_date"></span></p>
         			<p><b>លេខ No. : </b><span data-bind="text: obj.number"></span></p>
         		</div>
         	</div>
         	<div class="span12 mid-title main-color" data-bind="style: {backgroundColor: obj.color}">
-        		<div class="span6" style="text-align: left;padding-left: 10px;">ល្ខខណ្ឌ<br>TERM OF PAYMENT</div>
+        		<div class="span6" style="text-align: left;padding-left: 10px;">លក្ខខណ្ឌ<br>TERM OF PAYMENT</div>
         		
-        		<div class="span6" style="text-align: left;padding-left: 10px;">សុពលភាព <br>VALIDITY PERIOD</div>
+        		<div class="span6" style="text-align: left;padding-left: 10px;"><span style="margin-left: 47px;">សុពលភាព</span> <br>VALIDITY PERIOD</div>
         	</div>
         	<table class="span12" rules="rows">
         		<thead>
@@ -45189,7 +45299,7 @@
         	<div class="span7">
         		<div class="span5">
         			<p data-bind="text: company.name"></p>
-        			<p><b>អស័យដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
+        			<p><b>អាស័យ​ដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
         		</div>
         		<div class="span5" style="float:right">
         			<p><b>Tel: </b><span data-bind="text: company.telephone"></span></p>
@@ -45206,14 +45316,14 @@
         		</div>
         		<div class="span4" style="float:right;">
         			<p class="form-title" data-bind="text: obj.title"></p>
-        			<p><b>កាលបរិច្ឆេត Date : </b><span data-bind="text: obj.issued_date"></span></p>
+        			<p><b>កាលបរិច្ឆេទ Date : </b><span data-bind="text: obj.issued_date"></span></p>
         			<p><b>លេខ No. : </b><span data-bind="text: obj.number"></span></p>
         		</div>
         	</div>
         	<div class="span12 mid-title main-color" data-bind="style: {backgroundColor: obj.color}">
-        		<div class="span6" style="text-align: left;padding-left: 10px;">ល្ខខណ្ឌ<br>TERM OF PAYMENT</div>
+        		<div class="span6" style="text-align: left;padding-left: 10px;">លក្ខខណ្ឌ<br>TERM OF PAYMENT</div>
         		
-        		<div class="span6" style="text-align: left;padding-left: 10px;">សុពលភាព <br>VALIDITY PERIOD</div>
+        		<div class="span6" style="text-align: left;padding-left: 10px;"><span style="margin-left: 47px;">សុពលភាព</span> <br>VALIDITY PERIOD</div>
         	</div>
         	<table class="span12" rules="rows">
         		<thead>
@@ -45283,7 +45393,7 @@
         	<div class="span7">
         		<div class="span5" style="margin-right: 30px;">
         			<p data-bind="text: company.name"></p>
-        			<p><b>អស័យដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
+        			<p><b>អាស័យ​ដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
         		</div>
         		<div class="span5" >
         			<p><b>Tel: </b><span data-bind="text: company.telephone"></span></p>
@@ -45294,7 +45404,7 @@
         	<div class="span12 clear" style="margin: 20px 0;">
         		<div class="span4" style="margin-right:45px;">
         			<p class="form-title" style="margin-bottom: 15px;" data-bind="text: obj.title"></p>
-        			<p><b>កាលបរិច្ឆេត Date : </b><span data-bind="text: obj.issued_date"></span></p>
+        			<p><b>កាលបរិច្ឆេទ Date : </b><span data-bind="text: obj.issued_date"></span></p>
         			<p><b>លេខ No. : </b><span data-bind="text: obj.number"></span></p>
         			<div class="span12 main-color order-price" data-bind="style: {backgroundColor: obj.color}"><p>សរុប TOTAL <span data-bind="text: obj.amount"></span></p></div>
         		</div>
@@ -45306,9 +45416,9 @@
         		</div>
         	</div>
         	<div class="span12 mid-title main-color" data-bind="style: {backgroundColor: obj.color}">
-        		<div class="span6" style="text-align: left;padding-left: 10px;">ល្ខខណ្ឌ<br>TERM OF PAYMENT</div>
+        		<div class="span6" style="text-align: left;padding-left: 10px;">លក្ខខណ្ឌ<br>TERM OF PAYMENT</div>
         		
-        		<div class="span6" style="text-align: left;padding-left: 10px;">សុពលភាព <br>VALIDITY PERIOD</div>
+        		<div class="span6" style="text-align: left;padding-left: 10px;"><span style="margin-left: 47px;">សុពលភាព</span> <br>VALIDITY PERIOD</div>
         	</div>
         	<table class="span12" rules="rows">
         		<thead>
@@ -45376,7 +45486,7 @@
         	<div class="span7">
         		<div class="span5" style="margin-right: 30px;">
         			<p data-bind="text: company.name"></p>
-        			<p><b>អស័យដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
+        			<p><b>អាស័យ​ដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
         		</div>
         		<div class="span5" >
         			<p><b>Tel: </b><span data-bind="text: company.telephone"></span></p>
@@ -45387,7 +45497,7 @@
         	<div class="span12 clear" style="margin: 20px 0;">
         		<div class="span4" style="margin-right:45px;">
         			<p class="form-title" style="margin-bottom: 15px;" data-bind="text: obj.title"></p>
-        			<p><b>កាលបរិច្ឆេត Date : </b><span data-bind="text: obj.issued_date"></span></p>
+        			<p><b>កាលបរិច្ឆេទ Date : </b><span data-bind="text: obj.issued_date"></span></p>
         			<p><b>លេខ No. : </b><span data-bind="text: obj.number"></span></p>
         			<div class="span12 main-color order-price" data-bind="style: {backgroundColor: obj.color}"><p>សរុប TOTAL <span data-bind="text: obj.amount"></span></p></div>
         		</div>
@@ -45399,9 +45509,9 @@
         		</div>
         	</div>
         	<div class="span12 mid-title main-color" data-bind="style: {backgroundColor: obj.color}">
-        		<div class="span6" style="text-align: left;padding-left: 10px;">ល្ខខណ្ឌ<br>TERM OF PAYMENT</div>
+        		<div class="span6" style="text-align: left;padding-left: 10px;">លក្ខខណ្ឌ<br>TERM OF PAYMENT</div>
         		
-        		<div class="span6" style="text-align: left;padding-left: 10px;">សុពលភាព <br>VALIDITY PERIOD</div>
+        		<div class="span6" style="text-align: left;padding-left: 10px;"><span style="margin-left: 47px;">សុពលភាព</span> <br>VALIDITY PERIOD</div>
         	</div>
         	<table class="span12" rules="rows">
         		<thead>
@@ -45469,7 +45579,7 @@
         	<div class="span7">
         		<div class="span5">
         			<p data-bind="text: company.name"></p>
-        			<p><b>អស័យដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
+        			<p><b>អាស័យ​ដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
         		</div>
         		<div class="span5" style="float:right">
         			<p><b>Tel: </b><span data-bind="text: company.telephone"></span></p>
@@ -45486,7 +45596,7 @@
         		</div>
         		<div class="span4" style="float:right;">
         			<p class="form-title" style="font-size: 24px;" data-bind="text: obj.title"></p>
-        			<p><b>កាលបរិច្ឆេត Date : </b><span data-bind="text: obj.issued_date"></span></p>
+        			<p><b>កាលបរិច្ឆេទ Date : </b><span data-bind="text: obj.issued_date"></span></p>
         			<p><b>លេខ No. : </b><span data-bind="text: obj.number"></span></p>
         		</div>
         	</div>
@@ -45538,7 +45648,7 @@
         	<div class="span7">
         		<div class="span5">
         			<p data-bind="text: company.name"></p>
-        			<p><b>អស័យដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
+        			<p><b>អាស័យ​ដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
         		</div>
         		<div class="span5" style="float:right">
         			<p><b>Tel: </b><span data-bind="text: company.telephone"></span></p>
@@ -45555,7 +45665,7 @@
         		</div>
         		<div class="span4" style="float:right;">
         			<p class="form-title" style="font-size: 24px;" data-bind="text: obj.title"></p>
-        			<p><b>កាលបរិច្ឆេត Date : </b><span data-bind="text: obj.issued_date"></span></p>
+        			<p><b>កាលបរិច្ឆេទ Date : </b><span data-bind="text: obj.issued_date"></span></p>
         			<p><b>លេខ No. : </b><span data-bind="text: obj.number"></span></p>
         		</div>
         	</div>
@@ -45607,7 +45717,7 @@
         	<div class="span7">
         		<div class="span5" style="margin-right: 30px;">
         			<p data-bind="text: company.name"></p>
-        			<p><b>អស័យដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
+        			<p><b>អាស័យ​ដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
         		</div>
         		<div class="span5" >
         			<p><b>Tel: </b><span data-bind="text: company.telephone"></span></p>
@@ -45618,7 +45728,7 @@
         	<div class="span12 clear" style="margin: 20px 0;">
         		<div class="span4" style="margin-right:45px;">
         			<p class="form-title" style="margin-bottom: 15px;font-size: 24px;" data-bind="text: obj.title"></p>
-        			<p><b>កាលបរិច្ឆេត Date : </b><span data-bind="text: obj.issued_date"></span></p>
+        			<p><b>កាលបរិច្ឆេទ Date : </b><span data-bind="text: obj.issued_date"></span></p>
         			<p><b>លេខ No. : </b><span data-bind="text: obj.number"></span></p>
         			
         		</div>
@@ -45676,7 +45786,7 @@
         	<div class="span7">
         		<div class="span5" style="margin-right: 30px;">
         			<p data-bind="text: company.name"></p>
-        			<p><b>អស័យដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
+        			<p><b>អាស័យ​ដ្ឋាន Address:</b> <span data-bind="text: company.address"></span></p>
         		</div>
         		<div class="span5" >
         			<p><b>Tel: </b><span data-bind="text: company.telephone"></span></p>
@@ -45687,7 +45797,7 @@
         	<div class="span12 clear" style="margin: 20px 0;">
         		<div class="span4" style="margin-right:45px;">
         			<p class="form-title" style="margin-bottom: 15px;font-size: 24px;" data-bind="text: obj.title"></p>
-        			<p><b>កាលបរិច្ឆេត Date : </b><span data-bind="text: obj.issued_date"></span></p>
+        			<p><b>កាលបរិច្ឆេទ Date : </b><span data-bind="text: obj.issued_date"></span></p>
         			<p><b>លេខ No. : </b><span data-bind="text: obj.number"></span></p>
         			
         		</div>
@@ -46063,7 +46173,7 @@
 		<td style="text-align: left; padding-left: 5px;">#= description#</td>
 		<td>#= item_prices.length>0 ? item_prices[0].measurement : "" #</td>
 		<td>#= quantity#</td>
-		<td style="text-align: right; padding-right: 5px;">#= kendo.toString(price, "c", locale) #</td>
+		<!-- <td style="text-align: right; padding-right: 5px;">#= kendo.toString(price, "c", locale) #</td> -->
 	</tr>
 </script>
 <script id="invoiceForm-lineDS-template33" type="text/x-kendo-template">
@@ -46072,7 +46182,7 @@
 		<td>#= item_prices.length>0 ? item_prices[0].measurement : "" #</td>
 		<td>#= quantity#</td>
 		<td style="text-align: right; padding-right: 5px;">#= kendo.toString(price, "c", locale) #</td>
-		<td style="text-align: right; padding-right: 5px;">#= kendo.toString(amount, "c", locale) #</td>
+		<!-- <td style="text-align: right; padding-right: 5px;">#= kendo.toString(amount, "c", locale) #</td> -->
 	</tr>
 </script>
 
@@ -68710,6 +68820,172 @@
 	        });
 	        //save the file as Excel file with extension xlsx
 	        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "draftList.xlsx"});
+		}
+	});
+	banhji.customerList = kendo.observable({
+		lang 					: langVM,
+		institute 				: banhji.institute,
+		contact 				: dataStore(apiUrl + "sales/customer"),
+		dataSource 				: dataStore(apiUrl + "contacts/supplier"),
+		statusList 				: banhji.source.statusList,
+		contact_type_id 		: null,
+		status 					: null,		
+		pageLoad 				: function(){
+		},
+		search 					: function(){
+			var para = [],
+			status = this.get("status"),
+			contact_type_id = this.get("contact_type_id");
+
+			if(status!==null){
+				para.push({ field:"status", value: status });
+			}
+
+			if(contact_type_id){
+				para.push({ field:"contact_type_id", value: contact_type_id });
+			}
+
+			this.dataSource.filter(para);
+			this.set("status", null);
+			this.set("contact_type_id", null);
+			this.dataSource.bind("requestEnd", function(e) {
+                if (e.type == "read") {
+                    var response = e.response;
+                    self.exArray = [];
+
+                    self.exArray.push({
+                        cells: [{
+                            value: self.company.name,
+                            textAlign: "center",
+                            colSpan: 6
+                        }]
+                    });
+                    self.exArray.push({
+                        cells: [{
+                            value: "Customer List",
+                            bold: true,
+                            fontSize: 20,
+                            textAlign: "center",
+                            colSpan: 6
+                        }]
+                    });
+                    self.exArray.push({
+                        cells: [{
+                            value: "",
+                            colSpan: 6
+                        }]
+                    });
+                    self.exArray.push({
+                        cells: [{
+                                value: "Customer ID",
+                                background: "#496cad",
+                                color: "#ffffff"
+                            },
+                            {
+                                value: "Name",
+                                background: "#496cad",
+                                color: "#ffffff"
+                            },
+                            {
+                                value: "Type",
+                                background: "#496cad",
+                                color: "#ffffff"
+                            },
+                            {
+                                value: "Address",
+                                background: "#496cad",
+                                color: "#ffffff"
+                            },
+                            {
+                                value: "Phone",
+                                background: "#496cad",
+                                color: "#ffffff"
+                            },
+                            {
+                                value: "Email",
+                                background: "#496cad",
+                                color: "#ffffff"
+                            }
+                        ]
+                    });
+                    for (var i = 0; i < response.results.length; i++){
+				          	self.exArray.push({
+				          		cells: [
+				          	  		{ value: response.results[i].abbr + response.results[i].number},
+				          	  		{ value: response.results[i].name},
+				          	  		{ value: response.results[i].contact_type},
+				              		{ value: response.results[i].address},
+				              		{ value: response.results[i].phone},
+				              		{ value: response.results[i].email},
+				            	]
+				          	});
+					    self.exArray.push({
+					        cells: [
+					          	{ value: "", colSpan: 7 }
+					        ]
+					    });
+					}
+                }
+            });
+		}, 
+		printGrid			: function() {
+			var gridElement = $('#grid'),
+		        printableContent = '',
+		        win = window.open('', '', 'width=900, height=700'),
+		        doc = win.document.open();
+		    var htmlStart =
+		            '<!DOCTYPE html>' +
+		            '<html>' +
+		            '<head>' +
+		            '<meta charset="utf-8" />' +
+		            '<title></title>' +
+		            '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
+		            '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
+		            '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
+		            '<link href="<?php echo base_url(); ?>assets/responsive.css" rel="stylesheet" >' +
+		            '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
+		            '<style>' +
+		            '*{  } html { font: 11pt sans-serif; }' +
+		            '.k-grid { border-top-width: 0; }' +
+		            '.k-grid, .k-grid-content { height: auto !important; }' +
+		            '.k-grid-content { overflow: visible !important; }' +
+		            'div.k-grid table { table-layout: auto; width: 100% !important; }' +
+		            '.k-grid .k-grid-header th { border-top: 1px solid; }' +
+		            '.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
+		            '</style><style type="text/css" media="print"> @page { size: landscape; margin:0mm; } .saleSummaryCustomer .total-customer, .saleSummaryCustomer .total-sale { background-color: #DDEBF7!important; -webkit-print-color-adjust:exact; }.saleSummaryCustomer .table.table-borderless.table-condensed  tr th { background-color: #1E4E78!important;-webkit-print-color-adjust:exact;}.saleSummaryCustomer .table.table-borderless.table-condensed  tr th span{ color: #fff!important; }.saleSummaryCustomer .table.table-borderless.table-condensed tr:nth-child(2n+1) td {  background-color: #fff!important; -webkit-print-color-adjust:exact;} .saleSummaryCustomer .table.table-borderless.table-condensed tr td { background-color: #F2F2F2!important;-webkit-print-color-adjust:exact; } </style>' +
+		            '</head>' +
+		            '<body><div id="example" class="k-content saleSummaryCustomer" style="padding: 30px;">';
+		    var htmlEnd =
+		            '</div></body>' +
+		            '</html>';
+		    
+		    printableContent = $('#invFormContent').html();
+		    doc.write(htmlStart + printableContent + htmlEnd);
+		    doc.close();
+		    setTimeout(function(){
+		    	win.print();
+		    	win.close();
+		    },2000);
+		},
+		ExportExcel 		: function(){
+	        var workbook = new kendo.ooxml.Workbook({
+	          sheets: [
+	            {
+	              columns: [
+	                { autoWidth: true },
+	                { autoWidth: true },
+	                { autoWidth: true },
+	                { autoWidth: true },
+	                { autoWidth: true },
+	                { autoWidth: true },
+	              ],
+	              title: "customerList",
+	              rows: this.exArray
+	            }
+	          ]
+	        });
+	        //save the file as Excel file with extension xlsx
+	        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "customerList.xlsx"});
 		}
 	});
 	// CUSTOMER SETTINGS
@@ -102358,7 +102634,6 @@
 		statement: new kendo.Layout("#statement", {model: banhji.statement}),
 		customerDeposit: new kendo.Layout("#customerDeposit", {model: banhji.customerDeposit}),
 		customerReportCenter: new kendo.Layout("#customerReportCenter", {model: banhji.customerReportCenter}),
-		customerList : new kendo.Layout("#customerList"),
 		customerBalance : new kendo.Layout("#customerBalance", {model: banhji.customerBalance}),
 		customerSetting: new kendo.Layout("#customerSetting", {model: banhji.customerSetting}),
 		customerRecurring : new kendo.Layout("#customerRecurring", {model: banhji.customerRecurring}),
@@ -102432,6 +102707,7 @@
 		invoiceList : new kendo.Layout("#invoiceList", {model: banhji.invoiceList}),
 		saleJobEngagement: new kendo.Layout("#saleJobEngagement", {model: banhji.saleJob}),
 		saleOrderList: new kendo.Layout("#saleOrderList", {model: banhji.saleOrderList}),
+		customerList: new kendo.Layout("#customerList", {model: banhji.customerList}),
 		draftList: new kendo.Layout("#draftList", {model: banhji.draftList}),
 
 		//Sale
@@ -104002,49 +104278,6 @@
 		// 	}				
 		// });
 	});
-	banhji.router.route("/customer_list", function(){
-		if(!banhji.userManagement.getLogin()){
-			banhji.router.navigate('/manage');
-		}else{
-			banhji.view.layout.showIn("#content", banhji.view.customerList);
-			banhji.userManagement.addMultiTask("Customer List","customer_list",null);
-
-			if(banhji.pageLoaded["customer_list"]==undefined){
-				banhji.pageLoaded["customer_list"] = true;
-
-				$("#grid").kendoGrid({
-	                dataSource: dataStore(apiUrl + "contacts"),
-	                height: 550,
-	                groupable: true,
-	                sortable: true,
-	                columnMenu: true,
-	                pageable: {
-	                    refresh: true,
-	                    pageSizes: true,
-	                    buttonCount: 5
-	                },
-	                columns: [{
-	                	template: "#=abbr##=number#",
-	                    field: "number",
-	                    title: "Number"
-	                }, {
-	                    field: "name",
-	                    title: "Name"
-	                }, {
-	                	template: "#=contact_type#",
-	                    field: "contact_type_id",
-	                    title: "Type"
-	                }, {
-	                    field: "phone",
-	                    title: "Phone"
-	                }, {
-	                    field: "address",
-	                    title: "Address"
-	                }]
-	            });
-			}
-		}
-	});
 	banhji.router.route("/customer_balance", function(){
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
@@ -104509,6 +104742,22 @@
 				vm.sorterChanges();
 			}
 			vm.pageLoad();
+		}
+	});
+	banhji.router.route("/customer_list", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.customerList);
+			banhji.view.layout.showIn('#menu', banhji.view.menu);
+			banhji.view.menu.showIn('#secondary-menu', banhji.view.customerMenu);
+
+			var vm = banhji.customerList;
+			
+			if(banhji.pageLoaded["customer_list"]==undefined){
+				banhji.pageLoaded["customer_list"] = true;
+				
+			}
 		}
 	});
 	banhji.router.route("/draft_list", function(){

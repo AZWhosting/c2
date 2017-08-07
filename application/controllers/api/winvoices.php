@@ -49,6 +49,13 @@ class Winvoices extends REST_Controller {
 		$tmp = array();
 		if($obj->exists()){
 			foreach ($obj as $value) {
+				//Get Locale
+				$plan = ""; 
+				$l = ""; 
+				$locale = "";
+				$plan = $value->plan->get();
+				$l = $plan->currency->get();
+				$locale = $l->locale;
 				//Reactive Meter
 				if($value->reactive_id != 0){
 					$reactive = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
@@ -120,7 +127,9 @@ class Winvoices extends REST_Controller {
 								'location_id' => $value->location_id,
 								'pole_id' => $value->pole_id,
 								'box_id' => $value->box_id,
-								'multiplier' => intval($value->multiplier)
+								'multiplier' => intval($value->multiplier),
+								'locale' => $locale,
+								'number_digit' => $value->number_digit
 							);
 							$tmp["$value->number"]['items'][] = array(
 							'type' => 'usage',
@@ -507,15 +516,26 @@ class Winvoices extends REST_Controller {
 				$invoiceLine->limit(1)->get();
 				if($invoiceLine->exists()) {
 					foreach($invoiceLine as $line) {
+						$locale = NULL;
 						$box = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 						$box->where("id", $line->meter_record_meter_box_id)->limit(1)->get();
+
+						$meter = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						$meter->where("id", $line->meter_record_meter_id)->limit(1)->get();
+						if($meter->exists()) {
+							$plan = $meter->plan->get();
+							$l = $plan->currency->get();
+							$locale = $l->locale;
+						}
+
 						if($box->exists()){
 							$meter = array(
 								'meter_number'   => $line->meter_record_meter_number,
 								'meter_order'   => $line->meter_record_meter_worder,
 								'meter_id'   => $line->meter_record_meter_id,
 								'location' => $location->result(),
-								'box' => $box->name
+								'box' => $box->name,
+								'plan_locale' => $locale
 							);
 						}else{
 							$meter = array(
@@ -523,7 +543,8 @@ class Winvoices extends REST_Controller {
 								'meter_order'   => $line->meter_record_meter_worder,
 								'meter_id'   => $line->meter_record_meter_id,
 								'location' => $location->result(),
-								'box' => ""
+								'box' => "",
+								'plan_locale' => $locale
 							);
 						}
 					}
@@ -640,7 +661,7 @@ class Winvoices extends REST_Controller {
 					'due_date' => $row->due_date,
 					'bill_date' => $row->bill_date,
 					'amount'  => floatval($row->amount),
-					'locale' => $row->locale,
+					'locale' => $locale,
 					'consumption' => $usage,
 					'formcolor' => '',
 					'minusMonth' => $minusM,
