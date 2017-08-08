@@ -8354,6 +8354,10 @@
 										 data-bind="source: dataSource"
 							></tbody>
 						</table>
+						<div id="pager" class="k-pager-wrap"
+			            		 data-role="pager"
+						    	 data-auto-bind="false"
+					             data-bind="source: dataSource"></div>
 					</div>
 				</div>
 			</div>
@@ -8514,6 +8518,10 @@
 										 data-bind="source: dataSource"										 
 							></tbody>
 						</table>
+						<div id="pager" class="k-pager-wrap"
+			            		 data-role="pager"
+						    	 data-auto-bind="false"
+					             data-bind="source: dataSource"></div>
 					</div>
 				</div>
 			</div>

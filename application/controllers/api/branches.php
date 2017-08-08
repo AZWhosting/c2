@@ -77,7 +77,8 @@ class Branches extends REST_Controller {
 		 			"type" 				=> $value->type,
 		 			"attachment_id" 	=> intval($value->attachment_id),
 		 			"image_url"			=> $logo->url,
-		 			"term_of_condition"	=> $value->term_of_condition
+		 			"term_of_condition"	=> $value->term_of_condition,
+		 			"segment_item_id" 	=> $value->segment_item_id
 
 		 		);
 			}
@@ -113,6 +114,7 @@ class Branches extends REST_Controller {
 			isset($value->type) 				? $obj->type 				= $value->type : "w";
 			isset($value->attachment_id) 		? $obj->attachment_id 		= $value->attachment_id : 0;
 			isset($value->term_of_condition) 	? $obj->term_of_condition 	= $value->term_of_condition : "";
+			isset($value->segment_item_id) 		? $obj->segment_item_id 	= $value->segment_item_id : 0;
 			
 			if($obj->save()){
 				//Respsone
@@ -136,7 +138,8 @@ class Branches extends REST_Controller {
 		 			"telephone"			=> $obj->telephone,
 		 			"type"	 			=> $obj->type,
 		 			"attachment_id"	 			=> $obj->attachment_id,
-		 			"term_of_condition"	=> $obj->term_of_condition
+		 			"term_of_condition"	=> $obj->term_of_condition,
+		 			"segment_item_id"	=> $obj->segment_item_id
 					
 				);				
 			}		
@@ -174,6 +177,7 @@ class Branches extends REST_Controller {
 			isset($value->type) 			? $obj->type 			= $value->type : "";
 			isset($value->attachment_id) 		? $obj->attachment_id 			= $value->attachment_id : 0;
 			isset($value->term_of_condition) 	? $obj->term_of_condition 	= $value->term_of_condition : "";
+			isset($value->segment_item_id)		? $obj->segment_item_id 	= $value->segment_item_id : 0;
 			
 			if($obj->save()){				
 				//Results
@@ -197,7 +201,8 @@ class Branches extends REST_Controller {
 		 			"telephone"			=> $obj->telephone,
 		 			"type"				=> $obj->type,
 		 			"attachment_id"		=> $obj->attachment_id,
-		 			"term_of_condition"	=> $obj->term_of_condition
+		 			"term_of_condition"	=> $obj->term_of_condition,
+		 			"segment_item_id" 	=> $obj->segment_item_id
 				);						
 			}
 		}

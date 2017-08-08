@@ -354,12 +354,28 @@ class Utibills extends REST_Controller {
 	   			}
 	   			$oldtran = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 	   			$oldtran->where("id", $value->reference_id)->limit(1)->get();
-	   			if(($oldtran->amount + $value->amount_fine) - ($obj->amount + $obj->discount) == 0){
+	   			$famount = 0;
+	   			$samount = 0;
+	   			if($value->amount_fine > 0){
+	   				$famount = $oldtran->amount + $value->amount_fine;
+	   				$oldtran->fine = $value->amount_fine;
+	   			}else{
+	   				$famount = $oldtran->amount;
+	   			}
+	   			$oldreciept = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	   			$oldreciept->where("type", "Cash_Receipt");
+	   			$oldreciept->where("reference_id", $oldtran->id);
+	   			$oldreciept->get();
+	   			if($oldreciept->exists()){
+	   				foreach ($oldreciept as $oreciept) {
+	   					$samount += $oreciept->amount;
+	   				}
+	   			}
+	   			if($famount == $samount){
 	   				$oldtran->status = 1;
 	   			}else{
 	   				$oldtran->status = 2;
 	   			}
-	   			$oldtran->fine = $value->amount_fine;
 	   			$oldtran->save();
 	   			//Session Recieve
 	   			if($value->session_id){

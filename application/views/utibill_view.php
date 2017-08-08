@@ -1952,9 +1952,7 @@
 				    		<span class="glyphicons no-js remove_2" 
 								data-bind="click: cancel"><i></i></span>
 						</div>
-
 						<div class="clear"></div>
-
 						<div class="row-fluid">
 				        	<div id="plan" class="box-generic well" style="margin-bottom: 0;">
 				        		<div class="row">
@@ -2172,6 +2170,19 @@
 								            	placeholder="Representative" 
 							            		data-bind="value: obj.representative, attr: {placeholder: lang.lang.representative}" 
 							              		style="width: 100%;" />
+										</div>
+									</div>
+									<div class="col-xs-12 col-sm-3">
+										<div class="control-group">
+											<label ><span data-bind="text: lang.lang.segment">Segment</span></label>
+											<select data-role="dropdownlist"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="
+							                   	source: segmentItemDS,
+							                   	value: obj.segment_item_id"
+							                   style="width: 100%; margin-bottom: 15px;" ></select>
 										</div>
 									</div>
 								</div>
@@ -6673,7 +6684,8 @@
 			<input data-role="numerictextbox"
 				   data-spinners="false"
 				   data-culture=""
-                   data-decimals="2"
+				   data-format="c"
+                   data-decimals="3"
                    data-min="0"                   
                    data-bind="value: received,
                               events: { change: changes }"
@@ -6957,9 +6969,10 @@
 		<td class="center">
 			<input data-role="numerictextbox"
 				   data-spinners="false"
-				   data-format="c0"
+				   data-format="c"
 				   data-culture="#:locale#"
-                   data-min="0"                   
+                   data-min="0"
+                   data-decimals="3"               
                    data-bind="value: amount,
                               events: { change: changes }"
                    style="width: 100%; text-align: right;">			
