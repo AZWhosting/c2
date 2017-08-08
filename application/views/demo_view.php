@@ -59131,7 +59131,7 @@
 	    addJournal 			: function(transaction_id){
 	    	var self = this,
 		    	obj = this.get("obj"),
-		    	contact = obj.contact_id,
+		    	contact = obj.contact,
 		    	raw = "", entries = {};
 
 		    //Edit Mode
