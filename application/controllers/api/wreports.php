@@ -728,6 +728,7 @@ class Wreports extends REST_Controller {
 	    	foreach ($filters as $value) {	    		    			
 	    		$activeMeter->where("branch_id", $value["value"]);
 	    		$allMeter->where("branch_id", $value["value"]);
+	    		$income->where("location_id", $value["value"]);
 	    		$branch->where("id", $value["value"]);
 	    		$avgUsage->where_related("meter", $value["field"], $value["value"]);
 			}									 			

@@ -33,7 +33,7 @@ class Items extends REST_Controller {
 		$data["count"] = 0;
 		$is_pattern = 0;
 		
-		$obj = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+		$obj = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 		//Sort
 		if(!empty($sort) && isset($sort)){
@@ -69,6 +69,7 @@ class Items extends REST_Controller {
 		
 		$obj->include_related("category", "name");
 		$obj->include_related("measurement", array("name"));
+		$obj->where("nature <>", "variant");
 		$obj->where("is_pattern", $is_pattern);
 		$obj->where("deleted <>", 1);			
 		
@@ -87,7 +88,14 @@ class Items extends REST_Controller {
 				$measurement = array(
 					"measurement_id" 	=> $value->measurement_id,
 					"measurement"		=> $value->measurement_name ? $value->measurement_name : ""
-				);				
+				);
+
+				//Variant
+				$variant = [];
+				if($value->nature=="main_variant"){
+					$itemVariants = new Item_variant(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					
+				}				
 
 				$data["results"][] = array(
 					"id" 						=> $value->id,
@@ -136,7 +144,8 @@ class Items extends REST_Controller {
 				   	"is_system" 				=> $value->is_system,
 
 				   	"category" 					=> $value->category_name,
-				   	"measurement" 				=> $measurement
+				   	"measurement" 				=> $measurement,
+				   	"variant" 					=> $variant
 				);
 			}
 		}

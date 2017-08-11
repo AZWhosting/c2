@@ -8,10 +8,11 @@ class Ops extends REST_Controller {
 		$this->load->dbutil();
 		$this->load->dbforge();
 		$dbs = $this->dbutil->list_databases();
-		$companyList = array("api","banhji","banhji_mac","information_schema","innodb","mysql","performance_schema","tmp", "banhji_center");
+		$companyList = array("api","banhji","banhji_center","banhji_mac","information_schema","innodb","mysql","performance_schema","tmp");
 		$data["results"] = [];
 		$data["count"] = 0;
-		
+		$startQ = false;
+
 		foreach ($dbs as $key => $db)
 		{	
 			if (!in_array("$db", $companyList)) {
@@ -67,23 +68,29 @@ class Ops extends REST_Controller {
 				);
 			 	$this->db->insert_batch('prefixes', $raw);*/
 				
-				//Add new fields
+				
+				// Add new fields
 				// $fields = array(
-				// 	// "yield" => array(
+				// 	// "tags" => array(
 				// 	// 	"type" 		=> "DECIMAL",
 				// 	// 	"constraint"=> "30,15",
 				// 	// 	"null" 		=> FALSE,
 				// 	// 	"default" 	=> 0
 				// 	// ),
-				// 	"employee_id" => array(
-				// 		"type" 		=> "INT",
-				// 		"constraint"=> 11,
+				// 	"tags" => array(
+				// 		"type" 		=> "LONGTEXT",
 				// 		"null" 		=> FALSE,
-				// 		"default" 	=> 0
+				// 		"default" 	=> ""
+				// 	),
+				// 	"nature" => array(
+				// 		"type" 		=> "VARCHAR",
+				// 		"constraint"=> 255,
+				// 		"null" 		=> FALSE,
+				// 		"default" 	=> ""
 				// 	)
 				// );
-				// $this->dbforge->add_column("transactions", $fields);
-
+				// $data['results'][] = $this->dbforge->add_column("items", $fields);
+				
 			    // Modify fields
 			 // 	$fields = array(
 				// 	// 'unit_value' => array(

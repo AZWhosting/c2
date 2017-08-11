@@ -12230,3 +12230,51 @@
 	<span>#=abbr##=number#</span>	
 	<span>#=name#</span>	
 </script>
+
+<script id="cashReAuto" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background" style="overflow: hidden;">
+			<div class="container-960">
+				<div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 100%;margin-top: -15px;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
+					<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
+				</div>			
+				<div id="example" class="k-content">
+			    	<div class="hidden-print pull-right">
+			    		<span class="glyphicons no-js remove_2" 
+							data-bind="click: cancel"><i></i></span>	
+					</div>
+			        <h2 style="padding:0 15px;">Import</h2>
+					<br />
+					<div class="relativeWrap" data-toggle="source-code">
+						<div class="widget widget-tabs widget-tabs-double-2 widget-tabs-gray">
+							<div class="widget-head">
+								<ul style="padding-left: 1px;">
+									<li class="active"><a class="glyphicons group" href="#tabContact" data-toggle="tab"><i></i><span style="line-height: 55px;">Customer</span></a></li>
+								</ul>
+							</div>
+							<div class="widget-body">
+								<div class="tab-content">
+									<div id="tabContact" style="border: 1px solid #ccc" class="tab-pane active widget-body-regular">
+										
+										<h4 class="separator bottom" style="margin-top: 10px;">Please upload file</h4>
+										
+										<div class="fileupload fileupload-new margin-none" data-provides="fileupload">
+										  	<input type="file"  
+										  		data-role="upload" 
+										  		data-show-file-list="true" 
+										  		data-bind="events: {select: onSelected}" 
+										  		id="myFile"  class="margin-none" />
+										</div>
+										<span class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 160px!important;"><i></i>
+										<span data-bind="click: save">Start Import</span></span>
+									</div>
+								</div>
+							</div>
+							<div id="ntf1" data-role="notification"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
