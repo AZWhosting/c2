@@ -174,6 +174,7 @@ class Meters extends REST_Controller {
 			$obj->activated 			= isset($value->activated)			?$value->activated:0;
 			$obj->worder 				= isset($value->worder)				?$value->worder:0;
 			$obj->reactive_status 		= isset($value->reactive_status)	?$value->reactive_status:0;
+			$obj->sync = 1;
 			if($obj->save()){	
 				$data[] = array(
 					"id" 					=> $obj->id,
@@ -262,6 +263,7 @@ class Meters extends REST_Controller {
 			$obj->box_id 				= isset($value->box_id)				?$value->box_id:0;
 			$obj->reactive_id 			= isset($value->reactive_id)		?$value->reactive_id:0;
 			$obj->reactive_status		= isset($value->reactive_status)	?$value->reactive_status:0;
+			$obj->sync = 1;
 			if($obj->save()){
 				//Results
 				$data[] = array(
@@ -421,7 +423,7 @@ class Meters extends REST_Controller {
 			$obj->memo 			= $value->memo;
 			$obj->deleted 		= isset($value->deleted)?$value->deleted:"";
 			$obj->deleted_by 	= isset($value->deleted_by)?$value->deleted_by:"";
-						
+			$obj->sync = 1;
 			if($obj->save()){
 				//Respsone
 				$data["results"][] = array(
@@ -470,7 +472,7 @@ class Meters extends REST_Controller {
 			$obj->memo 			= $value->memo;
 			$obj->deleted 		= $value->deleted;
 			$obj->deleted_by 	= $value->deleted_by;
-
+			$obj->sync = 1;
 			if($obj->save()){				
 				//Results
 				$data["results"][] = array(

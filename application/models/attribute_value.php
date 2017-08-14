@@ -4,6 +4,20 @@ class Attribute_value extends DataMapper {
 	// protected $created_field = "created_at";
 	// protected $updated_field = "updated_at";
 
+	public $has_one = array(
+		'variant_attribute' => array(
+			'class' => 'variant_attribute',
+			'other_field' => 'attribute_value'
+		)
+	);
+
+	public $has_many = array(
+		'item_variant' => array(
+			'class' => 'item_variant',
+			'other_field' => 'attribute_value'
+		)
+	);
+
 	public function __construct($id = null, $server_name = null, $db_username = null, $server_password = null, $db = null) {	
 		$this->db_params = array(
 				'dbdriver' => 'mysql',

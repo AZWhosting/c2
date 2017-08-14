@@ -89,6 +89,7 @@ class Plans extends REST_Controller {
 			$table->currency_id = $row->currency;
 			$table->code = $row->code;
 			$table->name = $row->name;
+			$table->sync = 1;
 			if($table->save()) {
 				$items = array();
 
@@ -130,6 +131,7 @@ class Plans extends REST_Controller {
 			$table->currency_id = $row->currency;
 			$table->code = $row->code;
 			$table->name = $row->name;
+			$table->sync = 1;
 			if($table->save()) {
 				$items = array();
 				foreach($row->items as $item) {
@@ -262,7 +264,7 @@ class Plans extends REST_Controller {
 			$table->account_id = isset($row->account->id)?$row->account->id:0;
 			$table->is_active = isset($row->is_active) ? $row->is_active : 1;
 			$table->is_deleted = 0;
-
+			$table->sync = 1;
 			if($table->save()) {
 				$currency= $table->currency->get();
 				$data[] = array(
@@ -310,7 +312,7 @@ class Plans extends REST_Controller {
 			$table->is_active = isset($row->is_active) ? $row->is_active : 1;
 			$table->is_deleted = 0;
 			$table->tariff_id = isset($row->tariff_id) ? $row->tariff_id : 0;
-
+			$table->sync = 1;
 			if($table->save()) {
 				$currency= $table->currency->get();
 				$data[] = array(
@@ -460,6 +462,7 @@ class Plans extends REST_Controller {
 				$table->is_active = isset($row->is_active) ? $row->is_active : 1;
 				$table->is_deleted = 0;
 				$table->tariff_id = $row->tariff_id;
+				$table->sync = 1;
 				if($table->save()) {
 					$currency= $table->currency->get();
 					$data[] = array(
@@ -514,6 +517,7 @@ class Plans extends REST_Controller {
 				$table->account_id = isset($row->account->id)?$row->account->id:0;
 				$table->is_active = isset($row->is_active) ? $row->is_active : 1;
 				$table->is_deleted = 0;
+				$table->sync = 1;
 				if($table->save()) {
 					$currency= $table->currency->get();
 					$data[] = array(

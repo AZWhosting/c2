@@ -5530,7 +5530,7 @@
         contactDS: new kendo.data.DataSource({
             transport: {
                 read: {
-                    url: apiUrl + "utibills/contact",
+                    url: apiUrl + "utibills/pcontact",
                     type: "GET",
                     headers: banhji.header,
                     dataType: 'json'
@@ -18682,7 +18682,7 @@
     //Customer
     banhji.customer = kendo.observable({
         lang: langVM,
-        dataSource: dataStore(apiUrl + "contacts"),
+        dataSource: dataStore(apiUrl + "utibills/contacts"),
         propertyDS: dataStore(apiUrl + "properties"),
         proDS: dataStore(apiUrl + "properties"),
         patternDS: dataStore(apiUrl + "contacts"),
@@ -18857,7 +18857,6 @@
                 this.set("isEdit", true);
                 this.loadObj(id, contact_type_id);
                 var self = this;
-
                 this.set("propertyVisible", true);
                 this.propertyDS.filter({
                     field: "contact_id",

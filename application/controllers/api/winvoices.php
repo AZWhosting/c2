@@ -309,6 +309,7 @@ class Winvoices extends REST_Controller {
 		   	$obj->box_id 			= isset($value->box_id) ? $value->box_id : 0;
 		   	$obj->payment_term_id 	= 5;
 		   	$obj->user_id 			= isset($value->biller_id) ? $value->biller_id : 0;
+		   	$obj->sync = 1;
 	   		if($obj->save()){
 
 	   			$journal = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
@@ -358,6 +359,7 @@ class Winvoices extends REST_Controller {
 						$updateInstallSchedule = new Installment_schedule(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 						$updateInstallSchedule->where('id', $row->item_id);
 						$updateInstallSchedule->update('invoiced', 1);
+						$updateInstallSchedule->update('sync', 1);
 		   			}
 		   			//to do: add to accouting line
 		   			$updateInstallSchedule = isset($updateInstallSchedule) ? $updateInstallSchedule : "";

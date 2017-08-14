@@ -4,6 +4,21 @@ class Item_variant extends DataMapper {
 	// protected $created_field = "created_at";
 	// protected $updated_field = "updated_at";
 
+	public $has_one = array(
+		'item' => array(
+			'class' => 'item',
+			'other_field' => 'item_variant'
+		),
+		'variant_atrribute' => array(
+			'class' => 'variant_atrribute',
+			'other_field' => 'item_variant'
+		),
+		'atrribute_value' => array(
+			'class' => 'atrribute_value',
+			'other_field' => 'item_variant'
+		)
+	);
+
 	public function __construct($id = null, $server_name = null, $db_username = null, $server_password = null, $db = null) {	
 		$this->db_params = array(
 				'dbdriver' => 'mysql',
@@ -23,5 +38,5 @@ class Item_variant extends DataMapper {
 	}
 }
 
-/* End of file brand.php */
+/* End of file item_variant.php */
 /* Location: ./application/models/item_variant.php */

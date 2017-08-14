@@ -94,8 +94,17 @@ class Items extends REST_Controller {
 				$variant = [];
 				if($value->nature=="main_variant"){
 					$itemVariants = new Item_variant(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-					
-				}				
+					$itemVariants->where("item_id", $value->id);
+					// $itemVariants->include_related("item", array(""));
+					$itemVariants->get();
+
+					foreach ($itemVariants as $v) {
+						$variant = array(
+							"id" => $v->id,
+							"item_id" => $v->item_id
+						);
+					}
+				}
 
 				$data["results"][] = array(
 					"id" 						=> $value->id,

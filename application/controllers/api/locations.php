@@ -85,6 +85,7 @@ class Locations extends REST_Controller {
 			isset($value->main_bloc) 		? $obj->main_bloc 		= intval($value->main_bloc) : 0;
 			isset($value->main_pole) 		? $obj->main_pole 		= intval($value->main_pole) : 0;
 			isset($value->branch) 			? $obj->branch_id 		= $value->branch->id : "";
+			$obj->sync = 1;
 			if($obj->save()){
 				//Respsone
 				$license = $obj->branch->get();
@@ -120,6 +121,7 @@ class Locations extends REST_Controller {
 			isset($value->type)? 		$obj->type 		= $value->type: "";
 			isset($value->main_bloc)? 	$obj->main_bloc 	= intval($value->main_bloc): 0;
 			isset($value->main_pole)? 	$obj->main_pole 	= intval($value->main_pole): 0;
+			$obj->sync = 1;
 			if($obj->save()){				
 				//Results
 				$license = $obj->branch->get();

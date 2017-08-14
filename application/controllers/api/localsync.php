@@ -174,11 +174,6 @@ class Localsync extends REST_Controller {
 		$data["count"] = count($data["results"]);
 		$this->response($data, 201);					
 	}
-	
-	function index_get(){
-		
-	}
-	
 }
 /* End of file meters.php */
 /* Location: ./application/controllers/api/meters.php */

@@ -96,7 +96,7 @@ class Installments extends REST_Controller {
 			$obj->period 			= $value->period;
 			// $obj->payment_number 	= $value->payment_number;
 			$obj->invoiced 			= $value->invoiced;
-
+			$obj->sync = 1;
 			if($obj->save()){
 				$percentage = floatval($obj->amount) * (intval($obj->percentage)/100);
 				$amount = ($obj->amount + $percentage) / $obj->period;
@@ -157,7 +157,7 @@ class Installments extends REST_Controller {
 			$obj->counter 		= $value->counter;
 			$obj->status 		= $value->status;
 			$obj->name 			= $value->name;
-
+			$obj->sync = 1;
 			if($obj->save()){
 				$data["results"][] = array(
 					"id" 			=> $obj->id,

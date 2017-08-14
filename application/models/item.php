@@ -48,6 +48,10 @@ class Item extends DataMapper {
 	);
 
 	public $has_many = array(
+		'item_variant' => array(
+			'class' => 'item_variant',
+			'other_field' => 'item'
+		),
 		'item_line' => array(
 			'class' => 'item_line',
 			'other_field' => 'item'
