@@ -100,10 +100,10 @@ class Ops extends REST_Controller {
 				// 	// 	'null' 		=> FALSE,
 				// 	// 	'default' 	=> 1
 				// 	// ),
-				// 	'main_id' => array(
-				// 		'name' 		=> 'sub_of_id',//New Field Name 
-				// 		'type'		=> 'INT',
-				// 		'constraint'=> 11,
+				// 	'on_hand' => array(
+				// 		'name' 		=> 'quantity',//New Field Name 
+				// 		'type'		=> 'DECIMAL',
+				// 		'constraint'=> '30,15',
 				// 		'null' 		=> FALSE,
 				// 		'default' 	=> 0
 				// 	)

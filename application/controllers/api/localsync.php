@@ -40,6 +40,8 @@ class Localsync extends REST_Controller {
 		foreach ($models as $value) {
 			$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->location_id 		= isset($value->location_id) ? $value->location_id : "";
+			$obj->pole_id 			= isset($value->pole_id) ? $value->pole_id : "";
+			$obj->box_id 			= isset($value->box_id) ? $value->box_id : "";
 			$obj->contact_id 		= isset($value->contact_id) ? $value->contact_id : "";
 			$obj->payment_term_id	= isset($value->payment_term_id) ? $value->payment_term_id : 5;
 			$obj->payment_method_id = isset($value->payment_method_id) ? $value->payment_method_id : 5;
@@ -149,7 +151,6 @@ class Localsync extends REST_Controller {
 			$obj->memo 			= isset($value->memo)?$value->memo:"";
 			$obj->deleted 		= isset($value->deleted)?$value->deleted:"";
 			$obj->deleted_by 	= isset($value->deleted_by)?$value->deleted_by:"";
-						
 			if($obj->save()){
 				//Respsone
 				$data["results"][] = array(
@@ -173,6 +174,111 @@ class Localsync extends REST_Controller {
 		}
 		$data["count"] = count($data["results"]);
 		$this->response($data, 201);					
+	}
+	//Return Back
+	function offupdate_get(){
+		$filter 	= $this->get("filter");
+		$data = [];
+		$results = [];
+		//Filter
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter["filters"] as $value) {
+				if($value["field"]=="institute"){
+    				$institute = new Institute();
+					$institute->where('id', $value["value"])->get();
+					if($institute->exists()) {
+						$conn = $institute->connection->get();
+						$this->server_host = $conn->server_name;
+						$this->server_user = $conn->username;
+						$this->server_pwd = $conn->password;	
+						$this->_database = $conn->inst_database;
+						date_default_timezone_set("$conn->time_zone");
+					}
+    			}
+			}
+		}
+		$puttran = array();
+		$transaction = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$transaction->where("sync", 1)->order_by("id", "asc")->get_iterated();
+		if($transaction->exists()){
+			foreach($transaction as $txn) {
+				$puttran["items"][] = array(
+					"id" 						=> isset($txn->id) ? $txn->id : "",
+					"location_id" 				=> isset($txn->location_id) ? $txn->location_id : "",
+					"contact_id" 				=> isset($txn->contact_id) ? $txn->contact_id : "",
+					"pole_id" 					=> isset($txn->pole_id) ? $txn->pole_id : "",
+					"box_id" 					=> isset($txn->box_id) ? $txn->box_id : "",
+					"payment_term_id" 			=> isset($txn->payment_term_id) ? $txn->payment_term_id : "",
+					"payment_method_id" 		=> isset($txn->payment_method_id) ? $txn->payment_method_id : "",
+					"transaction_template_id" 	=> isset($txn->transaction_template_id) ? $txn->transaction_template_id : "",
+					"reference_id" 				=> isset($txn->reference_id) ? $txn->reference_id : "",
+					"recurring_id" 				=> isset($txn->recurring_id) ? $txn->recurring_id : "",
+					"return_id" 				=> isset($txn->return_id) ? $txn->return_id : "",
+					"job_id" 					=> isset($txn->job_id) ? $txn->job_id : "",
+					"account_id" 				=> isset($txn->account_id) ? $txn->account_id : "",
+					"item_id" 					=> isset($txn->item_id) ? $txn->item_id : "",
+					"tax_item_id" 				=> isset($txn->tax_item_id) ? $txn->tax_item_id : "",
+					"wht_account_id"			=> isset($txn->wht_account_id) ? $txn->wht_account_id : "",
+					"user_id" 					=> isset($txn->user_id) ? $txn->user_id : "",
+					"employee_id" 				=> isset($txn->employee_id) ? $txn->employee_id : "",
+				   	"number" 					=> isset($txn->number) ? $txn->number : "",
+				   	"type" 						=> isset($txn->type) ? $txn->type : "",
+				   	"journal_type" 				=> isset($txn->journal_type) ? $txn->journal_type : "",
+				   	"sub_total"					=> isset($txn->sub_total)? $txn->sub_total : "",
+				   	"discount" 					=> isset($txn->discount) ? $txn->discount : "",
+				   	"tax" 						=> isset($txn->tax) ? $txn->tax : "",
+				   	"amount" 					=> isset($txn->amount) ? $txn->amount : "",
+				   	"fine" 						=> isset($txn->fine) ? $txn->fine : "",
+				   	"deposit"					=> isset($txn->deposit) ? $txn->deposit : "",
+				   	"remaining" 				=> isset($txn->remaining) ? $txn->remaining : "",
+				   	"received" 					=> isset($txn->received) ? $txn->received : "",
+				   	"change" 					=> isset($txn->change) ? $txn->change : "",
+				   	"credit_allowed"			=> isset($txn->credit_allowed) ? $txn->credit_allowed : "",
+				   	"additional_cost" 			=> isset($txn->additional_cost) ? $txn->additional_cost : "",
+				   	"additional_apply" 			=> isset($txn->additional_apply) ? $txn->additional_apply : "",
+				   	"rate" 						=> isset($txn->rate) ? $txn->rate : "",
+				   	"locale" 					=> isset($txn->locale) ? $txn->locale : "",
+				   	"month_of"					=> isset($txn->month_of) ? $txn->month_of : "",
+				   	"issued_date"				=> isset($txn->issued_date) ? $txn->issued_date : "",
+				   	"bill_date"					=> isset($txn->bill_date) ? $txn->bill_date : "",
+				   	"payment_date" 				=> isset($txn->payment_date) ? $txn->payment_date : "",
+				   	"due_date" 					=> isset($txn->due_date) ? $txn->due_date : "",
+				   	"deposit_date" 				=> isset($txn->deposit_date) ? $txn->deposit_date : "",
+				   	"check_no" 					=> isset($txn->check_no) ? $txn->check_no : "",
+				   	"reference_no" 				=> isset($txn->reference_no) ? $txn->reference_no : "",
+				   	"references" 				=> isset($txn->references) ? $txn->references : "",
+				   	"bill_to" 					=> isset($txn->bill_to) ? $txn->bill_to : "",
+				   	"ship_to" 					=> isset($txn->ship_to) ? $txn->ship_to : "",
+				   	"memo" 						=> isset($txn->memo) ? $txn->memo : "",
+				   	"memo2" 					=> isset($txn->memo2) ? $txn->memo2 : "",
+				   	"recurring_name" 			=> isset($txn->recurring_name) ? $txn->recurring_name : "",
+				   	"start_date"				=> isset($txn->start_date) ? $txn->start_date : "",
+				   	"frequency"					=> isset($txn->frequency) ? $txn->frequency : "",
+					"month_option"				=> isset($txn->month_option) ? $txn->month_option : "",
+					"interval" 					=> isset($txn->interval) ? $txn->interval : "",
+					"day" 						=> isset($txn->day) ? $txn->interval : "",
+					"week" 						=> isset($txn->week) ? $txn->week : "",
+					"month" 					=> isset($txn->month) ? $txn->month : "",
+				   	"status" 					=> isset($txn->status) ? $txn->status : "",
+				   	"is_recurring" 				=> isset($txn->is_recurring) ? $txn->is_recurring : "",
+				   	"is_journal" 				=> isset($txn->is_journal) ? $txn->is_journal : "",
+				   	"print_count" 				=> isset($txn->print_count) ? $txn->print_count : "",
+				   	"printed_by" 				=> isset($txn->printed_by) ? $txn->printed_by : "",
+				   	"deleted" 					=> isset($txn->deleted) ? $txn->deleted : "",
+				   	"meter_id"					=> isset($txn->meter_id) ? $txn->meter_id : ""
+				);
+			}
+		}
+		
+		// foreach ($puttran as $ta) {
+		$data[] = array(
+			'transaction' => $puttran["items"],
+		);
+	
+		$results['count'] = 100;
+		$results['results'] = $data;
+		
+		$this->response($results, 200);
 	}
 }
 /* End of file meters.php */

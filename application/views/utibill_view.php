@@ -434,18 +434,18 @@
 		   	</div>
 
 		   <div class="col-md-12 water-tableList hidden-xs">
-				<table class=" table table-borderless table-condensed ">
+				<table style="margin-bottom: 0;" class="table table-bordered table-condensed table-striped table-primary table-vertical-center">
 					<thead>
 						<tr>
-							<th style="vertical-align: top;"><span data-bind="text: lang.lang.no">No.</span></th>
+							<th style="vertical-align: top; text-align: center"><span data-bind="text: lang.lang.no">No.</span></th>
 							<th style="vertical-align: top;"><span data-bind="text: lang.lang.license">License</span></th>
-							<th style="vertical-align: top;"><span data-bind="text: lang.lang.no_of_bloc">No.of Bloc</span></th>
-							<th style="vertical-align: top;"><span data-bind="text: lang.lang.active_meter">Active Meter</span></th>
-							<th style="vertical-align: top;"><span data-bind="text: lang.lang.inactive_meter">Inactive Meter</span></th>
-							<th style="vertical-align: top;"><span data-bind="text: lang.lang.deposit">Deposit</span></th>
-							<th style="vertical-align: top;">m<sup>3</sup>/kWh</th>
-							<th style="vertical-align: top;"><span data-bind="text: lang.lang.sale_amount">Sale Amount</span></th>
-							<th style="vertical-align: top;"><span data-bind="text: lang.lang.balance">Balance</span></th>
+							<th style="vertical-align: top; text-align: center"><span data-bind="text: lang.lang.no_of_bloc">No.of Bloc</span></th>
+							<th style="vertical-align: top; text-align: center"><span data-bind="text: lang.lang.active_meter">Active Meter</span></th>
+							<th style="vertical-align: top; text-align: center"><span data-bind="text: lang.lang.inactive_meter">Inactive Meter</span></th>
+							<th style="vertical-align: top; text-align: right"><span data-bind="text: lang.lang.deposit">Deposit</span></th>
+							<th style="vertical-align: top; text-align: right">m<sup>3</sup>/kWh</th>
+							<th style="vertical-align: top; text-align: right"><span data-bind="text: lang.lang.sale_amount">Sale Amount</span></th>
+							<th style="vertical-align: top; text-align: right"><span data-bind="text: lang.lang.balance">Balance</span></th>
 						</tr>
 					</thead>
 					<tbody style="border: none;" data-role="listview" data-bind="source: dataSource" data-template="dashboard-template-table-list">				
@@ -457,13 +457,13 @@
 </script>
 <script id="dashboard-template-table-list" type="text/x-kendo-tmpl">
 	<tr>
-		<td>#=banhji.wDashBoard.dataSource.indexOf(banhji.wDashBoard.dataSource.get(id)) +1 #</td>
-		<td>#=name#</td>
-		<td style="text-align: right; padding-right: 5px !important;">#=blocCount#</td>
-		<td style="text-align: right; padding-right: 5px !important;">#=activeCustomer#</td>
-		<td style="text-align: right; padding-right: 5px !important;">#=inActiveCustomer#</td>
+		<td style="text-align: center;">#=banhji.wDashBoard.dataSource.indexOf(banhji.wDashBoard.dataSource.get(id)) +1 #</td>
+		<td style="text-align: left;">#=name#</td>
+		<td style="text-align: center; padding-right: 5px !important;">#=kendo.toString(blocCount, "n0", banhji.locale)#</td>
+		<td style="text-align: center; padding-right: 5px !important;">#=kendo.toString(activeCustomer, "n0", banhji.locale)#</td>
+		<td style="text-align: center; padding-right: 5px !important;">#=kendo.toString(inActiveCustomer, "n0", banhji.locale)#</td>
 		<td style="text-align: right; padding-right: 5px !important;">#= kendo.toString(deposit, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#</td>
-		<td style="text-align: right; padding-right: 5px !important;">#=usage#</td>
+		<td style="text-align: right; padding-right: 5px !important;">#=kendo.toString(usage, "n0", banhji.locale)#</td>
 		<td style="text-align: right; padding-right: 5px !important;">#= kendo.toString(sale, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#</td>
 		<td style="text-align: right; padding-right: 5px !important;">#= kendo.toString(balance, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#</td>
 	</tr>
@@ -8708,7 +8708,13 @@
 					            	<a href="#tab1" data-toggle="tab"><span data-bind="text: lang.lang.customer"></span></a>
 					            </li>
 					            <li >
-					            	<a href="#tab2" data-toggle="tab"><span data-bind="text: lang.lang.cash"></span></a>
+					            	<a href="#tab2" data-toggle="tab"><span>Receiveable</span></a>
+					            </li>
+					            <li >
+					            	<a href="#tab3" data-toggle="tab"><span data-bind="text: lang.lang.cash"></span></a>
+					            </li>					            
+					            <li >
+					            	<a href="#tab4" data-toggle="tab"><span>Cash Receipt</span></a>
 					            </li>
 					        </ul>
 					    </div>
@@ -8756,7 +8762,11 @@
 										</table>
 									</div>
 								</div>
+				        	</div>
+					        <!-- //GENERAL INFO END -->
 
+					        <!-- //RECEIVEABLE AND DEPOSIT INFO -->
+					        <div class="tab-pane" id="tab2">
 								<div class="row-fluid sale-report">
 									<h2 style="margin-bottom: 10px;" data-bind="text: lang.lang.receiveable_and_deposits">Receiveable and Deposits</h2>
 									<p data-bind="text: lang.lang.these_would_be_the_most">
@@ -8805,10 +8815,10 @@
 									</div>
 								</div>
 				        	</div>
-					        <!-- //GENERAL INFO END -->
 
+					        <!-- //RECEIVEABLE AND DEPOSIT INFO END -->
 					        <!-- //ACCOUNTING -->
-					        <div class="tab-pane" id="tab2">
+					        <div class="tab-pane" id="tab3">
 					        	<div class="row-fluid sale-report">
 									<h2 style="margin-bottom: 10px;" data-bind="text: lang.lang.sale_report">Sale Report</h2>
 									<p data-bind="text: lang.lang.summary_and_detail_sale">
@@ -8853,7 +8863,11 @@
 										</table>
 									</div>
 								</div>
+				        	</div>
+					        <!-- //ACCOUNTING END -->					        
 
+					        <!-- //ACCOUNTING -->
+					        <div class="tab-pane" id="tab4">
 								<div class="row-fluid sale-report">
 									<h2 style="margin-bottom: 10px;" data-bind="text: lang.lang.cash_receipt_report">Cash Receipt Report</h2>
 									<p data-bind="text: lang.lang.summary_and_detail_cash">
@@ -8899,7 +8913,6 @@
 								</div>
 				        	</div>
 					        <!-- //ACCOUNTING END -->
-
 					    </div>
 					</div>
 				</div>

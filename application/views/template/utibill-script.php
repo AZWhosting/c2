@@ -17864,8 +17864,8 @@
                     deposit += value.deposit;
                 });
                 banhji.wDashBoard.set('totalSale', kendo.toString(sale, banhji.locale == "km-KH" ? "c0" : "c", banhji.locale));
-                banhji.wDashBoard.set('totalUsage', usage);
-                banhji.wDashBoard.set('totalUser', user);
+                banhji.wDashBoard.set('totalUsage', kendo.toString(usage, "n0", banhji.locale));
+                banhji.wDashBoard.set('totalUser', kendo.toString(user, "n0", banhji.locale));
                 banhji.wDashBoard.set('totalDeposit', kendo.toString(deposit, banhji.locale == "km-KH" ? "c0" : "c", banhji.locale));
                 banhji.wDashBoard.set('avgUsage', usage / user);
             },
@@ -17965,14 +17965,16 @@
                     voided += value.void;
                     amount += value.total;
                 });
-                banhji.wDashBoard.set('activeCust', activeCust);
+                banhji.wDashBoard.set('activeCust', kendo.toString(activeCust, "n0", banhji.locale));
                 banhji.wDashBoard.set('inActiveCust', inActiveCust);
-                banhji.wDashBoard.set('invoice', invoice);
-                banhji.wDashBoard.set('invCust', invCust);
-                banhji.wDashBoard.set('overDue', overDue);
-                banhji.wDashBoard.set('totalCust', totalCust);
+                banhji.wDashBoard.set('invoice', kendo.toString(invoice, "n0", banhji.locale));
+                banhji.wDashBoard.set('invCust', kendo.toString(invCust, "n0", banhji.locale));
+                banhji.wDashBoard.set('overDue', kendo.toString(overDue, "n0", banhji.locale));
+                banhji.wDashBoard.set('totalCust', kendo.toString(totalCust, "n0", banhji.locale));
                 banhji.wDashBoard.set('voidCust', voided);
+                banhji.wDashBoard.set('voidCust', kendo.toString(voided, "n0", banhji.locale));
                 banhji.wDashBoard.set('totalAmount', kendo.toString(amount, banhji.locale == "km-KH" ? "c0" : "c", banhji.locale));
+            
             },
             batch: true,
             serverFiltering: true,

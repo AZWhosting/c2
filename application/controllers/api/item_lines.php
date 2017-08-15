@@ -172,7 +172,6 @@ class Item_lines extends REST_Controller {
 
 		foreach ($models as $value) {
 			$obj = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$typeList = array("Cash_Purchase","Credit_Purchase","Internal_Usage","Commercial_Invoice","Vat_Invoice","Invoice","Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale","Sale_Return","Payment_Refund","Purchase_Return","Cash_Refund","Item_Adjustment");
 
 			//Record Item Movement
 			if($value->item_id>0){
@@ -223,42 +222,44 @@ class Item_lines extends REST_Controller {
 							}
 						}
 
-						//Average Cost						
-						if(in_array($transaction->type, $typeList)){
-							//Avg Cost
-							$additionalCost = 0;
-							if(isset($value->additional_cost)){
-								$additionalCost = floatval($value->additional_cost);
-							}
-							$lastCost = $onHand * floatval($item->cost);
-							$currentCost = ($currentQuantity * floatval($value->cost) + $additionalCost) / floatval($value->rate);
+						//Purchase
+						if($value->movement==1){
+							if($transaction->type=="Cash_Purchase" || $transaction->type=="Credit_Purchase" || $transaction->type=="Internal_Usage"){
+								//Avg Cost
+								$additionalCost = 0;
+								if(isset($value->additional_cost)){
+									$additionalCost = floatval($value->additional_cost);
+								}
+								$lastCost = $onHand * floatval($item->cost);
+								$currentCost = ($currentQuantity * floatval($value->cost) + $additionalCost) / floatval($value->rate);
 
-							if($onHand>0){
-								$item->cost = ($lastCost + $currentCost) / $totalQty;
-							}else{
-								$item->cost = $currentCost / $currentQuantity;
+								if($onHand>0){
+									$item->cost = ($lastCost + $currentCost) / $totalQty;
+								}else{
+									$item->cost = $currentCost / $currentQuantity;
+								}
+							}
+
+							if($transaction->type=="Item_Adjustment"){
+								if($item->cost==0){
+									$item->cost = floatval($value->cost);
+								}else{
+									//Avg Cost
+									$additionalCost = 0;
+									if(isset($value->additional_cost)){
+										$additionalCost = floatval($value->additional_cost);
+									}
+									$lastCost = $onHand * floatval($item->cost);
+									$currentCost = ($currentQuantity * floatval($value->cost) + $additionalCost) / floatval($value->rate);
+
+									if($onHand>0){
+										$item->cost = ($lastCost + $currentCost) / $totalQty;
+									}else{
+										$item->cost = $currentCost / $currentQuantity;
+									}
+								}
 							}
 						}
-
-						// if($transaction->type=="Item_Adjustment"){
-						// 	if($item->cost==0){
-						// 		$item->cost = floatval($value->cost);
-						// 	}else{
-						// 		//Avg Cost
-						// 		$additionalCost = 0;
-						// 		if(isset($value->additional_cost)){
-						// 			$additionalCost = floatval($value->additional_cost);
-						// 		}
-						// 		$lastCost = $onHand * floatval($item->cost);
-						// 		$currentCost = ($currentQuantity * floatval($value->cost) + $additionalCost) / floatval($value->rate);
-
-						// 		if($onHand>0){
-						// 			$item->cost = ($lastCost + $currentCost) / $totalQty;
-						// 		}else{
-						// 			$item->cost = $currentCost / $currentQuantity;
-						// 		}
-						// 	}
-						// }
 
 						//Update Item
 						if($item->save()){
