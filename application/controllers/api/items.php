@@ -100,8 +100,10 @@ class Items extends REST_Controller {
 
 					foreach ($itemVariants as $v) {
 						$variant = array(
-							"id" => $v->id,
-							"item_id" => $v->item_id
+							"id" 					=> $v->id,
+							"item_id" 				=> $v->item_id,
+							"variant_attribute_id" 	=> $v->variant_attribute_id,
+							"attribute_value_id" 	=> $v->attribute_value_id
 						);
 					}
 				}

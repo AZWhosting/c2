@@ -100,15 +100,15 @@ class Ops extends REST_Controller {
 				// 	// 	'null' 		=> FALSE,
 				// 	// 	'default' 	=> 1
 				// 	// ),
-				// 	'description' => array(
-				// 		'name' 		=> 'description',//New Field Name 
-				// 		'type'		=> 'VARCHAR',
-				// 		'constraint'=> 255,
+				// 	'main_id' => array(
+				// 		'name' 		=> 'sub_of_id',//New Field Name 
+				// 		'type'		=> 'INT',
+				// 		'constraint'=> 11,
 				// 		'null' 		=> FALSE,
-				// 		'default' 	=> ''
+				// 		'default' 	=> 0
 				// 	)
 				// );
-				// $this->dbforge->modify_column('journal_lines', $fields);
+				// $this->dbforge->modify_column('items', $fields);
 
 				//Custom
 				// $dsn = 'mysql://'.$this->db->username.':'.$this->db->password.'@'.$this->db->hostname.'/'.$db;

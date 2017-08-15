@@ -488,7 +488,7 @@ class Utibills extends REST_Controller {
 		//Response Data		
 		$this->response($data, 200);
 	}
-	function contact_get() {
+	function contacts_get() {
 		$filter 	= $this->get("filter");
 		$page 		= $this->get('page');
 		$limit 		= $this->get('limit');
@@ -622,7 +622,7 @@ class Utibills extends REST_Controller {
 		//Response Data		
 		$this->response($data, 200);
 	}
-	function contact_post() {
+	function contacts_post() {
 		$models = json_decode($this->post('models'));
 		//Generate order number
 		$lastContact = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
@@ -793,7 +793,7 @@ class Utibills extends REST_Controller {
 
 		$this->response($data, 201);
 	}
-	function contact_put() {
+	function contacts_put() {
 		$models = json_decode($this->put('models'));
 		$data["results"] = array();
 		$data["count"] = 0;

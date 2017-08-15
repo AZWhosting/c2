@@ -907,7 +907,9 @@
 													<tr style="border-bottom: 8px solid #fff;">
 														<td><span data-bind="text: lang.lang.price">Price</span></td>
 														<td>
-															<input class="k-textbox" placeholder="Price ..." data-bind="attr:{placeholder: lang.lang.price}, value: tariffItemAmount" style="width: 100%;">
+															<input 
+															class="k-textbox" placeholder="Price ..." 
+															data-bind="attr:{placeholder: lang.lang.price}, value: tariffItemAmount" style="width: 100%;">
 														</td>
 													</tr>
 												</table>
@@ -1498,7 +1500,7 @@
     <tr>
     	<td>#= name#</td>
     	<td align="center">#= usage#</td>
-    	<td align="right">#= kendo.toString(amount, _currency.locale=="km-KH"?"c0":"c", _currency.locale)#</td>
+    	<td align="right">#= kendo.toString(amount, _currency.locale=="km-KH"?"c0":"n3", _currency.locale)#</td>
     	<td align="center">
     		<span class="k-edit-button"><i class="icon-edit"></i> Edit</span>
     	</td>
@@ -1512,7 +1514,7 @@
     			<input style="width: 100%;" type="text" class="k-textbox" data-bind="value:usage" />
     		#}else{# #:usage# #}#
     	</td>
-    	<td><input style="width: 100%;" type="text" class="k-textbox" data-bind="value:amount" /></td>
+    	<td><input style="width: 100%;" type="text"  data-format class="k-textbox" data-bind="value:amount" /></td>
     	<td class="edit-buttons" style="text-align: center;">
 	        <a class="k-button k-update-button" href="\\#"><span class="k-icon k-i-check"></span></a>
 	        <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>

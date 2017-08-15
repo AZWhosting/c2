@@ -1766,7 +1766,7 @@ width: 50% !important;
 }
 .sale-overview h2{ 
   text-align: center;
-  color: #fff;
+  color: #fff !important;
   font-size: 15px;
   margin: 0;
 }
