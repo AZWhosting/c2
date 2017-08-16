@@ -176,7 +176,99 @@ class Localsync extends REST_Controller {
 		$this->response($data, 201);					
 	}
 	//Return Back
-	function offupdate_get(){
+	function offupdate1_get(){
+		$filter 	= $this->get("filter");
+		$data = [];
+		$tx = array();
+		$properties = array();
+		//Filter
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter["filters"] as $value) {
+				if($value["field"]=="institute"){
+    				$institute = new Institute();
+					$institute->where('id', $value["value"])->get();
+					if($institute->exists()) {
+						$conn = $institute->connection->get();
+						$this->server_host = $conn->server_name;
+						$this->server_user = $conn->username;
+						$this->server_pwd = $conn->password;	
+						$this->_database = $conn->inst_database;
+						date_default_timezone_set("$conn->time_zone");
+					}
+    			}
+			}
+		}
+		$puttran = array();
+		//Transaction
+		$transaction = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$transaction->where("sync", 1)->order_by("id", "asc")->get_iterated();
+		if($transaction->exists()){
+			foreach($transaction as $txn) {
+				$tx[] = array(
+					"id" 						=> isset($txn->id) ? $txn->id : "",
+					"location_id" 				=> isset($txn->location_id) ? $txn->location_id : "",
+					"contact_id" 				=> isset($txn->contact_id) ? $txn->contact_id : "",
+					"pole_id" 					=> isset($txn->pole_id) ? $txn->pole_id : "",
+					"box_id" 					=> isset($txn->box_id) ? $txn->box_id : "",
+					"payment_term_id" 			=> isset($txn->payment_term_id) ? $txn->payment_term_id : "",
+					"payment_method_id" 		=> isset($txn->payment_method_id) ? $txn->payment_method_id : "",
+					"reference_id" 				=> isset($txn->reference_id) ? $txn->reference_id : "",
+					"account_id" 				=> isset($txn->account_id) ? $txn->account_id : "",
+					"tax_item_id" 				=> isset($txn->tax_item_id) ? $txn->tax_item_id : "",
+					"user_id" 					=> isset($txn->user_id) ? $txn->user_id : "",
+				   	"number" 					=> isset($txn->number) ? $txn->number : "",
+				   	"type" 						=> isset($txn->type) ? $txn->type : "",
+				   	"journal_type" 				=> isset($txn->journal_type) ? $txn->journal_type : "",
+				   	"sub_total"					=> isset($txn->sub_total)? $txn->sub_total : "",
+				   	"discount" 					=> isset($txn->discount) ? $txn->discount : "",
+				   	"tax" 						=> isset($txn->tax) ? $txn->tax : "",
+				   	"amount" 					=> isset($txn->amount) ? $txn->amount : "",
+				   	"fine" 						=> isset($txn->fine) ? $txn->fine : "",
+				   	"remaining" 				=> isset($txn->remaining) ? $txn->remaining : "",
+				   	"received" 					=> isset($txn->received) ? $txn->received : "",
+				   	"rate" 						=> isset($txn->rate) ? $txn->rate : "",
+				   	"locale" 					=> isset($txn->locale) ? $txn->locale : "",
+				   	"month_of"					=> $txn->month_of,
+				   	"issued_date"				=> $txn->issued_date,
+				   	"bill_date"					=> isset($txn->bill_date) ? $txn->bill_date : "",
+				   	"payment_date" 				=> isset($txn->payment_date) ? $txn->payment_date : "",
+				   	"due_date" 					=> isset($txn->due_date) ? $txn->due_date : "",
+				   	"reference_no" 				=> isset($txn->reference_no) ? $txn->reference_no : "",
+				   	"references" 				=> isset($txn->references) ? $txn->references : "",
+				   	"memo" 						=> isset($txn->memo) ? $txn->memo : "",
+				   	"status" 					=> isset($txn->status) ? $txn->status : "",
+				   	"print_count" 				=> isset($txn->print_count) ? $txn->print_count : "",
+				   	"deleted" 					=> isset($txn->deleted) ? $txn->deleted : "",
+				   	"meter_id"					=> isset($txn->meter_id) ? $txn->meter_id : ""
+				);
+			}
+		}
+		//Property
+		$property = new Property(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$property->where("sync", 1)->order_by("id", "asc")->get_iterated();
+		if($property->exists()){
+			foreach($property as $pro) {
+				$properties[] = array(
+					"id" 		=> $pro->id,
+		 			"name" 		=> $pro->name,	
+		 			"abbr"		=> $pro->abbr,
+		 			"code"		=> $pro->code,
+		 			"address" 	=> $pro->address,
+		 			"contact_id" => $pro->contact_id
+				);
+			}
+		}
+		//Respone
+		
+		// $results['results'] = $data;
+		$data = array(
+			"transactions" => $tx,
+			"propterties"  => $properties
+		);
+		// $data['count'] = count($tx);
+		$this->response(['results'=>$data, 'count'=>count($tx)], 200);
+	}
+	function offupdate2_get(){
 		$filter 	= $this->get("filter");
 		$data = [];
 		$results = [];
@@ -197,85 +289,220 @@ class Localsync extends REST_Controller {
     			}
 			}
 		}
-		$puttran = array();
-		$transaction = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$transaction->where("sync", 1)->order_by("id", "asc")->get_iterated();
-		if($transaction->exists()){
-			foreach($transaction as $txn) {
-				$puttran["items"][] = array(
-					"id" 						=> isset($txn->id) ? $txn->id : "",
-					"location_id" 				=> isset($txn->location_id) ? $txn->location_id : "",
-					"contact_id" 				=> isset($txn->contact_id) ? $txn->contact_id : "",
-					"pole_id" 					=> isset($txn->pole_id) ? $txn->pole_id : "",
-					"box_id" 					=> isset($txn->box_id) ? $txn->box_id : "",
-					"payment_term_id" 			=> isset($txn->payment_term_id) ? $txn->payment_term_id : "",
-					"payment_method_id" 		=> isset($txn->payment_method_id) ? $txn->payment_method_id : "",
-					"transaction_template_id" 	=> isset($txn->transaction_template_id) ? $txn->transaction_template_id : "",
-					"reference_id" 				=> isset($txn->reference_id) ? $txn->reference_id : "",
-					"recurring_id" 				=> isset($txn->recurring_id) ? $txn->recurring_id : "",
-					"return_id" 				=> isset($txn->return_id) ? $txn->return_id : "",
-					"job_id" 					=> isset($txn->job_id) ? $txn->job_id : "",
-					"account_id" 				=> isset($txn->account_id) ? $txn->account_id : "",
-					"item_id" 					=> isset($txn->item_id) ? $txn->item_id : "",
-					"tax_item_id" 				=> isset($txn->tax_item_id) ? $txn->tax_item_id : "",
-					"wht_account_id"			=> isset($txn->wht_account_id) ? $txn->wht_account_id : "",
-					"user_id" 					=> isset($txn->user_id) ? $txn->user_id : "",
-					"employee_id" 				=> isset($txn->employee_id) ? $txn->employee_id : "",
-				   	"number" 					=> isset($txn->number) ? $txn->number : "",
-				   	"type" 						=> isset($txn->type) ? $txn->type : "",
-				   	"journal_type" 				=> isset($txn->journal_type) ? $txn->journal_type : "",
-				   	"sub_total"					=> isset($txn->sub_total)? $txn->sub_total : "",
-				   	"discount" 					=> isset($txn->discount) ? $txn->discount : "",
-				   	"tax" 						=> isset($txn->tax) ? $txn->tax : "",
-				   	"amount" 					=> isset($txn->amount) ? $txn->amount : "",
-				   	"fine" 						=> isset($txn->fine) ? $txn->fine : "",
-				   	"deposit"					=> isset($txn->deposit) ? $txn->deposit : "",
-				   	"remaining" 				=> isset($txn->remaining) ? $txn->remaining : "",
-				   	"received" 					=> isset($txn->received) ? $txn->received : "",
-				   	"change" 					=> isset($txn->change) ? $txn->change : "",
-				   	"credit_allowed"			=> isset($txn->credit_allowed) ? $txn->credit_allowed : "",
-				   	"additional_cost" 			=> isset($txn->additional_cost) ? $txn->additional_cost : "",
-				   	"additional_apply" 			=> isset($txn->additional_apply) ? $txn->additional_apply : "",
-				   	"rate" 						=> isset($txn->rate) ? $txn->rate : "",
-				   	"locale" 					=> isset($txn->locale) ? $txn->locale : "",
-				   	"month_of"					=> isset($txn->month_of) ? $txn->month_of : "",
-				   	"issued_date"				=> isset($txn->issued_date) ? $txn->issued_date : "",
-				   	"bill_date"					=> isset($txn->bill_date) ? $txn->bill_date : "",
-				   	"payment_date" 				=> isset($txn->payment_date) ? $txn->payment_date : "",
-				   	"due_date" 					=> isset($txn->due_date) ? $txn->due_date : "",
-				   	"deposit_date" 				=> isset($txn->deposit_date) ? $txn->deposit_date : "",
-				   	"check_no" 					=> isset($txn->check_no) ? $txn->check_no : "",
-				   	"reference_no" 				=> isset($txn->reference_no) ? $txn->reference_no : "",
-				   	"references" 				=> isset($txn->references) ? $txn->references : "",
-				   	"bill_to" 					=> isset($txn->bill_to) ? $txn->bill_to : "",
-				   	"ship_to" 					=> isset($txn->ship_to) ? $txn->ship_to : "",
-				   	"memo" 						=> isset($txn->memo) ? $txn->memo : "",
-				   	"memo2" 					=> isset($txn->memo2) ? $txn->memo2 : "",
-				   	"recurring_name" 			=> isset($txn->recurring_name) ? $txn->recurring_name : "",
-				   	"start_date"				=> isset($txn->start_date) ? $txn->start_date : "",
-				   	"frequency"					=> isset($txn->frequency) ? $txn->frequency : "",
-					"month_option"				=> isset($txn->month_option) ? $txn->month_option : "",
-					"interval" 					=> isset($txn->interval) ? $txn->interval : "",
-					"day" 						=> isset($txn->day) ? $txn->interval : "",
-					"week" 						=> isset($txn->week) ? $txn->week : "",
-					"month" 					=> isset($txn->month) ? $txn->month : "",
-				   	"status" 					=> isset($txn->status) ? $txn->status : "",
-				   	"is_recurring" 				=> isset($txn->is_recurring) ? $txn->is_recurring : "",
-				   	"is_journal" 				=> isset($txn->is_journal) ? $txn->is_journal : "",
-				   	"print_count" 				=> isset($txn->print_count) ? $txn->print_count : "",
-				   	"printed_by" 				=> isset($txn->printed_by) ? $txn->printed_by : "",
-				   	"deleted" 					=> isset($txn->deleted) ? $txn->deleted : "",
-				   	"meter_id"					=> isset($txn->meter_id) ? $txn->meter_id : ""
+		//Plan
+		$plan = new Plan(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$plan->where("sync", 1)->order_by("id", "asc")->get_iterated();
+		if($plan->exists()){
+			foreach($plan as $pl) {
+				$data["plan"][] = array(
+					"id" 		=> $pl->id,
+					"currency_id" 	=> $pl->currency_id,
+		 			"name" 		=> $pl->name,	
+		 			"code"		=> $pl->code,
 				);
 			}
 		}
+		//Plan Item
+		$planitem = new Plan_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$planitem->where("sync", 1)->order_by("id", "asc")->get_iterated();
+		if($planitem->exists()){
+			foreach($planitem as $pli) {
+				$data["plan_item"][] = array(
+					"id" 			=> $pli->id,
+					"tariff_id" 	=> $pli->tariff_id,
+					"currency_id" 	=> $pli->currency_id,
+		 			"name" 			=> $pli->name,	
+		 			"is_flat" 		=> $pli->is_flat,	
+		 			"type"			=> $pli->type,
+		 			"unit"			=> $pli->unit,
+		 			"amount"		=> $pli->amount,
+		 			"usage"			=> $pli->usage,
+		 			"account_id"	=> $pli->account_id,
+		 			"is_active"		=> $pli->is_active,
+				);
+			}
+		}
+		//Plan Item Plan
+		$planitemplan = new Plan_items_plan(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$planitemplan->order_by("id", "asc")->get_iterated();
+		if($planitemplan->exists()){
+			foreach($planitemplan as $pla) {
+				$data["plan_item_plan"][] = array(
+					"id" 		=> $pla->id,
+					"plan_id" 	=> $pla->plan_id,
+		 			"plan_item_id" 		=> $pla->plan_item_id,
+				);
+			}
+		}
+		//Respone
+		$results['count'] = count($data);
+		$results['results'] = $data;
 		
-		// foreach ($puttran as $ta) {
-		$data[] = array(
-			'transaction' => $puttran["items"],
-		);
-	
-		$results['count'] = 100;
+		$this->response($results, 200);
+	}
+	function offupdate3_get(){
+		$filter 	= $this->get("filter");
+		$data = [];
+		$results = [];
+		//Filter
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter["filters"] as $value) {
+				if($value["field"]=="institute"){
+    				$institute = new Institute();
+					$institute->where('id', $value["value"])->get();
+					if($institute->exists()) {
+						$conn = $institute->connection->get();
+						$this->server_host = $conn->server_name;
+						$this->server_user = $conn->username;
+						$this->server_pwd = $conn->password;	
+						$this->_database = $conn->inst_database;
+						date_default_timezone_set("$conn->time_zone");
+					}
+    			}
+			}
+		}
+		//contact
+		$contact = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$contact->where("sync", 1)->order_by("id", "asc")->get_iterated();
+		if($contact->exists()){
+			foreach($contact as $con) {
+				$data["contact"][] = array(
+					"id" 						=> $con->id,
+					"branch_id" 				=> $con->branch_id,
+					"country_id" 				=> $con->country_id,
+					"ebranch_id" 				=> $con->ebranch_id,
+					"elocation_id" 				=> $con->elocation_id,
+					"wbranch_id" 				=> $con->wbranch_id,
+					"wlocation_id" 				=> $con->wlocation_id,
+					"user_id"					=> $con->user_id,
+					"contact_type_id" 			=> $con->contact_type_id,
+					"eorder" 					=> $con->eorder,
+					"worder" 					=> $con->worder,
+					"abbr" 						=> $con->abbr,
+					"number" 					=> $con->number,
+					"eabbr" 					=> $con->eabbr,
+					"enumber" 					=> $con->enumber,
+					"wabbr" 					=> $con->wabbr,
+					"wnumber" 					=> $con->wnumber,
+					"name" 						=> $con->name,
+					"gender"					=> $con->gender,
+					"dob" 						=> $con->dob,
+					"pob" 						=> $con->pob,
+					"latitute" 					=> $con->latitute,
+					"longtitute" 				=> $con->longtitute,
+					"credit_limit" 				=> $con->credit_limit,
+					"locale" 					=> $con->locale,
+					"id_number" 				=> $con->id_number,
+					"phone" 					=> $con->phone,
+					"email" 					=> $con->email,
+					"website" 					=> $con->website,
+					"job" 						=> $con->job,
+					"vat_no" 					=> $con->vat_no,
+					"family_member"				=> $con->family_member,
+					"city" 						=> $con->city,
+					"post_code" 				=> $con->post_code,
+					"address" 					=> $con->address,
+					"bill_to" 					=> $con->bill_to,
+					"ship_to" 					=> $con->ship_to,
+					"memo" 						=> $con->memo,
+					"image_url" 				=> $con->image_url,
+					"company" 					=> $con->company,
+					"company_en" 				=> $con->company_en,
+					"bank_name" 				=> $con->bank_name,
+					"bank_address" 				=> $con->bank_address,
+					"bank_account_name" 		=> $con->bank_account_name,
+					"bank_account_number" 		=> $con->bank_account_number,
+					"name_on_cheque" 			=> $con->name_on_cheque,
+					"business_type_id" 			=> $con->business_type_id,
+					"payment_term_id" 			=> $con->payment_term_id,
+					"payment_method_id" 		=> $con->payment_method_id,
+					"deposit_account_id"		=> $con->deposit_account_id,
+					"trade_discount_id" 		=> $con->trade_discount_id,
+					"settlement_discount_id"	=> $con->settlement_discount_id,
+					"salary_account_id"			=> $con->salary_account_id,
+					"account_id" 				=> $con->account_id,
+					"ra_id" 					=> $con->ra_id,
+					"tax_item_id" 				=> $con->tax_item_id,
+					"phase_id" 					=> $con->phase_id,
+					"voltage_id" 				=> $con->voltage_id,
+					"ampere_id" 				=> $con->ampere_id,
+					"registered_date" 			=> $con->registered_date,
+					"use_electricity" 			=> $con->use_electricity,
+					"use_water" 				=> $con->use_water,
+					"is_local" 					=> $con->is_local,
+					"is_pattern" 				=> intval($con->is_pattern),
+					"status" 					=> $con->status,
+					"is_system"					=> $con->is_system,
+					"contact_type"				=> $con->contact_type_name
+				);
+			}
+		}
+		//Respone
+		$results['count'] = count($data);
+		$results['results'] = $data;
+		
+		$this->response($results, 200);
+	}
+	function offupdate4_get(){
+		$filter 	= $this->get("filter");
+		$data = [];
+		$results = [];
+		//Filter
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter["filters"] as $value) {
+				if($value["field"]=="institute"){
+    				$institute = new Institute();
+					$institute->where('id', $value["value"])->get();
+					if($institute->exists()) {
+						$conn = $institute->connection->get();
+						$this->server_host = $conn->server_name;
+						$this->server_user = $conn->username;
+						$this->server_pwd = $conn->password;	
+						$this->_database = $conn->inst_database;
+						date_default_timezone_set("$conn->time_zone");
+					}
+    			}
+			}
+		}
+		//meter
+		$meter = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$meter->where("sync", 1)->order_by("id", "asc")->get_iterated();
+		if($meter->exists()){
+			foreach($meter as $met) {
+				$data["meter"][] = array(
+					"id" 					=> $met->id,
+					"currency_id"			=> $met->currency_id,
+					"meter_number" 			=> $met->number,
+					"property_id" 			=> $met->property_id,
+					"contact_id" 			=> $met->contact_id,
+					"type"					=> $met->type,
+					"attachment_id"			=> $met->attachment_id,
+					"worder" 				=> $met->worder,
+					"status" 				=> $met->status,
+					"number_digit"			=> $met->number_digit,
+					"plan_id"				=> $met->plan_id,
+					"map" 					=> $met->latitute,
+					"starting_no" 			=> $met->startup_reading,
+					"location_id" 			=> intval($met->location_id),
+					"pole_id" 				=> intval($met->pole_id),
+					"box_id" 				=> intval($met->box_id),
+					"ampere_id" 			=> intval($met->ampere_id),
+					"phase_id" 				=> intval($met->phase_id),
+					"voltage_id" 			=> intval($met->voltage_id),
+					"brand_id" 				=> intval($met->brand_id),
+					"branch_id" 			=> intval($met->branch_id),
+					"activated" 			=> $met->activated,
+					"latitute" 				=> $met->latitute,
+					"longtitute" 			=> $met->longtitute,
+					"multiplier" 			=> $met->multiplier,
+					"date_used" 			=> $met->date_used,
+					"reactive_id" 			=> intval($met->reactive_id),
+					"reactive_status" 		=> $met->reactive_status
+				);
+			}
+		}
+		//Respone
+		$results['count'] = count($data);
 		$results['results'] = $data;
 		
 		$this->response($results, 200);

@@ -169,10 +169,11 @@ class Item_lines extends REST_Controller {
 		$models = json_decode($this->post('models'));
 		$data["results"] = [];
 		$data["count"] = 0;
+		$typeList = array("Cash_Purchase","Credit_Purchase","Internal_Usage","Commercial_Invoice","Vat_Invoice","Invoice","Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale","Sale_Return","Payment_Refund","Purchase_Return","Cash_Refund","Item_Adjustment");
 
 		foreach ($models as $value) {
 			$obj = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-
+			
 			//Record Item Movement
 			if($value->item_id>0){
 				$item = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
@@ -188,100 +189,51 @@ class Item_lines extends REST_Controller {
 					$transaction->get_by_id($value->transaction_id);
 					
 					if($transaction->exists()){
-						//Sum On Hand
-						$itemMovement = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);						
-						$itemMovement->where_in_related("transaction", "type", array("Cash_Purchase", "Credit_Purchase", "Commercial_Invoice", "Vat_Invoice", "Invoice", "Commercial_Cash_Sale", "Vat_Cash_Sale", "Cash_Sale", "Item_Adjustment"));
-						$itemMovement->where("item_id", $value->item_id);
-						$itemMovement->where_related("transaction", "issued_date <=", $transaction->issued_date);
-						$itemMovement->where_related("transaction", "is_recurring <>", 1);
-						$itemMovement->where_related("transaction", "deleted <>", 1);
-						$itemMovement->where("deleted <>", 1);
-						$itemMovement->get_iterated();
-
-						$onHand = 0;
-						foreach ($itemMovement as $val) {
-							$onHand += ($val->quantity * $val->conversion_ratio * $val->movement);
-						}
-
-						$currentQuantity = floatval($value->quantity) * floatval($value->conversion_ratio) * floatval($value->movement);
-						$totalQty = $onHand + $currentQuantity;
-
-						if($totalQty==0){
-							$totalQty = 1;
-						}
-						
-						//Sale
-						if($value->movement==-1){
-							if($transaction->type=="Commercial_Invoice" || $transaction->type=="Vat_Invoice" || $transaction->type=="Invoice" || $transaction->type=="Commercial_Cash_Sale" || $transaction->type=="Vat_Cash_Sale" || $transaction->type=="Cash_Sale"){
-								//Avg Price
-								$lastPrice = $onHand * floatval($item->price);
-								$currentPrice = $currentQuantity * (floatval($value->price) / floatval($value->rate));
-
-								$item->price = ($lastPrice + $currentPrice) / $totalQty;
-								$obj->price_avg = ($lastPrice + $currentPrice) / $totalQty;
+						if($value->movement!==0 && in_array($transaction->type, $typeList)){
+							//Sum quantity
+							$currentQuantity = floatval($value->quantity) * floatval($value->conversion_ratio) * floatval($value->movement);
+							$totalQty = $item->quantity + $currentQuantity;
+							$item->quantity = $totalQty;
+							//Avoid devide by 0
+							if($totalQty==0){
+								$totalQty = 1;
 							}
-						}
+							
+							//Sum Amount
+							//Additional Cost
+							$additionalCost = 0;
+							if(isset($value->additional_cost)){
+								$additionalCost = floatval($value->additional_cost);
+							}						
+							$currentAmount = ($currentQuantity * floatval($value->cost) + $additionalCost) / floatval($value->rate);
 
-						//Purchase
-						if($value->movement==1){
-							if($transaction->type=="Cash_Purchase" || $transaction->type=="Credit_Purchase" || $transaction->type=="Internal_Usage"){
-								//Avg Cost
-								$additionalCost = 0;
-								if(isset($value->additional_cost)){
-									$additionalCost = floatval($value->additional_cost);
-								}
-								$lastCost = $onHand * floatval($item->cost);
-								$currentCost = ($currentQuantity * floatval($value->cost) + $additionalCost) / floatval($value->rate);
+							//New Average Cost = $totalAmount / $totalQuantity
+							$totalAmount = $item->amount + $currentAmount;
+							$item->cost = $totalAmount / $totalQty;
+							$item->amount = $totalAmount;
 
-								if($onHand>0){
-									$item->cost = ($lastCost + $currentCost) / $totalQty;
-								}else{
-									$item->cost = $currentCost / $currentQuantity;
-								}
-							}
+							//Update Item
+							if($item->save()){
+								$poso = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+								$poso->where_in_related("transaction", "type", array("Purchase_Order, Sale_Order"));
+								$poso->where_related("transaction", "issued_date <=", $transaction->issued_date);
+								$poso->where_related("transaction", "status", 0);
+								$poso->where_related("transaction", "is_recurring <>", 1);
+								$poso->where_related("transaction", "deleted <>", 1);
+								$poso->where("deleted <>", 1);
+								$poso->get_iterated();
 
-							if($transaction->type=="Item_Adjustment"){
-								if($item->cost==0){
-									$item->cost = floatval($value->cost);
-								}else{
-									//Avg Cost
-									$additionalCost = 0;
-									if(isset($value->additional_cost)){
-										$additionalCost = floatval($value->additional_cost);
-									}
-									$lastCost = $onHand * floatval($item->cost);
-									$currentCost = ($currentQuantity * floatval($value->cost) + $additionalCost) / floatval($value->rate);
-
-									if($onHand>0){
-										$item->cost = ($lastCost + $currentCost) / $totalQty;
+								$onPO = 0; $onSO = 0;
+								foreach ($poso as $val) {
+									if($val->type=="Purchase_Order"){
+										$onPO += ($val->quantity * $val->conversion_ratio);
 									}else{
-										$item->cost = $currentCost / $currentQuantity;
+										$onSO += ($val->quantity * $val->conversion_ratio);
 									}
 								}
+								$obj->on_po = $onPO;
+								$obj->on_so = $onSO;
 							}
-						}
-
-						//Update Item
-						if($item->save()){
-							$poso = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-							$poso->where_in_related("transaction", "type", array("Purchase_Order, Sale_Order"));
-							$poso->where_related("transaction", "issued_date <=", $transaction->issued_date);
-							$poso->where_related("transaction", "status", 0);
-							$poso->where_related("transaction", "is_recurring <>", 1);
-							$poso->where_related("transaction", "deleted <>", 1);
-							$poso->where("deleted <>", 1);
-							$poso->get_iterated();
-
-							$onPO = 0; $onSO = 0;
-							foreach ($poso as $val) {
-								if($val->type=="Purchase_Order"){
-									$onPO += ($val->quantity * $val->conversion_ratio);
-								}else{
-									$onSO += ($val->quantity * $val->conversion_ratio);
-								}
-							}
-							$obj->on_po = $onPO;
-							$obj->on_so = $onSO;
 						}						
 					}					
 				}
@@ -358,7 +310,7 @@ class Item_lines extends REST_Controller {
 				   	"fine" 				=> floatval($obj->fine),
 				   	"tax" 				=> floatval($obj->tax),
 				   	"additional_cost" 	=> floatval($obj->additional_cost),
-				   	"additional_applied"=> $obj->additional_applied==1?true : false,
+				   	"additional_applied"=> $obj->additional_applied==1 ? true : false,
 				   	"rate"				=> floatval($obj->rate),
 				   	"locale" 			=> $obj->locale,
 				   	"movement" 			=> $obj->movement,
