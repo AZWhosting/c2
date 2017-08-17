@@ -194,7 +194,8 @@ class Item_lines extends REST_Controller {
 							$currentQuantity = floatval($value->quantity) * floatval($value->conversion_ratio) * floatval($value->movement);
 							$totalQty = $item->quantity + $currentQuantity;
 
-							if(floatval($item->quantity)<0){
+							//Negative on hand
+							if(floatval($item->quantity)<0){								
 								if($totalQty==0){
 									$item->amount = 0;
 								}else if($totalQty<0){
@@ -216,7 +217,7 @@ class Item_lines extends REST_Controller {
 									$totalAmount = $avgCost * $totalQty;
 									$item->amount = $totalAmount;
 								}
-							}else{
+							}else{//Positive on hand
 								//Sum Amount
 								//Additional Cost
 								$additionalCost = 0;
