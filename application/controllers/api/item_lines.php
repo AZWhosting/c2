@@ -195,9 +195,39 @@ class Item_lines extends REST_Controller {
 							$totalQty = $item->quantity + $currentQuantity;
 
 							//Negative on hand
-							if(floatval($item->quantity)<0){								
+							if(floatval($item->quantity)<0){
+								$journalLines = [];								
 								if($totalQty==0){
 									$item->amount = 0;
+									$amount = (floatval($item->quantity) * floatval($item->cost)) + (($currentQuantity * floatval($value->cost)) / floatval($value->rate));
+
+									//COGS on Dr
+									$journalLines[] = array(
+										"transaction_id"=> $value->transaction_id,
+										"account_id" 	=> $item->expense_account_id,
+										"contact_id" 	=> $transaction->contact_id,
+										"description" 	=> $value->description,
+										"reference_no" 	=> "",
+										"segments" 	 	=> [],
+										"dr" 	 		=> $amount * floatval($value->rate),
+										"cr" 			=> 0,
+										"rate"			=> $value->rate,
+										"locale"		=> $item->locale
+									);
+
+									//Inventory on Cr
+									$journalLines[] = array(
+										"transaction_id"=> $value->transaction_id,
+										"account_id" 	=> $item->inventory_account_id,
+										"contact_id" 	=> $transaction->contact_id,
+										"description" 	=> $value->description,
+										"reference_no" 	=> "",
+										"segments" 	 	=> [],
+										"dr" 	 		=> 0,
+										"cr" 			=> $amount * floatval($value->rate),
+										"rate"			=> $value->rate,
+										"locale"		=> $item->locale
+									);
 								}else if($totalQty<0){
 									$currentAmount = ($currentQuantity * floatval($item->cost)) / floatval($value->rate);
 									
@@ -216,6 +246,24 @@ class Item_lines extends REST_Controller {
 
 									$totalAmount = $avgCost * $totalQty;
 									$item->amount = $totalAmount;
+								}
+
+								//Add journal
+								for ($i=0; $i < count($journalLines); $i++) { 
+									$journals = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+									$journals->transaction_id	= $journalLines[$i]["transaction_id"];
+									$journals->account_id 		= $journalLines[$i]["account_id"];
+									$journals->contact_id 		= $journalLines[$i]["contact_id"];
+									$journals->description 		= $journalLines[$i]["description"];
+									// $journals->reference_no 	= $journalLines[$i]["reference_no"];
+									// $journals->segments 	 	= $journalLines[$i]["segments"];
+									$journals->dr 	 			= $journalLines[$i]["dr"];
+									$journals->cr 				= $journalLines[$i]["cr"];
+									$journals->rate				= $journalLines[$i]["rate"];
+									$journals->locale			= $journalLines[$i]["locale"];
+
+									$journals->save();
 								}
 							}else{//Positive on hand
 								//Sum Amount
