@@ -100,15 +100,15 @@ class Ops extends REST_Controller {
 				// 	// 	'null' 		=> FALSE,
 				// 	// 	'default' 	=> 1
 				// 	// ),
-				// 	'on_hand' => array(
-				// 		'name' 		=> 'quantity',//New Field Name 
+				// 	'amount' => array(
+				// 		'name' 		=> 'amount',//New Field Name 
 				// 		'type'		=> 'DECIMAL',
 				// 		'constraint'=> '30,15',
 				// 		'null' 		=> FALSE,
 				// 		'default' 	=> 0
 				// 	)
 				// );
-				// $this->dbforge->modify_column('items', $fields);
+				// $data['results'][] = $this->dbforge->modify_column('items', $fields);
 
 				//Custom
 				// $dsn = 'mysql://'.$this->db->username.':'.$this->db->password.'@'.$this->db->hostname.'/'.$db;

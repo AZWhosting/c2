@@ -193,24 +193,46 @@ class Item_lines extends REST_Controller {
 							//Sum quantity
 							$currentQuantity = floatval($value->quantity) * floatval($value->conversion_ratio) * floatval($value->movement);
 							$totalQty = $item->quantity + $currentQuantity;
-							$item->quantity = $totalQty;
-							//Avoid devide by 0
-							if($totalQty==0){
-								$totalQty = 1;
-							}
-							
-							//Sum Amount
-							//Additional Cost
-							$additionalCost = 0;
-							if(isset($value->additional_cost)){
-								$additionalCost = floatval($value->additional_cost);
-							}						
-							$currentAmount = ($currentQuantity * floatval($value->cost) + $additionalCost) / floatval($value->rate);
 
-							//New Average Cost = $totalAmount / $totalQuantity
-							$totalAmount = $item->amount + $currentAmount;
-							$item->cost = $totalAmount / $totalQty;
-							$item->amount = $totalAmount;
+							if(floatval($item->quantity)<0){
+								if($totalQty==0){
+									$item->amount = 0;
+								}else if($totalQty<0){
+									$currentAmount = ($currentQuantity * floatval($item->cost)) / floatval($value->rate);
+									
+									$totalAmount = $item->amount + $currentAmount;
+									$item->amount = $totalAmount;
+								}else{
+									$additionalCost = 0;
+									if(isset($value->additional_cost)){
+										$additionalCost = floatval($value->additional_cost);
+									}
+									$currentAmount = ($currentQuantity * floatval($value->cost) + $additionalCost) / floatval($value->rate);
+
+									//New Average Cost										
+									$avgCost = (floatval($value->cost) + ($additionalCost / $currentQuantity)) / floatval($value->rate);
+									$item->cost = $avgCost;
+
+									$totalAmount = $avgCost * $totalQty;
+									$item->amount = $totalAmount;
+								}
+							}else{
+								//Sum Amount
+								//Additional Cost
+								$additionalCost = 0;
+								if(isset($value->additional_cost)){
+									$additionalCost = floatval($value->additional_cost);
+								}
+								$currentAmount = ($currentQuantity * floatval($value->cost) + $additionalCost) / floatval($value->rate);
+
+								//New Average Cost = $totalAmount / $totalQuantity
+								$totalAmount = $item->amount + $currentAmount;
+								$item->cost = $totalAmount / $totalQty;
+								$item->amount = $totalAmount;
+							}
+
+							$item->quantity = $totalQty;
+							$value->cost_avg = $item->cost;
 
 							//Update Item
 							if($item->save()){

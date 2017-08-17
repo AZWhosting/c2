@@ -92,21 +92,24 @@ class Items extends REST_Controller {
 
 				//Variant
 				$variant = [];
-				if($value->nature=="main_variant"){
-					$itemVariants = new Item_variant(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-					$itemVariants->where("item_id", $value->id);
-					// $itemVariants->include_related("item", array(""));
-					$itemVariants->get();
+				// if($value->nature=="main_variant"){
+				// 	$itemVariants = new Item_variant(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				// 	$itemVariants->where("item_id", $value->id);
+				// 	$itemVariants->include_related("variant_attribute", array("name"));
+				// 	$itemVariants->include_related("attribute_value", array("name"));
+				// 	$itemVariants->get();
 
-					foreach ($itemVariants as $v) {
-						$variant = array(
-							"id" 					=> $v->id,
-							"item_id" 				=> $v->item_id,
-							"variant_attribute_id" 	=> $v->variant_attribute_id,
-							"attribute_value_id" 	=> $v->attribute_value_id
-						);
-					}
-				}
+				// 	foreach ($itemVariants as $v) {
+				// 		$variant = array(
+				// 			"id" 					=> $v->id,
+				// 			"item_id" 				=> $v->item_id,
+				// 			"variant_attribute_id" 	=> $v->variant_attribute_id,
+				// 			"attribute_value_id" 	=> $v->attribute_value_id,
+				// 			"variant_attribute_name"=> $v->variant_attribute_name,
+				// 			"attribute_value_name" 	=> $v->attribute_value_name
+				// 		);
+				// 	}
+				// }
 
 				$data["results"][] = array(
 					"id" 						=> $value->id,
@@ -259,7 +262,7 @@ class Items extends REST_Controller {
 				   	"price" 					=> floatval($obj->price),
 				   	"amount" 					=> floatval($obj->amount),
 				   	"rate" 						=> floatval($obj->rate),
-				   	"locale" 					=> floatval($obj->locale),
+				   	"locale" 					=> $obj->locale,
 				   	"on_hand" 					=> floatval($obj->on_hand),
 				   	"on_po" 					=> floatval($obj->on_po),
 				   	"on_so" 					=> floatval($obj->on_so),
@@ -367,7 +370,7 @@ class Items extends REST_Controller {
 				   	"price" 					=> floatval($obj->price),
 				   	"amount" 					=> floatval($obj->amount),
 				   	"rate" 						=> floatval($obj->rate),
-				   	"locale" 					=> floatval($obj->locale),
+				   	"locale" 					=> $obj->locale,
 				   	"on_hand" 					=> floatval($obj->on_hand),
 				   	"on_po" 					=> floatval($obj->on_po),
 				   	"on_so" 					=> floatval($obj->on_so),

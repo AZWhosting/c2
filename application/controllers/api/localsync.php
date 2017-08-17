@@ -176,7 +176,7 @@ class Localsync extends REST_Controller {
 		$this->response($data, 201);					
 	}
 	//Return Back
-	function offupdate1_get(){
+	function offupdatetxn_get(){
 		$filter 	= $this->get("filter");
 		$data = [];
 		$tx = array();
@@ -204,7 +204,7 @@ class Localsync extends REST_Controller {
 		$transaction->where("sync", 1)->order_by("id", "asc")->get_iterated();
 		if($transaction->exists()){
 			foreach($transaction as $txn) {
-				$tx[] = array(
+				$results["results"][] = array(
 					"id" 						=> isset($txn->id) ? $txn->id : "",
 					"location_id" 				=> isset($txn->location_id) ? $txn->location_id : "",
 					"contact_id" 				=> isset($txn->contact_id) ? $txn->contact_id : "",
@@ -248,7 +248,7 @@ class Localsync extends REST_Controller {
 		$property->where("sync", 1)->order_by("id", "asc")->get_iterated();
 		if($property->exists()){
 			foreach($property as $pro) {
-				$properties[] = array(
+				$data["property"][] = array(
 					"id" 		=> $pro->id,
 		 			"name" 		=> $pro->name,	
 		 			"abbr"		=> $pro->abbr,
@@ -259,14 +259,8 @@ class Localsync extends REST_Controller {
 			}
 		}
 		//Respone
-		
-		// $results['results'] = $data;
-		$data = array(
-			"transactions" => $tx,
-			"propterties"  => $properties
-		);
-		// $data['count'] = count($tx);
-		$this->response(['results'=>$data, 'count'=>count($tx)], 200);
+		$results['count'] = count($results);
+		$this->response($results, 200);
 	}
 	function offupdate2_get(){
 		$filter 	= $this->get("filter");
