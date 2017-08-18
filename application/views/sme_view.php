@@ -3,7 +3,7 @@
 <head>
     <title>BanhJi - ASEAN Accounting Platform</title>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
     <link href="https://fonts.googleapis.com/css?family=Battambang" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Preahvihear" rel="stylesheet">   
 
@@ -58,7 +58,7 @@
 	<!-- template section starts -->
 	<script type="text/x-kendo-template" id="layout">
 		<div id="menu" class="menu"></div>
-		<div id="content"></div>
+		<div id="content" class="container"></div>
 	</script>
 	<script type="text/x-kendo-template" id="blank-tmpl">
 	</script>
@@ -139,8 +139,8 @@
 							</li>
 			  			</ul>
 				  	</li>
-				  	<li class="help" style="padding-top: 4px;`">
-				  		<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+				  	<li class="help">
+				  		<a  style="padding-top: 4px;" class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
 				  			<i class="icon-question icon-question1"></i>
 				  		</a>
 				  		<ul class="dropdown-menu" >
@@ -302,7 +302,7 @@
 
 	<script type="text/x-kendo-template" id="index">
 		<div class="container">
-			<div class="row">
+			<div class="row" style="margin-top: 30px;">
 				<!-- Module Image -->
 				<div class="col-xs-12 col-sm-6">
 					<div class="row">
@@ -386,7 +386,7 @@
 					</div>
 				</div>
 
-				<div class="col-xs-12 col-sm-6">
+				<!-- <div class="col-xs-12 col-sm-6">
 					<div class="row">
 						<div class="col-sm-12 col-md-8">
 							<div class="board-chart">
@@ -438,7 +438,7 @@
 											</div>
 											<div style="width: 100%; background: #f4f4f4; float: left; padding: 5px 10px; text-align: left;">
 												<div id="carousel-1" class="carousel slide" style="margin-bottom: 0; float: left;">
-													<!-- Indicators -->
+													
 													<ol class="carousel-indicators" style="bottom: -14px; left: 86%;">
 														<li data-target="#carousel-1" data-slide-to="0" class="active"></li>
 														<li data-target="#carousel-1" data-slide-to="1"></li>
@@ -446,12 +446,12 @@
 														<li data-target="#carousel-1" data-slide-to="3"></li>
 														<li data-target="#carousel-1" data-slide-to="4"></li>
 													</ol>
-													<!-- // Indicators END -->
 													
-													<!-- Items -->
+													
+											
 													<div class="carousel-inner" style=" float: left;">
 													
-														<!-- Item -->
+														
 														<div class="item active">
 															<div class="carousel-caption" style="position: relative; right: 0; left: 0; padding: 0; top: 0; background: none;">
 																<h4 style="font-size: 15px; float: left; width: 100%; text-align: left;">Get this item now!</h4>
@@ -460,9 +460,8 @@
 																</p>
 															</div>
 														</div>
-														<!-- // Item END -->
+														
 
-														<!-- Item -->
 														<div class="item">
 															<div class="carousel-caption" style="position: relative; right: 0; left: 0; padding: 0; top: 0; background: none;">
 																<h4 style="font-size: 15px; float: left; width: 100%; text-align: left;">Get this item now!</h4>
@@ -471,9 +470,7 @@
 																</p>
 															</div>
 														</div>
-														<!-- // Item END -->
-
-														<!-- Item -->
+														
 														<div class="item">
 															<div class="carousel-caption" style="position: relative; right: 0; left: 0; padding: 0; top: 0; background: none;">
 																<h4 style="font-size: 15px; float: left; width: 100%; text-align: left;">Get this item now!</h4>
@@ -482,9 +479,7 @@
 																</p>
 															</div>
 														</div>
-														<!-- // Item END -->
-
-														<!-- Item -->
+														
 														<div class="item">
 															<div class="carousel-caption" style="position: relative; right: 0; left: 0; padding: 0; top: 0; background: none;">
 																<h4 style="font-size: 15px; float: left; width: 100%; text-align: left;">Get this item now!</h4>
@@ -493,9 +488,7 @@
 																</p>
 															</div>
 														</div>
-														<!-- // Item END -->
-
-														<!-- Item -->
+														
 														<div class="item">
 															<div class="carousel-caption" style="position: relative; right: 0; left: 0; padding: 0; top: 0; background: none;">
 																<h4 style="font-size: 15px; float: left; width: 100%; text-align: left;">Get this item now!</h4>
@@ -504,16 +497,11 @@
 																</p>
 															</div>
 														</div>
-														<!-- // Item END -->
+														
 														
 
 													</div>
-													<!-- // Items END -->
 													
-													<!-- Navigation -->
-													<!-- <a class="left carousel-control" href="#carousel-1" data-slide="prev">&lsaquo;</a>
-													<a class="right carousel-control" href="#carousel-1" data-slide="next">&rsaquo;</a> -->
-													<!-- // Navigation END -->
 													
 												</div>
 											</div>
@@ -637,9 +625,8 @@
 								</div>					
 							</div>
 						</div>
-					</div> 
-
-				</div>
+					</div>
+				</div> -->
 
 
 				<!-- <div class="col-xs-12 col-sm-6">
@@ -955,14 +942,14 @@
 			</div>
 
 			<!-- Footer -->
-			<div class="row" style="margin-top: 30px;">
+			<!-- <div class="row" style="margin-top: 30px;">
 				<div class="col-xs-12 col-sm-12" align="center">
 					<p>
 						&copy; <?php echo date('Y'); ?>
 						<span data-bind="text: lang.lang.all_rights_reserved"></span>
 					</p>
 				</div>
-			</div>
+			</div> -->
 		</div>
 	</script>
 	<!-- ADVANCE SEARCH -->

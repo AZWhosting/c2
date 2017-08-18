@@ -351,7 +351,7 @@
                         </div>
                         <div class="col-sm-10" style="width: 80%; margin-top: -10px; padding-left: 0;">
                             <h3 class="textnear-logo">
-                                is <span class="fontbold">online accounting software</span> for <span class="sme">sme</span>s
+                                is <span class="fontbold">online accounting software</span> for <span class="sme">msme</span>s
                             </h3>
                         </div>
                         <div class="btn-switch">
