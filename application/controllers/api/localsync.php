@@ -178,9 +178,10 @@ class Localsync extends REST_Controller {
 	//Return Back
 	function offupdatetxn_get(){
 		$filter 	= $this->get("filter");
-		$data = [];
-		$tx = array();
-		$properties = array();
+		$page 		= $this->get('page');
+		$limit 		= 10;
+		$data["results"] = [];
+		$data["count"] = 0;
 		//Filter
 		if(!empty($filter) && isset($filter)){
 	    	foreach ($filter["filters"] as $value) {
@@ -198,13 +199,20 @@ class Localsync extends REST_Controller {
     			}
 			}
 		}
-		$puttran = array();
 		//Transaction
 		$transaction = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$transaction->where("sync", 1)->order_by("id", "asc")->get_iterated();
+		$transaction->where("sync", 1)->order_by("id", "asc");
+		//Results
+		if($page && $limit){
+			$transaction->get_paged_iterated($page, $limit);
+			$data["count"] = $transaction->result_count();
+		}else{
+			$transaction->get_iterated();
+			$data["count"] = $transaction->result_count();
+		}
 		if($transaction->exists()){
 			foreach($transaction as $txn) {
-				$results["results"][] = array(
+				$data["results"][] = array(
 					"id" 						=> isset($txn->id) ? $txn->id : "",
 					"location_id" 				=> isset($txn->location_id) ? $txn->location_id : "",
 					"contact_id" 				=> isset($txn->contact_id) ? $txn->contact_id : "",
@@ -243,24 +251,8 @@ class Localsync extends REST_Controller {
 				);
 			}
 		}
-		//Property
-		$property = new Property(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$property->where("sync", 1)->order_by("id", "asc")->get_iterated();
-		if($property->exists()){
-			foreach($property as $pro) {
-				$data["property"][] = array(
-					"id" 		=> $pro->id,
-		 			"name" 		=> $pro->name,	
-		 			"abbr"		=> $pro->abbr,
-		 			"code"		=> $pro->code,
-		 			"address" 	=> $pro->address,
-		 			"contact_id" => $pro->contact_id
-				);
-			}
-		}
-		//Respone
-		$results['count'] = count($results);
-		$this->response($results, 200);
+		$data["all"] = $transaction->paged->total_rows;
+		$this->response($data, 200);
 	}
 	function offupdate2_get(){
 		$filter 	= $this->get("filter");

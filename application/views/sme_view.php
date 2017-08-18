@@ -97,12 +97,7 @@
 	            </div>
 
 	            <!-- Search Desktop-->
-	            <form class="navbar-form pull-left hidden-xs">
-					<div class="btn-group">
-					  	<a class="btn btn-inverse dropdown-toggle" data-toggle="dropdown" href="#">
-					    	<i class="icon-th"></i>
-					  	</a>
-					</div>
+	            <form class="navbar-form pull-left hidden-xs" style="padding-right: 0;">
 				  	<input id="search-placeholder" class="span2 search-query" 
 				  		type="text" 
 				  		placeholder="Search" 
@@ -110,12 +105,16 @@
 				  	<button class="btn btn-inverse"
 				  		type="submit" 
 				  		data-bind="click: search" >
-				  			<i class="icon-search"></i>
+				  			<i class="icon-search iconsearch"></i>
 				  	</button>
 				</form>
 
+				<!-- Secondary Menu -->
+				<ul class="topnav hidden-xs hidden-sm" id="secondary-menu">
+				</ul>
+
 				<!-- Menu rigth Desktop -->
-				<ul class="col-sm-3 topnav pull-right hidden-xs">
+				<ul class="menu-right col-sm-3 topnav pull-right hidden-xs">
 					<li role="presentation" class="setting dropdown">
 				  		<a style="color: #fff;" class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">[<span data-bind="text: getUsername"></span>]</a>
 			  			<ul class="dropdown-menu">
@@ -133,20 +132,14 @@
 	    					</li>
 							<li class="divider"></li>
 							<li>
-								<a  href="<?php echo base_url(); ?>admin">
-									<i class="icon-cog"></i>
-									Setting
-								</a>
-							</li>
-							<li>
 								<a href="#/manage" data-bind="click: logout">
 									<i class="icon-power-off"></i>
-									Logout
+									<span>Logout</span>
 								</a>
 							</li>
 			  			</ul>
 				  	</li>
-				  	<li class="help">
+				  	<li class="help" style="padding-top: 4px;`">
 				  		<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
 				  			<i class="icon-question icon-question1"></i>
 				  		</a>
@@ -190,18 +183,15 @@
 				  			</div>
 				  			<div class="bottom-help" style="background: #fff; padding: 20px 20px 20px; text-align: left; display: inline-block; width: 100%;">
 				  				<h3 style="float: left; margin-right: 10px;">Direct Chat by</h3>
-				  				<div class="fb-messengermessageus" 
-						            messenger_app_id="1301847836514973"
-						            page_id="862386433857166"
-						            color="blue"
-						            width="180"
-						            size="standard" style="float: left; margin-top: 6px;"></div>
+				  				
 				  			</div>
 				  		</ul>
 				  	</li>
 
 				  	<li role="presentation" class="dropdown multitasklist">
-				  		<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"> <i class="icon-th-list"></i></a>
+				  		<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+				  			<i class="icon-th-list"></i>
+				  		</a>
 			  			<ul class="dropdown-menu ul-multiTaskList" data-template="multiTaskList-row-template" data-bind="source: multiTaskList">  				  				
 			  			</ul>
 				  	</li>
@@ -210,49 +200,59 @@
 	            <!-- Menu Phone -->
 	            <div class="menu-phone collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 	                <ul class="nav navbar-nav hidden-lg hidden-md hidden-sm">
+	                	<li><a href='#/' class='glyphicons show_big_thumbnails'><i></i><span >Dashnboard</span></a></li>
+					  	<li><a href='#/center'><span data-bind="text: lang.lang.center"></span></a></li>
+					  	<li role='presentation' class='dropdown'>
+					  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><i class="text-t"></i> <span style="margin-top: 12px;" class='caret'></span></a>
+				  			<ul class='dropdown-menu'>
+				  				<li><a href='#/customer'><span >Add New Customer</span></a></li>
+				  				<li><a href='#/property'><span >Add New Property</span></a></li> 
+				  				<li ><a href='#/reorder'><span >Reading Route Management</span></a></li>  				
+				  				<li><span class="li-line"></span></li>
+				  				<li><a href='#/reading'><span >1. Meter Reading</span></a></li>
+				  				<li><a href='#/run_bill'><span >2. Run Bill</span></a></li> 
+				  				<li><a href='#/print_bill'><span >3. Print Bill</span></a></li>
+				  				<li><a href='#/receipt'><span >4. Cash Receipt</span></a></li>
+				  				<li><span class="li-line"></span></li>
+				  				<li><a href='#/imports'><span >Import</span></a></li>
+				  				<li><span class="li-line"></span></li>
+				  				<li><a href='#/backup'><span>Back Up</span></a></li>
+				  			</ul>
+					  	</li>
+					  	<li>
+					  		<a href="#/reports">
+					  			<span>REPORTS</span>
+					  		</a>
+					  	</li>
 	                	<li>
-							<a  href="<?php echo base_url(); ?>admin">
-								<i class="icon-cog"></i>
-								Setting
+							<a href='#/setting' class='glyphicons settings'>
+								<i ></i>
+								<span>Setting</span>
 							</a>
 						</li>
 						<li>
 							<a href="#/manage" data-bind="click: logout">
 								<i class="icon-power-off"></i>
-								Logout
+								<span>Logout</span>
 							</a>
 						</li>
 	                </ul>
 	            </div>
 
 	            <!-- Menu Phone Multipel Task-->
-	            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
-	            	<form class="navbar-form pull-left hidden-lg hidden-md hidden-sm">
-						<div class="btn-group">
-						  	<a class="btn btn-inverse dropdown-toggle" data-toggle="dropdown" href="#">
-						    	<i class="icon-th"></i>
-						  	</a>
-						</div>
-					  	<input id="search-placeholder" class="span2 search-query" 
-					  		type="text" 
-					  		placeholder="Search" 
-					  		data-bind="value: searchText" />
-					  	<button class="btn btn-inverse"
-					  		type="submit" 
-					  		data-bind="click: search" >
-					  			<i class="icon-search"></i>
-					  	</button>
-					</form>
+	            <div class="hidden-lg hidden-md collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+	            	<ul class="dropdown-menu ul-multiTaskList" data-template="multiTaskList-row-template" data-bind="source: multiTaskList">  				  				
+			  		</ul>
 	            </div>
 
 	            <!-- Menu Phone Search-->
 	            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-3">
 	            	<form class="navbar-form pull-left hidden-lg hidden-md hidden-sm">
-						<div class="btn-group">
+						<!-- <div class="btn-group">
 						  	<a class="btn btn-inverse dropdown-toggle" data-toggle="dropdown" href="#">
 						    	<i class="icon-th"></i>
 						  	</a>
-						</div>
+						</div> -->
 					  	<input id="search-placeholder" class="span2 search-query" 
 					  		type="text" 
 					  		placeholder="Search" 
@@ -260,7 +260,7 @@
 					  	<button class="btn btn-inverse"
 					  		type="submit" 
 					  		data-bind="click: search" >
-					  			<i class="icon-search"></i>
+					  			<i class="icon-search "></i>
 					  	</button>
 					</form>
 	            </div>
@@ -271,22 +271,23 @@
 	                    <li>
 	                    	<a href="#" data-bind="click: lang.changeToKh">
 	                    		<img class="kh-flag" src="https://lipis.github.io/flag-icon-css/flags/4x3/kh.svg">
-	                    		<span>ភាសាខ្មែរ</span>
+	                    		<span style="margin-left: 0;">ភាសាខ្មែរ</span>
 	                    	</a>
 	                    </li>
-    					<li>
-    						<a href="#" data-bind="click: lang.changeToEn">
-    							<img class="en-flag" src="https://lipis.github.io/flag-icon-css/flags/4x3/gb.svg">
-    							<span>English</span>
-    						</a>
-    					</li>	
+						<li>
+							<a href="#" data-bind="click: lang.changeToEn">
+								<img class="en-flag" src="https://lipis.github.io/flag-icon-css/flags/4x3/gb.svg">
+								<span>English</span>
+							</a>
+						</li>	
 	                </ul>
 	            </div>
 	            <!-- /.navbar-collapse -->
 	        </div>
 	        <!-- /.container -->
-	    </nav>			
+	    </nav>	
 	</script>
+
 	<script id="multiTaskList-row-template" type="text/x-kendo-template">
 	    <li>
 	    	<a href="\#/#=url#">
