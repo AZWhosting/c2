@@ -351,9 +351,10 @@ class Winvoices extends REST_Controller {
 		   			if($row->type == 'installment') {
 		   				//Update Installment Schedule Invoice = 1
 						$updateInstallSchedule = new Installment_schedule(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-						$updateInstallSchedule->where('id', $row->item_id);
-						$updateInstallSchedule->update('invoiced', 1);
-						$updateInstallSchedule->update('sync', 1);
+						$updateInstallSchedule->where('id', $row->item_id)->limit(1)->get();
+						$updateInstallSchedule->invoiced = 1;
+						$updateInstallSchedule->sync = 1;
+						$updateInstallSchedule->save();
 		   			}
 		   			//to do: add to accouting line
 		   			$updateInstallSchedule = isset($updateInstallSchedule) ? $updateInstallSchedule : "";
