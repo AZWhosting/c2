@@ -361,7 +361,9 @@ class Item_lines extends REST_Controller {
 							}
 
 							$item->quantity = $totalQty;
-							$value->cost_avg = $item->cost;
+							$obj->cost_avg = $item->cost;
+							$obj->inventory_quantity = $totalQty;
+							$obj->inventory_value = $item->amount;
 
 							//Update Item
 							if($item->save()){
@@ -480,10 +482,95 @@ class Item_lines extends REST_Controller {
 		$models = json_decode($this->put('models'));
 		$data["results"] = [];
 		$data["count"] = 0;
+		$typeList = array("Cash_Purchase","Credit_Purchase","Internal_Usage","Commercial_Invoice","Vat_Invoice","Invoice","Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale","Sale_Return","Payment_Refund","Purchase_Return","Cash_Refund","Item_Adjustment");
 
 		foreach ($models as $value) {
 			$obj = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->get_by_id($value->id);
+
+			//Update Avg Cost
+			/*if($value->item_id>0){
+				$item = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$item->where("item_type_id", 1);
+				$item->where("is_assembly <>", 1);
+				$item->where("is_catalog <>", 1);
+				$item->get_by_id($value->item_id);
+
+				if($item->exists()){
+					$transaction = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$transaction->where("is_recurring <>", 1);
+					$transaction->where("deleted <>", 1);
+					$transaction->get_by_id($obj->transaction_id);
+
+					if($value->movement!==0){
+						//Sum quantity
+						$oldQuanty = floatval($obj->quantity) * floatval($obj->conversion_ratio) * floatval($obj->movement);
+						$prevQuantity = $obj->inventory_quantity - $oldQuanty;						
+						
+						$currentQuantity = floatval($value->quantity) * floatval($value->conversion_ratio) * floatval($value->movement);
+						$totalQty = $prevQuantity + $currentQuantity;
+						$prevAmount = $obj->inventory_value - ($currentQuantity * $obj->cost_avg);
+
+						//Sum Amount
+						$currentAmount = ($currentQuantity * floatval($value->cost) + floatval($value->additional_cost)) / floatval($value->rate);
+						
+						$inventoryValue = $prevAmount + $currentAmount;
+						$avgCost = $inventoryValue / $totalQty;
+						
+						$value->cost_avg = $avgCost;
+						$value->inventory_quantity = $totalQty;
+						$value->inventory_value = $inventoryValue;
+
+						$data["test"][] = array(
+							"oldQuanty" => $oldQuanty,
+							"prevQuantity" => $prevQuantity,
+							"prevAmount" => $prevAmount,
+							"currentQuantity" => $currentQuantity,
+							"totalQty" => $totalQty,
+							"inventoryValue" => $inventoryValue,
+							"avgCost" => $avgCost
+						);
+						
+						//Update all avg cost
+						$itemLines = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						$itemLines->where_related("transaction","issued_date >", $transaction->issued_date);
+						$itemLines->where("item_id", $value->item_id);
+						$itemLines->where("movement <>", 0);
+						$itemLines->where("deleted <>", 0);
+						$itemLines->get_iterated();
+
+						foreach ($itemLines as $line) {
+							$lines = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+							$lines->get_by_id($line->id);
+
+							$lineQuantity = floatval($line->quantity) * floatval($line->conversion_ratio) * floatval($line->movement);
+							$totalQty += $lineQuantity;
+
+							$lineAmount = ($lineQuantity * floatval($line->cost) + floatval($line->additional_cost)) / floatval($line->rate);
+						
+							$inventoryValue += $lineAmount;
+							$avgCost = $inventoryValue / $totalQty;
+
+
+							$lines->cost_avg = $avgCost;
+							$lines->inventory_quantity = $totalQty;
+							$lines->inventory_value = $inventoryValue;
+							$lines->save();
+
+							$data["test"][] = array(
+								"totalQty" => $totalQty,
+								"inventoryValue" => $inventoryValue,
+								"avgCost" => $avgCost
+							);
+						}
+
+						$item->quantity = $totalQty;
+						$item->cost = $avgCost;
+						$item->amount = $inventoryValue;
+						$item->save();
+					}
+				}
+			}*/
 
 			isset($value->transaction_id) 	? $obj->transaction_id 		= $value->transaction_id : "";
 			isset($value->item_id)			? $obj->item_id				= $value->item_id : "";
