@@ -721,7 +721,7 @@ class Banhji extends REST_Controller {
 			$inst = new Institute();
 			$inst->select('id, name, country_id');
 			$inst->where('id', $r->institute);
-			$inst->include_related('monetary', 'locale');
+			$inst->include_related('monetary', array('locale'));
 			$inst->get();
 			$data = array();
 			if($inst->exists()) {

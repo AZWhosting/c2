@@ -260,8 +260,6 @@ class Winvoices extends REST_Controller {
 		$models = json_decode($this->post('models'));
 		$data["results"] = array();
 		$data["count"] = 0;
-
-
 		$number = "";
 		foreach ($models as $value) {
 			if($value->type == ""){
@@ -277,7 +275,6 @@ class Winvoices extends REST_Controller {
 			}else{
 				$number = $this->_generate_number($value->type, $value->issued_date);
 			}
-
 			$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			// $obj->company_id 		= $value->company_id;
 			$obj->location_id 		= isset($value->location_id) ? $value->location_id : "";
@@ -309,29 +306,27 @@ class Winvoices extends REST_Controller {
 		   	$obj->box_id 			= isset($value->box_id) ? $value->box_id : 0;
 		   	$obj->payment_term_id 	= 5;
 		   	$obj->user_id 			= isset($value->biller_id) ? $value->biller_id : 0;
-		   	$obj->sync = 1;
+		   	$obj->sync 				= 1;
 	   		if($obj->save()){
-
 	   			$journal = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-	   			$journal->transaction_id = $obj->id;
-	   			$journal->account_id = $value->contact->account_id;
-	   			$journal->contact_id = $value->contact->id;
-	   			$journal->dr  		 = $obj->amount;
-	   			$journal->description = "Utility Invoice";
-	   			$journal->cr 		 = 0.00;
-	   			$journal->rate 		 = $obj->rate;
-	   			$journal->locale 	 = $obj->locale;
+	   			$journal->transaction_id 	= $obj->id;
+	   			$journal->account_id 		= $value->contact->account_id;
+	   			$journal->contact_id 		= $value->contact->id;
+	   			$journal->dr  		 		= $obj->amount;
+	   			$journal->description 		= "Utility Invoice";
+	   			$journal->cr 		 		= 0.00;
+	   			$journal->rate 		 		= $obj->rate;
+	   			$journal->locale 	 		= $obj->locale;
 	   			$journal->save();
-
 	   			$journal2 = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-	   			$journal2->transaction_id = $obj->id;
-	   			$journal2->account_id = $value->contact->ra_id;
-	   			$journal2->contact_id = $value->contact->id;
-	   			$journal2->dr 		  = 0.00;
-	   			$journal2->cr 		  = $obj->amount;
-	   			$journal2->description = "Utility Invoice";
-	   			$journal2->rate 	  = $obj->rate;
-	   			$journal2->locale 	  = $obj->locale;
+	   			$journal2->transaction_id 	= $obj->id;
+	   			$journal2->account_id 		= $value->contact->ra_id;
+	   			$journal2->contact_id 		= $value->contact->id;
+	   			$journal2->dr 		  		= 0.00;
+	   			$journal2->cr 		  		= $obj->amount;
+	   			$journal2->description 		= "Utility Invoice";
+	   			$journal2->rate 	  		= $obj->rate;
+	   			$journal2->locale 	  		= $obj->locale;
 	   			$journal2->save();
 	   			$invoice_lines = [];
 		   		foreach ($value->invoice_lines as $row) {
@@ -343,7 +338,6 @@ class Winvoices extends REST_Controller {
 		   			}
 		   			$line = new Winvoice_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		   			$line->transaction_id 	= $obj->id;
-		   			//$line->item_id 			= $row->item_id;
 		   			$line->meter_record_id 	= isset($row->meter_record_id) ? $row->meter_record_id : "";
 		   			$line->description 		= isset($row->description) ? $row->description : "Utility Invoice";
 		   			$line->quantity 		= isset($row->quantity) ? $row->quantity: 0;
@@ -382,7 +376,6 @@ class Winvoices extends REST_Controller {
 		   				);
 		   			}
 		   		}
-
 			   	$data["results"][] = array(
 			   		"id" 				=> $obj->id,
 					"company_id" 		=> $obj->company_id,
