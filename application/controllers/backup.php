@@ -58,7 +58,7 @@ class Backup extends CI_Controller {
 			$this->load->dbutil();
 
 			$prefs = array(
-				// 'tables'        => array('branches', 'contacts', 'installment_schedules', 'installments', 'locations', 'meter_records', 'meters', 'plan_items', 'plan_items_plans', 'plans', 'properties', 'transactions', 'winvoice_lines'),
+				'tables' => array('branches', 'contacts', 'installment_schedules', 'installments', 'locations', 'meter_records', 'meters', 'plan_items', 'plan_items_plans', 'plans', 'properties', 'transactions', 'winvoice_lines'),
 				'ignore' => array(),
 				'format' => 'sql',
 				'filename' => $this->db->database .'-'. date("Y-m-d-H-i-s").'-backup.sql',  
@@ -69,14 +69,14 @@ class Backup extends CI_Controller {
 
 			$backup = $this->dbutil->backup($prefs);
 			$dbname = $this->db->database .'-'. date("Y-m-d-H-i-s").'-backup.sql';
-			
+			force_download($dbname, $backup);
 			if ( ! write_file('assets/backupdb/'.$dbname, $backup)){
 			    echo "error";
 			}else{
 			    $data = file_get_contents("assets/backupdb/".$dbname);
 	    		
 			}
-			force_download($dbname, $backup);
+			
 		}
 	}
 }

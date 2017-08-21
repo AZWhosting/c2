@@ -19281,6 +19281,7 @@
         cancel: function() {
             this.dataSource.data([]);
             this.contactPersonDS.data([]);
+            this.propertyDS.data([]);
             this.proDS.data([]);
             this.set("contact_type_id", 0);
             window.history.back();

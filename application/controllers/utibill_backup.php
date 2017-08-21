@@ -60,7 +60,7 @@ class Utibill_backup extends CI_Controller {
 			$prefs = array(
 				'tables'        => array('branches', 'contacts', 'installment_schedules', 'installments', 'locations', 'meter_records', 'meters', 'plan_items', 'plan_items_plans', 'plans', 'properties', 'transactions', 'winvoice_lines'),
 				'ignore' => array(),
-				'format' => 'gzip',
+				'format' => 'sql',
 				'filename' => $this->db->database .'-'. date("Y-m-d-H-i-s").'-backup.sql',  
 				'add_drop' => TRUE,
 				'add_insert' => TRUE,
