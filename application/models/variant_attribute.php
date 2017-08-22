@@ -5,8 +5,8 @@ class Variant_attribute extends DataMapper {
 	// protected $updated_field = "updated_at";
 
 	public $has_many = array(
-		'item_variant' => array(
-			'class' => 'item_variant',
+		'attribute_value' => array(
+			'class' => 'attribute_value',
 			'other_field' => 'variant_attribute'
 		)
 	);

@@ -35,6 +35,9 @@ class Ops extends REST_Controller {
 			    // $this->dbforge->add_field("created_at date DEFAULT NULL");
 			    // $this->dbforge->add_field("updated_at date DEFAULT NULL");
 			    // $this->dbforge->create_table('measurement_categories');
+
+				//Rename Table 'old_table_name' to 'new_table_name'
+			    // $this->dbforge->rename_table('items_variant_attributes', 'attribute_values_items');
 			    
 			    //Update data
 			    // $this->db->where('conversion_ratio', 0);
@@ -110,6 +113,9 @@ class Ops extends REST_Controller {
 				// 	)
 				// );
 				// $data['results'][] = $this->dbforge->modify_column('items', $fields);
+
+			 	//Remove column, 'table_name', 'column_to_drop'
+				// $this->dbforge->drop_column('attribute_values_items', 'variant_attribute_id');
 
 				//Custom
 				// $dsn = 'mysql://'.$this->db->username.':'.$this->db->password.'@'.$this->db->hostname.'/'.$db;

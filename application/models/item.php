@@ -40,16 +40,12 @@ class Item extends DataMapper {
 		'inventory_account' => array(
 			'class'=>'account',
 			'other_field' => 'inventory'
-		),
-		// 'attribute' => array(
-		// 	'class' => 'itemattribute',
-		// 	'other_field' => 'item'
-		// )
+		)
 	);
 
 	public $has_many = array(
-		'item_variant' => array(
-			'class' => 'item_variant',
+		'attribute_value' => array(
+			'class' => 'attribute_value',
 			'other_field' => 'item'
 		),
 		'item_line' => array(

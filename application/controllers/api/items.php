@@ -90,27 +90,6 @@ class Items extends REST_Controller {
 					"measurement"		=> $value->measurement_name ? $value->measurement_name : ""
 				);
 
-				//Variant
-				$variant = [];
-				// if($value->nature=="main_variant"){
-				// 	$itemVariants = new Item_variant(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				// 	$itemVariants->where("item_id", $value->id);
-				// 	$itemVariants->include_related("variant_attribute", array("name"));
-				// 	$itemVariants->include_related("attribute_value", array("name"));
-				// 	$itemVariants->get();
-
-				// 	foreach ($itemVariants as $v) {
-				// 		$variant = array(
-				// 			"id" 					=> $v->id,
-				// 			"item_id" 				=> $v->item_id,
-				// 			"variant_attribute_id" 	=> $v->variant_attribute_id,
-				// 			"attribute_value_id" 	=> $v->attribute_value_id,
-				// 			"variant_attribute_name"=> $v->variant_attribute_name,
-				// 			"attribute_value_name" 	=> $v->attribute_value_name
-				// 		);
-				// 	}
-				// }
-
 				$data["results"][] = array(
 					"id" 						=> $value->id,
 					"company_id" 				=> $value->company_id,
@@ -159,7 +138,7 @@ class Items extends REST_Controller {
 
 				   	"category" 					=> $value->category_name,
 				   	"measurement" 				=> $measurement,
-				   	"variant" 					=> $variant
+				   	"variant" 					=> $value->attribute_value->get_raw()->result()
 				);
 			}
 		}

@@ -12,8 +12,8 @@ class Attribute_value extends DataMapper {
 	);
 
 	public $has_many = array(
-		'item_variant' => array(
-			'class' => 'item_variant',
+		'item' => array(
+			'class' => 'item',
 			'other_field' => 'attribute_value'
 		)
 	);
