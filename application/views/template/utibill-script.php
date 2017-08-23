@@ -3200,6 +3200,8 @@
         haveLocationU: false,
         haveSubLocationU: false,
         pageLoad: function(id) {},
+        nameL           : null,
+        nameLO          : null,
         licenseChange: function(e) {
             var self = this;
             this.blocDS.data([]);
@@ -3210,7 +3212,6 @@
             this.set("boxSelect", "");
             this.set("haveLocation", false);
             this.set("haveSubLocation", false);
-
             this.blocDS.filter([{
                     field: "branch_id",
                     value: this.get("licenseSelect")
@@ -3224,6 +3225,8 @@
                     value: 0
                 }
             ]);
+            var liSelect = e.sender.selectedIndex;
+            this.set("nameL", this.licenseDS.data()[liSelect - 1].name);
             this.set("haveLicense", true);
         },
         onLocationChange: function(e) {
@@ -3234,31 +3237,33 @@
             this.set("haveSubLocation", false);
             if (this.get("blocSelect")) {
                 this.subLocationDS.query({
-                        filter: [{
-                                field: "branch_id",
-                                value: this.get("licenseSelect")
-                            },
-                            {
-                                field: "main_bloc",
-                                value: this.get("blocSelect")
-                            },
-                            {
-                                field: "main_pole",
-                                value: 0
-                            }
-                        ],
-                        page: 1
-                    })
-                    .then(function(e) {
-                        if (self.subLocationDS.data().length > 0) {
-                            self.set("haveLocation", true);
-                        } else {
-                            self.set("haveLocation", false);
-                            self.set("subLocationSelect", "");
-                            self.subLocationDS.data([]);
+                    filter: [{
+                            field: "branch_id",
+                            value: this.get("licenseSelect")
+                        },
+                        {
+                            field: "main_bloc",
+                            value: this.get("blocSelect")
+                        },
+                        {
+                            field: "main_pole",
+                            value: 0
                         }
-                    });
+                    ],
+                    page: 1
+                })
+                .then(function(e) {
+                    if (self.subLocationDS.data().length > 0) {
+                        self.set("haveLocation", true);
+                    } else {
+                        self.set("haveLocation", false);
+                        self.set("subLocationSelect", "");
+                        self.subLocationDS.data([]);
+                    }
+                });
             }
+            var loSelect = e.sender.selectedIndex;
+            this.set("nameLO", this.blocDS.data()[loSelect - 1].name);
         },
         onSubLocationChange: function(e) {
             var self = this;
@@ -3564,7 +3569,7 @@
             //save the file as Excel file with extension xlsx
             kendo.saveAs({
                 dataURI: workbook.toDataURL(),
-                fileName: "Reading-" + "<?php echo date('d-M-Y'); ?>" + ".xlsx"
+                fileName: this.get("nameL") + "-" + this.get("nameLO") + "-" + "<?php echo date('dmY'); ?>" + ".xlsx"
             });
         },
         MonthTo: false,
