@@ -8,6 +8,10 @@ class Variant_attribute extends DataMapper {
 		'attribute_value' => array(
 			'class' => 'attribute_value',
 			'other_field' => 'variant_attribute'
+		),
+		'item_variant' => array(
+			'class' => 'item_variant',
+			'other_field' => 'variant_attribute'
 		)
 	);
 

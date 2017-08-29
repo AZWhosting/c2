@@ -3200,8 +3200,6 @@
         haveLocationU: false,
         haveSubLocationU: false,
         pageLoad: function(id) {},
-        nameL           : null,
-        nameLO          : null,
         licenseChange: function(e) {
             var self = this;
             this.blocDS.data([]);
@@ -3212,6 +3210,7 @@
             this.set("boxSelect", "");
             this.set("haveLocation", false);
             this.set("haveSubLocation", false);
+
             this.blocDS.filter([{
                     field: "branch_id",
                     value: this.get("licenseSelect")
@@ -3225,8 +3224,6 @@
                     value: 0
                 }
             ]);
-            var liSelect = e.sender.selectedIndex;
-            this.set("nameL", this.licenseDS.data()[liSelect - 1].name);
             this.set("haveLicense", true);
         },
         onLocationChange: function(e) {
@@ -3237,33 +3234,31 @@
             this.set("haveSubLocation", false);
             if (this.get("blocSelect")) {
                 this.subLocationDS.query({
-                    filter: [{
-                            field: "branch_id",
-                            value: this.get("licenseSelect")
-                        },
-                        {
-                            field: "main_bloc",
-                            value: this.get("blocSelect")
-                        },
-                        {
-                            field: "main_pole",
-                            value: 0
+                        filter: [{
+                                field: "branch_id",
+                                value: this.get("licenseSelect")
+                            },
+                            {
+                                field: "main_bloc",
+                                value: this.get("blocSelect")
+                            },
+                            {
+                                field: "main_pole",
+                                value: 0
+                            }
+                        ],
+                        page: 1
+                    })
+                    .then(function(e) {
+                        if (self.subLocationDS.data().length > 0) {
+                            self.set("haveLocation", true);
+                        } else {
+                            self.set("haveLocation", false);
+                            self.set("subLocationSelect", "");
+                            self.subLocationDS.data([]);
                         }
-                    ],
-                    page: 1
-                })
-                .then(function(e) {
-                    if (self.subLocationDS.data().length > 0) {
-                        self.set("haveLocation", true);
-                    } else {
-                        self.set("haveLocation", false);
-                        self.set("subLocationSelect", "");
-                        self.subLocationDS.data([]);
-                    }
-                });
+                    });
             }
-            var loSelect = e.sender.selectedIndex;
-            this.set("nameLO", this.blocDS.data()[loSelect - 1].name);
         },
         onSubLocationChange: function(e) {
             var self = this;
@@ -3569,7 +3564,7 @@
             //save the file as Excel file with extension xlsx
             kendo.saveAs({
                 dataURI: workbook.toDataURL(),
-                fileName: this.get("nameL") + "-" + this.get("nameLO") + "-" + "<?php echo date('dmY'); ?>" + ".xlsx"
+                fileName: "Reading-" + "<?php echo date('d-M-Y'); ?>" + ".xlsx"
             });
         },
         MonthTo: false,
@@ -17818,7 +17813,486 @@
         lang: langVM,
         institute_id: banhji.institute.id,
         user_id: banhji.userData.id,
-        pageLoad: function() {}
+        pageLoad: function() {},
+        offTxnDS: dataStore(apiUrl + "transactions"),
+        txnArray        : [],
+        offTxnGet       : function(){
+            var self = this;
+            this.txnArray = [];
+            this.offTxnDS.query({
+                filter: [
+                    {field: "sync", value: 1},
+                    {field: "status <>", value: 1}
+                ],
+                page: 1
+            }).then(function(e){
+                var view = self.offTxnDS.view();
+                if(view.length > 0){
+                    self.txnArray.push({
+                        cells: [
+                            { value: "number", background: "#bbbbbb" },
+                            { value: "contact_id", background: "#bbbbbb" },
+                            { value: "location_id", background: "#bbbbbb" },
+                            { value: "pole_id", background: "#bbbbbb" },
+                            { value: "box_id", background: "#bbbbbb" },
+                            { value: "meter_id", background: "#bbbbbb" },
+                            { value: "rate", background: "#bbbbbb" },
+                            { value: "locale", background: "#bbbbbb" },
+                            { value: "amount", background: "#bbbbbb" },
+                            { value: "issued_date", background: "#bbbbbb" },
+                            { value: "bill_date", background: "#bbbbbb" },
+                            { value: "due_date", background: "#bbbbbb" },
+                            { value: "month_of", background: "#bbbbbb" }
+                        ]
+                    });
+                    $.each(view, function(i,v){
+                        var AmountAfterPaid = 0;
+                        AmountAfterPaid = v.amount - v.amount_paid;
+                        self.txnArray.push({
+                            cells: [
+                                { value: v.number },
+                                { value: v.contact_id },
+                                { value: v.location_id },
+                                { value: v.pole_id },
+                                { value: v.box_id },
+                                { value: v.meter_id },
+                                { value: v.rate },
+                                { value: v.locale },
+                                { value: AmountAfterPaid },
+                                { value: v.issued_date },
+                                { value: v.bill_date },
+                                { value: v.due_date },
+                                { value: v.month_of }
+                            ]
+                        });
+                    });
+                    var workbook = new kendo.ooxml.Workbook({
+                        sheets: [{
+                            columns: [
+                                { autoWidth: true },
+                                { autoWidth: true },
+                                { autoWidth: true },
+                                { autoWidth: true },
+                                { autoWidth: true },
+                                { autoWidth: true },
+                                { autoWidth: true },
+                                { autoWidth: true },
+                                { autoWidth: true },
+                                { autoWidth: true },
+                                { autoWidth: true },
+                                { autoWidth: true },
+                                { autoWidth: true }
+                            ],
+                            title: "transaction_offline",
+                            rows: self.txnArray
+                        }]
+                    });
+                    //save the file as Excel file with extension xlsx
+                    kendo.saveAs({
+                        dataURI: workbook.toDataURL(),
+                        fileName: "transaction_offline.xlsx"
+                    });
+                }
+            });
+        },
+        offContactDS: dataStore(apiUrl + "offlines/contacts"),
+        contactArray        : [],
+        offContactGet       : function(){
+            var self = this;
+            this.contactArray = [];
+            this.offContactDS.query({
+                filter: [
+                    {field: "sync <>", value: 0 }
+                ],
+                page: 1
+            }).then(function(e){
+                var view = self.offContactDS.view();
+                if(view.length > 0){
+                    self.contactArray.push({
+                        cells: [
+                            { value: "contact_type_id", background: "#bbbbbb" },
+                            { value: "abbr", background: "#bbbbbb" },
+                            { value: "number", background: "#bbbbbb" },
+                            { value: "name", background: "#bbbbbb" },
+                            { value: "gender", background: "#bbbbbb" },
+                            { value: "phone", background: "#bbbbbb" },
+                            { value: "address", background: "#bbbbbb" },
+                            { value: "account_id", background: "#bbbbbb" },
+                            { value: "status", background: "#bbbbbb" }
+                        ]
+                    });
+                    $.each(view, function(i,v){
+                        self.contactArray.push({
+                            cells: [
+                                { value: v.contact_type_id },
+                                { value: v.abbr },
+                                { value: v.number },
+                                { value: v.name },
+                                { value: v.gender },
+                                { value: v.phone },
+                                { value: v.address },
+                                { value: v.account_id },
+                                { value: v.status }
+                            ]
+                        });
+                    });
+                    var workbook = new kendo.ooxml.Workbook({
+                        sheets: [{
+                            columns: [
+                                { autoWidth: true },
+                                { autoWidth: true },
+                                { autoWidth: true },
+                                { autoWidth: true },
+                                { autoWidth: true },
+                                { autoWidth: true },
+                                { autoWidth: true },
+                                { autoWidth: true },
+                                { autoWidth: true }
+                            ],
+                            title: "contact_offline",
+                            rows: self.contactArray
+                        }]
+                    });
+                    //save the file as Excel file with extension xlsx
+                    kendo.saveAs({
+                        dataURI: workbook.toDataURL(),
+                        fileName: "contact_offline.xlsx"
+                    });
+                }
+            });
+        },
+        offPropertyDS: dataStore(apiUrl + "offlines/property"),
+        propertyArray        : [],
+        offPropertyGet       : function(){
+            var self = this;
+            this.propertyArray = [];
+            this.offPropertyDS.query({
+                filter: [
+                    {field: "sync <>", value: 0}
+                ],
+                page: 1
+            }).then(function(e){
+                var view = self.offPropertyDS.view();
+                if(view.length > 0){
+                    self.propertyArray.push({
+                        cells: [
+                            { value: "contact_name", background: "#bbbbbb" },
+                            { value: "name", background: "#bbbbbb" },
+                            { value: "abbr", background: "#bbbbbb" },
+                            { value: "code", background: "#bbbbbb" },
+                            { value: "status", background: "#bbbbbb" }
+                        ]
+                    });
+                    $.each(view, function(i,v){
+                        self.propertyArray.push({
+                            cells: [
+                                { value: v.contact_name },
+                                { value: v.name },
+                                { value: v.abbr },
+                                { value: v.code },
+                                { value: v.status }
+                            ]
+                        });
+                    });
+                    var workbook = new kendo.ooxml.Workbook({
+                        sheets: [{
+                            columns: [
+                                { autoWidth: true },
+                                { autoWidth: true },
+                                { autoWidth: true },
+                                { autoWidth: true },
+                                { autoWidth: true }
+                            ],
+                            title: "property_offline",
+                            rows: self.propertyArray
+                        }]
+                    });
+                    //save the file as Excel file with extension xlsx
+                    kendo.saveAs({
+                        dataURI: workbook.toDataURL(),
+                        fileName: "property_offline.xlsx"
+                    });
+                }
+            });
+        },
+        offMeterDS: dataStore(apiUrl + "offlines/meter"),
+        meterArray        : [],
+        offMeterGet       : function(){
+            var self = this;
+            this.meterArray = [];
+            this.offMeterDS.query({
+                filter: [
+                    {field: "sync <>", value: 0}
+                ],
+                page: 1
+            }).then(function(e){
+                var view = self.offMeterDS.view();
+                if(view.length > 0){
+                    self.meterArray.push({
+                        cells: [
+                            { value: "meter_number", background: "#bbbbbb" },
+                            { value: "property_id", background: "#bbbbbb" },
+                            { value: "contact_id", background: "#bbbbbb" },
+                            { value: "type", background: "#bbbbbb" },
+                            { value: "worder", background: "#bbbbbb" },
+                            { value: "status", background: "#bbbbbb" },
+                            { value: "number_digit", background: "#bbbbbb" },
+                            { value: "plan_id", background: "#bbbbbb" },
+                            { value: "starting_no", background: "#bbbbbb" },
+                            { value: "location_id", background: "#bbbbbb" },
+                            { value: "pole_id", background: "#bbbbbb" },
+                            { value: "box_id", background: "#bbbbbb" },
+                            { value: "ampere_id", background: "#bbbbbb" },
+                            { value: "phase_id", background: "#bbbbbb" },
+                            { value: "voltage_id", background: "#bbbbbb" },
+                            { value: "branch_id", background: "#bbbbbb" },
+                            { value: "multiplier", background: "#bbbbbb" },
+                            { value: "date_used", background: "#bbbbbb" },
+                            { value: "reactive_id", background: "#bbbbbb" },
+                            { value: "reactive_status", background: "#bbbbbb" },
+                            { value: "status_sync", background: "#bbbbbb" }
+                        ]
+                    });
+                    $.each(view, function(i,v){
+                        self.meterArray.push({
+                            cells: [
+                                { value: v.meter_number },
+                                { value: v.property_id },
+                                { value: v.contact_id },
+                                { value: v.type },
+                                { value: v.worder },
+                                { value: v.status },
+                                { value: v.number_digit },
+                                { value: v.plan_id },
+                                { value: v.starting_no },
+                                { value: v.location_id },
+                                { value: v.pole_id },
+                                { value: v.box_id },
+                                { value: v.ampere_id },
+                                { value: v.phase_id },
+                                { value: v.voltage_id },
+                                { value: v.branch_id },
+                                { value: v.multiplier },
+                                { value: v.date_used },
+                                { value: v.reactive_id },
+                                { value: v.reactive_status },
+                                { value: v.status_sync }
+                            ]
+                        });
+                    });
+                    var workbook = new kendo.ooxml.Workbook({
+                        sheets: [{
+                            columns: [
+                                { autoWidth: true },
+                                { autoWidth: true },
+                                { autoWidth: true },
+                                { autoWidth: true },
+                                { autoWidth: true },
+                                { autoWidth: true },
+                                { autoWidth: true },
+                                { autoWidth: true },
+                                { autoWidth: true },
+                                { autoWidth: true },
+                                { autoWidth: true },
+                                { autoWidth: true },
+                                { autoWidth: true },
+                                { autoWidth: true },
+                                { autoWidth: true },
+                                { autoWidth: true },
+                                { autoWidth: true },
+                                { autoWidth: true },
+                                { autoWidth: true },
+                                { autoWidth: true },
+                                { autoWidth: true }
+                            ],
+                            title: "meter_offline",
+                            rows: self.meterArray
+                        }]
+                    });
+                    //save the file as Excel file with extension xlsx
+                    kendo.saveAs({
+                        dataURI: workbook.toDataURL(),
+                        fileName: "meter_offline.xlsx"
+                    });
+                }
+            });
+        },
+        offRecordDS: dataStore(apiUrl + "offlines/record"),
+        recordArray        : [],
+        offRecordGet       : function(){
+            var self = this;
+            this.recordArray = [];
+            this.offRecordDS.query({
+                filter: [
+                    {field: "sync <>", value: 0}
+                ],
+                page: 1
+            }).then(function(e){
+                var view = self.offRecordDS.view();
+                if(view.length > 0){
+                    self.recordArray.push({
+                        cells: [
+                            { value: "meter_number", background: "#bbbbbb" },
+                            { value: "previous", background: "#bbbbbb" },
+                            { value: "current", background: "#bbbbbb" },
+                            { value: "usage", background: "#bbbbbb" },
+                            { value: "month_of", background: "#bbbbbb" },
+                            { value: "from_date", background: "#bbbbbb" },
+                            { value: "to_date", background: "#bbbbbb" },
+                            { value: "invoiced", background: "#bbbbbb" },
+                            { value: "status", background: "#bbbbbb" }
+                        ]
+                    });
+                    $.each(view, function(i,v){
+                        self.recordArray.push({
+                            cells: [
+                                { value: v.meter_number },
+                                { value: v.previous },
+                                { value: v.current },
+                                { value: v.usage },
+                                { value: v.month_of },
+                                { value: v.from_date },
+                                { value: v.to_date },
+                                { value: v.invoiced },
+                                { value: v.status }
+                            ]
+                        });
+                    });
+                    var workbook = new kendo.ooxml.Workbook({
+                        sheets: [{
+                            columns: [
+                                { autoWidth: true },
+                                { autoWidth: true },
+                                { autoWidth: true },
+                                { autoWidth: true },
+                                { autoWidth: true },
+                                { autoWidth: true },
+                                { autoWidth: true },
+                                { autoWidth: true },
+                                { autoWidth: true }
+                            ],
+                            title: "record_offline",
+                            rows: self.recordArray
+                        }]
+                    });
+                    //save the file as Excel file with extension xlsx
+                    kendo.saveAs({
+                        dataURI: workbook.toDataURL(),
+                        fileName: "record_offline.xlsx"
+                    });
+                }
+            });
+        },
+        offInstallmentDS: dataStore(apiUrl + "offlines/installment"),
+        intstallmentArray        : [],
+        offInstallmentGet       : function(){
+            var self = this;
+            this.intstallmentArray = [];
+            this.offInstallmentDS.query({
+                filter: [
+                    {field: "sync <>", value: 0}
+                ],
+                page: 1
+            }).then(function(e){
+                var view = self.offInstallmentDS.view();
+                if(view.length > 0){
+                    self.intstallmentArray.push({
+                        cells: [
+                            { value: "meter_number", background: "#bbbbbb" },
+                            { value: "start_month", background: "#bbbbbb" },
+                            { value: "percentage", background: "#bbbbbb" },
+                            { value: "amount", background: "#bbbbbb" },
+                            { value: "period", background: "#bbbbbb" },
+                            { value: "payment_number", background: "#bbbbbb" }
+                        ]
+                    });
+                    $.each(view, function(i,v){
+                        self.intstallmentArray.push({
+                            cells: [
+                                { value: v.meter_number },
+                                { value: v.start_month },
+                                { value: v.percentage },
+                                { value: v.amount },
+                                { value: v.period },
+                                { value: v.payment_number }
+                            ]
+                        });
+                    });
+                    var workbook = new kendo.ooxml.Workbook({
+                        sheets: [{
+                            columns: [
+                                { autoWidth: true },
+                                { autoWidth: true },
+                                { autoWidth: true },
+                                { autoWidth: true },
+                                { autoWidth: true },
+                                { autoWidth: true }
+                            ],
+                            title: "installment_offline",
+                            rows: self.intstallmentArray
+                        }]
+                    });
+                    //save the file as Excel file with extension xlsx
+                    kendo.saveAs({
+                        dataURI: workbook.toDataURL(),
+                        fileName: "installment_offline.xlsx"
+                    });
+                }
+            });
+        },
+        offInsItemDS        : dataStore(apiUrl + "offlines/insitem"),
+        insItemArray        : [],
+        offInsItemGet       : function(){
+            var self = this;
+            this.insItemArray = [];
+            this.offInsItemDS.query({
+                filter: [
+                    {field: "sync <>", value: 0}
+                ],
+                page: 1
+            }).then(function(e){
+                var view = self.offInsItemDS.view();
+                if(view.length > 0){
+                    self.insItemArray.push({
+                        cells: [
+                            { value: "meter_number", background: "#bbbbbb" },
+                            { value: "date", background: "#bbbbbb" },
+                            { value: "amount", background: "#bbbbbb" },
+                            { value: "invoiced", background: "#bbbbbb" }
+                        ]
+                    });
+                    $.each(view, function(i,v){
+                        self.insItemArray.push({
+                            cells: [
+                                { value: v.meter_number },
+                                { value: v.date },
+                                { value: v.amount },
+                                { value: v.invoiced }
+                            ]
+                        });
+                    });
+                    var workbook = new kendo.ooxml.Workbook({
+                        sheets: [{
+                            columns: [
+                                { autoWidth: true },
+                                { autoWidth: true },
+                                { autoWidth: true },
+                                { autoWidth: true },
+                                { autoWidth: true },
+                                { autoWidth: true }
+                            ],
+                            title: "installment_item_offline",
+                            rows: self.insItemArray
+                        }]
+                    });
+                    //save the file as Excel file with extension xlsx
+                    kendo.saveAs({
+                        dataURI: workbook.toDataURL(),
+                        fileName: "installment_item_offline.xlsx"
+                    });
+                }
+            });
+        }
     });
     /*************************
      * Water Section     * 

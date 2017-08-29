@@ -306,7 +306,7 @@
 				<!-- Module Image -->
 				<div class="col-xs-12 col-sm-6">
 					<div class="row">
-						<ul id="module-image">
+						<ul id="module-image" class="col-xs-12">
 							<li class="col-xs-3 col-sm-3">
 								<a href="#/customers">
 									<img title="Customers Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/customers.jpg" alt="Customer">
@@ -334,7 +334,7 @@
 								
 							</li>
 						</ul>
-						<ul id="module-image">
+						<!-- <ul id="module-image">
 							<li class="col-xs-3 col-sm-3">
 								<a href="#/accounting">
 									<img title="Accounting Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/accounting.jpg" alt="Customer">
@@ -359,10 +359,10 @@
 									<h5 data-bind="text: lang.lang.app_center" ></h5>
 								</a>
 							</li>
-						</ul>						
+						</ul> -->						
 					</div>
 
-					<div class="home-chart row" style="margin-top: 15px;">
+					<!-- <div class="home-chart row" style="margin-top: 15px;">
 						<div class="col-xs-12 col-sm-12">
 							<div class="chart">
 								<div data-role="chart"
@@ -383,7 +383,7 @@
 					            </div>
 							</div>
 						</div>
-					</div>
+					</div> -->
 				</div>
 
 				<!-- <div class="col-xs-12 col-sm-6">

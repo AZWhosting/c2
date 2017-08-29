@@ -3684,7 +3684,7 @@
 											 data-role="grid"
 											 data-bind="source: contactDS"
 											 data-row-template="waterCenter-customer-list-tmpl"
-											 data-columns="[{title: 'Contacts'}]"
+											 data-columns="[{title: 'Customers'}]"
 											 data-selectable=true
 											 data-height="400"
 											 data-scrollable="{virtual: true}"></div>
@@ -8209,6 +8209,13 @@
 												</span>
 											</a>
 										</li>
+										<li style="width: 210px;">
+											<a style="text-transform: capitalize;" href="#Offline" data-toggle="tab">
+												<span style="line-height: 23px;">
+													<span data-bind="text: lang.lang.offline">Offline</span>
+												</span>
+											</a>
+										</li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->
@@ -8242,6 +8249,62 @@
 													</span>
 												</button>
 											</form>
+										</div>
+										<div id="Offline" style="border: 1px solid #ccc; overflow: hidden;" class="tab-pane widget-body-regular">
+											<div class="span3" style="border: 1px solid #ccc;padding-bottom: 10px;min-height: 131px;">
+												<h2 data-bind="text: lang.lang.transaction"></h2>
+											  	<button>
+													<span class="btn btn-icon btn-success glyphicons upload" data-bind="click: offTxnGet" style="width: 200px!important;position: relative;margin: 0px;">
+														<i></i> 
+														<span data-bind="text: lang.lang.transaction"></span>
+													</span>
+												</button>
+											</div>
+											<div class="span3" style="border: 1px solid #ccc;padding-bottom: 10px;min-height: 131px;">
+												<h2 data-bind="text: lang.lang.contact"></h2>
+												<button style="margin-bottom: 5px;">
+													<span class="btn btn-icon btn-success glyphicons upload" data-bind="click: offContactGet" style="width: 200px!important;position: relative;margin: 0px;">
+														<i></i> 
+														<span data-bind="text: lang.lang.contact"></span>
+													</span>
+												</button>
+												<button>
+													<span class="btn btn-icon btn-success glyphicons upload" data-bind="click: offPropertyGet" style="width: 200px!important;position: relative;margin: 0px;">
+														<i></i> 
+														<span data-bind="text: lang.lang.property"></span>
+													</span>
+												</button>
+											</div>
+											<div class="span3" style="border: 1px solid #ccc;padding-bottom: 10px;min-height: 131px;">
+												<h2 data-bind="text: lang.lang.meter"></h2>
+												<button style="margin-bottom: 5px;">
+													<span class="btn btn-icon btn-success glyphicons upload" data-bind="click: offMeterGet" style="width: 200px!important;position: relative;margin: 0px;">
+														<i></i> 
+														<span data-bind="text: lang.lang.meter"></span>
+													</span>
+												</button>
+												<button>
+													<span class="btn btn-icon btn-success glyphicons upload" data-bind="click: offRecordGet" style="width: 200px!important;position: relative;margin: 0px;">
+														<i></i> 
+														<span data-bind="text: lang.lang.reading"></span>
+													</span>
+												</button>
+											</div>
+											<div class="span3" style="border: 1px solid #ccc;padding-bottom: 10px;min-height: 131px;">
+												<h2 data-bind="text: lang.lang.installment"></h2>
+												<button style="margin-bottom: 5px;">
+													<span class="btn btn-icon btn-success glyphicons upload" data-bind="click: offInstallmentGet" style="width: 200px!important;position: relative;margin: 0px;">
+														<i></i> 
+														<span data-bind="text: lang.lang.installment"></span>
+													</span>
+												</button>
+												<button>
+													<span class="btn btn-icon btn-success glyphicons upload" data-bind="click: offInsItemGet" style="width: 200px!important;position: relative;margin: 0px;">
+														<i></i> 
+														<span data-bind="text: lang.lang.item"></span>
+													</span>
+												</button>
+											</div>
 										</div>
 										<!-- // Tab content END -->
 									</div>

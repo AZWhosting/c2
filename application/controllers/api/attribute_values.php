@@ -48,8 +48,14 @@ class Attribute_values extends REST_Controller {
 		if(!empty($filter["filters"]) && isset($filter["filters"])){
 	    	foreach ($filter['filters'] as $value) {
 	    		if(isset($value['operator'])) {
-	    			$obj->{$value['operator']}($value['field'], $value['value']);
-				} else {
+	    			if($value['operator']=="startswith"){
+	    				$obj->like($value['field'], $value['value'], 'after');
+	    			}else if($value['operator']=="contains"){
+	    				$obj->like($value['field'], $value['value'], 'both');
+	    			}else{
+						$obj->{$value['operator']}($value['field'], $value['value']);
+	    			}
+				}  else {
 	    			$obj->where($value["field"], $value["value"]);
 				}
 			}
@@ -68,9 +74,9 @@ class Attribute_values extends REST_Controller {
 			foreach ($obj as $value) {
 				$data["results"][] = array(
 					"id" 					=> $value->id,
-					"variant_attribute_id" 	=> $value->variant_attribute_id
-					"name" 					=> $value->name
-					"color_code" 			=> $value->color_code
+					"variant_attribute_id" 	=> $value->variant_attribute_id,
+					"name" 					=> $value->name,
+					"color_code" 			=> $value->color_code,
 					"image_url" 			=> $value->image_url
 				);
 			}
@@ -97,9 +103,9 @@ class Attribute_values extends REST_Controller {
 	   		if($obj->save()){
 			   	$data["results"][] = array(
 			   		"id" 					=> $obj->id,
-					"variant_attribute_id" 	=> $obj->variant_attribute_id
-					"name" 					=> $obj->name
-					"color_code" 			=> $obj->color_code
+					"variant_attribute_id" 	=> $obj->variant_attribute_id,
+					"name" 					=> $obj->name,
+					"color_code" 			=> $obj->color_code,
 					"image_url" 			=> $obj->image_url
 			   	);
 		    }	
@@ -128,9 +134,9 @@ class Attribute_values extends REST_Controller {
 				//Results
 				$data["results"][] = array(
 					"id" 					=> $obj->id,
-					"variant_attribute_id" 	=> $obj->variant_attribute_id
-					"name" 					=> $obj->name
-					"color_code" 			=> $obj->color_code
+					"variant_attribute_id" 	=> $obj->variant_attribute_id,
+					"name" 					=> $obj->name,
+					"color_code" 			=> $obj->color_code,
 					"image_url" 			=> $obj->image_url
 				);						
 			}

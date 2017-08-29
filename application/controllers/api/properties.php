@@ -129,9 +129,8 @@ class Properties extends REST_Controller {
 			isset($value->abbr) 				? $obj->abbr 				= $value->abbr : "";				
 			isset($value->address) 				? $obj->address 			= $value->address : "";
 			isset($value->contact_id) 			? $obj->contact_id 			= $value->contact_id : "";
-			$obj->sync = 1;
+			$obj->sync = 2;
 	   		if($obj->save()){
-	   			
 			   	$data["results"][] = array(
 			   		"id" 					=> $obj->id,
 			   		"name" 					=> $obj->name,

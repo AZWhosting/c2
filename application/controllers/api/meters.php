@@ -263,7 +263,7 @@ class Meters extends REST_Controller {
 			$obj->box_id 				= isset($value->box_id)				?$value->box_id:0;
 			$obj->reactive_id 			= isset($value->reactive_id)		?$value->reactive_id:0;
 			$obj->reactive_status		= isset($value->reactive_status)	?$value->reactive_status:0;
-			$obj->sync = 1;
+			$obj->sync = 2;
 			if($obj->save()){
 				//Results
 				$data[] = array(

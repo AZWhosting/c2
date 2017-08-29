@@ -101,7 +101,7 @@ class Items extends REST_Controller {
 					"item_sub_group_id"			=> $value->item_sub_group_id,
 					"brand_id" 					=> $value->brand_id,					
 					"measurement_id" 			=> $value->measurement_id,					
-					"main_id" 					=> $value->main_id,
+					"sub_of_id" 				=> $value->sub_of_id,
 					"abbr" 						=> $value->abbr,
 					"number" 					=> $value->number,
 					"international_code" 		=> $value->international_code,
@@ -113,7 +113,8 @@ class Items extends REST_Controller {
 				   	"purchase_description" 		=> $value->purchase_description,
 				   	"sale_description" 			=> $value->sale_description,
 				   	"measurements"				=> $value->measurements,
-				   	"catalogs" 					=> explode(",",$value->catalogs),				   	
+				   	"barcode"					=> $value->barcode,
+				   	"catalogs" 					=> explode(",",$value->catalogs),
 				   	"cost" 						=> floatval($value->cost),
 				   	"price" 					=> floatval($value->price),
 				   	"amount" 					=> floatval($value->amount),
@@ -131,7 +132,9 @@ class Items extends REST_Controller {
 				   	"favorite" 					=> $value->favorite=="true"?true:false,
 				   	"is_catalog" 				=> intval($value->is_catalog),
 				   	"is_assembly" 				=> intval($value->is_assembly),
-				   	"is_pattern" 				=> intval($value->is_pattern),				  
+				   	"is_pattern" 				=> intval($value->is_pattern),
+				   	"tags" 						=> explode(",",$value->tags),
+				   	"nature" 					=> $value->nature,
 				   	"status" 					=> $value->status,
 				   	"deleted" 					=> $value->deleted,
 				   	"is_system" 				=> $value->is_system,
@@ -168,7 +171,7 @@ class Items extends REST_Controller {
 			isset($value->item_sub_group_id) 		? $obj->item_sub_group_id 		= $value->item_sub_group_id : "";
 			isset($value->brand_id) 				? $obj->brand_id 				= $value->brand_id : "";
 			isset($value->measurement_id) 			? $obj->measurement_id 			= $value->measurement_id : "";		
-			isset($value->main_id) 					? $obj->main_id 				= $value->main_id : "";
+			isset($value->sub_of_id) 				? $obj->sub_of_id 				= $value->sub_of_id : "";
 			isset($value->abbr) 					? $obj->abbr 					= $value->abbr : "";
 			isset($value->number) 					? $obj->number 					= $value->number : "";
 			isset($value->international_code) 		? $obj->international_code 		= $value->international_code : "";
@@ -180,6 +183,7 @@ class Items extends REST_Controller {
 		   	isset($value->purchase_description) 	? $obj->purchase_description 	= $value->purchase_description : "";
 		   	isset($value->sale_description) 		? $obj->sale_description 		= $value->sale_description : "";
 		   	isset($value->measurements) 			? $obj->measurements 			= $value->measurements : "";
+		   	isset($value->barcode) 					? $obj->barcode 				= $value->barcode : "";
 		   	isset($value->catalogs) 				? $obj->catalogs 				= implode(",",$value->catalogs) : "";
 		   	isset($value->cost) 					? $obj->cost 					= $value->cost : "";
 		   	isset($value->price) 					? $obj->price 					= $value->price : "";
@@ -199,7 +203,9 @@ class Items extends REST_Controller {
 		   	isset($value->is_catalog) 				? $obj->is_catalog 				= $value->is_catalog : "";
 		   	isset($value->is_assembly) 				? $obj->is_assembly 			= $value->is_assembly : "";
 		   	isset($value->is_pattern) 				? $obj->is_pattern 				= $value->is_pattern : "";
-		   	isset($value->status) 					? $obj->status 					= $value->status : "";	   	
+		   	isset($value->tags) 					? $obj->tags 					= implode(",",$value->tags) : "";
+		   	isset($value->nature) 					? $obj->nature 					= $value->nature : "";
+		   	isset($value->status) 					? $obj->status 					= $value->status : "";
 		   	isset($value->deleted) 					? $obj->deleted 				= $value->deleted : "";
 
 	   		if($obj->save()){
@@ -224,7 +230,7 @@ class Items extends REST_Controller {
 					"item_sub_group_id"			=> $obj->item_sub_group_id,
 					"brand_id" 					=> $obj->brand_id,					
 					"measurement_id" 			=> $obj->measurement_id,					
-					"main_id" 					=> $obj->main_id,
+					"sub_of_id" 				=> $obj->sub_of_id,
 					"abbr" 						=> $obj->abbr,
 					"number" 					=> $obj->number,
 					"international_code" 		=> $obj->international_code,
@@ -236,7 +242,8 @@ class Items extends REST_Controller {
 				   	"purchase_description" 		=> $obj->purchase_description,
 				   	"sale_description" 			=> $obj->sale_description,
 				   	"measurements"				=> $obj->measurements,
-				   	"catalogs" 					=> explode(",",$obj->catalogs),				   	
+				   	"barcode"					=> $obj->barcode,
+				   	"catalogs" 					=> explode(",",$obj->catalogs),
 				   	"cost" 						=> floatval($obj->cost),
 				   	"price" 					=> floatval($obj->price),
 				   	"amount" 					=> floatval($obj->amount),
@@ -254,7 +261,9 @@ class Items extends REST_Controller {
 				   	"favorite" 					=> $obj->favorite=="true"?true:false,
 				   	"is_catalog" 				=> $obj->is_catalog,
 				   	"is_assembly" 				=> $obj->is_assembly,
-				   	"is_pattern" 				=> intval($obj->is_pattern),				  
+				   	"is_pattern" 				=> intval($obj->is_pattern),
+				   	"tags" 						=> explode(",",$obj->tags),
+				   	"nature" 					=> $obj->nature,
 				   	"status" 					=> $obj->status,
 				   	"deleted" 					=> $obj->deleted,
 				   	"is_system" 				=> $obj->is_system
@@ -285,7 +294,7 @@ class Items extends REST_Controller {
 			isset($value->item_sub_group_id) 		? $obj->item_sub_group_id 		= $value->item_sub_group_id : "";
 			isset($value->brand_id) 				? $obj->brand_id 				= $value->brand_id : "";
 			isset($value->measurement_id) 			? $obj->measurement_id 			= $value->measurement_id : "";		
-			isset($value->main_id) 					? $obj->main_id 				= $value->main_id : "";
+			isset($value->sub_of_id) 				? $obj->sub_of_id 				= $value->sub_of_id : "";
 			isset($value->abbr) 					? $obj->abbr 					= $value->abbr : "";
 			isset($value->number) 					? $obj->number 					= $value->number : "";
 			isset($value->international_code) 		? $obj->international_code 		= $value->international_code : "";
@@ -297,6 +306,7 @@ class Items extends REST_Controller {
 		   	isset($value->purchase_description) 	? $obj->purchase_description 	= $value->purchase_description : "";
 		   	isset($value->sale_description) 		? $obj->sale_description 		= $value->sale_description : "";
 		   	isset($value->measurements) 			? $obj->measurements 			= $value->measurements : "";
+		   	isset($value->barcode) 					? $obj->barcode 				= $value->barcode : "";
 		   	isset($value->catalogs) 				? $obj->catalogs 				= implode(",",$value->catalogs) : "";
 		   	isset($value->cost) 					? $obj->cost 					= $value->cost : "";
 		   	isset($value->price) 					? $obj->price 					= $value->price : "";
@@ -316,6 +326,8 @@ class Items extends REST_Controller {
 		   	isset($value->is_catalog) 				? $obj->is_catalog 				= $value->is_catalog : "";
 		   	isset($value->is_assembly) 				? $obj->is_assembly 			= $value->is_assembly : "";
 		   	isset($value->is_pattern) 				? $obj->is_pattern 				= $value->is_pattern : "";
+		   	isset($value->tags) 					? $obj->tags 					= implode(",",$value->tags) : "";
+		   	isset($value->nature) 					? $obj->nature 					= $value->nature : "";
 		   	isset($value->status) 					? $obj->status 					= $value->status : "";	   	
 		   	isset($value->deleted) 					? $obj->deleted 				= $value->deleted : "";
 
@@ -332,7 +344,7 @@ class Items extends REST_Controller {
 					"item_sub_group_id"			=> $obj->item_sub_group_id,
 					"brand_id" 					=> $obj->brand_id,					
 					"measurement_id" 			=> $obj->measurement_id,					
-					"main_id" 					=> $obj->main_id,
+					"sub_of_id" 				=> $obj->sub_of_id,
 					"abbr" 						=> $obj->abbr,
 					"number" 					=> $obj->number,
 					"international_code" 		=> $obj->international_code,
@@ -344,6 +356,7 @@ class Items extends REST_Controller {
 				   	"purchase_description" 		=> $obj->purchase_description,
 				   	"sale_description" 			=> $obj->sale_description,
 				   	"measurements"				=> $obj->measurements,
+				   	"barcode"					=> $obj->barcode,
 				   	"catalogs" 					=> explode(",",$obj->catalogs),				   	
 				   	"cost" 						=> floatval($obj->cost),
 				   	"price" 					=> floatval($obj->price),
@@ -362,7 +375,9 @@ class Items extends REST_Controller {
 				   	"favorite" 					=> $obj->favorite=="true"?true:false,
 				   	"is_catalog" 				=> $obj->is_catalog,
 				   	"is_assembly" 				=> $obj->is_assembly,
-				   	"is_pattern" 				=> intval($obj->is_pattern),				  
+				   	"is_pattern" 				=> intval($obj->is_pattern),
+				   	"tags" 						=> explode(",",$obj->tags),
+				   	"nature" 					=> $obj->nature,				  
 				   	"status" 					=> $obj->status,
 				   	"deleted" 					=> $obj->deleted,
 				   	"is_system" 				=> $obj->is_system

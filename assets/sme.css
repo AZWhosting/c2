@@ -310,6 +310,7 @@ a:hover {
 #module-image{
   float: left;
   clear: both;
+  padding: inherit;
 }
 #module-image .col-sm-3{
   text-align: center;

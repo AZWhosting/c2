@@ -1473,7 +1473,7 @@ var	en_US = {
 	"supplier_center":"Supplier Center",
 	"inventory_center":"Inventory Center",
 	"reading_route_management":"Reading Route Management",
-
+	"offline":"Offline",
 
 
 	"end" : "End"

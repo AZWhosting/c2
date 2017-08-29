@@ -868,7 +868,7 @@ class Utibills extends REST_Controller {
 			isset($value->status)					? $obj->status					= $value->status : "";
 			isset($value->deleted)					? $obj->deleted					= $value->deleted : "";
 			isset($value->is_system)				? $obj->is_system				= $value->is_system : "";
-			$obj->sync	= 1;
+			$obj->sync	= 2;
 			if($obj->save()){
 				//Results
 				$data["results"][] = array(

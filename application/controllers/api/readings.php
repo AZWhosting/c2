@@ -121,7 +121,7 @@ class Readings extends REST_Controller {
 			$obj->to_date 				= isset($value->to_date)			? date('Y-m-d', strtotime($value->to_date)):date('Y-m-d');
 			$obj->invoiced 				= isset($value->invoiced)    		? $value->invoiced : 0;
 			$obj->usage    = intval($current) - intval($value->previous);
-			
+			$obj->sync 	= 1;
 			
 			if($obj->save()){								
 				//Respsone
@@ -155,14 +155,15 @@ class Readings extends REST_Controller {
 
 			$obj->where('id', $value->id);
 			$obj->get();
-
+			$obj->current 				= isset($value->current)			?$value->current: "";
+			$obj->from_date 			= isset($value->from_date)			?$value->from_date: "";
+			$obj->to_date 				= isset($value->to_date)			?$value->to_date: "";
+			$obj->meter_number 			= isset($value->meter_number)		?$value->meter_number: "";
+			$obj->usage 				= $obj->current - $obj->previous;
 			if($obj->invoiced == 0) {
 				// $obj->previous 				= isset($value->previous)			?$value->previous: "";
-				$obj->current 				= isset($value->current)			?$value->current: "";
-				$obj->from_date 			= isset($value->from_date)			?$value->from_date: "";
-				$obj->to_date 				= isset($value->to_date)			?$value->to_date: "";
-				$obj->meter_number 			= isset($value->meter_number)		?$value->meter_number: "";
-				$obj->usage 				= $obj->current - $obj->previous;
+				
+				$obj->sync = 2;
 				if($obj->save()){
 					$data["results"][] = array(
 						"meter_id" 		=> $obj->meter_id,
@@ -178,6 +179,7 @@ class Readings extends REST_Controller {
 				}
 			} else {
 				$obj->invoiced = 0;
+				$obj->sync = 2;
 				$obj->save();
 
 				$line = $obj->winvoice_line->get();
@@ -218,8 +220,7 @@ class Readings extends REST_Controller {
 				}
 				// }
 			}
-
-						}
+		}
 		$data["count"] = count($data["results"]);
 
 		$this->response($data, 200);

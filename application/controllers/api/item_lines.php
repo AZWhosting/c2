@@ -156,7 +156,8 @@ class Item_lines extends REST_Controller {
 				   	"item" 				=> $item,
 				   	"measurement" 		=> $measurement,
 				   	"tax_item" 			=> $tax_item,
-				   	"wht_account" 		=> $wht_account
+				   	"wht_account" 		=> $wht_account,
+				   	"item_prices"		=> $measurement
 				);
 			}
 		}

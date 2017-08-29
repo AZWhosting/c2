@@ -116,6 +116,7 @@ class Installments extends REST_Controller {
 					$installment->amount = floatval($amount);
 					$installment->date = $sDate;
 					$installment->invoiced = 0;
+					$installment->sync = 1;
 					$installment->save($obj);
 				}
 				

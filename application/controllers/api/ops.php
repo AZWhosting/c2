@@ -80,20 +80,14 @@ class Ops extends REST_Controller {
 				// 	// 	"null" 		=> FALSE,
 				// 	// 	"default" 	=> 0
 				// 	// ),
-				// 	"inventory_quantity" => array(
-				// 		"type" 		=> "DECIMAL",
-				// 		"constraint"=> "30,15",
+				// 	"barcode" => array(
+				// 		"type" 		=> "VARCHAR",
+				// 		"constraint"=> "255",
 				// 		"null" 		=> FALSE,
-				// 		"default" 	=> 0
-				// 	),
-				// 	"inventory_value" => array(
-				// 		"type" 		=> "DECIMAL",
-				// 		"constraint"=> "30,15",
-				// 		"null" 		=> FALSE,
-				// 		"default" 	=> 0
+				// 		"default" 	=> ""
 				// 	)
 				// );
-				// $data['results'][] = $this->dbforge->add_column("item_lines", $fields);
+				// $data['results'][] = $this->dbforge->add_column("items", $fields);
 				
 			    // Modify fields
 			 // 	$fields = array(
