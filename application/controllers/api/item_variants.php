@@ -21,6 +21,27 @@ class Item_variants extends REST_Controller {
 		}
 	}
 
+	function test_get(){
+		$traits = array(
+			"00" => array("Red","Blue"),
+			"11" => array("S","M","L")
+		);
+
+		$permutations = $this->permutations($traits);
+
+		$items = [];
+		for ($i=0; $i < count($permutations); $i++) { 
+			foreach ($permutations[$i] as $value) {
+				$items[] = $value;
+			}
+		}
+
+		$data["traits"] = $traits;
+		$data["permutations"] = $permutations;
+		$data["items"] = $items;
+
+		$this->response($data, 201);
+	}
 
 	//GET 
 	function index_get() {		
@@ -89,72 +110,25 @@ class Item_variants extends REST_Controller {
 		$this->response($data, 200);	
 	}
 
-	function test_get(){
-		$raw = array(
-			"color" => ["Red","Blue"],
-			"size" => ["S","M","L"]
-		);
-
-		// $colors = array("Red","Blue");
-		// $sizes = array("S","M","L");
-
-		// $items = [];
-		// foreach ($colors as $key => $value) {
-		// 	foreach ($sizes as $k => $v) {
-		// 		$items[$value][] = $v;
-		// 	}
-		// }
-
-		// $final = [];
-		// foreach ($items as $key => $value) {
-		// 	foreach ($value as $k => $v) {
-		// 		$final[] = array($key,$v);
-		// 	}
-		// }
-
-		$variants = [];
-		foreach ($raw as $key => $value) {
-			$variants[$key] = $value;
-		}
-
-		$items = [];
-		foreach ($variants as $key => $value) {
-			foreach ($value as $ke => $val) {
-				$items[] = $val;				
-				// foreach ($val as $k => $v) {
-				// 	$items[] = $v;
-				// }
-			}
-		}
-
-		// $final = [];
-		// foreach ($items as $key => $value) {
-		// 	foreach ($value as $k => $v) {
-		// 		$final[] = array($key,$v);
-		// 	}
-		// }
-		
-		$data["results"] = $items;
-
-		$this->response($data, 201);
-	}
-
 	//POST
 	function index_post() {
 		$models = json_decode($this->post('models'));
 		$data["results"] = [];
 		$data["count"] = 0;
 		
+		$traits = []; $item_id = 0;
 		foreach ($models as $value) {
 			$obj = new Item_variant(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 			//Variants
-			$variants = [];
+			$variants = [];			
 			if(isset($value->variants)){
 				foreach ($value->variants as $v) {
-					array_push($variants, $v->id);
+					array_push($variants, $v->id);					
 				}
 			}
+			$item_id = $value->item_id;
+			$traits[$value->variant_attribute_id] = $variants;
 
 			isset($value->item_id) 				? $obj->item_id 				= $value->item_id : "";
 			isset($value->variant_attribute_id) ? $obj->variant_attribute_id 	= $value->variant_attribute_id : "";
@@ -179,6 +153,55 @@ class Item_variants extends REST_Controller {
 			   	);
 		    }	
 		}
+
+		//Permutations
+		$permutations = [];
+		if(count($traits)>1){
+			$permutations = $this->permutations($traits);
+		}
+
+		$items = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$items->get_by_id($item_id);
+
+		for ($i=0; $i < count($permutations); $i++) {
+
+			$subItems = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);			
+			$subItems->item_type_id 		= $items->item_type_id;
+  			$subItems->category_id 			= $items->category_id;
+  			$subItems->item_group_id 		= $items->item_group_id;
+  			$subItems->brand_id 			= $items->brand_id;
+  			$subItems->sub_of_id 			= $items->id;
+  			$subItems->measurement_id		= $items->measurement_id;
+  			$subItems->abbr 				= $items->abbr;
+  			$subItems->number 				= $items->number;
+  			$subItems->name 				= $items->name;
+  			$subItems->purchase_description	= $items->purchase_description;
+  			$subItems->sale_description		= $items->sale_description;
+  			$subItems->cost 				= $items->cost;
+  			$subItems->price 				= $items->price;
+  			$subItems->locale 				= $items->locale;
+  			$subItems->order_point 			= $items->order_point;
+  			$subItems->income_account_id 	= $items->income_account_id;
+  			$subItems->expense_account_id  	= $items->expense_account_id;
+  			$subItems->inventory_account_id = $items->inventory_account_id;
+  			$subItems->image_url 			= $items->image_url;
+  			$subItems->tags 				= $items->tags;
+  			$subItems->nature 				= "variant";
+  			$subItems->is_pattern 			= $items->is_pattern;
+  			$subItems->status 				= $items->status;
+  			$subItems->deleted 				= $items->deleted;
+
+  			if($subItems->save()){
+				foreach ($permutations[$i] as $value) {
+					$attributeValues = new Attribute_value(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$attributeValues->get_by_id($value);
+					$attributeValues->save($subItems);
+				}
+			}
+		}
+
+		$data["traits"] = $traits;
+		$data["permutations"] = $permutations;
 		
 		$data["count"] = count($data["results"]);
 		$this->response($data, 201);		
@@ -247,5 +270,45 @@ class Item_variants extends REST_Controller {
 
 		//Response data
 		$this->response($data, 200);
+	}
+
+	//PERMUTATIONS
+	public function permutations(array $array, $inb=false){
+		switch (count($array)) {
+			case 1:
+				// Return the array as-is; returning the first item
+				// of the array was confusing and unnecessary
+				return $array[0];
+				break;
+			case 0:
+				throw new InvalidArgumentException('Requires at least one array');
+				break;
+		}
+
+		// We 'll need these, as array_shift destroys them
+		$keys = array_keys($array);
+
+		$a = array_shift($array);
+		$k = array_shift($keys); // Get the key that $a had
+		$b = $this->permutations($array, 'recursing');
+
+		$return = array();
+		foreach ($a as $v) {
+			if($v){
+				foreach ($b as $v2) {
+					// array($k => $v) re-associates $v (each item in $a)
+					// with the key that $a originally had
+					// array_combine re-associates each item in $v2 with
+					// the corresponding key it had in the original array
+					// Also, using operator+ instead of array_merge
+					// allows us to not lose the keys once more
+					if (!is_array($v2)) $v2 = array($v2);
+					if($inb == 'recursing') $return[] = array_merge(array($v), (array) $v2);
+					else $return[] = array($k => $v) + array_combine($keys, $v2);
+				}
+			}
+		}
+
+		return $return;
 	}
 }
