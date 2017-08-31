@@ -24,39 +24,8 @@ class Templates extends REST_Controller {
 		$this->response($institute->name);	
 	}
 	//GET 
-	function transaction_templates_get($id = NULL) {		
-		$filter 	= $this->get("filter");
-		$page 		= $this->get('page');
-		$limit 		= $this->get('limit');
-		$sort 	 	= $this->get("sort");
-		$data 		= array();
-		$is_recurring = 0;
-
-		$obj = new Transaction_template(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+	public function index_get($id = NULL) {
 		
-		// //Filter
-		// if(!empty($filter) && isset($filter)){
-	 //    	foreach ($filter['filters'] as $value) {
-	 //    		$obj->where($value["field"], $value["value"]);
-		// 	}
-		// }
-		
-		// $obj->order_by("type","desc");
-		
-		//Results
-		$obj->where('id', $id);
-		$obj->get();
-		$count = 1;	
-		if($obj->exists()){
-			$data = array(
-				"id" => $obj->id
-			);	
-			$this->response($data);	
-		} else {
-			$this->response("not found", 404);
-		}
-		//Response Data		
-				
 	}
 	
 }
