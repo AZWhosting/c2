@@ -286,7 +286,8 @@ class Inventory_modules extends REST_Controller {
 						"cost_avg" 			=> floatval($value->cost_avg) / floatval($value->transaction_rate),
 						"price" 			=> floatval($value->price) / floatval($value->transaction_rate),
 						"on_hand" 			=> floatval($value->inventory_quantity),
-						"amount"			=> floatval($value->inventory_value) / floatval($value->transaction_rate)
+						"amount"			=> floatval($value->inventory_value) / floatval($value->transaction_rate),
+						"movement" 			=> $value->movement
 					);
 				}else{
 					//Balance Forward
@@ -325,7 +326,8 @@ class Inventory_modules extends REST_Controller {
 						"cost_avg" 			=> floatval($value->cost_avg) / floatval($value->transaction_rate),
 						"price" 			=> floatval($value->price) / floatval($value->transaction_rate),
 						"on_hand" 			=> floatval($value->inventory_quantity),
-						"amount"			=> floatval($value->inventory_value) / floatval($value->transaction_rate)
+						"amount"			=> floatval($value->inventory_value) / floatval($value->transaction_rate),
+						"movement" 			=> $value->movement
 					);			
 				}
 			}
