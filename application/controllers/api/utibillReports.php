@@ -1156,7 +1156,7 @@ class UtibillReports extends REST_Controller {
 		$obj->include_related("location", "name");
 		$obj->include_related("branch", "name");
 		$obj->where("status", 1);		
-		$obj->get_iterated();
+		$obj->get_paged_iterated($page, $limit);
 		
 		if($obj->exists()){
 			$objList = [];
@@ -1186,7 +1186,8 @@ class UtibillReports extends REST_Controller {
 			foreach ($objList as $value) {
 				$data["results"][] = $value;
 			}
-			$data["count"] = count($data["results"]);
+			$data["count"] = $obj->paged->total_rows;
+			$data["currentPage"] = $obj->paged->current_page;
 		}
 
 		//Response Data
@@ -1284,7 +1285,7 @@ class UtibillReports extends REST_Controller {
 		$obj->where_in("status", array(0,2));
 		$obj->where("is_recurring <>", 1);
 		$obj->where("deleted <>", 1);
-		$obj->get_iterated();
+		$obj->get_paged_iterated($page, $limit);
 		
 		if($obj->exists()){
 			foreach ($obj as $value) {
@@ -1316,7 +1317,8 @@ class UtibillReports extends REST_Controller {
 				);
 			}
 
-			$data["count"] = count($data["results"]);
+			$data["count"] = $obj->paged->total_rows;
+			$data["currentPage"] = $obj->paged->current_page;
 		}
 
 		//Response Data
@@ -1442,6 +1444,7 @@ class UtibillReports extends REST_Controller {
 		$is_pattern = 0;
 		$data["results"] = [];
 		$data["count"] = 0;
+		$total = 0;
 
 		$obj = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
 
@@ -1470,7 +1473,7 @@ class UtibillReports extends REST_Controller {
 		if($obj->exists()) {
 			$data = array();
 			foreach($obj as $row) {
-				//$utility = $row->contact->include_related('utility', array('abbr', 'code'))->get();
+				$usage = $row->record_usage;
 				$data[] = array(
 					"id" => $row->id,
 					"meter_number" => $row->contact_name." ".$row->number,
@@ -1480,11 +1483,15 @@ class UtibillReports extends REST_Controller {
 					"address"=> $row->location_name,
 					"usage" => $row->record_usage,
 				);
+				$total += $usage;
+				
 			}
-			$this->response(array('results' => $data, 'count' => $obj->paged->total_rows), 200);
+			$this->response(array('results' => $data, 'count' => $obj->paged->total_rows, 'amount' => $total), 200);
 		} else {
 			$this->response($data, 200);;
 		}
+		$data["count"] = $obj->paged->total_rows;
+		$data["currentPage"] = $obj->paged->current_page;
 	}
 }
 /* End of file winvoices.php */

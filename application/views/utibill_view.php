@@ -7076,7 +7076,7 @@
 			<input style="text-align: left;background: none;border:none;" id="numeric" class="k-formatted-value k-input" type="text" data-bind="value: currency, enabled: false"  />
 		</td>
 		<td>
-			<input style="text-align: right;" id="numeric" class="k-formatted-value k-input" type="number" value="17" min="0" data-bind="value: amount, events: {change: checkChange}" step="1" />
+			<input style="text-align: right;" id="numeric" class="k-formatted-value k-input" type="number" value="17" min="0" data-format="n0" data-bind="value: amount, events: {change: checkChange}" step="1" />
 		</td>
 	</tr>
 </script>
@@ -9085,9 +9085,9 @@
 								<thead>
 									<tr>
 										<th style="vertical-align: top;"><span data-bind="text: lang.lang.customer"></span></th>
-										<th style="vertical-align: top;"><span data-bind="text:lang.lang.meter_number"></span></th>
-										<th style="vertical-align: top;"><span data-bind="text:lang.lang.address"></span></th>
-										<th style="vertical-align: top;"><span data-bind="text:lang.lang.license"></span></th>
+										<th style="text-align: center"><span data-bind="text:lang.lang.meter_number"></span></th>
+										<th style="text-align: right"><span data-bind="text:lang.lang.address"></span></th>
+										<th style="text-align: right"><span data-bind="text:lang.lang.license"></span></th>
 									</tr>
 								</thead>
 								<tbody data-role="listview"
@@ -9114,9 +9114,9 @@
 	#for(var i= 0; i <line.length; i++) {#
 		<tr>
 			<td>#=line[i].property#</td>
-			<td>#=line[i].meter#</td>
-			<td>#=line[i].location#</td>
-			<td>#=line[i].branch#</td>
+			<td style="text-align: center">#=line[i].meter#</td>
+			<td style="text-align: right">#=line[i].location#</td>
+			<td style="text-align: right">#=line[i].branch#</td>
 		</tr>
 
 	#}#
@@ -9322,6 +9322,10 @@
 											 data-template="disconnectList-temp"
 								></tbody>
 							</table>
+							<div id="pager" class="k-pager-wrap"
+			            		 data-role="pager"
+						    	 data-auto-bind="false"
+					             data-bind="source: dataSource"></div>
 						</div>
 
 					</div>
@@ -9433,6 +9437,11 @@
 											 data-template="to_be_disconnectList-temp"
 								></tbody>
 							</table>
+							<div id="pager" class="k-pager-wrap"
+			            		 data-role="pager"
+						    	 data-auto-bind="false"
+					             data-bind="source: dataSource"></div>	
+					             
 						</div>
 					</div>
 				</div>
@@ -9725,14 +9734,28 @@
 								<h2 data-bind="text:lang.lang.minimum_water_usage_list">Minimum Water Usage List</h2>
 								<p data-bind="text: displayDate"></p>
 							</div>
+							<div class="row">
+								<div class="col-xs-12 col-sm-3">
+									<div class="total-sale">
+										<p data-bind="text: lang.lang.number_of_customer">Number of Customer</p>
+										<span data-bind="text: count"></span>
+									</div>
+								</div>
+								<div class="col-xs-12 col-sm-9">
+									<div class="total-sale">
+										<p>Total Usage</p>
+										<span data-bind="text: amount"></sapn>
+									</div>
+								</div>
+							</div>
 							<table style="margin-bottom: 0;" class="table table-bordered table-condensed table-striped table-primary table-vertical-center">
 								<thead>
 									<tr>
 										<th style="vertical-align: top;"><span data-bind="text:lang.lang.meter_number">Meter Number</span></th>
 										<th style="vertical-align: top;"><span data-bind="text:lang.lang.date">Date</span></th>
-										<th style="vertical-align: top;"><span data-bind="text:lang.lang.license">License</span></th>
-										<th style="vertical-align: top;"><span data-bind="text:lang.lang.address">Address</span></th>
-										<th style="vertical-align: top;"><span data-bind="text:lang.lang.usage">Usage</span></th>
+										<th style="text-align: right;"><span data-bind="text:lang.lang.license">License</span></th>
+										<th style="text-align: right;"><span data-bind="text:lang.lang.address">Address</span></th>
+										<th style="text-align: right;"><span data-bind="text:lang.lang.usage">Usage</span></th>
 									</tr>
 								</thead>
 								<tbody data-role="listview"
@@ -9740,7 +9763,11 @@
 											 data-auto-bind="false" 
 											 data-template="miniCustomerList-temp"
 								></tbody>
-							</table>					
+							</table>
+							<div id="pager" class="k-pager-wrap"
+			            		 data-role="pager"
+						    	 data-auto-bind="false"
+					             data-bind="source: dataSource"></div>					
 						</div>
 					</div>
 				</div>
@@ -9752,9 +9779,9 @@
 	<tr>
 		<td>#=meter_number#</td>
 		<td>#=from_date# - #=to_date#</td>
-		<td>#=license#</td>
-		<td>#=address#</td>
-		<td>#=usage#</td>
+		<td style="text-align: right;">#=license#</td>
+		<td style="text-align: right;">#=address#</td>
+		<td style="text-align: right;">#=usage#</td>
 	</tr>
 </script>
 <script id="saleSummary" type="text/x-kendo-template">

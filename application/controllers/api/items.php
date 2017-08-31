@@ -85,10 +85,19 @@ class Items extends REST_Controller {
 		if($obj->exists()){
 			foreach ($obj as $value) {
 				//Measurement
-				$measurement = array(
-					"measurement_id" 	=> $value->measurement_id,
-					"measurement"		=> $value->measurement_name ? $value->measurement_name : ""
-				);
+				$measurement = [];
+				if($value->measurement_id>0){
+					$measurement = array(
+						"measurement_id" 	=> $value->measurement_id,
+						"measurement"		=> $value->measurement_name ? $value->measurement_name : ""
+					);
+				}
+
+				//Variant
+				$variant = [];
+				if($value->nature=="variant"){
+					$variant = $value->attribute_value->get_raw()->result();
+				}
 
 				$data["results"][] = array(
 					"id" 						=> $value->id,
@@ -141,7 +150,7 @@ class Items extends REST_Controller {
 
 				   	"category" 					=> $value->category_name,
 				   	"measurement" 				=> $measurement,
-				   	"variant" 					=> $value->attribute_value->get_raw()->result()
+				   	"variant" 					=> $variant
 				);
 			}
 		}

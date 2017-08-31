@@ -186,89 +186,33 @@ class Inventory_modules extends REST_Controller {
 			}
 		}
 
-		$obj->include_related("item", array("abbr", "number", "name"));
 		$obj->include_related("transaction", array("type","rate"));
-		$obj->where_in_related("transaction", "type", array("Purchase_Order", "Sale_Order", "Cash_Purchase", "Credit_Purchase", "Purchase_Return", "Payment_Refund", "Commercial_Invoice", "Vat_Invoice", "Invoice", "Commercial_Cash_Sale", "Vat_Cash_Sale", "Cash_Sale", "Sale_Return", "Cash_Refund", "Item_Adjustment", "Internal_Usage"));
+		$obj->include_related("item", array("abbr", "number", "name"));
+		$obj->include_related("measurement", array("name"));
+		$obj->where_related("item", "item_type_id", 1);
 		$obj->where_related("transaction", "status <>", 4);
 		$obj->where_related("transaction", "is_recurring <>", 1);
 		$obj->where_related("transaction", "deleted <>", 1);
-		$obj->where_related("item", "item_type_id", 1);
 		$obj->where("deleted <>", 1);
+		$obj->order_by_related("transaction", "issued_date", "desc");
 		$obj->order_by_related("item", "number", "asc");
+		$obj->group_by("item_id");
 
 		//Results
 		$obj->get_iterated();
 		
 		if($obj->exists()){
-			$objList = [];
 			foreach ($obj as $value) {
-				$qoh = 0;
-				$po = 0;
-				$so	= 0;
-				$purchaseQty = 0;
-				$purchaseAmount = 0;
-				$saleQty = 0;				
-				$saleAmount = 0;
-				$amount = 0;
-
-				$quantity = floatval($value->quantity) * floatval($value->conversion_ratio) * intval($value->movement);
-				
-				if($value->transaction_type==="Purchase_Order"){
-					$po = $quantity;
-				}else if($value->transaction_type==="Sale_Order"){
-					$so = abs($quantity);
-				}else{
-					$qoh = $quantity;
-					$amount = ($quantity * floatval($value->cost)) / floatval($value->transaction_rate);
-
-					if(intval($value->movement)>0){
-						$purchaseQty = $quantity;
-						$purchaseAmount = ($quantity * floatval($value->cost)) / floatval($value->transaction_rate);
-					}else{
-						$saleQty = abs($quantity);
-						$saleAmount = ($saleQty * floatval($value->price)) / floatval($value->transaction_rate);
-					}
-				}
-
-				if(isset($objList[$value->item_id])){
-					$objList[$value->item_id]["qoh"] 			+= $qoh;
-					$objList[$value->item_id]["po"] 			+= $po;
-					$objList[$value->item_id]["so"] 			+= $so;
-					$objList[$value->item_id]["purchaseQty"] 	+= $purchaseQty;
-					$objList[$value->item_id]["purchaseAmount"] += $purchaseAmount;
-					$objList[$value->item_id]["saleQty"] 		+= $saleQty;
-					$objList[$value->item_id]["saleAmount"] 	+= $saleAmount;
-					$objList[$value->item_id]["amount"] 		+= $amount;
-				}else{
-					$objList[$value->item_id]["id"] 			= $value->item_id;
-					$objList[$value->item_id]["name"] 			= $value->item_abbr . $value->item_number ." ". $value->item_name;					
-					$objList[$value->item_id]["qoh"] 			= $qoh;
-					$objList[$value->item_id]["po"] 			= $po;
-					$objList[$value->item_id]["so"] 			= $so;
-					$objList[$value->item_id]["purchaseQty"] 	= $purchaseQty;
-					$objList[$value->item_id]["purchaseAmount"] = $purchaseAmount;
-					$objList[$value->item_id]["saleQty"] 		= $saleQty;
-					$objList[$value->item_id]["saleAmount"] 	= $saleAmount;
-					$objList[$value->item_id]["amount"] 		= $amount;
-				}
-			}
-
-			foreach ($objList as $value) {
-				$avgPrice = 0;
-				$avgCost = 0;
-
-				if($value["purchaseQty"]>0){
-					$avgCost = $value["purchaseAmount"] / $value["purchaseQty"];
-				}
-
-				if($value["saleQty"]>0){
-					$avgPrice = $value["saleAmount"] / $value["saleQty"];
-				}
-				
-				$value["cost"] = $avgCost;
-				$value["price"] = $avgPrice;
-
-				$data["results"][] = $value;
+				$data["results"][] = array(
+					"id" 			=> $value->item_id,
+					"name" 			=> $value->item_abbr . $value->item_number ." ". $value->item_name,
+					"measurement"	=> $value->measurement_name,
+					"quantity" 		=> floatval($value->inventory_quantity),
+					"on_po" 		=> floatval($value->on_po),
+					"on_so" 		=> floatval($value->on_so),
+					"cost" 			=> floatval($value->cost_avg) / floatval($value->transaction_rate),
+					"amount" 		=> floatval($value->inventory_value) / floatval($value->transaction_rate)
+				);
 			}
 			$data["count"] = count($data["results"]);
 		}
@@ -312,11 +256,11 @@ class Inventory_modules extends REST_Controller {
 		$obj->include_related("item", array("abbr", "number", "name","measurement_id"));
 		$obj->include_related("measurement", array("name"));
 		$obj->include_related("transaction", array("number", "type", "issued_date", "rate"));
-		$obj->where_in_related("transaction", "type", array("Cash_Purchase", "Credit_Purchase", "Purchase_Return", "Payment_Refund", "Commercial_Invoice", "Vat_Invoice", "Invoice", "Commercial_Cash_Sale", "Vat_Cash_Sale", "Cash_Sale", "Sale_Return", "Cash_Refund", "Item_Adjustment", "Internal_Usage"));
 		$obj->where_related("transaction", "status <>", 4);
 		$obj->where_related("transaction", "is_recurring <>", 1);
 		$obj->where_related("transaction", "deleted <>", 1);
 		$obj->where_related("item", "item_type_id", 1);
+		$obj->where("movement <>", 0);
 		$obj->where("deleted <>", 1);		
 		$obj->order_by_related("transaction", "issued_date", "asc");
 
@@ -337,66 +281,51 @@ class Inventory_modules extends REST_Controller {
 						"type" 				=> $value->transaction_type,
 						"number" 			=> $value->transaction_number,
 						"issued_date" 		=> $value->transaction_issued_date,
-						"quantity" 			=> $quantity,
-						"cost" 				=> $cost,
-						"price" 			=> $price,
-						"amount"			=> $amount
+						"quantity" 			=> floatval($value->quantity),
+						"cost" 				=> floatval($value->cost) / floatval($value->transaction_rate),
+						"cost_avg" 			=> floatval($value->cost_avg) / floatval($value->transaction_rate),
+						"price" 			=> floatval($value->price) / floatval($value->transaction_rate),
+						"on_hand" 			=> floatval($value->inventory_quantity),
+						"amount"			=> floatval($value->inventory_value) / floatval($value->transaction_rate)
 					);
 				}else{
 					//Balance Forward
 					$bf = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
-					$bf->include_related("transaction", array("type", "rate"));
-					$bf->where_in_related("transaction", "type", array("Cash_Purchase", "Credit_Purchase", "Purchase_Return", "Payment_Refund", "Commercial_Invoice", "Vat_Invoice", "Invoice", "Commercial_Cash_Sale", "Vat_Cash_Sale", "Cash_Sale", "Sale_Return", "Cash_Refund", "Item_Adjustment", "Internal_Usage"));
+					$bf->include_related("transaction", array("rate"));
 					$bf->where_related("transaction", "issued_date <", $value->transaction_issued_date);
 					$bf->where_related("transaction", "status <>", 4);
 					$bf->where_related("transaction", "is_recurring <>", 1);
 					$bf->where_related("transaction", "deleted <>", 1);
 					$bf->where("item_id", $value->item_id);
+					$bf->where("movement <>", 0);
 					$bf->where("deleted <>", 1);
-					$bf->get_iterated();
-					
-					$balance_forward = 0; 
-					$sumOnHand = 0;
-					$purchaseQty = 0; 
-					$purchaseAmount = 0;
-					foreach ($bf as $val) {
-						$qty = $val->quantity * $val->conversion_ratio * $val->movement;
-						$amt = ($qty * $val->cost) / $val->transaction_rate;
+					$bf->limit(1);
+					$bf->order_by_related("transaction", "issued_date", "desc");
+					$bf->get();
 
-						$sumOnHand += $qty;
-
-						if(intval($val->movement)>0){
-							$purchaseQty += $qty;
-							$purchaseAmount += $amt;
-						}
+					$balance_forward = 0; $quantity_forward = 0;
+					if($bf->exists()){
+						$quantity_forward = floatval($bf->inventory_quantity);
+						$balance_forward = floatval($bf->inventory_value) / floatval($bf->transaction_rate);
 					}
-
-					if($purchaseQty==0){
-						$avgCost = 0;
-					}else{
-						$avgCost = $purchaseAmount / $purchaseQty;
-					}
-
-					$balance_forward = $avgCost * $sumOnHand;
 					//End Balance Forward
-
-					$measurements = new Measurement(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-					$measurements->get_by_id($value->item_measurement_id);
 
 					$objList[$value->item_id]["id"] 				= $value->item_id;
 					$objList[$value->item_id]["name"] 				= $value->item_abbr . $value->item_number ." ".$value->item_name;
-					$objList[$value->item_id]["measurement"] 		= $measurements->name;
-					$objList[$value->item_id]["qoh_forward"] 		= $sumOnHand;
+					$objList[$value->item_id]["measurement"] 		= $value->measurement_name;
+					$objList[$value->item_id]["quantity_forward"] 	= $quantity_forward;
 					$objList[$value->item_id]["balance_forward"] 	= $balance_forward;
 					$objList[$value->item_id]["line"][] 			= array(
 						"id" 				=> $value->transaction_id,
 						"type" 				=> $value->transaction_type,
 						"number" 			=> $value->transaction_number,
 						"issued_date" 		=> $value->transaction_issued_date,
-						"quantity" 			=> $quantity,
-						"cost" 				=> $cost,
-						"price" 			=> $price,
-						"amount"			=> $amount
+						"quantity" 			=> floatval($value->quantity),
+						"cost" 				=> floatval($value->cost) / floatval($value->transaction_rate),
+						"cost_avg" 			=> floatval($value->cost_avg) / floatval($value->transaction_rate),
+						"price" 			=> floatval($value->price) / floatval($value->transaction_rate),
+						"on_hand" 			=> floatval($value->inventory_quantity),
+						"amount"			=> floatval($value->inventory_value) / floatval($value->transaction_rate)
 					);			
 				}
 			}

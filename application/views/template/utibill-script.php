@@ -12735,18 +12735,7 @@
             }
             this.set("displayDate", displayDate);
 
-            this.dataSource.query({
-                filter: para
-            }).then(function() {
-                var view = self.dataSource.view();
-
-                var amount = 0;
-                $.each(view, function(index, value) {
-                    amount += value.amount;
-                });
-
-                self.set("totalAmount", kendo.toString(amount, banhji.locale == "km-KH" ? "c0" : "c", banhji.locale));
-            });
+            this.dataSource.filter(para);
             this.dataSource.bind("requestEnd", function(e) {
                 if (e.type == "read") {
                     var response = e.response;
@@ -20778,6 +20767,13 @@
             if (banhji.pageLoaded["mini_usage_list"] == undefined) {
                 banhji.pageLoaded["mini_usage_list"] = true;
             }
+            banhji.miniUsageList.dataSource.bind('requestEnd', function(e) {
+                if (e.response) {
+                    banhji.miniUsageList.set('count', e.response.count);
+                    kendo.culture(banhji.locale);
+                    banhji.miniUsageList.set('amount', kendo.toString(e.response.amount, 'n0'));
+                }
+            });
             vm.pageLoad();
         }
     });

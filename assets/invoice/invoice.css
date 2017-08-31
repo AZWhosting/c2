@@ -425,6 +425,7 @@ pre {
 }
 .inv1 .main-color th {
 	color: #fff;
+	text-align: center;
 }
 .pcg-cash {
 	padding: 40px 0;
@@ -466,11 +467,11 @@ pre {
 	color:#fff;text-align: center;
 }
 .inv1 .rside {
-	text-align: right;
+	text-align: center;
 	padding-right: 10px;
 }
 .inv1 .lside {
-	text-align: left;
+	text-align: center;
 	padding-left: 10px;
 }
 .inv1 .ten * {

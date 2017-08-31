@@ -365,30 +365,36 @@ class Item_lines extends REST_Controller {
 							$obj->cost_avg = $item->cost;
 							$obj->inventory_quantity = $totalQty;
 							$obj->inventory_value = $item->amount;
+						}
 
-							//Update Item
-							if($item->save()){
-								$poso = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-								$poso->where_in_related("transaction", "type", array("Purchase_Order, Sale_Order"));
-								$poso->where_related("transaction", "issued_date <=", $transaction->issued_date);
-								$poso->where_related("transaction", "status", 0);
-								$poso->where_related("transaction", "is_recurring <>", 1);
-								$poso->where_related("transaction", "deleted <>", 1);
-								$poso->where("deleted <>", 1);
-								$poso->get_iterated();
+						if($value->movement==0){
+							$obj->cost_avg = $item->cost;
+							$obj->inventory_quantity = $item->quantity;
+							$obj->inventory_value = $item->amount;
+						}
 
-								$onPO = 0; $onSO = 0;
-								foreach ($poso as $val) {
-									if($val->type=="Purchase_Order"){
-										$onPO += ($val->quantity * $val->conversion_ratio);
-									}else{
-										$onSO += ($val->quantity * $val->conversion_ratio);
-									}
+						//Update Item
+						if($item->save()){
+							$poso = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+							$poso->where_in_related("transaction", "type", array("Purchase_Order, Sale_Order"));
+							$poso->where_related("transaction", "issued_date <=", $transaction->issued_date);
+							$poso->where_related("transaction", "status", 0);
+							$poso->where_related("transaction", "is_recurring <>", 1);
+							$poso->where_related("transaction", "deleted <>", 1);
+							$poso->where("deleted <>", 1);
+							$poso->get_iterated();
+
+							$onPO = 0; $onSO = 0;
+							foreach ($poso as $val) {
+								if($val->type=="Purchase_Order"){
+									$onPO += ($val->quantity * $val->conversion_ratio);
+								}else{
+									$onSO += ($val->quantity * $val->conversion_ratio);
 								}
-								$obj->on_po = $onPO;
-								$obj->on_so = $onSO;
 							}
-						}						
+							$obj->on_po = $onPO;
+							$obj->on_so = $onSO;
+						}
 					}					
 				}
 			}
