@@ -22,7 +22,7 @@ class Templates extends REST_Controller {
 			date_default_timezone_set("$conn->time_zone");
 		}
 	}
-	//GET
+	//GET 
 	public function transactions_get() {
 		$filter 	= $this->get("filter");
 		$page 		= $this->get('page');
