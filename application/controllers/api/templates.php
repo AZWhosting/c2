@@ -212,7 +212,7 @@ class Templates extends REST_Controller {
 		$this->response($data, 200);
 	}
 	//GET 
-	function transaction_templates_get() {		
+	function transaction_templates_get($id = NULL) {		
 		$filter 	= $this->get("filter");
 		$page 		= $this->get('page');
 		$limit 		= $this->get('limit');
@@ -232,6 +232,7 @@ class Templates extends REST_Controller {
 		// $obj->order_by("type","desc");
 		
 		//Results
+		$obj->where('id', $id);
 		$obj->get();
 		$count = 1;	
 		if($obj->exists()){			
