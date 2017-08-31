@@ -21,6 +21,7 @@ class Templates extends REST_Controller {
 			$this->_database = $conn->inst_database;
 			date_default_timezone_set("$conn->time_zone");
 		}
+		$this->response($institute->name);	
 	}
 	//GET 
 	function transaction_templates_get($id = NULL) {		
@@ -59,5 +60,5 @@ class Templates extends REST_Controller {
 	}
 	
 }
-/* End of file meters.php */
-/* Location: ./application/controllers/api/meters.php */
+/* End of file template.php */
+/* Location: ./application/controllers/api/template.php */
