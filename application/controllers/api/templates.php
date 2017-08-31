@@ -23,7 +23,7 @@ class Templates extends REST_Controller {
 		}
 	}
 	//GET
-	function transactions_get() {
+	public function transactions_get() {
 		$filter 	= $this->get("filter");
 		$page 		= $this->get('page');
 		$limit 		= $this->get('limit');
@@ -220,7 +220,7 @@ class Templates extends REST_Controller {
 		$this->response($data, 200);
 	}
 	//GET 
-	function transaction_templates_get() {		
+	public function transaction_templates_get() {		
 		$filter 	= $this->get("filter");
 		$page 		= $this->get('page');
 		$limit 		= $this->get('limit');
@@ -288,7 +288,7 @@ class Templates extends REST_Controller {
 		$this->response($data, 200);		
 	}
 	//GET
-	function item_lines_get() {
+	public function item_lines_get() {
 		$filter 	= $this->get("filter");
 		$page 		= $this->get('page');
 		$limit 		= $this->get('limit');
@@ -432,7 +432,7 @@ class Templates extends REST_Controller {
 		$this->response($data, 200);
 	}
 	//GET 
-	function account_lines_get() {		
+	public function account_lines_get() {		
 		$filter 	= $this->get("filter");		
 		$page 		= $this->get('page');		
 		$limit 		= $this->get('limit');
@@ -547,7 +547,7 @@ class Templates extends REST_Controller {
 		$this->response($data, 200);		
 	}
 	//GET 
-	function contacts_get() {
+	public function contacts_get() {
 		$filter 	= $this->get("filter");
 		$page 		= $this->get('page');
 		$limit 		= $this->get('limit');
@@ -681,7 +681,7 @@ class Templates extends REST_Controller {
 		$this->response($data, 200);
 	}
 	//GET 
-	function journal_lines_get() {		
+	public function journal_lines_get() {		
 		$filter 	= $this->get("filter");		
 		$page 		= $this->get('page');		
 		$limit 		= $this->get('limit');
@@ -767,7 +767,7 @@ class Templates extends REST_Controller {
 		$this->response($data, 200);		
 	}
 	//GET ITEM
-	function segment_items_get() {		
+	public function segment_items_get() {		
 		$filter 	= $this->get("filter");
 		$page 		= $this->get('page');
 		$limit 		= $this->get('limit');
