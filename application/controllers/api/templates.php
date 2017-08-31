@@ -219,7 +219,7 @@ class Templates extends REST_Controller {
 		//Response Data
 		$this->response($data, 200);
 	}
-	//GET 
+	//GET
 	function transaction_templates_get() {		
 		$filter 	= $this->get("filter");
 		$page 		= $this->get('page');
