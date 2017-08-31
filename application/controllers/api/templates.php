@@ -222,13 +222,6 @@ class Templates extends REST_Controller {
 		$is_recurring = 0;
 
 		$obj = new Transaction_template(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
-
-		//Sort
-		if(!empty($sort) && isset($sort)){					
-			foreach ($sort as $value) {
-				$obj->order_by($value["field"], $value["dir"]);
-			}
-		}
 		
 		//Filter
 		if(!empty($filter) && isset($filter)){
@@ -237,18 +230,17 @@ class Templates extends REST_Controller {
 			}
 		}
 		
-		$obj->order_by("type","desc");
+		// $obj->order_by("type","desc");
 		
 		//Results
 		$obj->get();
 		$data["count"] = 1;	
-		if($obj->result_count()>0){			
+		if($obj->exists()){			
 			foreach ($obj as $value) {				
 				//Results				
 				$data["results"][] = array(
 					"id" 					=> $value->id,
-					"transaction_form_id" 	=> $value->transaction_form_id,					
-					"user_id" 				=> $value->user_id,
+					"transaction_form_id" 	=> $value->transaction_form_id,
 					"type" 					=> $value->type,
 					"name" 	 				=> $value->name,
 					"color" 				=> $value->color,
