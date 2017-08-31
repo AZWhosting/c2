@@ -63,7 +63,6 @@ class Templates extends REST_Controller {
 		$obj->include_related("contact", array("abbr","number","name","payment_term_id","payment_method_id","credit_limit","locale","bill_to","ship_to","deposit_account_id","trade_discount_id","settlement_discount_id","account_id","ra_id"));
 		$obj->where("is_recurring", $is_recurring);
 		$obj->where("deleted <>", 1);
-
 		//Results
 		if($page && $limit){
 			$obj->get_paged_iterated($page, $limit);
@@ -72,7 +71,6 @@ class Templates extends REST_Controller {
 			$obj->get_iterated();
 			$data["count"] = $obj->result_count();
 		}
-
 		if($obj->exists()){
 			foreach ($obj as $value) {
 				//Sum amount paid
@@ -98,7 +96,6 @@ class Templates extends REST_Controller {
 					$paid->get();
 					$amount_paid = floatval($paid->amount) + floatval($paid->received);
 				}
-
 				//Meter By Choeun
 				$meter = "";
 				$meterNum = "";
@@ -106,7 +103,6 @@ class Templates extends REST_Controller {
 					$meter = $value->meter->get();
 					$meterNum = $meter->get()->number;
 				}
-
 				//Contact
 				$contact = array(
 					"id" 						=> $value->contact_id,
@@ -125,7 +121,6 @@ class Templates extends REST_Controller {
 					"account_id"				=> $value->contact_account_id ? $value->contact_account_id : 0,
 					"ra_id"						=> $value->contact_ra_id ? $value->contact_ra_id : 0
 				);
-
 				//Employee
 				$employee = [];
 				if($value->employee_id>0){
@@ -141,7 +136,6 @@ class Templates extends REST_Controller {
 						"salary_account_id"	=> $employies->salary_account_id
 					);
 				}
-
 				$data["results"][] = array(
 					"id" 						=> $value->id,
 					"company_id" 				=> $value->company_id,
@@ -209,13 +203,11 @@ class Templates extends REST_Controller {
 				   	"meter"						=> $meterNum,
 				   	"meter_id"					=> $value->meter_id,
 				   	"amount_paid"				=> $amount_paid,
-
 				   	"contact" 					=> $contact,
 				   	"employee" 					=> $employee
 				);
 			}
 		}
-
 		//Response Data
 		$this->response($data, 200);
 	}
