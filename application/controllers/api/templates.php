@@ -22,91 +22,65 @@ class Templates extends REST_Controller {
 			date_default_timezone_set("$conn->time_zone");
 		}
 	}
+	public function index_get($id = NULL) {
+		$filter 	= $this->get('filter');
+        $page 		= $this->get('page') == TRUE ? $this->get('page'): 1;
+        $limit 		= $this->get('limit') == TRUE ? $this->get('limit'): 50;
+		$data = array();
+        $template = new Transaction_template(null, null, null, null, 'db_1502682028');
+		if(isset($filter)) {
+			foreach($filter['filters'] as $filter) {
+				if(isset($filter['operator'])) {
+					$template->{$filter['operator']}($filter['field'], $filter['value']);
+				} else {
+					$template->where($filter['field'], $filter['value']);
+				}
+            }            
+        }
+        if(isset($id)) {
+            $template->where('id', $id);
+        }
+		$template->get_paged_iterated($page, $limit);
+		if($template->exists()) {
+			foreach($template as $client) {
+				$data[] = array(
+					'id' => $client->id
+				);
+			}	
+		}					
+
+		if(count($data) > 0) {
+			$this->response(array('results'=>$data, 'count'=>$template->paged->total_rows), 200);
+		} else {
+			$this->response(array('results'=>$data, 'count'=>0), 400);
+        }
+	}
 	//GET 
 	public function transactions_get() {
-		$filter 	= $this->get("filter");
-		$page 		= $this->get('page');
-		$limit 		= $this->get('limit');
-		$sort 	 	= $this->get("sort");
-		$data["results"] = [];
-		$data["count"] = 0;
-		$is_recurring = 0;
+		$filter 	= $this->get('filter');
+        $page 		= $this->get('page') == TRUE ? $this->get('page'): 1;
+        $limit 		= $this->get('limit') == TRUE ? $this->get('limit'): 1;
+		$data = array();
 
 		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-
-		//Sort
-		if(!empty($sort) && isset($sort)){
-			foreach ($sort as $value) {
-				if(isset($value['operator'])){
-					$obj->{$value['operator']}($value["field"], $value["dir"]);
-				}else{
-					$obj->order_by($value["field"], $value["dir"]);
-				}
-			}
-		}
 
 		//Filter
 		if(!empty($filter) && isset($filter)){
 	    	foreach ($filter["filters"] as $value) {
-	    		if(isset($value["operator"])) {
-					$obj->{$value["operator"]}($value["field"], $value["value"]);
-				} else {
-					if($value["field"]=="is_recurring"){
-	    				$is_recurring = $value["value"];
-	    			}else{
-	    				$obj->where($value["field"], $value["value"]);
-	    			}
-				}
+	    		$obj->where($value["field"], $value["value"]);
 			}
 		}
-
-		$obj->include_related("contact", array("abbr","number","name","payment_term_id","payment_method_id","credit_limit","locale","bill_to","ship_to","deposit_account_id","trade_discount_id","settlement_discount_id","account_id","ra_id"));
-		$obj->where("is_recurring", $is_recurring);
 		$obj->where("deleted <>", 1);
 
 		//Results
-		if($page && $limit){
-			$obj->get_paged_iterated($page, $limit);
-			$data["count"] = $obj->paged->total_rows;
-		}else{
-			$obj->get_iterated();
-			$data["count"] = $obj->result_count();
-		}
+		$obj->get_paged_iterated($page, $limit);
+		$data["count"] = $obj->paged->total_rows;
+	
 
 		if($obj->exists()){
 			foreach ($obj as $value) {
 				//Sum amount paid
 				$amount_paid = 0;
-				if($value->type=="Commercial_Invoice" || $value->type=="Vat_Invoice" || $value->type=="Invoice" || $value->type=="Credit_Purchase" || $value->type=="Utility_Invoice"){
-					$paid = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-					$paid->select_sum("amount");
-					$paid->select_sum("discount");
-					$paid->where_in("type", array("Cash_Receipt", "Offset_Invoice", "Cash_Payment", "Offset_Bill"));					
-					$paid->where("reference_id", $value->id);					
-					$paid->where("is_recurring <>",1);
-					$paid->where("deleted <>",1);
-					$paid->get();
-					$amount_paid = floatval($paid->amount) + floatval($paid->discount);
-				}else if($value->type=="Cash_Advance"){
-					$paid = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-					$paid->select_sum("amount");
-					$paid->select_sum("received");
-					$paid->where("type", "Advance_Settlement");
-					$paid->where("reference_id", $value->id);
-					$paid->where("is_recurring <>",1);
-					$paid->where("deleted <>",1);
-					$paid->get();
-					$amount_paid = floatval($paid->amount) + floatval($paid->received);
-				}
-
-				//Meter By Choeun
-				$meter = "";
-				$meterNum = "";
-				if($value->meter_id != 0){
-					$meter = $value->meter->get();
-					$meterNum = $meter->get()->number;
-				}
-
 				//Contact
 				$contact = array(
 					"id" 						=> $value->contact_id,
@@ -206,10 +180,8 @@ class Templates extends REST_Controller {
 				   	"print_count" 				=> $value->print_count,
 				   	"printed_by" 				=> $value->printed_by,
 				   	"deleted" 					=> $value->deleted,
-				   	"meter"						=> $meterNum,
 				   	"meter_id"					=> $value->meter_id,
 				   	"amount_paid"				=> $amount_paid,
-
 				   	"contact" 					=> $contact,
 				   	"employee" 					=> $employee
 				);
