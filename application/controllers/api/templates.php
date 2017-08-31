@@ -217,8 +217,7 @@ class Templates extends REST_Controller {
 		$page 		= $this->get('page');
 		$limit 		= $this->get('limit');
 		$sort 	 	= $this->get("sort");
-		$data["results"] = [];
-		$data["count"] = 0;
+		$data 		= array();
 		$is_recurring = 0;
 
 		$obj = new Transaction_template(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
@@ -234,11 +233,11 @@ class Templates extends REST_Controller {
 		
 		//Results
 		$obj->get();
-		$data["count"] = 1;	
+		$count = 1;	
 		if($obj->exists()){			
 			foreach ($obj as $value) {				
 				//Results				
-				$data["results"][] = array(
+				$data[] = array(
 					"id" 					=> $value->id,
 					"transaction_form_id" 	=> $value->transaction_form_id,
 					"type" 					=> $value->type,
@@ -252,7 +251,10 @@ class Templates extends REST_Controller {
 			}
 		}
 		//Response Data		
-		$this->response($data, 200);		
+		$this->response(array(
+			'results' => $data,
+			'count' => $count
+		), 200);		
 	}
 	//GET
 	function item_lines_get() {
