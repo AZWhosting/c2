@@ -237,7 +237,7 @@ class Templates extends REST_Controller {
 		$count = 1;	
 		if($obj->exists()){
 			$data = array(
-				"id" => $value->id
+				"id" => $obj->id
 			);	
 			$this->response($data);	
 		} else {
