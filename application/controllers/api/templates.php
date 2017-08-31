@@ -233,29 +233,15 @@ class Templates extends REST_Controller {
 		//Filter
 		if(!empty($filter) && isset($filter)){
 	    	foreach ($filter['filters'] as $value) {
-	    		if(isset($value['operator'])) {
-					$obj->{$value['operator']}($value['field'], $value['value']);
-				} else {
-					if($value["field"]=="is_recurring"){
-	    				$is_recurring = $value["value"];
-	    			}else{
-	    				$obj->where($value["field"], $value["value"]);
-	    			}
-				}
+	    		$obj->where($value["field"], $value["value"]);
 			}
 		}
 		
 		$obj->order_by("type","desc");
 		
 		//Results
-		if($page && $limit){
-			$obj->get_paged_iterated($page, $limit);
-			$data["count"] = $obj->paged->total_rows;
-		}else{
-			$obj->get_iterated();
-			$data["count"] = $obj->result_count();
-		}		
-
+		$obj->get();
+		$data["count"] = 1;	
 		if($obj->result_count()>0){			
 			foreach ($obj as $value) {				
 				//Results				
@@ -269,13 +255,10 @@ class Templates extends REST_Controller {
 					"title" 				=> $value->title,
 					"note" 					=> $value->note,
 					"moduls" 				=> $value->moduls,
-					"status" 				=> $value->status,
-					"created_at" 			=> $value->created_at,
-					"updated_at" 			=> $value->updated_at	
+					"status" 				=> $value->status
 				);
 			}
 		}
-
 		//Response Data		
 		$this->response($data, 200);		
 	}
