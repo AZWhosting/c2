@@ -222,12 +222,12 @@ class Templates extends REST_Controller {
 
 		$obj = new Transaction_template(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
 		
-		//Filter
-		if(!empty($filter) && isset($filter)){
-	    	foreach ($filter['filters'] as $value) {
-	    		$obj->where($value["field"], $value["value"]);
-			}
-		}
+		// //Filter
+		// if(!empty($filter) && isset($filter)){
+	 //    	foreach ($filter['filters'] as $value) {
+	 //    		$obj->where($value["field"], $value["value"]);
+		// 	}
+		// }
 		
 		// $obj->order_by("type","desc");
 		
@@ -235,27 +235,16 @@ class Templates extends REST_Controller {
 		$obj->where('id', $id);
 		$obj->get();
 		$count = 1;	
-		if($obj->exists()){			
-			foreach ($obj as $value) {				
-				//Results				
-				$data[] = array(
-					"id" 					=> $value->id,
-					"transaction_form_id" 	=> $value->transaction_form_id,
-					"type" 					=> $value->type,
-					"name" 	 				=> $value->name,
-					"color" 				=> $value->color,
-					"title" 				=> $value->title,
-					"note" 					=> $value->note,
-					"moduls" 				=> $value->moduls,
-					"status" 				=> $value->status
-				);
-			}
+		if($obj->exists()){
+			$data = array(
+				"id" => $value->id
+			);	
+			$this->response($data);	
+		} else {
+			$this->response("not found", 404);
 		}
 		//Response Data		
-		$this->response(array(
-			'results' => $data,
-			'count' => $count
-		), 200);		
+				
 	}
 	//GET
 	function item_lines_get() {
