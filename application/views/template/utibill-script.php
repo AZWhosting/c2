@@ -17881,6 +17881,10 @@
                         dataURI: workbook.toDataURL(),
                         fileName: "transaction_offline.xlsx"
                     });
+                }else{
+                    var notifi = $("#ntf1").data("kendoNotification");
+                    notifi.hide();
+                    notifi.error(self.lang.lang.no_data);
                 }
             });
         },
@@ -17947,6 +17951,10 @@
                         dataURI: workbook.toDataURL(),
                         fileName: "contact_offline.xlsx"
                     });
+                }else{
+                    var notifi = $("#ntf1").data("kendoNotification");
+                    notifi.hide();
+                    notifi.error(self.lang.lang.no_data);
                 }
             });
         },
@@ -18001,6 +18009,10 @@
                         dataURI: workbook.toDataURL(),
                         fileName: "property_offline.xlsx"
                     });
+                }else{
+                    var notifi = $("#ntf1").data("kendoNotification");
+                    notifi.hide();
+                    notifi.error(self.lang.lang.no_data);
                 }
             });
         },
@@ -18103,6 +18115,10 @@
                         dataURI: workbook.toDataURL(),
                         fileName: "meter_offline.xlsx"
                     });
+                }else{
+                    var notifi = $("#ntf1").data("kendoNotification");
+                    notifi.hide();
+                    notifi.error(self.lang.lang.no_data);
                 }
             });
         },
@@ -18169,6 +18185,10 @@
                         dataURI: workbook.toDataURL(),
                         fileName: "record_offline.xlsx"
                     });
+                }else{
+                    var notifi = $("#ntf1").data("kendoNotification");
+                    notifi.hide();
+                    notifi.error(self.lang.lang.no_data);
                 }
             });
         },
@@ -18226,6 +18246,10 @@
                         dataURI: workbook.toDataURL(),
                         fileName: "installment_offline.xlsx"
                     });
+                }else{
+                    var notifi = $("#ntf1").data("kendoNotification");
+                    notifi.hide();
+                    notifi.error(self.lang.lang.no_data);
                 }
             });
         },
@@ -18279,6 +18303,10 @@
                         dataURI: workbook.toDataURL(),
                         fileName: "installment_item_offline.xlsx"
                     });
+                }else{
+                    var notifi = $("#ntf1").data("kendoNotification");
+                    notifi.hide();
+                    notifi.error(self.lang.lang.no_data);
                 }
             });
         },
