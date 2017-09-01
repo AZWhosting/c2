@@ -17884,7 +17884,7 @@
                 }
             });
         },
-        offContactDS: dataStore(apiUrl + "offlines/contacts"),
+        offContactDS: dataStore(apiUrl + "utibills/ocontacts"),
         contactArray        : [],
         offContactGet       : function(){
             var self = this;
@@ -17950,7 +17950,7 @@
                 }
             });
         },
-        offPropertyDS: dataStore(apiUrl + "offlines/property"),
+        offPropertyDS: dataStore(apiUrl + "utibills/oproperty"),
         propertyArray        : [],
         offPropertyGet       : function(){
             var self = this;
@@ -18004,7 +18004,7 @@
                 }
             });
         },
-        offMeterDS: dataStore(apiUrl + "offlines/meter"),
+        offMeterDS: dataStore(apiUrl + "utibills/ometer"),
         meterArray        : [],
         offMeterGet       : function(){
             var self = this;
@@ -18106,7 +18106,7 @@
                 }
             });
         },
-        offRecordDS: dataStore(apiUrl + "offlines/record"),
+        offRecordDS: dataStore(apiUrl + "utibills/orecord"),
         recordArray        : [],
         offRecordGet       : function(){
             var self = this;
@@ -18172,7 +18172,7 @@
                 }
             });
         },
-        offInstallmentDS: dataStore(apiUrl + "offlines/installment"),
+        offInstallmentDS: dataStore(apiUrl + "utibills/oinstallment"),
         intstallmentArray        : [],
         offInstallmentGet       : function(){
             var self = this;
@@ -18229,7 +18229,7 @@
                 }
             });
         },
-        offInsItemDS        : dataStore(apiUrl + "offlines/insitem"),
+        offInsItemDS        : dataStore(apiUrl + "utibills/oinsitem"),
         insItemArray        : [],
         offInsItemGet       : function(){
             var self = this;
