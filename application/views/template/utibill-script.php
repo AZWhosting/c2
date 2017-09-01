@@ -18281,6 +18281,25 @@
                     });
                 }
             });
+        },
+        offClearDS        : dataStore(apiUrl + "utibills/offlineclear"),
+        offClear            : function(){
+            var self = this;
+            this.offClearDS.data([]);
+            this.offClearDS.add({
+                method : "clear"
+            });
+            this.offClearDS.sync();
+            this.offClearDS.bind("requestEnd", function(e){
+                var notifi = $("#ntf1").data("kendoNotification");
+                    notifi.hide();
+                    notifi.success(self.lang.lang.success_message);
+            });
+            this.offClearDS.bind("error", function(e){
+                var notifi = $("#ntf1").data("kendoNotification");
+                    notifi.hide();
+                    notifi.error(self.lang.lang.error_message);
+            });
         }
     });
     /*************************

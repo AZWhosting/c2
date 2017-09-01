@@ -8251,57 +8251,68 @@
 											</form>
 										</div>
 										<div id="Offline" style="border: 1px solid #ccc; overflow: hidden;" class="tab-pane widget-body-regular">
-											<div class="span3" style="border: 1px solid #ccc;padding-bottom: 10px;min-height: 131px;">
-												<h2 data-bind="text: lang.lang.transaction"></h2>
-											  	<button>
-													<span class="btn btn-icon btn-success glyphicons upload" data-bind="click: offTxnGet" style="width: 200px!important;position: relative;margin: 0px;">
-														<i></i> 
-														<span data-bind="text: lang.lang.transaction"></span>
-													</span>
-												</button>
+											<div class="row-fluid" style="overflow: hidden;">
+												<div class="span3" style="border: 1px solid #ccc;padding-bottom: 10px;min-height: 131px;">
+													<h2 data-bind="text: lang.lang.transaction"></h2>
+												  	<button>
+														<span class="btn btn-icon btn-success glyphicons upload" data-bind="click: offTxnGet" style="width: 200px!important;position: relative;margin: 0px;">
+															<i></i> 
+															<span data-bind="text: lang.lang.transaction"></span>
+														</span>
+													</button>
+												</div>
+												<div class="span3" style="border: 1px solid #ccc;padding-bottom: 10px;min-height: 131px;">
+													<h2 data-bind="text: lang.lang.contact"></h2>
+													<button style="margin-bottom: 5px;">
+														<span class="btn btn-icon btn-success glyphicons upload" data-bind="click: offContactGet" style="width: 200px!important;position: relative;margin: 0px;">
+															<i></i> 
+															<span data-bind="text: lang.lang.contact"></span>
+														</span>
+													</button>
+													<button>
+														<span class="btn btn-icon btn-success glyphicons upload" data-bind="click: offPropertyGet" style="width: 200px!important;position: relative;margin: 0px;">
+															<i></i> 
+															<span data-bind="text: lang.lang.property"></span>
+														</span>
+													</button>
+												</div>
+												<div class="span3" style="border: 1px solid #ccc;padding-bottom: 10px;min-height: 131px;">
+													<h2 data-bind="text: lang.lang.meter"></h2>
+													<button style="margin-bottom: 5px;">
+														<span class="btn btn-icon btn-success glyphicons upload" data-bind="click: offMeterGet" style="width: 200px!important;position: relative;margin: 0px;">
+															<i></i> 
+															<span data-bind="text: lang.lang.meter"></span>
+														</span>
+													</button>
+													<button>
+														<span class="btn btn-icon btn-success glyphicons upload" data-bind="click: offRecordGet" style="width: 200px!important;position: relative;margin: 0px;">
+															<i></i> 
+															<span data-bind="text: lang.lang.reading"></span>
+														</span>
+													</button>
+												</div>
+												<div class="span3" style="border: 1px solid #ccc;padding-bottom: 10px;min-height: 131px;">
+													<h2 data-bind="text: lang.lang.installment"></h2>
+													<button style="margin-bottom: 5px;">
+														<span class="btn btn-icon btn-success glyphicons upload" data-bind="click: offInstallmentGet" style="width: 200px!important;position: relative;margin: 0px;">
+															<i></i> 
+															<span data-bind="text: lang.lang.installment"></span>
+														</span>
+													</button>
+													<button>
+														<span class="btn btn-icon btn-success glyphicons upload" data-bind="click: offInsItemGet" style="width: 200px!important;position: relative;margin: 0px;">
+															<i></i> 
+															<span data-bind="text: lang.lang.item"></span>
+														</span>
+													</button>
+												</div>
 											</div>
-											<div class="span3" style="border: 1px solid #ccc;padding-bottom: 10px;min-height: 131px;">
-												<h2 data-bind="text: lang.lang.contact"></h2>
+											<div class="row-fluid" style="overflow: hidden;border: 1px solid #ccc;margin-top: 20px;padding: 15px;">
+												<h2 style="width: 100%;">Clear Offline</h2>
 												<button style="margin-bottom: 5px;">
-													<span class="btn btn-icon btn-success glyphicons upload" data-bind="click: offContactGet" style="width: 200px!important;position: relative;margin: 0px;">
+													<span class="btn btn-icon btn-success glyphicons upload" data-bind="click: offClear" style="width: 200px!important;position: relative;margin: 0px;">
 														<i></i> 
-														<span data-bind="text: lang.lang.contact"></span>
-													</span>
-												</button>
-												<button>
-													<span class="btn btn-icon btn-success glyphicons upload" data-bind="click: offPropertyGet" style="width: 200px!important;position: relative;margin: 0px;">
-														<i></i> 
-														<span data-bind="text: lang.lang.property"></span>
-													</span>
-												</button>
-											</div>
-											<div class="span3" style="border: 1px solid #ccc;padding-bottom: 10px;min-height: 131px;">
-												<h2 data-bind="text: lang.lang.meter"></h2>
-												<button style="margin-bottom: 5px;">
-													<span class="btn btn-icon btn-success glyphicons upload" data-bind="click: offMeterGet" style="width: 200px!important;position: relative;margin: 0px;">
-														<i></i> 
-														<span data-bind="text: lang.lang.meter"></span>
-													</span>
-												</button>
-												<button>
-													<span class="btn btn-icon btn-success glyphicons upload" data-bind="click: offRecordGet" style="width: 200px!important;position: relative;margin: 0px;">
-														<i></i> 
-														<span data-bind="text: lang.lang.reading"></span>
-													</span>
-												</button>
-											</div>
-											<div class="span3" style="border: 1px solid #ccc;padding-bottom: 10px;min-height: 131px;">
-												<h2 data-bind="text: lang.lang.installment"></h2>
-												<button style="margin-bottom: 5px;">
-													<span class="btn btn-icon btn-success glyphicons upload" data-bind="click: offInstallmentGet" style="width: 200px!important;position: relative;margin: 0px;">
-														<i></i> 
-														<span data-bind="text: lang.lang.installment"></span>
-													</span>
-												</button>
-												<button>
-													<span class="btn btn-icon btn-success glyphicons upload" data-bind="click: offInsItemGet" style="width: 200px!important;position: relative;margin: 0px;">
-														<i></i> 
-														<span data-bind="text: lang.lang.item"></span>
+														<span >Clear Offline</span>
 													</span>
 												</button>
 											</div>

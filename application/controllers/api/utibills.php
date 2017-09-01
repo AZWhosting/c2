@@ -1455,6 +1455,42 @@ class Utibills extends REST_Controller {
 		//Response Data		
 		$this->response($data, 200);	
 	}
+	//Clear Offline
+	function offlineclear_post(){
+		$models = json_decode($this->post('models'));
+		$data["results"] = array();
+		$data["count"] = 1;
+		foreach ($models as $value) {
+			if($value->method == "clear"){
+				//contact
+				$con = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$con->update("sync", 0);
+				//transaction
+				$txn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$txn->update("sync", 0);
+				//property
+				$pro = new Property(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$pro->update("sync", 0);
+				//meter
+				$meter = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$meter->update("sync", 0);
+				//meter record
+				$record = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$record->update("sync", 0);
+				//Installment
+				$ins = new Installment(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$ins->update("sync", 0);
+				//Installment Scedule
+				$inti = new Installment_schedule(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$inti->update("sync", 0);
+				//Results				
+				$data["results"][] = array(
+					"msg" 			=> "done"
+				);
+				$this->response($data, 200);
+			}
+		}
+	}
 }
 /* End of file meters.php */
 /* Location: ./application/controllers/api/meters.php */
