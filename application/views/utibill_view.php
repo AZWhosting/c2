@@ -8018,10 +8018,10 @@
 			    		<span class="glyphicons no-js remove_2" 
 							data-bind="click: cancel"><i></i></span>	
 					</div>
-			        <h2 style="margin-bottom: 0;" data-bind="text: lang.lang.reconcile">Reconcile</h2>
+			        <h2 style="margin-bottom: 10px;" data-bind="text: lang.lang.reconcile">Reconcile</h2>
 			        <br>
 			        <div class="row-fluid reconcile">
-				        <table class="span12 table-remove">
+				        <table class="span12 table-remove" style="width: 99.9%">
 				        	<thead>
 					        	<tr>
 					        		<th colspan="1" data-bind="text: lang.lang.actual_cash_count">Actual Cash Count</th>
@@ -8033,11 +8033,11 @@
 										<table>
 											<thead>
 											<tr>
-												<td data-bind="click: list.addRow"><i class="icon-plus"></i></td>
-												<td style="background: #0077c5; color: #fff;" data-bind="text: lang.lang.currency">Currency:</td>
-												<td style="background: #0077c5; color: #fff;" data-bind="text: lang.lang.note">Note:</td>
-												<td style="background: #0077c5; color: #fff;" data-bind="text: lang.lang.unit">Unit</td>
-												<td style="background: #0077c5; color: #fff;" data-bind="text: lang.lang.total">Total</td>
+												<td data-bind="click: list.addRow" style="border: 0;"><i class="icon-plus"></i></td>
+												<td style="background: #0077c5; color: #fff; border-top: 0;" data-bind="text: lang.lang.currency">Currency:</td>
+												<td style="background: #0077c5; color: #fff; border-top: 0;" data-bind="text: lang.lang.note">Note:</td>
+												<td style="background: #0077c5; color: #fff; border-top: 0;" data-bind="text: lang.lang.unit">Unit</td>
+												<td style="background: #0077c5; color: #fff; border-top: 0; border-right: 0;" data-bind="text: lang.lang.total">Total</td>
 											</tr>
 											</thead>
 											<tbody data-role="listview" data-bind="source: list.dataSource" data-template="Reconcile-list-tmpl"></tbody>
@@ -8045,7 +8045,7 @@
 									</td>
 					        	</tr>
 					        	<tr>
-					        		<td style="padding: 0;">
+					        		<td style="padding: 15px;">
 					        			<table class="span6">
 					        				<thead>
 					        					<tr>
@@ -8058,7 +8058,7 @@
 					        				</tbody>
 					        			</table>
 					        		</td>
-					        		<td>
+					        		<td style="padding: 15px;">
 					        			<table class="span6">
 					        				<thead>
 					        					<tr>
@@ -8075,18 +8075,29 @@
 					        </tbody>
 				        </table>
 			        </div>
-			        <div class="box-generic bg-action-button">
+			        <div class="box-generic bg-action-button" style="margin-top: 15px;">
 						<div id="ntf1" data-role="notification"></div>
 				        <div class="row">
 							<div class="span12" align="right">
-								<span class="btn btn-icon btn-primary glyphicons ok_2" data-bind="click: verify" style="width: 110px;margin-bottom: 0;"><i></i> <span data-bind="text: lang.lang.verify">Verify</span></span>
-								<span class="btn btn-icon btn-primary glyphicons ok_2" data-bind="click: sync" style="width: 110px;margin-bottom: 0;"><i></i> <span data-bind="text: lang.lang.record">Record</span></span>
+								<span class="btn-btn" data-bind="click: verify" ><i></i> <span data-bind="text: lang.lang.verify">Verify</span></span>
+								<span class="btn-btn" data-bind="click: sync" ><i></i> <span data-bind="text: lang.lang.record">Record</span></span>
 								
-								<span class="btn btn-icon btn-warning glyphicons remove_2" data-bind="click: cancel" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
+								<span class="btn-btn" data-bind="click: cancel" ><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
 													
 							</div>
 						</div>
 					</div>
+
+
+					<!-- <div class="box-generic bg-action-button">
+						<div id="ntf1" data-role="notification"></div>
+				        <div class="row">
+							<div class="span12" align="right">
+								<span class="btn-btn" data-bind="click: save, visible: showButton" ><i></i> <span data-bind="text: lang.lang.run_bill">Run Bill</span></span>									
+								<span class="btn-btn" data-bind="click: cancel" ><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
+							</div>
+						</div>
+					</div> -->
 				</div>						
 			</div>
 		</div>
@@ -8095,11 +8106,11 @@
 
 <script id="Reconcile-list-tmpl" type="text/x-kendo-template">
 	<tr>
-		<td><i style="cursor: pointer;" class="icon-trash" data-bind="click: removeRow"></i></td>
-		<td><input type="text" data-role="combobox" data-bind="source: currencyDS, value: code" data-text-field="code" data-value-field="code"></td>
-		<td><input type="number" class="k-textbox" data-role="numerictextbox" data-format="n" data-min="0" data-spinners="false" data-bind="value: note, events: {change: onChange}"></td>
-		<td><input type="number" class="k-textbox" data-role="numerictextbox" data-format="n" data-min="0" data-spinners="false" data-bind="value: unit, events: {change: onChange}"></td>
-		<td><input type="number" data-role="numerictextbox" data-format="n" data-min="0" data-spinners="false" data-bind="value:total"></td>
+		<td style="border-left: 0; border-bottom: 0;"><i style="cursor: pointer;" class="icon-trash" data-bind="click: removeRow" ></i></td>
+		<td style="border-left: 0; border-bottom: 0;"><input type="text" data-role="combobox" data-bind="source: currencyDS, value: code" data-text-field="code" data-value-field="code"></td>
+		<td style="border-left: 0; border-bottom: 0;"><input type="number" class="k-textbox" data-role="numerictextbox" data-format="n" data-min="0" data-spinners="false" data-bind="value: note, events: {change: onChange}" style="display: inline-block; height: 28px; border: none; width: 168px !important;"></td>
+		<td style="border-left: 0; border-bottom: 0;"><input type="number" class="k-textbox" data-role="numerictextbox" data-format="n" data-min="0" data-spinners="false" data-bind="value: unit, events: {change: onChange}" style="display: inline-block; height: 28px; border: none; width: 168px !important;"></td>
+		<td style="border-left: 0; border-bottom: 0;"><input type="number" data-role="numerictextbox" data-format="n" data-min="0" data-spinners="false" data-bind="value:total" style="display: inline-block; border: none; width: 168px !important;"></td>
 	</tr>
 </script>
 <script id="reconcile-receipt-list" type="text/x-kendo-template">

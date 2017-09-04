@@ -1021,6 +1021,15 @@ input{
 }
 
 
+.reconcile .k-numeric-wrap.k-expand-padding .k-input{
+  border-radius: 0 !important;
+}
+.reconcile .k-state-default .k-input{
+  width: 100% !important;
+}
+.reconcile .k-numeric-wrap .k-state-default .k-expand-padding{
+  height: 28px;
+}
 
 @media only screen and (-webkit-min-device-pixel-ratio: 2) and (max-device-width: 1024px) and (min-device-width: 768px){
 	.widget-body table tr td{

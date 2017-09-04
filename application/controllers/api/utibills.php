@@ -64,10 +64,12 @@ class Utibills extends REST_Controller {
 					if($fine->exists()){
 						$dueDate = new DateTime($value->due_date);
 						$fineDate = new DateTime(date('Y-m-d'));
-						$fineDate = $fineDate->diff($dueDate)->days;
-						$fineDateAmount = intval($fine->usage);
-						if($fineDate >= $fineDateAmount){
-							$fineAmount = floatval($fine->amount);
+						if($fineDate > $dueDate){
+							$fineDate = $fineDate->diff($dueDate)->days;
+							$fineDateAmount = intval($fine->quantity);
+							if($fineDate >= $fineDateAmount){
+								$fineAmount = floatval($fine->amount);
+							}
 						}
 					}
 				}

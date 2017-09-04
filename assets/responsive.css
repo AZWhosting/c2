@@ -3566,3 +3566,7 @@ html.top-full .navbar.main .topnav .dropdown > a .caret{
   height: 40px;
   margin: 5px;
 }
+.product-view.k-widget{
+  padding: 10px;
+  margin-bottom: 10px;
+}
