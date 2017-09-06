@@ -20,18 +20,6 @@ class Item_locations extends REST_Controller {
 			$this->_database = $conn->inst_database;
 		}
 	}
-
-	function test_get() {
-		$data["results"] = [];
-		$data["count"] = 0;
-
-		$obj = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$obj->where_related("Item_location", "location_id", 2);
-		$data["results"] = $obj->get_raw()->result();
-
-
-		$this->response($data, 200);
-	}
 	
 	//GET
 	function index_get() {
@@ -70,7 +58,7 @@ class Item_locations extends REST_Controller {
 		$obj->get_paged_iterated($page, $limit);
 		$data["count"] = $obj->paged->total_rows;		
 		
-		if($obj->result_count()>0){
+		if($obj->exists()){
 			foreach ($obj as $value) {
 		 		$data["results"][] = array(	
 		 			"id"     	=> $value->id,		   	

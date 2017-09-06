@@ -37,7 +37,10 @@ class Ops extends REST_Controller {
 			    // $this->dbforge->create_table('measurement_categories');
 
 				//Rename Table 'old_table_name' to 'new_table_name'
-			    // $this->dbforge->rename_table('items_variant_attributes', 'attribute_values_items');
+			    // $this->dbforge->rename_table('item_locations', 'bin_locations');
+
+				//DROP TABLE IF EXISTS table_name
+			    // $this->dbforge->drop_table('location_types');
 			    
 			    //Update data
 			    // $this->db->where('conversion_ratio', 0);
@@ -98,15 +101,15 @@ class Ops extends REST_Controller {
 				// 	// 	'null' 		=> FALSE,
 				// 	// 	'default' 	=> 1
 				// 	// ),
-				// 	'amount' => array(
-				// 		'name' 		=> 'amount',//New Field Name 
-				// 		'type'		=> 'DECIMAL',
-				// 		'constraint'=> '30,15',
+				// 	'bin_location' => array(
+				// 		'name' 		=> 'number',//New Field Name 
+				// 		'type'		=> 'VARCHAR',
+				// 		'constraint'=> '500',
 				// 		'null' 		=> FALSE,
-				// 		'default' 	=> 0
+				// 		'default' 	=> ''
 				// 	)
 				// );
-				// $data['results'][] = $this->dbforge->modify_column('items', $fields);
+				// $data['results'][] = $this->dbforge->modify_column('bin_locations', $fields);
 
 			 	//Remove column, 'table_name', 'column_to_drop'
 				// $this->dbforge->drop_column('attribute_values_items', 'variant_attribute_id');
