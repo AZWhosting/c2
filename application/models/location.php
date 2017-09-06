@@ -5,6 +5,14 @@ class Location extends DataMapper {
 	protected $updated_field = "updated_at";
 
 	public $has_one = array(
+		"warehouse" => array(
+			"class" => "warehouse", 
+			"other_field" => "location"
+		),
+		"location_type" => array(
+			"class" => "location_type", 
+			"other_field" => "location"
+		),
 		"branch" => array(
 			"class" => "branch", 
 			"other_field" => "location"

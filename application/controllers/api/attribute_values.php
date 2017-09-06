@@ -31,8 +31,8 @@ class Attribute_values extends REST_Controller {
 		$data["results"] = [];
 		$data["count"] = 0;
 		
-		$obj = new Attribute_value(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
-
+		$obj = new Attribute_value(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		
 		//Sort
 		if(!empty($sort) && isset($sort)){
 			foreach ($sort as $value) {

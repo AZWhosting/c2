@@ -1,8 +1,15 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Warehouse extends DataMapper {	
-	// protected $created_field = "created_at";
-	// protected $updated_field = "updated_at";
+	protected $created_field = "created_at";
+	protected $updated_field = "updated_at";
+
+	public $has_many = array(
+		'location' => array(
+			'class' => 'location',
+			'other_field' => 'warehouse'
+		)
+	);
 
 	public function __construct($id = null, $server_name = null, $db_username = null, $server_password = null, $db = null) {	
 		$this->db_params = array(

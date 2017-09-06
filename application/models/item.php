@@ -52,6 +52,10 @@ class Item extends DataMapper {
 			'class' => 'attribute_value',
 			'other_field' => 'item'
 		),
+		'item_location' => array(
+			'class' => 'item_location',
+			'other_field' => 'item'
+		),
 		'item_line' => array(
 			'class' => 'item_line',
 			'other_field' => 'item'

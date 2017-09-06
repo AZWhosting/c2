@@ -2,7 +2,7 @@
 
 class Location_type extends DataMapper {	
 	// protected $created_field = "created_at";
-	// protected $updated_field = "updated_at";	
+	// protected $updated_field = "updated_at";
 
 	public $has_many = array(
 		'location' => array(

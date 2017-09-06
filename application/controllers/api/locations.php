@@ -23,29 +23,33 @@ class Locations extends REST_Controller {
 	
 	//GET
 	function index_get() {		
-		$filters 	= $this->get("filter");		
-		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
-		$sort 	 	= $this->get("sort");		
-		$data["results"] = array();
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
 		$data["count"] = 0;
 
 		$obj = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
 
 		//Sort
-		if(!empty($sort) && isset($sort)){					
+		if(!empty($sort) && isset($sort)){
 			foreach ($sort as $value) {
-				$obj->order_by($value["field"], $value["dir"]);
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
 			}
 		}
-
-		//Filter		
-		if(!empty($filters) && isset($filters["filters"])){
-	    	foreach ($filters["filters"] as $value) {
+		
+		//Filter
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter['filters'] as $value) {
 	    		if(isset($value['operator'])) {
 					$obj->{$value['operator']}($value['field'], $value['value']);
 				} else {
-	    			$obj->where($value["field"], $value["value"]);
+					$obj->where($value["field"], $value["value"]);
 				}
 			}
 		}
@@ -58,13 +62,16 @@ class Locations extends REST_Controller {
 			foreach ($obj as $value) {	
 				$license = $value->branch->get();			
 		 		$data["results"][] = array(	
-		 			"id"     		=> $value->id,		   	
-				   	"name" 			=> $value->name,
-				   	"abbr" 			=> $value->abbr,
-				   	"type" 			=> $value->type,
-				   	"main_bloc" 	=> intval($value->main_bloc),
-				   	"main_pole" 	=> intval($value->main_pole),
-				   	"branch" 		=> array('id' => $license->id, 'name' => $license->name)			
+		 			"id"     			=> $value->id,
+		 			"warehouse_id"  	=> $value->warehouse_id,
+		 			"location_type_id"	=> $value->location_type_id,
+				   	"nubmer" 			=> $value->nubmer,
+				   	"name" 				=> $value->name,
+				   	"abbr" 				=> $value->abbr,
+				   	"type" 				=> $value->type,
+				   	"main_bloc" 		=> intval($value->main_bloc),
+				   	"main_pole" 		=> intval($value->main_pole),
+				   	"branch" 			=> array('id' => $license->id, 'name' => $license->name)			
 		 		);
 			}
 		}
@@ -79,24 +86,31 @@ class Locations extends REST_Controller {
 
 		foreach ($models as $value) {
 			$obj = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			isset($value->type) 			? $obj->type 			= $value->type : "";
-			isset($value->name) 			? $obj->name 			= $value->name : "";
-			isset($value->abbr) 			? $obj->abbr 			= $value->abbr : "";
-			isset($value->main_bloc) 		? $obj->main_bloc 		= intval($value->main_bloc) : 0;
-			isset($value->main_pole) 		? $obj->main_pole 		= intval($value->main_pole) : 0;
-			isset($value->branch) 			? $obj->branch_id 		= $value->branch->id : "";
+			
+			isset($value->warehouse_id) 	? $obj->warehouse_id 		= $value->warehouse_id: "";
+			isset($value->location_type_id) ? $obj->location_type_id 	= $value->location_type_id: "";
+			isset($value->type) 			? $obj->type 				= $value->type : "";
+			isset($value->nubmer) 			? $obj->nubmer 				= $value->nubmer : "";
+			isset($value->name) 			? $obj->name 				= $value->name : "";
+			isset($value->abbr) 			? $obj->abbr 				= $value->abbr : "";
+			isset($value->main_bloc) 		? $obj->main_bloc 			= intval($value->main_bloc) : 0;
+			isset($value->main_pole) 		? $obj->main_pole 			= intval($value->main_pole) : 0;
+			isset($value->branch) 			? $obj->branch_id 			= $value->branch->id : "";
 			$obj->sync = 1;
 			if($obj->save()){
 				//Respsone
 				$license = $obj->branch->get();
 				$data["results"][] = array(					
-					"id" 			=> $obj->id,
-					"type" 			=> $obj->type,
-					"name" 			=> $obj->name,
-					"abbr" 			=> $obj->abbr,
-					"main_bloc" 	=> $obj->main_bloc,
-					"main_pole" 	=> $obj->main_pole,
-					"branch" 		=> array('id' => $license->id, 'name' => $license->name)	
+					"id" 				=> $obj->id,
+					"warehouse_id"  	=> $obj->warehouse_id,
+		 			"location_type_id"	=> $obj->location_type_id,
+					"type" 				=> $obj->type,
+					"nubmer" 			=> $obj->nubmer,
+					"name" 				=> $obj->name,
+					"abbr" 				=> $obj->abbr,
+					"main_bloc" 		=> $obj->main_bloc,
+					"main_pole" 		=> $obj->main_pole,
+					"branch" 			=> array('id' => $license->id, 'name' => $license->name)	
 				);				
 			}		
 		}
@@ -108,31 +122,37 @@ class Locations extends REST_Controller {
 	//PUT
 	function index_put() {
 		$models = json_decode($this->put('models'));
-		$data["results"] = array();
+		$data["results"] = [];
 		$data["count"] = 0;
 
 		foreach ($models as $value) {			
 			$obj = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->get_by_id($value->id);
-		
-			isset($value->name)? 		$obj->name 		= $value->name: "";
-			isset($value->abbr)?		$obj->abbr 		= $value->abbr: "";
-			isset($value->branch->id)? 	$obj->branch_id 	= $value->branch->id: "";
-			isset($value->type)? 		$obj->type 		= $value->type: "";
-			isset($value->main_bloc)? 	$obj->main_bloc 	= intval($value->main_bloc): 0;
-			isset($value->main_pole)? 	$obj->main_pole 	= intval($value->main_pole): 0;
+			
+			isset($value->warehouse_id) 		? $obj->warehouse_id 		= $value->warehouse_id: "";
+			isset($value->location_type_id) 	? $obj->location_type_id 	= $value->location_type_id: "";
+			isset($value->nubmer) 				? $obj->nubmer 				= $value->nubmer : "";
+			isset($value->name)? 				$obj->name 				= $value->name: "";			
+			isset($value->abbr)?				$obj->abbr 				= $value->abbr: "";
+			isset($value->branch->id)? 			$obj->branch_id 		= $value->branch->id: "";
+			isset($value->type)? 				$obj->type 				= $value->type: "";
+			isset($value->main_bloc)? 			$obj->main_bloc 		= intval($value->main_bloc): 0;
+			isset($value->main_pole)? 			$obj->main_pole 		= intval($value->main_pole): 0;
 			$obj->sync = 1;
 			if($obj->save()){				
 				//Results
 				$license = $obj->branch->get();
 				$data["results"][] = array(
-					"id" 			=> $obj->id,
-					"name" 			=> $obj->name,
-					"abbr" 			=> $obj->abbr,
-					"main_bloc" 	=> $obj->main_bloc,
-					"main_pole" 	=> $obj->main_pole,
-					"type" 			=> $obj->type,
-					"branch" 		=> array('id' => $license->id, 'name' => $license->name)
+					"id" 				=> $obj->id,
+					"warehouse_id"  	=> $obj->warehouse_id,
+		 			"location_type_id"	=> $obj->location_type_id,
+		 			"nubmer" 			=> $obj->nubmer,
+					"name" 				=> $obj->name,
+					"abbr" 				=> $obj->abbr,
+					"main_bloc" 		=> $obj->main_bloc,
+					"main_pole" 		=> $obj->main_pole,
+					"type" 				=> $obj->type,
+					"branch" 			=> array('id' => $license->id, 'name' => $license->name)
 				);						
 			}
 		}

@@ -80,14 +80,14 @@ class Ops extends REST_Controller {
 				// 	// 	"null" 		=> FALSE,
 				// 	// 	"default" 	=> 0
 				// 	// ),
-				// 	"barcode" => array(
+				// 	"number" => array(
 				// 		"type" 		=> "VARCHAR",
-				// 		"constraint"=> "255",
+				// 		"constraint"=> 255,
 				// 		"null" 		=> FALSE,
-				// 		"default" 	=> ""
+				// 		"default" 	=> ''
 				// 	)
 				// );
-				// $data['results'][] = $this->dbforge->add_column("items", $fields);
+				// $data['results'][] = $this->dbforge->add_column("locations", $fields);
 				
 			    // Modify fields
 			 // 	$fields = array(
