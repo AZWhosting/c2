@@ -83,14 +83,14 @@ class Ops extends REST_Controller {
 				// 	// 	"null" 		=> FALSE,
 				// 	// 	"default" 	=> 0
 				// 	// ),
-				// 	"number" => array(
-				// 		"type" 		=> "VARCHAR",
-				// 		"constraint"=> 255,
-				// 		"null" 		=> FALSE,
-				// 		"default" 	=> ''
+				// 	"created_at" => array(
+				// 		"type" 		=> "DATE"
+				// 	),
+				// 	"updated_at" => array(
+				// 		"type" 		=> "DATE"
 				// 	)
 				// );
-				// $data['results'][] = $this->dbforge->add_column("locations", $fields);
+				// $data['results'][] = $this->dbforge->add_column("bin_locations", $fields);
 				
 			    // Modify fields
 			 // 	$fields = array(
@@ -101,12 +101,12 @@ class Ops extends REST_Controller {
 				// 	// 	'null' 		=> FALSE,
 				// 	// 	'default' 	=> 1
 				// 	// ),
-				// 	'bin_location' => array(
-				// 		'name' 		=> 'number',//New Field Name 
-				// 		'type'		=> 'VARCHAR',
-				// 		'constraint'=> '500',
+				// 	'item_id' => array(
+				// 		'name' 		=> 'warehouse_id',//New Field Name 
+				// 		'type'		=> 'INT',
+				// 		'constraint'=> 1,
 				// 		'null' 		=> FALSE,
-				// 		'default' 	=> ''
+				// 		'default' 	=> 0
 				// 	)
 				// );
 				// $data['results'][] = $this->dbforge->modify_column('bin_locations', $fields);

@@ -2,7 +2,7 @@
 
 require APPPATH.'/libraries/REST_Controller.php';
 
-class Item_locations extends REST_Controller {	
+class Bin_locations extends REST_Controller {	
 	public $_database;
 	public $server_host;
 	public $server_user;
@@ -30,7 +30,7 @@ class Item_locations extends REST_Controller {
 		$data["results"] = [];
 		$data["count"] = 0;
 		
-		$obj = new Item_location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$obj = new Bin_location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		
 		//Sort
 		if(!empty($sort) && isset($sort)){
@@ -77,7 +77,7 @@ class Item_locations extends REST_Controller {
 		$models = json_decode($this->post('models'));
 
 		foreach ($models as $value) {
-			$obj = new Item_location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$obj = new Bin_location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 			isset($value->number) 	? $obj->number 	= $value->number : "";
 			isset($value->name) 	? $obj->name 	= $value->name : "";
@@ -103,7 +103,7 @@ class Item_locations extends REST_Controller {
 		$data["count"] = 0;
 
 		foreach ($models as $value) {			
-			$obj = new Item_location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$obj = new Bin_location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->get_by_id($value->id);
 		
 			isset($value->number) 	? $obj->number 	= $value->number : "";
@@ -128,7 +128,7 @@ class Item_locations extends REST_Controller {
 		$models = json_decode($this->delete('models'));
 
 		foreach ($models as $key => $value) {
-			$obj = new Item_location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$obj = new Bin_location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->where("id", $value->id)->get();
 			
 			$data["results"][] = array(
@@ -142,5 +142,5 @@ class Item_locations extends REST_Controller {
 	}
 	
 }
-/* End of file Item_location.php */
-/* Item_location: ./application/controllers/api/Item_location.php */
+/* End of file Bin_location.php */
+/* Bin_location: ./application/controllers/api/Bin_location.php */

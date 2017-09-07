@@ -39,11 +39,11 @@ class Location extends DataMapper {
 		'contact' => array(
 			'class' => 'customer',
 			'other_field' => 'location'
+		),
+		'bin_location' => array(
+			'class' => 'bin_location',
+			'other_field' => 'location'
 		)
-		// 'wlocation' => array(
-		// 	'class' => 'contact',
-		// 	'other_field' => 'wlocation'
-		// )		
 	);
 
 	public function __construct($id = null, $server_name = null, $db_username = null, $server_password = null, $db = null) {	

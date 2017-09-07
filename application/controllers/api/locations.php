@@ -24,8 +24,8 @@ class Locations extends REST_Controller {
 	//GET
 	function index_get() {		
 		$filter 	= $this->get("filter");
-		$page 		= $this->get('page');
-		$limit 		= $this->get('limit');
+		$page 		= $this->get('page') !== false ? $this->get('page') : 1;
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
 		$sort 	 	= $this->get("sort");
 		$data["results"] = [];
 		$data["count"] = 0;

@@ -1,13 +1,48 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Item_location extends DataMapper {	
+class Bin_location extends DataMapper {	
 	// protected $created_field = "created_at";
 	// protected $updated_field = "updated_at";
 
 	public $has_one = array(
+		'warehouse' => array(
+			'class' => 'warehouse',
+			'other_field' => 'bin_location'
+		),
+		'location' => array(
+			'class' => 'location',
+			'other_field' => 'bin_location'
+		),
+		'zone' => array(
+			'class' => 'zone',
+			'other_field' => 'bin_location'
+		),
+		'section' => array(
+			'class' => 'section',
+			'other_field' => 'bin_location'
+		),
+		'rack' => array(
+			'class' => 'rack',
+			'other_field' => 'bin_location'
+		),
+		'level' => array(
+			'class' => 'level',
+			'other_field' => 'bin_location'
+		),
+		'position' => array(
+			'class' => 'position',
+			'other_field' => 'bin_location'
+		)
+	);
+
+	public $has_many = array(
 		'item' => array(
 			'class' => 'item',
-			'other_field' => 'item_location'
+			'other_field' => 'bin_location'
+		),
+		'item_line' => array(
+			'class' => 'item_line',
+			'other_field' => 'bin_location'
 		)
 	);
 

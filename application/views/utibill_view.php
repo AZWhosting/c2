@@ -7616,10 +7616,11 @@
 	        	<!-- <div class="logo" style="width: 30%;">
 	            	<img data-bind="attr: { src: objLicense.image_url, alt: company.name, title: company.name }" />
 	            </div> -->
+
 	            <div class="cover-name-company" style="width: 100%; margin-left: 15px;">
-	            	<h2 style="text-align: center; line-height: 47px; margin-bottom: 0;">សហគ្រាសបន្ទាយមាស អេឡិទ្រីស៊ីធី    </h2>
-	                <p style="font-size: 12px; color: #000; text-align: center;">ភូមិទូកមាស ឃុំទូកមាសខាងលិច ស្រុកបន្ទាយមាស ខេត្តកំពត </p>
-	                
+	            	<h2 style="text-align: center; line-height: 47px; margin-bottom: 5px; width: 100%">សហគ្រាសបន្ទាយមាស អេឡិទ្រីស៊ីធី    </h2>
+	                <!-- <p style="font-size: 12px; color: #000; text-align: center;">ភូមិទូកមាស ឃុំទូកមាសខាងលិច ស្រុកបន្ទាយមាស ខេត្តកំពត </p> -->
+	                <p style="width: 100%; float: left; text-align: center; margin-bottom: 0;">Tel: 012345678</p>
 	            </div>
 	        </div>
 	        <h2 style="text-align: center; font-weight: 700; margin-bottom: 15px; width: 100%;">វិក្កយបត្រ INVOICE</h2>
@@ -7644,24 +7645,41 @@
 		    	</div>
 	    	</div> -->
 	    	<div class="row">
-    			<div class="span6">
+    			<div class="span6" style="padding-left: 0">
     				<table style="width: 100%; float: left;">
     					<tr >
-    						<td>ល.អ</td>
+    						<td>ល.អ :</td>
     						<td>KWS_A-19894</td>
     					</tr>
     					<tr>
-    						<td>ឈ្មោះ</td>
+    						<td>ឈ្មោះ :</td>
     						<td>តេង ពេញ</td>
     					</tr>
     					<tr>
-    						<td>ប្លុក</td>
+    						<td>ប្លុក :</td>
     						<td>A1-ភូមិស៊ីធរ</td>
     					</tr>
     				</table>
     			</div>
-    			<div class="span6">
-    				efv
+    			<div class="span6" style="padding-right: 0">
+    				<table style="width: 100%; float: right; text-align: right; line-height: 22px;">
+    					<tr >
+    						<td>កូដកុងទ័រ :</td>
+    						<td>A-1-9894</td>
+    					</tr>
+    					<tr>
+    						<td>ថ្ងៃចេញវិ.ក :</td>
+    						<td>30-កញ្ញា-2017</td>
+    					</tr>
+    					<tr>
+    						<td>ពីថ្ងៃទី :</td>
+    						<td>30-សីហា-2017</td>
+    					</tr>
+    					<tr>
+    						<td>ដល់ថ្ងៃទី :</td>
+    						<td>29-កញ្ញា-2017</td>
+    					</tr>
+    				</table>
     			</div>
 	    	</div>
 	        <div class="row">

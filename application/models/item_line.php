@@ -20,6 +20,10 @@ class Item_line extends DataMapper {
 		'item' => array(
 			'class' => 'item',
 			'other_field' => 'item_line'
+		),
+		'bin_location' => array(
+			'class' => 'bin_location',
+			'other_field' => 'item_line'
 		)
 	);
 

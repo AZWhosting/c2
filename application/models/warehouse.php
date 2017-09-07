@@ -8,6 +8,10 @@ class Warehouse extends DataMapper {
 		'location' => array(
 			'class' => 'location',
 			'other_field' => 'warehouse'
+		),
+		'bin_location' => array(
+			'class' => 'bin_location',
+			'other_field' => 'warehouse'
 		)
 	);
 
