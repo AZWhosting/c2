@@ -167,10 +167,10 @@ class Accounting_modules extends REST_Controller {
 		$incomeDr = 0;
 		$incomeCr = 0;
 		foreach ($income as $value) {
-			if($value->dr>0){
+			if($value->dr!==0){
 				$incomeDr += floatval($value->dr) / floatval($value->transaction_rate);
 			}
-			if($value->cr>0){
+			if($value->cr!==0){
 				$incomeCr += floatval($value->cr) / floatval($value->transaction_rate);
 			}	
 		}
@@ -194,10 +194,10 @@ class Accounting_modules extends REST_Controller {
 		$expenseDr = 0;
 		$expenseCr = 0;
 		foreach ($expense as $value) {
-			if($value->dr>0){
+			if($value->dr!==0){
 				$expenseDr += floatval($value->dr) / floatval($value->transaction_rate);
 			}
-			if($value->cr>0){
+			if($value->cr!==0){
 				$expenseCr += floatval($value->cr) / floatval($value->transaction_rate);
 			}	
 		}
@@ -219,10 +219,10 @@ class Accounting_modules extends REST_Controller {
 		$assetDr = 0;
 		$assetCr = 0;
 		foreach ($asset as $value) {			
-			if($value->dr>0){
+			if($value->dr!==0){
 				$assetDr += floatval($value->dr) / floatval($value->transaction_rate);
 			}
-			if($value->cr>0){
+			if($value->cr!==0){
 				$assetCr += floatval($value->cr) / floatval($value->transaction_rate);
 			}	
 		}
@@ -244,10 +244,10 @@ class Accounting_modules extends REST_Controller {
 		$liabilityDr = 0;
 		$liabilityCr = 0;
 		foreach ($liability as $value) {			
-			if($value->dr>0){
+			if($value->dr!==0){
 				$liabilityDr += floatval($value->dr) / floatval($value->transaction_rate);
 			}
-			if($value->cr>0){
+			if($value->cr!==0){
 				$liabilityCr += floatval($value->cr) / floatval($value->transaction_rate);
 			}	
 		}
@@ -297,10 +297,10 @@ class Accounting_modules extends REST_Controller {
 		$incomeDr = 0;
 		$incomeCr = 0;
 		foreach ($income as $value) {			
-			if($value->dr>0){
+			if($value->dr!==0){
 				$incomeDr += floatval($value->dr) / floatval($value->transaction_rate);
 			}
-			if($value->cr>0){
+			if($value->cr!==0){
 				$incomeCr += floatval($value->cr) / floatval($value->transaction_rate);
 			}	
 		}
@@ -324,10 +324,10 @@ class Accounting_modules extends REST_Controller {
 		$expenseDr = 0;
 		$expenseCr = 0;
 		foreach ($expense as $value) {			
-			if($value->dr>0){
+			if($value->dr!==0){
 				$expenseDr += floatval($value->dr) / floatval($value->transaction_rate);
 			}
-			if($value->cr>0){
+			if($value->cr!==0){
 				$expenseCr += floatval($value->cr) / floatval($value->transaction_rate);
 			}	
 		}
@@ -351,10 +351,10 @@ class Accounting_modules extends REST_Controller {
 		$expenseEBITDr = 0;
 		$expenseEBITCr = 0;
 		foreach ($expenseEBIT as $value) {			
-			if($value->dr>0){
+			if($value->dr!==0){
 				$expenseEBITDr += floatval($value->dr) / floatval($value->transaction_rate);
 			}
-			if($value->cr>0){
+			if($value->cr!==0){
 				$expenseEBITCr += floatval($value->cr) / floatval($value->transaction_rate);
 			}	
 		}
@@ -377,10 +377,10 @@ class Accounting_modules extends REST_Controller {
 		$assetDr = 0;
 		$assetCr = 0;
 		foreach ($asset as $value) {			
-			if($value->dr>0){
+			if($value->dr!==0){
 				$assetDr += floatval($value->dr) / floatval($value->transaction_rate);
 			}
-			if($value->cr>0){
+			if($value->cr!==0){
 				$assetCr += floatval($value->cr) / floatval($value->transaction_rate);
 			}	
 		}
@@ -403,10 +403,10 @@ class Accounting_modules extends REST_Controller {
 		$quickCurrentAssetDr = 0;
 		$quickCurrentAssetCr = 0;
 		foreach ($quickCurrentAsset as $value) {			
-			if($value->dr>0){
+			if($value->dr!==0){
 				$quickCurrentAssetDr += floatval($value->dr) / floatval($value->transaction_rate);
 			}
-			if($value->cr>0){
+			if($value->cr!==0){
 				$quickCurrentAssetCr += floatval($value->cr) / floatval($value->transaction_rate);
 			}	
 		}
@@ -429,10 +429,10 @@ class Accounting_modules extends REST_Controller {
 		$currentAssetDr = 0;
 		$currentAssetCr = 0;
 		foreach ($currentAsset as $value) {			
-			if($value->dr>0){
+			if($value->dr!==0){
 				$currentAssetDr += floatval($value->dr) / floatval($value->transaction_rate);
 			}
-			if($value->cr>0){
+			if($value->cr!==0){
 				$currentAssetCr += floatval($value->cr) / floatval($value->transaction_rate);
 			}	
 		}
@@ -455,10 +455,10 @@ class Accounting_modules extends REST_Controller {
 		$cashRatioDr = 0;
 		$cashRatioCr = 0;
 		foreach ($cashRatio as $value) {			
-			if($value->dr>0){
+			if($value->dr!==0){
 				$cashRatioDr += floatval($value->dr) / floatval($value->transaction_rate);
 			}
-			if($value->cr>0){
+			if($value->cr!==0){
 				$cashRatioCr += floatval($value->cr) / floatval($value->transaction_rate);
 			}	
 		}
@@ -481,10 +481,10 @@ class Accounting_modules extends REST_Controller {
 		$liabilityDr = 0;
 		$liabilityCr = 0;
 		foreach ($liability as $value) {			
-			if($value->dr>0){
+			if($value->dr!==0){
 				$liabilityDr += floatval($value->dr) / floatval($value->transaction_rate);
 			}
-			if($value->cr>0){
+			if($value->cr!==0){
 				$liabilityCr += floatval($value->cr) / floatval($value->transaction_rate);
 			}	
 		}
@@ -507,10 +507,10 @@ class Accounting_modules extends REST_Controller {
 		$currentLiabilityDr = 0;
 		$currentLiabilityCr = 0;
 		foreach ($currentLiability as $value) {			
-			if($value->dr>0){
+			if($value->dr!==0){
 				$currentLiabilityDr += floatval($value->dr) / floatval($value->transaction_rate);
 			}
-			if($value->cr>0){
+			if($value->cr!==0){
 				$currentLiabilityCr += floatval($value->cr) / floatval($value->transaction_rate);
 			}	
 		}
@@ -534,10 +534,10 @@ class Accounting_modules extends REST_Controller {
 		$cogsDr = 0;
 		$cogsCr = 0;
 		foreach ($cogs as $value) {			
-			if($value->dr>0){
+			if($value->dr!==0){
 				$cogsDr += floatval($value->dr) / floatval($value->transaction_rate);
 			}
-			if($value->cr>0){
+			if($value->cr!==0){
 				$cogsCr += floatval($value->cr) / floatval($value->transaction_rate);
 			}	
 		}
@@ -560,10 +560,10 @@ class Accounting_modules extends REST_Controller {
 		$inventoryDr = 0;
 		$inventoryCr = 0;
 		foreach ($inventory as $value) {			
-			if($value->dr>0){
+			if($value->dr!==0){
 				$inventoryDr += floatval($value->dr) / floatval($value->transaction_rate);
 			}
-			if($value->cr>0){
+			if($value->cr!==0){
 				$inventoryCr += floatval($value->cr) / floatval($value->transaction_rate);
 			}	
 		}
@@ -586,10 +586,10 @@ class Accounting_modules extends REST_Controller {
 		$arDr = 0;
 		$arCr = 0;
 		foreach ($ar as $value) {			
-			if($value->dr>0){
+			if($value->dr!==0){
 				$arDr += floatval($value->dr) / floatval($value->transaction_rate);
 			}
-			if($value->cr>0){
+			if($value->cr!==0){
 				$arCr += floatval($value->cr) / floatval($value->transaction_rate);
 			}	
 		}
@@ -612,10 +612,10 @@ class Accounting_modules extends REST_Controller {
 		$apDr = 0;
 		$apCr = 0;
 		foreach ($ap as $value) {			
-			if($value->dr>0){
+			if($value->dr!==0){
 				$apDr += floatval($value->dr) / floatval($value->transaction_rate);
 			}
-			if($value->cr>0){
+			if($value->cr!==0){
 				$apCr += floatval($value->cr) / floatval($value->transaction_rate);
 			}	
 		}
@@ -1275,10 +1275,10 @@ class Accounting_modules extends REST_Controller {
 		foreach ($balanceSheet as $value) {
 			$dr = 0;
 			$cr = 0;
-			if($value->dr>0){
+			if($value->dr!==0){
 				$dr = floatval($value->dr) / floatval($value->transaction_rate);
 			}
-			if($value->cr>0){
+			if($value->cr!==0){
 				$cr = floatval($value->cr) / floatval($value->transaction_rate);
 			}
 
@@ -1337,10 +1337,10 @@ class Accounting_modules extends REST_Controller {
 		foreach ($currPL as $value) {
 			$dr = 0;
 			$cr = 0;
-			if($value->dr>0){
+			if($value->dr!==0){
 				$dr = floatval($value->dr) / floatval($value->transaction_rate);
 			}
-			if($value->cr>0){
+			if($value->cr!==0){
 				$cr = floatval($value->cr) / floatval($value->transaction_rate);
 			}			
 
@@ -1396,10 +1396,10 @@ class Accounting_modules extends REST_Controller {
 		$sumDr = 0;
 		$sumCr = 0;		
 		foreach ($prevPL as $value) {			
-			if($value->dr>0){
+			if($value->dr!==0){
 				$sumDr += floatval($value->dr) / floatval($value->transaction_rate);
 			}
-			if($value->cr>0){
+			if($value->cr!==0){
 				$sumCr += floatval($value->cr) / floatval($value->transaction_rate);
 			}		
 		}
@@ -1436,10 +1436,10 @@ class Accounting_modules extends REST_Controller {
 		$retainEarningType = $retainEarningAccount->account_type_name;
 
 		foreach ($retainEarning as $value) {
-			if($value->dr>0){
+			if($value->dr!==0){
 				$sumDr += floatval($value->dr) / floatval($value->transaction_rate);
 			}
-			if($value->cr>0){
+			if($value->cr!==0){
 				$sumCr += floatval($value->cr) / floatval($value->transaction_rate);
 			}		
 		}
@@ -1858,10 +1858,10 @@ class Accounting_modules extends REST_Controller {
 		$sumDr = 0;
 		$sumCr = 0;		
 		foreach ($prevPL as $value) {			
-			if($value->dr>0){
+			if($value->dr!==0){
 				$sumDr += floatval($value->dr) / floatval($value->transaction_rate);
 			}
-			if($value->cr>0){
+			if($value->cr!==0){
 				$sumCr += floatval($value->cr) / floatval($value->transaction_rate);
 			}		
 		}
@@ -1898,10 +1898,10 @@ class Accounting_modules extends REST_Controller {
 		$retainEarningType = $retainEarningAccount->account_type_name;
 
 		foreach ($retainEarning as $value) {
-			if($value->dr>0){
+			if($value->dr!==0){
 				$sumDr += floatval($value->dr) / floatval($value->transaction_rate);
 			}
-			if($value->cr>0){
+			if($value->cr!==0){
 				$sumCr += floatval($value->cr) / floatval($value->transaction_rate);
 			}		
 		}
@@ -1942,10 +1942,10 @@ class Accounting_modules extends REST_Controller {
 		$sumDr = 0;
 		$sumCr = 0;		
 		foreach ($currPL as $value) {			
-			if($value->dr>0){
+			if($value->dr!==0){
 				$sumDr += floatval($value->dr) / floatval($value->transaction_rate);
 			}
-			if($value->cr>0){
+			if($value->cr!==0){
 				$sumCr += floatval($value->cr) / floatval($value->transaction_rate);
 			}		
 		}
