@@ -101,8 +101,12 @@ class Locations extends REST_Controller {
 		foreach ($models as $value) {
 			$obj = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			
+			if(isset($value->location_type)){
+				$obj->location_type_id = $value->location_type->id;
+			}
+			
 			isset($value->warehouse_id) 	? $obj->warehouse_id 		= $value->warehouse_id: "";
-			isset($value->location_type_id) ? $obj->location_type_id 	= $value->location_type_id: "";
+			// isset($value->location_type_id) ? $obj->location_type_id 	= $value->location_type_id: "";
 			isset($value->type) 			? $obj->type 				= $value->type : "";
 			isset($value->number) 			? $obj->number 				= $value->number : "";
 			isset($value->name) 			? $obj->name 				= $value->name : "";
@@ -142,9 +146,13 @@ class Locations extends REST_Controller {
 		foreach ($models as $value) {			
 			$obj = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->get_by_id($value->id);
+
+			if(isset($value->location_type)){
+				$obj->location_type_id = $value->location_type->id;
+			}
 			
 			isset($value->warehouse_id) 		? $obj->warehouse_id 		= $value->warehouse_id: "";
-			isset($value->location_type_id) 	? $obj->location_type_id 	= $value->location_type_id: "";
+			// isset($value->location_type_id) 	? $obj->location_type_id 	= $value->location_type_id: "";
 			isset($value->number) 				? $obj->number 				= $value->number : "";
 			isset($value->name)? 				$obj->name 				= $value->name: "";			
 			isset($value->abbr)?				$obj->abbr 				= $value->abbr: "";
