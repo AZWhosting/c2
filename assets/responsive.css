@@ -55,7 +55,10 @@ input[type="radio"], input[type="checkbox"]{
 .box-generic.bg-action-button .span4 a:hover{
   text-decoration: underline;
 }
-
+.k-button.k-state-active, .k-button:active{
+  background: #203864 !important;
+  border-color: #203864 !important;
+}
 
 .bg-action-button .btn-btn{
   color: #FFF;

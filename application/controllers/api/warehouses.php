@@ -55,15 +55,21 @@ class Warehouses extends REST_Controller {
 		}
 
 		//Results
-		$obj->get_paged_iterated($page, $limit);
-		$data["count"] = $obj->paged->total_rows;		
+		if($page && $limit){
+			$obj->get_paged_iterated($page, $limit);
+			$data["count"] = $obj->paged->total_rows;
+		}else{
+			$obj->get_iterated();
+			$data["count"] = $obj->result_count();
+		}
 		
 		if($obj->result_count()>0){
 			foreach ($obj as $value) {
 		 		$data["results"][] = array(	
-		 			"id"     	=> $value->id,		   	
-				   	"number" 	=> $value->number,
-				   	"name" 		=> $value->name			
+		 			"id" 			=> $value->id,
+					"number" 		=> $value->number,
+					"name" 			=> $value->name,
+					"address" 		=> $value->address
 		 		);
 			}
 		}
@@ -79,15 +85,17 @@ class Warehouses extends REST_Controller {
 		foreach ($models as $value) {
 			$obj = new Warehouse(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
-			isset($value->number) 	? $obj->number 	= $value->number : "";
-			isset($value->name) 	? $obj->name 	= $value->name : "";
+			isset($value->number) 	? $obj->number 		= $value->number : "";
+			isset($value->name) 	? $obj->name 		= $value->name : "";
+			isset($value->address) 	? $obj->address 	= $value->address : "";
 
 			if($obj->save()){
 				//Respsone
 				$data["results"][] = array(					
-					"id" 		=> $obj->id,
-					"number" 	=> $obj->number,
-					"name" 		=> $obj->name
+					"id" 			=> $obj->id,
+					"number" 		=> $obj->number,
+					"name" 			=> $obj->name,
+					"address" 		=> $obj->address
 				);				
 			}		
 		}
@@ -106,15 +114,17 @@ class Warehouses extends REST_Controller {
 			$obj = new Warehouse(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->get_by_id($value->id);
 		
-			isset($value->number) 	? $obj->number 	= $value->number : "";
-			isset($value->name) 	? $obj->name 	= $value->name : "";
+			isset($value->number) 	? $obj->number 		= $value->number : "";
+			isset($value->name) 	? $obj->name 		= $value->name : "";
+			isset($value->address) 	? $obj->address 	= $value->address : "";
 
 			if($obj->save()){				
 				//Results
 				$data["results"][] = array(
 					"id" 			=> $obj->id,
 					"number" 		=> $obj->number,
-					"name" 			=> $obj->name
+					"name" 			=> $obj->name,
+					"address" 		=> $obj->address
 				);						
 			}
 		}

@@ -83,14 +83,8 @@ class Ops extends REST_Controller {
 				// 	// 	"null" 		=> FALSE,
 				// 	// 	"default" 	=> 0
 				// 	// ),
-				// 	"created_at" => array(
-				// 		"type" 		=> "DATE"
-				// 	),
-				// 	"updated_at" => array(
-				// 		"type" 		=> "DATE"
-				// 	)
 				// );
-				// $data['results'][] = $this->dbforge->add_column("bin_locations", $fields);
+				// $data['results'][] = $this->dbforge->add_column("warehouses", $fields);
 				
 			    // Modify fields
 			 // 	$fields = array(

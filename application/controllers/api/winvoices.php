@@ -482,11 +482,7 @@ class Winvoices extends REST_Controller {
 	    		if(isset($value["operator"])) {
 					$table->{$value["operator"]}($value["field"], $value["value"]);
 				} else {
-					if($value["field"]=="is_recurring"){
-	    				$is_recurring = $value["value"];
-	    			}else{
-	    				$table->where($value["field"], $value["value"]);
-	    			}
+	    			$table->where($value["field"], $value["value"]);
 				}
 			}
 		}
@@ -505,43 +501,38 @@ class Winvoices extends REST_Controller {
 		if($table->exists()){
 			foreach($table as $row) {
 				$meter = null;
-				$invoiceLine = new winvoice_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$invoiceLine->include_related('meter_record/meter', array("id", "number", "worder", "box_id"));
+				$mtnumber = "";
+				$mtorder = "";
+				$mtid = "";
 				$location = $row->location->get_raw();
+				$invoiceLine = new Winvoice_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				$invoiceLine->where('transaction_id', $row->id);
-				$invoiceLine->limit(1)->get();
+				$invoiceLine->get();
 				if($invoiceLine->exists()) {
 					foreach($invoiceLine as $line) {
-						$locale = NULL;
-						$box = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-						$box->where("id", $line->meter_record_meter_box_id)->limit(1)->get();
-
-						$meter = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-						$meter->where("id", $line->meter_record_meter_id)->limit(1)->get();
-						if($meter->exists()) {
-							$plan = $meter->plan->get();
-							$l = $plan->currency->get();
-							$locale = $l->locale;
-						}
-
-						if($box->exists()){
-							$meter = array(
-								'meter_number'   => $line->meter_record_meter_number,
-								'meter_order'   => $line->meter_record_meter_worder,
-								'meter_id'   => $line->meter_record_meter_id,
-								'location' => $location->result(),
-								'box' => $box->name,
-								'plan_locale' => $locale
-							);
-						}else{
-							$meter = array(
-								'meter_number'   => $line->meter_record_meter_number,
-								'meter_order'   => $line->meter_record_meter_worder,
-								'meter_id'   => $line->meter_record_meter_id,
-								'location' => $location->result(),
-								'box' => "",
-								'plan_locale' => $locale
-							);
+						if($line->type == "usage"){
+							$locale = NULL;
+							$meter = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+							$meter->where("id", $line->item_id)->limit(1)->get();
+							if($meter->exists()) {
+								$plan = $meter->plan->get();
+								$l = $plan->currency->get();
+								$locale = $l->locale;
+								$boxname = "";
+								if($meter->box_id != 0){
+									$box = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+									$box->where("id", $meter->box_id)->limit(1)->get();
+									$boxname = $box->name;
+								}
+								$meter = array(
+									'meter_number'   => $meter->number,
+									'meter_order'   => $meter->worder,
+									'meter_id'   => $meter->id,
+									'location' => $location->result(),
+									'box' => $boxname,
+									'plan_locale' => $locale
+								);
+							}
 						}
 					}
 				}
@@ -668,7 +659,6 @@ class Winvoices extends REST_Controller {
 						'abbr' => $contact->abbr,
 						'number' => $contact->number,
 						'address'=> isset($contact->address)?$contact->address:''
-						//'code' 	 => $contact->utility_abbr ."-".$contact->utility_code
 					),
 					'amount_remain' => floatval($amountOwed),
 					'meter'=> $meter,
@@ -677,7 +667,6 @@ class Winvoices extends REST_Controller {
 
 			}
 		}
-		//$this->response(array('results'=> $data, 'count'=> count($data)), 200);
 		//Response Data
 		$this->response($data, 200);
 	}

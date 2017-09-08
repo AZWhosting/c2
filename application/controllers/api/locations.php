@@ -24,8 +24,8 @@ class Locations extends REST_Controller {
 	//GET
 	function index_get() {		
 		$filter 	= $this->get("filter");
-		$page 		= $this->get('page') !== false ? $this->get('page') : 1;
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
 		$sort 	 	= $this->get("sort");
 		$data["results"] = [];
 		$data["count"] = 0;
@@ -55,23 +55,37 @@ class Locations extends REST_Controller {
 		}
 
 		//Results
-		$obj->get_paged_iterated($page, $limit);
-		$data["count"] = $obj->paged->total_rows;		
+		if($page && $limit){
+			$obj->get_paged_iterated($page, $limit);
+			$data["count"] = $obj->paged->total_rows;
+		}else{
+			$obj->get_iterated();
+			$data["count"] = $obj->result_count();
+		}
 		
 		if($obj->result_count()>0){
 			foreach ($obj as $value) {	
-				$license = $value->branch->get();			
+				$license = $value->branch->get();
+
+				$location_type = [];
+				if($value->location_type_id>0){
+					$locationTypes = new Location_type();
+					$locationTypes->where("id", $value->location_type_id);
+					$location_type = $locationTypes->get_raw()->result()[0];
+				}
+
 		 		$data["results"][] = array(	
 		 			"id"     			=> $value->id,
 		 			"warehouse_id"  	=> $value->warehouse_id,
 		 			"location_type_id"	=> $value->location_type_id,
-				   	"nubmer" 			=> $value->nubmer,
+				   	"number" 			=> $value->number,
 				   	"name" 				=> $value->name,
 				   	"abbr" 				=> $value->abbr,
 				   	"type" 				=> $value->type,
 				   	"main_bloc" 		=> intval($value->main_bloc),
 				   	"main_pole" 		=> intval($value->main_pole),
-				   	"branch" 			=> array('id' => $license->id, 'name' => $license->name)			
+				   	"branch" 			=> array('id' => $license->id, 'name' => $license->name),
+				   	"location_type" 	=> $location_type			
 		 		);
 			}
 		}
@@ -90,7 +104,7 @@ class Locations extends REST_Controller {
 			isset($value->warehouse_id) 	? $obj->warehouse_id 		= $value->warehouse_id: "";
 			isset($value->location_type_id) ? $obj->location_type_id 	= $value->location_type_id: "";
 			isset($value->type) 			? $obj->type 				= $value->type : "";
-			isset($value->nubmer) 			? $obj->nubmer 				= $value->nubmer : "";
+			isset($value->number) 			? $obj->number 				= $value->number : "";
 			isset($value->name) 			? $obj->name 				= $value->name : "";
 			isset($value->abbr) 			? $obj->abbr 				= $value->abbr : "";
 			isset($value->main_bloc) 		? $obj->main_bloc 			= intval($value->main_bloc) : 0;
@@ -105,7 +119,7 @@ class Locations extends REST_Controller {
 					"warehouse_id"  	=> $obj->warehouse_id,
 		 			"location_type_id"	=> $obj->location_type_id,
 					"type" 				=> $obj->type,
-					"nubmer" 			=> $obj->nubmer,
+					"number" 			=> $obj->number,
 					"name" 				=> $obj->name,
 					"abbr" 				=> $obj->abbr,
 					"main_bloc" 		=> $obj->main_bloc,
@@ -131,7 +145,7 @@ class Locations extends REST_Controller {
 			
 			isset($value->warehouse_id) 		? $obj->warehouse_id 		= $value->warehouse_id: "";
 			isset($value->location_type_id) 	? $obj->location_type_id 	= $value->location_type_id: "";
-			isset($value->nubmer) 				? $obj->nubmer 				= $value->nubmer : "";
+			isset($value->number) 				? $obj->number 				= $value->number : "";
 			isset($value->name)? 				$obj->name 				= $value->name: "";			
 			isset($value->abbr)?				$obj->abbr 				= $value->abbr: "";
 			isset($value->branch->id)? 			$obj->branch_id 		= $value->branch->id: "";
@@ -146,7 +160,7 @@ class Locations extends REST_Controller {
 					"id" 				=> $obj->id,
 					"warehouse_id"  	=> $obj->warehouse_id,
 		 			"location_type_id"	=> $obj->location_type_id,
-		 			"nubmer" 			=> $obj->nubmer,
+		 			"number" 			=> $obj->number,
 					"name" 				=> $obj->name,
 					"abbr" 				=> $obj->abbr,
 					"main_bloc" 		=> $obj->main_bloc,

@@ -11,21 +11,7 @@ class Location_type extends DataMapper {
 		)
 	);
 
-	public function __construct($id = null, $server_name = null, $db_username = null, $server_password = null, $db = null) {	
-		$this->db_params = array(
-				'dbdriver' => 'mysql',
-				'pconnect' => true,
-				'db_debug' => true,
-				'cache_on' => false,
-				'char_set' => 'utf8',
-				'cachedir' => '',
-				'dbcollat' => 'utf8_general_ci',
-				'hostname' => 'banhji-db-instance.cwxbgxgq7thx.ap-southeast-1.rds.amazonaws.com',
-				'username' => 'mightyadmin',
-				'password' => 'banhji2016',
-				'database' => $db,
-				'prefix'   => ''
-			);
+	public function __construct($id = null) {
 		parent::__construct($id);
 	}
 }

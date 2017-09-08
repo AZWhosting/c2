@@ -2,7 +2,7 @@
 
 require APPPATH.'/libraries/REST_Controller.php';
 
-class Racks extends REST_Controller {	
+class Location_types extends REST_Controller {	
 	public $_database;
 	public $server_host;
 	public $server_user;
@@ -30,7 +30,7 @@ class Racks extends REST_Controller {
 		$data["results"] = [];
 		$data["count"] = 0;
 		
-		$obj = new Rack(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$obj = new Location_type();
 		
 		//Sort
 		if(!empty($sort) && isset($sort)){
@@ -66,15 +66,15 @@ class Racks extends REST_Controller {
 		if($obj->result_count()>0){
 			foreach ($obj as $value) {
 		 		$data["results"][] = array(	
-		 			"id"     	=> $value->id,
-		 			"number" 	=> $value->number,		   	
-				   	"name" 		=> $value->name			
+		 			"id"     		=> $value->id,
+				   	"name" 			=> $value->name,
+				   	"description" 	=> $value->description
 		 		);
 			}
 		}
 
 		//Response Data		
-		$this->response($data, 200);			
+		$this->response($data, 200);
 	}
 	
 	//POST
@@ -82,19 +82,19 @@ class Racks extends REST_Controller {
 		$models = json_decode($this->post('models'));
 
 		foreach ($models as $value) {
-			$obj = new Rack(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			
-			isset($value->number) 	? $obj->number 	= $value->number : "";
-			isset($value->name) 	? $obj->name 	= $value->name : "";
+			$obj = new Location_type();
+
+			isset($value->name) 		? $obj->name 			= $value->name : "";
+			isset($value->description) 	? $obj->description 	= $value->description : "";
 
 			if($obj->save()){
 				//Respsone
-				$data["results"][] = array(					
-					"id" 		=> $obj->id,
-					"number" 	=> $obj->number,
-					"name" 		=> $obj->name
-				);				
-			}		
+				$data["results"][] = array(
+					"id" 			=> $obj->id,
+					"name" 			=> $obj->name,
+					"description" 	=> $obj->description
+				);
+			}
 		}
 		$data["count"] = count($data["results"]);
 
@@ -108,18 +108,18 @@ class Racks extends REST_Controller {
 		$data["count"] = 0;
 
 		foreach ($models as $value) {			
-			$obj = new Rack(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$obj = new Location_type();
 			$obj->get_by_id($value->id);
-		
-			isset($value->number) 	? $obj->number 	= $value->number : "";
-			isset($value->name) 	? $obj->name 	= $value->name : "";
+			
+			isset($value->name) 		? $obj->name 			= $value->name : "";
+			isset($value->description) 	? $obj->description 	= $value->description : "";
 
 			if($obj->save()){				
 				//Results
 				$data["results"][] = array(
 					"id" 			=> $obj->id,
-					"number" 		=> $obj->number,
-					"name" 			=> $obj->name
+					"name" 			=> $obj->name,
+					"description" 	=> $obj->description
 				);						
 			}
 		}
@@ -133,7 +133,7 @@ class Racks extends REST_Controller {
 		$models = json_decode($this->delete('models'));
 
 		foreach ($models as $key => $value) {
-			$obj = new Rack(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$obj = new Location_type();
 			$obj->where("id", $value->id)->get();
 			
 			$data["results"][] = array(
@@ -147,5 +147,5 @@ class Racks extends REST_Controller {
 	}
 	
 }
-/* End of file Rack.php */
-/* Rack: ./application/controllers/api/Rack.php */
+/* End of file Location_type.php */
+/* Warehouse: ./application/controllers/api/Location_type.php */

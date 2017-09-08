@@ -61,9 +61,15 @@ class Bin_locations extends REST_Controller {
 		if($obj->exists()){
 			foreach ($obj as $value) {
 		 		$data["results"][] = array(	
-		 			"id"     	=> $value->id,		   	
-				   	"number" 	=> $value->number,
-				   	"name" 		=> $value->name			
+		 			"id"     			=> $value->id,
+		 			"warehouse_id"  	=> $value->warehouse_id,
+		 			"location_id"  		=> $value->location_id,
+		 			"zone_id"  			=> $value->zone_id,
+		 			"section_id"  		=> $value->section_id,
+		 			"rack_id"  			=> $value->rack_id,
+		 			"level_id"  		=> $value->level_id,
+		 			"position_id"  		=> $value->position_id,
+				   	"number" 			=> $value->number
 		 		);
 			}
 		}
@@ -79,15 +85,27 @@ class Bin_locations extends REST_Controller {
 		foreach ($models as $value) {
 			$obj = new Bin_location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
-			isset($value->number) 	? $obj->number 	= $value->number : "";
-			isset($value->name) 	? $obj->name 	= $value->name : "";
+			isset($value->warehouse_id) ? $obj->warehouse_id 	= $value->warehouse_id : "";
+			isset($value->location_id) 	? $obj->location_id 	= $value->location_id : "";
+			isset($value->zone_id) 		? $obj->zone_id 		= $value->zone_id : "";
+			isset($value->section_id) 	? $obj->section_id 		= $value->section_id : "";
+			isset($value->rack_id) 		? $obj->rack_id 		= $value->rack_id : "";
+			isset($value->level_id) 	? $obj->level_id 		= $value->level_id : "";
+			isset($value->position_id) 	? $obj->position_id 	= $value->position_id : "";
+			isset($value->number) 		? $obj->number 			= $value->number : "";
 
 			if($obj->save()){
 				//Respsone
 				$data["results"][] = array(					
-					"id" 		=> $obj->id,
-					"number" 	=> $obj->number,
-					"name" 		=> $obj->name
+					"id" 				=> $obj->id,
+					"warehouse_id"  	=> $obj->warehouse_id,
+		 			"location_id"  		=> $obj->location_id,
+		 			"zone_id"  			=> $obj->zone_id,
+		 			"section_id"  		=> $obj->section_id,
+		 			"rack_id"  			=> $obj->rack_id,
+		 			"level_id"  		=> $obj->level_id,
+		 			"position_id"  		=> $obj->position_id,
+				   	"number" 			=> $obj->number
 				);				
 			}		
 		}
@@ -105,16 +123,28 @@ class Bin_locations extends REST_Controller {
 		foreach ($models as $value) {			
 			$obj = new Bin_location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->get_by_id($value->id);
-		
-			isset($value->number) 	? $obj->number 	= $value->number : "";
-			isset($value->name) 	? $obj->name 	= $value->name : "";
-
+			
+			isset($value->warehouse_id) ? $obj->warehouse_id 	= $value->warehouse_id : "";
+			isset($value->location_id) 	? $obj->location_id 	= $value->location_id : "";
+			isset($value->zone_id) 		? $obj->zone_id 		= $value->zone_id : "";
+			isset($value->section_id) 	? $obj->section_id 		= $value->section_id : "";
+			isset($value->rack_id) 		? $obj->rack_id 		= $value->rack_id : "";
+			isset($value->level_id) 	? $obj->level_id 		= $value->level_id : "";
+			isset($value->position_id) 	? $obj->position_id 	= $value->position_id : "";
+			isset($value->number) 		? $obj->number 			= $value->number : "";
+			
 			if($obj->save()){				
 				//Results
 				$data["results"][] = array(
-					"id" 			=> $obj->id,
-					"number" 		=> $obj->number,
-					"name" 			=> $obj->name
+					"id" 				=> $obj->id,
+					"warehouse_id"  	=> $obj->warehouse_id,
+		 			"location_id"  		=> $obj->location_id,
+		 			"zone_id"  			=> $obj->zone_id,
+		 			"section_id"  		=> $obj->section_id,
+		 			"rack_id"  			=> $obj->rack_id,
+		 			"level_id"  		=> $obj->level_id,
+		 			"position_id"  		=> $obj->position_id,
+				   	"number" 			=> $obj->number
 				);						
 			}
 		}

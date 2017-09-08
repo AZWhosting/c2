@@ -113,16 +113,27 @@ class Readings extends REST_Controller {
 			$meter = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$meter->where('number', $value->meter_number)->get();
 			$current = intval($value->current);
-			$obj->meter_id 				= isset($meter->id)					?$meter->id: "";
-			$obj->previous 				= isset($value->previous)			?$value->previous: "";
-			$obj->current 				= isset($current)			?$current: "";
-			$obj->from_date 			= isset($value->from_date) 			? date('Y-m-d', strtotime($value->from_date)) : date('Y-m-d');
-			$obj->month_of 				= isset($value->month_of)			? date('Y-m-d', strtotime($value->month_of)): date('Y-m-d');
-			$obj->to_date 				= isset($value->to_date)			? date('Y-m-d', strtotime($value->to_date)):date('Y-m-d');
-			$obj->invoiced 				= isset($value->invoiced)    		? $value->invoiced : 0;
-			$obj->usage    = intval($current) - intval($value->previous);
+			$obj->meter_id 		= isset($meter->id)			? $meter->id : "";
+			$obj->previous 		= isset($value->previous)	? $value->previous : "";
+			$obj->current 		= isset($current)			? $current : "";
+			$oldcurrent = 0;
+			if($value->round == 1){
+				$digit = $meter->number_digit;
+				$oldcurrent =  pow(10, $digit);
+				$oldcurrent = $oldcurrent - intval($value->previous);
+				$obj->usage    = intval($oldcurrent) + intval($value->current);
+				$meter->round += 1;
+				$meter->save();
+				$obj->new_round = 1;
+			}else{
+				$obj->usage    = intval($current) - intval($value->previous);
+				$obj->new_round = 0;
+			}
+			$obj->from_date = isset($value->from_date) 	? date('Y-m-d', strtotime($value->from_date)) : date('Y-m-d');
+			$obj->month_of 	= isset($value->month_of)	? date('Y-m-d', strtotime($value->month_of)): date('Y-m-d');
+			$obj->to_date 	= isset($value->to_date)	? date('Y-m-d', strtotime($value->to_date)):date('Y-m-d');
+			$obj->invoiced 	=  0;
 			$obj->sync 	= 1;
-			
 			if($obj->save()){								
 				//Respsone
 				$data["results"][] = array(
@@ -135,7 +146,8 @@ class Readings extends REST_Controller {
 					"from_date"		=> $obj->from_date,
 					"month_of"		=> $obj->month_of,
 					"invoiced" 		=> $obj->invoiced,
-					"to_date"		=> $obj->to_date
+					"to_date"		=> $obj->to_date,
+					"usage" 		=> $obj->usage
 				);				
 			}			
 		}
@@ -195,8 +207,6 @@ class Readings extends REST_Controller {
 				$winvoiceLine->deleted = 1;
 				$winvoiceLine->save();
 
-				// if($invoiceStatus == 0) {
-				// $newObj = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				$obj->meter_id 				= $value->meter_id;
 				$obj->month_of 				= isset($value->month_of)			? date('Y-m-d', strtotime($value->month_of)): date('Y-m-d');
 				$obj->previous 				= isset($value->previous)			? $value->previous: "";
@@ -265,20 +275,13 @@ class Readings extends REST_Controller {
 		//Filter		
 		if(!empty($filters) && isset($filters)){			
 	    	foreach ($filters as $value) {
-	    		if(!empty($value["operator"]) && isset($value["operator"])){
-		    		// $obj->{$value["operator"]}($value["field"], $value["value"]);
-	    		}else{
-	    			$obj->where($value["field"], $value["value"]);
-	    		}
+	    		$obj->where($value["field"], $value["value"]);
 			}									 			
 		}			
 
 		//Get Result
 		$obj->where('activated', 1);
-		$obj->where('status', 1);
-		// $obj->where_related_record('invoiced', 0);
-		// $obj->get_paged_iterated($page, $limit);
-		// $data["count"] = $obj->paged->total_rows;		
+		$obj->where('status', 1);	
 		//Results
 		$obj->order_by("worder", "ASC");
 		if($page && $limit){
@@ -294,20 +297,11 @@ class Readings extends REST_Controller {
 				$date     = null;
 				$location = $value->location->get();
 				$contact = $value->contact->get();
-				$record = $value->record;//->limit(1)->order_by('id', 'desc')->get();
+				$record = $value->record;
 				if(!empty($filters) && isset($filters)){			
 			    	foreach ($filters as $f) {
 			    		if(!empty($f["operator"]) && isset($f["operator"])){
-				    		// $record->{$f["operator"]}($f["field"], $f["value"]);
-				    		//if($f['field'] === 'month_of <'){
-				    			//$date = date('Y-m-d', strtotime($f['value']));
-				    			//$record->where('month_of <', $f["value"]);
-				    			$record->where("invoiced <>", 1);
-
-				    		//} else {
-				    			//$record->where($f["field"], $f["value"]);
-				    		//}
-				    		// $record->where($f["field"], $f["value"]);
+				    		$record->where("invoiced <>", 1);
 			    		}
 					}									 			
 				}

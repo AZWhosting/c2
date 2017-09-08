@@ -3449,6 +3449,11 @@
                                         value: "current",
                                         background: "#496cad",
                                         color: "#ffffff"
+                                    },
+                                    {
+                                        value: "round",
+                                        background: "#496cad",
+                                        color: "#ffffff"
                                     }
                                 ]
                             });
@@ -3477,6 +3482,9 @@
                                         },
                                         {
                                             value: self.uploadDS.data()[i].current
+                                        },
+                                        {
+                                            value: 0
                                         }
                                     ]
                                 });
@@ -3536,6 +3544,9 @@
             var workbook = new kendo.ooxml.Workbook({
                 sheets: [{
                     columns: [{
+                            autoWidth: true
+                        },
+                        {
                             autoWidth: true
                         },
                         {
@@ -3664,14 +3675,16 @@
                             roa[i].month_of = monthOf;
                             roa[i].from_date = new Date(roa[i].to_date);
                             roa[i].to_date = self.get("toDateUpload");
-                            if (kendo.parseInt(roa[i].current) < kendo.parseInt(roa[i].previous)) {
-                                self.Uploaderror.push({
-                                    line: i + 2,
-                                    meter_number: roa[i].meter_number,
-                                    previous: roa[i].previous,
-                                    current: roa[i].current,
-                                    status: 0
-                                });
+                            if(roa[i].round != 1){
+                                if (kendo.parseInt(roa[i].current) < kendo.parseInt(roa[i].previous)) {
+                                    self.Uploaderror.push({
+                                        line: i + 2,
+                                        meter_number: roa[i].meter_number,
+                                        previous: roa[i].previous,
+                                        current: roa[i].current,
+                                        status: 0
+                                    });
+                                }
                             }
                             banhji.reading.dataSource.add(roa[i]);
                             $("#loadImport").css("display", "none");
