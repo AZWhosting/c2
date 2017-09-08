@@ -147,6 +147,8 @@ class Item_lines extends REST_Controller {
 				   	"tax" 				=> floatval($value->tax),
 				   	"additional_cost" 	=> floatval($value->additional_cost),
 				   	"additional_applied"=> $value->additional_applied==1?true : false,
+				   	"inventory_quantity"=> floatval($value->inventory_quantity),
+				   	"inventory_value" 	=> floatval($value->inventory_value),
 				   	"rate"				=> floatval($value->rate),
 				   	"locale" 			=> $value->locale,
 				   	"movement" 			=> $value->movement,
@@ -471,6 +473,8 @@ class Item_lines extends REST_Controller {
 				   	"tax" 				=> floatval($obj->tax),
 				   	"additional_cost" 	=> floatval($obj->additional_cost),
 				   	"additional_applied"=> $obj->additional_applied==1 ? true : false,
+				   	"inventory_quantity"=> floatval($obj->inventory_quantity),
+				   	"inventory_value" 	=> floatval($obj->inventory_value),
 				   	"rate"				=> floatval($obj->rate),
 				   	"locale" 			=> $obj->locale,
 				   	"movement" 			=> $obj->movement,
@@ -607,6 +611,8 @@ class Item_lines extends REST_Controller {
 		   	isset($value->rate)				? $obj->rate 				= $value->rate : "";
 		   	isset($value->locale)			? $obj->locale 				= $value->locale : "";
 		   	isset($value->additional_cost)	? $obj->additional_cost  	= $value->additional_cost : "";
+		   	isset($value->inventory_quantity)	? $obj->inventory_quantity  	= $value->inventory_quantity : "";
+		   	isset($value->inventory_value)		? $obj->inventory_value  		= $value->inventory_value : "";
 		   	isset($value->movement)			? $obj->movement 			= $value->movement : "";
 		   	isset($value->required_date)	? $obj->required_date 		= $value->required_date : "";
 		   	isset($value->deleted) 			? $obj->deleted 			= $value->deleted : "";
@@ -651,6 +657,8 @@ class Item_lines extends REST_Controller {
 				   	"tax" 				=> floatval($obj->tax),
 				   	"additional_cost" 	=> floatval($obj->additional_cost),
 				   	"additional_applied"=> $obj->additional_applied,
+				   	"inventory_quantity"=> floatval($obj->inventory_quantity),
+				   	"inventory_value" 	=> floatval($obj->inventory_value),
 				   	"rate"				=> floatval($obj->rate),
 				   	"locale" 			=> $obj->locale,
 				   	"movement" 			=> $obj->movement,
