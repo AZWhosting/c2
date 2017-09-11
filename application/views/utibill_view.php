@@ -11,41 +11,6 @@
 <script type="text/x-kendo-template" id="blank-tmpl">
 </script>
 <script type="text/x-kendo-template" id="menu-tmpl">
-	<!-- <div class="menu-hidden sidebar-hidden-phone menu-left hidden-print">
-		<div class="navbar main navbar-fixed-top" id="main-menu">
-			<ul class="topnav">
-				<li>
-					<a href="<?php echo base_url(); ?>rrd" data-bind="click: checkRole">
-						<img src="<?php echo base_url();?>/assets/water/utibill.png" style="height: 40px;">
-					</a>
-				</li>
-			</ul>
-			<form class="navbar-form pull-left">
-			  	<input type="text" class="span2 search-query" placeholder="Search Contact" id="search-placeholder" 
-			  			data-bind="value: searchText" 
-			  			style="background-color: #555555; color: #ffffff; border-color: #333333; height: 22px;">
-			  	<button type="submit" class="btn btn-inverse" data-bind="click: search"><i class="icon-search"></i></button>
-			</form>
-			<ul class="topnav" id="secondary-menu">
-			</ul> 
-			<ul class="topnav pull-right">
-				<li role="presentation" class="dropdown">
-			  		<a style="color: #fff;" class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"> <i class="icon-th-list"></i> <span class="caret"></span></a>
-		  			<ul class="dropdown-menu ul-multiTaskList" data-template="multiTaskList-row-template" data-bind="source: multiTaskList">  				  				
-		  			</ul>
-			  	</li>
-				<li role="presentation" class="dropdown">
-			  		<a style="color: #fff;" class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">[<span data-bind="text: getUsername"></span>] <span class="caret"></span></a>
-		  			<ul class="dropdown-menu">  				  				
-		  				<li><a href="#" data-bind="click: lang.changeToKh">ភាសាខ្មែរ</a></li>
-    					<li><a href="#" data-bind="click: lang.changeToEn">English</a></li>
-						<li class="divider"></li>	
-						<li><a href="#/manage" data-bind="click: logout"><i class="icon-power-off"></i> Logout</a></li> 				
-		  			</ul>
-			  	</li>				
-			</ul>
-		</div>
-	</div> -->
 	<nav class="navbar navbar-inverse " role="navigation">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -122,55 +87,6 @@
 						</li>
 		  			</ul>
 			  	</li>
-			  	<!-- <li class="help">
-			  		<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-			  			<i class="icon-question icon-question1"></i>
-			  		</a>
-			  		<ul class="dropdown-menu" >
-			  			<div class="top-help" style="">
-			  				<h3 >Help</h3>
-			  				<div class="row-fluid">
-				        		<div class="span12" style="padding: 0;">
-									<select data-role="multiselect" class="search-help"
-										    data-value-primitive="true"
-										    data-header-template="contact-header-tmpl"
-										    data-item-template="contact-list-tmpl"
-										    data-value-field="id"
-										    data-text-field="name"
-										    data-bind="value: obj.contactIds, 
-										   			source: contactDS"
-										    data-placeholder="Search for an app..." /></select>
-									<button class="btn-help-search" type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-								</div>
-							</div>
-			  			</div>
-			  			<div class="middle-help" >
-			  				<div class="more-help" style="border-bottom: 1px solid #ddd; margin-bottom: 10px; width: 100%; float: left; padding-bottom: 10px;">
-		  						<div class="help-img" style="margin-right: 20px; float: left;">
-		  							<img src="http://fpoimg.com/51x51?text=Picture%201">
-		  						</div>
-		  						<div class="help-desc" style="float: left;">
-		  							<p>Need more help?</p>
-		  							<a href="" target="_blank">Accountant Help hub</a>
-		  						</div>
-		  					</div>
-		  					<div class="what-help" style="width: 100%; float: left;">
-		  						<div class="help-img" style="margin-right: 20px; float: left;">
-		  							<img src="http://fpoimg.com/51x51?text=Picture%202">
-		  						</div>
-		  						<div class="help-desc">
-		  							<p>Check out what's new</p>
-		  							<a href="" target="_blank">Learn about new product features</a>
-		  						</div>
-		  					</div>
-			  			</div>
-			  			<div class="bottom-help" style="background: #fff; padding: 20px 20px 20px; text-align: left; display: inline-block; width: 100%;">
-			  				<h3 style="float: left; margin-right: 10px;">Direct Chat by</h3>
-			  				
-			  			</div>
-			  		</ul>
-			  	</li> -->
-
 			  	<li role="presentation" class="dropdown multitasklist">
 			  		<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
 			  			<i class="icon-th-list"></i>
@@ -200,6 +116,7 @@
 			  				<li><a href='#/imports'><span >Import</span></a></li>
 			  				<li><span class="li-line"></span></li>
 			  				<li><a href='#/backup'><span>Back Up</span></a></li>
+			  				<li><a href='#/offline'><span>Offline</span></a></li>
 			  			</ul>
 				  	</li>
 				  	<li>
@@ -231,11 +148,6 @@
             <!-- Menu Phone Search-->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-3">
             	<form class="navbar-form pull-left hidden-lg hidden-md hidden-sm">
-					<!-- <div class="btn-group">
-					  	<a class="btn btn-inverse dropdown-toggle" data-toggle="dropdown" href="#">
-					    	<i class="icon-th"></i>
-					  	</a>
-					</div> -->
 				  	<input id="search-placeholder" class="span2 search-query" 
 				  		type="text" 
 				  		placeholder="Search" 
@@ -8258,19 +8170,10 @@
 												</span>
 											</a>
 										</li>
-										<li style="width: 210px;">
-											<a style="text-transform: capitalize;" href="#Offline" data-toggle="tab">
-												<span style="line-height: 23px;">
-													<span data-bind="text: lang.lang.offline">Offline</span>
-												</span>
-											</a>
-										</li>
 									</ul>
 								</div>
-								<!-- // Tabs Heading END -->
 								<div class="widget-body">
 									<div class="tab-content">
-										<!-- Tab content -->
 										<div id="Download" style="border: 1px solid #ccc; overflow: hidden;" class="tab-pane active widget-body-regular">
 										  	<form action="<?php echo base_url(); ?>utibill_backup" method="post">
 										  		<input type="hidden" id="uinstitute" name="institute" data-bind="value: institute_id">
@@ -8299,7 +8202,56 @@
 												</button>
 											</form>
 										</div>
-										<div id="Offline" style="border: 1px solid #ccc; overflow: hidden;" class="tab-pane widget-body-regular">
+									</div>
+								</div>
+								<div id="ntf1" data-role="notification"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+<!--  Offline  -->
+<script id="Offline" type="text/x-kendo-template">
+	<div class="container">
+		<div class="row-fluid">
+			<div class="background">
+				<div class="row-fluid">
+					<div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 100%;margin-top: -15px;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
+						<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
+					</div>
+					<div id="example" class="k-content">
+						<h2>Offline</h2>
+						<div class="hidden-print pull-right">
+				    		<span class="glyphicons no-js remove_2" 
+								data-bind="click: cancel"><i></i></span>
+						</div>
+						<div class="clear"></div>
+						<div class="relativeWrap" data-toggle="source-code">
+							<div class="widget widget-tabs widget-tabs-double-2 widget-tabs-gray">
+								<div class="widget-head" style="background: #203864 !important; color: #fff;">
+									<ul style="padding-left: 0px;">
+										<li class="active" style="width: 210px;">
+											<a style="text-transform: capitalize;" href="#Download" data-toggle="tab">
+												<span style="line-height: 23px;">
+													<span  data-bind="text: lang.lang.download">Download</span>
+												</span>
+											</a>
+										</li>
+										<li style="width: 210px;">
+											<a style="text-transform: capitalize;" href="#Upload" data-toggle="tab">
+												<span style="line-height: 23px;">
+													<span data-bind="text: lang.lang.upload">Upload Database</span>
+												</span>
+											</a>
+										</li>
+									</ul>
+								</div>
+								<div class="widget-body">
+									<div class="tab-content">
+										<div id="Download" style="border: 1px solid #ccc; overflow: hidden;" class="tab-pane widget-body-regular active">
 											<div class="row-fluid" style="overflow: hidden;">
 												<div class="span3" style="border: 1px solid #ccc;padding-bottom: 10px;min-height: 131px;">
 													<h2 data-bind="text: lang.lang.transaction"></h2>
@@ -8366,7 +8318,40 @@
 												</button>
 											</div>
 										</div>
-										<!-- // Tab content END -->
+										<div id="Upload" style="border: 1px solid #ccc; overflow: hidden;" class="tab-pane widget-body-regular">
+											<div class="span4" style="border: 1px solid #ccc;padding-bottom: 10px;min-height: 131px;">
+												<h2 style="position: relative;clear:both;" data-bind="text: lang.lang.transaction"></h2>
+												<div style="clear: both;float:left; width: 95%;margin-bottom: 10px;position: relative;">
+													<input type="file" 
+														data-role="upload"
+														data-bind="events: {select: txnSelected}" 
+														name="userfile" 
+														style="height: 40px;" size="20" />
+												</div>
+											  	<button data-bind="click: saveTXNoffline">
+													<span class="btn btn-icon btn-success glyphicons upload" style="width: 200px!important;position: relative;margin: 0px;">
+														<i></i> 
+														<span data-bind="text: lang.lang.upload">Upload Database</span>
+													</span>
+												</button>
+											</div>
+											<div class="span4" style="border: 1px solid #ccc;padding-bottom: 10px;min-height: 131px;">
+												<h2 style="position: relative;clear:both;" data-bind="text: lang.lang.record"></h2>
+												<div style="clear: both;float:left; width: 95%;margin-bottom: 10px;position: relative;">
+													<input type="file" 
+														data-role="upload"
+														data-bind="events: {select: recordSelected}" 
+														name="userfile" 
+														style="height: 40px;" size="20" />
+												</div>
+											  	<button data-bind="click: saveRecordoffline">
+													<span class="btn btn-icon btn-success glyphicons upload" style="width: 200px!important;position: relative;margin: 0px;">
+														<i></i> 
+														<span data-bind="text: lang.lang.upload">Upload Database</span>
+													</span>
+												</button>
+											</div>
+										</div>
 									</div>
 								</div>
 								<div id="ntf1" data-role="notification"></div>
@@ -8379,7 +8364,6 @@
 		</div>
 	</div>
 </script>
-
 <!-- Report -->
 <script id="Reports" type="text/x-kendo-template">
 	<div class="container">
@@ -8828,16 +8812,16 @@
 					    <div class="tabsbar tabsbar-1" style="background: #203864 !important; color: #fff;">
 					        <ul class="row-fluid row-merge">
 					            <li class="active">
-					            	<a href="#tab1" data-toggle="tab"><span data-bind="text: lang.lang.customer"></span></a>
+					            	<a href="#tab1" data-toggle="tab"><span data-bind="text: lang.lang.customer_report"></span></a>
 					            </li>
 					            <li >
-					            	<a href="#tab2" data-toggle="tab"><span>Receiveable</span></a>
+					            	<a href="#tab2" data-toggle="tab"><span data-bind="text: lang.lang.receivable_reports"></span></a>
 					            </li>
 					            <li >
-					            	<a href="#tab3" data-toggle="tab"><span data-bind="text: lang.lang.cash"></span></a>
+					            	<a href="#tab3" data-toggle="tab"><span data-bind="text: lang.lang.sale_report"></span></a>
 					            </li>					            
 					            <li >
-					            	<a href="#tab4" data-toggle="tab"><span>Cash Receipt</span></a>
+					            	<a href="#tab4" data-toggle="tab"><span data-bind="text: lang.lang.cash_receipt_report"></span></a>
 					            </li>
 					        </ul>
 					    </div>
@@ -8865,8 +8849,16 @@
 											</tr>
 
 											<tr>
-												<td ><p></p></td>
-												<td ><p></p></td>
+												<td >
+													<p style="padding-right: 25px;"  data-bind="text: lang.lang.list_of_all_active_customers">
+														List of all active customers
+													</p>
+												</td>
+												<td style="vertical-align: top;" data-bind="text: lang.lang.disconnected_description">
+													<p>
+														list of the customer have been disconnected
+													</p>
+												</td>
 											</tr>
 
 											<tr>
@@ -8879,8 +8871,16 @@
 											</tr>
 
 											<tr>
-												<td ><p></p></td>
-												<td ><p></p></td>
+												<td >
+													<p style="padding-right: 25px;"  data-bind="text: lang.lang.minimum_water_usage_description">
+														list of each customer individual usage minimum water
+													</p>
+												</td>
+												<td style="vertical-align: top;" data-bind="text: lang.lang.to_be_disconnect_description">
+													<p>
+														List of the customer to be disconnect 
+													</p>
+												</td>
 											</tr>
 										</table>
 									</div>
@@ -8906,8 +8906,16 @@
 												</td>
 											</tr>
 											<tr>
-												<td ><p></p></td>
-												<td ><p></p></td>
+												<td >
+													<p style="padding-right: 25px;"  data-bind="text: lang.lang.shows_a_chronological_list_of_all_your_invoices_for_a_selected_date_range">
+														Shows a chronological list of all your invoices for a selected date range.
+													</p>
+												</td>
+												<td style="vertical-align: top;" data-bind="text: lang.lang.provides_detailed_information_about_customer_deposit">
+													<p>
+														Provides detailed information about customer deposit for specific order, prepayment, or credit.
+													</p>
+												</td>
 											</tr>
 											<tr>
 												<td >
@@ -8918,8 +8926,16 @@
 												</td>							
 											</tr>
 											<tr>
-												<td ><p></p></td>
-												<td ><p></p></td>
+												<td >
+													<p style="padding-right: 25px;"  data-bind="text: lang.lang.show_each_customers_total_outstanding_balances">
+														Show each customer’s total outstanding balances.
+													</p>
+												</td>
+												<td style="vertical-align: top;" data-bind="text: lang.lang.lists_individual_unpaid_invoices_for_each_customer">
+													<p>
+														Lists individual unpaid invoices for each customer
+													</p>
+												</td>
 											</tr>
 
 											<tr>
@@ -8931,8 +8947,17 @@
 												</td>						
 											</tr>
 											<tr>
-												<td ><p></p></td>
-												<td ><p></p></td>
+												<td >
+													<p style="padding-right: 25px;"  data-bind="text: lang.lang.lists_all_unpaid_invoices1">
+														Lists all unpaid invoices for the current period, 30, 60, 90, 
+													and more than 90 days, grouped by individual customers.
+													</p>
+												</td>
+												<td style="vertical-align: top;" data-bind="text: lang.lang.lists_individual_unpaid_invoices_grouped_by_customer">
+													<p>
+														Lists individual unpaid invoices, grouped by customer. This includes due date, outstanding days (aging days), and amount.
+													</p>
+												</td>
 											</tr>
 										</table>
 									</div>
@@ -8959,11 +8984,15 @@
 											</tr>
 											<tr>
 												<td >
-													<p></p>
-													
+													<p style="padding-right: 25px;"  data-bind="text: lang.lang.summarizes_total_sales">
+													Summarizes total sales for each customer within a period 
+													of time so you can see which ones generate the most revenue for you.
+													</p>
 												</td>
-												<td >
-													<p></p>
+												<td style="vertical-align: top;" data-bind="text: lang.lang.lists_individual_sale">
+													<p>
+														Lists individual sale transactions by date for each customer with a period of time.
+													</p>
 												</td>
 											</tr>
 											<tr>
@@ -8977,10 +9006,14 @@
 											</tr>
 											<tr>
 												<td >
-													<p></p>
+													<p style="padding-right: 25px;"  data-bind="text: lang.lang.connection_service_revenue_description">
+													Lists individual connection revenue service by date for each customer with a period of time.
+													</p>
 												</td>
-												<td >
-													<p></p>
+												<td style="vertical-align: top;" data-bind="text: lang.lang.fine_collection_description">
+													<p>
+														list individual fine by date for each customer with a period of time.
+													</p>
 												</td>
 											</tr>
 										</table>
@@ -9008,11 +9041,14 @@
 											</tr>
 											<tr>
 												<td >
-													<p></p>
-													
+													<p style="padding-right: 25px;"  data-bind="text: lang.lang.cash_receipt_description">
+													Lists of cash receipt for the select period of time, group by method of payment.
+													</p>
 												</td>
-												<td >
-													<p></p>
+												<td style="vertical-align: top;" data-bind="text: lang.lang.cash_receipt_sources_description">
+													<p>
+														Lists of cash receipt by sources for the select period of time, group by method of payment.
+													</p>
 												</td>
 											</tr>
 											<tr>
@@ -12376,6 +12412,7 @@
   				<li><a href='#/imports'><span >Import</span></a></li>
   				<li><span class="li-line"></span></li>
   				<li><a href='#/backup'><span >Back Up</span></a></li>
+  				<li><a href='#/offline'><span >Offline</span></a></li>
   			</ul>
 	  	</li>
 	  	<li><a href="#/reports" style="color: #fff">REPORTS</a></li>

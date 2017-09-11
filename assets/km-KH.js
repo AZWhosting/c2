@@ -1157,8 +1157,16 @@ var	km_KH = {
 	"segment_reports": "Segment Reports",
 	"journal_entry_report_with_segment": "Journal Entry Report with Segment",
 	"report_center_description": "This module consolidates different modules report into one place. In addition, ratio analysis is also included in this module",
-
-
+	"customer_report" : "របាយការណ៍​​អតិថិជន",
+	"disconnected_description" : "បញ្ជីអតិថិជនដែលបានផ្ដាច់ចរន្ត",
+	"minimum_water_usage_description" : "បញ្ជី​ការ​ប្រើប្រាស់​ទឹកអប្បបរមា",
+	"to_be_disconnect_description" : "បញ្ជីអតិថិជនដែលនឹងត្រូវផ្ដាច់ចរន្ត",
+	"receivable_reports" : "របាយការណ៍​​បំណុល​អតិថិជន",
+	"show_each_customers_total_outstanding_balances" : "តារាងជំពាក់សរុបរបស់អតិថិជននិមួយៗ",
+	"connection_service_revenue_description": "របាយការណ័ចំណូល​ពីការភ្ជាប់​ប្រព័ន្ធលម្អិតរបស់អតិថិជននីមួយៗ​​តាមកាលបរិច្ឆេទក្នុងរយះពេល មួយ",
+	"fine_collection_description": "របាយការណ័ចំណូល​ពីការពិន័យលើអតិថិជននីមួយៗ​​តាមកាលបរិច្ឆេទក្នុងរយះពេល មួយ",
+	"cash_receipt_description": "តារាង​វិក្កយបត្រ​រ​ប្រាក់​លំអិតសម្រាប់​ការ​កំណត់​មួយ​រាយ​តាម​របៀប​នៃ​ការ​បង់​ប្រាក់",
+	"cash_receipt_sources_description": "តារាង​វិក្កយបត្រ​រ​ប្រាក់​លំអិតតាមប្រភពសម្រាប់​ការ​កំណត់​មួយ​រាយ​តាម​របៀប​នៃ​ការ​បង់​ប្រាក់",
 	//Water Dashbaord
 	"reading": "អំណាន",
 	"run_bill": "ធ្វើ​វិក្កយបត្រ",

@@ -263,27 +263,24 @@ class Readings extends REST_Controller {
 		$data["results"] = array();
 		$data["count"] = 0;
 
-		$obj = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
-
+		$obj = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		//Sort
 		if(!empty($sort) && isset($sort)){					
 			foreach ($sort as $value) {
 				$obj->order_by($value["field"], $value["dir"]);
 			}
 		}
-		
 		//Filter		
 		if(!empty($filters) && isset($filters)){			
 	    	foreach ($filters as $value) {
 	    		$obj->where($value["field"], $value["value"]);
 			}									 			
-		}			
-
+		}
 		//Get Result
 		$obj->where('activated', 1);
 		$obj->where('status', 1);	
 		//Results
-		$obj->order_by("worder", "ASC");
+		$obj->order_by("worder", "asc");
 		if($page && $limit){
 			$obj->get_paged_iterated($page, $limit);
 			$data["count"] = $obj->paged->total_rows;

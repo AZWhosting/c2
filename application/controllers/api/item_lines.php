@@ -58,6 +58,7 @@ class Item_lines extends REST_Controller {
 			}
 		}
 
+		$obj->include_related("contact", array("abbr","number","name","payment_term_id","payment_method_id","credit_limit","locale","bill_to","ship_to","deposit_account_id","trade_discount_id","settlement_discount_id","account_id","ra_id"));
 		$obj->include_related("item", array("item_type_id","abbr","number","name","cost","price","locale","income_account_id","expense_account_id","inventory_account_id"));
 		$obj->include_related("measurement", array("name"));
 		$obj->include_related("tax_item", array("tax_type_id","account_id","name","rate"));
@@ -117,6 +118,25 @@ class Item_lines extends REST_Controller {
 						"name" 		=> $whtAccounts->name
 					);
 				}
+
+				//Contact
+				$contact = array(
+					"id" 						=> $value->contact_id,
+					"abbr"						=> $value->contact_abbr ? $value->contact_abbr : "",
+					"number"					=> $value->contact_number ? $value->contact_number : "",
+					"name"						=> $value->contact_name ? $value->contact_name : "",
+					"payment_term_id"			=> $value->contact_payment_term_id ? $value->contact_payment_term_id : 0,
+					"payment_method_id"			=> $value->contact_payment_method_id ? $value->contact_payment_method_id : 0,
+					"credit_limit"				=> $value->contact_credit_limit ? $value->contact_credit_limit : 0,
+					"locale"					=> $value->contact_locale ? $value->contact_locale : "",
+					"bill_to"					=> $value->contact_bill_to ? $value->contact_bill_to : "",
+					"ship_to"					=> $value->contact_ship_to ? $value->contact_ship_to : "",
+					"deposit_account_id"		=> $value->contact_deposit_account_id ? $value->contact_deposit_account_id : 0,
+					"trade_discount_id"			=> $value->contact_trade_discount_id ? $value->contact_trade_discount_id : 0,
+					"settlement_discount_id"	=> $value->contact_settlement_discount_id ? $value->contact_settlement_discount_id : 0,
+					"account_id"				=> $value->contact_account_id ? $value->contact_account_id : 0,
+					"ra_id"						=> $value->contact_ra_id ? $value->contact_ra_id : 0
+				);
 				
 				$data["results"][] = array(
 					"id" 				=> $value->id,
@@ -159,7 +179,8 @@ class Item_lines extends REST_Controller {
 				   	"measurement" 		=> $measurement,
 				   	"tax_item" 			=> $tax_item,
 				   	"wht_account" 		=> $wht_account,
-				   	"item_prices"		=> $measurement
+				   	"item_prices"		=> $measurement,
+				   	"contact" 			=> $contact
 				);
 			}
 		}

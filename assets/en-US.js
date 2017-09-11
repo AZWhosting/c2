@@ -1178,7 +1178,16 @@ var	en_US = {
 	"segment_reports": "Segment Reports",
 	"journal_entry_report_with_segment": "Journal Entry Report with Segment",
 	"report_center_description": "This module consolidates different modules report into one place. In addition, ratio analysis is also included in this module",
-
+	"customer_report" : "Customer Report",
+	"disconnected_description" : "list of the customer have been disconnected ",
+	"minimum_water_usage_description" : "list of each customer individual usage minimum water",
+	"to_be_disconnect_description" : "List of the customer to be disconnect ",
+	"receivable_reports" : "Receivable Report",
+	"show_each_customers_total_outstanding_balances" : "Show each customer’s total outstanding balances.",
+	"connection_service_revenue_description": "list individual connection revenue service by date for each customer with a period of time.",
+	"fine_collection_description": "list individual fine by date for each customer with a period of time.",
+	"cash_receipt_description": "Lists of cash receipt for the select period of time, group by method of payment.",
+	"cash_receipt_sources_description": "Lists of cash receipt by sources for the select period of time, group by method of payment.",
 	//Water Dashbaord
 	"reading": "Reading",
 	"run_bill": "Run Bill",
@@ -1241,6 +1250,7 @@ var	en_US = {
 	"summary_and_detail_cash": "Summary and detail cash receipt reports grouped by sources/ methods of receipts",
 	"cash_receipt_detail": "Cash Receipt Detail",
 	"cash_receipt_by_sources_detail": "Cash Receipt by Sources Detail",
+
 
 	//Water Reorder
 	"reorder_meter": "Reorder Meter",

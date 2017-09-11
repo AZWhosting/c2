@@ -1493,6 +1493,123 @@ class Utibills extends REST_Controller {
 			}
 		}
 	}
+	//Post TXN from offline
+	function uploadoff_post(){
+		$models = json_decode($this->post('models'));
+		$data["results"] = [];
+		$data["count"] = 0;
+		foreach ($models as $value) {
+			if($value->type == "txn"){
+				$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$obj->location_id 		= isset($value->location_id) ? $value->location_id : "";
+				$obj->pole_id 			= isset($value->pole_id) ? $value->pole_id : "";
+				$obj->box_id 			= isset($value->box_id) ? $value->box_id : "";
+				$obj->contact_id 		= isset($value->contact_id) ? $value->contact_id : "";
+				$obj->payment_term_id	= 5;
+				$obj->payment_method_id = 0;
+				$obj->account_id 		= 10;
+			   	$obj->number 			= isset($value->number) ? $value->number : "";
+			   	$obj->type 				= "Utility_Invoice";
+			   	$obj->amount 			= isset($value->amount) ? $value->amount : "";
+			   	$obj->rate 				= isset($value->rate) ? $value->rate : 1;
+			   	$obj->locale 			= isset($value->locale) ? $value->locale : "";
+			   	$obj->month_of 			= isset($value->month_of) ? $value->month_of : "";
+			   	$obj->issued_date 		= isset($value->issued_date) ? $value->issued_date : "";
+			   	$obj->bill_date 		= isset($value->bill_date) ? $value->bill_date : "";
+			   	$obj->due_date 			= isset($value->due_date) ? $value->due_date : "";
+			   	$obj->is_journal 		= 1;
+			   	$obj->memo 				= isset($value->memo) ? $value->memo: "";
+			   	$obj->meter_id 			= isset($value->meter_id) ? $value->meter_id: 0;
+			   	$obj->status 			= 0;
+			   	$obj->user_id 			= isset($value->user_id) ? $value->user_id: 0;
+			   	$obj->sub_total 		= isset($value->amount) ? $value->amount : "";
+			   	$obj->sync 				= 1;
+		   		if($obj->save()){
+		   			$journal = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		   			$journal->transaction_id = $obj->id;
+		   			$journal->account_id = 10;
+		   			$journal->contact_id = $value->contact_id;
+		   			$journal->dr  		 = $obj->amount;
+		   			$journal->description = "Utility Invoice";
+		   			$journal->cr 		 = 0.00;
+		   			$journal->rate 		 = $obj->rate;
+		   			$journal->locale 	 = $obj->locale;
+		   			$journal->save();
+		   			$journal2 = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		   			$journal2->transaction_id = $obj->id;
+		   			$journal2->account_id = 71;
+		   			$journal2->contact_id = $value->contact_id;
+		   			$journal2->dr 		  = 0.00;
+		   			$journal2->cr 		  = $obj->amount;
+		   			$journal2->description = "Utility Invoice";
+		   			$journal2->rate 	  = $obj->rate;
+		   			$journal2->locale 	  = $obj->locale;
+		   			$journal2->save();
+					$data["results"][] = array(
+				   		"id" 	=> $obj->id
+				   	);
+			    }
+			}else{
+				$txn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$txn->where("number", $value->number)->order_by("id", "desc")->limit(1)->get();
+				$line = new Winvoice_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	   			$line->transaction_id 	= $txn->id;
+	   			$line->meter_record_id 	= isset($value->meter_record_id) ? $value->meter_record_id : "";
+	   			$line->description 		= isset($value->description) ? $value->description : "Utility Invoice";
+	   			$line->quantity 		= isset($value->quantity) ? $value->quantity: 0;
+	   			$line->price 			= isset($value->price) ? $value->price : "";
+	   			$line->amount 			= isset($value->w_amount) ? $value->w_amount : "";
+	   			$line->rate 			= isset($value->rate) ? $value->rate : "";
+	   			$line->locale 			= isset($value->locale) ? $value->locale : "";
+	   			$line->type 			= isset($value->type) ? $value->type:"";
+	   			$line->item_id 			= isset($value->item_id) ? $value->item_id:"";
+	   			if($value->type == 'installment') {
+					$updateInstallSchedule = new Installment_schedule(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$updateInstallSchedule->where('invoiced', 0 );
+					$updateInstallSchedule->where('id', $value->item_id)->order_by("id", "asc")->limit(1);
+					$updateInstallSchedule->invoiced = 1;
+					$updateInstallSchedule->sync = 2;
+					$updateInstallSchedule->save();
+	   			}
+	   			$line->save();
+			}
+		}
+		$data["count"] = count($data["results"]);
+		$this->response($data, 201);
+	}
+	//Post Record from offline
+	function recordoff_post(){
+		$models = json_decode($this->post('models'));
+		$data["results"] = [];
+		$data["count"] = 0;
+		foreach ($models as $value) {
+			$obj = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$meter = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$meter->where("number", $value->number)->order_by("id", "desc")->limit(1)->get();
+			$obj->meter_id 		= $meter->id;
+			$obj->previous 		= intval($value->previous);
+			$obj->current 		= intval($value->current);
+			$obj->new_round 	= isset($value->round) ? $value->round : "";
+			$obj->usage 		= intval($value->usage);
+			$obj->month_of 		= $value->month_of;
+			$obj->from_date 	= $value->from_date;
+			$obj->to_date 		= $value->to_date;
+			$obj->invoiced 		= 1;
+			$obj->sync 			= 1;
+			if($value->void_meter != 1){
+				$meter->status = 2;
+				$meter->save();
+			}
+			if($obj->save()){
+				//Respsone
+				$data["results"][] = array(
+					"id" 			=> $obj->id
+				);				
+			}
+		}
+		$data["count"] = count($data["results"]);
+		$this->response($data, 201);
+	} 
 }
 /* End of file meters.php */
-/* Location: ./application/controllers/api/meters.php */
+/* Location: ./application/controllers/api/utibills.php */
