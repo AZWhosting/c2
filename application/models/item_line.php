@@ -24,6 +24,10 @@ class Item_line extends DataMapper {
 		'bin_location' => array(
 			'class' => 'bin_location',
 			'other_field' => 'item_line'
+		),
+		'contact' => array(
+			'class' => 'contact',
+			'other_field' => 'item_line'
 		)
 	);
 
