@@ -1585,7 +1585,7 @@ class Utibills extends REST_Controller {
 		foreach ($models as $value) {
 			$obj = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$meter = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$meter->where("number", $value->number)->order_by("id", "desc")->limit(1)->get();
+			$meter->where("number", $value->meter_number)->order_by("id", "desc")->limit(1)->get();
 			$obj->meter_id 		= $meter->id;
 			$obj->previous 		= intval($value->previous);
 			$obj->current 		= intval($value->current);
