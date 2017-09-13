@@ -5615,7 +5615,6 @@
 					<td></td>
 					<td></td>
 				</tr>
-
 				#for(var j=1; j< invoice_lines.length; j++) {#
 					#if(invoice_lines[j].amount != 0) {#
 						#if(invoice_lines[j].type == "tariff"){#
@@ -5654,7 +5653,19 @@
 							</tr>
 						#}#
 					# } #
-				#}#	
+				#}#
+				#var NU = 8;#
+				#var k = NU - invoice_lines.length;#
+				#if(k > 0){#
+					#for(var z = 1; z < k; z++){#
+						<tr>
+							<td colspan="3" align="left">&nbsp;</td>
+							<td align="center"></td>
+							<td align="right"></td>
+							<td align="right"></td>
+						</tr>
+					#}#
+				#}#
 				<tr>
 					<td colspan="5" style="padding-right: 10px;background: \\#355176;color: \\#fff;text-align: right;background-color: #: formcolor #!important;#= banhji.InvoicePrint.formVisible#" class="darkbblue main-color">បំណុល​សរុប TOTAL BALANCE</td>
 					<td style="border: 1px solid;text-align: right">#= kendo.toString(amount, locale=="km-KH"?"c0":"c", locale)#</td>
@@ -5971,6 +5982,198 @@
 			    </div>
 			</div>
 		</div>
+	</div>
+</script>
+<script id="InvoiceFormElectric" type="text/x-kendo-tmpl">	
+  	<div class="container winvoice-print" style="page-break-after: always;width: 800px;">
+		<div class="span12 headerinv " style="border-bottom: 2px solid \#000;padding: 15px 0;padding-bottom: 30px;#= banhji.InvoicePrint.formVisible#">
+            <img class="logoP" style="position: absolute;left: 0;top: 20px;width: auto;height: 90px;" src="#: banhji.InvoicePrint.license.image_url#" alt="#: banhji.InvoicePrint.license.name#" title="#: banhji.InvoicePrint.license.name#" />
+			<div class="span12" align="center">
+				<h4 style="line-height: 40px;">#: banhji.InvoicePrint.license.name#</h4>					
+				<h5 style="line-height: 30px;">#: banhji.InvoicePrint.license.address# 
+				<br>
+				#:typeof banhji.InvoicePrint.license.mobile != 'undefined' ? banhji.InvoicePrint.license.mobile: ''#</h5>					
+			</div>
+		</div>
+		<div class="span12 cover-customer">
+			<div class="span6">
+				<span id="secondwnumber#= id#" style="margin-left: -14px; float: left;"></span><br />
+				<div class="span12">
+					<p>អតិថិជន​ #=contact.number#</p>
+					<p>#:contact.name#</p>
+					<p>#: contact.address != 'null' ? contact.address: ''#</p>
+					<p style="font-size: 10px;"><i>ថ្ងៃ​ចាប់​ផ្តើម​ទទួល​ប្រាក់ #=kendo.toString(new Date(bill_date), "dd-MMMM-yyyy", "km-KH")#</i></p>
+				</div>
+			</div>
+			<div class="span5">
+				<table >
+					<tr>
+						<td width="140" style><p>លេខ​វិក្កយ​បត្រ</p></td>
+						<td><p>#:number#-#=banhji.institute.id#</p></td>
+					</tr>
+					<tr>
+						<td style><p>ថ្ងៃ​ចេញ វិក្កយ​បត្រ</p></td>
+						<td><p>#=kendo.toString(new Date(issue_date), "dd-MMMM-yyyy", "km-KH")#</p></td>
+					</tr>
+					<tr>
+						<td style><p>តំបន់</p></td>
+						<td><p>#:meter.location[0].name#</p></td>
+					</tr>
+					<tr>
+						<td style><p>លេខប្រអប់</p></td>
+						<td><p>#:meter.box#</p></td>
+					</tr>
+					<tr>
+						<td style><p>គិត​ចាប់​ពី​ថ្ងៃ​ទី</p></td>
+						<td><p>#=kendo.toString(new Date(invoice_lines[0].from_date), "dd-MMMM-yyyy", "km-KH")#</p></td>
+					</tr>
+					<tr>
+						<td style><p>ដល់​ថ្ងៃ​ទី</p></td>
+						<td><p>#=kendo.toString(new Date(invoice_lines[0].to_date), "dd-MMMM-yyyy", "km-KH")#</p></td>
+					</tr>
+				</table>		
+			</div>
+		</div>
+		<table class="span12 table table-bordered footerTbl" style="padding:0;margin-top: 40px; border-radius: 3px;border-collapse: inherit;margin-left: 0px;#= banhji.InvoicePrint.formBorder#">
+			<thead style>
+				<tr>
+					<th class="darkbblue main-color" style="width: 20%;background-color: #: formcolor #!important;border:none!important; vertical-align: top;">លេខ​កុងទ័រ<br>METER</th>
+					<th class="darkbblue main-color" style="width: 15%;background-color: #: formcolor #!important;border:none!important; vertical-align: top;">អំណានចាស់<br>PREVIOUS</th>
+					<th class="darkbblue main-color" style="width: 15%;background-color: #: formcolor #!important;border:none!important; vertical-align: top;">អំណានថ្មី<br>CURRENT</th>
+					<th class="darkbblue main-color" style="width: 10%;background-color: #: formcolor #!important;border:none!important; vertical-align: top;">មេគុណ<br>Multi.</th>
+					<th class="darkbblue main-color" style="width: 15%;background-color: #: formcolor #!important;border:none!important; vertical-align: top;">បរិមាណ<br>CONSUMPTION</th>
+					<th class="darkbblue main-color" style="background-color: #: formcolor #!important;border:none!important; vertical-align: top;">តំលៃឯកត្តា<br>RATE</th>
+					<th class="darkbblue main-color" style="background-color: #: formcolor #!important;border:none!important; vertical-align: top;">តំលៃសរុប<br>AMOUNT</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td style="vertical-align: middle;"></td>
+					<td colspan="5" style="text-align: right">
+						ជំពាក់​សរុប​នៅ​ថ្ងៃ​ធ្វើ​វិក្កយបត្រ Balance as at billing date .
+					</td>
+					<td align="right">
+						#: kendo.toString(amount_remain, locale=="km-KH"?"c0":"c", locale)#
+					</td>
+				</tr>
+				<tr>
+					<td>#: meter.location[0].abbr# - #: meter.meter_number#</td>
+					<td align="center"><strong>#: invoice_lines[0].previous#</strong></td>
+					<td align="center"><strong>#: invoice_lines[0].current#</strong></td>
+					<td align="center"><strong>#: meter.meter_multipier#</strong></td>
+					<td align="center"><strong>#: invoice_lines[0].consumption#</strong></td>
+					<td></td>
+					<td></td>
+				</tr>
+				#for(var j=1; j< invoice_lines.length; j++) {#
+					#if(invoice_lines[j].amount != 0) {#
+						#if(invoice_lines[j].type == "tariff"){#
+						#var amountTariff = invoice_lines[j].amount #
+						#var amountTariffMoney = invoice_lines[j].amount * invoice_lines[0].consumption #
+							<tr>
+								<td colspan="4" align="left">#: invoice_lines[j].number#</td>
+								<td align="center">#: invoice_lines[0].consumption#</td>
+								<td align="right">#= kendo.toString(invoice_lines[j].amount, locale=="km-KH"?"c0":"c", locale)#</td>
+								<td align="right">#= kendo.toString(amountTariffMoney, locale=="km-KH"?"c0":"c", locale)#</td>
+							</tr>
+						#}else if(invoice_lines[j].type == "exemption"){#
+							<tr>
+								<td colspan="4" align="left">#: invoice_lines[j].number#</td>
+								#if(invoice_lines[j].unit == "money"){#
+									<td align="center"></td>
+									<td align="right"></td>
+									<td align="right">-#= kendo.toString(invoice_lines[j].amount, locale=="km-KH"?"c0":"c", locale)#</td>
+								#}else if(invoice_lines[j].unit == "%"){#
+								#var AMM = (amountTariffMoney * invoice_lines[j].amount) / 100#
+									<td align="center">#= invoice_lines[j].amount#%</td>
+									<td align="center"></td>
+									<td align="right">-#= kendo.toString(AMM, locale=="km-KH"?"c0":"c", locale)#</td>
+								#}else{#
+									<td align="center">#= invoice_lines[j].amount#</td>
+									<td align="center"></td>
+									<td align="right">-#= kendo.toString(invoice_lines[j].amount * amountTariff, locale=="km-KH"?"c0":"c", locale)#</td>
+								#}#
+							</tr>
+						#}else{#
+							<tr>
+								<td colspan="4" align="left">#: invoice_lines[j].number#</td>
+								<td align="center"></td>
+								<td align="right"></td>
+								<td align="right">#= kendo.toString(invoice_lines[j].amount, locale=="km-KH"?"c0":"c", locale)#</td>
+							</tr>
+						#}#
+					# } #
+				#}#
+				#var NU = 8;#
+				#var k = NU - invoice_lines.length;#
+				#if(k > 0){#
+					#for(var z = 1; z < k; z++){#
+						<tr>
+							<td colspan="4" align="left">&nbsp;</td>
+							<td align="center"></td>
+							<td align="right"></td>
+							<td align="right"></td>
+						</tr>
+					#}#
+				#}#
+				<tr>
+					<td colspan="6" style="padding-right: 10px;background: \\#355176;color: \\#fff;text-align: right;background-color: #: formcolor #!important;#= banhji.InvoicePrint.formVisible#" class="darkbblue main-color">បំណុល​សរុប TOTAL BALANCE</td>
+					<td style="border: 1px solid;text-align: right">#= kendo.toString(amount, locale=="km-KH"?"c0":"c", locale)#</td>
+				</tr>
+				<tr>
+					<td rowspan="5" colspan="3">#= banhji.InvoicePrint.license.term_of_condition#</td>
+					<td colspan="3" class="greyy" style="background: \\#ccc;#= banhji.InvoicePrint.formVisible#">ប្រាក់​ត្រូវ​បង់ TOTAL DUE</td>
+					<td style="text-align: right"><strong>#= kendo.toString(amount + amount_remain, locale=="km-KH"?"c0":"c", locale)#</strong></td>
+				</tr>
+				<tr>
+					<td colspan="3" class="greyy"  style="background: \\#ccc;#= banhji.InvoicePrint.formVisible#">ថ្ងៃផុតកំណត់ DUE DATE</td>
+					<td align="left">#=kendo.toString(new Date(due_date), "dd-MMMM-yyyy", "km-KH")#</td>
+				</tr>
+				<tr>
+					<td colspan="3" class="greyy" style="background: \\#ccc;#= banhji.InvoicePrint.formVisible#">ថ្ងៃបង់ប្រាក់ PAY DATE</td>
+					<td align="left">#=kendo.toString(new Date(bill_date), "dd-MMMM-yyyy", "km-KH")#</td>
+				</tr>
+				<tr>
+					<td colspan="3" class="greyy" style="background: \\#ccc;#= banhji.InvoicePrint.formVisible#">ប្រាក់បានបង់ PAY AMOUNT</td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="line" style></div>
+		<table class="span12 table table-bordered footerTbl" style="padding:0;margin-bottom:15px;border-collapse: inherit;margin-top: 15px;border-radius: 3px;margin-left: 0px;#= banhji.InvoicePrint.formBorder#">
+			<tbody style="border:none!important">
+				<tr style="border:none!important">
+					<td width="150"></td>
+					<th width="300" style="border: none!important;">
+						<span style="margin-left: -15px;border:none!important" id="footwnumber#:id#"></span>
+					</th>
+					<td width="270" class="greyy"  style="background: \\#ccc;border-bottom:1px solid \\#fff;#= banhji.InvoicePrint.formVisible#">ប្រាក់​ត្រូវ​បង់ TOTAL DUE</td>
+					<td width="180" align="right"><strong>#= kendo.toString(amount + amount_remain, locale=="km-KH"?"c0":"c", locale)#</strong></td>
+				</tr>
+				<tr>
+					<td style><p>វិក្កយបត្រ</p></td>
+					<td>#: kendo.toString(new Date(issue_date), "dd-MMMM-yyyy", "km-KH")# - #: number#</td>
+					<td class="greyy" style="background: \\#ccc;border-bottom:1px solid \\#fff;#= banhji.InvoicePrint.formVisible#">ថ្ងៃបង់ប្រាក់ PAY DATE</td>
+					<td align="left"></td>
+				</tr>
+				<tr>
+					<td style><p>អតិថិជន</p></td>
+					<td>#=contact.number# #=contact.name#<br>#: contact.phone# #: contact.address#</td>
+					<td class="greyy" style="background: \\#ccc;border-bottom:1px solid \\#fff;#= banhji.InvoicePrint.formVisible#">ប្រាក់បានបង់ PAY AMOUNT</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td style>លេខ​ប្រអប់</td>
+					<td>#:meter.box#</td>
+					<td rowspan="2" class="greyy" style="#= banhji.InvoicePrint.formVisible#background: \\#ccc;">អ្នកទទួលប្រាក់ RECEIVER</td>
+					<td rowspan="2"></td>
+				</tr>
+				<tr>
+					<td style>លេខ​កុង​ទ័រ</td>
+					<td>#: meter.meter_number#</td>
+				</tr>
+			</tbody>
+		</table>
 	</div>
 </script>
 <script id="waterInvoice" type="text/x-kendo-tmpl">	
@@ -6333,13 +6536,63 @@
 													<div class="widget-body padding-none" style="background: none; width: 100%; float: left; border: none; padding: 0;">
 														<div class="row-fluid row-merge">
 															<div class="listWrapper" style="min-height: 0; margin-bottom: 15px; padding: 0;">
-																<div class="innerAll" style="padding: 15px 15px 0; ">
-																	<div class="widget-search separator bottom">
+																<div style="margin-bottom: 10px;">
+																	<input id="ddlPaymentMethod" name="ddlPaymentMethod"
+																			data-role="dropdownlist"
+												              				data-value-primitive="true"
+																			data-text-field="name" 
+												              				data-value-field="id"
+												              				data-bind="
+												              					value: searchSelect,
+												              					source: searchSelectDS,
+												              					events: { change: changeSearchMethod}"
+												              				required data-required-msg="required" 
+												              				style="width: 100%" />
+																</div>
+																<div class="innerAll" style="padding: 15px 15px 0;overflow: hidden;">
+																	<div class="widget-search separator bottom" data-bind="visible: haveSearchInv">
 																		<button class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></button>
 																		<div class="overflow-hidden">
-																			<input style="line-height: 26px;" type="text" placeholder="Invoice Number..." data-bind="value: searchText, events: {change: search}">
+																			<input style="line-height: 26px;" type="text" placeholder="Invoice Number..." data-bind="
+																				value: searchText,
+																				events: {change: search}
+																			">
 																		</div>
 																	</div>
+																	<div style="margin-bottom: 15px;" data-bind="visible: haveSearchCus">
+																		<input data-role="combobox"
+															                   	data-placeholder="Customer Name"
+															                   	data-value-primitive="true"
+															                   	data-text-field="name"
+															                   	data-value-field="id"
+															                   	data-filter="contains"
+	                   															data-min-length="3"
+															                   	data-bind="
+															                   		value: selectedCustomer,
+															                        source: customerDS,
+															                        events: {
+															                            change: search
+															                        }"
+															                   style="width: 100%;"
+															            />
+															        </div>
+															        <div style="margin-bottom: 15px;" data-bind="visible: haveSearchMet">
+																		<input data-role="combobox"
+															                   	data-placeholder="Meter Number"
+															                   	data-value-primitive="true"
+															                   	data-text-field="number"
+															                   	data-value-field="id"
+															                   	data-filter="contains"
+	                   															data-min-length="3"
+															                   	data-bind="
+															                   		value: selectedMeter,
+															                        source: searchMeterDS,
+															                        events: {
+															                            change: search
+															                        }"
+															                   style="width: 100%;"
+															            />
+															        </div>
 																</div>
 															</div>
 														</div>
@@ -7030,7 +7283,7 @@
 								<input type="text" id="formName" name="Form Name" class="k-textbox" placeholder="Form Name" required validationMessage="" data-bind="value: obj.name" style="width: 100%;" />
 							</div>
 							<div class="span12">
-								<h2 class="btn btn-block btn-primary" data-bind="text: lang.lang.form_style">Form Style</h2>
+								<h2 class="btn btn-block btn-primary" style="color: #fff!important;width: 100%;margin-bottom: 5px;" data-bind="text: lang.lang.form_style">Form Style</h2>
 								<div class="row formstyle">
 									<div id="formStyle"
 										 data-role="listview"
@@ -7038,12 +7291,12 @@
 										 data-selectable="true"
 						                 data-template="invoiceCustom-txn-form-template"
 						                 data-bind="source: txnFormDS"
-						                 style="overflow: auto">
+						                 style="overflow: auto;width: 100%;">
 						            </div>
 						        </div>
 							</div>
 							<div class="span12" style="margin-left:0; margin-top: 10px;">
-								<h2 class="btn btn-block btn-primary" data-bind="text: lang.lang.form_color">Form Color</h2>
+								<h2 class="btn btn-block btn-primary" style="color: #fff!important;width: 100%;margin-bottom: 5px;" data-bind="text: lang.lang.form_color">Form Color</h2>
 								<div class="colorPalatte span12">
 									<div class="" style="margin-top: 15px;">
 										<div data-selectable="true" data-bind="value: obj.color, events: { change : colorCC }" data-tile-size='{ width: 60, height: 35 }' data-role="colorpalette" data-columns="6" data-palette='[ "#ffffff", "#000000", "#eeece1", "#1f497d", "#4f81bd", "#c0504d", "#9bbb59", "#dbeef3", "#8064a2", "#f79646", "#f2f2f2", "#7f7f7f", "#ddd9c3", "#c6d9f0", "#dbe5f1", "#f2dcdb", "#ebf1dd", "#e5e0ec"]'></div>
@@ -7051,7 +7304,7 @@
                                 </div>
 							</div>
 							<div class="span12" style="margin-left:0; margin-top: 10px;padding-bottom: 30px;">
-								<h2 class="btn btn-block btn-primary" data-bind="text: lang.lang.form_appearance">Form Appearance</h2>
+								<h2 class="btn btn-block btn-primary" style="color: #fff!important;width: 100%;margin-bottom: 5px;" data-bind="text: lang.lang.form_appearance">Form Appearance</h2>
 								<div class="colorPalatte span12">
 									<div class="" style="margin-top: 15px;">
 										<input type="text" id="formtitle" name="Form Title" class="k-textbox" placeholder="Form Title" required validationMessage="" data-bind="value: obj.title" style="width: 100%;" />
@@ -7061,23 +7314,16 @@
 							</div>
 						</div>
 						<div class="span8" id="invFormContent" style="padding-left:0;padding-right: 0;width: 63%;border:1px solid #eee;margin-bottom:20px;">
-
 						</div>
 					</div>
-					<!-- Form actions -->
 					<div class="box-generic bg-action-button">
 						<div id="ntf1" data-role="notification"></div>
 						<div class="row">
-							<div class="span3">
-								
-							</div>
-							<div class="span9" align="right">
-								
-								<span id="saveClose" data-bind="click: save" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_close"></span></span>		
+							<div class="span12" align="right">
+								<span id="saveClose" data-bind="click: save" class="btn btn-icon btn-success glyphicons power" style="width: 120px;"><i></i> <span data-bind="text: lang.lang.save_close"></span></span>		
 							</div>
 						</div>
 					</div>
-					<!-- // Form actions END -->	
 				</div>							
 			</div>
 		</div>
@@ -7699,6 +7945,156 @@
     	</div>
     </div>
 </script>
+<script id="invoiceForm4" type="text/x-kendo-template">
+	<div class="container font-small winvoice-print" style="margin-bottom: 10px; width: 610px; ">
+		<div class="span12 headerinv " style="border-bottom: 2px solid \#000;padding: 15px 0;">
+            <img class="logoP" data-bind="attr: { src: objLicense.image_url }"  style="position: absolute;left: 0;top: 20px;max-width: 100px;height: auto;max-height: 50px;" />
+			<div class="span12" align="center">
+				<h4 data-bind="text: objLicense.name"></h4>					
+				<h5 data-bind="text: objLicense.address"></h5>
+				<h5 data-bind="text: objLicense.mobile"></h5>					
+			</div>
+		</div>		
+
+		<div class="span12 cover-customer">
+			
+			<div class="span7">
+				<span id="secondwnumber1" style="margin-left: -14px;"></span>
+				<div class="span12">
+					<p>អតិថិជន​ <span>001</span></p>
+					<p>Customer Name</p>
+					<p>No.124, St. 11</p>
+					<p style="font-size: 10px;"><i>ថ្ងៃ​ចាប់​ផ្តើម​ទទួល​ប្រាក់ <?php echo date("d/m/Y"); ?></i></p>
+				</div>
+			</div>
+			<div class="span4">
+				<table >
+					<tr>
+						<td width="200"><p>លេខ​វិក្កយ​បត្រ</p></td>
+						<td><p>WM00001</p></td>
+					</tr>
+					<tr>
+						<td><p>ថ្ងៃ​ចេញ វិក្កយ​បត្រ</p></td>
+						<td><p><?php echo date("d/m/Y"); ?></p></td>
+					</tr>
+					<tr>
+						<td><p>តំបន់</p></td>
+						<td><p>A1-001</p></td>
+					</tr>
+					<tr>
+						<td><p>លេខប្រអប់</p></td>
+						<td><p>P77,001</p></td>
+					</tr>
+					<tr>
+						<td><p>គិត​ចាប់​ពី​ថ្ងៃ​ទី</p></td>
+						<td><p><?php echo date("d/m/Y"); ?></p></td>
+					</tr>
+					<tr>
+						<td><p>ដល់​ថ្ងៃ​ទី</p></td>
+						<td><p><?php echo date("d/m/Y"); ?></p></td>
+					</tr>
+				</table>		
+			</div>			
+		</div>
+		<table class="span12 table table-bordered footerTbl" style="padding:0;margin-top: 40px;border:1px solid #000; border-radius: 3px;border-collapse: inherit;margin-left: 0px;">
+			<thead>
+				<tr>
+					<th width="180" class="darkbblue main-color">លេខ​កុងទ័រ<br>METER</th>
+					<th width="150" class="darkbblue main-color">អំណានចាស់<br>PREVIOUS</th>
+					<th width="120" class="darkbblue main-color">អំណានថ្មី<br>CURRENT</th>
+					<th width="120" class="darkbblue main-color">បរិមាណ<br>CONSUMPTION</th>
+					<th width="120" class="darkbblue main-color">តំលៃឯកត្តា<br>RATE</th>
+					<th width="180" class="darkbblue main-color">តំលៃសរុប<br>AMOUNT</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td style="vertical-align: middle;"> <?php echo date("d/m/Y"); ?></td>
+					<td colspan="4" style="text-align: right">
+						ជំពាក់​សរុប​នៅ​ថ្ងៃ​ធ្វើ​វិក្កយបត្រ Balance as at billing date .រ
+					</td>
+					<td>
+						0<br>
+					</td>
+				</tr>
+				<tr>
+					<td data-bind="text: meter_number"></td>
+					<td align="center">1</td>
+					<td align="center">2</td>
+					<td align="center">1</td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>រំលោះ</td>
+					<td align="center"></td>
+					<td align="center"></td>
+					<td align="center">1,០០០</td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr><td colspan="6"  style="height: 80px;" ></td></tr>
+				<tr>
+					<td colspan="5" style="padding-right: 10px;background: #355176;color: #fff;text-align: right;" class="darkbblue main-color">បំណុល​សរុប TOTAL BALANCE</td>
+					<td style="border: 1px solid;text-align: right"><strong>1,000</strong></td>
+				</tr>
+				<tr>
+					<td rowspan="4" colspan="3"></td>
+					<td colspan="2" class="greyy" style="background: \\#ccc;">ប្រាក់​ត្រូវ​បង់ TOTAL DUE</td>
+					<td style="text-align: right"><strong>1,000</strong></td>
+				</tr>
+				<tr>
+					<td colspan="2" class="greyy" style="background: \\#ccc;">ថ្ងៃផុតកំណត់ DUE DATE</td>
+					<td> <?php echo date("d/m/Y"); ?></td>
+				</tr>
+				<tr>
+					<td colspan="2" class="greyy" style="background: \\#ccc;">ថ្ងៃបង់ប្រាក់ PAY DATE</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td colspan="2" class="greyy" style="background: \\#ccc;">ប្រាក់បានបង់ PAY AMOUNT</td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="line"></div>
+		<table class="span12 table table-bordered footerTbl" style="padding:0;border-collapse: inherit;margin-top: 15px;border:1px solid #000; border-radius: 3px;margin-left: 0px;">
+			<tbody>
+				<tr>
+					<td width="100"></td>
+					<th width="390" style="border: none">
+						<span style="margin-left: -15px;" id="footwnumber1"></span>
+					</th>
+					<td width="270" class="greyy" style="background: #ccc;border-bottom:1px solid #fff;">ប្រាក់​ត្រូវ​បង់ TOTAL DUE</td>
+					<td width="180">1,000</td>
+				</tr>
+				<tr>
+					<td><p>វិក្កយបត្រ</p></td>
+					<td><span><?php echo date("d/m/Y"); ?></span> - <span>WM00001</span></td>
+					<td class="greyy" style="background: #ccc;border-bottom:1px solid #fff;">ថ្ងៃបង់ប្រាក់ PAY DATE</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td><p>អតិថិជន</p></td>
+					<td><span>001</span> <span>Customer Name</span><br>
+					<span>012 111 222</span> <span>No. 123, St.11</span></td>
+					<td class="greyy" style="background: #ccc;border-bottom:1px solid #fff;">ប្រាក់បានបង់ PAY AMOUNT</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>លេខ​ទី​តាំង</td>
+					<td>A1-01</td>
+					<td rowspan="2" class="greyy" style="background: #ccc;">អ្នកទទួលប្រាក់ RECEIVER</td>
+					<td rowspan="2"></td>
+				</tr>
+				<tr>
+					<td>លេខ​កុនង​ទ័រ</td>
+					<td>WM0001</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</script>
 <script id="invoiceForm3-bk" type="text/x-kendo-template">
     <div class="row-fluid">
     	<div class="span7 inv1" style="width: 54%; padding-right: 15px; padding-left: 8px; ">
@@ -7945,7 +8341,7 @@
 </script>
 
 <script id="invoiceCustom-txn-form-template" type="text/x-kendo-template">
-	<a class="span4 #= type #" data-id="#= id #" data-bind="click: selectedForm" style="padding-right: 0; width: 32%;">
+	<a class="span4 #= type #" data-id="#= id #" data-bind="click: selectedForm" style="padding: 0; width: 32%;">
     	<img src="<?php echo base_url(); ?>assets/invoice/img/#= image_url #.jpg" alt="#: name # image" />
     </a>
 </script>

@@ -612,6 +612,149 @@ class Transactions extends REST_Controller {
 		return $number;
 	}
 
+	//POST WITH LINE
+	function with_line_post() {
+		$models = json_decode($this->post('models'));
+		$data["results"] = [];
+		$data["count"] = 0;
+		
+		$number = "";
+		foreach ($models as $value) {
+			//Generate Number
+			if(isset($value->number)){
+				$number = $value->number;
+
+				if($number==""){
+					$number = $this->_generate_number($value->type, $value->issued_date);
+				}
+			}else{
+				$number = $this->_generate_number($value->type, $value->issued_date);
+			}
+			
+			if(isset($value->is_recurring)){
+				if($value->is_recurring==1){
+					$number = "";
+				}
+			}
+
+			$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			isset($value->company_id) 				? $obj->company_id 					= $value->company_id : "";
+			isset($value->location_id) 				? $obj->location_id 				= $value->location_id : "";
+			isset($value->contact_id) 				? $obj->contact_id 					= $value->contact_id : "";
+			isset($value->payment_term_id) 			? $obj->payment_term_id 			= $value->payment_term_id : 5;
+			isset($value->payment_method_id) 		? $obj->payment_method_id 			= $value->payment_method_id : "";
+			isset($value->transaction_template_id) 	? $obj->transaction_template_id 	= $value->transaction_template_id : "";
+			isset($value->reference_id) 			? $obj->reference_id 				= $value->reference_id : "";
+			isset($value->recurring_id) 			? $obj->recurring_id 				= $value->recurring_id : "";
+			isset($value->return_id) 				? $obj->return_id 					= $value->return_id : "";
+			isset($value->job_id) 					? $obj->job_id 						= $value->job_id : "";
+			isset($value->account_id) 				? $obj->account_id 					= $value->account_id : "";
+			isset($value->item_id) 					? $obj->item_id 					= $value->item_id : "";
+			isset($value->tax_item_id) 				? $obj->tax_item_id 				= $value->tax_item_id : "";
+			isset($value->wht_account_id) 			? $obj->wht_account_id 				= $value->wht_account_id : "";
+			isset($value->user_id) 					? $obj->user_id 					= $value->user_id : "";
+			isset($value->employee_id) 				? $obj->employee_id 				= $value->employee_id : "";
+			$obj->number = $number;
+		   	isset($value->type) 					? $obj->type 						= $value->type : "";
+		   	isset($value->journal_type) 			? $obj->journal_type 				= $value->journal_type : "";
+		   	isset($value->sub_total) 				? $obj->sub_total 					= $value->sub_total : "";
+		   	isset($value->discount) 				? $obj->discount 					= $value->discount : "";
+		   	isset($value->tax) 						? $obj->tax 						= $value->tax : "";
+		   	isset($value->amount) 					? $obj->amount 						= $value->amount : "";
+		   	isset($value->fine) 					? $obj->fine 						= $value->fine : "";
+		   	isset($value->deposit) 					? $obj->deposit 					= $value->deposit : "";
+		   	isset($value->remaining) 				? $obj->remaining 					= $value->remaining : "";
+		   	isset($value->received) 				? $obj->received 					= $value->received : "";
+		   	isset($value->change) 					? $obj->change 						= $value->change : "";
+		   	isset($value->credit_allowed) 			? $obj->credit_allowed 				= $value->credit_allowed : "";
+		   	isset($value->additional_cost) 			? $obj->additional_cost 			= $value->additional_cost : "";
+		   	isset($value->additional_apply) 		? $obj->additional_apply 			= $value->additional_apply : "";
+		   	isset($value->rate) 					? $obj->rate 						= $value->rate : "";
+		   	isset($value->locale) 					? $obj->locale 						= $value->locale : "";
+		   	isset($value->month_of) 				? $obj->month_of 					= $value->month_of : "";
+		   	isset($value->issued_date) 				? $obj->issued_date 				= $value->issued_date : "";
+		   	isset($value->bill_date) 				? $obj->bill_date 					= $value->bill_date : "";
+		   	isset($value->payment_date) 			? $obj->payment_date 				= $value->payment_date : "";
+		   	isset($value->due_date) 				? $obj->due_date 					= $value->due_date : "";
+		   	isset($value->deposit_date) 			? $obj->deposit_date 				= $value->deposit_date : "";
+		   	isset($value->check_no) 				? $obj->check_no 					= $value->check_no : "";
+		   	isset($value->reference_no) 			? $obj->reference_no 				= $value->reference_no : "";
+		   	isset($value->references) 				? $obj->references 					= implode(",", $value->references) : "";
+		   	isset($value->segments) 				? $obj->segments 					= implode(",", $value->segments) : "";
+		   	isset($value->bill_to) 					? $obj->bill_to 					= $value->bill_to : "";
+		   	isset($value->ship_to) 					? $obj->ship_to 					= $value->ship_to : "";
+		   	isset($value->memo) 					? $obj->memo 						= $value->memo : "";
+		   	isset($value->memo2) 					? $obj->memo2 						= $value->memo2 : "";
+		   	isset($value->recurring_name) 			? $obj->recurring_name 				= $value->recurring_name : "";
+		   	isset($value->start_date) 				? $obj->start_date 					= $value->start_date : "";
+		   	isset($value->frequency) 				? $obj->frequency 					= $value->frequency : "";
+		   	isset($value->month_option) 			? $obj->month_option 				= $value->month_option : "";
+		   	isset($value->interval) 				? $obj->interval 					= $value->interval : "";
+		   	isset($value->day) 						? $obj->day 						= $value->day : "";
+		   	isset($value->week) 					? $obj->week 						= $value->week : "";
+		   	isset($value->month) 					? $obj->month 						= $value->month : "";
+		   	isset($value->status) 					? $obj->status 						= $value->status : "";
+		   	isset($value->progress) 				? $obj->progress 					= $value->progress : "";
+		   	isset($value->is_recurring) 			? $obj->is_recurring 				= $value->is_recurring : "";
+		   	isset($value->is_journal) 				? $obj->is_journal 					= $value->is_journal : "";
+		   	isset($value->print_count) 				? $obj->print_count 				= $value->print_count : "";
+		   	isset($value->printed_by) 				? $obj->printed_by 					= $value->printed_by : "";
+		   	isset($value->deleted) 					? $obj->deleted 					= $value->deleted : "";
+		   	isset($value->meter_id) 				? $obj->meter_id 					= $value->meter_id : "";
+		   	
+	   		if($obj->save()){
+	   			$data["results"][] = $obj->where("id", $obj->id)->get_raw()->result()[0];
+
+	   			//Lines
+			   	if(isset($value->lines)){
+			   		foreach ($value->lines as $val) {
+			   			$lines = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+			   			$lines->transaction_id 	= $obj->id;
+						isset($val->item_id)			? $lines->item_id			= $val->item_id : "";
+						isset($val->assembly_id)		? $lines->assembly_id 		= $val->assembly_id : "";
+						isset($val->measurement_id)		? $lines->measurement_id	= $val->measurement_id : "";
+						isset($val->tax_item_id)		? $lines->tax_item_id		= $val->tax_item_id : "";
+					   	isset($val->wht_account_id)		? $lines->wht_account_id	= $val->wht_account_id : "";
+					   	isset($val->description)		? $lines->description 		= $val->description : "";
+					   	isset($val->on_hand)			? $lines->on_hand 			= $val->on_hand : "";
+					   	// isset($val->on_po)			? $lines->on_po 			= $val->on_po : "";
+					   	// isset($val->on_so)			? $lines->on_so 			= $val->on_so : "";
+					   	isset($val->gross_weight)		? $lines->gross_weight 		= $val->gross_weight : "";
+					   	isset($val->truck_weight)		? $lines->truck_weight 		= $val->truck_weight : "";
+					   	isset($val->bag_weight)			? $lines->bag_weight 		= $val->bag_weight : "";
+					   	isset($val->yield)				? $lines->yield 			= $val->yield : "";
+					   	isset($val->quantity)			? $lines->quantity 			= $val->quantity : "";
+					   	isset($val->quantity_adjusted) 	? $lines->quantity_adjusted = $val->quantity_adjusted : "";
+					   	// isset($val->conversion_ratio)? $lines->conversion_ratio 	= $val->conversion_ratio : $lines->conversion_ratio = 1;
+					   	isset($val->cost)				? $lines->cost 				= $val->cost : "";
+					   	isset($val->price)				? $lines->price 			= $val->price : "";
+					   	//isset($val->price_avg)		? $lines->price_avg 		= $val->price_avg : "";		   	
+					   	isset($val->amount)				? $lines->amount 			= $val->amount : "";
+					   	isset($val->markup)				? $lines->markup 			= $val->markup : "";
+					   	isset($val->discount)			? $lines->discount 			= $val->discount : "";
+					   	isset($val->fine)				? $lines->fine 				= $val->fine : "";
+					   	isset($val->tax)				? $lines->tax 				= $val->tax : "";
+					   	isset($val->rate)				? $lines->rate 				= $val->rate : "";
+					   	isset($val->locale)				? $lines->locale 			= $val->locale : "";
+					   	isset($val->additional_cost)	? $lines->additional_cost  	= $val->additional_cost : "";
+					   	isset($val->additional_applied)	? $lines->additional_applied= $val->additional_applied : "";
+					   	isset($val->movement)			? $lines->movement 			= $val->movement : "";
+					   	isset($val->required_date)		? $lines->required_date 	= $val->required_date : "";
+					   	isset($val->deleted) 			? $lines->deleted 			= $val->deleted : "";
+
+					   	if($lines->save()){
+					   		$data["lines"][] = $lines->where("id", $lines->id)->get_raw()->result()[0];
+					   	}
+			   		}
+			   	}
+		    }
+		}
+
+		$data["count"] = count($data["results"]);
+		$this->response($data, 201);
+	}
+
 
 	//GET BALANCE
 	function balance_get() {

@@ -527,6 +527,7 @@ class Winvoices extends REST_Controller {
 								$meter = array(
 									'meter_number'   => $meter->number,
 									'meter_order'   => $meter->worder,
+									'meter_multipier'   => $meter->multiplier,
 									'meter_id'   => $meter->id,
 									'location' => $location->result(),
 									'box' => $boxname,
@@ -655,10 +656,10 @@ class Winvoices extends REST_Controller {
 					'contact' => array(
 						'id' => $row->contact_id,
 						'name' => $contact->name,
-						'phone' => $contact->phone,
+						'phone' => isset($contact->phone) ? $contact->phone : '',
 						'abbr' => $contact->abbr,
 						'number' => $contact->number,
-						'address'=> isset($contact->address)?$contact->address:''
+						'address'=> isset($contact->address) ? $contact->address:''
 					),
 					'amount_remain' => floatval($amountOwed),
 					'meter'=> $meter,

@@ -7558,9 +7558,9 @@
                 if (v.reactive != 0) {
                     AmountUsage = v.items[0].line.usage;
                     AmountReactive = v.reactive.usage;
-                    var PAmount = (AmountReactive * 100) / AmountUsage;
-                    if (PAmount >= 48.4) {
-                        ReactivePrice = (AmountReactive * 100) * 0.25;
+                    var PAmount = (AmountReactive / AmountUsage) - 0484;
+                    if (PAmount > 0) {
+                        ReactivePrice = (PAmount * AmountUsage) * 0.025;
                     }
                 }
                 if (ReactivePrice > 0) {
@@ -8237,6 +8237,8 @@
                 TempForm = "";
             if (this.txnFormID == "45") {
                 TempForm = $("#InvoiceFormTemplate2").html();
+            } else if (this.txnFormID == "49") {
+                TempForm = $("#InvoiceFormElectric").html();
             } else {
                 TempForm = $("#InvoiceFormTemplate1").html();
             }
@@ -9851,87 +9853,133 @@
         idList: [],
         haveFine: false,
         amountFine: false,
+        searchSelect    : 1,
+        searchSelectDS  : [
+            {id: 1, name: "Invoice Number" },
+            {id: 2, name: "Customer Name" },
+            {id: 3, name: "Meter Number" }
+        ],
+        haveSearchInv       : true,
+        haveSearchCus       : false,
+        haveSearchMet       : false,
+        changeSearchMethod  : function(e){
+            if(this.get("searchSelect") == 1){
+                this.set("haveSearchInv", true);
+                this.set("haveSearchCus", false);
+                this.set("haveSearchMet", false);
+            }else if(this.get("searchSelect") == 2){
+                this.set("haveSearchInv", false);
+                this.set("haveSearchCus", true);
+                this.set("haveSearchMet", false);
+            }else if(this.get("searchSelect") == 3){
+                this.set("haveSearchInv", false);
+                this.set("haveSearchCus", false);
+                this.set("haveSearchMet", true);
+            }
+        },
+        customerDS              : dataStore(apiUrl + "contacts"),
+        searchMeterDS           : dataStore(apiUrl + "utibills/meters"),
+        onCustomerSearch        : function(e){
+            this.search();
+        },
+        onMeterSearch           : function(e){
+            this.search();
+        },
         //Search
         search: function() {
             var self = this,
                 para = [],
                 obj = this.get("obj"),
+                searchText = "";
+            if(this.get("searchSelect") == 1){
                 searchText = this.get("searchText");
-            if (searchText !== "") {
-                $("#loadING").css("display", "block");
-                this.exArray = [];
                 para.push({
                     field: "number",
                     value: searchText
                 });
-                if (jQuery.inArray(searchText, this.idList) != -1) {
-                    alert("This Invoice already Included!");
-                    this.set("searchText", "");
-                    $("#loadING").css("display", "none");
-                } else {
-                    this.txnDS.query({
-                        filter: para,
-                        page: 1,
-                        pageSize: 1
-                    }).then(function() {
-                        var view = self.txnDS.view();
-                        if (view.length > 0) {
-                            self.set("btnActive", false);
-                            $.each(view, function(index, v) {
-                                if (v.amount_fine > 0) {
-                                    self.set("haveFine", true);
-                                }
-                                var amount_due = (v.amount - (v.amount_paid + v.deposit)) + v.amount_fine;
-                                self.dataSource.add({
-                                    transaction_template_id: 0,
-                                    contact_id: v.contact_id,
-                                    contact_name: v.contact_name,
-                                    account_id: obj.account_id,
-                                    payment_term_id: v.payment_term_id,
-                                    payment_method_id: obj.payment_method_id,
-                                    reference_id: v.id,
-                                    reference_no: v.number,
-                                    number: "",
-                                    invnumber: v.number,
-                                    type: "Cash_Receipt",
-                                    sub_total: amount_due,
-                                    amount: amount_due,
-                                    discount: 0,
-                                    fine: 0,
-                                    rate: v.rate,
-                                    locale: v.locale,
-                                    issued_date: obj.issued_date,
-                                    invissued_date: v.issued_date,
-                                    memo: obj.memo,
-                                    memo2: obj.memo2,
-                                    status: 0,
-                                    segments: obj.segments,
-                                    is_journal: 1,
-                                    location_id: v.location_id,
-                                    pole_id: v.pole_id,
-                                    box_id: v.box_id,
-                                    meter_id: v.meter_id,
-                                    reference_id: v.id,
-                                    meter: v.meter,
-                                    month_of: v.month_of,
-                                    user_id: banhji.userData.id,
-                                    amount_fine: v.amount_fine,
-                                    session_id: self.get("CashierID")
-                                });
-                                self.idList.push(v.number);
-                                $("#loadING").css("display", "none");
+            }else if(this.get("searchSelect") == 2){
+                console.log(this.get("selectedCustomer"));
+                para.push({
+                    field: "contact_id",
+                    value: this.get("selectedCustomer")
+                });
+            }else if(this.get("searchSelect") == 3){
+                para.push({
+                    field: "meter_id",
+                    value: this.get("selectedMeter")
+                });
+            }
+            $("#loadING").css("display", "block");
+            this.exArray = [];
+            if (jQuery.inArray(searchText, this.idList) != -1) {
+                alert("This Invoice already Included!");
+                this.set("searchText", "");
+                $("#loadING").css("display", "none");
+            } else {
+                this.txnDS.query({
+                    filter: para,
+                    page: 1,
+                    pageSize: 100
+                }).then(function() {
+                    var view = self.txnDS.view();
+                    if (view.length > 0) {
+                        self.set("btnActive", false);
+                        $.each(view, function(index, v) {
+                            if (v.amount_fine > 0) {
+                                self.set("haveFine", true);
+                            }
+                            var amount_due = (v.amount - (v.amount_paid + v.deposit)) + v.amount_fine;
+                            self.dataSource.add({
+                                transaction_template_id: 0,
+                                contact_id: v.contact_id,
+                                contact_name: v.contact_name,
+                                account_id: obj.account_id,
+                                payment_term_id: v.payment_term_id,
+                                payment_method_id: obj.payment_method_id,
+                                reference_id: v.id,
+                                reference_no: v.number,
+                                number: "",
+                                invnumber: v.number,
+                                type: "Cash_Receipt",
+                                sub_total: amount_due,
+                                amount: amount_due,
+                                discount: 0,
+                                fine: 0,
+                                rate: v.rate,
+                                locale: v.locale,
+                                issued_date: obj.issued_date,
+                                invissued_date: v.issued_date,
+                                memo: obj.memo,
+                                memo2: obj.memo2,
+                                status: 0,
+                                segments: obj.segments,
+                                is_journal: 1,
+                                location_id: v.location_id,
+                                pole_id: v.pole_id,
+                                box_id: v.box_id,
+                                meter_id: v.meter_id,
+                                reference_id: v.id,
+                                meter: v.meter,
+                                month_of: v.month_of,
+                                user_id: banhji.userData.id,
+                                amount_fine: v.amount_fine,
+                                session_id: self.get("CashierID")
                             });
-                            self.setRate();
-                            self.set("btnActive", true);
-                        } else {
-                            var notifi = $("#ntf1").data("kendoNotification");
-                            notifi.hide();
-                            notifi.error(self.lang.lang.no_data);
+                            self.idList.push(v.number);
                             $("#loadING").css("display", "none");
-                        }
-                        self.set("searchText", "");
-                    });
-                }
+                        });
+                        self.setRate();
+                        self.set("btnActive", true);
+                    } else {
+                        var notifi = $("#ntf1").data("kendoNotification");
+                        notifi.hide();
+                        notifi.error(self.lang.lang.no_data);
+                        $("#loadING").css("display", "none");
+                    }
+                    self.set("searchText", "");
+                    self.set("selectedCustomer", "");
+                    self.set("selectedMeter", "");
+                });
             }
         },
         remainFind: function(meter_id) {
@@ -11369,6 +11417,9 @@
                     break;
                 case 45:
                     Active = banhji.view.invoiceForm3;
+                    break;
+                case 49:
+                    Active = banhji.view.invoiceForm4;
                     break;
             }
             banhji.view.invoiceCustom.showIn('#invFormContent', Active);
@@ -18906,11 +18957,13 @@
                 var notifi = $("#ntf1").data("kendoNotification");
                     notifi.hide();
                     notifi.success(self.lang.lang.success_message);
+                $('li.k-file').remove();
             });
             this.txnUploadOffDS.bind("error", function(e){
                 var notifi = $("#ntf1").data("kendoNotification");
                     notifi.hide();
                     notifi.error(self.lang.lang.error_message);
+                $('li.k-file').remove();
             });
         },
         recordUploadOffDS       : dataStore(apiUrl + "utibills/recordoff"),
@@ -18947,11 +19000,13 @@
                 var notifi = $("#ntf1").data("kendoNotification");
                     notifi.hide();
                     notifi.success(self.lang.lang.success_message);
+                $('li.k-file').remove();
             });
             this.recordUploadOffDS.bind("error", function(e){
                 var notifi = $("#ntf1").data("kendoNotification");
                     notifi.hide();
                     notifi.error(self.lang.lang.error_message);
+                $('li.k-file').remove();
             });
         }
     });
@@ -20653,6 +20708,9 @@
             model: banhji.invoiceCustom
         }),
         invoiceForm3: new kendo.Layout("#invoiceForm3", {
+            model: banhji.invoiceCustom
+        }),
+        invoiceForm4: new kendo.Layout("#invoiceForm4", {
             model: banhji.invoiceCustom
         }),
 
