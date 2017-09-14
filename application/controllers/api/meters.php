@@ -10,16 +10,6 @@ class Meters extends REST_Controller {
 	//CONSTRUCTOR
 	function __construct() {
 		parent::__construct();
-		$institute = new Institute();
-		$institute->where('id', $this->input->get_request_header('Institute'))->get();
-		if($institute->exists()) {
-			$conn = $institute->connection->get();
-			$this->server_host = $conn->server_name;
-			$this->server_user = $conn->username;
-			$this->server_pwd = $conn->password;	
-			$this->_database = $conn->inst_database;
-			date_default_timezone_set("$conn->time_zone");
-		}
 	}
 	
 	//GET 
@@ -82,7 +72,7 @@ class Meters extends REST_Controller {
 				$reactive = $value->reactive->get_raw();
 				//Results				
 				$data["results"][] = array(
-					"id" 					=> floatval($value->id),
+					"id" 					=> $value->id,
 					"currency_id"			=> $value->currency_id,
 					"_currency"				=> array(
 												"id" => $currency->id,
@@ -119,7 +109,8 @@ class Meters extends REST_Controller {
 					//"reactive_of" 			=> $value->reactive_of,
 					"date_used" 			=> $value->date_used,
 					"reactive_id" 			=> intval($value->reactive_id),
-					"reactive_status" 		=> $value->reactive_status
+					"reactive_status" 		=> $value->reactive_status,
+					"group" 				=> isset($value->group) ? $value->group : 0
 				);
 			}
 		}
@@ -172,9 +163,7 @@ class Meters extends REST_Controller {
 			$obj->box_id 				= isset($value->box_id)				?$value->box_id:0;
 			$obj->property_id 			= isset($value->property_id)		?$value->property_id:0;
 			$obj->activated 			= isset($value->activated)			?$value->activated:0;
-			$obj->worder 				= isset($value->worder)				?$value->worder:0;
 			$obj->reactive_status 		= isset($value->reactive_status)	?$value->reactive_status:0;
-			$obj->sync = 1;
 			if($obj->save()){	
 				$data[] = array(
 					"id" 					=> $obj->id,
@@ -199,7 +188,6 @@ class Meters extends REST_Controller {
 					"longtitute" 			=> $obj->longtitute,
 					"multiplier" 			=> $obj->multiplier,
 					"reactive_id" 			=> $obj->reactive_id,
-					"worder" 				=> $obj->worder,
 					"reactive_status" 		=> $obj->reactive_status,
 					"date_used" 			=> $obj->date_used
 				);					
@@ -263,7 +251,6 @@ class Meters extends REST_Controller {
 			$obj->box_id 				= isset($value->box_id)				?$value->box_id:0;
 			$obj->reactive_id 			= isset($value->reactive_id)		?$value->reactive_id:0;
 			$obj->reactive_status		= isset($value->reactive_status)	?$value->reactive_status:0;
-			$obj->sync = 2;
 			if($obj->save()){
 				//Results
 				$data[] = array(
@@ -322,9 +309,9 @@ class Meters extends REST_Controller {
 
 	//GET RECORD
 	function record_get() {		
-		$filter 	= $this->get("filter");
-		$page 		= $this->get('page');
-		$limit 		= $this->get('limit');
+		$filters 	= $this->get("filter")["filters"];		
+		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
 		$sort 	 	= $this->get("sort");		
 		$data["results"] = array();
 		$data["count"] = 0;
@@ -332,31 +319,48 @@ class Meters extends REST_Controller {
 		$obj = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
 
 		//Sort
-		if(!empty($sort) && isset($sort)){
+		if(!empty($sort) && isset($sort)){					
 			foreach ($sort as $value) {
-				if(isset($value['operator'])){
-					$obj->{$value['operator']}($value["field"], $value["dir"]);
-				}else{
-					$obj->order_by($value["field"], $value["dir"]);
-				}
+				$obj->order_by($value["field"], $value["dir"]);
 			}
 		}
-
-		//Filter
-		if(!empty($filter) && isset($filter)){
-	    	foreach ($filter["filters"] as $value) {
-	    		if(isset($value["operator"])) {
-					$obj->{$value["operator"]}($value["field"], $value["value"]);
-				} else {
-					if($value["field"]=="is_recurring"){
-	    				$is_recurring = $value["value"];
-	    			}else{
-	    				$obj->where($value["field"], $value["value"]);
-	    			}
-				}
-			}
-		}
-
+		
+		//Filter		
+		if(!empty($filters) && isset($filters)){			
+	    	foreach ($filters as $value) {
+	    		if(!empty($value["operator"]) && isset($value["operator"])){
+		    		if($value["operator"]=="where_in"){
+		    			$obj->where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_in"){
+		    			$obj->or_where_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="where_not_in"){
+		    			$obj->where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_where_not_in"){
+		    			$obj->or_where_not_in($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="like"){
+		    			$obj->like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_like"){
+		    			$obj->or_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="not_like"){
+		    			$obj->not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="or_not_like"){
+		    			$obj->or_not_like($value["field"], $value["value"]);
+		    		}else if($value["operator"]=="startswith"){
+		    			$obj->like($value["field"], $value["value"], "after");
+		    		}else if($value["operator"]=="endswith"){
+		    			$obj->like($value["field"], $value["value"], "before");
+		    		}else if($value["operator"]=="contains"){
+		    			$obj->like($value["field"], $value["value"], "both");
+		    		}else if($value["operator"]=="or_where"){
+		    			$obj->or_where($value["field"], $value["value"]);		    		    		
+		    		}else{
+		    			$obj->where($value["field"].' '.$value["operator"], $value["value"]);
+		    		}
+	    		}else{
+	    			$obj->where($value["field"], $value["value"]);
+	    		}
+			}									 			
+		}		
 		$obj->where("invoiced <>", 1);
 		$obj->get_paged_iterated($page, $limit);
 		$data["count"] = $obj->paged->total_rows;		
@@ -371,13 +375,13 @@ class Meters extends REST_Controller {
 					"input_by" 		=> $value->input_by,
 					"previous" 		=> intval($value->previous), 	
 					"current" 		=> intval($value->current),
-					"round" 		=> $value->round,
+					"new_round" 	=> $value->new_round,
 					"usage"			=> intval($value->usage),			
 					"month_of" 		=> $value->month_of, 						
 					"from_date" 	=> $value->from_date,			
 					"to_date" 		=> $value->to_date,
 					"memo"			=> $value->memo,			
-					"deleted" 		=> $value->deleted,
+					"deleted" 		=> $value->deleted,											
 					"deleted_by"	=> $value->deleted_by	
 				);
 			}
@@ -406,7 +410,7 @@ class Meters extends REST_Controller {
 			$obj->memo 			= $value->memo;
 			$obj->deleted 		= isset($value->deleted)?$value->deleted:"";
 			$obj->deleted_by 	= isset($value->deleted_by)?$value->deleted_by:"";
-			$obj->sync = 1;
+						
 			if($obj->save()){
 				//Respsone
 				$data["results"][] = array(
@@ -455,7 +459,7 @@ class Meters extends REST_Controller {
 			$obj->memo 			= $value->memo;
 			$obj->deleted 		= $value->deleted;
 			$obj->deleted_by 	= $value->deleted_by;
-			$obj->sync = 1;
+
 			if($obj->save()){				
 				//Results
 				$data["results"][] = array(
@@ -1070,6 +1074,7 @@ class Meters extends REST_Controller {
 		//Response Data		
 		$this->response($data, 200);		
 	}
+
 }
 /* End of file meters.php */
 /* Location: ./application/controllers/api/meters.php */

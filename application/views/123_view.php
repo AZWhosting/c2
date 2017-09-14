@@ -62,22 +62,23 @@
 				</div>
 
 				<div class="board-chart">
-					<div class="span12">
+					<div class="span12" style="padding: 0;">
 						<div class="span6">
 							<p><span data-bind="text: lang.lang.items"></span></p>
 								<div data-role="pager" data-bind="source: items.dataStore" data-numeric="false" data-page-sizes="[100, 200, 300]"></div>
-								<table class="table">
+								<table class="table" style="border: 1px solid #ddd;">
 									<tbody data-role="listview" data-bind="source: items.dataStore" data-template="item-tmpl">
 									</tbody>
 								</table>
 								<div data-role="pager" data-bind="source: items.dataStore" data-numeric="false"></div>    
 						</div>
-						<div class="span6">
-							<p><span data-bind="text: lang.lang.sale"></span></p>
-								<table class="table">
-									<tbody data-role="listview" data-bind="source: products.dataStore" data-template="product-tmpl" data-edit-template="product-edit-tmpl">
-									</tbody>
-								</table>
+						<div class="span6" style="padding-left: 15px;">             
+							<p class="span1"><span style="line-height: 39px; margin-left: -13px;" data-bind="text: lang.lang.sale"></span></p>
+              <div class="span11" style="text-align: right;"> <button data-bind="click: products.save" style="margin-bottom: 15px; margin-left: 15px;" class="btn btn-default">Button</button></div>
+							<table class="table" style="border: 1px solid #ddd;">
+								<tbody data-role="listview" data-bind="source: products.dataStore" data-template="product-tmpl" data-edit-template="product-edit-tmpl">
+								</tbody>
+							</table>
 						</div>
 					</div>					
 				</div>	
@@ -94,22 +95,20 @@
 </script>
 
 <script type="text/x-kendo-template" id="item-tmpl">
-	<tr><td>#=name#</td><td><button data-bind="click: items.onClick" class="btn btn-default">Put On 123</button></td></tr>
+	<tr><td>#=name#</td><td style="text-align: center;"><button data-bind="click: items.onClick" class="btn btn-default">Put On 123</button></td></tr>
 </script>
 <script type="text/x-kendo-template" id="product-tmpl">
 	<tr>
-		<td>#=name#</td>
-		<td>#=UoH#</td>
-		<td>
-			<button class="btn btn-invert" data-bind="click: products.removeProduct"><span class="k-icon k-i-delete"></button>
-			<button class="btn btn-default k-button k-edit-button"><span class="k-icon k-i-edit"></span></button>
-		</td>
+		<td><input type="text" data-bind="value: name"></td>
+		<td><input type="text" data-bind="value: summary"></td>
+		<td><input type="text" data-bind="value: UoH"></td>
+		<td><button class="btn btn-warning" data-bind="click: products.removeProduct"><span class="k-icon k-i-delete"></span></button></td>
 	</tr>
 </script>
 <script type="text/x-kendo-template" id="product-edit-tmpl">
 	<tr>
 		<td>#=name#</td>
-		<td><input type="number" data-bind="value: UoH"></td>
+		<td><input type="number" data-bind="value: UoH" style="border: 1px solid \#ddd; padding: 5px;"></td>
 		<td>
 			<button class="btn btn-default k-button k-update-button"><span class="k-icon k-i-check"></span></button>
 			<button class="btn btn-default k-button k-cancel-button"><span class="k-icon k-i-cancel"></span></button>
@@ -1275,24 +1274,25 @@
 	}
 
 	banhji.productStore = new kendo.data.DataSource({
-		transport: {
+		autoSync: false,
+    	transport: {
 			read 	: {
 				url: 'http://app.banhji.com/api/v1/products/index?seller=' + banhji.institute.id,
 				type: "GET",
 				dataType: 'json'
 			},
 			create 	: {
-				url: 'http://app.banhji.com/api/v1/products/index',
+				url: 'http://app.banhji.com/api/v1/products',
 				type: "POST",
 				dataType: 'json'
 			},
 			update 	: {
-				url: 'http://app.banhji.com/api/v1/products/index',
+				url: 'http://app.banhji.com/api/v1/products',
 				type: "PUT",
-				dataType: 'json'
+				dataType: 'json',
 			},
 			destroy 	: {
-				url:'http://app.banhji.com/api/v1/products/index',
+				url:'http://app.banhji.com/api/v1/products',
 				type: "DELETE",
 				dataType: 'json'
 			},
@@ -1758,11 +1758,21 @@
 
 	banhji.productVM = kendo.observable({
 		dataStore: banhji.productStore,
+		enabledSave: false,
 		addNew   : function(data) {
-			this.dataStore.insert(0, data);
+			banhji.productVM.set('enabledSave', true);
+			banhji.productVM.dataStore.insert(0, data);
 		},
 		removeProduct: function(e) {
 			banhji.productVM.dataStore.remove(e.data);
+		},
+		save 	 : function() {
+			banhji.productVM.dataStore.sync();
+			banhji.productVM.dataStore.bind('requestEnd', function(e){
+				if(e.response) {
+					banhji.productVM.set('enabledSave', false);
+				}
+			});
 		}
 	});
 
