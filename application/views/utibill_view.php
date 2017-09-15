@@ -2370,15 +2370,13 @@
 					<div class="row" style="margin-bottom: 15px;">
 						<div class="col-xs-12 col-sm-6" style="margin-bottom: 15px;">
 							<div class="widget widget-4 widget-tabs-icons-only margin-bottom-none">
-							    <!-- Widget Heading -->
 							    <div class="widget-head">
-							        <!-- Tabs -->
 							        <ul class="pull-right">
 							        	<li style="font-size: large; color: black; font-weight: bold;">							            	
 							            	<span data-bind="text: obj.name"></span>
 							            </li>
 							            <li class="glyphicons text_bigger dashboard active"><span data-toggle="tab" data-target="#tab1"><i></i></span>
-							            </li>						            							            
+							            </li>		            
 							            <li class="glyphicons circle_info"><span data-toggle="tab" data-target="#tab2"><i></i></span>
 							            </li>							            
 							            <li class="glyphicons pen"><span data-toggle="tab" data-target="#tab3"><i></i></span>
@@ -2387,15 +2385,12 @@
 							            </li>	         
 							        </ul>
 							        <div class="clearfix"></div>
-							        <!-- // Tabs END -->
 							    </div>
-							    <!-- Widget Heading END -->
 							    <div class="widget-body">
 							        <div class="tab-content">
-							        	<!-- METER -->
 							            <div id="tab1" class="tab-pane active">
 							            	<a class="btn btn-block btn-inverse" style="margin-bottom: 5px;" data-bind="click: goMeter, visible: meter_visible, text: lang.lang.add_meter">Add Meter</a>
-							            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
+							            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs" style="position: relative;clear:both;">
 										        <thead>
 										            <tr>			                
 										                <th style="vertical-align: top;"><span data-bind="text: lang.lang.meter_no">Meter No.</span></th>
@@ -2404,17 +2399,13 @@
 										            </tr> 
 										        </thead>
 										        <tbody data-role="listview" 
-										        		data-template="waterCenter-meter-list-tmpl" 
-										        		data-auto-bind="false"
-										        		data-selectable="single"
-										        		data-bind="source: meterDS"></tbody>			        
+									        		data-template="waterCenter-meter-list-tmpl" 
+									        		data-auto-bind="false"
+									        		data-selectable="single"
+									        		data-bind="source: meterDS"></tbody>	        
 										    </table>
-										    <div id="pager" class="k-pager-wrap"
-											 data-auto-bind="false"
-										     data-role="pager" data-bind="source: meterDS"></div>
+										    <a class="btn btn-block btn-inverse" style="margin-bottom: 5px;position: relative;clear:both;background: #609450!important;" data-bind="click: groupMeter, visible: meter_visible">Group Meter</a>
 							            </div>
-							            <!-- // METER END -->
-							            <!-- INFO -->
 							            <div id="tab2" class="tab-pane">
 							            	<div class="row-fluid">
 							            		<div class="accounCetner-textedit">
@@ -2422,9 +2413,6 @@
 														<tr>
 															<td width="40%"><span data-bind="text: lang.lang.customer_type"></span></td>
 															<td width="60%"><span data-bind="text: lang.lang.customer_type"></span></td>
-															<!-- <td width="60%">
-																<span class="strong" data-bind="text: obj.contact_type"></span>
-															</td> -->
 														</tr>
 														<tr>
 															<td><span data-bind="text: lang.lang.number"></span></td>
@@ -2857,6 +2845,9 @@
 		<td style="text-align: right;">
 			# if(activated != "1") { #
 			<a style="background: \#1f4774; padding:4px; margin-right: 3px; vertical-align: middle;" href="\#/activate_meter/#= id#" class="btn-action btn-success" data-bind="text: lang.lang.activate">Activate</a>
+			# } #
+			# if(group != 0){#
+				<span style="background-color: \\rgb(96, 148, 80) !important;border-color: \\rgb(96, 148, 80) !important;" title="Group" class="btn-action glyphicons share_alt btn-danger"><i></i></span>
 			# } #
 			<a style="border:none;" href="\#/meter/#= id #" class="btn-action glyphicons pencil btn-danger widget-stats widget-stats-info"><i></i></span>
 		</td>
@@ -3720,10 +3711,7 @@
 				    		<span class="glyphicons no-js remove_2" 
 								data-bind="click: cancel"><i></i></span>
 						</div>
-
 						<div class="clear"></div>
-
-						<!-- Top Part -->
 				    	<div class="row-fluid">
 				    		<div class="col-xs-12 col-sm-6 well">
 				    			<div class="row">
@@ -3743,10 +3731,8 @@
 							                   	events: {change: licenseChange}"
 							                   style="width: 100%;" ></select>
 										</div>
-										<!-- // Group END -->
 									</div>
 									<div class="col-xs-12 col-sm-6">
-										<!-- Group -->
 										<div class="control-group">							
 											<label><span data-bind="text: lang.lang.multiplier">Multiplier</span></label>			
 					              			<br>
@@ -3755,24 +3741,20 @@
 								                placeholder="eg. 1" required data-required-msg="required"
 								                style="width: 100%" />
 										</div>
-										<!-- // Group END -->		
 									</div>
 								</div>								
 								<div class="row">
 									<div class="col-xs-12 col-sm-6">
-										<!-- Group -->
 										<div class="control-group">							
-											<label><span data-bind="text: lang.lang.meter_code">Meter Code</span> <span style="color:red">*</span></label>			
+											<label><span data-bind="text: lang.lang.meter_number">Meter Code</span> <span style="color:red">*</span></label>			
 					              			<br>
 					              			<input class="k-textbox"					    
 						              			data-bind="value: obj.meter_number, events: {change: meterNumberChange}"
 								                placeholder="eg. 1" required data-required-msg="required"
 								                style="width: 100%" />
 										</div>
-										<!-- // Group END -->	
 									</div>
 									<div class="col-xs-12 col-sm-6">
-										<!-- Group -->
 										<div class="control-group">							
 											<label for="txtAbbr"><span data-bind="text: lang.lang.meter_no_digit">Meter No. Digit</span> <span style="color:red">*</span></label>			
 					              			<br>
@@ -3781,12 +3763,10 @@
 								                placeholder="eg. 1" required data-required-msg="required"
 								                style="width: 100%" />
 										</div>
-										<!-- // Group END -->
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-xs-12 col-sm-6">
-										<!-- Group -->
 										<div class="control-group">							
 											<label for="txtAbbr"><span data-bind="text: lang.lang.plan">Plan</span> <span style="color:red">*</span></label>	
 					              			<br>
@@ -3798,22 +3778,18 @@
 							                   data-bind="source: planDS, value: obj.plan_id"
 							                   style="width: 100%;" />
 										</div>
-										<!-- // Group END -->	
 									</div>
 									<div class="col-xs-12 col-sm-6">
 										<!-- Group -->
 										<div class="control-group">							
 											<label for="txtAbbr"><span data-bind="text: lang.lang.starting_meter_no">Starting Meter No.</span></label>
 					              			<br>
-						              		<input class="k-textbox" data-bind="value: obj.starting_no" 
-														placeholder="e.g. 0" style="width: 100%;" />
+						              		<input class="k-textbox" data-bind="value: obj.starting_no" placeholder="e.g. 0" style="width: 100%;" />
 										</div>
-										<!-- // Group END -->	
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-xs-12 col-sm-6">
-										<!-- Group -->
 										<div class="control-group">
 											<label for="customerStatus"><span data-bind="text: lang.lang.status"></span> <span style="color:red">*</span></label>
 								            <select data-role="dropdownlist"
@@ -3824,8 +3800,7 @@
 							                   	source: selectType,
 							                   	value: obj.status"
 							                   style="width: 100%; " ></select>
-										</div>				
-										<!-- // Group END -->
+										</div>
 										<div class="control-group">	
 											<label for="txtAbbr"><span data-bind="text: lang.lang.order"></span></label>			
 					              			<br>
@@ -3836,7 +3811,6 @@
 										</div>
 									</div>
 									<div class="col-xs-12 col-sm-6">
-										<!-- Group -->
 										<div class="control-group">
 											<label for="registeredDate"><span data-bind="text: lang.lang.register_date"></span> <span style="color:red">*</span></label>
 								            <input
@@ -3845,8 +3819,7 @@
 				            					data-format="dd-MM-yyyy"
 				            					placeholder="Register Date" 
 				            					style="width: 100%;" />
-										</div>					
-										<!-- // Group END -->
+										</div>
 										<div class="control-group" data-bind="visible: electricMeter">	
 											<input type="checkbox" data-bind="checked: chkRe, events: {change : checkRe}">
 											<label for="registeredDate"><span data-bind="text: lang.lang.reactive_meter"></span></label>
@@ -3854,58 +3827,22 @@
 									</div>
 								</div>						
 							</div>
-							<!-- <div class="col-xs-12 col-sm-6">
-								<div class="row-fluid">	
-									
-									<div id="map" class="span12" style="height: 225px;"></div>
-								</div>
-								<div class="separator line bottom"></div>
-								<div class="row-fluid">	
-									<div class="col-xs-12 col-sm-6">									
-										
-										<div class="control-group">
-							    			<label for="latitute"><span data-bind="text: lang.lang.latitute"></span> </label>
-											<div class="input-prepend">
-												<span class="add-on glyphicons direction"><i></i></span>
-												<input style="width: 84%;" type="text" class="input-large span12" data-bind="value: obj.latitute, events:{change: loadMap}" placeholder="012345.67897">
-											</div>
-										</div>									
-						
-									</div>
-									<div class="col-xs-12 col-sm-6">	
-							
-										<div class="control-group">
-							    			<label for="longtitute"><span data-bind="text: lang.lang.longtitute"></span> </label>
-							    			<div class="input-prepend">
-												<span class="add-on glyphicons google_maps"><i></i></span>
-												<input style="width: 84%;" type="text" class="input-large span12" data-bind="value: obj.longtitute, events:{change: loadMap}" placeholder="012345.67897">
-											</div>										
-										</div>
-										
-									</div>										
-								</div>
-							</div> -->
 							<div class="col-sm-6">
-								<div class="row-fluid">	
-									<!-- Map -->
+								<div class="row-fluid">
 									<div id="map" class="col-xs-12 col-sm-12" style="height: 200px;"></div>
 								</div>
 								<div class="separator line bottom"></div>
 								<div class="row-fluid">	
 									<div class="col-xs-12 col-sm-6">
-										<!-- Group -->
 										<div class="control-group">
 							    			<label for="latitute"><span data-bind="text: lang.lang.latitute"></span> </label>
 											<div class="input-prepend">
 												<span style="float: left;" class="add-on glyphicons direction"><i></i></span>
 												<input style="float: left;  width: 77%; padding: 4px 8px; border: 1px solid #efefef; line-height: 20px; box-shadow: none;" type="text" class="input-large span12" data-bind="value: obj.latitute, events:{change: loadMap}" placeholder="012345.67897">
 											</div>
-										</div>									
-										<!-- // Group END -->
-									</div>	
-									
-									<div class="col-xs-12 col-sm-6">	
-										<!-- Group -->
+										</div>
+									</div>
+									<div class="col-xs-12 col-sm-6">
 										<div class="control-group">
 							    			<label for="longtitute"><span data-bind="text: lang.lang.longtitute"></span> </label>
 							    			<div class="input-prepend">
@@ -3913,16 +3850,12 @@
 												<input style="float: left;  width: 77%;  box-shadow: none;padding: 4px 8px; border: 1px solid #efefef; line-height: 20px; box-shadow: none;" type="text" class="input-large span12" data-bind="value: obj.longtitute, events:{change: loadMap}" placeholder="012345.67897">
 											</div>										
 										</div>
-										<!-- // Group END -->
 									</div>										
 								</div>
 							</div>
 						</div>
-
-						<!-- // Bottom Part -->
 						<div class="row-fluid" data-bind="visible: otherINFO">
 							<div class="box-generic">
-							    <!-- //Tabs Heading -->
 							    <div class="tabsbar tabsbar-1" style="background: #203864 !important; color: #fff;">
 							        <ul class="row-fluid row-merge">
 							        	<li class="span2 glyphicons nameplate_alt active">
@@ -3936,12 +3869,10 @@
 							            </li>
 							        </ul>
 							    </div>
-							    <!-- // Tabs Heading END -->
 							    <div class="tab-content">
 							        <div class="tab-pane active" id="tab1">
 							        	<div class="row">	
 											<div class="col-xs-12 col-sm-6" style="margin-bottom: 15px;">
-												<!-- Group -->
 												<div class="control-group">
 									    			<label for="latitute"><span data-bind="text: lang.lang.location">Location</span> <span style="color:red">*</span></label>
 													<div class="input-prepend">
@@ -4002,11 +3933,9 @@
 										                   data-value-field="id"
 										                   data-bind="value: obj.brand_id, source: brandDS" style="width: 100%;" />
 													</div>
-												</div>									
-												<!-- // Group END -->
+												</div>
 											</div>	
 											<div class="col-xs-12 col-sm-6">
-												<!-- Group -->
 												<div class="control-group">
 									    			<img data-bind="attr: { src: obj.image_url, alt: obj.name, title: obj.name }" width="120px" style="margin-bottom: 15px; border: 1px solid #ddd;">
 													<input id="files" name="files"
@@ -4018,7 +3947,6 @@
 							                   				select: onSelect
 									                    }">
 												</div>
-												<!-- // Group END -->
 											</div>										
 										</div>
 						        	</div>
@@ -4067,7 +3995,6 @@
 							        <div class="tab-pane" id="tab3" data-bind="visible: visibleReMeter">
 							        	<div class="row-fluid">	
 											<div class="col-xs-12 col-sm-6">
-												<!-- Group -->
 												<div class="control-group">
 									    			<label for="latitute"><span data-bind="text: lang.lang.meter_number">Meter Number</span> </label>
 													<div class="input-prepend">
@@ -4090,17 +4017,13 @@
 										                   	attr: {placeholder: lang.lang.startup_number}"
 										                   style="width: 100%;" />
 													</div>
-												</div>								
-												<!-- // Group END -->
+												</div>
 											</div>								
 										</div>
 						        	</div>
 							    </div>
 							</div>
 						</div>
-
-
-						<!-- Form actions -->
 						<div class="box-generic bg-action-button">
 							<div id="ntf1" data-role="notification"></div>
 							<div class="row">
@@ -4112,8 +4035,6 @@
 								</div>
 							</div>
 						</div>
-						<!-- // Form actions END -->
-
 					</div>
 				</div>
 			</div>

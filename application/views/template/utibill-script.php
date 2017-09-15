@@ -32,7 +32,6 @@
     banhji.s3 = "https://banhji.s3.amazonaws.com/";
     banhji.token = null;
     banhji.no_image = "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/no_image.jpg";
-
     // custom widget for min and max
     kendo.data.binders.widget.max = kendo.data.Binder.extend({
         init: function(widget, bindings, options) { //call the base constructor
@@ -5963,6 +5962,7 @@
                 name: "Void"
             }
         ],
+        boxSelect : "",
         selectLocation: false,
         selectSLocation: false,
         meterOrder: 0,
@@ -7643,7 +7643,11 @@
                 aSold += Total;
                 aSoldL = kendo.toString(aSold, v.contact.locale == "km-KH" ? "c0" : "c", v.contact.locale);
                 //set INV
-                self.calInvoice(Total, v.contact, invoiceItems, MeterLocation, MeterPole, MeterBox, MeterID, locale);
+                if(v.meter.group == 0){
+                    self.calInvoice(Total, v.contact, invoiceItems, MeterLocation, MeterPole, MeterBox, MeterID, locale);
+                }else{
+                    self.calInvoiceGroup(Total, v.meter.id, v.meter.meter_number, MeterLocation, MeterPole, MeterBox, v.items[0].line.current, v.items[0].line.prev, v.meter.multiplier, v.items[0].line.usage, locale, v.contact, v.tariff, v.fine, v.meter.group);
+                }
             });
             this.set("amountSold", aSoldL);
             this.set("meterSold", mSold);
@@ -7675,41 +7679,193 @@
                 invoice_lines: invoiceItems
             });
         },
+        temGroupArray       : [],
+        tmpGroup            : [],
+        calInvoiceGroup: function(Total, MeterID, MeterNum, MeterLocation, MeterPole, MeterBox, Current, Previous, Multi, Usage, Locale, Contact, Tariff, Fine, Group) {
+            var self = this;
+            var date = new Date();
+            var rate = banhji.source.getRate(Locale, date);
+            this.temGroupArray.push({
+                "total": Total,
+                "meter_id": MeterID,
+                "meter_number": MeterNum,
+                "meter_location": MeterLocation,
+                "meter_pole": MeterPole,
+                "meter_box": MeterBox,
+                "current": Current,
+                "previous": Previous,
+                "multi": Multi,
+                "usage": Usage,
+                "locale": Locale,
+                "rate": rate,
+                "contact": Contact,
+                "tariff": Tariff,
+                "fine": Fine,
+                "group": Group
+            });
+            if (jQuery.inArray(Group, this.tmpGroup) != -1) {
+            }else{
+                this.tmpGroup.push(Group);
+            }
+        },
         save: function() {
             var self = this;
             if (this.get("FmonthSelect") && this.get("BillingDate") && this.get("IssueDate") && this.get("DueDate")) {
                 $("#loadImport").css("display", "block");
-                this.invoiceCollection.sync();
-                this.invoiceCollection.bind("requestEnd", function(e) {
-                    if (e.type != 'read') {
-                        if (e.response) {
-                            var notificat = $("#ntf1").data("kendoNotification");
-                            notificat.hide();
-                            notificat.success(self.lang.lang.success_message);
-                            $("#loadImport").css("display", "none");
-                            self.invoiceCollection.data([]);
-                            self.invoiceDS.data([]);
-                            self.set("monthSelect", null);
-                            self.set("licenseSelect", null);
-                            self.set("blocSelect", null);
-                            self.set("FmonthSelect", null);
-                            self.set("BillingDate", null);
-                            self.set("DueDate", null);
-                            self.set("IssueDate", null);
-                            self.invoiceArray = [];
-                            banhji.router.navigate("/print_bill");
-                        }
-                    }
-                });
-                this.invoiceCollection.bind("error", function(e) {
-                    var notificat = $("#ntf1").data("kendoNotification");
-                    notificat.hide();
-                    notificat.error(self.lang.lang.error_message);
-                    $("#loadImport").css("display", "none");
-                });
+                if(this.tmpGroup.length > 0){
+                    this.calGroupInv();
+                }else{
+                    this.saveInoices();
+                }
             } else {
                 alert("Fields Required!");
             }
+        },
+        calGroupInv         : function(){
+            var self = this;
+            $.each(this.tmpGroup, function(i,v){
+                var items = [];
+                var Total = 0, aTariff = 0, Usage = 0, Locale = "", Rate = "", MeterID = "", MeterLocation = 0, MeterPole = 0, MeterBox = 0, Contact = "", Tariff = [], Fine = [];
+                $.each(self.temGroupArray, function(j,k){
+                    if(k.group == v){
+                        items.push({
+                            "item_id": k.meter_id,
+                            "invoice_id": "",
+                            "meter_record_id": k.multi,
+                            "description": k.meter_number,
+                            "quantity": k.current,
+                            "price": k.previous,
+                            "amount": k.usage,
+                            "rate": k.rate,
+                            "locale": k.locale,
+                            "type": "meter"
+                        });
+                    }
+                    if(j == 0){
+                        Locale = k.locale;
+                        Rate = k.rate;
+                        MeterID = k.meter_id;
+                        MeterLocation = k.meter_location;
+                        MeterPole = k.meter_pole;
+                        MeterBox = k.meter_box;
+                        Contact = k.contact;
+                        Tariff = k.tariff;
+                        Fine = k.fine
+                    }
+                    Usage += k.usage;
+                });
+                items.push({
+                    "item_id": MeterID,
+                    "invoice_id": "",
+                    "meter_record_id": MeterID,
+                    "description": "សរុបថាមពល",
+                    "quantity": "",
+                    "price": "",
+                    "amount": Usage,
+                    "rate": Rate,
+                    "locale": Locale,
+                    "type": "total_usage"
+                });
+                //Calculate Tariff
+                $.each(Tariff, function(x, y) {
+                    if (kendo.parseInt(Usage) >= kendo.parseInt(y.line.usage)) {
+                        aTariff = y.line.amount;
+                    }
+                });
+                Total = Usage * aTariff;
+                //Plus Round Money KH
+                var AddH = 0;
+                var MTotal = Total;
+                if(Locale == "km-KH"){
+                    Total = Math.ceil(Total/100)*100;
+                    MTotal = Total - MTotal;
+                    if(MTotal > 0){
+                        items.push({
+                            "item_id": 0,
+                            "invoice_id": 0,
+                            "meter_record_id": MeterID,
+                            "description": "ទឹកប្រាក់បូកបង្គ្រប់",
+                            "quantity": 1,
+                            "price": 0,
+                            "amount": MTotal,
+                            "rate": Rate,
+                            "locale": Locale,
+                            "has_vat": false,
+                            "type": 'roundup'
+                        });
+                    }
+                }
+                if(Fine.length > 0){
+                    items.push({
+                        "item_id": Fine[0].line.id,
+                        "invoice_id": 0,
+                        "meter_record_id": MeterID,
+                        "description": Fine[0].line.name,
+                        "quantity": Fine[0].line.usage,
+                        "price": 0,
+                        "amount": Fine[0].line.amount,
+                        "rate": Rate,
+                        "locale": Locale,
+                        "has_vat": false,
+                        "type": 'fine'
+                    });
+                }
+                var date = new Date();
+                var locale = Locale;
+                var MonthOf = kendo.toString(new Date(self.get("FmonthSelect")), "s");
+                var IssueDate = kendo.toString(new Date(self.get("IssueDate")), "s");
+                var BillingDate = kendo.toString(new Date(self.get("BillingDate")), "s");
+                var DueDate = kendo.toString(new Date(self.get("DueDate")), "s");
+                self.invoiceCollection.add({
+                    contact: Contact,
+                    biller_id: banhji.userData.id,
+                    type: "Utility_Invoice",
+                    amount: Total,
+                    rate: Rate,
+                    locale: locale,
+                    location_id: MeterLocation,
+                    pole_id: MeterPole,
+                    box_id: MeterBox,
+                    month_of: MonthOf,
+                    issued_date: IssueDate,
+                    bill_date: BillingDate,
+                    due_date: DueDate,
+                    meter_id: MeterID,
+                    invoice_lines: items
+                });
+            });
+            this.saveInoices();
+        },
+        saveInoices         : function(){
+            var self = this;
+            this.invoiceCollection.sync();
+            this.invoiceCollection.bind("requestEnd", function(e) {
+                if (e.type != 'read') {
+                    if (e.response) {
+                        var notificat = $("#ntf1").data("kendoNotification");
+                        notificat.hide();
+                        notificat.success(self.lang.lang.success_message);
+                        $("#loadImport").css("display", "none");
+                        self.invoiceCollection.data([]);
+                        self.invoiceDS.data([]);
+                        self.set("monthSelect", null);
+                        self.set("licenseSelect", null);
+                        self.set("blocSelect", null);
+                        self.set("FmonthSelect", null);
+                        self.set("BillingDate", null);
+                        self.set("DueDate", null);
+                        self.set("IssueDate", null);
+                        self.invoiceArray = [];
+                        banhji.router.navigate("/print_bill");
+                    }
+                }
+            });
+            this.invoiceCollection.bind("error", function(e) {
+                var notificat = $("#ntf1").data("kendoNotification");
+                notificat.hide();
+                notificat.error(self.lang.lang.error_message);
+                $("#loadImport").css("display", "none");
+            });
         },
         clearAll: function() {
             this.set("chkAll", false);
@@ -19757,10 +19913,8 @@
                 para = [],
                 searchText = this.get("searchText"),
                 contact_type_id = this.get("contact_type_id");
-
             if (searchText) {
                 var textParts = searchText.replace(/([a-z]+)/i, "$1 ").split(/[^0-9a-z]+/ig);
-
                 para.push({
                     field: "name",
                     operator: "like",
@@ -19776,10 +19930,19 @@
                 });
             }
             this.contactDS.filter(para);
-
-            //Clear search filters
-            //self.set("searchText", "");
             self.set("contact_type_id", 0);
+        },
+        groupMeterDS        : dataStore(apiUrl + "utibills/groupmeter"),
+        groupMeter          : function(e){
+            var self = this;
+            this.groupMeterDS.data([]);
+            this.groupMeterDS.add({
+                property_id : this.get("propertyID")
+            });
+            this.groupMeterDS.sync();
+            this.groupMeterDS.bind("requestEnd", function(e){
+                self.meterDS.filter({field: "property_id", value: self.get("propertyID")});
+            });
         },
         searchTransaction: function() {
             var self = this,

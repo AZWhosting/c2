@@ -69,7 +69,8 @@ class Bin_locations extends REST_Controller {
 		 			"rack_id"  			=> $value->rack_id,
 		 			"level_id"  		=> $value->level_id,
 		 			"position_id"  		=> $value->position_id,
-				   	"number" 			=> $value->number
+				   	"number" 			=> $value->number,
+				   	"name" 				=> $value->number
 		 		);
 			}
 		}
@@ -105,7 +106,8 @@ class Bin_locations extends REST_Controller {
 		 			"rack_id"  			=> $obj->rack_id,
 		 			"level_id"  		=> $obj->level_id,
 		 			"position_id"  		=> $obj->position_id,
-				   	"number" 			=> $obj->number
+				   	"number" 			=> $obj->number,
+				   	"name" 				=> $obj->number
 				);				
 			}		
 		}
@@ -144,7 +146,8 @@ class Bin_locations extends REST_Controller {
 		 			"rack_id"  			=> $obj->rack_id,
 		 			"level_id"  		=> $obj->level_id,
 		 			"position_id"  		=> $obj->position_id,
-				   	"number" 			=> $obj->number
+				   	"number" 			=> $obj->number,
+				   	"name" 				=> $obj->number
 				);						
 			}
 		}

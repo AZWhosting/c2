@@ -1173,7 +1173,25 @@ class Utibills extends REST_Controller {
 		$data["count"] = count($data["results"]);
 		$this->response($data, 201);
 	}
-
+	function groupmeter_post(){
+		$models = json_decode($this->post('models'));
+		$data["results"] = [];
+		$data["count"] = 0;
+		foreach ($models as $value) {
+			$obj = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$obj->where("property_id", $value->property_id)->get();
+			foreach($obj as $row){
+				$row->group 		= $value->property_id;
+				if($row->save()){
+					$data["results"][] = array(
+						"id" 			=> $row->id
+					);				
+				}
+			}
+		}
+		$data["count"] = count($data["results"]);
+		$this->response($data, 201);
+	} 
 	function index_get(){
 	}
 	//Contact

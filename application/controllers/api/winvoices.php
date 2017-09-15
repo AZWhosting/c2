@@ -129,7 +129,8 @@ class Winvoices extends REST_Controller {
 								'box_id' => $value->box_id,
 								'multiplier' => intval($value->multiplier),
 								'locale' => $locale,
-								'number_digit' => $value->number_digit
+								'number_digit' => $value->number_digit,
+								'group' => intval($value->group)
 							);
 							$tmp["$value->number"]['items'][] = array(
 							'type' => 'usage',
@@ -500,10 +501,11 @@ class Winvoices extends REST_Controller {
 		}
 		if($table->exists()){
 			foreach($table as $row) {
-				$meter = null;
+				$meter = [];
 				$mtnumber = "";
 				$mtorder = "";
 				$mtid = "";
+				$locale = $row->locale;
 				$location = $row->location->get_raw();
 				$invoiceLine = new Winvoice_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				$invoiceLine->where('transaction_id', $row->id);
@@ -511,7 +513,6 @@ class Winvoices extends REST_Controller {
 				if($invoiceLine->exists()) {
 					foreach($invoiceLine as $line) {
 						if($line->type == "usage"){
-							$locale = NULL;
 							$meter = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 							$meter->where("id", $line->item_id)->limit(1)->get();
 							if($meter->exists()) {
@@ -636,7 +637,30 @@ class Winvoices extends REST_Controller {
 					);
 				}
 				$monthGraph = "";
-
+				if(empty($meter)){
+					$meter = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$meter->where("id", $row->meter_id)->limit(1)->get();
+					if($meter->exists()) {
+						$plan = $meter->plan->get();
+						$l = $plan->currency->get();
+						$locale = $l->locale;
+						$boxname = "";
+						if($meter->box_id != 0){
+							$box = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+							$box->where("id", $meter->box_id)->limit(1)->get();
+							$boxname = $box->name;
+						}
+						$meter = array(
+							'meter_number'   => $meter->number,
+							'meter_order'   => $meter->worder,
+							'meter_multipier'   => $meter->multiplier,
+							'meter_id'   => $meter->id,
+							'location' => $location->result(),
+							'box' => $boxname,
+							'plan_locale' => $locale
+						);
+					}
+				}
 				$contact = $row->contact->get();
 				$data["results"][] = array(
 					'id' => $row->id,

@@ -63,7 +63,7 @@
 
 				<div class="board-chart">
 					<div class="span12" style="padding: 0;">
-						<div class="span6">
+						<div class="span3">
 							<p><span data-bind="text: lang.lang.items"></span></p>
 								<div data-role="pager" data-bind="source: items.dataStore" data-numeric="false" data-page-sizes="[100, 200, 300]"></div>
 								<table class="table" style="border: 1px solid #ddd;">
@@ -72,10 +72,10 @@
 								</table>
 								<div data-role="pager" data-bind="source: items.dataStore" data-numeric="false"></div>    
 						</div>
-						<div class="span6" style="padding-left: 15px;">             
+						<div class="span9" style="padding-left: 15px;">             
 							<p class="span1"><span style="line-height: 39px; margin-left: -13px;" data-bind="text: lang.lang.sale"></span></p>
-              <div class="span11" style="text-align: right;"> <button data-bind="click: products.save" style="margin-bottom: 15px; margin-left: 15px;" class="btn btn-default">Button</button></div>
-							<table class="table" style="border: 1px solid #ddd;">
+                            <div class="span11" style="text-align: right;"> <button data-bind="click: products.save" style="margin-bottom: 15px; margin-left: 15px;" class="btn btn-default">Button</button></div>
+							<table class="table" style="border: 1px solid #ddd; width: 100%; float: left;">
 								<tbody data-role="listview" data-bind="source: products.dataStore" data-template="product-tmpl" data-edit-template="product-edit-tmpl">
 								</tbody>
 							</table>
@@ -95,13 +95,41 @@
 </script>
 
 <script type="text/x-kendo-template" id="item-tmpl">
-	<tr><td>#=name#</td><td style="text-align: center;"><button data-bind="click: items.onClick" class="btn btn-default">Put On 123</button></td></tr>
+	<tr><td>#=name#</td>
+  <td style="text-align: center;">
+    <button data-bind="click: items.onClick" class="btn btn-default">Put On 123</button>
+  </td></tr>
 </script>
 <script type="text/x-kendo-template" id="product-tmpl">
 	<tr>
-		<td><input type="text" data-bind="value: name"></td>
-		<td><input type="text" data-bind="value: summary"></td>
-		<td><input type="text" data-bind="value: UoH"></td>
+		<td><input style="border:1px solid \#ddd; padding: 5px;" type="text" data-bind="value: name"></td>
+		<td><input style="border:1px solid \#ddd; padding: 5px;" type="text" data-bind="value: summary"></td>
+		<td style="width: 50px;"><input style="border:1px solid \#ddd; padding: 5px;" type="text" data-bind="value: UoH"></td>
+    <td>
+        <input data-role="dropdownlist"
+            data-bind=""
+            style="width: 100%;"/>
+    </td>
+    <td>
+        <input data-role="dropdownlist"
+            data-bind=""
+            style="width: 100%;"/>
+    </td>
+    <td>
+        <input data-role="dropdownlist"
+            data-bind=""
+            style="width: 100%;"/>
+    </td>
+    <td>
+        <input data-role="dropdownlist"
+            data-bind=""
+            style="width: 100%;"/>
+    </td>
+    <td>
+        <input data-role="dropdownlist"
+            data-bind=""
+            style="width: 100%;"/>
+    </td>
 		<td><button class="btn btn-warning" data-bind="click: products.removeProduct"><span class="k-icon k-i-delete"></span></button></td>
 	</tr>
 </script>
@@ -1786,7 +1814,8 @@
 				cost: e.data.price,
 				UoH: e.data.on_hand,
 				sellerId: banhji.institute.id,
-				sellerItemId: e.data.id
+				sellerItemId: e.data.id,
+        locale: e.data.locale
 			});
 		}
 	});
