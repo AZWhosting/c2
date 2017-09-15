@@ -116,20 +116,13 @@ class Meters extends REST_Controller {
 			$obj->ampere_id 			= isset($value->ampere_id)			?$value->ampere_id:0;
 			$obj->phase_id 				= isset($value->phase_id)			?$value->phase_id:0;
 			$obj->voltage_id 			= isset($value->voltage_id)			?$value->voltage_id:0;
-			$obj->electricity_box_id 	= isset($value->electricity_box_id)	?$value->electricity_box_id:0;			
-			$obj->item_id 				= isset($value->item_id)			?$value->item_id:0;
-			$obj->tariff_id 			= isset($value->tariff_id)			?$value->tariff_id:0;
-			$obj->exemption_id 			= isset($value->exemption_id)		?$value->exemption_id:0;
 			$obj->maintenance_id 		= isset($value->maintenance_id)		?$value->maintenance_id:0;
 			$obj->reactive_id 			= isset($value->reactive_id)		?$value->reactive_id:0;
-			$obj->backup_of 			= isset($value->backup_of)			?$value->backup_of:0;
 			$obj->number 				= isset($value->meter_number) 		? $value->meter_number:0;			
 			$obj->multiplier 			= isset($value->multiplier) 		? $value->multiplier: 1;
 			$obj->max_number 			= isset($value->max_number) 		? $value->max_number:0;
 			$obj->contact_id 			= isset($value->contact_id) 		? $value->contact_id:0;
 			$obj->startup_reading 		= isset($value->starting_no) 		? $value->starting_no: 0;
-			$obj->ear_sealed 			= isset($value->ear_sealed)			?$value->ear_sealed:true;
-			$obj->cover_sealed 			= isset($value->cover_sealed)		?$value->cover_sealed:true;
 			$obj->longtitute 			= isset($value->longtitute) 		?$value->longtitute: "";
 			$obj->latitute 				= isset($value->latitute) 			?$value->latitute: "";
 			$obj->status 				= isset($value->status)				?$value->status:1;
@@ -146,6 +139,9 @@ class Meters extends REST_Controller {
 			$obj->property_id 			= isset($value->property_id)		?$value->property_id:0;
 			$obj->activated 			= isset($value->activated)			?$value->activated:0;
 			$obj->reactive_status 		= isset($value->reactive_status)	?$value->reactive_status:0;
+			$obj->group 				= isset($value->group)				?$value->group:0;
+			$obj->sync 					= 1;
+			$obj->round 				= 0;
 			if($obj->save()){	
 				$data[] = array(
 					"id" 					=> $obj->id,
@@ -196,11 +192,6 @@ class Meters extends REST_Controller {
 			$obj->ampere_id 			= isset($value->ampere_id)			?$value->ampere_id:0;
 			$obj->phase_id 				= isset($value->phase_id)			?$value->phase_id:0;
 			$obj->voltage_id 			= isset($value->voltage_id)			?$value->voltage_id:0;
-			$obj->electricity_box_id 	= isset($value->electricity_box_id)	?$value->electricity_box_id:0;			
-			$obj->item_id 				= isset($value->item_id)			?$value->item_id:0;
-			$obj->tariff_id 			= isset($value->tariff_id)			?$value->tariff_id:0;
-			$obj->exemption_id 			= isset($value->exemption_id)		?$value->exemption_id:0;
-			$obj->maintenance_id 		= isset($value->maintenance_id)		?$value->maintenance_id:0;
 			$obj->reactive_id 			= isset($value->reactive_id)		?$value->reactive_id:0;
 			$obj->backup_of 			= isset($value->backup_of)			?$value->backup_of:0;
 			$obj->number 				= isset($value->meter_number) 		? $value->meter_number:0;			
@@ -226,6 +217,9 @@ class Meters extends REST_Controller {
 			$obj->box_id 				= isset($value->box_id)				?$value->box_id:0;
 			$obj->reactive_id 			= isset($value->reactive_id)		?$value->reactive_id:0;
 			$obj->reactive_status		= isset($value->reactive_status)	?$value->reactive_status:0;
+			$obj->group 				= isset($value->group)				?$value->group:0;
+			$obj->sync 					= 2;
+			$obj->round 				= 0;
 			if($obj->save()){
 				//Results
 				$data[] = array(
