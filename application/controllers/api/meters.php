@@ -17,13 +17,10 @@ class Meters extends REST_Controller {
 		$filter 	= $this->get("filter");
 		$page 		= $this->get('page');
 		$limit 		= $this->get('limit');
-		$sort 	 	= $this->get("sort");	
-
+		$sort 	 	= $this->get("sort");
 		$data["results"] = array();
 		$data["count"] = 0;
-
-		$obj = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
-
+		$obj = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		//Sort
 		if(!empty($sort) && isset($sort)){
 			foreach ($sort as $value) {
@@ -34,7 +31,6 @@ class Meters extends REST_Controller {
 				}
 			}
 		}
-
 		//Filter
 		if(!empty($filter) && isset($filter)){
 	    	foreach ($filter["filters"] as $value) {
@@ -48,8 +44,7 @@ class Meters extends REST_Controller {
 	    			}
 				}
 			}
-		}		
-		// $obj->where("status", 1);
+		}
 		//Get Result
 		$obj->order_by('worder','asc');
 		//Results
@@ -60,8 +55,6 @@ class Meters extends REST_Controller {
 			$obj->get_iterated();
 			$data["count"] = $obj->result_count();
 		}
-	
-
 		if($obj->result_count()>0){			
 			foreach ($obj as $value) {
 				// $contact = $value->contact->get_raw();
@@ -75,9 +68,9 @@ class Meters extends REST_Controller {
 					"id" 					=> $value->id,
 					"currency_id"			=> $value->currency_id,
 					"_currency"				=> array(
-												"id" => $currency->id,
-												"code" => $currency->code,
-												"locale" => $currency->locale
+						"id" => $currency->id,
+						"code" => $currency->code,
+						"locale" => $currency->locale
 					),
 					"meter_number" 			=> $value->number,
 					"property_id" 			=> $value->property_id,
@@ -89,7 +82,7 @@ class Meters extends REST_Controller {
 					"worder" 				=> $value->worder,
 					"contact_name" 			=> $contacts->name,
 					"status" 				=> $value->status,
-					"contact" 				=> base_url(). "api/contacts/", //$contact->result(),
+					"contact" 				=> base_url(). "api/contacts/",
 					"number_digit"			=> $value->number_digit,
 					"plan_id"				=> $value->plan_id,
 					"map" 					=> $value->latitute,
@@ -106,7 +99,6 @@ class Meters extends REST_Controller {
 					"latitute" 				=> $value->latitute,
 					"longtitute" 			=> $value->longtitute,
 					"multiplier" 			=> $value->multiplier,
-					//"reactive_of" 			=> $value->reactive_of,
 					"date_used" 			=> $value->date_used,
 					"reactive_id" 			=> intval($value->reactive_id),
 					"reactive_status" 		=> $value->reactive_status,
@@ -114,19 +106,16 @@ class Meters extends REST_Controller {
 				);
 			}
 		}
-
 		//Response Data		
 		$this->response($data, 200);		
 	}
-	
+
 	//POST
 	function index_post() {
 		$models = json_decode($this->post('models'));
 		$data = array();
 		foreach ($models as $value) {
 			$obj = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			
-			
 			$obj->deposit_id 			= isset($value->deposit_id)			?$value->deposit_id:0;
 			$obj->invoice_id 			= isset($value->invoice_id)			?$value->invoice_id:0;
 			$obj->ampere_id 			= isset($value->ampere_id)			?$value->ampere_id:0;
@@ -146,7 +135,6 @@ class Meters extends REST_Controller {
 			$obj->startup_reading 		= isset($value->starting_no) 		? $value->starting_no: 0;
 			$obj->ear_sealed 			= isset($value->ear_sealed)			?$value->ear_sealed:true;
 			$obj->cover_sealed 			= isset($value->cover_sealed)		?$value->cover_sealed:true;
-			// $obj->memo 					= $value->memo;
 			$obj->longtitute 			= isset($value->longtitute) 		?$value->longtitute: "";
 			$obj->latitute 				= isset($value->latitute) 			?$value->latitute: "";
 			$obj->status 				= isset($value->status)				?$value->status:1;
@@ -154,7 +142,6 @@ class Meters extends REST_Controller {
 			$obj->location_id 			= isset($value->location_id)		?$value->location_id:"";
 			$obj->brand_id 				= isset($value->brand_id)			?$value->brand_id:"";
 			$obj->date_used= isset($value->date_used)?date("Y-m-d", strtotime($value->date_used)):'0000-00-00';
-			
 			$obj->number_digit 			= isset($value->number_digit)		?$value->number_digit:4;
 			$obj->plan_id 				= isset($value->plan_id)			?$value->plan_id:0;
 			$obj->type 					= isset($value->type)				?$value->type:"w";
@@ -194,14 +181,11 @@ class Meters extends REST_Controller {
 			}			
 		}
 		$count = count($data);
-		
-		// $this->response($data, 201);
 		if($count > 0) {
 			$this->response(array("results" => $data), 201);
 		} else {
 			$this->response(array("results" => array()), 401);
-		}
-							
+		}				
 	}
 
 	//PUT
@@ -209,11 +193,9 @@ class Meters extends REST_Controller {
 		$models = json_decode($this->put('models'));
 		$data = array();
 		$data["count"] = 0;
-
 		foreach ($models as $value) {			
 			$obj = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->get_by_id($value->id);
-
 			$obj->deposit_id 			= isset($value->deposit_id)			?$value->deposit_id:0;
 			$obj->invoice_id 			= isset($value->invoice_id)			?$value->invoice_id:0;
 			$obj->ampere_id 			= isset($value->ampere_id)			?$value->ampere_id:0;
@@ -229,11 +211,9 @@ class Meters extends REST_Controller {
 			$obj->number 				= isset($value->meter_number) 		? $value->meter_number:0;			
 			$obj->multiplier 			= isset($value->multiplier) 		? $value->multiplier: 1;
 			$obj->max_number 			= isset($value->max_number) 		? $value->max_number:0;
-			// $obj->contact_id 			= isset($value->contact_id) 		? $value->contact_id:0;
 			$obj->startup_reading 		= isset($value->starting_no) 		? $value->starting_no: 0;
 			$obj->ear_sealed 			= isset($value->ear_sealed)			?$value->ear_sealed:true;
 			$obj->cover_sealed 			= isset($value->cover_sealed)		?$value->cover_sealed:true;
-			// $obj->memo 					= $value->memo;
 			$obj->longtitute 			= isset($value->longtitute) 		?$value->longtitute: "";
 			$obj->activated 			= isset($value->activated) 			?$value->activated: "";
 			$obj->latitute 				= isset($value->latitute) 			?$value->latitute: "";
@@ -287,22 +267,17 @@ class Meters extends REST_Controller {
 			$this->response(array("results" => array()), 401);
 		}
 	}
-	
 	//DELETE
 	function index_delete() {
 		$models = json_decode($this->delete('models'));
-
 		foreach ($models as $key => $value) {
 			$obj = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->where("id", $value->id)->get();
-			
 			$data["results"][] = array(
 				"data"   => $value,
 				"status" => $obj->delete()
-			);
-							
+			);			
 		}
-
 		//Response data
 		$this->response($data, 200);
 	}
@@ -315,16 +290,13 @@ class Meters extends REST_Controller {
 		$sort 	 	= $this->get("sort");		
 		$data["results"] = array();
 		$data["count"] = 0;
-
-		$obj = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
-
+		$obj = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		//Sort
 		if(!empty($sort) && isset($sort)){					
 			foreach ($sort as $value) {
 				$obj->order_by($value["field"], $value["dir"]);
 			}
 		}
-		
 		//Filter		
 		if(!empty($filters) && isset($filters)){			
 	    	foreach ($filters as $value) {

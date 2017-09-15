@@ -603,8 +603,32 @@ class Winvoices extends REST_Controller {
 								'unit' => $unit->unit
 							);
 						}
-					}elseif($item->type == 'fine') {
-						
+					}elseif($item->type == 'meter') {
+						$meterdate = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						$meterdate->where("meter_id", $item->item_id)->order_by("id", "desc")->limit(1)->get();
+						$lines[] = array(
+							'number' => $item->description,
+							'previous' => floatval($item->price),
+							'current'  => floatval($item->quantity),
+							'consumption' => floatval($item->amount),
+							'rate' => floatval($item->meter_record_id),
+							'amount' => $item->amount,
+							'type' => $item->type,
+							'unit' => 1,
+							'from_date' => $meterdate->from_date,
+							'to_date' => $meterdate->to_date
+						);
+					}elseif($item->type == 'total_usage') {
+						$lines[] = array(
+							'number' => $item->description,
+							'price' => floatval($item->price),
+							'current'  => floatval($item->quantity),
+							'consumption' => intval($item->amount),
+							'rate' => floatval($item->meter_record_id),
+							'amount' => intval($item->amount),
+							'type' => $item->type,
+							'unit' => 1
+						);
 					}else{
 						$lines[] = array(
 							'number' => $item->description,

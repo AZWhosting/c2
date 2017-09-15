@@ -61,28 +61,8 @@
 					</div>
 				</div>
 
-				<div class="board-chart">
-					<div class="span12" style="padding: 0;">
-						<div class="span3">
-							<p><span data-bind="text: lang.lang.items"></span></p>
-								<div data-role="pager" data-bind="source: items.dataStore" data-numeric="false" data-page-sizes="[100, 200, 300]"></div>
-								<table class="table" style="border: 1px solid #ddd;">
-									<tbody data-role="listview" data-bind="source: items.dataStore" data-template="item-tmpl">
-									</tbody>
-								</table>
-								<div data-role="pager" data-bind="source: items.dataStore" data-numeric="false"></div>    
-						</div>
-						<div class="span9" style="padding-left: 15px;">             
-							<p class="span1"><span style="line-height: 39px; margin-left: -13px;" data-bind="text: lang.lang.sale"></span></p>
-                            <div class="span11" style="text-align: right;"> <button data-bind="click: products.save" style="margin-bottom: 15px; margin-left: 15px;" class="btn btn-default">Button</button></div>
-							<table class="table" style="border: 1px solid #ddd; width: 100%; float: left;">
-								<tbody data-role="listview" data-bind="source: products.dataStore" data-template="product-tmpl" data-edit-template="product-edit-tmpl">
-								</tbody>
-							</table>
-						</div>
-					</div>					
-				</div>	
-
+				<div class="board-chart" id="placeholder-mapping">					
+				</div>
 			</div>
 		</div>
 	</div>
@@ -94,43 +74,78 @@
 	</div>		
 </script>
 
+<script type="text/x-kendo-template" id="vendor-items-tmpl">
+  <div class="span12" style="padding: 0;">
+    <p class="span1"><span data-bind="text: lang.lang.items"></span></p>
+    <div class="span11" style="text-align: right;">
+        <button data-bind="click: pushProducts" style="margin-bottom: 15px; margin-left: 15px;" class="btn btn-default">Make Changes</button>
+    </div>
+    <div data-role="pager" data-bind="source: items.dataStore" data-numeric="false" data-page-sizes="[100, 200, 300]"></div>
+    <table class="table" style="border: 1px solid #ddd;">
+        <tbody data-role="listview" data-bind="source: items.dataStore" data-template="item-tmpl">
+        </tbody>
+    </table>
+    <div data-role="pager" data-bind="source: items.dataStore" data-numeric="false"></div>    
+  </div>
+</script>
+
+<script type="text/x-kendo-template" id="products-items-tmpl">
+  <div class="span12" style="padding: 0;">           
+    <p class="span1"><span style="line-height: 39px; margin-left: -13px;" data-bind="text: lang.lang.sale"></span></p>
+                  <div class="span11" style="text-align: right;">
+                    <button data-bind="click: addMoreItems" style="margin-bottom: 15px; margin-left: 15px;" class="btn btn-default">Add Item</button>
+                    <button data-bind="click: save" style="margin-bottom: 15px; margin-left: 15px;" class="btn btn-default">Save</button>
+                  </div>
+    <table class="table" style="border: 1px solid #ddd; width: 100%; float: left;">
+      <tbody data-role="listview" data-bind="source: products.dataStore" data-template="product-tmpl" data-edit-template="product-edit-tmpl">
+      </tbody>
+    </table>
+  </div>
+</script>
+
 <script type="text/x-kendo-template" id="item-tmpl">
-	<tr><td>#=name#</td>
-  <td style="text-align: center;">
-    <button data-bind="click: items.onClick" class="btn btn-default">Put On 123</button>
-  </td></tr>
+	<tr>
+        <td>#=name#</td>
+        <td style="text-align: right;">
+            <button data-bind="click: items.onClick" class="btn btn-default">Put On 123</button>
+        </td>
+    </tr>
 </script>
 <script type="text/x-kendo-template" id="product-tmpl">
 	<tr>
-		<td><input style="border:1px solid \#ddd; padding: 5px;" type="text" data-bind="value: name"></td>
-		<td><input style="border:1px solid \#ddd; padding: 5px;" type="text" data-bind="value: summary"></td>
-		<td style="width: 50px;"><input style="border:1px solid \#ddd; padding: 5px;" type="text" data-bind="value: UoH"></td>
-    <td>
+		<td style="width: 20%"><input style="border:1px solid \#ddd; padding: 5px; width: 94%" type="text" data-bind="value: name"></td>
+		<td style="width: 16%"><input style="border:1px solid \#ddd; padding: 5px; width: 94%" type="text" data-bind="value: summary"></td>
+		<td style="width: 5%;"><input style="border:1px solid \#ddd; padding: 5px; width: 71%" type="text" data-bind="value: UoH"></td>
+    <td style="width: 12%">
+        <input data-role="dropdownlist"
+            data-bind="source: categories"
+            data-value-field="category_id"
+            data-text-field="category_name"
+            style="width: 100%;"/>
+    </td>
+    <td style="width: 12%">
+        <input data-role="dropdownlist"
+            data-bind="source: category"
+            data-value-field="category_id"
+            data-text-field="category_name"
+            style="width: 100%;"/>
+    </td>
+    <td style="width: 12%">
         <input data-role="dropdownlist"
             data-bind=""
             style="width: 100%;"/>
     </td>
-    <td>
+    <td style="width: 12%">
         <input data-role="dropdownlist"
             data-bind=""
             style="width: 100%;"/>
     </td>
-    <td>
+    <td style="width: 12%">
         <input data-role="dropdownlist"
             data-bind=""
             style="width: 100%;"/>
     </td>
-    <td>
-        <input data-role="dropdownlist"
-            data-bind=""
-            style="width: 100%;"/>
-    </td>
-    <td>
-        <input data-role="dropdownlist"
-            data-bind=""
-            style="width: 100%;"/>
-    </td>
-		<td><button class="btn btn-warning" data-bind="click: products.removeProduct"><span class="k-icon k-i-delete"></span></button></td>
+	<td style="text-align: right;"><button class="btn btn-warning" data-bind="click: products.removeProduct"><span class="k-icon k-i-delete"></span></button></td>
 	</tr>
 </script>
 <script type="text/x-kendo-template" id="product-edit-tmpl">
@@ -1301,6 +1316,186 @@
 		return entity;
 	}
 
+  banhji.categoryDS = new kendo.data.DataSource({
+    autoSync: false,
+      transport: {
+      read  : {
+        url: 'http://tt-gateway.com/shopping/index.php/webservice/all_category',
+        type: "GET",
+        dataType: 'json'
+      },
+      parameterMap: function(options, operation) {
+        if(operation === 'read') {
+          return {
+            page: options.page,
+            limit: options.pageSize,
+            filter: options.filter,
+            sort: options.sort
+          };
+        } else {
+          return {products: kendo.stringify(options.models)};
+        }
+      }
+    },
+    schema  : {
+      model: {
+        id: 'id'
+      },
+      data: 'Response.category',
+      total: 'count'
+    },
+    batch: true,
+    serverFiltering: true,
+    serverSorting: true,
+    serverPaging: true,
+    page: 1,
+    pageSize: 100
+  });
+
+  banhji.subCatDSOne= new kendo.data.DataSource({
+    autoSync: false,
+      transport: {
+      read  : {
+        url: 'http://tt-gateway.com/shopping/index.php/webservice/all_category',
+        type: "GET",
+        dataType: 'json'
+      },
+      parameterMap: function(options, operation) {
+        if(operation === 'read') {
+          return {
+            page: options.page,
+            limit: options.pageSize,
+            filter: options.filter,
+            sort: options.sort
+          };
+        } else {
+          return {products: kendo.stringify(options.models)};
+        }
+      }
+    },
+    schema  : {
+      model: {
+        id: 'id'
+      },
+      data: 'Response.category',
+      total: 'count'
+    },
+    batch: true,
+    serverFiltering: true,
+    serverSorting: true,
+    serverPaging: true,
+    page: 1,
+    pageSize: 100
+  });
+
+  banhji.subCatDSTwo= new kendo.data.DataSource({
+    autoSync: false,
+      transport: {
+      read  : {
+        url: 'http://tt-gateway.com/shopping/index.php/webservice/all_category',
+        type: "GET",
+        dataType: 'json'
+      },
+      parameterMap: function(options, operation) {
+        if(operation === 'read') {
+          return {
+            page: options.page,
+            limit: options.pageSize,
+            filter: options.filter,
+            sort: options.sort
+          };
+        } else {
+          return {products: kendo.stringify(options.models)};
+        }
+      }
+    },
+    schema  : {
+      model: {
+        id: 'id'
+      },
+      data: 'Response.category',
+      total: 'count'
+    },
+    batch: true,
+    serverFiltering: true,
+    serverSorting: true,
+    serverPaging: true,
+    page: 1,
+    pageSize: 100
+  });
+
+  banhji.subCatDSThree= new kendo.data.DataSource({
+    autoSync: false,
+      transport: {
+      read  : {
+        url: 'http://tt-gateway.com/shopping/index.php/webservice/all_category',
+        type: "GET",
+        dataType: 'json'
+      },
+      parameterMap: function(options, operation) {
+        if(operation === 'read') {
+          return {
+            page: options.page,
+            limit: options.pageSize,
+            filter: options.filter,
+            sort: options.sort
+          };
+        } else {
+          return {products: kendo.stringify(options.models)};
+        }
+      }
+    },
+    schema  : {
+      model: {
+        id: 'id'
+      },
+      data: 'Response.category',
+      total: 'count'
+    },
+    batch: true,
+    serverFiltering: true,
+    serverSorting: true,
+    serverPaging: true,
+    page: 1,
+    pageSize: 100
+  });
+
+  banhji.subCatDSFour= new kendo.data.DataSource({
+    autoSync: false,
+      transport: {
+      read  : {
+        url: 'http://tt-gateway.com/shopping/index.php/webservice/all_category',
+        type: "GET",
+        dataType: 'json'
+      },
+      parameterMap: function(options, operation) {
+        if(operation === 'read') {
+          return {
+            page: options.page,
+            limit: options.pageSize,
+            filter: options.filter,
+            sort: options.sort
+          };
+        } else {
+          return {products: kendo.stringify(options.models)};
+        }
+      }
+    },
+    schema  : {
+      model: {
+        id: 'id'
+      },
+      data: 'Response.category',
+      total: 'count'
+    },
+    batch: true,
+    serverFiltering: true,
+    serverSorting: true,
+    serverPaging: true,
+    page: 1,
+    pageSize: 100
+  });
+
 	banhji.productStore = new kendo.data.DataSource({
 		autoSync: false,
     	transport: {
@@ -1786,12 +1981,16 @@
 
 	banhji.productVM = kendo.observable({
 		dataStore: banhji.productStore,
+    categories: banhji.categoryDS,
 		enabledSave: false,
 		addNew   : function(data) {
 			banhji.productVM.set('enabledSave', true);
 			banhji.productVM.dataStore.insert(0, data);
 		},
-		removeProduct: function(e) {
+    addMoreItems: function() {
+      banhji.router.navigate('/');
+    },		
+    removeProduct: function(e) {
 			banhji.productVM.dataStore.remove(e.data);
 		},
 		save 	 : function() {
@@ -1806,6 +2005,9 @@
 
 	banhji.itemVM = kendo.observable({
 		dataStore: banhji.itemStore,
+    pushProducts: function() {
+      banhji.router.navigate('/products');
+    },
 		onClick: function(e) {
 			banhji.productVM.addNew({
 				name: e.data.name,
@@ -1974,7 +2176,9 @@
 		layout 		: new kendo.Layout('#layout', {model: banhji.Layout}),
 		blank		: new kendo.View('<div></div>'),
 		index  		: new kendo.Layout("#index", {model: banhji.index}),
-		menu 		: new kendo.Layout('#menu-tmpl', {model: banhji.userManagement})
+		menu 		: new kendo.Layout('#menu-tmpl', {model: banhji.userManagement}),
+    item    : new kendo.View("vendor-items-tmpl", {model: banhji.itemVM}),
+    product : new kendo.View("products-items-tmpl", {model: banhji.productVM})
 	};
 	banhji.router = new kendo.Router({
 		init: function() {	
@@ -2026,14 +2230,32 @@
         	window.location.replace("<?php echo base_url(); ?>admin");
         } else {
         	banhji.view.layout.showIn('#content', banhji.view.index);
-			banhji.view.layout.showIn('#menu', banhji.view.menu);
-			$('#main-top-navigation').append('<li><a href="\#">Home</a></li>');
-			$('#current-section').text("");
-			$("#secondary-menu").html("");
-			banhji.index.getLogo();
+    			banhji.view.layout.showIn('#menu', banhji.view.menu);
+          banhji.view.index.showIn('#placeholder-mapping', banhji.view.item);
+    			$('#main-top-navigation').append('<li><a href="\#">Home</a></li>');
+    			$('#current-section').text("");
+    			$("#secondary-menu").html("");
+    			banhji.index.getLogo();
         }
 
 	});
+
+  banhji.router.route('/products', function(){
+    var blank = new kendo.View('#blank-tmpl');
+    var admin = JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).role : 0;
+        if(admin != 1) {
+          window.location.replace("<?php echo base_url(); ?>admin");
+        } else {
+          banhji.view.layout.showIn('#content', banhji.view.index);
+          banhji.view.layout.showIn('#menu', banhji.view.menu);
+          banhji.view.index.showIn('#placeholder-mapping', banhji.view.product);
+          $('#main-top-navigation').append('<li><a href="\#">Home</a></li>');
+          $('#current-section').text("");
+          $("#secondary-menu").html("");
+          banhji.index.getLogo();
+        }
+
+  });
 
 	$(function() {
 		banhji.router.start();

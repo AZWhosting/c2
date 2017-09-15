@@ -7754,23 +7754,23 @@
                     }
                     Usage += k.usage;
                 });
+                //Calculate Tariff
+                $.each(Tariff, function(x, y) {
+                    if (kendo.parseInt(Usage) >= kendo.parseInt(y.line.usage)) {
+                        aTariff = y.line.amount;
+                    }
+                });
                 items.push({
                     "item_id": MeterID,
                     "invoice_id": "",
                     "meter_record_id": MeterID,
                     "description": "សរុបថាមពល",
                     "quantity": "",
-                    "price": "",
+                    "price": aTariff,
                     "amount": Usage,
                     "rate": Rate,
                     "locale": Locale,
                     "type": "total_usage"
-                });
-                //Calculate Tariff
-                $.each(Tariff, function(x, y) {
-                    if (kendo.parseInt(Usage) >= kendo.parseInt(y.line.usage)) {
-                        aTariff = y.line.amount;
-                    }
                 });
                 Total = Usage * aTariff;
                 //Plus Round Money KH
@@ -19367,12 +19367,6 @@
                 data: 'results',
                 total: 'count'
             },
-            // group: {
-            //  field: 'month',
-            //  aggregates: [
-            //    {field: 'amount', aggregate: 'sum'}
-            //  ]
-            // },
             batch: true,
             serverFiltering: true,
             serverPaging: true,
@@ -19408,10 +19402,6 @@
                 data: 'results',
                 total: 'count'
             },
-            // filter:
-            //[
-            // {field:"use_water", value:1 },
-            // {field:"parent_id", operation: "where_related", model: "contact_type", value: 1}],
             sort: {
                 field: "id",
                 dir: "desc"
@@ -19542,12 +19532,10 @@
                     return false;
                 }
             });
-
             this.set("currencyCode", code);
         },
         loadObj: function(id) {
             var self = this;
-
             this.ownerDS.query({
                 filter: {
                     field: "id",
@@ -19850,25 +19838,17 @@
                     }, {
                         field: "reactive_status",
                         value: 0
-                    }]
+                    }],
+                    page: 1,
+                    pageSize: 100
                 })
                 .then(function(e) {
                     var meters = self.meterDS.data();
                     if (meters.length > 0) {
-                        // if(meters.length > 1) {
-                        //  var meterIds = [];
-                        //  $.each(meters, function(index, value) {
-                        //    meterIds.push(value.id);
-                        //  });
-                        //  self.readingVM.dataSource.filter({field: 'meter_id', operator: 'where_in', value: meterIds});
-                        // } else {
-                        //  self.readingVM.dataSource.filter({field: 'meter_id', value: meters[0].id});
-                        // }
                         self.graphDS.filter({
                             field: 'meter_id',
                             value: meters[0].id
                         });
-                        // self.invoiceVM.dataSource.filter({field: 'contact_id', value: data.contact.id});
                     }
                 });
             let currency = banhji.source.currencyList.filter(function(elem, i, array) {
