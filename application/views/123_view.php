@@ -118,31 +118,37 @@
 		<td style="width: 5%;"><input style="border:1px solid \#ddd; padding: 5px; width: 71%" type="text" data-bind="value: UoH"></td>
     <td style="width: 12%">
         <input data-role="dropdownlist"
-            data-bind="source: categories"
+            data-bind="source: categories, value: category"
             data-value-field="category_id"
             data-text-field="category_name"
             style="width: 100%;"/>
     </td>
     <td style="width: 12%">
         <input data-role="dropdownlist"
-            data-bind="source: category"
+            data-bind="source: subCatOne, value: subCategoryOne"
             data-value-field="category_id"
             data-text-field="category_name"
             style="width: 100%;"/>
     </td>
     <td style="width: 12%">
         <input data-role="dropdownlist"
-            data-bind=""
+            data-bind="source: subCatTwo, value: subCategoryTwo"
+            data-value-field="category_id"
+            data-text-field="category_name"
             style="width: 100%;"/>
     </td>
     <td style="width: 12%">
         <input data-role="dropdownlist"
-            data-bind=""
+            data-bind="source: subCatThree, value: subCategoryThree"
+            data-value-field="category_id"
+            data-text-field="category_name"
             style="width: 100%;"/>
     </td>
     <td style="width: 12%">
         <input data-role="dropdownlist"
-            data-bind=""
+            data-bind="source: subCatFour, value: subCategoryFour"
+            data-value-field="category_id"
+            data-text-field="category_name"
             style="width: 100%;"/>
     </td>
 	<td style="text-align: right;"><button class="btn btn-warning" data-bind="click: products.removeProduct"><span class="k-icon k-i-delete"></span></button></td>
@@ -1356,7 +1362,7 @@
     autoSync: false,
       transport: {
       read  : {
-        url: 'http://tt-gateway.com/shopping/index.php/webservice/all_category',
+        url: 'http://tt-gateway.com/shopping/index.php/webservice/sub_category',
         type: "GET",
         dataType: 'json'
       },
@@ -1377,7 +1383,7 @@
       model: {
         id: 'id'
       },
-      data: 'Response.category',
+      data: 'Response.sub_category',
       total: 'count'
     },
     batch: true,
@@ -1392,7 +1398,7 @@
     autoSync: false,
       transport: {
       read  : {
-        url: 'http://tt-gateway.com/shopping/index.php/webservice/all_category',
+        url: 'http://tt-gateway.com/shopping/index.php/webservice/sub_category2',
         type: "GET",
         dataType: 'json'
       },
@@ -1413,7 +1419,7 @@
       model: {
         id: 'id'
       },
-      data: 'Response.category',
+      data: 'Response.sub_category',
       total: 'count'
     },
     batch: true,
@@ -1428,7 +1434,7 @@
     autoSync: false,
       transport: {
       read  : {
-        url: 'http://tt-gateway.com/shopping/index.php/webservice/all_category',
+        url: 'http://tt-gateway.com/shopping/index.php/webservice/sub_category3',
         type: "GET",
         dataType: 'json'
       },
@@ -1449,7 +1455,7 @@
       model: {
         id: 'id'
       },
-      data: 'Response.category',
+      data: 'Response.sub_category',
       total: 'count'
     },
     batch: true,
@@ -1464,7 +1470,7 @@
     autoSync: false,
       transport: {
       read  : {
-        url: 'http://tt-gateway.com/shopping/index.php/webservice/all_category',
+        url: 'http://tt-gateway.com/shopping/index.php/webservice/sub_category4',
         type: "GET",
         dataType: 'json'
       },
@@ -1485,7 +1491,7 @@
       model: {
         id: 'id'
       },
-      data: 'Response.category',
+      data: 'Response.sub_category',
       total: 'count'
     },
     batch: true,
@@ -1982,6 +1988,10 @@
 	banhji.productVM = kendo.observable({
 		dataStore: banhji.productStore,
     categories: banhji.categoryDS,
+    subCatOne: banhji.subCatOne,
+    subCatTwo: banhji.subCatDSTwo,
+    subCatThree: banhji.subCatDSThree,
+    subCatFour: banhji.subCatDSFour,
 		enabledSave: false,
 		addNew   : function(data) {
 			banhji.productVM.set('enabledSave', true);
@@ -2017,7 +2027,12 @@
 				UoH: e.data.on_hand,
 				sellerId: banhji.institute.id,
 				sellerItemId: e.data.id,
-        locale: e.data.locale
+        locale: e.data.locale,
+        category: 1,
+        subCategoryOne: 1,
+        subCategoryTwo: 1,
+        subCategoryThree: 1,
+        subCategoryFour: 1
 			});
 		}
 	});

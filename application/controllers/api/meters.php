@@ -37,11 +37,7 @@ class Meters extends REST_Controller {
 	    		if(isset($value["operator"])) {
 					$obj->{$value["operator"]}($value["field"], $value["value"]);
 				} else {
-					if($value["field"]=="is_recurring"){
-	    				$is_recurring = $value["value"];
-	    			}else{
-	    				$obj->where($value["field"], $value["value"]);
-	    			}
+	    			$obj->where($value["field"], $value["value"]);
 				}
 			}
 		}
@@ -57,7 +53,6 @@ class Meters extends REST_Controller {
 		}
 		if($obj->result_count()>0){			
 			foreach ($obj as $value) {
-				// $contact = $value->contact->get_raw();
 				$currency= $value->currency->get();
 				$contacts = $value->contact->get();
 				$property = $value->property->get();
@@ -102,7 +97,7 @@ class Meters extends REST_Controller {
 					"date_used" 			=> $value->date_used,
 					"reactive_id" 			=> intval($value->reactive_id),
 					"reactive_status" 		=> $value->reactive_status,
-					"group" 				=> isset($value->group) ? $value->group : 0
+					"group" 				=> $value->group
 				);
 			}
 		}
