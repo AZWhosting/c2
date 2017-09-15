@@ -19343,7 +19343,7 @@
         summaryDS: dataStore(apiUrl + "transactions"),
         noteDS: dataStore(apiUrl + 'notes'),
         attachmentDS: dataStore(apiUrl + "attachments"),
-        meterDS: dataStore(apiUrl + "meters"),
+        meterDS: dataStore(apiUrl + "utibills/meters"),
         contactTypeDS: banhji.source.customerTypeDS,
         graphDS: new kendo.data.DataSource({
             transport: {

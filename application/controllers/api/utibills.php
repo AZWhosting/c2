@@ -295,7 +295,12 @@ class Utibills extends REST_Controller {
 			foreach ($obj as $value) {
 				$data["results"][] = array(
 					"id" 				=> $value->id,
-					"number" 				=> $value->number
+					"number" 			=> $value->number,
+					"meter_number" 		=> $value->number,
+					"group" 			=> $value->group,
+					"type" 				=> $value->type,
+					"activated" 		=> $value->activated,
+					"status" 			=> $value->status
 				);
 			}
 		}
