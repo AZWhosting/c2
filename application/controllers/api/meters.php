@@ -10,6 +10,16 @@ class Meters extends REST_Controller {
 	//CONSTRUCTOR
 	function __construct() {
 		parent::__construct();
+		$institute = new Institute();
+		$institute->where('id', $this->input->get_request_header('Institute'))->get();
+		if($institute->exists()) {
+			$conn = $institute->connection->get();
+			$this->server_host = $conn->server_name;
+			$this->server_user = $conn->username;
+			$this->server_pwd = $conn->password;
+			$this->_database = $conn->inst_database;
+			date_default_timezone_set("$conn->time_zone");
+		}
 	}
 	
 	//GET 
@@ -111,35 +121,32 @@ class Meters extends REST_Controller {
 		$data = array();
 		foreach ($models as $value) {
 			$obj = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$obj->deposit_id 			= isset($value->deposit_id)			?$value->deposit_id:0;
-			$obj->invoice_id 			= isset($value->invoice_id)			?$value->invoice_id:0;
-			$obj->ampere_id 			= isset($value->ampere_id)			?$value->ampere_id:0;
-			$obj->phase_id 				= isset($value->phase_id)			?$value->phase_id:0;
-			$obj->voltage_id 			= isset($value->voltage_id)			?$value->voltage_id:0;
-			$obj->maintenance_id 		= isset($value->maintenance_id)		?$value->maintenance_id:0;
-			$obj->reactive_id 			= isset($value->reactive_id)		?$value->reactive_id:0;
+			$obj->ampere_id 			= isset($value->ampere_id)			? $value->ampere_id:0;
+			$obj->phase_id 				= isset($value->phase_id)			? $value->phase_id:0;
+			$obj->voltage_id 			= isset($value->voltage_id)			? $value->voltage_id:0;
+			$obj->reactive_id 			= isset($value->reactive_id)		? $value->reactive_id:0;
 			$obj->number 				= isset($value->meter_number) 		? $value->meter_number:0;			
 			$obj->multiplier 			= isset($value->multiplier) 		? $value->multiplier: 1;
 			$obj->max_number 			= isset($value->max_number) 		? $value->max_number:0;
 			$obj->contact_id 			= isset($value->contact_id) 		? $value->contact_id:0;
 			$obj->startup_reading 		= isset($value->starting_no) 		? $value->starting_no: 0;
-			$obj->longtitute 			= isset($value->longtitute) 		?$value->longtitute: "";
-			$obj->latitute 				= isset($value->latitute) 			?$value->latitute: "";
-			$obj->status 				= isset($value->status)				?$value->status:1;
-			$obj->branch_id 			= isset($value->branch_id)			?$value->branch_id:"";
-			$obj->location_id 			= isset($value->location_id)		?$value->location_id:"";
-			$obj->brand_id 				= isset($value->brand_id)			?$value->brand_id:"";
+			$obj->longtitute 			= isset($value->longtitute) 		? $value->longtitute: "";
+			$obj->latitute 				= isset($value->latitute) 			? $value->latitute: "";
+			$obj->status 				= isset($value->status)				? $value->status:1;
+			$obj->branch_id 			= isset($value->branch_id)			? $value->branch_id:"";
+			$obj->location_id 			= isset($value->location_id)		? $value->location_id:"";
+			$obj->brand_id 				= isset($value->brand_id)			? $value->brand_id:"";
 			$obj->date_used= isset($value->date_used)?date("Y-m-d", strtotime($value->date_used)):'0000-00-00';
-			$obj->number_digit 			= isset($value->number_digit)		?$value->number_digit:4;
-			$obj->plan_id 				= isset($value->plan_id)			?$value->plan_id:0;
-			$obj->type 					= isset($value->type)				?$value->type:"w";
-			$obj->attachment_id 		= isset($value->attachment_id)		?$value->attachment_id:0;
-			$obj->pole_id 				= isset($value->pole_id)			?$value->pole_id:0;
-			$obj->box_id 				= isset($value->box_id)				?$value->box_id:0;
-			$obj->property_id 			= isset($value->property_id)		?$value->property_id:0;
-			$obj->activated 			= isset($value->activated)			?$value->activated:0;
-			$obj->reactive_status 		= isset($value->reactive_status)	?$value->reactive_status:0;
-			$obj->group 				= isset($value->group)				?$value->group:0;
+			$obj->number_digit 			= isset($value->number_digit)		? $value->number_digit:4;
+			$obj->plan_id 				= isset($value->plan_id)			? $value->plan_id:0;
+			$obj->type 					= isset($value->type)				? $value->type:"w";
+			$obj->attachment_id 		= isset($value->attachment_id)		? $value->attachment_id:0;
+			$obj->pole_id 				= isset($value->pole_id)			? $value->pole_id:0;
+			$obj->box_id 				= isset($value->box_id)				? $value->box_id:0;
+			$obj->property_id 			= isset($value->property_id)		? $value->property_id:0;
+			$obj->activated 			= isset($value->activated)			? $value->activated:0;
+			$obj->reactive_status 		= isset($value->reactive_status)	? $value->reactive_status:0;
+			$obj->group 				= isset($value->group)				? $value->group:0;
 			$obj->sync 					= 1;
 			$obj->round 				= 0;
 			if($obj->save()){	
@@ -187,8 +194,6 @@ class Meters extends REST_Controller {
 		foreach ($models as $value) {			
 			$obj = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->get_by_id($value->id);
-			$obj->deposit_id 			= isset($value->deposit_id)			?$value->deposit_id:0;
-			$obj->invoice_id 			= isset($value->invoice_id)			?$value->invoice_id:0;
 			$obj->ampere_id 			= isset($value->ampere_id)			?$value->ampere_id:0;
 			$obj->phase_id 				= isset($value->phase_id)			?$value->phase_id:0;
 			$obj->voltage_id 			= isset($value->voltage_id)			?$value->voltage_id:0;
