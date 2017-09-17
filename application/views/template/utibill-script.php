@@ -6078,7 +6078,7 @@
                     view[0].set("image_url", "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/no_image.jpg");
                 }
                 //Check Reactive
-                if (view[0].reactive_id) {
+                if (view[0].reactive_id != 0) {
                     self.set("chkRe", true);
                     self.set("visibleReMeter", true);
                     self.editRe(view[0].reactive_id);
