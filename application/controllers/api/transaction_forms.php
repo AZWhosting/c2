@@ -8,6 +8,7 @@ class Transaction_forms extends REST_Controller {
 	public $server_host;
 	public $server_user;
 	public $server_pwd;
+	public $int;
 	//CONSTRUCTOR
 	function __construct() {
 		parent::__construct();
@@ -20,6 +21,7 @@ class Transaction_forms extends REST_Controller {
 			$this->server_pwd = $conn->password;	
 			$this->_database = $conn->inst_database;
 		}
+		$this->int = $this->input->get_request_header('Institute');
 	}
 	
 	//GET 
@@ -55,17 +57,31 @@ class Transaction_forms extends REST_Controller {
 		$obj->get_paged_iterated($page, $limit);
 		$data["count"] = $obj->paged->total_rows;		
 
-		if($obj->result_count()>0){			
-			foreach ($obj as $value) {				
-				//Results				
-				$data["results"][] = array(
-					"id" 			=> $value->id,					
-					"type" 			=> $value->type,
-					"title" 	 	=> $value->title,
-					"moduls" 	 	=> $value->moduls,
-					"note" 	 		=> $value->note,
-					"image_url" 	=> $value->image_url	
-				);
+		if($obj->result_count()>0){	
+		 		
+			foreach ($obj as $value) {
+				if($value->id != 47 && $value->id != 48){		
+					//Results				
+					$data["results"][] = array(
+						"id" 			=> $value->id,					
+						"type" 			=> $value->type,
+						"title" 	 	=> $value->title,
+						"moduls" 	 	=> $value->moduls,
+						"note" 	 		=> $value->note,
+						"image_url" 	=> $value->image_url	
+					);
+				}else{
+					if($this->int == 267){
+						$data["results"][] = array(
+							"id" 			=> $value->id,					
+							"type" 			=> $value->type,
+							"title" 	 	=> $value->title,
+							"moduls" 	 	=> $value->moduls,
+							"note" 	 		=> $value->note,
+							"image_url" 	=> $value->image_url	
+						);
+					}
+				}
 			}
 		}
 

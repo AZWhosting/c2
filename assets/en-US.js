@@ -1188,6 +1188,8 @@ var	en_US = {
 	"fine_collection_description": "list individual fine by date for each customer with a period of time.",
 	"cash_receipt_description": "Lists of cash receipt for the select period of time, group by method of payment.",
 	"cash_receipt_sources_description": "Lists of cash receipt by sources for the select period of time, group by method of payment.",
+	"inactive_customer": "Inactive List",
+	"inactive_customer_description": "List of the customer have been inactive",
 	//Water Dashbaord
 	"reading": "Reading",
 	"run_bill": "Run Bill",

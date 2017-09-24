@@ -121,34 +121,39 @@
             data-bind="source: categories, value: category"
             data-value-field="category_id"
             data-text-field="category_name"
+            data-value-primitive="true"
             style="width: 100%;"/>
     </td>
     <td style="width: 12%">
         <input data-role="dropdownlist"
             data-bind="source: subCatOne, value: subCategoryOne"
-            data-value-field="category_id"
-            data-text-field="category_name"
+            data-value-field="sub_category_id"
+            data-text-field="sub_category_name"
+            data-value-primitive="true"
             style="width: 100%;"/>
     </td>
     <td style="width: 12%">
         <input data-role="dropdownlist"
             data-bind="source: subCatTwo, value: subCategoryTwo"
-            data-value-field="category_id"
-            data-text-field="category_name"
+            data-value-field="sub_category2_id"
+            data-text-field="sub_category2_name"
+            data-value-primitive="true"
             style="width: 100%;"/>
     </td>
     <td style="width: 12%">
         <input data-role="dropdownlist"
             data-bind="source: subCatThree, value: subCategoryThree"
-            data-value-field="category_id"
-            data-text-field="category_name"
+            data-value-field="sub_category3_id"
+            data-text-field="sub_category3_name"
+            data-value-primitive="true"            
             style="width: 100%;"/>
     </td>
     <td style="width: 12%">
         <input data-role="dropdownlist"
             data-bind="source: subCatFour, value: subCategoryFour"
-            data-value-field="category_id"
-            data-text-field="category_name"
+            data-value-field="sub_category4_id"
+            data-text-field="sub_category4_name"
+            data-value-primitive="true"
             style="width: 100%;"/>
     </td>
 	<td style="text-align: right;"><button class="btn btn-warning" data-bind="click: products.removeProduct"><span class="k-icon k-i-delete"></span></button></td>
@@ -1362,7 +1367,7 @@
     autoSync: false,
       transport: {
       read  : {
-        url: 'http://tt-gateway.com/shopping/index.php/webservice/sub_category',
+        url: 'http://123shoppe.com/index.php/webservice/sub_category/1',
         type: "GET",
         dataType: 'json'
       },
@@ -1398,7 +1403,7 @@
     autoSync: false,
       transport: {
       read  : {
-        url: 'http://tt-gateway.com/shopping/index.php/webservice/sub_category2',
+        url: 'http://123shoppe.com/index.php/webservice/sub_category2/1/1',
         type: "GET",
         dataType: 'json'
       },
@@ -1434,7 +1439,7 @@
     autoSync: false,
       transport: {
       read  : {
-        url: 'http://tt-gateway.com/shopping/index.php/webservice/sub_category3',
+        url: 'http://123shoppe.com/index.php/webservice/sub_category3/1/1/1',
         type: "GET",
         dataType: 'json'
       },
@@ -1470,7 +1475,7 @@
     autoSync: false,
       transport: {
       read  : {
-        url: 'http://tt-gateway.com/shopping/index.php/webservice/sub_category4',
+        url: 'http://123shoppe.com/index.php/webservice/sub_category4/1/1/1/1',
         type: "GET",
         dataType: 'json'
       },
@@ -1988,7 +1993,7 @@
 	banhji.productVM = kendo.observable({
 		dataStore: banhji.productStore,
     categories: banhji.categoryDS,
-    subCatOne: banhji.subCatOne,
+    subCatOne: banhji.subCatDSOne,
     subCatTwo: banhji.subCatDSTwo,
     subCatThree: banhji.subCatDSThree,
     subCatFour: banhji.subCatDSFour,
@@ -2241,18 +2246,21 @@
 	banhji.router.route('/', function(){
 		var blank = new kendo.View('#blank-tmpl');
 		var admin = JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).role : 0;
-        if(admin != 1) {
-        	window.location.replace("<?php echo base_url(); ?>admin");
-        } else {
-        	banhji.view.layout.showIn('#content', banhji.view.index);
-    			banhji.view.layout.showIn('#menu', banhji.view.menu);
-          banhji.view.index.showIn('#placeholder-mapping', banhji.view.item);
-    			$('#main-top-navigation').append('<li><a href="\#">Home</a></li>');
-    			$('#current-section').text("");
-    			$("#secondary-menu").html("");
-    			banhji.index.getLogo();
-        }
-
+    if(admin != 1) {
+    	window.location.replace("<?php echo base_url(); ?>admin");
+    } else {
+      banhji.itemStore.filter({field: 'item_type_id', value: 1});
+      banhji.itemStore.bind('change', function(e){
+        banhji.view.layout.showIn('#content', banhji.view.index);
+        banhji.view.layout.showIn('#menu', banhji.view.menu);
+        banhji.view.index.showIn('#placeholder-mapping', banhji.view.item);
+        $('#main-top-navigation').append('<li><a href="\#">Home</a></li>');
+        $('#current-section').text("");
+        $("#secondary-menu").html("");
+        banhji.index.getLogo();
+      });
+    	
+    }
 	});
 
   banhji.router.route('/products', function(){

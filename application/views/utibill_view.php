@@ -9206,13 +9206,33 @@
 													</p>
 												</td>
 											</tr>
+											<tr>
+												<td >
+													<h3><a href="#/inactive_list" data-bind="text: lang.lang.inactive_customer"></a></h3>
+												</td>
+												<td >													
+													<h3 ><a href="#/to_be_disconnect_list" data-bind="text: lang.lang.to_be_disconnect_list"></a></h3>
+												</td>
+											</tr>
 
+											<tr>
+												<td >
+													<p style="padding-right: 25px;"  data-bind="text: lang.lang.inactive_customer_description">
+														list of each customer have been inactive
+													</p>
+												</td>
+												<td style="vertical-align: top;" data-bind="text: lang.lang.to_be_disconnect_description">
+													<p>
+														List of the customer to be disconnect 
+													</p>
+												</td>
+											</tr>
 											<tr>
 												<td >
 													<h3><a href="#/mini_usage_list" data-bind="text: lang.lang.minimum_water_usage_list">Minimum Water Usage List</a></h3>
 												</td>
 												<td >													
-													<h3 ><a href="#/to_be_disconnect_list" data-bind="text: lang.lang.to_be_disconnect_list"></a></h3>
+													
 												</td>
 											</tr>
 
@@ -9222,10 +9242,7 @@
 														list of each customer individual usage minimum water
 													</p>
 												</td>
-												<td style="vertical-align: top;" data-bind="text: lang.lang.to_be_disconnect_description">
-													<p>
-														List of the customer to be disconnect 
-													</p>
+												<td>
 												</td>
 											</tr>
 										</table>
@@ -9777,6 +9794,124 @@
 	</div>
 </script>
 <script id="disconnectList-temp" type="text/x-kendo-template" >
+	<tr>
+		<td>#=name#</td>
+		<td>#=license#</td>
+		<td>#=number#</td>
+		<td>#=phone#</td>
+		<td style="text-align: right;">#=address#</td>
+	</tr>
+</script>
+<script id="inactiveList" type="text/x-kendo-template">
+	<div class="container">
+		<div class="row-fluid">
+			<div id="waterreport" class="background">
+				<div class="row-fluid">
+					<div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 100%;margin-top: -15px;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
+						<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
+					</div>
+					<div id="example" class="k-content">
+						<div class="hidden-print pull-right" style="margin-bottom: 15px;">
+				    		<span class="pull-right glyphicons no-js remove_2"
+						onclick="javascript:window.history.back()"><i></i></span>
+						</div>
+						<div class="clear"></div>
+
+						<!-- Tabs -->
+						<div class="relativeWrap" data-toggle="source-code" style="margin: 15px 0;">
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+								<!-- Tabs Heading -->
+								<div class="widget-head" style="background: #203864 !important; color: #fff;">
+									<ul>
+										<li class="active"><a class="glyphicons filter" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.filter">Filter</span></a></li>	
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export">Print/Export</span></a></li>
+									</ul>
+								</div>
+								<!-- // Tabs Heading END -->								
+								<div class="widget-body">
+									<div class="tab-content">
+								        <div class="tab-pane active" id="tab-1" style="border: 1px solid #ccc; overflow: hidden; padding: 15px">
+											<div class="row">
+												<div class="col-xs-12-3 col-sm-2">
+													<input 
+														data-role="dropdownlist" 
+														data-option-label="License ..." 
+														data-auto-bind="false" 
+														data-value-primitive="true" 
+														data-text-field="name" 
+														data-value-field="id" 
+														data-bind="
+															value: licenseSelect,
+						                  					source: licenseDS,
+						                  					events: {change: licenseChange}"
+						                  					style="width: 100%;">
+						                  		</div>
+						                  		<div class="col-xs-12-3 col-sm-2">
+											        <input 
+														data-role="dropdownlist" 
+														data-option-label="Location ..." 
+														data-auto-bind="false" 
+														data-value-primitive="false" 
+														data-text-field="name" 
+														data-value-field="id" 
+														data-bind="
+															value: blocSelect,
+															enabled: haveBloc,
+						                  					source: blocDS"
+						                  					style="width: 100%;">
+						                  		</div>
+						                  		<div class="col-xs-12-3 col-sm-1">
+												  	 <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>							
+									    		</div>
+									    	</div>
+									    </div>	
+									    <!-- PRINT/EXPORT  -->
+								        <div class="tab-pane report" id="tab-2" style="border: 1px solid #ccc; overflow: hidden; padding: 15px">								        	
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" ><i></i> Print</span>
+								        	<span id="excel" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" >
+								        		<i class="fa fa-file-excel-o"></i>
+								        		Export to Excel
+								        	</span>
+							        	</div>								        							       
+								    </div>
+								</div>
+							</div>
+						</div>
+						<!-- // Tabs END -->
+
+						<div id="invFormContent">
+							<div class="block-title" style="">
+								<h3 data-bind="text: institute.name"></h3>
+								<h2 data-bind="text: lang.lang.inactive_customer">Inactive Customer List</h2>
+							</div>
+							<table style="margin-bottom: 0;" class="table table-bordered table-condensed table-striped table-primary table-vertical-center">
+								<thead>
+									<tr>
+										<th style="vertical-align: top;"><span data-bind="text: lang.lang.customer_name">Customer Name</span></th>
+										<th style="vertical-align: top;"><span data-bind="text:lang.lang.license"></span></th>
+										<th style="vertical-align: top;"><span data-bind="text: lang.lang.number">Number</span></th>
+										<th style="vertical-align: top;"><span data-bind="text: lang.lang.phone">Phone</span></th>
+										<th style="vertical-align: top;"><span data-bind="text: lang.lang.address">Address</span></th>
+									</tr>
+								</thead>
+								<tbody data-role="listview"
+											 data-bind="source: dataSource"
+											 data-template="inactiveList-temp"
+								></tbody>
+							</table>
+							<div id="pager" class="k-pager-wrap"
+			            		 data-role="pager"
+						    	 data-auto-bind="false"
+					             data-bind="source: dataSource"></div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="inactiveList-temp" type="text/x-kendo-template" >
 	<tr>
 		<td>#=name#</td>
 		<td>#=license#</td>
