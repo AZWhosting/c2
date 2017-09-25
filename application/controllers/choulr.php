@@ -8,8 +8,8 @@ class Choulr extends CI_Controller {
 	
 	public function index() {	
 		$this->load->view("template/choulr-header");
-		// $this->_render("utibill_view");
 		$this->load->view("choulr_view");
+		$this->load->view("template/choulr-script");
 		$this->load->view("template/choulr-footer");
 	}
 }
