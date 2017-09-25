@@ -1544,5 +1544,5 @@ class Choulr extends REST_Controller {
 	}
 	
 }
-/* End of file meters.php */
+/* End of file choulr.php */
 /* Location: ./application/controllers/api/meters.php */
