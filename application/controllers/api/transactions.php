@@ -192,6 +192,7 @@ class Transactions extends REST_Controller {
 				   	"ship_to" 					=> $value->ship_to,
 				   	"memo" 						=> $value->memo,
 				   	"memo2" 					=> $value->memo2,
+				   	"note" 						=> $value->note,
 				   	"recurring_name" 			=> $value->recurring_name,
 				   	"start_date"				=> $value->start_date,
 				   	"frequency"					=> $value->frequency,
@@ -294,6 +295,7 @@ class Transactions extends REST_Controller {
 		   	isset($value->ship_to) 					? $obj->ship_to 					= $value->ship_to : "";
 		   	isset($value->memo) 					? $obj->memo 						= $value->memo : "";
 		   	isset($value->memo2) 					? $obj->memo2 						= $value->memo2 : "";
+		   	isset($value->note) 					? $obj->note 						= $value->note : "";
 		   	isset($value->recurring_name) 			? $obj->recurring_name 				= $value->recurring_name : "";
 		   	isset($value->start_date) 				? $obj->start_date 					= $value->start_date : "";
 		   	isset($value->frequency) 				? $obj->frequency 					= $value->frequency : "";
@@ -361,6 +363,7 @@ class Transactions extends REST_Controller {
 				   	"ship_to" 					=> $obj->ship_to,
 				   	"memo" 						=> $obj->memo,
 				   	"memo2" 					=> $obj->memo2,
+				   	"note" 						=> $obj->note,
 				   	"recurring_name" 			=> $obj->recurring_name,
 				   	"start_date"				=> $obj->start_date,
 					"frequency"					=> $obj->frequency,
@@ -443,6 +446,7 @@ class Transactions extends REST_Controller {
 		   	isset($value->ship_to) 					? $obj->ship_to 					= $value->ship_to : "";
 		   	isset($value->memo) 					? $obj->memo 						= $value->memo : "";
 		   	isset($value->memo2) 					? $obj->memo2 						= $value->memo2 : "";
+		   	isset($value->note) 					? $obj->note 						= $value->note : "";
 		   	isset($value->recurring_name) 			? $obj->recurring_name 				= $value->recurring_name : "";
 		   	isset($value->start_date) 				? $obj->start_date 					= $value->start_date : "";
 		   	isset($value->frequency) 				? $obj->frequency 					= $value->frequency : "";
@@ -511,6 +515,7 @@ class Transactions extends REST_Controller {
 				   	"ship_to" 					=> $obj->ship_to,
 				   	"memo" 						=> $obj->memo,
 				   	"memo2" 					=> $obj->memo2,
+				   	"note" 						=> $obj->note,
 				   	"recurring_name" 			=> $obj->recurring_name,
 				   	"start_date"				=> $obj->start_date,
 					"frequency"					=> $obj->frequency,

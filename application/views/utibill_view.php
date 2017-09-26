@@ -2404,7 +2404,7 @@
 									        		data-selectable="single"
 									        		data-bind="source: meterDS"></tbody>	        
 										    </table>
-										    <a class="btn btn-block btn-inverse" style="margin-bottom: 5px;position: relative;clear:both;background: #609450!important;" data-bind="click: groupMeter, visible: meter_visible">Group Meter</a>
+										    <a class="btn btn-block btn-inverse" style="margin-bottom: 5px;position: relative;clear:both;background: #609450!important;" data-bind="click: groupMeter, visible: haveGroup">Group Meter</a>
 							            </div>
 							            <div id="tab2" class="tab-pane">
 							            	<div class="row-fluid">

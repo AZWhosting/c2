@@ -120,6 +120,7 @@ class Contacts extends REST_Controller {
 					"ship_to" 					=> $value->ship_to,
 					"memo" 						=> $value->memo,
 					"image_url" 				=> $value->image_url,
+					"invoice_note" 				=> $value->invoice_note,
 					"company" 					=> $value->company,
 					"company_en" 				=> $value->company_en,
 					"bank_name" 				=> $value->bank_name,
@@ -224,6 +225,7 @@ class Contacts extends REST_Controller {
 			isset($value->ship_to)					? $obj->ship_to 				= $value->ship_to : "";
 			isset($value->memo)						? $obj->memo					= $value->memo : "";
 			isset($value->image_url)				? $obj->image_url				= $value->image_url : "";
+			isset($value->invoice_note)				? $obj->invoice_note			= $value->invoice_note : "";
 			isset($value->company)					? $obj->company					= $value->company : "";
 			isset($value->company_en)				? $obj->company_en				= $value->company_en : "";
 			isset($value->bank_name)				? $obj->bank_name				= $value->bank_name : "";
@@ -295,6 +297,7 @@ class Contacts extends REST_Controller {
 					"ship_to" 					=> $obj->ship_to,
 					"memo" 						=> $obj->memo,
 					"image_url" 				=> $obj->image_url,
+					"invoice_note" 				=> $obj->invoice_note,
 					"company" 					=> $obj->company,
 					"company_en" 				=> $obj->company_en,
 					"bank_name" 				=> $obj->bank_name,
@@ -381,6 +384,7 @@ class Contacts extends REST_Controller {
 			isset($value->ship_to)					? $obj->ship_to 				= $value->ship_to : "";
 			isset($value->memo)						? $obj->memo					= $value->memo : "";
 			isset($value->image_url)				? $obj->image_url				= $value->image_url : "";
+			isset($value->invoice_note)				? $obj->invoice_note			= $value->invoice_note : "";
 			isset($value->company)					? $obj->company					= $value->company : "";
 			isset($value->company_en)				? $obj->company_en				= $value->company_en : "";
 			isset($value->bank_name)				? $obj->bank_name				= $value->bank_name : "";
@@ -452,6 +456,7 @@ class Contacts extends REST_Controller {
 					"ship_to" 					=> $obj->ship_to,
 					"memo" 						=> $obj->memo,
 					"image_url" 				=> $obj->image_url,
+					"invoice_note" 				=> $obj->invoice_note,
 					"company" 					=> $obj->company,
 					"company_en" 				=> $obj->company_en,
 					"bank_name" 				=> $obj->bank_name,

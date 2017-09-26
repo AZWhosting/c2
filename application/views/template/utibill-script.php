@@ -10084,44 +10084,47 @@
                             if (v.amount_fine > 0) {
                                 self.set("haveFine", true);
                             }
-                            var amount_due = (v.amount - (v.amount_paid + v.deposit)) + v.amount_fine;
-                            self.dataSource.add({
-                                transaction_template_id: 0,
-                                contact_id: v.contact_id,
-                                contact_name: v.contact_name,
-                                account_id: obj.account_id,
-                                payment_term_id: v.payment_term_id,
-                                payment_method_id: obj.payment_method_id,
-                                reference_id: v.id,
-                                reference_no: v.number,
-                                number: "",
-                                invnumber: v.number,
-                                type: "Cash_Receipt",
-                                sub_total: amount_due,
-                                amount: amount_due,
-                                discount: 0,
-                                fine: 0,
-                                rate: v.rate,
-                                locale: v.locale,
-                                issued_date: obj.issued_date,
-                                invissued_date: v.issued_date,
-                                memo: obj.memo,
-                                memo2: obj.memo2,
-                                status: 0,
-                                segments: obj.segments,
-                                is_journal: 1,
-                                location_id: v.location_id,
-                                pole_id: v.pole_id,
-                                box_id: v.box_id,
-                                meter_id: v.meter_id,
-                                reference_id: v.id,
-                                meter: v.meter,
-                                month_of: v.month_of,
-                                user_id: banhji.userData.id,
-                                amount_fine: v.amount_fine,
-                                session_id: self.get("CashierID")
-                            });
-                            self.idList.push(v.number);
+                            if (jQuery.inArray(v.number, self.idList) != -1) {
+                            }else{
+                                var amount_due = (v.amount - (v.amount_paid + v.deposit)) + v.amount_fine;
+                                self.dataSource.add({
+                                    transaction_template_id: 0,
+                                    contact_id: v.contact_id,
+                                    contact_name: v.contact_name,
+                                    account_id: obj.account_id,
+                                    payment_term_id: v.payment_term_id,
+                                    payment_method_id: obj.payment_method_id,
+                                    reference_id: v.id,
+                                    reference_no: v.number,
+                                    number: "",
+                                    invnumber: v.number,
+                                    type: "Cash_Receipt",
+                                    sub_total: amount_due,
+                                    amount: amount_due,
+                                    discount: 0,
+                                    fine: 0,
+                                    rate: v.rate,
+                                    locale: v.locale,
+                                    issued_date: obj.issued_date,
+                                    invissued_date: v.issued_date,
+                                    memo: obj.memo,
+                                    memo2: obj.memo2,
+                                    status: 0,
+                                    segments: obj.segments,
+                                    is_journal: 1,
+                                    location_id: v.location_id,
+                                    pole_id: v.pole_id,
+                                    box_id: v.box_id,
+                                    meter_id: v.meter_id,
+                                    reference_id: v.id,
+                                    meter: v.meter,
+                                    month_of: v.month_of,
+                                    user_id: banhji.userData.id,
+                                    amount_fine: v.amount_fine,
+                                    session_id: self.get("CashierID")
+                                });
+                                self.idList.push(v.number);
+                            }
                             $("#loadING").css("display", "none");
                         });
                         self.setRate();
@@ -20021,6 +20024,7 @@
             }
         },
         propertyID: 0,
+        haveGroup: false,
         selectedRow: function(e) {
             this.goMonthlyTab();
             var data = e.data,
@@ -20028,25 +20032,30 @@
             this.set('meter_visible', true);
             this.set('propertyID', data.id);
             this.meterDS.query({
-                    filter: [{
-                        field: "property_id",
-                        value: data.id
-                    }, {
-                        field: "reactive_status",
-                        value: 0
-                    }],
-                    page: 1,
-                    pageSize: 100
-                })
-                .then(function(e) {
-                    var meters = self.meterDS.data();
-                    if (meters.length > 0) {
-                        self.graphDS.filter({
-                            field: 'meter_id',
-                            value: meters[0].id
-                        });
-                    }
-                });
+                filter: [{
+                    field: "property_id",
+                    value: data.id
+                }, {
+                    field: "reactive_status",
+                    value: 0
+                }],
+                page: 1,
+                pageSize: 100
+            })
+            .then(function(e) {
+                var meters = self.meterDS.data();
+                if (meters.length > 0) {
+                    self.graphDS.filter({
+                        field: 'meter_id',
+                        value: meters[0].id
+                    });
+                }
+                if(meters.length > 1){
+                    self.set("haveGroup", true);
+                }else{
+                    self.set("haveGroup", false);
+                }
+            });
             let currency = banhji.source.currencyList.filter(function(elem, i, array) {
                 return elem.locale === data.contact.locale;
             });

@@ -82,14 +82,12 @@ class Ops extends REST_Controller {
 				// 	// 	"null" 		=> FALSE,
 				// 	// 	"default" 	=> 0
 				// 	// ),
-				// 	"contact_id" => array(
-				// 		"type" 		=> "INT",
-				// 		"constraint"=> 11,
-				// 		"null" 		=> FALSE,
-				// 		"default" 	=> 0
+				// 	"note" => array(
+				// 		"type" 		=> "LONGTEXT",
+				// 		"null" 		=> TRUE
 				// 	)
 				// );
-				// $data['results'][] = $this->dbforge->add_column("item_lines", $fields);
+				// $data['results'][] = $this->dbforge->add_column("transactions", $fields);
 				
 			    // Modify fields
 			 // 	$fields = array(
