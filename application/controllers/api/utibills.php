@@ -1696,7 +1696,109 @@ class Utibills extends REST_Controller {
 		}
 		$data["count"] = count($data["results"]);
 		$this->response($data, 201);
-	} 
+	}
+	function offlinework_get(){
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
+		$data["count"] = 0;
+		$is_recurring = 0;
+
+		$obj = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
+			}
+		}
+
+		//Filter
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value['operator'])) {
+					$obj->{$value['operator']}($value['field'], $value['value']);
+				} else {
+	    			$obj->where($value["field"], $value["value"]);
+				}
+			}
+		}
+		$obj->where("activated", 1);
+		//Results
+		if($page && $limit){
+			$obj->get_paged_iterated($page, $limit);
+			$data["count"] = $obj->paged->total_rows;
+		}else{
+			$obj->get_iterated();
+			$data["count"] = $obj->result_count();
+		}
+
+		if($obj->exists()){
+			foreach ($obj as $value) {
+				$record = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$record->where("meter_id", $value->id)->order_by("id", "desc")->limit(1)->get();
+
+				$contact = $value->contact->get();
+				$location = $value->location->get();
+				//Pole
+				$polename = "";
+				if($value->pole_id != 0){
+					$pole = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$pole->where("id", $value->pole_id)->limit(1)->get();
+					$polename = $pole->name;
+				}
+				//Box
+				$boxname = "";
+				if($value->box_id != 0){
+					$box = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$box->where("id", $value->box_id)->limit(1)->get();
+					$boxname = $box->name;
+				}
+				//Balance
+				$remain = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$remain->where("meter_id", $value->id);
+				$remain->where("type", "Utility_Invoice");
+				$remain->where("deleted", 0);
+				$remain->where("status <>", 1)->get_iterated();
+				$amountOwed = 0;
+				foreach($remain as $rem) {
+					$amountOwed += $rem->amount;
+					if($rem->status == 2) {
+						$qu = $rem->transaction->select('amount')->where('type', 'Cash_Receipt')->get();
+						foreach($qu as $q){
+							$amountOwed -= $q->amount;
+						};
+					}
+				}
+				$data["results"][] = array(
+					"meter_id" 			=> $value->id,
+					"meter_number" 		=> $value->number,
+					"previous" 			=> $record->previous,
+					"current" 			=> 0,
+					"from_date" 		=> $record->to_date,
+					"contact_id" 		=> $contact->id,
+					"contact_name" 		=> $contact->name,
+					"conatct_code" 		=> $contact->abbr."-".$contact->number,
+					"location_id" 		=> $value->location_id,
+					"location_name" 	=> $location->name,
+					"pole_id" 			=> $value->pole_id,
+					"pole_name" 		=> $polename,
+					"box_id" 			=> $value->box_id,
+					"box_name" 			=> $boxname,
+					"balance" 			=> $amountOwed
+				);
+			}
+		}
+
+		//Response Data
+		$this->response($data, 200);
+	}
 }
 /* End of file meters.php */
 /* Location: ./application/controllers/api/utibills.php */

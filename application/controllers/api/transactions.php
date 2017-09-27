@@ -319,7 +319,14 @@ class Transactions extends REST_Controller {
 		   	isset($value->deleted) 					? $obj->deleted 					= $value->deleted : "";
 		   	isset($value->meter_id) 				? $obj->meter_id 					= $value->meter_id : "";
 		   	
-	   		if($obj->save()){
+		   	$relatedsegmentitem = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			if(isset($value->segments)){
+				if(count($value->segments)>0){
+					$relatedsegmentitem->where_in("id", $value->segments)->get();
+				}
+			}
+
+	   		if($obj->save($relatedsegmentitem->all)){
 			   	$data["results"][] = array(
 			   		"id" 						=> $obj->id,
 					"company_id" 				=> $obj->company_id,
@@ -405,6 +412,14 @@ class Transactions extends REST_Controller {
 			$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->get_by_id($value->id);
 
+			//Remove previouse segments
+			$segment = explode(",",$obj->segments);
+			if(count($segment)>0){
+		   		$prevSegments = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		   		$prevSegments->where_in("id", $segment)->get();
+		   		$obj->delete($prevSegments->all);
+		   	}
+
 			isset($value->company_id) 				? $obj->company_id 					= $value->company_id : "";
 			isset($value->location_id) 				? $obj->location_id 				= $value->location_id : "";
 			isset($value->contact_id) 				? $obj->contact_id 					= $value->contact_id : "";
@@ -470,6 +485,15 @@ class Transactions extends REST_Controller {
 		   	isset($value->deleted) 					? $obj->deleted 					= $value->deleted : "";
 		   	isset($value->meter_id) 				? $obj->meter_id 					= $value->meter_id : "";
 		   	
+		   	//Update new segments
+			if(isset($value->segments)){
+				foreach ($value->segments as $sg) {
+					$relatedsegmentitem = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$relatedsegmentitem->get_by_id($sg);
+					$relatedsegmentitem->save($obj);
+				}
+			}
+
 			if($obj->save()){
 				//Results
 				$data["results"][] = array(

@@ -9,6 +9,13 @@
 	line-height: 16px;
 }
 
+.pcg2 table tr td{
+	padding: 5px;
+}
+.pcg-list ul{
+	margin-left: 20px;
+}
+
 sup {
 	line-height: 0px;	
 }

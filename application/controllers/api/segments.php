@@ -48,7 +48,13 @@ class Segments extends REST_Controller {
 		if(!empty($filter) && isset($filter)){
 	    	foreach ($filter['filters'] as $value) {
 	    		if(isset($value['operator'])) {
-					$obj->{$value['operator']}($value['field'], $value['value']);
+					if($value['operator']=="startswith"){
+	    				$obj->like($value['field'], $value['value'], 'after');
+	    			}else if($value['operator']=="contains"){
+	    				$obj->like($value['field'], $value['value'], 'both');
+	    			}else{
+						$obj->{$value['operator']}($value['field'], $value['value']);
+	    			}
 				} else {
 					$obj->where($value["field"], $value["value"]);
 				}
@@ -179,12 +185,20 @@ class Segments extends REST_Controller {
 		if(!empty($filter) && isset($filter)){
 	    	foreach ($filter['filters'] as $value) {
 	    		if(isset($value['operator'])) {
-					$obj->{$value['operator']}($value['field'], $value['value']);
+					if($value['operator']=="startswith"){
+	    				$obj->like($value['field'], $value['value'], 'after');
+	    			}else if($value['operator']=="contains"){
+	    				$obj->like($value['field'], $value['value'], 'both');
+	    			}else{
+						$obj->{$value['operator']}($value['field'], $value['value']);
+	    			}
 				} else {
 					$obj->where($value["field"], $value["value"]);
 				}
 			}
 		}
+
+		$obj->include_related("segment", array("name"));
 		
 		//Results
 		if($page && $limit){
@@ -205,7 +219,7 @@ class Segments extends REST_Controller {
 					"name" 	 		=> $value->name,
 					"is_system" 	=> $value->is_system,
 
-					"segment" 		=> $value->segment->get_raw()->result()
+					"segment" 		=> array("id"=>$value->segment_id, "name"=>$value->segment_name)
 				);
 			}
 		}

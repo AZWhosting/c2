@@ -5575,7 +5575,7 @@
 						#}#
 					# } #
 				#}#
-				#var NU = 8;#
+				#var NU = 6;#
 				#var k = NU - invoice_lines.length;#
 				#if(k > 0){#
 					#for(var z = 1; z < k; z++){#
@@ -6054,7 +6054,7 @@
 						#}#
 					# } #
 				#}#
-				#var NU = 8;#
+				#var NU = 6;#
 				#var k = NU - invoice_lines.length;#
 				#if(k > 0){#
 					#for(var z = 1; z < k; z++){#
@@ -8599,74 +8599,152 @@
 									<div class="tab-content">
 										<div id="Download" style="border: 1px solid #ccc; overflow: hidden;" class="tab-pane widget-body-regular active">
 											<div class="row-fluid" style="overflow: hidden;">
-												<div class="span3" style="border: 1px solid #ccc;padding-bottom: 10px;min-height: 131px;">
-													<h2 data-bind="text: lang.lang.transaction"></h2>
-												  	<button>
-														<span class="btn btn-icon btn-success glyphicons upload" data-bind="click: offTxnGet" style="width: 200px!important;position: relative;margin: 0px;">
-															<i></i> 
-															<span data-bind="text: lang.lang.transaction"></span>
-														</span>
-													</button>
+												<div style="background: #fff; padding: 15px; width: 100%; color: #333; float: left; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1">
+													<div class="col-xs-12 col-sm-5 ">
+														<div class="innerAll" style="background: #eee;height :290px;">
+															<div class="control-group">								
+																<label ><span data-bind="text: lang.lang.license">License</span> <span style="color:red">*</span></label>
+																<input 
+																	data-role="dropdownlist" 
+																	style="width: 100%; margin-bottom: 10px;" 
+																	data-option-label="License ..." 
+																	data-auto-bind="false" 
+																	data-value-primitive="true" 
+																	data-text-field="name" 
+																	data-value-field="id" 
+																	data-bind="
+																		value: licenseSelect,
+									                  					source: licenseDS,
+									                  					events: {change: licenseChange}">
+									                  		</div>
+									                  		<div class="control-group">								
+																<label ><span data-bind="text: lang.lang.location">Location</span> <span style="color:red">*</span></label>
+																<input 
+																	data-role="dropdownlist" 
+																	style="width: 100%; margin-bottom: 10px;" 
+																	data-option-label="Location ..." 
+																	data-auto-bind="false" 
+																	data-value-primitive="true" 
+																	data-text-field="name" 
+																	data-value-field="id" 
+																	data-bind="
+																		value: locationSelect,
+									                  					source: locationDS,
+									                  					enabled: haveLicense,
+									                  					events: {change: onLocationChange}">
+									                  		</div>
+									                  		<div class="control-group">								
+																<label ><span data-bind="text: lang.lang.sub_location">Sub Location</span></label>
+																<input 
+																	data-role="dropdownlist" 
+																	style="width: 100%; margin-bottom: 10px;" 
+																	data-option-label="Sub Location ..." 
+																	data-auto-bind="false" 
+																	data-value-primitive="true" 
+																	data-text-field="name" 
+																	data-value-field="id" 
+																	data-bind="
+																		value: subLocationSelect,
+									                  					source: subLocationDS,
+									                  					enabled: haveLocation,
+									                  					events: {change: onSubLocationChange}">
+									                  		</div>
+									                  		<div class="control-group">								
+																<label ><span data-bind="text: lang.lang.box">Box</span></label>
+																<input 
+																	data-role="dropdownlist" 
+																	style="width: 100%;" 
+																	data-option-label="Box ..." 
+																	data-auto-bind="false" 
+																	data-value-primitive="true" 
+																	data-text-field="name" 
+																	data-value-field="id" 
+																	data-bind="
+																		value: boxSelect,
+									                  					source: boxDS,
+									                  					enabled: haveSubLocation">
+									                  		</div><br>
+														</div>
+													</div>
+
+													<div class="col-xs-12 col-sm-7">
+														<div class="tab-pane">
+												        	<div class="row" >				        		
+											        			<div class="col-xs-12 col-sm-6">
+																	<div class="control-group" style="margin-bottom: 10px;">
+																		<label ><span data-bind="text: lang.lang.month_of" >Month Of</span> <span style="color:red">*</span></label>
+															            <input type="text" 
+														                	style="width: 100%;" 
+														                	data-role="datepicker"
+														                	data-format="MM-yyyy"
+														                	data-parse-formats="yyyy-MM-dd HH:mm:ss"
+														                	data-start="year" 
+															  				data-depth="year" 
+														                	placeholder="Moth of ..." 
+																           	data-bind="value: monthOfSR" />
+																	</div>
+																</div>
+														        <div class="col-xs-12 col-sm-6">
+																	<div class="control-group" style="margin-bottom: 10px;">
+																		<label ><span data-bind="text: lang.lang.to_date">To Date</span> <span style="color:red">*</span></label>
+															            <input type="text" 
+														                	style="width: 100%;" 
+														                	data-role="datepicker"
+														                	placeholder="To Date ..." 
+														                	data-parse-formats="yyyy-MM-dd"
+																           	data-bind="value: toDateSR" />
+																	</div>
+														        </div>
+												        	</div>
+												        	<div class="row">
+											        			<div class="col-xs-12 col-sm-6">
+																	<div class="control-group" style="margin-bottom: 10px;">
+																		<label ><span data-bind="text: lang.lang.issue_date" >Issue Date</span> <span style="color:red">*</span></label>
+															            <input type="text" 
+														                	style="width: 100%;" 
+														                	data-role="datepicker"
+														                	data-parse-formats="yyyy-MM-dd HH:mm:ss"
+														                	placeholder="Issue Date ..." 
+																           	data-bind="value: IssueDate" />
+																	</div>
+																</div>
+																<div class="col-xs-12 col-sm-6">
+																	<div class="control-group" style="margin-bottom: 10px;">
+																		<label ><span data-bind="text: lang.lang.bill_date" >Bill Date</span> <span style="color:red">*</span></label>
+															            <input type="text" 
+														                	style="width: 100%;" 
+														                	data-role="datepicker"
+														                	data-parse-formats="yyyy-MM-dd"
+														                	placeholder="Bill Date ..." 
+																           	data-bind="value: BillingDate" />
+																	</div>
+																</div>
+												        	</div>
+
+											        		<div class="row">
+										        				<div class="col-xs-12 col-sm-6">
+																	<div class="control-group">
+																		<label ><span data-bind="text: lang.lang.due_date" >Due Date</span> <span style="color:red">*</span></label>
+															            <input type="text" 
+														                	style="width: 100%;" 
+														                	data-role="datepicker"
+														                	data-parse-formats="yyyy-MM-dd"
+														                	placeholder="Due Date ..." 
+																           	data-bind="value: DueDate" />
+																	</div>
+																</div>
+																<div class="col-xs-12 col-sm-6">
+												        			<span id="saveNew" style="width: 100% !important; text-align: center; margin-top: 22px; float: left;" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="click: getOfflineDB"><i></i> <span data-bind="text: lang.lang.download">Add</span></span>
+												        		</div>
+												        	</div>
+											        	</div>
+													</div>
 												</div>
-												<div class="span3" style="border: 1px solid #ccc;padding-bottom: 10px;min-height: 131px;">
-													<h2 data-bind="text: lang.lang.contact"></h2>
-													<button style="margin-bottom: 5px;">
-														<span class="btn btn-icon btn-success glyphicons upload" data-bind="click: offContactGet" style="width: 200px!important;position: relative;margin: 0px;">
-															<i></i> 
-															<span data-bind="text: lang.lang.contact"></span>
-														</span>
-													</button>
-													<button>
-														<span class="btn btn-icon btn-success glyphicons upload" data-bind="click: offPropertyGet" style="width: 200px!important;position: relative;margin: 0px;">
-															<i></i> 
-															<span data-bind="text: lang.lang.property"></span>
-														</span>
-													</button>
-												</div>
-												<div class="span3" style="border: 1px solid #ccc;padding-bottom: 10px;min-height: 131px;">
-													<h2 data-bind="text: lang.lang.meter"></h2>
-													<button style="margin-bottom: 5px;">
-														<span class="btn btn-icon btn-success glyphicons upload" data-bind="click: offMeterGet" style="width: 200px!important;position: relative;margin: 0px;">
-															<i></i> 
-															<span data-bind="text: lang.lang.meter"></span>
-														</span>
-													</button>
-													<button>
-														<span class="btn btn-icon btn-success glyphicons upload" data-bind="click: offRecordGet" style="width: 200px!important;position: relative;margin: 0px;">
-															<i></i> 
-															<span data-bind="text: lang.lang.reading"></span>
-														</span>
-													</button>
-												</div>
-												<div class="span3" style="border: 1px solid #ccc;padding-bottom: 10px;min-height: 131px;">
-													<h2 data-bind="text: lang.lang.installment"></h2>
-													<button style="margin-bottom: 5px;">
-														<span class="btn btn-icon btn-success glyphicons upload" data-bind="click: offInstallmentGet" style="width: 200px!important;position: relative;margin: 0px;">
-															<i></i> 
-															<span data-bind="text: lang.lang.installment"></span>
-														</span>
-													</button>
-													<button>
-														<span class="btn btn-icon btn-success glyphicons upload" data-bind="click: offInsItemGet" style="width: 200px!important;position: relative;margin: 0px;">
-															<i></i> 
-															<span data-bind="text: lang.lang.item"></span>
-														</span>
-													</button>
-												</div>
-											</div>
-											<div class="row-fluid" style="overflow: hidden;border: 1px solid #ccc;margin-top: 20px;padding: 15px;">
-												<h2 style="width: 100%;">Clear Offline</h2>
-												<button style="margin-bottom: 5px;">
-													<span class="btn btn-icon btn-success glyphicons upload" data-bind="click: offClear" style="width: 200px!important;position: relative;margin: 0px;">
-														<i></i> 
-														<span >Clear Offline</span>
-													</span>
-												</button>
 											</div>
 										</div>
 										<div id="Upload" style="border: 1px solid #ccc; overflow: hidden;" class="tab-pane widget-body-regular">
-											<div class="span4" style="border: 1px solid #ccc;padding-bottom: 10px;min-height: 131px;">
-												<h2 style="position: relative;clear:both;" data-bind="text: lang.lang.transaction"></h2>
+											<div class="span12" style="border: 1px solid #ccc;padding-bottom: 10px;min-height: 131px;">
+												<h2 style="position: relative;clear:both;width: 100%;" data-bind="text: lang.lang.upload"></h2>
 												<div style="clear: both;float:left; width: 95%;margin-bottom: 10px;position: relative;">
 													<input type="file" 
 														data-role="upload"
@@ -8675,22 +8753,6 @@
 														style="height: 40px;" size="20" />
 												</div>
 											  	<button data-bind="click: saveTXNoffline">
-													<span class="btn btn-icon btn-success glyphicons upload" style="width: 200px!important;position: relative;margin: 0px;">
-														<i></i> 
-														<span data-bind="text: lang.lang.upload">Upload Database</span>
-													</span>
-												</button>
-											</div>
-											<div class="span4" style="border: 1px solid #ccc;padding-bottom: 10px;min-height: 131px;">
-												<h2 style="position: relative;clear:both;" data-bind="text: lang.lang.record"></h2>
-												<div style="clear: both;float:left; width: 95%;margin-bottom: 10px;position: relative;">
-													<input type="file" 
-														data-role="upload"
-														data-bind="events: {select: recordSelected}" 
-														name="userfile" 
-														style="height: 40px;" size="20" />
-												</div>
-											  	<button data-bind="click: saveRecordoffline">
 													<span class="btn btn-icon btn-success glyphicons upload" style="width: 200px!important;position: relative;margin: 0px;">
 														<i></i> 
 														<span data-bind="text: lang.lang.upload">Upload Database</span>

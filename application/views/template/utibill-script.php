@@ -18752,617 +18752,202 @@
     banhji.Offline = kendo.observable({
         lang: langVM,
         pageLoad: function() {},
-        offTxnDS: dataStore(apiUrl + "transactions"),
-        txnArray        : [],
-        offTxnGet       : function(){
+        licenseDS           : dataStore(apiUrl + "branches"),
+        locationDS          : dataStore(apiUrl + "locations"),
+        subLocationDS       : dataStore(apiUrl + "locations"),
+        boxDS               : dataStore(apiUrl + "locations"),
+        lSelect             : false,
+        loSelect            : false,
+        timesyncID          : null,
+        haveLicense         : false,
+        haveLocation        : false,
+        haveSubLocation     : false,
+        subLocationSelect   : "",
+        boxSelect           : "",
+        licenseChange       : function(e) {
             var self = this;
-            this.txnArray = [];
-            this.offTxnDS.query({
-                filter: [
-                    {field: "sync", value: 1},
-                    {field: "status <>", value: 1}
-                ],
-                page: 1
-            }).then(function(e){
-                var view = self.offTxnDS.view();
-                if(view.length > 0){
-                    self.txnArray.push({
-                        cells: [
-                            { value: "number", background: "#bbbbbb" },
-                            { value: "contact_id", background: "#bbbbbb" },
-                            { value: "location_id", background: "#bbbbbb" },
-                            { value: "pole_id", background: "#bbbbbb" },
-                            { value: "box_id", background: "#bbbbbb" },
-                            { value: "meter_id", background: "#bbbbbb" },
-                            { value: "rate", background: "#bbbbbb" },
-                            { value: "locale", background: "#bbbbbb" },
-                            { value: "amount", background: "#bbbbbb" },
-                            { value: "issued_date", background: "#bbbbbb" },
-                            { value: "bill_date", background: "#bbbbbb" },
-                            { value: "due_date", background: "#bbbbbb" },
-                            { value: "month_of", background: "#bbbbbb" }
-                        ]
-                    });
-                    $.each(view, function(i,v){
-                        var AmountAfterPaid = 0;
-                        AmountAfterPaid = v.amount - v.amount_paid;
-                        self.txnArray.push({
-                            cells: [
-                                { value: v.number },
-                                { value: v.contact_id },
-                                { value: v.location_id },
-                                { value: v.pole_id },
-                                { value: v.box_id },
-                                { value: v.meter_id },
-                                { value: v.rate },
-                                { value: v.locale },
-                                { value: AmountAfterPaid },
-                                { value: v.issued_date },
-                                { value: v.bill_date },
-                                { value: v.due_date },
-                                { value: v.month_of }
-                            ]
-                        });
-                    });
-                    var workbook = new kendo.ooxml.Workbook({
-                        sheets: [{
-                            columns: [
-                                { autoWidth: true },
-                                { autoWidth: true },
-                                { autoWidth: true },
-                                { autoWidth: true },
-                                { autoWidth: true },
-                                { autoWidth: true },
-                                { autoWidth: true },
-                                { autoWidth: true },
-                                { autoWidth: true },
-                                { autoWidth: true },
-                                { autoWidth: true },
-                                { autoWidth: true },
-                                { autoWidth: true }
-                            ],
-                            title: "transaction_offline",
-                            rows: self.txnArray
-                        }]
-                    });
-                    //save the file as Excel file with extension xlsx
-                    kendo.saveAs({
-                        dataURI: workbook.toDataURL(),
-                        fileName: "transaction_offline.xlsx"
-                    });
-                }else{
-                    var notifi = $("#ntf1").data("kendoNotification");
-                    notifi.hide();
-                    notifi.error(self.lang.lang.no_data);
-                }
-            });
+            this.locationDS.data([]);
+            this.set("locationSelect", "");
+            this.set("haveLicense", false)
+            this.subLocationDS.data([]);
+            this.locationDS.data([]);
+            this.set("boxSelect", "");
+            this.set("haveLocation", false);
+            this.set("haveSubLocation", false);
+            this.locationDS.filter([
+                {field: "branch_id",value: this.get("licenseSelect")},
+                {field: "main_bloc",value: 0},
+                {field: "main_pole",value: 0}
+            ]);
+            this.set("haveLicense", true);
         },
-        offContactDS: dataStore(apiUrl + "utibills/ocontacts"),
-        contactArray        : [],
-        offContactGet       : function(){
+        onLocationChange    : function(e) {
             var self = this;
-            this.contactArray = [];
-            this.offContactDS.query({
-                filter: [
-                    {field: "sync <>", value: 0 }
-                ],
-                page: 1
-            }).then(function(e){
-                var view = self.offContactDS.view();
-                if(view.length > 0){
-                    self.contactArray.push({
-                        cells: [
-                            { value: "contact_type_id", background: "#bbbbbb" },
-                            { value: "abbr", background: "#bbbbbb" },
-                            { value: "number", background: "#bbbbbb" },
-                            { value: "name", background: "#bbbbbb" },
-                            { value: "gender", background: "#bbbbbb" },
-                            { value: "phone", background: "#bbbbbb" },
-                            { value: "address", background: "#bbbbbb" },
-                            { value: "account_id", background: "#bbbbbb" },
-                            { value: "status", background: "#bbbbbb" }
-                        ]
-                    });
-                    $.each(view, function(i,v){
-                        self.contactArray.push({
-                            cells: [
-                                { value: v.contact_type_id },
-                                { value: v.abbr },
-                                { value: v.number },
-                                { value: v.name },
-                                { value: v.gender },
-                                { value: v.phone },
-                                { value: v.address },
-                                { value: v.account_id },
-                                { value: v.status }
-                            ]
-                        });
-                    });
-                    var workbook = new kendo.ooxml.Workbook({
-                        sheets: [{
-                            columns: [
-                                { autoWidth: true },
-                                { autoWidth: true },
-                                { autoWidth: true },
-                                { autoWidth: true },
-                                { autoWidth: true },
-                                { autoWidth: true },
-                                { autoWidth: true },
-                                { autoWidth: true },
-                                { autoWidth: true }
-                            ],
-                            title: "contact_offline",
-                            rows: self.contactArray
-                        }]
-                    });
-                    //save the file as Excel file with extension xlsx
-                    kendo.saveAs({
-                        dataURI: workbook.toDataURL(),
-                        fileName: "contact_offline.xlsx"
-                    });
-                }else{
-                    var notifi = $("#ntf1").data("kendoNotification");
-                    notifi.hide();
-                    notifi.error(self.lang.lang.no_data);
-                }
-            });
-        },
-        offPropertyDS: dataStore(apiUrl + "utibills/oproperty"),
-        propertyArray        : [],
-        offPropertyGet       : function(){
-            var self = this;
-            this.propertyArray = [];
-            this.offPropertyDS.query({
-                filter: [
-                    {field: "sync <>", value: 0}
-                ],
-                page: 1
-            }).then(function(e){
-                var view = self.offPropertyDS.view();
-                if(view.length > 0){
-                    self.propertyArray.push({
-                        cells: [
-                            { value: "contact_name", background: "#bbbbbb" },
-                            { value: "name", background: "#bbbbbb" },
-                            { value: "abbr", background: "#bbbbbb" },
-                            { value: "code", background: "#bbbbbb" },
-                            { value: "status", background: "#bbbbbb" }
-                        ]
-                    });
-                    $.each(view, function(i,v){
-                        self.propertyArray.push({
-                            cells: [
-                                { value: v.contact_name },
-                                { value: v.name },
-                                { value: v.abbr },
-                                { value: v.code },
-                                { value: v.status }
-                            ]
-                        });
-                    });
-                    var workbook = new kendo.ooxml.Workbook({
-                        sheets: [{
-                            columns: [
-                                { autoWidth: true },
-                                { autoWidth: true },
-                                { autoWidth: true },
-                                { autoWidth: true },
-                                { autoWidth: true }
-                            ],
-                            title: "property_offline",
-                            rows: self.propertyArray
-                        }]
-                    });
-                    //save the file as Excel file with extension xlsx
-                    kendo.saveAs({
-                        dataURI: workbook.toDataURL(),
-                        fileName: "property_offline.xlsx"
-                    });
-                }else{
-                    var notifi = $("#ntf1").data("kendoNotification");
-                    notifi.hide();
-                    notifi.error(self.lang.lang.no_data);
-                }
-            });
-        },
-        offMeterDS: dataStore(apiUrl + "utibills/ometer"),
-        meterArray        : [],
-        offMeterGet       : function(){
-            var self = this;
-            this.meterArray = [];
-            this.offMeterDS.query({
-                filter: [
-                    {field: "sync <>", value: 0}
-                ],
-                page: 1
-            }).then(function(e){
-                var view = self.offMeterDS.view();
-                if(view.length > 0){
-                    self.meterArray.push({
-                        cells: [
-                            { value: "meter_number", background: "#bbbbbb" },
-                            { value: "property_id", background: "#bbbbbb" },
-                            { value: "contact_id", background: "#bbbbbb" },
-                            { value: "type", background: "#bbbbbb" },
-                            { value: "worder", background: "#bbbbbb" },
-                            { value: "status", background: "#bbbbbb" },
-                            { value: "number_digit", background: "#bbbbbb" },
-                            { value: "plan_id", background: "#bbbbbb" },
-                            { value: "starting_no", background: "#bbbbbb" },
-                            { value: "location_id", background: "#bbbbbb" },
-                            { value: "pole_id", background: "#bbbbbb" },
-                            { value: "box_id", background: "#bbbbbb" },
-                            { value: "ampere_id", background: "#bbbbbb" },
-                            { value: "phase_id", background: "#bbbbbb" },
-                            { value: "voltage_id", background: "#bbbbbb" },
-                            { value: "branch_id", background: "#bbbbbb" },
-                            { value: "multiplier", background: "#bbbbbb" },
-                            { value: "date_used", background: "#bbbbbb" },
-                            { value: "reactive_id", background: "#bbbbbb" },
-                            { value: "reactive_status", background: "#bbbbbb" },
-                            { value: "status_sync", background: "#bbbbbb" }
-                        ]
-                    });
-                    $.each(view, function(i,v){
-                        self.meterArray.push({
-                            cells: [
-                                { value: v.meter_number },
-                                { value: v.property_id },
-                                { value: v.contact_id },
-                                { value: v.type },
-                                { value: v.worder },
-                                { value: v.status },
-                                { value: v.number_digit },
-                                { value: v.plan_id },
-                                { value: v.starting_no },
-                                { value: v.location_id },
-                                { value: v.pole_id },
-                                { value: v.box_id },
-                                { value: v.ampere_id },
-                                { value: v.phase_id },
-                                { value: v.voltage_id },
-                                { value: v.branch_id },
-                                { value: v.multiplier },
-                                { value: v.date_used },
-                                { value: v.reactive_id },
-                                { value: v.reactive_status },
-                                { value: v.status_sync }
-                            ]
-                        });
-                    });
-                    var workbook = new kendo.ooxml.Workbook({
-                        sheets: [{
-                            columns: [
-                                { autoWidth: true },
-                                { autoWidth: true },
-                                { autoWidth: true },
-                                { autoWidth: true },
-                                { autoWidth: true },
-                                { autoWidth: true },
-                                { autoWidth: true },
-                                { autoWidth: true },
-                                { autoWidth: true },
-                                { autoWidth: true },
-                                { autoWidth: true },
-                                { autoWidth: true },
-                                { autoWidth: true },
-                                { autoWidth: true },
-                                { autoWidth: true },
-                                { autoWidth: true },
-                                { autoWidth: true },
-                                { autoWidth: true },
-                                { autoWidth: true },
-                                { autoWidth: true },
-                                { autoWidth: true }
-                            ],
-                            title: "meter_offline",
-                            rows: self.meterArray
-                        }]
-                    });
-                    //save the file as Excel file with extension xlsx
-                    kendo.saveAs({
-                        dataURI: workbook.toDataURL(),
-                        fileName: "meter_offline.xlsx"
-                    });
-                }else{
-                    var notifi = $("#ntf1").data("kendoNotification");
-                    notifi.hide();
-                    notifi.error(self.lang.lang.no_data);
-                }
-            });
-        },
-        offRecordDS: dataStore(apiUrl + "utibills/orecord"),
-        recordArray        : [],
-        offRecordGet       : function(){
-            var self = this;
-            this.recordArray = [];
-            this.offRecordDS.query({
-                filter: [
-                    {field: "sync <>", value: 0}
-                ],
-                page: 1
-            }).then(function(e){
-                var view = self.offRecordDS.view();
-                if(view.length > 0){
-                    self.recordArray.push({
-                        cells: [
-                            { value: "meter_number", background: "#bbbbbb" },
-                            { value: "previous", background: "#bbbbbb" },
-                            { value: "current", background: "#bbbbbb" },
-                            { value: "usage", background: "#bbbbbb" },
-                            { value: "month_of", background: "#bbbbbb" },
-                            { value: "from_date", background: "#bbbbbb" },
-                            { value: "to_date", background: "#bbbbbb" },
-                            { value: "invoiced", background: "#bbbbbb" },
-                            { value: "status", background: "#bbbbbb" }
-                        ]
-                    });
-                    $.each(view, function(i,v){
-                        self.recordArray.push({
-                            cells: [
-                                { value: v.meter_number },
-                                { value: v.previous },
-                                { value: v.current },
-                                { value: v.usage },
-                                { value: v.month_of },
-                                { value: v.from_date },
-                                { value: v.to_date },
-                                { value: v.invoiced },
-                                { value: v.status }
-                            ]
-                        });
-                    });
-                    var workbook = new kendo.ooxml.Workbook({
-                        sheets: [{
-                            columns: [
-                                { autoWidth: true },
-                                { autoWidth: true },
-                                { autoWidth: true },
-                                { autoWidth: true },
-                                { autoWidth: true },
-                                { autoWidth: true },
-                                { autoWidth: true },
-                                { autoWidth: true },
-                                { autoWidth: true }
-                            ],
-                            title: "record_offline",
-                            rows: self.recordArray
-                        }]
-                    });
-                    //save the file as Excel file with extension xlsx
-                    kendo.saveAs({
-                        dataURI: workbook.toDataURL(),
-                        fileName: "record_offline.xlsx"
-                    });
-                }else{
-                    var notifi = $("#ntf1").data("kendoNotification");
-                    notifi.hide();
-                    notifi.error(self.lang.lang.no_data);
-                }
-            });
-        },
-        offInstallmentDS: dataStore(apiUrl + "utibills/oinstallment"),
-        intstallmentArray        : [],
-        offInstallmentGet       : function(){
-            var self = this;
-            this.intstallmentArray = [];
-            this.offInstallmentDS.query({
-                filter: [
-                    {field: "sync <>", value: 0}
-                ],
-                page: 1
-            }).then(function(e){
-                var view = self.offInstallmentDS.view();
-                if(view.length > 0){
-                    self.intstallmentArray.push({
-                        cells: [
-                            { value: "meter_number", background: "#bbbbbb" },
-                            { value: "start_month", background: "#bbbbbb" },
-                            { value: "percentage", background: "#bbbbbb" },
-                            { value: "amount", background: "#bbbbbb" },
-                            { value: "period", background: "#bbbbbb" },
-                            { value: "payment_number", background: "#bbbbbb" }
-                        ]
-                    });
-                    $.each(view, function(i,v){
-                        self.intstallmentArray.push({
-                            cells: [
-                                { value: v.meter_number },
-                                { value: v.start_month },
-                                { value: v.percentage },
-                                { value: v.amount },
-                                { value: v.period },
-                                { value: v.payment_number }
-                            ]
-                        });
-                    });
-                    var workbook = new kendo.ooxml.Workbook({
-                        sheets: [{
-                            columns: [
-                                { autoWidth: true },
-                                { autoWidth: true },
-                                { autoWidth: true },
-                                { autoWidth: true },
-                                { autoWidth: true },
-                                { autoWidth: true }
-                            ],
-                            title: "installment_offline",
-                            rows: self.intstallmentArray
-                        }]
-                    });
-                    //save the file as Excel file with extension xlsx
-                    kendo.saveAs({
-                        dataURI: workbook.toDataURL(),
-                        fileName: "installment_offline.xlsx"
-                    });
-                }else{
-                    var notifi = $("#ntf1").data("kendoNotification");
-                    notifi.hide();
-                    notifi.error(self.lang.lang.no_data);
-                }
-            });
-        },
-        offInsItemDS        : dataStore(apiUrl + "utibills/oinsitem"),
-        insItemArray        : [],
-        offInsItemGet       : function(){
-            var self = this;
-            this.insItemArray = [];
-            this.offInsItemDS.query({
-                filter: [
-                    {field: "sync <>", value: 0}
-                ],
-                page: 1
-            }).then(function(e){
-                var view = self.offInsItemDS.view();
-                if(view.length > 0){
-                    self.insItemArray.push({
-                        cells: [
-                            { value: "meter_number", background: "#bbbbbb" },
-                            { value: "date", background: "#bbbbbb" },
-                            { value: "amount", background: "#bbbbbb" },
-                            { value: "invoiced", background: "#bbbbbb" }
-                        ]
-                    });
-                    $.each(view, function(i,v){
-                        self.insItemArray.push({
-                            cells: [
-                                { value: v.meter_number },
-                                { value: v.date },
-                                { value: v.amount },
-                                { value: v.invoiced }
-                            ]
-                        });
-                    });
-                    var workbook = new kendo.ooxml.Workbook({
-                        sheets: [{
-                            columns: [
-                                { autoWidth: true },
-                                { autoWidth: true },
-                                { autoWidth: true },
-                                { autoWidth: true },
-                                { autoWidth: true },
-                                { autoWidth: true }
-                            ],
-                            title: "installment_item_offline",
-                            rows: self.insItemArray
-                        }]
-                    });
-                    //save the file as Excel file with extension xlsx
-                    kendo.saveAs({
-                        dataURI: workbook.toDataURL(),
-                        fileName: "installment_item_offline.xlsx"
-                    });
-                }else{
-                    var notifi = $("#ntf1").data("kendoNotification");
-                    notifi.hide();
-                    notifi.error(self.lang.lang.no_data);
-                }
-            });
-        },
-        offClearDS          : dataStore(apiUrl + "utibills/offlineclear"),
-        offClear            : function(){
-            var self = this;
-            this.offClearDS.data([]);
-            this.offClearDS.add({
-                method : "clear"
-            });
-            this.offClearDS.sync();
-            this.offClearDS.bind("requestEnd", function(e){
-                var notifi = $("#ntf1").data("kendoNotification");
-                    notifi.hide();
-                    notifi.success(self.lang.lang.success_message);
-            });
-            this.offClearDS.bind("error", function(e){
-                var notifi = $("#ntf1").data("kendoNotification");
-                    notifi.hide();
-                    notifi.error(self.lang.lang.error_message);
-            });
-        },
-        txnUploadOffDS       : dataStore(apiUrl + "utibills/uploadoff"),
-        txnSelected         : function(e){
-            var files = e.files,
-                self = this;
-            $('li.k-file').remove();
-            $("#loadImport").css("display", "block");
-            this.txnUploadOffDS.data([]);
-            var reader = new FileReader();
-            reader.onload = function() {
-                var data = reader.result;
-                var result = {};
-                var workbook = XLSX.read(data, {
-                    type: 'binary'
-                });
-                workbook.SheetNames.forEach(function(sheetName) {
-                    var roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
-                    if (roa.length > 0) {
-                        result[sheetName] = roa;
-                        for (var i = 0; i < roa.length; i++) {
-                            self.txnUploadOffDS.add(roa[i]);
-                            $("#loadImport").css("display", "none");
-                        }
+            this.subLocationDS.data([]);
+            this.boxDS.data([]);
+            this.set("boxSelect", "");
+            this.set("haveSubLocation", false);
+            if(this.get("locationSelect")){
+                this.subLocationDS.query({
+                    filter: [
+                        {field: "main_bloc", value: this.get("locationSelect")},
+                        {field: "main_pole", value: 0}
+                        ],
+                    page: 1
+                })
+                .then(function(e){
+                    if(self.subLocationDS.data().length > 0){
+                        self.set("haveLocation", true);
+                    }else{
+                        self.set("haveLocation", false);
+                        self.set("subLocationSelect", "");
+                        self.subLocationDS.data([]);
                     }
                 });
             }
-            reader.readAsBinaryString(files[0].rawFile);
         },
-        saveTXNoffline      : function(){
+        onSubLocationChange : function(e) {
             var self = this;
-            this.txnUploadOffDS.sync();
-            this.txnUploadOffDS.bind("requestEnd", function(e){
-                var notifi = $("#ntf1").data("kendoNotification");
-                    notifi.hide();
-                    notifi.success(self.lang.lang.success_message);
-                $('li.k-file').remove();
-            });
-            this.txnUploadOffDS.bind("error", function(e){
-                var notifi = $("#ntf1").data("kendoNotification");
-                    notifi.hide();
-                    notifi.error(self.lang.lang.error_message);
-                $('li.k-file').remove();
-            });
-        },
-        recordUploadOffDS       : dataStore(apiUrl + "utibills/recordoff"),
-        recordSelected      : function(e){
-            var files = e.files,
-                self = this;
-            $('li.k-file').remove();
-            $("#loadImport").css("display", "block");
-            this.recordUploadOffDS.data([]);
-            var reader = new FileReader();
-            reader.onload = function() {
-                var data = reader.result;
-                var result = {};
-                var workbook = XLSX.read(data, {
-                    type: 'binary'
-                });
-                workbook.SheetNames.forEach(function(sheetName) {
-                    var roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
-                    if (roa.length > 0) {
-                        result[sheetName] = roa;
-                        for (var i = 0; i < roa.length; i++) {
-                            self.recordUploadOffDS.add(roa[i]);
-                            $("#loadImport").css("display", "none");
-                        }
+            if(this.get("subLocationSelect")){
+                this.boxDS.query({
+                    filter: [
+                        {field: "main_pole", value: this.get("subLocationSelect")}
+                    ]
+                })
+                .then(function(e){
+                    if(self.boxDS.data().length > 0){
+                        self.set("haveSubLocation", true);
+                    }else{
+                        self.set("haveSubLocation", false);
+                        self.set("boxSelect", "");
+                        self.boxDS.data([]);
                     }
                 });
             }
-            reader.readAsBinaryString(files[0].rawFile);
         },
-        saveRecordoffline      : function(){
-            var self = this;
-            this.recordUploadOffDS.sync();
-            this.recordUploadOffDS.bind("requestEnd", function(e){
+        offLineDB           : dataStore(apiUrl + "utibills/offlinework"),
+        rows                    : [],
+        getOfflineDB            : function(){
+            if(this.get("licenseSelect") && this.get("locationSelect") && this.get("monthOfSR") && this.get("toDateSR") && this.get("IssueDate") && this.get("BillingDate") && this.get("DueDate")){
+                $("#loadImport").css("display", "block");
+                var self = this,
+                    para = [],
+                    searchID = 0;
+                if(this.get("boxSelect")){
+                    para.push({field: "box_id", value: this.get("boxSelect")});
+                }else if(this.get("subLocationSelect")){
+                    para.push({field: "pole_id", value: this.get("subLocationSelect")});
+                }else{
+                    para.push({field: "location_id", value: this.get("locationSelect")});
+                }
+                this.offLineDB.query({
+                    filter: para
+                }).then(function(e){
+                    var view = self.offLineDB.view();
+                    if (view.length > 0) {
+                        self.rows = [];
+                        self.set("haveData", true);
+                        self.rows.push({
+                            cells: [
+                                { value: "meter_id", background: "#496cad", color: "#ffffff" },
+                                { value: "meter_number", background: "#496cad", color: "#ffffff" },
+                                { value: "previous", background: "#496cad", color: "#ffffff" },
+                                { value: "current", background: "#496cad", color: "#ffffff" },
+                                { value: "from_date", background: "#496cad", color: "#ffffff" },
+                                { value: "contact_id", background: "#496cad", color: "#ffffff" },
+                                { value: "contact_name", background: "#496cad", color: "#ffffff" },
+                                { value: "contact_code", background: "#496cad", color: "#ffffff" },
+                                { value: "location_id", background: "#496cad", color: "#ffffff" },
+                                { value: "location_name", background: "#496cad", color: "#ffffff" },
+                                { value: "pole_id", background: "#496cad", color: "#ffffff" },
+                                { value: "pole_name", background: "#496cad", color: "#ffffff" },
+                                { value: "box_id", background: "#496cad", color: "#ffffff" },
+                                { value: "box_name", background: "#496cad", color: "#ffffff" },
+                                { value: "balance", background: "#496cad", color: "#ffffff" },
+                                { value: "month_of", background: "#496cad", color: "#ffffff" },
+                                { value: "to_date", background: "#496cad", color: "#ffffff" },
+                                { value: "issue_date", background: "#496cad", color: "#ffffff" },
+                                { value: "bill_date", background: "#496cad", color: "#ffffff" },
+                                { value: "due_date", background: "#496cad", color: "#ffffff" }
+                            ]
+                        });
+                        var MonthOf = kendo.toString(new Date(self.get("monthOfSR")), "yyyy-M-dd");
+                        var ToDate = kendo.toString(new Date(self.get("toDateSR")), "yyyy-M-dd");
+                        var IssueDate = kendo.toString(new Date(self.get("IssueDate")), "yyyy-M-dd");
+                        var BillingDate = kendo.toString(new Date(self.get("BillingDate")), "yyyy-M-dd");
+                        var DueDate = kendo.toString(new Date(self.get("DueDate")), "yyyy-M-dd");
+                        $.each(view, function(i,v){
+                            self.rows.push({
+                                cells: [
+                                    { value: v.meter_id },
+                                    { value: v.meter_number },
+                                    { value: v.previous },
+                                    { value: v.current },
+                                    { value: v.from_date },
+                                    { value: v.contact_id },
+                                    { value: v.contact_name },
+                                    { value: v.contact_code },
+                                    { value: v.location_id },
+                                    { value: v.location_name },
+                                    { value: v.pole_id },
+                                    { value: v.pole_name },
+                                    { value: v.box_id },
+                                    { value: v.box_name },
+                                    { value: v.balance },
+                                    { value: MonthOf },
+                                    { value: ToDate },
+                                    { value: IssueDate },
+                                    { value: BillingDate },
+                                    { value: DueDate }
+                                ]
+                            });
+                        });
+                        var workbook = new kendo.ooxml.Workbook({
+                            sheets: [{
+                                columns: [
+                                    { autoWidth: true },
+                                    { autoWidth: true },
+                                    { autoWidth: true },
+                                    { autoWidth: true },
+                                    { autoWidth: true },
+                                    { autoWidth: true },
+                                    { autoWidth: true },
+                                    { autoWidth: true },
+                                    { autoWidth: true },
+                                    { autoWidth: true },
+                                    { autoWidth: true },
+                                    { autoWidth: true },
+                                    { autoWidth: true },
+                                    { autoWidth: true },
+                                    { autoWidth: true },
+                                    { autoWidth: true },
+                                    { autoWidth: true },
+                                    { autoWidth: true },
+                                    { autoWidth: true },
+                                    { autoWidth: true }
+                                ],
+                                title: "Offline_Get",
+                                rows: self.rows
+                            }]
+                        });
+                        //save the file as Excel file with extension xlsx
+                        kendo.saveAs({
+                            dataURI: workbook.toDataURL(),
+                            fileName: "offline-" + "<?php echo date('d-M-Y'); ?>" + ".xlsx"
+                        });
+                        $("#loadImport").css("display", "none");
+                    }else{
+                        var notifi = $("#ntf1").data("kendoNotification");
+                            notifi.hide();
+                            notifi.error(self.lang.lang.no_data);
+                        $("#loadImport").css("display", "none");
+                    }
+                });
+            }else{
                 var notifi = $("#ntf1").data("kendoNotification");
                     notifi.hide();
-                    notifi.success(self.lang.lang.success_message);
-                $('li.k-file').remove();
-            });
-            this.recordUploadOffDS.bind("error", function(e){
-                var notifi = $("#ntf1").data("kendoNotification");
-                    notifi.hide();
-                    notifi.error(self.lang.lang.error_message);
-                $('li.k-file').remove();
-            });
+                    notifi.error(this.lang.lang.field_required_message);
+            }
         }
     });
     /*************************

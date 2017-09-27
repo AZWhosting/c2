@@ -12,6 +12,10 @@ class Segmentitem extends DataMapper {
 	);
 
 	public $has_many = array(
+		'transaction' => array(
+			'class' => 'transaction',
+			'other_field' => 'segmentitem'
+		),
 		'journal_line' => array(
 			'class' => 'journal_line',
 			'other_field' => 'segmentitem'

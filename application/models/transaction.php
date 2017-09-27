@@ -66,6 +66,10 @@ class Transaction extends DataMapper {
         'account_line' => array(
             'class' => 'account_line',
             'other_field' => 'transaction'
+        ),
+        'segmentitem' => array(
+            'class' => 'segmentitem',
+            'other_field' => 'transaction'
         )
 	);
 
