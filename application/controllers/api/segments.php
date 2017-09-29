@@ -308,16 +308,6 @@ class Segments extends REST_Controller {
 		//Response data
 		$this->response($data, 200);
 	}
-
-
-
-
-
-
-
-
-
-
 	
 }
 /* End of file users.php */
