@@ -1792,7 +1792,7 @@ class Utibills extends REST_Controller {
 					"box_id" 			=> $value->box_id,
 					"box_name" 			=> $boxname,
 					"balance" 			=> $amountOwed,
-					"plan_id" 			=> $plan_id
+					"plan_id" 			=> $value->plan_id
 				);
 			}
 		}
