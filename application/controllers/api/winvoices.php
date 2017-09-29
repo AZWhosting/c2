@@ -686,6 +686,12 @@ class Winvoices extends REST_Controller {
 					}
 				}
 				$contact = $row->contact->get();
+				$address = "";
+				if(isset($contact->address) && $contact->address != NULL){
+					$address = $contact->address;
+				}else{
+					$address = "";
+				}
 				$data["results"][] = array(
 					'id' => $row->id,
 					'type' => $row->type,
@@ -707,7 +713,7 @@ class Winvoices extends REST_Controller {
 						'phone' => isset($contact->phone) ? $contact->phone : '',
 						'abbr' => $contact->abbr,
 						'number' => $contact->number,
-						'address'=> isset($contact->address) ? $contact->address:''
+						'address'=> $address
 					),
 					'amount_remain' => floatval($amountOwed),
 					'meter'=> $meter,

@@ -8466,7 +8466,7 @@
                 Win, pHeight, pWidth, ts;
             if (this.txnFormID == "45") {
                 Win = window.open('', '', 'width=1050, height=900');
-                pHeight = "210mm";
+                pHeight = "215mm";
                 pWidth = "297mm";
                 var colorM = this.formColor;
                 if (colorM == '#000000' || colorM == '#1f497d' || colorM == null) {
