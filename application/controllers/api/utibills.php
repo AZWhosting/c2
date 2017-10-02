@@ -260,29 +260,18 @@ class Utibills extends REST_Controller {
 				}
 			}
 		}
-
 		//Filter
-		if(!empty($filter['filters']) && isset($filter['filters'])){
-	    	foreach ($filter['filters'] as $value) {
-	    		if(isset($value['operator'])) {
-					if($value['operator']=="startswith"){
-	    				$obj->like($value['field'], $value['value'], 'after');
-	    			}else if($value['operator']=="contains"){
-	    				$obj->like($value['field'], $value['value'], 'both');
-	    			}else{
-						$obj->{$value['operator']}($value['field'], $value['value']);
-	    			}
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value["operator"])) {
+					$obj->{$value["operator"]}($value["field"], $value["value"]);
 				} else {
-					if($value["field"]=="is_pattern"){
-	    				$is_pattern = $value["value"];
-	    			}else{
-	    				$obj->where($value["field"], $value["value"]);
-	    			}
+	    			$obj->where($value["field"], $value["value"]);
 				}
 			}
 		}
-
-		$obj->where("status", 1);
+		//Get Result
+		$obj->order_by('worder','asc');
 		//Results
 		if($page && $limit){
 			$obj->get_paged_iterated($page, $limit);
@@ -291,7 +280,7 @@ class Utibills extends REST_Controller {
 			$obj->get_iterated();
 			$data["count"] = $obj->result_count();
 		}
-		if($obj->exists()){
+		if($obj->result_count()>0){			
 			foreach ($obj as $value) {
 				$data["results"][] = array(
 					"id" 				=> $value->id,
@@ -1718,7 +1707,6 @@ class Utibills extends REST_Controller {
 				}
 			}
 		}
-
 		//Filter
 		if(!empty($filter) && isset($filter)){
 	    	foreach ($filter["filters"] as $value) {
@@ -1743,7 +1731,6 @@ class Utibills extends REST_Controller {
 			foreach ($obj as $value) {
 				$record = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				$record->where("meter_id", $value->id)->order_by("id", "desc")->limit(1)->get();
-
 				$contact = $value->contact->get();
 				$location = $value->location->get();
 				//Pole
@@ -1777,14 +1764,16 @@ class Utibills extends REST_Controller {
 					}
 				}
 				$data["results"][] = array(
+					"branch_id" 		=> $value->branch_id,
 					"meter_id" 			=> $value->id,
 					"meter_number" 		=> $value->number,
+					"multiplier" 		=> $value->multiplier,
 					"previous" 			=> $record->previous,
 					"current" 			=> 0,
 					"from_date" 		=> $record->to_date,
 					"contact_id" 		=> $contact->id,
 					"contact_name" 		=> $contact->name,
-					"conatct_code" 		=> $contact->abbr."-".$contact->number,
+					"contact_code" 		=> $contact->abbr."-".$contact->number,
 					"location_id" 		=> $value->location_id,
 					"location_name" 	=> $location->name,
 					"pole_id" 			=> $value->pole_id,
@@ -1792,12 +1781,243 @@ class Utibills extends REST_Controller {
 					"box_id" 			=> $value->box_id,
 					"box_name" 			=> $boxname,
 					"balance" 			=> $amountOwed,
-					"plan_id" 			=> $value->plan_id
+					"plan_id" 			=> $value->plan_id,
+					"number_digit" 		=> $value->number_digit
 				);
 			}
 		}
 
 		//Response Data
+		$this->response($data, 200);
+	}
+	//Tablet
+	function tablet_get() {
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
+		$data["count"] = 0;
+
+		$obj = new Offline(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
+			}
+		}
+
+		//Filter
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value["operator"])) {
+					$obj->{$value["operator"]}($value["field"], $value["value"]);
+				} else {
+	    			$obj->where($value["field"], $value["value"]);
+				}
+			}
+		}
+
+		$obj->where("type", "tablet");
+		//Results
+		if($page && $limit){
+			$obj->get_paged_iterated($page, $limit);
+			$data["count"] = $obj->paged->total_rows;
+		}else{
+			$obj->get_iterated();
+			$data["count"] = $obj->result_count();
+		}
+
+		if($obj->exists()){
+			foreach ($obj as $value) {
+				$data["results"][] = array(
+					"id" 						=> $value->id,
+					"code" 						=> $value->code,
+					"name" 						=> $value->name,
+					"abbr" 						=> $value->abbr,
+					"type" 						=> $value->type
+				);
+			}
+		}
+
+		//Response Data
+		$this->response($data, 200);
+	}
+	function tablet_post() {
+		$models = json_decode($this->post('models'));
+		$data["results"] = [];
+		$data["count"] = 0;
+
+		foreach ($models as $value) {
+			
+			$obj = new Offline(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+			isset($value->code) 				? $obj->code 					= $value->code : "";
+			isset($value->name) 				? $obj->name 					= $value->name : "";
+			isset($value->abbr) 				? $obj->abbr 					= $value->abbr : "";
+			$obj->type = "tablet";
+		   	
+	   		if($obj->save()){
+			   	$data["results"][] = array(
+			   		"id" 						=> $obj->id,
+			   		"code" 						=> $obj->code,
+					"name" 						=> $obj->name,
+					"abbr" 						=> $obj->abbr,
+					"type" 						=> $obj->type
+			   	);
+		    }
+		}
+
+		$data["count"] = count($data["results"]);
+		$this->response($data, 201);
+	}
+	function tablet_put() {
+		$models = json_decode($this->put('models'));
+		$data["results"] = [];
+		$data["count"] = 0;
+
+		foreach ($models as $value) {
+			$obj = new Offline(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$obj->get_by_id($value->id);
+
+			isset($value->code) 				? $obj->code 					= $value->code : "";
+			isset($value->name) 				? $obj->name 					= $value->name : "";
+			isset($value->abbr) 				? $obj->abbr 					= $value->abbr : "";
+			$obj->type = "tablet";
+			
+			if($obj->save()){
+				//Results
+				$data["results"][] = array(
+					"id" 						=> $obj->id,
+					"code" 						=> $obj->code,
+					"name" 						=> $obj->name,
+					"abbr" 						=> $obj->abbr,
+					"type" 						=> $obj->type
+				);
+			}
+		}
+		$data["count"] = count($data["results"]);
+
+		$this->response($data, 200);
+	}
+	//Reader
+	function reader_get() {
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
+		$data["count"] = 0;
+
+		$obj = new Offline(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
+			}
+		}
+
+		//Filter
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value["operator"])) {
+					$obj->{$value["operator"]}($value["field"], $value["value"]);
+				} else {
+	    			$obj->where($value["field"], $value["value"]);
+				}
+			}
+		}
+
+		$obj->where("type", "reader");
+		//Results
+		if($page && $limit){
+			$obj->get_paged_iterated($page, $limit);
+			$data["count"] = $obj->paged->total_rows;
+		}else{
+			$obj->get_iterated();
+			$data["count"] = $obj->result_count();
+		}
+
+		if($obj->exists()){
+			foreach ($obj as $value) {
+				$data["results"][] = array(
+					"id" 						=> $value->id,
+					"code" 						=> $value->code,
+					"name" 						=> $value->name,
+					"abbr" 						=> $value->abbr,
+					"type" 						=> $value->type
+				);
+			}
+		}
+
+		//Response Data
+		$this->response($data, 200);
+	}
+	function reader_post() {
+		$models = json_decode($this->post('models'));
+		$data["results"] = [];
+		$data["count"] = 0;
+
+		foreach ($models as $value) {
+			
+			$obj = new Offline(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+			isset($value->code) 				? $obj->code 					= $value->code : "";
+			isset($value->name) 				? $obj->name 					= $value->name : "";
+			isset($value->abbr) 				? $obj->abbr 					= $value->abbr : "";
+			$obj->type = "reader";
+		   	
+	   		if($obj->save()){
+			   	$data["results"][] = array(
+			   		"id" 						=> $obj->id,
+			   		"code" 						=> $obj->code,
+					"name" 						=> $obj->name,
+					"abbr" 						=> $obj->abbr,
+					"type" 						=> $obj->type
+			   	);
+		    }
+		}
+
+		$data["count"] = count($data["results"]);
+		$this->response($data, 201);
+	}
+	function reader_put() {
+		$models = json_decode($this->put('models'));
+		$data["results"] = [];
+		$data["count"] = 0;
+
+		foreach ($models as $value) {
+			$obj = new Offline(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$obj->get_by_id($value->id);
+
+			isset($value->code) 				? $obj->code 					= $value->code : "";
+			isset($value->name) 				? $obj->name 					= $value->name : "";
+			isset($value->abbr) 				? $obj->abbr 					= $value->abbr : "";
+			$obj->type = "reader";
+			
+			if($obj->save()){
+				//Results
+				$data["results"][] = array(
+					"id" 						=> $obj->id,
+					"code" 						=> $obj->code,
+					"name" 						=> $obj->name,
+					"abbr" 						=> $obj->abbr,
+					"type" 						=> $obj->type
+				);
+			}
+		}
+		$data["count"] = count($data["results"]);
+
 		$this->response($data, 200);
 	}
 }

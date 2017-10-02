@@ -1459,6 +1459,7 @@ var	km_KH = {
 	"inventory_center":"ផលិតផល និង សេវាកម្ម",
 	"reading_route_management":"តំរៀបកុងទ័រ",
 	"offline": "Offline",
-
+	"reader": "អ្នកដើរអាន",
+	"tablet": "Tablet",
 	
 }

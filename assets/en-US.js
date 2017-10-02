@@ -1486,7 +1486,8 @@ var	en_US = {
 	"inventory_center":"Inventory Center",
 	"reading_route_management":"Reading Route Management",
 	"offline":"Offline",
-
+	"reader":"Reader",
+	"tablet": "Tablet",
 
 	"end" : "End"
 }

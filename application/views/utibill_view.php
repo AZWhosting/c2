@@ -422,12 +422,8 @@
 				    		<span class="glyphicons no-js remove_2" 
 								data-bind="click: cancel"><i></i></span>
 						</div>
-
 						<div class="clear"></div>
-
 						<div style="float: left; width: 100%; " class="widget widget-tabs widget-tabs-double widget-tabs-vertical row-fluid row-merge widget-tabs-gray">
-
-							<!-- Tabs Heading -->
 						    <div id="setting" class="widget-head col-xs-12 col-sm-3">
 						        <ul>
 						            <li class="active">
@@ -479,8 +475,13 @@
 						            	<a href="#tab9" data-bind="click: goPlan" class="glyphicons list" data-toggle="tab">
 						            		<i></i><span class="strong"><span data-bind="text: lang.lang.plans">Plans</span></span>
 						            	</a>
-						            </li> 
-						             <li>
+						            </li>
+						            <li>
+						            	<a href="#offline" class="glyphicons lock" data-toggle="tab">
+						            		<i></i><span class="strong" data-bind="text: lang.lang.offline"><span>Offline</span></span>
+						            	</a>
+						            </li>
+						            <li>
 						            	<a href="#tab10" class="glyphicons nameplate_alt" data-toggle="tab">
 						            		<i></i><span class="strong"><span data-bind="text: lang.lang.custom_forms">Custom Forms</span></span>
 						            	</a>
@@ -497,8 +498,6 @@
 						            </li>                        
 						        </ul>
 						    </div>
-						    <!-- // Tabs Heading END -->
-
 						    <div class="widget-body col-xs-12 col-sm-9 setting">
 						    	<div class="row-fluid">
 							        <div class="tab-content">
@@ -1113,15 +1112,67 @@
 									                data-bind="source: brandDS"></tbody>
 							            	</table>
 							            </div>
+							            <div class="tab-pane" id="offline">
+							            	<h2 data-bind="text: lang.lang.reader"></h2>
+							            	<div style="clear: both;">
+								            	<div data-role="grid" class="costom-grid"
+											    	 data-column-menu="false"
+											    	 data-reorderable="true"
+											    	 data-scrollable="false"
+											    	 data-resizable="true"
+											    	 data-editable="true"
+											    	 data-toolbar="['create', 'save']"
+									                 data-columns="[
+									                 	{ 
+									                 		field: 'code', title: banhji.setting.lang.lang.code, 
+									                 	 	width: '170px' 
+									                 	},
+							                            { 
+									                 		field: 'name', title: banhji.setting.lang.lang.name,
+									                 	 	width: '170px' 
+									                 	},
+									                 	{ 
+									                 		field: 'abbr', title: banhji.setting.lang.lang.abbr,
+									                 	 	width: '170px'
+									                 	},
+							                         ]"
+							                         data-auto-bind="true"
+									                 data-bind="source: readerDS" ></div>
+							            	</div>
+							            	<hr></hr>
+							            	<h2 data-bind="text: lang.lang.tablet"></h2>
+							            	<div style="clear: both;">
+								            	<div data-role="grid" class="costom-grid"
+											    	 data-column-menu="false"
+											    	 data-reorderable="true"
+											    	 data-scrollable="false"
+											    	 data-resizable="true"
+											    	 data-editable="true"
+											    	 data-toolbar="['create', 'save']"
+									                 data-columns="[
+									                 	{ 
+									                 		field: 'code', title: banhji.setting.lang.lang.code, 
+									                 	 	width: '170px' 
+									                 	},
+							                            { 
+									                 		field: 'name', title: banhji.setting.lang.lang.name,
+									                 	 	width: '170px' 
+									                 	},
+									                 	{ 
+									                 		field: 'abbr', title: banhji.setting.lang.lang.abbr,
+									                 	 	width: '170px'
+									                 	},
+							                         ]"
+							                         data-auto-bind="true"
+									                 data-bind="source: tabletDS" ></div>
+								            </div>
+							            </div>
 							        </div>
 							    </div>
 						    </div>
 						    <div id="ntf1" data-role="notification"></div>
 							</div>
 						</div>
-
-
-
 					</div>
 				</div>
 			</div>
@@ -2543,7 +2594,6 @@
 
 					<div class="row-fluid">
 						<div style="margin-bottom: 0; padding-bottom: 0;">
-						    <!-- //Tabs Heading -->
 						    <div class="tabsbar tabsbar-1">
 						        <ul class="row-fluid row-merge">	
 						        	<li class="span2 glyphicons charts active">
@@ -2557,14 +2607,10 @@
 						            </li>
 						            <li class="span2 glyphicons show_lines">
 						            	<a href="#tab-4" data-toggle="tab" data-bind="click: loadInstallment"><i></i> <span data-bind="text: lang.lang.installment_schedule">Installment Schedule</span></a>
-						            </li>						            					            
+						            </li>           
 						        </ul>
 						    </div>
-						    <!-- // Tabs Heading END -->
-
 						    <div class="tab-content cover-tab-content">
-
-						    	<!-- //MONTHLY SALE -->
 						        <div class="tab-pane active" id="tab-1">
 							        <div data-role="chart"
 						                 data-legend="{ position: 'top' }"
@@ -2581,9 +2627,6 @@
 						                 data-bind="source: graphDS"
 						                 style="height: 250px;"></div> 
 					        	</div>
-					        	<!-- //MONTHLY SALE END -->
-
-						    	<!-- //WATER SALE -->
 						        <div class="tab-pane" id="tab-2">
 						        	<div class="row">
 						        		<div class="col-xs-12 col-sm-3">
@@ -2729,8 +2772,6 @@
 										     data-bind="source: readingVM.dataSource"></div>
 
 					        	</div>
-						        <!-- //READING END -->
-						        <!-- //INSTALLMENT -->
 						        <div class="tab-pane" id="tab-4">
 						        	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 								        <thead>
@@ -2843,6 +2884,9 @@
 			# } #
 		</td>
 		<td style="text-align: right;">
+			# if(status == 2){ # 
+				<span style="" title="Group" class="btn-action glyphicons settings btn-danger"><i></i></span>
+			# } #
 			# if(activated != "1") { #
 			<a style="background: \#1f4774; padding:4px; margin-right: 3px; vertical-align: middle;" href="\#/activate_meter/#= id#" class="btn-action btn-success" data-bind="text: lang.lang.activate">Activate</a>
 			# } #
@@ -8557,7 +8601,7 @@
 		<div class="row-fluid">
 			<div class="background">
 				<div class="row-fluid">
-					<div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 100%;margin-top: -15px;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
+					<div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 100%;margin-top: -15px;background: rgba(142, 159, 167, 0.8);z-index: 9999;left: 0;">
 						<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
 					</div>
 					<div id="example" class="k-content">
@@ -8660,7 +8704,7 @@
 													</div>
 													<div class="col-xs-12 col-sm-7">
 														<div class="tab-pane">
-												        	<div class="row" >				        		
+												        	<div class="row" >
 											        			<div class="col-xs-12 col-sm-6">
 																	<div class="control-group" style="margin-bottom: 10px;">
 																		<label ><span data-bind="text: lang.lang.month_of" >Month Of</span> <span style="color:red">*</span></label>
@@ -8711,7 +8755,6 @@
 																	</div>
 																</div>
 												        	</div>
-
 											        		<div class="row">
 										        				<div class="col-xs-12 col-sm-6">
 																	<div class="control-group">
@@ -8728,6 +8771,37 @@
 												        			<span id="saveNew" style="width: 100% !important; text-align: center; margin-top: 22px; float: left;" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="click: getOfflineDB"><i></i> <span data-bind="text: lang.lang.download">Add</span></span>
 												        		</div>
 												        	</div>
+												        	<div class="row" style="border-top: 1px solid #ccc;padding-top: 15px;margin-top: 15px;background: #eee;">
+											        			<div class="col-xs-12 col-sm-6">
+											        				<label ><span data-bind="text: lang.lang.reader" >Reader</span> <span style="color:red">*</span></label>
+											        				<input 
+																		data-role="dropdownlist" 
+																		style="width: 100%; margin-bottom: 10px;" 
+																		data-option-label="Reader ..." 
+																		data-auto-bind="true" 
+																		data-value-primitive="true" 
+																		data-text-field="name" 
+																		data-value-field="id" 
+																		data-bind="
+																			value: readerSelect,
+										                  					source: readerDS">
+											        			</div>
+											        			<div class="col-xs-12 col-sm-6">
+											        				<label ><span data-bind="text: lang.lang.tablet" >Tablet</span> <span style="color:red">*</span></label>
+											        				<input 
+																		data-role="dropdownlist" 
+																		style="width: 100%; margin-bottom: 10px;" 
+																		data-option-label="Tablet ..." 
+																		data-auto-bind="true" 
+																		data-value-primitive="true" 
+																		data-text-field="name" 
+																		data-value-field="id"
+																		data-bind="
+																			value: tabletSelect,
+										                  					source: tabletDS,
+										                  					events: {change: tabletChange}">
+											        			</div>
+											        		</div>
 											        	</div>
 													</div>
 												</div>
@@ -13013,4 +13087,4 @@
 			</div>
 		</div>
 	</div>
-</script>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
+</script>                               

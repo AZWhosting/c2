@@ -4948,6 +4948,8 @@
                 this.txnTemplateDS.sync();
             }
         },
+        tabletDS        : dataStore(apiUrl + "utibills/tablet"),
+        readerDS        : dataStore(apiUrl + "utibills/reader"),
     });
     banhji.addLicense = kendo.observable({
         lang: langVM,
@@ -18827,8 +18829,9 @@
         },
         offLineDB           : dataStore(apiUrl + "utibills/offlinework"),
         rows                    : [],
+        TabletAbbr          : "",
         getOfflineDB            : function(){
-            if(this.get("licenseSelect") && this.get("locationSelect") && this.get("monthOfSR") && this.get("toDateSR") && this.get("IssueDate") && this.get("BillingDate") && this.get("DueDate")){
+            if(this.get("licenseSelect") && this.get("locationSelect") && this.get("monthOfSR") && this.get("toDateSR") && this.get("IssueDate") && this.get("BillingDate") && this.get("DueDate") && this.get("readerSelect") && this.get("tabletSelect")){
                 $("#loadImport").css("display", "block");
                 var self = this,
                     para = [],
@@ -18849,8 +18852,10 @@
                         self.set("haveData", true);
                         self.rows.push({
                             cells: [
+                                { value: "branch_id", background: "#496cad", color: "#ffffff" },
                                 { value: "meter_id", background: "#496cad", color: "#ffffff" },
                                 { value: "meter_number", background: "#496cad", color: "#ffffff" },
+                                { value: "multiplier", background: "#496cad", color: "#ffffff" },
                                 { value: "previous", background: "#496cad", color: "#ffffff" },
                                 { value: "current", background: "#496cad", color: "#ffffff" },
                                 { value: "from_date", background: "#496cad", color: "#ffffff" },
@@ -18865,11 +18870,15 @@
                                 { value: "box_name", background: "#496cad", color: "#ffffff" },
                                 { value: "balance", background: "#496cad", color: "#ffffff" },
                                 { value: "plan_id", background: "#496cad", color: "#ffffff" },
+                                { value: "number_digit", background: "#496cad", color: "#ffffff" },
                                 { value: "month_of", background: "#496cad", color: "#ffffff" },
                                 { value: "to_date", background: "#496cad", color: "#ffffff" },
                                 { value: "issue_date", background: "#496cad", color: "#ffffff" },
                                 { value: "bill_date", background: "#496cad", color: "#ffffff" },
-                                { value: "due_date", background: "#496cad", color: "#ffffff" }
+                                { value: "due_date", background: "#496cad", color: "#ffffff" },
+                                { value: "reader_id", background: "#496cad", color: "#ffffff" },
+                                { value: "tablet_id", background: "#496cad", color: "#ffffff" },
+                                { value: "tablet_abbr", background: "#496cad", color: "#ffffff" }
                             ]
                         });
                         var MonthOf = kendo.toString(new Date(self.get("monthOfSR")), "yyyy-M-dd");
@@ -18880,8 +18889,10 @@
                         $.each(view, function(i,v){
                             self.rows.push({
                                 cells: [
+                                    { value: v.branch_id },
                                     { value: v.meter_id },
                                     { value: v.meter_number },
+                                    { value: v.multiplier },
                                     { value: v.previous },
                                     { value: v.current },
                                     { value: v.from_date },
@@ -18896,17 +18907,27 @@
                                     { value: v.box_name },
                                     { value: v.balance },
                                     { value: v.plan_id },
+                                    { value: v.number_digit },
                                     { value: MonthOf },
                                     { value: ToDate },
                                     { value: IssueDate },
                                     { value: BillingDate },
-                                    { value: DueDate }
+                                    { value: DueDate },
+                                    { value: self.get("readerSelect") },
+                                    { value: self.get("tabletSelect") },
+                                    { value: self.get("TabletAbbr") }
                                 ]
                             });
                         });
                         var workbook = new kendo.ooxml.Workbook({
                             sheets: [{
                                 columns: [
+                                    { autoWidth: true },
+                                    { autoWidth: true },
+                                    { autoWidth: true },
+                                    { autoWidth: true },
+                                    { autoWidth: true },
+                                    { autoWidth: true },
                                     { autoWidth: true },
                                     { autoWidth: true },
                                     { autoWidth: true },
@@ -18951,7 +18972,13 @@
                     notifi.hide();
                     notifi.error(this.lang.lang.field_required_message);
             }
-        }
+        },
+        readerDS            : dataStore(apiUrl + "utibills/reader"),
+        tabletDS            : dataStore(apiUrl + "utibills/tablet"),
+        tabletChange        : function(e){
+            var data = e.sender.selectedIndex;
+            this.set("TabletAbbr", this.tabletDS.data()[data - 1].abbr);
+        },
     });
     /*************************
      * Water Section     * 
@@ -21817,4 +21844,4 @@
         var Href1 = '<?php echo base_url(); ?>assets/water/winvoice-res.css';
         var Href2 = '<?php echo base_url(); ?>assets/water/winvoice-print.css';
     });
-</script>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+</script>
