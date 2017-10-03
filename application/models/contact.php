@@ -112,6 +112,10 @@ class Contact extends DataMapper {
 			'class' => 'contact_utility',
 			'other_field' => 'contact'
 		),
+		'contact_group' => array(
+			'class' => 'contact_group',
+			'other_field' => 'contact'
+		)
 	);
 
 	public function __construct($id = null, $server_name = null, $db_username = null, $server_password = null, $db = null) {
