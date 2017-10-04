@@ -22,7 +22,7 @@
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://app.banhji.com/c2/';
+$config['base_url'] = 'http://172.20.10.4/c2/';
 
 /*
 |--------------------------------------------------------------------------

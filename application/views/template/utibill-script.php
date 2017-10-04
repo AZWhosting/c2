@@ -18979,6 +18979,62 @@
             var data = e.sender.selectedIndex;
             this.set("TabletAbbr", this.tabletDS.data()[data - 1].abbr);
         },
+        uploadOfflineDS     : dataStore(apiUrl + "utibills/uploadoff"),
+        txnSelected: function(e) {
+            $('li.k-file').remove();
+            var self = this;
+            var files = e.files;
+            var reader = new FileReader();
+            this.uploadOfflineDS.data([]);
+            reader.onload = function() {
+                var data = reader.result;
+                var result = {};
+                var workbook = XLSX.read(data, {
+                    type: 'binary'
+                });
+                workbook.SheetNames.forEach(function(sheetName) {
+                    if (sheetName == 'transaction_offline') {
+                        var roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+                        if (roa.length > 0) {
+                            result[sheetName] = roa;
+                            for (var i = 0; i < roa.length; i++) {
+                                self.uploadOfflineDS.add(roa[i]);
+                            }
+                        }
+                    }
+                });
+            }
+            reader.readAsBinaryString(files[0].rawFile);
+        },
+        saveTXNoffline      : function(){
+            var self = this;
+            if (this.uploadOfflineDS.data().length === 0) {
+                var notifi = $("#ntf1").data("kendoNotification");
+                notifi.hide();
+                notifi.error(this.lang.lang.error_message);
+            } else {
+                $("#loadImport").css("display", "block");
+                this.uploadOfflineDS.sync();
+                this.uploadOfflineDS.bind("requestEnd", function(e) {
+                    if (e.response) {
+                        var notifi = $("#ntf1").data("kendoNotification");
+                        notifi.hide();
+                        notifi.success(self.lang.lang.success_message);
+                        $("#loadImport").css("display", "none");
+                        $('li.k-file').remove();
+                        self.uploadOfflineDS.data([]);
+                    }
+                });
+                this.uploadOfflineDS.bind("error", function(e) {
+                    var notifi = $("#ntf1").data("kendoNotification");
+                    notifi.hide();
+                    notifi.error(self.lang.lang.error_message);
+                    $("#loadImport").css("display", "none");
+                    $('li.k-file').remove();
+                    self.uploadOfflineDS.data([]);
+                });
+            }
+        }
     });
     /*************************
      * Water Section     * 

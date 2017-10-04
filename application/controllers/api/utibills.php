@@ -1577,6 +1577,12 @@ class Utibills extends REST_Controller {
 		foreach ($models as $value) {
 			if($value->type == "txn"){
 				$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				//protect dublicate
+				$oldtxn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$oldtxn->where("number", $value->number)->limit(1)->get();
+				if($oldtxn->exists()){
+					$obj->get_by_id($oldtxn->id);
+				}
 				$obj->location_id 		= isset($value->location_id) ? $value->location_id : "";
 				$obj->pole_id 			= isset($value->pole_id) ? $value->pole_id : "";
 				$obj->box_id 			= isset($value->box_id) ? $value->box_id : "";
@@ -1590,17 +1596,22 @@ class Utibills extends REST_Controller {
 			   	$obj->rate 				= isset($value->rate) ? $value->rate : 1;
 			   	$obj->locale 			= isset($value->locale) ? $value->locale : "";
 			   	$obj->month_of 			= isset($value->month_of) ? $value->month_of : "";
-			   	$obj->issued_date 		= isset($value->issued_date) ? $value->issued_date : "";
+			   	$obj->issued_date 		= isset($value->issue_date) ? $value->issue_date : "";
 			   	$obj->bill_date 		= isset($value->bill_date) ? $value->bill_date : "";
 			   	$obj->due_date 			= isset($value->due_date) ? $value->due_date : "";
 			   	$obj->is_journal 		= 1;
 			   	$obj->memo 				= isset($value->memo) ? $value->memo: "";
 			   	$obj->meter_id 			= isset($value->meter_id) ? $value->meter_id: 0;
 			   	$obj->status 			= 0;
-			   	$obj->user_id 			= isset($value->user_id) ? $value->user_id: 0;
+			   	$obj->user_id 			= isset($value->read_by) ? $value->read_by: 0;
 			   	$obj->sub_total 		= isset($value->amount) ? $value->amount : "";
-			   	$obj->sync 				= 1;
 		   		if($obj->save()){
+		   			//protect dublicate
+		   			$oldjn = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		   			$oldjn->where("transaction_id", $obj->id)->get();
+		   			if($oldjn->exists()){
+		   				$oldjn->delete_all();
+		   			}
 		   			$journal = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		   			$journal->transaction_id = $obj->id;
 		   			$journal->account_id = 10;
@@ -1625,12 +1636,42 @@ class Utibills extends REST_Controller {
 				   		"id" 	=> $obj->id
 				   	);
 			    }
+			    //Save Records
+			    $record = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			    $record->meter_id = $value->meter_id;
+			    $record->read_by = $value->read_by;
+			    $record->input_by = $value->input_by;
+			    $record->previous = $value->previous;
+			    $record->current = $value->current;
+			    $record->usage = $value->usage;
+			    $record->month_of = $value->record_month_of;
+			    $record->from_date = $value->from_date;
+			    $record->to_date = $value->to_date;
+			    $record->new_round = $value->new_round;
+			    $record->memo = $value->record_momo;
+			    $record->invoiced = 1;
+			    $record->save();
 			}else{
 				$txn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				$txn->where("number", $value->number)->order_by("id", "desc")->limit(1)->get();
+				//protect dublicate
+	   			$oldwline = new Winvoice_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	   			$oldwline->where("transaction_id", $obj->id)->get();
+	   			if($oldwline->exists()){
+	   				$oldwline->delete_all();
+	   			}
 				$line = new Winvoice_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 	   			$line->transaction_id 	= $txn->id;
-	   			$line->meter_record_id 	= isset($value->meter_record_id) ? $value->meter_record_id : "";
+	   			if($value->type = "usage"){
+	   				$line->item_id 			= $value->meter_id;
+	   			}else{
+	   				$line->item_id 			= isset($value->item_id) ? $value->item_id:"";
+	   			}
+	   			//get meter record for field meter_record_id
+	   			$meterrecord = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	   			$meterrecord->where("meter_id", $value->meter_id)->order_by("id", "desc")->limit(1)->get();
+	   			$line->meter_record_id 	= $meterrecord->id;
+
 	   			$line->description 		= isset($value->description) ? $value->description : "Utility Invoice";
 	   			$line->quantity 		= isset($value->quantity) ? $value->quantity: 0;
 	   			$line->price 			= isset($value->price) ? $value->price : "";
@@ -1638,13 +1679,12 @@ class Utibills extends REST_Controller {
 	   			$line->rate 			= isset($value->rate) ? $value->rate : "";
 	   			$line->locale 			= isset($value->locale) ? $value->locale : "";
 	   			$line->type 			= isset($value->type) ? $value->type:"";
-	   			$line->item_id 			= isset($value->item_id) ? $value->item_id:"";
+	   			
 	   			if($value->type == 'installment') {
 					$updateInstallSchedule = new Installment_schedule(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 					$updateInstallSchedule->where('invoiced', 0 );
-					$updateInstallSchedule->where('id', $value->item_id)->order_by("id", "asc")->limit(1);
+					$updateInstallSchedule->where('id', $value->item_id)->limit(1);
 					$updateInstallSchedule->invoiced = 1;
-					$updateInstallSchedule->sync = 2;
 					$updateInstallSchedule->save();
 	   			}
 	   			$line->save();
