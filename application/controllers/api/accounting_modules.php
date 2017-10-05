@@ -2635,7 +2635,8 @@ class Accounting_modules extends REST_Controller {
 		
 		//TRANSACTION
 		$obj->include_related("job", array("name"));
-		$obj->where_in("type", array("Cash_Purchase", "Credit_Purchase","Purchase_Return","Payment_Refund","Commercial_Invoice","Vat_Invoice","Invoice","Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale","Sale_Return","Cash_Refund"));
+		$obj->include_related("contact", array("abbr", "number", "name"));
+		$obj->where_in("type", array("Cash_Purchase", "Credit_Purchase","Purchase_Return","Payment_Refund","Commercial_Invoice","Vat_Invoice","Invoice","Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale","Sale_Return","Cash_Refund", "purchase_expense", "direct_expense", "internal_usage", "journal_line", "advance_settlement"));
 		$obj->where("is_recurring <>", 1);
 		$obj->where("deleted <>", 1);
 		$obj->get_iterated();
@@ -2659,15 +2660,16 @@ class Accounting_modules extends REST_Controller {
 					$objList[$value->job_id]["revenue"] += $revenue;
 					$objList[$value->job_id]["expense"] += $expense;
 				}else{
-					$objList[$value->job_id]["id"] 			= $value->id;
-					$objList[$value->job_id]["job_id"] 		= $value->job_id;
-					$objList[$value->job_id]["name"] 		= $value->job_name;
-					$objList[$value->job_id]["type"] 		= $value->type;
-					$objList[$value->job_id]["number"] 		= $value->number;
-					$objList[$value->job_id]["issued_date"] = $value->issued_date;
-					$objList[$value->job_id]["rate"] 		= $value->rate;
-					$objList[$value->job_id]["revenue"] 	= $revenue;
-					$objList[$value->job_id]["expense"] 	= $expense;
+					$objList[$value->job_id]["id"] 					= $value->id;
+					$objList[$value->job_id]["customer_name"] 		= $value->contact_abbr.$value->contact_number." ".$value->contact_name;
+					$objList[$value->job_id]["job_id"] 				= $value->job_id;
+					$objList[$value->job_id]["name"] 				= $value->job_name;
+					$objList[$value->job_id]["type"] 				= $value->type;
+					$objList[$value->job_id]["number"] 				= $value->number;
+					$objList[$value->job_id]["issued_date"] 		= $value->issued_date;
+					$objList[$value->job_id]["rate"] 				= $value->rate;
+					$objList[$value->job_id]["revenue"] 			= $revenue;
+					$objList[$value->job_id]["expense"] 			= $expense;
 				}
 			}		
 		}
@@ -2760,7 +2762,7 @@ class Accounting_modules extends REST_Controller {
 		
 		//TRANSACTION
 		$obj->include_related("job", array("name"));
-		$obj->where_in("type", array("Cash_Purchase", "Credit_Purchase","Purchase_Return","Payment_Refund","Commercial_Invoice","Vat_Invoice","Invoice","Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale","Sale_Return","Cash_Refund"));
+		$obj->where_in("type", array("Cash_Purchase", "Credit_Purchase","Purchase_Return","Payment_Refund","Commercial_Invoice","Vat_Invoice","Invoice","Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale","Sale_Return","Cash_Refund", "purchase_expense", "direct_expense", "internal_usage", "journal_line", "advance_settlement"));
 		$obj->where("is_recurring <>", 1);
 		$obj->where("deleted <>", 1);
 		$obj->get_iterated();

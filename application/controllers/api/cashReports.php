@@ -525,49 +525,39 @@ class Cashreports extends REST_Controller {
 		if($obj->exists()){
 			$objList = [];
 			foreach ($obj as $value) {
-				//Payments
-				$payments = [];				
-				$pmt = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$pmt->where("reference_id", $value->id);
-				$pmt->where("is_recurring <>",1);
-				$pmt->where("deleted <>",1);
-				$pmt->get_iterated();
-				if($pmt->exists()){
-					foreach ($pmt as $val) {
-						$payments[] = array(
-							"id" 				=> $val->id,
-							"type" 				=> $val->type,
-							"number" 			=> $val->number,
-							"issued_date" 		=> $val->issued_date,
-							"rate" 				=> $val->rate,
-							"amount" 			=> floatval($val->amount) + floatval($val->discount) + floatval($val->received)
-						);
-					}
-				}
-								
-				$amount = (floatval($value->amount) - floatval($value->deposit)) / floatval($value->rate);
+				//Reference
+				$ref = $value->reference->select("type, number, issued_date, amount, deposit, rate")->get();				
+				$refAmount = floatval($ref->amount);
 
-				if(isset($objList[$value->employee_id])){
-					$objList[$value->employee_id]["line"][] = array(
-						"id" 				=> $value->id,
-						"type" 				=> $value->type,
-						"number" 			=> $value->number,
-						"issued_date" 		=> $value->issued_date,
-						"rate" 				=> $value->rate,
-						"amount" 			=> $amount,
-						"payments" 			=> $payments
+				$amount = floatval($value->amount);
+
+				if(isset($objList[$value->contact_id])){
+					$objList[$value->contact_id]["line"][] = array(
+						"id" 					=> $value->id,
+						"type" 					=> $value->type,
+						"number" 				=> $value->number,
+						"issued_date" 			=> $value->issued_date,
+						"amount" 				=> $amount,
+						"reference_id" 			=> $value->reference_id,
+						"reference_type" 		=> $ref->type,
+						"reference_number" 		=> $ref->number,
+						"reference_issued_date" => $ref->issued_date,
+						"reference_amount" 		=> $refAmount
 					);
 				}else{
-					$objList[$value->employee_id]["id"] 	= $value->employee_id;
-					$objList[$value->employee_id]["name"] 	= $value->contact_abbr.$value->contact_number." ".$value->contact_name;
-					$objList[$value->employee_id]["line"][] = array(
-						"id" 				=> $value->id,
-						"type" 				=> $value->type,
-						"number" 			=> $value->number,
-						"issued_date" 		=> $value->issued_date,
-						"rate" 				=> $value->rate,
-						"amount" 			=> $amount,
-						"payments" 			=> $payments
+					$objList[$value->contact_id]["id"] 		= $value->contact_id;
+					$objList[$value->contact_id]["name"] 	= $value->contact_abbr.$value->contact_number." ".$value->contact_name;
+					$objList[$value->contact_id]["line"][] 	= array(
+						"id" 					=> $value->id,
+						"type" 					=> $value->type,
+						"number" 				=> $value->number,
+						"issued_date" 			=> $value->issued_date,
+						"amount" 				=> $amount,
+						"reference_id" 			=> $value->reference_id,
+						"reference_type" 		=> $ref->type,
+						"reference_number" 		=> $ref->number,
+						"reference_issued_date" => $ref->issued_date,
+						"reference_amount" 		=> $refAmount
 					);			
 				}
 			}
@@ -576,7 +566,6 @@ class Cashreports extends REST_Controller {
 				$data["results"][] = $value;
 			}
 			$data["count"] = count($data["results"]);
-			$data['people'] = count($objList);
 		}
 
 		//Response Data
