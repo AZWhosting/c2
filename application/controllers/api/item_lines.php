@@ -380,7 +380,7 @@ class Item_lines extends REST_Controller {
 
 								//New Average Cost = $totalAmount / $totalQuantity
 								$totalAmount = $item->amount + $currentAmount;
-								$item->cost = $totalAmount / $totalQty;
+								$item->cost = $totalAmount / $totalQty==0?1:$totalQty;
 								$item->amount = $totalAmount;
 							}
 

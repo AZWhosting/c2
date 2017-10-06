@@ -34,9 +34,9 @@
                 </button>
 
                 <!-- Menu Phone Search-->
-                <button type="button" class="navbar-toggle phone-search" data-toggle="collapse" data-target="#bs-example-navbar-collapse-3">
+                <!-- <button type="button" class="navbar-toggle phone-search" data-toggle="collapse" data-target="#bs-example-navbar-collapse-3">
                     <span class="icon-search"></span>
-                </button>
+                </button> -->
 
                 <!--Logo-->
                 <a class="navbar-brand" href="#" data-bind="click: checkRole">
@@ -45,7 +45,7 @@
             </div>
 
             <!-- Search Desktop-->
-            <form class="navbar-form pull-left hidden-xs" style="padding-right: 0;">
+            <!-- <form class="navbar-form pull-left hidden-xs" style="padding-right: 0;">
 			  	<input id="search-placeholder" class="span2 search-query" 
 			  		type="text" 
 			  		placeholder="Search" 
@@ -55,10 +55,10 @@
 			  		data-bind="click: search" >
 			  			<i class="icon-search iconsearch"></i>
 			  	</button>
-			</form>
+			</form> -->
 
 			<!-- Secondary Menu -->
-			<ul class="topnav hidden-xs hidden-sm" id="secondary-menu">
+			<ul class="topnav hidden-xs " id="secondary-menu">
 			</ul>
 
 			<!-- Menu rigth Desktop -->
@@ -99,39 +99,39 @@
             <!-- Menu Phone -->
             <div class="menu-phone collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav hidden-lg hidden-md hidden-sm">
-                	<li><a href='#/' class='glyphicons show_big_thumbnails'><i></i><span >Dashnboard</span></a></li>
-				  	<li><a href='#/center'><span data-bind="text: lang.lang.center"></span></a></li>
+                	<li><a data-toggle="collapse" data-target=".navbar-collapse.in" href='#/' class='glyphicons show_big_thumbnails'><i></i><span >Dashnboard</span></a></li>
+				  	<li><a data-toggle="collapse" data-target=".navbar-collapse.in" href='#/center'><span data-bind="text: lang.lang.center"></span></a></li>
 				  	<li role='presentation' class='dropdown'>
 				  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><i class="text-t"></i> <span style="margin-top: 12px;" class='caret'></span></a>
 			  			<ul class='dropdown-menu'>
-			  				<li><a href='#/customer'><span >Add New Customer</span></a></li>
-			  				<li><a href='#/property'><span >Add New Property</span></a></li> 
-			  				<li ><a href='#/reorder'><span >Reading Route Management</span></a></li>  				
+			  				<li><a data-toggle="collapse" data-target=".navbar-collapse.in" href='#/customer'><span >Add New Customer</span></a></li>
+			  				<li><a data-toggle="collapse" data-target=".navbar-collapse.in" href='#/property'><span >Add New Property</span></a></li> 
+			  				<li ><a data-toggle="collapse" data-target=".navbar-collapse.in" href='#/reorder'><span >Reading Route Management</span></a></li>  				
 			  				<li><span class="li-line"></span></li>
-			  				<li><a href='#/reading'><span >1. Meter Reading</span></a></li>
-			  				<li><a href='#/run_bill'><span >2. Run Bill</span></a></li> 
-			  				<li><a href='#/print_bill'><span >3. Print Bill</span></a></li>
-			  				<li><a href='#/receipt'><span >4. Cash Receipt</span></a></li>
+			  				<li><a data-toggle="collapse" data-target=".navbar-collapse.in" href='#/reading'><span >1. Meter Reading</span></a></li>
+			  				<li><a data-toggle="collapse" data-target=".navbar-collapse.in" href='#/run_bill'><span >2. Run Bill</span></a></li> 
+			  				<li><a data-toggle="collapse" data-target=".navbar-collapse.in" href='#/print_bill'><span >3. Print Bill</span></a></li>
+			  				<li><a data-toggle="collapse" data-target=".navbar-collapse.in" href='#/receipt'><span >4. Cash Receipt</span></a></li>
 			  				<li><span class="li-line"></span></li>
-			  				<li><a href='#/imports'><span >Import</span></a></li>
+			  				<li><a data-toggle="collapse" data-target=".navbar-collapse.in" href='#/imports'><span >Import</span></a></li>
 			  				<li><span class="li-line"></span></li>
-			  				<li><a href='#/backup'><span>Back Up</span></a></li>
-			  				<li><a href='#/offline'><span>Offline</span></a></li>
+			  				<li><a data-toggle="collapse" data-target=".navbar-collapse.in" data-toggle="collapse" data-target=".navbar-collapse" href='#/backup'><span>Back Up</span></a></li>
+			  				<li><a data-toggle="collapse" data-target=".navbar-collapse.in" href='#/offline'><span>Offline</span></a></li>
 			  			</ul>
 				  	</li>
 				  	<li>
-				  		<a href="#/reports">
+				  		<a data-toggle="collapse" data-target=".navbar-collapse.in" href="#/reports">
 				  			<span>REPORTS</span>
 				  		</a>
 				  	</li>
                 	<li>
-						<a href='#/setting' class='glyphicons settings'>
+						<a data-toggle="collapse" data-target=".navbar-collapse.in" href='#/setting' class='glyphicons settings'>
 							<i ></i>
 							<span>Setting</span>
 						</a>
 					</li>
 					<li>
-						<a href="#/manage" data-bind="click: logout">
+						<a data-toggle="collapse" data-target=".navbar-collapse.in" href="#/manage" data-bind="click: logout">
 							<i class="icon-power-off"></i>
 							<span>Logout</span>
 						</a>
@@ -140,37 +140,37 @@
             </div>
 
             <!-- Menu Phone Multipel Task-->
-            <div class="hidden-lg hidden-md collapse navbar-collapse" id="bs-example-navbar-collapse-2">
-            	<ul class="dropdown-menu ul-multiTaskList" data-template="multiTaskList-row-template" data-bind="source: multiTaskList">  				  				
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+            	<ul class="hidden-lg hidden-md hidden-sm ul-multiTaskList nav navbar-nav phone-multiTaskList" data-template="multiTaskList-row-template" data-bind="source: multiTaskList">  				  				
 		  		</ul>
             </div>
 
             <!-- Menu Phone Search-->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-3">
+            <!-- <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-3">
             	<form class="navbar-form pull-left hidden-lg hidden-md hidden-sm">
 				  	<input id="search-placeholder" class="span2 search-query" 
 				  		type="text" 
 				  		placeholder="Search" 
 				  		data-bind="value: searchText" />
-				  	<button class="btn btn-inverse"
+				  	<button data-toggle="collapse" data-target=".navbar-collapse" class="btn btn-inverse"
 				  		type="submit" 
 				  		data-bind="click: search" >
 				  			<i class="icon-search "></i>
 				  	</button>
 				</form>
-            </div>
+            </div> -->
 
             <!-- Menu Phone Langauge-->
             <div class="menu-phone collapse navbar-collapse" id="bs-example-navbar-collapse-4">
             	<ul class=" nav navbar-nav hidden-lg hidden-md hidden-sm phone-language">
                     <li>
-                    	<a href="#" data-bind="click: lang.changeToKh">
+                    	<a  href="#" data-bind="click: lang.changeToKh">
                     		<img class="kh-flag" src="https://lipis.github.io/flag-icon-css/flags/4x3/kh.svg">
                     		<span style="margin-left: 0;">ភាសាខ្មែរ</span>
                     	</a>
                     </li>
 					<li>
-						<a href="#" data-bind="click: lang.changeToEn">
+						<a  href="#" data-bind="click: lang.changeToEn">
 							<img class="en-flag" src="https://lipis.github.io/flag-icon-css/flags/4x3/gb.svg">
 							<span>English</span>
 						</a>
@@ -183,9 +183,9 @@
     </nav>	
 </script>
 <script id="multiTaskList-row-template" type="text/x-kendo-template">
-    <li>
-    	<a href="\#/#=url#">
-    		<span>#=name#</span>
+    <li >
+    	<a data-toggle="collapse" data-target=".navbar-collapse.in" href="\#/#=url#">
+    		<span >#=name#</span>
     		<span title="Remove" class="multiTaskList glyphicons remove_2 pull-right" data-bind="click: removeLink">
     			<i></i>
     		</span>
@@ -288,7 +288,7 @@
 								<div class="widget-body alert-info welcome-nopadding" style="width: 100%; background: #0077c5;">
 									<p style="color: #fff;"><span data-bind="text: lang.lang.expected_due">Expected due</span></p>
 							
-									<div class="strong" align="center" style="color: #fff; font-size: 40px; margin-top: -15px; margin-bottom: 0;"><span data-bind="text: totalAmount"></span></div>
+									<div class="strong" align="center" style="color: #fff; font-size: 27px; line-height: 57px; margin-top: -15px; margin-bottom: 0;"><span data-bind="text: totalAmount"></span></div>
 								
 									<table width="100%" style="color: #fff;">
 										<tbody>
@@ -584,7 +584,6 @@
 										                data-edit-template="box-edit-template"
 										                data-bind="source: boxDS"></tbody>
 							            	</table>
-							            	<!-- Pole Item Window -->
 								            <div id="addPole"
 								            	data-role="window"
 									                 data-width="250"
@@ -2801,7 +2800,7 @@
 </script>
 <script id="waterCenter-customer-list-tmpl" type="text/x-kendo-tmpl">
 	<tr data-bind="click: selectedRow">
-		<td>
+		<td style="border-bottom: 1px solid \#ddd;">
 			<div class="media-body strong" style="position: relative;">				
 				<span>#=abbr##=code#</span>
 				<span>
@@ -2889,9 +2888,14 @@
 			# } #
 			# if(activated != "1") { #
 			<a style="background: \#1f4774; padding:4px; margin-right: 3px; vertical-align: middle;" href="\#/activate_meter/#= id#" class="btn-action btn-success" data-bind="text: lang.lang.activate">Activate</a>
-			# } #
-			# if(group != 0){#
-				<span style="background-color: \\rgb(96, 148, 80) !important;border-color: \\rgb(96, 148, 80) !important;" title="Group" class="btn-action glyphicons share_alt btn-danger"><i></i></span>
+			# } else { #
+				# if(type == "e"){ #
+					# if(group != 0){#
+						<span style="background-color: \\rgb(96, 148, 80) !important;border-color: \\rgb(96, 148, 80) !important;" title="Group" class="btn-action glyphicons share_alt btn-danger"><i></i></span>
+					# }else{ #
+						<input type="checkbox" name="items" data-bind="checked: groupItem" value="#= id#">
+					# } #
+				# } #
 			# } #
 			<a style="border:none;" href="\#/meter/#= id #" class="btn-action glyphicons pencil btn-danger widget-stats widget-stats-info"><i></i></span>
 		</td>
@@ -4100,7 +4104,6 @@
 								data-bind="click: cancel"><i></i></span>
 						</div>
 						<div class="clear"></div>
-						<!-- Top Part -->
 				    	<div class="row-fluid ">				    		
 				    		<div class="col-xs-12 col-sm-5">
 								<div class="row well activatemeter">
@@ -4122,7 +4125,8 @@
 						            					data-bind="value: issued_date, events: {change: addReading}" 
 						            					data-format="dd-MM-yyyy"
 						            					data-parse-formats="yyyy-MM-dd" 
-						            					placeholder="dd-MM-yyyy" required data-required-msg="required" 
+						            					placeholder="dd-MM-yyyy" 
+						            					required data-required-msg="required" 
 						            					style="width: 80%" />
 												</td>
 											</tr>
@@ -4131,7 +4135,9 @@
 								</div>
 								<div class="row well installshow" data-bind="visible: showInstallment">
 									<h2 data-bind="text: lang.lang.installment" style="width: 100%;">Installment</h2>
-				              		<label><span data-bind="text: lang.lang.month">Month</span></label>										
+				              		<label>
+				              			<span data-bind="text: lang.lang.month">Month</span>
+				              		</label>										
 			              			<br>
 				              		<input 
 				              			type="text"
@@ -4141,14 +4147,17 @@
 				              			placeholder="1 - 12" 
 				              		/>
 				              		<br>
-				              		<label><span data-bind="text: lang.lang.start_date">Start Date</span></label>										
+				              		<label>
+				              			<span data-bind="text: lang.lang.start_date">Start Date</span>
+				              		</label>										
 			              			<br>
 				              		<input
 					            		data-role="datepicker"	 		
 		            					data-bind="value: startDate" 
 		            					data-format="dd-MM-yyyy"
 		            					data-parse-formats="yyyy-MM-dd" 
-		            					placeholder="dd-MM-yyyy" required data-required-msg="required" 
+		            					placeholder="dd-MM-yyyy" 
+		            					required data-required-msg="required" 
 		            					style="width: 80%" />
 		            					<br>
 				              		<label><span data-bind="text: lang.lang.interest_percentage">Interest Percentage</span></label>										
@@ -4156,7 +4165,8 @@
 				              		<input	 		
 		            					data-bind="value: percentage" 
 		            					data-format="%"		            					
-		            					placeholder="percentage number (10)" required data-required-msg="required" 
+		            					placeholder="percentage number (10)" 
+		            					required data-required-msg="required" 
 		            					style="width: 80%" />
 		            			</div>
 							</div>
@@ -4170,28 +4180,66 @@
 													<tr>
 										            	<td><span data-bind="text: lang.lang.payment_method">Payment Method </span></td>				
 														<td>
-															<input data-role="dropdownlist" data-value-primitive="true" data-text-field="name" data-value-field="id" data-bind="value: paymentMethod,
-										              							source: paymentMethodDS" data-option-label="Select method..." style="width: 100%; display: none;">
+															<input 
+																data-role="dropdownlist" 
+																data-value-primitive="true" 
+																data-text-field="name" 
+																data-value-field="id" 
+																data-bind="
+																	value: paymentMethod,
+										              				source: paymentMethodDS" 
+										              			data-option-label="Select method..." 
+										              			style="width: 100%; display: none;">
 														</td>
 													</tr>
 										            <tr>
 										            	<td><span data-bind="text: lang.lang.cash_account">Cash Account</span></td>				            	
 									            		<td>
-									            			<input id="ddlCash" name="ddlCash" data-role="dropdownlist"  data-template="account-list-tmpl" data-value-primitive="true" data-text-field="name" data-value-field="id" data-bind="value: cashAccount,
-									              							source: cashAccountDS" data-option-label="Select Account..." required="" data-required-msg="required" style="width: 100%; display: none;" class="k-valid">
+									            			<input 
+									            				id="ddlCash" 
+									            				name="ddlCash" 
+									            				data-role="dropdownlist"  
+									            				data-template="account-list-tmpl" 
+									            				data-value-primitive="true" 
+									            				data-text-field="name" 
+									            				data-value-field="id" 
+									            				data-bind="
+									            					value: cashAccount,
+									              					source: cashAccountDS" 
+									              				data-option-label="Select Account..." 
+									              				required="" 
+									              				data-required-msg="required" 
+									              				style="width: 100%; display: none;" 
+									              				class="k-valid" />
 														</td>							            	
 										            </tr>
 										            <tr>
 										            	<td><span data-bind="text: lang.lang.ar_account">Account Receivable</span></td>				            	
 									            		<td>
-									            			<input id="ddlCash" name="ddlCash" data-role="dropdownlist"  data-template="account-list-tmpl" data-value-primitive="true" data-text-field="name" data-value-field="id" data-bind="value: arAccount,
-									              							source: arAccountDS" data-option-label="Select Account..." required="" data-required-msg="required" style="width: 100%; display: none;" class="k-valid">
+									            			<input 
+									            				id="ddlCash" 
+									            				name="ddlCash" 
+									            				data-role="dropdownlist"  
+									            				data-template="account-list-tmpl" 
+									            				data-value-primitive="true" 
+									            				data-text-field="name" 
+									            				data-value-field="id" 
+									            				data-bind="
+									            					value: arAccount,
+									              					source: arAccountDS" 
+									              				data-option-label="Select Account..." 
+									              				required="" data-required-msg="required" 
+									              				style="width: 100%; display: none;" class="k-valid">
 														</td>							            	
 										            </tr>
 										            <tr>
 										            	<td><span data-bind="text: lang.lang.check_no">Check Number</span></td>							            	
 									            		<td>
-															<input class="k-textbox" placeholder="type check number ..." data-bind="value: checkNumber" style="width: 100%;">
+															<input 
+																class="k-textbox" 
+																placeholder="type check number ..." 
+																data-bind="value: checkNumber" 
+																style="width: 100%;" />
 														</td>							            	
 										            </tr>	
 									            </tbody></table>
@@ -4207,29 +4255,39 @@
 												<th style="vertical-align: top;" data-bind="text: lang.lang.receive">Receive</th>
 											</tr>
 										</thead>
-										<tbody data-role="listview" data-bind="source: items" data-template="meter-plan-item-list">
+										<tbody 
+											data-role="listview" 
+											data-bind="source: items" 
+											data-template="meter-plan-item-list">
 										</tbody>
 									</table>
 								</div>
 								
 								<div class="row">
 									<div class="col-sm-3"></div>
-									<div class="col-xs-12 col-sm-9">	
-										<!-- Group -->
+									<div class="col-xs-12 col-sm-9">
 										<table class="table table-condensed table-striped table-white">
 											<tbody>
 												<tr>
-													<td class="right"><span data-bind="text: lang.lang.subtotal">Amount Paid:</span></td>
-													<td class="right" width="40%"><span data-bind="text: amountToBeRecieved">0</span></td>
+													<td class="right">
+														<span data-bind="text: lang.lang.subtotal">Amount Paid:</span>
+													</td>
+													<td class="right" width="40%">
+														<span data-bind="text: amountToBeRecieved">0</span>
+													</td>
 												</tr>
 												<tr>
-													<td class="right"><span data-bind="text: lang.lang.amount_billed">Amount Billed</span></td>
+													<td class="right">
+														<span data-bind="text: lang.lang.amount_billed">Amount Billed</span>
+													</td>
 													<td class="right" style="width: 40%;border-bottom: 1px solid #000">
 														<span data-bind="text: amountBilled">0</span>
 				                   					</td>
 												</tr>							
 												<tr>
-													<td class="right"><span data-bind="text: lang.lang.remaining">Outstanding:</span></td>
+													<td class="right">
+														<span data-bind="text: lang.lang.remaining">Outstanding:</span>
+													</td>
 													<td class="right">
 														<span data-bind="text: amountRemain">0</span>
 				                   					</td>
@@ -4240,22 +4298,21 @@
 								</div>
 							</div>
 						</div>
-
-						<!-- Form actions -->
 						<div class="box-generic bg-action-button">
 							<div id="ntf1" data-role="notification"></div>
 							<div class="row">
 								<div class="col-sm-3">
 								</div>
 								<div class="col-sm-9" align="right">
-									<span id="saveClose" data-bind="click: cancel" class="btn-btn" ><span data-bind="text: lang.lang.cancel">Cancel</span></span>
-									<span id="saveNew" class="btn-btn" data-bind="invisible: isEdit, click: save"><span data-bind="text: lang.lang.activate">Activate</span></span>									>		
+									<span id="saveClose" data-bind="click: cancel" class="btn-btn" >
+										<span data-bind="text: lang.lang.cancel">Cancel</span>
+									</span>
+									<span 
+										class="btn-btn" 
+										data-bind="click: save"><span data-bind="text: lang.lang.activate">Activate</span></span>									>		
 								</div>
 							</div>
 						</div>
-						<!-- // Form actions END -->
-
-
 					</div>
 				</div>
 			</div>
@@ -6041,7 +6098,7 @@
 						#var amountTariffMoney = invoice_lines[j].amount * invoice_lines[0].consumption #
 							<tr>
 								<td colspan="4" align="left">#: invoice_lines[j].number#</td>
-								<td align="center">#: invoice_lines[0].consumption#</td>
+								<td align="center">#: invoice_lines[0].consumption * meter.meter_multiplier #</td>
 								<td align="right">#= kendo.toString(invoice_lines[j].amount, locale=="km-KH"?"c0":"c", locale)#</td>
 								<td align="right">#= kendo.toString(amountTariffMoney, locale=="km-KH"?"c0":"c", locale)#</td>
 							</tr>
@@ -13087,4 +13144,4 @@
 			</div>
 		</div>
 	</div>
-</script>                               
+</script>

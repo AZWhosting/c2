@@ -292,6 +292,15 @@ p.addItem.glyphicons.circle_remove i:before {
     width: 83%;
     margin: -12px auto 0;
 }
+.phone-multiTaskList .glyphicons.remove_2 i:before{
+  color: #fff;
+}
+.phone-multiTaskList li{
+  margin-left: 15px;
+}
+.phone-multiTaskList li a span{
+  color: #fff;
+}
 
 /*Menu Search*/
 

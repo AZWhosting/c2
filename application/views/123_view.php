@@ -1516,17 +1516,17 @@
 				dataType: 'json'
 			},
 			create 	: {
-				url: 'http://app.banhji.com/api/v1/products',
+				url: 'https://mj741cni1a.execute-api.ap-southeast-1.amazonaws.com/dev/products',
 				type: "POST",
 				dataType: 'json'
 			},
 			update 	: {
-				url: 'http://app.banhji.com/api/v1/products',
+				url: 'https://mj741cni1a.execute-api.ap-southeast-1.amazonaws.com/dev/products',
 				type: "PUT",
 				dataType: 'json',
 			},
 			destroy 	: {
-				url:'http://app.banhji.com/api/v1/products',
+				url:'https://mj741cni1a.execute-api.ap-southeast-1.amazonaws.com/dev/products',
 				type: "DELETE",
 				dataType: 'json'
 			},

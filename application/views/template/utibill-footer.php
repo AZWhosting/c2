@@ -1,5 +1,8 @@
 <!-- Facebook and Direct Chat -->
 <script>
+    // $(document).on('click',function(){
+    //     $('.collapse').collapse('hide');
+    // })
     window.fbAsyncInit = function() {
         FB.init({
           appId      : '387834344756149',

@@ -1650,6 +1650,14 @@ class Utibills extends REST_Controller {
 			    $record->new_round = $value->new_round;
 			    $record->memo = $value->record_momo;
 			    $record->invoiced = 1;
+			    if($value->record_momo = "void"){
+			    	$updatemeter = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			    	$updatemeter->where("id", $value->meter_id);
+			    	if($updatemeter->exists()){
+			    		$updatemeter->status = 2;
+			    		$updatemeter->save();
+			    	}
+			    }
 			    $record->save();
 			}else{
 				$txn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
