@@ -754,7 +754,7 @@ class Contacts extends REST_Controller {
 	}
 
 	//GET GROUP 
-	function group_get() {		
+	function group_get() {
 		$filter 	= $this->get("filter");
 		$page 		= $this->get('page');
 		$limit 		= $this->get('limit');
@@ -762,7 +762,7 @@ class Contacts extends REST_Controller {
 		$data["results"] = [];
 		$data["count"] = 0;
 
-		$obj = new Contact_group(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+		$obj = new Contact_group(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 		//Sort
 		if(!empty($sort) && isset($sort)){
@@ -797,7 +797,7 @@ class Contacts extends REST_Controller {
 
 		if($obj->exists()){
 			foreach ($obj as $value) {				
-				//Results				
+				//Results
 				$data["results"][] = array(
 					"id" 			=> $value->id,					
 					"type" 			=> $value->type,

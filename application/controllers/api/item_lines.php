@@ -21,6 +21,20 @@ class Item_lines extends REST_Controller {
 		}
 	}
 
+	function onhand_get(){
+		$data["results"] = [];
+		$data["count"] = 0;
+
+		$obj = new Item_line(null, 'banhji-db-instance.cwxbgxgq7thx.ap-southeast-1.rds.amazonaws.com', 'mightyadmin', 'banhji2016', 'db_banhji');
+		$obj->where('item_id', 2134);
+		$obj->select_sum('quantity * conversion_ratio * movement', "totalQty");
+		$obj->get();
+		
+		$data["results"] = $obj->totalQty;
+
+		$this->response($data, 200);
+	}
+
 	//GET
 	function index_get() {
 		$filter 	= $this->get("filter");

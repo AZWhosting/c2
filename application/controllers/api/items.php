@@ -22,7 +22,6 @@ class Items extends REST_Controller {
 		}
 	}
 
-
 	//GET 
 	function index_get() {		
 		$filter 	= $this->get("filter");

@@ -158,6 +158,8 @@ class Item_variants extends REST_Controller {
 		$permutations = [];
 		if(count($traits)>1){
 			$permutations = $this->permutations($traits);
+		}else{
+			$permutations = $variants;
 		}
 
 		$items = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
