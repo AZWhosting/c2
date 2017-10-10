@@ -1511,7 +1511,7 @@
 		autoSync: false,
     	transport: {
 			read 	: {
-				url: 'http://app.banhji.com/api/v1/products/index?seller=' + banhji.institute.id,
+				url: 'https://mj741cni1a.execute-api.ap-southeast-1.amazonaws.com/dev/products?seller=' + banhji.institute.id,
 				type: "GET",
 				dataType: 'json'
 			},

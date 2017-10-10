@@ -1488,6 +1488,7 @@ var	en_US = {
 	"offline":"Offline",
 	"reader":"Reader",
 	"tablet": "Tablet",
+	"new_round": "New Round",
 
 	"end" : "End"
 }

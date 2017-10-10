@@ -1461,5 +1461,6 @@ var	km_KH = {
 	"offline": "Offline",
 	"reader": "អ្នកដើរអាន",
 	"tablet": "Tablet",
+	"new_round": "ជុំថ្មី",
 	
 }

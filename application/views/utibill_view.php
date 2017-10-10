@@ -2414,7 +2414,6 @@
 						 data-scrollable="{virtual: true}"></div>
 				</div>	
 			</div>
-
 			<div class="col-xs-12 col-sm-8 col-md-9 ">
 				<div class="listWrapper" >
 					<div class="row" style="margin-bottom: 15px;">
@@ -2452,7 +2451,7 @@
 									        		data-template="waterCenter-meter-list-tmpl" 
 									        		data-auto-bind="false"
 									        		data-selectable="single"
-									        		data-bind="source: meterDS"></tbody>	        
+									        		data-bind="source: meterDS"></tbody>
 										    </table>
 										    <a class="btn btn-block btn-inverse" style="margin-bottom: 5px;position: relative;clear:both;background: #609450!important;" data-bind="click: groupMeter, visible: haveGroup">Group Meter</a>
 							            </div>
@@ -2500,15 +2499,12 @@
 												</div>
 											</div>
 							            </div>
-							            <!-- // INFO END -->
-
-							            <!-- NOTE -->
 							            <div id="tab3" class="tab-pane">
 										    <div>
 												<input type="text" class="k-textbox" 
-														data-bind="value: note, events:{change:saveNoteEnter}" 
-														placeholder="Add memo ..." 
-														style="width: 100%;" >
+													data-bind="value: note, events:{change:saveNoteEnter}" 
+													placeholder="Add memo ..." 
+													style="width: 100%;" >
 												<span style="margin-top: 8px;" class="btn btn-primary" data-bind="click: saveNote"><span data-bind="text: lang.lang.add"></span></span>
 											</div>
 											<br>
@@ -2519,11 +2515,8 @@
 												 data-row-template="waterCenter-note-tmpl"
 												 data-columns="[{title: ''}]"
 												 data-height="100"
-												 data-scrollable="{virtual: true}"></div>											
+												 data-scrollable="{virtual: true}"></div>		
 							            </div>
-							            <!-- // NOTE END -->
-
-							            <!-- ATTACHMENT -->
 								        <div id="tab4" class="tab-pane">
 								            <p><span data-bind="text: lang.lang.file_type"></span> [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>
 								            <input id="files" name="files"
@@ -2549,12 +2542,10 @@
 										    </table>
 										    <span class="btn btn-icon btn-success glyphicons ok_2" data-bind="click: uploadFile" style="color: #fff; padding: 5px 38px; text-align: left; width: 98px !important; display: inline-block; margin-top: 10px;"><i></i> <span data-bind="text: lang.lang.save"></span></span>
 								        </div>
-								        <!-- // ATTACHMENT END -->	
 							        </div>
 							    </div>
 							</div>
 						</div>
-
 						<div class="col-xs-12 col-sm-6">
 							<div class="row">
 								<div class="col-xs-12 col-sm-6">
@@ -2590,7 +2581,6 @@
 							</div>														
 						</div>
 					</div>
-
 					<div class="row-fluid">
 						<div style="margin-bottom: 0; padding-bottom: 0;">
 						    <div class="tabsbar tabsbar-1">
@@ -2619,9 +2609,10 @@
 						                    format: "{0}%",
 						                    template: "#= series.name #: #= kendo.toString(value) #"
 						                 }'                 
-						                 data-series="[
-						                                 { field: 'usage', name: 'Usage', categoryField:'month', color: '#236DA4', overlay:{ gradient: 'none'} }
-						                             ]"
+						                 data-series="
+						                 	[
+			                                 	{ field: 'usage', name: 'Usage', categoryField:'month', color: '#236DA4', overlay:{ gradient: 'none'} }
+			                             	]"
 						                 data-auto-bind="false"
 						                 data-bind="source: graphDS"
 						                 style="height: 250px;"></div> 
@@ -2659,9 +2650,7 @@
 									  		<button type="button" data-role="button" data-bind="click: searchTransaction"><i class="icon-search"></i></button>
 										</div>
 									</div>
-
 									<br>
-
 						        	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 							        	<thead>
 								            <tr>			                
@@ -2685,9 +2674,8 @@
 					        	</div>
 						        <div class="tab-pane" id="tab-3">
 						        	<h2 style="margin-left: 0;" data-bind="text: lang.lang.add_single_reading">Add Single Reading</h2>
-						        	
-						        	<div class="row" style="margin-bottom: 15px">
-					        			<div class="col-xs-12 col-sm-2">
+						        	<div class="row">
+					        			<div class="col-xs-12 col-sm-3">
 											<div class="control-group">								
 												<label ><span data-bind="text: lang.lang.month_of" >Month Of</span></label>
 									            <input type="text" 
@@ -2701,7 +2689,7 @@
 										           	data-bind="value: readingVM.monthOfSR, min: miniMonthofS" />
 											</div>
 										</div>										
-										<div class="col-xs-12 col-sm-2">
+										<div class="col-xs-12 col-sm-3">
 											<div class="control-group">								
 												<label ><span data-bind="text: lang.lang.meter_number">Meter Number</span></label>
 								        		<p class="k-input k-textbox" 
@@ -2710,7 +2698,7 @@
 								        		</p>
 								        	</div>
 								        </div>
-								        <div class="col-xs-12 col-sm-2">
+								        <div class="col-xs-12 col-sm-3">
 											<div class="control-group">								
 												<label ><span data-bind="text: lang.lang.previous">Previous</span></label>
 								        		<p class="k-input k-textbox" 
@@ -2719,7 +2707,7 @@
 								        		</p>
 								        	</div>
 								       	</div>
-								       	<div class="col-xs-12 col-sm-2">
+								       	<div class="col-xs-12 col-sm-3">
 											<div class="control-group">								
 												<label ><span data-bind="text: lang.lang.current">Current</span></label>
 								        		<input type="text" 
@@ -2728,8 +2716,10 @@
 								        			style="width:100%;border:1px solid #ccc;"
 								        			data-bind="value: readingVM.currentSR" />
 								        	</div>
-								        </div>									   
-								        <div class="col-xs-12 col-sm-2">
+								        </div>
+								    </div>
+								    <div class="row" style="margin-bottom: 15px;">   
+								        <div class="col-xs-12 col-sm-3">
 											<div class="control-group">	
 												<label ><span data-bind="text: lang.lang.to_date">To Date</span></label>
 									            <input type="text" 
@@ -2740,12 +2730,23 @@
 										           	data-bind="value: readingVM.toDateSR, min: miniMonthofS" />
 											</div>
 								        </div>
-							        	<div class="col-xs-12 col-sm-2">
+								        <div class="col-xs-12 col-sm-3">
+								        	<label ><span data-bind="text: lang.lang.new_round">New Round</span></label>
+										    <input 
+					              				data-role="dropdownlist"
+							            		data-text-field="name"
+				           						data-value-field="id"
+				           						data-value-primitive="true" 
+							            		data-bind="
+							            			source: roundDS, 
+							            			value: readingVM.newRound"
+							            		style="width: 100%;" />
+								        </div>
+							        	<div class="col-xs-12 col-sm-3">
 							        		<br>
 							        		<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="click: readingVM.addSingleReading"><i></i> <span data-bind="text: lang.lang.add">Add</span></span>
 							        	</div>
 						        	</div>
-
 						        	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 							        	<thead>
 								            <tr>			                
@@ -13144,4 +13145,4 @@
 			</div>
 		</div>
 	</div>
-</script>
+</script>                                    

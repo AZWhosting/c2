@@ -3497,42 +3497,51 @@
         NumberSR: null,
         previousSR: 0,
         currentSR: 0,
+        newRound: 0,
         toDateDisabled: true,
         addSingleReading: function() {
             var self = this;
             if (banhji.reading.get('monthOfSR')) {
-                if (kendo.parseInt(banhji.reading.get('previousSR')) > kendo.parseInt(banhji.reading.get('currentSR'))) {
-                    alert("Current Reading is smaller than Previous Reading");
-                } else {
-                    banhji.reading.dataSource.insert(0, {
-                        month_of: banhji.reading.get('monthOfSR'),
-                        to_date: banhji.reading.get('toDateSR'),
-                        meter_number: banhji.reading.get('NumberSR'),
-                        previous: banhji.reading.get('previousSR'),
-                        current: banhji.reading.get('currentSR'),
-                        invoiced: 0,
-                        condition: "new",
-                        consumption: banhji.reading.get('currentSR') - banhji.reading.get('previousSR')
-                    });
-                    banhji.reading.dataSource.sync();
-                    banhji.reading.dataSource.bind("requestEnd",
-                        function(data) {
-                            var notificat = $("#ntf1").data("kendoNotification");
-                            notificat.hide();
-                            notificat.success(self.lang.lang.success_message);
-                            banhji.reading.set('monthOfSR', null);
-                            banhji.reading.set('toDateSR', null);
-                            banhji.reading.set('previousSR', null);
-                            banhji.reading.set('currentSR', null);
-                            $("#loadImport").css("display", "none");
-                        }
-                    );
+                if(banhji.reading.newRound == 0){
+                    if (kendo.parseInt(banhji.reading.get('previousSR')) > kendo.parseInt(banhji.reading.get('currentSR'))) {
+                        alert("Current Reading is smaller than Previous Reading");
+                    } else {
+                        banhji.reading.saveSingleReading();
+                    }
+                }else{
+                    banhji.reading.saveSingleReading();
                 }
             } else {
                 var notificat = $("#ntf1").data("kendoNotification");
                 notificat.hide();
                 notificat.error(this.lang.lang.field_required_message);
             }
+        },
+        saveSingleReading : function(e){
+            banhji.reading.dataSource.insert(0, {
+                month_of: banhji.reading.get('monthOfSR'),
+                to_date: banhji.reading.get('toDateSR'),
+                meter_number: banhji.reading.get('NumberSR'),
+                previous: banhji.reading.get('previousSR'),
+                current: banhji.reading.get('currentSR'),
+                round: banhji.reading.get('newRound'),
+                invoiced: 0,
+                condition: "new",
+                consumption: banhji.reading.get('currentSR') - banhji.reading.get('previousSR')
+            });
+            banhji.reading.dataSource.sync();
+            banhji.reading.dataSource.bind("requestEnd",
+                function(data) {
+                    var notificat = $("#ntf1").data("kendoNotification");
+                    notificat.hide();
+                    notificat.success(self.lang.lang.success_message);
+                    banhji.reading.set('monthOfSR', null);
+                    banhji.reading.set('toDateSR', null);
+                    banhji.reading.set('previousSR', null);
+                    banhji.reading.set('currentSR', null);
+                    $("#loadImport").css("display", "none");
+                }
+            );
         },
         exportEXCEL: function(e) {
             var workbook = new kendo.ooxml.Workbook({
@@ -19353,6 +19362,10 @@
         overInvoice: 0,
         currencyCode: "",
         user_id: banhji.source.user_id,
+        roundDS : [
+            {id: 0, name: "No"},
+            {id: 1, name: "Yes"}
+        ],
         exportEXCEL: function() {},
         pageLoad: function(id) {
             this.contactDS.fetch();

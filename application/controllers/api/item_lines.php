@@ -228,9 +228,15 @@ class Item_lines extends REST_Controller {
 					
 					if($transaction->exists()){
 						if($value->movement!==0 && in_array($transaction->type, $typeList)){
+							//On Hand
+							$oh = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+							$oh->where('item_id', $value->item_id);
+							$oh->select_sum('quantity * conversion_ratio * movement', "qty");
+							$oh->get();
+							
 							//Sum quantity
 							$currentQuantity = floatval($value->quantity) * floatval($value->conversion_ratio) * floatval($value->movement);
-							$totalQty = $item->quantity + $currentQuantity;
+							$totalQty = floatval($oh->qty) + $currentQuantity;
 
 							//Negative on hand
 							if(floatval($item->quantity)<0){
@@ -394,7 +400,11 @@ class Item_lines extends REST_Controller {
 
 								//New Average Cost = $totalAmount / $totalQuantity
 								$totalAmount = $item->amount + $currentAmount;
-								$item->cost = $totalAmount / $totalQty==0?1:$totalQty;
+								if($totalQty==0){
+
+								}else{
+									$item->cost = $totalAmount / $totalQty;
+								}
 								$item->amount = $totalAmount;
 							}
 
