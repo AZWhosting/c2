@@ -26,11 +26,17 @@ class Item_lines extends REST_Controller {
 		$data["count"] = 0;
 
 		$obj = new Item_line(null, 'banhji-db-instance.cwxbgxgq7thx.ap-southeast-1.rds.amazonaws.com', 'mightyadmin', 'banhji2016', 'db_banhji');
-		$obj->where('item_id', 2134);
+		$obj->where_related("transaction", "is_recurring <>", 1);
+		$obj->where_related("transaction", "deleted <>", 1);
+		$obj->where('item_id', 2214);
 		$obj->select_sum('quantity * conversion_ratio * movement', "totalQty");
+		$obj->select_sum('quantity * conversion_ratio * movement * cost', "totalAmount");
 		$obj->get();
 		
-		$data["results"] = $obj->totalQty;
+		$data["results"] = array(
+			"qty" => $obj->totalQty,
+			"amt" => $obj->totalAmount
+		);
 
 		$this->response($data, 200);
 	}
@@ -223,16 +229,20 @@ class Item_lines extends REST_Controller {
 					$transaction->get_by_id($value->transaction_id);
 					
 					if($transaction->exists()){
-						if($value->movement==1){
+						if($value->movement!==0){
 							//On Hand
-							$oh = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+							$oh = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);							
+							$oh->where_related("transaction", "is_recurring <>", 1);
+							$oh->where_related("transaction", "deleted <>", 1);
 							$oh->where('item_id', $value->item_id);
-							$oh->select_sum('quantity * conversion_ratio * movement', "qty");
+							$oh->where('movement <>', 0);
+							$oh->select_sum('quantity * conversion_ratio * movement', "totalQuantity");
+							$oh->select_sum('quantity * conversion_ratio * movement * cost', "totalAmount");
 							$oh->get();
 							
 							//Sum quantity
 							$currentQuantity = floatval($value->quantity) * floatval($value->conversion_ratio) * floatval($value->movement);
-							$totalQty = floatval($oh->qty) + $currentQuantity;
+							$totalQty = floatval($oh->totalQuantity) + $currentQuantity;
 
 							//Negative on hand
 							if(floatval($item->quantity)<0){
@@ -395,11 +405,15 @@ class Item_lines extends REST_Controller {
 								$currentAmount = ($currentQuantity * floatval($value->cost) + $additionalCost) / floatval($value->rate);
 
 								//New Average Cost = $totalAmount / $totalQuantity
-								$totalAmount = $item->amount + $currentAmount;
+								// $totalAmount = $item->amount + $currentAmount;
+								$totalAmount = floatval($oh->totalAmount) + $currentAmount;
 								if($totalQty==0){
 
 								}else{
-									$item->cost = $totalAmount / $totalQty;
+									//Update item avg cost only purchase in
+									if($value->movement==1){
+										$item->cost = $totalAmount / $totalQty;
+									}
 								}
 								$item->amount = $totalAmount;
 							}

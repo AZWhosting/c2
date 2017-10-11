@@ -100,7 +100,7 @@
                     <button data-bind="click: save" style="margin-bottom: 15px; margin-left: 15px;" class="btn btn-default">Save</button>
                   </div>
     <table class="table" style="border: 1px solid #ddd; width: 100%; float: left;">
-      <tbody data-role="listview" data-bind="source: products.dataStore" data-template="product-tmpl" data-edit-template="product-edit-tmpl">
+      <tbody data-role="listview" data-bind="source: products.dataStore" data-template="product-tmpl" data-edit-template="product-edit-tmpl" data-auto-bind="true">
       </tbody>
     </table>
   </div>
@@ -2042,7 +2042,7 @@
 			banhji.productVM.dataStore.insert(0, data);
 		},
     addMoreItems: function() {
-      banhji.router.navigate('/');
+      banhji.router.navigate('/additem');
     },		
     removeProduct: function(e) {
 			banhji.productVM.dataStore.remove(e.data);
@@ -2061,7 +2061,7 @@
 		dataStore: banhji.itemStore,
     categories: banhji.categories,
     pushProducts: function() {
-      banhji.router.navigate('/products');
+      banhji.router.navigate('/');
     },
     onCatChange: function(e) {
       let id = e.sender.dataSource.at(e.sender.selectedIndex).id;
@@ -2290,7 +2290,7 @@
 		}
 	});
 	/* Login page */
-	banhji.router.route('/', function(){
+	banhji.router.route('/additem', function(){
 		var blank = new kendo.View('#blank-tmpl');
 		var admin = JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).role : 0;
     if(admin != 1) {
@@ -2306,11 +2306,10 @@
         $("#secondary-menu").html("");
         banhji.index.getLogo();
       });
-    	
     }
 	});
 
-  banhji.router.route('/products', function(){
+  banhji.router.route('/', function(){
     var blank = new kendo.View('#blank-tmpl');
     var admin = JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).role : 0;
         if(admin != 1) {
