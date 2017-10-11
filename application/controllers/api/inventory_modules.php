@@ -203,10 +203,10 @@ class Inventory_modules extends REST_Controller {
 		
 		if($obj->exists()){
 			foreach ($obj as $value) {
-				// $oh = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				// $oh->where('item_id', $value->item_id);
-				// $oh->select_sum('quantity * conversion_ratio * movement', "onhand");
-				// $oh->get();
+				$oh = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$oh->where('item_id', $value->item_id);
+				$oh->select_sum('quantity * conversion_ratio * movement', "qty");
+				$oh->get();
 
 				$data["results"][] = array(
 					"id" 			=> $value->item_id,

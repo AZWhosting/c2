@@ -107,7 +107,7 @@
 	<tr>
         <td>#=name#</td>
         <td style="text-align: right;">
-            <button data-bind="click: items.onClick" class="btn btn-default">Put On 123</button>
+            <button data-bind="click: onClick" class="btn btn-default">Put On 123</button>
         </td>
     </tr>
 </script>
@@ -1547,7 +1547,7 @@
 			model: {
 				id: 'id'
 			},
-			data: 'products',
+			data: 'data',
 			total: 'count'
 		},
 		batch: true,

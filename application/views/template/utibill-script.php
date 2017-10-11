@@ -3518,6 +3518,7 @@
             }
         },
         saveSingleReading : function(e){
+            var self = this;
             banhji.reading.dataSource.insert(0, {
                 month_of: banhji.reading.get('monthOfSR'),
                 to_date: banhji.reading.get('toDateSR'),
