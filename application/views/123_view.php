@@ -78,6 +78,9 @@
   <div class="span12" style="padding: 0;">
     <p class="span1"><span data-bind="text: lang.lang.items"></span></p>
     <div class="span11" style="text-align: right;">
+      <input data-role="dropdownlist" data-bind="source: categories, events: {change: onCatChange}" data-text-field="name" data-value-field="id">
+    </div>
+    <div class="span11" style="text-align: right;">
         <button data-bind="click: pushProducts" style="margin-bottom: 15px; margin-left: 15px;" class="btn btn-default">Make Changes</button>
     </div>
     <div data-role="pager" data-bind="source: items.dataStore" data-numeric="false" data-page-sizes="[100, 200, 300]"></div>
@@ -1327,6 +1330,42 @@
 		return entity;
 	}
 
+  banhji.categories = new kendo.data.DataSource({
+    autoSync: false,
+    transport: {
+      read  : {
+      url: apiUrl + "categories",
+      type: "GET",
+      dataType: 'json'
+    },
+    parameterMap: function(options, operation) {
+      if(operation === 'read') {
+        return {
+          page: options.page,
+          limit: options.pageSize,
+          filter: options.filter,
+          sort: options.sort
+        };
+      } else {
+        return {products: kendo.stringify(options.models)};
+      }
+    }
+    },
+    schema  : {
+      model: {
+        id: 'id'
+      },
+      data: 'results',
+      total: 'count'
+    },
+    batch: true,
+    serverFiltering: true,
+    serverSorting: true,
+    serverPaging: true,
+    page: 1,
+    pageSize: 100
+  });
+
   banhji.categoryDS = new kendo.data.DataSource({
     autoSync: false,
       transport: {
@@ -2020,8 +2059,16 @@
 
 	banhji.itemVM = kendo.observable({
 		dataStore: banhji.itemStore,
+    categories: banhji.categories,
     pushProducts: function() {
       banhji.router.navigate('/products');
+    },
+    onCatChange: function(e) {
+      let id = e.sender.dataSource.at(e.sender.selectedIndex).id;
+      this.dataStore.filter({
+        field: "category_id",
+        value: id
+      });
     },
 		onClick: function(e) {
 			banhji.productVM.addNew({

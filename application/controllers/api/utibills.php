@@ -1777,8 +1777,7 @@ class Utibills extends REST_Controller {
 
 		if($obj->exists()){
 			foreach ($obj as $value) {
-				$record = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$record->where("meter_id", $value->id)->order_by("id", "desc")->limit(1)->get();
+			
 				$contact = $value->contact->get();
 				$location = $value->location->get();
 				//Pole
@@ -1811,14 +1810,16 @@ class Utibills extends REST_Controller {
 						};
 					}
 				}
+				$recorda = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$recorda->where("meter_id", $value->id)->order_by("id", "desc")->limit(1)->get();
 				$data["results"][] = array(
 					"branch_id" 		=> $value->branch_id,
 					"meter_id" 			=> $value->id,
 					"meter_number" 		=> $value->number,
 					"multiplier" 		=> $value->multiplier,
-					"previous" 			=> $record->previous,
+					"previous" 			=> intval($recorda->current),
 					"current" 			=> 0,
-					"from_date" 		=> $record->to_date,
+					"from_date" 		=> $recorda->to_date,
 					"contact_id" 		=> $contact->id,
 					"contact_name" 		=> $contact->name,
 					"contact_code" 		=> $contact->abbr."-".$contact->number,

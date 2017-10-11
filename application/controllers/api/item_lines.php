@@ -61,11 +61,7 @@ class Item_lines extends REST_Controller {
 		if(!empty($filter) && isset($filter)){
 	    	foreach ($filter["filters"] as $value) {
 	    		if(isset($value["operator"])) {
-	    			if($value["operator"]=="item") {
-	    				
-					}else{
-						$obj->{$value["operator"]}($value["field"], $value["value"]);
-					}
+	    			$obj->{$value["operator"]}($value["field"], $value["value"]);
 				} else {
 					$obj->where($value["field"], $value["value"]);
 				}
@@ -227,7 +223,7 @@ class Item_lines extends REST_Controller {
 					$transaction->get_by_id($value->transaction_id);
 					
 					if($transaction->exists()){
-						if($value->movement!==0 && in_array($transaction->type, $typeList)){
+						if($value->movement==1){
 							//On Hand
 							$oh = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 							$oh->where('item_id', $value->item_id);
