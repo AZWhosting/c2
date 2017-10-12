@@ -28,14 +28,14 @@ class Item_lines extends REST_Controller {
 		$obj = new Item_line(null, 'banhji-db-instance.cwxbgxgq7thx.ap-southeast-1.rds.amazonaws.com', 'mightyadmin', 'banhji2016', 'db_banhji');
 		$obj->where_related("transaction", "is_recurring <>", 1);
 		$obj->where_related("transaction", "deleted <>", 1);
-		$obj->where('item_id', 2214);
-		$obj->select_sum('quantity * conversion_ratio * movement', "totalQty");
+		$obj->where('item_id', 2217);
+		$obj->select_sum('quantity * conversion_ratio * movement', "totalQuantity");
 		$obj->select_sum('quantity * conversion_ratio * movement * cost', "totalAmount");
 		$obj->get();
 		
 		$data["results"] = array(
-			"qty" => $obj->totalQty,
-			"amt" => $obj->totalAmount
+			"qty" => floatval($obj->totalQuantity),
+			"amt" => floatval($obj->totalAmount)
 		);
 
 		$this->response($data, 200);

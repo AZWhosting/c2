@@ -153,6 +153,107 @@ class Inventory_modules extends REST_Controller {
 		$this->response($data, 200);	
 	}
 
+	//GET CENTER
+	function center_get() {		
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
+		$data["count"] = 1;
+
+		$obj = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		//Filter		
+		if(!empty($filter["filters"]) && isset($filter["filters"])){
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value["operator"])) {
+	    			$obj->{$value["operator"]}($value["field"], $value["value"]);
+				} else {
+					$obj->where($value["field"], $value["value"]);
+				}
+			}
+		}
+
+		$obj->select("id, number, name, locale");
+		$obj->include_related("item_type", "name");
+		$obj->include_related("measurement", "name");
+		$obj->get();
+
+		//Quantity, Avg. Cost, and Amount
+		$oh = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$oh->where_related("transaction", "is_recurring <>", 1);
+		$oh->where_related("transaction", "deleted <>", 1);
+		$oh->where('item_id', $obj->id);
+		$oh->select_sum('quantity * conversion_ratio * movement', "totalQuantity");
+		$oh->select_sum('quantity * conversion_ratio * movement * cost', "totalAmount");
+		$oh->get();
+
+		$cost = 0;
+		if(floatval($oh->totalQuantity)==0){
+		}else{
+			$cost = floatval($oh->totalAmount) / floatval($oh->totalQuantity);
+		}
+
+		//Price
+		$itemPrice = new Item_price(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$itemPrice->where("item_id", $obj->id);
+		$itemPrice->where("conversion_ratio", 1);
+		$itemPrice->limit(1);
+		$itemPrice->get();
+
+		//Currency Code
+		$currency = new Currency();
+		$currency->where("locale", $obj->locale);
+		$currency->get();
+
+		//Txn
+		$txn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$txn->where_related("item_line", "item_id", $obj->id);
+		$txn->where("is_recurring <>", 1);
+		$txn->where("deleted <>", 1);
+		$txnCount = $txn->count();
+
+		//On PO
+		$po = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+		$po->select_sum("quantity * conversion_ratio", "totalQuantity");
+		$po->where("item_id", $obj->id);
+		$po->where_related("transaction", "type", "Purchase_Order");
+		$po->where_related("transaction", "is_recurring <>", 1);
+		$po->where_related("transaction", "deleted <>", 1);
+		$po->get();
+
+		//On SO
+		$so = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$so->select_sum("quantity * conversion_ratio", "totalQuantity");
+		$so->where("item_id", $obj->id);
+		$so->where_related("transaction", "type", "Sale_Order");
+		$so->where_related("transaction", "is_recurring <>", 1);
+		$so->where_related("transaction", "deleted <>", 1);		
+		$so->get();
+
+		//Results
+		$data["results"][] = array(
+			"id" 			=> $obj->id,
+			"number" 		=> $obj->number,
+			"name" 			=> $obj->name,
+			"item_type"		=> $obj->item_type_name,
+			"measurement" 	=> $obj->measurement_name,
+			"currency_code" => $currency->code,
+			"locale" 		=> $obj->locale,
+			"quantity" 		=> floatval($oh->totalQuantity),
+			"cost" 			=> $cost,
+			"price" 		=> floatval($itemPrice->price),
+			"amount" 		=> floatval($oh->totalAmount),
+			"txn" 			=> $txnCount,
+			"po" 			=> floatval($po->totalQuantity),
+			"so" 			=> floatval($so->totalQuantity)
+		);
+
+		//Response Data		
+		$this->response($data, 200);	
+	}
+
 	//POSITION SUMMARY BY DAWINE
 	function position_summary_get() {
 		$filter 	= $this->get("filter");
