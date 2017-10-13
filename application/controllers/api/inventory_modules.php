@@ -181,18 +181,17 @@ class Inventory_modules extends REST_Controller {
 		$obj->get();
 
 		//Quantity, Avg. Cost, and Amount
-		$oh = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$oh->where_related("transaction", "is_recurring <>", 1);
-		$oh->where_related("transaction", "deleted <>", 1);
-		$oh->where('item_id', $obj->id);
-		$oh->select_sum('quantity * conversion_ratio * movement', "totalQuantity");
-		$oh->select_sum('quantity * conversion_ratio * movement * cost', "totalAmount");
-		$oh->get();
+		$itemLines = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$itemLines->where_related("transaction", "is_recurring <>", 1);
+		$itemLines->where_related("transaction", "deleted <>", 1);
+		$itemLines->where('item_id', $obj->id);
+		$itemLines->select_sum('quantity * conversion_ratio * movement', "totalQuantity");
+		$itemLines->select_sum('quantity * conversion_ratio * movement * cost', "totalAmount");
+		$itemLines->get();
 
 		$cost = 0;
-		if(floatval($oh->totalQuantity)==0){
-		}else{
-			$cost = floatval($oh->totalAmount) / floatval($oh->totalQuantity);
+		if(floatval($itemLines->totalQuantity)==0){}else{
+			$cost = floatval($itemLines->totalAmount) / floatval($itemLines->totalQuantity);
 		}
 
 		//Price
@@ -241,10 +240,10 @@ class Inventory_modules extends REST_Controller {
 			"measurement" 	=> $obj->measurement_name,
 			"currency_code" => $currency->code,
 			"locale" 		=> $obj->locale,
-			"quantity" 		=> floatval($oh->totalQuantity),
+			"quantity" 		=> floatval($itemLines->totalQuantity),
 			"cost" 			=> $cost,
 			"price" 		=> floatval($itemPrice->price),
-			"amount" 		=> floatval($oh->totalAmount),
+			"amount" 		=> floatval($itemLines->totalAmount),
 			"txn" 			=> $txnCount,
 			"po" 			=> floatval($po->totalQuantity),
 			"so" 			=> floatval($so->totalQuantity)
@@ -263,7 +262,7 @@ class Inventory_modules extends REST_Controller {
 		$data["results"] = [];
 		$data["count"] = 0;
 
-		$obj = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$obj = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		
 		//Sort
 		if(!empty($sort) && isset($sort)){
@@ -275,49 +274,83 @@ class Inventory_modules extends REST_Controller {
 				}
 			}
 		}
-
+		
 		//Filter		
-		if(!empty($filter) && isset($filter)){
+		if(!empty($filter["filters"]) && isset($filter["filters"])){
 	    	foreach ($filter['filters'] as $value) {
 	    		if(isset($value['operator'])) {
-					$obj->{$value['operator']}($value['field'], $value['value']);
+	    			if($value['operator']=="startswith"){
+	    				$obj->like($value['field'], $value['value'], 'after');
+	    			}else{
+						$obj->{$value['operator']}($value['field'], $value['value']);
+	    			}
 				} else {
-	    			$obj->where($value["field"], $value["value"]);
+					$obj->where($value["field"], $value["value"]);
 				}
 			}
 		}
 
-		$obj->include_related("transaction", array("type","rate"));
-		$obj->include_related("item", array("abbr", "number", "name"));
-		$obj->include_related("measurement", array("name"));
-		$obj->where_related("item", "item_type_id", 1);
-		$obj->where_related("transaction", "status <>", 4);
-		$obj->where_related("transaction", "is_recurring <>", 1);
-		$obj->where_related("transaction", "deleted <>", 1);
+		$obj->select("id, abbr, number, name");
+		$obj->include_related("category", "name");
+		$obj->include_related("measurement", "name");
+		$obj->where("item_type_id", 1);
+		$obj->where("nature <>", "main_variant");
+		$obj->where("is_pattern <>", 1);
 		$obj->where("deleted <>", 1);
-		$obj->order_by_related("transaction", "issued_date", "desc");
-		$obj->order_by_related("item", "number", "asc");
-		$obj->group_by("item_id");
-
-		//Results
-		$obj->get_iterated();
 		
+		//Results
+		if($page && $limit){
+			$obj->get_paged_iterated($page, $limit);
+			$data["count"] = $obj->paged->total_rows;
+		}else{
+			$obj->get_iterated();
+			$data["count"] = $obj->result_count();
+		}
+
 		if($obj->exists()){
 			foreach ($obj as $value) {
-				$oh = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$oh->where('item_id', $value->item_id);
-				$oh->select_sum('quantity * conversion_ratio * movement', "qty");
-				$oh->get();
+				//Find Item Quantity and Amount
+				$itemLines = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$itemLines->select_sum('quantity * conversion_ratio * movement', "totalQuantity");
+				$itemLines->select_sum('quantity * conversion_ratio * movement * cost', "totalAmount");
+				$itemLines->where_related("transaction", "is_recurring <>", 1);
+				$itemLines->where_related("transaction", "deleted <>", 1);
+				$itemLines->where('item_id', $value->id);
+				$itemLines->where('movement <>', 0);
+				$itemLines->get();
+
+				$cost = 0;
+				if(floatval($itemLines->totalQuantity)==0){}else{
+					$cost = floatval($itemLines->totalAmount) / floatval($itemLines->totalQuantity);
+				}
+
+				//On PO
+				// $po = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+				// $po->select_sum("quantity * conversion_ratio", "totalQuantity");
+				// $po->where("item_id", $value->id);
+				// $po->where_related("transaction", "type", "Purchase_Order");
+				// $po->where_related("transaction", "is_recurring <>", 1);
+				// $po->where_related("transaction", "deleted <>", 1);
+				// $po->get();
+
+				// //On SO
+				// $so = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				// $so->select_sum("quantity * conversion_ratio", "totalQuantity");
+				// $so->where("item_id", $value->id);
+				// $so->where_related("transaction", "type", "Sale_Order");
+				// $so->where_related("transaction", "is_recurring <>", 1);
+				// $so->where_related("transaction", "deleted <>", 1);		
+				// $so->get();
 
 				$data["results"][] = array(
-					"id" 			=> $value->item_id,
-					"name" 			=> $value->item_abbr . $value->item_number ." ". $value->item_name,
+					"id" 			=> $value->id,
+					"name" 			=> $value->abbr . $value->number ." ". $value->name,
 					"measurement"	=> $value->measurement_name,
-					"quantity" 		=> floatval($value->inventory_quantity),
-					"on_po" 		=> floatval($value->on_po),
-					"on_so" 		=> floatval($value->on_so),
-					"cost" 			=> floatval($value->cost_avg) / floatval($value->transaction_rate),
-					"amount" 		=> floatval($value->inventory_value) / floatval($value->transaction_rate)
+					"quantity" 		=> floatval($itemLines->totalQuantity),
+					"on_po" 		=> 0,//floatval($po->totalQuantity),
+					"on_so" 		=> 0,//floatval($so->totalQuantity),
+					"cost" 			=> $cost,
+					"amount" 		=> floatval($itemLines->totalAmount)
 				);
 			}
 			$data["count"] = count($data["results"]);

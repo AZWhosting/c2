@@ -70,7 +70,7 @@ class Items extends REST_Controller {
 		$obj->include_related("measurement", array("name"));
 		$obj->where("nature <>", "main_variant");
 		$obj->where("is_pattern", $is_pattern);
-		$obj->where("deleted <>", 1);			
+		$obj->where("deleted <>", 1);
 		
 		//Results
 		if($page && $limit){

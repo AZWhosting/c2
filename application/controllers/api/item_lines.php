@@ -229,36 +229,50 @@ class Item_lines extends REST_Controller {
 					$transaction->get_by_id($value->transaction_id);
 					
 					if($transaction->exists()){
-						if($value->movement!==0){
-							//On Hand
-							$oh = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);							
-							$oh->where_related("transaction", "is_recurring <>", 1);
-							$oh->where_related("transaction", "deleted <>", 1);
-							$oh->where('item_id', $value->item_id);
-							$oh->where('movement <>', 0);
-							$oh->select_sum('quantity * conversion_ratio * movement', "totalQuantity");
-							$oh->select_sum('quantity * conversion_ratio * movement * cost', "totalAmount");
-							$oh->get();
+						if($value->movement==0){}else{
+							//Find Item Quantity and Amount
+							$itemLines = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);							
+							$itemLines->select_sum('quantity * conversion_ratio * movement', "totalQuantity");
+							$itemLines->select_sum('quantity * conversion_ratio * movement * cost', "totalAmount");
+							$itemLines->where_related("transaction", "is_recurring <>", 1);
+							$itemLines->where_related("transaction", "deleted <>", 1);
+							$itemLines->where('item_id', $value->item_id);
+							$itemLines->where('movement <>', 0);
+							$itemLines->get();
 							
-							//Sum quantity
+							//Quantity
 							$currentQuantity = floatval($value->quantity) * floatval($value->conversion_ratio) * floatval($value->movement);
-							$totalQty = floatval($oh->totalQuantity) + $currentQuantity;
+							$totalQty = floatval($itemLines->totalQuantity) + $currentQuantity;
+
+							//Amount
+							$additionalCost = 0;
+							if(isset($value->additional_cost)){
+								$additionalCost = floatval($value->additional_cost);
+							}
+							$currentAmount = ($currentQuantity * floatval($value->cost) + $additionalCost) / floatval($value->rate);
+							$totalAmount = floatval($itemLines->totalAmount) + $currentAmount;
+
+							//Item Cost = $totalAmount / $totalQuantity;
+							$itemCost = 0;
+							if($totalQty==0){}else{
+								$itemCost = $totalAmount / $totalQty;
+							}
 
 							//Negative on hand
-							if(floatval($item->quantity)<0){
+							if(floatval($itemLines->totalQuantity)<0){
 								$journalLines = [];
 
 								if($totalQty==0){
-									$item->amount = 0;
+									/*$item->amount = 0;
 									$oldAmount = floatval($item->quantity) * floatval($item->cost) * floatval($value->rate);
 									$newAmount = ($currentQuantity * floatval($value->cost)) / floatval($value->rate);
-									$amount = $oldAmount + $newAmount;
+									$amount = $oldAmount + $newAmount;*/
 
-									if($amount>0){
+									if($totalAmount>0){
 										//COGS on Dr
 										$journalLines[] = array(
 											"account_id" 	=> $item->expense_account_id,
-											"dr" 			=> abs($amount),
+											"dr" 			=> abs($totalAmount),
 											"cr" 			=> 0
 										);
 
@@ -266,15 +280,15 @@ class Item_lines extends REST_Controller {
 										$journalLines[] = array(
 											"account_id" 	=> $item->inventory_account_id,
 											"dr" 			=> 0,
-											"cr" 			=> abs($amount)
+											"cr" 			=> abs($totalAmount)
 										);
 									}
 
-									if($amount<0){
+									if($totalAmount<0){
 										//Inventory on Dr
 										$journalLines[] = array(
 											"account_id" 	=> $item->inventory_account_id,
-											"dr" 			=> abs($amount),
+											"dr" 			=> abs($totalAmount),
 											"cr" 			=> 0
 										);
 
@@ -282,11 +296,11 @@ class Item_lines extends REST_Controller {
 										$journalLines[] = array(
 											"account_id" 	=> $item->expense_account_id,
 											"dr" 			=> 0,
-											"cr" 			=> abs($amount)
+											"cr" 			=> abs($totalAmount)
 										);
 									}
 								}else if($totalQty<0){
-									$currentAmount = ($currentQuantity * floatval($item->cost)) / floatval($value->rate);
+									/*$currentAmount = ($currentQuantity * floatval($item->cost)) / floatval($value->rate);
 									
 									$totalAmount = $item->amount + $currentAmount;
 									$item->amount = $totalAmount;
@@ -294,41 +308,47 @@ class Item_lines extends REST_Controller {
 									$oldAmount = floatval($item->quantity) * floatval($item->cost) * floatval($value->rate);
 									$newAmount = ($currentQuantity * floatval($value->cost)) / floatval($value->rate);
 									$total = $oldAmount + $newAmount;
-									$amount = abs($totalQty * floatval($item->cost)) - abs($total);
+									$amount = abs($totalQty * floatval($item->cost)) - abs($total);*/
 
-									if($total>0 && $amount!==0){
-										//COGS on Dr
-										$journalLines[] = array(
-											"account_id" 	=> $item->expense_account_id,
-											"dr" 			=> abs($amount),
-											"cr" 			=> 0
-										);
+									$currentAmount = ($currentQuantity * $itemCost) / floatval($value->rate);
+									$totalAmount = floatval($itemLines->totalAmount) + $currentAmount;
+									$amount = abs($totalQty * $itemCost) - abs($totalAmount);
 
-										//Inventory on Cr
-										$journalLines[] = array(
-											"account_id" 	=> $item->inventory_account_id,
-											"dr" 			=> 0,
-											"cr" 			=> abs($amount)
-										);
-									}
+									if($amount==0){}else{
+										if($totalAmount>0){
+											//COGS on Dr
+											$journalLines[] = array(
+												"account_id" 	=> $item->expense_account_id,
+												"dr" 			=> abs($amount),
+												"cr" 			=> 0
+											);
 
-									if($total<0 && $amount!==0){
-										//Inventory on Dr
-										$journalLines[] = array(
-											"account_id" 	=> $item->inventory_account_id,
-											"dr" 			=> abs($amount),
-											"cr" 			=> 0
-										);
+											//Inventory on Cr
+											$journalLines[] = array(
+												"account_id" 	=> $item->inventory_account_id,
+												"dr" 			=> 0,
+												"cr" 			=> abs($amount)
+											);
+										}
 
-										//COGS on Cr
-										$journalLines[] = array(
-											"account_id" 	=> $item->expense_account_id,
-											"dr" 			=> 0,
-											"cr" 			=> abs($amount)
-										);
+										if($totalAmount<0){
+											//Inventory on Dr
+											$journalLines[] = array(
+												"account_id" 	=> $item->inventory_account_id,
+												"dr" 			=> abs($amount),
+												"cr" 			=> 0
+											);
+
+											//COGS on Cr
+											$journalLines[] = array(
+												"account_id" 	=> $item->expense_account_id,
+												"dr" 			=> 0,
+												"cr" 			=> abs($amount)
+											);
+										}
 									}
 								}else{//totalQty > 0
-									$additionalCost = 0;
+									/*$additionalCost = 0;
 									if(isset($value->additional_cost)){
 										$additionalCost = floatval($value->additional_cost);
 									}
@@ -345,38 +365,44 @@ class Item_lines extends REST_Controller {
 									$item->cost = $avgCost;
 
 									$totalAmount = $avgCost * $totalQty;
-									$item->amount = $totalAmount;
+									$item->amount = $totalAmount;*/
 
-									if($total>0 && $amount!==0){
-										//COGS on Dr
-										$journalLines[] = array(
-											"account_id" 	=> $item->expense_account_id,
-											"dr" 			=> abs($amount),
-											"cr" 			=> 0
-										);
+									$avgCost = (floatval($value->cost) + ($additionalCost / $currentQuantity)) / floatval($value->rate);
+									$totalAmount = $avgCost * $totalQty;
+									$amount = abs($totalQty * floatval($value->cost)) - abs($totalAmount);
 
-										//Inventory on Cr
-										$journalLines[] = array(
-											"account_id" 	=> $item->inventory_account_id,
-											"dr" 			=> 0,
-											"cr" 			=> abs($amount)
-										);
-									}
+									if($amount==0){}else{
+										if($totalAmount>0){
+											//COGS on Dr
+											$journalLines[] = array(
+												"account_id" 	=> $item->expense_account_id,
+												"dr" 			=> abs($amount),
+												"cr" 			=> 0
+											);
 
-									if($total<0 && $amount!==0){
-										//Inventory on Dr
-										$journalLines[] = array(
-											"account_id" 	=> $item->inventory_account_id,
-											"dr" 			=> abs($amount),
-											"cr" 			=> 0
-										);
+											//Inventory on Cr
+											$journalLines[] = array(
+												"account_id" 	=> $item->inventory_account_id,
+												"dr" 			=> 0,
+												"cr" 			=> abs($amount)
+											);
+										}
 
-										//COGS on Cr
-										$journalLines[] = array(
-											"account_id" 	=> $item->expense_account_id,
-											"dr" 			=> 0,
-											"cr" 			=> abs($amount)
-										);
+										if($totalAmount<0){
+											//Inventory on Dr
+											$journalLines[] = array(
+												"account_id" 	=> $item->inventory_account_id,
+												"dr" 			=> abs($amount),
+												"cr" 			=> 0
+											);
+
+											//COGS on Cr
+											$journalLines[] = array(
+												"account_id" 	=> $item->expense_account_id,
+												"dr" 			=> 0,
+												"cr" 			=> abs($amount)
+											);
+										}
 									}
 								}
 
@@ -395,39 +421,13 @@ class Item_lines extends REST_Controller {
 
 									$journals->save();
 								}
-							}else{//Positive on hand
-								//Sum Amount
-								//Additional Cost
-								$additionalCost = 0;
-								if(isset($value->additional_cost)){
-									$additionalCost = floatval($value->additional_cost);
-								}
-								$currentAmount = ($currentQuantity * floatval($value->cost) + $additionalCost) / floatval($value->rate);
-
-								//New Average Cost = $totalAmount / $totalQuantity
-								// $totalAmount = $item->amount + $currentAmount;
-								$totalAmount = floatval($oh->totalAmount) + $currentAmount;
-								if($totalQty==0){
-
-								}else{
-									//Update item avg cost only purchase in
-									if($value->movement==1){
-										$item->cost = $totalAmount / $totalQty;
-									}
-								}
-								$item->amount = $totalAmount;
 							}
-
-							$item->quantity = $totalQty;
-							$obj->cost_avg = $item->cost;
-							$obj->inventory_quantity = $totalQty;
-							$obj->inventory_value = $item->amount;
 						}
 
-						if($value->movement==0){
+						/*if($value->movement==0){
 							$obj->cost_avg = $item->cost;
 							$obj->inventory_quantity = $item->quantity;
-							$obj->inventory_value = $item->amount;
+							$obj->inventory_value = $totalAmount;
 						}
 
 						//Update Item
@@ -451,7 +451,7 @@ class Item_lines extends REST_Controller {
 							}
 							$obj->on_po = $onPO;
 							$obj->on_so = $onSO;
-						}
+						}*/
 					}					
 				}
 			}
@@ -553,90 +553,6 @@ class Item_lines extends REST_Controller {
 		foreach ($models as $value) {
 			$obj = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->get_by_id($value->id);
-
-			//Update Avg Cost
-			// if($value->item_id>0){
-			// 	$item = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			// 	$item->where("item_type_id", 1);
-			// 	$item->where("is_assembly <>", 1);
-			// 	$item->where("is_catalog <>", 1);
-			// 	$item->get_by_id($value->item_id);
-
-			// 	if($item->exists()){
-			// 		$transaction = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			// 		$transaction->where("is_recurring <>", 1);
-			// 		$transaction->where("deleted <>", 1);
-			// 		$transaction->get_by_id($obj->transaction_id);
-
-			// 		if($value->movement!==0){
-			// 			//Sum quantity
-			// 			$oldQuanty = floatval($obj->quantity) * floatval($obj->conversion_ratio) * floatval($obj->movement);
-			// 			$prevQuantity = $obj->inventory_quantity - $oldQuanty;						
-						
-			// 			$currentQuantity = floatval($value->quantity) * floatval($value->conversion_ratio) * floatval($value->movement);
-			// 			$totalQty = $prevQuantity + $currentQuantity;
-			// 			$prevAmount = $obj->inventory_value - ($currentQuantity * $obj->cost_avg);
-
-			// 			//Sum Amount
-			// 			$currentAmount = ($currentQuantity * floatval($value->cost) + floatval($value->additional_cost)) / floatval($value->rate);
-						
-			// 			$inventoryValue = $prevAmount + $currentAmount;
-			// 			$avgCost = $inventoryValue / $totalQty;
-						
-			// 			$value->cost_avg = $avgCost;
-			// 			$value->inventory_quantity = $totalQty;
-			// 			$value->inventory_value = $inventoryValue;
-
-			// 			$data["test"][] = array(
-			// 				"oldQuanty" => $oldQuanty,
-			// 				"prevQuantity" => $prevQuantity,
-			// 				"prevAmount" => $prevAmount,
-			// 				"currentQuantity" => $currentQuantity,
-			// 				"totalQty" => $totalQty,
-			// 				"inventoryValue" => $inventoryValue,
-			// 				"avgCost" => $avgCost
-			// 			);
-						
-			// 			//Update all avg cost
-			// 			$itemLines = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			// 			$itemLines->where_related("transaction","issued_date >", $transaction->issued_date);
-			// 			$itemLines->where("item_id", $value->item_id);
-			// 			$itemLines->where("movement <>", 0);
-			// 			$itemLines->where("deleted <>", 0);
-			// 			$itemLines->get_iterated();
-
-			// 			foreach ($itemLines as $line) {
-			// 				$lines = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			// 				$lines->get_by_id($line->id);
-
-			// 				$lineQuantity = floatval($line->quantity) * floatval($line->conversion_ratio) * floatval($line->movement);
-			// 				$totalQty += $lineQuantity;
-
-			// 				$lineAmount = ($lineQuantity * floatval($line->cost) + floatval($line->additional_cost)) / floatval($line->rate);
-						
-			// 				$inventoryValue += $lineAmount;
-			// 				$avgCost = $inventoryValue / $totalQty;
-
-
-			// 				$lines->cost_avg = $avgCost;
-			// 				$lines->inventory_quantity = $totalQty;
-			// 				$lines->inventory_value = $inventoryValue;
-			// 				$lines->save();
-
-			// 				$data["test"][] = array(
-			// 					"totalQty" => $totalQty,
-			// 					"inventoryValue" => $inventoryValue,
-			// 					"avgCost" => $avgCost
-			// 				);
-			// 			}
-
-			// 			$item->quantity = $totalQty;
-			// 			$item->cost = $avgCost;
-			// 			$item->amount = $inventoryValue;
-			// 			$item->save();
-			// 		}
-			// 	}
-			// }
 
 			isset($value->transaction_id) 	? $obj->transaction_id 		= $value->transaction_id : "";
 			isset($value->item_id)			? $obj->item_id				= $value->item_id : "";
