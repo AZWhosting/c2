@@ -18849,7 +18849,6 @@
                 }else{
                     para.push({field: "location_id", value: this.get("locationSelect")});
                 }
-                para.push({field: "inst", value: banhji.institute.id});
                 this.offLineDB.query({
                     filter: para
                 }).then(function(e){
@@ -18967,7 +18966,7 @@
                         //save the file as Excel file with extension xlsx
                         kendo.saveAs({
                             dataURI: workbook.toDataURL(),
-                            fileName: "offline-"+ self.locationDS.data()[self.get("locationSelect") - 1].name + "<?php echo date('d-M-Y H:s:i'); ?>" + ".xlsx"
+                            fileName: "offline-"+ self.locationDS.data()[self.get("locationSelect") - 1].name + "<?php echo date('d-M-Y H:s'); ?>" + ".xlsx"
                         });
                         $("#loadImport").css("display", "none");
                     }else{

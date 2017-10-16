@@ -1788,16 +1788,6 @@ class Utibills extends REST_Controller {
 		$sort 	 	= $this->get("sort");
 		$data["results"] = [];
 		$data["count"] = 0;
-		foreach($filter["filters"] as $int){
-			if($int["field"] == "inst"){
-				$institute = new Institute();
-				$institute->where('id', $int["value"])->get();
-				if($institute->exists()) {
-					$conn = $institute->connection->get();
-					$this->_database = $conn->inst_database;
-				}
-			}
-		}
 		$obj = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 		//Sort
@@ -1813,12 +1803,10 @@ class Utibills extends REST_Controller {
 		//Filter
 		if(!empty($filter) && isset($filter)){
 	    	foreach ($filter["filters"] as $value) {
-	    		if($value["field"] != "inst"){
-		    		if(isset($value['operator'])) {
-						$obj->{$value['operator']}($value['field'], $value['value']);
-					} else {
-		    			$obj->where($value["field"], $value["value"]);
-					}
+	    		if(isset($value['operator'])) {
+					$obj->{$value['operator']}($value['field'], $value['value']);
+				} else {
+	    			$obj->where($value["field"], $value["value"]);
 				}
 			}
 		}
@@ -1867,6 +1855,21 @@ class Utibills extends REST_Controller {
 						};
 					}
 				}
+				//Intstallment
+				$installamount = 0;
+				$inst = new Installment(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$inst->where("meter_id", $value->id)->limit(1)->get();
+				if($inst->exists()){
+					foreach($inst as $install){
+						$institem = new Installment_schedule(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						$institem->where("installment_id", $install->id);
+						$institem->where("invoiced", 0)->limit(1)->get();
+						if($institem->exists()){
+							$installamount = floatval($institem->amount);
+						}
+					}
+				}
+
 				$recorda = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				$recorda->where("meter_id", $value->id)->order_by("id", "desc")->limit(1)->get();
 				$data["results"][] = array(
@@ -1888,7 +1891,8 @@ class Utibills extends REST_Controller {
 					"box_name" 			=> $boxname,
 					"balance" 			=> $amountOwed,
 					"plan_id" 			=> $value->plan_id,
-					"number_digit" 		=> $value->number_digit
+					"number_digit" 		=> $value->number_digit,
+					"installment" 		=> $installamount
 				);
 			}
 		}
