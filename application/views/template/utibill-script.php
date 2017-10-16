@@ -3475,10 +3475,10 @@
                                             value: self.uploadDS.data()[i].previous
                                         },
                                         {
-                                            value: self.uploadDS.data()[i].current
+                                            value: ""
                                         },
                                         {
-                                            value: 0
+                                            value: ""
                                         }
                                     ]
                                 });
@@ -3528,7 +3528,7 @@
                 round: banhji.reading.get('newRound'),
                 invoiced: 0,
                 condition: "new",
-                consumption: banhji.reading.get('currentSR') - banhji.reading.get('previousSR')
+                usage: banhji.reading.get('currentSR') - banhji.reading.get('previousSR')
             });
             banhji.reading.dataSource.sync();
             banhji.reading.dataSource.bind("requestEnd",
@@ -10107,6 +10107,7 @@
                                     invnumber: v.number,
                                     type: "Cash_Receipt",
                                     sub_total: amount_due,
+                                    amountshow: v.amount,
                                     amount: amount_due,
                                     discount: 0,
                                     fine: 0,
@@ -18848,6 +18849,7 @@
                 }else{
                     para.push({field: "location_id", value: this.get("locationSelect")});
                 }
+                para.push({field: "inst", value: banhji.institute.id});
                 this.offLineDB.query({
                     filter: para
                 }).then(function(e){
@@ -18883,7 +18885,8 @@
                                 { value: "due_date", background: "#496cad", color: "#ffffff" },
                                 { value: "reader_id", background: "#496cad", color: "#ffffff" },
                                 { value: "tablet_id", background: "#496cad", color: "#ffffff" },
-                                { value: "tablet_abbr", background: "#496cad", color: "#ffffff" }
+                                { value: "tablet_abbr", background: "#496cad", color: "#ffffff" },
+                                { value: "institute_id", background: "#496cad", color: "#ffffff" }
                             ]
                         });
                         var MonthOf = kendo.toString(new Date(self.get("monthOfSR")), "yyyy-M-dd");
@@ -18920,13 +18923,15 @@
                                     { value: DueDate },
                                     { value: self.get("readerSelect") },
                                     { value: self.get("tabletSelect") },
-                                    { value: self.get("TabletAbbr") }
+                                    { value: self.get("TabletAbbr") },
+                                    { value: banhji.institute.id}
                                 ]
                             });
                         });
                         var workbook = new kendo.ooxml.Workbook({
                             sheets: [{
                                 columns: [
+                                    { autoWidth: true },
                                     { autoWidth: true },
                                     { autoWidth: true },
                                     { autoWidth: true },
@@ -18962,7 +18967,7 @@
                         //save the file as Excel file with extension xlsx
                         kendo.saveAs({
                             dataURI: workbook.toDataURL(),
-                            fileName: "offline-" + "<?php echo date('d-M-Y'); ?>" + ".xlsx"
+                            fileName: "offline-"+ self.locationDS.data()[self.get("locationSelect") - 1].name + "<?php echo date('d-M-Y H:s:i'); ?>" + ".xlsx"
                         });
                         $("#loadImport").css("display", "none");
                     }else{
@@ -19014,9 +19019,6 @@
         saveTXNoffline      : function(){
             var self = this;
             if (this.uploadOfflineDS.data().length === 0) {
-                var notifi = $("#ntf1").data("kendoNotification");
-                notifi.hide();
-                notifi.error(this.lang.lang.error_message);
             } else {
                 $("#loadImport").css("display", "block");
                 this.uploadOfflineDS.sync();
@@ -20329,7 +20331,7 @@
                     value: obj.contact_type_id
                 }],
                 sort: {
-                    field: "number",
+                    field: "id",
                     dir: "desc"
                 },
                 page: 1,
@@ -20338,7 +20340,7 @@
                 var view = self.numberDS.view();
                 var lastNo = 0;
                 if (view.length > 0) {
-                    lastNo = kendo.parseInt(view[0].number);
+                    lastNo = kendo.parseInt(view[0].id);
                 }
                 lastNo++;
                 obj.set("number", kendo.toString(lastNo, "00000"));
@@ -20443,7 +20445,7 @@
             });
             var obj = this.dataSource.at(0);
             this.set("obj", obj);
-            this.typeChanges();
+            // this.typeChanges();
         },
         objSync: function() {
             var self = this,
@@ -20530,9 +20532,13 @@
         closeConfirm: function() {
             this.set("showConfirm", false);
         },
+        ConTypeID  : "",
         //Pattern
         typeChanges: function(e) {
             var obj = this.get("obj");
+            var Index = parseInt(e.sender._old);
+            obj.set("abbr", this.contactTypeDS.data()[Index - 1].abbr);
+            this.set("ConTypeID", Index);
             if (obj.contact_type_id && obj.isNew()) {
                 this.applyPattern();
                 this.generateNumber();
@@ -20545,21 +20551,15 @@
             this.patternDS.query({
                 filter: [{
                         field: "contact_type_id",
-                        value: obj.contact_type_id
+                        value: this.get("ConTypeID")
                     },
-                    {
-                        field: "is_pattern",
-                        value: 1
-                    }
                 ],
                 page: 1,
                 pageSize: 1
             }).then(function(data) {
-                var view = self.patternDS.view(),
-                    type = self.contactTypeDS.get(view[0].contact_type_id);
+                var view = self.patternDS.view();
                 if (view.length > 0) {
                     obj.set("country_id", view[0].country_id);
-                    obj.set("abbr", type.abbr);
                     obj.set("gender", view[0].gender);
                     obj.set("company", view[0].company);
                     obj.set("vat_no", view[0].vat_no);
@@ -20579,6 +20579,7 @@
                     obj.set("deposit_account_id", view[0].deposit_account_id);
                     obj.set("trade_discount_id", view[0].trade_discount_id);
                     obj.set("settlement_discount_id", view[0].settlement_discount_id);
+                    obj.set("locale", banhji.institute.locale);
                 }
             });
         }

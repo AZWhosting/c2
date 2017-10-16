@@ -3028,7 +3028,7 @@
 			#=current#
 		</td>
 		<td align="center">
-			#=current-previous#
+			#=usage#
 		</td>
 		<td align="center">
 			# if(!invoiced || banhji.waterCenter.readingVM.dataSource.indexOf(data) == 0) {#
@@ -3080,15 +3080,11 @@
 				    		<span class="glyphicons no-js remove_2" 
 								data-bind="click: cancel"><i></i></span>
 						</div>
-
 						<div class="clear"></div>
-
-						<!-- Top Part -->
 				    	<div class="row-fluid">
 				    		<div class="col-sm-6 well">
 								<div class="row">
 									<div class="col-xs-12 col-sm-6">
-										<!-- Group -->
 										<div class="control-group">
 											<label for="ddlContactType"><span data-bind="text: lang.lang.customer_type"></span> <span style="color:red">*</span></label>
 											<input id="ddlContactType" name="ddlContactType"
@@ -3097,23 +3093,20 @@
 							                   data-value-primitive="true"
 							                   data-text-field="name"
 							                   data-value-field="id"
+							                   data-auto-bind="false"
 							                   data-bind="value: obj.contact_type_id,
-							                   			  disabled: obj.is_pattern,
 							                              source: contactTypeDS,
 							                              events:{change: typeChanges}"
 							                   data-option-label="(--- Select ---)"
 							                   required data-required-msg="required" style="width: 100%;" />	            
 										</div>
-										<!-- // Group END -->
 									</div>
 									<div class="col-xs-12 col-sm-6">
-										<!-- Group -->
 										<div class="control-group">	
 											<label for="txtAbbr"><span data-bind="text: lang.lang.number"></span> <span style="color:red">*</span></label>			
 					              			<br>
 					              			<input id="txtAbbr" name="txtAbbr" class="k-textbox"
-					              				data-bind="value: obj.abbr, 
-					              						   disabled: obj.is_pattern" 
+					              				data-bind="value: obj.abbr" 
 					              				placeholder="eg. AB" required data-required-msg="required"
 					              				style="width: 48%; float: left;" />
 						              		<span style="float: left;">-</span>					              		
@@ -3125,13 +3118,10 @@
 							                   placeholder="eg. 001" required data-required-msg="required"
 							                   style="width: 48%; float: left;" />
 										</div>
-										<!-- // Group END -->											
 									</div>
 								</div>
-								
 								<div class="row">
 									<div class="col-xs-12 col-sm-12">
-										<!-- Group -->
 										<div class="control-group">	
 											<label for="fullname"><span data-bind="text: lang.lang.full_name"></span> <span style="color:red">*</span></label>
 								            <input id="fullname" name="fullname" class="k-textbox" 
@@ -3140,14 +3130,11 @@
 							            					attr: { placeholder: phFullname }" 
 							              		required data-required-msg="required"
 							              		style="width: 100%;" />
-										</div>	
-										<!-- // Group END -->
+										</div>
 									</div>
 								</div>
-
 								<div class="row">
 									<div class="col-xs-12 col-sm-6">
-										<!-- Group -->
 										<div class="control-group">
 											<label for="customerStatus"><span data-bind="text: lang.lang.status"></span> <span style="color:red">*</span></label>
 								            <input id="customerStatus" name="customerStatus" 
@@ -3158,11 +3145,9 @@
 							            		data-bind="source: statusList, value: obj.status"
 							            		data-option-label="(--- Select ---)"
 							            		required data-required-msg="required" style="width: 100%;" />
-										</div>					
-										<!-- // Group END -->
+										</div>
 									</div>
 									<div class="col-xs-12 col-sm-6">
-										<!-- Group -->
 										<div class="control-group">
 											<label for="registeredDate"><span data-bind="text: lang.lang.register_date"></span> <span style="color:red">*</span></label>
 								            <input id="registeredDate" name="registeredDate" 
@@ -3171,33 +3156,26 @@
 				            					data-format="dd-MM-yyyy"
 				            					data-parse-formats="yyyy-MM-dd" 
 				            					placeholder="dd-MM-yyyy" required data-required-msg="required" style="width: 100%;" />
-										</div>					
-										<!-- // Group END -->
+										</div>
 									</div>
 								</div>						
 							</div>
-
 							<div class="col-sm-6">
-								<div class="row-fluid">	
-									<!-- Map -->
+								<div class="row-fluid">
 									<div id="map" class="col-xs-12 col-sm-12" style="height: 130px;"></div>
 								</div>
 								<div class="separator line bottom"></div>
 								<div class="row-fluid">	
 									<div class="col-xs-12 col-sm-6">
-										<!-- Group -->
 										<div class="control-group">
 							    			<label for="latitute"><span data-bind="text: lang.lang.latitute"></span> </label>
 											<div class="input-prepend">
 												<span style="float: left;" class="add-on glyphicons direction"><i></i></span>
 												<input style="float: left;  width: 77%; padding: 4px 8px; border: 1px solid #efefef; line-height: 20px; box-shadow: none;" type="text" class="input-large span12" data-bind="value: obj.latitute, events:{change: loadMap}" placeholder="012345.67897">
 											</div>
-										</div>									
-										<!-- // Group END -->
-									</div>	
-									
-									<div class="col-xs-12 col-sm-6">	
-										<!-- Group -->
+										</div>
+									</div>
+									<div class="col-xs-12 col-sm-6">
 										<div class="control-group">
 							    			<label for="longtitute"><span data-bind="text: lang.lang.longtitute"></span> </label>
 							    			<div class="input-prepend">
@@ -3205,16 +3183,12 @@
 												<input style="float: left;  width: 77%;  box-shadow: none;padding: 4px 8px; border: 1px solid #efefef; line-height: 20px; box-shadow: none;" type="text" class="input-large span12" data-bind="value: obj.longtitute, events:{change: loadMap}" placeholder="012345.67897">
 											</div>										
 										</div>
-										<!-- // Group END -->
 									</div>										
 								</div>
 							</div>
 						</div>
-
-						<!-- // Bottom Tabs -->
 						<div class="row-fluid">
 							<div class="box-generic">
-							    <!-- //Tabs Heading -->
 							    <div class="tabsbar tabsbar-1" style="background: #203864 !important; color: #fff;">
 							        <ul class="row-fluid row-merge">
 							            <li class="span2 glyphicons nameplate_alt active">
@@ -3231,9 +3205,7 @@
 							            </li>
 							        </ul>
 							    </div>
-							    <!-- // Tabs Heading END -->
 							    <div class="tab-content">
-							    	<!-- //GENERAL INFO -->
 							        <div class="tab-pane active" id="tab1">
 							        	<div class="row" style="margin-bottom: 15px;">
 							        		<div class="col-sm-3 col-sx-12">
@@ -3255,22 +3227,22 @@
 							              	<div class="col-sm-3 col-sx-12"><span data-bind="text: lang.lang.country"></span></div>
 							              	<div class="col-sm-3 col-sx-12">
 							              		<input data-role="dropdownlist"
-						              			   data-option-label="(--- Select ---)"	                   
+						              			   data-option-label="(--- Select ---)"   
 								                   data-value-primitive="true"
 								                   data-text-field="name"
 								                   data-value-field="id"
-								                   data-bind="value: obj.country_id,
-								                              source: countryDS" style="width: 100%;" />
+								                   data-bind="
+								                   		value: obj.country_id,
+								                        source: countryDS" 
+								                   style="width: 100%;" />
 							              	</div>      	
 							            	<div class="col-sm-3 col-sx-12"><span data-bind="text: lang.lang.email"></span></div>
 							              	<div class="col-sm-3 col-sx-12"><input class="k-textbox" data-bind="value: obj.email" placeholder="e.g. me@email.com" style="width: 100%;" />
 							              	</div>
-
 							            </div>
 							            <div class="row" style="margin-bottom: 15px;">
-
 							              	<div class="col-sm-3 col-sx-12"><span data-bind="text: lang.lang.city"></span></div>
-							              	<div class="col-sm-3 col-sx-12"><input class="k-textbox" data-bind="value: obj.city" placeholder="city name ..." style="width: 100%;" /></div>							              	
+							              	<div class="col-sm-3 col-sx-12"><input class="k-textbox" data-bind="value: obj.city" placeholder="city name ..." style="width: 100%;" /></div>
 							            	<div class="col-sm-3 col-sx-12"><span data-bind="text: lang.lang.post_code"></span></div>
 							              	<div class="col-sm-3 col-sx-12"><input class="k-textbox" data-bind="value: obj.post_code" placeholder="e.g. 12345" style="width: 100%;" /></div>
 							            </div>
@@ -3280,10 +3252,8 @@
 							              	<div class="col-sm-3 col-sx-12"><textarea class="k-textbox" data-bind="value: obj.address" placeholder="where you live ..." style="width: 100%;" /></textarea></div>									            								              	
 							            	<div class="col-sm-3 col-sx-12"><span data-bind="text: lang.lang.memo"></span></div>
 							              	<div class="col-sm-3 col-sx-12"><textarea rows="2" class="k-textbox" data-bind="value: obj.memo" placeholder="memo ..." style="width: 100%;" ></textarea></div>
-							              	
 							            </div>
 							            <div class="row">
-
 							              	<div class="col-sm-3 col-sx-12">
 							            		<span for="txtBillTo" data-bind="click: copyBillTo"><span data-bind="text: lang.lang.bill_to"></span> </span>		            
 							            	</div>
@@ -3294,12 +3264,8 @@
 							            	<div class="col-sm-3 col-sx-12">
 							            		<textarea rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.ship_to" placeholder="delivered to ..."></textarea>
 							            	</div>
-
 							        	</div>
 						        	</div>
-							        <!-- //GENERAL INFO END -->
-
-							        <!-- //Utility INFO -->
 							        <div class="tab-pane" id="tab2">
 							        	<div class="row">
 							        		<div class="col-xs-12 col-sm-2">
@@ -4625,12 +4591,8 @@
 												</table>
 											</div>
 										</div>
-										<!-- // Tab content END -->
-
-										<!-- Tab content -->
-										<div id="tabReading" style="border: 1px solid #ccc; padding: 15px" class="tab-pane widget-body-regular">	
+										<div id="tabReading" style="border: 1px solid #ccc; padding: 15px" class="tab-pane widget-body-regular">
 											<h4 class="separator bottom" style="margin-top: 10px;" data-bind="text: lang.lang.please_upload_reading_book">Please upload reading book</h4>
-
 											<div class="row clear" style="overflow: hidden;margin-bottom: 20px;">
 												<div class="col-xs-12 col-sm-4" >
 													<div class="control-group">	
@@ -4732,7 +4694,7 @@
 													</div>
 												</div>
 											</div>
-											<div class="fileupload fileupload-new margin-none" data-provides="fileupload" data-bind="visible: MonthTo">
+											<div style="margin-top: 20px;" class="fileupload fileupload-new margin-none" data-provides="fileupload" data-bind="visible: MonthTo">
 											  	<input type="file"  data-role="upload" data-show-file-list="true" data-bind="events: {select: onSelected}" id="myFile"  class="margin-none" />
 											</div>
 											<table data-bind="visible: errorShow" class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
@@ -7164,7 +7126,7 @@
 		<td>#=invnumber#</td>
 		<td>#=meter#</td>
 		<td class="center">
-			#=kendo.toString(sub_total, locale=="km-KH"?"c0":"c", locale)#		
+			#=kendo.toString(amountshow, locale=="km-KH"?"c0":"c", locale)#		
 		</td>
 		<td class="center" data-bind="visible: chhDiscount">
 			<input data-role="numerictextbox"
@@ -8836,7 +8798,7 @@
 																		data-role="dropdownlist" 
 																		style="width: 100%; margin-bottom: 10px;" 
 																		data-option-label="Reader ..." 
-																		data-auto-bind="true" 
+																		data-auto-bind="false" 
 																		data-value-primitive="true" 
 																		data-text-field="name" 
 																		data-value-field="id" 
@@ -8850,7 +8812,7 @@
 																		data-role="dropdownlist" 
 																		style="width: 100%; margin-bottom: 10px;" 
 																		data-option-label="Tablet ..." 
-																		data-auto-bind="true" 
+																		data-auto-bind="false" 
 																		data-value-primitive="true" 
 																		data-text-field="name" 
 																		data-value-field="id"

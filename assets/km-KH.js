@@ -1195,7 +1195,7 @@ var	km_KH = {
 	"meter_number": "លេខ កុងទ័រ",
 	"previous": "លេខ ចាស់",
 	"current": "លេខ ថ្មី",
-	"to_date": "ថ្ងៃនេះ",
+	"to_date": "ដល់ថ្ងៃ",
 	"installment": "រំលោះ",
 	"amount_paid": "ទឹកប្រាក់​បាន​បង់",
 

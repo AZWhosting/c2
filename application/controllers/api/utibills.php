@@ -58,17 +58,41 @@ class Utibills extends REST_Controller {
 				//Calulate Fine
 				$fineAmount = 0;
 				if($value->status == 0){
-					$fine = new Winvoice_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-					$fine->where("transaction_id", $value->id);
-					$fine->where("type", "fine")->order_by("id", "desc")->limit(1)->get();
-					if($fine->exists()){
-						$dueDate = new DateTime($value->due_date);
-						$fineDate = new DateTime(date('Y-m-d'));
-						if($fineDate > $dueDate){
-							$fineDate = $fineDate->diff($dueDate)->days;
-							$fineDateAmount = intval($fine->quantity);
-							if($fineDate >= $fineDateAmount){
-								$fineAmount = floatval($fine->amount);
+					//Chhayhout Find module
+					if($this->_database == 'db_1501212262'){
+						$fine = new Winvoice_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						$fine->where("transaction_id", $value->id);
+						$fine->where("type", "fine")->order_by("id", "desc")->limit(1)->get();
+						if($fine->exists()){
+							$dueDate = new DateTime($value->due_date);
+							$ddate = $dueDate->getTimestamp();
+							$fineDate = new DateTime(date('Y-m-d'));
+							$fdate = $fineDate->getTimestamp();
+							if($fdate > $ddate){
+								$fDay = $fineDate->diff($dueDate)->days;
+								$fineDay = $fDay * 500;
+								$fineAmount = floatval($fineDay);
+								if($fDay >= 10){
+									$fineAmount += 10000;
+								}
+							}
+						}
+					//Normal fine
+					}else{
+						$fine = new Winvoice_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						$fine->where("transaction_id", $value->id);
+						$fine->where("type", "fine")->order_by("id", "desc")->limit(1)->get();
+						if($fine->exists()){
+							$dueDate = new DateTime($value->due_date);
+							$ddate = $dueDate->getTimestamp();
+							$fineDate = new DateTime(date('Y-m-d'));
+							$fdate = $fineDate->getTimestamp();
+							if($fdate > $ddate){
+								$fineDate = $fineDate->diff($dueDate)->days;
+								$fineDateAmount = intval($fine->quantity);
+								if($fineDate >= $fineDateAmount){
+									$fineAmount = floatval($fine->amount);
+								}
 							}
 						}
 					}
@@ -150,18 +174,41 @@ class Utibills extends REST_Controller {
 				if($relateinv->exists()){
 					foreach ($relateinv as $relate) {
 						//Calulate Fine
-						$fineAmount = 0;
-						if($relate->status == 0){
+						//Chhayhout Find module
+						if($this->_database == 'db_1501212262'){
 							$fine = new Winvoice_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-							$fine->where("transaction_id", $relate->id);
+							$fine->where("transaction_id", $value->id);
 							$fine->where("type", "fine")->order_by("id", "desc")->limit(1)->get();
 							if($fine->exists()){
-								$dueDate = new DateTime($relate->due_date);
+								$dueDate = new DateTime($value->due_date);
+								$ddate = $dueDate->getTimestamp();
 								$fineDate = new DateTime(date('Y-m-d'));
-								$fineDate = $fineDate->diff($dueDate)->days;
-								$fineDateAmount = intval($fine->usage);
-								if($fineDate >= $fineDateAmount){
-									$fineAmount = floatval($fine->amount);
+								$fdate = $fineDate->getTimestamp();
+								if($fdate > $ddate){
+									$fDay = $fineDate->diff($dueDate)->days;
+									$fineDay = $fDay * 500;
+									$fineAmount = floatval($fineDay);
+									if($fDay >= 10){
+										$fineAmount += 10000;
+									}
+								}
+							}
+						//Normal fine
+						}else{
+							$fine = new Winvoice_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+							$fine->where("transaction_id", $value->id);
+							$fine->where("type", "fine")->order_by("id", "desc")->limit(1)->get();
+							if($fine->exists()){
+								$dueDate = new DateTime($value->due_date);
+								$ddate = $dueDate->getTimestamp();
+								$fineDate = new DateTime(date('Y-m-d'));
+								$fdate = $fineDate->getTimestamp();
+								if($fdate > $ddate){
+									$fineDate = $fineDate->diff($dueDate)->days;
+									$fineDateAmount = intval($fine->quantity);
+									if($fineDate >= $fineDateAmount){
+										$fineAmount = floatval($fine->amount);
+									}
 								}
 							}
 						}
@@ -420,6 +467,7 @@ class Utibills extends REST_Controller {
 	   			if($value->amount_fine > 0){
 	   				$famount = $oldtran->amount + $value->amount_fine;
 	   				$oldtran->fine = $value->amount_fine;
+	   				$oldtran->amount = $oldtran->amount + $value->amount_fine;
 	   			}else{
 	   				$famount = $oldtran->amount;
 	   			}
@@ -437,7 +485,6 @@ class Utibills extends REST_Controller {
 	   			}else{
 	   				$oldtran->status = 2;
 	   			}
-	   			$oldtran->sync = 1;
 	   			$oldtran->save();
 	   			//Session Recieve
 	   			if($value->session_id){
@@ -1741,8 +1788,16 @@ class Utibills extends REST_Controller {
 		$sort 	 	= $this->get("sort");
 		$data["results"] = [];
 		$data["count"] = 0;
-		$is_recurring = 0;
-
+		foreach($filter["filters"] as $int){
+			if($int["field"] == "inst"){
+				$institute = new Institute();
+				$institute->where('id', $int["value"])->get();
+				if($institute->exists()) {
+					$conn = $institute->connection->get();
+					$this->_database = $conn->inst_database;
+				}
+			}
+		}
 		$obj = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 		//Sort
@@ -1758,10 +1813,12 @@ class Utibills extends REST_Controller {
 		//Filter
 		if(!empty($filter) && isset($filter)){
 	    	foreach ($filter["filters"] as $value) {
-	    		if(isset($value['operator'])) {
-					$obj->{$value['operator']}($value['field'], $value['value']);
-				} else {
-	    			$obj->where($value["field"], $value["value"]);
+	    		if($value["field"] != "inst"){
+		    		if(isset($value['operator'])) {
+						$obj->{$value['operator']}($value['field'], $value['value']);
+					} else {
+		    			$obj->where($value["field"], $value["value"]);
+					}
 				}
 			}
 		}
@@ -1849,28 +1906,6 @@ class Utibills extends REST_Controller {
 		$data["count"] = 0;
 
 		$obj = new Offline(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-
-		//Sort
-		if(!empty($sort) && isset($sort)){
-			foreach ($sort as $value) {
-				if(isset($value['operator'])){
-					$obj->{$value['operator']}($value["field"], $value["dir"]);
-				}else{
-					$obj->order_by($value["field"], $value["dir"]);
-				}
-			}
-		}
-
-		//Filter
-		if(!empty($filter) && isset($filter)){
-	    	foreach ($filter["filters"] as $value) {
-	    		if(isset($value["operator"])) {
-					$obj->{$value["operator"]}($value["field"], $value["value"]);
-				} else {
-	    			$obj->where($value["field"], $value["value"]);
-				}
-			}
-		}
 
 		$obj->where("type", "tablet");
 		//Results
@@ -1964,28 +1999,6 @@ class Utibills extends REST_Controller {
 		$data["count"] = 0;
 
 		$obj = new Offline(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-
-		//Sort
-		if(!empty($sort) && isset($sort)){
-			foreach ($sort as $value) {
-				if(isset($value['operator'])){
-					$obj->{$value['operator']}($value["field"], $value["dir"]);
-				}else{
-					$obj->order_by($value["field"], $value["dir"]);
-				}
-			}
-		}
-
-		//Filter
-		if(!empty($filter) && isset($filter)){
-	    	foreach ($filter["filters"] as $value) {
-	    		if(isset($value["operator"])) {
-					$obj->{$value["operator"]}($value["field"], $value["value"]);
-				} else {
-	    			$obj->where($value["field"], $value["value"]);
-				}
-			}
-		}
 
 		$obj->where("type", "reader");
 		//Results

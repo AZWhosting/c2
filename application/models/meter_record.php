@@ -1,8 +1,8 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Meter_record extends DataMapper {
-	protected $created_field = "created_at";
-	protected $updated_field = "updated_at";
+	// protected $created_field = "created_at";
+	// protected $updated_field = "updated_at";
 
 	public $has_one = array("meter", "invoice_line",
 		'employee' => array(

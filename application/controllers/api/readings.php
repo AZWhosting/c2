@@ -133,7 +133,7 @@ class Readings extends REST_Controller {
 			$obj->month_of 	= isset($value->month_of)	? date('Y-m-d', strtotime($value->month_of)): date('Y-m-d');
 			$obj->to_date 	= isset($value->to_date)	? date('Y-m-d', strtotime($value->to_date)):date('Y-m-d');
 			$obj->invoiced 	=  0;
-			$obj->sync 	= 1;
+			$obj->created_at = date('Y-m-d H:i:s');
 			if($obj->save()){								
 				//Respsone
 				$data["results"][] = array(
@@ -171,6 +171,7 @@ class Readings extends REST_Controller {
 			$obj->from_date 			= isset($value->from_date)			?$value->from_date: "";
 			$obj->to_date 				= isset($value->to_date)			?$value->to_date: "";
 			$obj->meter_number 			= isset($value->meter_number)		?$value->meter_number: "";
+			$obj->updated_at = date('Y-m-d H:i:s');
 			$obj->usage 				= $obj->current - $obj->previous;
 			if($obj->invoiced == 0) {
 				// $obj->previous 				= isset($value->previous)			?$value->previous: "";
