@@ -18885,6 +18885,7 @@
                                 { value: "reader_id", background: "#496cad", color: "#ffffff" },
                                 { value: "tablet_id", background: "#496cad", color: "#ffffff" },
                                 { value: "tablet_abbr", background: "#496cad", color: "#ffffff" },
+                                { value: "installment", background: "#496cad", color: "#ffffff" },
                                 { value: "institute_id", background: "#496cad", color: "#ffffff" }
                             ]
                         });
@@ -18923,6 +18924,7 @@
                                     { value: self.get("readerSelect") },
                                     { value: self.get("tabletSelect") },
                                     { value: self.get("TabletAbbr") },
+                                    { value: v.installment},
                                     { value: banhji.institute.id}
                                 ]
                             });
