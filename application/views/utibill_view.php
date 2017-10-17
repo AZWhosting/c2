@@ -3106,7 +3106,7 @@
 											<label for="txtAbbr"><span data-bind="text: lang.lang.number"></span> <span style="color:red">*</span></label>			
 					              			<br>
 					              			<input id="txtAbbr" name="txtAbbr" class="k-textbox"
-					              				data-bind="value: obj.abbr" 
+					              				data-bind="value: obj.abbr, events: {change: proChange}" 
 					              				placeholder="eg. AB" required data-required-msg="required"
 					              				style="width: 48%; float: left;" />
 						              		<span style="float: left;">-</span>					              		
@@ -3127,7 +3127,8 @@
 								            <input id="fullname" name="fullname" class="k-textbox" 
 							            		data-bind="value: obj.name, 
 							            					disabled: obj.is_pattern,
-							            					attr: { placeholder: phFullname }" 
+							            					attr: { placeholder: phFullname },
+							            					events: {change: proChange}" 
 							              		required data-required-msg="required"
 							              		style="width: 100%;" />
 										</div>
@@ -3197,12 +3198,6 @@
 							            <li class="span2 glyphicons usd">
 							            	<a href="#tab3" data-toggle="tab"><i></i> <span><span data-bind="text: lang.lang.account"></span></span></a>
 							            </li>
-							            <li class="span2 glyphicons parents">
-							            	<a href="#tab4" data-toggle="tab"><i></i> <span><span data-bind="text: lang.lang.contact"></span></span></a>
-							            </li>
-							            <li data-bind="visible: propertyVisible" class="span2 glyphicons adress_book">
-							            	<a href="#tab2" data-toggle="tab"><i></i> <span><span data-bind="text: lang.lang.add_property">Add Property</span></span></a>
-							            </li>
 							        </ul>
 							    </div>
 							    <div class="tab-content">
@@ -3266,61 +3261,7 @@
 							            	</div>
 							        	</div>
 						        	</div>
-							        <div class="tab-pane" id="tab2">
-							        	<div class="row">
-							        		<div class="col-xs-12 col-sm-2">
-								            	<input 
-								            		data-bind="value: pAbbr, 
-								            			attr: {placeholder: lang.lang.abbr}" type="text"
-								            		style="height: 32px; padding: 5px; width: 100%;"  class="span2 k-textbox k-invalid" />
-							            	</div>
-							            	<div class="col-xs-12 col-sm-3">
-								            	<input 
-								            		data-bind="value: pCode, 
-								            			attr: {placeholder: lang.lang.code}" type="text"
-								            		style="height: 32px; padding: 5px; width: 100%;"  class="span2 k-textbox k-invalid" />
-								            </div>
-								            <div class="col-xs-12 col-sm-3 width: 100%;">	
-								            	<input 
-								            		data-bind="value: pName, 
-								            			attr: {placeholder: lang.lang.name}" type="text"
-								            		style="height: 32px; padding: 5px; width: 100%;"  class="span2 k-textbox k-invalid" />
-								            </div>
-								            <div class="col-xs-12 col-sm-2">
-								            	<input 
-								            		data-bind="value: pAddress, 
-								            			attr: {placeholder: lang.lang.address}" type="text"
-								            		style="height: 32px; padding: 5px; width: 100%;"  class="span2 k-textbox k-invalid" />
-								            </div>
-								            <div class="col-xs-12 col-sm-2">
-								            	<a class="btn-icon btn-primary glyphicons circle_plus cutype-icon" style="width: 80px; padding: 5px 7px 5px 35px !important; text-align: left;" data-bind="click: addProperty"><i></i><span data-bind="text: lang.lang.add">Add</span></a>
-							            	</div>
-							            </div>
-
-						            	<div class="row-fluid" style="overflow: hidden;">
-								        	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center">
-								        		<thead>
-									        		<tr>
-										        		<th style="vertical-align: top;" data-bind="text: lang.lang.abbr">ABBR</th>
-										        		<th style="vertical-align: top;" data-bind="text: lang.lang.code">Code</th>
-										        		<th style="vertical-align: top;" data-bind="text: lang.lang.name">Name</th>
-										        		<th style="vertical-align: top;" data-bind="text: lang.lang.address">Address</th>
-										        		<th style="vertical-align: top;" data-bind="text: lang.lang.action">Action</th>
-									        		</tr>
-									        	</thead>
-									        	<tbody 
-									        		data-role="listview" 
-									        		data-bind="source: propertyDS" 
-									        		data-template="property-template-list" 
-									        		data-edit-template="property-edit-template-list"
-									        		data-auto-bind="false">
-									        	</tbody>
-								        	</table>
-								        </div>
-						        	</div>
-							        <!-- //Utility END -->
-
-							        <!-- //ACCOUNTING -->
+							        
 							        <div class="tab-pane" id="tab3">
 							        	<div class="row">	
 							            	<div class="col-sm-3 col-xs-12">
@@ -3392,8 +3333,7 @@
 									            	data-value-primitive="true"
 									                data-text-field="code"
 									                data-value-field="locale"
-													data-bind="value: obj.locale,
-																disabled: isProtected, 
+													data-bind="value: obj.locale, 
 																source: currencyDS"
 													data-option-label="(--- Select ---)" 
 													required data-required-msg="required" style="width: 100%;" />
@@ -3464,44 +3404,18 @@
 											</div>																							
 										</div>
 						        	</div>
-							        <!-- //ACCOUNTING END -->						       
-
-							        <!-- //CONTACT PERSON -->
-							        <div class="tab-pane" id="tab4">
-							        	<span style="margin-bottom: 15px;" class="btn btn-primary btn-icon glyphicons circle_plus" data-bind="click: addEmptyContactPerson"><i></i><span data-bind="text: lang.lang.new_contact_person"></span></span>
-
-							        	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center">
-									        <thead>
-									            <tr>
-									                <th style="vertical-align: top;"><span data-bind="text: lang.lang.name"></span></th>
-									                <th style="vertical-align: top;"><span data-bind="text: lang.lang.department"></span></th>						                
-									                <th style="vertical-align: top;"><span data-bind="text: lang.lang.phone"></span></th>
-									                <th style="vertical-align: top;"><span data-bind="text: lang.lang.email"></span></th>
-									                <th style="vertical-align: top;"></th>										               
-									            </tr>
-									        </thead>
-									        <tbody data-role="listview"	  		
-									        		data-auto-bind="false"
-									        		data-template="contact-person-row-tmpl"
-									        		data-bind="source: contactPersonDS">
-									        </tbody>
-									    </table>
-						        	</div>
-							        <!-- //CONTACT PERSON END -->
 							    </div>
 							</div>
 						</div>
-						<!-- Form actions -->
 						<div class="box-generic bg-action-button">
 							<div id="ntf1" data-role="notification"></div>
 							<div class="row">
 								<div class="col-sm-12" align="right">
 									<span class="btn-btn" onclick="javascript:window.history.back()" data-bind="click: cancel" ><span data-bind="text: lang.lang.cancel"></span></span>
-									<span id="saveNew" class="btn-btn" ><span data-bind="text: lang.lang.save"></span></span>
+									<span id="saveNew" data-bind="click: save, visible: saveProcess" class="btn-btn" ><span data-bind="text: lang.lang.save"></span></span>
 								</div>
 							</div>
 						</div>
-						<!-- // Form actions END -->
 					</div>
 				</div>
 			</div>
@@ -3603,7 +3517,7 @@
 											 data-bind="source: contactDS"
 											 data-row-template="waterCenter-customer-list-tmpl"
 											 data-columns="[{title: 'Customers'}]"
-											 data-selectable=true
+											 data-selectable="true"
 											 data-height="400"
 											 data-scrollable="{virtual: true}"></div>
 									</div>
@@ -5445,10 +5359,7 @@
 						        		data-bind="source: invoiceCollection.dataSource"></tbody>
 						        <tfoot data-template="printbill-footer-template" 
 							        		data-bind="source: this"></tfoot>	            
-						    </table>
-						    <div id="pager" class="k-pager-wrap"
-						    	 data-auto-bind="false"
-					             data-role="pager" data-bind="source: invoiceCollection.dataSource"></div>					       	
+						    </table>				       	
 				        </div>
 
 				        <div class="box-generic bg-action-button">
@@ -5631,6 +5542,7 @@
 									<td align="right">-#= kendo.toString(invoice_lines[j].amount * amountTariff, locale=="km-KH"?"c0":"c", locale)#</td>
 								#}#
 							</tr>
+						#}else if(invoice_lines[j].type == "fine"){#
 						#}else{#
 							<tr>
 								<td colspan="3" align="left">#: invoice_lines[j].number#</td>
@@ -13107,4 +13019,4 @@
 			</div>
 		</div>
 	</div>
-</script>                                    
+</script>

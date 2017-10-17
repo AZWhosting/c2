@@ -196,7 +196,7 @@ abstract class REST_Controller extends CI_Controller
 	{
 		parent::__construct();
 
-		HEADER("Access-Control-Allow-Origin: *");
+		// HEADER("Access-Control-Allow-Origin: *");
 		// Start the timer for how long the request takes
 		$this->_start_rtime = microtime(TRUE);		
 

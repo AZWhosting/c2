@@ -5549,7 +5549,7 @@
         contactDS: new kendo.data.DataSource({
             transport: {
                 read: {
-                    url: apiUrl + "utibills/pcontact",
+                    url: apiUrl + "utibills/contacts",
                     type: "GET",
                     headers: banhji.header,
                     dataType: 'json'
@@ -5623,7 +5623,6 @@
             var boxwindow = $("#addProperty").kendoWindow({
                 title: this.lang.lang.add_property
             });
-            this.contactDS.read();
         },
         loadContact: function(id) {
             var self = this;
@@ -7648,7 +7647,7 @@
                 var MeterID = v.meter.id;
                 
                 aSold += Total;
-                aSoldL = kendo.toString(aSold, v.contact.locale == "km-KH" ? "c0" : "c", v.contact.locale);
+                aSoldL = kendo.toString(aSold, banhji.institute.currency.locale == "km-KH" ? "c0" : "c", v.contact.locale);
                 //set INV
                 if(v.meter.group == 0){
                     self.calInvoice(Total, v.contact, invoiceItems, MeterLocation, MeterPole, MeterBox, MeterID, locale);
@@ -8024,7 +8023,7 @@
             $.each(this.printArray, function(i, v) {
                 tMeter += kendo.parseInt(v.consumption);
                 AmountT += kendo.parseFloat(v.amount);
-                AmountTA = kendo.toString(AmountT, v.locale == "km-KH" ? "c0" : "c", v.locale);
+                AmountTA = kendo.toString(AmountT, banhji.institute.currency.locale == "km-KH" ? "c0" : "c", v.locale);
             });
             this.set("amountTotal", AmountTA);
             this.set("totalMeter", tMeter);
@@ -19911,8 +19910,6 @@
     banhji.customer = kendo.observable({
         lang: langVM,
         dataSource: dataStore(apiUrl + "utibills/contacts"),
-        propertyDS: dataStore(apiUrl + "properties"),
-        proDS: dataStore(apiUrl + "properties"),
         patternDS: dataStore(apiUrl + "contacts"),
         numberDS: dataStore(apiUrl + "contacts"),
         deleteDS: dataStore(apiUrl + "transactions"),
@@ -19921,13 +19918,7 @@
         paymentTermDS: banhji.source.paymentTermDS,
         paymentMethodDS: banhji.source.paymentMethodDS,
         countryDS: banhji.source.countryDS,
-        currencyDS: new kendo.data.DataSource({
-            data: banhji.source.currencyList,
-            filter: {
-                field: "status",
-                value: 1
-            }
-        }),
+        currencyDS: dataStore(apiUrl + "currencies"),
         contactTypeDS: new kendo.data.DataSource({
             data: banhji.source.contactTypeList,
             filter: {
@@ -20079,102 +20070,24 @@
         licenseDSA: dataStore(apiUrl + "branches"),
         numberDSA: dataStore(apiUrl + "activate_water"),
         contactID: 0,
-        propertyVisible: false,
+        saveProcess: true,
         pageLoad: function(id, contact_type_id) {
+            var self = this;
+            this.currencyDS.query({
+                filter: {field: "status", value: 1}
+            }).then(function(e){
+                self.obj.set("locale", banhji.institute.id);
+            });
             if (id) {
                 this.set("isEdit", true);
                 this.loadObj(id, contact_type_id);
                 var self = this;
-                this.set("propertyVisible", true);
-                this.propertyDS.filter({
-                    field: "contact_id",
-                    value: id
-                });
                 this.set("contactID", id);
             } else {
                 if (this.get("isEdit") || this.dataSource.total() == 0) {
                     this.addEmpty();
                 }
-                this.set("propertyVisible", true);
             }
-        },
-        addProperty: function(e) {
-            var self = this;
-            if (this.get("pName") && this.get("pCode") && this.get("pAbbr")) {
-                if (this.get("contactID") != 0) {
-                    this.savePro(this.get("contactID"));
-                } else {
-                    this.proDS.insert(0, {
-                        contact_id: "",
-                        code: this.get("pCode"),
-                        abbr: this.get("pAbbr"),
-                        name: this.get("pName"),
-                        address: this.get("pAddress")
-                    });
-                    this.propertyDS.insert(0, {
-                        contact_id: "",
-                        code: this.get("pCode"),
-                        abbr: this.get("pAbbr"),
-                        name: this.get("pName"),
-                        address: this.get("pAddress")
-                    });
-                    this.set("pCode", "");
-                    this.set("pAbbr", "");
-                    this.set("pName", "");
-                    this.set("pAddress", "");
-                }
-            } else {
-                var notificat = $("#ntf1").data("kendoNotification");
-                notificat.hide();
-                notificat.error(this.lang.lang.field_required_message);
-            }
-        },
-        savePro: function(contact_id) {
-            this.proDS.data([]);
-            this.proDS.insert(0, {
-                contact_id: contact_id,
-                code: this.get("pCode"),
-                abbr: this.get("pAbbr"),
-                name: this.get("pName"),
-                address: this.get("pAddress")
-            });
-            this.proDS.sync();
-            this.proDS.bind("requestEnd", function(e) {
-                if (e.type != 'read' && e.response) {
-                    var notificat = $("#ntf1").data("kendoNotification");
-                    notificat.hide();
-                    notificat.success(self.lang.lang.success_message);
-                    self.set("pCode", "");
-                    self.set("pAbbr", "");
-                    self.set("pName", "");
-                    self.set("pAddress", "");
-                    self.propertyDS.filter({
-                        field: "contact_id",
-                        value: self.get("contactID")
-                    });
-                }
-            });
-            this.proDS.bind("error", function(e) {
-                var notificat = $("#ntf1").data("kendoNotification");
-                notificat.hide();
-                notificat.error(self.lang.lang.error_message);
-            });
-        },
-        setProperty: function(contact_id) {
-            var self = this;
-            $.each(this.proDS.data(), function(index, value) {
-                value.set("contact_id", contact_id);
-            });
-            this.proDS.sync();
-            this.proDS.bind("requestEnd", function(e) {
-                if (e.type != 'read' && e.response) {
-                    self.set("pCode", "");
-                    self.set("pAbbr", "");
-                    self.set("pName", "");
-                    self.set("pAddress", "");
-                    self.proDS.data([]);
-                }
-            });
         },
         licenseChange: function(e) {
             var obj = this.get("utility"),
@@ -20411,7 +20324,7 @@
             this.dataSource.insert(0, {
                 "country_id": 0,
                 "user_id": 0,
-                "contact_type_id": 4,
+                "contact_type_id": "",
                 "abbr": "",
                 "number": "",
                 "surname": "",
@@ -20430,7 +20343,7 @@
                 "latitute": "",
                 "longtitute": "",
                 "credit_limit": 0,
-                "locale": banhji.locale,
+                "locale": banhji.institute.locale,
                 "payment_term_id": 0,
                 "payment_method_id": 0,
                 "registered_date": new Date(),
@@ -20473,6 +20386,7 @@
         save: function() {
             var self = this,
                 obj = this.get("obj");
+            this.set("saveProcess", false);
             //Edit Mode
             if (this.get("isEdit")) {
                 //Contact Person has changes
@@ -20482,35 +20396,34 @@
             }
             //Save Obj
             this.objSync()
-                .then(function(data) { //Success
-                    if (self.contactPersonDS.data().length > 0) {
-                        //Contact Person
-                        $.each(self.contactPersonDS.data(), function(index, value) {
-                            value.set("contact_id", data[0].id);
-                        });
-                        self.contactPersonDS.sync();
-                    }
-                    self.setProperty(data[0].id);
-                    return data;
-                }, function(reason) { //Error
-                    var notificat = $("#ntf1").data("kendoNotification");
-                    notificat.hide();
-                    notificat.error(self.lang.lang.error_message);
-                }).then(function(result) {
-                    var notificat = $("#ntf1").data("kendoNotification");
-                    notificat.hide();
-                    notificat.success(self.lang.lang.success_message);
-                    //Save Close
-                    self.cancel();
-                });
+            .then(function(data) { //Success
+                if (self.contactPersonDS.data().length > 0) {
+                    //Contact Person
+                    $.each(self.contactPersonDS.data(), function(index, value) {
+                        value.set("contact_id", data[0].id);
+                    });
+                    self.contactPersonDS.sync();
+                }
+                return data;
+            }, function(reason) { //Error
+                var notificat = $("#ntf1").data("kendoNotification");
+                notificat.hide();
+                notificat.error(self.lang.lang.error_message);
+                self.set("saveProcess", true);
+            }).then(function(result) {
+                var notificat = $("#ntf1").data("kendoNotification");
+                notificat.hide();
+                notificat.success(self.lang.lang.success_message);
+                //Save Close
+                self.cancel();
+            });
         },
         cancel: function() {
             this.dataSource.data([]);
             this.contactPersonDS.data([]);
-            this.propertyDS.data([]);
-            this.proDS.data([]);
             this.set("contact_type_id", 0);
             window.history.back();
+            self.set("saveProcess", true);
             banhji.userManagement.removeMultiTask("customer");
         },
         delete: function() {
@@ -20548,44 +20461,54 @@
         applyPattern: function() {
             var self = this,
                 obj = self.get("obj");
-
-            this.patternDS.query({
-                filter: [{
-                        field: "contact_type_id",
-                        value: this.get("ConTypeID")
-                    },
-                ],
-                page: 1,
-                pageSize: 1
-            }).then(function(data) {
-                var view = self.patternDS.view();
-                if (view.length > 0) {
-                    obj.set("country_id", view[0].country_id);
-                    obj.set("gender", view[0].gender);
-                    obj.set("company", view[0].company);
-                    obj.set("vat_no", view[0].vat_no);
-                    obj.set("memo", view[0].memo);
-                    obj.set("city", view[0].city);
-                    obj.set("post_code", view[0].post_code);
-                    obj.set("address", view[0].address);
-                    obj.set("bill_to", view[0].bill_to);
-                    obj.set("ship_to", view[0].ship_to);
-                    obj.set("payment_term_id", view[0].payment_term_id);
-                    obj.set("payment_method_id", view[0].payment_method_id);
-                    obj.set("credit_limit", view[0].credit_limit);
-                    obj.set("locale", view[0].locale);
-                    obj.set("account_id", view[0].account_id);
-                    obj.set("ra_id", view[0].ra_id);
-                    obj.set("tax_item_id", view[0].tax_item_id);
-                    obj.set("deposit_account_id", view[0].deposit_account_id);
-                    obj.set("trade_discount_id", view[0].trade_discount_id);
-                    obj.set("settlement_discount_id", view[0].settlement_discount_id);
-                    obj.set("locale", banhji.institute.locale);
-                }
-            });
+            if(this.get("ConTypeID") == 11){
+                obj.set("country_id", 36);
+                obj.set("payment_term_id", 4);
+                obj.set("payment_method_id", 1);
+                obj.set("account_id", 130);
+                obj.set("ra_id", 134);
+                obj.set("deposit_account_id", 55);
+                obj.set("trade_discount_id", 72);
+                obj.set("settlement_discount_id", 99);
+                obj.set("locale", banhji.institute.locale);
+            }else{
+                this.patternDS.query({
+                    filter: [{
+                            field: "contact_type_id",
+                            value: this.get("ConTypeID")
+                        },
+                    ],
+                    page: 1,
+                    pageSize: 1
+                }).then(function(data) {
+                    var view = self.patternDS.view();
+                    if (view.length > 0) {
+                        obj.set("country_id", view[0].country_id);
+                        obj.set("gender", view[0].gender);
+                        obj.set("company", view[0].company);
+                        obj.set("vat_no", view[0].vat_no);
+                        obj.set("memo", view[0].memo);
+                        obj.set("city", view[0].city);
+                        obj.set("post_code", view[0].post_code);
+                        obj.set("address", view[0].address);
+                        obj.set("bill_to", view[0].bill_to);
+                        obj.set("ship_to", view[0].ship_to);
+                        obj.set("payment_term_id", view[0].payment_term_id);
+                        obj.set("payment_method_id", view[0].payment_method_id);
+                        obj.set("credit_limit", view[0].credit_limit);
+                        obj.set("locale", view[0].locale);
+                        obj.set("account_id", view[0].account_id);
+                        obj.set("ra_id", view[0].ra_id);
+                        obj.set("tax_item_id", view[0].tax_item_id);
+                        obj.set("deposit_account_id", view[0].deposit_account_id);
+                        obj.set("trade_discount_id", view[0].trade_discount_id);
+                        obj.set("settlement_discount_id", view[0].settlement_discount_id);
+                        obj.set("locale", banhji.institute.locale);
+                    }
+                });
+            }
         }
     });
-
 
     banhji.cashReAuto = kendo.observable({
         lang: langVM,
@@ -20993,14 +20916,6 @@
                             customRule1: banhji.source.duplicateNumber
                         }
                     }).data("kendoValidator");
-                    $("#saveNew").click(function(e) {
-                        e.preventDefault();
-                        if (validator.validate()) {
-                            vm.save();
-                        } else {
-                            $("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-                        }
-                    });
                     $("#saveClose").click(function(e) {
                         e.preventDefault();
                         if (validator.validate()) {

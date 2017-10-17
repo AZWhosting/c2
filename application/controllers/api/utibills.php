@@ -671,6 +671,7 @@ class Utibills extends REST_Controller {
 					"enumber" 					=> $value->enumber,
 					"wabbr" 					=> $value->wabbr,
 					"wnumber" 					=> $value->wnumber,
+					"code" 						=> $value->number,
 					"name" 						=> $value->name,
 					"gender"					=> $value->gender,
 					"dob" 						=> $value->dob,
@@ -822,6 +823,13 @@ class Utibills extends REST_Controller {
 			isset($value->is_system)				? $obj->is_system				= $value->is_system : "";
 			$obj->sync	= 1;
 			if($obj->save()){
+				$property = new Property(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$property->contact_id = $obj->id;
+				$property->name = $obj->name;
+				$property->code = $obj->number;
+				$property->abbr = $obj->abbr;
+				$property->address = $obj->address;
+				$property->save();
 				//Respsone
 				$data["results"][] = array(
 					"id" 						=> $obj->id,

@@ -279,8 +279,8 @@ class Inventory_modules extends REST_Controller {
 		if(!empty($filter["filters"]) && isset($filter["filters"])){
 	    	foreach ($filter['filters'] as $value) {
 	    		if(isset($value['operator'])) {
-	    			if($value['operator']=="startswith"){
-	    				$obj->like($value['field'], $value['value'], 'after');
+	    			if($value['operator']=="as_of"){
+
 	    			}else{
 						$obj->{$value['operator']}($value['field'], $value['value']);
 	    			}
@@ -353,7 +353,6 @@ class Inventory_modules extends REST_Controller {
 					"amount" 		=> floatval($itemLines->totalAmount)
 				);
 			}
-			$data["count"] = count($data["results"]);
 		}
 		
 		$this->response($data, 200);
