@@ -329,35 +329,39 @@ class Inventory_modules extends REST_Controller {
 				}
 
 				//On PO
-				// $po = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
-				// $po->select_sum("quantity * conversion_ratio", "totalQuantity");
-				// $po->where("item_id", $value->id);
-				// $po->where_related("transaction", "type", "Purchase_Order");
-				// $po->where_related("transaction", "is_recurring <>", 1);
-				// $po->where_related("transaction", "deleted <>", 1);
-				// $po->get();
+				$po = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+				$po->select_sum("quantity * conversion_ratio", "totalQuantity");
+				$po->where("item_id", $value->id);
+				$po->where_related("transaction", "issued_date <", $asOf);
+				$po->where_related("transaction", "type", "Purchase_Order");
+				$po->where_related("transaction", "is_recurring <>", 1);
+				$po->where_related("transaction", "deleted <>", 1);
+				$po->get();
 
 				// //On SO
-				// $so = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				// $so->select_sum("quantity * conversion_ratio", "totalQuantity");
-				// $so->where("item_id", $value->id);
-				// $so->where_related("transaction", "type", "Sale_Order");
-				// $so->where_related("transaction", "is_recurring <>", 1);
-				// $so->where_related("transaction", "deleted <>", 1);		
-				// $so->get();
+				$so = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$so->select_sum("quantity * conversion_ratio", "totalQuantity");
+				$so->where("item_id", $value->id);
+				$so->where_related("transaction", "issued_date <", $asOf);
+				$so->where_related("transaction", "type", "Sale_Order");
+				$so->where_related("transaction", "is_recurring <>", 1);
+				$so->where_related("transaction", "deleted <>", 1);		
+				$so->get();
 
 				$data["results"][] = array(
 					"id" 			=> $value->id,
 					"name" 			=> $value->abbr . $value->number ." ". $value->name,
 					"measurement"	=> $value->measurement_name,
 					"quantity" 		=> floatval($itemLines->totalQuantity),
-					"on_po" 		=> 0,//floatval($po->totalQuantity),
-					"on_so" 		=> 0,//floatval($so->totalQuantity),
+					"on_po" 		=> floatval($po->totalQuantity),
+					"on_so" 		=> floatval($so->totalQuantity),
 					"cost" 			=> $cost,
 					"amount" 		=> floatval($itemLines->totalAmount)
 				);
 			}
 		}
+
+		$data["asOf"] = $asOf;
 		
 		$this->response($data, 200);
 	}
