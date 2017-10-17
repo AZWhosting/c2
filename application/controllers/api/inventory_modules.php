@@ -264,6 +264,7 @@ class Inventory_modules extends REST_Controller {
 		$asOf = date("Y-m-d");		
 
 		$obj = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$lines = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		
 		//Sort
 		if(!empty($sort) && isset($sort)){
@@ -284,9 +285,11 @@ class Inventory_modules extends REST_Controller {
 	    				$asOf = $value['value'];
 	    			}else{
 						$obj->{$value['operator']}($value['field'], $value['value']);
+						$lines->{$value['operator']}($value['field'], $value['value']);
 	    			}
 				} else {
 					$obj->where($value["field"], $value["value"]);
+					$lines->where($value["field"], $value["value"]);
 				}
 			}
 		}
@@ -300,6 +303,31 @@ class Inventory_modules extends REST_Controller {
 		$obj->where("nature <>", "main_variant");
 		$obj->where("is_pattern <>", 1);
 		$obj->where("deleted <>", 1);
+
+		//TOTAL
+		$lines->select("id");
+		$lines->where("item_type_id", 1);
+		$lines->where("nature <>", "main_variant");
+		$lines->where("is_pattern <>", 1);
+		$lines->where("deleted <>", 1);
+		$lines->get_iterated();
+
+		$ids = [];
+		foreach ($lines as $value) {
+			array_push($ids, $value->id);
+		}
+
+		$totalLines = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$totalLines->select_sum('quantity * conversion_ratio * movement * cost', "totalAmount");
+		$totalLines->where_related("transaction", "is_recurring <>", 1);
+		$totalLines->where_related("transaction", "issued_date <", $asOf);
+		$totalLines->where_related("transaction", "deleted <>", 1);
+		$totalLines->where_in('item_id', $ids);
+		$totalLines->where('movement <>', 0);
+		$totalLines->get();
+
+		$data["totalAmount"] = floatval($totalLines->totalAmount);
+		//End TOTAL
 		
 		//Results
 		if($page && $limit){
@@ -360,8 +388,6 @@ class Inventory_modules extends REST_Controller {
 				);
 			}
 		}
-
-		$data["asOf"] = $asOf;
 		
 		$this->response($data, 200);
 	}
