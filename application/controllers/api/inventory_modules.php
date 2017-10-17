@@ -261,6 +261,7 @@ class Inventory_modules extends REST_Controller {
 		$sort 	 	= $this->get("sort");
 		$data["results"] = [];
 		$data["count"] = 0;
+		$asOf = date("Y-m-d");		
 
 		$obj = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		
@@ -280,7 +281,7 @@ class Inventory_modules extends REST_Controller {
 	    	foreach ($filter['filters'] as $value) {
 	    		if(isset($value['operator'])) {
 	    			if($value['operator']=="as_of"){
-
+	    				$asOf = $value['value'];
 	    			}else{
 						$obj->{$value['operator']}($value['field'], $value['value']);
 	    			}
@@ -289,6 +290,8 @@ class Inventory_modules extends REST_Controller {
 				}
 			}
 		}
+		//Add 1 day
+		$asOf = date("Y-m-d", strtotime($asOf . "+1 days"));
 
 		$obj->select("id, abbr, number, name");
 		$obj->include_related("category", "name");
@@ -314,6 +317,7 @@ class Inventory_modules extends REST_Controller {
 				$itemLines->select_sum('quantity * conversion_ratio * movement', "totalQuantity");
 				$itemLines->select_sum('quantity * conversion_ratio * movement * cost', "totalAmount");
 				$itemLines->where_related("transaction", "is_recurring <>", 1);
+				$itemLines->where_related("transaction", "issued_date <", $asOf);
 				$itemLines->where_related("transaction", "deleted <>", 1);
 				$itemLines->where('item_id', $value->id);
 				$itemLines->where('movement <>', 0);

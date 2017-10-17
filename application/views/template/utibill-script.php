@@ -18967,7 +18967,7 @@
                         //save the file as Excel file with extension xlsx
                         kendo.saveAs({
                             dataURI: workbook.toDataURL(),
-                            fileName: "offline-"+ self.locationDS.data()[self.get("locationSelect") - 1].name + "<?php echo date('d-M-Y H:s'); ?>" + ".xlsx"
+                            fileName: "offline-"+"<?php echo date('d-M-Y H:s'); ?>" + ".xlsx"
                         });
                         $("#loadImport").css("display", "none");
                     }else{
