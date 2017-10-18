@@ -531,6 +531,8 @@ class Inventory_modules extends REST_Controller {
 			$data["totalAmount"] = floatval($totalLines->totalAmount);
 			//End TOTAL INVENTORY
 		}
+
+		$data["count"] = count($data["results"]);
 		
 		$this->response($data, 200);
 	}
