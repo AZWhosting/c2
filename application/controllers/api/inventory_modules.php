@@ -261,7 +261,7 @@ class Inventory_modules extends REST_Controller {
 		$sort 	 	= $this->get("sort");
 		$data["results"] = [];
 		$data["count"] = 0;
-		$asOf = date("Y-m-d");		
+		$asOf = date("Y-m-d");
 
 		$obj = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$lines = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
@@ -304,7 +304,7 @@ class Inventory_modules extends REST_Controller {
 		$obj->where("is_pattern <>", 1);
 		$obj->where("deleted <>", 1);
 
-		//TOTAL
+		//TOTAL INVENTORY
 		$lines->select("id");
 		$lines->where("item_type_id", 1);
 		$lines->where("nature <>", "main_variant");
@@ -328,7 +328,7 @@ class Inventory_modules extends REST_Controller {
 		$totalLines->get();
 
 		$data["totalAmount"] = floatval($totalLines->totalAmount);
-		//End TOTAL
+		//End TOTAL INVENTORY
 		
 		//Results
 		if($page && $limit){
@@ -404,9 +404,10 @@ class Inventory_modules extends REST_Controller {
 		$sort 	 	= $this->get("sort");
 		$data["results"] = [];
 		$data["count"] = 0;
+		$data["totalAmount"] = 0;
 
 		$obj = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				
+
 		//Sort
 		if(!empty($sort) && isset($sort)){
 			foreach ($sort as $value) {
@@ -432,24 +433,37 @@ class Inventory_modules extends REST_Controller {
 		$obj->include_related("item", array("abbr", "number", "name","measurement_id"));
 		$obj->include_related("measurement", array("name"));
 		$obj->include_related("transaction", array("number", "type", "issued_date", "rate"));
-		$obj->where_related("transaction", "status <>", 4);
+		// $obj->where_related("transaction", "status <>", 4);
 		$obj->where_related("transaction", "is_recurring <>", 1);
 		$obj->where_related("transaction", "deleted <>", 1);
 		$obj->where_related("item", "item_type_id", 1);
 		$obj->where("movement <>", 0);
 		$obj->where("deleted <>", 1);		
 		$obj->order_by_related("transaction", "issued_date", "asc");
-
-		//Results
 		$obj->get_iterated();
 		
 		if($obj->exists()){
-			$objList = [];
+			$objList = []; $ids = [];
 			foreach ($obj as $value) {
-				$cost = floatval($value->cost) / floatval($value->transaction_rate);
-				$price = floatval($value->price) / $value->transaction_rate;
-				$quantity = floatval($value->quantity) * floatval($value->conversion_ratio) * intval($value->movement);
-				$amount = $quantity * $cost;				
+				//Item Ids
+				array_push($ids, $value->item_id);
+
+				//Find Item Quantity and Amount
+				$itemLines = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$itemLines->select_sum('quantity * conversion_ratio * movement', "totalQuantity");
+				$itemLines->select_sum('quantity * conversion_ratio * movement * cost', "totalAmount");
+				$itemLines->where_related("transaction", "issued_date <=", $value->transaction_issued_date);
+				$itemLines->where_related("transaction", "is_recurring <>", 1);
+				$itemLines->where_related("transaction", "deleted <>", 1);
+				$itemLines->where('item_id', $value->item_id);
+				$itemLines->where('movement <>', 0);
+				$itemLines->where("deleted <>", 1);
+				$itemLines->get();
+
+				$cost = 0;
+				if(floatval($itemLines->totalQuantity)==0){}else{
+					$cost = floatval($itemLines->totalAmount) / floatval($itemLines->totalQuantity);
+				}
 
 				if(isset($objList[$value->item_id])){
 					$objList[$value->item_id]["line"][] = array(
@@ -458,52 +472,42 @@ class Inventory_modules extends REST_Controller {
 						"number" 			=> $value->transaction_number,
 						"issued_date" 		=> $value->transaction_issued_date,
 						"quantity" 			=> floatval($value->quantity),
-						"cost" 				=> floatval($value->cost) / floatval($value->transaction_rate),
-						"cost_avg" 			=> floatval($value->cost_avg) / floatval($value->transaction_rate),
+						"cost" 				=> $cost,
 						"price" 			=> floatval($value->price) / floatval($value->transaction_rate),
-						"on_hand" 			=> floatval($value->inventory_quantity),
-						"amount"			=> floatval($value->inventory_value) / floatval($value->transaction_rate),
-						"movement" 			=> $value->movement
+						"on_hand" 			=> floatval($itemLines->totalQuantity),
+						"amount"			=> floatval($itemLines->totalAmount),
+						"movement" 			=> intval($value->movement)
 					);
 				}else{
 					//Balance Forward
-					$bf = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
-					$bf->include_related("transaction", array("rate"));
+					$bf = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$bf->select_sum('quantity * conversion_ratio * movement', "totalQuantity");
+					$bf->select_sum('quantity * conversion_ratio * movement * cost', "totalAmount");
 					$bf->where_related("transaction", "issued_date <", $value->transaction_issued_date);
-					$bf->where_related("transaction", "status <>", 4);
 					$bf->where_related("transaction", "is_recurring <>", 1);
 					$bf->where_related("transaction", "deleted <>", 1);
-					$bf->where("item_id", $value->item_id);
-					$bf->where("movement <>", 0);
+					$bf->where('item_id', $value->item_id);
+					$bf->where('movement <>', 0);
 					$bf->where("deleted <>", 1);
-					$bf->limit(1);
-					$bf->order_by_related("transaction", "issued_date", "desc");
 					$bf->get();
-
-					$balance_forward = 0; $quantity_forward = 0;
-					if($bf->exists()){
-						$quantity_forward = floatval($bf->inventory_quantity);
-						$balance_forward = floatval($bf->inventory_value) / floatval($bf->transaction_rate);
-					}
 					//End Balance Forward
 
 					$objList[$value->item_id]["id"] 				= $value->item_id;
 					$objList[$value->item_id]["name"] 				= $value->item_abbr . $value->item_number ." ".$value->item_name;
 					$objList[$value->item_id]["measurement"] 		= $value->measurement_name;
-					$objList[$value->item_id]["quantity_forward"] 	= $quantity_forward;
-					$objList[$value->item_id]["balance_forward"] 	= $balance_forward;
+					$objList[$value->item_id]["quantity_forward"] 	= floatval($bf->totalQuantity);
+					$objList[$value->item_id]["balance_forward"] 	= floatval($bf->totalAmount);
 					$objList[$value->item_id]["line"][] 			= array(
 						"id" 				=> $value->transaction_id,
 						"type" 				=> $value->transaction_type,
 						"number" 			=> $value->transaction_number,
 						"issued_date" 		=> $value->transaction_issued_date,
 						"quantity" 			=> floatval($value->quantity),
-						"cost" 				=> floatval($value->cost) / floatval($value->transaction_rate),
-						"cost_avg" 			=> floatval($value->cost_avg) / floatval($value->transaction_rate),
+						"cost" 				=> $cost,
 						"price" 			=> floatval($value->price) / floatval($value->transaction_rate),
-						"on_hand" 			=> floatval($value->inventory_quantity),
-						"amount"			=> floatval($value->inventory_value) / floatval($value->transaction_rate),
-						"movement" 			=> $value->movement
+						"on_hand" 			=> floatval($itemLines->totalQuantity),
+						"amount"			=> floatval($itemLines->totalAmount),
+						"movement" 			=> intval($value->movement)
 					);			
 				}
 			}
@@ -511,7 +515,21 @@ class Inventory_modules extends REST_Controller {
 			foreach ($objList as $value) {
 				$data["results"][] = $value;
 			}
-			$data["count"] = count($data["results"]);
+
+			//TOTAL INVENTORY
+			$ids = array_unique($ids);
+
+			$totalLines = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$totalLines->select_sum('quantity * conversion_ratio * movement * cost', "totalAmount");
+			$totalLines->where_related("transaction", "is_recurring <>", 1);
+			$totalLines->where_related("transaction", "deleted <>", 1);
+			$totalLines->where_in('item_id', $ids);
+			$totalLines->where('movement <>', 0);
+			$totalLines->where("deleted <>", 1);
+			$totalLines->get();
+
+			$data["totalAmount"] = floatval($totalLines->totalAmount);
+			//End TOTAL INVENTORY
 		}
 		
 		$this->response($data, 200);
