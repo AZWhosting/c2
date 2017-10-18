@@ -324,6 +324,7 @@ class Inventory_modules extends REST_Controller {
 		$totalLines->where_related("transaction", "deleted <>", 1);
 		$totalLines->where_in('item_id', $ids);
 		$totalLines->where('movement <>', 0);
+		$totalLines->where("deleted <>", 1);
 		$totalLines->get();
 
 		$data["totalAmount"] = floatval($totalLines->totalAmount);
@@ -349,6 +350,7 @@ class Inventory_modules extends REST_Controller {
 				$itemLines->where_related("transaction", "deleted <>", 1);
 				$itemLines->where('item_id', $value->id);
 				$itemLines->where('movement <>', 0);
+				$itemLines->where("deleted <>", 1);
 				$itemLines->get();
 
 				$cost = 0;
@@ -359,21 +361,23 @@ class Inventory_modules extends REST_Controller {
 				//On PO
 				$po = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
 				$po->select_sum("quantity * conversion_ratio", "totalQuantity");
-				$po->where("item_id", $value->id);
 				$po->where_related("transaction", "issued_date <", $asOf);
 				$po->where_related("transaction", "type", "Purchase_Order");
 				$po->where_related("transaction", "is_recurring <>", 1);
 				$po->where_related("transaction", "deleted <>", 1);
+				$po->where("item_id", $value->id);
+				$po->where("deleted <>", 1);
 				$po->get();
 
-				// //On SO
+				//On SO
 				$so = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				$so->select_sum("quantity * conversion_ratio", "totalQuantity");
-				$so->where("item_id", $value->id);
 				$so->where_related("transaction", "issued_date <", $asOf);
 				$so->where_related("transaction", "type", "Sale_Order");
 				$so->where_related("transaction", "is_recurring <>", 1);
-				$so->where_related("transaction", "deleted <>", 1);		
+				$so->where_related("transaction", "deleted <>", 1);
+				$so->where("item_id", $value->id);
+				$so->where("deleted <>", 1);		
 				$so->get();
 
 				$data["results"][] = array(
@@ -415,7 +419,7 @@ class Inventory_modules extends REST_Controller {
 		}
 		
 		//Filter		
-		if(!empty($filter) && isset($filter)){
+		if(!empty($filter['filters']) && isset($filter['filters'])){
 	    	foreach ($filter['filters'] as $value) {
 	    		if(isset($value['operator'])) {
 					$obj->{$value['operator']}($value['field'], $value['value']);

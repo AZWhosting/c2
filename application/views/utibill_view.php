@@ -2589,7 +2589,7 @@
 						            	<a id="tabms" href="#tab-1" data-toggle="tab"><i></i> <span data-bind="text: lang.lang.monthly_sale">Monthly Sale</span></a>
 						            </li>					            
 						            <li class="span2 glyphicons usd" style="width: 23%;">
-						            	<a id="tabTxn" href="#tab-2" data-toggle="tab" data-bind="click: loadTransaction"><i></i> <span data-bind="text: lang.lang.water_sale">Water Sale</span></a>
+						            	<a id="tabTxn" href="#tab-2" data-toggle="tab" data-bind="click: loadTransaction"><i></i> <span data-bind="text: lang.lang.utility_sale">Utility Sale</span></a>
 						            </li>								            
 						            <li class="span2 glyphicons qrcode" style="width: 21%;">
 						            	<a href="#tab-3" data-toggle="tab" data-bind="click: loadReading"><i></i> <span data-bind="text: lang.lang.reading">Reading</span></a>

@@ -1462,5 +1462,6 @@ var	km_KH = {
 	"reader": "អ្នកដើរអាន",
 	"tablet": "Tablet",
 	"new_round": "ជុំថ្មី",
+	"utility_sale": "លក់ជាសាច់ប្រាក់",
 	
 }

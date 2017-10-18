@@ -1489,6 +1489,7 @@ var	en_US = {
 	"reader":"Reader",
 	"tablet": "Tablet",
 	"new_round": "New Round",
+	"utility_sale": "Utility Sale",
 
 	"end" : "End"
 }
