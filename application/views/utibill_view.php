@@ -2894,11 +2894,13 @@
 					# if(group != 0){#
 						<span style="background-color: \\rgb(96, 148, 80) !important;border-color: \\rgb(96, 148, 80) !important;" title="Group" class="btn-action glyphicons share_alt btn-danger"><i></i></span>
 					# }else{ #
-						<input type="checkbox" name="items" data-bind="checked: groupItem" value="#= id#">
+						<!--input type="checkbox" name="items" data-bind="checked: groupItem" value="#= id#"-->
 					# } #
 				# } #
 			# } #
-			<a style="border:none;" href="\#/meter/#= id #" class="btn-action glyphicons pencil btn-danger widget-stats widget-stats-info"><i></i></span>
+			# if(reaktive == 0){#
+				<a style="border:none;" href="\#/meter/#= id #" class="btn-action glyphicons pencil btn-danger widget-stats widget-stats-info"><i></i></span>
+			#}#
 		</td>
 	</tr>
 </script>

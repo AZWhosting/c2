@@ -327,7 +327,7 @@ class Utibills extends REST_Controller {
 			$obj->get_iterated();
 			$data["count"] = $obj->result_count();
 		}
-		if($obj->result_count()>0){			
+		if($obj->result_count()>0){
 			foreach ($obj as $value) {
 				$data["results"][] = array(
 					"id" 				=> $value->id,
@@ -336,8 +336,25 @@ class Utibills extends REST_Controller {
 					"group" 			=> $value->group,
 					"type" 				=> $value->type,
 					"activated" 		=> $value->activated,
-					"status" 			=> $value->status
+					"status" 			=> $value->status,
+					"reaktive" 			=> 0,
 				);
+				if($value->reactive_id != 0){
+					$remeter = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$remeter->where("id", $value->reactive_id)->limit(1)->get();
+					if($remeter->exists()){
+						$data["results"][] = array(
+							"id" 				=> $remeter->id,
+							"number" 			=> $remeter->number,
+							"meter_number" 		=> $remeter->number,
+							"group" 			=> $remeter->group,
+							"type" 				=> $remeter->type,
+							"activated" 		=> $remeter->activated,
+							"status" 			=> $remeter->status,
+							"reaktive" 			=> 1,
+						);
+					}
+				}
 			}
 		}
 		//Response Data

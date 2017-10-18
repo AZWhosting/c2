@@ -6125,6 +6125,7 @@
                 self.set("oldPlan", view[0].plan_id);
                 self.set("meterOrder", view[0].worder);
                 self.loadMap();
+                self.set("propertyID", view[0].property_id);
             });
         },
         editRe: function(id) {
@@ -6219,7 +6220,7 @@
             this.reactiveDS.data([]);
             this.reactiveDS.insert(0, {
                 property_id: this.propertyID,
-                contact_id: this.get("contact").id,
+                contact_id: this.get("obj").contact_id,
                 meter_number: this.get("obj").meter_number,
                 status: 1,
                 location_id: this.get("obj").location_id,
@@ -6250,7 +6251,7 @@
             this.set("objReactive", objReactive);
         },
         meterNumberChange: function(e) {
-            var Name = this.get("obj").meter_number + "(Reactive)";
+            var Name = this.get("obj").meter_number + "(REAKTIVE)";
             this.get("objReactive").set("meter_number", Name);
         },
         haveLocation: false,
@@ -6429,7 +6430,6 @@
                 obj = this.get("obj");
             this.readingDS.data([]);
             var monthOf = obj.date_used;
-            monthOf.setDate(1);
             monthOf = kendo.toString(monthOf, "yyyy-MM-dd");
             var monthL = new Date(obj.date_used);
             var lastDayOfMonth = new Date(monthL.getFullYear(), monthL.getMonth() + 1, 0);
