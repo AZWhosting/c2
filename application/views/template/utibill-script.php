@@ -20088,6 +20088,7 @@
                     this.addEmpty();
                 }
             }
+            this.set("saveProcess", true);
         },
         licenseChange: function(e) {
             var obj = this.get("utility"),
