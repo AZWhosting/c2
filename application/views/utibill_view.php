@@ -33,29 +33,11 @@
                     <span data-bind="text: lang.localeCode"></span>
                 </button>
 
-                <!-- Menu Phone Search-->
-                <!-- <button type="button" class="navbar-toggle phone-search" data-toggle="collapse" data-target="#bs-example-navbar-collapse-3">
-                    <span class="icon-search"></span>
-                </button> -->
-
                 <!--Logo-->
                 <a class="navbar-brand" href="#" data-bind="click: checkRole">
                     <img src="<?php echo base_url();?>assets/water/utibill(v1).png" >
                 </a>
             </div>
-
-            <!-- Search Desktop-->
-            <!-- <form class="navbar-form pull-left hidden-xs" style="padding-right: 0;">
-			  	<input id="search-placeholder" class="span2 search-query" 
-			  		type="text" 
-			  		placeholder="Search" 
-			  		data-bind="value: searchText" />
-			  	<button class="btn btn-inverse"
-			  		type="submit" 
-			  		data-bind="click: search" >
-			  			<i class="icon-search iconsearch"></i>
-			  	</button>
-			</form> -->
 
 			<!-- Secondary Menu -->
 			<ul class="topnav hidden-xs " id="secondary-menu">
@@ -4043,7 +4025,7 @@
 		            					required data-required-msg="required" 
 		            					style="width: 80%" />
 		            					<br>
-				              		<label><span data-bind="text: lang.lang.interest_percentage">Interest Percentage</span></label>										
+				              		<label><span data-bind="text: lang.lang.interest_percentage">Interest Percentage</span></label>	
 			              			<br>
 				              		<input	 		
 		            					data-bind="value: percentage" 
@@ -4058,8 +4040,7 @@
 									<div class="box-generic-noborder">
 									    <div class="tab-content">
 									        <div class="tab-pane active" id="tab1-5">
-									            <table style="margin-bottom: 0;" class="table table-borderless table-condensed cart_total">							            
-													<tbody>
+									            <table style="margin-bottom: 0;" class="table table-borderless table-condensed cart_total">    <tbody>
 													<tr>
 										            	<td><span data-bind="text: lang.lang.payment_method">Payment Method </span></td>				
 														<td>
@@ -4094,10 +4075,10 @@
 									              				data-required-msg="required" 
 									              				style="width: 100%; display: none;" 
 									              				class="k-valid" />
-														</td>							            	
+														</td>       	
 										            </tr>
 										            <tr>
-										            	<td><span data-bind="text: lang.lang.ar_account">Account Receivable</span></td>				            	
+										            	<td><span data-bind="text: lang.lang.ar_account">Account Receivable</span></td>
 									            		<td>
 									            			<input 
 									            				id="ddlCash" 
@@ -4113,17 +4094,17 @@
 									              				data-option-label="Select Account..." 
 									              				required="" data-required-msg="required" 
 									              				style="width: 100%; display: none;" class="k-valid">
-														</td>							            	
+														</td>        	
 										            </tr>
 										            <tr>
-										            	<td><span data-bind="text: lang.lang.check_no">Check Number</span></td>							            	
+										            	<td><span data-bind="text: lang.lang.check_no">Check Number</span></td>      	
 									            		<td>
 															<input 
 																class="k-textbox" 
 																placeholder="type check number ..." 
 																data-bind="value: checkNumber" 
 																style="width: 100%;" />
-														</td>							            	
+														</td>        	
 										            </tr>	
 									            </tbody></table>
 									        </div>
@@ -4145,7 +4126,6 @@
 										</tbody>
 									</table>
 								</div>
-								
 								<div class="row">
 									<div class="col-sm-3"></div>
 									<div class="col-xs-12 col-sm-9">
@@ -4192,7 +4172,7 @@
 									</span>
 									<span 
 										class="btn-btn" 
-										data-bind="click: save"><span data-bind="text: lang.lang.activate">Activate</span></span>									>		
+										data-bind="click: save"><span data-bind="text: lang.lang.activate">Activate</span></span>	
 								</div>
 							</div>
 						</div>
@@ -4206,8 +4186,8 @@
 	<tr>
 		<td>#=type#</td>
 		<td>#=name#</td>
-		<td>#= kendo.toString(amount, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#</td>
-		<td><input style="width: 100%" type="number" class="k-textbox k-input k-formatted-value" data-bind="value: received, events: {change: onAmountChange}">
+		<td>#: kendo.toString(kendo.parseFloat(amount), banhji.institute.locale == "km-KH"?"c0":"c", banhji.institute.locale)#</td>
+		<td><input style="width: 100%" type="number" data-format="c0" class="k-textbox k-input k-formatted-value" data-bind="value: received, events: {change: onAmountChange}">
 	</tr>
 </script>
 <script id="Reorder" type="text/x-kendo-template">
@@ -6730,7 +6710,7 @@
 </script>
 <script id="cashier-session-template" type="text/x-kendo-template">
 	<tr>
-		<td><i class="icon-trash" data-bind="events: { click: rmCSItemRow }"></i>
+		<td>
 			#:banhji.Receipt.cashierItemDS.indexOf(data)+1#	
 		</td>
 		<td>
@@ -8290,7 +8270,7 @@
 				        <table class="span12 table-remove" style="width: 99.9%">
 				        	<thead>
 					        	<tr>
-					        		<th colspan="1" data-bind="text: lang.lang.actual_cash_count">Actual Cash Count</th>
+					        		<th colspan="1" align="left" data-bind="text: lang.lang.actual_cash_count">Actual Cash Count : <span data-bind="text: actualCash"></span></th>
 					        	</tr>
 				        	</thead>
 				        	<tbody>
@@ -8353,17 +8333,6 @@
 							</div>
 						</div>
 					</div>
-
-
-					<!-- <div class="box-generic bg-action-button">
-						<div id="ntf1" data-role="notification"></div>
-				        <div class="row">
-							<div class="span12" align="right">
-								<span class="btn-btn" data-bind="click: save, visible: showButton" ><i></i> <span data-bind="text: lang.lang.run_bill">Run Bill</span></span>									
-								<span class="btn-btn" data-bind="click: cancel" ><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
-							</div>
-						</div>
-					</div> -->
 				</div>						
 			</div>
 		</div>

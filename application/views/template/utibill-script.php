@@ -11793,6 +11793,9 @@
     banhji.Reconcile = kendo.observable({
         lang: langVM,
         institute: banhji.institute,
+        actualCash: 0,
+        actualDS: dataStore(apiUrl + "utibills/cashier_actual"),
+        sessionDS: dataStore(apiUrl + "utibills/session"),
         pageLoad: function() {
 
         },

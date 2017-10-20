@@ -62,7 +62,19 @@ class Plans extends REST_Controller {
 
 		if($table->exists()) {
 			foreach($table as $value) {
-				$items = $value->plan_item->select('id as item, account_id, name, is_flat, type, unit, amount')->get_raw();
+				$itemarr = [];
+				$items = $value->plan_item->select('id as item, account_id, name, is_flat, type, unit, amount')->get();
+				foreach($items as $item){
+					$itemarr[] = array(
+						"item" 			=> $item->item,
+						"account_id" 	=> intval($item->account_id),
+						"name" 			=> $item->name,
+						"is_flat" 		=> intval($item->is_flat),
+						"type" 			=> $item->type,
+						"unit" 			=> $item->unit,
+						"amount" 		=> floatval($item->amount),
+					);
+				}
 				$currency= $value->currency->get();
 				$data["results"][] = array(
 					'id' => $value->id,
@@ -74,7 +86,7 @@ class Plans extends REST_Controller {
 					),
 					'code' => $value->code,
 					'name' => $value->name,
-					'items' => $items->result()
+					'items' => $itemarr
 				);
 			}
 		}

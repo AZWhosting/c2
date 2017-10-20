@@ -443,38 +443,47 @@ class Inventory_modules extends REST_Controller {
 		$obj->get_iterated();
 		
 		if($obj->exists()){
-			$objList = []; $ids = [];
+			$objList = []; $totalAmount = 0;
 			foreach ($obj as $value) {
-				//Item Ids
-				array_push($ids, $value->item_id);
+				//Find Quantity On Hand
+				$oh = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$oh->select_sum('quantity * conversion_ratio * movement', "qty");
+				$oh->where_related("transaction", "issued_date <=", $value->transaction_issued_date);
+				$oh->where_related("transaction", "is_recurring <>", 1);
+				$oh->where_related("transaction", "deleted <>", 1);
+				$oh->where('item_id', $value->item_id);
+				$oh->where('movement <>', 0);
+				$oh->where("deleted <>", 1);
+				$oh->get();
 
-				//Total Quantity
-				$totalQuantity = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$totalQuantity->select_sum('quantity * conversion_ratio * movement', "qty");
-				$totalQuantity->where_related("transaction", "issued_date <=", $value->transaction_issued_date);
-				$totalQuantity->where_related("transaction", "is_recurring <>", 1);
-				$totalQuantity->where_related("transaction", "deleted <>", 1);
-				$totalQuantity->where('item_id', $value->item_id);
-				$totalQuantity->where('movement <>', 0);
-				$totalQuantity->where("deleted <>", 1);
-				$totalQuantity->get();
+				//Find Item Avg. Cost
+				$itemCost = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$itemCost->select_sum('quantity * conversion_ratio * movement', "totalQuantity");
+				$itemCost->select_sum('quantity * conversion_ratio * movement * cost', "totalAmount");
+				$itemCost->where_related("transaction", "issued_date <=", $value->transaction_issued_date);
+				$itemCost->where_related("transaction", "is_recurring <>", 1);
+				$itemCost->where_related("transaction", "deleted <>", 1);
+				$itemCost->where('item_id', $value->item_id);
+				$itemCost->where('movement', 1);
+				$itemCost->where("deleted <>", 1);
+				$itemCost->get();
 
-				//Avg. Cost
-				$totalAvgCost = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$totalAvgCost->select_sum('quantity * conversion_ratio * movement', "totalQuantity");
-				$totalAvgCost->select_sum('quantity * conversion_ratio * movement * cost', "totalAmount");
-				$totalAvgCost->where_related("transaction", "issued_date <=", $value->transaction_issued_date);
-				$totalAvgCost->where_related("transaction", "is_recurring <>", 1);
-				$totalAvgCost->where_related("transaction", "deleted <>", 1);
-				$totalAvgCost->where('item_id', $value->item_id);
-				$totalAvgCost->where('movement', 1);
-				$totalAvgCost->where("deleted <>", 1);
-				$totalAvgCost->get();
-
-				$cost = 0;
-				if(floatval($totalAvgCost->totalQuantity)==0){}else{
-					$cost = floatval($totalAvgCost->totalAmount) / floatval($totalAvgCost->totalQuantity);
+				$avgCost = 0;
+				if(floatval($itemCost->totalQuantity)==0){}else{
+					$avgCost = floatval($itemCost->totalAmount) / floatval($itemCost->totalQuantity);
 				}
+				//End Item Avg. Cost
+
+				//Inventory Value
+				$amount = floatval($oh->qty) * $avgCost;
+
+				//Cost
+				$cost = floatval($value->cost) / floatval($value->transaction_rate);				
+				if(intval($value->movement)==-1){
+					$cost = $avgCost;
+				}
+
+				// $totalAmount += floatval($value->quantity) * floatval($value->conversion_ratio) * intval($value->movement) * $cost;
 
 				if(isset($objList[$value->item_id])){
 					$objList[$value->item_id]["line"][] = array(
@@ -484,9 +493,10 @@ class Inventory_modules extends REST_Controller {
 						"issued_date" 		=> $value->transaction_issued_date,
 						"quantity" 			=> floatval($value->quantity),
 						"cost" 				=> $cost,
+						"cost_avg" 			=> $avgCost,
 						"price" 			=> floatval($value->price) / floatval($value->transaction_rate),
-						"on_hand" 			=> floatval($totalQuantity->qty),
-						"amount"			=> floatval($totalQuantity->qty) * $cost,
+						"on_hand" 			=> floatval($oh->qty),
+						"amount"			=> $amount,
 						"movement" 			=> intval($value->movement)
 					);
 				}else{
@@ -515,9 +525,10 @@ class Inventory_modules extends REST_Controller {
 						"issued_date" 		=> $value->transaction_issued_date,
 						"quantity" 			=> floatval($value->quantity),
 						"cost" 				=> $cost,
+						"cost_avg" 			=> $avgCost,
 						"price" 			=> floatval($value->price) / floatval($value->transaction_rate),
-						"on_hand" 			=> floatval($totalQuantity->qty),
-						"amount"			=> floatval($totalQuantity->qty) * $cost,
+						"on_hand" 			=> floatval($oh->qty),
+						"amount"			=> $amount,
 						"movement" 			=> intval($value->movement)
 					);			
 				}
@@ -527,20 +538,7 @@ class Inventory_modules extends REST_Controller {
 				$data["results"][] = $value;
 			}
 
-			//TOTAL INVENTORY
-			$ids = array_unique($ids);
-
-			$totalLines = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$totalLines->select_sum('quantity * conversion_ratio * movement * cost', "totalAmount");
-			$totalLines->where_related("transaction", "is_recurring <>", 1);
-			$totalLines->where_related("transaction", "deleted <>", 1);
-			$totalLines->where_in('item_id', $ids);
-			$totalLines->where('movement <>', 0);
-			$totalLines->where("deleted <>", 1);
-			$totalLines->get();
-
-			$data["totalAmount"] = floatval($totalLines->totalAmount);
-			//End TOTAL INVENTORY
+			$data["totalAmount"] = $totalAmount;
 		}
 
 		$data["count"] = count($data["results"]);

@@ -533,31 +533,31 @@
                         
                         <div class="col-sm-12" style="padding: 0;">
                             <div class="signup-img" style="height: 110px; margin-bottom: 8px;">
-                                <a class="" id="41" data-bind="click: industryClick">
+                                <a class="" id="91" data-bind="click: industryClick">
                                     <img src="<?php echo base_url();?>assets/industry_logos/10.png">
                                     <p style="font-size: 10px; color: #333;" data-bind="text: lang.lang.wholesale_retail_trading"></p>
                                 </a>
                             </div>
                             <div class="signup-img" style="height: 110px; margin-bottom: 8px;">
-                                <a class="" id="31" data-bind="click: industryClick">
+                                <a class="" id="92" data-bind="click: industryClick">
                                     <img src="<?php echo base_url();?>assets/industry_logos/9.png">
                                     <p style="font-size: 10px; color: #333;" data-bind="text: lang.lang.manufacturing"></p>
                                 </a>
                             </div>                            
                             <div class="signup-img" style="height: 110px; margin-bottom: 8px;">
-                                <a class="" id="33" data-bind="click: industryClick">
+                                <a class="" id="93" data-bind="click: industryClick">
                                     <img src="<?php echo base_url();?>assets/industry_logos/11.png">
                                     <p style="font-size: 10px; color: #333;" data-bind="text: lang.lang.electricity"></p>
                                 </a>
                             </div>
                             <div class="signup-img" style="height: 110px; margin-bottom: 8px;">
-                                <a class="" id="34" data-bind="click: industryClick">
+                                <a class="" id="94" data-bind="click: industryClick">
                                     <img src="<?php echo base_url();?>assets/industry_logos/15.png">
                                     <p style="font-size: 10px; color: #333;" data-bind="text: lang.lang.swater"></p>
                                 </a>
                             </div>
                             <div class="signup-img" style="height: 110px; margin-bottom: 8px;">
-                                <a class="" id="57" data-bind="click: industryClick">
+                                <a class="" id="95" data-bind="click: industryClick">
                                     <img src="<?php echo base_url();?>assets/industry_logos/4.png">
                                     <p style="font-size: 10px; color: #333;" data-bind="text: lang.lang.financial_institutions"></p>
                                 </a>
@@ -570,7 +570,7 @@
                                 </a>
                             </div>
                             <div class="signup-img" style="height: 110px;">
-                                <a class=""  id="66" data-bind="click: industryClick">
+                                <a class=""  id="96" data-bind="click: industryClick">
                                     <img src="<?php echo base_url();?>assets/industry_logos/7.png">
                                     <p style="font-size: 10px; color: #333;" data-bind="text: lang.lang.professional_service"></p>
                                 </a>
@@ -582,7 +582,7 @@
                                 </a>
                             </div>
                             <div class="signup-img" style="height: 110px;">
-                                <a class="" id="56" data-bind="click: industryClick">
+                                <a class="" id="97" data-bind="click: industryClick">
                                     <img src="<?php echo base_url();?>assets/industry_logos/5.png">
                                     <p style="font-size: 10px; color: #333;" data-bind="text: lang.lang.information_communication"></p>
                                 </a>
@@ -595,31 +595,31 @@
                             </div>
 
                             <div class="signup-img">
-                                <a class="" id="60" data-bind="click: industryClick">
+                                <a class="" id="98" data-bind="click: industryClick">
                                     <img src="<?php echo base_url();?>assets/industry_logos/8.png">
                                     <p style="font-size: 10px; color: #333;" data-bind="text: lang.lang.real_estate_activities">
                                 </a>
                             </div>                            
                             <div class="signup-img">
-                                <a class="" id="49" data-bind="click: industryClick">
+                                <a class="" id="99" data-bind="click: industryClick">
                                     <img src="<?php echo base_url();?>assets/industry_logos/12.png">
                                     <p style="font-size: 10px; color: #333;" data-bind="text: lang.lang.accomm_food"></p>
                                 </a>
                             </div>
                             <div class="signup-img">
-                                <a class="" id="47" data-bind="click: industryClick">
+                                <a class="" id="100" data-bind="click: industryClick">
                                     <img src="<?php echo base_url();?>assets/industry_logos/14.png">
                                     <p style="font-size: 10px; color: #333;" data-bind="text: lang.lang.transportation"></p>
                                 </a>
                             </div>
                             <div class="signup-img">
-                                <a class="" id="63" data-bind="click: industryClick">
+                                <a class="" id="101" data-bind="click: industryClick">
                                     <img src="<?php echo base_url();?>assets/industry_logos/2.png">
                                     <p style="font-size: 10px; color: #333;" data-bind="text: lang.lang.agriculture"></p>
                                 </a>
                             </div>
                             <div class="signup-img">
-                                <a class="" id="38" data-bind="click: industryClick">
+                                <a class="" id="102" data-bind="click: industryClick">
                                     <img src="<?php echo base_url();?>assets/industry_logos/1.png">
                                     <p style="font-size: 10px; color: #333;" data-bind="text: lang.lang.construction"></p>
                                 </a>
