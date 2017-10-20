@@ -487,14 +487,14 @@ class Items extends REST_Controller {
 		$this->response($data, 200);	
 	}
 
-	//GET ON HAND
-	function on_hand_get() {		
+	//GET WEIGHTED AVERAGE COSTING
+	function weighted_average_costing_get() {		
 		$filter 	= $this->get("filter");
 		$page 		= $this->get('page');
 		$limit 		= $this->get('limit');
 		$sort 	 	= $this->get("sort");
 		$data["results"] = [];
-		$data["count"] = 0;
+		$data["count"] = 1;
 
 		$obj = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
 
@@ -510,7 +510,7 @@ class Items extends REST_Controller {
 		}
 		
 		//Filter		
-		if(!empty($filter) && isset($filter)){
+		if(!empty($filter['filters']) && isset($filter['filters'])){
 	    	foreach ($filter['filters'] as $value) {
 	    		if(isset($value['operator'])) {
 					$obj->{$value['operator']}($value['field'], $value['value']);
@@ -520,29 +520,27 @@ class Items extends REST_Controller {
 			}
 		}
 		
-		$obj->select("item_id, quantity, conversion_ratio, movement");
-		$obj->where_in_related("transaction", "type", array("Cash_Purchase", "Credit_Purchase", "Commercial_Invoice", "Vat_Invoice", "Invoice", "Commercial_Cash_Sale", "Vat_Cash_Sale", "Cash_Sale", "Item_Adjustment", "Internal_Usage"));		
+		$obj->select_sum('quantity * conversion_ratio * movement', "totalQuantity");
+		$obj->select_sum('quantity * conversion_ratio * movement * cost', "totalAmount");
+		// $obj->where_related("transaction", "issued_date <=", $value->transaction_issued_date);
 		$obj->where_related("transaction", "is_recurring <>", 1);
 		$obj->where_related("transaction", "deleted <>", 1);
+		// $obj->where('item_id', $value->item_id);
+		$obj->where('movement <>', 0);
 		$obj->where("deleted <>", 1);
-		$obj->get_iterated();
+		$obj->get();
 
-		$objList = [];
-		if($obj->exists()){			
-			foreach ($obj as $value) {
-				$quantity = ($value->quantity * $value->conversion_ratio * $value->movement);
-				if(isset($objList[$value->item_id])){
-					$objList[$value->item_id]["on_hand"] += $quantity;
-				}else{
-					$objList[$value->item_id]["id"] 		= $value->item_id;
-					$objList[$value->item_id]["on_hand"] 	= $quantity;
-				}
-			}
+		$cost = 0;
+		if(floatval($obj->totalQuantity)==0){}else{
+			$cost = floatval($obj->totalAmount) / floatval($obj->totalQuantity);
 		}
-
-		foreach ($objList as $value) {
-			$data["results"][] = $value;
-		}
+		
+		$data["results"] = array(
+			"id" 		=> 0,
+			"quantity"	=> floatval($obj->totalQuantity),
+			"cost"		=> $cost,
+			"amount"	=> floatval($obj->totalAmount)
+		);
 
 		//Response Data		
 		$this->response($data, 200);	
