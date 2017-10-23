@@ -12962,15 +12962,14 @@
 						<div class="widget widget-tabs widget-tabs-double-2 widget-tabs-gray">
 							<div class="widget-head">
 								<ul style="padding-left: 1px;">
-									<li class="active"><a class="glyphicons group" href="#tabContact" data-toggle="tab"><i></i><span style="line-height: 55px;">Customer</span></a></li>
+									<li class="active"><a class="glyphicons group" href="#tabMeter" data-toggle="tab"><i></i><span style="line-height: 55px;">Meter</span></a></li>
+									<li><a class="glyphicons group" href="#tabContact" data-toggle="tab"><i></i><span style="line-height: 55px;">Customer Number</span></a></li>
 								</ul>
 							</div>
 							<div class="widget-body">
 								<div class="tab-content">
-									<div id="tabContact" style="border: 1px solid #ccc" class="tab-pane active widget-body-regular">
-										
-										<h4 class="separator bottom" style="margin-top: 10px;">Please upload file</h4>
-										
+									<div id="tabMeter" style="border: 1px solid #ccc" class="tab-pane active widget-body-regular">
+										<h4 class="separator bottom" style="margin-top: 10px;">Recieve By Meter ID</h4>
 										<div class="fileupload fileupload-new margin-none" data-provides="fileupload">
 										  	<input type="file"  
 										  		data-role="upload" 
@@ -12980,6 +12979,18 @@
 										</div>
 										<span class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 160px!important;"><i></i>
 										<span data-bind="click: save">Start Import</span></span>
+									</div>
+									<div id="tabContact" style="border: 1px solid #ccc" class="tab-pane widget-body-regular">
+										<h4 class="separator bottom" style="margin-top: 10px;">Recieve By Customer Number</h4>
+										<div class="fileupload fileupload-new margin-none" data-provides="fileupload">
+										  	<input type="file"
+										  		data-role="upload"
+										  		data-show-file-list="true"
+										  		data-bind="events: {select: onCusSelected}" 
+										  		id="myFile"  class="margin-none" />
+										</div>
+										<span class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 160px!important;"><i></i>
+										<span data-bind="click: saveCus">Start Import</span></span>
 									</div>
 								</div>
 							</div>

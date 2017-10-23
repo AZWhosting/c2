@@ -7621,23 +7621,25 @@
                 var AddH = 0;
                 var MTotal = Total;
                 Total = Total + ReactivePrice;
-                if(locale == "km-KH"){
-                    Total = Math.ceil(Total/100)*100;
-                    MTotal = Total - MTotal;
-                    if(MTotal > 0){
-                        invoiceItems.push({
-                            "item_id": 0,
-                            "invoice_id": 0,
-                            "meter_record_id": record_id,
-                            "description": "ទឹកប្រាក់បូកបង្គ្រប់",
-                            "quantity": 1,
-                            "price": 0,
-                            "amount": MTotal,
-                            "rate": rate,
-                            "locale": locale,
-                            "has_vat": false,
-                            "type": 'roundup'
-                        });
+                if(banhji.institute.id != 860){
+                    if(locale == "km-KH"){
+                        Total = Math.ceil(Total/100)*100;
+                        MTotal = Total - MTotal;
+                        if(MTotal > 0){
+                            invoiceItems.push({
+                                "item_id": 0,
+                                "invoice_id": 0,
+                                "meter_record_id": record_id,
+                                "description": "ទឹកប្រាក់បូកបង្គ្រប់",
+                                "quantity": 1,
+                                "price": 0,
+                                "amount": MTotal,
+                                "rate": rate,
+                                "locale": locale,
+                                "has_vat": false,
+                                "type": 'roundup'
+                            });
+                        }
                     }
                 }
                 //Meter Location
@@ -20567,6 +20569,60 @@
                     $("#loadImport").css("display", "none");
                     $('li.k-file').remove();
                     self.dataSource.data([]);
+                });
+            }
+        },
+        cusDS: dataStore(apiUrl + "utibills/receiptautocus"),
+        onCusSelected: function(e) {
+            $('li.k-file').remove();
+            var self = this;
+            var files = e.files;
+            var reader = new FileReader();
+            this.cusDS.data([]);
+            reader.onload = function() {
+                var data = reader.result;
+                var result = {};
+                var workbook = XLSX.read(data, {
+                    type: 'binary'
+                });
+                workbook.SheetNames.forEach(function(sheetName) {
+                    var roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+                    if (roa.length > 0) {
+                        result[sheetName] = roa;
+                        for (var i = 0; i < roa.length; i++) {
+                            self.cusDS.add(roa[i]);
+                        }
+                    }
+                });
+            }
+            reader.readAsBinaryString(files[0].rawFile);
+        },
+        saveCus: function() {
+            var self = this;
+            if (this.cusDS.data().length === 0) {
+                var notifi = $("#ntf1").data("kendoNotification");
+                notifi.hide();
+                notifi.error(this.lang.lang.error_message);
+            } else {
+                $("#loadImport").css("display", "block");
+                this.cusDS.sync();
+                this.cusDS.bind("requestEnd", function(e) {
+                    if (e.response) {
+                        var notifi = $("#ntf1").data("kendoNotification");
+                        notifi.hide();
+                        notifi.success(self.lang.lang.success_message);
+                        $("#loadImport").css("display", "none");
+                        $('li.k-file').remove();
+                        self.cusDS.data([]);
+                    }
+                });
+                this.cusDS.bind("error", function(e) {
+                    var notifi = $("#ntf1").data("kendoNotification");
+                    notifi.hide();
+                    notifi.error(self.lang.lang.error_message);
+                    $("#loadImport").css("display", "none");
+                    $('li.k-file').remove();
+                    self.cusDS.data([]);
                 });
             }
         },
