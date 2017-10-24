@@ -294,7 +294,7 @@ class Inventory_modules extends REST_Controller {
 			}
 		}
 		//Add 1 day
-		$asOf = date("Y-m-d", strtotime($asOf . "+1 days"));
+		// $asOf = date("Y-m-d", strtotime($asOf . "+1 days"));
 
 		$obj->select("id, abbr, number, name");
 		$obj->include_related("category", "name");
@@ -441,9 +441,9 @@ class Inventory_modules extends REST_Controller {
 		$obj->where("deleted <>", 1);		
 		$obj->order_by_related("transaction", "issued_date", "asc");
 		$obj->get_iterated();
-		
+
 		if($obj->exists()){
-			$objList = []; $totalAmount = 0;
+			$objList = [];
 			foreach ($obj as $value) {
 				//Find Qty On Hand, Avg. Cost, and Inventory Value
 				$itemLines = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
@@ -464,9 +464,9 @@ class Inventory_modules extends REST_Controller {
 
 				//Cost
 				$cost = floatval($value->cost) / floatval($value->transaction_rate);				
-				// if(intval($value->movement)==-1){
-				// 	$cost = $avgCost;
-				// }
+				if(intval($value->movement)==-1){
+					$cost = $avgCost;
+				}
 
 				if(isset($objList[$value->item_id])){
 					$objList[$value->item_id]["line"][] = array(
@@ -515,10 +515,13 @@ class Inventory_modules extends REST_Controller {
 				}
 			}
 
+			$totalAmount = 0;
 			foreach ($objList as $value) {
+				$lineLength = count($value["line"]);
+				$totalAmount += $value["line"][$lineLength-1]["amount"];
+
 				$data["results"][] = $value;
 			}
-
 			$data["totalAmount"] = $totalAmount;
 		}
 
