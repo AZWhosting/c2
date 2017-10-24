@@ -445,45 +445,28 @@ class Inventory_modules extends REST_Controller {
 		if($obj->exists()){
 			$objList = []; $totalAmount = 0;
 			foreach ($obj as $value) {
-				//Find Quantity On Hand
-				$oh = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$oh->select_sum('quantity * conversion_ratio * movement', "qty");
-				$oh->where_related("transaction", "issued_date <=", $value->transaction_issued_date);
-				$oh->where_related("transaction", "is_recurring <>", 1);
-				$oh->where_related("transaction", "deleted <>", 1);
-				$oh->where('item_id', $value->item_id);
-				$oh->where('movement <>', 0);
-				$oh->where("deleted <>", 1);
-				$oh->get();
-
-				//Find Item Avg. Cost
-				$itemCost = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$itemCost->select_sum('quantity * conversion_ratio * movement', "totalQuantity");
-				$itemCost->select_sum('quantity * conversion_ratio * movement * cost', "totalAmount");
-				$itemCost->where_related("transaction", "issued_date <=", $value->transaction_issued_date);
-				$itemCost->where_related("transaction", "is_recurring <>", 1);
-				$itemCost->where_related("transaction", "deleted <>", 1);
-				$itemCost->where('item_id', $value->item_id);
-				$itemCost->where('movement', 1);
-				$itemCost->where("deleted <>", 1);
-				$itemCost->get();
+				//Find Qty On Hand, Avg. Cost, and Inventory Value
+				$itemLines = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$itemLines->select_sum('quantity * conversion_ratio * movement', "totalQuantity");
+				$itemLines->select_sum('quantity * conversion_ratio * movement * cost', "totalAmount");
+				$itemLines->where_related("transaction", "issued_date <=", $value->transaction_issued_date);
+				$itemLines->where_related("transaction", "is_recurring <>", 1);
+				$itemLines->where_related("transaction", "deleted <>", 1);
+				$itemLines->where('item_id', $value->item_id);
+				$itemLines->where('movement <>', 0);
+				$itemLines->where("deleted <>", 1);
+				$itemLines->get();
 
 				$avgCost = 0;
-				if(floatval($itemCost->totalQuantity)==0){}else{
-					$avgCost = floatval($itemCost->totalAmount) / floatval($itemCost->totalQuantity);
+				if(floatval($itemLines->totalQuantity)==0){}else{
+					$avgCost = floatval($itemLines->totalAmount) / floatval($itemLines->totalQuantity);
 				}
-				//End Item Avg. Cost
-
-				//Inventory Value
-				$amount = floatval($oh->qty) * $avgCost;
 
 				//Cost
 				$cost = floatval($value->cost) / floatval($value->transaction_rate);				
-				if(intval($value->movement)==-1){
-					$cost = $avgCost;
-				}
-
-				// $totalAmount += floatval($value->quantity) * floatval($value->conversion_ratio) * intval($value->movement) * $cost;
+				// if(intval($value->movement)==-1){
+				// 	$cost = $avgCost;
+				// }
 
 				if(isset($objList[$value->item_id])){
 					$objList[$value->item_id]["line"][] = array(
@@ -493,10 +476,9 @@ class Inventory_modules extends REST_Controller {
 						"issued_date" 		=> $value->transaction_issued_date,
 						"quantity" 			=> floatval($value->quantity),
 						"cost" 				=> $cost,
-						"cost_avg" 			=> $avgCost,
 						"price" 			=> floatval($value->price) / floatval($value->transaction_rate),
-						"on_hand" 			=> floatval($oh->qty),
-						"amount"			=> $amount,
+						"on_hand" 			=> floatval($itemLines->totalQuantity),
+						"amount"			=> floatval($itemLines->totalAmount),
 						"movement" 			=> intval($value->movement)
 					);
 				}else{
@@ -525,10 +507,9 @@ class Inventory_modules extends REST_Controller {
 						"issued_date" 		=> $value->transaction_issued_date,
 						"quantity" 			=> floatval($value->quantity),
 						"cost" 				=> $cost,
-						"cost_avg" 			=> $avgCost,
 						"price" 			=> floatval($value->price) / floatval($value->transaction_rate),
-						"on_hand" 			=> floatval($oh->qty),
-						"amount"			=> $amount,
+						"on_hand" 			=> floatval($itemLines->totalQuantity),
+						"amount"			=> floatval($itemLines->totalAmount),
 						"movement" 			=> intval($value->movement)
 					);			
 				}

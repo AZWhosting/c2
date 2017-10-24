@@ -441,13 +441,19 @@ class Items extends REST_Controller {
 		if(!empty($filter["filters"]) && isset($filter["filters"])){
 	    	foreach ($filter['filters'] as $value) {
 	    		if(isset($value['operator'])) {
-	    			$obj->{$value['operator']}($value['field'], $value['value']);
+	    			if($value['operator']=="startswith"){
+	    				$obj->like($value['field'], $value['value'], 'after');
+	    			}else if($value['operator']=="contains"){
+	    				$obj->like($value['field'], $value['value'], 'both');
+	    			}else{
+						$obj->{$value['operator']}($value['field'], $value['value']);
+	    			}
 				} else {
 					$obj->where($value["field"], $value["value"]);
 				}
 			}
 		}
-		
+
 		$obj->where("is_pattern <>", 1);
 		$obj->where("deleted <>", 1);			
 		
@@ -535,7 +541,7 @@ class Items extends REST_Controller {
 			$cost = floatval($obj->totalAmount) / floatval($obj->totalQuantity);
 		}
 		
-		$data["results"] = array(
+		$data["results"][] = array(
 			"id" 		=> 0,
 			"quantity"	=> floatval($obj->totalQuantity),
 			"cost"		=> $cost,
@@ -1496,95 +1502,6 @@ class Items extends REST_Controller {
 				);				
 			}
 		}		
-
-		//Response Data		
-		$this->response($data, 200);	
-	}
-
-	//GET SUMMARY
-	function summary_get() {		
-		$filters 	= $this->get("filter")["filters"];		
-		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
-		$sort 	 	= $this->get("sort");		
-		$data["results"] = [];
-		$data["count"] = 0;
-
-		$obj = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
-
-		//Sort
-		if(!empty($sort) && isset($sort)){
-			foreach ($sort as $value) {
-				$obj->order_by($value["field"], $value["dir"]);
-			}
-		}
-
-		//Filter		
-		if(!empty($filters) && isset($filters)){			
-	    	foreach ($filters as $value) {
-	    		if(!empty($value["operator"]) && isset($value["operator"])){
-		    		if($value["operator"]=="where_in"){
-		    			$obj->where_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_where_in"){
-		    			$obj->or_where_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="where_not_in"){
-		    			$obj->where_not_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_where_not_in"){
-		    			$obj->or_where_not_in($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="like"){
-		    			$obj->like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_like"){
-		    			$obj->or_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="not_like"){
-		    			$obj->not_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="or_not_like"){
-		    			$obj->or_not_like($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="startswith"){
-		    			$obj->like($value["field"], $value["value"], "after");
-		    		}else if($value["operator"]=="endswith"){
-		    			$obj->like($value["field"], $value["value"], "before");
-		    		}else if($value["operator"]=="contains"){
-		    			$obj->like($value["field"], $value["value"], "both");
-		    		}else if($value["operator"]=="or_where"){
-		    			$obj->or_where($value["field"], $value["value"]);
-		    		}else if($value["operator"]=="where_related"){
-		    			$obj->where_related($value["model"], $value["field"], $value["value"]);
-		    		}else if($value["operator"]=="where_in_related"){
-		    			$obj->where_in_related($value["model"], $value["field"], $value["value"]);		    			    		
-		    		}else{
-		    			$obj->where($value["field"], $value["value"]);
-		    		}
-	    		}else{	    			
-	    			$obj->where($value["field"], $value["value"]);	    				    			
-	    		}
-			}									 			
-		}
-				
-		//Results
-		$obj->get_paged_iterated($page, $limit);
-		$data["count"] = $obj->paged->total_rows;							
-
-		if($obj->result_count()>0){
-			foreach ($obj as $value) {
-				if($value->item_id>0){
-					$data["results"][] = array(
-						"id" 			=> $value->id,
-						"item_id" 		=> $value->item_id,
-						"on_hand" 		=> intval($value->on_hand),
-						"unit" 			=> intval($value->quantity),
-						"cost" 			=> floatval($value->cost),
-						"price" 		=> floatval($value->price),
-						"amount" 		=> floatval($value->amount),
-						"rate" 			=> floatval($value->rate),
-						"locale" 		=> $value->locale,
-						"movement" 		=> intval($value->movement),											
-						
-						"invoice" 		=> $value->transaction->get_raw()->result(),						
-						"item" 			=> $value->item->get_raw()->result()								
-					);
-				}
-			}
-		}				
 
 		//Response Data		
 		$this->response($data, 200);	

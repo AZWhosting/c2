@@ -66,24 +66,24 @@ class Item_prices extends REST_Controller {
 		}
 
 		if($obj->exists()){
-			foreach ($obj as $value) {							
+			foreach ($obj as $value) {
 				$data["results"][] = array(
-					"id" 				=> $value->id,					
+					"id" 				=> $value->id,
 					"item_id" 			=> $value->item_id,
 					"assembly_id" 		=> $value->assembly_id,
 					"measurement_id" 	=> $value->measurement_id,
-					"quantity" 			=> floatval($value->quantity),					
+					"quantity" 			=> floatval($value->quantity),
 					"conversion_ratio" 	=> floatval($value->conversion_ratio),
 					"price" 			=> floatval($value->price),
-					"amount" 			=> floatval($value->amount),					
-					"locale" 			=> $value->locale,					
+					"amount" 			=> floatval($value->amount),
+					"locale" 			=> $value->locale,
 					"measurement" 		=> $value->measurement_name
 				);
 			}
 		}
 
 		//Response Data		
-		$this->response($data, 200);		
+		$this->response($data, 200);
 	}
 	
 	//POST
