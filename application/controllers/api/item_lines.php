@@ -238,6 +238,7 @@ class Item_lines extends REST_Controller {
 							$itemLines->where_related("transaction", "deleted <>", 1);
 							$itemLines->where('item_id', $value->item_id);
 							$itemLines->where('movement <>', 0);
+							$itemLines->where("deleted <>", 1);
 							$itemLines->get();
 							
 							//Quantity
