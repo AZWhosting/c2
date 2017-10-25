@@ -1771,7 +1771,7 @@ class Utibills extends REST_Controller {
 			   	$obj->rate 				= isset($value->rate) ? $value->rate : 1;
 			   	$obj->locale 			= isset($value->locale) ? $value->locale : "";
 			   	$obj->month_of 			= isset($value->month_of) ? $value->month_of : "";
-			   	$obj->issued_date 		= isset($value->issue_date) ? $value->issue_date : "";
+			   	$obj->issued_date 		= isset($value->issued_date) ? $value->issued_date : "";
 			   	$obj->bill_date 		= isset($value->bill_date) ? $value->bill_date : "";
 			   	$obj->due_date 			= isset($value->due_date) ? $value->due_date : "";
 			   	$obj->is_journal 		= 1;
@@ -1780,6 +1780,9 @@ class Utibills extends REST_Controller {
 			   	$obj->status 			= 0;
 			   	$obj->user_id 			= isset($value->read_by) ? $value->read_by: 0;
 			   	$obj->sub_total 		= isset($value->amount) ? $value->amount : "";
+			   	$data["results"][] = array(
+			   		"id" 	=> $obj->id
+			   	);
 		   		if($obj->save()){
 		   			//protect dublicate
 		   			$oldjn = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
@@ -1807,9 +1810,6 @@ class Utibills extends REST_Controller {
 		   			$journal2->rate 	  = $obj->rate;
 		   			$journal2->locale 	  = $obj->locale;
 		   			$journal2->save();
-					$data["results"][] = array(
-				   		"id" 	=> $obj->id
-				   	);
 			    }
 			    //Save Records
 			    $record = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);

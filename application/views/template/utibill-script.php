@@ -18841,9 +18841,9 @@
             }
         },
         offLineDB           : dataStore(apiUrl + "utibills/offlinework"),
-        rows                    : [],
+        rows                : [],
         TabletAbbr          : "",
-        getOfflineDB            : function(){
+        getOfflineDB        : function(){
             if(this.get("licenseSelect") && this.get("locationSelect") && this.get("monthOfSR") && this.get("toDateSR") && this.get("IssueDate") && this.get("BillingDate") && this.get("DueDate") && this.get("readerSelect") && this.get("tabletSelect")){
                 $("#loadImport").css("display", "block");
                 var self = this,
@@ -19031,19 +19031,9 @@
                 $("#loadImport").css("display", "block");
                 this.uploadOfflineDS.sync();
                 this.uploadOfflineDS.bind("requestEnd", function(e) {
-                    if (e.response) {
-                        var notifi = $("#ntf1").data("kendoNotification");
-                        notifi.hide();
-                        notifi.success(self.lang.lang.success_message);
-                        $("#loadImport").css("display", "none");
-                        $('li.k-file').remove();
-                        self.uploadOfflineDS.data([]);
-                    }
-                });
-                this.uploadOfflineDS.bind("error", function(e) {
                     var notifi = $("#ntf1").data("kendoNotification");
                     notifi.hide();
-                    notifi.error(self.lang.lang.error_message);
+                    notifi.success(self.lang.lang.success_message);
                     $("#loadImport").css("display", "none");
                     $('li.k-file').remove();
                     self.uploadOfflineDS.data([]);
