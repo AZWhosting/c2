@@ -3193,6 +3193,7 @@
         haveLicenseU: false,
         haveLocationU: false,
         haveSubLocationU: false,
+        liSelectName: "",
         pageLoad: function(id) {},
         licenseChange: function(e) {
             var self = this;
@@ -3204,7 +3205,6 @@
             this.set("boxSelect", "");
             this.set("haveLocation", false);
             this.set("haveSubLocation", false);
-
             this.blocDS.filter([{
                     field: "branch_id",
                     value: this.get("licenseSelect")
@@ -3219,7 +3219,9 @@
                 }
             ]);
             this.set("haveLicense", true);
+            this.set("liSelectName", e.sender.span[0].innerText);
         },
+        loSelectName: "",
         onLocationChange: function(e) {
             var self = this;
             this.subLocationDS.data([]);
@@ -3253,6 +3255,7 @@
                         }
                     });
             }
+            this.set("loSelectName", e.sender.span[0].innerText);
         },
         onSubLocationChange: function(e) {
             var self = this;
@@ -3579,7 +3582,7 @@
             //save the file as Excel file with extension xlsx
             kendo.saveAs({
                 dataURI: workbook.toDataURL(),
-                fileName: "Reading-" + "<?php echo date('d-M-Y'); ?>" + ".xlsx"
+                fileName: this.get("liSelectName") + "-" + this.get("loSelectName") + "-" + "<?php echo date('dmY'); ?>" + ".xlsx"
             });
         },
         MonthTo: false,
