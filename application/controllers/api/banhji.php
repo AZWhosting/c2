@@ -752,10 +752,14 @@ class Banhji extends REST_Controller {
 						// get file based on industry id
 						$data = 'use ' . $conn->inst_database;
 						$files = new Dbfile();
+						$industryID = $inst->industry_id;
 						if($inst->industry_id == 94) {
 							$files->where('industry_id', $inst->industry_id);
+						} else {
+							$files->where('industry_id', 0);
 						}
 						$files->where('country_id', $inst->country_id)->get();
+						
 						// $files->get();
 						$my_table = new Systemtable();
 						$my_table->get();
