@@ -19784,19 +19784,25 @@
                 contact_type_id = this.get("contact_type_id");
             if (searchText) {
                 var textParts = searchText.replace(/([a-z]+)/i, "$1 ").split(/[^0-9a-z]+/ig);
-                para.push({
-                    field: "name",
-                    operator: "like",
-                    value: searchText
-                }, {
-                    field: "code",
-                    operator: "or_where",
-                    value: textParts[1]
-                }, {
-                    field: "abbr",
-                    operator: "or_where",
-                    value: searchText
-                });
+                para.push(
+                    {
+                        field: "name",
+                        operator: "like",
+                        value: searchText
+                    },
+                    {
+                        field: "abbr",
+                        operator: "or_where",
+                        value: searchText
+                    }
+                );
+                if(textParts[1]){
+                    para.push({
+                        field: "code",
+                        operator: "or_where",
+                        value: textParts[1]
+                    });
+                }
             }
             this.contactDS.filter(para);
             self.set("contact_type_id", 0);

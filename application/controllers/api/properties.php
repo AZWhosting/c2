@@ -73,7 +73,15 @@ class Properties extends REST_Controller {
 		 			"name" 				=> $value->name,	
 		 			"abbr"				=> $value->abbr,
 		 			"code"				=> floatval($value->code),
-		 			"contact" 			=> $contact->exists() ? array('id' => $contact->id, 'abbr' => $contact->abbr, 'number' => $contact->number, 'name'=> $contact->name, 'phone' => $contact->phone, 'url'=>base_url() . 'api/contacts/' . $contact->id, 'locale'=> $contact->locale, 'address' => $contact->address) : array('id' => 0, 'abbr' => 'null', 'number' => 'null', 'name'=> 'null', 'phone' => 'null', 'url'=> 'null', 'locale' => 'null', 'address' => 'null'),
+		 			"contact" 			=> array(
+		 				'id' 		=> $contact->id, 
+		 				'abbr' 		=> $contact->abbr, 
+		 				'number' 	=> $contact->number, 
+		 				'name'		=> $contact->name, 
+		 				'phone' 	=> $contact->phone, 
+		 				'locale'	=> $contact->locale, 
+		 				'address' 	=> $contact->address
+		 			),
 					"address" 			=> $value->address
 		 		);
 			}
