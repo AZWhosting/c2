@@ -533,7 +533,7 @@ class Items extends REST_Controller {
 		$obj->select_sum('quantity * conversion_ratio * movement * cost', "totalAmount");
 		$obj->where_related("transaction", "is_recurring <>", 1);
 		$obj->where_related("transaction", "deleted <>", 1);
-		$obj->where_related("item", "item_type_id", 1);
+		// $obj->where_related("item", "item_type_id", 1);
 		$obj->where('movement <>', 0);
 		$obj->where("deleted <>", 1);
 		$obj->get();
