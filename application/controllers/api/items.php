@@ -503,6 +503,7 @@ class Items extends REST_Controller {
 		$data["count"] = 1;
 
 		$obj = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+		$additionalCosts = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 		//Sort
 		if(!empty($sort) && isset($sort)){
@@ -520,25 +521,34 @@ class Items extends REST_Controller {
 	    	foreach ($filter['filters'] as $value) {
 	    		if(isset($value['operator'])) {
 					$obj->{$value['operator']}($value['field'], $value['value']);
+					$additionalCosts->{$value['operator']}($value['field'], $value['value']);
 				} else {
 	    			$obj->where($value["field"], $value["value"]);
+	    			$additionalCosts->where($value["field"], $value["value"]);
 				}
 			}
 		}
 		
 		$obj->select_sum('quantity * conversion_ratio * movement', "totalQuantity");
 		$obj->select_sum('quantity * conversion_ratio * movement * cost', "totalAmount");
-		// $obj->where_related("transaction", "issued_date <=", $value->transaction_issued_date);
 		$obj->where_related("transaction", "is_recurring <>", 1);
 		$obj->where_related("transaction", "deleted <>", 1);
-		// $obj->where('item_id', $value->item_id);
+		$obj->where_related("item", "item_type_id", 1);
 		$obj->where('movement <>', 0);
 		$obj->where("deleted <>", 1);
 		$obj->get();
+		
+		$additionalCosts->select_sum("additional_cost");
+		$additionalCosts->where_related("transaction", "is_recurring <>", 1);
+		$additionalCosts->where_related("transaction", "deleted <>", 1);
+		$additionalCosts->where_related("item", "item_type_id", 1);
+		$additionalCosts->where('movement <>', 0);
+		$additionalCosts->where("deleted <>", 1);
+		$additionalCosts->get();
 
 		$cost = 0;
 		if(floatval($obj->totalQuantity)==0){}else{
-			$cost = floatval($obj->totalAmount) / floatval($obj->totalQuantity);
+			$cost = (floatval($obj->totalAmount) + floatval($additionalCosts->additional_cost)) / floatval($obj->totalQuantity);
 		}
 		
 		$data["results"][] = array(

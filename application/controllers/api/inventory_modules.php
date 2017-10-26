@@ -175,23 +175,61 @@ class Inventory_modules extends REST_Controller {
 			}
 		}
 
-		$obj->select("id, number, name, locale");
+		$obj->select("id, number, name, locale, item_type_id");
 		$obj->include_related("item_type", "name");
 		$obj->include_related("measurement", "name");
 		$obj->get();
 
-		//Quantity, Avg. Cost, and Amount
-		$itemLines = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$itemLines->where_related("transaction", "is_recurring <>", 1);
-		$itemLines->where_related("transaction", "deleted <>", 1);
-		$itemLines->where('item_id', $obj->id);
-		$itemLines->select_sum('quantity * conversion_ratio * movement', "totalQuantity");
-		$itemLines->select_sum('quantity * conversion_ratio * movement * cost', "totalAmount");
-		$itemLines->get();
+		$quantity = 0; $cost = 0; $amount = 0; $po = 0; $so = 0;
+		if($obj->item_type_id==1){
+			//Quantity, Avg. Cost, and Amount
+			$itemLines = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$itemLines->select_sum('quantity * conversion_ratio * movement', "totalQuantity");
+			$itemLines->select_sum('quantity * conversion_ratio * movement * cost', "totalAmount");
+			$itemLines->where_related("transaction", "is_recurring <>", 1);
+			$itemLines->where_related("transaction", "deleted <>", 1);
+			// $itemLines->where_related("item", "item_type_id", 1);
+			$itemLines->where('item_id', $obj->id);
+			$itemLines->where('movement <>', 0);
+			$itemLines->where("deleted <>", 1);
+			$itemLines->get();
 
-		$cost = 0;
-		if(floatval($itemLines->totalQuantity)==0){}else{
-			$cost = floatval($itemLines->totalAmount) / floatval($itemLines->totalQuantity);
+			$additionalCosts = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$additionalCosts->select_sum("additional_cost");
+			$additionalCosts->where_related("transaction", "is_recurring <>", 1);
+			$additionalCosts->where_related("transaction", "deleted <>", 1);
+			$additionalCosts->where_related("item", "item_type_id", 1);
+			$additionalCosts->where('item_id', $obj->id);		
+			$additionalCosts->where('movement <>', 0);
+			$additionalCosts->where("deleted <>", 1);
+			$additionalCosts->get();
+			
+			if(floatval($itemLines->totalQuantity)==0){}else{
+				$cost = (floatval($itemLines->totalAmount) + floatval($additionalCosts->additional_cost)) / floatval($itemLines->totalQuantity);
+			}
+
+			$quantity = floatval($itemLines->totalQuantity);
+			$amount = floatval($itemLines->totalAmount);
+
+			//On PO
+			$po = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+			$po->select_sum("quantity * conversion_ratio", "totalQuantity");
+			$po->where("item_id", $obj->id);
+			$po->where_related("transaction", "type", "Purchase_Order");
+			$po->where_related("transaction", "is_recurring <>", 1);
+			$po->where_related("transaction", "deleted <>", 1);
+			$po->get();
+			$po = floatval($po->totalQuantity);
+
+			//On SO
+			$so = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$so->select_sum("quantity * conversion_ratio", "totalQuantity");
+			$so->where("item_id", $obj->id);
+			$so->where_related("transaction", "type", "Sale_Order");
+			$so->where_related("transaction", "is_recurring <>", 1);
+			$so->where_related("transaction", "deleted <>", 1);		
+			$so->get();
+			$so = floatval($so->totalQuantity);
 		}
 
 		//Price
@@ -213,24 +251,6 @@ class Inventory_modules extends REST_Controller {
 		$txn->where("deleted <>", 1);
 		$txnCount = $txn->count();
 
-		//On PO
-		$po = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
-		$po->select_sum("quantity * conversion_ratio", "totalQuantity");
-		$po->where("item_id", $obj->id);
-		$po->where_related("transaction", "type", "Purchase_Order");
-		$po->where_related("transaction", "is_recurring <>", 1);
-		$po->where_related("transaction", "deleted <>", 1);
-		$po->get();
-
-		//On SO
-		$so = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$so->select_sum("quantity * conversion_ratio", "totalQuantity");
-		$so->where("item_id", $obj->id);
-		$so->where_related("transaction", "type", "Sale_Order");
-		$so->where_related("transaction", "is_recurring <>", 1);
-		$so->where_related("transaction", "deleted <>", 1);		
-		$so->get();
-
 		//Results
 		$data["results"][] = array(
 			"id" 			=> $obj->id,
@@ -240,13 +260,13 @@ class Inventory_modules extends REST_Controller {
 			"measurement" 	=> $obj->measurement_name,
 			"currency_code" => $currency->code,
 			"locale" 		=> $obj->locale,
-			"quantity" 		=> floatval($itemLines->totalQuantity),
+			"quantity" 		=> $quantity,
 			"cost" 			=> $cost,
 			"price" 		=> floatval($itemPrice->price),
-			"amount" 		=> floatval($itemLines->totalAmount),
+			"amount" 		=> $amount,
 			"txn" 			=> $txnCount,
-			"po" 			=> floatval($po->totalQuantity),
-			"so" 			=> floatval($so->totalQuantity)
+			"po" 			=> $po,
+			"so" 			=> $so
 		);
 
 		//Response Data		
