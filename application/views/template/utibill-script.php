@@ -7718,6 +7718,7 @@
                 "fine": Fine,
                 "group": Group
             });
+            this.tmpGroup = [];
             if (jQuery.inArray(Group, this.tmpGroup) != -1) {
             }else{
                 this.tmpGroup.push(Group);
