@@ -160,8 +160,9 @@ class Waterdash extends REST_Controller {
 				$trx = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				$trx->select_sum('amount');
 				$trx->where('type', 'Utility_Invoice');
-				$trx->where('location_id', $loc->id)->get();
 				$trx->where('status <>', 1);
+				$trx->where('location_id', $loc->id)->get();
+				
 				$balance += $trx->amount;
 
 				$trxSale = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
