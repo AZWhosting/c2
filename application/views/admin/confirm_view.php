@@ -471,12 +471,12 @@
                     banhji.aws.createDB.sync();
                     banhji.aws.createDB.bind('requestEnd', function(e){
                     $('#proccessMsg').text("Finalizing...");
-                      if(e.response.results.institute) {
+                      // if(e.response.results.institute) {
                         $('#proccessMsg').text("Redirecting...");
                         setTimeout(function(){
                           window.location.replace(baseUrl + "login/");
                         },2000);
-                      }
+                      // }
                     });
                   // });
                 } else {
