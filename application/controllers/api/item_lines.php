@@ -549,7 +549,6 @@ class Item_lines extends REST_Controller {
 		$models = json_decode($this->put('models'));
 		$data["results"] = [];
 		$data["count"] = 0;
-		$typeList = array("Cash_Purchase","Credit_Purchase","Internal_Usage","Commercial_Invoice","Vat_Invoice","Invoice","Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale","Sale_Return","Payment_Refund","Purchase_Return","Cash_Refund","Item_Adjustment");
 
 		foreach ($models as $value) {
 			$obj = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
@@ -597,6 +596,43 @@ class Item_lines extends REST_Controller {
 				}
 			}
 			$obj->conversion_ratio = $conversion_ratio;
+
+			//Update item costing
+			$txns = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$txns->get_by_id($obj->transaction_id);
+
+			$itemLines = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$itemLines->where_related("transaction", "issued_date <", $txns->issued_date);
+			$itemLines->where("item_id", $obj->item_id);
+			$itemLines->where("movement", -1);
+			$itemLines->where("deleted <>", 1);
+			$itemLines->get_iterated();
+
+			foreach ($itemLines as $line) {
+				$txnLines = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$obj->select_sum('quantity * conversion_ratio * movement', "totalQuantity");
+				$obj->select_sum('quantity * conversion_ratio * movement * cost', "totalAmount");
+				$obj->where_related("transaction", "is_recurring <>", 1);
+				$obj->where_related("transaction", "deleted <>", 1);
+				// $obj->where_related("item", "item_type_id", 1);
+				$obj->where('movement <>', 0);
+				$obj->where("deleted <>", 1);
+				$obj->get();
+				
+				$additionalCosts->select_sum("additional_cost");
+				$additionalCosts->where_related("transaction", "is_recurring <>", 1);
+				$additionalCosts->where_related("transaction", "deleted <>", 1);
+				$additionalCosts->where_related("item", "item_type_id", 1);
+				$additionalCosts->where('movement <>', 0);
+				$additionalCosts->where("deleted <>", 1);
+				$additionalCosts->get();
+
+				$cost = 0;
+				if(floatval($obj->totalQuantity)==0){}else{
+					$cost = (floatval($obj->totalAmount) + floatval($additionalCosts->additional_cost)) / floatval($obj->totalQuantity);
+				}
+				
+			}
 
 			if($obj->save()){
 				//Results
