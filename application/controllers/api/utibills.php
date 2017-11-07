@@ -1823,7 +1823,7 @@ class Utibills extends REST_Controller {
 			    $record->from_date = $value->from_date;
 			    $record->to_date = $value->to_date;
 			    $record->new_round = $value->new_round;
-			    $record->memo = $value->record_momo;
+			    $record->memo = $value->record_memo;
 			    $record->invoiced = 1;
 			    if($value->record_momo = "void"){
 			    	$updatemeter = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
