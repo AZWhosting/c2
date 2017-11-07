@@ -1832,7 +1832,7 @@ class Utibills extends REST_Controller {
 			    		$updatemeter->status = 2;
 			    		$updatemeter->save();
 			    	}
-			    }else($value->memo == 2){
+			    }elseif($value->memo == 2){
 			    	$updatemeter = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			    	$updatemeter->where("id", $value->meter_id);
 			    	if($updatemeter->exists()){
@@ -2496,4 +2496,4 @@ class Utibills extends REST_Controller {
 	}
 }
 /* End of file meters.php */
-/* Location: ./application/controllers/api/utibills.php */       
+/* Location: ./application/controllers/api/utibills.php */
