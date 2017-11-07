@@ -11182,63 +11182,179 @@
 					    <!-- Tabs -->
 						<div class="relativeWrap" data-toggle="source-code">
 							<div class="widget widget-tabs widget-tabs-gray report-tab">
+							
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>										
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date">Date</span></a></li>	
+										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.filter">Filter</span></a></li>
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab" ><i></i><span data-bind="text: lang.lang.print_export">Print/Export</span></a></li>
 									</ul>
 								</div>
-								<!-- // Tabs Heading END -->								
+								<!-- // Tabs Heading END -->
 								<div class="widget-body">
 									<div class="tab-content">
+								        <!-- //Date -->
 								        <div class="tab-pane active" id="tab-1">
-								        	<div class="row">
+											<div class="row">
 												<div class="col-xs-12 col-sm-2">
 													<input data-role="dropdownlist"
-									                   data-value-primitive="true"
-									                   data-text-field="text"
-									                   data-value-field="value"
-									                   data-bind="value: sorter,
-									                              source: sortList,             
-									                              events: { change: sorterChanges }" style="width: 100%" />
-									            </div>                       
-								                <div class="col-xs-12 col-sm-2">
-								                    <input data-role="datepicker"
-								                       data-format="dd-MM-yyyy"
-								                       data-parse-formats="yyyy-MM-dd"
-									                   data-bind="value: sdate"
-									                   placeholder="From" style="width: 100%" />
-									            </div>                       
-								                <div class="col-xs-12 col-sm-2">
-								                   	<input data-role="datepicker"
-								                       data-format="dd-MM-yyyy"
-								                       data-parse-formats="yyyy-MM-dd"
-									                   data-bind="value: edate"
-									                   placeholder="To" style="width: 100%" />
-									            </div>                       
-								                <div class="col-xs-12 col-sm-1">
-									          		<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>							
-									    		</div>
-									    	</div>
-									    </div>									        							       
+														   class="sorter"
+												           data-value-primitive="true"
+												           data-text-field="text"
+												           data-value-field="value"
+												           data-bind="value: sorter,
+												                      source: sortList,
+												                      events: { change: sorterChanges }" style="width: 100%" />
+												</div>
+												<div class="col-xs-12 col-sm-2">
+													<input data-role="datepicker"
+														   class="sdate"
+														   data-format="dd-MM-yyyy"
+												           data-bind="value: sdate,
+												           			  max: edate"
+												           placeholder="From ..." style="width: 100%" >
+												</div>
+												<div class="col-xs-12 col-sm-2">
+												    <input data-role="datepicker"
+												    	   class="edate"
+												    	   data-format="dd-MM-yyyy"
+												           data-bind="value: edate,
+												                      min: sdate"
+												           placeholder="To ..." style="width: 100%" >
+												</div>
+												<div class="col-xs-12 col-sm-1">
+												  	<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+												</div>
+											</div>
+							        	</div>
+
+								    	<!-- Filter -->
+								        <div class="tab-pane" id="tab-2">
+											<div class="row">
+												<div class="col-xs-12 col-sm-3">
+													<span data-bind="text: lang.lang.license">Licenses</span>
+													<input 
+														data-role="dropdownlist" 
+														data-option-label="License ..." 
+														data-auto-bind="false" 
+														data-value-primitive="true" 
+														data-text-field="name" 
+														data-value-field="id" 
+														data-bind="
+															value: licenseSelect,
+																source: licenseDS,
+																events: {change: licenseChange}" style="width: 100%">
+												</div>
+												<div class="col-xs-12 col-sm-3">
+													<span data-bind="text: lang.lang.location">Locations</span>
+														<input 
+															data-role="dropdownlist" 
+															data-option-label="Location ..." 
+															data-auto-bind="false" 
+															data-value-primitive="false" 
+															data-text-field="name" 
+															data-value-field="id" 
+															data-bind="
+																value: blocSelect,
+																enabled: haveBloc,
+																source: blocDS" style="width: 100%">
+												</div>
+												<div class="col-xs-12 col-sm-1">											
+										  			<button style="margin-top: 20px;" type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+												</div>														
+											</div>		
+							        	</div>
+							        	<!-- PRINT/EXPORT  -->
+								        <div class="tab-pane report" id="tab-3">
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" ><i></i> Print</span>
+											<span id="excel" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" >
+												<i class="fa fa-file-excel-o"></i>
+												Export to Excel
+											</span>
+							        	</div>	
 								    </div>
 								</div>
 							</div>
 						</div>
 						<!-- // Tabs END -->						
 					
+
 						<div id="invFormContent">
 							<div class="block-title">
-								<h3 data-bind="text: institute.name"></h3>
-								<h2>Other Revenues</h2>
+								<h3 data-bind="text: company.name"></h3>
+								<h2 data-bind="text: lang.lang.fine_collection_report">Fine Collection</h2>
+								<p data-bind="text: displayDate"></p>
 							</div>
+
+							<div class="row">
+								<div class="col-xs-12 col-sm-3">
+									<div class="total-sale">
+										<p data-bind="text: lang.lang.number_of_customer">Number of Customers</p>
+										<span data-bind="text: dataSource.total"></span>
+									</div>
+
+								</div>
+								<div class="col-xs-12 col-sm-9">
+									<div class="total-sale">
+										<p data-bind="text: lang.lang.amount">Amount</p>
+										<span data-bind="text: total"></sapn>
+									</div>
+								</div>
+							</div>
+
+							<table style="margin-bottom: 0;" class="table table-bordered table-condensed table-striped table-primary table-vertical-center">
+								<thead>
+									<tr>									
+										<th style="vertical-align: top;"><span data-bind="text: lang.lang.type">Type</span></th>
+										<th style="vertical-align: top;"><span data-bind="text: lang.lang.date">Date</span></th>
+										<th style="vertical-align: top;"><span data-bind="text: lang.lang.location">Location</span></th>
+										<th style="vertical-align: top;"><span data-bind="text: lang.lang.reference">Reference</span></th>
+										<th style="vertical-align: top;"><span data-bind="text: lang.lang.amount">Amount</span></th>
+									</tr>
+								</thead>
+								<tbody data-role="listview"
+										data-template="otherRevenues-template"
+										data-auto-bind="false" 
+										data-bind="source: dataSource">
+								</tbody>
+							</table>
 						</div>
-					</ul>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+</script>
+<script id="otherRevenues-template" type="text/x-kendo-template">
+	<tr style="font-weight: bold">
+		<td>#=name#</td>
+		<td></td>
+		<td></td>
+	</tr>	
+	# var amount = 0;#
+	#for(var i= 0; i <line.length; i++) {#
+		# amount += line[i].amount;#
+		<tr>
+			<td style="padding-left: 20px !important;">#=line[i].type#</td>
+			<td>#=kendo.toString(new Date(line[i].date), "dd-MM-yyyy")#</td>
+			<td>#=line[i].location#</td>
+			<td>#=line[i].number#</td>		
+			<td style="text-align: right;">#=kendo.toString(line[i].amount, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#</td>
+		</tr>
+	#}#
+	<tr>
+    	<td style="font-weight: bold; color: black;">Total</td>
+    	<td></td>
+    	<td></td>
+    	<td></td>
+    	<td class="right" style="font-weight: bold; border-top: 1px solid black !important; color: black;">
+    		#=kendo.toString(amount, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#
+    	</td>
+    </tr>
+    <tr>
+    	<td colspan="6">&nbsp;</td>
+    </tr>
 </script>
 <script id="accountReceivableList" type="text/x-kendo-template">
 	<div class="container">
