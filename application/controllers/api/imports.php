@@ -491,7 +491,15 @@ class Imports extends REST_Controller {
 			$meter->startup_reader = isset($startup) ? $startup : 0;
 			$meter->number_digit = $row->digit_number;
 			$meter->activated = 1;
-			$meter->status = 1;
+			
+			if($row->status == "inactive"){
+				$meter->status = 0;
+			}elseif($row->status == "void"){
+				$meter->status = 2;
+			}else{
+				$meter->status = 1;
+			}
+			
 			$meter->property_id = $property->id;
 			$meter->contact_id = $property->contact_id;
 			$meter->branch_id = $location->branch_id;

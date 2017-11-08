@@ -598,56 +598,58 @@ class Item_lines extends REST_Controller {
 			$obj->conversion_ratio = $conversion_ratio;
 
 			//Update item costing
-			if($value->movement==1){				
-				$transactions = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$transactions->where("is_recurring <>", 1);
-				$transactions->where("deleted <>", 0);
-				$transactions->get_by_id($value->transaction_id);
+			if($value->movement==1){
+				if($value->quantity<>$obj->quantity || $value->cost<>$obj->cost){				
+					$transactions = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$transactions->where("is_recurring <>", 1);
+					$transactions->where("deleted <>", 0);
+					$transactions->get_by_id($value->transaction_id);
 
-				if($transactions->exists()){
-					$itemLines = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-					$itemLines->where_related("transaction", "issued_date >", $transactions->issued_date);
-					$itemLines->where_related("transaction", "is_recurring <>", 1);
-					$itemLines->where_related("transaction", "deleted <>", 0);
-					$itemLines->where("item_id", $obj->item_id);
-					$itemLines->where("movement", -1);
-					$itemLines->where("deleted <>", 1);
-					$itemLines->get_iterated();
+					if($transactions->exists()){
+						$itemLines = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						$itemLines->where_related("transaction", "issued_date >", $transactions->issued_date);
+						$itemLines->where_related("transaction", "is_recurring <>", 1);
+						$itemLines->where_related("transaction", "deleted <>", 0);
+						$itemLines->where("item_id", $obj->item_id);
+						$itemLines->where("movement", -1);
+						$itemLines->where("deleted <>", 1);
+						$itemLines->get_iterated();
 
-					foreach ($itemLines as $line) {
-						$lineTxns = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-						$lineTxns->get_by_id($line->transaction_id);
+						foreach ($itemLines as $line) {
+							$lineTxns = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+							$lineTxns->get_by_id($line->transaction_id);
 
-						$itemWAC = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-						$itemWAC->select_sum('quantity * conversion_ratio * movement', "totalQuantity");
-						$itemWAC->select_sum('quantity * conversion_ratio * movement * cost', "totalAmount");
-						$itemWAC->where_related("transaction", "issued_date <", $lineTxns->issued_date);
-						$itemWAC->where_related("transaction", "is_recurring <>", 1);
-						$itemWAC->where_related("transaction", "deleted <>", 1);
-						$itemWAC->where("item_id", $line->item_id);
-						$itemWAC->where('movement <>', 0);
-						$itemWAC->where("deleted <>", 1);
-						$itemWAC->get();
-						
-						$additionalCosts = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-						$additionalCosts->select_sum("additional_cost");
-						$additionalCosts->where_related("transaction", "is_recurring <>", 1);
-						$additionalCosts->where_related("transaction", "deleted <>", 1);
-						$additionalCosts->where_related("item", "item_type_id", 1);
-						$additionalCosts->where('movement <>', 0);
-						$additionalCosts->where("deleted <>", 1);
-						$additionalCosts->get();
+							$itemWAC = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+							$itemWAC->select_sum('quantity * conversion_ratio * movement', "totalQuantity");
+							$itemWAC->select_sum('quantity * conversion_ratio * movement * cost', "totalAmount");
+							$itemWAC->where_related("transaction", "issued_date <", $lineTxns->issued_date);
+							$itemWAC->where_related("transaction", "is_recurring <>", 1);
+							$itemWAC->where_related("transaction", "deleted <>", 1);
+							$itemWAC->where("item_id", $line->item_id);
+							$itemWAC->where('movement <>', 0);
+							$itemWAC->where("deleted <>", 1);
+							$itemWAC->get();
+							
+							$additionalCosts = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+							$additionalCosts->select_sum("additional_cost");
+							$additionalCosts->where_related("transaction", "is_recurring <>", 1);
+							$additionalCosts->where_related("transaction", "deleted <>", 1);
+							$additionalCosts->where_related("item", "item_type_id", 1);
+							$additionalCosts->where('movement <>', 0);
+							$additionalCosts->where("deleted <>", 1);
+							$additionalCosts->get();
 
-						$cost = 0;
-						if(floatval($itemWAC->totalQuantity)==0){}else{
-							$cost = (floatval($itemWAC->totalAmount) + floatval($additionalCosts->additional_cost)) / floatval($itemWAC->totalQuantity);
+							$cost = 0;
+							if(floatval($itemWAC->totalQuantity)==0){}else{
+								$cost = (floatval($itemWAC->totalAmount) + floatval($additionalCosts->additional_cost)) / floatval($itemWAC->totalQuantity);
+							}
+
+							$lines = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+							$lines->get_by_id($line->id);
+
+							$lines->cost = $cost;
+							$lines->save();
 						}
-
-						$lines = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-						$lines->get_by_id($line->id);
-
-						$lines->cost = $cost;
-						$lines->save();
 					}
 				}
 			}

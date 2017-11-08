@@ -786,6 +786,8 @@ class Contacts extends REST_Controller {
 			}
 		}
 
+		$obj->order_by("name", "asc");
+
 		//Results
 		if($page && $limit){
 			$obj->get_paged_iterated($page, $limit);

@@ -123,7 +123,7 @@
 	</div> -->
 	<div class="span12">
 		<div class="relativeWrap" data-toggle="source-code">
-			<div class="widget widget-tabs widget-tabs-gray report-tab" style="background: #fff; overflow: hidden;">
+			<!-- <div class="widget widget-tabs widget-tabs-gray report-tab" style="background: #fff; overflow: hidden;">
 				<div class="widget-head head-custom" style="height: 50px;">
 					<ul>
 						<li class="active"><a href="#tab-1" data-toggle="tab"><i></i><span >My Apps</span></a></li>
@@ -133,7 +133,7 @@
 
 				<div class="widget-body" style="padding: 20px 0; float: left; width: 100%;">
 					<div class="tab-content">
-				        <div class="tab-pane active" id="tab-1">
+				        <div class="tab-pane active" id="tab-1"> -->
 							<div class="row-fluid" style="padding: 0 20px;">
 								<div class="row-fluid" style="float: left; background: #ebeef3; padding: 15px 20px 20px; width: 100%;">
 					        		<h2>Bring your apps along for the ride</h2>
@@ -211,7 +211,7 @@
 					        		</div>
 					        	</div>					        	
 							</div>
-			        	</div>
+			        	<!-- </div>
 
 			        	<div class="tab-pane" id="tab-2">
 				        	<div class="row-fluid" style="padding: 0 20px;">
@@ -243,7 +243,7 @@
 									</div>
 								</div>
 
-					        	<!-- <div class="row-fluid" style="margin-top: 20px; float: left; background: #ebeef3; padding: 15px 20px 0; width: 100%;">
+					        	<div class="row-fluid" style="margin-top: 20px; float: left; background: #ebeef3; padding: 15px 20px 0; width: 100%;">
 					        		<h2>Apps Recommended For You</h2>
 					        		<div class="row-fluid" style="margin-top: 20px;">
 					        			<div class="wrapper">
@@ -266,7 +266,7 @@
 								            </div>
 								        </div>
 					        		</div>
-					        	</div> -->
+					        	</div>
 
 					        	<div class="row-fluid" style="margin-top: 20px; float: left; background: #ebeef3 ; padding: 15px 20px 15px; width: 100%;">
 					        		<h2>Featured</h2>
@@ -398,7 +398,7 @@
 					        		</div>
 					        	</div>
 
-					        	<!--First Window -->
+					        	
 							    <div data-role="window" id="appcenter"
 							    	data-title="false"
 						            data-width="90%"
@@ -641,8 +641,8 @@
 						    		</div>
 								</div>
 
-								<!--Second Window -->
-							    <!-- <div data-role="window"
+								Second Window 
+							    <div data-role="window"
 							    	data-title="false"
 							    	data-resizable= "false"
 						            data-width="610"
@@ -703,7 +703,7 @@
 						    				</a>
 						    			</div>
 						    		</div>									
-								</div> -->
+								</div>
 
 					        	<div class="row-fluid" style="float: left; background: #f7f9fb ; padding: 15px 20px 15px; width: 100%;">
 					        		<h2>Newest</h2>
@@ -906,7 +906,7 @@
 			        	
 				    </div>
 				</div>
-			</div>
+			</div> -->
 		</div>		
 	</div>		
 </script>

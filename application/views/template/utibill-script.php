@@ -11867,6 +11867,7 @@
         dataSource: dataStore(apiUrl + "utibillReports/customer_list"),
         licenseDS: dataStore(apiUrl + "branches"),
         blocDS: dataStore(apiUrl + "locations"),
+        subLocationDS: dataStore(apiUrl + "locations"),
         licenseSelect: null,
         company: banhji.institute,
         blocSelect: null,
@@ -11924,6 +11925,17 @@
             });
             this.set("haveBloc", true);
         },
+        locationChange: function(e){
+            var data = e.data;
+            var license = this.licenseDS.at(e.sender.selectedIndex - 1);
+            this.set("blocSelect", license);
+            this.blocDS.filter({
+                field: "branch_id",
+                value: license.id
+            });
+            this.set("haveLocation", true);
+        },
+
         search: function() {
             var self = this,
                 para = [],
