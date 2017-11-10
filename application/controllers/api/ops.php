@@ -105,12 +105,8 @@ class Ops extends REST_Controller {
 				// 	// 	'null' 		=> FALSE,
 				// 	// 	'default' 	=> 0
 				// 	// )
-				// 	'memo' => array(
-				// 		'name' 		=> 'memo',//New Field Name 
-				// 		'type'		=> 'LONGTEXT'
-				// 	)
 				// );
-				// $data['results'][] = $this->dbforge->modify_column('transactions', $fields);
+				// $data['results'][] = $this->dbforge->modify_column('contact_assignees', $fields);
 
 			 	//Remove column, 'table_name', 'column_to_drop'
 				// $this->dbforge->drop_column('attribute_values_items', 'variant_attribute_id');
