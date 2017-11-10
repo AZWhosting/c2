@@ -737,7 +737,7 @@ class Wreports extends REST_Controller {
 		$activeMeter->where('status', 1);
 		$nActiveMeter = $activeMeter->count();
 		$contact->where('use_water', '1');
-		$nContact 		= $contact->count();
+		$nContact 		= $	->count();
 
 		$branch->get();
 		$totalAllowCustomer = $branch->max_customer == 0 ? 0: $nActiveMeter / intval($branch->max_customer);

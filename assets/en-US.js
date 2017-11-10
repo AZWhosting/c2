@@ -1190,6 +1190,8 @@ var	en_US = {
 	"cash_receipt_sources_description": "Lists of cash receipt by sources for the select period of time, group by method of payment.",
 	"inactive_customer": "Inactive List",
 	"inactive_customer_description": "List of the customer have been inactive",
+	"summary_report": "Summary Report",
+	"kpi_report": "KPI Report",
 	//Water Dashbaord
 	"reading": "Reading",
 	"run_bill": "Run Bill",

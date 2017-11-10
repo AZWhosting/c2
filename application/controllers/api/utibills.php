@@ -2494,6 +2494,181 @@ class Utibills extends REST_Controller {
 		$data["count"] = count($data["results"]);
 		$this->response($data, 201);
 	}
+	//Head Meter
+	//GET
+	function head_meter_get() {
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
+		$data["count"] = 0;
+
+		$obj = new Head_meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
+			}
+		}
+
+		//Filter
+		if(!empty($filter["filters"]) && isset($filter["filters"])){
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value['operator'])) {
+					if($value['operator']=="startswith"){
+	    				$obj->like($value['field'], $value['value'], 'after');
+	    			}else if($value['operator']=="contains"){
+	    				$obj->like($value['field'], $value['value'], 'both');
+	    			}else{
+						$obj->{$value['operator']}($value['field'], $value['value']);
+	    			}
+				} else {
+	    			$obj->where($value["field"], $value["value"]);
+				}
+			}
+		}
+
+		//Results
+		if($page && $limit){
+			$obj->get_paged_iterated($page, $limit);
+			$data["count"] = $obj->paged->total_rows;
+		}else{
+			$obj->get_iterated();
+			$data["count"] = $obj->result_count();
+		}
+
+		if($obj->exists()){
+			foreach ($obj as $value) {
+				$url = "";
+				if($value->attachment_id > 0){
+					$att = new Attachment(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$att->where("id", $value->attachment_id)->limit(1)->get();
+					if($att->exists()){
+						$url = $att->url;
+					}
+				}
+				$data["results"][] = array(
+					"id" 						=> $value->id,
+					"branch_id" 				=> $value->branch_id,
+					"order" 					=> $value->order,
+					"location_id" 				=> $value->location_id,
+					"pole_id"					=> $value->pole_id,
+					"box_id"					=> $value->box_id,
+					"starting_no" 				=> $value->starting_no,
+					"attachment_id" 			=> $value->attachment_id,
+					"image_url"  				=> $url,
+					"type" 						=> $value->type,
+					"number" 					=> $value->number,
+					"multiplier" 				=> $value->multiplier,
+					"latitute" 					=> $value->latitute,
+					"longtitute" 				=> $value->longtitute,
+					"status" 					=> $value->status,
+					"number_digit" 				=> $value->number_digit,
+					"date_used"  				=> $value->date_used,
+					"round" 					=> $value->round
+				);
+			}
+		}
+
+		//Response Data
+		$this->response($data, 200);
+	}
+
+	//POST
+	function head_meter_post() {
+		$models = json_decode($this->post('models'));
+		$data["results"] = [];
+		$data["count"] = 0;
+		
+		$number = "";
+		foreach ($models as $value) {
+
+			$obj = new Head_meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			isset($value->branch_id) 					? $obj->branch_id 					= $value->branch_id : "";
+			isset($value->order) 						? $obj->order 						= $value->order : 0;
+			isset($value->location_id) 					? $obj->location_id 				= $value->location_id : "";
+			isset($value->pole_id) 						? $obj->pole_id 					= $value->pole_id : "";
+			isset($value->box_id) 						? $obj->box_id 						= $value->box_id : "";
+			isset($value->starting_no) 					? $obj->starting_no 				= $value->starting_no : 0;
+			isset($value->attachment_id) 				? $obj->attachment_id 				= $value->attachment_id : "";
+			isset($value->type) 						? $obj->type 						= $value->type : "w";
+			isset($value->number) 						? $obj->number 						= $value->number : "";
+			isset($value->multiplier) 					? $obj->multiplier 					= $value->multiplier : 1;
+			isset($value->latitute) 					? $obj->latitute 					= $value->latitute : "";
+			isset($value->longtitute) 					? $obj->longtitute 					= $value->longtitute : "";
+			isset($value->status) 						? $obj->status 						= $value->status : 1;
+			isset($value->number_digit) 				? $obj->number_digit 				= $value->number_digit : 4;
+			isset($value->date_used) 					? $obj->date_used 					= $value->date_used : "";
+			isset($value->round) 						? $obj->round 						= $value->round : 0;
+
+	   		if($obj->save()){
+			   	$data["results"][] = array(
+			   		"id" 						=> $obj->id,
+			   	);
+			   	$record = new Head_meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			   	$record->head_meter_id = $obj->id;
+			   	$record->current = $obj->starting_no;
+			   	$record->previous = $obj->starting_no;
+			   	$record->from_date = $obj->date_used;
+			   	$record->to_date = $obj->date_used;
+			   	$record->month_of = $obj->date_used;
+			   	$record->readed = 1;
+			   	$record->usage = 0;
+			   	$record->round = 0;
+			   	$record->read_by = $value->read_by;
+			   	$record->input_by = $value->input_by;
+			   	$record->save();
+		    }
+		}
+
+		$data["count"] = count($data["results"]);
+		$this->response($data, 201);
+	}
+
+	//PUT
+	function head_meter_put() {
+		$models = json_decode($this->put('models'));
+		$data["results"] = [];
+		$data["count"] = 0;
+
+		foreach ($models as $value) {
+			$obj = new Head_meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$obj->get_by_id($value->id);
+
+			isset($value->branch_id) 					? $obj->branch_id 					= $value->branch_id : "";
+			isset($value->order) 						? $obj->order 						= $value->order : 0;
+			isset($value->location_id) 					? $obj->location_id 				= $value->location_id : "";
+			isset($value->pole_id) 						? $obj->pole_id 					= $value->pole_id : "";
+			isset($value->box_id) 						? $obj->box_id 						= $value->box_id : "";
+			isset($value->starting_no) 					? $obj->starting_no 				= $value->starting_no : 0;
+			isset($value->attachment_id) 				? $obj->attachment_id 				= $value->attachment_id : "";
+			isset($value->type) 						? $obj->type 						= $value->type : "w";
+			isset($value->number) 						? $obj->number 						= $value->number : "";
+			isset($value->multiplier) 					? $obj->multiplier 					= $value->multiplier : 1;
+			isset($value->latitute) 					? $obj->latitute 					= $value->latitute : "";
+			isset($value->longtitute) 					? $obj->longtitute 					= $value->longtitute : "";
+			isset($value->status) 						? $obj->status 						= $value->status : 1;
+			isset($value->number_digit) 				? $obj->number_digit 				= $value->number_digit : 4;
+			isset($value->date_used) 					? $obj->date_used 					= $value->date_used : "";
+			isset($value->round) 						? $obj->round 						= $value->round : 0;
+
+			if($obj->save()){
+				//Results
+				$data["results"][] = array(
+					"id" 						=> $obj->id,
+				);
+			}
+		}
+		$data["count"] = count($data["results"]);
+
+		$this->response($data, 200);
+	}
 }
 /* End of file meters.php */
 /* Location: ./application/controllers/api/utibills.php */

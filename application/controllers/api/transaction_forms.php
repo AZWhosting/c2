@@ -60,7 +60,7 @@ class Transaction_forms extends REST_Controller {
 		if($obj->result_count()>0){	
 		 		
 			foreach ($obj as $value) {
-				if($value->id != 47 && $value->id != 48){		
+				if($value->id != 47 && $value->id != 48 && $value->id != 50){		
 					//Results				
 					$data["results"][] = array(
 						"id" 			=> $value->id,					
@@ -71,7 +71,16 @@ class Transaction_forms extends REST_Controller {
 						"image_url" 	=> $value->image_url	
 					);
 				}else{
-					if($this->int == 267){
+					if($this->int == 267 && $value->id != 50){
+						$data["results"][] = array(
+							"id" 			=> $value->id,					
+							"type" 			=> $value->type,
+							"title" 	 	=> $value->title,
+							"moduls" 	 	=> $value->moduls,
+							"note" 	 		=> $value->note,
+							"image_url" 	=> $value->image_url	
+						);
+					}else{
 						$data["results"][] = array(
 							"id" 			=> $value->id,					
 							"type" 			=> $value->type,

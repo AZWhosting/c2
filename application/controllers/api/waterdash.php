@@ -219,6 +219,80 @@ class Waterdash extends REST_Controller {
 		$this->response($data, 200);
 	}
 
+	function kpi_get() {
+		$filters 	= $this->get("filter")["filters"];		
+		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
+		$sort 	 	= $this->get("sort");		
+		$data["results"] = array();
+		$data["count"] = 0;
+
+
+		$obj = new Branch(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$obj->order_by('id', 'asc');
+		$obj->get();
+		foreach($obj as $value) {
+			$location = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$location->where('branch_id', $value->id);
+			$location->where('main_bloc', 0);
+			$location->where('main_pole', 0);
+			$location->get_iterated();
+			$nActiveMeter = 0;
+			$totalAllowCustomer = 0;
+			$totalActiveCustomer = 0;
+			$totalAmount = 0;
+			$avgIncome = 0;
+			$totalUsage = 0;
+			$nContact = 0;
+			$avg = 0;
+			foreach($location as $loc) {
+				$activeMeter = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$activeMeter->where('status', 1);
+				$activeMeter->where('location_id', $loc->id)->get();
+				$nActiveMeter = $activeMeter->count();
+
+				$totalAllowCustomer = $value->max_customer == 0 ? 0: $nContact / intval($value->max_customer);
+
+				$contact = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$contact->where('use_water', '1');
+				$contact->where('location_id', $loc->id)->get_iterated();
+				$nContact 		= $contact->count();				
+				$totalActiveCustomer = $value->max_customer == 0 ? 0: $nActiveMeter / $value->max_customer;
+
+		
+				$trxSale = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$trxSale->select_sum('amount');
+				$trxSale->where('type', 'Utility_Invoice');
+				$trxSale->where('location_id', $loc->id)->get();
+				$totalAmount += $trxSale->amount;
+
+				$avgIncome = $nActiveMeter == 0? 0 : $totalAmount  / $nActiveMeter;
+
+				$avgUsage = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+				$avgUsage->get();
+				$avg = 0;
+				foreach($avgUsage as $avgUsg) {
+					$totalUsage += $avgUsg->usage;
+				}
+				$avg = $nActiveMeter == 0 ? 0:$totalUsage / $nActiveMeter;
+
+			}
+			$data['results'][] = array(
+				'id' => $value->id,
+				'name'=>$value->name,
+				'totalCustomer' => $nActiveMeter,
+				'totalAllowCustomer' => $totalAllowCustomer,
+				'totalActiveCustomer' => $totalActiveCustomer,
+				'avgIncome' => $avgIncome,
+				'totalUsage' => $totalUsage,
+				'avgUsage' => $avg,
+				'totalAmount' => $totalAmount,
+			);
+		}
+		$this->response($data, 200);
+	}
+
 	function graph_get() {
 		$filters 	= $this->get("filter")["filters"];		
 		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		

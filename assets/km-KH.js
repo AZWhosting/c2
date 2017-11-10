@@ -1169,6 +1169,8 @@ var	km_KH = {
 	"cash_receipt_sources_description": "តារាង​វិក្កយបត្រ​រ​ប្រាក់​លំអិតតាមប្រភពសម្រាប់​ការ​កំណត់​មួយ​រាយ​តាម​របៀប​នៃ​ការ​បង់​ប្រាក់",
 	"inactive_customer": "បញ្ជីផ្អាក",
 	"inactive_customer_description": "បញ្ជីអតិថិជនដែលបានផ្អាក",
+	"summary_report": "របាយការណ័សង្ខេប",
+	"kpi_report": "KPI Report",
 	//Water Dashbaord
 	"reading": "អំណាន",
 	"run_bill": "ធ្វើ​វិក្កយបត្រ",
@@ -1177,7 +1179,7 @@ var	km_KH = {
 	"deposits": "ប្រាក់​កក់",
 	"expected_due": "ចំនួន​ដែល​ត្រូវ​បង់",
 	"active_meter": "កុង​ទ័រ​ដំណើរ​ការ",
-	"no": "លេខ​រាង",
+	"no": "លេខ​រៀង",
 	"license": "អាជ្ញាប័ណ្ណ",
 	"no_of_bloc": "ចំនួន​ប្លុក",
 	"inactive_meter": "កុងទ័រ​មិន​ដំណើរ​ការ",
