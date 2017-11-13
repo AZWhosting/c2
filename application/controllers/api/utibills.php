@@ -2620,7 +2620,6 @@ class Utibills extends REST_Controller {
 			   	$record->from_date = $obj->date_used;
 			   	$record->to_date = $obj->date_used;
 			   	$record->month_of = $obj->date_used;
-			   	$record->readed = 1;
 			   	$record->usage = 0;
 			   	$record->round = 0;
 			   	$record->read_by = $value->read_by;
@@ -2736,7 +2735,6 @@ class Utibills extends REST_Controller {
 					"from_date"  			=> $value->from_date,
 					"to_date" 				=> $value->to_date,
 					"round" 				=> $value->round,
-					"readed" 				=> $value->readed,
 				);
 			}
 		}
@@ -2791,6 +2789,126 @@ class Utibills extends REST_Controller {
 
 		$data["count"] = count($data["results"]);
 		$this->response($data, 201);
+	}
+	function head_meter_reading_put() {
+		$models = json_decode($this->put('models'));
+		$data["results"] = [];
+		$data["count"] = 0;
+		
+		$number = "";
+		foreach ($models as $value) {
+
+			$obj = new Head_meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$obj->get_by_id($value->id);
+			isset($value->head_meter_id) 		? $obj->head_meter_id 		= $value->head_meter_id : "";
+			isset($value->current) 				? $obj->current 			= $value->current : "";
+			isset($value->previous) 			? $obj->previous 			= $value->previous : "";
+			isset($value->month_of) 			? $obj->month_of 			= $value->month_of : "";
+			isset($value->to_date) 		 		? $obj->to_date 			= $value->to_date : "";
+			isset($value->input_by) 		 	? $obj->input_by 			= $value->input_by : "";
+			isset($value->read_by) 		 		? $obj->read_by 			= $value->read_by : "";
+			$current = intval($value->current);
+			if($value->round == 1){
+				$meter = new Head_meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$meter->where('id', $value->head_meter_id)->get();
+				$digit = $meter->number_digit;
+				$oldcurrent =  pow(10, $digit);
+				$oldcurrent = $oldcurrent - intval($value->previous);
+				$obj->usage    = intval($oldcurrent) + intval($value->current);
+				$meter->round += 1;
+				$meter->save();
+				$obj->round = 1;
+			}else{
+				$obj->usage    = intval($current) - intval($value->previous);
+				$obj->round = 0;
+			}
+			$oldreading = new Head_meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$oldreading->where("head_meter_id", $value->head_meter_id)->order_by("id", "desc")->limit(1)->get();
+			if($oldreading->exists()){
+				$obj->from_date = $oldreading->to_date;
+			}else{
+				$obj->from_date = $value->to_date;
+			}
+	   		if($obj->save()){
+			   	$data["results"][] = array(
+			   		"id" 						=> $obj->id,
+			   	);
+		    }
+		}
+
+		$data["count"] = count($data["results"]);
+		$this->response($data, 201);
+	}
+	//GET
+	function head_meter_book_get() {
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
+		$data["count"] = 0;
+
+		$obj = new Head_meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
+			}
+		}
+
+		//Filter
+		if(!empty($filter["filters"]) && isset($filter["filters"])){
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value['operator'])) {
+					if($value['operator']=="startswith"){
+	    				$obj->like($value['field'], $value['value'], 'after');
+	    			}else if($value['operator']=="contains"){
+	    				$obj->like($value['field'], $value['value'], 'both');
+	    			}else{
+						$obj->{$value['operator']}($value['field'], $value['value']);
+	    			}
+				} else {
+	    			$obj->where($value["field"], $value["value"]);
+				}
+			}
+		}
+
+		//Results
+		if($page && $limit){
+			$obj->get_paged_iterated($page, $limit);
+			$data["count"] = $obj->paged->total_rows;
+		}else{
+			$obj->get_iterated();
+			$data["count"] = $obj->result_count();
+		}
+
+		if($obj->exists()){
+			foreach ($obj as $value) {
+				$record = new Head_meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$record->where("head_meter_id", $value->id)->order_by("id", "desc")->limit(1)->get();
+				if($record->exists()){
+					$data["results"][] = array(
+						"meter_id" 		=> $value->id,
+						"meter_number" 	=> $value->number,
+						"previous"		=> floatval($record->current),
+						"current"		=> 0,
+						"from_date"		=> $record->from_date, 
+						"to_date"		=> $record->to_date,
+						"month_of" 		=> $record->month_of,
+						"status" 		=> "new"
+					);
+				}
+				
+			}
+		}
+
+		//Response Data
+		$this->response($data, 200);
 	}
 }
 /* End of file meters.php */

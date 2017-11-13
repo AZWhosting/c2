@@ -4854,7 +4854,6 @@
 	</tr>
 </script>
 <!-- Head Meter Reading -->
-<!-- Head Meter Reading -->
 <script id="HeadMeter" type="text/x-kendo-template">
 	<div class="container">
 		<div class="row-fluid">
@@ -5093,7 +5092,6 @@
 												<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 													<thead>
 														<tr>
-															<th style="vertical-align: top;"><span data-bind="text: lang.lang.name">name</span></th>
 															<th style="vertical-align: top;"><span data-bind="text: lang.lang.meter_number">Meter Number</span></th>
 															<th style="vertical-align: top;"><span data-bind="text: lang.lang.from_date">From Date</span></th>
 															<th style="vertical-align: top;"><span data-bind="text: lang.lang.to_date">To Date</span></th>
@@ -5103,10 +5101,10 @@
 														</tr>
 													</thead>
 													<tbody 
-								                		data-bind="source: uploadDS" 
+								                		data-bind="source: getReadingDS" 
 								                		data-auto-bind="false" 
 								                		data-role="listview" 
-								                		data-template="reading-template">
+								                		data-template="head-download-reading-template">
 								                	</tbody>
 												</table>
 											</div>
@@ -5297,7 +5295,9 @@
 			#=usage#
 		</td>
 		<td align="center">
+			# if(banhji.HeadMeter.meterReadingDS.indexOf(data) == 0) {#
 				<a class="btn-action glyphicons pencil btn-success k-edit-button" ><i></i></a>
+			#}#
 		</td>
 	</tr>
 </script>
@@ -5308,7 +5308,7 @@
 			#:kendo.toString(new Date(month_of), "D")#
 		</td>
 		<td>
-			#=meter_number#
+			#=head_meter_number#
 		</td>
 		<td>
 			#=previous#
@@ -5326,6 +5326,28 @@
 	        </div>
 		</td>
 	</tr>
+</script>
+<script id="head-download-reading-template" type="text/x-kendo-tmpl">
+    <tr>
+    	<td>
+    		#= meter_number#
+   		</td>
+   		<td align="center">
+    		#= kendo.toString(new Date(from_date), "dd-MMM-yyyy")#
+   		</td>
+   		<td align="center">
+    		#= kendo.toString(new Date(to_date), "dd-MMM-yyyy")#
+   		</td>
+   		<td align="center">
+    		#= kendo.toString(new Date(month_of), "MMM-yyyy")#
+   		</td>
+   		<td align="center">
+    		#= previous#
+   		</td>
+   		<td align="center">
+    		#= current#
+   		</td>		
+   	</tr>
 </script>
 <script id="AddHeadMeter" type="text/x-kendo-template">
 	<div class="container">

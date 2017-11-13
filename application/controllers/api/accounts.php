@@ -86,7 +86,7 @@ class Accounts extends REST_Controller {
 					"locale" 				=> $value->locale,
 					"is_taxable" 			=> intval($value->is_taxable),
 					"status" 				=> $value->status,
-					"is_system" 			=> $value->is_system,
+					"is_system" 			=> intval($value->is_system),
 
 				   	"account_type_name"		=> $value->account_type_name
 				);				

@@ -776,6 +776,9 @@ class Banhji extends REST_Controller {
 						$this->db->where('locale <>', "");
 						$this->db->update('contacts', array('locale'=> "$inst->monetary_locale"));
 
+						// update currency based on company
+						$this->db->update('accounts', array('locale' => "$inst->monetary_locale"));
+
 						// add currency based on company to inventory
 						$this->db->where('locale <>', "");
 						$this->db->update('items', array('locale'=> "$inst->monetary_locale"));

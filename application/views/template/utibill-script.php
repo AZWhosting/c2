@@ -3582,7 +3582,7 @@
             //save the file as Excel file with extension xlsx
             kendo.saveAs({
                 dataURI: workbook.toDataURL(),
-                fileName: this.get("liSelectName") + "-" + this.get("loSelectName") + "-" + "<?php echo date('dmY'); ?>" + ".xlsx"
+                fileName: "[" + this.get("liSelectName") + "]-[" + this.get("loSelectName") + "]-[" + "<?php echo date('Ym'); ?>" + "]-[" + "<?php echo date('dmY'); ?>" + "].xlsx"
             });
         },
         MonthTo: false,
@@ -19024,6 +19024,249 @@
         },
         pageLoad            : function() {
             this.meterDS.fetch();
+        },
+        licenseDS: dataStore(apiUrl + "branches"),
+        blocDS: dataStore(apiUrl + "locations"),
+        subLocationDS: dataStore(apiUrl + "locations"),
+        boxDS: dataStore(apiUrl + "locations"),
+        haveLicense : false,
+        haveLocation : false,
+        haveSubLocation : false,
+        licenseChange: function(e) {
+            var self = this;
+            this.blocDS.data([]);
+            this.set("locationSelect", "");
+            this.set("haveLicense", false)
+            this.subLocationDS.data([]);
+            this.boxDS.data([]);
+            this.set("boxSelect", "");
+            this.set("haveLocation", false);
+            this.set("haveSubLocation", false);
+            this.blocDS.filter([{
+                    field: "branch_id",
+                    value: this.get("licenseSelect")
+                },
+                {
+                    field: "main_bloc",
+                    value: 0
+                },
+                {
+                    field: "main_pole",
+                    value: 0
+                }
+            ]);
+            this.set("haveLicense", true);
+            this.set("liSelectName", e.sender.span[0].innerText);
+        },
+        loSelectName: "",
+        onLocationChange: function(e) {
+            var self = this;
+            this.subLocationDS.data([]);
+            this.boxDS.data([]);
+            this.set("boxSelect", "");
+            this.set("haveSubLocation", false);
+            if (this.get("blocSelect")) {
+                this.subLocationDS.query({
+                        filter: [{
+                                field: "branch_id",
+                                value: this.get("licenseSelect")
+                            },
+                            {
+                                field: "main_bloc",
+                                value: this.get("blocSelect")
+                            },
+                            {
+                                field: "main_pole",
+                                value: 0
+                            }
+                        ],
+                        page: 1
+                    })
+                    .then(function(e) {
+                        if (self.subLocationDS.data().length > 0) {
+                            self.set("haveLocation", true);
+                        } else {
+                            self.set("haveLocation", false);
+                            self.set("subLocationSelect", "");
+                            self.subLocationDS.data([]);
+                        }
+                    });
+            }
+            this.set("loSelectName", e.sender.span[0].innerText);
+        },
+        onSubLocationChange: function(e) {
+            var self = this;
+            if (this.get("subLocationSelect")) {
+                this.boxDS.query({
+                        filter: [{
+                                field: "branch_id",
+                                value: this.get("licenseSelect")
+                            },
+                            {
+                                field: "main_bloc",
+                                value: this.get("blocSelect")
+                            },
+                            {
+                                field: "main_pole",
+                                value: this.get("subLocationSelect")
+                            }
+                        ]
+                    })
+                    .then(function(e) {
+                        if (self.boxDS.data().length > 0) {
+                            self.set("haveSubLocation", true);
+                        } else {
+                            self.set("haveSubLocation", false);
+                            self.set("boxSelect", "");
+                            self.boxDS.data([]);
+                        }
+                    });
+            }
+        },
+        getReadingDS : dataStore(apiUrl + "utibills/head_meter_book"),
+        search: function() {
+            this.getReadingDS.data([]);
+            this.set("haveData", false);
+            var monthOfSearch = this.get("monthOfSelect"),
+                license_id = this.get("licenseSelect"),
+                bloc_id = this.get("blocSelect");
+            var para = [];
+            this.set("selectMeter", true);
+            if (this.get("boxSelect")) {
+                para.push({
+                    field: "box_id",
+                    value: this.get("boxSelect")
+                });
+            } else if (this.get("subLocationSelect")) {
+                para.push({
+                    field: "pole_id",
+                    value: this.get("subLocationSelect")
+                });
+            } else if (this.get("locationSelect")){
+                para.push({
+                    field: "location_id",
+                    value: bloc_id
+                });
+            } else {
+                para.push({
+                    field: "branch_id",
+                    value: this.get("licenseSelect")
+                });
+            }
+            var self = this;
+            this.getReadingDS.query({
+                filter: para
+            }).then(function() {
+                var FromDate, ToDate, MonthOf;
+                self.rows = [];
+                if (self.getReadingDS.data().length > 0) {
+                    self.set("haveData", true);
+                    self.rows.push({
+                        cells: [
+                            {
+                                value: "meter_number",
+                                background: "#496cad",
+                                color: "#ffffff"
+                            },
+                            {
+                                value: "from_date",
+                                background: "#496cad",
+                                color: "#ffffff"
+                            },
+                            {
+                                value: "to_date",
+                                background: "#496cad",
+                                color: "#ffffff"
+                            },
+                            {
+                                value: "month_of",
+                                background: "#496cad",
+                                color: "#ffffff"
+                            },
+                            {
+                                value: "previous",
+                                background: "#496cad",
+                                color: "#ffffff"
+                            },
+                            {
+                                value: "current",
+                                background: "#496cad",
+                                color: "#ffffff"
+                            },
+                            {
+                                value: "round",
+                                background: "#496cad",
+                                color: "#ffffff"
+                            }
+                        ]
+                    });
+                    for (var i = 0; i < self.getReadingDS.data().length; i++) {
+                        self.rows.push({
+                            cells: [
+                                {
+                                    value: self.uploadDS.data()[i].meter_number
+                                },
+                                {
+                                    value: self.uploadDS.data()[i].from_date
+                                },
+                                {
+                                    value: self.uploadDS.data()[i].to_date
+                                },
+                                {
+                                    value: self.uploadDS.data()[i].month_of
+                                },
+                                {
+                                    value: self.uploadDS.data()[i].previous
+                                },
+                                {
+                                    value: ""
+                                },
+                                {
+                                    value: ""
+                                }
+                            ]
+                        });
+                    }
+                }
+            });
+        },
+        exportEXCEL: function(e) {
+            var workbook = new kendo.ooxml.Workbook({
+                sheets: [{
+                    columns: [{
+                            autoWidth: true
+                        },
+                        {
+                            autoWidth: true
+                        },
+                        {
+                            autoWidth: true
+                        },
+                        {
+                            autoWidth: true
+                        },
+                        {
+                            autoWidth: true
+                        },
+                        {
+                            autoWidth: true
+                        },
+                        {
+                            autoWidth: true
+                        },
+                        {
+                            autoWidth: true
+                        }
+                    ],
+                    title: "Reading",
+                    rows: this.rows
+                }]
+            });
+            //save the file as Excel file with extension xlsx
+            kendo.saveAs({
+                dataURI: workbook.toDataURL(),
+                fileName: "[" + this.get("liSelectName") + "]-[" + this.get("loSelectName") + "]-[" + "<?php echo date('Ym'); ?>" + "]-[" + "<?php echo date('dmY'); ?>" + "].xlsx"
+            });
         },
     });
     banhji.AddHeadMeter = kendo.observable({
