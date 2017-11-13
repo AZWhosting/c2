@@ -11830,6 +11830,96 @@
         licenseSelect: 0,
         dataSource: dataStore(apiUrl + "wreports/kpi"),
         licenseDS: dataStore(apiUrl + "branches"),
+        dataSourceSummary: new kendo.data.DataSource({
+            transport: {
+                read: {
+                    url: baseUrl + 'api/waterdash/license',
+                    type: "GET",
+                    dataType: 'json',
+                    headers: {
+                        Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id
+                    }
+                },
+                parameterMap: function(options, operation) {
+                    if (operation === 'read') {
+                        return {
+                            limit: options.take,
+                            page: options.page,
+                            filter: options.filter
+                        };
+                    } else {
+                        return {
+                            models: kendo.stringify(options.models)
+                        };
+                    }
+                }
+            },
+            schema: {
+                model: {
+                    id: 'id'
+                },
+                data: 'results',
+                total: 'count'
+            },
+            change: function(e) {
+                var vm = banhji.wDashboard;
+                var sale = 0,
+                    usage = 0,
+                    user = 0,
+                    deposit = 0;
+                $.each(this.data(), function(index, value) {
+                    sale += value.sale;
+                    usage += value.usage;
+                    user += value.activeCustomer;
+                    deposit += value.deposit;
+                });
+                banhji.wDashBoard.set('totalSale', kendo.toString(sale, banhji.locale == "km-KH" ? "c0" : "c", banhji.locale));
+                banhji.wDashBoard.set('totalUsage', kendo.toString(usage, "n0", banhji.locale));
+                banhji.wDashBoard.set('totalUser', kendo.toString(user, "n0", banhji.locale));
+                banhji.wDashBoard.set('totalDeposit', kendo.toString(deposit, banhji.locale == "km-KH" ? "c0" : "c", banhji.locale));
+                banhji.wDashBoard.set('avgUsage', usage / user);
+            },
+            batch: true,
+            serverFiltering: true,
+            serverPaging: true,
+            pageSize: 100
+        }),
+        dataSourceKPI: new kendo.data.DataSource({
+            transport: {
+                read: {
+                    url: baseUrl + 'api/waterdash/kpi',
+                    type: "GET",
+                    dataType: 'json',
+                    headers: {
+                        Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id
+                    }
+                },
+                parameterMap: function(options, operation) {
+                    if (operation === 'read') {
+                        return {
+                            limit: options.take,
+                            page: options.page,
+                            filter: options.filter
+                        };
+                    } else {
+                        return {
+                            models: kendo.stringify(options.models)
+                        };
+                    }
+                }
+            },
+            schema: {
+                model: {
+                    id: 'id'
+                },
+                data: 'results',
+                total: 'count'
+            },
+            batch: true,
+            serverFiltering: true,
+            serverPaging: true,
+            pageSize: 100
+        }),
         onLicenseChange: function() {
             var that = this;
             this.dataSource.query({
@@ -19058,6 +19148,455 @@
             }
         }
     });
+    //Head Meter
+    //Head Meter
+    banhji.HeadMeter = kendo.observable({
+        lang: langVM,
+        meterDS             : dataStore(apiUrl + "utibills/head_meter"),
+        cancel              : function(){
+            banhji.router.navigate("/");
+        },
+        haveMeter           : false,
+        newRound            : 0,
+        roundDS             : [
+            {id: 0, name: "No"},
+            {id: 1, name: "Yes"}
+        ],
+        meterReadingDS      : dataStore(apiUrl + "utibills/head_meter_reading"),
+        selectedRow            : function(e) {
+            var data = e.data,
+                self = this;
+            this.set("numberSR", data.number);
+            this.set('haveMeter', true);
+            this.meterReadingDS.query({
+                filter: [{
+                    field: "head_meter_id",
+                    value: data.id
+                }],
+                page: 1,
+                pageSize: 100
+            })
+            .then(function(e) {
+                self.set("previousSR", self.meterReadingDS.data()[0].current);
+            });
+        },
+        pageLoad            : function() {
+            this.meterDS.fetch();
+        },
+    });
+    banhji.AddHeadMeter = kendo.observable({
+        lang: langVM,
+        dataSource: dataStore(apiUrl + "utibills/head_meter"),
+        userActivatDS: dataStore(apiUrl + "activate_water"),
+        brandDS: banhji.source.brandDS,
+        licenseDS: dataStore(apiUrl + "branches"),
+        locationDS: dataStore(apiUrl + "locations"),
+        poleDS: dataStore(apiUrl + "locations"),
+        boxDS: dataStore(apiUrl + "locations"),
+        attachmentDS: dataStore(apiUrl + "attachments"),
+        itemDS: null,
+        obj: null,
+        objReactive: null,
+        isEdit: false,
+        disableOnly: false,
+        contact: null,
+        electricMeter: false,
+        haveEdit: false,
+        propertyID: 0,
+        selectType: [{
+                id: 1,
+                name: "Active"
+            },
+            {
+                id: 0,
+                name: "Inactive"
+            },
+            {
+                id: 2,
+                name: "Void"
+            }
+        ],
+        boxSelect : "",
+        selectLocation: false,
+        selectSLocation: false,
+        meterOrder: 0,
+        pageLoad: function(id) {
+            this.set("haveEdit", false);
+            this.set("licenseSelect", "");
+            this.set("locationSelect", "");
+            this.set("subLocationSelect", "");
+            this.set("boxSelect", "");
+            this.set("haveLocation", false);
+            this.set("haveSubLocation", false);
+            this.set("ampereSelect", "");
+            this.set("phaseSelect", "");
+            this.set("voltageSelect", "");
+            if (id) {
+                this.loadObj(id);
+                this.set("otherINFO", true);
+                this.set("haveEdit", true);
+            } else {
+                this.set("haveLocation", false);
+                this.set("haveSubLocation", false);
+                this.addEmpty();
+            }
+            this.setWords();
+        },
+        licenseData: [],
+        otherINFO: false,
+        licenseID: "",
+        licenseChange: function(e) {
+            this.locationDS.filter([{
+                    field: "branch_id",
+                    value: this.get("obj").branch_id
+                },
+                {
+                    field: "main_bloc",
+                    value: 0
+                },
+                {
+                    field: "main_pole",
+                    value: 0
+                }
+            ]);
+            var ind =e.sender._oldIndex;
+            this.get("obj").set("type", this.licenseDS.data()[ind - 1].type);
+        },
+        setWords: function() {
+            this.selectType[0].set("name", this.lang.lang.active);
+            this.selectType[1].set("name", this.lang.lang.inactive);
+            this.selectType[2].set("name", this.lang.lang.void);
+        },
+        oldPlan: "",
+        allowD : true,
+        loadObj: function(id) {
+            var self = this;
+            this.dataSource.data([]);
+            this.dataSource.query({
+                filter: {
+                    field: "id",
+                    value: id
+                },
+                page: 1,
+                take: 1,
+                sort: {field: "id", dir: "desc"}
+            }).then(function(e) {
+                var view = self.dataSource.view();
+                if (view[0].image_url) {
+                    self.set("obj", view[0]);
+                } else {
+                    view[0].set("image_url", "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/no_image.jpg");
+                }
+                //Set all OBJ
+                self.set("obj", view[0]);
+                self.set("licenseID", view[0].branch_id);
+                self.set("licenseSelect", view[0].branch_id);
+                self.set("locationSelect", view[0].location_id);
+                if (view[0].pole_id != 0) {
+                    self.set("haveLocation", true);
+                    self.set("subLocationSelect", view[0].pole_id);
+                }
+                if (view[0].box_id != 0) {
+                    self.set("haveSubLocation", true);
+                    self.set("boxSelect", view[0].box_id);
+                }
+                self.set("oldPlan", view[0].plan_id);
+                self.set("meterOrder", view[0].order);
+                self.loadMap();
+                self.set("propertyID", view[0].property_id);
+                self.set("allowD", false);
+                if(view.length == 0){
+                    banhji.router.navigate("/head_meter");
+                }
+            });
+        },
+        editRe: function(id) {
+            var self = this;
+            this.reactiveDS.query({
+                filter: {
+                    field: "id",
+                    value: id
+                },
+                take: 1
+            }).then(function(e) {
+                var view = self.reactiveDS.view();
+                self.set("objReactive", view[0]);
+
+            });
+        },
+        loadMap: function() {
+            var obj = this.get("obj");
+            lat = kendo.parseFloat(obj.latitute),
+                lng = kendo.parseFloat(obj.longtitute);
+
+            if (lat && lng) {
+                var myLatLng = {
+                    lat: lat,
+                    lng: lng
+                };
+                var mapOptions = {
+                    zoom: 17,
+                    center: myLatLng,
+                    mapTypeControl: false,
+                    zoomControl: false,
+                    scaleControl: false,
+                    streetViewControl: false
+                };
+                var map = new google.maps.Map(document.getElementById('map'), mapOptions);
+                var marker = new google.maps.Marker({
+                    position: myLatLng,
+                    map: map
+                });
+            }
+        },
+        visibleReMeter: false,
+        chkRe: false,
+        checkRe: function(e) {
+            if (this.chkRe == true) {
+                this.set("visibleReMeter", true);
+                this.addEmptyRe(this.propertyID);
+                this.meterNumberChange();
+            } else {
+                this.set("visibleReMeter", false);
+            }
+        },
+        addEmpty: function() {
+            var self = this;
+            this.dataSource.data([]);
+            this.set("obj", null);
+            this.dataSource.insert(0, {
+                number: "",
+                status: 1,
+                location_id: 0,
+                pole_id: 0,
+                box_id: 0,
+                branch_id: 0,
+                latitute: null,
+                longtitute: null,
+                date_used: "<?php echo date('Y-m-d'); ?>",
+                type: "w",
+                multiplier: 1,
+                starting_no: 0,
+                attachment_id: 0,
+                number_digit: 4,
+                order: 0,
+                image_url: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/no_image.jpg"
+            });
+            var obj = this.dataSource.at(0);
+            this.set("obj", obj);
+            this.set("meterOrder", 0);
+            this.set("allowD", true);
+        },
+        existMeter      : dataStore(apiUrl + "utibills/head_meter"),
+        meterNumberChange: function(e) {
+            var self = this;
+            this.existMeter.query({
+                filter: {field: "number", value: this.get("obj").number}
+            }).then(function(e){
+                var v = self.existMeter.view();
+                if(v.length > 0){
+                    var notificat = $("#ntf1").data("kendoNotification");
+                    notificat.hide();
+                    notificat.error(self.lang.lang.error_message);
+                    self.get("obj").set("number", "");
+                }
+            });
+        },
+        haveLocation: false,
+        haveSubLocation: false,
+        onLocationChange: function() {
+            var self = this;
+            this.poleDS.data([]);
+            if (this.get("locationSelect")) {
+                this.poleDS.query({
+                    filter: [
+                        {
+                            field: "main_bloc",
+                            value: this.get("locationSelect")
+                        },
+                        {
+                            field: "main_pole",
+                            value: 0
+                        }
+                    ],
+                    page: 1
+                }).then(function(e) {
+                    if (self.poleDS.data().length > 0) {
+                        self.set("haveLocation", true);
+                    } else {
+                        self.set("haveLocation", false);
+                        self.set("subLocationSelect", "");
+                        self.boxDS.data([]);
+                    }
+                });
+                this.set("selectLocation", true);
+            }
+        },
+        onSubLocationChange: function() {
+            var self = this;
+            if (this.get("subLocationSelect")) {
+                this.boxDS.data([]);
+                this.boxDS.query({
+                    filter: [
+                        {
+                            field: "main_pole",
+                            value: this.get("subLocationSelect")
+                        }
+                    ],
+                    page: 1
+                }).then(function(e) {
+                    if (self.boxDS.data().length > 0) {
+                        self.set("haveSubLocation", true);
+                    } else {
+                        self.set("haveSubLocation", false);
+                    }
+                });
+            }
+        },
+        onSelect: function(e) {
+            // Array with information about the uploaded files
+            var self = this,
+                files = e.files[0],
+                obj = this.get("obj");
+            var fileReader = new FileReader();
+            fileReader.onload = function(event) {
+                var mapImage = event.target.result;
+                self.obj.set('image_url', mapImage);
+            }
+            fileReader.readAsDataURL(files.rawFile);
+            // Check the extension of each file and abort the upload if it is not .jpg         
+            if (files.extension.toLowerCase() === ".jpg" ||
+                files.extension.toLowerCase() === ".jpeg" ||
+                files.extension.toLowerCase() === ".tiff" ||
+                files.extension.toLowerCase() === ".png" ||
+                files.extension.toLowerCase() === ".gif") {
+                if (this.attachmentDS.total() > 0) {
+                    var att = this.attachmentDS.at(0);
+                    this.attachmentDS.remove(att);
+                }
+                var key = 'METER_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) + '_' + files.name;
+                this.attachmentDS.add({
+                    user_id: this.get("user_id"),
+                    item_id: obj.id,
+                    type: "Item",
+                    name: files.name,
+                    description: "",
+                    key: key,
+                    url: banhji.s3 + key,
+                    size: files.size,
+                    created_at: new Date(),
+                    file: files.rawFile
+                });
+            } else {
+                var notificat = $("#ntf1").data("kendoNotification");
+                notificat.hide();
+                notificat.error(this.lang.lang.file_not_allow);
+            }
+        },
+        uploadFile: function() {
+            var self = this;
+            $.each(this.attachmentDS.data(), function(index, value) {
+                if (!value.id) {
+                    var params = {
+                        Body: value.file,
+                        Key: value.key
+                    };
+                    bucket.upload(params, function(err, data) {});
+                }
+            });
+            this.attachmentDS.sync();
+            this.attachmentDS.bind("requestEnd", function(e) {
+                //Delete File
+                if (e.type != 'read' && e.response) {
+                    var response = e.response.results;
+                    self.get("obj").set("attachment_id", response[0].id);
+                    self.get("obj").set("image_url", "");
+                    self.saveDataSource();
+                }
+            });
+        },
+        removeFile: function(e) {
+            var data = e.data;
+            if (confirm(banhji.source.confirmMessage)) {
+                this.attachmentDS.remove(data);
+            }
+        },
+        save: function() {
+            var self = this;
+            var obj = this.get("obj");
+            if (obj.number && this.get("locationSelect") && obj.date_used && obj.number_digit) {
+                obj.location_id = this.get("locationSelect");
+                obj.pole_id = this.get("subLocationSelect");
+                obj.box_id = this.get("boxSelect");
+                obj.order = this.get("meterOrder");
+                if(banhji.userData.id){
+                    obj.read_by = banhji.userData.id;
+                    obj.input_by = banhji.userData.id;
+                }else{
+                    obj.read_by = 0;
+                    obj.input_by = 0;
+                }
+                if (this.attachmentDS.hasChanges() == true) {
+                    this.uploadFile();
+                } else {
+                    this.saveDataSource();
+                }
+            } else {
+                var notificat = $("#ntf1").data("kendoNotification");
+                notificat.hide();
+                notificat.error(self.lang.lang.field_required_message);
+            }
+        },
+        readingDS: dataStore(apiUrl + "readings"),
+        addReading: function(meterNum) {
+            var self = this,
+                obj = this.get("obj");
+            this.readingDS.data([]);
+            var monthOf = obj.date_used;
+            monthOf = kendo.toString(monthOf, "yyyy-MM-dd");
+            var monthL = new Date(obj.date_used);
+            var lastDayOfMonth = new Date(monthL.getFullYear(), monthL.getMonth() + 1, 0);
+            lastDayOfMonth = lastDayOfMonth.getDate();
+            monthL.setDate(lastDayOfMonth);
+            this.readingDS.insert(0, {
+                month_of: monthOf,
+                meter_number: meterNum,
+                previous: 0,
+                to_date: monthL,
+                current: obj.starting_no,
+                invoiced: 1,
+                condition: "new",
+                consumption: 0
+            });
+            this.readingDS.sync();
+        },
+        saveDataSource: function() {
+            var self = this;
+            if (this.dataSource.data().length > 0) {
+                this.dataSource.sync();
+                this.dataSource.bind("requestEnd", function(e) {
+                    if (e.type != 'read' && e.response) {
+                        var notificat = $("#ntf1").data("kendoNotification");
+                        notificat.hide();
+                        notificat.success(self.lang.lang.success_message);
+                        banhji.router.navigate("/head_meter");
+                        banhji.source.loadMeters();
+                    }
+                });
+                this.dataSource.bind("error", function(e) {
+                    var notificat = $("#ntf1").data("kendoNotification");
+                    notificat.hide();
+                    notificat.error(self.lang.lang.error_message);
+                });
+            }
+        },
+        cancel: function() {
+            this.dataSource.data([]);
+            banhji.router.navigate("/head_meter");
+            this.set("selectLocation", true);
+            this.set("selectSLocation", true);
+        }
+    });
     /*************************
      * Water Section     * 
      **************************/
@@ -20857,6 +21396,12 @@
         imports: new kendo.Layout("#importView", {
             model: banhji.importView
         }),
+        HeadMeter: new kendo.Layout("#HeadMeter", {
+            model: banhji.HeadMeter
+        }),
+        AddHeadMeter: new kendo.Layout("#AddHeadMeter", {
+            model: banhji.AddHeadMeter
+        }),
 
         waterInvoice: new kendo.Layout("#waterInvoice", {
             model: banhji.waterInvoice
@@ -21847,6 +22392,25 @@
 
             // vm.pageLoad();
         }
+    });
+    banhji.router.route("/head_meter", function() {
+        if (!banhji.userManagement.getLogin()) {
+            banhji.router.navigate('/manage');
+        } else {
+            banhji.view.layout.showIn("#content", banhji.view.HeadMeter);
+            banhji.HeadMeter.pageLoad();
+        }
+    });
+    banhji.router.route("/add_head_meter(/:id)", function(id) {
+        banhji.view.layout.showIn("#content", banhji.view.AddHeadMeter);
+        banhji.view.layout.showIn('#menu', banhji.view.menu);
+        banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+        var vm = banhji.AddHeadMeter;
+        banhji.userManagement.addMultiTask("Add Head Meter", "add_head_meter", null);
+        if (banhji.pageLoaded["add_head_meter"] == undefined) {
+            banhji.pageLoaded["add_head_meter"] = true;
+        }
+        vm.pageLoad(id);
     });
     
 

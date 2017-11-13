@@ -1800,6 +1800,7 @@ class Utibills extends REST_Controller {
 		   			$journal->rate 		 = $obj->rate;
 		   			$journal->locale 	 = $obj->locale;
 		   			$journal->save();
+		   			//
 		   			$journal2 = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		   			$journal2->transaction_id = $obj->id;
 		   			$journal2->account_id = 71;
@@ -1811,7 +1812,7 @@ class Utibills extends REST_Controller {
 		   			$journal2->locale 	  = $obj->locale;
 		   			$journal2->save();
 			    }
-			    //Save Records
+			    // Save Records
 			    $record = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			    $record->meter_id = $value->meter_id;
 			    $record->read_by = $value->read_by;
@@ -1845,39 +1846,41 @@ class Utibills extends REST_Controller {
 				$txn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				$txn->where("number", $value->number)->order_by("id", "desc")->limit(1)->get();
 				//protect dublicate
-	   			$oldwline = new Winvoice_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-	   			$oldwline->where("transaction_id", $obj->id)->get();
-	   			if($oldwline->exists()){
-	   				$oldwline->delete_all();
-	   			}
-				$line = new Winvoice_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-	   			$line->transaction_id 	= $txn->id;
-	   			if($value->type = "usage"){
-	   				$line->item_id 			= $value->meter_id;
-	   			}else{
-	   				$line->item_id 			= isset($value->item_id) ? $value->item_id:"";
-	   			}
-	   			//get meter record for field meter_record_id
-	   			$meterrecord = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-	   			$meterrecord->where("meter_id", $value->meter_id)->order_by("id", "desc")->limit(1)->get();
-	   			$line->meter_record_id 	= $meterrecord->id;
+				if($txn->exists()){
+		   			// $oldwline = new Winvoice_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		   			// $oldwline->where("transaction_id", $txn->id)->get_iterated();
+		   			// if($oldwline->exists()){
+		   			// 	$oldwline->delete_all();
+		   			// }
+					$line = new Winvoice_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		   			$line->transaction_id 	= $txn->id;
+		   			if($value->type = "usage"){
+		   				$line->item_id 			= $value->meter_id;
+		   			}else{
+		   				$line->item_id 			= isset($value->item_id) ? $value->item_id:"";
+		   			}
+		   			//get meter record for field meter_record_id
+		   			$meterrecord = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		   			$meterrecord->where("meter_id", $value->meter_id)->order_by("id", "desc")->limit(1)->get();
+		   			$line->meter_record_id 	= $meterrecord->id;
 
-	   			$line->description 		= isset($value->description) ? $value->description : "Utility Invoice";
-	   			$line->quantity 		= isset($value->quantity) ? $value->quantity: 0;
-	   			$line->price 			= isset($value->price) ? $value->price : "";
-	   			$line->amount 			= isset($value->w_amount) ? $value->w_amount : "";
-	   			$line->rate 			= isset($value->rate) ? $value->rate : "";
-	   			$line->locale 			= isset($value->locale) ? $value->locale : "";
-	   			$line->type 			= isset($value->type) ? $value->type:"";
-	   			
-	   			if($value->type == 'installment') {
-					$updateInstallSchedule = new Installment_schedule(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-					$updateInstallSchedule->where('invoiced', 0 );
-					$updateInstallSchedule->where('id', $value->item_id)->limit(1);
-					$updateInstallSchedule->invoiced = 1;
-					$updateInstallSchedule->save();
-	   			}
-	   			$line->save();
+		   			$line->description 		= isset($value->description) ? $value->description : "Utility Invoice";
+		   			$line->quantity 		= isset($value->quantity) ? $value->quantity: 0;
+		   			$line->price 			= isset($value->price) ? $value->price : "";
+		   			$line->amount 			= isset($value->w_amount) ? $value->w_amount : "";
+		   			$line->rate 			= isset($value->rate) ? $value->rate : "";
+		   			$line->locale 			= isset($value->locale) ? $value->locale : "";
+		   			$line->type 			= isset($value->type) ? $value->type:"";
+		   			
+		   			if($value->type == 'installment') {
+						$updateInstallSchedule = new Installment_schedule(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						$updateInstallSchedule->where('invoiced', 0 );
+						$updateInstallSchedule->where('id', $value->item_id)->limit(1);
+						$updateInstallSchedule->invoiced = 1;
+						$updateInstallSchedule->save();
+		   			}
+		   			$line->save();
+				}
 			}
 		}
 		$data["count"] = count($data["results"]);
@@ -2579,7 +2582,6 @@ class Utibills extends REST_Controller {
 		//Response Data
 		$this->response($data, 200);
 	}
-
 	//POST
 	function head_meter_post() {
 		$models = json_decode($this->post('models'));
@@ -2630,7 +2632,6 @@ class Utibills extends REST_Controller {
 		$data["count"] = count($data["results"]);
 		$this->response($data, 201);
 	}
-
 	//PUT
 	function head_meter_put() {
 		$models = json_decode($this->put('models'));
@@ -2667,6 +2668,80 @@ class Utibills extends REST_Controller {
 		}
 		$data["count"] = count($data["results"]);
 
+		$this->response($data, 200);
+	}
+
+	//Head Meter Reading
+	function head_meter_reading_get() {
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
+		$data["count"] = 0;
+
+		$obj = new Head_meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
+			}
+		}
+		$obj->order_by("id", "desc");
+		//Filter
+		if(!empty($filter["filters"]) && isset($filter["filters"])){
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value['operator'])) {
+					if($value['operator']=="startswith"){
+	    				$obj->like($value['field'], $value['value'], 'after');
+	    			}else if($value['operator']=="contains"){
+	    				$obj->like($value['field'], $value['value'], 'both');
+	    			}else{
+						$obj->{$value['operator']}($value['field'], $value['value']);
+	    			}
+				} else {
+	    			$obj->where($value["field"], $value["value"]);
+				}
+			}
+		}
+
+		//Results
+		if($page && $limit){
+			$obj->get_paged_iterated($page, $limit);
+			$data["count"] = $obj->paged->total_rows;
+		}else{
+			$obj->get_iterated();
+			$data["count"] = $obj->result_count();
+		}
+
+		if($obj->exists()){
+			foreach ($obj as $value) {
+				$meter = new Head_meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$meter->where("id", $value->head_meter_id)->limit(1)->get();
+				$data["results"][] = array(
+					"id" 					=> $value->id,
+					"head_meter_id" 		=> $value->head_meter_id,
+					"head_meter_number" 	=> $meter->number,
+					"read_by" 				=> $value->read_by,
+					"input_by" 				=> $value->input_by,
+					"previous"				=> $value->previous,
+					"current"				=> $value->current,
+					"usage" 				=> $value->usage,
+					"month_of" 				=> $value->month_of,
+					"from_date"  			=> $value->from_date,
+					"to_date" 				=> $value->to_date,
+					"round" 				=> $value->round,
+					"readed" 				=> $value->readed,
+				);
+			}
+		}
+
+		//Response Data
 		$this->response($data, 200);
 	}
 }

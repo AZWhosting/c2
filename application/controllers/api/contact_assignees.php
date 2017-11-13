@@ -54,6 +54,8 @@ class Contact_assignees extends REST_Controller {
 			}
 		}
 
+		$obj->include_related("contact", array("abbr","number", "name"));
+
 		//Results
 		if($page && $limit){
 			$obj->get_paged_iterated($page, $limit);
@@ -64,12 +66,21 @@ class Contact_assignees extends REST_Controller {
 		}
 
 		if($obj->exists()){
-			foreach ($obj as $value) {				
+			foreach ($obj as $value) {
+				//Contact
+				$contact = array(
+					"id" 		=> $value->contact_id,
+					"abbr"		=> $value->contact_abbr ? $value->contact_abbr : "",
+					"number"	=> $value->contact_number ? $value->contact_number : "",
+					"name"		=> $value->contact_name ? $value->contact_name : ""
+				);
+
 				//Results
 				$data["results"][] = array(
 					"id" 			=> $value->id,
 					"assignee_id" 	=> $value->assignee_id,
-					"contact_id" 	=> $value->contact_id
+					"contact_id" 	=> $value->contact_id,
+					"contact"  		=> $contact
 				);
 			}
 		}
@@ -143,6 +154,69 @@ class Contact_assignees extends REST_Controller {
 
 		//Response data
 		$this->response($data, 200);
+	}
+
+	//GET SUMMARY
+	function summary_get() {
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
+		$data["count"] = 0;
+
+		$obj = new Contact_assignee(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
+			}
+		}
+
+		//Filter
+		if(!empty($filter['filters']) && isset($filter['filters'])){
+	    	foreach ($filter['filters'] as $value) {
+	    		if(isset($value['operator'])) {
+					$obj->{$value['operator']}($value['field'], $value['value']);
+				} else {
+					$obj->where($value["field"], $value["value"]);
+				}
+			}
+		}
+
+		//Results
+		if($page && $limit){
+			$obj->get_paged_iterated($page, $limit);
+			$data["count"] = $obj->paged->total_rows;
+		}else{
+			$obj->get_iterated();
+			$data["count"] = $obj->result_count();
+		}
+
+		if($obj->exists()){
+			foreach ($obj as $value) {
+				$assignees = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$assignees->select("abbr,number,name");
+				$assignees->get_by_id($value->assignee_id);
+				
+				//Results
+				$data["results"][] = array(
+					"id" 			=> $value->id,
+					"assignee_id" 	=> $value->assignee_id,
+					"contact_id" 	=> $value->contact_id,
+					"assignee"  	=> $assignee,
+					"contact"  		=> $contact
+				);
+			}
+		}
+
+		//Response Data		
+		$this->response($data, 200);		
 	}
 }
 
