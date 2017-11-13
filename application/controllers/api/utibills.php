@@ -2744,6 +2744,54 @@ class Utibills extends REST_Controller {
 		//Response Data
 		$this->response($data, 200);
 	}
+	function head_meter_reading_post() {
+		$models = json_decode($this->post('models'));
+		$data["results"] = [];
+		$data["count"] = 0;
+		
+		$number = "";
+		foreach ($models as $value) {
+
+			$obj = new Head_meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			isset($value->head_meter_id) 		? $obj->head_meter_id 		= $value->head_meter_id : "";
+			isset($value->current) 				? $obj->current 			= $value->current : "";
+			isset($value->previous) 			? $obj->previous 			= $value->previous : "";
+			isset($value->month_of) 			? $obj->month_of 			= $value->month_of : "";
+			isset($value->to_date) 		 		? $obj->to_date 			= $value->to_date : "";
+			isset($value->input_by) 		 	? $obj->input_by 			= $value->input_by : "";
+			isset($value->read_by) 		 		? $obj->read_by 			= $value->read_by : "";
+			$current = intval($value->current);
+			if($value->round == 1){
+				$meter = new Head_meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$meter->where('id', $value->head_meter_id)->get();
+				$digit = $meter->number_digit;
+				$oldcurrent =  pow(10, $digit);
+				$oldcurrent = $oldcurrent - intval($value->previous);
+				$obj->usage    = intval($oldcurrent) + intval($value->current);
+				$meter->round += 1;
+				$meter->save();
+				$obj->round = 1;
+			}else{
+				$obj->usage    = intval($current) - intval($value->previous);
+				$obj->round = 0;
+			}
+			$oldreading = new Head_meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$oldreading->where("head_meter_id", $value->head_meter_id)->order_by("id", "desc")->limit(1)->get();
+			if($oldreading->exists()){
+				$obj->from_date = $oldreading->to_date;
+			}else{
+				$obj->from_date = $value->to_date;
+			}
+	   		if($obj->save()){
+			   	$data["results"][] = array(
+			   		"id" 						=> $obj->id,
+			   	);
+		    }
+		}
+
+		$data["count"] = count($data["results"]);
+		$this->response($data, 201);
+	}
 }
 /* End of file meters.php */
 /* Location: ./application/controllers/api/utibills.php */

@@ -9887,84 +9887,27 @@
 					    <!-- //Tabs Heading -->
 					    <div class="tabsbar tabsbar-1" style="background: #203864 !important; color: #fff;">
 					        <ul class="row-fluid row-merge">
-					        	<li class="active">
-					            	<a href="#tab1" data-toggle="tab"><span data-bind="text: lang.lang.summary_report"></span></a>
-					            </li>
-					            <li>
-					            	<a href="#tab2" data-toggle="tab"><span data-bind="text: lang.lang.kpi_report"></span></a>
-					            </li>
-					            <li>
-					            	<a href="#tab3" data-toggle="tab"><span data-bind="text: lang.lang.customer_report"></span></a>
+					            <li class="active">
+					            	<a href="#tab1" data-toggle="tab"><span data-bind="text: lang.lang.customer_report"></span></a>
 					            </li>
 					            <li >
-					            	<a href="#tab4" data-toggle="tab"><span data-bind="text: lang.lang.receivable_reports"></span></a>
+					            	<a href="#tab2" data-toggle="tab"><span data-bind="text: lang.lang.receivable_reports"></span></a>
 					            </li>
 					            <li >
-					            	<a href="#tab5" data-toggle="tab"><span data-bind="text: lang.lang.sale_report"></span></a>
+					            	<a href="#tab3" data-toggle="tab"><span data-bind="text: lang.lang.sale_report"></span></a>
 					            </li>					            
 					            <li >
-					            	<a href="#tab6" data-toggle="tab"><span data-bind="text: lang.lang.cash_receipt_report"></span></a>
+					            	<a href="#tab4" data-toggle="tab"><span data-bind="text: lang.lang.cash_receipt_report"></span></a>
 					            </li>
 					        </ul>
 					    </div>
 					    <!-- // Tabs Heading END -->
 
 					    <div class="tab-content">
-							<!-- //Summary Report -->
-							<div class="tab-pane active" id="tab1">
-					        	<div class="row-fluid sale-report">
-											   <div class="col-md-12 water-tableList hidden-xs">
-								<table style="margin-bottom: 0;" class="table table-bordered table-condensed table-striped table-primary table-vertical-center">
-									<thead>
-										<tr>
-											<th style="vertical-align: top; text-align: center"><span data-bind="text: lang.lang.no">No.</span></th>
-											<th style="vertical-align: top;"><span data-bind="text: lang.lang.license">License</span></th>
-											<th style="vertical-align: top; text-align: center"><span data-bind="text: lang.lang.no_of_bloc">No.of Bloc</span></th>
-											<th style="vertical-align: top; text-align: center"><span data-bind="text: lang.lang.active_meter">Active Meter</span></th>
-											<th style="vertical-align: top; text-align: center"><span data-bind="text: lang.lang.inactive_meter">Inactive Meter</span></th>
-											<th style="vertical-align: top; text-align: right"><span data-bind="text: lang.lang.deposit">Deposit</span></th>
-											<th style="vertical-align: top; text-align: right">m<sup>3</sup>/kWh</th>
-											<th style="vertical-align: top; text-align: right"><span data-bind="text: lang.lang.sale_amount">Sale Amount</span></th>
-											<th style="vertical-align: top; text-align: right"><span data-bind="text: lang.lang.balance">Balance</span></th>
-										</tr>
-									</thead>
-									<tbody style="border: none;" data-role="listview" data-bind="source: dataSourceSummary" data-template="dashboard-template-table-list">				
-									</tbody>
-								</table>
-							</div>
-								</div>
-				        	</div>
-							<!-- //Summary Report END -->	
-
-							<!-- //Summary Report -->
-							<div class="tab-pane" id="tab2">
-					        	<div class="row-fluid sale-report">
-											   <div class="col-md-12 water-tableList hidden-xs">
-								<table style="margin-bottom: 0;" class="table table-bordered table-condensed table-striped table-primary table-vertical-center">
-									<thead>
-										<tr>
-											<th style="vertical-align: top; text-align: center"><span data-bind="text: lang.lang.no">No.</span></th>
-											<th style="vertical-align: top;"><span data-bind="text: lang.lang.license">License</span></th>
-											<th style="vertical-align: top; text-align: center"><span data-bind="text: lang.lang.active_customer_ratio">Active Customer Ratio</span></th>
-											<th style="vertical-align: top; text-align: center"><span data-bind="text: lang.lang.total_customer_ratio">Total Customer Ratio</span></th>
-											<th style="vertical-align: top; text-align: center"><span data-bind="text: lang.lang.total_no_of_customer">Total No. of Customer</span></th>
-											<th style="vertical-align: top; text-align: right"><span data-bind="text: lang.lang.avarage_reveune_per_connection">Average Reveune Per Connection</span></th>
-											<th style="vertical-align: top; text-align: right"><span data-bind="text: lang.lang.avarage_water_usage_per_connection">Average Water Usage Per Connection</span></th>
-											<th style="vertical-align: top; text-align: right"><span data-bind="text: lang.lang.quantity_sold"></span><span>m<sup>3</sup>/kWh
-											</span></th>
-											<th style="vertical-align: top; text-align: right"><span data-bind="text: lang.lang.total_water_revenue">Water Revenue</span></th>
-										</tr>
-									</thead>
-									<tbody style="border: none;" data-role="listview" data-bind="source: dataSourceKPI" data-template="kpi-template-table-list">				
-									</tbody>
-								</table>
-							</div>
-								</div>
-				        	</div>
 							<!-- //Summary Report END -->
 
 					    	<!-- //GENERAL INFO -->
-					        <div class="tab-pane" id="tab3">
+					        <div class="tab-pane active" id="tab1">
 					        	<div class="row-fluid sale-report">
 									<h2 style="margin-bottom: 10px;" data-bind="text: lang.lang.customer_management_report">Customer Management Report</h2>
 									<p data-bind="text: lang.lang.these_reports_are_useful">
@@ -10040,7 +9983,7 @@
 					        <!-- //GENERAL INFO END -->
 
 					        <!-- //RECEIVEABLE AND DEPOSIT INFO -->
-					        <div class="tab-pane" id="tab4">
+					        <div class="tab-pane" id="tab2">
 								<div class="row-fluid sale-report">
 									<h2 style="margin-bottom: 10px;" data-bind="text: lang.lang.receiveable_and_deposits">Receiveable and Deposits</h2>
 									<p data-bind="text: lang.lang.these_would_be_the_most">
@@ -10117,7 +10060,7 @@
 
 					        <!-- //RECEIVEABLE AND DEPOSIT INFO END -->
 					        <!-- //ACCOUNTING -->
-					        <div class="tab-pane" id="tab5">
+					        <div class="tab-pane" id="tab3">
 					        	<div class="row-fluid sale-report">
 									<h2 style="margin-bottom: 10px;" data-bind="text: lang.lang.sale_report">Sale Report</h2>
 									<p data-bind="text: lang.lang.summary_and_detail_sale">
@@ -10174,7 +10117,7 @@
 					        <!-- //ACCOUNTING END -->					        
 
 					        <!-- //ACCOUNTING -->
-					        <div class="tab-pane" id="tab6">
+					        <div class="tab-pane" id="tab4">
 								<div class="row-fluid sale-report">
 									<h2 style="margin-bottom: 10px;" data-bind="text: lang.lang.cash_receipt_report">Cash Receipt Report</h2>
 									<p data-bind="text: lang.lang.summary_and_detail_cash">

@@ -156,6 +156,7 @@ var themerPrimaryColor = primaryColor;
 <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/js/jquery.print.js"></script>
 <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/common/theme/scripts/demo/megamenu.js?1374506514"></script>
 
+<!-- Translate Files -->
 <script src="<?php echo base_url()?>assets/km-KH.js"></script>
 <script src="<?php echo base_url()?>assets/en-US.js"></script>
 

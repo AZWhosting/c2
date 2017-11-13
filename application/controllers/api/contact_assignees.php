@@ -168,52 +168,55 @@ class Contact_assignees extends REST_Controller {
 		$obj = new Contact_assignee(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 		//Sort
-		if(!empty($sort) && isset($sort)){
-			foreach ($sort as $value) {
-				if(isset($value['operator'])){
-					$obj->{$value['operator']}($value["field"], $value["dir"]);
-				}else{
-					$obj->order_by($value["field"], $value["dir"]);
-				}
-			}
-		}
+		// if(!empty($sort) && isset($sort)){
+		// 	foreach ($sort as $value) {
+		// 		if(isset($value['operator'])){
+		// 			$obj->{$value['operator']}($value["field"], $value["dir"]);
+		// 		}else{
+		// 			$obj->order_by($value["field"], $value["dir"]);
+		// 		}
+		// 	}
+		// }
 
-		//Filter
-		if(!empty($filter['filters']) && isset($filter['filters'])){
-	    	foreach ($filter['filters'] as $value) {
-	    		if(isset($value['operator'])) {
-					$obj->{$value['operator']}($value['field'], $value['value']);
-				} else {
-					$obj->where($value["field"], $value["value"]);
-				}
-			}
-		}
+		// //Filter
+		// if(!empty($filter['filters']) && isset($filter['filters'])){
+	 //    	foreach ($filter['filters'] as $value) {
+	 //    		if(isset($value['operator'])) {
+		// 			$obj->{$value['operator']}($value['field'], $value['value']);
+		// 		} else {
+		// 			$obj->where($value["field"], $value["value"]);
+		// 		}
+		// 	}
+		// }
 
-		//Results
-		if($page && $limit){
-			$obj->get_paged_iterated($page, $limit);
-			$data["count"] = $obj->paged->total_rows;
-		}else{
-			$obj->get_iterated();
-			$data["count"] = $obj->result_count();
-		}
+		// //Results
+		// if($page && $limit){
+		// 	$obj->get_paged_iterated($page, $limit);
+		// 	$data["count"] = $obj->paged->total_rows;
+		// }else{
+		// 	$obj->get_iterated();
+		// 	$data["count"] = $obj->result_count();
+		// }
+		
+		$obj->distinct('assignee_id');
+		$data["results"] = $obj->get_raw()->result();
 
-		if($obj->exists()){
-			foreach ($obj as $value) {
-				$assignees = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$assignees->select("abbr,number,name");
-				$assignees->get_by_id($value->assignee_id);
+		// if($obj->exists()){
+		// 	foreach ($obj as $value) {
+		// 		$assignees = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		// 		$assignees->select("abbr,number,name");
+		// 		$assignees->get_by_id($value->assignee_id);
 				
-				//Results
-				$data["results"][] = array(
-					"id" 			=> $value->id,
-					"assignee_id" 	=> $value->assignee_id,
-					"contact_id" 	=> $value->contact_id,
-					"assignee"  	=> $assignee,
-					"contact"  		=> $contact
-				);
-			}
-		}
+		// 		//Results
+		// 		$data["results"][] = array(
+		// 			"id" 			=> $value->id,
+		// 			"assignee_id" 	=> $value->assignee_id,
+		// 			"contact_id" 	=> $value->contact_id,
+		// 			"assignee"  	=> $assignee,
+		// 			""
+		// 		);
+		// 	}
+		// }
 
 		//Response Data		
 		$this->response($data, 200);		
