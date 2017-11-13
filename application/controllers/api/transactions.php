@@ -219,7 +219,8 @@ class Transactions extends REST_Controller {
 				   	"amount_paid"				=> $amount_paid,
 
 				   	"contact" 					=> $contact,
-				   	"employee" 					=> $employee
+				   	"employee" 					=> $employee,
+				   	"reference" 				=> []
 				);
 			}
 		}
