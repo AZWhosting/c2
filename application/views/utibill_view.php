@@ -34,8 +34,9 @@
                 </button>
 
                 <!--Logo-->
-                <a class="navbar-brand" href="#" data-bind="click: checkRole">
-                    <img src="<?php echo base_url();?>assets/water/utibill(v1).png" >
+                <!-- <a class="navbar-brand" href="#/" data-bind="click: checkRole"> -->
+                <a class="navbar-brand" href="<?php echo base_url();?>utibill" >
+                    <img src="<?php echo base_url();?>assets/water/utibill_logo.png" >
                 </a>
             </div>
 
@@ -187,25 +188,25 @@
 					<div class="row-fluid" >
 						<div class="col-xs-3 col-sm-3 col-md-3" >
 							<a href="#/reading">
-								<img title="Add Reading" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/water_logo/reading.png"   />
+								<img width="100%" title="Add Reading" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/water_logo/reading.png"   />
 								<span data-bind="text: lang.lang.reading" style="text-transform: uppercase; color: #000; font-weight: 600; margin-top: 8px; display: inline-block;">Readings</span>
 							</a>
 						</div>
 						<div class="col-xs-3 col-sm-3 col-md-3" >
 							<a href="#/run_bill">
-								<img title="Add Create Invoice" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/water_logo/run_bill.png"  />
+								<img width="100%" title="Add Create Invoice" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/water_logo/run_bill.png"  />
 								<span data-bind="text: lang.lang.run_bill" style=" text-transform: uppercase; color: #000; font-weight: 600; margin-top: 8px; display: inline-block;">Run Bill</span>
 							</a>
 						</div>
 						<div class="col-xs-3 col-sm-3 col-md-3" >
 							<a href="#/print_bill">
-								<img title="Add Print Invoice" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/water_logo/print_bill.png"  />
+								<img width="100%" title="Add Print Invoice" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/water_logo/print_bill.png"  />
 								<span data-bind="text: lang.lang.print_bill" style="text-transform: uppercase; color: #000; font-weight: 600; margin-top: 8px; display: inline-block;">Print Bill</span>
 							</a>
 						</div>
 						<div class="col-xs-3 col-sm-3 col-md-3" >
 							<a href="#/receipt">
-								<img title="Receive Water Bill Payment" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/water_logo/receipt.png"  />
+								<img width="100%" title="Receive Water Bill Payment" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/water_logo/receipt.png"  />
 								<span data-bind="text: lang.lang.wreceipt"  style=" text-transform: uppercase; color: #000; font-weight: 600; margin-top: 8px; display: inline-block;">Receipt</span>
 							</a>
 						</div>
@@ -346,7 +347,220 @@
 					</tbody>
 				</table>
 			</div>
-		</div>		
+		</div>
+		<!-- <div class="row" style="margin-top: 30px;">
+			<div class="col-md-4">
+				<div class="cash-bg" style="margin-bottom: 10px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">				
+					<div class="row-fluid" >
+						<div class="col-xs-6 col-sm-6 col-md-6" >
+							<a href="#/reading">
+								<img title="Add Reading" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/water_logo/reading.png"   />
+								<span data-bind="text: lang.lang.reading" style="text-transform: uppercase; color: #000; font-weight: 600; margin-top: 8px; display: inline-block;">Readings</span>
+							</a>
+						</div>
+						<div class="col-xs-6 col-sm-6 col-md-6" >
+							<a href="#/run_bill">
+								<img title="Add Create Invoice" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/water_logo/run_bill.png"  />
+								<span data-bind="text: lang.lang.run_bill" style=" text-transform: uppercase; color: #000; font-weight: 600; margin-top: 8px; display: inline-block;">Run Bill</span>
+							</a>
+						</div>
+					</div>
+					<div class="row-fluid" >
+						<div class="col-xs-6 col-sm-6 col-md-6" >
+							<a href="#/print_bill">
+								<img title="Add Print Invoice" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/water_logo/print_bill.png"  />
+								<span data-bind="text: lang.lang.print_bill" style="text-transform: uppercase; color: #000; font-weight: 600; margin-top: 8px; display: inline-block;">Print Bill</span>
+							</a>
+						</div>
+						<div class="col-xs-6 col-sm-6 col-md-6" >
+							<a href="#/receipt">
+								<img title="Receive Water Bill Payment" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/water_logo/receipt.png"  />
+								<span data-bind="text: lang.lang.wreceipt"  style=" text-transform: uppercase; color: #000; font-weight: 600; margin-top: 8px; display: inline-block;">Receipt</span>
+							</a>
+						</div>
+					</div>
+				</div>
+
+				<div class="home-chart row-fluid" style="margin-bottom: 15px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1; float: left; width: 100%; background: #fff;">
+					<div class="col-xs-12 col-sm-12">
+						<div class="chart" >
+							<div data-role="chart"
+								 data-auto-bind="true"
+					             data-legend="{ position: 'top' }"
+					             data-series-defaults="{ type: 'column' }"
+					             data-tooltip='{
+					                visible: true,
+					                format: "{0}%",
+					                template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
+					             }'                 
+					             data-series="[
+					                             { field: 'amount', name: langVM.lang.sale, categoryField:'month', color: '#203864', overlay:{ gradient: 'none'}  }
+					                         ]"
+					             data-bind="source: graphDS"
+					             style="height: 240px; " >
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12 col-md-5">
+						<div class="cash-bg" style="margin-bottom: 10px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
+							
+							<a href="http://app.banhji.com/c2/rrd/">
+								<div class="col-md-6" style="padding-left: 0;">
+								 	<img style="height: 50px" src="<?php echo base_url();?>assets/water/banhji.jpg" >
+								</div>
+								<div class="col-md-6" style="padding: 0; text-align: center; line-height: 23px; margin-top: 4px;">
+									ត្រឡប់ទៅ <span style="color: #203864">បញ្ជី</span>
+								</div>
+							</a>
+						</div>
+						
+					</div>
+					<div class="col-xs-12 col-md-7" style="padding-left: 0">
+						<div class="cash-bg" style="margin-bottom: 10px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
+							<a href="http://market.utibill.com/" target="_blank"><img src="<?php echo base_url();?>assets/water/market.png"></a>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		    <div class="col-md-8" >
+		    	<div class="cash-bg" style="margin-bottom: 10px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
+		    		<div class="col-xs-6 col-sm-6 col-md-6">
+		    			<a href="#/customer_deposit_report">
+							<div class="cash-invoice" style="background: #203864; color: #fff; width: 98%">
+								<div class="span3" style="padding-left: 0;">
+									<span data-bind="text: lang.lang.deposit" style="font-size: 24px; ">DEPOSIT</span>
+								</div>
+								<div class="span9" style=" text-align: center; font-size: 35px; font-weight: 600; padding: 0;">
+									<span style="float: right;" data-bind="text: totalDeposit"></span>
+								</div>
+							</div>
+						</a>
+		    		</div>
+		    		<div class="col-xs-6 col-sm-6 col-md-6" >
+		    			<a href="#/customer_deposit_report">
+							<div class="cash-invoice" style="background: #203864; color: #fff; width: 98%; float: right;">
+								<div class="span3" style="padding-left: 0;">
+									<span data-bind="text: lang.lang.deposit" style="font-size: 24px; ">DEPOSIT</span>
+								</div>
+								<div class="span9" style=" text-align: center; font-size: 35px; font-weight: 600; padding: 0;">
+									<span style="float: right;" data-bind="text: totalDeposit"></span>
+								</div>
+							</div>
+						</a>
+		    		</div>
+		    		<a href="#/customer_deposit_report">
+						<div class="cash-invoice" style="background: #203864; color: #fff;">
+							<div class="span3" style="padding-left: 0;">
+								<span data-bind="text: lang.lang.deposit" style="font-size: 24px; ">DEPOSIT</span>
+								<br>
+								<p><span style="color: #9EA7B8;" data-bind="text: totalUser"></span>
+								<span style="color: #9EA7B8;" data-bind="text: lang.lang.meter">Meters</span></p>
+							</div>
+							<div class="span9" style=" text-align: center; font-size: 35px; font-weight: 600; padding: 0;">
+								<span style="float: right;" data-bind="text: totalDeposit"></span>
+							</div>
+						</div>
+					</a>
+					<a href="#/sale_summary">
+						<div class="cash-invoice" style="margin-bottom: 0; background: #203864; color: #fff;">
+							<div class="span4" style="padding-left: 0;">
+								<span data-bind="text: lang.lang.total_sale" style="font-size: 24px; color: #fff;">TOTAL SALE</span><br>
+								<span style="color: #9EA7B8;" data-bind="text: totalUsage"></span>
+								<span style="color: #9EA7B8;">Usage</span>
+							</div>
+							<div class="span8" style="color: #fff; text-align: center; font-size: 35px; font-weight: 600; padding: 0;">
+								<span style="float: right;" data-bind="text: totalSale"></span>
+							</div>										
+						</div>
+					</a>
+		    	</div>
+		    	<div class="cash-bg" style="margin-bottom: 10px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
+		    		<div class="row-fluid" >
+						<div class="col-xs-12 col-sm-6 col-md-7" style="background: #0077c5; padding-bottom: 15px; padding-top: 15px; padding-right: 0;">
+							<a href="#/customer_aging_sum_list">
+								<div class="widget-body alert-info welcome-nopadding" style="width: 100%; background: #0077c5;">
+									<p style="color: #fff;"><span data-bind="text: lang.lang.expected_due">Expected due</span></p>
+							
+									<div class="strong" align="center" style="color: #fff; font-size: 27px; line-height: 57px; margin-top: -15px; margin-bottom: 0;"><span data-bind="text: totalAmount"></span></div>
+								
+									<table width="100%" style="color: #fff;">
+										<tbody>
+											<tr align="center">
+												<td>
+													<span style="font-size: 25px;"><span data-bind="text: invoice"></span></span>
+													<br>
+													<span data-bind="text: lang.lang.invoice">Invoices</span>
+												</td>
+												<td>
+													<span style="font-size: 25px;"><span data-bind="text: invCust"></span></span>
+													<br>
+													<span data-bind="text: lang.lang.customers">Customers</span>
+												</td>
+												<td>
+													<span style="font-size: 25px;"><span data-bind="text: overDue"></span></span>
+													<br>
+													<span data-bind="text: lang.lang.overdue">Overdue</span>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</a>
+						</div>
+
+						<div class="col-xs-12 col-sm-6 col-md-5" style="background: #21abf6; padding-bottom: 15px; padding-top: 15px; padding-right: 0;">
+							<a href="#/customer_list">
+								<div class="widget-body alert-info welcome-nopadding" style="width: 100%; background: #21abf6;">
+									<p style="color: #fff;"><span data-bind="text: lang.lang.active_meter">Active Meter</span></p>
+							
+									<div class="strong" align="center" style="color: #fff; font-size: 40px; margin-top: -15px; margin-bottom: 0;"><span data-bind="text: activeCust"></span></div>
+								
+									<table width="100%" style="color: #fff;">
+										<tbody>
+											<tr align="center">
+												<td>
+													<span style="font-size: 25px;" data-bind="text: totalCust"></span>
+													<br>
+													<span data-bind="text: lang.lang.meter">Meter</span>
+												</td>
+												<td>
+													<span style="font-size: 25px;" data-bind="text: voidCust"></span>
+													<br>
+													<span data-bind="text: lang.lang.customers">Customers</span>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</a>
+						</div>
+					</div>
+		    	</div>
+		   	</div>
+
+		   	 <div class="col-md-12 water-tableList hidden-xs">
+				<table style="margin-bottom: 0;" class="table table-bordered table-condensed table-striped table-primary table-vertical-center">
+					<thead>
+						<tr>
+							<th style="vertical-align: top; text-align: center"><span data-bind="text: lang.lang.no">No.</span></th>
+							<th style="vertical-align: top;"><span data-bind="text: lang.lang.license">License</span></th>
+							<th style="vertical-align: top; text-align: center"><span data-bind="text: lang.lang.no_of_bloc">No.of Bloc</span></th>
+							<th style="vertical-align: top; text-align: center"><span data-bind="text: lang.lang.active_meter">Active Meter</span></th>
+							<th style="vertical-align: top; text-align: center"><span data-bind="text: lang.lang.inactive_meter">Inactive Meter</span></th>
+							<th style="vertical-align: top; text-align: right"><span data-bind="text: lang.lang.deposit">Deposit</span></th>
+							<th style="vertical-align: top; text-align: right">m<sup>3</sup>/kWh</th>
+							<th style="vertical-align: top; text-align: right"><span data-bind="text: lang.lang.sale_amount">Sale Amount</span></th>
+							<th style="vertical-align: top; text-align: right"><span data-bind="text: lang.lang.balance">Balance</span></th>
+						</tr>
+					</thead>
+					<tbody style="border: none;" data-role="listview" data-bind="source: dataSource" data-template="dashboard-template-table-list">				
+					</tbody>
+				</table>
+			</div>
+		</div> -->
 	</div>
 </script>
 <script id="wsale-by-branch-row-template" type="text/x-kendo-tmpl">
@@ -2519,31 +2733,31 @@
 							<div class="row">
 								<div class="col-xs-12 col-sm-6">
 									<div style="background: #203864;" class="widget-stats widget-stats-primary widget-stats-5" data-bind="click: loadBalance">
-										<span class="glyphicons coins"><i></i></span>
-										<span class="txt"><span data-bind="text: lang.lang.balance"></span><span data-bind="text: balance" style="font-size:medium;"></span></span>
+										<span class="glyphicons coins" style="position: absolute; top: 5px; left: 5px;"><i></i></span>
+										<span class="txt" style="float: left;"><span data-bind="text: lang.lang.balance"></span><span data-bind="text: balance" style="font-size:medium;"></span></span>
 										<div class="clearfix"></div>
 									</div>
 								</div>
 								<div class="col-xs-12 col-sm-6">
 									<a href="#/customer_deposit_report">
 										<div style="background: #0077c5;" class="widget-stats widget-stats-inverse widget-stats-5">
-											<span class="glyphicons briefcase"><i></i></span>
-											<span class="txt"><span data-bind="text: lang.lang.deposit"></span><span data-bind="text: deposit" style="font-size:medium;"></span></span>
+											<span class="glyphicons briefcase" style="position: absolute; top: 5px; left: 5px;"><i></i></span>
+											<span class="txt" style="float: left;"><span data-bind="text: lang.lang.deposit"></span><span data-bind="text: deposit" style="font-size:medium;"></span></span>
 											<div class="clearfix"></div>
 										</div>
 									</a>
 								</div>
 								<div class="col-xs-12 col-sm-6">
 									<div style="background: #21abf6; padding: 10px;" class="widget-stats widget-stats-info widget-stats-5" data-bind="click: loadBalance">
-										<span class="glyphicons circle_exclamation_mark"><i></i></span>
-										<span style="padding-left: 50px;" class="txt"><span data-bind="text: outInvoice"></span> <span data-bind="text: lang.lang.open_invoice"></span></span>
+										<span class="glyphicons circle_exclamation_mark " style="position: absolute; top: 5px; left: 5px;"><i></i></span>
+										<span style="padding-left: 50px; float: left;" class="txt"><span data-bind="text: outInvoice"></span> <span data-bind="text: lang.lang.open_invoice"></span></span>
 										<div class="clearfix"></div>
 									</div>
 								</div>
 								<div class="col-xs-12 col-sm-6">
 									<div style="padding:10px;" class="widget-stats widget-stats-default widget-stats-5" data-bind="click: loadOverInvoice">
-										<span class="glyphicons turtle"><i></i></span>
-										<span style="padding-left: 50px;" class="txt"><span data-bind="text: overInvoice"></span> <span data-bind="text: lang.lang.over_due"></span></span>
+										<span class="glyphicons turtle" style="position: absolute; top: 5px; left: 5px;"><i></i></span>
+										<span style="padding-left: 50px; float: left;" class="txt"><span data-bind="text: overInvoice"></span> <span data-bind="text: lang.lang.over_due"></span></span>
 										<div class="clearfix"></div>
 									</div>
 								</div>
@@ -13830,7 +14044,7 @@
 </script>
 <script id="waterMenu" type="text/x-kendo-template">
 	<ul class="topnav pull-left">
-	  	<li><a href='#/' style="padding-left: 11px; padding-right: 15px;"><img src="<?php echo base_url();?>assets/water/utibill(v2).png" style="width: 37px;"></a></li>
+	  	<!-- <li><a href='#/' style="padding-left: 11px; padding-right: 15px;"><img src="<?php echo base_url();?>assets/water/utibill(v2).png" style="width: 37px;"></a></li> -->
 	  	<li><a href='#/center'><span data-bind="text: lang.lang.center"></span></a></li>
 	  	<li role='presentation' class='dropdown'>
 	  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><i class="text-t"></i> <span class='caret'></span></a>
@@ -13926,4 +14140,4 @@
 			</div>
 		</div>
 	</div>
-</script>
+</script> 
