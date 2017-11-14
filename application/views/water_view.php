@@ -349,19 +349,6 @@
 		</div>		
 	</div>
 </script>
-<script id="dashboard-template-table-list" type="text/x-kendo-tmpl">
-	<tr>
-		<td style="text-align: center;">#=banhji.wDashBoard.dataSource.indexOf(banhji.wDashBoard.dataSource.get(id)) +1 #</td>
-		<td style="text-align: left;">#=name#</td>
-		<td style="text-align: center; padding-right: 5px !important;">#=kendo.toString(blocCount, "n0", banhji.locale)#</td>
-		<td style="text-align: center; padding-right: 5px !important;">#=kendo.toString(activeCustomer, "n0", banhji.locale)#</td>
-		<td style="text-align: center; padding-right: 5px !important;">#=kendo.toString(inActiveCustomer, "n0", banhji.locale)#</td>
-		<td style="text-align: right; padding-right: 5px !important;">#= kendo.toString(deposit, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#</td>
-		<td style="text-align: right; padding-right: 5px !important;">#=kendo.toString(usage, "n0", banhji.locale)#</td>
-		<td style="text-align: right; padding-right: 5px !important;">#= kendo.toString(sale, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#</td>
-		<td style="text-align: right; padding-right: 5px !important;">#= kendo.toString(balance, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#</td>
-	</tr>
-</script>
 <script id="wsale-by-branch-row-template" type="text/x-kendo-tmpl">
 	<tr>		
 		<td class="sno">1</td>
@@ -2549,14 +2536,14 @@
 								<div class="col-xs-12 col-sm-6">
 									<div style="background: #21abf6; padding: 10px;" class="widget-stats widget-stats-info widget-stats-5" data-bind="click: loadBalance">
 										<span class="glyphicons circle_exclamation_mark"><i></i></span>
-										<span class="txt"><span data-bind="text: outInvoice"></span> <span data-bind="text: lang.lang.open_invoice"></span></span>
+										<span style="padding-left: 50px;" class="txt"><span data-bind="text: outInvoice"></span> <span data-bind="text: lang.lang.open_invoice"></span></span>
 										<div class="clearfix"></div>
 									</div>
 								</div>
 								<div class="col-xs-12 col-sm-6">
 									<div style="padding:10px;" class="widget-stats widget-stats-default widget-stats-5" data-bind="click: loadOverInvoice">
 										<span class="glyphicons turtle"><i></i></span>
-										<span class="txt"><span data-bind="text: overInvoice"></span> <span data-bind="text: lang.lang.over_due"></span></span>
+										<span style="padding-left: 50px;" class="txt"><span data-bind="text: overInvoice"></span> <span data-bind="text: lang.lang.over_due"></span></span>
 										<div class="clearfix"></div>
 									</div>
 								</div>
@@ -4887,8 +4874,8 @@
 								<div class="widget-head" style="background: #203864 !important; color: #fff;">
 									<ul style="padding-left: 0px;">
 										<li class="active" style="width: 210px;"><a style="text-transform: capitalize;" href="#tabCenter" data-toggle="tab"><span style="line-height: 23px;"><span >Head Meter Center</span><b><span >Information of Meter</span></b></span></a></li>
-										<li style="width: 210px;"><a style="text-transform: capitalize;" href="#tabDownload" data-toggle="tab"><span style="line-height: 23px;"><span data-bind="text: lang.lang.step1">Step 1:</span><b><span  data-bind="text: lang.lang.download_reading_book">Download Reading Book</span></b></span></a></li>
-										<li style="width: 210px;"><a style="text-transform: capitalize;" href="#tabReading" data-toggle="tab"><span style="line-height: 23px;"><span data-bind="text: lang.lang.step2">Step 2:</span> <b><span data-bind="text: lang.lang.upload_reading_book">Upload Reading Book</span> </b></span></a></li>
+										<!-- <li style="width: 210px;"><a style="text-transform: capitalize;" href="#tabDownload" data-toggle="tab"><span style="line-height: 23px;"><span data-bind="text: lang.lang.step1">Step 1:</span><b><span  data-bind="text: lang.lang.download_reading_book">Download Reading Book</span></b></span></a></li>
+										<li style="width: 210px;"><a style="text-transform: capitalize;" href="#tabReading" data-toggle="tab"><span style="line-height: 23px;"><span data-bind="text: lang.lang.step2">Step 2:</span> <b><span data-bind="text: lang.lang.upload_reading_book">Upload Reading Book</span> </b></span></a></li> -->
 									</ul>
 								</div>
 								<div class="widget-body">
@@ -4917,53 +4904,98 @@
 													</div>
 												</div>
 									        	<div class="col-sm-8">
-									        		<div class="row" style="clear: both;" data-bind="visible: haveContact">
-									        			<div class="col-xs-12 col-sm-2">
-											            	<input 
-											            		data-bind="value: pAbbr, 
-											            			attr: {placeholder: lang.lang.abbr}" type="text"
-											            		style="height: 32px; padding: 5px; width: 100%"  class="span2 k-textbox k-invalid" />
-											           	</div>
-											           	<div class="col-xs-12 col-sm-2">
-											            	<input 
-											            		data-bind="value: pCode, 
-											            			attr: {placeholder: lang.lang.code}" type="text"
-											            		style="height: 32px; padding: 5px; width: 100%"  class="span2 k-textbox k-invalid" />
-											            </div>
-											           	<div class="col-xs-12 col-sm-3">         	
-											            	<input 
-											            		data-bind="value: pName, 
-											            			attr: {placeholder: lang.lang.name}" type="text"
-											            		style="height: 32px; padding: 5px; width: 100%"  class="span2 k-textbox k-invalid" />
-														</div>
-											           	<div class="col-xs-12 col-sm-3">     	
-											            	<input 
-											            		data-bind="value: pAddress, 
-											            			attr: {placeholder: lang.lang.address}" type="text"
-											            		style="height: 32px; padding: 5px; width: 100%"  class="span2 k-textbox k-invalid" />
-											            </div>
-											           	<div class="col-xs-12 col-sm-2">							            	
-											            	<a class="btn-icon btn-primary glyphicons circle_plus cutype-icon" style="width: 80px; padding: 5px 7px 5px 35px !important; text-align: left;" data-bind="click: addProperty"><i></i><span data-bind="text: lang.lang.add">Add</span></a>
-										            	</div>
-										            </div>
-										        	<table style="margin-bottom: 0;" class="table table-bordered table-condensed table-striped table-primary table-vertical-center">
-										        		<thead>
-											        		<tr>
-												        		<th style="vertical-align: top;" data-bind="text: lang.lang.abbr">ABBR</th>
-												        		<th style="vertical-align: top;" data-bind="text: lang.lang.code">Code</th>
-												        		<th style="vertical-align: top;" data-bind="text: lang.lang.name">Name</th>
-												        		<th style="vertical-align: top;" data-bind="text: lang.lang.address">Address</th>
-												        		<th style="vertical-align: top;" data-bind="text: lang.lang.action">Action</th>
-											        		</tr>
-											        	</thead>
-											        	<tbody 
-											        		data-role="listview" 
-											        		data-bind="source: dataSource" 
-											        		data-template="property-template-list" 
-											        		data-edit-template="property-edit-template-list"
-											        		data-auto-bind="false">
-											        	</tbody>
-										        	</table>
+									        		<h2 style="margin-left: 0;" data-bind="text: lang.lang.add_single_reading">Add Single Reading</h2>
+										        	<div class="row">
+									        			<div class="col-xs-12 col-sm-3">
+															<div class="control-group">
+																<label ><span data-bind="text: lang.lang.month_of" >Month Of</span></label>
+													            <input type="text" 
+												                	style="width: 100%;" 
+												                	data-role="datepicker"
+												                	data-format="MM-yyyy"
+												                	data-parse-formats="yyyy-MM-dd HH:mm:ss"
+												                	data-start="year" 
+													  				data-depth="year" 
+												                	placeholder="Moth of ..." 
+														           	data-bind="value: monthOfSR" />
+															</div>
+														</div>										
+														<div class="col-xs-12 col-sm-3">
+															<div class="control-group">								
+																<label ><span data-bind="text: lang.lang.meter_number">Meter Number</span></label>
+												        		<p class="k-input k-textbox" 
+												        			style="width:100%; border:1px solid #ccc; padding: 5px;"
+												        			data-bind="text: numberSR">
+												        		</p>
+												        	</div>
+												        </div>
+												        <div class="col-xs-12 col-sm-3">
+															<div class="control-group">								
+																<label ><span data-bind="text: lang.lang.previous">Previous</span></label>
+												        		<p class="k-input k-textbox" 
+												        			style="width:100%; border:1px solid #ccc; padding: 5px;"
+												        			data-bind="text: previousSR" >
+												        		</p>
+												        	</div>
+												       	</div>
+												       	<div class="col-xs-12 col-sm-3">
+															<div class="control-group">								
+																<label ><span data-bind="text: lang.lang.current">Current</span></label>
+												        		<input type="text" 
+												        			class="k-input k-textbox" 
+												        			placeholder="Current" 
+												        			style="width:100%;border:1px solid #ccc;"
+												        			data-bind="value: currentSR" />
+												        	</div>
+												        </div>
+												    </div>
+												    <div class="row" style="margin-bottom: 15px;">   
+												        <div class="col-xs-12 col-sm-3">
+															<div class="control-group">	
+																<label ><span data-bind="text: lang.lang.to_date">To Date</span></label>
+													            <input type="text" 
+												                	style="width: 100%;" 
+												                	data-role="datepicker"
+												                	placeholder="To Date ..." 
+												                	data-parse-formats="yyyy-MM-dd HH:mm:ss"
+														           	data-bind="value: toDateSR" />
+															</div>
+												        </div>
+												        <div class="col-xs-12 col-sm-3">
+												        	<label ><span data-bind="text: lang.lang.new_round">New Round</span></label>
+														    <input 
+									              				data-role="dropdownlist"
+											            		data-text-field="name"
+								           						data-value-field="id"
+								           						data-value-primitive="true" 
+											            		data-bind="
+											            			source: roundDS, 
+											            			value: newRound"
+											            		style="width: 100%;" />
+												        </div>
+											        	<div class="col-xs-12 col-sm-3">
+											        		<br>
+											        		<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="click: addReading"><i></i> <span data-bind="text: lang.lang.add">Add</span></span>
+											        	</div>
+										        	</div>
+										        	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
+											        	<thead>
+												            <tr>			                
+												                <th style="vertical-align: top;"><span data-bind="text: lang.lang.month">Month</span></th>
+												                <th style="vertical-align: top;"><span data-bind="text: lang.lang.meter_number">Meter Number</span></th>
+												                <th style="vertical-align: top;"><span data-bind="text: lang.lang.previous">Previous</span></th>
+												                <th style="vertical-align: top;"><span data-bind="text: lang.lang.current">Current</span></th>
+												                <th style="vertical-align: top;">Usage</th>
+												                <th style="vertical-align: top;"><span data-bind="text: lang.lang.action">Action</span></th>     
+												            </tr> 
+												        </thead>
+												        <tbody data-role="listview"
+												        		data-template="headmeter-reading-template" 
+												        		data-edit-template="edit-headmeter-reading-template"
+												        		data-auto-bind="false" 
+												        		data-bind="source: meterReadingDS">
+												        </tbody>
+												    </table>
 										        </div>
 										    </div>
 										</div>
@@ -5060,7 +5092,6 @@
 												<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 													<thead>
 														<tr>
-															<th style="vertical-align: top;"><span data-bind="text: lang.lang.name">name</span></th>
 															<th style="vertical-align: top;"><span data-bind="text: lang.lang.meter_number">Meter Number</span></th>
 															<th style="vertical-align: top;"><span data-bind="text: lang.lang.from_date">From Date</span></th>
 															<th style="vertical-align: top;"><span data-bind="text: lang.lang.to_date">To Date</span></th>
@@ -5070,89 +5101,17 @@
 														</tr>
 													</thead>
 													<tbody 
-								                		data-bind="source: uploadDS" 
+								                		data-bind="source: getReadingDS" 
 								                		data-auto-bind="false" 
 								                		data-role="listview" 
-								                		data-template="reading-template">
+								                		data-template="head-download-reading-template">
 								                	</tbody>
 												</table>
 											</div>
 										</div>
 										<div id="tabReading" style="border: 1px solid #ccc; padding: 15px" class="tab-pane widget-body-regular">
 											<h4 class="separator bottom" style="margin-top: 10px;" data-bind="text: lang.lang.please_upload_reading_book">Please upload reading book</h4>
-											<div class="row clear" style="overflow: hidden;margin-bottom: 20px;">
-												<div class="col-xs-12 col-sm-4" >
-													<div class="control-group">	
-														<label ><span data-bind="text: lang.lang.license">License</span></label>
-														<input 
-															data-role="dropdownlist" 
-															style="width: 100%;" 
-															data-option-label="License ..." 
-															data-auto-bind="false" 
-															data-value-primitive="true" 
-															data-text-field="name" 
-															data-value-field="id" 
-															data-bind="
-																value: licenseSelectU,
-							                  					source: licenseDSU,
-							                  					events: {change: licenseChangeU}">
-							                  		</div>
-												</div>
-												<div class="col-xs-12 col-sm-4">
-													<div class="control-group">
-														<label ><span data-bind="text: lang.lang.location">Location</span></label>
-														<input 
-															data-role="dropdownlist" 
-															style="width: 100%;" 
-															data-option-label="Location ..." 
-															data-auto-bind="false" 
-															data-value-primitive="true" 
-															data-text-field="name" 
-															data-value-field="id" 
-															data-bind="
-																value: blocSelectU,
-																enabled: haveLicenseU,
-																events: {change: onLocationChangeU},
-							                  					source: blocDSU">
-							                  		</div>
-												</div>
-												<div class="col-xs-12 col-sm-4">
-													<div class="control-group">	
-														<label ><span data-bind="text: lang.lang.sub_location">Location</span></label>
-														<input 
-															data-role="dropdownlist" 
-															style="width: 100%;" 
-															data-option-label="Sub Location ..." 
-															data-auto-bind="false" 
-															data-value-primitive="true" 
-															data-text-field="name" 
-															data-value-field="id" 
-															data-bind="
-																value: subLocationSelectU,
-																enabled: haveLocationU,
-																events: {change: onSubLocationChangeU},
-							                  					source: subLocationDSU">
-							                  		</div>
-												</div>
-											</div>
 											<div class="row clear" style="overflow: hidden; ">
-												<div class="col-xs-12 col-sm-4" >
-													<div class="control-group">
-														<label ><span data-bind="text: lang.lang.box">Box</span></label>
-														<input 
-															data-role="dropdownlist" 
-															style="width: 100%;" 
-															data-option-label="Box ..." 
-															data-auto-bind="false" 
-															data-value-primitive="true" 
-															data-text-field="name" 
-															data-value-field="id" 
-															data-bind="
-																value: boxSelectU,
-																enabled: haveSubLocationU,
-							                  					source: boxDSU">
-							                  		</div>
-												</div>
 												<div class="col-xs-12 col-sm-4">
 													<div class="control-group">	
 														<label ><span data-bind="text: lang.lang.month_of">Month Of</span></label>
@@ -5164,8 +5123,8 @@
 											  				data-depth="year"
 										                	placeholder="Moth of ..." 
 												           	data-bind="value: monthOfUpload,
-												           			enabled: monthOfUen,
-												           			events: {change: monthOfUSelect}" />
+											           			enabled: monthOfUen,
+											           			events: {change: monthOfUSelect}" />
 													</div>
 												</div>											
 												<div class="col-xs-12 col-sm-4">
@@ -5176,8 +5135,8 @@
 										                	data-role="datepicker"
 										                	placeholder="To Date ..." 
 												           	data-bind="value: toDateUpload,
-												           			events: {change: selectMonthTo},
-												           			disabled: toDateDisabled" />
+											           			events: {change: selectMonthTo},
+											           			disabled: toDateDisabled" />
 													</div>
 												</div>
 											</div>
@@ -5201,26 +5160,6 @@
 							                		data-template="reading-Error11-template">
 							                	</tbody>
 											</table>
-											<div data-bind="visible: existShow" style="overflow: hidden;">
-												<p data-bind="text: lang.lang.exist_meter">Exist Meter</p>
-												<table  class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
-													<thead>
-														<tr>
-															<th class="center"><span data-bind="text: lang.lang.line">Line</span></th>
-															<th class="center"><span data-bind="text: lang.lang.meter_number">Meter Number</span></th>
-															<th class="center"><span data-bind="text: lang.lang.previous">Previus</span></th>
-															<th class="center"><span data-bind="text: lang.lang.current">Current</span></th>
-															<th class="center"><span data-bind="text: lang.lang.status">Status</span></th>
-														</tr>
-													</thead>
-													<tbody 
-								                		data-bind="source: ExistRUpload" 
-								                		data-auto-bind="true" 
-								                		data-role="listview" 
-								                		data-template="reading-Exist-template">
-								                	</tbody>
-												</table>
-											</div>
 											<br>
 											<span data-bind="visible: fullCorrect" class="btn btn-icon btn-primary glyphicons ok_2" style="margin-top: 3px;width: 160px!important;"><i></i><span data-bind="click: save" data-bind="text: lang.lang.start_reading">Start Reading</span></span>
 										</div>
@@ -5244,6 +5183,79 @@
 			</div>
 		</td>
 	</tr>
+</script>
+<script id="headmeter-reading-template" type="text/x-kendo-tmpl">
+	kendo.culture("km-KH");
+	<tr>
+		<td>
+			#:kendo.toString(new Date(month_of), "MMMM")#
+		</td>
+		<td>
+			#= head_meter_number#
+		</td>
+		<td align="center">
+			#=previous#
+		</td>
+		<td align="center">
+			#=current#
+		</td>
+		<td align="center">
+			#=usage#
+		</td>
+		<td align="center">
+			# if(banhji.HeadMeter.meterReadingDS.indexOf(data) == 0) {#
+				<a class="btn-action glyphicons pencil btn-success k-edit-button" ><i></i></a>
+			#}#
+		</td>
+	</tr>
+</script>
+<script id="edit-headmeter-reading-template" type="text/x-kendo-tmpl">
+	kendo.culture("km-KH");
+	<tr>
+		<td>
+			#:kendo.toString(new Date(month_of), "D")#
+		</td>
+		<td>
+			#=head_meter_number#
+		</td>
+		<td>
+			#=previous#
+		</td>
+		<td>
+			<input type="text" class="k-input" data-bind="value: current">
+		</td>
+		<td>
+			#:consumption = current - previous #
+		</td>
+		<td>
+			<div class="edit-buttons">
+	            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-i-check"></span></a>
+	            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
+	        </div>
+		</td>
+	</tr>
+</script>
+<script id="head-download-reading-template" type="text/x-kendo-tmpl">
+    <tr>
+    	<td>
+    		#= meter_number#
+   		</td>
+   		<td align="center">
+    		#= kendo.toString(new Date(from_date), "dd-MMM-yyyy")#
+   		</td>
+   		<td align="center">
+    		#= kendo.toString(new Date(to_date), "dd-MMM-yyyy")#
+   		</td>
+   		<td align="center">
+    		#= kendo.toString(new Date(month_of), "MMM-yyyy")#
+   		</td>
+   		<td align="center">
+    		#= previous#
+   		</td>
+   		<td align="center">
+    		#= current#
+   		</td>		
+   	</tr>
 </script>
 <script id="AddHeadMeter" type="text/x-kendo-template">
 	<div class="container">
@@ -9822,6 +9834,7 @@
 					    <!-- // Tabs Heading END -->
 
 					    <div class="tab-content">
+							<!-- //Summary Report END -->
 
 					    	<!-- //GENERAL INFO -->
 					        <div class="tab-pane active" id="tab1">
@@ -10091,6 +10104,32 @@
 
 		</div>
 	</div>
+</script>
+<script id="dashboard-template-table-list" type="text/x-kendo-tmpl">
+	<tr>
+		<td style="text-align: center;">#=banhji.Reports.dataSourceSummary.indexOf(banhji.Reports.dataSourceSummary.get(id)) +1 #</td>
+		<td style="text-align: left;">#=name#</td>
+		<td style="text-align: center; padding-right: 5px !important;">#=kendo.toString(blocCount, "n0", banhji.locale)#</td>
+		<td style="text-align: center; padding-right: 5px !important;">#=kendo.toString(activeCustomer, "n0", banhji.locale)#</td>
+		<td style="text-align: center; padding-right: 5px !important;">#=kendo.toString(inActiveCustomer, "n0", banhji.locale)#</td>
+		<td style="text-align: right; padding-right: 5px !important;">#= kendo.toString(deposit, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#</td>
+		<td style="text-align: right; padding-right: 5px !important;">#=kendo.toString(usage, "n0", banhji.locale)#</td>
+		<td style="text-align: right; padding-right: 5px !important;">#= kendo.toString(sale, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#</td>
+		<td style="text-align: right; padding-right: 5px !important;">#= kendo.toString(balance, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#</td>
+	</tr>
+</script>
+<script id="kpi-template-table-list" type="text/x-kendo-tmpl">
+	<tr>
+		<td style="text-align: center;">#=banhji.Reports.dataSourceKPI.indexOf(banhji.Reports.dataSourceKPI.get(id)) +1 #</td>
+		<td style="text-align: left;">#=name#</td>
+		<td style="text-align: center; padding-right: 5px !important;">#=kendo.toString(totalActiveCustomer, "n2", banhji.locale)#</td>
+		<td style="text-align: center; padding-right: 5px !important;">#=kendo.toString(totalAllowCustomer, "n2", banhji.locale)#</td>
+		<td style="text-align: center; padding-right: 5px !important;">#=kendo.toString(totalCustomer, "n0", banhji.locale)#</td>
+		<td style="text-align: right; padding-right: 5px !important;">#= kendo.toString(avgIncome, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#</td>
+		<td style="text-align: right; padding-right: 5px !important;">#=kendo.toString(avgUsage, "n0", banhji.locale)#</td>
+		<td style="text-align: right; padding-right: 5px !important;">#=kendo.toString(totalUsage, "n0", banhji.locale)#</td>
+		<td style="text-align: right; padding-right: 5px !important;">#= kendo.toString(totalAmount, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#</td>
+	</tr>
 </script>
 <script id="customerList" type="text/x-kendo-template">
 	<div class="container">
@@ -17382,7 +17421,7 @@
             //save the file as Excel file with extension xlsx
             kendo.saveAs({
                 dataURI: workbook.toDataURL(),
-                fileName: this.get("liSelectName") + "-" + this.get("loSelectName") + "-" + "<?php echo date('dmY'); ?>" + ".xlsx"
+                fileName: "[" + this.get("liSelectName") + "]-[" + this.get("loSelectName") + "]-[" + "<?php echo date('Ym'); ?>" + "]-[" + "<?php echo date('dmY'); ?>" + "].xlsx"
             });
         },
         MonthTo: false,
@@ -25630,6 +25669,96 @@
         licenseSelect: 0,
         dataSource: dataStore(apiUrl + "wreports/kpi"),
         licenseDS: dataStore(apiUrl + "branches"),
+        dataSourceSummary: new kendo.data.DataSource({
+            transport: {
+                read: {
+                    url: baseUrl + 'api/waterdash/license',
+                    type: "GET",
+                    dataType: 'json',
+                    headers: {
+                        Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id
+                    }
+                },
+                parameterMap: function(options, operation) {
+                    if (operation === 'read') {
+                        return {
+                            limit: options.take,
+                            page: options.page,
+                            filter: options.filter
+                        };
+                    } else {
+                        return {
+                            models: kendo.stringify(options.models)
+                        };
+                    }
+                }
+            },
+            schema: {
+                model: {
+                    id: 'id'
+                },
+                data: 'results',
+                total: 'count'
+            },
+            change: function(e) {
+                var vm = banhji.wDashboard;
+                var sale = 0,
+                    usage = 0,
+                    user = 0,
+                    deposit = 0;
+                $.each(this.data(), function(index, value) {
+                    sale += value.sale;
+                    usage += value.usage;
+                    user += value.activeCustomer;
+                    deposit += value.deposit;
+                });
+                banhji.wDashBoard.set('totalSale', kendo.toString(sale, banhji.locale == "km-KH" ? "c0" : "c", banhji.locale));
+                banhji.wDashBoard.set('totalUsage', kendo.toString(usage, "n0", banhji.locale));
+                banhji.wDashBoard.set('totalUser', kendo.toString(user, "n0", banhji.locale));
+                banhji.wDashBoard.set('totalDeposit', kendo.toString(deposit, banhji.locale == "km-KH" ? "c0" : "c", banhji.locale));
+                banhji.wDashBoard.set('avgUsage', usage / user);
+            },
+            batch: true,
+            serverFiltering: true,
+            serverPaging: true,
+            pageSize: 100
+        }),
+        dataSourceKPI: new kendo.data.DataSource({
+            transport: {
+                read: {
+                    url: baseUrl + 'api/waterdash/kpi',
+                    type: "GET",
+                    dataType: 'json',
+                    headers: {
+                        Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id
+                    }
+                },
+                parameterMap: function(options, operation) {
+                    if (operation === 'read') {
+                        return {
+                            limit: options.take,
+                            page: options.page,
+                            filter: options.filter
+                        };
+                    } else {
+                        return {
+                            models: kendo.stringify(options.models)
+                        };
+                    }
+                }
+            },
+            schema: {
+                model: {
+                    id: 'id'
+                },
+                data: 'results',
+                total: 'count'
+            },
+            batch: true,
+            serverFiltering: true,
+            serverPaging: true,
+            pageSize: 100
+        }),
         onLicenseChange: function() {
             var that = this;
             this.dataSource.query({
@@ -25659,220 +25788,6 @@
         cancel: function() {
             this.dataSource.data([]);
             banhji.router.navigate("/");
-        }
-    });
-    banhji.customerList = kendo.observable({
-        lang: langVM,
-        institute: banhji.institute,
-        dataSource: dataStore(apiUrl + "utibillReports/customer_list"),
-        licenseDS: dataStore(apiUrl + "branches"),
-        blocDS: dataStore(apiUrl + "locations"),
-        subLocationDS: dataStore(apiUrl + "locations"),
-        licenseSelect: null,
-        company: banhji.institute,
-        blocSelect: null,
-        pageLoad: function() {
-            this.licenseDS.read();
-            this.search();
-            this.set("haveBloc", false);
-        },
-        printGrid: function() {
-            var gridElement = $('#grid'),
-                printableContent = '',
-                win = window.open('', '', 'width=900, height=700'),
-                doc = win.document.open();
-            var htmlStart =
-                '<!DOCTYPE html>' +
-                '<html>' +
-                '<head>' +
-                '<meta charset="utf-8" />' +
-                '<title></title>' +
-                '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />' +
-                '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
-                '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
-                '<link href="<?php echo base_url(); ?>assets/responsive.css" rel="stylesheet" >' +
-                '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
-                '<style>' +
-                '*{  } html { font: 11pt sans-serif; }' +
-                '.k-grid { border-top-width: 0; }' +
-                '.k-grid, .k-grid-content { height: auto !important; }' +
-                '.k-grid-content { overflow: visible !important; }' +
-                'div.k-grid table { table-layout: auto; width: 100% !important; }' +
-                '.k-grid .k-grid-header th { border-top: 1px solid; }' +
-                '.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
-                '</style><style type="text/css" media="print"> @page { size: landscape; margin:0mm; } .saleSummaryCustomer .total-customer, .saleSummaryCustomer .total-sale { background-color: #DDEBF7!important; -webkit-print-color-adjust:exact; }.saleSummaryCustomer .table.table-borderless.table-condensed  tr th { background-color: #1E4E78!important;-webkit-print-color-adjust:exact;}.saleSummaryCustomer .table.table-borderless.table-condensed  tr th span{ color: #fff!important; }.saleSummaryCustomer .table.table-borderless.table-condensed tr:nth-child(2n+1) td {  background-color: #fff!important; -webkit-print-color-adjust:exact;} .saleSummaryCustomer .table.table-borderless.table-condensed tr td { background-color: #F2F2F2!important;-webkit-print-color-adjust:exact; } </style>' +
-                '</head>' +
-                '<body><div id="example" class="k-content saleSummaryCustomer" style="padding: 30px;">';
-            var htmlEnd =
-                '</div></body>' +
-                '</html>';
-
-            printableContent = $('#invFormContent').html();
-            doc.write(htmlStart + printableContent + htmlEnd);
-            doc.close();
-            setTimeout(function() {
-                win.print();
-                win.close();
-            }, 2000);
-        },
-        licenseChange: function(e) {
-            var data = e.data;
-            var license = this.licenseDS.at(e.sender.selectedIndex - 1);
-            this.set("licenseSelect", license);
-            this.blocDS.filter({
-                field: "branch_id",
-                value: license.id
-            });
-            this.set("haveBloc", true);
-        },
-        locationChange: function(e){
-            var data = e.data;
-            var license = this.licenseDS.at(e.sender.selectedIndex - 1);
-            this.set("blocSelect", license);
-            this.blocDS.filter({
-                field: "branch_id",
-                value: license.id
-            });
-            this.set("haveLocation", true);
-        },
-
-        search: function() {
-            var self = this,
-                para = [],
-                license = this.get("licenseSelect"),
-                bloc = this.get("blocSelect");
-            if (license) {
-                para.push({
-                    field: "branch_id",
-                    value: license.id
-                });
-            }
-
-            if (bloc) {
-                para.push({
-                    field: "location_id",
-                    value: bloc.id
-                });
-            }
-
-            this.dataSource.filter(para);
-            this.dataSource.bind("requestEnd", function(e) {
-                if (e.type == "read") {
-                    var response = e.response;
-                    self.exArray = [];
-
-                    self.exArray.push({
-                        cells: [{
-                            value: self.company.name,
-                            textAlign: "center",
-                            colSpan: 4
-                        }]
-                    });
-                    self.exArray.push({
-                        cells: [{
-                            value: "Customer List",
-                            bold: true,
-                            fontSize: 20,
-                            textAlign: "center",
-                            colSpan: 4
-                        }]
-                    });
-                    self.exArray.push({
-                        cells: [{
-                            value: "",
-                            colSpan: 4
-                        }]
-                    });
-                    self.exArray.push({
-                        cells: [{
-                                value: "Property",
-                                background: "#496cad",
-                                color: "#ffffff"
-                            },
-                            {
-                                value: "Meter",
-                                background: "#496cad",
-                                color: "#ffffff"
-                            },
-                            {
-                                value: "Block",
-                                background: "#496cad",
-                                color: "#ffffff"
-                            },
-                            {
-                                value: "License",
-                                background: "#496cad",
-                                color: "#ffffff"
-                            }
-                        ]
-                    });
-                    for (var i = 0; i < response.results.length; i++) {
-                        self.exArray.push({
-                            cells: [{
-                                    value: response.results[i].name,
-                                    bold: true,
-                                },
-                                {
-                                    value: ""
-                                },
-                                {
-                                    value: ""
-                                },
-                                {
-                                    value: ""
-                                },
-                            ]
-                        });
-                        for (var j = 0; j < response.results[i].line.length; j++) {
-                            self.exArray.push({
-                                cells: [{
-                                        value: response.results[i].line[j].property
-                                    },
-                                    {
-                                        value: response.results[i].line[j].meter
-                                    },
-                                    {
-                                        value: response.results[i].line[j].location
-                                    },
-                                    {
-                                        value: response.results[i].line[j].branch
-                                    },
-                                ]
-                            });
-                        }
-                    }
-                }
-            });
-        },
-        cancel: function() {
-            this.contact.cancelChanges();
-            window.history.back();
-        },
-        ExportExcel: function() {
-            var workbook = new kendo.ooxml.Workbook({
-                sheets: [{
-                    columns: [{
-                            autoWidth: true
-                        },
-                        {
-                            autoWidth: true
-                        },
-                        {
-                            autoWidth: true
-                        },
-                        {
-                            autoWidth: true
-                        }
-                    ],
-                    title: "Customer List",
-                    rows: this.exArray
-                }]
-            });
-            //save the file as Excel file with extension xlsx
-            kendo.saveAs({
-                dataURI: workbook.toDataURL(),
-                fileName: "customerList.xlsx"
-            });
         }
     });
     banhji.customerNoConnection = kendo.observable({
@@ -32861,12 +32776,448 @@
     //Head Meter
     banhji.HeadMeter = kendo.observable({
         lang: langVM,
-        meterDS           : dataStore(apiUrl + "utibills/head_meter"),
+        meterDS             : dataStore(apiUrl + "utibills/head_meter"),
         cancel              : function(){
             banhji.router.navigate("/");
         },
+        haveMeter           : false,
+        newRound            : 0,
+        roundDS             : [
+            {id: 0, name: "No"},
+            {id: 1, name: "Yes"}
+        ],
+        meterReadingDS      : dataStore(apiUrl + "utibills/head_meter_reading"),
+        meterID             : "",
+        selectedRow         : function(e) {
+            var data = e.data,
+                self = this;
+            this.set("meterID", data.id);
+            this.set("numberSR", data.number);
+            this.set('haveMeter', true);
+            this.meterReadingDS.query({
+                filter: [{
+                    field: "head_meter_id",
+                    value: data.id
+                }],
+                page: 1,
+                pageSize: 100
+            })
+            .then(function(e) {
+                self.set("previousSR", self.meterReadingDS.data()[0].current);
+            });
+        },
+        addReading          : function() {
+            var self = this,
+                round = this.get("newRound"),
+                month_of = this.get("monthOfSR"),
+                current = this.get("currentSR"),
+                previous = this.get("previousSR"),
+                to_date = this.get("toDateSR");
+            if(round == 0){
+                if(current < previous){
+                    var notifi = $("#ntf1").data("kendoNotification");
+                    notifi.hide();
+                    notifi.error(self.lang.lang.error_input);
+                }else{
+                    this.saveSingleReading();
+                }
+            }else{
+                if(month_of != "" && current != "" && to_date != "" ){
+                    this.saveSingleReading();
+                }else{
+                    var notifi = $("#ntf1").data("kendoNotification");
+                    notifi.hide();
+                    notifi.error(self.lang.lang.error_input);
+                }
+            }
+        },
+        singleReadingDS     : dataStore(apiUrl + "utibills/head_meter_reading"),
+        saveSingleReading   : function() {
+            var self = this,
+                round = this.get("newRound"),
+                month_of = this.get("monthOfSR"),
+                current = this.get("currentSR"),
+                previous = this.get("previousSR"),
+                to_date = this.get("toDateSR");
+            this.singleReadingDS.data([]);
+            this.singleReadingDS.add({
+                head_meter_id       : this.get("meterID"),
+                month_of            : month_of,
+                previous            : previous,
+                current             : current,
+                round               : round,
+                to_date             : to_date,
+                read_by             : banhji.userData.id,
+                input_by            : banhji.userData.id,
+            });
+            this.singleReadingDS.sync();
+            this.singleReadingDS.bind("requestEnd", function(e){
+                self.meterReadingDS.filter({ field: "head_meter_id", value: self.get("meterID") });
+                self.set("currentSR", "");
+                self.set("newRound", 0);
+                self.set("previousSR", current);
+                var notifi = $("#ntf1").data("kendoNotification");
+                    notifi.hide();
+                    notifi.success(self.lang.lang.success_message);
+            });
+        },
         pageLoad            : function() {
-        	this.meterDS.fetch();
+            this.meterDS.fetch();
+        },
+        licenseDS: dataStore(apiUrl + "branches"),
+        blocDS: dataStore(apiUrl + "locations"),
+        subLocationDS: dataStore(apiUrl + "locations"),
+        boxDS: dataStore(apiUrl + "locations"),
+        haveLicense : false,
+        haveLocation : false,
+        haveSubLocation : false,
+        licenseChange: function(e) {
+            var self = this;
+            this.blocDS.data([]);
+            this.set("locationSelect", "");
+            this.set("haveLicense", false)
+            this.subLocationDS.data([]);
+            this.boxDS.data([]);
+            this.set("boxSelect", "");
+            this.set("haveLocation", false);
+            this.set("haveSubLocation", false);
+            this.blocDS.filter([{
+                    field: "branch_id",
+                    value: this.get("licenseSelect")
+                },
+                {
+                    field: "main_bloc",
+                    value: 0
+                },
+                {
+                    field: "main_pole",
+                    value: 0
+                }
+            ]);
+            this.set("haveLicense", true);
+            this.set("liSelectName", e.sender.span[0].innerText);
+        },
+        loSelectName: "",
+        onLocationChange: function(e) {
+            var self = this;
+            this.subLocationDS.data([]);
+            this.boxDS.data([]);
+            this.set("boxSelect", "");
+            this.set("haveSubLocation", false);
+            if (this.get("blocSelect")) {
+                this.subLocationDS.query({
+                        filter: [{
+                                field: "branch_id",
+                                value: this.get("licenseSelect")
+                            },
+                            {
+                                field: "main_bloc",
+                                value: this.get("blocSelect")
+                            },
+                            {
+                                field: "main_pole",
+                                value: 0
+                            }
+                        ],
+                        page: 1
+                    })
+                    .then(function(e) {
+                        if (self.subLocationDS.data().length > 0) {
+                            self.set("haveLocation", true);
+                        } else {
+                            self.set("haveLocation", false);
+                            self.set("subLocationSelect", "");
+                            self.subLocationDS.data([]);
+                        }
+                    });
+            }
+            this.set("loSelectName", e.sender.span[0].innerText);
+        },
+        onSubLocationChange: function(e) {
+            var self = this;
+            if (this.get("subLocationSelect")) {
+                this.boxDS.query({
+                        filter: [{
+                                field: "branch_id",
+                                value: this.get("licenseSelect")
+                            },
+                            {
+                                field: "main_bloc",
+                                value: this.get("blocSelect")
+                            },
+                            {
+                                field: "main_pole",
+                                value: this.get("subLocationSelect")
+                            }
+                        ]
+                    })
+                    .then(function(e) {
+                        if (self.boxDS.data().length > 0) {
+                            self.set("haveSubLocation", true);
+                        } else {
+                            self.set("haveSubLocation", false);
+                            self.set("boxSelect", "");
+                            self.boxDS.data([]);
+                        }
+                    });
+            }
+        },
+        rows : [],
+        getReadingDS : dataStore(apiUrl + "utibills/head_meter_book"),
+        search: function() {
+            this.getReadingDS.data([]);
+            this.set("haveData", false);
+            var monthOfSearch = this.get("monthOfSelect"),
+                license_id = this.get("licenseSelect"),
+                bloc_id = this.get("blocSelect");
+            var para = [];
+            this.set("selectMeter", true);
+            if (this.get("boxSelect")) {
+                para.push({
+                    field: "box_id",
+                    value: this.get("boxSelect")
+                });
+            } else if (this.get("subLocationSelect")) {
+                para.push({
+                    field: "pole_id",
+                    value: this.get("subLocationSelect")
+                });
+            } else if (this.get("locationSelect")){
+                para.push({
+                    field: "location_id",
+                    value: bloc_id
+                });
+            } else {
+                para.push({
+                    field: "branch_id",
+                    value: this.get("licenseSelect")
+                });
+            }
+            var self = this;
+            this.getReadingDS.query({
+                filter: para
+            }).then(function() {
+                var FromDate, ToDate, MonthOf;
+                self.rows = [];
+                if (self.getReadingDS.data().length > 0) {
+                    self.set("haveData", true);
+                    self.rows.push({
+                        cells: [
+                            {
+                                value: "meter_number",
+                                background: "#496cad",
+                                color: "#ffffff"
+                            },
+                            {
+                                value: "from_date",
+                                background: "#496cad",
+                                color: "#ffffff"
+                            },
+                            {
+                                value: "to_date",
+                                background: "#496cad",
+                                color: "#ffffff"
+                            },
+                            {
+                                value: "month_of",
+                                background: "#496cad",
+                                color: "#ffffff"
+                            },
+                            {
+                                value: "previous",
+                                background: "#496cad",
+                                color: "#ffffff"
+                            },
+                            {
+                                value: "current",
+                                background: "#496cad",
+                                color: "#ffffff"
+                            },
+                            {
+                                value: "round",
+                                background: "#496cad",
+                                color: "#ffffff"
+                            }
+                        ]
+                    });
+                    for (var i = 0; i < self.getReadingDS.data().length; i++) {
+                        self.rows.push({
+                            cells: [
+                                {
+                                    value: self.getReadingDS.data()[i].meter_number
+                                },
+                                {
+                                    value: self.getReadingDS.data()[i].from_date
+                                },
+                                {
+                                    value: self.getReadingDS.data()[i].to_date
+                                },
+                                {
+                                    value: self.getReadingDS.data()[i].month_of
+                                },
+                                {
+                                    value: self.getReadingDS.data()[i].previous
+                                },
+                                {
+                                    value: ""
+                                },
+                                {
+                                    value: ""
+                                }
+                            ]
+                        });
+                    }
+                }
+            });
+        },
+        exportEXCEL: function(e) {
+            var workbook = new kendo.ooxml.Workbook({
+                sheets: [{
+                    columns: [{
+                            autoWidth: true
+                        },
+                        {
+                            autoWidth: true
+                        },
+                        {
+                            autoWidth: true
+                        },
+                        {
+                            autoWidth: true
+                        },
+                        {
+                            autoWidth: true
+                        },
+                        {
+                            autoWidth: true
+                        },
+                        {
+                            autoWidth: true
+                        },
+                        {
+                            autoWidth: true
+                        }
+                    ],
+                    title: "Reading",
+                    rows: this.rows
+                }]
+            });
+            //save the file as Excel file with extension xlsx
+            kendo.saveAs({
+                dataURI: workbook.toDataURL(),
+                fileName: "[" + this.get("liSelectName") + "]-[" + this.get("loSelectName") + "]-[" + "<?php echo date('Ym'); ?>" + "]-[" + "<?php echo date('dmY'); ?>" + "].xlsx"
+            });
+        },
+        monthOfUSelect: function(e) {
+            $("#loadImport").css("display", "block");
+            var para = [],
+                self = this;
+            var monthOfSearch = self.get("monthOfUpload");
+            var monthOf = new Date(monthOfSearch);
+            monthOf.setDate(1);
+            monthOf = kendo.toString(monthOf, "yyyy-MM-dd");
+            var monthL = new Date(monthOfSearch);
+            var lastDayOfMonth = new Date(monthL.getFullYear(), monthL.getMonth() + 1, 0);
+            lastDayOfMonth = lastDayOfMonth.getDate();
+            monthL.setDate(lastDayOfMonth);
+            monthL = kendo.toString(monthL, "yyyy-MM-dd");
+            if (this.get("boxSelectU")) {
+                para.push({
+                    field: "box_id",
+                    operator: "where_related_meter",
+                    value: this.get("boxSelectU")
+                });
+            } else if (this.get("subLocationSelectU")) {
+                para.push({
+                    field: "pole_id",
+                    operator: "where_related_meter",
+                    value: this.get("subLocationSelectU")
+                });
+            } else {
+                para.push({
+                    field: "location_id",
+                    operator: "where_related_meter",
+                    value: this.get("blocSelectU")
+                });
+            }
+            para.push({
+                field: "month_of >",
+                value: monthOf
+            }, {
+                field: "month_of <=",
+                value: monthL
+            });
+            para.push({
+                field: "invoiced",
+                value: 0
+            });
+            this.existReading.query({
+                    filter: para
+                })
+                .then(function(e) {
+                    self.set("toDateDisabled", false);
+                    $("#loadImport").css("display", "none");
+                });
+        },
+        selectMonthTo: function(e) {
+            if (this.get("monthOfUpload") && this.get("toDateUpload")) {
+                this.set("MonthTo", true);
+            } else {
+                this.set("MonthTo", false);
+            }
+        },
+        Uploaderror : [],
+        upReadingDS : dataStore(apiUrl + "utibills/head_meter_reading"),
+        onSelected: function(e) {
+            var files = e.files,
+                self = this;
+            $('li.k-file').remove();
+            $("#loadImport").css("display", "block");
+            var reader = new FileReader();
+            this.upReadingDS.data([]);
+            this.Uploaderror = [];
+            reader.onload = function() {
+                var data = reader.result;
+                var result = {};
+                var workbook = XLSX.read(data, {
+                    type: 'binary'
+                });
+                workbook.SheetNames.forEach(function(sheetName) {
+                    var roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+                    if (roa.length > 0) {
+                        result[sheetName] = roa;
+                        for (var i = 0; i < roa.length; i++) {
+                            roa[i].invoiced = 0;
+                            var monthOf = self.get("monthOfUpload");
+                            monthOf.setDate(1);
+                            roa[i].month_of = monthOf;
+                            roa[i].from_date = new Date(roa[i].to_date);
+                            roa[i].to_date = self.get("toDateUpload");
+                            if(roa[i].round != 1){
+                                if (kendo.parseInt(roa[i].current) < kendo.parseInt(roa[i].previous)) {
+                                    self.Uploaderror.push({
+                                        line: i + 2,
+                                        meter_number: roa[i].meter_number,
+                                        previous: roa[i].previous,
+                                        current: roa[i].current,
+                                        status: 0
+                                    });
+                                }
+                            }
+                            self.upReadingDS.add(roa[i]);
+                            $("#loadImport").css("display", "none");
+                        }
+                    }
+                });
+                if (self.Uploaderror.length > 0) {
+                    self.set("errorShow", true);
+                    self.set("fullCorrect", false);
+                } else {
+                    self.set("errorShow", false);
+                    self.set("fullCorrect", true);
+                }
+            }
+            reader.readAsBinaryString(files[0].rawFile);
         },
     });
     banhji.AddHeadMeter = kendo.observable({
@@ -32991,7 +33342,7 @@
                 self.set("propertyID", view[0].property_id);
                 self.set("allowD", false);
                 if(view.length == 0){
-                	banhji.router.navigate("/head_meter");
+                    banhji.router.navigate("/head_meter");
                 }
             });
         },
@@ -33072,19 +33423,19 @@
             this.set("meterOrder", 0);
             this.set("allowD", true);
         },
-        existMeter 		: dataStore(apiUrl + "utibills/head_meter"),
+        existMeter      : dataStore(apiUrl + "utibills/head_meter"),
         meterNumberChange: function(e) {
-        	var self = this;
+            var self = this;
             this.existMeter.query({
-            	filter: {field: "number", value: this.get("obj").number}
+                filter: {field: "number", value: this.get("obj").number}
             }).then(function(e){
-            	var v = self.existMeter.view();
-            	if(v.length > 0){
-            		var notificat = $("#ntf1").data("kendoNotification");
+                var v = self.existMeter.view();
+                if(v.length > 0){
+                    var notificat = $("#ntf1").data("kendoNotification");
                     notificat.hide();
                     notificat.error(self.lang.lang.error_message);
                     self.get("obj").set("number", "");
-            	}
+                }
             });
         },
         haveLocation: false,
@@ -33215,11 +33566,11 @@
                 obj.box_id = this.get("boxSelect");
                 obj.order = this.get("meterOrder");
                 if(banhji.userData.id){
-                	obj.read_by = banhji.userData.id;
-                	obj.input_by = banhji.userData.id;
+                    obj.read_by = banhji.userData.id;
+                    obj.input_by = banhji.userData.id;
                 }else{
-                	obj.read_by = 0;
-                	obj.input_by = 0;
+                    obj.read_by = 0;
+                    obj.input_by = 0;
                 }
                 if (this.attachmentDS.hasChanges() == true) {
                     this.uploadFile();
@@ -36151,4 +36502,4 @@
         var Href1 = '<?php echo base_url(); ?>assets/water/winvoice-res.css';
         var Href2 = '<?php echo base_url(); ?>assets/water/winvoice-print.css';
     });
-</script> 
+</script>
