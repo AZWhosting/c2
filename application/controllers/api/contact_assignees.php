@@ -148,9 +148,9 @@ class Contact_assignees extends REST_Controller {
 	function index_delete() {
 		$models = json_decode($this->delete('models'));
 
-		foreach ($models as $key => $value) {
+		foreach ($models as $value) {
 			$obj = new Contact_assignee(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$obj->where("id", $value->id)->get();
+			$obj->get_by_id($value->id);
 			
 			$data["results"][] = array(
 				"data"   => $value,
