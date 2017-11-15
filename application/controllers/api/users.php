@@ -453,6 +453,42 @@ class Users extends REST_Controller {
 		}
 	}
 
+	function access_role_get() {
+		$filter 	= $this->get("filter");
+		$data["results"] = [];
+		$data["count"] = 0;
+
+		$obj = new Role();
+		//Filter
+		if(!empty($filter['filters']) && isset($filter['filters'])){
+	    	foreach ($filter['filters'] as $value) {
+	    		if(isset($value['operator'])) {
+					$obj->{$value['operator']}($value['field'], $value['value']);
+				} else {
+					$obj->where($value["field"], $value["value"]);
+				}
+			}
+		}
+
+		$obj->limit(1);
+		$obj->get();		
+
+		if($obj->exists()){
+			foreach ($obj as $value) {				
+				//Results				
+				$data["results"][] = array(
+					"id" 			=> $value->id,
+					"name" 	 		=> $value->name
+				);
+			}
+		}
+
+		$data["count"] = count($data["results"]);
+
+		//Response Data		
+		$this->response($data, 200);
+	}
+
 	private function _check_email($email) {
 		$query = $this->login->get_by(array("username"=>$email));
 		if(!empty($query)) {
