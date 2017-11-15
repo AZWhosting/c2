@@ -112,44 +112,46 @@ class Readings extends REST_Controller {
 			$obj = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$meter = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$meter->where('number', $value->meter_number)->get();
-			$current = intval($value->current);
-			$obj->meter_id 		= isset($meter->id)			? $meter->id : "";
-			$obj->previous 		= isset($value->previous)	? $value->previous : "";
-			$obj->current 		= isset($current)			? $current : "";
-			$oldcurrent = 0;
-			if($value->round == 1){
-				$digit = $meter->number_digit;
-				$oldcurrent =  pow(10, $digit);
-				$oldcurrent = $oldcurrent - intval($value->previous);
-				$obj->usage    = intval($oldcurrent) + intval($value->current);
-				$meter->round += 1;
-				$meter->save();
-				$obj->new_round = 1;
-			}else{
-				$obj->usage    = intval($current) - intval($value->previous);
-				$obj->new_round = 0;
-			}
-			$obj->from_date = isset($value->from_date) 	? date('Y-m-d', strtotime($value->from_date)) : date('Y-m-d');
-			$obj->month_of 	= isset($value->month_of)	? date('Y-m-d', strtotime($value->month_of)): date('Y-m-d');
-			$obj->to_date 	= isset($value->to_date)	? date('Y-m-d', strtotime($value->to_date)):date('Y-m-d');
-			$obj->invoiced 	=  0;
-			$obj->created_at = date('Y-m-d H:i:s');
-			if($obj->save()){								
-				//Respsone
-				$data["results"][] = array(
-					"id"			=> $obj->id,
-					"meter_id" 		=> $obj->meter_id,
-					"meter_number" 	=> $meter->number,
-					"prev"			=> $obj->previous,
-					"current"		=> $obj->current,
-					"usage"	 		=> $obj->current - $obj->previous,
-					"from_date"		=> $obj->from_date,
-					"month_of"		=> $obj->month_of,
-					"invoiced" 		=> $obj->invoiced,
-					"to_date"		=> $obj->to_date,
-					"usage" 		=> $obj->usage
-				);				
-			}			
+			if($meter->exists()){
+				$current = intval($value->current);
+				$obj->meter_id 		= isset($meter->id)			? $meter->id : "";
+				$obj->previous 		= isset($value->previous)	? $value->previous : "";
+				$obj->current 		= isset($current)			? $current : "";
+				$oldcurrent = 0;
+				if($value->round == 1){
+					$digit = $meter->number_digit;
+					$oldcurrent =  pow(10, $digit);
+					$oldcurrent = $oldcurrent - intval($value->previous);
+					$obj->usage    = intval($oldcurrent) + intval($value->current);
+					$meter->round += 1;
+					$meter->save();
+					$obj->new_round = 1;
+				}else{
+					$obj->usage    = intval($current) - intval($value->previous);
+					$obj->new_round = 0;
+				}
+				$obj->from_date = isset($value->from_date) 	? date('Y-m-d', strtotime($value->from_date)) : date('Y-m-d');
+				$obj->month_of 	= isset($value->month_of)	? date('Y-m-d', strtotime($value->month_of)): date('Y-m-d');
+				$obj->to_date 	= isset($value->to_date)	? date('Y-m-d', strtotime($value->to_date)):date('Y-m-d');
+				$obj->invoiced 	=  0;
+				$obj->created_at = date('Y-m-d H:i:s');
+				if($obj->save()){								
+					//Respsone
+					$data["results"][] = array(
+						"id"			=> $obj->id,
+						"meter_id" 		=> $obj->meter_id,
+						"meter_number" 	=> $meter->number,
+						"prev"			=> $obj->previous,
+						"current"		=> $obj->current,
+						"usage"	 		=> $obj->current - $obj->previous,
+						"from_date"		=> $obj->from_date,
+						"month_of"		=> $obj->month_of,
+						"invoiced" 		=> $obj->invoiced,
+						"to_date"		=> $obj->to_date,
+						"usage" 		=> $obj->usage
+					);				
+				}
+			}		
 		}
 		$data["count"] = count($data["results"]);
 		
