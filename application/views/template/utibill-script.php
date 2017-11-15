@@ -11951,6 +11951,143 @@
             banhji.router.navigate("/");
         }
     });
+    banhji.customerList = kendo.observable({
+        lang                    : langVM,
+        institute               : banhji.institute,
+        dataSource              : dataStore(apiUrl + "utibillReports/customer_list"),
+        licenseDS               : dataStore(apiUrl+"branches"),
+        blocDS                  : dataStore(apiUrl+"locations"),
+        licenseSelect           : null,
+        company                 : banhji.institute,
+        blocSelect              : null,
+        pageLoad                : function(){
+            this.licenseDS.read();
+            this.search();
+        },
+        printGrid           : function() {
+            var gridElement = $('#grid'),
+                printableContent = '',
+                win = window.open('', '', 'width=900, height=700'),
+                doc = win.document.open();
+            var htmlStart =
+                    '<!DOCTYPE html>' +
+                    '<html>' +
+                    '<head>' +
+                    '<meta charset="utf-8" />' +
+                    '<title></title>' +
+                    '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
+                    '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
+                    '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
+                    '<link href="<?php echo base_url(); ?>assets/responsive.css" rel="stylesheet" >' +
+                    '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
+                    '<style>' +
+                    '*{  } html { font: 11pt sans-serif; }' +
+                    '.k-grid { border-top-width: 0; }' +
+                    '.k-grid, .k-grid-content { height: auto !important; }' +
+                    '.k-grid-content { overflow: visible !important; }' +
+                    'div.k-grid table { table-layout: auto; width: 100% !important; }' +
+                    '.k-grid .k-grid-header th { border-top: 1px solid; }' +
+                    '.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
+                    '</style><style type="text/css" media="print"> @page { size: landscape; margin:0mm; } .saleSummaryCustomer .total-customer, .saleSummaryCustomer .total-sale { background-color: #DDEBF7!important; -webkit-print-color-adjust:exact; }.saleSummaryCustomer .table.table-borderless.table-condensed  tr th { background-color: #1E4E78!important;-webkit-print-color-adjust:exact;}.saleSummaryCustomer .table.table-borderless.table-condensed  tr th span{ color: #fff!important; }.saleSummaryCustomer .table.table-borderless.table-condensed tr:nth-child(2n+1) td {  background-color: #fff!important; -webkit-print-color-adjust:exact;} .saleSummaryCustomer .table.table-borderless.table-condensed tr td { background-color: #F2F2F2!important;-webkit-print-color-adjust:exact; } </style>' +
+                    '</head>' +
+                    '<body><div id="example" class="k-content saleSummaryCustomer" style="padding: 30px;">';
+            var htmlEnd =
+                    '</div></body>' +
+                    '</html>';
+            
+            printableContent = $('#invFormContent').html();
+            doc.write(htmlStart + printableContent + htmlEnd);
+            doc.close();
+            setTimeout(function(){
+                win.print();
+                win.close();
+            },2000);
+        },
+        licenseChange   : function(e) {
+            var data = e.data;
+            var license = this.licenseDS.at(e.sender.selectedIndex - 1);
+            this.set("licenseSelect", license);
+            this.blocDS.filter({field: "branch_id", value: license.id});
+        },
+        search                  : function(){
+            var self = this, para = [],
+            license = this.get("licenseSelect"),
+            bloc = this.get("blocSelect");
+
+            this.dataSource.bind("requestEnd", function(e){             
+                if(e.type=="read"){
+                    var response = e.response;
+                    self.exArray = [];
+
+                    self.exArray.push({
+                        cells: [
+                            { value: self.company.name, textAlign: "center", colSpan: 4 }
+                        ]
+                    });
+                    self.exArray.push({
+                        cells: [
+                            { value: "Customer List",bold: true, fontSize: 20, textAlign: "center", colSpan: 4 }
+                        ]
+                    });
+                    self.exArray.push({
+                        cells: [
+                            { value: "", colSpan: 4 }
+                        ]
+                    });
+                    self.exArray.push({ 
+                        cells: [
+                            { value: "Property", background: "#496cad", color: "#ffffff" },
+                            { value: "Meter", background: "#496cad", color: "#ffffff" },
+                            { value: "Block", background: "#496cad", color: "#ffffff" },
+                            { value: "License", background: "#496cad", color: "#ffffff" }
+                        ]
+                    });
+                    for (var i = 0; i < response.results.length; i++){
+                        self.exArray.push({
+                            cells: [
+                                { value: response.results[i].name, bold: true, },
+                                { value: "" },
+                                { value: "" },
+                                { value: "" },
+                            ]
+                        });
+                        for(var j = 0; j < response.results[i].line.length; j++){
+                            self.exArray.push({
+                                cells: [
+                                    { value: response.results[i].line[j].property },
+                                    { value: response.results[i].line[j].meter},
+                                    { value: response.results[i].line[j].location},
+                                    { value: response.results[i].line[j].branch},
+                                ]
+                            });
+                        }
+                    }
+                }
+            }); 
+        }, 
+        cancel          : function(){
+            this.contact.cancelChanges();
+            window.history.back();
+        },
+        ExportExcel         : function(){
+            var workbook = new kendo.ooxml.Workbook({
+              sheets: [
+                {
+                  columns: [
+                    { autoWidth: true },
+                    { autoWidth: true },
+                    { autoWidth: true },
+                    { autoWidth: true }
+                  ],
+                  title: "Customer List",
+                  rows: this.exArray
+                }
+              ]
+            });
+            //save the file as Excel file with extension xlsx
+            kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "customerList.xlsx"});
+        }
+    }); 
     banhji.customerNoConnection = kendo.observable({
         lang: langVM,
         institute: banhji.institute,

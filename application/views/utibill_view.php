@@ -10452,165 +10452,56 @@
 						</div>
 						<div class="clear"></div>
 
-						<!-- Tabs -->
-						<div class="relativeWrap" data-toggle="source-code" style="margin: 15px 0;">
+					    <!-- Tabs -->
+						<div class="relativeWrap" data-toggle="source-code">
 							<div class="widget widget-tabs widget-tabs-gray report-tab">
 								<!-- Tabs Heading -->
-								<div class="widget-head" style="background: #203864 !important; color: #fff;">
+								<!-- Tabs Heading -->
+								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons filter" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.filter">Filter</span></a></li>	
-										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export">Print/Export</span></a></li>
+										
+										<li class="active"><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export" style="text-transform: capitalize;"></span></a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-								        <div class="tab-pane active" id="tab-1" style="border: 1px solid #ccc; overflow: hidden; padding: 15px">
-											<div class="row">
-												<div class="col-xs-12 col-sm-2" >
-													<div class="control-group">	
-													<label ><span data-bind="text: lang.lang.license">License</span></label>
-														<input 
-															data-role="dropdownlist" 
-															style="width: 100%;" 
-															data-option-label="License ..." 
-															data-auto-bind="false" 
-															data-value-primitive="true" 
-															data-text-field="name" 
-															data-value-field="id" 
-															data-bind="
-																value: licenseSelect,
-							                  					source: licenseDS,
-							                  					events: {change: licenseChange}">
-							                  		</div>
-												</div>
-												<div class="col-xs-12 col-sm-2" >
-													<div class="control-group">		
-													<label ><span data-bind="text: lang.lang.location">Location</span></label>
-														<input 
-															data-role="dropdownlist" 
-															style="width: 100%;" 
-															data-option-label="Location ..." 
-															data-auto-bind="false" 
-															data-value-primitive="true" 
-															data-text-field="name" 
-															data-value-field="id" 
-															data-bind="
-																value: blocSelect,
-																enabled: haveLicense,
-																events: {change: onLocationChange},
-							                  					source: blocDS">
-							                  		</div>
-												</div>
-												<div class="col-xs-12 col-sm-2">
-													<div class="control-group">	
-													<label ><span data-bind="text: lang.lang.sub_location">Location</span></label>
-														<input 
-															data-role="dropdownlist" 
-															style="width: 100%;" 
-															data-option-label="Sub Location ..." 
-															data-auto-bind="false" 
-															data-value-primitive="true" 
-															data-text-field="name" 
-															data-value-field="id" 
-															data-bind="
-																value: subLocationSelect,
-																enabled: haveLocation,
-																events: {change: onSubLocationChange},
-							                  					source: subLocationDS">
-							                  		</div>
-												</div>
-												<div class="col-xs-12 col-sm-2" >
-													<div class="control-group">	
-														<label ><span data-bind="text: lang.lang.box">box</span></label>
-														<input 
-															data-role="dropdownlist" 
-															style="width: 100%;" 
-															data-option-label="Box ..." 
-															data-auto-bind="false" 
-															data-value-primitive="true" 
-															data-text-field="name" 
-															data-value-field="id" 
-															data-bind="
-																value: boxSelect,
-																enabled: haveSubLocation,
-							                  					source: boxDS">
-							                  		</div>
-												</div>
-												<div class="col-xs-12 col-sm-2">
-													<label ><span data-bind="text: lang.lang.month_of" >Month Of</span></label>
-													<input type="text" 
-									                	style="width: 100%;" 
-									                	data-role="datepicker"
-									                	data-format="MM-yyyy"
-									                	data-parse-formats="yyyy-MM-dd HH:mm:ss"
-									                	data-start="year" 
-										  				data-depth="year" 
-									                	placeholder="Moth of ..." 
-											           	data-bind="value: readingVM.monthOfSR, min: miniMonthofS" />
-												</div>
-						                  		<div class="col-xs-12-3 col-sm-1">
-						                  			<label ><span data-bind="text: lang.lang.search">search</span></label>	
-												  	 <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>							
-									    		</div>
-									    	</div>
-									    </div>	
-									    <!-- PRINT/EXPORT  -->
-								        <div class="tab-pane report" id="tab-2" style="border: 1px solid #ccc; overflow: hidden; padding: 15px">								        	
+
+							        	<!-- PRINT/EXPORT  -->
+								        <div class="tab-pane active report" id="tab-3">								        	
 								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" ><i></i> Print</span>
 								        	<span id="excel" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" >
 								        		<i class="fa fa-file-excel-o"></i>
 								        		Export to Excel
 								        	</span>
-							        	</div>								        							       
+							        	</div>
 								    </div>
 								</div>
 							</div>
 						</div>
+
 						<!-- // Tabs END -->
-						
+
 						<div id="invFormContent">
 							<div class="block-title">
 								<h3 data-bind="text: institute.name"></h3>
-								<h2 data-bind="text: lang.lang.customer_list">Customer List</h2>
-							</div>
-							<div class="row">
-								<div class="col-xs-12 col-sm-6">
-									<div class="total-sale">
-										<p data-bind="text: lang.lang.number_of_customer">Number of Customer</p>
-										<span data-bind="text: dataSource.total"></span>
-									</div>
-								</div>
-								<div class="col-xs-12 col-sm-6">
-									<div class="total-sale">
-										<p data-bind="text: lang.lang.number_of_meter">Number of Meter</p>
-										<span data-bind="text: dataSource.total"></span>
-									</div>
-								</div>
+							<h2 data-bind="text: lang.lang.customer_list">Customer List</h2>
 							</div>
 							<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center">
-								<thead>
-									<tr>
-										<th style="vertical-align: top;"><span data-bind="">code</span></th>
-										<th style="vertical-align: top;"><span data-bind="text: lang.lang.customer"></span></th>
-										<th style="text-align: center"><span data-bind="text:lang.lang.meter_number"></span></th>
-										<th style="text-align: center"><span data-bind="">Previous</span></th>
-										<th style="text-align: center"><span data-bind="">Current</span></th>
-										<th style="text-align: center"><span data-bind="">Status</span></th>
-										<th style="text-align: right"><span data-bind="text:lang.lang.address"></span></th>
-										<th style="text-align: right"><span data-bind="text:lang.lang.license"></span></th>
-									</tr>
-								</thead>
-								<tbody data-role="listview"
-											 data-bind="source: dataSource"
-											
-											 data-template="customerList-temp"
-								></tbody>
-							</table>
-							<div id="pager" class="k-pager-wrap"
-			            		 data-role="pager"
-						    	 data-auto-bind="false"
-					             data-bind="source: dataSource"></div>
+							<thead>
+								<tr>
+									<th style="vertical-align: top;">Property</th>
+									<th style="vertical-align: top;">Meter</th>
+									<th style="vertical-align: top;">Block</th>
+									<th style="vertical-align: top;">License</th>
+								</tr>
+							</thead>
+							<tbody data-role="listview"
+										 data-bind="source: dataSource"
+										
+										 data-template="customerList-temp"
+							></tbody>
+						</table>
 						</div>
 					</div>
 				</div>
@@ -10625,9 +10516,9 @@
 	#for(var i= 0; i <line.length; i++) {#
 		<tr>
 			<td>#=line[i].property#</td>
-			<td style="text-align: center">#=line[i].meter#</td>
-			<td style="text-align: right">#=line[i].location#</td>
-			<td style="text-align: right">#=line[i].branch#</td>
+			<td>#=line[i].meter#</td>
+			<td>#=line[i].location#</td>
+			<td style="text-align: right;">#=line[i].branch#</td>
 		</tr>
 
 	#}#
