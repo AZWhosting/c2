@@ -1493,5 +1493,9 @@ var	en_US = {
 	"new_round": "New Round",
 	"utility_sale": "Utility Sale",
 
-	"end" : "End"
+	"end" : "End",
+	"disconnect_meter": "Disconnect Meter",
+
+
+
 }

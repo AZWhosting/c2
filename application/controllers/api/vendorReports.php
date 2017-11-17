@@ -1113,7 +1113,7 @@ class Vendorreports extends REST_Controller {
 		}
 		
 		//Filter		
-		if(!empty($filter) && isset($filter)){
+		if(!empty($filter["filters"]) && isset($filter["filters"])){
 	    	foreach ($filter["filters"] as $value) {
 	    		if(isset($value['operator'])){
 	    			$obj->{$value['operator']}($value['field'], $value['value']);	    		
@@ -1124,39 +1124,35 @@ class Vendorreports extends REST_Controller {
 		}
 
 		//Results
-		$obj->include_related("contact", array("abbr", "number", "name"));
-		$obj->where("type", "Credit_Purchase");
-		$obj->where_in("status", array(1,2));
+		$obj->where_in("type", array("Cash_Payment", "Offset_Bill"));
 		$obj->where("is_recurring <>", 1);
 		$obj->where("deleted <>", 1);
 		$obj->order_by("issued_date", "asc");
 		$obj->get_iterated();
-		
+
 		if($obj->exists()){
 			$objList = [];
 			foreach ($obj as $value) {
-				//Payments
-				$payments = [];				
-				$pmt = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);				
-				$pmt->where("reference_id", $value->id);
-				$pmt->where_in("type", array("Cash_Payment", "Offset_Bill"));
-				$pmt->where("is_recurring <>",1);
-				$pmt->where("deleted <>",1);
-				$pmt->get_iterated();
-				if($pmt->exists()){
-					foreach ($pmt as $val) {
-						$payments[] = array(
-							"id" 				=> $val->id,
-							"type" 				=> $val->type,
-							"number" 			=> $val->number,
-							"issued_date" 		=> $val->issued_date,
-							"rate" 				=> $val->rate,
-							"amount" 			=> floatval($val->amount) + floatval($val->discount)
-						);
-					}
+				//Reference
+				$references = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);				
+				$references->where("id", $value->reference_id);
+				$references->where("is_recurring <>",1);
+				$references->where("deleted <>",1);
+				$references->get();
+
+				$reference = [];
+				if($references->exists()){
+					$reference = array(
+						"id" 				=> $value->id,
+						"type" 				=> $references->type,
+						"number" 			=> $references->number,
+						"issued_date" 		=> $references->issued_date,
+						"rate" 				=> $references->rate,
+						"amount" 			=> (floatval($references->amount) - floatval($references->deposit)) / floatval($references->rate)
+					);
 				}
-								
-				$amount = (floatval($value->amount) - floatval($value->deposit)) / floatval($value->rate);
+
+				$amount = (floatval($value->amount) + floatval($value->discount)) / floatval($value->rate);
 
 				if(isset($objList[$value->contact_id])){
 					$objList[$value->contact_id]["line"][] = array(
@@ -1166,11 +1162,14 @@ class Vendorreports extends REST_Controller {
 						"issued_date" 		=> $value->issued_date,
 						"rate" 				=> $value->rate,
 						"amount" 			=> $amount,
-						"payments" 			=> $payments
+						"reference" 		=> $reference
 					);
 				}else{
-					$objList[$value->contact_id]["id"] 		= $value->contact_id;
-					$objList[$value->contact_id]["name"] 	= $value->contact_abbr.$value->contact_number." ".$value->contact_name;
+					$contacts = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);				
+					$contacts->get_by_id($value->contact_id);
+
+					$objList[$value->contact_id]["id"] 			= $value->contact_id;
+					$objList[$value->contact_id]["name"] 		= $contacts->abbr.$contacts->number." ".$contacts->name;
 					$objList[$value->contact_id]["line"][] 	= array(
 						"id" 				=> $value->id,
 						"type" 				=> $value->type,
@@ -1178,7 +1177,7 @@ class Vendorreports extends REST_Controller {
 						"issued_date" 		=> $value->issued_date,
 						"rate" 				=> $value->rate,
 						"amount" 			=> $amount,
-						"payments" 			=> $payments
+						"reference" 		=> $reference
 					);			
 				}
 			}

@@ -1465,5 +1465,7 @@ var	km_KH = {
 	"tablet": "Tablet",
 	"new_round": "ជុំថ្មី",
 	"utility_sale": "លក់ជាសាច់ប្រាក់",
+
+	"disconnect_meter": "កុងទ័រត្រូវផ្តាច់",
 	
 }

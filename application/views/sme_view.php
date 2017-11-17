@@ -334,7 +334,7 @@
 								
 							</li>
 						</ul>
-						<!-- <ul id="module-image">
+						<ul id="module-image">
 							<li class="col-xs-3 col-sm-3">
 								<a href="#/accounting">
 									<img title="Accounting Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/accounting.jpg" alt="Customer">
@@ -359,10 +359,10 @@
 									<h5 data-bind="text: lang.lang.app_center" ></h5>
 								</a>
 							</li>
-						</ul> -->						
+						</ul>						
 					</div>
 
-					<!-- <div class="home-chart row" style="margin-top: 15px;">
+					<div class="home-chart row" style="margin-top: 15px;">
 						<div class="col-xs-12 col-sm-12">
 							<div class="chart">
 								<div data-role="chart"
@@ -383,10 +383,10 @@
 					            </div>
 							</div>
 						</div>
-					</div> -->
+					</div>
 				</div>
 
-				<!-- <div class="col-xs-12 col-sm-6">
+				<div class="col-xs-12 col-sm-6">
 					<div class="row">
 						<div class="col-sm-12 col-md-8">
 							<div class="board-chart">
@@ -626,10 +626,10 @@
 							</div>
 						</div>
 					</div>
-				</div> -->
+				</div>
 
 
-				<!-- <div class="col-xs-12 col-sm-6">
+				<div class="col-xs-12 col-sm-6">
 					<div class="row">
 						<ul id="module-image">
 							<li class="col-xs-3 col-sm-3">
@@ -709,7 +709,7 @@
 							</div>
 						</div>
 					</div>
-				</div> -->
+				</div>
 
 				<!-- <div class="col-xs-12 col-sm-6">
 					<div class="row"> -->
@@ -727,7 +727,7 @@
 							<p style="text-align: center; margin-bottom: 0; cursor: pointer;">User Guide</p>
 						</div> -->
 
-						<!-- <div class="board-chart" style="margin-top: 20px; ">
+						 <div class="board-chart" style="margin-top: 20px; ">
 							<div class="span3" style="padding-left: 0;">
 								<div style="background: #0ec9fc; width: 100%; float: left; text-align: center; height: 135px;	">
 									<p style="margin-top: 10px; font-size: 10px;">Your Business Financial Health Score</p>
@@ -825,7 +825,7 @@
 									</div>
 								</div>
 							</div>
-						</div>-->
+						</div>
 
 						<!-- <div class="board-chart" >
 							<div class="span12">
@@ -942,14 +942,14 @@
 			</div>
 
 			<!-- Footer -->
-			<!-- <div class="row" style="margin-top: 30px;">
+			<div class="row" style="margin-top: 30px;">
 				<div class="col-xs-12 col-sm-12" align="center">
 					<p>
 						&copy; <?php echo date('Y'); ?>
 						<span data-bind="text: lang.lang.all_rights_reserved"></span>
 					</p>
 				</div>
-			</div> -->
+			</div>
 		</div>
 	</script>
 	<!-- ADVANCE SEARCH -->

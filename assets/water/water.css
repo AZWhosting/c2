@@ -156,8 +156,8 @@ p.addItem.glyphicons.circle_remove i:before {
     text-align: center;
 }
 .cash-bg .col-sm-6 a img {
-    float: left;
-    width: 98.5%;
+    width: 72%;
+    text-align: center;
 }
 /*---------
   CSS Menu

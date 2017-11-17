@@ -186,25 +186,25 @@
 			<div class="col-md-6">
 				<div class="cash-bg" style="margin-bottom: 10px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">				
 					<div class="row-fluid" >
-						<div class="col-xs-3 col-sm-3 col-md-3" >
+						<div class="col-xs-3 col-sm-3 col-md-3" style="text-align: center;">
 							<a href="#/reading">
 								<img width="100%" title="Add Reading" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/water_logo/reading.png"   />
 								<span data-bind="text: lang.lang.reading" style="text-transform: uppercase; color: #000; font-weight: 600; margin-top: 8px; display: inline-block;">Readings</span>
 							</a>
 						</div>
-						<div class="col-xs-3 col-sm-3 col-md-3" >
+						<div class="col-xs-3 col-sm-3 col-md-3" style="text-align: center;">
 							<a href="#/run_bill">
 								<img width="100%" title="Add Create Invoice" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/water_logo/run_bill.png"  />
 								<span data-bind="text: lang.lang.run_bill" style=" text-transform: uppercase; color: #000; font-weight: 600; margin-top: 8px; display: inline-block;">Run Bill</span>
 							</a>
 						</div>
-						<div class="col-xs-3 col-sm-3 col-md-3" >
+						<div class="col-xs-3 col-sm-3 col-md-3" style="text-align: center;">
 							<a href="#/print_bill">
 								<img width="100%" title="Add Print Invoice" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/water_logo/print_bill.png"  />
 								<span data-bind="text: lang.lang.print_bill" style="text-transform: uppercase; color: #000; font-weight: 600; margin-top: 8px; display: inline-block;">Print Bill</span>
 							</a>
 						</div>
-						<div class="col-xs-3 col-sm-3 col-md-3" >
+						<div class="col-xs-3 col-sm-3 col-md-3" style="text-align: center;">
 							<a href="#/receipt">
 								<img width="100%" title="Receive Water Bill Payment" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/water_logo/receipt.png"  />
 								<span data-bind="text: lang.lang.wreceipt"  style=" text-transform: uppercase; color: #000; font-weight: 600; margin-top: 8px; display: inline-block;">Receipt</span>
@@ -213,7 +213,62 @@
 					</div>
 				</div>
 
-				<div class="home-chart row-fluid" style="margin-bottom: 15px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1; float: left; width: 100%; background: #fff;">
+				<div class="row">
+					<div class="col-xs-12 col-md-6">
+						<div class="cash-bg" style="margin-bottom: 10px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
+							
+							<a href="http://app.banhji.com/c2/rrd/">
+								<div class="col-md-12" style="padding-left: 0;">
+								 	<img style="height: 50px" src="<?php echo base_url();?>assets/water/banhji-logo.png" >
+								</div>
+							</a>
+						</div>
+						
+					</div>
+					<div class="col-xs-12 col-md-6" style="padding-left: 0">
+						<div class="cash-bg" style="margin-bottom: 10px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
+							<a href="http://market.utibill.com/" target="_blank"><img style="width: 100%" src="<?php echo base_url();?>assets/water/market.png"></a>
+						</div>
+					</div>
+
+				</div>
+
+				
+				<div class="row-fluid" style="display: inline-block; margin-bottom: 15px;">
+					<div style="width: 100%; float: left; ">
+						<div style="width: 100%; background: #f4f4f4; float: left; text-align: left; overflow: hidden;">
+							<div id="carousel-1" class="carousel slide" style="margin-bottom: 0; float: left;">
+								
+								<ol class="carousel-indicators" style="bottom: -11px; left: 92%;">
+									<li data-target="#carousel-1" data-slide-to="0" class="active"></li>
+									<li data-target="#carousel-1" data-slide-to="1"></li>
+									<li data-target="#carousel-1" data-slide-to="2"></li>									
+								</ol>
+								<div class="carousel-inner" style=" float: left;">
+								
+									
+									<div class="item active">
+										<div class="carousel-caption" style="position: relative; right: 0; left: 0; padding: 0; top: 0; background: none;">
+											 <img style="width: 100%; min-width: auto;" src="<?php echo base_url();?>assets/water/banner/banhji_banner.png" >
+										</div>
+									</div>
+									<div class="item ">
+										<div class="carousel-caption" style="position: relative; right: 0; left: 0; padding: 0; top: 0; background: none;">
+											 <img style="width: 100%; min-width: auto;" src="<?php echo base_url();?>assets/water/banner/pcg_banner.png" >
+										</div>
+									</div>
+									<div class="item ">
+										<div class="carousel-caption" style="position: relative; right: 0; left: 0; padding: 0; top: 0; background: none;">
+											 <img style="width: 100%; min-width: auto;" src="<?php echo base_url();?>assets/water/banner/reachs_banner.png" >
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- <div class="home-chart row-fluid" style="margin-bottom: 15px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1; float: left; width: 100%; background: #fff;">
 					<div class="col-xs-12 col-sm-12">
 						<div class="chart" >
 							<div data-role="chart"
@@ -233,25 +288,36 @@
 							</div>
 						</div>
 					</div>
-				</div>
+				</div> -->
 			</div>
 
 		    <div class="col-md-6" >
 		    	<div class="cash-bg" style="margin-bottom: 10px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
-		    		<a href="#/customer_deposit_report">
-						<div class="cash-invoice" style="background: #203864; color: #fff;">
-							<div class="span3" style="padding-left: 0;">
-								<span data-bind="text: lang.lang.deposit" style="font-size: 24px; ">DEPOSIT</span>
-								<br>
-								<p><span style="color: #9EA7B8;" data-bind="text: totalUser"></span>
-								<span style="color: #9EA7B8;" data-bind="text: lang.lang.meter">Meters</span></p>
+		    		<div class="col-xs-6 col-sm-6 col-md-6">
+		    			<a href="#/customer_deposit_report">
+							<div class="cash-invoice" style="background: #203864; color: #fff; width: 98%">
+								<div class="span9" style="padding-left: 0; text-align: left;">
+									<span data-bind="" style="font-size: 18px; ">កុងទ័រត្រូវភ្ជាប់</span>
+								</div>
+								<div class="span3" style=" text-align: center; font-size: 18px; font-weight: 600; padding: 0;">
+									<span style="float: right;" data-bind="text: totalDeposit"></span>
+								</div>
 							</div>
-							<div class="span9" style=" text-align: center; font-size: 35px; font-weight: 600; padding: 0;">
-								<span style="float: right;" data-bind="text: totalDeposit"></span>
-							</div>					
-						</div>
-					</a>
-					<a href="#/sale_summary">
+						</a>
+		    		</div>
+		    		<div class="col-xs-6 col-sm-6 col-md-6" >
+		    			<a href="#/customer_deposit_report">
+							<div class="cash-invoice" style="background: #203864; color: #fff; width: 98%; float: right;">
+								<div class="span9" style="padding-left: 0; text-align: left;">
+									<span data-bind="text: lang.lang.disconnect_meter" style="font-size:18px; "></span>
+								</div>
+								<div class="span3" style=" text-align: center; font-size: 18px; font-weight: 600; padding: 0;">
+									<span style="float: right;" data-bind="text: totalDeposit"></span>
+								</div>
+							</div>
+						</a>
+		    		</div>
+		    		<a href="#/sale_summary">
 						<div class="cash-invoice" style="margin-bottom: 0; background: #203864; color: #fff;">
 							<div class="span4" style="padding-left: 0;">
 								<span data-bind="text: lang.lang.total_sale" style="font-size: 24px; color: #fff;">TOTAL SALE</span><br>
@@ -268,12 +334,12 @@
 		    		<div class="row-fluid" >
 						<div class="col-xs-12 col-sm-6 col-md-7" style="background: #0077c5; padding-bottom: 15px; padding-top: 15px; padding-right: 0;">
 							<a href="#/customer_aging_sum_list">
-								<div class="widget-body alert-info welcome-nopadding" style="width: 100%; background: #0077c5;">
+								<div class="widget-body alert-info welcome-nopadding" style="width: 100%; background: #0077c5; height: 182px;">
 									<p style="color: #fff;"><span data-bind="text: lang.lang.expected_due">Expected due</span></p>
 							
-									<div class="strong" align="center" style="color: #fff; font-size: 27px; line-height: 57px; margin-top: -15px; margin-bottom: 0;"><span data-bind="text: totalAmount"></span></div>
+									<div class="strong" align="center" style="color: #fff; font-size: 27px; line-height: 57px; margin-top: 20px; margin-bottom: 0;"><span data-bind="text: totalAmount"></span></div>
 								
-									<table width="100%" style="color: #fff;">
+									<table width="100%" style="color: #fff; margin-top: 20px;">
 										<tbody>
 											<tr align="center">
 												<td>
@@ -300,12 +366,12 @@
 
 						<div class="col-xs-12 col-sm-6 col-md-5" style="background: #21abf6; padding-bottom: 15px; padding-top: 15px; padding-right: 0;">
 							<a href="#/customer_list">
-								<div class="widget-body alert-info welcome-nopadding" style="width: 100%; background: #21abf6;">
+								<div class="widget-body alert-info welcome-nopadding" style="width: 100%; background: #21abf6; height: 182px;">
 									<p style="color: #fff;"><span data-bind="text: lang.lang.active_meter">Active Meter</span></p>
 							
-									<div class="strong" align="center" style="color: #fff; font-size: 40px; margin-top: -15px; margin-bottom: 0;"><span data-bind="text: activeCust"></span></div>
+									<div class="strong" align="center" style="color: #fff; font-size: 40px; margin-top: 20px; margin-bottom: 0;"><span data-bind="text: activeCust"></span></div>
 								
-									<table width="100%" style="color: #fff;">
+									<table width="100%" style="color: #fff; margin-top: 20px;">
 										<tbody>
 											<tr align="center">
 												<td>
@@ -328,7 +394,7 @@
 		    	</div>
 		   	</div>
 
-		   <div class="col-md-12 water-tableList hidden-xs">
+		   <!-- <div class="col-md-12 water-tableList hidden-xs">
 				<table style="margin-bottom: 0;" class="table table-bordered table-condensed table-striped table-primary table-vertical-center">
 					<thead>
 						<tr>
@@ -346,16 +412,16 @@
 					<tbody style="border: none;" data-role="listview" data-bind="source: dataSource" data-template="dashboard-template-table-list">				
 					</tbody>
 				</table>
-			</div>
+			</div> -->
 		</div>
 		<!-- <div class="row" style="margin-top: 30px;">
-			<div class="col-md-4">
+			<div class="col-xs-12 col-sm-4 col-md-4">
 				<div class="cash-bg" style="margin-bottom: 10px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">				
 					<div class="row-fluid" >
 						<div class="col-xs-6 col-sm-6 col-md-6" >
 							<a href="#/reading">
 								<img title="Add Reading" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/water_logo/reading.png"   />
-								<span data-bind="text: lang.lang.reading" style="text-transform: uppercase; color: #000; font-weight: 600; margin-top: 8px; display: inline-block;">Readings</span>
+								<span data-bind="text: lang.lang.reading" style="text-transform: uppercase; color: #000; font-weight: 600; margin-top: 8px; display: inline-block; margin-bottom: 8px;">Readings</span>
 							</a>
 						</div>
 						<div class="col-xs-6 col-sm-6 col-md-6" >
@@ -380,28 +446,7 @@
 						</div>
 					</div>
 				</div>
-
-				<div class="home-chart row-fluid" style="margin-bottom: 15px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1; float: left; width: 100%; background: #fff;">
-					<div class="col-xs-12 col-sm-12">
-						<div class="chart" >
-							<div data-role="chart"
-								 data-auto-bind="true"
-					             data-legend="{ position: 'top' }"
-					             data-series-defaults="{ type: 'column' }"
-					             data-tooltip='{
-					                visible: true,
-					                format: "{0}%",
-					                template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
-					             }'                 
-					             data-series="[
-					                             { field: 'amount', name: langVM.lang.sale, categoryField:'month', color: '#203864', overlay:{ gradient: 'none'}  }
-					                         ]"
-					             data-bind="source: graphDS"
-					             style="height: 240px; " >
-							</div>
-						</div>
-					</div>
-				</div>
+				
 				<div class="row">
 					<div class="col-xs-12 col-md-5">
 						<div class="cash-bg" style="margin-bottom: 10px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
@@ -423,9 +468,47 @@
 						</div>
 					</div>
 				</div>
+
+				
+				<div class="row-fluid">
+					<div style="width: 100%; float: left; ">
+						<div style="width: 100%; background: #f4f4f4; float: left; text-align: left; overflow: hidden;">
+							<div id="carousel-1" class="carousel slide" style="margin-bottom: 0; float: left;">
+								
+								<ol class="carousel-indicators" style="bottom: -11px; left: 92%;">
+									<li data-target="#carousel-1" data-slide-to="0" class="active"></li>
+									<li data-target="#carousel-1" data-slide-to="1"></li>
+									<li data-target="#carousel-1" data-slide-to="2"></li>									
+								</ol>
+								
+								
+						
+								<div class="carousel-inner" style=" float: left;">
+								
+									
+									<div class="item active">
+										<div class="carousel-caption" style="position: relative; right: 0; left: 0; padding: 0; top: 0; background: none;">
+											 <img style="width: 100%; min-width: auto;" src="<?php echo base_url();?>assets/water/banner/banhji_banner.png" >
+										</div>
+									</div>
+									<div class="item ">
+										<div class="carousel-caption" style="position: relative; right: 0; left: 0; padding: 0; top: 0; background: none;">
+											 <img style="width: 100%; min-width: auto;" src="<?php echo base_url();?>assets/water/banner/pcg_banner.png" >
+										</div>
+									</div>
+									<div class="item ">
+										<div class="carousel-caption" style="position: relative; right: 0; left: 0; padding: 0; top: 0; background: none;">
+											 <img style="width: 100%; min-width: auto;" src="<?php echo base_url();?>assets/water/banner/reachs_banner.png" >
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 
-		    <div class="col-md-8" >
+		    <div class="col-xs-12 col-sm-8 col-md-8" >
 		    	<div class="cash-bg" style="margin-bottom: 10px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
 		    		<div class="col-xs-6 col-sm-6 col-md-6">
 		    			<a href="#/customer_deposit_report">
@@ -451,19 +534,7 @@
 							</div>
 						</a>
 		    		</div>
-		    		<a href="#/customer_deposit_report">
-						<div class="cash-invoice" style="background: #203864; color: #fff;">
-							<div class="span3" style="padding-left: 0;">
-								<span data-bind="text: lang.lang.deposit" style="font-size: 24px; ">DEPOSIT</span>
-								<br>
-								<p><span style="color: #9EA7B8;" data-bind="text: totalUser"></span>
-								<span style="color: #9EA7B8;" data-bind="text: lang.lang.meter">Meters</span></p>
-							</div>
-							<div class="span9" style=" text-align: center; font-size: 35px; font-weight: 600; padding: 0;">
-								<span style="float: right;" data-bind="text: totalDeposit"></span>
-							</div>
-						</div>
-					</a>
+		    		
 					<a href="#/sale_summary">
 						<div class="cash-invoice" style="margin-bottom: 0; background: #203864; color: #fff;">
 							<div class="span4" style="padding-left: 0;">
@@ -473,20 +544,20 @@
 							</div>
 							<div class="span8" style="color: #fff; text-align: center; font-size: 35px; font-weight: 600; padding: 0;">
 								<span style="float: right;" data-bind="text: totalSale"></span>
-							</div>										
+							</div>
 						</div>
 					</a>
 		    	</div>
 		    	<div class="cash-bg" style="margin-bottom: 10px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
 		    		<div class="row-fluid" >
-						<div class="col-xs-12 col-sm-6 col-md-7" style="background: #0077c5; padding-bottom: 15px; padding-top: 15px; padding-right: 0;">
+						<div class="col-xs-12 col-sm-6 col-md-6" style="min-height: 365px; width: 49%; background: #0077c5; padding-bottom: 15px; padding-top: 15px; padding-right: 0;">
 							<a href="#/customer_aging_sum_list">
 								<div class="widget-body alert-info welcome-nopadding" style="width: 100%; background: #0077c5;">
-									<p style="color: #fff;"><span data-bind="text: lang.lang.expected_due">Expected due</span></p>
+									<p style="color: #fff;"><span style="margin-top: 15px; display: inline-block; font-size: 20px;" data-bind="text: lang.lang.expected_due">Expected due</span></p>
 							
-									<div class="strong" align="center" style="color: #fff; font-size: 27px; line-height: 57px; margin-top: -15px; margin-bottom: 0;"><span data-bind="text: totalAmount"></span></div>
+									<div class="strong" align="center" style="margin-top: 90px; color: #fff; font-size: 27px; line-height: 57px; margin-bottom: 0;"><span data-bind="text: totalAmount"></span></div>
 								
-									<table width="100%" style="color: #fff;">
+									<table width="100%" style="color: #fff; margin-top: 75px;">
 										<tbody>
 											<tr align="center">
 												<td>
@@ -511,14 +582,14 @@
 							</a>
 						</div>
 
-						<div class="col-xs-12 col-sm-6 col-md-5" style="background: #21abf6; padding-bottom: 15px; padding-top: 15px; padding-right: 0;">
+						<div class="col-xs-12 col-sm-6 col-md-6" style="min-height: 365px; width: 49%; float: right; background: #21abf6; padding-bottom: 15px; padding-top: 15px; padding-right: 0;">
 							<a href="#/customer_list">
 								<div class="widget-body alert-info welcome-nopadding" style="width: 100%; background: #21abf6;">
-									<p style="color: #fff;"><span data-bind="text: lang.lang.active_meter">Active Meter</span></p>
+									<p style="color: #fff;"><span style="margin-top: 15px; display: inline-block; font-size: 20px;" data-bind="text: lang.lang.active_meter">Active Meter</span></p>
 							
-									<div class="strong" align="center" style="color: #fff; font-size: 40px; margin-top: -15px; margin-bottom: 0;"><span data-bind="text: activeCust"></span></div>
+									<div class="strong" align="center" style="margin-top: 90px; color: #fff; font-size: 40px;  margin-bottom: 0;"><span data-bind="text: activeCust"></span></div>
 								
-									<table width="100%" style="color: #fff;">
+									<table width="100%" style="color: #fff; margin-top: 75px;">
 										<tbody>
 											<tr align="center">
 												<td>
@@ -540,27 +611,55 @@
 					</div>
 		    	</div>
 		   	</div>
-
-		   	 <div class="col-md-12 water-tableList hidden-xs">
-				<table style="margin-bottom: 0;" class="table table-bordered table-condensed table-striped table-primary table-vertical-center">
-					<thead>
-						<tr>
-							<th style="vertical-align: top; text-align: center"><span data-bind="text: lang.lang.no">No.</span></th>
-							<th style="vertical-align: top;"><span data-bind="text: lang.lang.license">License</span></th>
-							<th style="vertical-align: top; text-align: center"><span data-bind="text: lang.lang.no_of_bloc">No.of Bloc</span></th>
-							<th style="vertical-align: top; text-align: center"><span data-bind="text: lang.lang.active_meter">Active Meter</span></th>
-							<th style="vertical-align: top; text-align: center"><span data-bind="text: lang.lang.inactive_meter">Inactive Meter</span></th>
-							<th style="vertical-align: top; text-align: right"><span data-bind="text: lang.lang.deposit">Deposit</span></th>
-							<th style="vertical-align: top; text-align: right">m<sup>3</sup>/kWh</th>
-							<th style="vertical-align: top; text-align: right"><span data-bind="text: lang.lang.sale_amount">Sale Amount</span></th>
-							<th style="vertical-align: top; text-align: right"><span data-bind="text: lang.lang.balance">Balance</span></th>
-						</tr>
-					</thead>
-					<tbody style="border: none;" data-role="listview" data-bind="source: dataSource" data-template="dashboard-template-table-list">				
-					</tbody>
-				</table>
-			</div>
 		</div> -->
+		<div class="row">
+			<div class='col-sm-6'>
+				<div class="home-chart row-fluid" style="margin-bottom: 15px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1; float: left; width: 100%; background: #fff;">
+					<div class="col-xs-12 col-sm-12">
+						<div class="chart" >
+							<div data-role="chart"
+								 data-auto-bind="true"
+					             data-legend="{ position: 'top' }"
+					             data-series-defaults="{ type: 'column' }"
+					             data-tooltip='{
+					                visible: true,
+					                format: "{0}%",
+					                template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
+					             }'                 
+					             data-series="[
+					                             { field: 'amount', name: langVM.lang.sale, categoryField:'month', color: '#203864', overlay:{ gradient: 'none'}  }
+					                         ]"
+					             data-bind="source: graphDS"
+					             style="height: 240px; " >
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class='col-sm-6'>
+				<div class="home-chart row-fluid" style="margin-bottom: 15px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1; float: left; width: 100%; background: #fff;">
+					<div class="col-xs-12 col-sm-12">
+						<div class="chart" >
+							<div data-role="chart"
+								 data-auto-bind="true"
+					             data-legend="{ position: 'top' }"
+					             data-series-defaults="{ type: 'column' }"
+					             data-tooltip='{
+					                visible: true,
+					                format: "{0}%",
+					                template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
+					             }'                 
+					             data-series="[
+					                             { field: 'amount', name: langVM.lang.sale, categoryField:'month', color: '#203864', overlay:{ gradient: 'none'}  }
+					                         ]"
+					             data-bind="source: graphDS"
+					             style="height: 240px; " >
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 </script>
 <script id="wsale-by-branch-row-template" type="text/x-kendo-tmpl">
@@ -9681,17 +9780,17 @@
 	<div class="container">
 		<div class="row-fluid">
 			<h2 style="font-family: 'Open Sans', sans-serif;margin: 15px 0 10px;font-weight: 400; color: #4d4d4d; font-size: 26px; text-transform: uppercase;" data-bind="text: lang.lang.reports">Reports</h2>
-			<input id="ddlCashAccount" name="ddlCashAccount" 
+			<!-- <input id="ddlCashAccount" name="ddlCashAccount" 
 				data-role="dropdownlist"
   				data-value-primitive="true"
 				data-text-field="name" 
   				data-value-field="id"
   				data-bind="value: licenseSelect,
   							source: licenseDS, events: {change: onLicenseChange}"
-  				data-option-label="Select Licenses..." style="margin-bottom: 15px" />
+  				data-option-label="Select Licenses..." style="margin-bottom: 15px" /> -->
 
 
-  			<div class="row">
+  			<!-- <div class="row">
   				<div class="col-xs-12 col-sm-6">
 					<div class="widget widget-3 customer-border" style="padding: 15px;">
 						<div class="widget-head header-custome" style="display: none;">
@@ -9784,7 +9883,7 @@
 					</div>				
 				</div>
 
-  			</div>
+  			</div> -->
 
   			<!-- <div class="row" >
 	  			<div class="col-xs-12 col-sm-4" >
@@ -10149,70 +10248,74 @@
 									<p data-bind="text: lang.lang.these_reports_are_useful">
 										These reports are useful for customer information management, meter connections, and usage managements 
 									</p>
-									<div class="row-fluid">
-										<table class="table table-borderless table-condensed">
-											<tr>
-												<td style="width: 50%">
-													<h3 ><a href="#/customer_list" data-bind="text: lang.lang.customer_list"></a></h3>
-												</td>
-												<td>
-													<h3><a href="#/disconnect_list" data-bind="text: lang.lang.disconnected_list">Disconnected List</a></h3>
-												</td>
-												
-											</tr>
-
-											<tr>
-												<td >
-													<p style="padding-right: 25px;"  data-bind="text: lang.lang.list_of_all_active_customers">
-														List of all active customers
-													</p>
-												</td>
-												<td style="vertical-align: top;" data-bind="text: lang.lang.disconnected_description">
-													<p>
-														list of the customer have been disconnected
-													</p>
-												</td>
-											</tr>
-											<tr>
-												<td >
-													<h3><a href="#/inactive_list" data-bind="text: lang.lang.inactive_customer"></a></h3>
-												</td>
-												<td >													
-													<h3 ><a href="#/to_be_disconnect_list" data-bind="text: lang.lang.to_be_disconnect_list"></a></h3>
-												</td>
-											</tr>
-
-											<tr>
-												<td >
-													<p style="padding-right: 25px;"  data-bind="text: lang.lang.inactive_customer_description">
-														list of each customer have been inactive
-													</p>
-												</td>
-												<td style="vertical-align: top;" data-bind="text: lang.lang.to_be_disconnect_description">
-													<p>
-														List of the customer to be disconnect 
-													</p>
-												</td>
-											</tr>
-											<tr>
-												<td >
-													<h3><a href="#/mini_usage_list" data-bind="text: lang.lang.minimum_water_usage_list">Minimum Water Usage List</a></h3>
-												</td>
-												<td >													
+									<div class="row">
+										<div class="col-sm-9">
+											<table class="table table-borderless table-condensed">
+												<tr>
+													<td style="width: 50%">
+														<h3 ><a href="#/customer_list" data-bind="text: lang.lang.customer_list"></a></h3>
+													</td>
+													<td>
+														<h3><a href="#/disconnect_list" data-bind="text: lang.lang.disconnected_list">Disconnected List</a></h3>
+													</td>
 													
-												</td>
-											</tr>
+												</tr>
 
-											<tr>
-												<td >
-													<p style="padding-right: 25px;"  data-bind="text: lang.lang.minimum_water_usage_description">
-														list of each customer individual usage minimum water
-													</p>
-												</td>
-												<td>
-												</td>
-											</tr>
-										</table>
+												<tr>
+													<td >
+														<p style="padding-right: 25px;"  data-bind="text: lang.lang.list_of_all_active_customers">
+															List of all active customers
+														</p>
+													</td>
+													<td style="vertical-align: top;" data-bind="text: lang.lang.disconnected_description">
+														<p>
+															list of the customer have been disconnected
+														</p>
+													</td>
+												</tr>
+												<tr>
+													<td >
+														<h3><a href="#/inactive_list" data-bind="text: lang.lang.inactive_customer"></a></h3>
+													</td>
+													<td >													
+														<h3 ><a href="#/to_be_disconnect_list" data-bind="text: lang.lang.to_be_disconnect_list"></a></h3>
+													</td>
+												</tr>
+
+												<tr>
+													<td >
+														<p style="padding-right: 25px;"  data-bind="text: lang.lang.inactive_customer_description">
+															list of each customer have been inactive
+														</p>
+													</td>
+													<td style="vertical-align: top;" data-bind="text: lang.lang.to_be_disconnect_description">
+														<p>
+															List of the customer to be disconnect 
+														</p>
+													</td>
+												</tr>
+												<tr>
+													<td >
+														<h3><a href="#/mini_usage_list" data-bind="text: lang.lang.minimum_water_usage_list">Minimum Water Usage List</a></h3>
+													</td>
+													<td >													
+														
+													</td>
+												</tr>
+
+												<tr>
+													<td >
+														<p style="padding-right: 25px;"  data-bind="text: lang.lang.minimum_water_usage_description">
+															list of each customer individual usage minimum water
+														</p>
+													</td>
+													<td>
+													</td>
+												</tr>
+											</table>
+										</div>
+										<div class="col-sm-3">
+										</div>
 									</div>
 								</div>
 				        	</div>
@@ -10225,71 +10328,75 @@
 									<p data-bind="text: lang.lang.these_would_be_the_most">
 										These would be the most common reports that you will be using. It includes receivables balance and its aging in both summary and detail list and the security deposit made by the customers for their water connection.
 									</p>
-									<div class="row-fluid">
-										<table class="table table-borderless table-condensed">
-											<tr>
-												<td style="width: 50%">
-													<h3><a href="#/account_receivable_list" data-bind="text: lang.lang.accounts_receivable_listing">Accounts Receivable Listing</a></h3>
-												</td>
-												<td >
-													<h3><a href="#/customer_deposit_report" data-bind="text: lang.lang.customer_deposit">Customer Deposit</a></h3>								
-												</td>
-											</tr>
-											<tr>
-												<td >
-													<p style="padding-right: 25px;"  data-bind="text: lang.lang.shows_a_chronological_list_of_all_your_invoices_for_a_selected_date_range">
-														Shows a chronological list of all your invoices for a selected date range.
-													</p>
-												</td>
-												<td style="vertical-align: top;" data-bind="text: lang.lang.provides_detailed_information_about_customer_deposit">
-													<p>
-														Provides detailed information about customer deposit for specific order, prepayment, or credit.
-													</p>
-												</td>
-											</tr>
-											<tr>
-												<td >
-													<h3><a href="#/customer_balance_summary" data-bind="text: lang.lang.customer_balance_summary">Customer Balance Summary</a></h3>
-												</td>
-												<td >
-													<h3><a href="#/customer_balance_detail" data-bind="text: lang.lang.customer_balance_detail">Customer Balance Detail</a></h3>
-												</td>							
-											</tr>
-											<tr>
-												<td >
-													<p style="padding-right: 25px;"  data-bind="text: lang.lang.show_each_customers_total_outstanding_balances">
-														Show each customer’s total outstanding balances.
-													</p>
-												</td>
-												<td style="vertical-align: top;" data-bind="text: lang.lang.lists_individual_unpaid_invoices_for_each_customer">
-													<p>
-														Lists individual unpaid invoices for each customer
-													</p>
-												</td>
-											</tr>
+									<div class="row">
+										<div class="col-sm-9">
+											<table class="table table-borderless table-condensed">
+												<tr>
+													<td style="width: 50%">
+														<h3><a href="#/account_receivable_list" data-bind="text: lang.lang.accounts_receivable_listing">Accounts Receivable Listing</a></h3>
+													</td>
+													<td >
+														<h3><a href="#/customer_deposit_report" data-bind="text: lang.lang.customer_deposit">Customer Deposit</a></h3>								
+													</td>
+												</tr>
+												<tr>
+													<td >
+														<p style="padding-right: 25px;"  data-bind="text: lang.lang.shows_a_chronological_list_of_all_your_invoices_for_a_selected_date_range">
+															Shows a chronological list of all your invoices for a selected date range.
+														</p>
+													</td>
+													<td style="vertical-align: top;" data-bind="text: lang.lang.provides_detailed_information_about_customer_deposit">
+														<p>
+															Provides detailed information about customer deposit for specific order, prepayment, or credit.
+														</p>
+													</td>
+												</tr>
+												<tr>
+													<td >
+														<h3><a href="#/customer_balance_summary" data-bind="text: lang.lang.customer_balance_summary">Customer Balance Summary</a></h3>
+													</td>
+													<td >
+														<h3><a href="#/customer_balance_detail" data-bind="text: lang.lang.customer_balance_detail">Customer Balance Detail</a></h3>
+													</td>							
+												</tr>
+												<tr>
+													<td >
+														<p style="padding-right: 25px;"  data-bind="text: lang.lang.show_each_customers_total_outstanding_balances">
+															Show each customer’s total outstanding balances.
+														</p>
+													</td>
+													<td style="vertical-align: top;" data-bind="text: lang.lang.lists_individual_unpaid_invoices_for_each_customer">
+														<p>
+															Lists individual unpaid invoices for each customer
+														</p>
+													</td>
+												</tr>
 
-											<tr>
-												<td >
-													<h3><a href="#/customer_aging_sum_list" data-bind="text: lang.lang.customer_aging_summary_list">Customer Aging Summary List</a></h3>
-												</td>
-												<td >
-													<h3><a href="#/customer_aging_detail" data-bind="text: lang.lang.customer_aging_detail_list">Customer Aging Detail List</a></h3>								
-												</td>						
-											</tr>
-											<tr>
-												<td >
-													<p style="padding-right: 25px;"  data-bind="text: lang.lang.lists_all_unpaid_invoices1">
-														Lists all unpaid invoices for the current period, 30, 60, 90, 
-													and more than 90 days, grouped by individual customers.
-													</p>
-												</td>
-												<td style="vertical-align: top;" data-bind="text: lang.lang.lists_individual_unpaid_invoices_grouped_by_customer">
-													<p>
-														Lists individual unpaid invoices, grouped by customer. This includes due date, outstanding days (aging days), and amount.
-													</p>
-												</td>
-											</tr>
-										</table>
+												<tr>
+													<td >
+														<h3><a href="#/customer_aging_sum_list" data-bind="text: lang.lang.customer_aging_summary_list">Customer Aging Summary List</a></h3>
+													</td>
+													<td >
+														<h3><a href="#/customer_aging_detail" data-bind="text: lang.lang.customer_aging_detail_list">Customer Aging Detail List</a></h3>								
+													</td>						
+												</tr>
+												<tr>
+													<td >
+														<p style="padding-right: 25px;"  data-bind="text: lang.lang.lists_all_unpaid_invoices1">
+															Lists all unpaid invoices for the current period, 30, 60, 90, 
+														and more than 90 days, grouped by individual customers.
+														</p>
+													</td>
+													<td style="vertical-align: top;" data-bind="text: lang.lang.lists_individual_unpaid_invoices_grouped_by_customer">
+														<p>
+															Lists individual unpaid invoices, grouped by customer. This includes due date, outstanding days (aging days), and amount.
+														</p>
+													</td>
+												</tr>
+											</table>
+										</div>
+										<div class="col-sm-3">
+										</div>
 									</div>
 								</div>
 				        	</div>
@@ -10302,51 +10409,55 @@
 									<p data-bind="text: lang.lang.summary_and_detail_sale">
 										Summary and detail sale report broken down by Licenses, bloc, and types of reveneues.	
 									</p>
-									<div class="row-fluid">
-										<table class="table table-borderless table-condensed">
-											<tr>
-												<td style="width: 50%">
-													<h3><a href="#/sale_summary" data-bind="text: lang.lang.sale_summary_report">Sale Summary Report</a></h3>
-												</td>
-												<td >
-													<h3><a href="#/sale_detail" data-bind="text: lang.lang.sale_detail_report">Sale Detail Report</a></h3>								
-												</td>
-											</tr>
-											<tr>
-												<td >
-													<p style="padding-right: 25px;"  data-bind="text: lang.lang.summarizes_total_sales">
-													Summarizes total sales for each customer within a period 
-													of time so you can see which ones generate the most revenue for you.
-													</p>
-												</td>
-												<td style="vertical-align: top;" data-bind="text: lang.lang.lists_individual_sale">
-													<p>
-														Lists individual sale transactions by date for each customer with a period of time.
-													</p>
-												</td>
-											</tr>
-											<tr>
-												<td >
-													<h3><a href="#/connect_service_revenue" data-bind="text: lang.lang.connection_service_revenue_report">Connection Service Revenue Report</a></h3>
-												</td>
-												<td >
-													<h3><a href="#/fine_collect" data-bind="text: lang.lang.fine_collection_report">Fine Collection Report</a></h3>
-													
-												</td>
-											</tr>
-											<tr>
-												<td >
-													<p style="padding-right: 25px;"  data-bind="text: lang.lang.connection_service_revenue_description">
-													Lists individual connection revenue service by date for each customer with a period of time.
-													</p>
-												</td>
-												<td style="vertical-align: top;" data-bind="text: lang.lang.fine_collection_description">
-													<p>
-														list individual fine by date for each customer with a period of time.
-													</p>
-												</td>
-											</tr>
-										</table>
+									<div class="row">
+										<div class="col-sm-9">
+											<table class="table table-borderless table-condensed">
+												<tr>
+													<td style="width: 50%">
+														<h3><a href="#/sale_summary" data-bind="text: lang.lang.sale_summary_report">Sale Summary Report</a></h3>
+													</td>
+													<td >
+														<h3><a href="#/sale_detail" data-bind="text: lang.lang.sale_detail_report">Sale Detail Report</a></h3>								
+													</td>
+												</tr>
+												<tr>
+													<td >
+														<p style="padding-right: 25px;"  data-bind="text: lang.lang.summarizes_total_sales">
+														Summarizes total sales for each customer within a period 
+														of time so you can see which ones generate the most revenue for you.
+														</p>
+													</td>
+													<td style="vertical-align: top;" data-bind="text: lang.lang.lists_individual_sale">
+														<p>
+															Lists individual sale transactions by date for each customer with a period of time.
+														</p>
+													</td>
+												</tr>
+												<tr>
+													<td >
+														<h3><a href="#/connect_service_revenue" data-bind="text: lang.lang.connection_service_revenue_report">Connection Service Revenue Report</a></h3>
+													</td>
+													<td >
+														<h3><a href="#/fine_collect" data-bind="text: lang.lang.fine_collection_report">Fine Collection Report</a></h3>
+														
+													</td>
+												</tr>
+												<tr>
+													<td >
+														<p style="padding-right: 25px;"  data-bind="text: lang.lang.connection_service_revenue_description">
+														Lists individual connection revenue service by date for each customer with a period of time.
+														</p>
+													</td>
+													<td style="vertical-align: top;" data-bind="text: lang.lang.fine_collection_description">
+														<p>
+															list individual fine by date for each customer with a period of time.
+														</p>
+													</td>
+												</tr>
+											</table>
+										</div>
+										<div class="col-sm-3">
+										</div>
 									</div>
 								</div>
 				        	</div>
@@ -10359,45 +10470,49 @@
 									<p data-bind="text: lang.lang.summary_and_detail_cash">
 										Summary and detail cash receipt reports grouped by sources/ methods of receipts 
 									</p>
-									<div class="row-fluid">
-										<table class="table table-borderless table-condensed">
-											<tr>
-												<td style="width: 50%">
-													<h3><a href="#/cash_receipt_detail" data-bind="text: lang.lang.cash_receipt_detail">Cash Receipt Detail</a></h3>
-												</td>
-												<td >
-													<h3><a href="#/cash_receipt_source_detail" data-bind="text: lang.lang.cash_receipt_by_sources_detail">Cash Receipt By Sources Detail</a></h3>								
-												</td>
-											</tr>
-											<tr>
-												<td >
-													<p style="padding-right: 25px;"  data-bind="text: lang.lang.cash_receipt_description">
-													Lists of cash receipt for the select period of time, group by method of payment.
-													</p>
-												</td>
-												<td style="vertical-align: top;" data-bind="text: lang.lang.cash_receipt_sources_description">
-													<p>
-														Lists of cash receipt by sources for the select period of time, group by method of payment.
-													</p>
-												</td>
-											</tr>
-											<tr>
-												<td >
-													
-												</td>
-												<td >
-													
-												</td>
-											</tr>
-											<tr>
-												<td >
-													<p></p>
-												</td>
-												<td >
-													<p></p>
-												</td>
-											</tr>
-										</table>
+									<div class="row">
+										<div class="col-sm-9">
+											<table class="table table-borderless table-condensed">
+												<tr>
+													<td style="width: 50%">
+														<h3><a href="#/cash_receipt_detail" data-bind="text: lang.lang.cash_receipt_detail">Cash Receipt Detail</a></h3>
+													</td>
+													<td >
+														<h3><a href="#/cash_receipt_source_detail" data-bind="text: lang.lang.cash_receipt_by_sources_detail">Cash Receipt By Sources Detail</a></h3>								
+													</td>
+												</tr>
+												<tr>
+													<td >
+														<p style="padding-right: 25px;"  data-bind="text: lang.lang.cash_receipt_description">
+														Lists of cash receipt for the select period of time, group by method of payment.
+														</p>
+													</td>
+													<td style="vertical-align: top;" data-bind="text: lang.lang.cash_receipt_sources_description">
+														<p>
+															Lists of cash receipt by sources for the select period of time, group by method of payment.
+														</p>
+													</td>
+												</tr>
+												<tr>
+													<td >
+														
+													</td>
+													<td >
+														
+													</td>
+												</tr>
+												<tr>
+													<td >
+														<p></p>
+													</td>
+													<td >
+														<p></p>
+													</td>
+												</tr>
+											</table>
+										</div>
+										<div class="col-sm-3">
+										</div>
 									</div>
 								</div>
 				        	</div>
