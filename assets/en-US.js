@@ -1492,7 +1492,7 @@ var	en_US = {
 	"tablet": "Tablet",
 	"new_round": "New Round",
 	"utility_sale": "Utility Sale",
-
+	"meter_order": "Order",
 	"end" : "End",
 	"disconnect_meter": "Disconnect Meter",
 

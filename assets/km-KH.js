@@ -1249,7 +1249,7 @@ var	km_KH = {
 
 	//Water Run Bill
 	"total_number_of_invoice": "ចំនួន​វិក្កយបត្រ​សរុប",
-	"billing_date": "ថ្ងៃ​ចេញ​វិក្កយបត្រ",
+	"billing_date": "ថ្ងៃ​ចាប់ផ្តើមទទួលប្រាក់",
 	"issue_date": "ថ្ងៃ​ធ្វើ​វិក្កយបត្រ",
 
 	//Water Print Bill
@@ -1465,7 +1465,7 @@ var	km_KH = {
 	"tablet": "Tablet",
 	"new_round": "ជុំថ្មី",
 	"utility_sale": "លក់ជាសាច់ប្រាក់",
-
+	"meter_order": "លេខតំរាបកុងទ័រ",
 	"disconnect_meter": "កុងទ័រត្រូវផ្តាច់",
 	
 }
