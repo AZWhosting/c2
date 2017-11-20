@@ -13,6 +13,10 @@ class Utibill extends CI_Controller {
 		$this->load->view("template/utibill-script");
 		$this->load->view("template/utibill-footer");
 	}
+
+	public function login() {
+		$this->load->view("utibill/login");
+	}
 }
 
 /* End of file home.php */
