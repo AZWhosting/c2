@@ -2183,6 +2183,203 @@ class Accounting_modules extends REST_Controller {
 		//Response Data		
 		$this->response($data, 200);	
 	}
+	function income_statement_nature_get() {		
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
+		$data["count"] = 0;
+		
+		$obj = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+				
+		//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
+			}
+		}
+
+		//Filter
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter['filters'] as $value) {
+	    		if(isset($value['operator'])) {
+					$obj->{$value['operator']}($value['field'], $value['value']);
+				} else {
+					$obj->where($value["field"], $value["value"]);
+				}
+			}
+		}
+		
+		$obj->include_related("transaction", array("rate"));
+		$obj->include_related("account", array("number","name","account_type_id"));
+		$obj->include_related("account/account_type", array("name","nature"));
+		$obj->where_in_related("account", "account_type_id", array(35,36,37,38,39,40,41,42));
+		$obj->where_related("transaction", "is_recurring <>", 1);
+		$obj->where_related("transaction", "deleted <>", 1);
+		$obj->where("deleted <>", 1);
+				
+		//Results
+		if($page && $limit){
+			$obj->get_paged_iterated($page, $limit);
+			$data["count"] = $obj->paged->total_rows;
+		}else{
+			$obj->get_iterated();
+			$data["count"] = $obj->result_count();
+		}		
+		
+		if($obj->exists()){
+			$objList = [];
+			foreach ($obj as $value) {
+				$amount = 0;
+				if($value->account_account_type_nature=="Dr"){
+					$amount = (floatval($value->dr) - floatval($value->cr)) / floatval($value->transaction_rate);				
+				}else{
+					$amount = (floatval($value->cr) - floatval($value->dr)) / floatval($value->transaction_rate);					
+				}
+
+				if(isset($objList[$value->account_id])){
+					$objList[$value->account_id]["amount"] += $amount;
+				}else{
+					$objList[$value->account_id]["id"] 		= $value->account_id;
+					$objList[$value->account_id]["type_id"]	= $value->account_account_type_id;
+					$objList[$value->account_id]["type"] 	= $value->account_account_type_name;
+					$objList[$value->account_id]["number"] 	= $value->account_number;
+					$objList[$value->account_id]["name"] 	= $value->account_name;
+					$objList[$value->account_id]["amount"]	= $amount;
+				}
+			}
+
+			//Group by account_type_id
+			$typeList = [];
+			foreach ($objList as $value) {
+				$typeId = $value["type_id"];
+				if(isset($typeList[$typeId])){
+					$typeList[$typeId]["amount"] 	+= $value["amount"];
+					$typeList[$typeId]["line"][] 	= $value;
+				} else {
+					$typeList[$typeId]["id"] 		= $value["type_id"];
+					$typeList[$typeId]["type"] 		= $value["type"];
+					$typeList[$typeId]["amount"] 	= $value["amount"];
+					$typeList[$typeId]["line"][] 	= $value;
+				}
+			}
+
+			//Revenue
+			$totalRevenue = 0;
+			foreach ($typeList as $value) {
+				if($value["id"]=="35"){
+					$totalRevenue += $value["amount"];
+
+					$data["results"][] = $value;
+				}
+			}
+
+			//COGS
+			$totalCOGS = 0;
+			foreach ($typeList as $value) {
+				if($value["id"]=="36"){
+					$totalCOGS += $value["amount"];
+
+					$data["results"][] = $value;
+				}
+			}
+
+			//Gross Profit
+			$grossProfit = $totalRevenue - $totalCOGS;
+			$data["results"][] = array("id"=>0, "name"=>"Gross Profit", "amount"=>$grossProfit);
+
+
+			//Other Revenue
+			$totalOtherRevenue = 0;
+			foreach ($typeList as $value) {
+				if($value["id"]=="39"){
+					$totalOtherRevenue += $value["amount"];
+
+					$data["results"][] = $value;
+				}
+			}
+
+			//Operating Expense
+			$totalOperatingExpense = 0;
+			foreach ($typeList as $value) {
+				if($value["id"]=="37"){
+					$totalOperatingExpense += $value["amount"];
+
+					$data["results"][] = $value;
+				}
+			}
+
+			//EBITDA
+			$EBITDA = ($grossProfit + $totalOtherRevenue) - $totalOperatingExpense;
+			$data["results"][] = array("id"=>0, "name"=>"Operating Income(EBITDA)", "amount"=>$EBITDA);
+
+
+			//Depreciation Expense
+			$totalDepreciationExpense = 0;
+			foreach ($typeList as $value) {
+				if($value["id"]=="38"){
+					$totalDepreciationExpense += $value["amount"];
+
+					$data["results"][] = $value;
+				}
+			}
+
+			//Other Expense
+			$totalOtherExpense = 0;
+			foreach ($typeList as $value) {
+				if($value["id"]=="40"){
+					$totalOtherExpense += $value["amount"];
+
+					$data["results"][] = $value;
+				}
+			}
+
+			//EBIT
+			$EBIT = ($EBITDA - $totalDepreciationExpense) - $totalOtherExpense;
+			$data["results"][] = array("id"=>0, "name"=>"Earning Before Interest And Tax(EBIT)", "amount"=>$EBIT);
+
+
+			//Financing Cost
+			$totalFinancingCost = 0;
+			foreach ($typeList as $value) {
+				if($value["id"]=="41"){
+					$totalFinancingCost += $value["amount"];
+
+					$data["results"][] = $value;
+				}
+			}
+
+			//Profit Before Tax
+			$ProfitBeforeTax = $EBIT - $totalFinancingCost;
+			$data["results"][] = array("id"=>0, "name"=>"Profit Before Tax", "amount"=>$ProfitBeforeTax);
+
+
+			//Tax Expense
+			$totalTaxExpense = 0;
+			foreach ($typeList as $value) {
+				if($value["id"]=="42"){
+					$totalTaxExpense += $value["amount"];
+
+					$data["results"][] = $value;
+				}
+			}
+
+			//Profit For The Year
+			$ProfitForTheYear = $ProfitBeforeTax - $totalTaxExpense;
+			$data["results"][] = array("id"=>0, "name"=>"Profit For The Year", "amount"=>$ProfitForTheYear);
+
+
+			$data["count"] = count($data["results"]);			
+		}		
+
+		//Response Data		
+		$this->response($data, 200);	
+	}
 	function income_statement_by_segment_get() {		
 		$filter 	= $this->get("filter");
 		$page 		= $this->get('page');
