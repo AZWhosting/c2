@@ -2,11 +2,6 @@
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jszip/2.4.0/jszip.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.js"></script>
-<script type="text/javascript">
-    // jQuery(function($){
-    //     
-    // }); 
-</script>
 <script>
     localforage.config({
         driver: localforage.LOCALSTORAGE,
@@ -10431,14 +10426,21 @@
                 sub_total += kendo.parseFloat(value.sub_total) / value.rate;
                 discount += kendo.parseFloat(value.discount) / value.rate;
                 total_received += kendo.parseFloat(value.amount) / value.rate;
-                amountFine += kendo.parseFloat(value.amount_fine);
+                if(banhji.institute.id != 860){
+                    amountFine += kendo.parseFloat(value.amount_fine);
+                }
             });
             total = sub_total - discount;
             remaining = total - total_received;
             obj.set("sub_total", sub_total);
             obj.set("discount", discount);
             this.set("total", kendo.toString(total, banhji.locale == "km-KH" ? "c0" : "c", banhji.locale));
-            this.set("amountFine", kendo.toString(amountFine, banhji.locale == "km-KH" ? "c0" : "c", banhji.locale));
+            if(banhji.institute.id != 860){
+                this.set("amountFine", kendo.toString(amountFine, banhji.locale == "km-KH" ? "c0" : "c", banhji.locale));
+            }else{
+                //Check fine for Borey Kamkor
+                this.checkFineBKK();
+            }
             this.set("total_received", kendo.toString(total_received, banhji.locale == "km-KH" ? "c0" : "c", banhji.locale));
             obj.set("remaining", remaining);
             this.set("amountReceive", total_received)
@@ -12181,6 +12183,202 @@
         lang: langVM,
         institute: banhji.institute,
         dataSource: dataStore(apiUrl + "utibillReports/disconnection_list"),
+        licenseDS: dataStore(apiUrl + "branches"),
+        blocDS: dataStore(apiUrl + "locations"),
+        company: banhji.institute,
+        licenseSelect: null,
+        blocSelect: null,
+        pageLoad: function() {
+            this.licenseDS.read();
+            this.search();
+            this.set("haveBloc", false);
+        },
+        printGrid: function() {
+            var gridElement = $('#grid'),
+                printableContent = '',
+                win = window.open('', '', 'width=900, height=700'),
+                doc = win.document.open();
+            var htmlStart =
+                '<!DOCTYPE html>' +
+                '<html>' +
+                '<head>' +
+                '<meta charset="utf-8" />' +
+                '<title></title>' +
+                '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />' +
+                '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
+                '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
+                '<link href="<?php echo base_url(); ?>assets/responsive.css" rel="stylesheet" >' +
+                '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
+                '<style>' +
+                '*{  } html { font: 11pt sans-serif; }' +
+                '.k-grid { border-top-width: 0; }' +
+                '.k-grid, .k-grid-content { height: auto !important; }' +
+                '.k-grid-content { overflow: visible !important; }' +
+                'div.k-grid table { table-layout: auto; width: 100% !important; }' +
+                '.k-grid .k-grid-header th { border-top: 1px solid; }' +
+                '.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
+                '</style><style type="text/css" media="print"> @page { size: landscape; margin:0mm; } .saleSummaryCustomer .total-customer, .saleSummaryCustomer .total-sale { background-color: #DDEBF7!important; -webkit-print-color-adjust:exact; }.saleSummaryCustomer .table.table-borderless.table-condensed  tr th { background-color: #1E4E78!important;-webkit-print-color-adjust:exact;}.saleSummaryCustomer .table.table-borderless.table-condensed  tr th span{ color: #fff!important; }.saleSummaryCustomer .table.table-borderless.table-condensed tr:nth-child(2n+1) td {  background-color: #fff!important; -webkit-print-color-adjust:exact;} .saleSummaryCustomer .table.table-borderless.table-condensed tr td { background-color: #F2F2F2!important;-webkit-print-color-adjust:exact; } </style>' +
+                '</head>' +
+                '<body><div id="example" class="k-content saleSummaryCustomer" style="padding: 30px;">';
+            var htmlEnd =
+                '</div></body>' +
+                '</html>';
+
+            printableContent = $('#invFormContent').html();
+            doc.write(htmlStart + printableContent + htmlEnd);
+            doc.close();
+            setTimeout(function() {
+                win.print();
+                win.close();
+            }, 2000);
+        },
+        licenseChange: function(e) {
+            var data = e.data;
+            var license = this.licenseDS.at(e.sender.selectedIndex - 1);
+            this.set("licenseSelect", license);
+            this.blocDS.filter({
+                field: "branch_id",
+                value: license.id
+            });
+            this.set("haveBloc", true);
+        },
+        search: function() {
+            var self = this,
+                para = [],
+                license = this.get("licenseSelect"),
+                bloc = this.get("blocSelect");
+
+            if (license) {
+                para.push({
+                    field: "branch_id",
+                    value: license.id
+                });
+            }
+
+            if (bloc) {
+                para.push({
+                    field: "location_id",
+                    value: bloc.id
+                });
+            }
+
+            this.dataSource.filter(para);
+            this.dataSource.bind("requestEnd", function(e) {
+                if (e.type == "read") {
+                    var response = e.response;
+                    self.exArray = [];
+
+                    self.exArray.push({
+                        cells: [{
+                            value: self.company.name,
+                            textAlign: "center",
+                            colSpan: 5
+                        }]
+                    });
+                    self.exArray.push({
+                        cells: [{
+                            value: "Disconnect Customer List",
+                            bold: true,
+                            fontSize: 20,
+                            textAlign: "center",
+                            colSpan: 5
+                        }]
+                    });
+                    self.exArray.push({
+                        cells: [{
+                            value: "",
+                            colSpan: 5
+                        }]
+                    });
+                    self.exArray.push({
+                        cells: [{
+                                value: "Customer",
+                                background: "#496cad",
+                                color: "#ffffff"
+                            },
+                            {
+                                value: "License",
+                                background: "#496cad",
+                                color: "#ffffff"
+                            },
+                            {
+                                value: "Number",
+                                background: "#496cad",
+                                color: "#ffffff"
+                            },
+                            {
+                                value: "Phone",
+                                background: "#496cad",
+                                color: "#ffffff"
+                            },
+                            {
+                                value: "Address",
+                                background: "#496cad",
+                                color: "#ffffff"
+                            }
+                        ]
+                    });
+                    for (var i = 0; i < response.results.length; i++) {
+                        self.exArray.push({
+                            cells: [{
+                                    value: response.results[i].name
+                                },
+                                {
+                                    value: response.results[i].license
+                                },
+                                {
+                                    value: response.results[i].number
+                                },
+                                {
+                                    value: response.results[i].phone
+                                },
+                                {
+                                    value: response.results[i].address
+                                },
+                            ]
+                        });
+                    }
+                }
+            });
+        },
+        cancel: function() {
+            this.contact.cancelChanges();
+            window.history.back();
+        },
+        ExportExcel: function() {
+            var workbook = new kendo.ooxml.Workbook({
+                sheets: [{
+                    columns: [{
+                            autoWidth: true
+                        },
+                        {
+                            autoWidth: true
+                        },
+                        {
+                            autoWidth: true
+                        },
+                        {
+                            autoWidth: true
+                        },
+                        {
+                            autoWidth: true
+                        }
+                    ],
+                    title: "Disconnect Customer List",
+                    rows: this.exArray
+                }]
+            });
+            //save the file as Excel file with extension xlsx
+            kendo.saveAs({
+                dataURI: workbook.toDataURL(),
+                fileName: "disconnectCustomer.xlsx"
+            });
+        }
+    });
+    banhji.connectionList = kendo.observable({
+        lang: langVM,
+        institute: banhji.institute,
+        dataSource: dataStore(apiUrl + "utibillReports/connection_list"),
         licenseDS: dataStore(apiUrl + "branches"),
         blocDS: dataStore(apiUrl + "locations"),
         company: banhji.institute,
@@ -19829,6 +20027,11 @@
      **************************/
     banhji.wDashBoard = kendo.observable({
         lang: langVM,
+        totalSale: 0,
+        totalUsage: 0,
+        totalUser: 0,
+        totalDeposit: 0,
+        avgUsage: 0,
         dataSource: new kendo.data.DataSource({
             transport: {
                 read: {
@@ -19872,8 +20075,7 @@
                     user += value.activeCustomer;
                     deposit += value.deposit;
                 });
-                banhji.wDashBoard.set('totalSale', kendo.toString(sale, banhji.locale == "km-KH" ? "c0" : "c", banhji.locale));
-                banhji.wDashBoard.set('totalUsage', kendo.toString(usage, "n0", banhji.locale));
+
                 banhji.wDashBoard.set('totalUser', kendo.toString(user, "n0", banhji.locale));
                 banhji.wDashBoard.set('totalDeposit', kendo.toString(deposit, banhji.locale == "km-KH" ? "c0" : "c", banhji.locale));
                 banhji.wDashBoard.set('avgUsage', usage / user);
@@ -19887,6 +20089,38 @@
             transport: {
                 read: {
                     url: apiUrl + 'waterdash/graph',
+                    type: "GET",
+                    headers: banhji.header,
+                    dataType: 'json'
+                },
+                parameterMap: function(options, operation) {
+                    if (operation === 'read') {
+                        return {
+                            page: options.page,
+                            filter: options.filter
+                        };
+                    }
+                }
+            },
+            schema: {
+                data: 'results',
+                total: 'count'
+            },
+            // group: {
+            //  field: 'month',
+            //  aggregates: [
+            //    {field: 'amount', aggregate: 'sum'}
+            //  ]
+            // },
+            batch: true,
+            serverFiltering: true,
+            serverPaging: true,
+            pageSize: 1000
+        }),
+        graphDS1: new kendo.data.DataSource({
+            transport: {
+                read: {
+                    url: apiUrl + 'waterdash/graph1',
                     type: "GET",
                     headers: banhji.header,
                     dataType: 'json'
@@ -19964,6 +20198,11 @@
                     amount = 0,
                     activeCust = 0,
                     inActiveCust = 0;
+                    totalSale = 0;
+                    totalUsage = 0;
+                    totalDisconnect = 0;
+                    totalConnect = 0;
+
                 $.each(this.data(), function(index, value) {
                     activeCust += value.activeCustomer;
                     totalCust += value.totalCustomer;
@@ -19973,6 +20212,10 @@
                     inActiveCust += value.inActiveCustomer;
                     voided += value.void;
                     amount += value.total;
+                    totalSale += value.totalSale;
+                    totalUsage += value.totalUsage;
+                    totalDisconnect += value.totalDisconnect;
+                    totalConnect += value.totalConnect;
                 });
                 banhji.wDashBoard.set('activeCust', kendo.toString(activeCust, "n0", banhji.locale));
                 banhji.wDashBoard.set('inActiveCust', inActiveCust);
@@ -19983,6 +20226,10 @@
                 banhji.wDashBoard.set('voidCust', voided);
                 banhji.wDashBoard.set('voidCust', kendo.toString(voided, "n0", banhji.locale));
                 banhji.wDashBoard.set('totalAmount', kendo.toString(amount, banhji.locale == "km-KH" ? "c0" : "c", banhji.locale));
+                banhji.wDashBoard.set('totalSale', kendo.toString(totalSale, banhji.locale == "km-KH" ? "c0" : "c", banhji.locale));
+                banhji.wDashBoard.set('totalUsage', kendo.toString(totalUsage, "n0", banhji.locale));
+                banhji.wDashBoard.set('totalDisconnect', kendo.toString(totalDisconnect, "n0", banhji.locale));
+                banhji.wDashBoard.set('totalConnect', kendo.toString(totalConnect, "n0", banhji.locale));
             
             },
             batch: true,
@@ -19990,11 +20237,7 @@
             serverPaging: true,
             pageSize: 100
         }),
-        totalSale: 0,
-        totalUsage: 0,
-        totalUser: 0,
-        totalDeposit: 0,
-        avgUsage: 0
+
     });
     banhji.waterCenter = kendo.observable({
         lang: langVM,
@@ -20453,8 +20696,10 @@
             });
         },
         loadTransaction: function() {
-            if (this.invoiceVM.dataSource.total() == 0) {
-                this.searchTransaction();
+            if(this.objMeter){
+                if (this.invoiceVM.dataSource.total() == 0) {
+                    this.searchTransaction();
+                }
             }
         },
         loadReading: function() {
@@ -20682,9 +20927,9 @@
                 alert("Please select a customer.");
             }
         },
+        singleInvDS: dataStore(apiUrl + "winvoices"),
         payInvoice: function(e) {
             var data = e.data;
-
             if (obj !== null) {
                 banhji.router.navigate('/receipt');
                 banhji.Receipt.loadInvoice(data.id);
@@ -20692,6 +20937,31 @@
                 alert(banhji.source.selectCustomerMessage);
             }
         },
+        branchDS: dataStore(apiUrl + "branches"),
+        viewInv: function(e){
+            var data = e.data;
+            var self = this;
+            this.singleInvDS.data([]);
+            this.singleInvDS.query({
+                filter: {field: "id", value: data.id}
+            }).then(function(e){
+                var view = self.singleInvDS.view();
+                banhji.InvoicePrint.dataSource.push(view[0]);
+                banhji.InvoicePrint.txnFormID = 14;
+                self.branchDS.query({
+                    filter: {
+                        field: "id",
+                        value: view[0].meter.branch_id
+                    }
+                }).then(function(e) {
+                    var v = self.branchDS.view();
+                    banhji.InvoicePrint.license = v[0];
+                    banhji.router.navigate('/invoice_print');
+                });
+                
+                
+            });
+        }
     });
     //Customer
     banhji.customer = kendo.observable({
@@ -21563,6 +21833,9 @@
         disconnectList: new kendo.Layout("#disconnectList", {
             model: banhji.disconnectList
         }),
+        connectionList: new kendo.Layout("#connectionList", {
+            model: banhji.connectionList
+        }),
         to_be_disconnectList: new kendo.Layout("#to_be_disconnectList", {
             model: banhji.to_be_disconnectList
         }),
@@ -22260,6 +22533,23 @@
             vm.pageLoad();
         }
     });
+    banhji.router.route("/connect_list", function() {
+        if (!banhji.userManagement.getLogin()) {
+            banhji.router.navigate('/manage');
+        } else {
+            banhji.view.layout.showIn("#content", banhji.view.connectionList);
+            banhji.view.layout.showIn('#menu', banhji.view.menu);
+            banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+
+            var vm = banhji.connectionList;
+            banhji.userManagement.addMultiTask("Connected List", "connect_list", null);
+            if (banhji.pageLoaded["disconnect_list"] == undefined) {
+                banhji.pageLoaded["disconnect_list"] = true;
+
+            }
+            vm.pageLoad();
+        }
+    });
     banhji.router.route("/inactive_list", function() {
         if (!banhji.userManagement.getLogin()) {
             banhji.router.navigate('/manage');
@@ -22694,4 +22984,4 @@
         var Href1 = '<?php echo base_url(); ?>assets/water/winvoice-res.css';
         var Href2 = '<?php echo base_url(); ?>assets/water/winvoice-print.css';
     });
-</script>
+</script>     

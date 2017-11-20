@@ -796,6 +796,7 @@ var	en_US = {
 	"opening" : "OPENING",
 	"dr" : "DR",
 	"cr" : "CR",
+	"moneyCollection": "Collected Money",
 	"purchase detail by product/service" : "Purchase Detail by Product/Service",
 	"total_product" : "Total Product",
 	"total_purchase" : "Total Purchase",
@@ -1192,6 +1193,8 @@ var	en_US = {
 	"inactive_customer_description": "List of the customer have been inactive",
 	"summary_report": "Summary Report",
 	"kpi_report": "KPI Report",
+	"connect_list": "Customer To Be Connected",
+	"list_connect_customers": "List of the customer to be connected",
 	//Water Dashbaord
 	"reading": "Reading",
 	"run_bill": "Run Bill",
@@ -1495,6 +1498,7 @@ var	en_US = {
 	"meter_order": "Order",
 	"end" : "End",
 	"disconnect_meter": "Disconnect Meter",
+	"meter_to_be_connected": "Meter to be Connected",
 
 
 

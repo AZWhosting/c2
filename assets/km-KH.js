@@ -225,6 +225,8 @@ var	km_KH = {
 	"charge" :  "ចំណាយ",
 	"credit" :  "Credit",
 	"current" :  "របាយការណ៍",
+	"moneyCollection": "ចំណូលជាសាច់ប្រាក់",
+
 	//Customer Modual,Report "របាយការណ៍",
 	"sale_managment_reports" :  "របាយការណ៍​គ្រប់​គ្រង​ការ​លក់",
 	"the_following_reports_provide" : "របាយការណ៍ខាងក្រោមជារបាយការណ៍សង្ខេប និងលម្អិតដែលអាចអោយអ្នកវិភាគអំពីលទ្ធផលចំណូលរបស់ក្រុមហ៊ុន",
@@ -1163,14 +1165,14 @@ var	km_KH = {
 	"to_be_disconnect_description" : "បញ្ជីអតិថិជនដែលនឹងត្រូវផ្ដាច់ចរន្ត",
 	"receivable_reports" : "របាយការណ៍​​បំណុល​អតិថិជន",
 	"show_each_customers_total_outstanding_balances" : "តារាងជំពាក់សរុបរបស់អតិថិជននិមួយៗ",
-	"connection_service_revenue_description": "របាយការណ័ចំណូល​ពីការភ្ជាប់​ប្រព័ន្ធលម្អិតរបស់អតិថិជននីមួយៗ​​តាមកាលបរិច្ឆេទក្នុងរយះពេល មួយ",
-	"fine_collection_description": "របាយការណ័ចំណូល​ពីការពិន័យលើអតិថិជននីមួយៗ​​តាមកាលបរិច្ឆេទក្នុងរយះពេល មួយ",
+	"connection_service_revenue_description": "របាយការណ៍​​ចំណូល​ពីការភ្ជាប់​ប្រព័ន្ធលម្អិតរបស់អតិថិជននីមួយៗ​​តាមកាលបរិច្ឆេទក្នុងរយះពេល មួយ",
+	"fine_collection_description": "របាយការណ៍​​ចំណូល​ពីការពិន័យលើអតិថិជននីមួយៗ​​តាមកាលបរិច្ឆេទក្នុងរយះពេល មួយ",
 	"cash_receipt_description": "តារាង​វិក្កយបត្រ​រ​ប្រាក់​លំអិតសម្រាប់​ការ​កំណត់​មួយ​រាយ​តាម​របៀប​នៃ​ការ​បង់​ប្រាក់",
 	"cash_receipt_sources_description": "តារាង​វិក្កយបត្រ​រ​ប្រាក់​លំអិតតាមប្រភពសម្រាប់​ការ​កំណត់​មួយ​រាយ​តាម​របៀប​នៃ​ការ​បង់​ប្រាក់",
 	"inactive_customer": "បញ្ជីផ្អាក",
 	"inactive_customer_description": "បញ្ជីអតិថិជនដែលបានផ្អាក",
-	"summary_report": "របាយការណ័សង្ខេប",
-	"kpi_report": "KPI Report",
+	"summary_report": "របាយការណ៍​​សង្ខេប",
+	"kpi_report": "របាយការណ៍​​សូចនាករ",
 	//Water Dashbaord
 	"reading": "អំណាន",
 	"run_bill": "ធ្វើ​វិក្កយបត្រ",
@@ -1230,6 +1232,8 @@ var	km_KH = {
 	"summary_and_detail_cash": "Summary and detail cash receipt reports grouped by sources ឬ  methods of receipts",
 	"cash_receipt_detail": "របាយការណ៍​ទទួល​ប្រាក់​លំអិត",
 	"cash_receipt_by_sources_detail": "របាយការណ៍​ទទួល​ប្រាក់​លំអិត​តាម​ប្រភព",
+	"connect_list": "បញ្ជីអតិថិជនត្រូវភ្ជាប់",
+	"list_connect_customers": "បញ្ជីអតិថិជនដែលត្រូវភ្ជាប់កុងទ័រ",
 
 	//Water Reorder
 	"reorder_meter": "រៀប​លំដាប់​កុងទ័រ",
@@ -1467,5 +1471,6 @@ var	km_KH = {
 	"utility_sale": "លក់ជាសាច់ប្រាក់",
 	"meter_order": "លេខតំរាបកុងទ័រ",
 	"disconnect_meter": "កុងទ័រត្រូវផ្តាច់",
+	"meter_to_be_connected": "កុងទ័រត្រូវភ្ជាប់",
 	
 }

@@ -532,7 +532,8 @@ class Winvoices extends REST_Controller {
 									'meter_id'   => $meter->id,
 									'location' => $location->result(),
 									'box' => $boxname,
-									'plan_locale' => $locale
+									'plan_locale' => $locale,
+									'branch_id' => $meter->branch_id
 								);
 							}
 						}

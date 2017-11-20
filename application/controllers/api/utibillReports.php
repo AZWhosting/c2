@@ -83,7 +83,7 @@ class UtibillReports extends REST_Controller {
 					$objList[$value->contact_id]["invoice"]			= 1;
 					$objList[$value->contact_id]["location"]		= $value->location_name;
 					$objList[$value->contact_id]["amount"]			= $amount;
-					$objList[$value->contact_id]["usage"]			=  $value->winvoice_line_quantity;
+					$objList[$value->contact_id]["usage"]			=  floatval($value->winvoice_line_quantity);
 				}
 			}
 
@@ -153,7 +153,7 @@ class UtibillReports extends REST_Controller {
 						"date" 				=> $value->issued_date,
 						"location" 			=> $value->location_name,
 						"number" 			=> $value->number,
-						"usage" 			=> $value->winvoice_line_quantity,
+						"usage" 			=> floatval($value->winvoice_line_quantity),
 						"amount"			=> $amount
 					);
 				}else{
@@ -165,7 +165,7 @@ class UtibillReports extends REST_Controller {
 						"date" 				=> $value->issued_date,
 						"location" 			=> $value->location_name,
 						"number" 			=> $value->number,
-						"usage" 			=> $value->winvoice_line_quantity,
+						"usage" 			=> floatval($value->winvoice_line_quantity),
 						"amount"			=> $amount
 					);
 				}
@@ -1237,6 +1237,59 @@ class UtibillReports extends REST_Controller {
 					"number" 	=> $value->contact_abbr ."-". $value->contact_number,
 					"phone"     => $value->contact_phone,
 					"address"	=> $value->contact_address
+				);
+			}
+			$this->response(array('results' => $data, 'count' => $obj->paged->total_rows), 200);
+		} else {
+			$this->response(array('results'=> array()));
+		}
+	}
+
+	//connection List
+	function connection_list_get() {
+		$filters 	= $this->get("filter");		
+		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
+		$sort 	 	= $this->get("sort");		
+		$is_pattern = 0;
+
+		$obj = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+
+		//Sort
+		if(!empty($sort) && isset($sort)){				
+			foreach ($sort as $value) {
+				$obj->order_by($value["field"], $value["dir"]);
+			}
+		}
+
+		//Filter		
+		if(!empty($filters) && isset($filters['filters'])){
+	    	foreach ($filters['filters'] as $value) {
+	    		if(isset($value['operator'])) {
+					$obj->{$value['operator']}($value['field'], $value['value']);
+				} else {
+	    			$obj->where($value["field"], $value["value"]);
+				}
+			}
+		}
+		$obj->include_related("contact", array("abbr", "number", "name", "email", "address", "phone", "id"));
+		$obj->include_related("location", "name");
+		$obj->include_related("branch", "name");
+		$obj->where('status', 1);
+		$obj->where("activated", 0);
+		$obj->get_paged_iterated($page, $limit);
+		if($obj->exists()) {
+			$data = array();
+			foreach($obj as $value) {
+				//$utility = $row->contact->include_related('utility', array('abbr', 'code'))->get();
+				$data[] = array(
+					"id" 		=> $value->id,
+					"name"		=> $value->contact_abbr.$value->contact_number." ".$value->contact_name,
+					"license" 	=> $value->branch_name,
+					"number" 	=> $value->contact_abbr ."-". $value->contact_number,
+					"phone"     => $value->contact_phone,
+					"address"	=> $value->contact_address,
+					"dataUsed" 	=> $value->date_used
 				);
 			}
 			$this->response(array('results' => $data, 'count' => $obj->paged->total_rows), 200);

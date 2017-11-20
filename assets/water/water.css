@@ -142,6 +142,7 @@ p.addItem.glyphicons.circle_remove i:before {
     padding: 15px;
     background: #fff;
     display: inline-block;
+    border-radius: 5px;
 }
 .cash-invoice {
     background: #d5dce6;
