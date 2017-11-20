@@ -87,7 +87,7 @@ class Waterdash extends REST_Controller {
 		$totalVCust = $vcontact->count();
 
 		$disconnect->where("type", "Utility_Invoice");
-		$disconnect->where_in("status", array(0,2));
+		$disconnect->where_in("status", 0);
 		$disconnect->where("is_recurring <>", 1);
 		$disconnect->where("deleted <>", 1);
 		$totalDisconnect = $disconnect->count();

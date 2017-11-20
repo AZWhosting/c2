@@ -1234,6 +1234,7 @@ var	km_KH = {
 	"cash_receipt_by_sources_detail": "របាយការណ៍​ទទួល​ប្រាក់​លំអិត​តាម​ប្រភព",
 	"connect_list": "បញ្ជីអតិថិជនត្រូវភ្ជាប់",
 	"list_connect_customers": "បញ្ជីអតិថិជនដែលត្រូវភ្ជាប់កុងទ័រ",
+	"meter_report_map": "របាយការណ័ផែនទី",
 
 	//Water Reorder
 	"reorder_meter": "រៀប​លំដាប់​កុងទ័រ",
@@ -1472,5 +1473,6 @@ var	km_KH = {
 	"meter_order": "លេខតំរាបកុងទ័រ",
 	"disconnect_meter": "កុងទ័រត្រូវផ្តាច់",
 	"meter_to_be_connected": "កុងទ័រត្រូវភ្ជាប់",
+	"day_to_be_disconnected": "ចំនួនថ្ងៃដែលត្រូវប្តាច់"
 	
 }

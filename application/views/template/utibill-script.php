@@ -5082,6 +5082,7 @@
                 telephone: null,
                 attachment_id: 0,
                 type: "w",
+                day_disconnect: 90,
                 image_url: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/no_image.jpg",
                 term_of_condition: null
             });

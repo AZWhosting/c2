@@ -233,7 +233,7 @@
 				<div class="row-fluid" style="display: inline-block; margin-bottom: 15px;">
 					<div style="width: 100%; float: left; ">
 						<div style="width: 100%; background: #f4f4f4; float: left; text-align: left; overflow: hidden;">
-							<div id="carousel-1" class="carousel slide" style="margin-bottom: 0; float: left;">
+							<div id="carousel-1" class="carousel slide" data-ride="carousel" data-interval="500" style="margin-bottom: 0; float: left;">
 								<ol class="carousel-indicators" style="bottom: -11px; left: 92%;">
 									<li data-target="#carousel-1" data-slide-to="0" class="active"></li>
 									<li data-target="#carousel-1" data-slide-to="1"></li>
@@ -279,10 +279,10 @@
 		    		<div class="col-xs-6 col-sm-6 col-md-6" >
 		    			<a href="#/to_be_disconnect_list">
 							<div class="cash-invoice" style="background: #203864; color: #fff; width: 98%; float: right;">
-								<div class="span9" style="padding-left: 0; text-align: left;">
-									<span data-bind="text: lang.lang.disconnect_meter" style="font-size:18px; "></span>
+								<div class="span10" style="padding-left: 0; text-align: left;">
+									<span data-bind="text: lang.lang.disconnect_meter" style="font-size:15px; "></span>
 								</div>
-								<div class="span3" style=" text-align: center; font-size: 18px; font-weight: 600; padding: 0;">
+								<div class="span2" style=" text-align: center; font-size: 18px; font-weight: 600; padding: 0;">
 									<span style="float: right;" data-bind="text: totalDisconnect"></span>
 								</div>
 							</div>
@@ -2377,7 +2377,17 @@
 							                      	data-bind="value: obj.term_of_condition"
 							                      	style="height: 200px;">
 								                </textarea>
-					                      	</div>							        		
+					                      	</div>			        		
+							            </div>
+							            <div class="row">
+							            	<div class="col-xs-12 col-sm-3">
+							        			<span data-bind="text: lang.lang.day_to_be_disconnected">ចំនួនថ្ងៃដែលត្រូវប្តាច់</span>
+							        		</div>
+							        		<div class="col-xs-12 col-sm-3">
+							        			<input class="k-textbox" 
+							        				data-bind="value: obj.day_disconnect, attr: {placeholder: lang.lang.day}" placeholder="Mobile" 
+							        				style="width: 100%;">
+							        		</div>
 							            </div>
 						        	</div>
 							        <!-- //ACCOUNTING END -->
@@ -9996,6 +10006,9 @@
 					            <li >
 					            	<a href="#tab6" data-toggle="tab"><span data-bind="text: lang.lang.cash_receipt_report"></span></a>
 					            </li>
+					            <li >
+					            	<a href="#tab7" data-toggle="tab"><span data-bind="text: lang.lang.meter_report_map"></span></a>
+					            </li>
 					        </ul>
 					    </div>
 					    <!-- // Tabs Heading END -->
@@ -10316,6 +10329,7 @@
 								</div>
 				        	</div>
 					        <!-- //ACCOUNTING END -->
+
 					    </div>
 					</div>
 				</div>

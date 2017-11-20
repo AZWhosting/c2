@@ -2216,12 +2216,13 @@ class Accounting_modules extends REST_Controller {
 		}
 		
 		$obj->include_related("transaction", array("rate"));
-		$obj->include_related("account", array("number","name","account_type_id"));
+		$obj->include_related("account", array("number","name","account_type_id","sub_of_id"));
 		$obj->include_related("account/account_type", array("name","nature"));
 		$obj->where_in_related("account", "account_type_id", array(35,36,37,38,39,40,41,42));
 		$obj->where_related("transaction", "is_recurring <>", 1);
 		$obj->where_related("transaction", "deleted <>", 1);
 		$obj->where("deleted <>", 1);
+		$obj->order_by_related("account", "account_type_id", "asc");
 
 		//Results
 		if($page && $limit){
@@ -2245,19 +2246,42 @@ class Accounting_modules extends REST_Controller {
 				if(isset($objList[$value->account_id])){
 					$objList[$value->account_id]["amount"] += $amount;
 				}else{
-					$objList[$value->account_id]["id"] 		= $value->account_id;
-					$objList[$value->account_id]["type_id"]	= $value->account_account_type_id;
-					$objList[$value->account_id]["type"] 	= $value->account_account_type_name;
-					$objList[$value->account_id]["number"] 	= $value->account_number;
-					$objList[$value->account_id]["name"] 	= $value->account_name;
-					$objList[$value->account_id]["amount"]	= $amount;
+					$objList[$value->account_id]["id"] 			= $value->account_id;
+					$objList[$value->account_id]["type_id"]		= $value->account_account_type_id;
+					$objList[$value->account_id]["sub_of_id"]	= $value->account_sub_of_id;
+					$objList[$value->account_id]["type"] 		= $value->account_account_type_name;
+					$objList[$value->account_id]["number"] 		= $value->account_number;
+					$objList[$value->account_id]["name"] 		= $value->account_name;
+					$objList[$value->account_id]["amount"]		= $amount;
 				}
 			}
 
-			//Group
+			//Group by sub_of_id
+			$subList = [];
+			foreach ($objList as $value) {
+				if(isset($subList[$value["sub_of_id"]])){
+					$subList[$value["sub_of_id"]]["line"][] = $value;
+				}else{
+					$subName = "";
+					if(intval($value["sub_of_id"])>0){
+						$subs = new Account(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						$subs->get_by_id(intval($value["sub_of_id"]));
+
+						if($subs->exists()){
+							$subName = $subs->name; 
+						}
+					}
+
+					$subList[$value["sub_of_id"]]["type_id"] = $value["type_id"];
+					$subList[$value["sub_of_id"]]["name"] = $subName;
+					$subList[$value["sub_of_id"]]["line"][] = $value;
+				}
+			}
+
+			//Group by type
 			$revenueList = [];
 			$expenseList = [];
-			foreach ($objList as $value) {
+			foreach ($subList as $value) {
 				//Revenues
 				if(intval($value["type_id"])==35 || intval($value["type_id"])==39){
 					$revenueList[] = $value;

@@ -22,7 +22,7 @@ class Branches extends REST_Controller {
 	}
 
 	//GET
-	function index_get() {		
+	function index_get() {
 		$filters 	= $this->get("filter");		
 		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
 		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
@@ -78,8 +78,8 @@ class Branches extends REST_Controller {
 		 			"attachment_id" 	=> intval($value->attachment_id),
 		 			"image_url"			=> $logo->url,
 		 			"term_of_condition"	=> $value->term_of_condition,
-		 			"segment_item_id" 	=> $value->segment_item_id
-
+		 			"segment_item_id" 	=> $value->segment_item_id,
+		 			"day_disconnect" 	=> $value->day_disconnect
 		 		);
 			}
 		}

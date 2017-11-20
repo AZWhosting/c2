@@ -1010,7 +1010,8 @@ var	en_US = {
 	"lists_all_accounting" : "Lists all accounting transactions within a period of time into debits and credits and displays them chronologically.",
 	"trial_balance" : "Trial Balance",
 	"chart_of_account" : "Chart of Account",
-	"statement_of_profit_or_loss" : "Statement of Profit or Loss",
+	"statement_of_profit_or_loss" : "Statement of Profit or Loss by Functions",
+	"statement_of_profit_or_loss_by_nature" : "Statement of Profit or Loss by Nature",
 	"statement_of_financial_position" : "Statement of Financial Position",
 	"total_no_of_transactions" : "Total no. of Transaction",
 	"total_dr_balance" : "Total Dr Balance",
@@ -1257,7 +1258,7 @@ var	en_US = {
 	"summary_and_detail_cash": "Summary and detail cash receipt reports grouped by sources/ methods of receipts",
 	"cash_receipt_detail": "Cash Receipt Detail",
 	"cash_receipt_by_sources_detail": "Cash Receipt by Sources Detail",
-
+	"meter_report_map": "Report Loccation",
 
 	//Water Reorder
 	"reorder_meter": "Reorder Meter",
@@ -1497,9 +1498,9 @@ var	en_US = {
 	"utility_sale": "Utility Sale",
 	"meter_order": "Order",
 	"end" : "End",
-	"disconnect_meter": "Disconnect Meter",
+	"disconnect_meter": "Meter to be Disconnected",
 	"meter_to_be_connected": "Meter to be Connected",
-
+	"day_to_be_disconnected": "Day to be Disconnected",
 
 
 }
