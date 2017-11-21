@@ -12058,23 +12058,32 @@
         }),
         onLicenseChange: function() {
             var that = this;
-            this.dataSource.query({
+            this.dataSourceSummary.query({
                     filter: {
-                        field: 'branch_id',
+                        field: 'id',
                         value: this.get('licenseSelect')
                     }
                 })
                 .then(function(e) {
-                    let data = that.dataSource.data();
-                    that.set('nCustomer', kendo.toString(data[0].totalAllowCustomer, 'n'));
-                    that.set('tCustomer', kendo.toString(data[0].totalCustomer, 'n'));
-                    that.set('activeCustomer', kendo.toString(data[0].totalActiveCustomer, 'n'));
-                    that.set('waterSold', kendo.toString(data[0].totalUsage, 'n'));
-                    that.set('avgUsage', kendo.toString(data[0].avgUsage, 'n'));
-                    that.set('avgRevenue', kendo.toString(data[0].avgIncome, 'n'));
-                    that.set('waterRevenue', kendo.toString(data[0].totalIncome, 'n'));
-                    that.set('totalDeposit', kendo.toString(data[0].totalDeposit, 'n'));
+                    let data = that.dataSourceSummary.data();
+                    that.set('blocCount', kendo.toString(data[0].blocCount, 'n'));
+                    that.set('activeCustomer', kendo.toString(data[0].activeCustomer, 'n'));
+                    that.set('inActiveCount', kendo.toString(data[0].inActiveCount, 'n'));
+                    that.set('deposit', kendo.toString(data[0].deposit, 'n'));
+                    that.set('usage', kendo.toString(data[0].usage, 'n'));
+                    that.set('sale', kendo.toString(data[0].sale, 'n'));
+                    that.set('balance', kendo.toString(data[0].balance, 'n'));
                 });
+        },
+        onLicenseChangeKPI: function() {
+            var that = this;
+            this.dataSourceKPI.query({
+                    filter: {
+                        field: 'id',
+                        value: this.get('licenseKPISelect')
+                    }
+                })
+
         },
         pageLoad: function() {
             var that = this;

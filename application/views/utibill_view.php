@@ -10018,7 +10018,14 @@
 							<div class="tab-pane active" id="tab1">
 					        	<div class="row-fluid sale-report">
 											   <div class="col-md-12 water-tableList hidden-xs">
-								
+								<input id="ddlCashAccount" name="ddlCashAccount" 
+									data-role="dropdownlist"
+					  				data-value-primitive="true"
+									data-text-field="name" 
+					  				data-value-field="id"
+					  				data-bind="value: licenseSelect,
+					  							source: licenseDS, events: {change: onLicenseChange}"
+					  				data-option-label="Select Licenses..." style="margin-bottom: 15px" />
 								<table style="margin-bottom: 0;" class="table table-bordered table-condensed table-striped table-primary table-vertical-center">
 									<thead>
 										<tr>
@@ -10033,7 +10040,7 @@
 											<th style="vertical-align: top; text-align: right"><span data-bind="text: lang.lang.balance">Balance</span></th>
 										</tr>
 									</thead>
-									<tbody style="border: none;" data-role="listview" data-bind="source: dataSourceSummary" data-template="dashboard-template-table-list">				
+									<tbody style="border: none;" data-role="listview" data-bind="source: dataSourceSummary" data-template="dashboard-template-table-list" data-auto-bind="false">				
 									</tbody>
 								</table>
 							</div>
@@ -10045,6 +10052,14 @@
 							<div class="tab-pane" id="tab2">
 					        	<div class="row-fluid sale-report">
 											   <div class="col-md-12 water-tableList hidden-xs">
+								<input id="ddlCashAccount" name="ddlCashAccount" 
+									data-role="dropdownlist"
+					  				data-value-primitive="true"
+									data-text-field="name" 
+					  				data-value-field="id"
+					  				data-bind="value: licenseKPISelect,
+					  							source: licenseDS, events: {change: onLicenseChangeKPI}"
+					  				data-option-label="Select Licenses..." style="margin-bottom: 15px" />
 								<table style="margin-bottom: 0;" class="table table-bordered table-condensed table-striped table-primary table-vertical-center">
 									<thead>
 										<tr>
@@ -10060,7 +10075,7 @@
 											<th style="vertical-align: top; text-align: center"><span data-bind="text: lang.lang.total_water_revenue">Water Revenue</span></th>
 										</tr>
 									</thead>
-									<tbody style="border: none;" data-role="listview" data-bind="source: dataSourceKPI" data-template="kpi-template-table-list">				
+									<tbody style="border: none;" data-role="listview" data-bind="source: dataSourceKPI" data-template="kpi-template-table-list" data-auto-bind="false">				
 									</tbody>
 								</table>
 							</div>

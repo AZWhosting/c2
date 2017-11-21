@@ -161,7 +161,7 @@ class Waterdash extends REST_Controller {
 	}
 
 	function license_get() {
-		$filters 	= $this->get("filter")["filters"];		
+		$filter 	= $this->get("filter");		
 		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
 		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
 		$sort 	 	= $this->get("sort");		
@@ -170,7 +170,30 @@ class Waterdash extends REST_Controller {
 
 		$obj = new Branch(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$obj->order_by('id', 'asc');
-		$obj->get();
+		
+
+			//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
+			}
+		}
+		
+		//Filter		
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value['operator'])){
+	    			$obj->{$value['operator']}($value['field'], $value['value']);	    		
+	    		} else {
+	    			$obj->where($value['field'], $value['value']);
+	    		}
+			}
+		}
+		$obj->get_iterated();
 		foreach($obj as $value) {
 			$location = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$location->where('branch_id', $value->id);
@@ -185,7 +208,7 @@ class Waterdash extends REST_Controller {
 			$deposit = 0;
 			$balance = 0;
 			foreach($location as $loc) {
-				$meter = $loc->meter->where('activated', 1)->get();
+				$meter = $loc->meter->where('activated', 1)->get_iterated();
 				foreach($meter as $c) {
 					if($c->status == 1) {
 						$activeCount += 1;
@@ -197,7 +220,7 @@ class Waterdash extends REST_Controller {
 				$trx->select_sum('amount');
 				$trx->where('type', 'Utility_Invoice');
 				$trx->where('status <>', 1);
-				$trx->where('location_id', $loc->id)->get();
+				$trx->where('location_id', $loc->id)->get_iterated();
 				
 				$balance += $trx->amount;
 
@@ -210,7 +233,7 @@ class Waterdash extends REST_Controller {
 				$tmpBal->select('id, amount, deposit, rate');
 				$tmpBal->where('type', 'Utility_Invoice');
 				$tmpBal->where('status', 2);
-				$tmpBal->where('location_id', $loc->id)->get();
+				$tmpBal->where('location_id', $loc->id)->get_iterated();
 				
 				foreach($tmpBal as $b) {
 					$amount = (floatval($b->amount) - floatval($b->deposit)) / floatval($b->rate);
@@ -221,20 +244,20 @@ class Waterdash extends REST_Controller {
 					$paid->where_in("type", array("Cash_Receipt", "Offset_Invoice"));
 					$paid->where("is_recurring <>",1);
 					$paid->where("deleted <>",1);
-					$paid->get();
+					$paid->get_iterated();
 					$balance += $amount - (floatval($paid->amount) + floatval($paid->discount));
 				}
 				$dep = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				$dep->select_sum('amount');
 				$dep->where('type', 'Utility_Deposit');
-				$dep->where('location_id', $loc->id)->get();
+				$dep->where('location_id', $loc->id)->get_iterated();
 				$deposit +=$dep->amount;
 
 				$usages = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				$usages->select('id');
 				$usages->include_related('winvoice_line', 'quantity');
 				$usages->where_related_winvoice_line('type', 'usage');
-				$usages->where('location_id', $loc->id)->get();
+				$usages->where('location_id', $loc->id)->get_iterated();
 				foreach($usages as $u) {
 					$usage += $u->winvoice_line_quantity;
 				}							
@@ -255,7 +278,7 @@ class Waterdash extends REST_Controller {
 	}
 
 	function kpi_get() {
-		$filters 	= $this->get("filter")["filters"];		
+		$filter     = $this->get("filter");		
 		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
 		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
 		$sort 	 	= $this->get("sort");		
@@ -265,6 +288,28 @@ class Waterdash extends REST_Controller {
 
 		$obj = new Branch(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$obj->order_by('id', 'asc');
+			//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
+			}
+		}
+		
+		//Filter		
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value['operator'])){
+	    			$obj->{$value['operator']}($value['field'], $value['value']);	    		
+	    		} else {
+	    			$obj->where($value['field'], $value['value']);
+	    		}
+			}
+		}
+
 		$obj->get_iterated();
 		foreach($obj as $value) {
 			$location = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
