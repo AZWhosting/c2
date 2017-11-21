@@ -340,7 +340,7 @@ class Waterdash extends REST_Controller {
 				$contact = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				$contact->where('use_water', '1');
 				$nContact 		= $contact->count();
-								
+
 				$totalActiveCustomer = $value->max_customer == 0 ? 0: $activeCount / $value->max_customer;
 
 				$totalAllowCustomer = $value->max_customer == 0 ? 0: ($nContact / intval($value->max_customer));
@@ -352,7 +352,7 @@ class Waterdash extends REST_Controller {
 				$trxSale->where('location_id', $loc->id)->get_iterated();
 				$totalAmount += $trxSale->amount;
 
-				// $avgIncome = $activeCount == 0? 0 : $totalAmount  / $activeCount;
+				$avgIncome = $activeCount == 0 ? 0 : ($totalAmount  / $activeCount);
 
 				// $avgUsage = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				// $trxSale->where('location_id', $loc->id)->get_iterated();
