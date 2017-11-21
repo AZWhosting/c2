@@ -1236,7 +1236,7 @@ var	km_KH = {
 	"cash_receipt_by_sources_detail": "របាយការណ៍​ទទួល​ប្រាក់​លំអិត​តាម​ប្រភព",
 	"connect_list": "បញ្ជីអតិថិជនត្រូវភ្ជាប់",
 	"list_connect_customers": "បញ្ជីអតិថិជនដែលត្រូវភ្ជាប់កុងទ័រ",
-	"meter_report_map": "របាយការណ័ផែនទី",
+	"meter_report_map": "ផែនទីគ្រប់គ្រងបណ្តាញ",
 
 	//Water Reorder
 	"reorder_meter": "រៀប​លំដាប់​កុងទ័រ",
