@@ -233,7 +233,7 @@
 				<div class="row-fluid" style="display: inline-block; margin-bottom: 15px;">
 					<div style="width: 100%; float: left; ">
 						<div style="width: 100%; background: #f4f4f4; float: left; text-align: left; overflow: hidden;">
-							<div id="carousel-1" class="carousel slide" data-ride="carousel" data-interval="500" style="margin-bottom: 0; float: left;">
+							<div id="carousel-1" class="carousel slide" data-ride="carousel" data-interval="2000" style="margin-bottom: 0; float: left;">
 								<ol class="carousel-indicators" style="bottom: -11px; left: 92%;">
 									<li data-target="#carousel-1" data-slide-to="0" class="active"></li>
 									<li data-target="#carousel-1" data-slide-to="1"></li>
@@ -400,12 +400,12 @@
 					             data-tooltip='{
 					                visible: true,
 					                format: "{0}%",
-					                template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
+					                template: "#= series.name #: #= kendo.toString(value) #"
 					             }'                 
 					             data-series="[
-					                             { field: 'amount', name: langVM.lang.moneyCollection, categoryField:'month', color: '#203864', overlay:{ gradient: 'none'}  }
+					                             { field: 'amount', name: langVM.lang.waterSale, categoryField:'month', color: '#203864', overlay:{ gradient: 'none'}  }
 					                         ]"
-					             data-bind="source: graphDS1"
+					             data-bind="source: graphWater"
 					             style="height: 240px; " >
 							</div>
 						</div>
@@ -10018,6 +10018,14 @@
 							<div class="tab-pane active" id="tab1">
 					        	<div class="row-fluid sale-report">
 											   <div class="col-md-12 water-tableList hidden-xs">
+								<input id="ddlCashAccount" name="ddlCashAccount" 
+									data-role="dropdownlist"
+					  				data-value-primitive="true"
+									data-text-field="name" 
+					  				data-value-field="id"
+					  				data-bind="value: licenseSelect,
+					  							source: licenseDS, events: {change: onLicenseChange}"
+					  				data-option-label="Select Licenses..." style="margin-bottom: 15px" />
 								<table style="margin-bottom: 0;" class="table table-bordered table-condensed table-striped table-primary table-vertical-center">
 									<thead>
 										<tr>
@@ -10139,7 +10147,29 @@
 													</p>
 												</td>
 											</tr>
+											<tr>
+												
+											</tr>
 										</table>
+										<div class="col-sm-12">
+											<div class="chart" >
+												<div data-role="chart"
+													 data-auto-bind="true"
+										             data-legend="{ position: 'top' }"
+										             data-series-defaults="{ type: 'column' }"
+										             data-tooltip='{
+										                visible: true,
+										                format: "{0}%",
+										                template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
+										             }'                 
+										             data-series="[
+										                             { field: 'amount', name: langVM.lang.active_meter, categoryField:'month', color: '#203864', overlay:{ gradient: 'none'}  }
+										                         ]"
+										             data-bind="source: graphCustomer"
+										             style="height: 240px; " >
+												</div>
+											</div>
+										</div>
 									</div>
 								</div>
 				        	</div>
@@ -10216,6 +10246,25 @@
 													</p>
 												</td>
 											</tr>
+											<tr>
+												<div class="chart" >
+														<div data-role="chart"
+															 data-auto-bind="true"
+												             data-legend="{ position: 'top' }"
+												             data-series-defaults="{ type: 'column' }"
+												             data-tooltip='{
+												                visible: true,
+												                format: "{0}%",
+												                template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
+												             }'                 
+												             data-series="[
+												                             { field: 'amount', name: langVM.lang.expected_due, categoryField:'month', color: '#203864', overlay:{ gradient: 'none'}  }
+												                         ]"
+												             data-bind="source: graphBalance"
+												             style="height: 240px; " >
+														</div>
+													</div>
+											</tr>
 										</table>
 									</div>
 								</div>
@@ -10273,6 +10322,25 @@
 													</p>
 												</td>
 											</tr>
+											<tr>
+												<div class="chart" >
+														<div data-role="chart"
+															 data-auto-bind="true"
+												             data-legend="{ position: 'top' }"
+												             data-series-defaults="{ type: 'column' }"
+												             data-tooltip='{
+												                visible: true,
+												                format: "{0}%",
+												                template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
+												             }'                 
+												             data-series="[
+												                             { field: 'amount', name: langVM.lang.sale, categoryField:'month', color: '#203864', overlay:{ gradient: 'none'}  }
+												                         ]"
+												             data-bind="source: graphSale"
+												             style="height: 240px; " >
+														</div>
+													</div>
+											</tr>
 										</table>
 									</div>
 								</div>
@@ -10295,6 +10363,9 @@
 												<td >
 													<h3><a href="#/cash_receipt_source_detail" data-bind="text: lang.lang.cash_receipt_by_sources_detail">Cash Receipt By Sources Detail</a></h3>								
 												</td>
+												<td>
+
+												</td>
 											</tr>
 											<tr>
 												<td >
@@ -10309,19 +10380,24 @@
 												</td>
 											</tr>
 											<tr>
-												<td >
-													
-												</td>
-												<td >
-													
-												</td>
-											</tr>
-											<tr>
-												<td >
-													<p></p>
-												</td>
-												<td >
-													<p></p>
+												<td>
+													<div class="chart" >
+														<div data-role="chart"
+															 data-auto-bind="true"
+												             data-legend="{ position: 'top' }"
+												             data-series-defaults="{ type: 'column' }"
+												             data-tooltip='{
+												                visible: true,
+												                format: "{0}%",
+												                template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
+												             }'                 
+												             data-series="[
+												                             { field: 'amount', name: langVM.lang.moneyCollection, categoryField:'month', color: '#203864', overlay:{ gradient: 'none'}  }
+												                         ]"
+												             data-bind="source: graphMoney"
+												             style="height: 240px; " >
+														</div>
+													</div>
 												</td>
 											</tr>
 										</table>
@@ -14079,4 +14155,4 @@
 			</div>
 		</div>
 	</div>
-</script>
+</script>                  

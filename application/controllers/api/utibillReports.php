@@ -1597,6 +1597,274 @@ class UtibillReports extends REST_Controller {
 		$data["count"] = $obj->paged->total_rows;
 		$data["currentPage"] = $obj->paged->current_page;
 	}
+
+	//Graph>>>>>>>>>>>>>>>>>>>>>>>>>>>>.
+	//Graph Money
+	function money_collection_get() {
+		$filters 	= $this->get("filter")["filters"];		
+		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
+		$sort 	 	= $this->get("sort");		
+		$data = array();
+		// $data["count"] = 0;
+
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		//Sort
+		if(!empty($sort) && isset($sort)){					
+			foreach ($sort as $value) {
+				$obj->order_by($value["field"], $value["dir"]);
+			}
+		}
+
+		//Filter		
+		if(!empty($filters) && isset($filters)){
+	    	foreach ($filters as $value) {
+	    		if(isset($value['operator'])) {
+					$obj->{$value['operator']}($value['field'], $value['value']);
+				} else {
+	    			$obj->where($value["field"], $value["value"]);
+				}
+			}
+		}
+
+		$obj->where('type', 'Cash_Receipt');
+		$obj->where('deleted', 0);
+		$obj->where("issued_date >=", date("Y")."-01-01");
+		$obj->where("issued_date <=", date("Y")."-12-31");						
+		$obj->order_by("issued_date");	
+		$obj->get_iterated();
+		$temp = array();
+
+		if($obj->exists()){
+			foreach ($obj as $value) {
+				$invoiceMonth = date('F', strtotime($value->issued_date));
+				if(isset($temp["$invoiceMonth"])) {
+					$temp["$invoiceMonth"]['amount'] += floatval($value->amount);
+				} else {
+					$temp["$invoiceMonth"]['amount'] = floatval($value->amount);
+				}
+			}
+			
+			foreach($temp as $key => $value) {
+				$data["results"][] = array(					
+				   	"amount" 		=> floatval($value['amount']),				   	
+				   	"month"			=> $key				   	
+				);
+			}
+
+		}else{
+			$data["results"][] = array(					
+			   	"amount" 		=> 0,			   	
+			   	"month"			=> ""				   	
+			);
+		}
+
+		$this->response($data, 200);
+	}
+
+	//Graph Sale
+	function sale_get() {
+		$filters 	= $this->get("filter")["filters"];		
+		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
+		$sort 	 	= $this->get("sort");		
+		$data = array();
+		// $data["count"] = 0;
+
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		//Sort
+		if(!empty($sort) && isset($sort)){					
+			foreach ($sort as $value) {
+				$obj->order_by($value["field"], $value["dir"]);
+			}
+		}
+
+		//Filter		
+		if(!empty($filters) && isset($filters)){
+	    	foreach ($filters as $value) {
+	    		if(isset($value['operator'])) {
+					$obj->{$value['operator']}($value['field'], $value['value']);
+				} else {
+	    			$obj->where($value["field"], $value["value"]);
+				}
+			}
+		}
+
+		$obj->where('type', 'Utility_Invoice');
+		$obj->where('deleted', 0);
+		$obj->where("issued_date >=", date("Y")."-01-01");
+		$obj->where("issued_date <=", date("Y")."-12-31");						
+		$obj->order_by("issued_date");	
+		$obj->get_iterated();
+		$temp = array();
+
+		if($obj->exists()){
+			foreach ($obj as $value) {
+				$invoiceMonth = date('F', strtotime($value->issued_date));
+				if(isset($temp["$invoiceMonth"])) {
+					$temp["$invoiceMonth"]['amount'] += floatval($value->amount);
+				} else {
+					$temp["$invoiceMonth"]['amount'] = floatval($value->amount);
+				}
+			}
+			
+			foreach($temp as $key => $value) {
+				$data["results"][] = array(					
+				   	"amount" 		=> floatval($value['amount']),				   	
+				   	"month"			=> $key				   	
+				);
+			}
+
+		}else{
+			$data["results"][] = array(					
+			   	"amount" 		=> 0,			   	
+			   	"month"			=> ""				   	
+			);
+		}
+
+		$this->response($data, 200);
+	}
+
+	//Graph Balance
+	function balance_get() {
+		$filters 	= $this->get("filter")["filters"];		
+		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
+		$sort 	 	= $this->get("sort");		
+		$data = array();
+		// $data["count"] = 0;
+
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		//Sort
+		if(!empty($sort) && isset($sort)){					
+			foreach ($sort as $value) {
+				$obj->order_by($value["field"], $value["dir"]);
+			}
+		}
+
+		//Filter		
+		if(!empty($filters) && isset($filters)){
+	    	foreach ($filters as $value) {
+	    		if(isset($value['operator'])) {
+					$obj->{$value['operator']}($value['field'], $value['value']);
+				} else {
+	    			$obj->where($value["field"], $value["value"]);
+				}
+			}
+		}
+
+		$obj->where('type', 'Utility_Invoice');
+		$obj->where('deleted <>', 1);
+		$obj->where('status <>', 1 );
+		$obj->where("issued_date >=", date("Y")."-01-01");
+		$obj->where("issued_date <=", date("Y")."-12-31");						
+		$obj->order_by("issued_date");	
+		$obj->get_iterated();
+		$temp = array();
+
+		if($obj->exists()){
+			foreach ($obj as $value) {
+				$invoiceMonth = date('F', strtotime($value->issued_date));
+				if ($value->status==2){
+					if(isset($temp["$invoiceMonth"])) {
+						$temp["$invoiceMonth"]['amount'] -= floatval($value->amount);
+					} else {
+						$temp["$invoiceMonth"]['amount'] = floatval($value->amount);
+					}
+				}else{
+					if(isset($temp["$invoiceMonth"])) {
+					$temp["$invoiceMonth"]['amount'] += floatval($value->amount);
+					} else {
+						$temp["$invoiceMonth"]['amount'] = floatval($value->amount);
+					}
+				}
+				
+			}
+			
+			foreach($temp as $key => $value) {
+				$data["results"][] = array(					
+				   	"amount" 		=> floatval($value['amount']),				   	
+				   	"month"			=> $key				   	
+				);
+			}
+
+		}else{
+			$data["results"][] = array(					
+			   	"amount" 		=> 0,			   	
+			   	"month"			=> ""				   	
+			);
+		}
+
+		$this->response($data, 200);
+	}
+
+	//Graph Customer
+	function customer_get() {
+		$filters 	= $this->get("filter")["filters"];		
+		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
+		$sort 	 	= $this->get("sort");		
+		$data = array();
+		// $data["count"] = 0;
+
+		$obj = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		//Sort
+		if(!empty($sort) && isset($sort)){					
+			foreach ($sort as $value) {
+				$obj->order_by($value["field"], $value["dir"]);
+			}
+		}
+
+		//Filter		
+		if(!empty($filters) && isset($filters)){
+	    	foreach ($filters as $value) {
+	    		if(isset($value['operator'])) {
+					$obj->{$value['operator']}($value['field'], $value['value']);
+				} else {
+	    			$obj->where($value["field"], $value["value"]);
+				}
+			}
+		}
+
+		$obj->where('status', 1);
+		$obj->where('activated', 1);
+		$obj->where("date_used >=", date("Y")."-01-01");
+		$obj->where("date_used <=", date("Y")."-12-31");						
+		$obj->order_by("date_used");	
+		$obj->get_iterated();
+		$temp = array();
+
+		if($obj->exists()){
+			foreach ($obj as $value) {
+				$invoiceMonth = date('F', strtotime($value->date_used));
+					if(isset($temp["$invoiceMonth"])) {
+						$temp["$invoiceMonth"]['contact'] +=1;
+					} else {
+						$temp["$invoiceMonth"]['contact'] = 1;
+					}
+				
+			}
+			
+			foreach($temp as $key => $value) {
+				$data["results"][] = array(					
+				   	"amount" 		=> $value['contact'],				   	
+				   	"month"			=> $key				   	
+				);
+			}
+
+		}else{
+			$data["results"][] = array(					
+			   	"amount" 		=> 0,			   	
+			   	"month"			=> ""				   	
+			);
+		}
+
+		$this->response($data, 200);
+	}
 }
 /* End of file winvoices.php */
 /* Location: ./application/controllers/api/categories.php */

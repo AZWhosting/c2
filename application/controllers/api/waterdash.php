@@ -280,18 +280,24 @@ class Waterdash extends REST_Controller {
 			$totalUsage = 0;
 			$nContact = 0;
 			$avg = 0;
+			$activeCount =0;
+			$inActiveCount = 0;
 			foreach($location as $loc) {
-				$activeMeter = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$activeMeter->where('status', 1);
-				$activeMeter->where('location_id', $loc->id)->get();
-				$nActiveMeter = $activeMeter->count();
+				$meter = $loc->meter->where('activated', 1)->get();
+				foreach($meter as $c) {
+					if($c->status == 1) {
+						$activeCount += 1;
+					} else {
+						$inActiveCount += 1;
+					}
+				}
 
 				$totalAllowCustomer = $value->max_customer == 0 ? 0: $nContact / intval($value->max_customer);
 
 				$contact = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				$contact->where('use_water', '1');
 				$nContact 		= $contact->count();				
-				$totalActiveCustomer = $value->max_customer == 0 ? 0: $nActiveMeter / $value->max_customer;
+				$totalActiveCustomer = $value->max_customer == 0 ? 0: $activeCount / $value->max_customer;
 
 		
 				$trxSale = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
@@ -300,7 +306,7 @@ class Waterdash extends REST_Controller {
 				$trxSale->where('location_id', $loc->id)->get();
 				$totalAmount += $trxSale->amount;
 
-				$avgIncome = $nActiveMeter == 0? 0 : $totalAmount  / $nActiveMeter;
+				$avgIncome = $activeCount == 0? 0 : $totalAmount  / $activeCount;
 
 				$avgUsage = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				$trxSale->where('location_id', $loc->id)->get();
@@ -309,13 +315,13 @@ class Waterdash extends REST_Controller {
 				foreach($avgUsage as $avgUsg) {
 					$totalUsage += $avgUsg->usage;
 				}
-				$avg = $nActiveMeter == 0 ? 0:$totalUsage / $nActiveMeter;
+				$avg = $activeCount == 0 ? 0:$totalUsage / $activeCount;
 
 			}
 			$data['results'][] = array(
 				'id' => $value->id,
 				'name'=>$value->name,
-				'totalCustomer' => $nActiveMeter,
+				'totalCustomer' => $activeCount,
 				'totalAllowCustomer' => $totalAllowCustomer,
 				'totalActiveCustomer' => $totalActiveCustomer,
 				'avgIncome' => $avgIncome,
@@ -390,7 +396,7 @@ class Waterdash extends REST_Controller {
 		$this->response($data, 200);
 	}
 
-	function graph1_get() {
+	function graph_water_get() {
 		$filters 	= $this->get("filter")["filters"];		
 		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
 		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
@@ -398,7 +404,7 @@ class Waterdash extends REST_Controller {
 		$data = array();
 		// $data["count"] = 0;
 
-		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$obj = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 		//Sort
 		if(!empty($sort) && isset($sort)){					
@@ -418,27 +424,25 @@ class Waterdash extends REST_Controller {
 			}
 		}
 
-		$obj->where('type', 'Cash_Receipt');
-		$obj->where('deleted', 0);
-		$obj->where("issued_date >=", date("Y")."-01-01");
-		$obj->where("issued_date <=", date("Y")."-12-31");						
-		$obj->order_by("issued_date");	
+		$obj->where("month_of >=", date("Y")."-01-01");
+		$obj->where("month_of <=", date("Y")."-12-31");						
+		$obj->order_by("month_of");	
 		$obj->get_iterated();
 		$temp = array();
 
 		if($obj->exists()){
 			foreach ($obj as $value) {
-				$invoiceMonth = date('F', strtotime($value->issued_date));
+				$invoiceMonth = date('F', strtotime($value->month_of));
 				if(isset($temp["$invoiceMonth"])) {
-					$temp["$invoiceMonth"]['amount'] += floatval($value->amount);
+					$temp["$invoiceMonth"]['usage'] += floatval($value->usage);
 				} else {
-					$temp["$invoiceMonth"]['amount'] = floatval($value->amount);
+					$temp["$invoiceMonth"]['usage'] = floatval($value->usage);
 				}
 			}
 			
 			foreach($temp as $key => $value) {
 				$data["results"][] = array(					
-				   	"amount" 		=> floatval($value['amount']),				   	
+				   	"amount" 		=> $value['usage'],				   	
 				   	"month"			=> $key				   	
 				);
 			}

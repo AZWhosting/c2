@@ -11928,6 +11928,134 @@
             serverPaging: true,
             pageSize: 100
         }),
+        graphMoney: new kendo.data.DataSource({
+            transport: {
+                read: {
+                    url: apiUrl + 'utibillReports/money_collection',
+                    type: "GET",
+                    headers: banhji.header,
+                    dataType: 'json'
+                },
+                parameterMap: function(options, operation) {
+                    if (operation === 'read') {
+                        return {
+                            page: options.page,
+                            filter: options.filter
+                        };
+                    }
+                }
+            },
+            schema: {
+                data: 'results',
+                total: 'count'
+            },
+            // group: {
+            //  field: 'month',
+            //  aggregates: [
+            //    {field: 'amount', aggregate: 'sum'}
+            //  ]
+            // },
+            batch: true,
+            serverFiltering: true,
+            serverPaging: true,
+            pageSize: 1000
+        }),
+        graphSale: new kendo.data.DataSource({
+            transport: {
+                read: {
+                    url: apiUrl + 'utibillReports/sale',
+                    type: "GET",
+                    headers: banhji.header,
+                    dataType: 'json'
+                },
+                parameterMap: function(options, operation) {
+                    if (operation === 'read') {
+                        return {
+                            page: options.page,
+                            filter: options.filter
+                        };
+                    }
+                }
+            },
+            schema: {
+                data: 'results',
+                total: 'count'
+            },
+            // group: {
+            //  field: 'month',
+            //  aggregates: [
+            //    {field: 'amount', aggregate: 'sum'}
+            //  ]
+            // },
+            batch: true,
+            serverFiltering: true,
+            serverPaging: true,
+            pageSize: 1000
+        }),
+        graphBalance: new kendo.data.DataSource({
+            transport: {
+                read: {
+                    url: apiUrl + 'utibillReports/balance',
+                    type: "GET",
+                    headers: banhji.header,
+                    dataType: 'json'
+                },
+                parameterMap: function(options, operation) {
+                    if (operation === 'read') {
+                        return {
+                            page: options.page,
+                            filter: options.filter
+                        };
+                    }
+                }
+            },
+            schema: {
+                data: 'results',
+                total: 'count'
+            },
+            // group: {
+            //  field: 'month',
+            //  aggregates: [
+            //    {field: 'amount', aggregate: 'sum'}
+            //  ]
+            // },
+            batch: true,
+            serverFiltering: true,
+            serverPaging: true,
+            pageSize: 1000
+        }),
+        graphCustomer: new kendo.data.DataSource({
+            transport: {
+                read: {
+                    url: apiUrl + 'utibillReports/cusotmer',
+                    type: "GET",
+                    headers: banhji.header,
+                    dataType: 'json'
+                },
+                parameterMap: function(options, operation) {
+                    if (operation === 'read') {
+                        return {
+                            page: options.page,
+                            filter: options.filter
+                        };
+                    }
+                }
+            },
+            schema: {
+                data: 'results',
+                total: 'count'
+            },
+            // group: {
+            //  field: 'month',
+            //  aggregates: [
+            //    {field: 'amount', aggregate: 'sum'}
+            //  ]
+            // },
+            batch: true,
+            serverFiltering: true,
+            serverPaging: true,
+            pageSize: 1000
+        }),
         onLicenseChange: function() {
             var that = this;
             this.dataSource.query({
@@ -20117,11 +20245,11 @@
             serverFiltering: true,
             serverPaging: true,
             pageSize: 1000
-        }),
-        graphDS1: new kendo.data.DataSource({
+        }),   
+        graphWater: new kendo.data.DataSource({
             transport: {
                 read: {
-                    url: apiUrl + 'waterdash/graph1',
+                    url: apiUrl + 'waterdash/graph_water',
                     type: "GET",
                     headers: banhji.header,
                     dataType: 'json'
@@ -20149,7 +20277,7 @@
             serverFiltering: true,
             serverPaging: true,
             pageSize: 1000
-        }),
+        }),      
         backupdbDS: dataStore(apiUrl + "localsync"),
         invoice: 0,
         activeCust: 0,

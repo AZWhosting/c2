@@ -1344,6 +1344,7 @@ var	en_US = {
 	"card_number": "Card Number",
 	"id_card_number": "Id Card Number",
 	"occupation": "Occupation",
+	"waterSale": "Water Sale",
 
 	//Water Report Disconnect List
 	"disconnect_customer_list": "Disconnect Customer List",
