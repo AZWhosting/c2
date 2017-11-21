@@ -10018,14 +10018,7 @@
 							<div class="tab-pane active" id="tab1">
 					        	<div class="row-fluid sale-report">
 											   <div class="col-md-12 water-tableList hidden-xs">
-								<input id="ddlCashAccount" name="ddlCashAccount" 
-									data-role="dropdownlist"
-					  				data-value-primitive="true"
-									data-text-field="name" 
-					  				data-value-field="id"
-					  				data-bind="value: licenseSelect,
-					  							source: licenseDS, events: {change: onLicenseChange}"
-					  				data-option-label="Select Licenses..." style="margin-bottom: 15px" />
+								
 								<table style="margin-bottom: 0;" class="table table-bordered table-condensed table-striped table-primary table-vertical-center">
 									<thead>
 										<tr>
@@ -10082,91 +10075,95 @@
 									<p data-bind="text: lang.lang.these_reports_are_useful">
 										These reports are useful for customer information management, meter connections, and usage managements 
 									</p>
-									<div class="row-fluid">
-										<table class="table table-borderless table-condensed">
-											<tr>
-												<td style="width: 50%">
-													<h3 ><a href="#/customer_list" data-bind="text: lang.lang.customer_list"></a></h3>
-												</td>
-												<td>
-													<h3 ><a href="#/connect_list" data-bind="text: lang.lang.connect_list"></a></h3>
-												</td>
-												
-											</tr>
+									<div class="row">
+										<div class="col-sm-6">
+											<table class="table table-borderless table-condensed">
+												<tr>
+													<td style="width: 50%">
+														<h3 ><a href="#/customer_list" data-bind="text: lang.lang.customer_list"></a></h3>
+													</td>
+													<td>
+														<h3 ><a href="#/connect_list" data-bind="text: lang.lang.connect_list"></a></h3>
+													</td>
+													
+												</tr>
 
-											<tr>
-												<td >
-													<p style="padding-right: 25px;"  data-bind="text: lang.lang.list_of_all_active_customers">
-														List of all active customers
-													</p>
-												</td>
-												<td >
-													<p style="padding-right: 25px;"  data-bind="text: lang.lang.list_connect_customers">
-														List of all customers to be connected
-												</td>
-											</tr>
-											<tr>
-												<td >
-													<h3><a href="#/disconnect_list" data-bind="text: lang.lang.disconnected_list">Disconnected List</a></h3>
-												</td>
-												<td >													
-													<h3><a href="#/inactive_list" data-bind="text: lang.lang.inactive_customer"></a></h3>
-												</td>
-											</tr>
+												<tr>
+													<td >
+														<p style="padding-right: 25px;"  data-bind="text: lang.lang.list_of_all_active_customers">
+															List of all active customers
+														</p>
+													</td>
+													<td >
+														<p style="padding-right: 25px;"  data-bind="text: lang.lang.list_connect_customers">
+															List of all customers to be connected
+													</td>
+												</tr>
+												<tr>
+													<td >
+														<h3><a href="#/disconnect_list" data-bind="text: lang.lang.disconnected_list">Disconnected List</a></h3>
+													</td>
+													<td >													
+														<h3><a href="#/inactive_list" data-bind="text: lang.lang.inactive_customer"></a></h3>
+													</td>
+												</tr>
 
-											<tr>
-												<td >
-													<p style="vertical-align: top;" data-bind="text: lang.lang.disconnected_description"> 
-														list of the customer have been disconnected
-													</p>
-												</td>
-												<td >
-													<p style="padding-right: 25px;"  data-bind="text: lang.lang.inactive_customer_description">
-														list of each customer have been inactive
-													</p>
-												</td>
-											</tr>
-											<tr>
-												<td >
-													<h3 ><a href="#/to_be_disconnect_list" data-bind="text: lang.lang.to_be_disconnect_list"></a></h3>
-												</td>
-												<td >													
-													<h3><a href="#/mini_usage_list" data-bind="text: lang.lang.minimum_water_usage_list">Minimum Water Usage List</a></h3>
-												</td>
-											</tr>
+												<tr>
+													<td >
+														<p style="vertical-align: top;" data-bind="text: lang.lang.disconnected_description"> 
+															list of the customer have been disconnected
+														</p>
+													</td>
+													<td >
+														<p style="padding-right: 25px;"  data-bind="text: lang.lang.inactive_customer_description">
+															list of each customer have been inactive
+														</p>
+													</td>
+												</tr>
+												<tr>
+													<td >
+														<h3 ><a href="#/to_be_disconnect_list" data-bind="text: lang.lang.to_be_disconnect_list"></a></h3>
+													</td>
+													<td >													
+														<h3><a href="#/mini_usage_list" data-bind="text: lang.lang.minimum_water_usage_list">Minimum Water Usage List</a></h3>
+													</td>
+												</tr>
 
-											<tr>
-												<td >
-													<p style="vertical-align: top;" data-bind="text: lang.lang.to_be_disconnect_description">
-														List of the customer to be disconnect 
-													</p>
-												</td>
-												<td>
-													<p style="padding-right: 25px;"  data-bind="text: lang.lang.minimum_water_usage_description">
-														list of each customer individual usage minimum water
-													</p>
-												</td>
-											</tr>
-											<tr>
-												
-											</tr>
-										</table>
-										<div class="col-sm-12">
-											<div class="chart" >
-												<div data-role="chart"
-													 data-auto-bind="true"
-										             data-legend="{ position: 'top' }"
-										             data-series-defaults="{ type: 'column' }"
-										             data-tooltip='{
-										                visible: true,
-										                format: "{0}%",
-										                template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
-										             }'                 
-										             data-series="[
-										                             { field: 'amount', name: langVM.lang.active_meter, categoryField:'month', color: '#203864', overlay:{ gradient: 'none'}  }
-										                         ]"
-										             data-bind="source: graphCustomer"
-										             style="height: 240px; " >
+												<tr>
+													<td >
+														<p style="vertical-align: top;" data-bind="text: lang.lang.to_be_disconnect_description">
+															List of the customer to be disconnect 
+														</p>
+													</td>
+													<td>
+														<p style="padding-right: 25px;"  data-bind="text: lang.lang.minimum_water_usage_description">
+															list of each customer individual usage minimum water
+														</p>
+													</td>
+												</tr>
+												<tr>
+													
+												</tr>
+											</table>
+										</div>
+										<div class="col-sm-6">
+											<div class="home-chart">
+												<div class="chart" >
+													<div data-role="chart"
+														 data-auto-bind="true"
+											             data-legend="{ position: 'top' }"
+											             data-series-defaults="{ type: 'column' }"
+											             data-tooltip='{
+											                visible: true,
+											                format: "{0}%",
+											                template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
+											             }'                 
+											             data-series="[
+											                             { field: 'amount', name: langVM.lang.active_meter, categoryField:'month', color: '#203864', overlay:{ gradient: 'none'}  }
+											                         ]"
+											             data-bind="source: graphCustomer"
+											             style="height: 240px; " >
+													</div>
 												</div>
 											</div>
 										</div>
@@ -10182,90 +10179,95 @@
 									<p data-bind="text: lang.lang.these_would_be_the_most">
 										These would be the most common reports that you will be using. It includes receivables balance and its aging in both summary and detail list and the security deposit made by the customers for their water connection.
 									</p>
-									<div class="row-fluid">
-										<table class="table table-borderless table-condensed">
-											<tr>
-												<td style="width: 50%">
-													<h3><a href="#/account_receivable_list" data-bind="text: lang.lang.accounts_receivable_listing">Accounts Receivable Listing</a></h3>
-												</td>
-												<td >
-													<h3><a href="#/customer_deposit_report" data-bind="text: lang.lang.customer_deposit">Customer Deposit</a></h3>								
-												</td>
-											</tr>
-											<tr>
-												<td >
-													<p style="padding-right: 25px;"  data-bind="text: lang.lang.shows_a_chronological_list_of_all_your_invoices_for_a_selected_date_range">
-														Shows a chronological list of all your invoices for a selected date range.
-													</p>
-												</td>
-												<td style="vertical-align: top;" data-bind="text: lang.lang.provides_detailed_information_about_customer_deposit">
-													<p>
-														Provides detailed information about customer deposit for specific order, prepayment, or credit.
-													</p>
-												</td>
-											</tr>
-											<tr>
-												<td >
-													<h3><a href="#/customer_balance_summary" data-bind="text: lang.lang.customer_balance_summary">Customer Balance Summary</a></h3>
-												</td>
-												<td >
-													<h3><a href="#/customer_balance_detail" data-bind="text: lang.lang.customer_balance_detail">Customer Balance Detail</a></h3>
-												</td>							
-											</tr>
-											<tr>
-												<td >
-													<p style="padding-right: 25px;"  data-bind="text: lang.lang.show_each_customers_total_outstanding_balances">
-														Show each customer’s total outstanding balances.
-													</p>
-												</td>
-												<td style="vertical-align: top;" data-bind="text: lang.lang.lists_individual_unpaid_invoices_for_each_customer">
-													<p>
-														Lists individual unpaid invoices for each customer
-													</p>
-												</td>
-											</tr>
+									<div class="row">
+										<div class="col-sm-6">
+											<table class="table table-borderless table-condensed">
+												<tr>
+													<td style="width: 50%">
+														<h3><a href="#/account_receivable_list" data-bind="text: lang.lang.accounts_receivable_listing">Accounts Receivable Listing</a></h3>
+													</td>
+													<td >
+														<h3><a href="#/customer_deposit_report" data-bind="text: lang.lang.customer_deposit">Customer Deposit</a></h3>								
+													</td>
+												</tr>
+												<tr>
+													<td >
+														<p style="padding-right: 25px;"  data-bind="text: lang.lang.shows_a_chronological_list_of_all_your_invoices_for_a_selected_date_range">
+															Shows a chronological list of all your invoices for a selected date range.
+														</p>
+													</td>
+													<td style="vertical-align: top;" data-bind="text: lang.lang.provides_detailed_information_about_customer_deposit">
+														<p>
+															Provides detailed information about customer deposit for specific order, prepayment, or credit.
+														</p>
+													</td>
+												</tr>
+												<tr>
+													<td >
+														<h3><a href="#/customer_balance_summary" data-bind="text: lang.lang.customer_balance_summary">Customer Balance Summary</a></h3>
+													</td>
+													<td >
+														<h3><a href="#/customer_balance_detail" data-bind="text: lang.lang.customer_balance_detail">Customer Balance Detail</a></h3>
+													</td>							
+												</tr>
+												<tr>
+													<td >
+														<p style="padding-right: 25px;"  data-bind="text: lang.lang.show_each_customers_total_outstanding_balances">
+															Show each customer’s total outstanding balances.
+														</p>
+													</td>
+													<td style="vertical-align: top;" data-bind="text: lang.lang.lists_individual_unpaid_invoices_for_each_customer">
+														<p>
+															Lists individual unpaid invoices for each customer
+														</p>
+													</td>
+												</tr>
 
-											<tr>
-												<td >
-													<h3><a href="#/customer_aging_sum_list" data-bind="text: lang.lang.customer_aging_summary_list">Customer Aging Summary List</a></h3>
-												</td>
-												<td >
-													<h3><a href="#/customer_aging_detail" data-bind="text: lang.lang.customer_aging_detail_list">Customer Aging Detail List</a></h3>								
-												</td>						
-											</tr>
-											<tr>
-												<td >
-													<p style="padding-right: 25px;"  data-bind="text: lang.lang.lists_all_unpaid_invoices1">
-														Lists all unpaid invoices for the current period, 30, 60, 90, 
-													and more than 90 days, grouped by individual customers.
-													</p>
-												</td>
-												<td style="vertical-align: top;" data-bind="text: lang.lang.lists_individual_unpaid_invoices_grouped_by_customer">
-													<p>
-														Lists individual unpaid invoices, grouped by customer. This includes due date, outstanding days (aging days), and amount.
-													</p>
-												</td>
-											</tr>
-											<tr>
+												<tr>
+													<td >
+														<h3><a href="#/customer_aging_sum_list" data-bind="text: lang.lang.customer_aging_summary_list">Customer Aging Summary List</a></h3>
+													</td>
+													<td >
+														<h3><a href="#/customer_aging_detail" data-bind="text: lang.lang.customer_aging_detail_list">Customer Aging Detail List</a></h3>								
+													</td>						
+												</tr>
+												<tr>
+													<td >
+														<p style="padding-right: 25px;"  data-bind="text: lang.lang.lists_all_unpaid_invoices1">
+															Lists all unpaid invoices for the current period, 30, 60, 90, 
+														and more than 90 days, grouped by individual customers.
+														</p>
+													</td>
+													<td style="vertical-align: top;" data-bind="text: lang.lang.lists_individual_unpaid_invoices_grouped_by_customer">
+														<p>
+															Lists individual unpaid invoices, grouped by customer. This includes due date, outstanding days (aging days), and amount.
+														</p>
+													</td>
+												</tr>												
+											</table>
+										</div>
+										<div class="col-sm-6">
+											<div class="home-chart">
 												<div class="chart" >
-														<div data-role="chart"
-															 data-auto-bind="true"
-												             data-legend="{ position: 'top' }"
-												             data-series-defaults="{ type: 'column' }"
-												             data-tooltip='{
-												                visible: true,
-												                format: "{0}%",
-												                template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
-												             }'                 
-												             data-series="[
-												                             { field: 'amount', name: langVM.lang.expected_due, categoryField:'month', color: '#203864', overlay:{ gradient: 'none'}  }
-												                         ]"
-												             data-bind="source: graphBalance"
-												             style="height: 240px; " >
-														</div>
+													<div data-role="chart"
+														 data-auto-bind="true"
+											             data-legend="{ position: 'top' }"
+											             data-series-defaults="{ type: 'column' }"
+											             data-tooltip='{
+											                visible: true,
+											                format: "{0}%",
+											                template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
+											             }'                 
+											             data-series="[
+											                             { field: 'amount', name: langVM.lang.expected_due, categoryField:'month', color: '#203864', overlay:{ gradient: 'none'}  }
+											                         ]"
+											             data-bind="source: graphBalance"
+											             style="height: 240px; " >
 													</div>
-											</tr>
-										</table>
+												</div>
+											</div>
+										</div>
+
 									</div>
 								</div>
 				        	</div>
@@ -10278,70 +10280,74 @@
 									<p data-bind="text: lang.lang.summary_and_detail_sale">
 										Summary and detail sale report broken down by Licenses, bloc, and types of reveneues.	
 									</p>
-									<div class="row-fluid">
-										<table class="table table-borderless table-condensed">
-											<tr>
-												<td style="width: 50%">
-													<h3><a href="#/sale_summary" data-bind="text: lang.lang.sale_summary_report">Sale Summary Report</a></h3>
-												</td>
-												<td >
-													<h3><a href="#/sale_detail" data-bind="text: lang.lang.sale_detail_report">Sale Detail Report</a></h3>								
-												</td>
-											</tr>
-											<tr>
-												<td >
-													<p style="padding-right: 25px;"  data-bind="text: lang.lang.summarizes_total_sales">
-													Summarizes total sales for each customer within a period 
-													of time so you can see which ones generate the most revenue for you.
-													</p>
-												</td>
-												<td style="vertical-align: top;" data-bind="text: lang.lang.lists_individual_sale">
-													<p>
-														Lists individual sale transactions by date for each customer with a period of time.
-													</p>
-												</td>
-											</tr>
-											<tr>
-												<td >
-													<h3><a href="#/connect_service_revenue" data-bind="text: lang.lang.connection_service_revenue_report">Connection Service Revenue Report</a></h3>
-												</td>
-												<td >
-													<h3><a href="#/fine_collect" data-bind="text: lang.lang.fine_collection_report">Fine Collection Report</a></h3>
-													
-												</td>
-											</tr>
-											<tr>
-												<td >
-													<p style="padding-right: 25px;"  data-bind="text: lang.lang.connection_service_revenue_description">
-													Lists individual connection revenue service by date for each customer with a period of time.
-													</p>
-												</td>
-												<td style="vertical-align: top;" data-bind="text: lang.lang.fine_collection_description">
-													<p>
-														list individual fine by date for each customer with a period of time.
-													</p>
-												</td>
-											</tr>
-											<tr>
+									<div class="row">
+										<div class="col-sm-6">
+											<table class="table table-borderless table-condensed">
+												<tr>
+													<td style="width: 50%">
+														<h3><a href="#/sale_summary" data-bind="text: lang.lang.sale_summary_report">Sale Summary Report</a></h3>
+													</td>
+													<td >
+														<h3><a href="#/sale_detail" data-bind="text: lang.lang.sale_detail_report">Sale Detail Report</a></h3>								
+													</td>
+												</tr>
+												<tr>
+													<td >
+														<p style="padding-right: 25px;"  data-bind="text: lang.lang.summarizes_total_sales">
+														Summarizes total sales for each customer within a period 
+														of time so you can see which ones generate the most revenue for you.
+														</p>
+													</td>
+													<td style="vertical-align: top;" data-bind="text: lang.lang.lists_individual_sale">
+														<p>
+															Lists individual sale transactions by date for each customer with a period of time.
+														</p>
+													</td>
+												</tr>
+												<tr>
+													<td >
+														<h3><a href="#/connect_service_revenue" data-bind="text: lang.lang.connection_service_revenue_report">Connection Service Revenue Report</a></h3>
+													</td>
+													<td >
+														<h3><a href="#/fine_collect" data-bind="text: lang.lang.fine_collection_report">Fine Collection Report</a></h3>
+														
+													</td>
+												</tr>
+												<tr>
+													<td >
+														<p style="padding-right: 25px;"  data-bind="text: lang.lang.connection_service_revenue_description">
+														Lists individual connection revenue service by date for each customer with a period of time.
+														</p>
+													</td>
+													<td style="vertical-align: top;" data-bind="text: lang.lang.fine_collection_description">
+														<p>
+															list individual fine by date for each customer with a period of time.
+														</p>
+													</td>
+												</tr>
+											</table>
+										</div>
+										<div class="col-sm-6">
+											<div class="home-chart">
 												<div class="chart" >
-														<div data-role="chart"
-															 data-auto-bind="true"
-												             data-legend="{ position: 'top' }"
-												             data-series-defaults="{ type: 'column' }"
-												             data-tooltip='{
-												                visible: true,
-												                format: "{0}%",
-												                template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
-												             }'                 
-												             data-series="[
-												                             { field: 'amount', name: langVM.lang.sale, categoryField:'month', color: '#203864', overlay:{ gradient: 'none'}  }
-												                         ]"
-												             data-bind="source: graphSale"
-												             style="height: 240px; " >
-														</div>
+													<div data-role="chart"
+														 data-auto-bind="true"
+											             data-legend="{ position: 'top' }"
+											             data-series-defaults="{ type: 'column' }"
+											             data-tooltip='{
+											                visible: true,
+											                format: "{0}%",
+											                template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
+											             }'                 
+											             data-series="[
+											                             { field: 'amount', name: langVM.lang.sale, categoryField:'month', color: '#203864', overlay:{ gradient: 'none'}  }
+											                         ]"
+											             data-bind="source: graphSale"
+											             style="height: 240px; " >
 													</div>
-											</tr>
-										</table>
+												</div>
+											</div>
+										</div>
 									</div>
 								</div>
 				        	</div>
@@ -10354,58 +10360,66 @@
 									<p data-bind="text: lang.lang.summary_and_detail_cash">
 										Summary and detail cash receipt reports grouped by sources/ methods of receipts 
 									</p>
-									<div class="row-fluid">
-										<table class="table table-borderless table-condensed">
-											<tr>
-												<td style="width: 50%">
-													<h3><a href="#/cash_receipt_detail" data-bind="text: lang.lang.cash_receipt_detail">Cash Receipt Detail</a></h3>
-												</td>
-												<td >
-													<h3><a href="#/cash_receipt_source_detail" data-bind="text: lang.lang.cash_receipt_by_sources_detail">Cash Receipt By Sources Detail</a></h3>								
-												</td>
-												<td>
+									<div class="row">
+										<div class="col-sm-6">
+											<table class="table table-borderless table-condensed">
+												<tr>
+													<td style="width: 50%">
+														<h3><a href="#/cash_receipt_detail" data-bind="text: lang.lang.cash_receipt_detail">Cash Receipt Detail</a></h3>
+													</td>
+													<td >
+														<h3><a href="#/cash_receipt_source_detail" data-bind="text: lang.lang.cash_receipt_by_sources_detail">Cash Receipt By Sources Detail</a></h3>								
+													</td>
+													<td>
 
-												</td>
-											</tr>
-											<tr>
-												<td >
-													<p style="padding-right: 25px;"  data-bind="text: lang.lang.cash_receipt_description">
-													Lists of cash receipt for the select period of time, group by method of payment.
-													</p>
-												</td>
-												<td style="vertical-align: top;" data-bind="text: lang.lang.cash_receipt_sources_description">
-													<p>
-														Lists of cash receipt by sources for the select period of time, group by method of payment.
-													</p>
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<div class="chart" >
-														<div data-role="chart"
-															 data-auto-bind="true"
-												             data-legend="{ position: 'top' }"
-												             data-series-defaults="{ type: 'column' }"
-												             data-tooltip='{
-												                visible: true,
-												                format: "{0}%",
-												                template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
-												             }'                 
-												             data-series="[
-												                             { field: 'amount', name: langVM.lang.moneyCollection, categoryField:'month', color: '#203864', overlay:{ gradient: 'none'}  }
-												                         ]"
-												             data-bind="source: graphMoney"
-												             style="height: 240px; " >
-														</div>
+													</td>
+												</tr>
+												<tr>
+													<td >
+														<p style="padding-right: 25px;"  data-bind="text: lang.lang.cash_receipt_description">
+														Lists of cash receipt for the select period of time, group by method of payment.
+														</p>
+													</td>
+													<td style="vertical-align: top;" data-bind="text: lang.lang.cash_receipt_sources_description">
+														<p>
+															Lists of cash receipt by sources for the select period of time, group by method of payment.
+														</p>
+													</td>
+												</tr>
+											</table>
+										</div>
+										<div class="col-sm-6">
+											<div class="home-chart">
+												<div class="chart" >
+													<div data-role="chart"
+														 data-auto-bind="true"
+											             data-legend="{ position: 'top' }"
+											             data-series-defaults="{ type: 'column' }"
+											             data-tooltip='{
+											                visible: true,
+											                format: "{0}%",
+											                template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
+											             }'                 
+											             data-series="[
+											                             { field: 'amount', name: langVM.lang.moneyCollection, categoryField:'month', color: '#203864', overlay:{ gradient: 'none'}  }
+											                         ]"
+											             data-bind="source: graphMoney"
+											             style="height: 240px; " >
 													</div>
-												</td>
-											</tr>
-										</table>
+												</div>
+											</div>
+										</div>
 									</div>
 								</div>
 				        	</div>
 					        <!-- //ACCOUNTING END -->
 
+
+					        <div class="tab-pane" id="tab7">
+								<div class="row-fluid sale-report">
+									<h2 style="margin-bottom: 10px;" data-bind="text: lang.lang.meter_report_map"></h2>
+								</div>
+							</div>
 					    </div>
 					</div>
 				</div>

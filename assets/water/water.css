@@ -731,6 +731,14 @@ input{
 #tab1 .col-sm-3.col-sx-12 textarea{
   resize: none;
 }
+
+.home-chart{
+  display: inline-block;
+  width: 100%;
+  padding: 10px;
+  background: #fff;
+}
+
 .sale-report .table > tbody > tr > td,
 .customer-report-center tbody > tr > td,
 #plan .table tbody > tr > td{
@@ -898,7 +906,7 @@ input{
 }
 
 
-@charset "UTF-8";
+
 /* CSS Document */
 .winvoice-print * {
 	font-family: 'Content', Arial!important;
@@ -1055,3 +1063,4 @@ input{
 	    margin-top: 13px;
 	}
 }
+                        
