@@ -337,12 +337,13 @@ class Waterdash extends REST_Controller {
 					}
 				}
 
-				// $totalAllowCustomer = $value->max_customer == 0 ? 0: $nContact / intval($value->max_customer);
+				$contact = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$contact->where('use_water', '1');
+				$nContact 		= $contact->count();
+								
+				$totalActiveCustomer = $value->max_customer == 0 ? 0: $activeCount / $value->max_customer;
 
-				// $contact = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				// $contact->where('use_water', '1');
-				// $nContact 		= $contact->count();				
-				// $totalActiveCustomer = $value->max_customer == 0 ? 0: $activeCount / $value->max_customer;
+				$totalAllowCustomer = $value->max_customer == 0 ? 0: ($nContact / intval($value->max_customer));
 
 		
 				// $trxSale = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
