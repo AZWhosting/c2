@@ -327,42 +327,42 @@ class Waterdash extends REST_Controller {
 			$avg = 0;
 			$activeCount =0;
 			$inActiveCount = 0;
-			foreach($location as $loc) {
-				$meter = $loc->meter->where('activated', 1)->get_iterated();
-				foreach($meter as $c) {
-					if($c->status == 1) {
-						$activeCount += 1;
-					} else {
-						$inActiveCount += 1;
-					}
-				}
+			// foreach($location as $loc) {
+			// 	$meter = $loc->meter->where('activated', 1)->get_iterated();
+			// 	foreach($meter as $c) {
+			// 		if($c->status == 1) {
+			// 			$activeCount += 1;
+			// 		} else {
+			// 			$inActiveCount += 1;
+			// 		}
+			// 	}
 
-				$totalAllowCustomer = $value->max_customer == 0 ? 0: $nContact / intval($value->max_customer);
+			// 	$totalAllowCustomer = $value->max_customer == 0 ? 0: $nContact / intval($value->max_customer);
 
-				$contact = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$contact->where('use_water', '1');
-				$nContact 		= $contact->count();				
-				$totalActiveCustomer = $value->max_customer == 0 ? 0: $activeCount / $value->max_customer;
+			// 	$contact = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			// 	$contact->where('use_water', '1');
+			// 	$nContact 		= $contact->count();				
+			// 	$totalActiveCustomer = $value->max_customer == 0 ? 0: $activeCount / $value->max_customer;
 
 		
-				$trxSale = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$trxSale->select_sum('amount');
-				$trxSale->where('type', 'Utility_Invoice');
-				$trxSale->where('location_id', $loc->id)->get_iterated();
-				$totalAmount += $trxSale->amount;
+			// 	$trxSale = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			// 	$trxSale->select_sum('amount');
+			// 	$trxSale->where('type', 'Utility_Invoice');
+			// 	$trxSale->where('location_id', $loc->id)->get_iterated();
+			// 	$totalAmount += $trxSale->amount;
 
-				$avgIncome = $activeCount == 0? 0 : $totalAmount  / $activeCount;
+			// 	$avgIncome = $activeCount == 0? 0 : $totalAmount  / $activeCount;
 
-				$avgUsage = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$trxSale->where('location_id', $loc->id)->get_iterated();
-				$avgUsage->get_iterated();
-				$avg = 0;
-				foreach($avgUsage as $avgUsg) {
-					$totalUsage += $avgUsg->usage;
-				}
-				$avg = $activeCount == 0 ? 0:$totalUsage / $activeCount;
+			// 	$avgUsage = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			// 	$trxSale->where('location_id', $loc->id)->get_iterated();
+			// 	$avgUsage->get_iterated();
+			// 	$avg = 0;
+			// 	foreach($avgUsage as $avgUsg) {
+			// 		$totalUsage += $avgUsg->usage;
+			// 	}
+			// 	$avg = $activeCount == 0 ? 0:$totalUsage / $activeCount;
 
-			}
+			// }
 			$data['results'][] = array(
 				'id' => $value->id,
 				'name'=>$value->name,
