@@ -347,21 +347,20 @@ class Waterdash extends REST_Controller {
 
 		
 				$trxSale = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$trxSale->select_sum('amount');
 				$trxSale->where('type', 'Utility_Invoice');
 				$trxSale->where('location_id', $loc->id)->get_iterated();
 				$totalAmount += $trxSale->amount;
 
 				$avgIncome = $activeCount == 0 ? 0 : ($totalAmount  / $activeCount);
 
-				// $avgUsage = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				// $trxSale->where('location_id', $loc->id)->get_iterated();
-				// $avgUsage->get_iterated();
-				// $avg = 0;
-				// foreach($avgUsage as $avgUsg) {
-				// 	$totalUsage += $avgUsg->usage;
-				// }
-				// $avg = $activeCount == 0 ? 0:$totalUsage / $activeCount;
+				$avgUsage = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$trxSale->where('location_id', $loc->id)->get_iterated();
+				$avgUsage->get_iterated();
+				$avg = 0;
+				foreach($avgUsage as $avgUsg) {
+					$totalUsage += $avgUsg->usage;
+				}
+				$avg = $activeCount == 0 ? 0:$totalUsage / $activeCount;
 			}
 			$data['results'][] = array(
 				'id' => $value->id,

@@ -283,7 +283,7 @@
 									<span data-bind="text: lang.lang.disconnect_meter" style="font-size:15px; "></span>
 								</div>
 								<div class="span2" style=" text-align: center; font-size: 18px; font-weight: 600; padding: 0;">
-									<span style="float: right;" data-bind="text: totalDisconnect"></span>
+									0
 								</div>
 							</div>
 						</a>
@@ -921,13 +921,13 @@
 								            	<input data-role="dropdownlist"
 								            	   class="span2"
 								            	   style="padding-right: 1px; height: 32px; margin-right: 10px;" 
-						            			   data-option-label="(--- Acount ---)"
+						            			   data-option-label="(--- Tax ---)"
 						            			   data-auto-bind="false"			                   
 								                   data-value-primitive="false"
 								                   data-text-field="name"
 								                   data-value-field="id"
-								                   data-bind="value: serviceAccount,
-								                              source: tariffAccDS"/>
+								                   data-bind="value: ,
+								                              source: taxDs"/>
 								                <input data-role="dropdownlist"
 								            	   class="span2"
 								            	   style="padding-right: 1px; height: 32px; margin-right: 10px;" 
@@ -966,13 +966,13 @@
 								            	<input data-role="dropdownlist"
 								            	   class="span2"
 								            	   style="padding-right: 1px; height: 32px; margin-right: 10px;" 
-						            			   data-option-label="(--- Acount ---)"
+						            			   data-option-label="(--- Tax ---)"
 						            			   data-auto-bind="false"			                   
 								                   data-value-primitive="false"
 								                   data-text-field="name"
 								                   data-value-field="id"
 								                   data-bind="value: maintenanceAccount,
-								                              source: tariffAccDS"/>
+								                              source: taxDs"/>
 								                <input data-role="dropdownlist"
 								            	   class="span2"
 								            	   style="padding-right: 1px; height: 32px; margin-right: 10px;" 
@@ -10006,8 +10006,8 @@
 					            <li >
 					            	<a href="#tab6" data-toggle="tab"><span data-bind="text: lang.lang.cash_receipt_report"></span></a>
 					            </li>
-					            <li >
-					            	<a href="#tab7" data-toggle="tab"><span data-bind="text: lang.lang.meter_report_map"></span></a>
+					            <li data-bind="click: viewMap">
+					            	<a href="#tab7" data-toggle="tab"><span data-bind="text: lang.lang.meter_report_map" ></span></a>
 					            </li>
 					        </ul>
 					    </div>
@@ -10430,9 +10430,13 @@
 					        <!-- //ACCOUNTING END -->
 
 
-					        <div class="tab-pane" id="tab7">
+					        <div class="tab-pane" id="tab7" >
 								<div class="row-fluid sale-report">
-									<h2 style="margin-bottom: 10px;" data-bind="text: lang.lang.meter_report_map"></h2>
+									<h1 style="text-align: center; padding: 20px;">Coming Soon !!</h1>
+									<!-- <h2 style="margin-bottom: 10px;" data-bind="text: lang.lang.meter_report_map"></h2>
+									<div id="map" style="border: 1px solid green; height: 70%; width: 100%">
+										sdklasdj
+									</div> -->
 								</div>
 							</div>
 					    </div>
@@ -11381,6 +11385,14 @@
 																value: blocSelect,
 																enabled: haveBloc,
 																source: blocDS" style="width: 100%">
+												</div>
+												<div class="col-xs-12-3 col-sm-2">
+													<span >Water</span>
+													 <input id="usage" name="usage" class="k-textbox" 
+													 	data-option-label="Usage ..." 
+									            		data-bind="{placeholder: Usage }"
+									            					
+									              		style="width: 100%;" />
 												</div>
 												<div class="col-xs-12-3 col-sm-1">											
 										  			<button style="margin-top: 20px;" type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>

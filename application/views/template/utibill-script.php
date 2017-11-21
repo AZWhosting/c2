@@ -1,7 +1,7 @@
 <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/js/libs/localforage.min.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jszip/2.4.0/jszip.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.js"></script>
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
 <script>
     localforage.config({
         driver: localforage.LOCALSTORAGE,
@@ -4151,6 +4151,16 @@
                 value: 1
             }
         }),
+        taxDs: [
+            {
+                id: "noTax",
+                name: "NoTax"
+            },
+            {
+                id: "Tax",
+                name: "Tax"
+            }
+        ],
         licenseDS: dataStore(apiUrl + "branches"),
         branchDS: dataStore(apiUrl + "branches"),
         planDS: dataStore(apiUrl + "plans"),
@@ -12094,7 +12104,117 @@
         cancel: function() {
             this.dataSource.data([]);
             banhji.router.navigate("/");
-        }
+        },
+        // bindMarkerToPolylines(marker, index) {
+        //     var infoWindow = new google.maps.InfoWindow();
+        //     google.maps.event.addListener(marker, 'click', function(e) {
+        //         var nextlatlng, prevlatlng, newMarkerLatLng = marker.getPosition();
+
+        //         // for all markers apart from the last one, we have the polyline from this marker to the next one to update
+        //         if (index < arrDestinations.length-1) {
+        //             nextlatlng = new google.maps.LatLng(arrDestinations[index+1].lat, arrDestinations[index+1].lng);
+        //             arrDestinations[index].polyline.setPath([newMarkerLatLng, nextlatlng]);
+        //         }
+
+        //         // for all markers apart from the first one, we have the polyline to this marker from the previous one
+        //         if (index > 0) {
+        //             prevlatlng = new google.maps.LatLng(arrDestinations[index-1].lat, arrDestinations[index-1].lng);
+        //             arrDestinations[index-1].polyline.setPath([prevlatlng, newMarkerLatLng]);
+        //         }
+
+        //         // update our lat/lng values
+        //         arrDestinations[index].lat = newMarkerLatLng.lat();
+        //         arrDestinations[index].lng = newMarkerLatLng.lng();
+        //         infoWindow.setContent("<div style = 'width:200px;min-height:40px'>" 
+        //             +"<b>"+ arrDestinations[index].title +"</b>"+"<br><br>"
+        //             + arrDestinations[index].lat + " ," 
+        //             + arrDestinations[index].lng + "</div>");
+
+        //         infoWindow.open(map, marker);
+        //     });
+        // },
+        // initMap() {
+        //     map = new google.maps.Map(document.getElementById('map'), {
+        //       center: {lat: -34.397, lng: 150.644},
+        //       zoom: 8
+        //     });
+        // },
+        // viewMap: function() {
+        //     var arrDestinations;
+        //     var mapElemnt = $("#map");
+        //     var map;
+        //     this.initMap();
+        //     google.maps.event.addDomListener(window, 'load', this.initialize());
+        // },
+        // initialize: function() {
+
+        //         var i, latlng, nextlatlng, marker, map = new google.maps.Map(map, {
+        //             zoom: 17,
+        //             center: new google.maps.LatLng(10.598616,104.165910),
+        //             mapTypeId: google.maps.MapTypeId.ROADMAP
+        //         });
+
+        //         arrDestinations = [
+        //             {lat: 10.599540, lng: 104.167985, title: "WS-0001 តេង​ ពេញ"},
+        //             {lat: 10.599614, lng: 104.167561, title: "WS-0002 ពេជ្រ វណ្ណៈ"},
+        //             {lat: 10.599630, lng: 104.167132, title: "WS-0003 សុខ សារួន"},
+        //             {lat: 10.599630, lng: 104.166166, title: "WS-0004 ចឹក តុប"},          
+        //             {lat: 10.599556, lng: 104.165501, title: "WS-0005 គ្រី តង"},
+        //             {lat: 10.599451, lng: 104.165122, title: "WS-0006 ជីព ផល"},
+        //             {lat: 10.599436, lng: 104.165064, title: "WS-0007 ខាត់ ខៃ"},
+        //             {lat: 10.599299, lng: 104.164277, title: "WS-0008 ផូ ស្រី"},
+        //             {lat: 10.599312, lng: 104.163700, title: "WS-0009 បូ ថារី"},
+        //             {lat: 10.599254, lng: 104.163641, title: "WS-0010 ចែត សំបូរ"},
+        //             {lat: 10.599232, lng: 104.163453, title: "WS-0011 ហ៊ីង ណែម"},
+        //             {lat: 10.599198, lng: 104.163319, title: "WS-0012 ជា​ ជំនិត"}, 
+        //             {lat: 10.599162, lng: 104.163362, title: "WS-0013 កាយ ម៉ៅ"},
+        //             {lat: 10.599020, lng: 104.163469, title: "WS-0014 អុន ឌីណា"},
+        //             {lat: 10.598917, lng: 104.163541, title: "WS-0015 អ៊ុច ហូរ"},
+        //             {lat: 10.598818, lng: 104.163635, title: "WS-0016 ពេជ្រ ចន្ធូ"},
+        //             {lat: 10.598657, lng: 104.163825, title: "WS-0017 នួន នឿន"},
+        //             {lat: 10.598483, lng: 104.163964, title: "WS-0018 អ៊ុច សេងគង័"},
+        //             {lat: 10.598389, lng: 104.164031, title: "WS-0019 ផាន វៃ"},
+        //             {lat: 10.598194, lng: 104.164203, title: "WS-0020 ដូង ស៊ីណាត"},
+        //             {lat: 10.598141, lng: 104.164102, title: "WS-0021 សំ រ៉េន"},
+        //             {lat: 10.598291, lng: 104.163984, title: "WS-0022 រឺន វណ្ណា"},
+        //             {lat: 10.598562, lng: 104.163683, title: "WS-0023 ទេព សុភា"}, 
+        //             {lat: 10.598710, lng: 104.163576 , title: "WS-0024 បូ សៅ"},
+        //             {lat: 10.599039, lng: 104.163267, title: "WS-0025 ណយ ភាស់"},
+        //             {lat: 10.599081, lng: 104.162980 , title: "WS-0026 ជា យូរ៉ា"},
+        //             {lat: 10.599039, lng: 104.162556 , title: "WS-0027 វី​ ណារី"},  
+        //             {lat: 10.599039, lng: 104.162556 , title: "WS-0028 ជា សេង"},
+        //             {lat: 10.599023, lng: 104.162272 , title: "WS-0029 ហឿង ហាក់"},
+        //             {lat: 10.598873, lng: 104.161317 , title: "WS-0030 ណុច សាវី"},
+        //             {lat: 10.598556, lng: 104.160544 , title: "WS-0030 ណុច សាវី"},
+        //             {lat: 10.597823, lng: 104.160409 , title: "WS-0030 ណុច សាវី"} 
+                    
+        //         ]; 
+        //         var self = this;
+        //         for (i = 0; i < arrDestinations.length; i++) {
+        //             latlng = new google.maps.LatLng(arrDestinations[i].lat, arrDestinations[i].lng);
+
+        //             if (i < arrDestinations.length-1) {
+        //                 nextlatlng = new google.maps.LatLng(arrDestinations[i+1].lat, arrDestinations[i+1].lng);
+
+        //                 // draw a line from this marker to the next one 
+        //                 arrDestinations[i].polyline = new google.maps.Polyline({
+        //                     path: [latlng, nextlatlng],
+        //                     strokeColor: "#FF0000",
+        //                     strokeOpacity: 0.5,
+        //                     strokeWeight: 2,
+        //                     map: map
+        //                 });
+        //             }
+
+        //             marker = new google.maps.Marker({
+        //                 position: latlng,
+        //                 map: map, 
+        //                 title: arrDestinations[i].title
+        //             });
+
+        //             self.bindMarkerToPolylines(marker, i);
+        //         }
+        // }   
     });
     banhji.customerList = kendo.observable({
         lang                    : langVM,
@@ -18247,6 +18367,7 @@
             });
         }
     });
+
     banhji.importContact = kendo.observable({
         lang: langVM,
         dataSource: dataStore(apiUrl + "imports/wcontact"),
