@@ -994,7 +994,7 @@ var	km_KH = {
 	"trial_balance" : "តារាង​តុល្យ ការណ៍",
 	"chart_of_account" : "តារាង​គណនី",
 	"statement_of_profit_or_loss" : "របាយការណ៍​ចំណេញ ឬ ខាត",
-	"statement_of_profit_or_loss_by_nature" : "របាយការណ៍​ចំណេញ ឬ ខាតដុល",
+	"statement_of_profit_or_loss_by_nature" : "របាយការណ៍​ចំណេញ ឬ ខាតតាមប្រភេទចំណាយ",
 	"statement_of_financial_position" : "របាយការណ៍​ស្ថានភាព​ហិរញ្ញវត្ថុ",
 	"total_no_of_transactions" : "ល.រ សរុប​ប្រតិបត្តិការ",
 	"total_dr_balance" : "សមតុល្យ​ឥណពន្ធ",

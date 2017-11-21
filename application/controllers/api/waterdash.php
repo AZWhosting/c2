@@ -265,7 +265,7 @@ class Waterdash extends REST_Controller {
 
 		$obj = new Branch(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$obj->order_by('id', 'asc');
-		$obj->get();
+		$obj->get_iterated();
 		foreach($obj as $value) {
 			$location = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$location->where('branch_id', $value->id);
@@ -283,7 +283,7 @@ class Waterdash extends REST_Controller {
 			$activeCount =0;
 			$inActiveCount = 0;
 			foreach($location as $loc) {
-				$meter = $loc->meter->where('activated', 1)->get();
+				$meter = $loc->meter->where('activated', 1)->get_iterated();
 				foreach($meter as $c) {
 					if($c->status == 1) {
 						$activeCount += 1;
@@ -303,14 +303,14 @@ class Waterdash extends REST_Controller {
 				$trxSale = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				$trxSale->select_sum('amount');
 				$trxSale->where('type', 'Utility_Invoice');
-				$trxSale->where('location_id', $loc->id)->get();
+				$trxSale->where('location_id', $loc->id)->get_iterated();
 				$totalAmount += $trxSale->amount;
 
 				$avgIncome = $activeCount == 0? 0 : $totalAmount  / $activeCount;
 
 				$avgUsage = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$trxSale->where('location_id', $loc->id)->get();
-				$avgUsage->get();
+				$trxSale->where('location_id', $loc->id)->get_iterated();
+				$avgUsage->get_iterated();
 				$avg = 0;
 				foreach($avgUsage as $avgUsg) {
 					$totalUsage += $avgUsg->usage;
