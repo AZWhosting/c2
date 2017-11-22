@@ -52,6 +52,14 @@ class Contacts extends REST_Controller {
 	    				$obj->like($value['field'], $value['value'], 'after');
 	    			}else if($value['operator']=="contains"){
 	    				$obj->like($value['field'], $value['value'], 'both');
+	    			}else if($value['operator']=="by_user_id"){
+	    				$employeeUsers = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	    				$employeeUsers->where("user_id", $value['value']);
+	    				$employeeUsers->get();
+
+	    				if($employeeUsers->exists()){
+	    					$obj->where_related_contact_assignee($value['field'], $employeeUsers->id);
+	    				}
 	    			}else{
 						$obj->{$value['operator']}($value['field'], $value['value']);
 	    			}

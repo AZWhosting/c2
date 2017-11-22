@@ -921,17 +921,17 @@
 								            	<input data-role="dropdownlist"
 								            	   class="span2"
 								            	   style="padding-right: 1px; height: 32px; margin-right: 10px;" 
-						            			   data-option-label="(--- Tax ---)"
+						            			   data-option-label="(--- Account ---)"
 						            			   data-auto-bind="false"			                   
 								                   data-value-primitive="false"
 								                   data-text-field="name"
 								                   data-value-field="id"
 								                   data-bind="value: ,
-								                              source: taxDs"/>
+								                              source: tariffAccDS"/>
 								                <input data-role="dropdownlist"
 								            	   class="span2"
 								            	   style="padding-right: 1px; height: 32px; margin-right: 10px;" 
-						            			   data-option-label="(--- Currency ---)"
+						            			   data-option-label="(--- Account ---)"
 						            			   data-auto-bind="false"			                   
 								                   data-value-primitive="true"
 								                   data-text-field="code"
@@ -972,7 +972,7 @@
 								                   data-text-field="name"
 								                   data-value-field="id"
 								                   data-bind="value: maintenanceAccount,
-								                              source: taxDs"/>
+								                              source: tariffAccDS"/>
 								                <input data-role="dropdownlist"
 								            	   class="span2"
 								            	   style="padding-right: 1px; height: 32px; margin-right: 10px;" 
