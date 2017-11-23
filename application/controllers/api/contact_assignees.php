@@ -98,12 +98,6 @@ class Contact_assignees extends REST_Controller {
 			
 			isset($value->assignee_id) 	? $obj->assignee_id = $value->assignee_id : "";
 			isset($value->contact_id) 	? $obj->contact_id  = $value->contact_id : "";
-
-			// //Delete previouse
-			// $prevObj = new Contact_assignee(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			// $prevObj->where("assignee_id", $value->assignee_id);
-			// $prevObj->get();
-			// $prevObj->delete();
 						
 			if($obj->save()){
 				$data["results"][] = array(

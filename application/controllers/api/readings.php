@@ -143,7 +143,6 @@ class Readings extends REST_Controller {
 						"meter_number" 	=> $meter->number,
 						"prev"			=> $obj->previous,
 						"current"		=> $obj->current,
-						"usage"	 		=> $obj->current - $obj->previous,
 						"from_date"		=> $obj->from_date,
 						"month_of"		=> $obj->month_of,
 						"invoiced" 		=> $obj->invoiced,

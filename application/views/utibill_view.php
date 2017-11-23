@@ -6743,7 +6743,7 @@
 						<td>#: meter.location[0].abbr# - #: meter.meter_number#</td>
 						<td align="center"><strong>#: invoice_lines[0].previous#</strong></td>
 						<td align="center"><strong>#: invoice_lines[0].current#</strong></td>
-						<td align="center"><strong>#: meter.meter_multipier#</strong></td>
+						<td align="center"><strong>#: meter.meter_multiplier#</strong></td>
 						<td align="center"><strong>#: invoice_lines[0].consumption#</strong></td>
 						<td></td>
 						<td></td>

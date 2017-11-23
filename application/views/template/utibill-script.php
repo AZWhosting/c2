@@ -7586,8 +7586,6 @@
                     if (PAmount > 0) {
                         ReactivePrice = (PAmount * AmountUsage) * 0.025;
                     }
-                }
-                if (ReactivePrice > 0) {
                     invoiceItems.push({
                         "item_id": v.reactive.id,
                         "invoice_id": 0,
