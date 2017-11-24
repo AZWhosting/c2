@@ -1636,8 +1636,8 @@ class Sales extends REST_Controller {
 		$this->response($data, 200);
 	}
 
-	//SALE ORDER LIST
-	function sale_order_list_get() {
+	//TRANSACTION LIST
+	function transaction_list_get() {
 		$filter 	= $this->get("filter");
 		$page 		= $this->get('page');
 		$limit 		= $this->get('limit');
@@ -1671,7 +1671,6 @@ class Sales extends REST_Controller {
 
 		//Results
 		$obj->include_related("contact", array("abbr","number","name"));
-		$obj->where("type", "Sale_Order");
 		$obj->where("is_recurring <>", 1);
 		$obj->where("deleted <>", 1);
 		$obj->order_by("issued_date", "asc");

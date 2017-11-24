@@ -7710,29 +7710,26 @@
             var self = this;
             var date = new Date();
             var rate = banhji.source.getRate(Locale, date);
-            if (jQuery.inArray(MeterRID, this.temGroupArray) != -1) {
-            }else{
-                this.temGroupArray.push({
-                    "total": Total,
-                    "meter_id": MeterID,
-                    "meter_number": MeterNum,
-                    "meter_location": MeterLocation,
-                    "meter_pole": MeterPole,
-                    "meter_box": MeterBox,
-                    "current": Current,
-                    "previous": Previous,
-                    "multi": Multi,
-                    "usage": Usage,
-                    "locale": Locale,
-                    "rate": rate,
-                    "contact": Contact,
-                    "tariff": Tariff,
-                    "fine": Fine,
-                    "group": Group,
-                    "meter_record_id": MeterRID,
-                });
-                this.tmpGroup = [];
-            }
+            this.temGroupArray.push({
+                "total": Total,
+                "meter_id": MeterID,
+                "meter_number": MeterNum,
+                "meter_location": MeterLocation,
+                "meter_pole": MeterPole,
+                "meter_box": MeterBox,
+                "current": Current,
+                "previous": Previous,
+                "multi": Multi,
+                "usage": Usage,
+                "locale": Locale,
+                "rate": rate,
+                "contact": Contact,
+                "tariff": Tariff,
+                "fine": Fine,
+                "group": Group,
+                "meter_record_id": MeterRID,
+            });
+            this.tmpGroup = [];
             if (jQuery.inArray(Group, this.tmpGroup) != -1) {
             }else{
                 this.tmpGroup.push(Group);
@@ -9672,6 +9669,8 @@
                                     payment_term_id: value.payment_term_id,
                                     payment_method_id: obj.payment_method_id,
                                     reference_id: value.id,
+                                    due_date_fine: value.due_date,
+                                    status_inv_fine: value.status,
                                     user_id: self.get("user_id"),
                                     check_no: value.check_no,
                                     reference_no: value.number,
@@ -10127,6 +10126,8 @@
                                     payment_method_id: obj.payment_method_id,
                                     reference_id: v.id,
                                     reference_no: v.number,
+                                    due_date_fine: v.due_date,
+                                    status_inv_fine: v.status,
                                     number: "",
                                     invnumber: v.number,
                                     type: "Cash_Receipt",
@@ -10424,6 +10425,7 @@
             });
         },
         amountReceive: 0,
+        oldAmountR: 0,
         changes: function() {
             var self = this,
                 obj = this.get("obj"),
@@ -10443,7 +10445,12 @@
                 total_received += kendo.parseFloat(value.amount) / value.rate;
                 if(banhji.institute.id != 860){
                     amountFine += kendo.parseFloat(value.amount_fine);
+                }else{
+                    if(value.status_inv_fine == 0){
+                        self.checkFineBKK(value.due_date_fine,value.amountshow);
+                    }
                 }
+                self.set("oldAmountR", value.amount_fine);
             });
             total = sub_total - discount;
             remaining = total - total_received;
@@ -10452,14 +10459,34 @@
             this.set("total", kendo.toString(total, banhji.locale == "km-KH" ? "c0" : "c", banhji.locale));
             if(banhji.institute.id != 860){
                 this.set("amountFine", kendo.toString(amountFine, banhji.locale == "km-KH" ? "c0" : "c", banhji.locale));
-            }else{
-                //Check fine for Borey Kamkor
-                this.checkFineBKK();
             }
             this.set("total_received", kendo.toString(total_received, banhji.locale == "km-KH" ? "c0" : "c", banhji.locale));
             obj.set("remaining", remaining);
             this.set("amountReceive", total_received)
             this.setDefaultReceiptCurrency(total_received);
+        },
+        bkkFineAmount: 0,
+        checkFineBKK: function(DUEDATE, AMOUNT){
+            var chDATE = this.daysBetween(new Date(DUEDATE), new Date("<?php echo date('Y-m-d'); ?>"));
+            if(chDATE > 30){
+
+            }else if(chDATE > 0){
+                var tmpABKK = AMOUNT * 0.01;
+                var oAfine = this.get("oldAmountR");
+                if(tmpABKK > 0){
+                    this.set("amountFine", kendo.toString(oAfine + (chDATE * tmpABKK), banhji.locale == "km-KH" ? "c0" : "c", banhji.locale));
+                    this.set("haveFine", true);
+                }
+            }
+        },
+        treatAsUTC: function(date) {
+            var result = new Date(date);
+            result.setMinutes(result.getMinutes() - result.getTimezoneOffset());
+            return result;
+        },
+        daysBetween: function(startDate, endDate) {
+            var millisecondsPerDay = 24 * 60 * 60 * 1000;
+            return (this.treatAsUTC(endDate) - this.treatAsUTC(startDate)) / millisecondsPerDay;
         },
         removeRow: function(e) {
             var self = this;
@@ -21209,6 +21236,7 @@
                 filter: {field: "id", value: data.id}
             }).then(function(e){
                 var view = self.singleInvDS.view();
+                banhji.InvoicePrint.dataSource = [];
                 banhji.InvoicePrint.dataSource.push(view[0]);
                 banhji.InvoicePrint.txnFormID = 14;
                 self.branchDS.query({
