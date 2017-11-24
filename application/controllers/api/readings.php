@@ -133,7 +133,7 @@ class Readings extends REST_Controller {
 				$obj->from_date = isset($value->from_date) 	? date('Y-m-d', strtotime($value->from_date)) : date('Y-m-d');
 				$obj->month_of 	= isset($value->month_of)	? date('Y-m-d', strtotime($value->month_of)): date('Y-m-d');
 				$obj->to_date 	= isset($value->to_date)	? date('Y-m-d', strtotime($value->to_date)):date('Y-m-d');
-				$obj->invoiced 	=  0;
+				$obj->invoiced 		= isset($value->invoiced)	? $value->invoiced : 0;
 				$obj->created_at = date('Y-m-d H:i:s');
 				if($obj->save()){								
 					//Respsone

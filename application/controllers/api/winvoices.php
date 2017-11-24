@@ -351,6 +351,13 @@ class Winvoices extends REST_Controller {
 		   				$rerecord->invoiced = 1;
 		   				$rerecord->save();
 		   			}
+		   			//Update Record Type Meter
+		   			if(isset($row->type) && $row->type == 'meter'){
+		   				$mrecord = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		   				$mrecord->where('id', $row->meter_record_id)->get();
+		   				$mrecord->invoiced = 1;
+		   				$mrecord->save();
+		   			}
 		   			$line = new Winvoice_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		   			$line->transaction_id 	= $obj->id;
 		   			$line->meter_record_id 	= isset($row->meter_record_id) ? $row->meter_record_id : "";
@@ -625,7 +632,7 @@ class Winvoices extends REST_Controller {
 							'number' => $item->description,
 							'previous' => floatval($meterdate->previous),
 							'current'  => floatval($meterdate->current),
-							'consumption' => floatval($meterdate->consumption),
+							'consumption' => floatval($meterdate->usage),
 							'rate' => floatval($item->rate),
 							'amount' => $item->amount,
 							'type' => $item->type,

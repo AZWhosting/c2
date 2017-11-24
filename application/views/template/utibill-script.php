@@ -6609,6 +6609,7 @@
                 to_date: this.get("issued_date"),
                 current: obj.starting_no,
                 invoiced: 1,
+                round: 0,
                 condition: "new",
                 consumption: 0
             });
@@ -7709,26 +7710,29 @@
             var self = this;
             var date = new Date();
             var rate = banhji.source.getRate(Locale, date);
-            this.temGroupArray.push({
-                "total": Total,
-                "meter_id": MeterID,
-                "meter_number": MeterNum,
-                "meter_location": MeterLocation,
-                "meter_pole": MeterPole,
-                "meter_box": MeterBox,
-                "current": Current,
-                "previous": Previous,
-                "multi": Multi,
-                "usage": Usage,
-                "locale": Locale,
-                "rate": rate,
-                "contact": Contact,
-                "tariff": Tariff,
-                "fine": Fine,
-                "group": Group,
-                "meter_record_id": MeterRID,
-            });
-            this.tmpGroup = [];
+            if (jQuery.inArray(MeterRID, this.temGroupArray) != -1) {
+            }else{
+                this.temGroupArray.push({
+                    "total": Total,
+                    "meter_id": MeterID,
+                    "meter_number": MeterNum,
+                    "meter_location": MeterLocation,
+                    "meter_pole": MeterPole,
+                    "meter_box": MeterBox,
+                    "current": Current,
+                    "previous": Previous,
+                    "multi": Multi,
+                    "usage": Usage,
+                    "locale": Locale,
+                    "rate": rate,
+                    "contact": Contact,
+                    "tariff": Tariff,
+                    "fine": Fine,
+                    "group": Group,
+                    "meter_record_id": MeterRID,
+                });
+                this.tmpGroup = [];
+            }
             if (jQuery.inArray(Group, this.tmpGroup) != -1) {
             }else{
                 this.tmpGroup.push(Group);
