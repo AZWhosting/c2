@@ -3523,15 +3523,18 @@
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>	
-										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filter</a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>	
+										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.filter"></span></a></li>
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
 									</ul>
 								</div>
 								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-								        <div class="tab-pane active" id="tab-1">
+
+								        <!-- Date -->
+								        <div class="tab-pane active" id="tab-1">									        	
+											
 											<input data-role="dropdownlist"
 												   class="sorter"                  
 										           data-value-primitive="true"
@@ -3556,24 +3559,51 @@
 										           placeholder="To ..." >
 
 										  	<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-									    </div>
-									    <div class="tab-pane" id="tab-2">
-								        	<select data-role="multiselect"
-								        		   data-item-template="contact-list-tmpl"
-												   data-value-primitive="true"
-												   data-value-field="id" 
-												   data-text-field="name"
-												   data-bind="value: customerList, 
-												   			source: customerDS"
-												   data-placeholder="Add Customer..."
-												   style="width: 100%" /></select>
-									    </div>								        							       
+							
+							        	</div>
+
+								    	<!-- Filter -->
+								        <div class="tab-pane" id="tab-2">
+											<table class="table table-condensed">
+												<tr>
+									            	<td style="padding: 8px 0 0 0 !important; ">
+														<span data-bind="text: lang.lang.customers"></span>
+														<select data-role="multiselect"
+															   data-value-primitive="true"
+															   data-header-template="contact-header-tmpl"
+															   data-item-template="contact-list-tmpl"
+															   data-value-field="id"
+															   data-text-field="name"
+															   data-bind="value: obj.contactIds, 
+															   			source: contactDS"
+															   data-placeholder="Select Customer.."
+															   style="width: 100%" /></select>
+													</td>													
+													<td style="padding-top: 31px !important; float: left;">
+										  				<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+													</td>
+												</tr>
+											</table>
+							        	</div>
+							        	<!-- PRINT/EXPORT  -->
+								        <div class="tab-pane" id="tab-3">								        	
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i><span data-bind="text: lang.lang.print"></span></span>
+								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
+								        		<i class="fa fa-file-pdf-o"></i>
+								        		Print as PDF
+								        	</span> -->
+								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" style="width: 80px;">
+								        		<i class="fa fa-file-excel-o"></i>
+								        		<span data-bind="text: lang.lang.export_to_excel"></span>
+								        	</span>
+							        	</div>
 								    </div>
 								</div>
 							</div>
 						</div>
 						<!-- // Tabs END -->						
-					</div>	
+					</div>
+
 					<div id="invFormContent">
 						<div class="block-title">
 							<h3 data-bind="text: company.name"></h3>
@@ -3608,8 +3638,8 @@
 								</tr>
 							</thead>
 							<tbody data-role="listview"
-										 data-bind="source: saleJob.dataSource"
-										 data-template="saleJobEngagement-temp"
+										 data-bind="source: dataSource"
+										 data-template="saleJobEngagement-template"
 							></tbody>
 						</table>					
 					</div>	
@@ -3618,17 +3648,42 @@
 		</div>
 	</div>
 </script>
-<script id="saleJobEngagement-temp" type="text/x-kendo-template" >
+<script id="saleJobEngagement-template" type="text/x-kendo-template">
+	<tr style="font-weight: bold; color: black;">
+		<td colspan="5">#=name#</td>
+	</tr>	
+	# var amount = 0;#
+	#for(var i= 0; i <line.length; i++) {#
+		# amount += line[i].amount;#
+		<tr>
+			<td style="padding-left: 20px !important;">
+				<a href="\#/#=line[i].type.toLowerCase()#/#=line[i].id#">#=line[i].number#</a>
+			</td>
+			<td>
+				#if(line[i].reference.length>0){#
+					<a href="\#/#=line[i].reference[0].type.toLowerCase()#/#=line[i].reference[0].id#"><i></i> #=line[i].reference[0].number#</a>
+				#}#
+			</td>
+			<td>#=kendo.toString(new Date(line[i].issued_date), "dd-MM-yyyy")#</td>
+			<td style="text-align: center;">
+        		#if(line[i].status==="0"){#
+        			Open
+        		#}else{#
+        			Used
+        		#}#
+			</td>
+			<td style="text-align: right;">#=kendo.toString(line[i].amount, "c2", banhji.locale)#</td>
+		</tr>
+	#}#
 	<tr>
-		<td>#=job#</td>
-		<td style="text-align: right;">#=name#</td>
-		<td style="text-align: right;">#=type#</td>
-		<td style="text-align: right;">#=myDate#</td>
-		<td style="text-align: right;">
-			<a href="\#/#=type.toLowerCase()#/#=id#">#=number#</a>
-		</td>	
-		<td align="right">#=kendo.toString(amount, 'c2')#</td>
-	</tr>
+    	<td colspan="4" style="font-weight: bold; color: black;"><span data-bind="text: lang.lang.total"></span> #=name#</td>    	
+    	<td style="text-align: right; font-weight: bold; border-top: 1px solid black !important; color: black;">
+    		#=kendo.toString(amount, "c2", banhji.locale)#
+    	</td>
+    </tr>
+    <tr>
+    	<td colspan="5">&nbsp;</td>
+    </tr>
 </script>
 
 
@@ -11861,8 +11916,6 @@
 				start = this.get("sdate"),
         		end = this.get("edate"),
         		displayDate = "";
-
-        	para.push({ field:"type", value:"Sale_Order" });
 
         	//Customer
             if(obj.contactIds.length>0){
