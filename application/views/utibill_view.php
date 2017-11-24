@@ -922,25 +922,23 @@
 								            	   class="span2"
 								            	   style="padding-right: 1px; height: 32px; margin-right: 10px;" 
 						            			   data-option-label="(--- Account ---)"
-						            			   data-auto-bind="false"			                   
+						            			   data-auto-bind="false"
 								                   data-value-primitive="false"
 								                   data-text-field="name"
 								                   data-value-field="id"
-								                   data-bind="value: ,
+								                   data-bind="value: serviceAccount,
 								                              source: tariffAccDS"/>
 								                <input data-role="dropdownlist"
 								            	   class="span2"
 								            	   style="padding-right: 1px; height: 32px; margin-right: 10px;" 
 						            			   data-option-label="(--- Account ---)"
-						            			   data-auto-bind="false"			                   
+						            			   data-auto-bind="false"
 								                   data-value-primitive="true"
 								                   data-text-field="code"
 								                   data-value-field="id"
 								                   data-bind="value: serviceCurrency,
 								                              source: currencyDS"/>
-
 								            	<input data-bind="value: servicePrice, attr: {placeholder: lang.lang.price}" type="text" placeholder="Price" style="height: 32px; padding: 5px; margin-right: 10px;" class="span2 k-textbox k-invalid" />
-
 								            	<a class="btn-icon btn-primary glyphicons circle_plus cutype-icon" style="width: 80px; padding: 5px 7px 5px 35px !important; text-align: left;" data-bind="click: addService"><i></i><span data-bind="text: lang.lang.add">Add</span></a>
 								            </div>
 							            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
@@ -953,7 +951,7 @@
 							            				<th style="text-align: center;"><span data-bind="text: lang.lang.action">Action</span></th>
 							            			</tr>
 							            		</thead>
-							            		<tbody data-role="listview"	            				
+							            		<tbody data-role="listview"
 										                data-template="serviceSetting-template"
 										                data-edit-template="service-edit-template"
 										                data-auto-bind="false"
@@ -967,7 +965,7 @@
 								            	   class="span2"
 								            	   style="padding-right: 1px; height: 32px; margin-right: 10px;" 
 						            			   data-option-label="(--- Tax ---)"
-						            			   data-auto-bind="false"			                   
+						            			   data-auto-bind="false"
 								                   data-value-primitive="false"
 								                   data-text-field="name"
 								                   data-value-field="id"
@@ -977,7 +975,7 @@
 								            	   class="span2"
 								            	   style="padding-right: 1px; height: 32px; margin-right: 10px;" 
 						            			   data-option-label="(--- Currency ---)"
-						            			   data-auto-bind="false"			                   
+						            			   data-auto-bind="false"
 								                   data-value-primitive="true"
 								                   data-text-field="code"
 								                   data-value-field="id"

@@ -214,6 +214,7 @@ class Winvoices extends REST_Controller {
 					$reactive->where('invoiced <>', 1);
 					$reactive->order_by("id", "desc");
 					$reactive->limit(1)->get();
+					$remeter = $value->number."(REAKTIVE)";
 					if($reactive->exists()){
 						$tmp["$value->number"]['reactive'] = array(
 							'type' => 'reactive',
@@ -224,7 +225,7 @@ class Winvoices extends REST_Controller {
 							'prev'=> intval($reactive->previous),
 							'current'=> intval($reactive->current),
 							'usage' => intval($reactive->usage),
-							'meter_number' => $reactive->number,
+							'meter_number' => $remeter,
 							'amount'=> 0
 						);
 					}
@@ -617,18 +618,17 @@ class Winvoices extends REST_Controller {
 								'unit' => $unit->unit
 							);
 						}
-					}elseif($item->type == 'meter') {
+					}elseif($item->type == 'meter' || $item->type == 'reactive') {
 						$meterdate = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-						$meterdate->where("meter_id", $item->item_id)->order_by("id", "desc")->limit(1)->get();
+						$meterdate->where("id", $item->meter_record_id)->order_by("id", "desc")->limit(1)->get();
 						$lines[] = array(
 							'number' => $item->description,
-							'previous' => floatval($item->price),
-							'current'  => floatval($item->quantity),
-							'consumption' => floatval($item->amount),
-							'rate' => floatval($item->meter_record_id),
+							'previous' => floatval($meterdate->previous),
+							'current'  => floatval($meterdate->current),
+							'consumption' => floatval($meterdate->consumption),
+							'rate' => floatval($item->rate),
 							'amount' => $item->amount,
 							'type' => $item->type,
-							'unit' => 1,
 							'from_date' => $meterdate->from_date,
 							'to_date' => $meterdate->to_date
 						);

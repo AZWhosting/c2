@@ -4771,7 +4771,7 @@
             } else {
                 var notificat = $("#ntf1").data("kendoNotification");
                 notificat.hide();
-                notificat.success(self.lang.lang.field_required_message);
+                notificat.error(self.lang.lang.field_required_message);
             }
         },
         goMaintenance: function() {
@@ -7670,7 +7670,7 @@
                 if(v.meter.group == 0){
                     self.calInvoice(Total, v.contact, invoiceItems, MeterLocation, MeterPole, MeterBox, MeterID, locale);
                 }else{
-                    self.calInvoiceGroup(Total, v.meter.id, v.meter.meter_number, MeterLocation, MeterPole, MeterBox, v.items[0].line.current, v.items[0].line.prev, v.meter.multiplier, v.items[0].line.usage, locale, v.contact, v.tariff, v.fine, v.meter.group);
+                    self.calInvoiceGroup(Total, v.meter.id, v.meter.meter_number, MeterLocation, MeterPole, MeterBox, v.items[0].line.current, v.items[0].line.prev, v.meter.multiplier, v.items[0].line.usage, locale, v.contact, v.tariff, v.fine, v.meter.group, record_id);
                 }
             });
             this.set("amountSold", aSoldL);
@@ -7705,7 +7705,7 @@
         },
         temGroupArray       : [],
         tmpGroup            : [],
-        calInvoiceGroup: function(Total, MeterID, MeterNum, MeterLocation, MeterPole, MeterBox, Current, Previous, Multi, Usage, Locale, Contact, Tariff, Fine, Group) {
+        calInvoiceGroup: function(Total, MeterID, MeterNum, MeterLocation, MeterPole, MeterBox, Current, Previous, Multi, Usage, Locale, Contact, Tariff, Fine, Group,MeterRID) {
             var self = this;
             var date = new Date();
             var rate = banhji.source.getRate(Locale, date);
@@ -7725,7 +7725,8 @@
                 "contact": Contact,
                 "tariff": Tariff,
                 "fine": Fine,
-                "group": Group
+                "group": Group,
+                "meter_record_id": MeterRID,
             });
             this.tmpGroup = [];
             if (jQuery.inArray(Group, this.tmpGroup) != -1) {
@@ -7750,15 +7751,15 @@
             var self = this;
             $.each(this.tmpGroup, function(i,v){
                 var items = [];
-                var Total = 0, aTariff = 0, Usage = 0, Locale = "", Rate = "", MeterID = "", MeterLocation = 0, MeterPole = 0, MeterBox = 0, Contact = "", Tariff = [], Fine = [];
+                var Total = 0, aTariff = 0, Usage = 0, Locale = "", Rate = "", MeterID = "", MeterLocation = 0, MeterPole = 0, MeterBox = 0, Contact = "",MeterRecordID = "", Tariff = [], Fine = [];
                 $.each(self.temGroupArray, function(j,k){
                     if(k.group == v){
                         items.push({
                             "item_id": k.meter_id,
                             "invoice_id": "",
-                            "meter_record_id": k.multi,
+                            "meter_record_id": k.meter_record_id,
                             "description": k.meter_number,
-                            "quantity": k.current,
+                            "quantity": k.multi,
                             "price": k.previous,
                             "amount": k.usage,
                             "rate": k.rate,
@@ -7775,7 +7776,8 @@
                         MeterBox = k.meter_box;
                         Contact = k.contact;
                         Tariff = k.tariff;
-                        Fine = k.fine
+                        Fine = k.fine;
+                        MeterRecordID = k.meter_record_id;
                     }
                     Usage += k.usage;
                 });
