@@ -82,9 +82,11 @@ class Ops extends REST_Controller {
 				// 	// 	"null" 		=> FALSE,
 				// 	// 	"default" 	=> 0
 				// 	// ),
-				// 	"note" => array(
-				// 		"type" 		=> "LONGTEXT",
-				// 		"null" 		=> TRUE
+				// 	"discount_account_id" => array(
+				// 		"type" 		=> "INT",
+				// 		"constraint"=> "11",
+				// 		"null" 		=> FALSE,
+				// 		"default" 	=> 0
 				// 	)
 				// );
 				// $data['results'][] = $this->dbforge->add_column("transactions", $fields);
@@ -98,15 +100,15 @@ class Ops extends REST_Controller {
 				// 	// 	'null' 		=> FALSE,
 				// 	// 	'default' 	=> 1
 				// 	// ),
-				// 	// 'item_id' => array(
-				// 	// 	'name' 		=> 'warehouse_id',//New Field Name 
-				// 	// 	'type'		=> 'INT',
-				// 	// 	'constraint'=> 1,
-				// 	// 	'null' 		=> FALSE,
-				// 	// 	'default' 	=> 0
-				// 	// )
+				// 	'trade_discount_id' => array(
+				// 		'name' 		=> 'discount_account_id',//New Field Name 
+				// 		'type'		=> 'INT',
+				// 		'constraint'=> 11,
+				// 		'null' 		=> FALSE,
+				// 		'default' 	=> 0
+				// 	)
 				// );
-				// $data['results'][] = $this->dbforge->modify_column('contact_assignees', $fields);
+				// $data['results'][] = $this->dbforge->modify_column('transactions', $fields);
 
 			 	//Remove column, 'table_name', 'column_to_drop'
 				// $this->dbforge->drop_column('attribute_values_items', 'variant_attribute_id');

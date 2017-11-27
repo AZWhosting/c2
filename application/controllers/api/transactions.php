@@ -162,6 +162,7 @@ class Transactions extends REST_Controller {
 					"return_id" 				=> $value->return_id,
 					"job_id" 					=> $value->job_id,
 					"account_id" 				=> intval($value->account_id),
+					"discount_account_id" 		=> intval($value->discount_account_id),
 					"item_id" 					=> $value->item_id,
 					"tax_item_id" 				=> $value->tax_item_id,
 					"wht_account_id"			=> $value->wht_account_id,
@@ -266,6 +267,7 @@ class Transactions extends REST_Controller {
 			isset($value->return_id) 				? $obj->return_id 					= $value->return_id : "";
 			isset($value->job_id) 					? $obj->job_id 						= $value->job_id : "";
 			isset($value->account_id) 				? $obj->account_id 					= $value->account_id : "";
+			isset($value->discount_account_id) 		? $obj->discount_account_id 		= $value->discount_account_id : "";
 			isset($value->item_id) 					? $obj->item_id 					= $value->item_id : "";
 			isset($value->tax_item_id) 				? $obj->tax_item_id 				= $value->tax_item_id : "";
 			isset($value->wht_account_id) 			? $obj->wht_account_id 				= $value->wht_account_id : "";
@@ -345,7 +347,8 @@ class Transactions extends REST_Controller {
 					"recuring_id" 				=> $obj->recuring_id,
 					"return_id" 				=> $obj->return_id,
 					"job_id" 					=> $obj->job_id,
-					"account_id" 				=> $obj->account_id,
+					"account_id" 				=> intval($obj->account_id),
+					"discount_account_id" 		=> intval($obj->discount_account_id),
 					"item_id" 					=> $obj->item_id,
 					"tax_item_id" 				=> $obj->tax_item_id,
 					"wht_account_id"			=> $obj->wht_account_id,
@@ -438,6 +441,7 @@ class Transactions extends REST_Controller {
 			isset($value->return_id) 				? $obj->return_id 					= $value->return_id : "";
 			isset($value->job_id) 					? $obj->job_id 						= $value->job_id : "";
 			isset($value->account_id) 				? $obj->account_id 					= $value->account_id : "";
+			isset($value->discount_account_id) 		? $obj->discount_account_id 		= $value->discount_account_id : "";
 			isset($value->item_id) 					? $obj->item_id 					= $value->item_id : "";
 			isset($value->tax_item_id) 				? $obj->tax_item_id 				= $value->tax_item_id : "";
 			isset($value->wht_account_id) 			? $obj->wht_account_id 				= $value->wht_account_id : "";
@@ -515,7 +519,8 @@ class Transactions extends REST_Controller {
 					"recuring_id" 				=> $obj->recuring_id,
 					"return_id" 				=> $obj->return_id,
 					"job_id" 					=> $obj->job_id,
-					"account_id" 				=> $obj->account_id,
+					"account_id" 				=> intval($obj->account_id),
+					"discount_account_id" 		=> intval($obj->discount_account_id),
 					"item_id" 					=> $obj->item_id,
 					"tax_item_id" 				=> $obj->tax_item_id,
 					"wht_account_id"			=> $obj->wht_account_id,
