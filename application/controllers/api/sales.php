@@ -2020,8 +2020,100 @@ class Sales extends REST_Controller {
 		//Response Data		
 		$this->response($data, 200);			
 	}
-	//BY HEANG #############################################################################
 
+	//SALE BY JOB ENGAGEMENT
+	function sale_by_job_engagement_get() {
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
+		$data["count"] = 0;
+
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				if(isset($value["operator"])){
+					$obj->{$value["operator"]}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
+			}
+		}
+		
+		//Filter
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value["operator"])){
+	    			$obj->{$value["operator"]}($value['field'], $value['value']);
+	    		} else {
+	    			$obj->where($value['field'], $value['value']);
+	    		}
+			}
+		}
+
+		//Results
+		$obj->include_related("contact", array("abbr", "number", "name"));
+		$obj->include_related("job", array("name"));
+		$obj->where("type", "Sale_Order");
+		$obj->where("job_id >", 0);
+		$obj->where("is_recurring <>", 1);
+		$obj->where("deleted <>", 1);
+		$obj->order_by("issued_date", "asc");
+
+		//Results
+		if($page && $limit){
+			$obj->get_paged_iterated($page, $limit);
+			$data["count"] = $obj->paged->total_rows;
+		}else{
+			$obj->get_iterated();
+			$data["count"] = $obj->result_count();
+		}
+		
+		if($obj->exists()){
+			$objList = [];
+			foreach ($obj as $value) {								
+				$amount = (floatval($value->amount) - floatval($value->deposit)) / floatval($value->rate);
+				
+				if(isset($objList[$value->job_id])){
+					$objList[$value->job_id]["line"][] = array(
+						"id" 				=> $value->id,
+						"type" 				=> $value->type,
+						"number" 			=> $value->number,
+						"name" 				=> $value->contact_abbr.$value->contact_number." ".$value->contact_name,
+						"issued_date" 		=> $value->issued_date,
+						"rate" 				=> $value->rate,
+						"amount" 			=> $amount
+					);
+				}else{
+					$objList[$value->job_id]["id"] 		= $value->job_id;
+					$objList[$value->job_id]["job"] 	= $value->job_name;
+					$objList[$value->job_id]["line"][]	= array(
+						"id" 				=> $value->id,
+						"type" 				=> $value->type,
+						"number" 			=> $value->number,
+						"name" 				=> $value->contact_abbr.$value->contact_number." ".$value->contact_name,
+						"issued_date" 		=> $value->issued_date,
+						"rate" 				=> $value->rate,
+						"amount" 			=> $amount
+					);
+				}
+			}
+
+			foreach ($objList as $value) {
+				$data["results"][] = $value;
+			}
+		}
+
+		//Response Data
+		$this->response($data, 200);
+	}
+
+
+
+	//BY HEANG #############################################################################
 	function detail_customer_get() {
 		$filters 	= $this->get("filter");
 		$page 		= $this->get('page') !== false ? $this->get('page') : 1;

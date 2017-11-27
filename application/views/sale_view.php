@@ -3607,7 +3607,7 @@
 					<div id="invFormContent">
 						<div class="block-title">
 							<h3 data-bind="text: company.name"></h3>
-							<h2>Sale by Job/Engagement</h2>
+							<h2>Sale Order by Job/Engagement</h2>
 							<p>From <span data-bind="text: displayDateStart"></span> to <span data-bind="text: displayDateEnd"></p>
 						</div>
 
@@ -3638,8 +3638,9 @@
 								</tr>
 							</thead>
 							<tbody data-role="listview"
-										 data-bind="source: dataSource"
-										 data-template="saleJobEngagement-template"
+									 data-auto-bind="false"
+									 data-bind="source: dataSource"
+									 data-template="saleJobEngagement-template"
 							></tbody>
 						</table>					
 					</div>	
@@ -11860,7 +11861,7 @@
 	});
 	banhji.saleJobEngagement =  kendo.observable({
 		lang 				: langVM,
-		dataSource 			: dataStore(apiUrl + "sales/transaction_list"),
+		dataSource 			: dataStore(apiUrl + "sales/sale_by_job_engagement"),
 		contactDS  			: banhji.source.customerDS,
 		sortList			: banhji.source.sortList,
 		sorter 				: "month",
@@ -11873,7 +11874,7 @@
 		totalAmount 		: 0,
 		exArray 			: [],
 		pageLoad 			: function(){
-			this.search();
+			// this.search();
 		},
 		sorterChanges 		: function(){
 	        var today = new Date(),

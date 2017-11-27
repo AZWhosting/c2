@@ -1475,6 +1475,7 @@ var	km_KH = {
 	"meter_order": "លេខតំរាបកុងទ័រ",
 	"disconnect_meter": "កុងទ័រត្រូវផ្តាច់",
 	"meter_to_be_connected": "កុងទ័រត្រូវភ្ជាប់",
-	"day_to_be_disconnected": "ចំនួនថ្ងៃដែលត្រូវប្តាច់"
+	"day_to_be_disconnected": "ចំនួនថ្ងៃដែលត្រូវប្តាច់",
+	"reading_device": "ឧបករណ៍ធ្វើអំណាន",
 	
 }

@@ -1502,6 +1502,7 @@ var	en_US = {
 	"disconnect_meter": "Meter to be Disconnected",
 	"meter_to_be_connected": "Meter to be Connected",
 	"day_to_be_disconnected": "Day to be Disconnected",
+	"reading_device": "Reading Device",
 
 
 }
