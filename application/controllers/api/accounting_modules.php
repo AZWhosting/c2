@@ -1037,6 +1037,9 @@ class Accounting_modules extends REST_Controller {
 			$objList = [];
 			foreach ($obj as $value) {
 				$amount = 0;
+				$dr = floatval($value->dr) / floatval($value->transaction_rate);
+				$cr = floatval($value->cr) / floatval($value->transaction_rate);
+
 				if($value->account_account_type_nature=="Dr"){
 					$amount = (floatval($value->dr) - floatval($value->cr)) / floatval($value->transaction_rate);				
 				}else{
@@ -1053,6 +1056,8 @@ class Accounting_modules extends REST_Controller {
 						"number" 			=> $value->transaction_number,
 						"issued_date" 		=> $value->transaction_issued_date,
 						"memo" 				=> $value->description,
+						"dr" 				=> $dr,
+						"cr" 				=> $cr,
 						"amount" 			=> $amount
 					);
 				}else{
@@ -1088,6 +1093,8 @@ class Accounting_modules extends REST_Controller {
 						"number" 			=> $value->transaction_number,
 						"issued_date" 		=> $value->transaction_issued_date,
 						"memo" 				=> $value->description,
+						"dr" 				=> $dr,
+						"cr" 				=> $cr,
 						"amount" 			=> $amount
 					);			
 				}
