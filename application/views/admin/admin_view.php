@@ -1894,7 +1894,7 @@
         batch: true,
         serverFiltering: true,
         serverPaging: true,
-        filter: {field: 'institute_id', value: JSON.parse(localStorage.getItem('userData/user')).institute.id},
+        filter: {field: 'id', value: JSON.parse(localStorage.getItem('userData/user')).institute.id},
         pageSize: 50
       });
 
