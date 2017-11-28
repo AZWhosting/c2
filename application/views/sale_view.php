@@ -2996,7 +2996,7 @@
 						</tr>
 						<tr>
 							<td >
-								<h3><a href="#/sale_job_engagement">Sale by Job/Engagement</a></h3>
+								<h3><a href="#/sale_order_by_job_engagement">Sale Order By Job/Engagement</a></h3>
 							</td>
 							<!-- <td >
 								<h3><a href="#/customer_list">Customer List</a></h3>
@@ -3506,7 +3506,7 @@
     	<td colspan="5">&nbsp;</td>
     </tr>
 </script>
-<script id="saleJobEngagement" type="text/x-kendo-template">
+<script id="saleOrderByJobEngagment" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background">
 			<div class="container-960">
@@ -3608,14 +3608,14 @@
 						<div class="block-title">
 							<h3 data-bind="text: company.name"></h3>
 							<h2>Sale Order by Job/Engagement</h2>
-							<p>From <span data-bind="text: displayDateStart"></span> to <span data-bind="text: displayDateEnd"></p>
+							<p data-bind="text: displayDate"></p>
 						</div>
 
 						<div class="row-fluid">
 							<div class="span5">
 								<div class="total-customer">
-									<p>Number of Job Sale</p>
-									<span data-bind="text: count"></span>
+									<p>Number of Job Ordered</p>
+									<span data-format="n0" data-bind="text: dataSource.total()"></span>
 								</div>
 							</div>
 							<div class="span7">
@@ -3629,18 +3629,17 @@
 						<table class="table table-borderless table-condensed ">
 							<thead>
 								<tr>
-									<th><span>Job</span></th>
-									<th style="text-align: right;"><span>Name</span></th>
-									<th style="text-align: right;"><span>Type</span></th>
-									<th style="text-align: right;"><span>Date</span></th>
-									<th style="text-align: right;"><span>Reference</span></th>
-									<th><span>Amount</span></th>
+									<th><span>Name</span></th>
+									<th><span>Date</span></th>
+									<th><span>Reference</span></th>
+									<th><span>Status</span></th>
+									<th style="text-align: right;"><span>Amount</span></th>
 								</tr>
 							</thead>
 							<tbody data-role="listview"
 									 data-auto-bind="false"
 									 data-bind="source: dataSource"
-									 data-template="saleJobEngagement-template"
+									 data-template="saleOrderByJobEngagment-template"
 							></tbody>
 						</table>					
 					</div>	
@@ -3649,23 +3648,19 @@
 		</div>
 	</div>
 </script>
-<script id="saleJobEngagement-template" type="text/x-kendo-template">
+<script id="saleOrderByJobEngagment-template" type="text/x-kendo-template">
 	<tr style="font-weight: bold; color: black;">
-		<td colspan="5">#=name#</td>
+		<td colspan="5">#=job#</td>
 	</tr>	
 	# var amount = 0;#
-	#for(var i= 0; i <line.length; i++) {#
-		# amount += line[i].amount;#
+	#for(var i= 0; i < line.length; i++) {#
+		#amount += line[i].amount;#
 		<tr>
+			<td>#=line[i].name#</td>
+			<td>#=kendo.toString(new Date(line[i].issued_date), "dd-MM-yyyy")#</td>
 			<td style="padding-left: 20px !important;">
 				<a href="\#/#=line[i].type.toLowerCase()#/#=line[i].id#">#=line[i].number#</a>
 			</td>
-			<td>
-				#if(line[i].reference.length>0){#
-					<a href="\#/#=line[i].reference[0].type.toLowerCase()#/#=line[i].reference[0].id#"><i></i> #=line[i].reference[0].number#</a>
-				#}#
-			</td>
-			<td>#=kendo.toString(new Date(line[i].issued_date), "dd-MM-yyyy")#</td>
 			<td style="text-align: center;">
         		#if(line[i].status==="0"){#
         			Open
@@ -3677,7 +3672,7 @@
 		</tr>
 	#}#
 	<tr>
-    	<td colspan="4" style="font-weight: bold; color: black;"><span data-bind="text: lang.lang.total"></span> #=name#</td>    	
+    	<td colspan="4" style="font-weight: bold; color: black;"><span data-bind="text: lang.lang.total"></span>Total #=job#</td>    	
     	<td style="text-align: right; font-weight: bold; border-top: 1px solid black !important; color: black;">
     		#=kendo.toString(amount, "c2", banhji.locale)#
     	</td>
@@ -4551,7 +4546,7 @@
   				<!-- <li><a href='#/item_catalog'><span data-bind="text: lang.lang.add_new_catalog"></span></a></li> -->
   				<li><a href='rrd/#/item_assembly'><span data-bind="text: lang.lang.build_assembly"></span></a></li>
   				<li> <span class="li-line"></span></li>
-  				<li ><a href='#/sale'>Mobile Sale</a></li>
+  				<!-- <li ><a href='#/sale'>Mobile Sale</a></li> -->
   				<li ><a href='#/quote'><span data-bind="text: lang.lang.create_quotation"></span></a></li>
   				<li><a href='#/sale_order'><span data-bind="text: lang.lang.create_sale_order"></span></a></li>
   				<li><a href='#/customer_deposit'><span data-bind="text: lang.lang.create_customer_deposit"></span></a></li>
@@ -7428,7 +7423,7 @@
 	            	
 	            }
 
-	            para.push({ field:"employee_id", value: 10 });
+	            para.push({ field:"employee_id", value: banhji.source.get("employee").id });
 	            para.push({ field:"type", operator:"where_in", value: ["Quote","Sale_Order","Customer_Deposit"] });
 
 	            this.transactionDS.query({
@@ -11859,9 +11854,9 @@
 	        kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "saleOrderList.xlsx"});
 		}
 	});
-	banhji.saleJobEngagement =  kendo.observable({
+	banhji.saleOrderByJobEngagment =  kendo.observable({
 		lang 				: langVM,
-		dataSource 			: dataStore(apiUrl + "sales/sale_by_job_engagement"),
+		dataSource 			: dataStore(apiUrl + "sales/transaction_by_job_engagement"),
 		contactDS  			: banhji.source.customerDS,
 		sortList			: banhji.source.sortList,
 		sorter 				: "month",
@@ -11874,7 +11869,7 @@
 		totalAmount 		: 0,
 		exArray 			: [],
 		pageLoad 			: function(){
-			// this.search();
+			this.search();
 		},
 		sorterChanges 		: function(){
 	        var today = new Date(),
@@ -11952,21 +11947,22 @@
             }
             this.set("displayDate", displayDate);
 
+            para.push({ field:"type", value:"Sale_Order" });
+            para.push({ field:"employee_id", value: banhji.source.get("employee").id });
+
             this.dataSource.query({
             	filter:para
             }).then(function(){
             	var view = self.dataSource.view();
 
-            	var amount = 0, orderCount = 0;
+            	var amount = 0;
             	$.each(view, function(index, value){ 
             		$.each(value.line, function(ind, val){
-            			orderCount++; 
 	            		amount += val.amount;
 	            	});
             	});
-            	
-            	self.set("orderCount", kendo.toString(orderCount, "n0"));
-            	self.set("totalAmount", kendo.toString(amount, "c2", banhji.locale));
+
+            	self.set("total", kendo.toString(amount, "c2", banhji.locale));
             });
             this.dataSource.bind("requestEnd", function(e){				
 				if(e.type=="read"){
@@ -12159,7 +12155,7 @@
 		saleInventoryPositionSummary: new kendo.Layout("#saleInventoryPositionSummary", {model: banhji.inventoryPositionSummary}),
 		quotationList : new kendo.Layout("#quotationList", {model: banhji.quotationList}),
 		saleOrderList : new kendo.Layout("#saleOrderList", {model: banhji.saleOrderList}),
-		saleJobEngagement : new kendo.Layout("#saleJobEngagement", {model: banhji.saleJobEngagement}),
+		saleOrderByJobEngagment : new kendo.Layout("#saleOrderByJobEngagment", {model: banhji.saleOrderByJobEngagment}),
 
 		//Menu
 		saleMenu: new kendo.View("#saleMenu", {model: langVM})
@@ -12722,17 +12718,17 @@
 			vm.pageLoad();
 		}
 	});
-	banhji.router.route("/sale_job_engagement", function(){
+	banhji.router.route("/sale_order_by_job_engagement", function(){
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
 		}else{
-			banhji.view.layout.showIn("#content", banhji.view.saleJobEngagement);
+			banhji.view.layout.showIn("#content", banhji.view.saleOrderByJobEngagment);
 
-			var vm = banhji.saleJobEngagement;
-			banhji.userManagement.addMultiTask("Sale Job Engagement","sale_job_engagement",null);
+			var vm = banhji.saleOrderByJobEngagment;
+			banhji.userManagement.addMultiTask("Sale Order By Job Engagement","sale_order_by_job_engagement",null);
 
-			if(banhji.pageLoaded["sale_job_engagement"]==undefined){
-				banhji.pageLoaded["sale_job_engagement"] = true;
+			if(banhji.pageLoaded["sale_order_by_job_engagement"]==undefined){
+				banhji.pageLoaded["sale_order_by_job_engagement"] = true;
 				vm.sorterChanges();
 			}
 			vm.pageLoad();			

@@ -2021,8 +2021,8 @@ class Sales extends REST_Controller {
 		$this->response($data, 200);			
 	}
 
-	//SALE BY JOB ENGAGEMENT
-	function sale_by_job_engagement_get() {
+	//TRANSACTION BY JOB ENGAGEMENT
+	function transaction_by_job_engagement_get() {
 		$filter 	= $this->get("filter");
 		$page 		= $this->get('page');
 		$limit 		= $this->get('limit');
@@ -2057,20 +2057,11 @@ class Sales extends REST_Controller {
 		//Results
 		$obj->include_related("contact", array("abbr", "number", "name"));
 		$obj->include_related("job", array("name"));
-		$obj->where("type", "Sale_Order");
 		$obj->where("job_id >", 0);
 		$obj->where("is_recurring <>", 1);
 		$obj->where("deleted <>", 1);
 		$obj->order_by("issued_date", "asc");
-
-		//Results
-		if($page && $limit){
-			$obj->get_paged_iterated($page, $limit);
-			$data["count"] = $obj->paged->total_rows;
-		}else{
-			$obj->get_iterated();
-			$data["count"] = $obj->result_count();
-		}
+		$obj->get_iterated();
 		
 		if($obj->exists()){
 			$objList = [];
@@ -2084,6 +2075,7 @@ class Sales extends REST_Controller {
 						"number" 			=> $value->number,
 						"name" 				=> $value->contact_abbr.$value->contact_number." ".$value->contact_name,
 						"issued_date" 		=> $value->issued_date,
+						"status" 			=> $value->status,
 						"rate" 				=> $value->rate,
 						"amount" 			=> $amount
 					);
@@ -2096,6 +2088,7 @@ class Sales extends REST_Controller {
 						"number" 			=> $value->number,
 						"name" 				=> $value->contact_abbr.$value->contact_number." ".$value->contact_name,
 						"issued_date" 		=> $value->issued_date,
+						"status" 			=> $value->status,
 						"rate" 				=> $value->rate,
 						"amount" 			=> $amount
 					);
@@ -2105,6 +2098,8 @@ class Sales extends REST_Controller {
 			foreach ($objList as $value) {
 				$data["results"][] = $value;
 			}
+
+			$data["count"] = count($data["results"]);
 		}
 
 		//Response Data
