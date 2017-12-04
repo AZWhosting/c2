@@ -8,6 +8,7 @@ class Utibills extends REST_Controller {
 	public $server_host;
 	public $server_user;
 	public $server_pwd;
+	public $inst;
 	//CONSTRUCTOR
 	function __construct() {
 		parent::__construct();
@@ -21,6 +22,7 @@ class Utibills extends REST_Controller {
 			$this->_database = $conn->inst_database;
 			date_default_timezone_set("$conn->time_zone");
 		}
+		$this->inst = $this->input->get_request_header('Institute');
 	}
 	//Search
 	function search_get(){
@@ -1855,7 +1857,7 @@ class Utibills extends REST_Controller {
 		   			// }
 					$line = new Winvoice_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		   			$line->transaction_id 	= $txn->id;
-		   			if($value->type = "usage"){
+		   			if($value->type == "usage"){
 		   				$line->item_id 			= $value->meter_id;
 		   			}else{
 		   				$line->item_id 			= isset($value->item_id) ? $value->item_id:"";
@@ -2198,6 +2200,108 @@ class Utibills extends REST_Controller {
 		$this->response($data, 201);
 	}
 	function reader_put() {
+		$models = json_decode($this->put('models'));
+		$data["results"] = [];
+		$data["count"] = 0;
+
+		foreach ($models as $value) {
+			$obj = new Offline(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$obj->get_by_id($value->id);
+
+			isset($value->code) 				? $obj->code 					= $value->code : "";
+			isset($value->name) 				? $obj->name 					= $value->name : "";
+			isset($value->abbr) 				? $obj->abbr 					= $value->abbr : "";
+			$obj->type = "reader";
+			
+			if($obj->save()){
+				//Results
+				$data["results"][] = array(
+					"id" 						=> $obj->id,
+					"code" 						=> $obj->code,
+					"name" 						=> $obj->name,
+					"abbr" 						=> $obj->abbr,
+					"type" 						=> $obj->type
+				);
+			}
+		}
+		$data["count"] = count($data["results"]);
+
+		$this->response($data, 200);
+	}
+	//Device
+	function device_get() {
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
+		$data["count"] = 0;
+
+		$obj = new Offline(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		$obj->where("type", "device");
+		//Results
+		if($page && $limit){
+			$obj->get_paged_iterated($page, $limit);
+			$data["count"] = $obj->paged->total_rows;
+		}else{
+			$obj->get_iterated();
+			$data["count"] = $obj->result_count();
+		}
+
+		if($obj->exists()){
+			foreach ($obj as $value) {
+				$data["results"][] = array(
+					"id" 						=> $value->id,
+					"code" 						=> $value->code,
+					"name" 						=> $value->name,
+					"abbr" 						=> $value->abbr,
+					"type" 						=> $value->type,
+					"device_id" 				=> $value->device_id,
+					"status" 					=> $value->status,
+				);
+			}
+		}
+
+		//Response Data
+		$this->response($data, 200);
+	}
+	function device_post() {
+		$models = json_decode($this->post('models'));
+		$data["results"] = [];
+		$data["count"] = 0;
+
+		foreach ($models as $value) {
+			$mdevice = new Device();
+			isset($this->inst) 			? $mdevice->institute_id		= $this->inst : "";
+			isset($value->name) 		? $mdevice->name 				= $value->name : "";
+			isset($value->status) 		? $mdevice->status 				= $value->status->id : 1;
+			isset($value->device_id) 	? $mdevice->device_id 			= $value->device_id : "";
+			if($mdevice->save()){
+				$obj = new Offline(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				isset($value->code) 				? $obj->code 					= $value->code : "";
+				isset($value->name) 				? $obj->name 					= $value->name : "";
+				isset($value->abbr) 				? $obj->abbr 					= $value->abbr : "";
+				isset($value->status) 				? $obj->status 					= $value->status->id : 1;
+				$obj->main_id = $mdevice->id;
+				$obj->type = "device";
+		   		if($obj->save()){
+				   	$data["results"][] = array(
+				   		"id" 						=> $obj->id,
+				   		"code" 						=> $obj->code,
+						"name" 						=> $obj->name,
+						"abbr" 						=> $obj->abbr,
+						"type" 						=> $obj->type,
+						"main_id" 					=> $mdevice->id,
+				   	);
+			    }
+			}
+		}
+
+		$data["count"] = count($data["results"]);
+		$this->response($data, 201);
+	}
+	function device_put() {
 		$models = json_decode($this->put('models'));
 		$data["results"] = [];
 		$data["count"] = 0;
@@ -2943,6 +3047,27 @@ class Utibills extends REST_Controller {
 
 		//Response Data
 		$this->response($data, 200);
+	}
+	//Meter Order
+	function meter_order_xls_post() {
+		$models = json_decode($this->post('models'));
+		$data["results"] = [];
+		$data["count"] = 0;
+		foreach ($models as $value) {
+
+			$obj = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$obj->where("number", $value->meter_number)->order_by("id", "desc")->limit(1)->get();
+			if($obj->exists()){
+				$obj->worder = $value->order;
+				$obj->save();
+				$data["results"][] = array(
+			   		"id" 						=> $obj->id,
+			   	);
+			}
+		}
+
+		$data["count"] = count($data["results"]);
+		$this->response($data, 201);
 	}
 }
 /* End of file meters.php */
