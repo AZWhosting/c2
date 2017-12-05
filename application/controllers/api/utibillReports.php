@@ -1120,13 +1120,14 @@ class UtibillReports extends REST_Controller {
 	//Customer List
 	function customer_list_get() {
 		$filter 	= $this->get("filter");
-		$page 		= $this->get('page');
-		$limit 		= $this->get('limit');
-		$sort 	 	= $this->get("sort");
+		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
+		$sort 	 	= $this->get("sort");		
 		$data["results"] = [];
 		$data["count"] = 0;
+	
 
-		$obj = new meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$obj = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 		//Sort
 		if(!empty($sort) && isset($sort)){
@@ -1151,34 +1152,45 @@ class UtibillReports extends REST_Controller {
 		}
 
 		//Results
-		$obj->include_related("contact", array("abbr", "number", "address", "phone", "name"));
-		$obj->include_related("property", array("abbr", "name"));
-		$obj->include_related("location", "name");
-		$obj->include_related("branch", "name");
-		$obj->where("status", 1);		
+		$obj->include_related('meter/contact', array("abbr", "number", "address", "phone", "name", "status", "id"));
+		$obj->include_related('meter/property', array("abbr", "name"));
+		$obj->include_related('meter/location', "name");
+		$obj->include_related('meter/branch', "name" );
+		$obj->include_related('meter', array("number", "status", "location_id", "pole_id", "box_id"));
 		$obj->get_paged_iterated($page, $limit);
 		
 		if($obj->exists()){
 			$objList = [];
 			foreach ($obj as $value) {								
 				
-				if(isset($objList[$value->contact_id])){
-					$objList[$value->contact_id]["line"][] = array(
+				if(isset($objList[$value->meter_contact_id])){
+					$objList[$value->meter_contact_id]["line"][] = array(
 						"id"		=> $value->id,
-						"meter"		=> $value->number,
-						"location"  => $value->location_name,
-						"branch"	=> $value->branch_name,
-						"property"	=> $value->property_name,
+						"number"	=> $value->meter_contact_number,
+						"meter"		=> $value->meter_number,
+						"location"  => $value->meter_location_name,
+						"branch"	=> $value->meter_branch_name,
+						"status"	=> $value->meter_status,
+						"previous"	=> $value->previous,						
+						"current"	=> $value->current,
+						"month_of" 	=> $value->month_of,
+						"property"	=> $value->meter_property_name,
 					);
 				}else{
-					$objList[$value->contact_id]["id"] 		= $value->contact_id;
-					$objList[$value->contact_id]["name"] 	= $value->contact_abbr.$value->contact_number." ".$value->contact_name;
-					$objList[$value->contact_id]["line"][]	= array(
+					$objList[$value->meter_contact_id]["id"] 		= $value->meter_contact_id;					
+					$objList[$value->meter_contact_id]["number"] 	= $value->meter_contact_abbr.$value->meter_contact_number;
+					$objList[$value->meter_contact_id]["name"] 		= $value->meter_contact_name;
+					$objList[$value->meter_contact_id]["line"][]	= array(
 						"id"		=> $value->id,
-						"meter"		=> $value->number,
-						"location"  => $value->location_name,
-						"branch"	=> $value->branch_name,
-						"property"	=> $value->property_name,
+						"number"	=> $value->meter_contact_number,
+						"meter"		=> $value->meter_number,
+						"location"  => $value->meter_location_name,
+						"branch"	=> $value->meter_branch_name,
+						"status"	=> $value->meter_status,
+						"previous"	=> $value->previous,
+						"current"	=> $value->current,
+						"month_of" 	=> $value->month_of,
+						"property"	=> $value->meter_property_name,
 					);
 				}
 			}
