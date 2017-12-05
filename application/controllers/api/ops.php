@@ -8,7 +8,7 @@ class Ops extends REST_Controller {
 		$this->load->dbutil();
 		$this->load->dbforge();
 		$dbs = $this->dbutil->list_databases();
-		$companyList = array("api","banhji","banhji_center","banhji_mac","information_schema","innodb","mysql","performance_schema","tmp");
+		$companyList = array("api","banhji","banhji0055","choeun_reeco","banhji_center","banhji_mac","information_schema","innodb","mysql","performance_schema","tmp");
 		$data["results"] = [];
 		$data["count"] = 0;
 		$startQ = false;
@@ -18,6 +18,10 @@ class Ops extends REST_Controller {
 			if (!in_array("$db", $companyList)) {
 				$connection = 'use ' . $db;
 				$this->db->query($connection);
+
+				// if($db=="db_1505299843"){
+				// 	$startQ = true;
+				// }
 
 				// $counter = $this->db->count_all('transactions');
 				// $data["results"][] = array( "db" => $db, "rows" => $counter );
@@ -73,23 +77,22 @@ class Ops extends REST_Controller {
 				// );
 			 // 	$this->db->insert_batch('payment_methods', $raw);
 				
-				
 				// Add new fields
-				// $fields = array(
-				// 	// "tags" => array(
-				// 	// 	"type" 		=> "DECIMAL",
-				// 	// 	"constraint"=> "30,15",
-				// 	// 	"null" 		=> FALSE,
-				// 	// 	"default" 	=> 0
-				// 	// ),
-				// 	"discount_account_id" => array(
-				// 		"type" 		=> "INT",
-				// 		"constraint"=> "11",
-				// 		"null" 		=> FALSE,
-				// 		"default" 	=> 0
-				// 	)
-				// );
-				// $data['results'][] = $this->dbforge->add_column("transactions", $fields);
+				$fields = array(
+					// "tags" => array(
+					// 	"type" 		=> "DECIMAL",
+					// 	"constraint"=> "30,15",
+					// 	"null" 		=> FALSE,
+					// 	"default" 	=> 0
+					// ),
+					"favorite" => array(
+						"type" 		=> "TINYINT",
+						"constraint"=> 1,
+						"null" 		=> FALSE,
+						"default" 	=> 0
+					)
+				);
+				$data['results'][] = $this->dbforge->add_column("categories", $fields);
 				
 			    // Modify fields
 			 // 	$fields = array(
@@ -100,15 +103,12 @@ class Ops extends REST_Controller {
 				// 	// 	'null' 		=> FALSE,
 				// 	// 	'default' 	=> 1
 				// 	// ),
-				// 	'trade_discount_id' => array(
-				// 		'name' 		=> 'discount_account_id',//New Field Name 
-				// 		'type'		=> 'INT',
-				// 		'constraint'=> 11,
-				// 		'null' 		=> FALSE,
-				// 		'default' 	=> 0
+				// 	'image_url' => array(
+				// 		'name' 		=> 'image_url',//New Field Name 
+				// 		'type'		=> 'LONGTEXT'
 				// 	)
 				// );
-				// $data['results'][] = $this->dbforge->modify_column('transactions', $fields);
+				// $data['results'][] = $this->dbforge->modify_column('items', $fields);
 
 			 	//Remove column, 'table_name', 'column_to_drop'
 				// $this->dbforge->drop_column('attribute_values_items', 'variant_attribute_id');

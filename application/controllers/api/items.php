@@ -22,6 +22,7 @@ class Items extends REST_Controller {
 		}
 	}
 
+
 	//GET 
 	function index_get() {		
 		$filter 	= $this->get("filter");
@@ -31,6 +32,7 @@ class Items extends REST_Controller {
 		$data["results"] = [];
 		$data["count"] = 0;
 		$is_pattern = 0;
+		$no_nature = true;
 		
 		$obj = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
@@ -59,16 +61,21 @@ class Items extends REST_Controller {
 				} else {
 					if($value["field"]=="is_pattern"){
 	    				$is_pattern = $value["value"];
+	    			}else if($value["field"]=="nature"){
+	    				$no_nature = false;
 	    			}else{
 	    				$obj->where($value["field"], $value["value"]);
 	    			}
 				}
 			}
 		}
+
+		if($no_nature){
+			$obj->where("nature <>", "main_variant");
+		}
 		
 		$obj->include_related("category", "name");
 		$obj->include_related("measurement", array("name"));
-		$obj->where("nature <>", "main_variant");
 		$obj->where("is_pattern", $is_pattern);
 		$obj->where("deleted <>", 1);
 		
@@ -137,6 +144,7 @@ class Items extends REST_Controller {
 				   	"inventory_account_id"		=> $value->inventory_account_id,   				   	
 				   	"preferred_vendor_id" 		=> $value->preferred_vendor_id,
 				   	"image_url" 				=> $value->image_url!="" ? $value->image_url : $this->noImageUrl,
+				   	"thumbnail_url" 			=> $value->thumbnail_url!="" ? $value->thumbnail_url : $this->noImageUrl,
 				   	"favorite" 					=> $value->favorite=="true"?true:false,
 				   	"is_catalog" 				=> intval($value->is_catalog),
 				   	"is_assembly" 				=> intval($value->is_assembly),
@@ -150,6 +158,87 @@ class Items extends REST_Controller {
 				   	"category" 					=> $value->category_name,
 				   	"measurement" 				=> $measurement,
 				   	"variant" 					=> $variant
+				);
+			}
+		}
+		
+		$data['pageSize'] = $limit;
+		$data['skip'] = $limit * $page;	
+
+		//Response Data		
+		$this->response($data, 200);	
+	}
+
+	//GET LESS
+	function less_get() {		
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
+		$data["count"] = 0;
+		
+		$obj = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+
+		//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
+			}
+		}
+		
+		//Filter		
+		if(!empty($filter["filters"]) && isset($filter["filters"])){
+	    	foreach ($filter['filters'] as $value) {
+	    		if(isset($value['operator'])) {
+	    			if($value['operator']=="startswith"){
+	    				$obj->like($value['field'], $value['value'], 'after');
+	    			}else if($value['operator']=="contains"){
+	    				$obj->like($value['field'], $value['value'], 'both');
+	    			}else{
+						$obj->{$value['operator']}($value['field'], $value['value']);
+	    			}
+				} else {
+					$obj->where($value["field"], $value["value"]);
+				}
+			}
+		}
+		
+		$obj->where("nature <>", "main_variant");
+		$obj->where("is_pattern <>", 1);
+		$obj->where("deleted <>", 1);			
+		
+		//Results
+		if($page && $limit){
+			$obj->get_paged_iterated($page, $limit);
+			$data["count"] = $obj->paged->total_rows;
+		}else{
+			$obj->get_iterated();
+			$data["count"] = $obj->result_count();
+		}
+
+		if($obj->exists()){
+			foreach ($obj as $value) {
+				$data["results"][] = array(
+					"id" 						=> $value->id,
+					"item_type_id"				=> $value->item_type_id,
+					"category_id" 				=> $value->category_id,
+					"measurement_id" 			=> $value->measurement_id,
+					"abbr" 						=> $value->abbr,
+					"number" 					=> $value->number,
+				   	"name" 						=> $value->name,
+				   	"cost" 						=> floatval($value->cost),
+				   	"price" 					=> floatval($value->price),
+				   	"locale" 					=> $value->locale,
+				   	"image_url" 				=> $value->image_url!="" ? $value->image_url : $this->noImageUrl,
+				   	"thumbnail_url" 			=> $value->thumbnail_url!="" ? $value->thumbnail_url : $this->noImageUrl,
+				   	"income_account_id" 		=> $value->income_account_id,
+				   	"expense_account_id"		=> $value->expense_account_id,
+				   	"inventory_account_id"		=> $value->inventory_account_id
 				);
 			}
 		}
@@ -413,84 +502,6 @@ class Items extends REST_Controller {
 
 		//Response data
 		$this->response($data, 200);
-	}
-
-	//GET LESS
-	function less_get() {		
-		$filter 	= $this->get("filter");
-		$page 		= $this->get('page');
-		$limit 		= $this->get('limit');
-		$sort 	 	= $this->get("sort");
-		$data["results"] = [];
-		$data["count"] = 0;
-		
-		$obj = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
-
-		//Sort
-		if(!empty($sort) && isset($sort)){
-			foreach ($sort as $value) {
-				if(isset($value['operator'])){
-					$obj->{$value['operator']}($value["field"], $value["dir"]);
-				}else{
-					$obj->order_by($value["field"], $value["dir"]);
-				}
-			}
-		}
-		
-		//Filter		
-		if(!empty($filter["filters"]) && isset($filter["filters"])){
-	    	foreach ($filter['filters'] as $value) {
-	    		if(isset($value['operator'])) {
-	    			if($value['operator']=="startswith"){
-	    				$obj->like($value['field'], $value['value'], 'after');
-	    			}else if($value['operator']=="contains"){
-	    				$obj->like($value['field'], $value['value'], 'both');
-	    			}else{
-						$obj->{$value['operator']}($value['field'], $value['value']);
-	    			}
-				} else {
-					$obj->where($value["field"], $value["value"]);
-				}
-			}
-		}
-
-		$obj->where("is_pattern <>", 1);
-		$obj->where("deleted <>", 1);			
-		
-		//Results
-		if($page && $limit){
-			$obj->get_paged_iterated($page, $limit);
-			$data["count"] = $obj->paged->total_rows;
-		}else{
-			$obj->get_iterated();
-			$data["count"] = $obj->result_count();
-		}
-
-		if($obj->exists()){
-			foreach ($obj as $value) {
-				$data["results"][] = array(
-					"id" 						=> $value->id,
-					"item_type_id"				=> $value->item_type_id,
-					"category_id" 				=> $value->category_id,
-					"measurement_id" 			=> $value->measurement_id,
-					"abbr" 						=> $value->abbr,
-					"number" 					=> $value->number,
-				   	"name" 						=> $value->name,
-				   	"cost" 						=> floatval($value->cost),
-				   	"price" 					=> floatval($value->price),
-				   	"locale" 					=> $value->locale,
-				   	"income_account_id" 		=> $value->income_account_id,
-				   	"expense_account_id"		=> $value->expense_account_id,
-				   	"inventory_account_id"		=> $value->inventory_account_id
-				);
-			}
-		}
-		
-		$data['pageSize'] = $limit;
-		$data['skip'] = $limit * $page;	
-
-		//Response Data		
-		$this->response($data, 200);	
 	}
 
 	//GET WEIGHTED AVERAGE COSTING
@@ -1599,5 +1610,108 @@ class Items extends REST_Controller {
 		$result["$requestedDate"] = array();
 
 		$this->response($result, 200);
-	}	
+	}
+
+	//POST BATH
+	function random_sample_get() {
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
+		$data["count"] = 0;
+
+		for ($i=0; $i < 100000; $i++) { 
+			$obj = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			
+			$number = str_pad($i+1000, 5, "0", STR_PAD_LEFT);
+
+			$obj->currency_id 			= 3;
+			$obj->item_type_id			= 1;			
+			$obj->category_id 			= 1;
+			$obj->measurement_id 		= 1;
+			$obj->abbr 					= "INV";
+			$obj->number 				= $number;
+			$obj->name 					= "Inventory Sample ".$i;
+		   	$obj->purchase_description 	= "Inventory Sample ".$i." Purchase Description";
+		   	$obj->sale_description 		= "Inventory Sample ".$i." Sale Description";
+			$obj->cost 					= 0;
+			$obj->price 				= 0;
+			$obj->rate 					= 1;
+		   	$obj->locale 				= "km-KH";
+		   	$obj->income_account_id 	= 71;
+		   	$obj->expense_account_id 	= 74;
+		   	$obj->inventory_account_id 	= 14;
+		   	$obj->is_catalog 			= 0;
+		   	$obj->is_assembly 			= 0;
+		   	$obj->is_pattern 			= 0;
+		   	$obj->status 				= 1;
+		   	$obj->deleted 				= 0;
+
+	   		if($obj->save()){
+	   			//Item Price
+	   			$itemPrice = new Item_price(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	   			$itemPrice->item_id 			= $obj->id;
+				$itemPrice->measurement_id 		= $obj->measurement_id;
+				$itemPrice->quantity 			= 1;
+				$itemPrice->conversion_ratio 	= 1;
+				$itemPrice->price 				= $obj->price;			
+				$itemPrice->locale 				= $obj->locale;
+				$itemPrice->save();
+
+			   	$data["results"][] = array(
+			   		"id" 						=> $obj->id,
+					"company_id" 				=> $obj->company_id,
+					"contact_id" 				=> $obj->contact_id,
+					"currency_id" 				=> $obj->currency_id,
+					"item_type_id"				=> $obj->item_type_id,					
+					"category_id" 				=> $obj->category_id,
+					"item_group_id"				=> $obj->item_group_id,
+					"item_sub_group_id"			=> $obj->item_sub_group_id,
+					"brand_id" 					=> $obj->brand_id,					
+					"measurement_id" 			=> $obj->measurement_id,					
+					"sub_of_id" 				=> $obj->sub_of_id,
+					"abbr" 						=> $obj->abbr,
+					"number" 					=> $obj->number,
+					"international_code" 		=> $obj->international_code,
+					"imei" 						=> $obj->imei,
+					"serial_number" 			=> $obj->serial_number,
+					"supplier_code"				=> $obj->supplier_code,
+					"color_code" 				=> $obj->color_code,
+				   	"name" 						=> $obj->name,
+				   	"purchase_description" 		=> $obj->purchase_description,
+				   	"sale_description" 			=> $obj->sale_description,
+				   	"measurements"				=> $obj->measurements,
+				   	"barcode"					=> $obj->barcode,
+				   	"catalogs" 					=> explode(",",$obj->catalogs),
+				   	"cost" 						=> floatval($obj->cost),
+				   	"price" 					=> floatval($obj->price),
+				   	"amount" 					=> floatval($obj->amount),
+				   	"rate" 						=> floatval($obj->rate),
+				   	"locale" 					=> $obj->locale,
+				   	"on_hand" 					=> floatval($obj->on_hand),
+				   	"on_po" 					=> floatval($obj->on_po),
+				   	"on_so" 					=> floatval($obj->on_so),
+				   	"order_point" 				=> intval($obj->order_point),
+				   	"income_account_id" 		=> $obj->income_account_id,
+				   	"expense_account_id"		=> $obj->expense_account_id,
+				   	"inventory_account_id"		=> $obj->inventory_account_id,
+				   	"preferred_vendor_id" 		=> $obj->preferred_vendor_id,
+				   	"image_url" 				=> $obj->image_url!="" ? $obj->image_url : $this->noImageUrl,
+				   	"favorite" 					=> $obj->favorite=="true"?true:false,
+				   	"is_catalog" 				=> $obj->is_catalog,
+				   	"is_assembly" 				=> $obj->is_assembly,
+				   	"is_pattern" 				=> intval($obj->is_pattern),
+				   	"tags" 						=> explode(",",$obj->tags),
+				   	"nature" 					=> $obj->nature,
+				   	"status" 					=> $obj->status,
+				   	"deleted" 					=> $obj->deleted,
+				   	"is_system" 				=> $obj->is_system
+			   	);
+		    }	
+		}
+		
+		$data["count"] = count($data["results"]);
+		$this->response($data, 200);		
+	}
 }

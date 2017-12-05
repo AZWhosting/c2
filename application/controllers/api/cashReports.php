@@ -526,10 +526,22 @@ class Cashreports extends REST_Controller {
 			$objList = [];
 			foreach ($obj as $value) {
 				//Reference
-				$ref = $value->reference->select("type, number, issued_date, amount, deposit, rate")->get();				
-				$refAmount = floatval($ref->amount);
+				$references = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$references->where("reference_id", $value->id);
+				$references->get();
 
-				$amount = floatval($value->amount);
+				$referenceList = [];
+				foreach ($references as $val) {
+					$referenceList[] = array(
+						"id" 			=> $val->id,
+						"type" 			=> $val->type,
+						"number" 		=> $val->number,
+						"issued_date" 	=> $val->issued_date,
+						"amount" 		=> floatval($val->amount) / floatval($val->rate)
+					);
+				}
+
+				$amount = floatval($value->amount) / floatval($value->rate);
 
 				if(isset($objList[$value->contact_id])){
 					$objList[$value->contact_id]["line"][] = array(
@@ -538,11 +550,8 @@ class Cashreports extends REST_Controller {
 						"number" 				=> $value->number,
 						"issued_date" 			=> $value->issued_date,
 						"amount" 				=> $amount,
-						"reference_id" 			=> $value->reference_id,
-						"reference_type" 		=> $ref->type,
-						"reference_number" 		=> $ref->number,
-						"reference_issued_date" => $ref->issued_date,
-						"reference_amount" 		=> $refAmount
+						"status" 				=> intval($value->status),
+						"references" 			=> $referenceList
 					);
 				}else{
 					$objList[$value->contact_id]["id"] 		= $value->contact_id;
@@ -553,11 +562,8 @@ class Cashreports extends REST_Controller {
 						"number" 				=> $value->number,
 						"issued_date" 			=> $value->issued_date,
 						"amount" 				=> $amount,
-						"reference_id" 			=> $value->reference_id,
-						"reference_type" 		=> $ref->type,
-						"reference_number" 		=> $ref->number,
-						"reference_issued_date" => $ref->issued_date,
-						"reference_amount" 		=> $refAmount
+						"status" 				=> intval($value->status),
+						"references" 			=> $referenceList
 					);			
 				}
 			}
