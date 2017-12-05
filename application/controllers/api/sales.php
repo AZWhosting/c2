@@ -251,12 +251,14 @@ class Sales extends REST_Controller {
 
 		//Results
 		$obj->include_related("item", array("abbr", "number", "name", "measurement_id"));
+		$obj->include_related("measurement", array("name"));
 		$obj->where_related("item", "item_type_id", array(1,4));
 		$obj->include_related("transaction", array("rate"));		
 		$obj->where_in_related("transaction", "type", array("Commercial_Invoice","Vat_Invoice","Invoice", "Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale"));
 		$obj->where_related("transaction", "is_recurring <>", 1);
 		$obj->where_related("transaction", "deleted <>", 1);
 		$obj->order_by_related("transaction", "issued_date", "asc");
+		$obj->where("deleted <>", 1);
 		$obj->get_iterated();
 		
 		if($obj->exists()){
@@ -272,13 +274,10 @@ class Sales extends REST_Controller {
 					$objList[$value->item_id]["price"] 			+= $value->price;
 					$objList[$value->item_id]["txn_count"]++;
 				}else{
-					$measurement = new Measurement(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-					$measurement->get_by_id($value->measurement_id);
-
 					$objList[$value->item_id]["id"] 			= $value->item_id;
 					$objList[$value->item_id]["name"] 			= $value->item_abbr.$value->item_number." ".$value->item_name;
 					$objList[$value->item_id]["quantity"] 		= $quantity;
-					$objList[$value->item_id]["measurement"]	= $measurement->name;
+					$objList[$value->item_id]["measurement"]	= $value->measurement_name;
 					$objList[$value->item_id]["amount"] 		= $amount;
 					$objList[$value->item_id]["cost"] 			= $value->cost;
 					$objList[$value->item_id]["price"] 			= $value->price;
