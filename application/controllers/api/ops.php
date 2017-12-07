@@ -42,6 +42,7 @@ class Ops extends REST_Controller {
 
 				//Rename Table 'old_table_name' to 'new_table_name'
 			    // $this->dbforge->rename_table('item_locations', 'bin_locations');
+			    // $this->dbforge->rename_table('contacts_items', 'contacts_locations');
 
 				//DROP TABLE IF EXISTS table_name
 			    // $this->dbforge->drop_table('location_types');
@@ -78,24 +79,24 @@ class Ops extends REST_Controller {
 			 // 	$this->db->insert_batch('payment_methods', $raw);
 				
 				// Add new fields
-				$fields = array(
-					// "tags" => array(
-					// 	"type" 		=> "DECIMAL",
-					// 	"constraint"=> "30,15",
-					// 	"null" 		=> FALSE,
-					// 	"default" 	=> 0
-					// ),
-					"favorite" => array(
-						"type" 		=> "TINYINT",
-						"constraint"=> 1,
-						"null" 		=> FALSE,
-						"default" 	=> 0
-					)
-				);
-				$data['results'][] = $this->dbforge->add_column("categories", $fields);
+				// $fields = array(
+				// 	// "tags" => array(
+				// 	// 	"type" 		=> "DECIMAL",
+				// 	// 	"constraint"=> "30,15",
+				// 	// 	"null" 		=> FALSE,
+				// 	// 	"default" 	=> 0
+				// 	// ),
+				// 	"favorite" => array(
+				// 		"type" 		=> "TINYINT",
+				// 		"constraint"=> 1,
+				// 		"null" 		=> FALSE,
+				// 		"default" 	=> 0
+				// 	)
+				// );
+				// $data['results'][] = $this->dbforge->add_column("categories", $fields);
 				
 			    // Modify fields
-			 // 	$fields = array(
+			 	// 	$fields = array(
 				// 	// 'unit_value' => array(
 				// 	// 	'name' 		=> 'conversion_ratio',//New Field Name 
 				// 	// 	'type'		=> 'DECIMAL',
@@ -103,12 +104,8 @@ class Ops extends REST_Controller {
 				// 	// 	'null' 		=> FALSE,
 				// 	// 	'default' 	=> 1
 				// 	// ),
-				// 	'image_url' => array(
-				// 		'name' 		=> 'image_url',//New Field Name 
-				// 		'type'		=> 'LONGTEXT'
-				// 	)
 				// );
-				// $data['results'][] = $this->dbforge->modify_column('items', $fields);
+				// $data['results'][] = $this->dbforge->modify_column('contacts_locations', $fields);
 
 			 	//Remove column, 'table_name', 'column_to_drop'
 				// $this->dbforge->drop_column('attribute_values_items', 'variant_attribute_id');

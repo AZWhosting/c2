@@ -610,7 +610,6 @@ class Contacts extends REST_Controller {
 		return $number;
 	}
 
-
 	//GET TYPE
 	function type_get() {
 		$filter 	= $this->get("filter");
@@ -930,6 +929,165 @@ class Contacts extends REST_Controller {
 		}
 
 		//Response data
+		$this->response($data, 200);
+	}
+
+	//GET ITEM LOCATION 
+	function item_location_get() {
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
+		$data["count"] = 0;
+
+		$obj = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
+			}
+		}
+
+		//Filter
+		if(!empty($filter['filters']) && isset($filter['filters'])){
+	    	foreach ($filter['filters'] as $value) {
+	    		if(isset($value['operator'])) {
+					$obj->{$value['operator']}($value['field'], $value['value']);
+				} else {
+					$obj->where($value["field"], $value["value"]);
+				}
+			}
+		}
+
+		$obj->select("id, abbr, number, name");
+		$obj->order_by("name", "asc");
+
+		//Results
+		if($page && $limit){
+			$obj->get_paged_iterated($page, $limit);
+			$data["count"] = $obj->paged->total_rows;
+		}else{
+			$obj->get_iterated();
+			$data["count"] = $obj->result_count();
+		}
+
+		if($obj->exists()){
+			foreach ($obj as $value) {
+				$contact = array(
+					"id" 			=> $value->id,
+					"abbr" 	 		=> $value->abbr,
+					"number" 		=> $value->number,
+					"name" 	 		=> $value->name
+				);
+
+				$locations = $value->location->get_raw()->result();
+
+				if(count($locations)>0){
+					//Results
+					$data["results"][] = array(
+						"id" 			=> $value->id,
+						"contact" 		=> $contact,
+						"locations" 	=> $locations
+					);
+				}
+			}
+		}
+
+		//Response Data		
+		$this->response($data, 200);		
+	}
+
+	//POST ITEM LOCATION
+	function item_location_post() {
+		$models = json_decode($this->post('models'));
+
+		foreach ($models as $value) {
+			$obj = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$obj->get_by_id($value->contact->id);
+
+			$relatedItem = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			if(isset($value->locations)){
+				if(count($value->locations)>0){
+					$ids = [];
+					foreach ($value->locations as $val) {
+						array_push($ids, $val->id);
+					}
+
+					$relatedItem->where_in("id", array_unique($ids))->get();
+				}
+			}
+
+			if($obj->save($relatedItem->all)){
+				$contact = array(
+					"id" 			=> $obj->id,
+					"abbr" 	 		=> $obj->abbr,
+					"number" 		=> $obj->number,
+					"name" 	 		=> $obj->name
+				);
+
+				//Results
+				$data["results"][] = array(
+					"id" 			=> $obj->id,
+					"contact" 		=> $contact,
+					"locations" 	=> $obj->location->get_raw()->result()
+				);
+			}
+		}
+		$data["count"] = count($data["results"]);
+
+		$this->response($data, 201);
+	}
+
+	//PUT ITEM LOCATION
+	function item_location_put() {
+		$models = json_decode($this->put('models'));
+		$data["results"] = [];
+		$data["count"] = 0;
+
+		foreach ($models as $value) {			
+			$obj = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$obj->get_by_id($value->contact->id);
+
+			//Remove previouse locations
+	   		$prevLocations = $obj->location->get();
+	   		$obj->delete($prevLocations->all);
+
+			$relatedItem = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			if(isset($value->locations)){
+				if(count($value->locations)>0){
+					$ids = [];
+					foreach ($value->locations as $val) {
+						array_push($ids, $val->id);
+					}
+
+					$relatedItem->where_in("id", array_unique($ids))->get();
+				}
+			}
+
+			if($obj->save($relatedItem->all)){
+				$contact = array(
+					"id" 			=> $obj->id,
+					"abbr" 	 		=> $obj->abbr,
+					"number" 		=> $obj->number,
+					"name" 	 		=> $obj->name
+				);
+
+				//Results
+				$data["results"][] = array(
+					"id" 			=> $obj->id,
+					"contact" 		=> $contact,
+					"locations" 	=> $obj->location->get_raw()->result()
+				);
+			}
+		}
+		$data["count"] = count($data["results"]);
+
 		$this->response($data, 200);
 	}
 

@@ -37,16 +37,8 @@ class Contact extends DataMapper {
 			'class' => 'location',
 			'other_field' => 'elocation'
 		),
-		'location' => array(
-			'class' => 'location',
-			'other_field' => 'contact'
-		),
 		'payroll' => array(
 			'class' => 'payroll',
-			'other_field' => 'contact'
-		),
-		'utility' => array(
-			'class' => 'utility',
 			'other_field' => 'contact'
 		),
 		'branch' => array(
@@ -76,8 +68,8 @@ class Contact extends DataMapper {
 			"class" => 'account_line',
 			"other_field" => "contact"
 		),
-		'item' => array(
-			'class' => 'item',
+		'location' => array(
+			'class' => 'location',
 			'other_field' => 'contact'
 		),
 		'item_contact' => array(
@@ -106,10 +98,6 @@ class Contact extends DataMapper {
 		),
 		'attachment' => array(
 			'class' => 'attachment',
-			'other_field' => 'contact'
-		),
-		'contact_utility' => array(
-			'class' => 'contact_utility',
 			'other_field' => 'contact'
 		),
 		'contact_group' => array(

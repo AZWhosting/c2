@@ -715,7 +715,7 @@ class Items extends REST_Controller {
 		//Response data
 		$this->response($data, 200);
 	}
-
+		
 
 	//GET ITEM CONTACT
 	function contact_get() {		

@@ -16,11 +16,7 @@ class Location extends DataMapper {
 		"branch" => array(
 			"class" => "branch", 
 			"other_field" => "location"
-		),
-		"contact_utility" => array(
-			"class" => "contact_utility", 
-			"other_field" => "location"
-		)	
+		)
 	);
 
 	public $has_many = array(
@@ -37,7 +33,7 @@ class Location extends DataMapper {
 			'other_field' => 'location'
 		),
 		'contact' => array(
-			'class' => 'customer',
+			'class' => 'contact',
 			'other_field' => 'location'
 		),
 		'bin_location' => array(

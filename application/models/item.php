@@ -17,16 +17,16 @@ class Item extends DataMapper {
 			'class' => 'item_group',
 			'other_field' => 'item'
 		),
+		'contact' => array(
+			'class' => 'contact',
+			'other_field' => 'item'
+		),
 		'brand' => array(
 			'class' => 'brand',
 			'other_field' => 'item'
 		),		
 		'measurement' => array(
 			'class' => 'measurement',
-			'other_field' => 'item'
-		),
-		'contact' => array(
-			'class' => 'contact',
 			'other_field' => 'item'
 		),
 		'income_account' => array(
