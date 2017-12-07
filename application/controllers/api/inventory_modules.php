@@ -400,16 +400,18 @@ class Inventory_modules extends REST_Controller {
 				$so->where("deleted <>", 1);		
 				$so->get();
 
-				$data["results"][] = array(
-					"id" 			=> $value->id,
-					"name" 			=> $value->abbr . $value->number ." ". $value->name,
-					"measurement"	=> $value->measurement_name,
-					"quantity" 		=> floatval($itemLines->totalQuantity),
-					"on_po" 		=> floatval($po->totalQuantity),
-					"on_so" 		=> floatval($so->totalQuantity),
-					"cost" 			=> $cost,
-					"amount" 		=> floatval($itemLines->totalAmount)
-				);
+				if($cost<>0){
+					$data["results"][] = array(
+						"id" 			=> $value->id,
+						"name" 			=> $value->abbr . $value->number ." ". $value->name,
+						"measurement"	=> $value->measurement_name,
+						"quantity" 		=> floatval($itemLines->totalQuantity),
+						"on_po" 		=> floatval($po->totalQuantity),
+						"on_so" 		=> floatval($so->totalQuantity),
+						"cost" 			=> $cost,
+						"amount" 		=> floatval($itemLines->totalAmount)
+					);
+				}
 			}
 		}
 		
