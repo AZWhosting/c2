@@ -684,7 +684,7 @@ class Vendorreports extends REST_Controller {
 			$objList = [];
 			$today = new DateTime();
 			foreach ($obj as $value) {
-				$amount = floatval($value->amount)/ floatval($value->rate);
+				$amount = (floatval($value->amount) - floatval($value->deposit)) / floatval($value->rate);
 				
 				if($value->status=="2"){
 					$paid = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
