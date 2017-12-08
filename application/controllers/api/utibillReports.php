@@ -1206,55 +1206,95 @@ class UtibillReports extends REST_Controller {
 		$this->response($data, 200);
 	}
 
+
 	//Disconnection List
 	function disconnection_list_get() {
-		$filters 	= $this->get("filter");		
+		$filter 	= $this->get("filter");
 		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
 		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
 		$sort 	 	= $this->get("sort");		
-		$is_pattern = 0;
+		$data["results"] = [];
+		$data["count"] = 0;
+	
 
-		$obj = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+		$obj = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 		//Sort
-		if(!empty($sort) && isset($sort)){				
+		if(!empty($sort) && isset($sort)){
 			foreach ($sort as $value) {
-				$obj->order_by($value["field"], $value["dir"]);
-			}
-		}
-
-		//Filter		
-		if(!empty($filters) && isset($filters['filters'])){
-	    	foreach ($filters['filters'] as $value) {
-	    		if(isset($value['operator'])) {
-					$obj->{$value['operator']}($value['field'], $value['value']);
-				} else {
-	    			$obj->where($value["field"], $value["value"]);
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
 				}
 			}
 		}
-		$obj->include_related("contact", array("abbr", "number", "name", "email", "address", "phone", "id"));
-		$obj->include_related("location", "name");
-		$obj->include_related("branch", "name");
-		$obj->where("status", 0);
-		$obj->get_paged_iterated($page, $limit);
-		if($obj->exists()) {
-			$data = array();
-			foreach($obj as $value) {
-				//$utility = $row->contact->include_related('utility', array('abbr', 'code'))->get();
-				$data[] = array(
-					"id" 		=> $value->id,
-					"name"		=> $value->contact_abbr.$value->contact_number." ".$value->contact_name,
-					"license" 	=> $value->branch_name,
-					"number" 	=> $value->contact_abbr ."-". $value->contact_number,
-					"phone"     => $value->contact_phone,
-					"address"	=> $value->contact_address
-				);
+		
+		//Filter		
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value['operator'])){
+	    			$obj->{$value['operator']}($value['field'], $value['value']);	    		
+	    		} else {
+	    			$obj->where($value['field'], $value['value']);
+	    		}
 			}
-			$this->response(array('results' => $data, 'count' => $obj->paged->total_rows), 200);
-		} else {
-			$this->response(array('results'=> array()));
 		}
+
+		//Results
+		$obj->include_related('meter/contact', array("abbr", "number", "address", "phone", "name", "status", "id"));
+		$obj->include_related('meter/property', array("abbr", "name"));
+		$obj->include_related('meter/location', "name");
+		$obj->include_related('meter/branch', "name" );
+		$obj->include_related('meter', array("number", "status", "location_id", "pole_id", "box_id"));
+		$obj->where_related("meter", "status", 0);
+		$obj->get_paged_iterated($page, $limit);
+		
+		if($obj->exists()){
+			$objList = [];
+			foreach ($obj as $value) {								
+				
+				if(isset($objList[$value->meter_contact_id])){
+					$objList[$value->meter_contact_id]["line"][] = array(
+						"id"		=> $value->id,
+						"number"	=> $value->meter_contact_number,
+						"meter"		=> $value->meter_number,
+						"location"  => $value->meter_location_name,
+						"branch"	=> $value->meter_branch_name,
+						"status"	=> $value->meter_status,
+						"previous"	=> $value->previous,						
+						"current"	=> $value->current,
+						"month_of" 	=> $value->month_of,
+						"property"	=> $value->meter_property_name,
+					);
+				}else{
+					$objList[$value->meter_contact_id]["id"] 		= $value->meter_contact_id;					
+					$objList[$value->meter_contact_id]["number"] 	= $value->meter_contact_abbr.$value->meter_contact_number;
+					$objList[$value->meter_contact_id]["name"] 		= $value->meter_contact_name;
+					$objList[$value->meter_contact_id]["line"][]	= array(
+						"id"		=> $value->id,
+						"number"	=> $value->meter_contact_number,
+						"meter"		=> $value->meter_number,
+						"location"  => $value->meter_location_name,
+						"branch"	=> $value->meter_branch_name,
+						"status"	=> $value->meter_status,
+						"previous"	=> $value->previous,
+						"current"	=> $value->current,
+						"month_of" 	=> $value->month_of,
+						"property"	=> $value->meter_property_name,
+					);
+				}
+			}
+
+			foreach ($objList as $value) {
+				$data["results"][] = $value;
+			}
+			$data["count"] = $obj->paged->total_rows;
+			$data["currentPage"] = $obj->paged->current_page;
+		}
+
+		//Response Data
+		$this->response($data, 200);
 	}
 
 	//connection List
@@ -1301,7 +1341,8 @@ class UtibillReports extends REST_Controller {
 					"number" 	=> $value->contact_abbr ."-". $value->contact_number,
 					"phone"     => $value->contact_phone,
 					"address"	=> $value->contact_address,
-					"dataUsed" 	=> $value->date_used
+					"dataUsed" 	=> $value->date_used,
+					"meter_number" => $value->number
 				);
 			}
 			$this->response(array('results' => $data, 'count' => $obj->paged->total_rows), 200);
@@ -1312,53 +1353,92 @@ class UtibillReports extends REST_Controller {
 
 	//inactive List
 	function inactive_list_get() {
-		$filters 	= $this->get("filter");		
+		$filter 	= $this->get("filter");
 		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
 		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
 		$sort 	 	= $this->get("sort");		
-		$is_pattern = 0;
+		$data["results"] = [];
+		$data["count"] = 0;
+	
 
-		$obj = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+		$obj = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 		//Sort
-		if(!empty($sort) && isset($sort)){				
+		if(!empty($sort) && isset($sort)){
 			foreach ($sort as $value) {
-				$obj->order_by($value["field"], $value["dir"]);
-			}
-		}
-
-		//Filter		
-		if(!empty($filters) && isset($filters['filters'])){
-	    	foreach ($filters['filters'] as $value) {
-	    		if(isset($value['operator'])) {
-					$obj->{$value['operator']}($value['field'], $value['value']);
-				} else {
-	    			$obj->where($value["field"], $value["value"]);
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
 				}
 			}
 		}
-		$obj->include_related("contact", array("abbr", "number", "name", "email", "address", "phone", "id"));
-		$obj->include_related("location", "name");
-		$obj->include_related("branch", "name");
-		$obj->where("status", 2);
-		$obj->get_paged_iterated($page, $limit);
-		if($obj->exists()) {
-			$data = array();
-			foreach($obj as $value) {
-				//$utility = $row->contact->include_related('utility', array('abbr', 'code'))->get();
-				$data[] = array(
-					"id" 		=> $value->id,
-					"name"		=> $value->contact_abbr.$value->contact_number." ".$value->contact_name,
-					"license" 	=> $value->branch_name,
-					"number" 	=> $value->contact_abbr ."-". $value->contact_number,
-					"phone"     => $value->contact_phone,
-					"address"	=> $value->contact_address
-				);
+		
+		//Filter		
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value['operator'])){
+	    			$obj->{$value['operator']}($value['field'], $value['value']);	    		
+	    		} else {
+	    			$obj->where($value['field'], $value['value']);
+	    		}
 			}
-			$this->response(array('results' => $data, 'count' => $obj->paged->total_rows), 200);
-		} else {
-			$this->response(array('results'=> array()));
 		}
+
+		//Results
+		$obj->include_related('meter/contact', array("abbr", "number", "address", "phone", "name", "status", "id"));
+		$obj->include_related('meter/property', array("abbr", "name"));
+		$obj->include_related('meter/location', "name");
+		$obj->include_related('meter/branch', "name" );
+		$obj->include_related('meter', array("number", "status", "location_id", "pole_id", "box_id"));
+		$obj->where_related("meter", "status", 2);
+		$obj->get_paged_iterated($page, $limit);
+		
+		if($obj->exists()){
+			$objList = [];
+			foreach ($obj as $value) {								
+				
+				if(isset($objList[$value->meter_contact_id])){
+					$objList[$value->meter_contact_id]["line"][] = array(
+						"id"		=> $value->id,
+						"number"	=> $value->meter_contact_number,
+						"meter"		=> $value->meter_number,
+						"location"  => $value->meter_location_name,
+						"branch"	=> $value->meter_branch_name,
+						"status"	=> $value->meter_status,
+						"previous"	=> $value->previous,						
+						"current"	=> $value->current,
+						"month_of" 	=> $value->month_of,
+						"property"	=> $value->meter_property_name,
+					);
+				}else{
+					$objList[$value->meter_contact_id]["id"] 		= $value->meter_contact_id;					
+					$objList[$value->meter_contact_id]["number"] 	= $value->meter_contact_abbr.$value->meter_contact_number;
+					$objList[$value->meter_contact_id]["name"] 		= $value->meter_contact_name;
+					$objList[$value->meter_contact_id]["line"][]	= array(
+						"id"		=> $value->id,
+						"number"	=> $value->meter_contact_number,
+						"meter"		=> $value->meter_number,
+						"location"  => $value->meter_location_name,
+						"branch"	=> $value->meter_branch_name,
+						"status"	=> $value->meter_status,
+						"previous"	=> $value->previous,
+						"current"	=> $value->current,
+						"month_of" 	=> $value->month_of,
+						"property"	=> $value->meter_property_name,
+					);
+				}
+			}
+
+			foreach ($objList as $value) {
+				$data["results"][] = $value;
+			}
+			$data["count"] = $obj->paged->total_rows;
+			$data["currentPage"] = $obj->paged->current_page;
+		}
+
+		//Response Data
+		$this->response($data, 200);
 	}
 
 	//To be Disconnection List
