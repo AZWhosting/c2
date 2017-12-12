@@ -149,6 +149,14 @@ class Transactions extends REST_Controller {
 					);
 				}
 
+				//Reference
+				$reference = [];
+				if($value->reference_id>0){
+					$ref = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$ref->where("id", $value->reference_id);
+					$reference = $ref->get_raw()->result();
+				}
+
 				$data["results"][] = array(
 					"id" 						=> $value->id,
 					"company_id" 				=> $value->company_id,
@@ -221,7 +229,7 @@ class Transactions extends REST_Controller {
 
 				   	"contact" 					=> $contact,
 				   	"employee" 					=> $employee,
-				   	"reference" 				=> []
+				   	"reference" 				=> $reference
 				);
 			}
 		}
