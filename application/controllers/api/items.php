@@ -541,7 +541,7 @@ class Items extends REST_Controller {
 		}
 		
 		$obj->select_sum('quantity * conversion_ratio * movement', "totalQuantity");
-		$obj->select_sum('quantity * conversion_ratio * movement * cost', "totalAmount");
+		$obj->select_sum('(quantity * conversion_ratio * movement * cost) + inventory_adjust_value', "totalAmount");
 		$obj->where_related("transaction", "is_recurring <>", 1);
 		$obj->where_related("transaction", "deleted <>", 1);
 		// $obj->where_related("item", "item_type_id", 1);
@@ -1440,7 +1440,7 @@ class Items extends REST_Controller {
 				
 		//Results
 		$obj->get_paged_iterated($page, $limit);
-		$data["count"] = $obj->paged->total_rows;							
+		$data["count"] = $obj->paged->total_rows;		
 
 		if($obj->exists()){
 			foreach ($obj as $value) {
@@ -1468,10 +1468,10 @@ class Items extends REST_Controller {
 					);
 				}
 			}
-		}		
+		}
 
 		//Response Data		
-		$this->response($data, 200);	
+		$this->response($data, 200);
 	}
 
 	//GET PURCHASE BY VENDOR SUMMARY
@@ -1496,16 +1496,16 @@ class Items extends REST_Controller {
 	    	foreach ($filters as $val) {			    				
 	    		$obj->where_related("transaction", $val["field"], $val["value"]);			    				    		
 			}									 			
-		}		
+		}
 		
 		$obj->include_related('transaction', array('number','type','issued_date'));
 		$obj->include_related('transaction/contact', 'company');
 		$obj->where_related("transaction", "type", "Purchase");
 		$obj->where("deleted <>", 1);
-				
+
 		//Results
 		$obj->get_paged_iterated($page, $limit);
-		$data["count"] = $obj->paged->total_rows;							
+		$data["count"] = $obj->paged->total_rows;
 
 		if($obj->exists()){
 			foreach ($obj as $value) {				
@@ -1522,14 +1522,14 @@ class Items extends REST_Controller {
 					"amount" 		=> floatval($value->amount)
 				);				
 			}
-		}		
+		}
 
 		//Response Data		
-		$this->response($data, 200);	
+		$this->response($data, 200);
 	}
 
 	//GET MOVEMENT
-	function movement_get() {		
+	function movement_get() {
 		$filter 	= $this->get("filter");
 		$page 		= $this->get('page');
 		$limit 		= $this->get('limit');
@@ -1550,7 +1550,7 @@ class Items extends REST_Controller {
 			}
 		}
 
-		//Filter		
+		//Filter
 		if(!empty($filter) && isset($filter)){
 	    	foreach ($filter["filters"] as $value) {
 	    		if(isset($value["operator"])) {
@@ -1599,11 +1599,11 @@ class Items extends REST_Controller {
 					"transaction_issued_date"	=> $value->transaction_issued_date						
 				);
 			}
-		}				
+		}
 
-		//Response Data		
-		$this->response($data, 200);	
-	}	
+		//Response Data
+		$this->response($data, 200);
+	}
 
 	function valueMapper_get() {
 		$requestedDate = $this->get('callback');
@@ -1712,6 +1712,6 @@ class Items extends REST_Controller {
 		}
 		
 		$data["count"] = count($data["results"]);
-		$this->response($data, 200);		
+		$this->response($data, 200);
 	}
 }

@@ -185,7 +185,7 @@ class Inventory_modules extends REST_Controller {
 			//Quantity, Avg. Cost, and Amount
 			$itemLines = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$itemLines->select_sum('quantity * conversion_ratio * movement', "totalQuantity");
-			$itemLines->select_sum('quantity * conversion_ratio * movement * cost', "totalAmount");
+			$itemLines->select_sum('(quantity * conversion_ratio * movement * cost) + inventory_adjust_value', "totalAmount");
 			$itemLines->where_related("transaction", "is_recurring <>", 1);
 			$itemLines->where_related("transaction", "deleted <>", 1);
 			// $itemLines->where_related("item", "item_type_id", 1);
@@ -338,7 +338,7 @@ class Inventory_modules extends REST_Controller {
 		}
 
 		$totalLines = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$totalLines->select_sum('quantity * conversion_ratio * movement * cost', "totalAmount");
+		$totalLines->select_sum('(quantity * conversion_ratio * movement * cost) + inventory_adjust_value', "totalAmount");
 		$totalLines->where_related("transaction", "is_recurring <>", 1);
 		$totalLines->where_related("transaction", "issued_date <", $asOf);
 		$totalLines->where_related("transaction", "deleted <>", 1);
@@ -364,7 +364,7 @@ class Inventory_modules extends REST_Controller {
 				//Find Item Quantity and Amount
 				$itemLines = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				$itemLines->select_sum('quantity * conversion_ratio * movement', "totalQuantity");
-				$itemLines->select_sum('quantity * conversion_ratio * movement * cost', "totalAmount");
+				$itemLines->select_sum('(quantity * conversion_ratio * movement * cost) + inventory_adjust_value', "totalAmount");
 				$itemLines->where_related("transaction", "issued_date <", $asOf);
 				$itemLines->where_related("transaction", "is_recurring <>", 1);				
 				$itemLines->where_related("transaction", "deleted <>", 1);
@@ -470,7 +470,7 @@ class Inventory_modules extends REST_Controller {
 				//Find Qty On Hand, Avg. Cost, and Inventory Value
 				$itemLines = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				$itemLines->select_sum('quantity * conversion_ratio * movement', "totalQuantity");
-				$itemLines->select_sum('quantity * conversion_ratio * movement * cost', "totalAmount");
+				$itemLines->select_sum('(quantity * conversion_ratio * movement * cost) + inventory_adjust_value', "totalAmount");
 				$itemLines->where_related("transaction", "issued_date <=", $value->transaction_issued_date);
 				$itemLines->where_related("transaction", "is_recurring <>", 1);
 				$itemLines->where_related("transaction", "deleted <>", 1);
@@ -507,7 +507,7 @@ class Inventory_modules extends REST_Controller {
 					//Balance Forward
 					$bf = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 					$bf->select_sum('quantity * conversion_ratio * movement', "totalQuantity");
-					$bf->select_sum('quantity * conversion_ratio * movement * cost', "totalAmount");
+					$bf->select_sum('(quantity * conversion_ratio * movement * cost) + inventory_adjust_value', "totalAmount");
 					$bf->where_related("transaction", "issued_date <", $value->transaction_issued_date);
 					$bf->where_related("transaction", "is_recurring <>", 1);
 					$bf->where_related("transaction", "deleted <>", 1);

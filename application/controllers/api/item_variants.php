@@ -274,6 +274,38 @@ class Item_variants extends REST_Controller {
 		$this->response($data, 200);
 	}
 
+	//PERMUTATION
+	function permutaion_post(){
+		$models 			= json_decode($this->post('models'));
+		$data["results"] 	= [];
+		$data["count"] 		= 0;
+
+		//Filter
+		$traits = [];
+		foreach ($models as $value) {
+			//Variants
+			$variants = [];			
+			if(isset($value->variants)){
+				foreach ($value->variants as $v) {
+					array_push($variants, $v->id);					
+				}
+			}
+			$traits[$value->variant_attribute_id] = $variants;
+		}
+
+		//Permutations
+		$permutations = [];
+		if(count($traits)>1){
+			$permutations = $this->permutations($traits);
+		}else{
+			$permutations = $variants;
+		}
+
+		$data["results"] = $permutations;
+
+		$this->response($data, 200);
+	}
+
 	//PERMUTATIONS
 	public function permutations(array $array, $inb=false){
 		switch (count($array)) {

@@ -8,7 +8,7 @@ class Ops extends REST_Controller {
 		$this->load->dbutil();
 		$this->load->dbforge();
 		$dbs = $this->dbutil->list_databases();
-		$companyList = array("api","banhji","banhji0055","choeun_reeco","banhji_center","banhji_mac","information_schema","innodb","mysql","performance_schema","tmp");
+		$companyList = array("api","db_banhji","banhji","banhji0055","choeun_reeco","banhji_center","banhji_mac","information_schema","innodb","mysql","performance_schema","tmp");
 		$data["results"] = [];
 		$data["count"] = 0;
 		$startQ = false;
@@ -86,14 +86,14 @@ class Ops extends REST_Controller {
 				// 	// 	"null" 		=> FALSE,
 				// 	// 	"default" 	=> 0
 				// 	// ),
-				// 	"favorite" => array(
-				// 		"type" 		=> "TINYINT",
-				// 		"constraint"=> 1,
+				// 	"inventory_adjust_value" => array(
+				// 		"type" 		=> "DECIMAL",
+				// 		"constraint"=> "30,15",
 				// 		"null" 		=> FALSE,
 				// 		"default" 	=> 0
 				// 	)
 				// );
-				// $data['results'][] = $this->dbforge->add_column("categories", $fields);
+				// $data['results'][] = $this->dbforge->add_column("item_lines", $fields);
 				
 			    // Modify fields
 			 	// 	$fields = array(
