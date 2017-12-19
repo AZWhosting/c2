@@ -44,7 +44,7 @@ class Bin_locations extends REST_Controller {
 		}
 		
 		//Filter
-		if(!empty($filter) && isset($filter)){
+		if(!empty($filter['filters']) && isset($filter['filters'])){
 	    	foreach ($filter['filters'] as $value) {
 	    		if(isset($value['operator'])) {
 					$obj->{$value['operator']}($value['field'], $value['value']);
