@@ -1191,6 +1191,7 @@ var	en_US = {
 	"cash_receipt_description": "Lists of cash receipt for the select period of time, group by method of payment.",
 	"cash_receipt_sources_description": "Lists of cash receipt by sources for the select period of time, group by method of payment.",
 	"inactive_customer": "Inactive List",
+	"cash_receipt_description_by_employee": "Lists of cash receipt for the select period of time, group by method of employee.",
 	"inactive_customer_description": "List of the customer have been inactive",
 	"summary_report": "Summary Report",
 	"kpi_report": "KPI Report",
@@ -1291,6 +1292,7 @@ var	en_US = {
 	"cash_receipt_by_detail": "Cash Receipt by Detail",
 	"cash_receipt_by_sources_summary": "Cash Receipt by Sources Summary",
 	"cash_receipt_by_sources_detail": "Cash Receipt by Sources Detail",
+	"cash_receipt_by_employee": "Cash Receipt by Employee",
 	"receipt_number": "Receipt Number",
 
 	//Water Reconcile

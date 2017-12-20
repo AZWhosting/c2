@@ -1104,13 +1104,17 @@ class Utibills extends REST_Controller {
 		$number = "";
 		foreach ($models as $value) {
 			$obj = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$obj->where("number", $value->meter_number)->order_by("id", "desc")->limit(1);
-			isset($value->order) 	? $obj->worder 		= $value->order : 0;
-	   		if($obj->save()){
-	   			$data["results"][] = array(
-			   		"id" => $obj->id
-			   	);
-		    }
+			$id = intval($value->meter_id);
+			$order = intval($value->order);
+			$obj->where("id", $id)->limit(1)->get();
+			if($obj->exists()){
+				$obj->worder 		= $order;
+		   		if($obj->save()){
+		   			$data["results"][] = array(
+				   		"id" => $obj->id
+				   	);
+			    }
+			}
 		}
 		$data["count"] = count($data["results"]);
 		$this->response($data, 201);	
@@ -1177,8 +1181,9 @@ class Utibills extends REST_Controller {
 		$data["count"] = 0;
 		$number = "";
 		foreach ($models as $value) {
-			if($value->receive > 0){
-				$meter =new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$val = floatval($value->receive);
+			if($val > 0){
+				$meter = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				$meter->where('number', $value->meter_number)->order_by("id", "desc")->limit(1)->get();
 				if($meter->exists()){
 					$tran = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
@@ -1198,8 +1203,8 @@ class Utibills extends REST_Controller {
 						isset($tran->user_id) 	? $obj->user_id 	= $tran->user_id : "";
 						$obj->number = $number;
 					   	$obj->type = "Cash_Receipt";
-					   	$obj->sub_total = floatval($value->receive);
-					   	$obj->amount = floatval($value->receive);
+					   	$obj->sub_total = floatval($val);
+					   	$obj->amount = floatval($val);
 					   	isset($tran->rate) 			? $obj->rate 					= $tran->rate : 1;
 					   	isset($tran->locale) 		? $obj->locale 					= $tran->locale : "";
 					   	isset($tran->month_of) 		? $obj->month_of 				= $tran->month_of : "";
@@ -1236,12 +1241,15 @@ class Utibills extends REST_Controller {
 				   			$journal2->rate 	  = $obj->rate;
 				   			$journal2->locale 	  = $obj->locale;
 				   			$journal2->save();
-				   			if(floatval($tran->amount) == floatval($value->receive)){
+				   			if(floatval($tran->amount) == floatval($val)){
 				   				$tran->status = 1; 
 				   			}else{
 				   				$tran->status = 2;
 				   			}
 				   			$tran->save();
+				   			$data["results"][] = array(
+								"id" 			=> $tran->id
+							);
 					    }
 					}else{
 						$data["results"][] = array(
@@ -1857,7 +1865,7 @@ class Utibills extends REST_Controller {
 		   			// }
 					$line = new Winvoice_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		   			$line->transaction_id 	= $txn->id;
-		   			if($value->type == "usage"){
+		   			if($value->type = "usage"){
 		   				$line->item_id 			= $value->meter_id;
 		   			}else{
 		   				$line->item_id 			= isset($value->item_id) ? $value->item_id:"";
@@ -3064,6 +3072,778 @@ class Utibills extends REST_Controller {
 			   		"id" 						=> $obj->id,
 			   	);
 			}
+		}
+
+		$data["count"] = count($data["results"]);
+		$this->response($data, 201);
+	}
+
+	//Meter
+	//GET 
+	function meter_get() {		
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = array();
+		$data["count"] = 0;
+		$obj = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
+			}
+		}
+		//Filter
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value["operator"])) {
+					$obj->{$value["operator"]}($value["field"], $value["value"]);
+				} else {
+	    			$obj->where($value["field"], $value["value"]);
+				}
+			}
+		}
+		//Get Result
+		$obj->order_by('worder','asc');
+		//Results
+		if($page && $limit){
+			$obj->get_paged_iterated($page, $limit);
+			$data["count"] = $obj->paged->total_rows;
+		}else{
+			$obj->get_iterated();
+			$data["count"] = $obj->result_count();
+		}
+		if($obj->result_count()>0){			
+			foreach ($obj as $value) {
+				$currency= $value->currency->get();
+				$contacts = $value->contact->get();
+				$property = $value->property->get();
+				$image_url = $value->attachment->get();
+				$reactive = $value->reactive->get_raw();
+				$itemline = [];
+				$itemassline = [];
+				if($value->activated == 0){
+					//Get Item Line
+					$txn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$txn->where("meter_id", $value->id);
+					$txn->where("deleted", 0);
+					$txn->where_in("type", array('Invoice', 'Commercial_Invoice'))->limit(1)->get();
+					if($txn->exists()){
+						$itm = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						$itm->where("transaction_id", $txn->id)->get();
+						if($itm->exists()){
+							foreach($itm as $items){
+								if($items->assembly_id == 0){
+									$itemline[] =  array(
+										"transaction_id"     => $txn->id,
+						                "tax_item_id"        => $items->tax_item_id,
+						                "item_id"            => $items->item_id,
+						                "assembly_id"        => $items->assembly_id,
+						                "measurement_id"     => $items->measurement_id,
+						                "description"        => $items->description,
+						                "quantity"           => floatval($items->quantity),
+						                "conversion_ratio"   => floatval($items->conversion_ratio),
+						                "cost"               => floatval($items->cost),
+						                "price"              => floatval($items->price),
+						                "amount"             => floatval($items->amount),
+						                "discount"           => floatval($items->discount),
+						                "tax"                => floatval($items->tax),
+						                "rate"               => floatval($items->rate),
+						                "locale"             => $items->locale,
+						                "movement"           => floatval($items->movement),
+						                "measurement" 		 => array(
+						                	"measurement_id" => intval($items->measurement_id)
+						                ),
+						                "tax_item" 			 => array(
+						                	"id" 		=> intval($items->tax_item_id)
+						                ),
+						                "item" 				 => array(
+						                	"id" 		=> $items->item_id,
+						                	"name" 		=> $items->description,
+						                	"locale" 	=> $items->locale
+						                )
+									);
+								}else{
+									$itemassline[] =  array(
+										"transaction_id"     => $txn->id,
+						                "tax_item_id"        => $items->tax_item_id,
+						                "item_id"            => $items->item_id,
+						                "assembly_id"        => $items->assembly_id,
+						                "measurement_id"     => $items->measurement_id,
+						                "description"        => $items->description,
+						                "quantity"           => $items->quantity,
+						                "conversion_ratio"   => $items->conversion_ratio,
+						                "cost"               => $items->cost,
+						                "price"              => $items->price,
+						                "amount"             => $items->amount,
+						                "discount"           => $items->discount,
+						                "tax"                => $items->tax,
+						                "rate"               => $items->rate,
+						                "locale"             => $items->locale,
+						                "movement"           => $items->movement,
+						                "measurement" 		 => array(
+						                	"measurement_id" => $items->tax_item_id
+						                ),
+						                "tax_item" 			 => array(
+						                	"id" 		=> $items->tax_item_id
+						                ),
+						                "item" 				 => array(
+						                	"id" 		=> $items->id,
+						                	"name" 		=> $items->description,
+						                	"locale" 	=> $items->locale
+						                )
+									);
+								}
+							}
+						}
+					}
+				}
+				//Get Deposit
+				$depname = "";
+				$depamount = "";
+				$pip = new Plan_items_plan(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$pip->where("plan_id", $value->plan_id)->get();
+				if($pip->exists()){
+					foreach($pip as $ip){
+						$pli = new Plan_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						$pli->where("id", $ip->plan_item_id)->limit(1)->get();
+						if($pli->exists()){
+							if($pli->type == "deposit"){
+								$depname = $pli->name;
+								$depamount = $pli->amount;
+							}
+						}
+					}
+				}
+				//Results				
+				$data["results"][] = array(
+					"id" 					=> intval($value->id),
+					"currency_id"			=> intval($value->currency_id),
+					"_currency"				=> array(
+						"id" => $currency->id,
+						"code" => $currency->code,
+						"locale" => $currency->locale
+					),
+					"meter_number" 			=> $value->number,
+					"property_id" 			=> intval($value->property_id),
+					"property_name"			=> $property->name,
+					"contact_id" 			=> intval($value->contact_id),
+					"type"					=> $value->type,
+					"attachment_id"			=> intval($value->attachment_id),
+					"image_url"				=> $image_url->url,
+					"worder" 				=> intval($value->worder),
+					"contact_name" 			=> $contacts->name,
+					"status" 				=> $value->status,
+					"contact" 				=> base_url(). "api/contacts/",
+					"number_digit"			=> $value->number_digit,
+					"plan_id"				=> intval($value->plan_id),
+					"map" 					=> $value->latitute,
+					"starting_no" 			=> $value->startup_reading,
+					"location_id" 			=> intval($value->location_id),
+					"pole_id" 				=> intval($value->pole_id),
+					"box_id" 				=> intval($value->box_id),
+					"ampere_id" 			=> intval($value->ampere_id),
+					"phase_id" 				=> intval($value->phase_id),
+					"voltage_id" 			=> intval($value->voltage_id),
+					"brand_id" 				=> intval($value->brand_id),
+					"branch_id" 			=> intval($value->branch_id),
+					"activated" 			=> intval($value->activated),
+					"latitute" 				=> $value->latitute,
+					"longtitute" 			=> $value->longtitute,
+					"multiplier" 			=> floatval($value->multiplier),
+					"date_used" 			=> $value->date_used,
+					"reactive_id" 			=> intval($value->reactive_id),
+					"reactive_status" 		=> $value->reactive_status,
+					"group" 				=> $value->group,
+					"item" 					=> $itemline,
+					"assembly_lines" 		=> $itemassline,
+					"invoice_type" 			=> $txn->type,
+					"transaction_id" 		=> $txn->id,
+					"txn_number" 			=> $txn->number,
+					"txn_amount" 			=> floatval($txn->amount),
+					"txn_tax" 				=> floatval($txn->tax),
+					"txn_sub_total" 		=> floatval($txn->sub_total),
+					"txn_discount" 			=> floatval($txn->discount),
+					"locale" 				=> $txn->locale,
+					"deposit_name" 			=> $depname,
+					"deposit_amount" 		=> floatval($depamount)
+				);
+			}
+		}
+		//Response Data		
+		$this->response($data, 200);		
+	}
+
+	//POST
+	function meter_post() {
+		$models = json_decode($this->post('models'));
+		$data = array();
+		foreach ($models as $value) {
+			$obj = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$obj->ampere_id 			= isset($value->ampere_id)			? $value->ampere_id:0;
+			$obj->phase_id 				= isset($value->phase_id)			? $value->phase_id:0;
+			$obj->voltage_id 			= isset($value->voltage_id)			? $value->voltage_id:0;
+			$obj->reactive_id 			= isset($value->reactive_id)		? $value->reactive_id:0;
+			$obj->number 				= isset($value->meter_number) 		? $value->meter_number:0;			
+			$obj->multiplier 			= isset($value->multiplier) 		? $value->multiplier: 1;
+			$obj->max_number 			= isset($value->max_number) 		? $value->max_number:0;
+			$obj->contact_id 			= isset($value->contact_id) 		? $value->contact_id:0;
+			$obj->startup_reading 		= isset($value->starting_no) 		? $value->starting_no: 0;
+			$obj->longtitute 			= isset($value->longtitute) 		? $value->longtitute: "";
+			$obj->latitute 				= isset($value->latitute) 			? $value->latitute: "";
+			$obj->status 				= isset($value->status)				? $value->status:1;
+			$obj->branch_id 			= isset($value->branch_id)			? $value->branch_id:"";
+			$obj->location_id 			= isset($value->location_id)		? $value->location_id:"";
+			$obj->brand_id 				= isset($value->brand_id)			? $value->brand_id:"";
+			$obj->date_used 			= isset($value->date_used)?date("Y-m-d", strtotime($value->date_used)):'0000-00-00';
+			$obj->number_digit 			= isset($value->number_digit)		? $value->number_digit:4;
+			$obj->plan_id 				= isset($value->plan_id)			? $value->plan_id:0;
+			$obj->type 					= isset($value->type)				? $value->type:"w";
+			$obj->attachment_id 		= isset($value->attachment_id)		? $value->attachment_id:0;
+			$obj->pole_id 				= isset($value->pole_id)			? $value->pole_id:0;
+			$obj->box_id 				= isset($value->box_id)				? $value->box_id:0;
+			$obj->property_id 			= isset($value->property_id)		? $value->property_id:0;
+			$obj->activated 			= isset($value->activated)			? $value->activated:0;
+			$obj->reactive_status 		= isset($value->reactive_status)	? $value->reactive_status:0;
+			$obj->group 				= isset($value->group)				? $value->group:0;
+			$obj->worder 				= isset($value->worder)				? $value->worder:0;
+			$obj->sync 					= 1;
+			$obj->round 				= 0;
+			if($obj->save()){
+				//Add Transaction
+				if($value->txn_amount > 0){
+					$txn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					//Number of Invoice
+					$txn_number = $this->_generate_number($value->invoice_type, $value->date_used);
+					//Contact
+					$contxn = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$contxn->where("id", $value->contact_id)->limit(1)->get();
+
+					isset($value->location_id) 				? $txn->location_id 				= $value->location_id : "";
+					isset($value->contact_id) 				? $txn->contact_id 					= $value->contact_id : "";
+					isset($contxn->payment_term_id) 		? $txn->payment_term_id 			= $contxn->payment_term_id : 5;
+					isset($contxn->payment_method_id) 		? $txn->payment_method_id 			= $contxn->payment_method_id : "";
+					isset($value->txn_form) 				? $txn->transaction_template_id 	= $value->txn_form : "";
+					isset($contxn->account_id) 				? $txn->account_id 					= $contxn->account_id : "";
+					isset($contxn->trade_discount_id) 		? $txn->discount_account_id 		= $contxn->trade_discount_id : "";
+					isset($contxn->item_id) 				? $txn->item_id 					= $contxn->item_id : "";
+					isset($contxn->tax_item_id) 			? $txn->tax_item_id 				= $contxn->tax_item_id : "";
+					isset($value->user_id) 					? $txn->user_id 					= $value->user_id : "";
+					$txn->number = $txn_number;
+				   	isset($value->invoice_type) 			? $txn->type 						= $value->invoice_type : "";
+				   	isset($value->txn_sub_total) 			? $txn->sub_total 					= $value->txn_sub_total : "";
+				   	isset($value->txn_discount) 			? $txn->discount 					= $value->txn_discount : "";
+				   	isset($value->txn_tax) 					? $txn->tax 						= $value->txn_tax : "";
+				   	isset($value->txn_amount) 				? $txn->amount 						= $value->txn_amount : "";
+				   	isset($value->rate) 					? $txn->rate 						= $value->rate : "";
+				   	isset($value->locale) 					? $txn->locale 						= $value->locale : "";
+				   	isset($value->date_used) 				? $txn->issued_date 				= $value->date_used : "";
+				   	$txn->status = 0;
+				   	$txn->is_journal = 1;
+				   	isset($obj->id) 						? $txn->meter_id 					= $obj->id : "";
+				   	if($txn->save()){
+				   		//DR
+				   		$j1 = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				   		$j1->transaction_id 	= $txn->id;		
+						$j1->account_id			= $contxn->account_id;
+						$j1->contact_id 		= $value->contact_id;
+					   	$j1->description 		= "Utility Service";
+					   	$j1->dr 				= $value->txn_amount;
+					   	$j1->cr 				= 0;
+					   	$j1->rate 				= $value->rate;
+					   	$j1->locale 			= $value->locale;
+					   	$j1->save();
+					   	//Discount
+					   	if($value->txn_discount > 0){
+					   		$jd = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					   		$jd->transaction_id 	= $txn->id;		
+							$jd->account_id			= $contxn->trade_discount_id;
+							$jd->contact_id 		= $value->contact_id;
+						   	$jd->description 		= "Utility Service";
+						   	$jd->dr 				= $value->txn_discount;
+						   	$jd->cr 				= 0;
+						   	$jd->rate 				= $value->rate;
+						   	$jd->locale 			= $value->locale;
+						   	$jd->save();
+					   	}
+					   	//CR
+				   		$j2 = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				   		$j2->transaction_id 	= $txn->id;		
+						$j2->account_id			= $contxn->ra_id;
+						$j2->contact_id 		= $value->contact_id;
+					   	$j2->description 		= "Utility Service";
+					   	$j2->dr 				= 0;
+					   	$j2->cr 				= $value->txn_sub_total;
+					   	$j2->rate 				= $value->rate;
+					   	$j2->locale 			= $value->locale;
+					   	$j2->save();
+					   	//TAX
+					   	if($value->txn_tax > 0){
+					   		$taxID = "";
+					   		foreach ($value->item_lines as $iline) {
+					   			if($iline->tax_item->account_id != ""){
+					   				$taxID = $iline->tax_item->account_id;
+					   			}
+					   		}
+					   		$jx = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					   		$jx->transaction_id 	= $txn->id;		
+							$jx->account_id			= $taxID;
+							$jx->contact_id 		= $value->contact_id;
+						   	$jx->description 		= "Utility Service";
+						   	$jx->dr 				= 0;
+						   	$jx->cr 				= $value->txn_tax;
+						   	$jx->rate 				= $value->rate;
+						   	$jx->locale 			= $value->locale;
+						   	$jx->save();
+					   	}
+
+					   	//Items Line
+					   	foreach ($value->item_lines as $itemline) {
+						   	$assItems = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						   	$assItems->transaction_id 		= $txn->id;
+							isset($itemline->item_id)				? $assItems->item_id				= $itemline->item_id : "";
+							isset($itemline->assembly_id)			? $assItems->assembly_id 			= $itemline->assembly_id : "";
+							isset($itemline->measurement_id)		? $assItems->measurement_id			= $itemline->measurement_id : "";
+							isset($itemline->tax_item_id)			? $assItems->tax_item_id			= $itemline->tax_item_id : "";
+						   	isset($itemline->wht_account_id)		? $assItems->wht_account_id			= $itemline->wht_account_id : "";
+						   	isset($itemline->description)			? $assItems->description 			= $itemline->description : "";
+						   	isset($itemline->on_hand)				? $assItems->on_hand 				= $itemline->on_hand : "";
+						   	isset($itemline->gross_weight)			? $assItems->gross_weight 			= $itemline->gross_weight : "";
+						   	isset($itemline->truck_weight)			? $assItems->truck_weight 			= $itemline->truck_weight : "";
+						   	isset($itemline->bag_weight)			? $assItems->bag_weight 			= $itemline->bag_weight : "";
+						   	isset($itemline->yield)					? $assItems->yield 					= $itemline->yield : "";
+						   	isset($itemline->quantity)				? $assItems->quantity 				= $itemline->quantity : "";
+						   	isset($itemline->quantity_adjusted) 	? $assItems->quantity_adjusted 		= $itemline->quantity_adjusted : "";
+						   	isset($itemline->cost)					? $assItems->cost 					= $itemline->cost : "";
+						   	isset($itemline->price)					? $assItems->price 					= $itemline->price : "";		   	
+						   	isset($itemline->amount)				? $assItems->amount 				= $itemline->amount : "";
+						   	isset($itemline->markup)				? $assItems->markup 				= $itemline->markup : "";
+						   	isset($itemline->discount)				? $assItems->discount 				= $itemline->discount : "";
+						   	isset($itemline->fine)					? $assItems->fine 					= $itemline->fine : "";
+						   	isset($itemline->tax)					? $assItems->tax 					= $itemline->tax : "";
+						   	isset($itemline->rate)					? $assItems->rate 					= $itemline->rate : "";
+						   	isset($itemline->locale)				? $assItems->locale 				= $itemline->locale : "";
+						   	isset($itemline->additional_cost)		? $assItems->additional_cost  		= $itemline->additional_cost : "";
+						   	isset($itemline->additional_applied)	? $assItems->additional_applied  	= $itemline->additional_applied : "";
+						   	isset($itemline->movement)				? $assItems->movement 				= $itemline->movement : "";
+						   	$assItems->save();
+						}
+						//Assembly Item
+						if($value->item_assembly_lines){
+							foreach ($value->item_assembly_lines as $assline) {
+							   	$ass = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+							   	$ass->transaction_id 		= $txn->id;
+								isset($assline->item_id)				? $ass->item_id				= $assline->item_id : "";
+								isset($assline->assembly_id)			? $ass->assembly_id 			= $assline->assembly_id : "";
+								isset($assline->measurement_id)			? $ass->measurement_id			= $assline->measurement_id : "";
+								isset($assline->tax_item_id)			? $ass->tax_item_id			= $assline->tax_item_id : "";
+							   	isset($assline->wht_account_id)			? $ass->wht_account_id			= $assline->wht_account_id : "";
+							   	isset($assline->description)			? $ass->description 			= $assline->description : "";
+							   	isset($assline->on_hand)				? $ass->on_hand 				= $assline->on_hand : "";
+							   	isset($assline->gross_weight)			? $ass->gross_weight 			= $assline->gross_weight : "";
+							   	isset($assline->truck_weight)			? $ass->truck_weight 			= $assline->truck_weight : "";
+							   	isset($assline->bag_weight)				? $ass->bag_weight 			= $assline->bag_weight : "";
+							   	isset($assline->yield)					? $ass->yield 					= $assline->yield : "";
+							   	isset($assline->quantity)				? $ass->quantity 				= $assline->quantity : "";
+							   	isset($assline->quantity_adjusted) 		? $ass->quantity_adjusted 		= $assline->quantity_adjusted : "";
+							   	isset($assline->cost)					? $ass->cost 					= $assline->cost : "";
+							   	isset($assline->price)					? $ass->price 					= $assline->price : "";		   	
+							   	isset($assline->amount)					? $ass->amount 				= $assline->amount : "";
+							   	isset($assline->markup)					? $ass->markup 				= $assline->markup : "";
+							   	isset($assline->discount)				? $ass->discount 				= $assline->discount : "";
+							   	isset($assline->fine)					? $ass->fine 					= $assline->fine : "";
+							   	isset($assline->tax)					? $ass->tax 					= $assline->tax : "";
+							   	isset($assline->rate)					? $ass->rate 					= $assline->rate : "";
+							   	isset($assline->locale)					? $ass->locale 				= $assline->locale : "";
+							   	isset($assline->additional_cost)		? $ass->additional_cost  		= $assline->additional_cost : "";
+							   	isset($assline->additional_applied)		? $ass->additional_applied  	= $assline->additional_applied : "";
+							   	isset($assline->movement)				? $ass->movement 				= $assline->movement : "";
+							   	$ass->save();
+							}
+						}
+				   		$data[] = array(
+							"id" 				=> $txn->id,
+							"amount" 			=> floatval($txn->amount),
+							"discount" 			=> floatval($txn->discount),
+							"sub_total" 		=> floatval($txn->sub_total),
+							"tax" 				=> floatval($txn->tax),
+							"number" 			=> $txn->number,
+							"issued_date" 		=> $txn->issued_date,
+							"locale" 			=> $txn->locale,
+							"item_lines" 		=> $value->item_lines,
+							"invoice_type" 		=> $txn->type,
+							"contact" 			=> array(
+				 				'id' 		=> $contxn->id, 
+				 				'abbr' 		=> $contxn->abbr, 
+				 				'number' 	=> $contxn->number, 
+				 				'name'		=> $contxn->name, 
+				 				'phone' 	=> $contxn->phone, 
+				 				'locale'	=> $contxn->locale, 
+				 				'address' 	=> $contxn->address,
+				 			),
+				 			"print_count" 		=> $txn->print_count
+						);
+				   	}
+				}			
+			}			
+		}
+		$count = count($data);
+		if($count > 0) {
+			$this->response(array("results" => $data), 201);
+		} else {
+			$this->response(array("results" => array()), 401);
+		}			
+	}
+
+	//PUT
+	function meter_put() {
+		$models = json_decode($this->put('models'));
+		$data = array();
+		$data["count"] = 0;
+		foreach ($models as $value) {			
+			$obj = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$obj->get_by_id($value->id);
+			$obj->ampere_id 			= isset($value->ampere_id)			? $value->ampere_id:0;
+			$obj->phase_id 				= isset($value->phase_id)			? $value->phase_id:0;
+			$obj->voltage_id 			= isset($value->voltage_id)			? $value->voltage_id:0;
+			$obj->reactive_id 			= isset($value->reactive_id)		? $value->reactive_id:0;
+			$obj->number 				= isset($value->meter_number) 		? $value->meter_number:0;			
+			$obj->multiplier 			= isset($value->multiplier) 		? $value->multiplier: 1;
+			$obj->max_number 			= isset($value->max_number) 		? $value->max_number:0;
+			$obj->contact_id 			= isset($value->contact_id) 		? $value->contact_id:0;
+			$obj->startup_reading 		= isset($value->starting_no) 		? $value->starting_no: 0;
+			$obj->longtitute 			= isset($value->longtitute) 		? $value->longtitute: "";
+			$obj->latitute 				= isset($value->latitute) 			? $value->latitute: "";
+			$obj->status 				= isset($value->status)				? $value->status:1;
+			$obj->branch_id 			= isset($value->branch_id)			? $value->branch_id:"";
+			$obj->location_id 			= isset($value->location_id)		? $value->location_id:"";
+			$obj->brand_id 				= isset($value->brand_id)			? $value->brand_id:"";
+			$obj->date_used 			= isset($value->date_used)?date("Y-m-d", strtotime($value->date_used)):'0000-00-00';
+			$obj->number_digit 			= isset($value->number_digit)		? $value->number_digit:4;
+			$obj->plan_id 				= isset($value->plan_id)			? $value->plan_id:0;
+			$obj->type 					= isset($value->type)				? $value->type:"w";
+			$obj->attachment_id 		= isset($value->attachment_id)		? $value->attachment_id:0;
+			$obj->pole_id 				= isset($value->pole_id)			? $value->pole_id:0;
+			$obj->box_id 				= isset($value->box_id)				? $value->box_id:0;
+			$obj->property_id 			= isset($value->property_id)		? $value->property_id:0;
+			$obj->activated 			= isset($value->activated)			? $value->activated:0;
+			$obj->reactive_status 		= isset($value->reactive_status)	? $value->reactive_status:0;
+			$obj->group 				= isset($value->group)				? $value->group:0;
+			$obj->worder 				= isset($value->worder)				? $value->worder:0;
+			$obj->sync 					= 1;
+			$obj->round 				= 0;
+			if($obj->save()){
+				//Add Transaction
+				//Contact
+				$contxn = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$contxn->where("id", $value->contact_id)->limit(1)->get();
+				if($value->change_line == 1){
+					if($value->txn_amount > 0){
+						//Delete Old Transaction
+						$otxn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						$otxn->where("id", $value->transaction_id)->get();
+						if($otxn->exists()){
+							$otxn->deleted = 1;
+							$otxn->save();
+						}
+						$ojn = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						$ojn->where("transaction_id", $value->transaction_id)->get();
+						if($ojn->exists()){
+							$ojn->update_all('deleted', 1);
+						}
+						$oit = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						$oit->where("transaction_id", $value->transaction_id)->get();
+						if($oit->exists()){
+							$oit->update_all('deleted', 1);
+						}
+						//Add TXN
+						$txn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						//Number of Invoice
+						$txn_number = $this->_generate_number($value->invoice_type, $value->date_used);
+
+						isset($value->location_id) 				? $txn->location_id 				= $value->location_id : "";
+						isset($value->contact_id) 				? $txn->contact_id 					= $value->contact_id : "";
+						isset($contxn->payment_term_id) 		? $txn->payment_term_id 			= $contxn->payment_term_id : 5;
+						isset($contxn->payment_method_id) 		? $txn->payment_method_id 			= $contxn->payment_method_id : "";
+						isset($value->txn_form) 				? $txn->transaction_template_id 	= $value->txn_form : "";
+						isset($contxn->account_id) 				? $txn->account_id 					= $contxn->account_id : "";
+						isset($contxn->trade_discount_id) 		? $txn->discount_account_id 		= $contxn->trade_discount_id : "";
+						isset($contxn->item_id) 				? $txn->item_id 					= $contxn->item_id : "";
+						isset($contxn->tax_item_id) 			? $txn->tax_item_id 				= $contxn->tax_item_id : "";
+						isset($value->user_id) 					? $txn->user_id 					= $value->user_id : "";
+						$txn->number = $txn_number;
+					   	isset($value->invoice_type) 			? $txn->type 						= $value->invoice_type : "";
+					   	isset($value->txn_sub_total) 			? $txn->sub_total 					= $value->txn_sub_total : "";
+					   	isset($value->txn_discount) 			? $txn->discount 					= $value->txn_discount : "";
+					   	isset($value->txn_tax) 					? $txn->tax 						= $value->txn_tax : "";
+					   	isset($value->txn_amount) 				? $txn->amount 						= $value->txn_amount : "";
+					   	isset($value->rate) 					? $txn->rate 						= $value->rate : "";
+					   	isset($value->locale) 					? $txn->locale 						= $value->locale : "";
+					   	isset($value->date_used) 				? $txn->issued_date 				= $value->date_used : "";
+					   	$txn->status = 0;
+					    $txn->is_journal = 1;
+					   	isset($obj->id) 						? $txn->meter_id 					= $obj->id : "";
+					   	if($txn->save()){
+					   		//DR
+					   		$j1 = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					   		$j1->transaction_id 	= $txn->id;		
+							$j1->account_id			= $contxn->account_id;
+							$j1->contact_id 		= $value->contact_id;
+						   	$j1->description 		= "Utility Service";
+						   	$j1->dr 				= $value->txn_amount;
+						   	$j1->cr 				= 0;
+						   	$j1->rate 				= $value->rate;
+						   	$j1->locale 			= $value->locale;
+						   	$j1->save();
+						   	//Discount
+						   	if($value->txn_discount > 0){
+						   		$jd = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						   		$jd->transaction_id 	= $txn->id;		
+								$jd->account_id			= $contxn->trade_discount_id;
+								$jd->contact_id 		= $value->contact_id;
+							   	$jd->description 		= "Utility Service";
+							   	$jd->dr 				= $value->txn_discount;
+							   	$jd->cr 				= 0;
+							   	$jd->rate 				= $value->rate;
+							   	$jd->locale 			= $value->locale;
+							   	$jd->save();
+						   	}
+						   	//CR
+					   		$j2 = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					   		$j2->transaction_id 	= $txn->id;		
+							$j2->account_id			= $contxn->ra_id;
+							$j2->contact_id 		= $value->contact_id;
+						   	$j2->description 		= "Utility Service";
+						   	$j2->dr 				= 0;
+						   	$j2->cr 				= $value->txn_sub_total;
+						   	$j2->rate 				= $value->rate;
+						   	$j2->locale 			= $value->locale;
+						   	$j2->save();
+						   	//TAX
+						   	if($value->txn_tax > 0){
+						   		$taxID = "";
+						   		foreach ($value->item_lines as $iline) {
+						   			if($iline->tax_item->account_id != ""){
+						   				$taxID = $iline->tax_item->account_id;
+						   			}
+						   		}
+						   		$jx = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						   		$jx->transaction_id 	= $txn->id;		
+								$jx->account_id			= $taxID;
+								$jx->contact_id 		= $value->contact_id;
+							   	$jx->description 		= "Utility Service";
+							   	$jx->dr 				= 0;
+							   	$jx->cr 				= $value->txn_tax;
+							   	$jx->rate 				= $value->rate;
+							   	$jx->locale 			= $value->locale;
+							   	$jx->save();
+						   	}
+
+						   	//Items Line
+						   	foreach ($value->item_lines as $itemline) {
+							   	$assItems = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+							   	$assItems->transaction_id 		= $txn->id;
+								isset($itemline->item_id)				? $assItems->item_id				= $itemline->item_id : "";
+								isset($itemline->assembly_id)			? $assItems->assembly_id 			= $itemline->assembly_id : "";
+								isset($itemline->measurement_id)		? $assItems->measurement_id			= $itemline->measurement_id : "";
+								isset($itemline->tax_item_id)			? $assItems->tax_item_id			= $itemline->tax_item_id : "";
+							   	isset($itemline->wht_account_id)		? $assItems->wht_account_id			= $itemline->wht_account_id : "";
+							   	isset($itemline->description)			? $assItems->description 			= $itemline->description : "";
+							   	isset($itemline->on_hand)				? $assItems->on_hand 				= $itemline->on_hand : "";
+							   	isset($itemline->gross_weight)			? $assItems->gross_weight 			= $itemline->gross_weight : "";
+							   	isset($itemline->truck_weight)			? $assItems->truck_weight 			= $itemline->truck_weight : "";
+							   	isset($itemline->bag_weight)			? $assItems->bag_weight 			= $itemline->bag_weight : "";
+							   	isset($itemline->yield)					? $assItems->yield 					= $itemline->yield : "";
+							   	isset($itemline->quantity)				? $assItems->quantity 				= $itemline->quantity : "";
+							   	isset($itemline->quantity_adjusted) 	? $assItems->quantity_adjusted 		= $itemline->quantity_adjusted : "";
+							   	isset($itemline->cost)					? $assItems->cost 					= $itemline->cost : "";
+							   	isset($itemline->price)					? $assItems->price 					= $itemline->price : "";		   	
+							   	isset($itemline->amount)				? $assItems->amount 				= $itemline->amount : "";
+							   	isset($itemline->markup)				? $assItems->markup 				= $itemline->markup : "";
+							   	isset($itemline->discount)				? $assItems->discount 				= $itemline->discount : "";
+							   	isset($itemline->fine)					? $assItems->fine 					= $itemline->fine : "";
+							   	isset($itemline->tax)					? $assItems->tax 					= $itemline->tax : "";
+							   	isset($itemline->rate)					? $assItems->rate 					= $itemline->rate : "";
+							   	isset($itemline->locale)				? $assItems->locale 				= $itemline->locale : "";
+							   	isset($itemline->additional_cost)		? $assItems->additional_cost  		= $itemline->additional_cost : "";
+							   	isset($itemline->additional_applied)	? $assItems->additional_applied  	= $itemline->additional_applied : "";
+							   	isset($itemline->movement)				? $assItems->movement 				= $itemline->movement : "";
+							   	$assItems->save();
+							}
+							//Assembly Item
+							if($value->item_assembly_lines){
+								foreach ($value->item_assembly_lines as $assline) {
+								   	$ass = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+								   	$ass->transaction_id 		= $txn->id;
+									isset($assline->item_id)				? $ass->item_id				= $assline->item_id : "";
+									isset($assline->assembly_id)			? $ass->assembly_id 			= $assline->assembly_id : "";
+									isset($assline->measurement_id)			? $ass->measurement_id			= $assline->measurement_id : "";
+									isset($assline->tax_item_id)			? $ass->tax_item_id			= $assline->tax_item_id : "";
+								   	isset($assline->wht_account_id)			? $ass->wht_account_id			= $assline->wht_account_id : "";
+								   	isset($assline->description)			? $ass->description 			= $assline->description : "";
+								   	isset($assline->on_hand)				? $ass->on_hand 				= $assline->on_hand : "";
+								   	isset($assline->gross_weight)			? $ass->gross_weight 			= $assline->gross_weight : "";
+								   	isset($assline->truck_weight)			? $ass->truck_weight 			= $assline->truck_weight : "";
+								   	isset($assline->bag_weight)				? $ass->bag_weight 			= $assline->bag_weight : "";
+								   	isset($assline->yield)					? $ass->yield 					= $assline->yield : "";
+								   	isset($assline->quantity)				? $ass->quantity 				= $assline->quantity : "";
+								   	isset($assline->quantity_adjusted) 		? $ass->quantity_adjusted 		= $assline->quantity_adjusted : "";
+								   	isset($assline->cost)					? $ass->cost 					= $assline->cost : "";
+								   	isset($assline->price)					? $ass->price 					= $assline->price : "";		   	
+								   	isset($assline->amount)					? $ass->amount 				= $assline->amount : "";
+								   	isset($assline->markup)					? $ass->markup 				= $assline->markup : "";
+								   	isset($assline->discount)				? $ass->discount 				= $assline->discount : "";
+								   	isset($assline->fine)					? $ass->fine 					= $assline->fine : "";
+								   	isset($assline->tax)					? $ass->tax 					= $assline->tax : "";
+								   	isset($assline->rate)					? $ass->rate 					= $assline->rate : "";
+								   	isset($assline->locale)					? $ass->locale 				= $assline->locale : "";
+								   	isset($assline->additional_cost)		? $ass->additional_cost  		= $assline->additional_cost : "";
+								   	isset($assline->additional_applied)		? $ass->additional_applied  	= $assline->additional_applied : "";
+								   	isset($assline->movement)				? $ass->movement 				= $assline->movement : "";
+								   	$ass->save();
+								}
+							}
+					   		
+					   	}
+					}
+				}else{
+					$txn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$txn->where("id", $value->transaction_id)->get();
+				}	
+				$data[] = array(
+					"id" 				=> $txn->id,
+					"amount" 			=> floatval($txn->amount),
+					"discount" 			=> floatval($txn->discount),
+					"sub_total" 		=> floatval($txn->sub_total),
+					"tax" 				=> floatval($txn->tax),
+					"number" 			=> $txn->number,
+					"issued_date" 		=> $txn->issued_date,
+					"locale" 			=> $txn->locale,
+					"item_lines" 		=> $value->item_lines,
+					"invoice_type" 		=> $txn->type,
+					"contact" 			=> array(
+		 				'id' 		=> $contxn->id, 
+		 				'abbr' 		=> $contxn->abbr, 
+		 				'number' 	=> $contxn->number, 
+		 				'name'		=> $contxn->name, 
+		 				'phone' 	=> $contxn->phone, 
+		 				'locale'	=> $contxn->locale, 
+		 				'address' 	=> $contxn->address,
+		 			),
+		 			"print_count" 		=> $txn->print_count
+				);
+			}	
+		}
+		$count = count($data);
+		if($count > 0) {
+			$this->response(array("results" =>$data), 201);
+		} else {
+			$this->response(array("results" => array()), 401);
+		}
+	}
+	//DELETE
+	function meter_delete() {
+		$models = json_decode($this->delete('models'));
+		foreach ($models as $key => $value) {
+			$obj = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$obj->where("id", $value->id)->get();
+			$data["results"][] = array(
+				"data"   => $value,
+				"status" => $obj->delete()
+			);			
+		}
+		//Response data
+		$this->response($data, 200);
+	}
+
+	//Activate Meter
+	function delactivatmeter_post(){
+		$models = json_decode($this->post('models'));
+		$data = array();
+		foreach ($models as $value) {
+			$otxn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$otxn->where("id", $value->transaction_id)->get();
+			if($otxn->exists()){
+				$otxn->deleted = 1;
+				$otxn->save();
+			}
+			$ojn = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$ojn->where("transaction_id", $value->transaction_id)->get();
+			if($ojn->exists()){
+				$ojn->update_all('deleted', 1);
+			}
+			$oit = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$oit->where("transaction_id", $value->transaction_id)->get();
+			if($oit->exists()){
+				$oit->update_all('deleted', 1);
+			}
+			$data[] = array(
+				"id" => $value->transaction_id,
+			);
+		}
+		$count = count($data);
+		if($count > 0) {
+			$this->response(array("results" => $data), 201);
+		} else {
+			$this->response(array("results" => array()), 401);
+		}
+	}
+	function activate_deposit_post(){
+		$models = json_decode($this->post('models'));
+		$data["results"] = [];
+		$data["count"] = 0;
+
+		foreach ($models as $value) {
+			$txn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$txn_number = $this->_generate_number($value->type, $value->issued_date);
+			isset($value->account_id) 				? $txn->account_id 					= $value->account_id : "";
+			isset($value->location_id) 				? $txn->location_id 				= $value->location_id : "";
+			isset($value->contact_id) 				? $txn->contact_id 					= $value->contact_id : "";
+			isset($value->payment_term_id) 			? $txn->payment_term_id 			= $value->payment_term_id : 5;
+			isset($value->payment_method_id) 		? $txn->payment_method_id 			= $value->payment_method_id : 1;
+			isset($value->transaction_template_id) 	? $txn->transaction_template_id 	= $value->transaction_template_id : "";
+			isset($value->account_id) 				? $txn->account_id 					= $value->account_id : "";
+			
+			isset($value->user_id) 					? $txn->user_id 					= $value->user_id : "";
+			$txn->number = $txn_number;
+		   	isset($value->type) 					? $txn->type 						= $value->type : "";
+		   	isset($value->amount) 					? $txn->sub_total 					= $value->amount : "";
+		   	isset($value->amount) 					? $txn->amount 						= $value->amount : "";
+		   	isset($value->rate) 					? $txn->rate 						= $value->rate : "";
+		   	isset($value->locale) 					? $txn->locale 						= $value->locale : "";
+		   	isset($value->issued_date) 				? $txn->issued_date 				= $value->issued_date : "";
+		   	$txn->status = 0;
+		   	isset($value->is_journal) 				? $txn->is_journal 					= $value->is_journal : 1;
+		   	isset($value->meter_id) 				? $txn->meter_id 					= $value->meter_id : "";
+	   		if($txn->save()){
+	   			$obj = new Account_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				isset($txn->id) 				? $obj->transaction_id 		= $txn->id : "";
+				isset($value->account_id)		? $obj->account_id			= $value->account_id : "";
+				isset($value->contact_id)		? $obj->contact_id			= $value->contact_id : "";			
+			   	isset($value->description)		? $obj->description 		= $value->description : "";
+			   	isset($value->amount)			? $obj->amount 				= $value->amount : "";
+			   	isset($value->rate)				? $obj->rate 				= $value->rate : "";
+			   	isset($value->locale)			? $obj->locale 				= $value->locale : "";
+			   	if($obj->save()){
+				   	$data["results"][] = array(
+				   		"id" 			=> $txn->id,
+				   		"contact_name" 	=> $value->contact_name,
+				   		"contact_address" => $value->contact_address,
+				   		"purpose" 		=> $value->description,
+				   		"issued_date" 	=> $txn->issued_date,
+				   		"number" 		=> $txn->number,
+				   		"amount" 		=> floatval($txn->amount),
+				   		"locale" 		=> $value->locale,
+				   		"payment_method" => $value->payment_method_name,
+				   		"invoice_type" 	=> $txn->type,
+				   	);
+				}
+		    }
 		}
 
 		$data["count"] = count($data["results"]);

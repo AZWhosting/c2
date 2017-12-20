@@ -86,6 +86,7 @@ class Meters extends REST_Controller {
 					"image_url"				=> $image_url->url,
 					"worder" 				=> $value->worder,
 					"contact_name" 			=> $contacts->name,
+					"contact_address" 		=> $contacts->address,
 					"status" 				=> $value->status,
 					"contact" 				=> base_url(). "api/contacts/",
 					"number_digit"			=> $value->number_digit,

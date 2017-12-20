@@ -894,15 +894,13 @@
 							    <!-- Tabs Heading -->
 							    <div class="tabsbar tabsbar-2">
 							        <ul class="row-fluid row-merge">
-							        	<li class="span1 glyphicons cogwheels active"><a href="#tab1-5" data-toggle="tab"><i></i> </a>
+							        	<li class="span1 glyphicons cogwheels active"><a href="#tab1-4" data-toggle="tab"><i></i> </a>
 							            </li>
-							            <li class="span1 glyphicons google_maps"><a href="#tab2-5" data-toggle="tab"><i></i></a>
+							            <li class="span1 glyphicons pen"><a href="#tab2-4" data-toggle="tab"><i></i></a>
 							            </li>
-							            <li class="span1 glyphicons pen"><a href="#tab3-5" data-toggle="tab"><i></i></a>
-							            </li>
-							            <li class="span1 glyphicons paperclip"><a href="#tab4-5" data-toggle="tab"><i></i></a>
+							            <li class="span1 glyphicons paperclip"><a href="#tab3-4" data-toggle="tab"><i></i></a>
 							            </li>						            
-							            <li class="span1 glyphicons history"><a href="#tab5-5" data-toggle="tab"><i></i></a>
+							            <li class="span1 glyphicons history"><a href="#tab4-4" data-toggle="tab"><i></i></a>
 							            </li>						            								            
 							        </ul>
 							    </div>
@@ -911,7 +909,7 @@
 							    <div class="tab-content">
 
 							    	<!-- Options Tab content -->
-							        <div class="tab-pane active" id="tab1-5">						            
+							        <div class="tab-pane active" id="tab1-4">						            
 							            <table class="table table-borderless table-condensed cart_total">											
 								            <tr>
 								            	<td><span data-bind="text: lang.lang.expected_date"></span></td>
@@ -947,113 +945,8 @@
 							        </div>
 							        <!-- // Options Tab content END -->
 
-							        <!-- Location -->
-							        <div class="tab-pane" id="tab2-5">
-							        	<table class="table table-borderless table-condensed cart_total">
-						        			<tr>
-												<td>Warehouse</td>
-												<td>
-													<input data-role="dropdownlist"
-															data-value-primitive="true"
-															data-auto-bind="false"
-															data-filter="startswith"
-															data-text-field="name" 
-								              				data-value-field="id"
-								              				data-bind="value: obj.locationTo.warehouse_id,
-								              							source: warehouseDS" 
-								              				style="width: 100%" />
-												</td>
-											</tr>
-											<tr>
-												<td>Location</td>
-												<td>
-													<input data-role="dropdownlist"
-															data-value-primitive="true"
-															data-auto-bind="false"
-															data-filter="startswith"
-															data-text-field="name" 
-								              				data-value-field="id"
-								              				data-bind="value: obj.locationTo.location_id,
-								              							source: locationDS" 
-								              				style="width: 100%" />
-												</td>
-											</tr>
-											<tr>
-												<td>Zone</td>
-								            	<td>
-													<input data-role="dropdownlist"
-															data-value-primitive="true"
-															data-auto-bind="false"
-															data-filter="startswith"
-															data-text-field="name" 
-								              				data-value-field="id"
-								              				data-bind="value: obj.locationTo.zone_id,
-								              							source: zoneDS" 
-								              				style="width: 100%" />
-												</td>
-											</tr>
-											<tr>
-												<td>Section</td>
-								            	<td>
-													<input data-role="dropdownlist"
-															data-value-primitive="true"
-															data-auto-bind="false"
-															data-filter="startswith"
-															data-text-field="name" 
-								              				data-value-field="id"
-								              				data-bind="value: obj.locationTo.section_id,
-								              							source: sectionDS" 
-								              				style="width: 100%" />
-												</td>
-											</tr>
-											<tr>
-												<td>Rack</td>
-								            	<td>
-													<input data-role="dropdownlist"
-															data-value-primitive="true"
-															data-auto-bind="false"
-															data-filter="startswith"
-															data-text-field="name" 
-								              				data-value-field="id"
-								              				data-bind="value: obj.locationTo.rack_id,
-								              							source: rackDS" 
-								              				style="width: 100%" />
-												</td>
-											</tr>
-											<tr>
-												<td>Level</td>
-								            	<td>
-													<input data-role="dropdownlist"
-															data-value-primitive="true"
-															data-auto-bind="false"
-															data-filter="startswith"
-															data-text-field="name" 
-								              				data-value-field="id"
-								              				data-bind="value: obj.locationTo.level_id,
-								              							source: levelDS" 
-								              				style="width: 100%" />
-												</td>
-											</tr>
-											<tr>
-												<td>Position</td>
-								            	<td>
-													<input data-role="dropdownlist"
-															data-value-primitive="true"
-															data-auto-bind="false"
-															data-filter="startswith"
-															data-text-field="name" 
-								              				data-value-field="id"
-								              				data-bind="value: obj.locationTo.position_id,
-								              							source: positionDS" 
-								              				style="width: 100%" />
-												</td>
-											</tr>
-							            </table>
-							        </div>
-							        <!-- // Location END -->
-
 							        <!-- Memo Tab content -->
-							        <div class="tab-pane" id="tab3-5">
+							        <div class="tab-pane" id="tab2-4">
 							        	<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.memo2" placeholder="memo for internal ..."></textarea>
 										<br>						
 										<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.memo" placeholder="memo for external ..."></textarea>
@@ -1061,7 +954,7 @@
 							        <!-- // Memo Tab content END -->
 
 							        <!-- Attach Tab content -->
-							        <div class="tab-pane" id="tab4-5">
+							        <div class="tab-pane" id="tab3-4">
 							         	<p><span data-bind="text: lang.lang.file_type"></span> [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>							            	
 							            
 							            <input id="files" name="files"
@@ -1091,7 +984,7 @@
 							        <!-- // Attach Tab content END -->						        
 
 							        <!-- Recuring Tab content -->
-							        <div class="tab-pane" id="tab5-5">							            	
+							        <div class="tab-pane" id="tab4-4">							            	
 							            
 							            <table style="width: 100%" class="table borderless">
 							            	<tr align="right">
@@ -1192,6 +1085,120 @@
 
 				    </div>
 				</div>
+
+				<div data-role="window"
+	                 data-title="Location"
+	                 data-width="650"
+	                 data-actions="{}"
+	                 data-position="{top: '150px', left: '30%'}"
+	                 data-height="355"
+	                 data-bind="visible: windowVisible">
+	            	
+	            	<table class="table table-borderless table-condensed cart_total">
+	        			<tr>
+							<td>Warehouse</td>
+							<td>
+								<input data-role="dropdownlist"
+										data-value-primitive="true"
+										data-auto-bind="false"
+										data-filter="startswith"
+										data-text-field="name" 
+			              				data-value-field="id"
+			              				data-bind="value: obj.warehouse_id,
+			              							source: warehouseDS" 
+			              				style="width: 100%" />
+							</td>
+						</tr>
+						<tr>
+							<td>Location</td>
+							<td>
+								<input data-role="dropdownlist"
+										data-value-primitive="true"
+										data-auto-bind="false"
+										data-filter="startswith"
+										data-text-field="name" 
+			              				data-value-field="id"
+			              				data-bind="value: obj.location_id,
+			              							source: locationDS" 
+			              				style="width: 100%" />
+							</td>
+						</tr>
+						<tr>
+							<td>Zone</td>
+			            	<td>
+								<input data-role="dropdownlist"
+										data-value-primitive="true"
+										data-auto-bind="false"
+										data-filter="startswith"
+										data-text-field="name" 
+			              				data-value-field="id"
+			              				data-bind="value: obj.zone_id,
+			              							source: zoneDS" 
+			              				style="width: 100%" />
+							</td>
+						</tr>
+						<tr>
+							<td>Section</td>
+			            	<td>
+								<input data-role="dropdownlist"
+										data-value-primitive="true"
+										data-auto-bind="false"
+										data-filter="startswith"
+										data-text-field="name" 
+			              				data-value-field="id"
+			              				data-bind="value: obj.section_id,
+			              							source: sectionDS" 
+			              				style="width: 100%" />
+							</td>
+						</tr>
+						<tr>
+							<td>Rack</td>
+			            	<td>
+								<input data-role="dropdownlist"
+										data-value-primitive="true"
+										data-auto-bind="false"
+										data-filter="startswith"
+										data-text-field="name" 
+			              				data-value-field="id"
+			              				data-bind="value: obj.rack_id,
+			              							source: rackDS" 
+			              				style="width: 100%" />
+							</td>
+						</tr>
+						<tr>
+							<td>Level</td>
+			            	<td>
+								<input data-role="dropdownlist"
+										data-value-primitive="true"
+										data-auto-bind="false"
+										data-filter="startswith"
+										data-text-field="name" 
+			              				data-value-field="id"
+			              				data-bind="value: obj.level_id,
+			              							source: levelDS" 
+			              				style="width: 100%" />
+							</td>
+						</tr>
+						<tr>
+							<td>Position</td>
+			            	<td>
+								<input data-role="dropdownlist"
+										data-value-primitive="true"
+										data-auto-bind="false"
+										data-filter="startswith"
+										data-text-field="name" 
+			              				data-value-field="id"
+			              				data-bind="value: obj.position_id,
+			              							source: positionDS" 
+			              				style="width: 100%" />
+							</td>
+						</tr>
+		            </table>
+
+		            <input type="button" value="Close" data-bind="click: closeWindow" />
+	            </div>
+
+	            <input type="button" value="Open" data-bind="click: openWindow" />
 
 				<!-- Item List -->
 				<div data-role="grid" class="costom-grid"
@@ -6837,6 +6844,7 @@
 		recurring_validate 	: false,
 		enableRef 	 		: false,
 		total 				: 0,
+		windowVisible 		: false,
 		user_id				: banhji.source.user_id,
 		pageLoad 			: function(id){
 			if(id){
@@ -7186,6 +7194,13 @@
 			    default:
 			        //Default here
 			}
+		},
+		//Window
+		openWindow 			: function(){
+			this.set("windowVisible", true);
+		},
+		closeWindow 		: function(){
+			this.set("windowVisible", false);
 		},
 		//Obj
 		loadObj 			: function(id){

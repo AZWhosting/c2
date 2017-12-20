@@ -1,0 +1,12 @@
+.navbar-collapse {
+  background: #3fac51;
+}
+#secondary-menu ul li, .navbar > .container-fluid .navbar-brand, .menu-right.topnav li {
+  border-right: 1px solid #eee;
+}
+#secondary-menu  ul> li > a:hover {
+  background: green;
+}
+#secondary-menu li.dropdown .dropdown-menu li a:hover span {
+  background: none;
+}

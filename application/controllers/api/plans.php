@@ -63,7 +63,7 @@ class Plans extends REST_Controller {
 		if($table->exists()) {
 			foreach($table as $value) {
 				$itemarr = [];
-				$items = $value->plan_item->select('id as item, account_id, name, is_flat, type, unit, amount')->get();
+				$items = $value->plan_item->select('id as item, account_id, name, is_flat, type, unit, amount, assembly_id')->get();
 				foreach($items as $item){
 					$itemarr[] = array(
 						"item" 			=> $item->item,
@@ -72,21 +72,22 @@ class Plans extends REST_Controller {
 						"is_flat" 		=> intval($item->is_flat),
 						"type" 			=> $item->type,
 						"unit" 			=> $item->unit,
+						"assembly_id" 	=> $item->assembly_id,
 						"amount" 		=> floatval($item->amount),
 					);
 				}
 				$currency= $value->currency->get();
 				$data["results"][] = array(
-					'id' => $value->id,
-					"currency"			=> $value->currency_id,
-					"_currency"				=> array(
-												"id" => $currency->id,
-												"code" => $currency->code,
-												"locale" => $currency->locale
+					'id' 			=> $value->id,
+					"currency"		=> $value->currency_id,
+					"_currency"		=> array(
+						"id" 		=> $currency->id,
+						"code" 		=> $currency->code,
+						"locale" 	=> $currency->locale
 					),
-					'code' => $value->code,
-					'name' => $value->name,
-					'items' => $itemarr
+					'code' 			=> $value->code,
+					'name' 			=> $value->name,
+					'items' 		=> $itemarr
 				);
 			}
 		}
@@ -101,10 +102,8 @@ class Plans extends REST_Controller {
 			$table->currency_id = $row->currency;
 			$table->code = $row->code;
 			$table->name = $row->name;
-			$table->sync = 1;
 			if($table->save()) {
 				$items = array();
-
 				foreach($row->items as $item) {
 					$related_table = new Plan_item(null, null, null, null, $this->_database);
 					$related_table->where('id', $item->item)->get();
@@ -127,7 +126,6 @@ class Plans extends REST_Controller {
 				);
 			}
 		}
-
 		$this->response(array('results'=> $data, 'count' => count($data)), 201);
 	}
 
@@ -143,7 +141,6 @@ class Plans extends REST_Controller {
 			$table->currency_id = $row->currency;
 			$table->code = $row->code;
 			$table->name = $row->name;
-			$table->sync = 1;
 			if($table->save()) {
 				$items = array();
 				foreach($row->items as $item) {
@@ -210,10 +207,8 @@ class Plans extends REST_Controller {
 
 	function items_get() {
 		$filters = $this->get('filter');
-		// $filters = $getData['filters'];
 		$table = new Plan_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$data = array();
-
 		if(isset($filters) && $filters['filters']) {
 			foreach($filters['filters'] as $filter) {
 				if(isset($filter['operator'])) {
@@ -226,28 +221,48 @@ class Plans extends REST_Controller {
 		$table->where('is_deleted', 0);
 		$table->where('tariff_id', 0);
 		$table->get();
-
 		if($table->exists()) {
 			foreach($table as $value) {
 				$account = new Account(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				$account->where('id', $value->account_id)->get();
+				$acc = [];
+				if($account->exists()){
+					$acc = array(
+						"id" 	=> $account->id,
+						"name" 	=> $account->name,
+					);
+				}
 				$currency= $value->currency->get();
+				$ass = [];
+				if($value->assembly_id != 0){
+					$assds = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$assds->where("id", $value->assembly_id)->limit(1)->get();
+					if($assds->exists()){
+						$ass = array(
+							"id" 	=> $assds->id,
+							"name" 	=> $assds->name,
+						);
+					}
+				}
 				$data[] = array(
-					"id"  	  => $value->id,
-					"currency"			=> $value->currency_id,
-					"_currency"				=> array(
-												"id" => $currency->id,
-												"code" => $currency->code,
-												"locale" => $currency->locale
+					"id"  	  		=> $value->id,
+					"currency"		=> $value->currency_id,
+					"_currency"		=> array(
+						"id" 		=> $currency->id,
+						"code" 		=> $currency->code,
+						"locale" 	=> $currency->locale
 					),
-					"is_flat" => $value->is_flat,
-					"type" 	  => $value->type,
-					"unit" 	  => $value->unit,
-					"amount"  => floatval($value->amount),
-					"usage"   => $value->usage,
-					"name" 	  => $value->name,
-					"account" => array('id' => $account->id, 'name' => $account->name),
-					"is_active"=>$value->is_active == 1 ? TRUE:FALSE
+					"is_flat" 		=> $value->is_flat,
+					"type" 	  		=> $value->type,
+					"unit" 	  		=> $value->unit,
+					"amount" 	 	=> floatval($value->amount),
+					"assembly_id"  	=> floatval($value->assembly_id),
+					"assembly" 		=> $ass,
+					"usage"   		=> $value->usage,
+					"name" 	  		=> $value->name,
+					"account_id" 	=> $value->account_id,
+					"account" 		=> $acc,
+					"is_active"		=>$value->is_active == 1 ? TRUE:FALSE
 				);
 			}
 		}		
@@ -273,10 +288,10 @@ class Plans extends REST_Controller {
 			$table->amount = isset($row->amount) ? $row->amount : 0;
 			$table->usage = isset($row->usage)?$row->usage:0;
 			$table->name = isset($row->name)?$row->name:null;
-			$table->account_id = isset($row->account->id)?$row->account->id:0;
+			$table->account_id = isset($row->account_id)?$row->account_id:0;
 			$table->is_active = isset($row->is_active) ? $row->is_active : 1;
+			$table->assembly_id = isset($row->assembly_id) ? $row->assembly_id: 0;
 			$table->is_deleted = 0;
-			$table->sync = 1;
 			if($table->save()) {
 				$currency= $table->currency->get();
 				$data[] = array(
@@ -293,7 +308,8 @@ class Plans extends REST_Controller {
 					"amount"  => $table->amount,
 					"usage"   => $table->usage,
 					"name" 	  => $table->name,
-					"acount"  => $row->account,
+					"account_id"  => $row->account_id,
+					"assembly_id" => $row->assembly_id,
 					"is_active"=>$table->is_active == 1 ? TRUE:FALSE
 				);
 			}
@@ -320,11 +336,11 @@ class Plans extends REST_Controller {
 			$table->amount = isset($row->amount) ? $row->amount : 0;
 			$table->usage = isset($row->usage) ? $row->usage: 0;
 			$table->name = isset($row->name)?$row->name:null;
-			$table->account_id = isset($row->account->id)?$row->account->id:0;
+			$table->account_id = isset($row->account_id)?$row->account_id:0;
 			$table->is_active = isset($row->is_active) ? $row->is_active : 1;
 			$table->is_deleted = 0;
 			$table->tariff_id = isset($row->tariff_id) ? $row->tariff_id : 0;
-			$table->sync = 1;
+			$table->assembly_id = isset($row->assembly_id) ? $row->assembly_id : 0;
 			if($table->save()) {
 				$currency= $table->currency->get();
 				$data[] = array(
@@ -342,7 +358,8 @@ class Plans extends REST_Controller {
 					"amount"  => $table->amount,
 					"usage" 	  => $table->usage,
 					"name" 	  => $table->name,
-					"acount"  => $row->account,
+					"account_id"  => $table->account_id,
+					"assembly_id" => $table->assembly_id,
 					"is_active"=>$table->is_active == 1 ? TRUE:FALSE
 				);
 			}
@@ -441,7 +458,7 @@ class Plans extends REST_Controller {
 					'type' => $row->type,
 					'usage' 	=> intval($row->usage),
 					'tariff_id' => $row->tariff_id,
-					"account" => $account->exists() ? array('id' => $account->id, 'name' => $account->name) : array('id'=>null, 'name'=> null),
+					"account_id" => $account_id,
 					'amount'=> floatval($row->amount)
 				);
 			}
@@ -470,11 +487,10 @@ class Plans extends REST_Controller {
 				$table->amount = isset($row->amount) ? $row->amount : 0;
 				$table->usage = isset($row->usage)?$row->usage:0;
 				$table->name = isset($row->name)?$row->name:null;
-				$table->account_id = isset($row->account->id)?$row->account->id:0;
+				$table->account_id = isset($row->account_id)?$row->account_id:0;
 				$table->is_active = isset($row->is_active) ? $row->is_active : 1;
 				$table->is_deleted = 0;
 				$table->tariff_id = $row->tariff_id;
-				$table->sync = 1;
 				if($table->save()) {
 					$currency= $table->currency->get();
 					$data[] = array(
@@ -490,7 +506,7 @@ class Plans extends REST_Controller {
 						"type" 	  => $table->type,
 						"unit" 	  => $table->unit,
 						"amount"  => $table->amount,
-						"account" => $row->account,
+						"account_id" => $row->account_id,
 						"usage"   => $table->usage,
 						"is_active"=>$table->is_active == 1 ? TRUE:FALSE
 					);
@@ -526,10 +542,9 @@ class Plans extends REST_Controller {
 				$table->amount = isset($row->amount) ? $row->amount : 0;
 				$table->usage = isset($row->usage)?$row->usage:0;
 				$table->name = isset($row->name)?$row->name:null;
-				$table->account_id = isset($row->account->id)?$row->account->id:0;
+				$table->account_id = isset($row->account_id)?$row->account_id:0;
 				$table->is_active = isset($row->is_active) ? $row->is_active : 1;
 				$table->is_deleted = 0;
-				$table->sync = 1;
 				if($table->save()) {
 					$currency= $table->currency->get();
 					$data[] = array(
@@ -546,7 +561,7 @@ class Plans extends REST_Controller {
 						"unit" 	  => $table->unit,
 						"amount"  => $table->amount,
 						"usage"   => $table->usage,
-						"account" => $row->account,
+						"account_id" => $row->account_id,
 						"is_active"=>$table->is_active == 1 ? TRUE:FALSE
 					);
 				}

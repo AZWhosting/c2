@@ -5,7 +5,7 @@
 <!--[if gt IE 8]> <html class="animations ie gt-ie8 fluid top-full menuh-top sticky-top"> <![endif]-->
 <!--[if !IE]><!--><html class="animations fluid top-full menuh-top sticky-top"><!-- <![endif]-->
 <head>
-<title>Choulr</title>
+<title>Choulr | ជួល</title>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
@@ -129,6 +129,7 @@ var themerPrimaryColor = primaryColor;
 //]]>
 </script>
 <!-- cognito -->
+
 <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/jsbn.js"></script>
 <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/jsbn2.js"></script>
 <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/sjcl.js"></script>
@@ -172,6 +173,17 @@ var themerPrimaryColor = primaryColor;
 
 <!-- Le fav and touch icons -->
 <link rel="shortcut icon" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/banhji-logo.png">
+<!-- Global Site Tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-106967397-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments)};
+  gtag('js', new Date());
+
+  gtag('config', 'UA-106967397-1');
+</script>
+<!-- Choulr CSS -->
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/choulr/choulr.css" />
 
 </head>
 <body class="document-body ">
@@ -411,5 +423,3 @@ var themerPrimaryColor = primaryColor;
 			<a href="#" class="btn btn-primary" id="referralSend">Send</a>
 		</div>
 	</div>
-	
-	
