@@ -77,8 +77,8 @@
 								        <thead>
 								            <tr>
 								                <th class="center" style="width: 50px;"><span data-bind="text: lang.lang.no_">No.</span></th>
-								                <th><span data-bind="text: lang.lang.amount">Amount</span></th>
 								                <th><span data-bind="text: lang.lang.currency">Currency</span></th>
+								                <th><span data-bind="text: lang.lang.amount">Amount</span></th>
 								            </tr> 
 								        </thead>
 								        <tbody data-role="listview" 
@@ -461,10 +461,10 @@
 			#:banhji.Receipt.cashierItemDS.indexOf(data)+1#	
 		</td>
 		<td>
-			<input style="text-align: right;" id="numeric" class="k-formatted-value k-input" type="number" value="17" min="0" data-bind="value: amount" step="1" />
+			<p> #: currency# </p>
 		</td>
 		<td>
-			<p> #: currency# </p>
+			<input style="text-align: right;" id="numeric" class="k-formatted-value k-input" type="number" value="17" min="0" data-bind="value: amount" step="1" />
 		</td>
 	</tr>
 </script>

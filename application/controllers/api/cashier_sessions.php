@@ -69,7 +69,7 @@ class Cashier_sessions extends REST_Controller {
 		foreach ($models as $value) {
 			$obj = new Cashier_session(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			isset($value->cashier_id) 			? $obj->cashier_id 			= $value->cashier_id : "";
-			isset($value->start_date) 			? $obj->start_date 			= $value->start_date : "";
+			$obj->start_date = date('Y-m-d H:i:s');
 			isset($value->end_date) 			? $obj->end_date 			= $value->end_date : "";
 			isset($value->status) 				? $obj->status 				= $value->status : "";
 			if($obj->save()){

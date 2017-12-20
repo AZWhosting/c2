@@ -31,6 +31,13 @@ class Item_line extends DataMapper {
 		)
 	);
 
+	public $has_many = array(
+		'item_serial' => array(
+			'class' => 'item_serial',
+			'other_field' => 'item_line'
+		)
+	);
+
 	public function __construct($id = null, $server_name = null, $server_username = null, $server_password = null, $db = null) {   
         $this->db_params = array(
                 'dbdriver' => 'mysql',

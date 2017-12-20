@@ -24223,10 +24223,7 @@
             banhji.pageLoaded["water_center"] = true;
         }
         vm.pageLoad(id);
-        window.onerror = function(error) {
-          // do something clever here
-          alert(error); // do NOT do this for real!
-        };
+        checkError();
     });
     banhji.router.route("/customer(/:id)(/:is_pattern)", function(id, is_pattern) {
         banhji.accessMod.query({
@@ -24305,10 +24302,7 @@
         }
         vm.lineDS.bind("change", vm.lineDSChanges);
         vm.pageLoad(id);
-        window.onerror = function(error) {
-          // do something clever here
-          alert(error); // do NOT do this for real!
-        };
+        checkError();
     });
     banhji.router.route("/activate_meter/:id", function(id) {
         banhji.view.layout.showIn("#content", banhji.view.ActivateMeter);
@@ -24320,10 +24314,7 @@
             banhji.pageLoaded["activate_meter"] = true;
         }
         vm.pageLoad(id);
-        window.onerror = function(error) {
-          // do something clever here
-          alert(error); // do NOT do this for real!
-        };
+        checkError();
     });
     banhji.router.route("/plan(/:id)", function(id) {
         banhji.view.layout.showIn("#content", banhji.view.plan);
@@ -25198,6 +25189,12 @@
         }
     }
     checkRoleMG();
+    checkError = function(){
+        window.onerror = function(error) {
+          // alert(langVM.alert_error);
+          // alert(error);
+        };
+    }
     $(function() {
         
         banhji.accessMod.query({

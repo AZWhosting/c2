@@ -1758,13 +1758,18 @@
 												</td>
 											</tr>
 											<tr>
+												<td>Location</td>
 												<td>
-
+													<input data-role="dropdownlist"
+										                   data-auto-bind="false"
+										                   data-value-primitive="true"
+										                   data-text-field="name"
+										                   data-value-field="id"
+										                   data-bind="value: location_id,
+										                              source: locationDS"
+										                   style="width: 100%;" />
 												</td>
-												<td>
-
-												</td>
-											</tr>	
+											</tr>
 							            </table>						            
 							        </div>
 							        <!-- // Options Tab content END -->
@@ -5774,6 +5779,41 @@
 		itemPriceDS					: dataStore(apiUrl + "item_prices"),
 		measurementList 			: [],
 		measurementDS				: dataStore(apiUrl + "measurements"),
+		locationDS			: new kendo.data.DataSource({
+			transport: {
+				read 	: {
+					url: apiUrl + "locations",
+					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				},				
+				parameterMap: function(options, operation) {
+					if(operation === 'read') {
+						return {
+							page: options.page,
+							limit: options.pageSize,
+							filter: options.filter,
+							sort: options.sort
+						};
+					} else {
+						return {models: kendo.stringify(options.models)};
+					}
+				}
+			},
+			schema 	: {
+				model: {
+					id: 'id'
+				},
+				data: 'results',
+				total: 'count'
+			},
+			filter:{ field:"contact_id", operator:"by_user_id", value:banhji.userData.id },
+			serverFiltering: true,
+			serverSorting: true,
+			serverPaging: true,
+			page:1,
+			pageSize: 100
+		}),
 		//Tax
 		taxTypeDS					: dataStore(apiUrl + "tax_types"),
 		taxList 					: [],
@@ -8924,6 +8964,7 @@
 			page:1,
 			pageSize: 100
 		}),
+		locationDS			: banhji.source.locationDS,
 		contactDS			: banhji.source.customerDS,
 		amtDueColor 		: banhji.source.amtDueColor,
 	    confirmMessage 		: banhji.source.confirmMessage,

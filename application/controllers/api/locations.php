@@ -49,6 +49,14 @@ class Locations extends REST_Controller {
 	    		if(isset($value['operator'])) {
 					if($value['operator']=="eq"){
 	    				$obj->where($value["field"], $value["value"]);
+	    			}else if($value['operator']=="by_user_id"){
+	    				$employeeUsers = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	    				$employeeUsers->where("user_id", $value['value']);
+	    				$employeeUsers->get();
+
+	    				if($employeeUsers->exists()){
+	    					$obj->where_related_contact("id", $employeeUsers->id);
+	    				}
 	    			}else{
 						$obj->{$value['operator']}($value['field'], $value['value']);
 	    			}
