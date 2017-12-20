@@ -455,7 +455,7 @@ class Plans extends REST_Controller {
 					'type' => $row->type,
 					'usage' 	=> intval($row->usage),
 					'tariff_id' => $row->tariff_id,
-					"account_id" => $account_id,
+					"account_id" => $row->account_id,
 					'amount'=> floatval($row->amount)
 				);
 			}
