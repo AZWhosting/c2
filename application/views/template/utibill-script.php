@@ -24184,6 +24184,7 @@
         // $("#secondary-menu").html("");
         banhji.index.getLogo();
         banhji.index.pageLoad();
+        // checkRoleMG();
     });
     banhji.router.route('/setting', function() {
         banhji.view.layout.showIn("#content", banhji.view.setting);
@@ -25186,7 +25187,17 @@
     banhji.router.route("/choeun", function() {
         banhji.view.layout.showIn("#content", banhji.view.choeun);
     });
-
+    checkRoleMG = function(){
+        var role = banhji.userData.role;
+        if(role == "2"){
+            if(banhji.userData.roles.length == 1){
+                if(banhji.userData.roles[0].name == "receipt"){
+                    window.location.replace("<?php echo base_url(); ?>"+"cashier");
+                }
+            }
+        }
+    }
+    checkRoleMG();
     $(function() {
         
         banhji.accessMod.query({

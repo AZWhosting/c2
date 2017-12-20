@@ -233,7 +233,7 @@
 				<div class="row-fluid" style="display: inline-block; margin-bottom: 15px;">
 					<div style="width: 100%; float: left; ">
 						<div style="width: 100%; background: #f4f4f4; float: left; text-align: left; overflow: hidden;">
-							<div id="carousel-1" class="carousel slide" data-ride="carousel" data-interval="2000" style="margin-bottom: 0; float: left;">
+							<div id="carousel-1" class="carousel slide" data-ride="carousel" data-interval="6000" style="margin-bottom: 0; float: left;">
 								<ol class="carousel-indicators" style="bottom: -11px; left: 92%;">
 									<li data-target="#carousel-1" data-slide-to="0" class="active"></li>
 									<li data-target="#carousel-1" data-slide-to="1"></li>
