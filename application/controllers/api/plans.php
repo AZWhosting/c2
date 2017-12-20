@@ -272,8 +272,6 @@ class Plans extends REST_Controller {
 			$this->response(array('results' => $data, 'count' => count($data)), 400);
 		}
 	}
-
-
 	function items_put() {
 		$requestedData = json_decode($this->put('models'));
 		$array = array();
@@ -299,9 +297,9 @@ class Plans extends REST_Controller {
 					"is_flat" => $table->is_flat,
 					"currency"=> $table->currency_id,
 					"_currency"				=> array(
-												"id" => $currency->id,
-												"code" => $currency->code,
-												"locale" => $currency->locale
+						"id" => $currency->id,
+						"code" => $currency->code,
+						"locale" => $currency->locale
 					),
 					"type" 	  => $table->type,
 					"unit" 	  => $table->unit,
@@ -321,7 +319,6 @@ class Plans extends REST_Controller {
 			$this->response(array('results' => $data, 'count' => count($data)), 200);
 		}
 	}
-
 	function items_post() {
 		$requestedData = json_decode($this->post('models'));
 		$array = array();
@@ -348,9 +345,9 @@ class Plans extends REST_Controller {
 					"is_flat" => $table->is_flat,
 					"currency"=> $table->currency_id,
 					"_currency"				=> array(
-												"id" => $currency->id,
-												"code" => $currency->code,
-												"locale" => $currency->locale
+						"id" => $currency->id,
+						"code" => $currency->code,
+						"locale" => $currency->locale
 					),
 					"tariff_id" => $table->tariff_id,
 					"type" 	  => $table->type,
@@ -449,9 +446,9 @@ class Plans extends REST_Controller {
 					'id' => $row->id,
 					"currency"				=> $row->currency_id,
 					"_currency"				=> array(
-												"id" => $currency->id,
-												"code" => $currency->code,
-												"locale" => $currency->locale
+						"id" => $currency->id,
+						"code" => $currency->code,
+						"locale" => $currency->locale
 					),
 					'name' => $row->name,
 					'is_flat' => $row->is_flat,
@@ -498,9 +495,9 @@ class Plans extends REST_Controller {
 						"is_flat" => $table->is_flat,
 						"currency"				=> $table->currency_id,
 						"_currency"				=> array(
-													"id" => $currency->id,
-													"code" => $currency->code,
-													"locale" => $currency->locale
+							"id" => $currency->id,
+							"code" => $currency->code,
+							"locale" => $currency->locale
 						),
 						"tariff_id" => $table->tariff_id,
 						"type" 	  => $table->type,

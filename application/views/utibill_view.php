@@ -1556,11 +1556,11 @@
 		</td> 
         <td>        	
         	<input data-role="dropdownlist"
-                   data-value-primitive="false"
+                   data-value-primitive="true"
                    data-text-field="name"
                    data-auto-bind="true"
                    data-value-field="id"
-                   data-bind="value: account,
+                   data-bind="value: account_id,
                    source: tariffAccDS" />
         </td>
         <td>

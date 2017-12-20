@@ -5209,7 +5209,7 @@
                 name: "Flat"
             }
         ],
-        tariffSaveDS: dataStore("plans/items"),
+        tariffSaveDS: dataStore(apiUrl + "plans/items"),
         addTariff: function(e) {
             var self = this;
             if (this.get("tariffName") && this.get("tariffAccount") && this.get("tariffCurrency")) {
