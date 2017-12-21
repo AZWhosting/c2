@@ -155,6 +155,30 @@ class Customer_modules extends REST_Controller {
 				}
 			}
 		}
+
+		//cash position
+		$cash = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);	
+		$cash->include_related("transaction", array("type", "number", "issued_date", "memo", "rate"));
+		$cash->include_related("account", array("number","name"));
+		$cash->include_related("account/account_type", array("name","nature"));
+		$cash->where_related("transaction", "is_recurring <>", 1);		
+		$cash->where_related("transaction", "deleted <>", 1);
+		$cash->where("deleted <>", 1);
+		$cash->get_iterated();	
+		$totalCashPosition = 0;	
+		if($cash->exists()){
+			foreach ($cash as $value) {
+				$amount = 0;
+				$dr = floatval($value->dr) / floatval($value->transaction_rate);
+				$cr = floatval($value->cr) / floatval($value->transaction_rate);
+				if($value->account_account_type_nature=="Dr"){
+					$amount = (floatval($value->dr) - floatval($value->cr)) / floatval($value->transaction_rate);				
+				}else{
+					$amount = (floatval($value->cr) - floatval($value->dr)) / floatval($value->transaction_rate);					
+				}
+				$totalCashPosition += $amount/2;
+			}
+		}
 		
 		//Sale Product
 		$product = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);			
@@ -194,7 +218,8 @@ class Customer_modules extends REST_Controller {
 			'ar_open' 			=> $arOpen,
 			'ar_customer' 		=> count($arCustomer),
 			'ar_overdue' 		=> $arOverDue,
-			'collection_day' 	=> 0
+			'collection_day' 	=> 0,
+			'totalCashPosition' => $totalCashPosition,
 		);
 
 		$data["count"] = count($data["results"]);

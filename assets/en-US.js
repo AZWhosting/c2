@@ -1506,6 +1506,6 @@ var	en_US = {
 	"day_to_be_disconnected": "Day to be Disconnected",
 	"reading_device": "Reading Device",
 	"alert_error": "Please Reload Page. If still alert this error please contact our team.",
-
+	"note_recieve": "Recieve Note",
 
 }

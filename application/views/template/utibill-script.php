@@ -6793,6 +6793,7 @@
         pageLoad: function(id) {
             this.set("haveEdit", false);
             this.set("licenseSelect", "");
+            $("#loadImport").css("display", "none");
             if (id) {
                 this.loadObj(id);
                 this.set("otherINFO", true);
@@ -8213,9 +8214,9 @@
             banhji.ActivateMeter.meterDS.bind('requestEnd', function(e) {
                 if (e.type != 'read') {
                     self.set('amountToBeRecieved', 0.00);
-                    self.readingDS.sync();
                 }
             });
+            this.readingDS.sync();
         },
         cancel: function() {
             $("#loadImport").css("display", "none");
@@ -9832,6 +9833,8 @@
                 TempForm = $("#invoiceServiceCommercial").html();
             } else if (this.txnFormID == "7"){
                 TempForm = $("#depositForm").html();
+            } else if (this.txnFormID == "44"){
+                TempForm = $("#formFrame").html();
             } else {
                 TempForm = $("#InvoiceFormTemplate1").html();
             }

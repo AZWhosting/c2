@@ -5043,6 +5043,7 @@
         CashierID: "",
         pageLoad: function(id) {
             var self = this;
+            this.idList = [];
             $("#loadING").css("display", "block");
             this.currencyDS.query({
                 sort: {
@@ -5689,6 +5690,7 @@
                 memo2: "",
                 segments: []
             });
+            this.receipCurrencyDS.data([]);
         },
         objSync: function() {
             var dfd = $.Deferred();
@@ -5755,6 +5757,8 @@
             var self = this,
                 FR = firstReceipt;
             this.receipCurrencyDS.data([]);
+            this.set("haveChangeMoney", false);
+            this.receipChangeDS.data([]);
             var j = 1;
             $.each(this.currencyDS.data(), function(i, v) {
                 if (j == 1) {
@@ -5782,25 +5786,28 @@
         haveChangeMoney: false,
         checkChange: function(e) {
             var data = e.data;
-            if (data.amount === undefined || data.amount === null) {
-                var index = this.receipCurrencyDS.indexOf(data);
+            var self = this;
+            var obj = this.get("obj");
+            var currencyReceipt = 0;
+            $.each(this.receipCurrencyDS.data(), function(i, v) {
+                var amountAfterRate = parseFloat(v.amount) / parseFloat(v.rate);
+                currencyReceipt += amountAfterRate;
+            });
+            //Check wrong input
+            if(currencyReceipt < obj.sub_total){
                 alert(this.lang.lang.error_input);
-                this.receipCurrencyDS.data()[index].set("amount", 0);
-            } else {
-                var self = this;
-                var currencyReceipt = 0;
-                var moneyReceipt = parseFloat(this.get("amountReceive"));
-                $.each(this.receipCurrencyDS.data(), function(i, v) {
-                    var amountAfterRate = parseFloat(v.amount) / parseFloat(v.rate);
-                    currencyReceipt += amountAfterRate;
+                $.each(this.receipCurrencyDS.data(), function(i,v){
+                    if(i == 0){
+                        self.receipCurrencyDS.data()[i].set("amount", obj.sub_total);
+                    }else{
+                        self.receipCurrencyDS.data()[i].set("amount", 0);
+                    }
                 });
-                var changeAmount = parseFloat(currencyReceipt) - moneyReceipt;
-                if (currencyReceipt > moneyReceipt) {
-                    this.setDefaultChangeCurrency(changeAmount);
-                    this.set("haveChangeMoney", true);
-                } else {
-                    this.set("haveChangeMoney", false);
-                }
+                this.set("haveChangeMoney", false);
+            }else if(currencyReceipt > obj.sub_total){
+                this.set("haveChangeMoney", true);
+                var ramount = currencyReceipt - obj.sub_total;
+                this.setDefaultChangeCurrency(ramount);
             }
         },
         receipCurrencyDS: dataStore(apiUrl + "cashier_sessions/currency"),
@@ -5885,13 +5892,15 @@
             window.history.back();
         }
     });
-
+    //Reconcile
     banhji.Reconcile = kendo.observable({
         lang: langVM,
         institute: banhji.institute,
         actualCash: 0,
         actualDS: dataStore(apiUrl + "utibills/cashier_actual"),
-        sessionDS: dataStore(apiUrl + "utibills/session"),
+        startAmountDS: dataStore(apiUrl + "cashier/reconcile"),
+        currencyDS: dataStore(apiUrl + "utibills/currency"),
+        noteDS: dataStore(apiUrl + "cashier/note"),
         pageLoad: function() {
 
         },
@@ -5900,7 +5909,22 @@
         },
         cancel: function() {
             window.history.back();
-        }
+        },
+        addRow              : function(){
+            var obj = this.get("obj");
+            this.noteDS.add({
+                currency            : "",
+                note                : 0,
+                unit                : 0,
+                amount              : 0,
+            });
+        },
+        removeRow           : function(e){
+            var data = e.data;
+            if(this.noteDS.total()>1){
+                this.noteDS.remove(data);
+            }
+        },
     });
     /* Report */
     banhji.Reports = kendo.observable({
@@ -8141,7 +8165,7 @@
             model: banhji.Reports
         }),
         Reconcile: new kendo.Layout("#Reconcile", {
-            model: banhji.reconcileVM
+            model: banhji.Reconcile
         }),
         Reorder: new kendo.Layout("#Reorder", {
             model: banhji.Reorder
@@ -8395,26 +8419,13 @@
     banhji.router.route("/reconcile", function() {
         banhji.view.layout.showIn('#menu', banhji.view.menu);
         banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+        banhji.view.layout.showIn("#content", banhji.view.Reconcile);
         var vm = banhji.Reconcile;
         banhji.userManagement.addMultiTask("Reconcile", "reconcile", null);
         if (banhji.pageLoaded["reconcile"] == undefined) {
             banhji.pageLoaded["reconcile"] = true;
         }
         vm.pageLoad();
-        if (banhji.Receipt.currencyDS.data().length == 0) {
-            banhji.Receipt.currencyDS.read()
-                .then(function(e) {
-                    $.each(banhji.Receipt.currencyDS.data(), function(i, v) {
-                        banhji.reconcileVM.currencyDS.push(v);
-                    });
-                    banhji.view.layout.showIn("#content", banhji.view.Reconcile);
-                });
-        } else {
-            $.each(banhji.Receipt.currencyDS.data(), function(i, v) {
-                banhji.reconcileVM.currencyDS.push(v);
-            });
-            banhji.view.layout.showIn("#content", banhji.view.Reconcile);
-        }
     });
     banhji.router.route("/cash_receipt_summary", function() {
         if (!banhji.userManagement.getLogin()) {

@@ -106,8 +106,6 @@
 <script src="<?php echo base_url()?>assets/app_center/jquery.jcarousel.min.js" ></script>
 <script src="<?php echo base_url()?>assets/app_center/jcarousel.responsive.js" ></script>
 
-
-
 <!-- Global -->
 <script>
 //<![CDATA[

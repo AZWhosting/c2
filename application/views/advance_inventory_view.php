@@ -308,9 +308,9 @@
 						</a>
 					</td>
 					<td class="center" style="vertical-align: top;">
-						<a href="#/item_catalog">
+						<a href="#/transfer">
 							<img title="Add Catalog" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/catalog.png" width="110" height="200" />
-							<span data-bind="text: lang.lang.catalog" style="margin-top: 7px; display: inline-block; text-transform: uppercase;"></span>
+							<span style="margin-top: 7px; display: inline-block; text-transform: uppercase;">TRANSFER</span>
 						</a>
 					</td>
 				</tr>				
@@ -1103,7 +1103,13 @@
 						        	return '<i class=icon-trash data-bind=click:removeRow></i>' + ' ' + rowIndex;
 						      	}
 						    },
-		                 	{ field: 'item', title: 'PRODUCTS/SERVICES', editor: inventoryForSaleEditor, template: '#=item.name#', width: '250px' },
+		                 	{ 	
+		                 		field: 'item', 
+		                 		title: 'PRODUCTS/SERVICES', 
+		                 		editor: inventoryForSaleEditor, 
+		                 		template: '#=item.name#', 
+		                 		width: '250px' 
+		                 	},
                             { field: 'description', title:'DESCRIPTION', width: '250px' },                            
                             {
 							    field: 'quantity',
@@ -1912,6 +1918,43 @@
 					    </div>
 					</div>
 
+					<!-- Window -->
+				    <div data-role="window"
+		                 data-title="Serial Numbers"
+		                 data-resizable="true"
+		                 data-width="430"
+		                 data-actions="{}"
+		                 data-position="{top: '150px', left: '30%'}"
+		                 data-height="200"
+		                 data-bind="visible: serialWindowVisible">
+
+						<div data-role="grid" class="costom-grid"
+				    	 data-editable="true"
+		                 data-columns="[
+						    { 
+						    	title:'NO',
+						    	width: '50px', 
+						    	attributes: { style: 'text-align: center;' }, 
+						        template: function (dataItem) {
+						        	var rowIndex = banhji.transfer.serialObj.item_serials.indexOf(dataItem)+1;
+						        	return rowIndex;
+						      	}
+						    },
+                            { field: 'number', title:'NUMBER' },
+		                 	{ command: ['destroy'], title: '&nbsp;', width: '100px' }
+						 ]"
+                         data-auto-bind="false"
+		                 data-bind="source: serialObj.item_serials" ></div>
+
+						<br>
+
+						<div align="left">
+							<span class="btn btn-icon btn-inverse" data-bind="click: serialAdd" style="width: 100px;"><i class="icon-plus"></i> Add Serial</span>
+							<span class="btn btn-icon btn-success glyphicons power" data-bind="click: serialSave" style="width: 80px;"><i></i> Save</span>
+							<span class="btn btn-icon btn-danger glyphicons remove_2" data-bind="click: serialClose" style="width: 80px;"><i></i> Cancel</span>
+						</div>
+					</div>
+
 					<!-- Item List -->
 					<div data-role="grid" class="costom-grid"
 				    	 data-column-menu="true"
@@ -1939,7 +1982,25 @@
 							    width: '150px',
 							    attributes: { style: 'text-align: right;' }
 							},
-                            { field: 'measurement', title: 'UOM', editor: measurementEditor, template: '#=measurement.measurement#', width: '150px' }
+                            { field: 'measurement', title: 'UOM', editor: measurementEditor, template: '#=measurement.measurement#', width: '150px' },
+						 	{
+		                 		field: 'bin_locations', 
+		                 		title: 'BIN LOCATION', 
+		                 		editor: inventoryForSaleEditor, 
+		                 		template: '#=bin_locations.number#', 
+		                 		width: '250px' 
+		                 	},
+		                 	{ 	
+		                 		field: 'item_serials', 
+		                 		title: 'SERIAL NO.',
+		                 		template:'#for(var i=0; i < item_serials.length; i++){# #=item_serials[i].number#, #}#',
+		                 		width: '250px' 
+		                 	},
+		                 	{
+		                 		title:'',
+		                 		template: kendo.template($('#transfer-add-group-buttons-template').html()),
+		                 		width: '250px'
+		                 	}
 						 ]"
                          data-auto-bind="false"
 		                 data-bind="source: lineDS" ></div>
@@ -2035,6 +2096,10 @@
 			</div>
 		</div>
 	</div>
+</script>
+<script id="transfer-add-group-buttons-template" type="text/x-kendo-template">
+	<span class="btn btn-inverse" data-bind="click: serialOpen">Bin</span>
+	<span class="btn btn-inverse" data-bind="click: serialOpen">Serial</span>
 </script>
 <script id="itemAdjustment" type="text/x-kendo-template">
 	<div id="slide-form">
@@ -3493,6 +3558,12 @@
 
 <!--  List Templates -->
 <script>
+	function serialMultiSelectEditor(container, options) {
+        $('<select name="' + options.field + '"></select>')
+        .appendTo(container)
+        .kendoMultiSelect();
+    }
+
 	function itemComboBoxEditor(container, options) {
         $('<input name="' + options.field + '"/>')
         .appendTo(container)
@@ -8978,6 +9049,7 @@
 		showWeek 			: false,
 		showDay 			: false,
 		obj 				: null,
+		serialObj 			: [],
 		isEdit 				: false,
 		saveClose 			: false,
 		savePrint 			: false,
@@ -8989,6 +9061,7 @@
 		recurring_validate 	: false,
 		enableRef 	 		: false,
 		total 				: 0,
+		serialWindowVisible : false,
 		user_id				: banhji.source.user_id,
 		pageLoad 			: function(id){
 			if(id){
@@ -9486,7 +9559,9 @@
 				movement 			: 0,
 
 				item 				: { id:"", name:"" },
-				measurement 		: { measurement_id:"", measurement:"" }
+				measurement 		: { measurement_id:"", measurement:"" },
+				item_serials 		: [],
+				bin_locations		: { id:"", number:"" }
 			});
 		},
 		removeRow 			: function(e){
@@ -9678,6 +9753,39 @@
 			}
 
 			return result;
+		},
+		// Windows
+		serialOpen 			: function(e){
+			var data = e.data;
+
+			this.set("serialObj", data);
+			this.serialAdd();
+			this.serialAdd();
+			this.set("serialWindowVisible", true);
+		},
+		serialAdd 			: function(){
+			var obj = this.get("serialObj");
+
+			obj.item_serials.push({ id:0, number:"" });
+		},
+		serialRemoveEmpty 		: function(){
+			var raw = this.get("serialObj").item_serials;
+		    var item, i;
+		    for(i=raw.length-1; i>=0; i--){
+		    	item = raw[i];
+
+		    	if (item.number=="") {
+			       	raw.splice(i, 1);
+			    }
+		    }
+	    },
+		serialSave 			: function(){
+			this.serialRemoveEmpty();
+
+			this.set("serialWindowVisible", false);
+		},
+		serialClose	 		: function(){
+			this.set("serialWindowVisible", false);
 		},
 		//Reference
 		loadReference 		: function(){
