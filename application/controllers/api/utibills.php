@@ -3127,6 +3127,13 @@ class Utibills extends REST_Controller {
 				$reactive = $value->reactive->get_raw();
 				$itemline = [];
 				$itemassline = [];
+				$txntype = "";
+				$txnid = "";
+				$txnnumber = "";
+				$txnamount = "";
+				$txntax = "";
+				$txnsub_total = "";
+				$txndiscount = "";
 				if($value->activated == 0){
 					//Get Item Line
 					$txn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
@@ -3134,6 +3141,14 @@ class Utibills extends REST_Controller {
 					$txn->where("deleted", 0);
 					$txn->where_in("type", array('Invoice', 'Commercial_Invoice'))->limit(1)->get();
 					if($txn->exists()){
+						$txntype = $txn->type;
+						$txnid = intval($txn->id);
+						$txnnumber = $txn->number;
+						$txnamount = floatval($txn->amount);
+						$txntax = floatval($txn->tax);
+						$txnsub_total = floatval($txn->sub_total);
+						$txndiscount = floatval($txn->discount);
+
 						$itm = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 						$itm->where("transaction_id", $txn->id)->get();
 						if($itm->exists()){
@@ -3262,14 +3277,14 @@ class Utibills extends REST_Controller {
 					"group" 				=> $value->group,
 					"item" 					=> $itemline,
 					"assembly_lines" 		=> $itemassline,
-					"invoice_type" 			=> $txn->type,
-					"transaction_id" 		=> $txn->id,
-					"txn_number" 			=> $txn->number,
-					"txn_amount" 			=> floatval($txn->amount),
-					"txn_tax" 				=> floatval($txn->tax),
-					"txn_sub_total" 		=> floatval($txn->sub_total),
-					"txn_discount" 			=> floatval($txn->discount),
-					"locale" 				=> $txn->locale,
+					"invoice_type" 			=> $txntype,
+					"transaction_id" 		=> $txnid,
+					"txn_number" 			=> $txnnumber,
+					"txn_amount" 			=> floatval($txnamount),
+					"txn_tax" 				=> floatval($txntax),
+					"txn_sub_total" 		=> floatval($txnsub_total),
+					"txn_discount" 			=> floatval($txndiscount),
+					"locale" 				=> $contacts->locale,
 					"deposit_name" 			=> $depname,
 					"deposit_amount" 		=> floatval($depamount)
 				);
