@@ -21,26 +21,6 @@ class Item_lines extends REST_Controller {
 		}
 	}
 
-	function onhand_get(){
-		$data["results"] = [];
-		$data["count"] = 0;
-
-		$obj = new Item_line(null, 'banhji-db-instance.cwxbgxgq7thx.ap-southeast-1.rds.amazonaws.com', 'mightyadmin', 'banhji2016', 'db_banhji');
-		$obj->where_related("transaction", "is_recurring <>", 1);
-		$obj->where_related("transaction", "deleted <>", 1);
-		$obj->where('item_id', 2217);
-		$obj->select_sum('quantity * conversion_ratio * movement', "totalQuantity");
-		$obj->select_sum('(quantity * conversion_ratio * movement * cost) + inventory_adjust_value', "totalAmount");
-		$obj->get();
-		
-		$data["results"] = array(
-			"qty" => floatval($obj->totalQuantity),
-			"amt" => floatval($obj->totalAmount)
-		);
-
-		$this->response($data, 200);
-	}
-
 	//GET
 	function index_get() {
 		$filter 	= $this->get("filter");
@@ -77,6 +57,7 @@ class Item_lines extends REST_Controller {
 		$obj->include_related("contact", array("abbr","number","name","payment_term_id","payment_method_id","credit_limit","locale","bill_to","ship_to","deposit_account_id","trade_discount_id","settlement_discount_id","account_id","ra_id"));
 		$obj->include_related("item", array("item_type_id","abbr","number","name","cost","price","locale","income_account_id","expense_account_id","inventory_account_id"));
 		$obj->include_related("measurement", array("name"));
+		$obj->include_related("bin_location", array("number"));
 		$obj->include_related("tax_item", array("tax_type_id","account_id","name","rate"));
 		$obj->where("deleted <>", 1);
 
@@ -153,11 +134,22 @@ class Item_lines extends REST_Controller {
 					"account_id"				=> $value->contact_account_id ? $value->contact_account_id : 0,
 					"ra_id"						=> $value->contact_ra_id ? $value->contact_ra_id : 0
 				);
+
+				//Bin Location
+				$bin_locations = array(
+					"id" 		=> $value->bin_location_id,
+					"number"	=> $value->bin_location_number ? $value->bin_location_number : ""
+				);
+
+				//Item Serial
+				$itemSerials = new Item_serial(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$itemSerials->where("item_line_id", $value->id);
 				
 				$data["results"][] = array(
 					"id" 				=> $value->id,
 			   		"transaction_id"	=> $value->transaction_id,
 			   		"measurement_id" 	=> $value->measurement_id,
+			   		"bin_location_id" 	=> $value->bin_location_id,
 					"tax_item_id" 		=> $value->tax_item_id,
 					"wht_account_id"	=> $value->wht_account_id,
 					"item_id" 			=> $value->item_id,
@@ -197,8 +189,8 @@ class Item_lines extends REST_Controller {
 				   	"wht_account" 		=> $wht_account,
 				   	"item_prices"		=> $measurement,
 				   	"contact" 			=> $contact,
-				   	"serials"			=> [],
-				   	"bin_locations"		=> []
+				   	"item_serials"		=> $itemSerials->get_raw()->result(),
+				   	"bin_locations"		=> $bin_locations
 				);
 			}
 		}
@@ -333,6 +325,7 @@ class Item_lines extends REST_Controller {
 
 			isset($value->transaction_id) 		? $obj->transaction_id 		= $value->transaction_id : "";
 			isset($value->item_id)				? $obj->item_id				= $value->item_id : "";
+			isset($value->bin_location_id)		? $obj->bin_location_id		= $value->bin_location_id : "";
 			isset($value->assembly_id)			? $obj->assembly_id 		= $value->assembly_id : "";
 			isset($value->measurement_id)		? $obj->measurement_id		= $value->measurement_id : "";
 			isset($value->tax_item_id)			? $obj->tax_item_id			= $value->tax_item_id : "";
@@ -374,10 +367,20 @@ class Item_lines extends REST_Controller {
 			$obj->conversion_ratio = $conversion_ratio;
 
 		   	if($obj->save()){
+		   		if(count($value->item_serials)>0){
+		   			foreach ($value->item_serials as $serial) {
+			   			$itemSerials = new Item_serial(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			   			$itemSerials->item_line_id 	= $obj->id;
+			   			$itemSerials->number 		= $serial->number;
+			   			$itemSerials->save();
+		   			}
+		   		}
+
 			   	$data["results"][] = array(
 			   		"id" 				=> $obj->id,
 			   		"transaction_id"	=> $obj->transaction_id,
 			   		"measurement_id" 	=> $obj->measurement_id,
+			   		"bin_location_id" 	=> $obj->bin_location_id,
 			   		"tax_item_id" 		=> $obj->tax_item_id,
 					"wht_account_id"	=> $obj->wht_account_id,
 					"item_id" 			=> $obj->item_id,
@@ -429,6 +432,7 @@ class Item_lines extends REST_Controller {
 			$obj->get_by_id($value->id);
 
 			isset($value->transaction_id) 	? $obj->transaction_id 		= $value->transaction_id : "";
+			isset($value->bin_location_id)	? $obj->bin_location_id		= $value->bin_location_id : "";
 			isset($value->item_id)			? $obj->item_id				= $value->item_id : "";
 			isset($value->assembly_id)		? $obj->assembly_id 		= $value->assembly_id : "";
 			isset($value->measurement_id)	? $obj->measurement_id		= $value->measurement_id : "";
@@ -529,11 +533,27 @@ class Item_lines extends REST_Controller {
 			}
 
 			if($obj->save()){
+				//Item Serial
+				$prevItemSerials = new Item_serial(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$prevItemSerials->where("item_line_id", $obj->id);
+				$prevItemSerials->get();
+				$prevItemSerials->delete_all();
+
+				if(count($value->item_serials)>0){
+		   			foreach ($value->item_serials as $serial) {
+			   			$itemSerials = new Item_serial(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			   			$itemSerials->item_line_id 	= $obj->id;
+			   			$itemSerials->number 		= $serial->number;
+			   			$itemSerials->save();
+		   			}
+		   		}
+
 				//Results
 				$data["results"][] = array(
 					"id" 				=> $obj->id,
 			   		"transaction_id"	=> $obj->transaction_id,
 			   		"measurement_id" 	=> $obj->measurement_id,
+			   		"bin_location_id" 	=> $obj->bin_location_id,
 			   		"tax_item_id" 		=> $obj->tax_item_id,
 					"wht_account_id"	=> $obj->wht_account_id,
 					"item_id" 			=> $obj->item_id,
@@ -590,6 +610,26 @@ class Item_lines extends REST_Controller {
 		}
 
 		//Response data
+		$this->response($data, 200);
+	}
+
+	function onhand_get(){
+		$data["results"] = [];
+		$data["count"] = 0;
+
+		$obj = new Item_line(null, 'banhji-db-instance.cwxbgxgq7thx.ap-southeast-1.rds.amazonaws.com', 'mightyadmin', 'banhji2016', 'db_banhji');
+		$obj->where_related("transaction", "is_recurring <>", 1);
+		$obj->where_related("transaction", "deleted <>", 1);
+		$obj->where('item_id', 2217);
+		$obj->select_sum('quantity * conversion_ratio * movement', "totalQuantity");
+		$obj->select_sum('(quantity * conversion_ratio * movement * cost) + inventory_adjust_value', "totalAmount");
+		$obj->get();
+		
+		$data["results"] = array(
+			"qty" => floatval($obj->totalQuantity),
+			"amt" => floatval($obj->totalAmount)
+		);
+
 		$this->response($data, 200);
 	}
 }

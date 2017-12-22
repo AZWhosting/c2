@@ -1655,7 +1655,7 @@
 							data-bind="click: cancel"><i></i></span>
 					</div>
 
-			        <h2>Transfer</h2>
+			        <h2>Transfer Order</h2>
 
 				    <br>
 						
@@ -1680,7 +1680,7 @@
 									</tr>
 									<tr>
 										<td><span data-bind="text: lang.lang.date"></span></td>
-										<td class="right">
+										<td>
 											<input id="issuedDate" name="issuedDate" 
 													data-role="datepicker"
 													data-format="dd-MM-yyyy"
@@ -1690,26 +1690,21 @@
 													required data-required-msg="required"
 													style="width: 210px;" />
 										</td>
-									</tr>								
+									</tr>
 									<tr>
-										<td><span data-bind="text: lang.lang.customers"></span></td>
+										<td><span data-bind="text: lang.lang.type"></span></td>
 										<td>
-											<input id="cbbContact" name="cbbContact"
+											<input id="cbbType" name="cbbType"
 												   data-role="dropdownlist"
-												   data-header-template="contact-header-tmpl"
-								                   data-template="contact-list-tmpl"
-								                   data-auto-bind="false"
-								                   data-value-primitive="false"
-								                   data-filter="startswith"
+								                   data-value-primitive="true"
 								                   data-text-field="name"
-								                   data-value-field="id"
-								                   data-bind="value: obj.contact,
-								                              source: contactDS,
-								                              events: {change: contactChanges}"
-								                   data-option-label="Select Customer..."
-								                   required data-required-msg="required" style="width: 210px;" />
+								                   data-value-field="type"
+								                   data-bind="value: obj.type,
+								                              source: typeList,
+								                              events:{ change: typeChanges }"
+								                   required data-required-msg="required" style="width: 210px" />
 										</td>
-									</tr>																															
+									</tr>
 								</table>
 
 								<div class="strong" style="background: #eee;  border: 1px solid #ddd; width: 100%; padding: 10px;" align="center"
@@ -1761,19 +1756,6 @@
 								              							source: referenceDS,						              							
 								              							events:{change: referenceChanges}" 
 								              				style="width: 100%" />
-												</td>
-											</tr>
-											<tr>
-												<td>Location</td>
-												<td>
-													<input data-role="dropdownlist"
-										                   data-auto-bind="false"
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="value: location_id,
-										                              source: locationDS"
-										                   style="width: 100%;" />
 												</td>
 											</tr>
 							            </table>						            
@@ -1918,7 +1900,7 @@
 					    </div>
 					</div>
 
-					<!-- Window -->
+					<!-- Serial Window -->
 				    <div data-role="window"
 		                 data-title="Serial Numbers"
 		                 data-resizable="true"
@@ -1929,29 +1911,67 @@
 		                 data-bind="visible: serialWindowVisible">
 
 						<div data-role="grid" class="costom-grid"
-				    	 data-editable="true"
-		                 data-columns="[
-						    { 
-						    	title:'NO',
-						    	width: '50px', 
-						    	attributes: { style: 'text-align: center;' }, 
-						        template: function (dataItem) {
-						        	var rowIndex = banhji.transfer.serialObj.item_serials.indexOf(dataItem)+1;
-						        	return rowIndex;
-						      	}
-						    },
-                            { field: 'number', title:'NUMBER' },
-		                 	{ command: ['destroy'], title: '&nbsp;', width: '100px' }
-						 ]"
-                         data-auto-bind="false"
-		                 data-bind="source: serialObj.item_serials" ></div>
-
-						<br>
-
-						<div align="left">
+					    	 data-editable="true"
+			                 data-columns="[
+							    { 
+							    	title:'NO',
+							    	width: '50px', 
+							    	attributes: { style: 'text-align: center;' }, 
+							        template: function (dataItem) {
+							        	var rowIndex = banhji.transfer.serialObj.item_serials.indexOf(dataItem)+1;
+							        	return rowIndex;
+							      	}
+							    },
+	                            { field: 'number', title:'NUMBER' },
+			                 	{ command: ['destroy'], title: '&nbsp;', width: '100px' }
+							 ]"
+	                         data-auto-bind="false"
+			                 data-bind="source: serialObj.item_serials" ></div>
+						
+						<div align="center">
 							<span class="btn btn-icon btn-inverse" data-bind="click: serialAdd" style="width: 100px;"><i class="icon-plus"></i> Add Serial</span>
-							<span class="btn btn-icon btn-success glyphicons power" data-bind="click: serialSave" style="width: 80px;"><i></i> Save</span>
-							<span class="btn btn-icon btn-danger glyphicons remove_2" data-bind="click: serialClose" style="width: 80px;"><i></i> Cancel</span>
+							<span class="btn btn-icon btn-success glyphicons ok_2" data-bind="click: serialSave" style="width: 80px;"><i></i> Done</span>
+						</div>
+					</div>
+
+					<!-- Bin Location Window -->
+				    <div data-role="window"
+		                 data-title="Bin Location"
+		                 data-resizable="true"
+		                 data-width="430"
+		                 data-actions="{}"
+		                 data-position="{top: '150px', left: '30%'}"
+		                 data-height="150"
+		                 data-bind="visible: binWindowVisible">
+
+						<input data-role="dropdownlist"
+			                   data-auto-bind="false"
+			                   data-value-primitive="true"
+			                   data-text-field="name"
+			                   data-value-field="id"
+			                   data-bind="value: location_id,
+			                              source: locationDS,
+			                              events:{ change: locationChanges }"
+			                   data-option-label="--- Select Location ---"
+			                   style="width: 100%;" />
+
+			            <br><br>
+
+			            <input data-role="dropdownlist"
+			                   data-auto-bind="false"
+			                   data-value-primitive="false"
+			                   data-text-field="number"
+			                   data-value-field="id"
+			                   data-bind="value: binObj.bin_locations,
+			                              source: binLocationDS,
+			                              events:{ change: binLocationChanges }"
+			                   data-option-label="--- Select Bin Location ---"
+			                   style="width: 100%;" />
+
+						<br><br>
+
+						<div align="right">
+							<span class="btn btn-icon btn-success glyphicons ok_2" data-bind="click: binClose" style="width: 80px;"><i></i> Done</span>
 						</div>
 					</div>
 
@@ -1986,19 +2006,24 @@
 						 	{
 		                 		field: 'bin_locations', 
 		                 		title: 'BIN LOCATION', 
-		                 		editor: inventoryForSaleEditor, 
-		                 		template: '#=bin_locations.number#', 
+		                 		editable: function(){
+		                 			return false;
+		                 		},
+		                 		template: '#=bin_locations?bin_locations.number:banhji.emptyString#', 
 		                 		width: '250px' 
 		                 	},
 		                 	{ 	
 		                 		field: 'item_serials', 
 		                 		title: 'SERIAL NO.',
-		                 		template:'#for(var i=0; i < item_serials.length; i++){# #=item_serials[i].number#, #}#',
+		                 		editable: function(){
+		                 			return false;
+		                 		},
+		                 		template:'#for(var i=0; i < item_serials.length; i++){# #=item_serials[i].number# <br /> #}#',
 		                 		width: '250px' 
 		                 	},
 		                 	{
 		                 		title:'',
-		                 		template: kendo.template($('#transfer-add-group-buttons-template').html()),
+		                 		template: kendo.template($('#transfer-group-buttons-template').html()),
 		                 		width: '250px'
 		                 	}
 						 ]"
@@ -2097,8 +2122,8 @@
 		</div>
 	</div>
 </script>
-<script id="transfer-add-group-buttons-template" type="text/x-kendo-template">
-	<span class="btn btn-inverse" data-bind="click: serialOpen">Bin</span>
+<script id="transfer-group-buttons-template" type="text/x-kendo-template">
+	<span class="btn btn-inverse" data-bind="click: binOpen">Bin</span>
 	<span class="btn btn-inverse" data-bind="click: serialOpen">Serial</span>
 </script>
 <script id="itemAdjustment" type="text/x-kendo-template">
@@ -4196,6 +4221,7 @@
 	var apiUrl = baseUrl + 'api/';
 	banhji.s3 = "https://banhji.s3.amazonaws.com/";	
 	banhji.token = null;
+	banhji.emptyString = "";
 	banhji.no_image = "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/no_image.jpg";
 	// custom widget for min and max
 	kendo.data.binders.widget.max = kendo.data.Binder.extend({
@@ -8992,6 +9018,7 @@
 		referenceLineDS		: dataStore(apiUrl + "item_lines"),
 		itemPriceDS			: dataStore(apiUrl + "item_prices"),
 		attachmentDS	 	: dataStore(apiUrl + "attachments"),
+		binLocationDS		: dataStore(apiUrl + "bin_locations"),
 		txnTemplateDS 		: new kendo.data.DataSource({
 		  	data: banhji.source.txnTemplateList,
 		  	filter:{ field: "type", value: "GDN" }
@@ -9035,7 +9062,17 @@
 			page:1,
 			pageSize: 100
 		}),
-		locationDS			: banhji.source.locationDS,
+		typeList  			: new kendo.data.DataSource({
+		  	data: banhji.source.prefixList,
+		  	filter:{
+			    logic: "or",
+			    filters: [
+			      	{ field: "type", value: "Transfer" },
+			      	{ field: "type", value: "Packing" }
+			    ]
+			}
+		}),
+		locationDS			: banhji.source.locationDS,		
 		contactDS			: banhji.source.customerDS,
 		amtDueColor 		: banhji.source.amtDueColor,
 	    confirmMessage 		: banhji.source.confirmMessage,
@@ -9050,6 +9087,7 @@
 		showDay 			: false,
 		obj 				: null,
 		serialObj 			: [],
+		binObj 				: [],
 		isEdit 				: false,
 		saveClose 			: false,
 		savePrint 			: false,
@@ -9061,6 +9099,8 @@
 		recurring_validate 	: false,
 		enableRef 	 		: false,
 		total 				: 0,
+		location_id 		: 0,
+		binWindowVisible 	: false,
 		serialWindowVisible : false,
 		user_id				: banhji.source.user_id,
 		pageLoad 			: function(id){
@@ -9174,30 +9214,6 @@
             //Clear upload files
             $(".k-upload-files").remove();
 	    },
-		//Contact
-		setContact 			: function(contact){
-			var obj = this.get("obj");
-
-		    obj.set("contact", contact);
-		    this.contactChanges();
-	    },
-		contactChanges 		: function(){
-			var self = this, obj = this.get("obj");
-
-	    	if(obj.contact){
-		    	var contact = obj.contact;
-
-		    	obj.set("contact_id", contact.id);
-		    	obj.set("locale", contact.locale);
-		    	obj.set("bill_to", contact.bill_to);
-		    	obj.set("ship_to", contact.ship_to);
-
-		    	this.setRate();
-		    	this.loadReference();
-	    	}
-
-		    this.changes();
-	    },
 	    //Currency Rate
 		setRate 			: function(){
 			var obj = this.get("obj"), 
@@ -9281,7 +9297,7 @@
 			});
 		},
 		lineDSChanges 		: function(arg){
-			var self = banhji.gdn;
+			var self = banhji.transfer;
 
 			if(arg.field){
 				if(arg.field=="item"){
@@ -9503,7 +9519,7 @@
 				job_id 				: 0,
 				user_id 			: this.get("user_id"),
 				employee_id 		: "",
-			   	type				: "GDN",//Required
+			   	type				: "Transfer",//Required
 			   	number 				: "",
 			   	amount				: 0,
 			   	rate				: 1,
@@ -9546,6 +9562,7 @@
 			this.lineDS.add({
 				transaction_id 		: obj.id,
 				tax_item_id 		: "",
+				bin_location_id 	: 0,
 				item_id 			: "",
 				assembly_id 		: 0,
 				measurement_id 		: 0,
@@ -9561,7 +9578,7 @@
 				item 				: { id:"", name:"" },
 				measurement 		: { measurement_id:"", measurement:"" },
 				item_serials 		: [],
-				bin_locations		: { id:"", number:"" }
+				bin_locations		: { id:0, number:"" }
 			});
 		},
 		removeRow 			: function(e){
@@ -9754,7 +9771,7 @@
 
 			return result;
 		},
-		// Windows
+		// Serial Windows
 		serialOpen 			: function(e){
 			var data = e.data;
 
@@ -9768,7 +9785,7 @@
 
 			obj.item_serials.push({ id:0, number:"" });
 		},
-		serialRemoveEmpty 		: function(){
+		serialRemoveEmpty 	: function(){
 			var raw = this.get("serialObj").item_serials;
 		    var item, i;
 		    for(i=raw.length-1; i>=0; i--){
@@ -9784,26 +9801,57 @@
 
 			this.set("serialWindowVisible", false);
 		},
-		serialClose	 		: function(){
-			this.set("serialWindowVisible", false);
+		// Bin Location Windows
+		binOpen 			: function(e){
+			var data = e.data;
+
+			this.set("binObj", data);
+			
+			this.set("binWindowVisible", true);
+		},
+		binClose	 		: function(){
+			this.set("binWindowVisible", false);
+		},
+		//Location
+		locationChanges 	: function(){
+			var location_id = this.get("location_id"),
+				obj = this.get("binObj");
+
+			obj.set("bin_location_id", 0);
+			obj.set("bin_locations", {id:0, number:""});
+
+			if(location_id!==null){	
+				this.binLocationDS.filter({ field:"location_id", value: location_id });
+			}
+		},
+		binLocationChanges 	: function(){
+			var obj = this.get("binObj");
+
+			if(obj.bin_locations){	
+				obj.set("bin_location_id", obj.bin_locations.id);
+			}else{
+				obj.set("bin_location_id", 0);
+				obj.set("bin_locations", {id:0, number:""});
+			}
 		},
 		//Reference
+		typeChanges 		: function(){
+			var obj = this.get("obj");
+			this.set("enableRef", false);
+
+			if(obj.type=="Packing"){
+				this.loadReference();
+				this.set("enableRef", true);
+			}
+		},
 		loadReference 		: function(){
 			var obj = this.get("obj");
 
-			if(obj.contact_id>0){
-				this.set("enableRef", true);
-
-				this.referenceDS.filter([
-					{ field: "contact_id", value: obj.contact_id },
-					{ field: "status", value: 0 },
-					{ field: "type", operator:"where_in", value:["Quote", "Sale_Order", "Commercial_Invoice", "Vat_Invoice", "Invoice"] },
-					{ field: "due_date >=", value: kendo.toString(obj.issued_date, "yyyy-MM-dd") }
-				]);
-			}else{
-				this.set("enableRef", false);
-				obj.set("reference_id", "");
-			}
+			this.referenceDS.filter([
+				{ field: "status", value: 0 },
+				{ field: "type", operator:"where_in", value:["Quote", "Sale_Order", "Commercial_Invoice", "Vat_Invoice", "Invoice", "GDN", "GRN"] },
+				{ field: "due_date >=", value: kendo.toString(obj.issued_date, "yyyy-MM-dd") }
+			]);
 		},
 		referenceChanges 	: function(){
 			var self = this, obj = this.get("obj");
@@ -9811,13 +9859,13 @@
 			if(obj.reference_id>0){
 				var data = this.referenceDS.get(obj.reference_id);
 				
-				obj.set("employee_id", data.employee_id);
-				obj.set("reference_no", data.number);
 				obj.set("segments", data.segments);
-				obj.set("deposit", data.deposit);
 
 			 	this.referenceLineDS.query({
-			 		filter: { field:"transaction_id", value: obj.reference_id }
+			 		filter:[
+						{ field:"transaction_id", value: obj.reference_id },
+						{ field: "assembly_id", value: 0 }
+					]
 			 	}).then(function(){
 			 		var view = self.referenceLineDS.view();
 
@@ -9825,6 +9873,7 @@
 			 		$.each(view, function(index, value){
 			 			self.lineDS.add({
 							transaction_id 		: obj.id,
+							bin_location_id 	: value.bin_location_id,
 							tax_item_id 		: value.tax_item_id,
 							item_id 			: value.item_id,
 							measurement_id 		: value.measurement_id,
@@ -9839,7 +9888,9 @@
 							movement 			: 0,
 
 							item 				: value.item,
-							measurement 		: value.measurement
+							measurement 		: value.measurement,
+							item_serials 		: [],
+							bin_locations		: { id:0, number:"" }
 						});
 			 		});
 
@@ -9864,20 +9915,19 @@
 				var view = self.recurringDS.view(),
 				obj = self.get("obj");
 				
-				obj.set("contact", view[0].contact);
-				obj.set("contact_id", view[0].contact.id);
 				obj.set("recurring_id", id);
 				obj.set("locale", view[0].locale);
 				obj.set("memo", view[0].memo);
 				obj.set("memo2", view[0].memo2);
 				obj.set("bill_to", view[0].bill_to);
 				obj.set("ship_to", view[0].ship_to);
-
-				// self.setContact(view[0].contact);
 			});
 
 			this.recurringLineDS.query({
-				filter: { field:"transaction_id", value:id }
+				filter:[
+					{ field:"transaction_id", value: id },
+					{ field: "assembly_id", value: 0 }
+				]
 			}).then(function(){
 				var view = self.recurringLineDS.view();
 				self.lineDS.data([]);
@@ -9885,6 +9935,7 @@
 				$.each(view, function(index, value){
 					self.lineDS.add({
 						transaction_id 		: 0,
+						bin_location_id 	: value.bin_location_id,
 						tax_item_id 		: value.tax_item_id,
 						item_id 			: value.item_id,
 						measurement_id 		: value.measurement_id,
@@ -9898,7 +9949,9 @@
 						movement 			: 0,
 
 						item 				: value.item,
-						measurement 		: value.measurement
+						measurement 		: value.measurement,
+						item_serials 		: [],
+						bin_locations		: { id:0, number:"" }
 					});
 				});
 
@@ -12368,26 +12421,26 @@
 				vm.lineDS.bind("change", vm.lineDSChanges);
 
 				var validator = $("#example").kendoValidator({
-			        	rules: {
-					        customRule1: function(input) {
-					          	if (input.is("[name=txtRecurringName]") && vm.recurring_validate) {
-					          		vm.set("recurring_validate", false);
-					            	return $.trim(input.val()) !== "";
-					          	}
-					          	return true;
-					        },
-					        customRule2: function(input){
-					          	if (input.is("[name=txtNumber]")) {	
-						            return vm.get("notDuplicateNumber");
-						        }
-						        return true;
+		        	rules: {
+				        customRule1: function(input) {
+				          	if (input.is("[name=txtRecurringName]") && vm.recurring_validate) {
+				          		vm.set("recurring_validate", false);
+				            	return $.trim(input.val()) !== "";
+				          	}
+				          	return true;
+				        },
+				        customRule2: function(input){
+				          	if (input.is("[name=txtNumber]")) {	
+					            return vm.get("notDuplicateNumber");
 					        }
-					    },
-					    messages: {
-					        customRule1: banhji.source.requiredMessage,
-					        customRule2: banhji.source.duplicateNumber
-					    }
-			        }).data("kendoValidator");
+					        return true;
+				        }
+				    },
+				    messages: {
+				        customRule1: banhji.source.requiredMessage,
+				        customRule2: banhji.source.duplicateNumber
+				    }
+		        }).data("kendoValidator");
 
 		        $("#saveNew").click(function(e){
 					e.preventDefault();
@@ -12638,8 +12691,6 @@
 			}
 		});	
 	});
-
-	
 
 
 	$(function() {
