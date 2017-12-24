@@ -148,6 +148,7 @@ class Item_lines extends REST_Controller {
 				$data["results"][] = array(
 					"id" 				=> $value->id,
 			   		"transaction_id"	=> $value->transaction_id,
+			   		"reference_id"		=> $value->reference_id,
 			   		"measurement_id" 	=> $value->measurement_id,
 			   		"bin_location_id" 	=> $value->bin_location_id,
 					"tax_item_id" 		=> $value->tax_item_id,
@@ -324,6 +325,7 @@ class Item_lines extends REST_Controller {
 			}
 
 			isset($value->transaction_id) 		? $obj->transaction_id 		= $value->transaction_id : "";
+			isset($value->reference_id) 		? $obj->reference_id 		= $value->reference_id : "";
 			isset($value->item_id)				? $obj->item_id				= $value->item_id : "";
 			isset($value->bin_location_id)		? $obj->bin_location_id		= $value->bin_location_id : "";
 			isset($value->assembly_id)			? $obj->assembly_id 		= $value->assembly_id : "";
@@ -379,6 +381,7 @@ class Item_lines extends REST_Controller {
 			   	$data["results"][] = array(
 			   		"id" 				=> $obj->id,
 			   		"transaction_id"	=> $obj->transaction_id,
+			   		"reference_id"		=> $obj->reference_id,
 			   		"measurement_id" 	=> $obj->measurement_id,
 			   		"bin_location_id" 	=> $obj->bin_location_id,
 			   		"tax_item_id" 		=> $obj->tax_item_id,
@@ -432,6 +435,7 @@ class Item_lines extends REST_Controller {
 			$obj->get_by_id($value->id);
 
 			isset($value->transaction_id) 	? $obj->transaction_id 		= $value->transaction_id : "";
+			isset($value->reference_id) 	? $obj->reference_id 		= $value->reference_id : "";
 			isset($value->bin_location_id)	? $obj->bin_location_id		= $value->bin_location_id : "";
 			isset($value->item_id)			? $obj->item_id				= $value->item_id : "";
 			isset($value->assembly_id)		? $obj->assembly_id 		= $value->assembly_id : "";
@@ -552,6 +556,7 @@ class Item_lines extends REST_Controller {
 				$data["results"][] = array(
 					"id" 				=> $obj->id,
 			   		"transaction_id"	=> $obj->transaction_id,
+			   		"reference_id"		=> $obj->reference_id,
 			   		"measurement_id" 	=> $obj->measurement_id,
 			   		"bin_location_id" 	=> $obj->bin_location_id,
 			   		"tax_item_id" 		=> $obj->tax_item_id,
