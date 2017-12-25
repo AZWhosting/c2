@@ -141,6 +141,16 @@ class Item_lines extends REST_Controller {
 					"number"	=> $value->bin_location_number ? $value->bin_location_number : ""
 				);
 
+				//New Bin Location
+				$newBinLocations = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$newBinLocations->include_related("bin_location", array("number"));
+				$newBinLocations->where("reference_id", $value->id)->get();
+
+				$new_bin_locations = array(
+					"id" 		=> $newBinLocations->bin_location_id,
+					"number"	=> $newBinLocations->bin_location_number ? $newBinLocations->bin_location_number : ""
+				);
+
 				//Item Serial
 				$itemSerials = new Item_serial(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				$itemSerials->where("item_line_id", $value->id);
@@ -191,7 +201,8 @@ class Item_lines extends REST_Controller {
 				   	"item_prices"		=> $measurement,
 				   	"contact" 			=> $contact,
 				   	"item_serials"		=> $itemSerials->get_raw()->result(),
-				   	"bin_locations"		=> $bin_locations
+				   	"bin_locations"		=> $bin_locations,
+				   	"new_bin_locations"	=> $new_bin_locations
 				);
 			}
 		}
@@ -368,7 +379,34 @@ class Item_lines extends REST_Controller {
 			}
 			$obj->conversion_ratio = $conversion_ratio;
 
+			//Bin Location
+			if(count($value->bin_locations)>0){
+				$obj->bin_location_id = $value->bin_locations->id;
+			}
+
 		   	if($obj->save()){
+		   		//New Bin Location
+		   		if(count($value->new_bin_locations)>0){
+		   			$newBinLocations = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		   			$newBinLocations->transaction_id 	= $obj->transaction_id;
+					$newBinLocations->bin_location_id 	= $value->new_bin_locations->id;
+					$newBinLocations->item_id 			= $obj->item_id;
+					$newBinLocations->assembly_id 		= $obj->assembly_id;
+					$newBinLocations->measurement_id 	= $obj->measurement_id;
+					$newBinLocations->description 		= $obj->description;
+					$newBinLocations->quantity 	 		= $obj->quantity;
+					$newBinLocations->conversion_ratio 	= $obj->conversion_ratio;
+					$newBinLocations->price 			= $obj->price;
+					$newBinLocations->amount 			= $obj->amount;
+					$newBinLocations->rate				= $obj->rate;
+					$newBinLocations->locale			= $obj->locale;
+					$newBinLocations->movement 			= 1;
+
+					$newBinLocations->save();
+		   		}
+
+		   		//Serials
 		   		if(count($value->item_serials)>0){
 		   			foreach ($value->item_serials as $serial) {
 			   			$itemSerials = new Item_serial(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
@@ -536,7 +574,20 @@ class Item_lines extends REST_Controller {
 				}
 			}
 
+			//Bin Location
+			if(count($value->bin_locations)>0){
+				$obj->bin_location_id = $value->bin_locations->id;
+			}
+
 			if($obj->save()){
+				//New Bin Location
+				if(count($value->new_bin_locations)>0){
+					$newBinLocations = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$newBinLocations->where("reference_id", $value->id)->get();
+					$newBinLocations->bin_location_id = $value->new_bin_locations->id;
+					$newBinLocations->save();
+				}
+
 				//Item Serial
 				$prevItemSerials = new Item_serial(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				$prevItemSerials->where("item_line_id", $obj->id);
