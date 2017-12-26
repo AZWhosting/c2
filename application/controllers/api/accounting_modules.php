@@ -1049,13 +1049,18 @@ class Accounting_modules extends REST_Controller {
 				$totalAmount += $amount;
 				$totalBalance += $amount;
 
+				$description = $value->description;
+				if($description==""){
+					$description = $value->transaction_memo;
+				}
+
 				if(isset($objList[$value->account_id])){
 					$objList[$value->account_id]["line"][] = array(
 						"id" 				=> $value->transaction_id,
 						"type" 				=> $value->transaction_type,
 						"number" 			=> $value->transaction_number,
 						"issued_date" 		=> $value->transaction_issued_date,
-						"memo" 				=> $value->description,
+						"memo" 				=> $description,
 						"dr" 				=> $dr,
 						"cr" 				=> $cr,
 						"amount" 			=> $amount
@@ -1092,7 +1097,7 @@ class Accounting_modules extends REST_Controller {
 						"type" 				=> $value->transaction_type,
 						"number" 			=> $value->transaction_number,
 						"issued_date" 		=> $value->transaction_issued_date,
-						"memo" 				=> $value->description,
+						"memo" 				=> $description,
 						"dr" 				=> $dr,
 						"cr" 				=> $cr,
 						"amount" 			=> $amount
