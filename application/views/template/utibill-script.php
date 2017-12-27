@@ -9844,8 +9844,8 @@
             });
             if(this.dataSource[0].invoice_type){
             }else{
-                for (var i = 0; i <= this.dataSource.length; i++) {
-                    var PrintCount = this.dataSource[i].print_count + 1;
+                for (var i = 0; i < this.dataSource.length; i++) {
+                    var PrintCount = self.dataSource[i].print_count + 1;
                     banhji.InvoicePrint.dataSource[i].set("print_count", PrintCount);
                 }
             }
