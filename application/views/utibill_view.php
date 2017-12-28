@@ -7802,61 +7802,48 @@
 			</div>
 		</div>
 		<div class="span12 cover-customer">
-			<div class="span6">
+			<div class="span5">
 				<span id="secondwnumber#= id#" style="margin-left: -14px; float: left;"></span><br />
 				<div class="span12">
-					<p>អតិថិជន​ #=contact.number#</p>
+				<p>អតិថិជន​ #=contact.number#</p>
 					<p>#:contact.name#</p>
 					<p>#: contact.address #</p>
 					<p style="font-size: 10px;"><i>ថ្ងៃ​ចាប់​ផ្តើម​ទទួល​ប្រាក់ #=kendo.toString(new Date(bill_date), "dd-MMMM-yyyy", "km-KH")#</i></p>
 				</div>
 			</div>
-			<div class="span5">
+			<div class="span7">
 				<table >
 					<tr>
-						<td width="140" style><p>លេខ​វិក្កយ​បត្រ</p></td>
+						
 						<td><p>#:number#-#=banhji.institute.id#</p></td>
 					</tr>
 					<tr>
-						<td style><p>ថ្ងៃ​ចេញ វិក្កយ​បត្រ</p></td>
+						
 						<td><p>#=kendo.toString(new Date(issue_date), "dd-MMMM-yyyy", "km-KH")#</p></td>
 					</tr>
 					<tr>
-						<td style><p>តំបន់</p></td>
+						
 						<td><p>#:meter.location[0].abbr# - #:meter.location[0].name# #:meter.box#</p></td>
 					</tr>
 					<tr>
-						<td style><p>គិត​ចាប់​ពី​ថ្ងៃ​ទី</p></td>
+						
+						<td></td>
+					</tr>
+
+					<tr>
+						
 						<td><p>#=kendo.toString(new Date(invoice_lines[0].from_date), "dd-MMMM-yyyy", "km-KH")#</p></td>
 					</tr>
 					<tr>
-						<td style><p>ដល់​ថ្ងៃ​ទី</p></td>
+						
 						<td><p>#=kendo.toString(new Date(invoice_lines[0].to_date), "dd-MMMM-yyyy", "km-KH")#</p></td>
 					</tr>
 				</table>		
 			</div>
 		</div>
 		<table class="span12 table table-bordered footerTbl" style="padding:0;margin-top: 40px; border-radius: 3px;border-collapse: inherit;margin-left: 0px;#= banhji.InvoicePrint.formBorder#">
-			<thead style>
-				<tr>
-					<th class="darkbblue main-color" style="width: 20%;background-color: #: formcolor #!important;border:none!important; vertical-align: top;">លេខ​កុងទ័រ<br>METER</th>
-					<th class="darkbblue main-color" style="width: 15%;background-color: #: formcolor #!important;border:none!important; vertical-align: top;">អំណានចាស់<br>PREVIOUS</th>
-					<th class="darkbblue main-color" style="width: 15%;background-color: #: formcolor #!important;border:none!important; vertical-align: top;">អំណានថ្មី<br>CURRENT</th>
-					<th class="darkbblue main-color" style="width: 15%;background-color: #: formcolor #!important;border:none!important; vertical-align: top;">បរិមាណ<br>CONSUMPTION</th>
-					<th class="darkbblue main-color" style="background-color: #: formcolor #!important;border:none!important; vertical-align: top;">តំលៃឯកត្តា<br>RATE</th>
-					<th class="darkbblue main-color" style="background-color: #: formcolor #!important;border:none!important; vertical-align: top;">តំលៃសរុប<br>AMOUNT</th>
-				</tr>
-			</thead>
+			
 			<tbody>
-				<tr>
-					<td style="vertical-align: middle;"></td>
-					<td colspan="4" style="text-align: right">
-						ជំពាក់​សរុប​នៅ​ថ្ងៃ​ធ្វើ​វិក្កយបត្រ Balance as at billing date .
-					</td>
-					<td align="right">
-						#: kendo.toString(amount_remain, locale=="km-KH"?"c0":"c", locale)#
-					</td>
-				</tr>
 				<tr>
 					<td>#: meter.location[0].abbr# - #: meter.meter_number#</td>
 					<td align="center"><strong>#: invoice_lines[0].previous#</strong></td>
@@ -7907,60 +7894,63 @@
 				#}#
 				<tr>
 					<td colspan="5" style="padding-right: 10px;background: \\#355176;color: \\#fff;text-align: right;background-color: #: formcolor #!important;#= banhji.InvoicePrint.formVisible#" class="darkbblue main-color">បំណុល​សរុប TOTAL BALANCE</td>
-					<td style="border: 1px solid;text-align: right">#= kendo.toString(amount, locale=="km-KH"?"c0":"c", locale)#</td>
+					<td style="text-align: right">#= kendo.toString(amount, locale=="km-KH"?"c0":"c", locale)#</td>
 				</tr>
-				<tr>
-					<td rowspan="4" colspan="3">#= banhji.InvoicePrint.license.term_of_condition#</td>
-					<td colspan="2" class="greyy" style="background: \\#ccc;#= banhji.InvoicePrint.formVisible#">ប្រាក់​ត្រូវ​បង់ TOTAL DUE</td>
-					<td style="text-align: right"><strong>#= kendo.toString(amount + amount_remain, locale=="km-KH"?"c0":"c", locale)#</strong></td>
-				</tr>
-				<tr>
-					<td colspan="2" class="greyy"  style="background: \\#ccc;#= banhji.InvoicePrint.formVisible#">ថ្ងៃផុតកំណត់ DUE DATE</td>
-					<td align="left">#=kendo.toString(new Date(due_date), "dd-MMMM-yyyy", "km-KH")#</td>
-				</tr>
-				<tr>
-					<td colspan="2" class="greyy" style="background: \\#ccc;#= banhji.InvoicePrint.formVisible#">ថ្ងៃបង់ប្រាក់ PAY DATE</td>
-					<td align="left"></td>
-				</tr>
-				<tr>
-					<td colspan="2" class="greyy" style="background: \\#ccc;#= banhji.InvoicePrint.formVisible#">ប្រាក់បានបង់ PAY AMOUNT</td>
-					<td></td>
-				</tr>
+
+				
 			</tbody>
 		</table>
-		<div style="position: absolute;bottom:0; width: 768px;left: 15px;overflow: hidden;">
-			<div class="line"></div>
+		<table class="span12 table table-bordered footerTbl" style="padding:0; border-radius: 3px;border-collapse: inherit;margin-left: 0px;#= banhji.InvoicePrint.formBorder#">
+			<tbody >
+				<tr>
+					
+					<td colspan="5" class="greyy" style="background: \\#ccc;#= banhji.InvoicePrint.formVisible#; border: none!important;">បំណុលសរុប TOTAL Balance</td>
+					<td style="text-align: right; border: none!important;"><strong>#= kendo.toString(amount_remain, locale=="km-KH"?"c0":"c", locale)#</strong></td>
+				</tr>
+				<tr>
+					
+					<td colspan="5" class="greyy" style="background: \\#ccc;#= banhji.InvoicePrint.formVisible#; border: none!important;">ប្រាក់​ត្រូវ​បង់ TOTAL DUE</td>
+					<td style="text-align: right; border: none!important;"><strong>#= kendo.toString(amount + amount_remain, locale=="km-KH"?"c0":"c", locale)#</strong></td>
+				</tr>
+				<tr>
+					<td colspan="5" class="greyy"  style="background: \\#ccc;#= banhji.InvoicePrint.formVisible#; border: none!important;">ថ្ងៃផុតកំណត់ DUE DATE</td>
+					<td style="border: none!important;" align="left">#=kendo.toString(new Date(due_date), "dd-MMMM-yyyy", "km-KH")#</td>
+				</tr>
+
+			</tbody>
+		</table>
+		<div style="position: absolute;bottom:0; width: 600px;left: 15px;overflow: hidden;">
 			<table class="span12 table table-bordered footerTbl" style="padding:0;margin-bottom:15px;border-collapse: inherit;margin-top: 15px;border-radius: 3px;margin-left: 0px;#= banhji.InvoicePrint.formBorder#">
 				<tbody style="border:none!important">
 					<tr style="border:none!important">
-						<td width="150"></td>
+						<td width="150" style="border: none!important;"></td>
 						<th width="300" style="border: none!important;">
-							<span style="margin-left: -15px;border:none!important" id="footwnumber#:id#"></span>
+							<span style="margin-left: -15px; border:none!important" id="footwnumber#:id#"></span>
 						</th>
-						<td width="270" class="greyy"  style="background: \\#ccc;border-bottom:1px solid \\#fff;#= banhji.InvoicePrint.formVisible#">ប្រាក់​ត្រូវ​បង់ TOTAL DUE</td>
-						<td width="180" align="right"><strong>#= kendo.toString(amount + amount_remain, locale=="km-KH"?"c0":"c", locale)#</strong></td>
+						<td width="270" class="greyy"  style="background: \\#ccc;border-bottom:1px solid \\#fff;#= banhji.InvoicePrint.formVisible#; border:none!important">ប្រាក់​ត្រូវ​បង់ TOTAL DUE</td>
+						<td width="180" align="right" style="border: none!important;"><strong>#= kendo.toString(amount + amount_remain, locale=="km-KH"?"c0":"c", locale)#</strong></td>
 					</tr>
 					<tr>
-						<td style><p>វិក្កយបត្រ</p></td>
-						<td>#: kendo.toString(new Date(issue_date), "dd-MMMM-yyyy", "km-KH")# - #: number#</td>
-						<td class="greyy" style="background: \\#ccc;border-bottom:1px solid \\#fff;#= banhji.InvoicePrint.formVisible#">ថ្ងៃបង់ប្រាក់ PAY DATE</td>
-						<td align="left"></td>
+						<td style="border: none!important;"><p>វិក្កយបត្រ</p></td>
+						<td style="border: none!important;">#: kendo.toString(new Date(issue_date), "dd-MMMM-yyyy", "km-KH")# - #: number#</td>
+						<td class="greyy" style="background: \\#ccc;border-bottom:1px solid \\#fff;#= banhji.InvoicePrint.formVisible#; border: none!important">ថ្ងៃបង់ប្រាក់ PAY DATE</td>
+						<td align="left" style="border: none!important;"></td>
 					</tr>
 					<tr>
-						<td style><p>អតិថិជន</p></td>
-						<td>#=contact.number# #=contact.name#<br>#: contact.phone# #:contact.address#</td>
-						<td class="greyy" style="background: \\#ccc;border-bottom:1px solid \\#fff;#= banhji.InvoicePrint.formVisible#">ប្រាក់បានបង់ PAY AMOUNT</td>
-						<td></td>
+						<td style="border: none!important;"><p>អតិថិជន</p></td>
+						<td style="border: none!important;">#=contact.number# #=contact.name#<br>#: contact.phone# #:contact.address#</td>
+						<td class="greyy" style="background: \\#ccc;border-bottom:1px solid \\#fff;#= banhji.InvoicePrint.formVisible#; border: none!important;">ប្រាក់បានបង់ PAY AMOUNT</td>
+						<td style="border: none!important;"></td>
 					</tr>
 					<tr>
-						<td style>លេខ​ទី​តាំង</td>
-						<td>#:meter.location[0].abbr# - #:meter.location[0].name#</td>
-						<td rowspan="2" class="greyy" style="#= banhji.InvoicePrint.formVisible#background: \\#ccc;">អ្នកទទួលប្រាក់ RECEIVER</td>
-						<td rowspan="2"></td>
+						<td style="border: none!important;">លេខ​ទី​តាំង</td>
+						<td style="border: none!important;">#:meter.location[0].abbr# - #:meter.location[0].name#</td>
+						<td rowspan="2" class="greyy" style="#= banhji.InvoicePrint.formVisible#background: \\#ccc; border: none!important">អ្នកទទួលប្រាក់ RECEIVER</td>
+						<td rowspan="2" style="border: none!important;"></td>
 					</tr>
 					<tr>
-						<td style>លេខ​កុង​ទ័រ</td>
-						<td>#: meter.meter_number#</td>
+						<td style="border: none!important;">លេខ​កុង​ទ័រ</td>
+						<td style="border: none!important;">#: meter.meter_number#</td>
 					</tr>
 				</tbody>
 			</table>
@@ -9952,6 +9942,152 @@
 		    	<p style="font-size: 11px; font-weight: 600; margin-top: 10px; float: left;">សហគ្រាសបន្ទាយមាស អេឡិទ្រីស៊ីធី</p>
 		    </div>
 		</div>
+	</div>
+</script>
+<script id="invoiceForm5" type="text/x-kendo-template">
+	<div class="container font-small winvoice-print" style="margin-bottom: 10px; width: 610px; ">
+		<div class="span12 headerinv " style="visibility: hidden;border-bottom: 2px solid \#000;padding: 15px 0;">
+            <img class="logoP" data-bind="attr: { src: objLicense.image_url }"  style="position: absolute;left: 0;top: 20px;max-width: 100px;height: auto;max-height: 50px;" />
+			<div class="span12" align="center">
+				<h4 data-bind="text: objLicense.name"></h4>					
+				<h5 data-bind="text: objLicense.address"></h5>
+				<h5 data-bind="text: objLicense.mobile"></h5>					
+			</div>
+		</div>		
+
+		<div class="span12 cover-customer">
+			
+			<div class="span7">
+				<span id="secondwnumber1" style="margin-left: -14px;"></span>
+				<div class="span12">
+					<p>អតិថិជន​ <span>001</span></p>
+					<p>Customer Name</p>
+					<p>No.124, St. 11</p>
+					<p style="font-size: 10px;"><i>ថ្ងៃ​ចាប់​ផ្តើម​ទទួល​ប្រាក់ <?php echo date("d/m/Y"); ?></i></p>
+				</div>
+			</div>
+			<div class="span4">
+				<table >
+					<tr>
+						<td width="200" style="visibility: hidden;"><p>លេខ​វិក្កយ​បត្រ</p></td>
+						<td><p>WM00001</p></td>
+					</tr>
+					<tr>
+						<td style="visibility: hidden;"><p>ថ្ងៃ​ចេញ វិក្កយ​បត្រ</p></td>
+						<td><p><?php echo date("d/m/Y"); ?></p></td>
+					</tr>
+					<tr>
+						<td style="visibility: hidden;"><p>តំបន់</p></td>
+						<td><p>A1-001</p></td>
+					</tr>
+					<tr>
+						<td style="visibility: hidden;"><p>គិត​ចាប់​ពី​ថ្ងៃ​ទី</p></td>
+						<td><p><?php echo date("d/m/Y"); ?></p></td>
+					</tr>
+					<tr>
+						<td style="visibility: hidden;"><p>ដល់​ថ្ងៃ​ទី</p></td>
+						<td><p><?php echo date("d/m/Y"); ?></p></td>
+					</tr>
+				</table>		
+			</div>			
+		</div>
+		<table class="span12 table footerTbl" style="border:none;padding:0;margin-top: 40px; border-radius: 3px;border-collapse: inherit;margin-left: 0px;">
+			<thead style="visibility: hidden;">
+				<tr>
+					<th width="180" class="darkbblue main-color">លេខ​កុងទ័រ<br>METER</th>
+					<th width="150" class="darkbblue main-color">អំណានចាស់<br>PREVIOUS</th>
+					<th width="120" class="darkbblue main-color">អំណានថ្មី<br>CURRENT</th>
+					<th width="120" class="darkbblue main-color">បរិមាណ<br>CONSUMPTION</th>
+					<th width="120" class="darkbblue main-color">តំលៃឯកត្តា<br>RATE</th>
+					<th width="180" class="darkbblue main-color">តំលៃសរុប<br>AMOUNT</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td style="vertical-align: middle;"> <?php echo date("d/m/Y"); ?></td>
+					<td colspan="4" style="text-align: right">
+						ជំពាក់​សរុប​នៅ​ថ្ងៃ​ធ្វើ​វិក្កយបត្រ Balance as at billing date .រ
+					</td>
+					<td>
+						0<br>
+					</td>
+				</tr>
+				<tr>
+					<td data-bind="text: meter_number"></td>
+					<td align="center">1</td>
+					<td align="center">2</td>
+					<td align="center">1</td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>រំលោះ</td>
+					<td align="center"></td>
+					<td align="center"></td>
+					<td align="center">1,០០០</td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr><td colspan="6"  style="height: 80px;" ></td></tr>
+				<tr>
+					<td colspan="5" style="visibility: hidden;padding-right: 10px;background: #355176;color: #fff;text-align: right;" class="darkbblue main-color">បំណុល​សរុប TOTAL BALANCE</td>
+					<td style="border: none;text-align: right"><strong>1,000</strong></td>
+				</tr>
+				<tr>
+					<td rowspan="4" colspan="3"></td>
+					<td colspan="2" class="greyy" style="visibility: hidden;background: \\#ccc;">ប្រាក់​ត្រូវ​បង់ TOTAL DUE</td>
+					<td style="text-align: right"><strong>1,000</strong></td>
+				</tr>
+				<tr>
+					<td colspan="2" class="greyy" style="background: \\#ccc;visibility: hidden;">ថ្ងៃផុតកំណត់ DUE DATE</td>
+					<td> <?php echo date("d/m/Y"); ?></td>
+				</tr>
+				<tr>
+					<td colspan="2" class="greyy" style="background: \\#ccc;visibility: hidden;">ថ្ងៃបង់ប្រាក់ PAY DATE</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td colspan="2" class="greyy" style="background: \\#ccc;visibility: hidden;">ប្រាក់បានបង់ PAY AMOUNT</td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="line" style="visibility: hidden;"></div>
+		<table class="span12 table footerTbl" style="border:none;padding:0;border-collapse: inherit;margin-top: 15px; border-radius: 3px;margin-left: 0px;">
+			<tbody>
+				<tr>
+					<td width="100"></td>
+					<th width="390" style="border: none">
+						<span style="margin-left: -15px;" id="footwnumber1"></span>
+					</th>
+					<td width="270" class="greyy" style="background: #ccc;border-bottom:1px solid #fff;visibility: hidden;">ប្រាក់​ត្រូវ​បង់ TOTAL DUE</td>
+					<td width="180">1,000</td>
+				</tr>
+				<tr>
+					<td style="visibility: hidden;"><p>វិក្កយបត្រ</p></td>
+					<td><span><?php echo date("d/m/Y"); ?></span> - <span>WM00001</span></td>
+					<td class="greyy" style="visibility:hidden;background: #ccc;border-bottom:1px solid #fff;">ថ្ងៃបង់ប្រាក់ PAY DATE</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td style="visibility: hidden;"><p>អតិថិជន</p></td>
+					<td><span>001</span> <span>Customer Name</span><br>
+					<span>012 111 222</span> <span>No. 123, St.11</span></td>
+					<td class="greyy" style="visibility: hidden;background: #ccc;border-bottom:1px solid #fff;visibility: hidden;">ប្រាក់បានបង់ PAY AMOUNT</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td style="visibility: hidden;">លេខ​ទី​តាំង</td>
+					<td>A1-01</td>
+					<td rowspan="2" class="greyy" style="background: #ccc;visibility: hidden;">អ្នកទទួលប្រាក់ RECEIVER</td>
+					<td rowspan="2"></td>
+				</tr>
+				<tr>
+					<td style="visibility: hidden;">លេខ​កុនង​ទ័រ</td>
+					<td>WM0001</td>
+				</tr>
+			</tbody>
+		</table>
 	</div>
 </script>
 
