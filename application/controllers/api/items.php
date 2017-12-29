@@ -515,6 +515,7 @@ class Items extends REST_Controller {
 
 		$obj = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
 		$additionalCosts = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$zeroQty = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 		//Sort
 		if(!empty($sort) && isset($sort)){
@@ -533,13 +534,15 @@ class Items extends REST_Controller {
 	    		if(isset($value['operator'])) {
 					$obj->{$value['operator']}($value['field'], $value['value']);
 					$additionalCosts->{$value['operator']}($value['field'], $value['value']);
+					$zeroQty->{$value['operator']}($value['field'], $value['value']);
 				} else {
 	    			$obj->where($value["field"], $value["value"]);
 	    			$additionalCosts->where($value["field"], $value["value"]);
+	    			$zeroQty->where($value["field"], $value["value"]);
 				}
 			}
 		}
-		
+
 		$obj->select_sum('quantity * conversion_ratio * movement', "totalQuantity");
 		$obj->select_sum('(quantity * conversion_ratio * movement * cost) + inventory_adjust_value', "totalAmount");
 		$obj->where_related("transaction", "is_recurring <>", 1);
@@ -558,7 +561,19 @@ class Items extends REST_Controller {
 		$additionalCosts->get();
 
 		$cost = 0;
-		if(floatval($obj->totalQuantity)==0){}else{
+		if(floatval($obj->totalQuantity)==0){
+			$zeroQty->where_related("transaction", "is_recurring <>", 1);
+			$zeroQty->where_related("transaction", "deleted <>", 1);
+			$zeroQty->where('movement', -1);
+			$zeroQty->where("deleted <>", 1);
+			$zeroQty->order_by_related("transaction", "issued_date", "DESC");
+			$zeroQty->limit(1);
+			$zeroQty->get();
+
+			if($zeroQty->exists()){
+				$cost = floatval($zeroQty->cost) / floatval($zeroQty->rate);
+			}
+		}else{
 			$cost = (floatval($obj->totalAmount) + floatval($additionalCosts->additional_cost)) / floatval($obj->totalQuantity);
 		}
 		
