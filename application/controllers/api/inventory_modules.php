@@ -479,16 +479,19 @@ class Inventory_modules extends REST_Controller {
 				$itemLines->where("deleted <>", 1);
 				$itemLines->get();
 
+				//Cost
+				$cost = floatval($value->cost) / floatval($value->transaction_rate);				
+				
 				$avgCost = 0;
-				if(floatval($itemLines->totalQuantity)==0){}else{
+				if(floatval($itemLines->totalQuantity)==0){
+					$avgCost = $cost;
+				}else{
 					$avgCost = floatval($itemLines->totalAmount) / floatval($itemLines->totalQuantity);
 				}
 
-				//Cost
-				$cost = floatval($value->cost) / floatval($value->transaction_rate);				
-				if(intval($value->movement)==-1){
-					$cost = $avgCost;
-				}
+				// if(intval($value->movement)==-1){
+				// 	$cost = 0;
+				// }
 
 				if(isset($objList[$value->item_id])){
 					$objList[$value->item_id]["line"][] = array(
@@ -500,6 +503,7 @@ class Inventory_modules extends REST_Controller {
 						"cost" 				=> $cost,
 						"price" 			=> floatval($value->price) / floatval($value->transaction_rate),
 						"on_hand" 			=> floatval($itemLines->totalQuantity),
+						"cost_avg" 			=> $avgCost,
 						"amount"			=> floatval($itemLines->totalAmount),
 						"movement" 			=> intval($value->movement)
 					);
@@ -531,6 +535,7 @@ class Inventory_modules extends REST_Controller {
 						"cost" 				=> $cost,
 						"price" 			=> floatval($value->price) / floatval($value->transaction_rate),
 						"on_hand" 			=> floatval($itemLines->totalQuantity),
+						"cost_avg" 			=> $avgCost,
 						"amount"			=> floatval($itemLines->totalAmount),
 						"movement" 			=> intval($value->movement)
 					);			
