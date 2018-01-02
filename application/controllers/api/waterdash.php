@@ -127,6 +127,10 @@ class Waterdash extends REST_Controller {
 
 		$trxSale->select('amount, contact_id as contact');
 		$trxSale->where('type', 'Utility_Invoice');
+		$trxSale->where_related("winvoice_line", "description", "usage");
+		$trxSale->where("is_recurring <>", 1);
+		$trxSale->where("deleted <>", 1);
+		$trxSale->order_by("issued_date", "asc");
 		$trxSale->get_iterated();
 		$sale = 0;
 		foreach($trxSale as $invoice) {

@@ -62,7 +62,7 @@ class UtibillReports extends REST_Controller {
 		$obj->include_related("contact", array("abbr", "number", "name"));
 		$obj->include_related("location", "name");
 		$obj->include_related("winvoice_line", array("quantity", "type"));
-		$obj->where_related("winvoice_line", "type", "usage");
+		$obj->where_related("winvoice_line", "description", "usage");
 		$obj->where("type", "Utility_Invoice");
 		$obj->where("is_recurring <>", 1);
 		$obj->where("deleted <>", 1);
@@ -77,6 +77,7 @@ class UtibillReports extends REST_Controller {
 				if(isset($objList[$value->contact_id])){
 					$objList[$value->contact_id]["invoice"] 		+= 1;
 					$objList[$value->contact_id]["amount"] 			+= $amount;
+					$objList[$value->contact_id]["usage"]			+=  floatval($value->winvoice_line_quantity);
 				}else{
 					$objList[$value->contact_id]["id"] 				= $value->contact_id;
 					$objList[$value->contact_id]["name"] 			= $value->contact_abbr.$value->contact_number." ".$value->contact_name;
@@ -133,7 +134,7 @@ class UtibillReports extends REST_Controller {
 
 		$obj->include_related("contact", array("abbr", "number", "name"));
 		$obj->include_related("winvoice_line", array("quantity", "type"));
-		$obj->where_related("winvoice_line", "type", "usage");
+		$obj->where_related("winvoice_line", "description", "usage");
 		$obj->include_related("location", "name");
 		$obj->where("type", "Utility_Invoice");
 		$obj->where("is_recurring <>", 1);
