@@ -11,7 +11,7 @@ class Accounting_modules extends REST_Controller {
 	public $startFiscalDate;
 	public $endFiscalDate;
 	//CONSTRUCTOR
-	function __construct() {
+	    function __construct() {
 		parent::__construct();
 		$institute = new Institute();
 		$institute->where('id', $this->input->get_request_header('Institute'))->get();
@@ -2764,7 +2764,7 @@ class Accounting_modules extends REST_Controller {
 		//TRANSACTION
 		$obj->include_related("job", array("name"));
 		$obj->include_related("contact", array("abbr", "number", "name"));
-		$obj->where_in("type", array("Cash_Purchase", "Credit_Purchase","Purchase_Return","Payment_Refund","Commercial_Invoice","Vat_Invoice","Invoice","Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale","Sale_Return","Cash_Refund", "purchase_expense", "direct_expense", "internal_usage", "journal_line", "advance_settlement"));
+		$obj->where_in("type", array("Cash_Purchase", "Credit_Purchase","Purchase_Return","Payment_Refund","Commercial_Invoice","Vat_Invoice","Invoice","Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale","Sale_Return","Cash_Refund", "purchase_expense", "Direct_Expense", "internal_usage", "journal_line", "advance_settlement"));
 		$obj->where("is_recurring <>", 1);
 		$obj->where("deleted <>", 1);
 		$obj->get_iterated();
@@ -2774,7 +2774,7 @@ class Accounting_modules extends REST_Controller {
 				$revenue = 0;
 				$expense = 0;
 
-				if($value->type=="Cash_Purchase" || $value->type=="Credit_Purchase"){
+				if($value->type=="Cash_Purchase" || $value->type=="Credit_Purchase" || $value->type=="Direct_Expense" || $value->type=="journal_line" || $value->type=="advance_settlement"){
 					$expense += floatval($value->amount) / floatval($value->rate);
 				}else if($value->type=="Purchase_Return" || $value->type=="Payment_Refund"){
 					$expense -= floatval($value->amount) / floatval($value->rate);
@@ -2900,7 +2900,7 @@ class Accounting_modules extends REST_Controller {
 				$revenue = 0;
 				$expense = 0;
 
-				if($value->type=="Cash_Purchase" || $value->type=="Credit_Purchase"){
+				if($value->type=="Cash_Purchase" || $value->type=="Credit_Purchase" || $value->type=="Direct_Expense" || $value->type=="journal_line" || $value->type=="advance_settlement") {
 					$expense += floatval($value->amount) / floatval($value->rate);
 				}else if($value->type=="Purchase_Return" || $value->type=="Payment_Refund"){
 					$expense -= floatval($value->amount) / floatval($value->rate);
