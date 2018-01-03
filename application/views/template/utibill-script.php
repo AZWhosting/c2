@@ -13664,7 +13664,6 @@
     });
     banhji.customerList = kendo.observable({
         lang: langVM,
-        institute: banhji.institute,
         dataSource: dataStore(apiUrl + "utibillReports/customer_list"),
         licenseDS: dataStore(apiUrl + "branches"),
         blocDS: dataStore(apiUrl + "locations"),
@@ -13676,6 +13675,7 @@
         loSelectName: "",
         monthOf: "",
         monthOfUpload: null,
+         exArray: [],
         pageLoad: function() {
             this.licenseDS.read();
             this.set("monthOfUpload", "<?php echo date('Y-m-d');?>");
@@ -13684,7 +13684,7 @@
         printGrid: function() {
             var gridElement = $('#grid'),
                 printableContent = '',
-                win = window.open('', '', 'width=900, height=700'),
+                win = window.open('', '', 'width=990, height=900'),
                 doc = win.document.open();
             var htmlStart =
                 '<!DOCTYPE html>' +
@@ -13694,20 +13694,56 @@
                 '<title></title>' +
                 '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />' +
                 '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
+                '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/responsive.css">' +
+                '<link href="<?php echo base_url(); ?>assets/invoice/invoice.css" rel="stylesheet" />' +
                 '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
-                '<link href="<?php echo base_url(); ?>assets/responsive.css" rel="stylesheet" >' +
                 '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
                 '<style>' +
-                '*{  } html { font: 11pt sans-serif; }' +
+                'html { font: 11pt sans-serif; }' +
                 '.k-grid { border-top-width: 0; }' +
                 '.k-grid, .k-grid-content { height: auto !important; }' +
                 '.k-grid-content { overflow: visible !important; }' +
                 'div.k-grid table { table-layout: auto; width: 100% !important; }' +
                 '.k-grid .k-grid-header th { border-top: 1px solid; }' +
                 '.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
-                '</style><style type="text/css" media="print"> @page { size: landscape; margin:0mm; } .saleSummaryCustomer .total-customer, .saleSummaryCustomer .total-sale { background-color: #DDEBF7!important; -webkit-print-color-adjust:exact; }.saleSummaryCustomer .table.table-borderless.table-condensed  tr th { background-color: #1E4E78!important;-webkit-print-color-adjust:exact;}.saleSummaryCustomer .table.table-borderless.table-condensed  tr th span{ color: #fff!important; }.saleSummaryCustomer .table.table-borderless.table-condensed tr:nth-child(2n+1) td {  background-color: #fff!important; -webkit-print-color-adjust:exact;} .saleSummaryCustomer .table.table-borderless.table-condensed tr td { background-color: #F2F2F2!important;-webkit-print-color-adjust:exact; } </style>' +
+                '</style><style type="text/css" media="print"> @page { size: portrait; margin:1mm; }' +
+                '.inv1 .main-color {' +
+
+                '-webkit-print-color-adjust:exact; ' +
+                '} ' +
+                '.table.table-borderless.table-condensed  tr th { background-color: #1E4E78!important;' +
+                '-webkit-print-color-adjust:exact; color:#fff!important;}' +
+                '.table.table-borderless.table-condensed  tr th * { color: #fff!important; -webkit-print-color-adjust:exact;}' +
+                '.inv1 .light-blue-td { ' +
+                'background-color: #c6d9f1!important;' +
+                'text-align: left;' +
+                'padding-left: 5px;' +
+                '-webkit-print-color-adjust:exact; ' +
+                '}' +
+                '.saleSummaryCustomer .table.table-borderless.table-condensed tr td { ' +
+                'background-color: #F2F2F2!important; -webkit-print-color-adjust:exact;' +
+                '}' +
+                '.saleSummaryCustomer .table.table-borderless.table-condensed tr:nth-child(2n+1) td { ' +
+                ' background-color: #fff!important; -webkit-print-color-adjust:exact;' +
+                '}' +
+                '.journal_block1>.span2 *, .journal_block1>.span5 * {color: #fff!important;}' +
+                '.journal_block1>.span2:first-child { ' +
+                'background-color: #bbbbbb!important; -webkit-print-color-adjust:exact;' +
+                '}' +
+                '.journal_block1>.span5:last-child {' +
+                'background-color: #496cad!important; color: #fff!important; -webkit-print-color-adjust:exact; ' +
+                '}' +
+                '.journal_block1>.span5 {' +
+                'background-color: #5cc7dd!important; color: #fff!important; -webkit-print-color-adjust:exact;' +
+                '}' +
+                '.saleSummaryCustomer .table.table-borderless.table-condensed tfoot .bg-total td {' +
+                'background-color: #1C2633!important;' +
+                'color: #fff!important; ' +
+                '-webkit-print-color-adjust:exact;' +
+                '}' +
+                '</style>' +
                 '</head>' +
-                '<body><div id="example" class="k-content saleSummaryCustomer" style="padding: 30px;">';
+                '<body><div class="saleSummaryCustomer" style="padding: 0 10px;">';
             var htmlEnd =
                 '</div></body>' +
                 '</html>';
@@ -13745,7 +13781,7 @@
             ]);
             this.set("haveLicense", true);
             this.set("liSelectName", e.sender.span[0].innerText);
-        },        
+        }, 
         onLocationChange: function(e) {
             var self = this;
             this.subLocationDS.data([]);
@@ -13816,6 +13852,7 @@
                 bloc_id = this.get("blocSelect");
                 pole_id = this.get("subLocationSelect");
                 box_id = this.get("boxSelect");
+            var self = this;
 
             var para = [];
             var monthPara = [];
@@ -13839,41 +13876,164 @@
                 });
                 this.set("monthOf", monthOf);
                 //this.dataSource.filter(para);
-                        if(license_id){
-                            para.push({
-                                field: "branch_id",
-                                operator: "where_related_meter",
-                                value: license_id
+                    if(license_id){
+                        para.push({
+                            field: "branch_id",
+                            operator: "where_related_meter",
+                            value: license_id
+                        });
+                    }
+
+                    if (box_id) {
+                        para.push({
+                            field: "box_id",
+                            operator: "where_related_meter",
+                            value: box_id
+                        });
+                    } 
+
+                    if (pole_id) {
+                        para.push({
+                            field: "pole_id",
+                            operator: "where_related_meter",
+                            value: pole_id
+                        });
+                    } 
+
+                    if (bloc_id){
+                        para.push({
+                            field: "location_id",
+                            operator: "where_related_meter",
+                            value: bloc_id
+                        });
+                    }
+                    this.dataSource.query({
+                        filter: para,
+                        limit: 300
+                    }).then(function(e) {
+                    // if (e.type == "read") {
+                        var response = self.dataSource.view();
+
+                        self.exArray = [];
+
+                        self.exArray.push({
+                            cells: [{
+                                value: "Customer List",
+                                bold: true,
+                                fontSize: 20,
+                                textAlign: "center",
+                                colSpan: 7
+                            }]
+                        });
+                        if (self.displayDate) {
+                            self.exArray.push({
+                                cells: [{
+                                    value: self.displayDate,
+                                    textAlign: "center",
+                                    colSpan: 7
+                                }]
                             });
                         }
-
-                        if (box_id) {
-                            para.push({
-                                field: "box_id",
-                                operator: "where_related_meter",
-                                value: box_id
+                        self.exArray.push({
+                            cells: [{
+                                value: "",
+                                colSpan: 7
+                            }]
+                        });
+                        self.exArray.push({
+                            cells: [{
+                                    value: "Code",
+                                    background: "#496cad",
+                                    color: "#ffffff"
+                                },
+                                {
+                                    value: "Customer",
+                                    background: "#496cad",
+                                    color: "#ffffff"
+                                },
+                                {
+                                    value: "Meter Number",
+                                    background: "#496cad",
+                                    color: "#ffffff"
+                                },
+                                {
+                                    value: "Previous",
+                                    background: "#496cad",
+                                    color: "#ffffff"
+                                },
+                                {
+                                    value: "Current",
+                                    background: "#496cad",
+                                    color: "#ffffff"
+                                },
+                                {
+                                    value: "Address",
+                                    background: "#496cad",
+                                    color: "#ffffff"
+                                },
+                                {
+                                    value: "License",
+                                    background: "#496cad",
+                                    color: "#ffffff"
+                                }
+                            ]
+                        });
+                        for (var i = 0; i < response.length; i++) {
+                            self.exArray.push({
+                                cells: [{
+                                        value: response[i].number,
+                                        bold: true,
+                                    },
+                                    {
+                                        value: response[i].name,
+                                        bold: true,
+                                    },
+                                    {
+                                        value: ""
+                                    },
+                                    {
+                                        value: ""
+                                    },
+                                    {
+                                        value: ""
+                                    },
+                                    {
+                                        value: ""
+                                    },
+                                    {
+                                        value: ""
+                                    }
+                                ]
                             });
-                        } 
-
-                        if (pole_id) {
-                            para.push({
-                                field: "pole_id",
-                                operator: "where_related_meter",
-                                value: pole_id
-                            });
-                        } 
-
-                        if (bloc_id){
-                            para.push({
-                                field: "location_id",
-                                operator: "where_related_meter",
-                                value: bloc_id
-                            });
+                            for (var j = 0; j < response[i].line.length; j++) {
+                                self.exArray.push({
+                                    cells: [{
+                                            value: ""
+                                        },
+                                        {
+                                            value: ""
+                                        },
+                                        {
+                                            value: response[i].line[j].meter
+                                        },
+                                        {
+                                            value: response[i].line[j].previous
+                                        },
+                                        {
+                                            value: response[i].line[j].current
+                                        },
+                                        {
+                                            value: response[i].line[j].location
+                                        },
+                                        {
+                                            value: response[i].line[j].branch
+                                        },
+                                    ]
+                                });
+                            }
                         }
-                        this.dataSource.query({
-                            filter: para,
-                            limit: 300
-                        });                     
+                    // }
+                });                  
         },
         cancel: function() {
             this.contact.cancelChanges();
@@ -13893,7 +14053,16 @@
                         },
                         {
                             autoWidth: true
-                        }
+                        },
+                        {
+                            autoWidth: true
+                        },
+                        {
+                            autoWidth: true
+                        },
+                        {
+                            autoWidth: true
+                        },
                     ],
                     title: "Customer List",
                     rows: this.exArray
