@@ -1161,7 +1161,8 @@ class UtibillReports extends REST_Controller {
 		$obj->include_related("contact", array("abbr", "number", "name"));
 		$obj->include_related("location", "name");
 		$obj->include_related('location/branch', "name");
-		$obj->where("type", "Meter_Activation");
+		$obj->where("type", "invoice");
+		$obj->where("meter_id <>", 0);
 		$obj->where("is_recurring <>", 1);
 		$obj->where("deleted <>", 1);
 		$obj->order_by("issued_date", "asc");
@@ -1213,7 +1214,7 @@ class UtibillReports extends REST_Controller {
 	function customer_list_get() {
 		$filter 	= $this->get("filter");
 		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 10000;								
 		$sort 	 	= $this->get("sort");		
 		$data["results"] = [];
 		$data["count"] = 0;

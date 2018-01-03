@@ -241,9 +241,11 @@
 								</ol>
 								<div class="carousel-inner" style=" float: left;">
 									<div class="item active">
-										<div class="carousel-caption" style="position: relative; right: 0; left: 0; padding: 0; top: 0; background: none;">
-											 <img style="width: 100%; min-width: auto;" src="<?php echo base_url();?>assets/update/pcg-banner.png" >
-										</div>
+										<a href="http://pro-cg.com/" target="_blank">
+											<div class="carousel-caption" style="position: relative; right: 0; left: 0; padding: 0; top: 0; background: none;">
+												 <img style="width: 100%; min-width: auto;" src="<?php echo base_url();?>assets/update/pcg-banner-banhji.png" >
+											</div>
+										</a>
 									</div>
 									<div class="item ">
 										<div class="carousel-caption" style="position: relative; right: 0; left: 0; padding: 0; top: 0; background: none;">
