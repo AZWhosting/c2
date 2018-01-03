@@ -125,26 +125,15 @@ class Cashier extends REST_Controller {
 		//Response data
 		$this->response($data, 200);
 	}
-	//Reconcile
-	function reconcile_get(){
+	//Start Ballance
+	function start_get(){
 		$filter 	= $this->get("filter");
 		$page 		= $this->get('page');
 		$limit 		= $this->get('limit');
 		$sort 	 	= $this->get("sort");
 		$data["results"] = [];
 		$data["count"] = 0;
-		$is_pattern = 0;
-		$obj = new Choulr_space(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		//Sort
-		if(!empty($sort) && isset($sort)){
-			foreach ($sort as $value) {
-				if(isset($value['operator'])){
-					$obj->{$value['operator']}($value["field"], $value["dir"]);
-				}else{
-					$obj->order_by($value["field"], $value["dir"]);
-				}
-			}
-		}
+		$obj = new Cashier_session(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		//Filter
 		if(!empty($filter) && isset($filter)){
 	    	foreach ($filter["filters"] as $value) {
@@ -155,20 +144,73 @@ class Cashier extends REST_Controller {
 				}
 			}
 		}
+		$obj->where("status", 0)->order_by("id", "desc")->limit(1)->get();
 		//Results
-		if($page && $limit){
-			$obj->get_paged_iterated($page, $limit);
-			$data["count"] = $obj->paged->total_rows;
-		}else{
-			$obj->get_iterated();
-			$data["count"] = $obj->result_count();
-		}
+		$data["count"] = $obj->result_count();
 		if($obj->exists()){
 			foreach ($obj as $value) {
+				//Start 
+				$startss = new  Cashier_session_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$startss->where("cashier_session_id", $value->id)->get_iterated();
+				$startitem = [];
+				if($startss->exists()){
+					foreach($startss as $start){
+						$startitem[] = array(
+							"id" 		=> $start->id,
+							"amount" 	=> floatval($start->amount),
+							"currency" 	=> $start->currency,
+						);
+					}
+				}
+				//Amount Recieve
+				$receivess = new  Cashier_session_receive(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$receivess->where("cashier_session_id", $value->id)->get_iterated();
+				$receiveitem = [];
+				if($receivess->exists()){
+					foreach($receivess as $receive){
+						$txn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						$txn->where("id", $receive->transaction_id)->limi(1)->get();
+						$receiveitem[] = array(
+							"id" 		=> $receive->id,
+							"amount" 	=> floatval($receive->amount),
+							"transaction_id" => $receive->transaction_id,
+							"rate" 		=> floatval($txn->rate),
+							"locale" 	=> $txn->locale
+						);
+					}
+				}
+				//Note get and change
+				$notess = new  Cashier_currency(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$notess->where("cashier_session_id", $value->id)->get_iterated();
+				$noteitemget = [];
+				$noteitemchange = [];
+				if($notess->exists()){
+					foreach($notess as $note){
+						if($note->amount > 0){
+							if($note->type == 0){
+								$noteitemget[] = array(
+									"id" 		=> $note->id,
+									"amount" 	=> floatval($note->amount),
+									"rate" 		=> floatval($note->rate),
+									"currency" 	=> $note->currency,
+								);
+							}else{
+								$noteitemchange[] = array(
+									"id" 		=> $note->id,
+									"amount" 	=> floatval($note->amount),
+									"rate" 		=> floatval($note->rate),
+									"currency" 	=> $note->currency,
+								);
+							}
+						}
+					}
+				}
 		 		$data["results"][] = array(
-		 			"id" 		=> $value->id,
-		 			"name" 		=> $value->name,
-		 			"is_system" => $value->is_system
+		 			"id" 				=> $value->id,
+		 			"start_amount" 		=> $startitem,
+		 			"receive_amount" 	=> $receiveitem,
+		 			"note_receive" 		=> $noteitemget,
+		 			"note_change" 		=> $noteitemchange,
 		 		);
 		 	}
 		}

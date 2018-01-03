@@ -265,9 +265,29 @@ class Item_lines extends REST_Controller {
 								$itemCost = $totalAmount / $totalQty;
 							}
 
+							$journalLines = [];
+
+							//If sale with zero cost
+							if($value->movement==-1 && floatval($value->cost)==0){
+								$zeroCostAmt = $currentQuantity * $itemCost / floatval($value->rate);
+
+								//COGS on Dr
+								$journalLines[] = array(
+									"account_id" 	=> $item->expense_account_id,
+									"dr" 			=> $zeroCostAmt,
+									"cr" 			=> 0
+								);
+
+								//Inventory on Cr
+								$journalLines[] = array(
+									"account_id" 	=> $item->inventory_account_id,
+									"dr" 			=> 0,
+									"cr" 			=> $zeroCostAmt
+								);
+							}
+
 							//Negative on hand
 							if(floatval($itemLines->totalQuantity)<0){
-								$journalLines = [];
 								$adjAmount = 0;
 								$avgCost = abs(floatval($itemLines->totalAmount) / floatval($itemLines->totalQuantity));
 
@@ -313,25 +333,26 @@ class Item_lines extends REST_Controller {
 										"cr" 			=> abs($adjAmount)
 									);
 								}
-
-								//Add journals
-								for ($i=0; $i < count($journalLines); $i++) { 
-									$journals = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);									
-
-									$journals->transaction_id	= $value->transaction_id;
-									$journals->account_id 		= $journalLines[$i]["account_id"];
-									$journals->contact_id 		= $transaction->contact_id;
-									$journals->description 		= $value->description;
-									$journals->dr 	 			= $journalLines[$i]["dr"];
-									$journals->cr 				= $journalLines[$i]["cr"];
-									$journals->rate				= $value->rate;
-									$journals->locale			= $item->locale;
-
-									$journals->save();
-								}
 							}
+
+							//Add journals
+							for ($i=0; $i < count($journalLines); $i++) { 
+								$journals = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);									
+
+								$journals->transaction_id	= $value->transaction_id;
+								$journals->account_id 		= $journalLines[$i]["account_id"];
+								$journals->contact_id 		= $transaction->contact_id;
+								$journals->description 		= $value->description;
+								$journals->dr 	 			= $journalLines[$i]["dr"];
+								$journals->cr 				= $journalLines[$i]["cr"];
+								$journals->rate				= $value->rate;
+								$journals->locale			= $item->locale;
+
+								$journals->save();
+							}
+
 						}
-					}					
+					}
 				}
 			}
 
@@ -380,40 +401,46 @@ class Item_lines extends REST_Controller {
 			$obj->conversion_ratio = $conversion_ratio;
 
 			//Bin Location
-			if(count($value->bin_locations)>0){
-				$obj->bin_location_id = $value->bin_locations->id;
+			if(isset($value->bin_locations)){
+				if(count($value->bin_locations)>0){
+					$obj->bin_location_id = $value->bin_locations->id;
+				}
 			}
 
 		   	if($obj->save()){
 		   		//New Bin Location
-		   		if(count($value->new_bin_locations)>0){
-		   			$newBinLocations = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		   		if(isset($value->new_bin_locations)){
+			   		if(count($value->new_bin_locations)>0){
+			   			$newBinLocations = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
-		   			$newBinLocations->transaction_id 	= $obj->transaction_id;
-					$newBinLocations->bin_location_id 	= $value->new_bin_locations->id;
-					$newBinLocations->item_id 			= $obj->item_id;
-					$newBinLocations->assembly_id 		= $obj->assembly_id;
-					$newBinLocations->measurement_id 	= $obj->measurement_id;
-					$newBinLocations->description 		= $obj->description;
-					$newBinLocations->quantity 	 		= $obj->quantity;
-					$newBinLocations->conversion_ratio 	= $obj->conversion_ratio;
-					$newBinLocations->price 			= $obj->price;
-					$newBinLocations->amount 			= $obj->amount;
-					$newBinLocations->rate				= $obj->rate;
-					$newBinLocations->locale			= $obj->locale;
-					$newBinLocations->movement 			= 1;
+			   			$newBinLocations->transaction_id 	= $obj->transaction_id;
+						$newBinLocations->bin_location_id 	= $value->new_bin_locations->id;
+						$newBinLocations->item_id 			= $obj->item_id;
+						$newBinLocations->assembly_id 		= $obj->assembly_id;
+						$newBinLocations->measurement_id 	= $obj->measurement_id;
+						$newBinLocations->description 		= $obj->description;
+						$newBinLocations->quantity 	 		= $obj->quantity;
+						$newBinLocations->conversion_ratio 	= $obj->conversion_ratio;
+						$newBinLocations->price 			= $obj->price;
+						$newBinLocations->amount 			= $obj->amount;
+						$newBinLocations->rate				= $obj->rate;
+						$newBinLocations->locale			= $obj->locale;
+						$newBinLocations->movement 			= 1;
 
-					$newBinLocations->save();
+						$newBinLocations->save();
+			   		}
 		   		}
 
 		   		//Serials
-		   		if(count($value->item_serials)>0){
-		   			foreach ($value->item_serials as $serial) {
-			   			$itemSerials = new Item_serial(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			   			$itemSerials->item_line_id 	= $obj->id;
-			   			$itemSerials->number 		= $serial->number;
-			   			$itemSerials->save();
-		   			}
+		   		if(isset($value->item_serials)){
+			   		if(count($value->item_serials)>0){
+			   			foreach ($value->item_serials as $serial) {
+				   			$itemSerials = new Item_serial(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				   			$itemSerials->item_line_id 	= $obj->id;
+				   			$itemSerials->number 		= $serial->number;
+				   			$itemSerials->save();
+			   			}
+			   		}
 		   		}
 
 			   	$data["results"][] = array(

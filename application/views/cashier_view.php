@@ -2011,9 +2011,56 @@
 			        <h2 style="margin-bottom: 10px;" data-bind="text: lang.lang.reconcile">Reconcile</h2>
 			        <br>
 			        <div class="row-fluid">
-			        	<div class="row" style="margin: 0;">
-				        	<p colspan="1" align="left" data-bind="text: lang.lang.actual_cash_count">Actual Cash Count : <span data-bind="text: actualCash"></span></p>
-			        	</div>
+			        	<div class="row" style="padding: 0px;margin: 0;">
+		        			<div class="span4" style="padding-left: 0;">
+			        			<table class="table table-bordered table-primary table-striped table-vertical-center" >
+			        				<thead>
+			        					<tr>
+			        						<th colspan="2" style="background: #fefefe;color: #000;border: 1px solid #ccc;" >
+			        							ប្រាក់ដើមគ្រា
+			        						</th>
+			        					</tr>
+			        				</thead>
+			        				<tbody 
+			        					data-role="listview" 
+			        					data-bind="source: startAR" 
+			        					data-template="reconcile-start-list">
+			        				</tbody>
+			        			</table>
+			        		</div>
+			        		<div class="span4" style="">
+			        			<table class="table table-bordered table-primary table-striped table-vertical-center" >
+			        				<thead>
+			        					<tr>
+			        						<th colspan="2" style="background: #fefefe;color: #000;border: 1px solid #ccc;" >
+			        							ប្រាក់ទទួលមិនទាន់អាប់
+			        						</th>
+			        					</tr>
+			        				</thead>
+			        				<tbody 
+			        					data-role="listview" 
+			        					data-bind="source: receiveNoChangeAR" 
+			        					data-template="reconcile-receivenochange-list">
+			        				</tbody>
+			        			</table>
+			        		</div>
+			        		<div class="span4" style="padding-left: 0;">
+			        			<table class="table table-bordered table-primary table-striped table-vertical-center" >
+			        				<thead>
+			        					<tr>
+			        						<th colspan="2" style="background: #fefefe;color: #000;border: 1px solid #ccc;" >
+			        							ប្រាក់អាប់
+			        						</th>
+			        					</tr>
+			        				</thead>
+			        				<tbody 
+			        					data-role="listview" 
+			        					data-bind="source: changeAR" 
+			        					data-template="reconcile-change-list">
+			        				</tbody>
+			        			</table>
+			        		</div>
+		        		</div>
 						<div class="row" style="padding: 0;margin: 0;">
 							<table class="table table-bordered table-primary table-striped table-vertical-center" style="margin-top: 15px;">
 						        <thead>
@@ -2032,40 +2079,12 @@
 						    </table>
 						    <button class="btn btn-inverse" data-bind="click: addRow"><i class="icon-plus icon-white"></i></button>
 						</div>
-		        		<div class="row" style="padding: 15px;margin: 0;">
-		        			<div class="span6">
-			        			<table >
-			        				<thead>
-			        					<tr>
-			        						<th colspan="2" data-bind="text: lang.lang.amount_received">
-			        							Amount Received
-			        						</th>
-			        					</tr>
-			        				</thead>
-			        				<tbody data-role="listview" data-bind="source: receiptDS" data-template="reconcile-receipt-list">
-			        				</tbody>
-			        			</table>
-			        		</div>
-			        		<div class="span6">
-			        			<table class="span6">
-			        				<thead>
-			        					<tr>
-			        						<th colspan="2" data-bind="text: lang.lang.actual_count">
-			        							Actual Count
-			        						</th>
-			        					</tr>
-			        				</thead>
-			        				<tbody data-role="listview" data-bind="source: list.cashReceiptArr" data-template="reconcile-cash-list">
-			        				</tbody>
-			        			</table>
-			        		</div>
-		        		</td>
+		        		
 			        </div>
 			        <div class="box-generic bg-action-button" style="margin-top: 15px;">
 						<div id="ntf1" data-role="notification"></div>
 				        <div class="row">
 							<div class="span12" align="right">
-								<span class="btn-btn" data-bind="click: verify" ><i></i> <span data-bind="text: lang.lang.verify">Verify</span></span>
 								<span class="btn-btn" data-bind="click: sync" ><i></i> <span data-bind="text: lang.lang.record">Record</span></span>
 								<span class="btn-btn" data-bind="click: cancel" ><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
 							</div>
@@ -2077,27 +2096,45 @@
 	</div>				  	
 </script>
 <script id="reconcile-list-template" type="text/x-kendo-template">
-	<tr data-uid="#: uid #">
-		<td>
-			<i class="icon-trash" data-bind="events: { click: removeRow }"></i>
-			#:banhji.Reconcile.noteDS.indexOf(data)+1#			
+    <tr>
+		<td style="border-left: 0; border-bottom: 0;">
+			<i style="cursor: pointer;" class="icon-trash" data-bind="events: {click: removeRow}" ></i>
+			#:banhji.Reconcile.noteDS.indexOf(data)+1#
 		</td>
-		<td>
+		<td style="border-left: 0; border-bottom: 0;">
 			<input type="text" 
 				data-role="combobox" 
-				data-bind="source: currencyDS, value: currency" 
+				data-bind="source: currencyAR, value: currency" 
 				data-text-field="code" 
 				data-value-field="code">
 		</td>
-		<td>#= note#</td>
-		<td>#= unit#</td>
-		<td>#= amount#</td>
-    </tr> 
+		<td style="border-left: 0; border-bottom: 0;">
+			<input type="number" class="k-textbox" data-role="numerictextbox" data-format="n0" data-min="0" data-spinners="false" data-bind="value: note, events: {change: onChange}" style="padding-right: 10px;display: inline-block; text-align: right; height: 28px; border: none; width: 168px !important;">
+		</td>
+		<td style="border-left: 0; border-bottom: 0;">
+			<input type="number" class="k-textbox" data-role="numerictextbox" data-format="n0" data-min="0" data-spinners="false" data-bind="value: unit, events: {change: onChange}" style="padding-right: 10px;text-align: right; display: inline-block; height: 28px; border: none; width: 168px !important;">
+		</td>
+		<td style="border-left: 0; border-bottom: 0;">
+			<input type="number" data-role="numerictextbox" data-format="n" data-min="0" data-spinners="false" data-bind="value:total" disabled="disabled" style="padding-right: 10px;text-align: right; display: inline-block; border: none; width: 168px !important;">
+		</td>
+	</tr>
 </script>
-<script id="reconcile-receipt-list" type="text/x-kendo-template">
+<script id="reconcile-start-list" type="text/x-kendo-template">
 	<tr>
-		<td width="100">#=code#</td>
-		<td>#=amount#</td>
+		<td width="100">#=currency#</td>
+		<td style="text-align: right;">#=amount#</td>
+	</tr>
+</script>
+<script id="reconcile-receivenochange-list" type="text/x-kendo-template">
+	<tr>
+		<td width="100">#= currency#</td>
+		<td style="text-align: right;">#=amount#</td>
+	</tr>
+</script>
+<script id="reconcile-change-list" type="text/x-kendo-template">
+	<tr>
+		<td width="100">#= currency#</td>
+		<td style="text-align: right;">#=amount#</td>
 	</tr>
 </script>
 <script id="reconcile-cash-list" type="text/x-kendo-template">

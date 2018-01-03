@@ -168,7 +168,7 @@ var themerPrimaryColor = primaryColor;
 <!--start kendo localization in Khmer-->
 
 <!-- Le fav and touch icons -->
-<link rel="shortcut icon" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/banhji-logo.png">
+<link rel="shortcut icon" href="<?php echo base_url();?>assets/update/banhji.jpg">
 
 </head>
 <body class="document-body ">
@@ -578,4 +578,4 @@ var themerPrimaryColor = primaryColor;
 	</script>
 
 </body>
-</html>
+</html>                   

@@ -65,6 +65,56 @@
             }
         });
     }
+    function itemCurrency(container, options) {
+        $('<input name="' + options.field + '" />')
+        .appendTo(container)
+        .kendoDropDownList({
+            filter: "contains",     
+            dataTextField: "code",
+            dataValueField: "code",
+            autoWidth: true,
+            height: 200,
+            template: kendo.template($("#currency-list-tmpl").html()),
+            dataSource: {
+                transport: {
+                    read    : {
+                        url: apiUrl + "utibills/currency",
+                        type: "GET",
+                        headers: banhji.header,
+                        dataType: 'json'
+                    },
+                    parameterMap: function(options, operation) {
+                        if(operation === 'read') {
+                            return {
+                                page: options.page,
+                                limit: options.pageSize,
+                                filter: options.filter,
+                                sort: options.sort
+                            };
+                        } else {
+                            return {models: kendo.stringify(options.models)};
+                        }
+                    }
+                },
+                schema  : {
+                    model: {
+                        id: 'id'
+                    },
+                    data: 'results',
+                    total: 'count'
+                },
+                sort: [
+                    { field:"id", dir:"asc" }
+                ],
+                batch: true,
+                serverFiltering: true,
+                serverSorting: true,
+                serverPaging: true,
+                page: 1,
+                pageSize: 50
+            }
+        });
+    }
     function variantAttributeEditor(container, options) {
         $('<input name="' + options.field + '" />')
         .appendTo(container)
@@ -5055,10 +5105,10 @@
             });
             this.addEmpty();
             this.cashierSessionDS.query({
-                filter: {
-                    field: "status",
-                    value: 0
-                },
+                filter: [
+                    { field: "status",  value: 0 },
+                    { field: "cashier_id",  value: banhji.userData.id }
+                ],
                 limit: 1,
                 sort: {
                     field: "id",
@@ -5898,22 +5948,79 @@
         institute: banhji.institute,
         actualCash: 0,
         actualDS: dataStore(apiUrl + "utibills/cashier_actual"),
-        startAmountDS: dataStore(apiUrl + "cashier/reconcile"),
+        startAmountDS: dataStore(apiUrl + "cashier/start"),
         currencyDS: dataStore(apiUrl + "utibills/currency"),
         noteDS: dataStore(apiUrl + "cashier/note"),
+        currencyAR: [],
+        startAR: [],
+        receiveNoChangeAR: [],
+        changeAR: [],
         pageLoad: function() {
-
+            var self = this;
+            this.startAmountDS.query({
+                filter: {field: "cashier_id", value: banhji.userData.id}
+            }).then(function(e){
+                var view = self.startAmountDS.view();
+                if(view.length > 0){
+                    //Start
+                    if(view[0].start_amount.length > 0){
+                        $.each(view[0].start_amount, function(i,v){
+                            self.startAR.push({
+                                currency: v.currency,
+                                amount: v.amount
+                            });
+                        });
+                    }
+                    //Get not yet change
+                    if(view[0].note_receive.length > 0){
+                        $.each(view[0].note_receive, function(i,v){
+                            self.receiveNoChangeAR.push({
+                                currency: v.currency,
+                                amount: v.amount
+                            });
+                        });
+                    }
+                    //Change
+                    if(view[0].note_change.length > 0){
+                        $.each(view[0].note_change, function(i,v){
+                            self.changeAR.push({
+                                currency: v.currency,
+                                amount: v.amount
+                            });
+                        });
+                    }
+                }else{
+                    banhji.router.navigate("/");
+                }
+            });
+            this.currencyDS.query({
+                sort: {
+                    field: "created_at",
+                    dir: "asc"
+                }
+            }).then(function(e) {
+                $.each(self.currencyDS.data(), function(i, v) {
+                    self.currencyAR.push({
+                        code: v.code,
+                        locale: v.locale,
+                        rate: v.rate
+                    });
+                });
+                self.addRow();
+            });
+        },
+        onChange: function(e) {
+            e.data.set('total', e.data.note * e.data.unit);
         },
         save: function() {
-
         },
         cancel: function() {
             window.history.back();
         },
         addRow              : function(){
-            var obj = this.get("obj");
             this.noteDS.add({
                 currency            : "",
+                code                : "",
                 note                : 0,
                 unit                : 0,
                 amount              : 0,
