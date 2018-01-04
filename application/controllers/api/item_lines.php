@@ -235,23 +235,33 @@ class Item_lines extends REST_Controller {
 					$transaction->get_by_id($value->transaction_id);
 					
 					if($transaction->exists()){
-						
-						// if($transaction->reference_id>0){
-						// 	$referenceTxn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-						// 	$referenceTxn->get_by_id($transaction->reference_id);
-							
-						// 	if($transaction->type=="Cash_Purchase" || $transaction->type=="Credit_Purchase"){
-						// 		if($referenceTxn->type=="GRN"){
-						// 			$value->movement = 0;
-						// 		}
-						// 	}
-							
-						// 	if($transaction->type=="GRN"){
-						// 		if($referenceTxn->type=="Cash_Purchase" || $referenceTxn->type=="Credit_Purchase"){
-						// 			$value->movement = 0;
-						// 		}
-						// 	}
-						// }
+						$referenceTxn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						$referenceTxn->where_in("id", explode(",", $transaction->references));
+						$referenceTxn->get();
+
+						if($transaction->type=="Cash_Purchase" || $transaction->type=="Credit_Purchase" || $transaction->type=="GRN"){
+							$value->movement = 1;
+
+							if($referenceTxn->exists()){
+								foreach ($referenceTxn as $refTxn) {
+									if($refTxn->type=="Cash_Purchase" || $refTxn->type=="Credit_Purchase" || $refTxn->type=="GRN"){
+										$value->movement = 0;
+									}
+								}
+							}
+						}
+
+						if($transaction->type=="GDN" || $transaction->type=="Commercial_Invoice" || $transaction->type=="Vat_Invoice" || $transaction->type=="Invoice" || $transaction->type=="Commercial_Cash_Sale" || $transaction->type=="Vat_Cash_Sale" || $transaction->type=="Cash_Sale"){
+							$value->movement = -1;
+
+							if($referenceTxn->exists()){
+								foreach ($referenceTxn as $refTxn) {
+									if($refTxn->type=="GDN" || $refTxn->type=="Commercial_Invoice" || $refTxn->type=="Vat_Invoice" || $refTxn->type=="Invoice" || $refTxn->type=="Commercial_Cash_Sale" || $refTxn->type=="Vat_Cash_Sale" || $refTxn->type=="Cash_Sale"){
+										$value->movement = 0;
+									}
+								}
+							}
+						}
 
 						if($value->movement==0){}else{
 							//Find Item Quantity and Amount
