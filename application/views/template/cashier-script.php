@@ -5947,7 +5947,6 @@
         lang: langVM,
         institute: banhji.institute,
         actualCash: 0,
-        actualDS: dataStore(apiUrl + "utibills/cashier_actual"),
         startAmountDS: dataStore(apiUrl + "cashier/start"),
         currencyDS: dataStore(apiUrl + "utibills/currency"),
         noteDS: dataStore(apiUrl + "cashier/note"),
@@ -5955,67 +5954,225 @@
         startAR: [],
         receiveNoChangeAR: [],
         changeAR: [],
-        pageLoad: function() {
+        receiveAR: [],
+        actualCountDS: dataStore(apiUrl + "cashier/blank"),
+        actualDS: dataStore(apiUrl + "cashier/blank"),
+        dataSource: dataStore(apiUrl + "cashier/reconcile"),
+        baseCurrency: "km-KH",
+        defBG: "#be1e2d",
+        haveDef: true,
+        sessionDS: dataStore(apiUrl + "cashier"),
+        noSession: true,
+        sessionID: "",
+        cashierID: "",
+        pageLoad: function(id) {
             var self = this;
-            this.startAmountDS.query({
-                filter: {field: "cashier_id", value: banhji.userData.id}
-            }).then(function(e){
-                var view = self.startAmountDS.view();
-                if(view.length > 0){
-                    //Start
-                    if(view[0].start_amount.length > 0){
-                        $.each(view[0].start_amount, function(i,v){
-                            self.startAR.push({
-                                currency: v.currency,
-                                amount: v.amount
+            this.actualCountDS.data([]);
+            this.actualDS.data([]);
+            this.currencyAR = [];
+            if(id){
+                this.set("noSession", false);
+                this.set("sessionID", id);
+                this.startAmountDS.query({
+                    filter: {field: "id", value: id}
+                }).then(function(e){
+                    var view = self.startAmountDS.view();
+                    var tmpActual = [];
+                    if(view.length > 0){
+                        self.set("cashierID", view[0].cashier_id);
+                        //Start
+                        if(view[0].start_amount.length > 0){
+                            $.each(view[0].start_amount, function(i,v){
+                                self.startAR.push({
+                                    currency: v.currency,
+                                    amount: v.amount
+                                });
+                                self.actualCountDS.add({
+                                    currency: v.currency,
+                                    amount: v.amount,
+                                    locale: v.locale
+                                });
                             });
-                        });
-                    }
-                    //Get not yet change
-                    if(view[0].note_receive.length > 0){
-                        $.each(view[0].note_receive, function(i,v){
-                            self.receiveNoChangeAR.push({
-                                currency: v.currency,
-                                amount: v.amount
+                        }
+                        //Get not yet change
+                        if(view[0].note_receive.length > 0){
+                            $.each(view[0].note_receive, function(i,v){
+                                self.receiveNoChangeAR.push({
+                                    currency: v.currency,
+                                    amount: v.amount
+                                });
+                                $.each(self.actualCountDS.data(), function(j,k){
+                                    if(v.currency == k.currency){
+                                        var o = this.amount;
+                                        this.set("amount", o + v.amount);
+                                    }
+                                });
                             });
-                        });
-                    }
-                    //Change
-                    if(view[0].note_change.length > 0){
-                        $.each(view[0].note_change, function(i,v){
-                            self.changeAR.push({
-                                currency: v.currency,
-                                amount: v.amount
+                        }
+                        //Change
+                        if(view[0].note_change.length > 0){
+                            $.each(view[0].note_change, function(i,v){
+                                self.changeAR.push({
+                                    currency: v.currency,
+                                    amount: v.amount
+                                });
+                                $.each(self.actualCountDS.data(), function(j,k){
+                                    if(v.currency == k.currency){
+                                        var o = this.amount;
+                                        this.set("amount", o - v.amount);
+                                    }
+                                });
                             });
-                        });
+                            self.calBaseCurrency();
+                        }
+                        //Receive
+                        if(view[0].receive_group.length > 0){
+                            $.each(view[0].receive_group, function(i,v){
+                                self.receiveAR.push({
+                                    code: v.code,
+                                    amount: v.amount
+                                });
+                            });
+                        }
+                        //Set Base Currency
+                        self.set("baseCurrency", view[0].rate.locale);
+                    }else{
+                        banhji.router.navigate("/");
                     }
-                }else{
-                    banhji.router.navigate("/");
-                }
-            });
-            this.currencyDS.query({
-                sort: {
-                    field: "created_at",
-                    dir: "asc"
-                }
-            }).then(function(e) {
-                $.each(self.currencyDS.data(), function(i, v) {
-                    self.currencyAR.push({
-                        code: v.code,
-                        locale: v.locale,
-                        rate: v.rate
-                    });
                 });
+
+                this.currencyDS.query({
+                    sort: {
+                        field: "created_at",
+                        dir: "asc"
+                    }
+                }).then(function(e) {
+                    $.each(self.currencyDS.data(), function(i, v) {
+                        self.currencyAR.push({
+                            code: v.code,
+                            locale: v.locale,
+                            rate: v.rate
+                        });
+                        self.actualDS.add({
+                            code: v.code,
+                            locale: v.locale,
+                            amount: 0
+                        });
+                    });
+                    self.findNote(self.get("sessionID"));
+                });
+                this.tmpAR = [];
+                if(this.noteDS.data().length > 0){
+                    this.calBaseCurrency();
+                    this.resetActual();
+                }
+            }else{
+                this.set("noSession", true);
+                this.sessionDS.query({
+                });
+            }
+        },
+        findNote: function(id){
+            var self = this;
+            this.noteDS.query({
+                filter: {field: "cashier_session_id", value: id}
+            }).then(function(e){
+                if(self.noteDS.data().length > 0){
+                    self.resetActual();
+                }
                 self.addRow();
             });
         },
+        actualAmount: 0,
+        acAmount: 0,
+        calBaseCurrency: function(){
+            var self = this;
+            var total = 0;
+            var today = "<?php echo date('Y-m-d'); ?>";
+            $.each(this.actualCountDS.data(), function(i,v){
+                var rate = banhji.source.getRate(v.locale, new Date(today));
+                var arate = v.amount / rate;
+                total += arate;
+            });
+            this.set("actualAmount", kendo.toString(total, this.get("baseCurrency") == "km-KH" ? "c0" : "c", this.get("baseCurrency")));
+            this.set("acAmount", total);
+        },
+        accountDS           : new kendo.data.DataSource({
+            data: banhji.source.accountList,
+            sort: { field:"number", dir:"asc" }
+        }),
+        tmpAR: [],
         onChange: function(e) {
             e.data.set('total', e.data.note * e.data.unit);
+            var AMT = e.data.note * e.data.unit;
+            this.resetActual();
         },
-        save: function() {
+        countAmount: 0,
+        cAmount: 0,
+        deferentAmount: 0,
+        defAmount: 0,
+        resetActual: function(){
+            var self = this;
+            var cur = [];
+            var total = 0;
+            var today = "<?php echo date('Y-m-d'); ?>";
+            $.each(this.actualDS.data(), function(i,v){
+                this.set("amount", 0);
+            });
+            $.each(this.noteDS.data(), function(i,v ){
+                $.each(self.actualDS.data(), function(j,k){
+                    if(v.currency == k.locale){
+                        var o = this.amount;
+                        this.set("amount", o + v.total);
+                    }
+                });
+                var rate = banhji.source.getRate(v.currency, new Date(today));
+                var arate = v.total / rate;
+                total += arate;
+            });
+            this.set("countAmount", kendo.toString(total, this.get("baseCurrency") == "km-KH" ? "c0" : "c", this.get("baseCurrency")));
+            this.set("cAmount", total);
+            var def = total - this.get("acAmount");
+            this.set("deferentAmount", kendo.toString(def, this.get("baseCurrency") == "km-KH" ? "c0" : "c", this.get("baseCurrency")));
+            if(def == 0){
+                this.set("defBG", "#ffffff");
+                this.set("haveDef", false)
+            }else{
+                this.set("defBG", "#be1e2d");
+                this.set("haveDef", true);
+                this.set("defAmount", def);
+            }
+        },
+        saveDraft: function(){
+            this.save(2);
+        },
+        saveClose: function(){
+        },
+        save: function(act) {
+            var self = this;
+            $("#loadING").css("display", "block");
+            $.each(this.noteDS.data(), function(i,v){
+                this.set("cashier_id", self.get("cashierID"));
+                this.set("cashier_session_id", self.get("sessionID"));
+                this.set("action", act);
+            });
+            this.noteDS.sync();
+            this.noteDS.bind("requestEnd", function(e){
+                $("#loadING").css("display", "none");
+                var notifact = $("#ntf1").data("kendoNotification");
+                    notifact.hide();
+                    notifact.success(self.lang.lang.success_message);
+                self.cancel();
+            });
         },
         cancel: function() {
-            window.history.back();
+            this.startAR = [];
+            this.receiveNoChangeAR = [];
+            this.changeAR = [];
+            this.receiveAR = [];
+            this.noteDS.data([]);
+            $("#loadING").css("display", "none");
+            banhji.router.navigate("/receipt");
         },
         addRow              : function(){
             this.noteDS.add({
@@ -6030,6 +6187,7 @@
             var data = e.data;
             if(this.noteDS.total()>1){
                 this.noteDS.remove(data);
+                this.onChange(e);
             }
         },
     });
@@ -8523,7 +8681,7 @@
                 }
             });
     });
-    banhji.router.route("/reconcile", function() {
+    banhji.router.route("/reconcile(/:id)", function(id) {
         banhji.view.layout.showIn('#menu', banhji.view.menu);
         banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
         banhji.view.layout.showIn("#content", banhji.view.Reconcile);
@@ -8532,7 +8690,7 @@
         if (banhji.pageLoaded["reconcile"] == undefined) {
             banhji.pageLoaded["reconcile"] = true;
         }
-        vm.pageLoad();
+        vm.pageLoad(id);
     });
     banhji.router.route("/cash_receipt_summary", function() {
         if (!banhji.userManagement.getLogin()) {

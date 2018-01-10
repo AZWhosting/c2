@@ -22,6 +22,27 @@ class Transactions extends REST_Controller {
 		}
 	}
 
+	function test_get() {
+		$data["results"] = [];
+		$data["count"] = 0;
+
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$obj->where('id', 679)->get();
+
+		$delTxn = $obj->transaction->get();
+		$data["results"] = $obj->delete($delTxn->all);
+
+		// $data["results"] = $obj->transaction->get_raw()->result();
+
+		// $txn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		// $txn->where_in('id', array(664,665))->get();
+
+		// $data["results"] = $obj->save($txn->all);
+				
+		
+		$this->response($data, 200);
+	}
+
 
 	//GET
 	function index_get() {
@@ -149,14 +170,6 @@ class Transactions extends REST_Controller {
 					);
 				}
 
-				//Reference
-				$reference = [];
-				if($value->reference_id>0){
-					$ref = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-					$ref->where("id", $value->reference_id);
-					$reference = $ref->get_raw()->result();
-				}
-
 				$data["results"][] = array(
 					"id" 						=> $value->id,
 					"company_id" 				=> $value->company_id,
@@ -201,7 +214,6 @@ class Transactions extends REST_Controller {
 				   	"deposit_date" 				=> $value->deposit_date,
 				   	"check_no" 					=> $value->check_no,
 				   	"reference_no" 				=> $value->reference_no,
-				   	"references" 				=> $value->references!="" ? array_map('intval', explode(",", $value->references)) : [],
 				   	"segments" 					=> $value->segments!="" ? array_map('intval', explode(",", $value->segments)) : [],
 				   	"bill_to" 					=> $value->bill_to,
 				   	"ship_to" 					=> $value->ship_to,
@@ -229,7 +241,7 @@ class Transactions extends REST_Controller {
 
 				   	"contact" 					=> $contact,
 				   	"employee" 					=> $employee,
-				   	"reference" 				=> $reference
+				   	"references" 				=> $value->transaction->get_raw()->result()
 				);
 			}
 		}
@@ -306,7 +318,7 @@ class Transactions extends REST_Controller {
 		   	isset($value->deposit_date) 			? $obj->deposit_date 				= $value->deposit_date : "";
 		   	isset($value->check_no) 				? $obj->check_no 					= $value->check_no : "";
 		   	isset($value->reference_no) 			? $obj->reference_no 				= $value->reference_no : "";
-		   	isset($value->references) 				? $obj->references 					= implode(",", $value->references) : "";
+		   	// isset($value->references) 				? $obj->references 					= implode(",", $value->references) : "";
 		   	isset($value->segments) 				? $obj->segments 					= implode(",", $value->segments) : "";
 		   	isset($value->bill_to) 					? $obj->bill_to 					= $value->bill_to : "";
 		   	isset($value->ship_to) 					? $obj->ship_to 					= $value->ship_to : "";
@@ -330,19 +342,43 @@ class Transactions extends REST_Controller {
 		   	isset($value->deleted) 					? $obj->deleted 					= $value->deleted : "";
 		   	isset($value->meter_id) 				? $obj->meter_id 					= $value->meter_id : "";
 		   	
-		   	$relatedsegmentitem = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		   	$related = [];
+
+		   	//References
+   			if(isset($value->references)){
+	   			$ids = [];
+	   			foreach ($value->references as $val) {
+		   			array_push($ids, $val->id);
+	   			}
+	   			//Update references status
+	   			if(count($ids)>0){
+		   			$referenceUpdate = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	   				$referenceUpdate->where_in("id", $ids);
+	   				$referenceUpdate->update("status", 1);
+
+	   				$referenceTxn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	   				$referenceTxn->where_in("id", $ids);
+	   				$referenceTxn->get();
+
+	   				array_push($related, $referenceTxn->all);
+   				}
+			}
+		   	
+		   	//Segments
 			if(isset($value->segments)){
 				if(count($value->segments)>0){
-					$relatedsegmentitem->where_in("id", $value->segments)->get();
+					$segmentTxn = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$segmentTxn->where_in("id", $value->segments)->get();
+					array_push($related, $segmentTxn->all);
 				}
-			}
+			}			
 
 			$contact = [];
 			if(isset($value->contact)){
 				$contact = $value->contact;
 			}
 
-	   		if($obj->save($relatedsegmentitem->all)){
+	   		if($obj->save($related)){
 			   	$data["results"][] = array(
 			   		"id" 						=> $obj->id,
 					"company_id" 				=> $obj->company_id,
@@ -428,15 +464,7 @@ class Transactions extends REST_Controller {
 
 		foreach ($models as $value) {
 			$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$obj->get_by_id($value->id);
-
-			//Remove previouse segments
-			$segment = explode(",",$obj->segments);
-			if(count($segment)>0){
-		   		$prevSegments = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		   		$prevSegments->where_in("id", $segment)->get();
-		   		$obj->delete($prevSegments->all);
-		   	}
+			$obj->get_by_id($value->id);			
 
 			isset($value->company_id) 				? $obj->company_id 					= $value->company_id : "";
 			isset($value->location_id) 				? $obj->location_id 				= $value->location_id : "";
@@ -480,7 +508,7 @@ class Transactions extends REST_Controller {
 		   	isset($value->deposit_date) 			? $obj->deposit_date 				= $value->deposit_date : "";
 		   	isset($value->check_no) 				? $obj->check_no 					= $value->check_no : "";
 		   	isset($value->reference_no) 			? $obj->reference_no 				= $value->reference_no : "";
-		   	isset($value->references) 				? $obj->references 					= implode(",", $value->references) : "";
+		   	// isset($value->references) 				? $obj->references 					= implode(",", $value->references) : "";
 		   	isset($value->segments) 				? $obj->segments 					= implode(",", $value->segments) : "";
 		   	isset($value->bill_to) 					? $obj->bill_to 					= $value->bill_to : "";
 		   	isset($value->ship_to) 					? $obj->ship_to 					= $value->ship_to : "";
@@ -503,17 +531,61 @@ class Transactions extends REST_Controller {
 		   	isset($value->printed_by) 				? $obj->printed_by 					= $value->printed_by : "";
 		   	isset($value->deleted) 					? $obj->deleted 					= $value->deleted : "";
 		   	isset($value->meter_id) 				? $obj->meter_id 					= $value->meter_id : "";
-		   	
-		   	//Update new segments
-			if(isset($value->segments)){
-				foreach ($value->segments as $sg) {
-					$relatedsegmentitem = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-					$relatedsegmentitem->get_by_id($sg);
-					$relatedsegmentitem->save($obj);
+
+		   	$related = [];
+
+		   	//References
+			if(isset($value->references)){
+				$ids = [];
+				foreach ($value->references as $val) {
+					array_push($ids, $val->id);
 				}
+
+				if(count($ids)>0){
+					//Remove previouse segments
+			   		$referenceDel = $obj->transaction->get();
+			   		$refDelIds = [];
+			   		foreach ($referenceDel as $refDel) {
+			   			array_push($refDelIds, $refDel->id);
+			   		}			   		
+			   		$obj->delete($referenceDel->all);
+			   		//Reverse reference status
+			   		$refDowndate = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	   				$refDowndate->where_in("id", $refDelIds);
+	   				$refDowndate->update("status", 0);
+
+			   		//Update references status
+		   			if(count($ids)>0){
+			   			$referenceUpdate = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		   				$referenceUpdate->where_in("id", $ids);
+		   				$referenceUpdate->update("status", 1);
+
+		   				$referenceTxn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		   				$referenceTxn->where_in("id", $ids);
+		   				$referenceTxn->get();
+
+		   				array_push($related, $referenceTxn->all);
+	   				}
+			   	}
 			}
 
-			if($obj->save()){
+			//Segments
+			if(isset($value->segments)){
+				if(count($value->segments)>0){
+					//Remove previouse segments
+			   		$segmentDel = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			   		$segmentDel->transaction->get();
+			   		$obj->delete($segmentDel->all);
+
+			   		//Add new segments
+			   		$segmentTxn = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			   		$segmentTxn->where_in("id", $value->segments)->get();
+
+			   		array_push($related, $segmentTxn->all);
+			   	}
+			}
+
+			if($obj->save($related)){
 				//Results
 				$data["results"][] = array(
 					"id" 						=> $obj->id,

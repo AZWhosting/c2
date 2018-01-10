@@ -57,7 +57,6 @@ class Item_lines extends REST_Controller {
 		$obj->include_related("contact", array("abbr","number","name","payment_term_id","payment_method_id","credit_limit","locale","bill_to","ship_to","deposit_account_id","trade_discount_id","settlement_discount_id","account_id","ra_id"));
 		$obj->include_related("item", array("item_type_id","abbr","number","name","cost","price","locale","income_account_id","expense_account_id","inventory_account_id"));
 		$obj->include_related("measurement", array("name"));
-		$obj->include_related("bin_location", array("number"));
 		$obj->include_related("tax_item", array("tax_type_id","account_id","name","rate"));
 		$obj->where("deleted <>", 1);
 
@@ -235,9 +234,7 @@ class Item_lines extends REST_Controller {
 					$transaction->get_by_id($value->transaction_id);
 					
 					if($transaction->exists()){
-						$referenceTxn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-						$referenceTxn->where_in("id", explode(",", $transaction->references));
-						$referenceTxn->get();
+						$referenceTxn = $transaction->transaction->get();
 
 						if($transaction->type=="Cash_Purchase" || $transaction->type=="Credit_Purchase" || $transaction->type=="GRN"){
 							$value->movement = 1;
@@ -428,34 +425,24 @@ class Item_lines extends REST_Controller {
 			}
 			$obj->conversion_ratio = $conversion_ratio;
 
-			//Bin Location
-			if(isset($value->bin_locations)){
-				if(count($value->bin_locations)>0){
-					$obj->bin_location_id = $value->bin_locations->id;
-				}
-			}
-
 		   	if($obj->save()){
-		   		//New Bin Location
-		   		if(isset($value->new_bin_locations)){
-			   		if(count($value->new_bin_locations)>0){
-			   			$newBinLocations = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		   		//Item line locations
+		   		if(isset($value->item_line_locations)){
+			   		foreach ($value->item_line_locations as $itemLoc) {
+			   			$itemLineLocations = new Item_line_location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
-			   			$newBinLocations->transaction_id 	= $obj->transaction_id;
-						$newBinLocations->bin_location_id 	= $value->new_bin_locations->id;
-						$newBinLocations->item_id 			= $obj->item_id;
-						$newBinLocations->assembly_id 		= $obj->assembly_id;
-						$newBinLocations->measurement_id 	= $obj->measurement_id;
-						$newBinLocations->description 		= $obj->description;
-						$newBinLocations->quantity 	 		= $obj->quantity;
-						$newBinLocations->conversion_ratio 	= $obj->conversion_ratio;
-						$newBinLocations->price 			= $obj->price;
-						$newBinLocations->amount 			= $obj->amount;
-						$newBinLocations->rate				= $obj->rate;
-						$newBinLocations->locale			= $obj->locale;
-						$newBinLocations->movement 			= 1;
+			   			$itemLineLocations->item_line_id 	= $obj->id;
+			   			$itemLineLocations->bin_location_id = $itemLoc->bin_location_id;
+			   			$itemLineLocations->warehouse_id 	= $itemLoc->warehouse_id;
+						$itemLineLocations->location_id 	= $itemLoc->location_id;
+						$itemLineLocations->zone_id 		= $itemLoc->zone_id;
+						$itemLineLocations->section_id 		= $itemLoc->section_id;
+						$itemLineLocations->rack_id 		= $itemLoc->rack_id;
+						$itemLineLocations->level_id 		= $itemLoc->level_id;
+						$itemLineLocations->position_id 	= $itemLoc->position_id;
+						$itemLineLocations->movement 		= $itemLoc->movement;
 
-						$newBinLocations->save();
+						$itemLineLocations->save();
 			   		}
 		   		}
 

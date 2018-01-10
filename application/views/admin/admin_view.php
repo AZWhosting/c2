@@ -37,9 +37,9 @@
         <div class="container-fluid">
           <a href="#" data-bind="click: checkRole" class="site-logo">
             <div class="hidden-xs">
-                <img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/banhji-logo.png" alt="" width="40">
+                <img src="<?php echo base_url();?>assets/update/banhji-blank.png" alt="" width="40">
             </div>
-            <img class="hidden-sm hidden-md hidden-lg" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/banhji-logo.png" alt="">
+            <img class="hidden-sm hidden-md hidden-lg" src="<?php echo base_url();?>assets/update/banhji-blank.png" alt="">
           </a>
 
           <div class="site-header-content">

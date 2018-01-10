@@ -9,6 +9,7 @@
 </script>
 <script type="text/x-kendo-template" id="blank-tmpl">
 </script>
+<!-- Reciept -->
 <script id="Receipt" type="text/x-kendo-template">
 	<div class="container">
 		<div class="row-fluid">
@@ -28,7 +29,7 @@
 								        		<span data-bind="text: lang.lang.in_here"></span>
 								        	</p>
 								        	<p style="width: 100%; float: left; margin-top: 8px;">
-									        	<span style="position: relative; height: 35px; line-height: 35px;  float: left; display: block; ">
+									        	<span style="position: relative; height: 35px; line-height: 35px;display: block; ">
 													<a data-bind="text: lang.lang.reconcile_transfer" style="color: #203864; line-height: 17px; background: #fff; width: 100%; padding: 10px 13px; font-size: 18px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1; float: left;" href="#/reconcile">
 														Reconcile & Transfer
 													</a>
@@ -901,1107 +902,10 @@
 		</td>
 	</tr>
 </script>
-
-<!-- ***************************
-*	End Water Section         *
-**************************** -->
-
-
-<!-- ***************************
-*	Invoice Form Section        *
-**************************** -->	
-<script id="invoiceCustom" type="text/x-kendo-template">
-	<div id="slide-form">
-		<div class="customer-background" style="margin-top: 15px;">
-			<div class="container-960">					
-				<div id="example" class="k-content">
-			    	<div class="hidden-print pull-right">
-			    		<span class="glyphicons no-js remove_2" 
-							data-bind="click: cancel"><i></i></span>						
-					</div>
-			        <h2 style="padding:0 15px 0 0;" data-bind="text: lang.lang.custom_forms"></h2>
-				    <br>	
-				    <div class="row" style="margin-left:0;">			   				
-						<div class="span4">	
-							<div class="span12" style="margin-bottom: 10px;">
-								<input type="text" id="formName" name="Form Name" class="k-textbox" placeholder="Form Name" required validationMessage="" data-bind="value: obj.name" style="width: 100%;" />
-							</div>
-							<div class="span12">
-								<h2 class="btn btn-block btn-primary" style="color: #fff!important;width: 100%;margin-bottom: 5px;" data-bind="text: lang.lang.form_style">Form Style</h2>
-								<div class="row formstyle">
-									<div id="formStyle"
-										 data-role="listview"
-										 data-auto-bind="false"
-										 data-selectable="true"
-						                 data-template="invoiceCustom-txn-form-template"
-						                 data-bind="source: txnFormDS"
-						                 style="overflow: auto;width: 100%;">
-						            </div>
-						        </div>
-							</div>
-							<div class="span12" style="margin-left:0; margin-top: 10px;">
-								<h2 class="btn btn-block btn-primary" style="color: #fff!important;width: 100%;margin-bottom: 5px;" data-bind="text: lang.lang.form_color">Form Color</h2>
-								<div class="colorPalatte span12">
-									<div class="" style="margin-top: 15px;">
-										<div data-selectable="true" data-bind="value: obj.color, events: { change : colorCC }" data-tile-size='{ width: 60, height: 35 }' data-role="colorpalette" data-columns="6" data-palette='[ "#ffffff", "#000000", "#eeece1", "#1f497d", "#4f81bd", "#c0504d", "#9bbb59", "#dbeef3", "#8064a2", "#f79646", "#f2f2f2", "#7f7f7f", "#ddd9c3", "#c6d9f0", "#dbe5f1", "#f2dcdb", "#ebf1dd", "#e5e0ec"]'></div>
-                                	</div>
-                                </div>
-							</div>
-							<div class="span12" style="margin-left:0; margin-top: 10px;padding-bottom: 30px;">
-								<h2 class="btn btn-block btn-primary" style="color: #fff!important;width: 100%;margin-bottom: 5px;" data-bind="text: lang.lang.form_appearance">Form Appearance</h2>
-								<div class="colorPalatte span12">
-									<div class="" style="margin-top: 15px;">
-										<input type="text" id="formtitle" name="Form Title" class="k-textbox" placeholder="Form Title" required validationMessage="" data-bind="value: obj.title" style="width: 100%;" />
-										<textarea data-bind="value: obj.note, text: obj.note" placeholder="Note" class="span12" style="min-height: 100px;margin-top: 15px;padding-left: 10px;"></textarea>
-                                	</div>
-                                </div>
-							</div>
-						</div>
-						<div class="span8" id="invFormContent" style="padding-left:0;padding-right: 0;width: 63%;border:1px solid #eee;margin-bottom:20px;">
-						</div>
-					</div>
-					<div class="box-generic bg-action-button">
-						<div id="ntf1" data-role="notification"></div>
-						<div class="row">
-							<div class="span12" align="right">
-								<span id="saveClose" data-bind="click: save" class="btn btn-icon btn-success glyphicons power" style="width: 120px;"><i></i> <span data-bind="text: lang.lang.save_close"></span></span>		
-							</div>
-						</div>
-					</div>
-				</div>							
-			</div>
-		</div>
-	</div>
-</script>
-<script id="invoiceForm1" type="text/x-kendo-template">
-	<div class="container font-small winvoice-print" style="margin-bottom: 10px; width: 610px; ">
-		<div class="span12 headerinv " style="border-bottom: 2px solid \#000;padding: 15px 0;">
-            <img class="logoP" data-bind="attr: { src: objLicense.image_url }"  style="position: absolute;left: 0;top: 20px;max-width: 100px;height: auto;max-height: 50px;" />
-			<div class="span12" align="center">
-				<h4 data-bind="text: objLicense.name"></h4>					
-				<h5 data-bind="text: objLicense.address"></h5>
-				<h5 data-bind="text: objLicense.mobile"></h5>					
-			</div>
-		</div>		
-
-		<div class="span12 cover-customer">
-			
-			<div class="span7">
-				<span id="secondwnumber1" style="margin-left: -14px;"></span>
-				<div class="span12">
-					<p>អតិថិជន​ <span>001</span></p>
-					<p>Customer Name</p>
-					<p>No.124, St. 11</p>
-					<p style="font-size: 10px;"><i>ថ្ងៃ​ចាប់​ផ្តើម​ទទួល​ប្រាក់ <?php echo date("d/m/Y"); ?></i></p>
-				</div>
-			</div>
-			<div class="span4">
-				<table >
-					<tr>
-						<td width="200"><p>លេខ​វិក្កយ​បត្រ</p></td>
-						<td><p>WM00001</p></td>
-					</tr>
-					<tr>
-						<td><p>ថ្ងៃ​ចេញ វិក្កយ​បត្រ</p></td>
-						<td><p><?php echo date("d/m/Y"); ?></p></td>
-					</tr>
-					<tr>
-						<td><p>តំបន់</p></td>
-						<td><p>A1-001</p></td>
-					</tr>
-					<tr>
-						<td><p>គិត​ចាប់​ពី​ថ្ងៃ​ទី</p></td>
-						<td><p><?php echo date("d/m/Y"); ?></p></td>
-					</tr>
-					<tr>
-						<td><p>ដល់​ថ្ងៃ​ទី</p></td>
-						<td><p><?php echo date("d/m/Y"); ?></p></td>
-					</tr>
-				</table>		
-			</div>			
-		</div>
-		<table class="span12 table table-bordered footerTbl" style="padding:0;margin-top: 40px;border:1px solid #000; border-radius: 3px;border-collapse: inherit;margin-left: 0px;">
-			<thead>
-				<tr>
-					<th width="180" class="darkbblue main-color">លេខ​កុងទ័រ<br>METER</th>
-					<th width="150" class="darkbblue main-color">អំណានចាស់<br>PREVIOUS</th>
-					<th width="120" class="darkbblue main-color">អំណានថ្មី<br>CURRENT</th>
-					<th width="120" class="darkbblue main-color">បរិមាណ<br>CONSUMPTION</th>
-					<th width="120" class="darkbblue main-color">តំលៃឯកត្តា<br>RATE</th>
-					<th width="180" class="darkbblue main-color">តំលៃសរុប<br>AMOUNT</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td style="vertical-align: middle;"> <?php echo date("d/m/Y"); ?></td>
-					<td colspan="4" style="text-align: right">
-						ជំពាក់​សរុប​នៅ​ថ្ងៃ​ធ្វើ​វិក្កយបត្រ Balance as at billing date .រ
-					</td>
-					<td>
-						0<br>
-					</td>
-				</tr>
-				<tr>
-					<td data-bind="text: meter_number"></td>
-					<td align="center">1</td>
-					<td align="center">2</td>
-					<td align="center">1</td>
-					<td></td>
-					<td></td>
-				</tr>
-				<tr>
-					<td>រំលោះ</td>
-					<td align="center"></td>
-					<td align="center"></td>
-					<td align="center">1,០០០</td>
-					<td></td>
-					<td></td>
-				</tr>
-				<tr><td colspan="6"  style="height: 80px;" ></td></tr>
-				<tr>
-					<td colspan="5" style="padding-right: 10px;background: #355176;color: #fff;text-align: right;" class="darkbblue main-color">បំណុល​សរុប TOTAL BALANCE</td>
-					<td style="border: 1px solid;text-align: right"><strong>1,000</strong></td>
-				</tr>
-				<tr>
-					<td rowspan="4" colspan="3"></td>
-					<td colspan="2" class="greyy" style="background: \\#ccc;">ប្រាក់​ត្រូវ​បង់ TOTAL DUE</td>
-					<td style="text-align: right"><strong>1,000</strong></td>
-				</tr>
-				<tr>
-					<td colspan="2" class="greyy" style="background: \\#ccc;">ថ្ងៃផុតកំណត់ DUE DATE</td>
-					<td> <?php echo date("d/m/Y"); ?></td>
-				</tr>
-				<tr>
-					<td colspan="2" class="greyy" style="background: \\#ccc;">ថ្ងៃបង់ប្រាក់ PAY DATE</td>
-					<td></td>
-				</tr>
-				<tr>
-					<td colspan="2" class="greyy" style="background: \\#ccc;">ប្រាក់បានបង់ PAY AMOUNT</td>
-					<td></td>
-				</tr>
-			</tbody>
-		</table>
-		<div class="line"></div>
-		<table class="span12 table table-bordered footerTbl" style="padding:0;border-collapse: inherit;margin-top: 15px;border:1px solid #000; border-radius: 3px;margin-left: 0px;">
-			<tbody>
-				<tr>
-					<td width="100"></td>
-					<th width="390" style="border: none">
-						<span style="margin-left: -15px;" id="footwnumber1"></span>
-					</th>
-					<td width="270" class="greyy" style="background: #ccc;border-bottom:1px solid #fff;">ប្រាក់​ត្រូវ​បង់ TOTAL DUE</td>
-					<td width="180">1,000</td>
-				</tr>
-				<tr>
-					<td><p>វិក្កយបត្រ</p></td>
-					<td><span><?php echo date("d/m/Y"); ?></span> - <span>WM00001</span></td>
-					<td class="greyy" style="background: #ccc;border-bottom:1px solid #fff;">ថ្ងៃបង់ប្រាក់ PAY DATE</td>
-					<td></td>
-				</tr>
-				<tr>
-					<td><p>អតិថិជន</p></td>
-					<td><span>001</span> <span>Customer Name</span><br>
-					<span>012 111 222</span> <span>No. 123, St.11</span></td>
-					<td class="greyy" style="background: #ccc;border-bottom:1px solid #fff;">ប្រាក់បានបង់ PAY AMOUNT</td>
-					<td></td>
-				</tr>
-				<tr>
-					<td>លេខ​ទី​តាំង</td>
-					<td>A1-01</td>
-					<td rowspan="2" class="greyy" style="background: #ccc;">អ្នកទទួលប្រាក់ RECEIVER</td>
-					<td rowspan="2"></td>
-				</tr>
-				<tr>
-					<td>លេខ​កុនង​ទ័រ</td>
-					<td>WM0001</td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
-</script>
-<script id="invoiceForm2" type="text/x-kendo-template">
-	<div class="container font-small winvoice-print" style="margin-bottom: 10px; width: 610px; ">
-		<div class="span12 headerinv " style="visibility: hidden;border-bottom: 2px solid \#000;padding: 15px 0;">
-            <img class="logoP" data-bind="attr: { src: objLicense.image_url }"  style="position: absolute;left: 0;top: 20px;max-width: 100px;height: auto;max-height: 50px;" />
-			<div class="span12" align="center">
-				<h4 data-bind="text: objLicense.name"></h4>					
-				<h5 data-bind="text: objLicense.address"></h5>
-				<h5 data-bind="text: objLicense.mobile"></h5>					
-			</div>
-		</div>		
-
-		<div class="span12 cover-customer">
-			
-			<div class="span7">
-				<span id="secondwnumber1" style="margin-left: -14px;"></span>
-				<div class="span12">
-					<p>អតិថិជន​ <span>001</span></p>
-					<p>Customer Name</p>
-					<p>No.124, St. 11</p>
-					<p style="font-size: 10px;"><i>ថ្ងៃ​ចាប់​ផ្តើម​ទទួល​ប្រាក់ <?php echo date("d/m/Y"); ?></i></p>
-				</div>
-			</div>
-			<div class="span4">
-				<table >
-					<tr>
-						<td width="200" style="visibility: hidden;"><p>លេខ​វិក្កយ​បត្រ</p></td>
-						<td><p>WM00001</p></td>
-					</tr>
-					<tr>
-						<td style="visibility: hidden;"><p>ថ្ងៃ​ចេញ វិក្កយ​បត្រ</p></td>
-						<td><p><?php echo date("d/m/Y"); ?></p></td>
-					</tr>
-					<tr>
-						<td style="visibility: hidden;"><p>តំបន់</p></td>
-						<td><p>A1-001</p></td>
-					</tr>
-					<tr>
-						<td style="visibility: hidden;"><p>គិត​ចាប់​ពី​ថ្ងៃ​ទី</p></td>
-						<td><p><?php echo date("d/m/Y"); ?></p></td>
-					</tr>
-					<tr>
-						<td style="visibility: hidden;"><p>ដល់​ថ្ងៃ​ទី</p></td>
-						<td><p><?php echo date("d/m/Y"); ?></p></td>
-					</tr>
-				</table>		
-			</div>			
-		</div>
-		<table class="span12 table footerTbl" style="border:none;padding:0;margin-top: 40px; border-radius: 3px;border-collapse: inherit;margin-left: 0px;">
-			<thead style="visibility: hidden;">
-				<tr>
-					<th width="180" class="darkbblue main-color">លេខ​កុងទ័រ<br>METER</th>
-					<th width="150" class="darkbblue main-color">អំណានចាស់<br>PREVIOUS</th>
-					<th width="120" class="darkbblue main-color">អំណានថ្មី<br>CURRENT</th>
-					<th width="120" class="darkbblue main-color">បរិមាណ<br>CONSUMPTION</th>
-					<th width="120" class="darkbblue main-color">តំលៃឯកត្តា<br>RATE</th>
-					<th width="180" class="darkbblue main-color">តំលៃសរុប<br>AMOUNT</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td style="vertical-align: middle;"> <?php echo date("d/m/Y"); ?></td>
-					<td colspan="4" style="text-align: right">
-						ជំពាក់​សរុប​នៅ​ថ្ងៃ​ធ្វើ​វិក្កយបត្រ Balance as at billing date .រ
-					</td>
-					<td>
-						0<br>
-					</td>
-				</tr>
-				<tr>
-					<td data-bind="text: meter_number"></td>
-					<td align="center">1</td>
-					<td align="center">2</td>
-					<td align="center">1</td>
-					<td></td>
-					<td></td>
-				</tr>
-				<tr>
-					<td>រំលោះ</td>
-					<td align="center"></td>
-					<td align="center"></td>
-					<td align="center">1,០០០</td>
-					<td></td>
-					<td></td>
-				</tr>
-				<tr><td colspan="6"  style="height: 80px;" ></td></tr>
-				<tr>
-					<td colspan="5" style="visibility: hidden;padding-right: 10px;background: #355176;color: #fff;text-align: right;" class="darkbblue main-color">បំណុល​សរុប TOTAL BALANCE</td>
-					<td style="border: none;text-align: right"><strong>1,000</strong></td>
-				</tr>
-				<tr>
-					<td rowspan="4" colspan="3"></td>
-					<td colspan="2" class="greyy" style="visibility: hidden;background: \\#ccc;">ប្រាក់​ត្រូវ​បង់ TOTAL DUE</td>
-					<td style="text-align: right"><strong>1,000</strong></td>
-				</tr>
-				<tr>
-					<td colspan="2" class="greyy" style="background: \\#ccc;visibility: hidden;">ថ្ងៃផុតកំណត់ DUE DATE</td>
-					<td> <?php echo date("d/m/Y"); ?></td>
-				</tr>
-				<tr>
-					<td colspan="2" class="greyy" style="background: \\#ccc;visibility: hidden;">ថ្ងៃបង់ប្រាក់ PAY DATE</td>
-					<td></td>
-				</tr>
-				<tr>
-					<td colspan="2" class="greyy" style="background: \\#ccc;visibility: hidden;">ប្រាក់បានបង់ PAY AMOUNT</td>
-					<td></td>
-				</tr>
-			</tbody>
-		</table>
-		<div class="line" style="visibility: hidden;"></div>
-		<table class="span12 table footerTbl" style="border:none;padding:0;border-collapse: inherit;margin-top: 15px; border-radius: 3px;margin-left: 0px;">
-			<tbody>
-				<tr>
-					<td width="100"></td>
-					<th width="390" style="border: none">
-						<span style="margin-left: -15px;" id="footwnumber1"></span>
-					</th>
-					<td width="270" class="greyy" style="background: #ccc;border-bottom:1px solid #fff;visibility: hidden;">ប្រាក់​ត្រូវ​បង់ TOTAL DUE</td>
-					<td width="180">1,000</td>
-				</tr>
-				<tr>
-					<td style="visibility: hidden;"><p>វិក្កយបត្រ</p></td>
-					<td><span><?php echo date("d/m/Y"); ?></span> - <span>WM00001</span></td>
-					<td class="greyy" style="visibility:hidden;background: #ccc;border-bottom:1px solid #fff;">ថ្ងៃបង់ប្រាក់ PAY DATE</td>
-					<td></td>
-				</tr>
-				<tr>
-					<td style="visibility: hidden;"><p>អតិថិជន</p></td>
-					<td><span>001</span> <span>Customer Name</span><br>
-					<span>012 111 222</span> <span>No. 123, St.11</span></td>
-					<td class="greyy" style="visibility: hidden;background: #ccc;border-bottom:1px solid #fff;visibility: hidden;">ប្រាក់បានបង់ PAY AMOUNT</td>
-					<td></td>
-				</tr>
-				<tr>
-					<td style="visibility: hidden;">លេខ​ទី​តាំង</td>
-					<td>A1-01</td>
-					<td rowspan="2" class="greyy" style="background: #ccc;visibility: hidden;">អ្នកទទួលប្រាក់ RECEIVER</td>
-					<td rowspan="2"></td>
-				</tr>
-				<tr>
-					<td style="visibility: hidden;">លេខ​កុនង​ទ័រ</td>
-					<td>WM0001</td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
-</script>
-<script id="invoiceForm3-bk-26" type="text/x-kendo-template">
-    <div class="row-fluid">
-    	<div class="col-md-8 col-md-offset-2" inv1" style="margin-top: 15px; padding-right: 15px; padding-left: 8px; ">
-    		<div class="head" style="width: 100%; margin-bottom: 10px; float: left;">
-	        	<!-- <div class="logo" style="width: 30%;">
-	            	<img data-bind="attr: { src: objLicense.image_url, alt: company.name, title: company.name }" />
-	            </div> -->
-	            <div class="cover-name-company" style="width: 100%; margin-left: 15px;">
-	            	<h2 style="text-align: center;">សហគ្រាសបន្ទាយមាស អេឡិទ្រីស៊ីធី    </h2>
-	                <p style="font-size: 12px; color: #000; text-align: center;">ភូមិទូកមាស ឃុំទូកមាសខាងលិច ស្រុកបន្ទាយមាស ខេត្តកំពត </p>
-	                
-	            </div>
-	        </div>
-	        <h2 style="text-align: center; font-weight: 700; margin-bottom: 15px;">វិក្កយបត្រ INVOICE</h2>
-	        
-	        <div class="row " style="width: 100%; text-align: center; margin-left: 7%; margin-bottom: 10px;">
-	    		<div class="">
-		    		<table style="width: 100%;">
-		    			<tr>
-		    				<td style="width: 50% text-align: left;">លេខវិក្កយបត្រ INVOICE NO</td>
-		    				<td style="padding: 5px;">
-		    					<input type="text">
-		    				</td>
-
-		    			</tr>
-		    			<tr>
-		    				<td style="width: 50%; text-align: left;">ថ្ងៃចេញ INVOICE DATE</td>
-		    				<td style="padding: 5px;">
-		    					<input type="text">
-		    				</td>
-		    			</tr>
-		    		</table>
-		    	</div>
-	    	</div>
-
-	        <div class="row">
-    			<div class="span6" style="padding-right: 0">
-    				<p style="list-style: 20px; margin-bottom: 0;">
-    					<b>យិន អ៊ិច</b><br>
-    					ភូមិសាមគ្គី ឃុំអង្គរជ័យ
-    				</p>
-		    	</div>
-		    	<div class="span6" style="padding: 0;">
-		    		<img style="width: 180px; height: auto; float: right;" src="<?php echo base_url();?>/assets/barcode.png">
-		    		<p style="margin-bottom: 0; float: right; margin-top: 5px; font-size: 12px; margin-left: 8px;">លេខកូដអតិថិជន ០០៤៣៣៦</p>
-		    	</div>
-    		</div>
-    		
-    		<div class="row" style="padding-left: 0;">
-	    		<p style="width: 180px; float: left; margin: 25px 0 0 8px; font-size: 20px; ">ចំនួនដែលត្រូវបង់សរុប</p>
-	    		<p style="padding: 5px 8px; background: #F1F1F1; border: 1px solid #000; width: 190px; float: right;font-size: 25px; color: #000;font-weight: 600; text-align: right; margin: 13px 0 10px 8px;">38,808,900</p>
-	    		<p style="float: left; text-align: center; width: 100%;">
-	    			សូមអញ្ជើញមកបង់ប្រាក់ អោយបានមុនថ្ងៃផុតកំនត់ទី
-	    			<span style="font-weight: 600;">១៥ មេសា ២០១៦</span>
-	    		</p>
-	    	</div>
-
-	        <div class="table-content" style="border: 2px solid #30859C; border-radius: 10px; padding: 10px; margin: 10px 8px; font-weight: 600; float: left; width: 100%;">    		
-	    		<table>
-	    			<thead>
-	    				<tr>
-	    					<th>អំនានមុន <br> PREVIOUS</th>
-	    					<th>អំនានថ្មី <br> LASTES</th>
-	    					<th>ប្រើប្រាស់ <br> UNIT</th>
-	    					<th>តម្លៃឯកតា <br> RATE</th>
-	    					<th>តម្លៃសរុប <br> AMOUNT</th>
-	    				</tr>
-	    			</thead>
-	    			<tbody>
-	    				<tr>
-	    					<td>1</td>
-	    					<td></td>
-	    					<td></td>
-	    					<td></td>
-	    					<td></td>
-	    				</tr>
-	    				<tr>
-	    					<td>2</td>
-	    					<td></td>
-	    					<td></td>
-	    					<td></td>
-	    					<td></td>
-	    				</tr>
-	    				<tr>
-	    					<td>3</td>
-	    					<td></td>
-	    					<td></td>
-	    					<td></td>
-	    					<td></td>
-	    				</tr>
-	    				<tr>
-	    					<td>4</td>
-	    					<td></td>
-	    					<td></td>
-	    					<td></td>
-	    					<td></td>
-	    				</tr>
-	    			</tbody>
-	    			<tfoot>
-	    				<tr>
-	    					<td colspan="4" style="text-align: right;">
-	    						<span >
-	    							ថាមពលប្រើប្រាស់សរុបសម្រាប់រយះពេលនេះ
-	    						</span>
-	    					</td>
-	    					<td colspan="1" style="font-weight: 700; text-align: right;">
-	    						<span >
-	    							100,000
-	    						</span>
-	    					</td>
-	    				</tr>
-	    				<tr>
-	    					<td colspan="4" style="text-align: right;">
-	    						<span >
-	    							សមតុល្យសាច់ប្រាក់ជំពាក់គ្រាមុន
-	    						</span>
-	    					</td>
-	    					<td colspan="1" style="font-weight: 700; text-align: right;">
-	    						<span >
-	    							0
-	    						</span>
-	    					</td>
-	    				</tr>
-	    				<tr>
-	    					<td colspan="4" style="text-align: right;">
-	    						<span >
-	    							ប្រាក់ដែលត្រូវបង់សរុប
-	    						</span>
-	    					</td>
-	    					<td colspan="1" style="font-weight: 700; text-align: right;">
-	    						<span >
-	    							100,000
-	    						</span>
-	    					</td>
-	    				</tr>
-	    			</tfoot>
-	    		</table>
-	    	</div>
-
-	    	<div class="row" style="float: left; margin-left: 50px;">
-	    		<p style="margin-bottom: 0;">បច្ចេកទេស <span style="font-weight: 700">០៣៣ ៦៦០១ ៣៣៣</span></p>
-	    		<p>បង់ប្រាក់ និងវិក័យប័ត្រ <span style="font-weight: 700">០១១ ៦០០ ៧៣០</span></p>
-	    	</div>
-    	</div>
-    </div>
-</script>
-<script id="invoiceForm3" type="text/x-kendo-template">
-    <div class="row-fluid">
-    	<div class="col-md-8 col-md-offset-2" inv1" style="margin-top: 15px; padding-right: 15px; padding-left: 8px; ">
-    		<div class="head" style="width: 100%; margin-bottom: 10px; float: left;">
-	        	<!-- <div class="logo" style="width: 30%;">
-	            	<img data-bind="attr: { src: objLicense.image_url, alt: company.name, title: company.name }" />
-	            </div> -->
-
-	            <div class="cover-name-company" style="width: 100%; margin-left: 15px;">
-	            	<h2 style="text-align: center; line-height: 47px; margin-bottom: 5px; width: 100%">សហគ្រាសបន្ទាយមាស អេឡិទ្រីស៊ីធី    </h2>
-	                <!-- <p style="font-size: 12px; color: #000; text-align: center;">ភូមិទូកមាស ឃុំទូកមាសខាងលិច ស្រុកបន្ទាយមាស ខេត្តកំពត </p> -->
-	                <p style="width: 100%; float: left; text-align: center; margin-bottom: 0;">Tel: 012345678</p>
-	            </div>
-	        </div>
-	        <h2 style="text-align: center; font-weight: 700; margin-bottom: 15px; width: 100%;">វិក្កយបត្រ INVOICE</h2>
-	        
-	        <!-- <div class="row " style="width: 100%; text-align: center; margin-left: 7%; margin-bottom: 10px;">
-	    		<div class="">
-		    		<table style="width: 100%;">
-		    			<tr>
-		    				<td style="width: 50% text-align: left;">លេខវិក្កយបត្រ INVOICE NO</td>
-		    				<td style="padding: 5px;">
-		    					<input type="text">
-		    				</td>
-
-		    			</tr>
-		    			<tr>
-		    				<td style="width: 50%; text-align: left;">ថ្ងៃចេញ INVOICE DATE</td>
-		    				<td style="padding: 5px;">
-		    					<input type="text">
-		    				</td>
-		    			</tr>
-		    		</table>
-		    	</div>
-	    	</div> -->
-	    	<div class="row">
-    			<div class="span6" style="padding-left: 0">
-    				<table style="width: 100%; float: left;">
-    					<tr >
-    						<td>ល.អ :</td>
-    						<td>KWS_A-19894</td>
-    					</tr>
-    					<tr>
-    						<td>ឈ្មោះ :</td>
-    						<td>តេង ពេញ</td>
-    					</tr>
-    					<tr>
-    						<td>ប្លុក :</td>
-    						<td>A1-ភូមិស៊ីធរ</td>
-    					</tr>
-    				</table>
-    			</div>
-    			<div class="span6" style="padding-right: 0">
-    				<table style="width: 100%; float: right; text-align: right; line-height: 22px;">
-    					<tr >
-    						<td>កូដកុងទ័រ :</td>
-    						<td>A-1-9894</td>
-    					</tr>
-    					<tr>
-    						<td>ថ្ងៃចេញវិ.ក :</td>
-    						<td>30-កញ្ញា-2017</td>
-    					</tr>
-    					<tr>
-    						<td>ពីថ្ងៃទី :</td>
-    						<td>30-សីហា-2017</td>
-    					</tr>
-    					<tr>
-    						<td>ដល់ថ្ងៃទី :</td>
-    						<td>29-កញ្ញា-2017</td>
-    					</tr>
-    				</table>
-    			</div>
-	    	</div>
-	        <div class="row">
-    			<!-- <div class="span12" style="padding-right: 0">
-    				<div class="span6" style="padding-right: 0">
-	    				<p style="list-style: 20px; margin-bottom: 0;">
-	    					<b>យិន អ៊ិច</b><br>
-	    					ភូមិសាមគ្គី ឃុំអង្គរជ័យ
-	    				</p>
-	    			</div>
-	    			<div class="span6" style="padding-right: 0">
-	    				<p style="margin-bottom: 0; float: right; margin-top: 5px; font-size: 12px; margin-left: 8px;">
-	    					លេខកូដអតិថិជន </b><br>
-	    					<span style="font-size: 15px;">០០៤៣៣៦</span>
-	    				</p>
-	    			</div>
-		    	</div>
-		    	<div class="span12" style="padding-right: 0">
-		    		<table style="width: 100%;">
-		    			<tr>
-		    				<td style="width: 50% text-align: left;">លេខកុងទ័រ METER NO</td>
-		    				<td style="padding: 5px;">
-		    					<input type="text">
-		    				</td>
-
-		    			</tr>
-		    		</table>
-		    	</div> -->
-		    	<div class="span12" style="padding: 0;">
-		    		<img style="width: 100%; height: auto; float: left; margin: 8px 0;" src="<?php echo base_url();?>/assets/barcode.png">
-		    		
-		    	</div>
-    		</div>
-    		
-    		<div class="row" style="padding-left: 0;">
-	    		<p style="width: 180px; float: left; margin: 25px 0 0 8px; font-size: 20px; ">ចំនួនដែលត្រូវបង់សរុប</p>
-	    		<p style="padding: 5px 8px; background: #F1F1F1; border: 1px solid #000; width: 190px; float: right;font-size: 25px; color: #000;font-weight: 600; text-align: right; margin: 13px 0 10px 8px;">38,808,900</p>
-	    		<p style="float: left; text-align: center; width: 100%;">
-	    			សូមអញ្ជើញមកបង់ប្រាក់ អោយបានមុនថ្ងៃផុតកំនត់ទី
-	    			<span style="font-weight: 600;">១៥ មេសា ២០១៦</span>
-	    		</p>
-	    	</div>
-
-	        <div class="table-content" style="font-weight: 600; float: left; width: 100%;">    		
-	    		<table>
-	    			<thead>
-	    				<tr>
-	    					<th style="background: #333; border: 1px solid #ccc; ">អំនានមុន <br> PREVIOUS</th>
-	    					<th style="background: #333; border: 1px solid #ccc; ">អំនានថ្មី <br> LASTES</th>
-	    					<th style="background: #333; border: 1px solid #ccc; ">ប្រើប្រាស់ <br> UNIT</th>
-	    				</tr>
-	    			</thead>
-	    			<tbody>
-	    				<tr>
-	    					<td style="border: 1px solid #ccc; ">1</td>
-	    					<td style="border: 1px solid #ccc; "></td>
-	    					<td style="border: 1px solid #ccc; "></td>
-	    				</tr>
-	    			</tbody>
-	    			<tfoot>
-	    				<tr style="border: 1px solid #ccc; ">
-	    					<td colspan="2" style="text-align: right; border: 1px solid #ccc;">
-	    						<span style="color: #333; font-size: 15px;">
-	    							ថ្លៃថែទាំកុងទ័រ
-	    						</span>
-	    					</td>
-	    					<td colspan="1" style="font-weight: 700; text-align: right; border: 1px solid #ccc;">
-	    						<span style="color: #333; font-size: 15px;"">
-	    							100,000
-	    						</span>
-	    					</td>
-	    				</tr>
-	    				<tr>
-	    					<td colspan="2" style="text-align: right; border: 1px solid #ccc;">
-	    						<span style="color: #333; font-size: 15px;"">
-	    							សមតុល្យសាច់ប្រាក់ជំពាក់គ្រាមុន
-	    						</span>
-	    					</td>
-	    					<td colspan="1" style="font-weight: 700; text-align: right; border: 1px solid #ccc;">
-	    						<span style="color: #333; font-size: 15px;"">
-	    							0
-	    						</span>
-	    					</td>
-	    				</tr>
-	    				<tr>
-	    					<td colspan="2" style="text-align: right; border: 1px solid #ccc;">
-	    						<span style="color: #333; font-size: 15px;"">
-	    							ប្រាក់ដែលត្រូវបង់សរុប
-	    						</span>
-	    					</td>
-	    					<td colspan="1" style="font-weight: 700; text-align: right; border: 1px solid #ccc;">
-	    						<span style="color: #333; font-size: 15px;"">
-	    							100,000
-	    						</span>
-	    					</td>
-	    				</tr>
-	    			</tfoot>
-	    		</table>
-	    	</div>
-
-	    	<div class="row" style="float: left; margin-left: 50px;">
-	    		<p style="margin-bottom: 0;">បច្ចេកទេស <span style="font-weight: 700">០៣៣ ៦៦០១ ៣៣៣</span></p>
-	    		<p>បង់ប្រាក់ និងវិក័យប័ត្រ <span style="font-weight: 700">០១១ ៦០០ ៧៣០</span></p>
-	    	</div>
-    	</div>
-    </div>
-</script>
-<script id="invoiceForm4" type="text/x-kendo-template">
-	<div class="container font-small winvoice-print" style="margin-bottom: 10px; width: 610px; ">
-		<div class="span12 headerinv " style="border-bottom: 2px solid \#000;padding: 15px 0;">
-            <img class="logoP" data-bind="attr: { src: objLicense.image_url }"  style="position: absolute;left: 0;top: 20px;max-width: 100px;height: auto;max-height: 50px;" />
-			<div class="span12" align="center">
-				<h4 data-bind="text: objLicense.name"></h4>					
-				<h5 data-bind="text: objLicense.address"></h5>
-				<h5 data-bind="text: objLicense.mobile"></h5>					
-			</div>
-		</div>		
-
-		<div class="span12 cover-customer">
-			
-			<div class="span7">
-				<span id="secondwnumber1" style="margin-left: -14px;"></span>
-				<div class="span12">
-					<p>អតិថិជន​ <span>001</span></p>
-					<p>Customer Name</p>
-					<p>No.124, St. 11</p>
-					<p style="font-size: 10px;"><i>ថ្ងៃ​ចាប់​ផ្តើម​ទទួល​ប្រាក់ <?php echo date("d/m/Y"); ?></i></p>
-				</div>
-			</div>
-			<div class="span4">
-				<table >
-					<tr>
-						<td width="200"><p>លេខ​វិក្កយ​បត្រ</p></td>
-						<td><p>WM00001</p></td>
-					</tr>
-					<tr>
-						<td><p>ថ្ងៃ​ចេញ វិក្កយ​បត្រ</p></td>
-						<td><p><?php echo date("d/m/Y"); ?></p></td>
-					</tr>
-					<tr>
-						<td><p>តំបន់</p></td>
-						<td><p>A1-001</p></td>
-					</tr>
-					<tr>
-						<td><p>លេខប្រអប់</p></td>
-						<td><p>P77,001</p></td>
-					</tr>
-					<tr>
-						<td><p>គិត​ចាប់​ពី​ថ្ងៃ​ទី</p></td>
-						<td><p><?php echo date("d/m/Y"); ?></p></td>
-					</tr>
-					<tr>
-						<td><p>ដល់​ថ្ងៃ​ទី</p></td>
-						<td><p><?php echo date("d/m/Y"); ?></p></td>
-					</tr>
-				</table>		
-			</div>			
-		</div>
-		<table class="span12 table table-bordered footerTbl" style="padding:0;margin-top: 40px;border:1px solid #000; border-radius: 3px;border-collapse: inherit;margin-left: 0px;">
-			<thead>
-				<tr>
-					<th width="180" class="darkbblue main-color">លេខ​កុងទ័រ<br>METER</th>
-					<th width="150" class="darkbblue main-color">អំណានចាស់<br>PREVIOUS</th>
-					<th width="120" class="darkbblue main-color">អំណានថ្មី<br>CURRENT</th>
-					<th width="120" class="darkbblue main-color">បរិមាណ<br>CONSUMPTION</th>
-					<th width="120" class="darkbblue main-color">តំលៃឯកត្តា<br>RATE</th>
-					<th width="180" class="darkbblue main-color">តំលៃសរុប<br>AMOUNT</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td style="vertical-align: middle;"> <?php echo date("d/m/Y"); ?></td>
-					<td colspan="4" style="text-align: right">
-						ជំពាក់​សរុប​នៅ​ថ្ងៃ​ធ្វើ​វិក្កយបត្រ Balance as at billing date .រ
-					</td>
-					<td>
-						0<br>
-					</td>
-				</tr>
-				<tr>
-					<td data-bind="text: meter_number"></td>
-					<td align="center">1</td>
-					<td align="center">2</td>
-					<td align="center">1</td>
-					<td></td>
-					<td></td>
-				</tr>
-				<tr>
-					<td>រំលោះ</td>
-					<td align="center"></td>
-					<td align="center"></td>
-					<td align="center">1,០០០</td>
-					<td></td>
-					<td></td>
-				</tr>
-				<tr><td colspan="6"  style="height: 80px;" ></td></tr>
-				<tr>
-					<td colspan="5" style="padding-right: 10px;background: #355176;color: #fff;text-align: right;" class="darkbblue main-color">បំណុល​សរុប TOTAL BALANCE</td>
-					<td style="border: 1px solid;text-align: right"><strong>1,000</strong></td>
-				</tr>
-				<tr>
-					<td rowspan="4" colspan="3"></td>
-					<td colspan="2" class="greyy" style="background: \\#ccc;">ប្រាក់​ត្រូវ​បង់ TOTAL DUE</td>
-					<td style="text-align: right"><strong>1,000</strong></td>
-				</tr>
-				<tr>
-					<td colspan="2" class="greyy" style="background: \\#ccc;">ថ្ងៃផុតកំណត់ DUE DATE</td>
-					<td> <?php echo date("d/m/Y"); ?></td>
-				</tr>
-				<tr>
-					<td colspan="2" class="greyy" style="background: \\#ccc;">ថ្ងៃបង់ប្រាក់ PAY DATE</td>
-					<td></td>
-				</tr>
-				<tr>
-					<td colspan="2" class="greyy" style="background: \\#ccc;">ប្រាក់បានបង់ PAY AMOUNT</td>
-					<td></td>
-				</tr>
-			</tbody>
-		</table>
-		<div class="line"></div>
-		<table class="span12 table table-bordered footerTbl" style="padding:0;border-collapse: inherit;margin-top: 15px;border:1px solid #000; border-radius: 3px;margin-left: 0px;">
-			<tbody>
-				<tr>
-					<td width="100"></td>
-					<th width="390" style="border: none">
-						<span style="margin-left: -15px;" id="footwnumber1"></span>
-					</th>
-					<td width="270" class="greyy" style="background: #ccc;border-bottom:1px solid #fff;">ប្រាក់​ត្រូវ​បង់ TOTAL DUE</td>
-					<td width="180">1,000</td>
-				</tr>
-				<tr>
-					<td><p>វិក្កយបត្រ</p></td>
-					<td><span><?php echo date("d/m/Y"); ?></span> - <span>WM00001</span></td>
-					<td class="greyy" style="background: #ccc;border-bottom:1px solid #fff;">ថ្ងៃបង់ប្រាក់ PAY DATE</td>
-					<td></td>
-				</tr>
-				<tr>
-					<td><p>អតិថិជន</p></td>
-					<td><span>001</span> <span>Customer Name</span><br>
-					<span>012 111 222</span> <span>No. 123, St.11</span></td>
-					<td class="greyy" style="background: #ccc;border-bottom:1px solid #fff;">ប្រាក់បានបង់ PAY AMOUNT</td>
-					<td></td>
-				</tr>
-				<tr>
-					<td>លេខ​ទី​តាំង</td>
-					<td>A1-01</td>
-					<td rowspan="2" class="greyy" style="background: #ccc;">អ្នកទទួលប្រាក់ RECEIVER</td>
-					<td rowspan="2"></td>
-				</tr>
-				<tr>
-					<td>លេខ​កុនង​ទ័រ</td>
-					<td>WM0001</td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
-</script>
-<script id="invoiceForm3-bk" type="text/x-kendo-template">
-    <div class="row-fluid">
-    	<div class="span7 inv1" style="width: 54%; padding-right: 15px; padding-left: 8px; ">
-    		<div class="head" style="width: 100%">
-	        	<div class="logo" style="width: 30%;">
-	            	<img data-bind="attr: { src: objLicense.image_url, alt: company.name, title: company.name }" />
-	            </div>
-	            <div class="cover-name-company" style="width: 65%; margin-left: 15px;">
-	            	<h2 style="text-align: left;">សហគ្រាសបន្ទាយមាស អេឡិទ្រីស៊ីធី    </h2>
-	                <p style="font-size: 12px; color: #000;">ភូមិទូកមាស ឃុំទូកមាសខាងលិច ស្រុកបន្ទាយមាស ខេត្តកំពត </p>
-	                
-	            </div>
-	        </div>
-	        <div class="row textunder">
-	        	<div clas="span6" style="width: 47%;float: left; display: inherit; line-height: 30px;">
-	        		<p>បច្ចេកទេស</p>
-	        		<a href="#" class="glyphicons no-js iphone" style="font-weight: 600; color: #31849b;">
-	        			<i></i> 
-	        			<span style="margin-left: 17px;">០៣៣ ៦៦០១ ៣៣៣</span>
-	        		</a>
-	        		<p>២៤ម៉ោង</p>
-	        	</div>
-	        	<div clas="span6" style="width: 50%;float: left; display: inherit; border-left: 1px solid #000; padding-left: 15px; line-height: 30px;">
-	        		<p>បង់ប្រាក់ និង វិក្កយបត្រ </p>
-	        		<a href="#" class="glyphicons no-js iphone" style="font-weight: 600; color: #31849b;">
-	        			<i></i>
-	        			<span style="margin-left: 17px;">០៩៩ ៨៤១ ១៣៣</span>
-	        		</a>
-	        		<p>ច័ន្ទ ដល់ សៅរ៍ ៧:០០-៦:០០</p>
-	        	</div>
-	        </div>
-    	</div>
-    	<div class="span5 " style="padding-left: 0; padding-right: 8px; width: 46%">
-    		<div class="headertable-invoice">
-	    		<table style="">
-	    			<tr>
-	    				<td>លេខវិក្កយបត្រ INVOICE NO</td>
-	    				<td>
-	    					<input type="text">
-	    				</td>
-
-	    			</tr>
-	    			<tr>
-	    				<td>ថ្ងៃចេញ INVOICE DATE</td>
-	    				<td>
-	    					<input type="text">
-	    				</td>
-	    			</tr>
-	    			<tr>
-	    				<td>តំបន់ AREA</td>
-	    				<td>
-	    					<input type="text">
-	    				</td>
-	    			</tr>
-	    			<tr>
-	    				<td>លេខប្រអប់ BOX NO</td>
-	    				<td>
-	    					<input type="text">
-	    				</td>
-	    			</tr>
-	    		</table>
-	    	</div>
-    	</div>
-    </div>
-
-    <div class="row-fluid">
-    	<div class="span5">
-    	</div>
-    	<div class="span7">
-    		<div class="row">
-    			<div class="span5" style="padding-right: 0">
-    				<p style="list-style: 20px; margin-bottom: 0;">
-    					<b>យិន អ៊ិច</b><br>
-    					ភូមិសាមគ្គី ឃុំអង្គរជ័យ
-    				</p>
-		    	</div>
-		    	<div class="span6" style="padding-left: 0; margin-left: 15px;">
-		    		<img style="width: 180px; height: auto; " src="<?php echo base_url();?>/assets/barcode.png">
-		    		<p style="margin-bottom: 0; margin-top: 5px; font-size: 12px; margin-left: 8px;">លេខកូដអតិថិជន ០០៤៣៣៦</p>
-		    	</div>
-    		</div>
-    	</div>
-    </div>
-
-    <div class="row-fluid">
-    	<div class="span4" style="padding-left: 15px; padding-left: 8px;">
-    		<p >ប្រវត្តិប្រើប្រាស់របស់អ្នកក្នុងឆ្នាំនេះ</p>
-    		<img style="width: 175px; height: auto;" src="<?php echo base_url();?>/assets/chart.png">
-    	</div>
-    	<div class="span8" style="padding-left: 0;">
-    		<img style="width: 58px; height: auto; float: left;" src="<?php echo base_url();?>/assets/icon-water.png">
-    		<p style="width: 140px; float: left; margin: 25px 0 0 8px; font-size: 20px; ">ប្រាក់ត្រូវបង់សរុប</p>
-    		<p style="padding: 5px 8px; background: #F1F1F1; border: 1px solid #000; width: 190px; float: left;font-size: 25px; color: #000;font-weight: 600; text-align: right; margin: 13px 0 10px 8px;">38,808,900</p>
-    		<p style="margin-left: 30px; float: left; margin-bottom: 0;">សូមអញ្ជើញមកបង់ប្រាក់ អោយបានមុនថ្ងៃផុតកំនត់ទី</p><br>
-    		<p style="margin-left: 40%; float: left; font-weight: 600;">១៥ មេសា ២០១៦</p>
-
-    	</div>
-    </div>
-
-    <div class="row-fluid">
-    	<div class="table-content" style="border: 2px solid #30859C; border-radius: 10px; padding: 10px; margin: 10px 8px; font-weight: 600; float: left; width: 97.5%;">
-    		<p style="color: #30859C;">ការប្រើប្រាស់របស់អ្នកក្នុងរយះពេលពី​ (Electricity charges) <span style="color: #000;">01-05-2013</span> ដល់ <span style="color: #000;">31-05-2013</span></p>
-    		<table>
-    			<thead>
-    				<tr>
-    					<th>លេខកុងទ័រ <br> METER NO.</th>
-    					<th>អំនានមុន <br> PREVIOUS</th>
-    					<th>អំនានថ្មី <br> LASTES</th>
-    					<th>មេគុណ <br> MULTIPLIER</th>
-    					<th>ប្រើប្រាស់ <br> UNIT</th>
-    					<th>តម្លៃឯកតា <br> RATE</th>
-    					<th>តម្លៃសរុប <br> AMOUNT</th>
-    				</tr>
-    			</thead>
-    			<tbody>
-    				<tr>
-    					<td>1</td>
-    					<td></td>
-    					<td></td>
-    					<td></td>
-    					<td></td>
-    					<td></td>
-    					<td></td>
-    				</tr>
-    				<tr>
-    					<td>2</td>
-    					<td></td>
-    					<td></td>
-    					<td></td>
-    					<td></td>
-    					<td></td>
-    					<td></td>
-    				</tr>
-    				<tr>
-    					<td>3</td>
-    					<td></td>
-    					<td></td>
-    					<td></td>
-    					<td></td>
-    					<td></td>
-    					<td></td>
-    				</tr>
-    				<tr>
-    					<td>4</td>
-    					<td></td>
-    					<td></td>
-    					<td></td>
-    					<td></td>
-    					<td></td>
-    					<td></td>
-    				</tr>
-    			</tbody>
-    			<tfoot>
-    				<tr>
-    					<td colspan="2" rowspan="5"></td>
-    					<td colspan="4">
-    						ប្រាក់ត្រូវបង់សរុប ខែនេះ
-    						<span style="font-size: 10px;">
-    							Total charge for this period
-    						</span>
-    					</td>
-    					<td colspan="2" ></td>
-    				</tr>
-    				<tr>
-    					<td colspan="4">
-    						ប្រាក់ត្រូវបង់សរុប
-    						<span style="font-size: 10px;">
-    							Total amount due
-    						</span>
-    					</td>
-    					<td colspan="2"></td>
-    				</tr>
-    				<tr>
-    					<td colspan="2" rowspan="3" style="vertical-align: middle;">
-    						<div style="margin: 0 auto; width: 92px; height: 92px; border: 1px solid #A8B8CB; border-radius: 50%;">
-							</div>
-    					</td>
-    					<td colspan="2">ថ្ងៃដែលបានបង់ប្រាក់ PAY DATE</td>
-    					<td ></td>
-    				</tr>
-    				<tr>
-    					<td colspan="2">ប្រាក់ដែលបានបង់ AMOUNT PAID</td>
-    					<td ></td>
-    				</tr>
-    				<tr>
-    					<td colspan="2">ហត្ថលេខា និងឈ្មោះរបស់បេឡាករ</td>
-    					<td ></td>
-    				</tr>
-    			</tfoot>
-    		</table>    		
-    	</div>    	
-    </div>
-
-    <div class="row-fluid" style="float: left; border-bottom: 2px dotted #B9CDE4;">
-		<a href="#" style="float: left; margin-left: 15px; " class="glyphicons no-js share"><i></i></a>
-		<div class="span11" style="padding-left: 0;">    			
-    		<p style="float: left; margin: 0; font-size: 11px; width: 100%;">
-				ក្នុងករណីដែលលោក លោកស្រីមិនបានមកបង់ប្រាក់ទាន់ពេលកំនត់ ក្រុមហ៊ិននឹងផ្អាក់ការប្រើប្រាស់របស់លោកអ្នក
-			</p>
-			<p style="float: left; font-size: 11px; padding-bottom: 8px;">
-				ការភ្ជាប់ចរន្តជួនវិញ លុះត្រាតែអតិថិជនបានទូទាត់បំណុលសរុបក្នុងវិក្កយបត្រនេះដោយបូកបន្ថែមការប្រាក់១% និងសេវាភ្ជាប់ចរន្តរួចហើយ។
-			</p>
-		</div>
-	</div>
-	<div class="row-fluid">
-		<div class="invoice-footer" style="float: left; width: 100%; text-align: center;">
-			<p style="text-align: center; margin-top: 10px; font-weight: 600; ">បង្កាន់ដៃបង់ប្រាក់ PAYMENT SLIP</p>
-		</div>		
-		<div class="span1" style="width: 108px;float: left;padding-right: 0;text-align: center;">
-			<div style="float: left; width: 92px; height: 92px; margin:0 0 5px 0; border: 1px solid #A8B8CB; border-radius: 50%;">
-			</div>
-			<p style="font-size: 10px; float: left;">ហត្ថលេខា និងត្រា របស់បេឡាករ </p>
-			<p style="display: inline-block; text-align: center; margin-top: 40px; border-bottom: 1px solid #000; width: 75px;"></p>
-		</div>
-		<div class="row-fluid" style="width: 489px;float: left;clear: initial; margin-left: 15px;">
-			<div class="span4">
-				<p style="text-align: center; font-size: 12px; margin-bottom: 5px;">លេខវិក្កយបត្រ INVOICE NO</p>
-				<p style="padding: 8px; background: #fff; margin-bottom: 0; border: 1px solid #A8B8CB; width: 155px; float: left;font-size: 15px; color: #000;font-weight: 600; text-align: center; ">INV1305-00001</p> 
-			</div>
-			<div class="span4">
-				<p style="text-align: center; font-size: 12px; margin-bottom: 5px;">ប្រាក់ត្រូវបង់ AMOUNT DUE</p>
-				<p style="padding: 8px; background: #fff; margin-bottom: 0; margin-left: -9px; border: 1px solid #A8B8CB; width: 155px; float: left;font-size: 15px; color: #000;font-weight: 600; text-align: center; ">38,808,900</p> 
-			</div>
-			<div class="span4">
-				<p style="text-align: center; font-size: 12px; margin-bottom: 5px;">ថ្ងៃបង់ប្រាក់ PAY DATE</p>
-				<p style="padding: 8px; background: #fff; margin-bottom: 0; border: 1px solid #A8B8CB; width: 155px; float: left;font-size: 15px; color: #000;font-weight: 600; text-align: center; ">38,808,900</p> 
-			</div>
-		</div>
-		<div class="row-fluid" style="width: 489px;float: left;clear: initial; margin-left: 15px;">
-			<div class="span8">
-				<p style="float: left; margin-top: 5px; clear: both;"><b>យិន អ៊ិច</b> <br/> ភូមិសាមគ្គី ឃុំអង្គរជ័យ</p>
-				<div style=" float: left;">
-		    		<img style="width: 257px; height: auto; " src="<?php echo base_url();?>/assets/barcode.png">
-		    		<p style="margin-bottom: 0; margin-top: 5px; font-size: 12px; margin-left: 8px;">លេខកូដអតិថិជន ០០៤៣៣៦</p>
-		    	</div>
-		    </div>
-		    <div class="span4" style="padding: 0;">
-		    	<p style="text-align: center; font-size: 12px; margin-bottom: 0px; margin-top: 8px;">ប្រាក់បានបង់ AMOUNT DUE</p>
-		    	<p style="padding: 8px; height: 40px; background: #fff; margin-bottom: 0; border: 5px solid #000; width: 155px; float: left;font-size: 15px; color: #000;font-weight: 600; text-align: center; "></p>
-		    	<p style="font-size: 11px; font-weight: 600; margin-top: 10px; float: left;">សហគ្រាសបន្ទាយមាស អេឡិទ្រីស៊ីធី</p>
-		    </div>
-		</div>
-	</div>
-</script>
-
-<script id="invoiceCustom-txn-form-template" type="text/x-kendo-template">
-	<a class="span4 #= type #" data-id="#= id #" data-bind="click: selectedForm" style="padding: 0; width: 32%;">
-    	<img src="<?php echo base_url(); ?>assets/invoice/img/#= image_url #.jpg" alt="#: name # image" />
-    </a>
-</script>
-<script id="invoiceForm-lineDS-template" type="text/x-kendo-template">
-	<tr>
-		<td><i>#:banhji.invoiceForm.lineDS.indexOf(data)+1#</i>&nbsp;</td>
-		<td class="lside">#= description#</td>
-		<td>#= quantity#</td>
-		<td class="rside" width="70">#= kendo.toString(price, locale=="km-KH"?"c0":"c", locale) #</td>
-		<td class="rside">#= kendo.toString(amount, locale=="km-KH"?"c0":"c", locale) #</td>
-	</tr>
-</script>
-
+<!-- Reconcile -->
 <script id="Reconcile" type="text/x-kendo-template">
 	<div id="slide-form">
-		<div class="customer-background" style="overflow: hidden; margin-top: 15px;">
+		<div class="customer-background" style=" margin-top: 15px;">
 			<div class="container-960">					
 				<div id="example" class="k-content">
 			    	<div class="hidden-print pull-right">
@@ -2010,9 +914,29 @@
 					</div>
 			        <h2 style="margin-bottom: 10px;" data-bind="text: lang.lang.reconcile">Reconcile</h2>
 			        <br>
-			        <div class="row-fluid">
+			        <div class="row-fluid" style="position: relative;">
+			        	<div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 100%;margin-top: -15px;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
+							<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
+						</div>
+			        	<div class="row" style="padding: 0;margin: 0;position: absolute;left:0;top:0;width: 100%;height: 100%;background: #fff;z-index: 999;" data-bind="visible: noSession">
+							<table class="table table-bordered table-primary table-striped table-vertical-center" style="margin-top: 15px;">
+						        <thead>
+						            <tr>
+						            	<th style="vertical-align: top;" data-bind="text: lang.lang.no_"></th>
+						            	<th style="vertical-align: top;" data-bind="text: lang.lang.employee"></th>
+						            	<th style="vertical-align: top;" data-bind="text: lang.lang.start"></th>
+						            	<th style="vertical-align: top;" data-bind="text: lang.lang.end"></th>
+						            	<th style="vertical-align: top;" data-bind="text: lang.lang.action"></th>
+						            </tr>
+						        </thead>
+						        <tbody data-role="listview" 
+					        		data-template="session-list-template" 
+					        		data-auto-bind="false"
+					        		data-bind="source: sessionDS"></tbody>
+						    </table>
+						</div>
 			        	<div class="row" style="padding: 0px;margin: 0;">
-		        			<div class="span4" style="padding-left: 0;">
+		        			<div class="span3" style="padding-left: 0;">
 			        			<table class="table table-bordered table-primary table-striped table-vertical-center" >
 			        				<thead>
 			        					<tr>
@@ -2028,7 +952,7 @@
 			        				</tbody>
 			        			</table>
 			        		</div>
-			        		<div class="span4" style="">
+			        		<div class="span3" style="">
 			        			<table class="table table-bordered table-primary table-striped table-vertical-center" >
 			        				<thead>
 			        					<tr>
@@ -2044,7 +968,7 @@
 			        				</tbody>
 			        			</table>
 			        		</div>
-			        		<div class="span4" style="padding-left: 0;">
+			        		<div class="span3" style="">
 			        			<table class="table table-bordered table-primary table-striped table-vertical-center" >
 			        				<thead>
 			        					<tr>
@@ -2057,6 +981,22 @@
 			        					data-role="listview" 
 			        					data-bind="source: changeAR" 
 			        					data-template="reconcile-change-list">
+			        				</tbody>
+			        			</table>
+			        		</div>
+			        		<div class="span3" style="padding-left: 0;">
+			        			<table class="table table-bordered table-primary table-striped table-vertical-center" >
+			        				<thead>
+			        					<tr>
+			        						<th colspan="2" style="background: #fefefe;color: #000;border: 1px solid #ccc;" >
+			        							សមតុលសាច់ប្រាក់ក្នុងរបាយការណ៍
+			        						</th>
+			        					</tr>
+			        				</thead>
+			        				<tbody 
+			        					data-role="listview"
+			        					data-bind="source: receiveAR" 
+			        					data-template="reconcile-recieve-list">
 			        				</tbody>
 			        			</table>
 			        		</div>
@@ -2079,14 +1019,122 @@
 						    </table>
 						    <button class="btn btn-inverse" data-bind="click: addRow"><i class="icon-plus icon-white"></i></button>
 						</div>
-		        		
+		        		<div class="row" style="padding: 0px;margin: 0;margin-top: 20px;">
+		        			<div class="span4" style="padding-left: 0;">
+			        			<table class="table table-bordered table-primary table-striped table-vertical-center" >
+			        				<thead>
+			        					<tr>
+			        						<th colspan="2" style="background: #fefefe;color: #000;border: 1px solid #ccc;" >
+			        							សមតុលសាច់ប្រាក់ជាក់ស្តែង
+			        						</th>
+			        					</tr>
+			        				</thead>
+			        				<tbody 
+			        					data-role="listview"
+			        					data-bind="source: actualCountDS" 
+			        					data-template="reconcile-actualcount-list">
+			        				</tbody>
+			        				<tfoot>
+			        					<tr>
+			        						<td colspan="2" style="text-align: center;background: #91268f;">
+			        							<span data-bind="text: actualAmount" style="color: #fff;font-weight: bold;font-size: 18px;"></span>
+			        						</td>
+			        					</tr>
+			        				</tfoot>
+			        			</table>
+			        		</div>
+			        		<div class="span4" style="">
+			        			<table class="table table-bordered table-primary table-striped table-vertical-center" >
+			        				<thead>
+			        					<tr>
+			        						<th colspan="2" style="background: #fefefe;color: #000;border: 1px solid #ccc;" >
+			        							សមតុលសាច់ប្រាក់រាប់ជាក់ស្តែង
+			        						</th>
+			        					</tr>
+			        				</thead>
+			        				<tbody 
+			        					data-role="listview" 
+			        					data-bind="source: actualDS" 
+			        					data-template="reconcile-actual-list">
+			        				</tbody>
+			        				<tfoot>
+			        					<tr>
+			        						<td colspan="2" style="text-align: center;background: #91268f;">
+			        							<span data-bind="text: countAmount" style="color: #fff;font-weight: bold;font-size: 18px;"></span>
+			        						</td>
+			        					</tr>
+			        				</tfoot>
+			        			</table>
+			        		</div>
+			        		<div class="span4" style="padding-right: 0;" >
+			        			<table class="table table-bordered table-primary table-striped table-vertical-center" >
+			        				<thead>
+			        					<tr>
+			        						<th colspan="2" style="background: #fefefe;color: #000;border: 1px solid #ccc;" >
+			        							ផ្ទៀងផ្ទាត់
+			        						</th>
+			        					</tr>
+			        				</thead>
+			        				<tbody >
+			        					<tr data-bind="visible: haveDef">
+			        						<td colspan="2" style="text-align: center;" data-bind="style: { backgroundColor: defBG}">
+			        							<p style="color: #fff;margin: 0;">ចំនួនខុសសរុប ៖ <span style="font-weight: bold;font-size: 18px;" data-bind="text: deferentAmount"></span></p>
+			        						</td>
+			        					</tr>
+			        					<tr data-bind="invisible: haveDef">
+			        						<td colspan="2">
+			        							<p style="font-weight: bold;font-size: 18px;color: lightgreen;">
+			        								ត្រឹមត្រូវ
+			        							</p>
+			        						</td>
+			        					</tr>
+			        				</tbody>
+			        				<tfoot data-bind="visible: haveDef">
+			        					<tr>
+			        						<td colspan="2"  >
+			        							<input data-role="dropdownlist"
+								                   data-value-primitive="true"
+								                   data-text-field="name"
+								                   data-value-field="id"
+								                   style="width: 100%;" 
+								                   data-auto-bind="false"
+								                   data-bind="value: accountSelect,
+								                              source: accountDS"
+								                   data-option-label="Select Accounting..." />
+			        						</td>
+			        					</tr>
+			        				</tfoot>
+			        			</table>
+			        		</div>
+			        	</div>
 			        </div>
-			        <div class="box-generic bg-action-button" style="margin-top: 15px;">
+			        <div class="box-generic bg-action-button" data-bind="invisible: noSession" style="margin-top: 15px;">
 						<div id="ntf1" data-role="notification"></div>
 				        <div class="row">
-							<div class="span12" align="right">
-								<span class="btn-btn" data-bind="click: sync" ><i></i> <span data-bind="text: lang.lang.record">Record</span></span>
-								<span class="btn-btn" data-bind="click: cancel" ><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
+							<div class="col-sm-12" align="right">
+								<span class="btn-btn" style="float: left;" data-bind="click: saveDraft" ><i></i> 
+									<span data-bind="text: lang.lang.save_draft">Record</span>
+								</span>
+								<span role='presentation' class='dropdown btn-btn' style="padding: 0 15px; float: left; height: 32px; line-height: 30px;">
+							  		<a style="color: #fff; padding: 0;" class='dropdown-toggle glyphicons' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'>
+							  			<span >Reconcile Option</span>
+							  			<span class="small-btn"><i class='caret '></i></span>
+							  		</a>
+							  		<ul class='dropdown-menu'>
+						  				<li id="saveNew" >
+						  					<span data-bind="saveClose">Reconcile Close</span>
+						  				</li>
+						  				<li id="savePrint">
+						  					<span >Reconcile Print</span>
+						  				</li>
+						  				<li id="savePrint">
+						  					<span >Reconcile and Transfer</span>
+						  				</li>
+						  			</ul>
+							  	</span>
+								<span class="btn-btn" style="float: right;" data-bind="click: cancel" ><i></i> 
+									<span data-bind="text: lang.lang.cancel"></span>
+								</span>
 							</div>
 						</div>
 					</div>
@@ -2095,27 +1143,76 @@
 		</div>
 	</div>				  	
 </script>
+<script id="session-list-template" type="text/x-kendo-template">
+    <tr>
+		<td style="border-left: 0; border-bottom: 0;">
+			#:banhji.Reconcile.sessionDS.indexOf(data)+1#
+		</td>
+		<td style="border-left: 0; border-bottom: 0;">
+			<a href="\\#/reconcile/#= id#">#: employee#</a>
+		</td>
+		<td style="border-left: 0; border-bottom: 0;">
+			#: kendo.toString(new Date(start_date), "dd-MMMM-yyyy", "km-KH")#
+		</td>
+		<td style="border-left: 0; border-bottom: 0;">
+			#: kendo.toString(new Date(end_date), "dd-MMMM-yyyy", "km-KH")#
+		</td>
+		<td style="border-left: 0; border-bottom: 0; text-align: center;">
+			#if(status == 1){#
+				<span style="cursor: pointer; margin-top: 3px;" title="Finish" class="btn-action glyphicons ok_2 btn-success"><i></i></span>
+			#}else{#
+				<span style="cursor: pointer;background-color: \\#a22314;border-color: \\#a22314;" title="Reconcile" class="btn-action glyphicons retweet_2 btn-danger"><i></i></span>
+			#}#
+			<a style="cursor: pointer;" class="btn-action glyphicons pencil btn-success" href="\\#/reconcile/#= id # "><i></i></a>
+		</td>
+	</tr>
+</script>
 <script id="reconcile-list-template" type="text/x-kendo-template">
     <tr>
 		<td style="border-left: 0; border-bottom: 0;">
-			<i style="cursor: pointer;" class="icon-trash" data-bind="events: {click: removeRow}" ></i>
+			#if(banhji.Reconcile.noteDS.indexOf(data) > 0){#
+				<i style="cursor: pointer;" class="icon-trash" data-bind="events: {click: removeRow}" ></i>
+			#}#
 			#:banhji.Reconcile.noteDS.indexOf(data)+1#
 		</td>
 		<td style="border-left: 0; border-bottom: 0;">
 			<input type="text" 
 				data-role="combobox" 
-				data-bind="source: currencyAR, value: currency" 
+				data-bind="source: currencyAR, value: currency, events: {change: onChange}" 
 				data-text-field="code" 
-				data-value-field="code">
+				data-value-field="locale">
 		</td>
 		<td style="border-left: 0; border-bottom: 0;">
-			<input type="number" class="k-textbox" data-role="numerictextbox" data-format="n0" data-min="0" data-spinners="false" data-bind="value: note, events: {change: onChange}" style="padding-right: 10px;display: inline-block; text-align: right; height: 28px; border: none; width: 168px !important;">
+			<input 
+				type="number" 
+				class="k-textbox" 
+				data-role="numerictextbox" 
+				data-format="n0" 
+				data-min="0" 
+				data-spinners="false" 
+				data-bind="value: note, events: {change: onChange}" 
+				style="padding-right: 10px;display: inline-block; text-align: right; height: 28px; border: none; width: 168px !important;">
 		</td>
 		<td style="border-left: 0; border-bottom: 0;">
-			<input type="number" class="k-textbox" data-role="numerictextbox" data-format="n0" data-min="0" data-spinners="false" data-bind="value: unit, events: {change: onChange}" style="padding-right: 10px;text-align: right; display: inline-block; height: 28px; border: none; width: 168px !important;">
+			<input 
+				type="number" 
+				class="k-textbox" 
+				data-role="numerictextbox" 
+				data-format="n0" 
+				data-min="0" 
+				data-spinners="false" 
+				data-bind="value: unit, events: {change: onChange}" 
+				style="padding-right: 10px;text-align: right; display: inline-block; height: 28px; border: none; width: 168px !important;">
 		</td>
 		<td style="border-left: 0; border-bottom: 0;">
-			<input type="number" data-role="numerictextbox" data-format="n" data-min="0" data-spinners="false" data-bind="value:total" disabled="disabled" style="padding-right: 10px;text-align: right; display: inline-block; border: none; width: 168px !important;">
+			<input 
+				type="number" 
+				data-role="numerictextbox" 
+				data-format="n" data-min="0" 
+				data-spinners="false" 
+				data-bind="value:total" 
+				disabled="disabled" 
+				style="padding-right: 10px;text-align: right; display: inline-block; border: none; width: 168px !important;">
 		</td>
 	</tr>
 </script>
@@ -2143,6 +1240,25 @@
 		<td>#=total#</td>
 	</tr>
 </script>
+<script id="reconcile-recieve-list" type="text/x-kendo-template">
+	<tr>
+		<td width="100">#=code#</td>
+		<td>#=amount#</td>
+	</tr>
+</script>
+<script id="reconcile-actual-list" type="text/x-kendo-template">
+	<tr>
+		<td width="100">#=code#</td>
+		<td><p data-bind="text: amount"></p></td>
+	</tr>
+</script>
+<script id="reconcile-actualcount-list" type="text/x-kendo-template">
+	<tr>
+		<td width="100">#= currency#</td>
+		<td style="text-align: right;"><p data-bind="text: amount"></p></td>
+	</tr>
+</script>
+
 
 <!-- ***************************
 *	Template Blog         	  *
@@ -2189,9 +1305,6 @@
 	</tr>
 </script>
 <script id="segment-header-tmpl" type="text/x-kendo-tmpl">
-    <strong>
-    	<a href="\#/segment">+ Add New Segment</a>
-    </strong>
 </script>
 <script id="segment-list-tmpl" type="text/x-kendo-tmpl">
 	<span>#=code#</span> <span>#=name#</span>

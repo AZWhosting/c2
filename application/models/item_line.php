@@ -39,6 +39,10 @@ class Item_line extends DataMapper {
 		'item_serial' => array(
 			'class' => 'item_serial',
 			'other_field' => 'item_line'
+		),
+		'item_line_location' => array(
+			'class' => 'item_line_location',
+			'other_field' => 'item_line'
 		)
 	);
 

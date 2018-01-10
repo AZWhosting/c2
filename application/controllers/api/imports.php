@@ -541,6 +541,7 @@ class Imports extends REST_Controller {
 					$transaction->number = "JV".$this->_generate_number($transaction->type, $meter->date_used);
 					$transaction->deposit_date = date('Y-m-d', strtotime($row->date_used));
 					$transaction->status = 1;
+					$transaction->meter_id = $meter->id;
 					$transaction->amount = isset($row->deposit) ? $row->deposit : 0;
 					if($transaction->save()) {
 						$deposit1 = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);

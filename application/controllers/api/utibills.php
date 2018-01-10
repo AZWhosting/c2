@@ -529,6 +529,8 @@ class Utibills extends REST_Controller {
 	   				$srecieve->transaction_id = $value->reference_id;
 	   				$srecieve->contact_id = $value->contact_id;
 	   				$srecieve->amount = $value->amount;
+	   				$srecieve->locale = $value->locale;
+	   				$srecieve->rate = $value->rate;
 	   				$srecieve->time = $value->issued_date;
 	   				$srecieve->save();	
 	   			}

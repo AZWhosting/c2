@@ -5,10 +5,6 @@ class Transaction extends DataMapper {
 	protected $updated_field = "updated_at";
 
 	public $has_one = array(
-		// 'branch' => array(
-  //           'class' => 'branch',
-  //           'other_field' => 'transaction'
-  //       ),
         'location' => array(
             'class' => 'location',
             'other_field' => 'transaction'
@@ -29,20 +25,12 @@ class Transaction extends DataMapper {
             'class' => 'payment_method',
             'other_field' => 'transaction'
         ),
-        'reference' => array(
-            'class' => 'transaction',
-            'other_field' => 'transaction'
-        ),
         'job' => array(
             'class' => 'job',
             'other_field' => 'transaction'
         )
 	);
 	public $has_many = array(
-        'transaction' => array(
-            'class' => 'transaction',
-            'other_field' => 'reference'
-        ),
         'attachment' => array(
             'class' => 'attachment',
             'other_field' => 'transaction'
@@ -51,10 +39,6 @@ class Transaction extends DataMapper {
             'class' => 'item_line',
             'other_field' => 'transaction'
         ),
-        // 'einvoice_line' => array(
-        //     'class' => 'einvoice_line',
-        //     'other_field' => 'transaction'
-        // ),
         'winvoice_line' => array(
             'class' => 'winvoice_line',
             'other_field' => 'transaction'
@@ -70,6 +54,13 @@ class Transaction extends DataMapper {
         'segmentitem' => array(
             'class' => 'segmentitem',
             'other_field' => 'transaction'
+        ),
+        'related_transaction' => array(
+            'class' => 'transaction',
+            'other_field' => 'transaction'
+        ),
+        'transaction' => array(
+            'other_field' => 'related_transaction'
         )
 	);
 

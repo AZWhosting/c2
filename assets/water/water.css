@@ -26,6 +26,9 @@ ul{
 a:hover {
     text-decoration: none;
 }
+#content{
+  overflow: inherit;
+}
 .row-fluid {
   clear: both;
 }
@@ -51,7 +54,7 @@ a:hover {
 .container-960 {
     width: 1020px;
     margin: 0 auto;
-    overflow: hidden;
+    /*overflow: hidden;*/
 }
 html.no-touch.sticky-top:not(.animations-gpu) #content {
 	padding-top: 0 !important
@@ -614,6 +617,41 @@ p.addItem.glyphicons.circle_remove i:before {
     cursor: pointer;
     float: right;
     margin-left: 8px;
+}
+.bg-action-button .btn-btn .dropdown-menu{
+  border-radius: 2px;
+  color: #333;
+  top: 29px !important;
+  left: -20px !important;
+  width: 175px;
+}
+.bg-action-button .btn-btn .dropdown-menu li span{
+  float: left;
+  width: 100%;
+  padding: 8px;
+  cursor: pointer;
+  color: #333;
+}
+.bg-action-button .btn-btn .dropdown-menu li:hover span{
+  background: #0077c5;
+  color: #fff;
+}
+.bg-action-button .btn-btn .dropdown-menu #saveClose,
+.bg-action-button .btn-btn .dropdown-menu #savePrint,
+.bg-action-button .btn-btn .dropdown-menu #saveNew{
+  width: auto !important;
+  padding: 0 !important;
+  color: #333 !important;
+}
+.bg-action-button #saveClose{
+  color: #FFF;
+  border: 1px solid #d5d5d5;
+  border-radius: 2px;
+  padding: 5px 15px;
+  cursor: pointer;
+  float: right;
+  margin-left: 8px;
+  width: auto !important;
 }
 .cover-block h2{
 	margin-bottom: 15px;

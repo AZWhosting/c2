@@ -39,13 +39,13 @@ class Ops extends REST_Controller {
 			    // $this->dbforge->add_field("created_at date DEFAULT NULL");
 			    // $this->dbforge->add_field("updated_at date DEFAULT NULL");
 			    // $this->dbforge->create_table('measurement_categories');
+			    
 
 				//Rename Table 'old_table_name' to 'new_table_name'
 			    // $this->dbforge->rename_table('item_locations', 'bin_locations');
-			    // $this->dbforge->rename_table('contacts_items', 'contacts_locations');
 
 				//DROP TABLE IF EXISTS table_name
-			    // $this->dbforge->drop_table('location_types');
+			    // $this->dbforge->drop_table('references');
 			    
 			    //Update data
 			    // $this->db->where('conversion_ratio', 0);
@@ -86,14 +86,14 @@ class Ops extends REST_Controller {
 				// 	// 	"null" 		=> FALSE,
 				// 	// 	"default" 	=> 0
 				// 	// ),
-				// 	"reference_id" => array(
+				// 	"bin_location_id" => array(
 				// 		"type" 		=> "INT",
 				// 		"constraint"=> "11",
 				// 		"null" 		=> FALSE,
 				// 		"default" 	=> 0
 				// 	)
 				// );
-				// $data['results'][] = $this->dbforge->add_column("item_lines", $fields);
+				// $data['results'][] = $this->dbforge->add_column("item_line_locations", $fields);
 				
 			    // Modify fields
 			 	// 	$fields = array(
