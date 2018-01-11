@@ -5957,7 +5957,6 @@
         receiveAR: [],
         actualCountDS: dataStore(apiUrl + "cashier/blank"),
         actualDS: dataStore(apiUrl + "cashier/blank"),
-        dataSource: dataStore(apiUrl + "cashier/reconcile"),
         baseCurrency: "km-KH",
         defBG: "#be1e2d",
         haveDef: true,
@@ -5971,6 +5970,7 @@
             this.actualDS.data([]);
             this.currencyAR = [];
             if(id){
+                console.log("A");
                 this.set("noSession", false);
                 this.set("sessionID", id);
                 this.startAmountDS.query({
@@ -6147,6 +6147,13 @@
             this.save(2);
         },
         saveClose: function(){
+            if(this.get("accountSelect")){
+                this.save(1);
+            }else{
+                var notifact = $("#ntf1").data("kendoNotification");
+                    notifact.hide();
+                    notifact.error(this.lang.lang.error_input);
+            }
         },
         save: function(act) {
             var self = this;
@@ -6155,6 +6162,9 @@
                 this.set("cashier_id", self.get("cashierID"));
                 this.set("cashier_session_id", self.get("sessionID"));
                 this.set("action", act);
+                this.set("defamont", self.get("defAmount"));
+                this.set("account_id", self.get("accountSelect"));
+                this.set("locale", self.get("baseCurrency"));
             });
             this.noteDS.sync();
             this.noteDS.bind("requestEnd", function(e){

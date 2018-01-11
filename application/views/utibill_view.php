@@ -15188,10 +15188,10 @@
 		#totalInvoice += line[i].reference_amount;#
 		<tr>
 			<td>#=kendo.toString(new Date(line[i].issued_date), "dd-MM-yyyy")#</td>
-			<td><a href="\#/#=line[i].type.toLowerCase()#/#=line[i].id#">#=line[i].number#</a></td>
+			<td>#=line[i].number#</td>
 			<td style="text-align: right;">#=kendo.toString(line[i].amount, "c2", banhji.locale)#</td>		
 			<td>#=kendo.toString(new Date(line[i].reference_issued_date), "dd-MM-yyyy")#</td>
-			<td><a href="\#/#=line[i].reference_type.toLowerCase()#/#=line[i].reference_id#">#=line[i].reference_number#</a></td>
+			<td><#=line[i].reference_number#</td>
 			<td style="text-align: right;">#=kendo.toString(line[i].reference_amount, "c2", banhji.locale)#</td>				
 		</tr>
 	#}#

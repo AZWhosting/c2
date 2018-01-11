@@ -1122,7 +1122,7 @@
 							  		</a>
 							  		<ul class='dropdown-menu'>
 						  				<li id="saveNew" >
-						  					<span data-bind="saveClose">Reconcile Close</span>
+						  					<span data-bind="click: saveClose">Reconcile Close</span>
 						  				</li>
 						  				<li id="savePrint">
 						  					<span >Reconcile Print</span>

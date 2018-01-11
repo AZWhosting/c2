@@ -892,7 +892,7 @@ class UtibillReports extends REST_Controller {
 			foreach ($obj as $value) {
 				//Reference
 				$ref = $value->reference->select("type, number, issued_date, amount, deposit, rate")->get();				
-				$refAmount = (floatval($ref->amount) - floatval($ref->deposit)) / floatval($ref->rate);
+				$refAmount = $ref->rate > 0? (floatval($ref->amount) - floatval($ref->deposit))/floatval($ref->rate) : 0 ;
 				$cashReceipt +=1;
 				$amount = (floatval($value->amount) - floatval($value->deposit)) / floatval($value->rate);
 

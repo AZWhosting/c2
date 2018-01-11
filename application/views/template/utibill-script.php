@@ -4152,8 +4152,8 @@
         errorShow: false,
         existShow: false,
         fullCorrect: false,
-        Uploaderror: [],
-        ExistRUpload: [],
+        Uploaderror: dataStore(apiUrl + "cashier/blank"),
+        ExistRUpload: dataStore(apiUrl + "cashier/blank"),
         monthOfUSelect: function(e) {
             $("#loadImport").css("display", "block");
             var para = [],
@@ -4216,8 +4216,8 @@
             var files = e.files,
                 self = this;
             $('li.k-file').remove();
-            this.Uploaderror = [];
-            this.ExistRUpload = [];
+            this.Uploaderror.data([]);
+            this.ExistRUpload.data([]);
             $("#loadImport").css("display", "block");
             var reader = new FileReader();
             banhji.reading.dataSource.data([]);
@@ -4232,15 +4232,17 @@
                     if (roa.length > 0) {
                         result[sheetName] = roa;
                         for (var i = 0; i < roa.length; i++) {
-                            for (var j = 0; j < self.existReading.data().length; j++) {
-                                if (roa[i].meter_number == self.existReading.data()[j].meter_number) {
-                                    self.ExistRUpload.push({
-                                        line: j + 1,
-                                        meter_number: roa[i].meter_number,
-                                        previous: roa[i].previous,
-                                        current: roa[i].current,
-                                        status: 0
-                                    });
+                            if(self.existReading.data().length > 0){
+                                for (var j = 0; j < self.existReading.data().length; j++) {
+                                    if (roa[i].meter_number == self.existReading.data()[j].meter_number) {
+                                        self.ExistRUpload.add({
+                                            line: j + 1,
+                                            meter_number: roa[i].meter_number,
+                                            previous: roa[i].previous,
+                                            current: roa[i].current,
+                                            status: 0
+                                        });
+                                    }
                                 }
                             }
                             roa[i].invoiced = 0;
@@ -4251,7 +4253,7 @@
                             roa[i].to_date = self.get("toDateUpload");
                             if(roa[i].round != 1){
                                 if (kendo.parseInt(roa[i].current) < kendo.parseInt(roa[i].previous)) {
-                                    self.Uploaderror.push({
+                                    self.Uploaderror.add({
                                         line: i + 2,
                                         meter_number: roa[i].meter_number,
                                         previous: roa[i].previous,
@@ -4265,17 +4267,17 @@
                         }
                     }
                 });
-                if (self.Uploaderror.length > 0) {
+                if (self.Uploaderror.data().length > 0) {
                     self.set("errorShow", true);
                 } else {
                     self.set("errorShow", false);
                 }
-                if (self.ExistRUpload.length > 0) {
+                if (self.ExistRUpload.data().length > 0) {
                     self.set("existShow", true);
                 } else {
                     self.set("existShow", false);
                 }
-                if (self.Uploaderror.length > 0 || self.ExistRUpload.length > 0) {
+                if (self.Uploaderror.data().length > 0 || self.ExistRUpload.data().length > 0) {
                     self.set("fullCorrect", false);
                 } else {
                     self.set("fullCorrect", true);
@@ -8621,7 +8623,8 @@
         invoiceArray: [],
         checkAll: function(e) {
             var self = this;
-            this.set("invoiceArray", []);
+            this.invoiceArray =[];
+            this.temGroupArray = [];
             var bolValue = this.get("chkAll");
             var data = this.invoiceDS.data();
             if (bolValue == true) {
@@ -9113,26 +9116,34 @@
             var self = this;
             var date = new Date();
             var rate = banhji.source.getRate(Locale, date);
-            this.temGroupArray.push({
-                "total": Total,
-                "meter_id": MeterID,
-                "meter_number": MeterNum,
-                "meter_location": MeterLocation,
-                "meter_pole": MeterPole,
-                "meter_box": MeterBox,
-                "current": Current,
-                "previous": Previous,
-                "multi": Multi,
-                "usage": Usage,
-                "locale": Locale,
-                "rate": rate,
-                "contact": Contact,
-                "tariff": Tariff,
-                "fine": Fine,
-                "group": Group,
-                "meter_record_id": MeterRID,
+            var haveMeter = 0;
+            $.each(this.temGroupArray, function(i,v){
+                if(v.meter_id == MeterID){
+                    haveMeter = 1;
+                }
             });
-            this.tmpGroup = [];
+            if(haveMeter == 0){
+                this.temGroupArray.push({
+                    "total": Total,
+                    "meter_id": MeterID,
+                    "meter_number": MeterNum,
+                    "meter_location": MeterLocation,
+                    "meter_pole": MeterPole,
+                    "meter_box": MeterBox,
+                    "current": Current,
+                    "previous": Previous,
+                    "multi": Multi,
+                    "usage": Usage,
+                    "locale": Locale,
+                    "rate": rate,
+                    "contact": Contact,
+                    "tariff": Tariff,
+                    "fine": Fine,
+                    "group": Group,
+                    "meter_record_id": MeterRID,
+                });
+            }
+            // this.tmpGroup = [];
             if (jQuery.inArray(Group, this.tmpGroup) != -1) {
             }else{
                 this.tmpGroup.push(Group);
@@ -9157,7 +9168,7 @@
                 var items = [];
                 var Total = 0, aTariff = 0, Usage = 0, Locale = "", Rate = "", MeterID = "", MeterLocation = 0, MeterPole = 0, MeterBox = 0, Contact = "",MeterRecordID = "", Tariff = [], Fine = [];
                 $.each(self.temGroupArray, function(j,k){
-                    if(k.group == v){
+                    if( v == k.group ){
                         items.push({
                             "item_id": k.meter_id,
                             "invoice_id": "",
@@ -9170,8 +9181,6 @@
                             "locale": k.locale,
                             "type": "meter"
                         });
-                    }
-                    if(j == 0){
                         Locale = k.locale;
                         Rate = k.rate;
                         MeterID = k.meter_id;
@@ -9264,6 +9273,7 @@
                     meter_id: MeterID,
                     invoice_lines: items
                 });
+                Contact = "";
             });
             this.saveInoices();
         },
@@ -9317,6 +9327,7 @@
             this.set("DueDate", null);
             this.set("IssueDate", null);
             this.invoiceArray = [];
+            $("#loadImport").css("display", "none");
             banhji.router.navigate("/");
         }
     });
