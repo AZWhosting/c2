@@ -234,31 +234,31 @@ class Item_lines extends REST_Controller {
 					$transaction->get_by_id($value->transaction_id);
 					
 					if($transaction->exists()){
-						$referenceTxn = $transaction->transaction->get();
+						// $referenceTxn = $transaction->transaction->get();
 
-						if($transaction->type=="Cash_Purchase" || $transaction->type=="Credit_Purchase" || $transaction->type=="GRN"){
-							$value->movement = 1;
+						// if($transaction->type=="Cash_Purchase" || $transaction->type=="Credit_Purchase" || $transaction->type=="GRN"){
+						// 	$value->movement = 1;
 
-							if($referenceTxn->exists()){
-								foreach ($referenceTxn as $refTxn) {
-									if($refTxn->type=="Cash_Purchase" || $refTxn->type=="Credit_Purchase" || $refTxn->type=="GRN"){
-										$value->movement = 0;
-									}
-								}
-							}
-						}
+						// 	if($referenceTxn->exists()){
+						// 		foreach ($referenceTxn as $refTxn) {
+						// 			if($refTxn->type=="Cash_Purchase" || $refTxn->type=="Credit_Purchase" || $refTxn->type=="GRN"){
+						// 				$value->movement = 0;
+						// 			}
+						// 		}
+						// 	}
+						// }
 
-						if($transaction->type=="GDN" || $transaction->type=="Commercial_Invoice" || $transaction->type=="Vat_Invoice" || $transaction->type=="Invoice" || $transaction->type=="Commercial_Cash_Sale" || $transaction->type=="Vat_Cash_Sale" || $transaction->type=="Cash_Sale"){
-							$value->movement = -1;
+						// if($transaction->type=="GDN" || $transaction->type=="Commercial_Invoice" || $transaction->type=="Vat_Invoice" || $transaction->type=="Invoice" || $transaction->type=="Commercial_Cash_Sale" || $transaction->type=="Vat_Cash_Sale" || $transaction->type=="Cash_Sale"){
+						// 	$value->movement = -1;
 
-							if($referenceTxn->exists()){
-								foreach ($referenceTxn as $refTxn) {
-									if($refTxn->type=="GDN" || $refTxn->type=="Commercial_Invoice" || $refTxn->type=="Vat_Invoice" || $refTxn->type=="Invoice" || $refTxn->type=="Commercial_Cash_Sale" || $refTxn->type=="Vat_Cash_Sale" || $refTxn->type=="Cash_Sale"){
-										$value->movement = 0;
-									}
-								}
-							}
-						}
+						// 	if($referenceTxn->exists()){
+						// 		foreach ($referenceTxn as $refTxn) {
+						// 			if($refTxn->type=="GDN" || $refTxn->type=="Commercial_Invoice" || $refTxn->type=="Vat_Invoice" || $refTxn->type=="Invoice" || $refTxn->type=="Commercial_Cash_Sale" || $refTxn->type=="Vat_Cash_Sale" || $refTxn->type=="Cash_Sale"){
+						// 				$value->movement = 0;
+						// 			}
+						// 		}
+						// 	}
+						// }
 
 						if($value->movement==0){}else{
 							//Find Item Quantity and Amount

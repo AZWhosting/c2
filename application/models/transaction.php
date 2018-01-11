@@ -25,12 +25,20 @@ class Transaction extends DataMapper {
             'class' => 'payment_method',
             'other_field' => 'transaction'
         ),
+        'reference' => array(
+            'class' => 'transaction',
+            'other_field' => 'transaction'
+        ),
         'job' => array(
             'class' => 'job',
             'other_field' => 'transaction'
         )
 	);
 	public $has_many = array(
+        'transaction' => array(
+            'class' => 'transaction',
+            'other_field' => 'reference'
+        ),
         'attachment' => array(
             'class' => 'attachment',
             'other_field' => 'transaction'
