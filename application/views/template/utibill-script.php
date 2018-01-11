@@ -9191,8 +9191,8 @@
                         Tariff = k.tariff;
                         Fine = k.fine;
                         MeterRecordID = k.meter_record_id;
+                        Usage += k.usage;
                     }
-                    Usage += k.usage;
                 });
                 //Calculate Tariff
                 $.each(Tariff, function(x, y) {
@@ -9212,6 +9212,7 @@
                     "locale": Locale,
                     "type": "total_usage"
                 });
+                Usage = 0;
                 Total = Usage * aTariff;
                 //Plus Round Money KH
                 var AddH = 0;
