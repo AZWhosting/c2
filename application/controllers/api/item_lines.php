@@ -214,7 +214,7 @@ class Item_lines extends REST_Controller {
 		$models = json_decode($this->post('models'));
 		$data["results"] = [];
 		$data["count"] = 0;
-		$typeList = array("Cash_Purchase","Credit_Purchase","Internal_Usage","Commercial_Invoice","Vat_Invoice","Invoice","Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale","Sale_Return","Payment_Refund","Purchase_Return","Cash_Refund","Item_Adjustment");
+		$typeList = array("Cash_Purchase","Credit_Purchase","Commercial_Invoice","Vat_Invoice","Invoice","Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale","Sale_Return","Payment_Refund","Purchase_Return","Cash_Refund","Item_Adjustment","Internal_Usage");
 
 		foreach ($models as $value) {
 			$obj = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
@@ -234,32 +234,36 @@ class Item_lines extends REST_Controller {
 					$transaction->get_by_id($value->transaction_id);
 					
 					if($transaction->exists()){
-						// $referenceTxn = $transaction->transaction->get();
+						//Trigger movement
+						/*$referenceTxn = $transaction->transaction->get();
 
-						// if($transaction->type=="Cash_Purchase" || $transaction->type=="Credit_Purchase" || $transaction->type=="GRN"){
-						// 	$value->movement = 1;
+						if($transaction->type=="Cash_Purchase" || $transaction->type=="Credit_Purchase" || $transaction->type=="GRN"){
+							$value->movement = 1;
 
-						// 	if($referenceTxn->exists()){
-						// 		foreach ($referenceTxn as $refTxn) {
-						// 			if($refTxn->type=="Cash_Purchase" || $refTxn->type=="Credit_Purchase" || $refTxn->type=="GRN"){
-						// 				$value->movement = 0;
-						// 			}
-						// 		}
-						// 	}
-						// }
+							if($referenceTxn->exists()){
+								foreach ($referenceTxn as $refTxn) {
+									if($refTxn->type=="Cash_Purchase" || $refTxn->type=="Credit_Purchase" || $refTxn->type=="GRN"){
+										$value->movement = 0;
+									}
+								}
+							}
+						}
 
-						// if($transaction->type=="GDN" || $transaction->type=="Commercial_Invoice" || $transaction->type=="Vat_Invoice" || $transaction->type=="Invoice" || $transaction->type=="Commercial_Cash_Sale" || $transaction->type=="Vat_Cash_Sale" || $transaction->type=="Cash_Sale"){
-						// 	$value->movement = -1;
+						if($transaction->type=="GDN" || $transaction->type=="Commercial_Invoice" || $transaction->type=="Vat_Invoice" || $transaction->type=="Invoice" || $transaction->type=="Commercial_Cash_Sale" || $transaction->type=="Vat_Cash_Sale" || $transaction->type=="Cash_Sale"){
+							$value->movement = -1;
 
-						// 	if($referenceTxn->exists()){
-						// 		foreach ($referenceTxn as $refTxn) {
-						// 			if($refTxn->type=="GDN" || $refTxn->type=="Commercial_Invoice" || $refTxn->type=="Vat_Invoice" || $refTxn->type=="Invoice" || $refTxn->type=="Commercial_Cash_Sale" || $refTxn->type=="Vat_Cash_Sale" || $refTxn->type=="Cash_Sale"){
-						// 				$value->movement = 0;
-						// 			}
-						// 		}
-						// 	}
-						// }
-
+							if($referenceTxn->exists()){
+								foreach ($referenceTxn as $refTxn) {
+									if($refTxn->type=="GDN" || $refTxn->type=="Commercial_Invoice" || $refTxn->type=="Vat_Invoice" || $refTxn->type=="Invoice" || $refTxn->type=="Commercial_Cash_Sale" || $refTxn->type=="Vat_Cash_Sale" || $refTxn->type=="Cash_Sale"){
+										$value->movement = 0;
+									}
+								}
+							}
+						}*/
+						//End trigger movement
+						
+						//Calculate weighted average cost
+						// if(in_array($transaction->type, $typeList)){
 						if($value->movement==0){}else{
 							//Find Item Quantity and Amount
 							$itemLines = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);							
