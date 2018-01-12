@@ -183,6 +183,124 @@ class UtibillReports extends REST_Controller {
 		//Response Data
 		$this->response($data, 200);
 	}
+	function sale_total_get() {
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
+		$data["count"] = 0;
+
+		$obj = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
+			}
+		}
+		
+		//Filter		
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value['operator'])){
+	    			$obj->{$value['operator']}($value['field'], $value['value']);
+	    		} else {
+	    			if($value['field'] == "branch_id"){
+	    				$obj->where($value['field'], $value['value']);
+	    			}
+	    		}
+			}
+		}
+
+		//Results
+		$obj->where("main_bloc", 0);
+		$obj->where("main_pole", 0);
+		$obj->order_by("id", "asc");
+		$obj->get_iterated();
+		
+		if($obj->exists()){
+			foreach ($obj as $value) {
+				$blockname = $value->name;
+				//Number Of Custoemr
+				$con = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$con->where("location_id", $value->id)->get_iterated();
+				$customertotal = $con->result_count();
+				//Void
+				$void = 0;
+				$usage = 0;
+				$invamount = 0;
+				$mainamount = 0;
+				$intamount = 0;
+				$examount = 0;
+				$fineamount = 0;
+				foreach($con as $meter){
+					if($meter->status == 2){
+						$void += 1;
+					}
+					$txn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					//Filter		
+					if(!empty($filter) && isset($filter)){
+				    	foreach ($filter["filters"] as $value) {
+				    		if(isset($value['operator'])){
+				    			$txn->{$value['operator']}($value['field'], $value['value']);
+				    		} else {
+				    			if($value['field'] == "month_of"){
+				    				$txn->where($value['field'], $value['value']);
+				    			}
+				    		}
+						}
+					}
+					$txn->where("meter_id", $meter->id)->get_iterated();
+					foreach($txn as $tran){
+						$winvoice = $tran->winvoice_line->get();
+						foreach($winvoice as $w){
+							if($w->type == "usage"){
+								//Total Usage
+								$usage += intval($w->quantity);
+							}elseif($w->type == "maintenance"){
+								//Total Maintenance
+								$mainamount += floatval($w->amount);
+							}elseif($w->type == "installment"){
+								//Total Installment
+								$intamount += floatval($w->amount);
+							}elseif($w->type == "exemption"){
+								//Total Exemption
+								$examount += floatval($w->amount);
+							}elseif($w->type == "fine"){
+								//Total Fine
+								$fineamount += floatval($w->amount);
+							}
+						}
+						//Amount Invoice
+						if($tran->type == "Utility_Invoice"){
+							$invamount += floatval($tran->amount);
+						}
+					}
+				}
+				//Result
+				$data["results"][] = array(
+		 			"id" 				=> $value->id,
+		 			"bloc_name" 		=> $blockname,
+		 			"total_customer" 	=> $customertotal,
+		 			"void_customer" 	=> $void,
+		 			"total_usage" 		=> $usage
+		 		);
+			}
+
+			foreach ($objList as $value) {
+				$data["results"][] = $value;
+			}
+			$data["count"] = count($data["results"]);
+		}
+
+		//Response Data
+		$this->response($data, 200);
+	}
 
 	//Fine Collect
 	function fine_collect_get() {

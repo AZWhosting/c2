@@ -76,8 +76,10 @@ pre {
 .inv1 .cover-name-company h3 {
 	text-align: center;
 	color: #000;
-	font-size: 100%;
+	/*font-size: 100%;*/
 	text-transform: uppercase;
+	font-size: 15px;
+	font-weight: 700;
 }
 
 .inv1 .content {
@@ -117,7 +119,9 @@ pre {
 }
 .inv1 .content .left {
 	float: left;	
-	margin-right: 10px;
+	width: 100% !important;
+	margin-bottom: 0;
+	padding-bottom: 0;
 }
 .inv1 .content .left p {
 	font-size: 12px;
@@ -136,7 +140,7 @@ pre {
 	font-family: 'Content', Arial;
 }
 .inv1 th {
-	font-size: 10px;
+	font-size: 12px;
 	font-weight: bold;
 	border: 1px solid #000;
 	text-align: center;
@@ -165,12 +169,12 @@ pre {
 .inv1 .cover-signature .singature {
 	    border-top: 1px solid #000;
     padding-top: 5px;
-    width: 30%;
+    width: 34%;
     text-align: center;
     font-weight: bold;
 }
 .inv1 .cover-signature .singature p {
-	font-size: 10px;
+	font-size: 12px;
 }
 .inv1 .foot h6 {
 	    padding-left: 5px;
@@ -188,14 +192,14 @@ pre {
 }
 .inv1 .vattin p {
 	font-weight: bold;
-	font-size: 10px;
+	font-size: 12px;
 	font-family: 'Content', Arial;
 	float: left;
 }
 .inv1 .vattin span {
-	padding: 1px 2px;
-	font-size: 10px;
-	line-height: 10px;
+	/*padding: 1px 2px;*/
+	font-size: 12px;
+	line-height: 16px;
 	font-weight: bold;
 	float: left;
 	margin-left: 0.8%;
@@ -203,8 +207,13 @@ pre {
 .inv2 table td {
 	padding: 2px 0;	
 }
-
-
+.inv1 .clear p{
+	font-size: 12px !important;
+	line-height: 18px !important
+}
+.inv1 .cover-name-company{
+	width: 75% !important;
+}
 
 .headertable-invoice table{
 	    background: #daeef3;

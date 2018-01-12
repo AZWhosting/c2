@@ -695,7 +695,7 @@ class Transactions extends REST_Controller {
 			$endDate = $YY."-12-31";
 		}
 
-		$prefix = new Prefix(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$prefix = new Prefix();
 		$prefix->where('type', $type);
 		$prefix->limit(1);
 		$prefix->get();
