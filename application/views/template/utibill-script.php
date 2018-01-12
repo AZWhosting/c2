@@ -16966,6 +16966,10 @@
         exArray: [],
         pageLoad: function() {
         },
+        licenseName: "",
+        onLicenseChange: function(e){
+            this.set("licenseName", e.sender.span[0].innerText);
+        },
         search: function() {
             var self = this;
             var monthOfSearch = this.get("monthOfSelect");
@@ -16997,6 +17001,170 @@
                     });
                     this.dataSource.query({
                         filter: para,
+                    }).then(function(e){
+                        var total = 0;
+                        self.exArray = [];
+                        self.exArray.push({
+                            cells: [{
+                                value: self.get("licenseName"),
+                                textAlign: "center",
+                                colSpan: 15
+                            }]
+                        });
+                        self.exArray.push({
+                            cells: [{
+                                value: "Total Sale Report",
+                                bold: true,
+                                fontSize: 20,
+                                textAlign: "center",
+                                colSpan: 15
+                            }]
+                        });
+                        if (self.displayDate) {
+                            self.exArray.push({
+                                cells: [{
+                                    value: self.get("monthOfSelect"),
+                                    textAlign: "center",
+                                    colSpan: 15
+                                }]
+                            });
+                        }
+                        self.exArray.push({
+                            cells: [{
+                                value: "",
+                                colSpan: 15
+                            }]
+                        });
+                        self.exArray.push({
+                            cells: [{
+                                    value: "Bloc",
+                                    background: "#496cad",
+                                    color: "#ffffff"
+                                },
+                                {
+                                    value: "Customer",
+                                    background: "#496cad",
+                                    color: "#ffffff"
+                                },
+                                {
+                                    value: "Void",
+                                    background: "#496cad",
+                                    color: "#ffffff"
+                                },
+                                {
+                                    value: "Usage",
+                                    background: "#496cad",
+                                    color: "#ffffff"
+                                },
+                                {
+                                    value: "Cash",
+                                    background: "#496cad",
+                                    color: "#ffffff"
+                                },
+                                {
+                                    value: "Maintenance",
+                                    background: "#496cad",
+                                    color: "#ffffff"
+                                },
+                                {
+                                    value: "Installment",
+                                    background: "#496cad",
+                                    color: "#ffffff"
+                                },
+                                {
+                                    value: "Other Service",
+                                    background: "#496cad",
+                                    color: "#ffffff"
+                                },
+                                {
+                                    value: "Exemption",
+                                    background: "#496cad",
+                                    color: "#ffffff"
+                                },
+                                {
+                                    value: "Fine",
+                                    background: "#496cad",
+                                    color: "#ffffff"
+                                },
+                                {
+                                    value: "Balance Last Month",
+                                    background: "#496cad",
+                                    color: "#ffffff"
+                                },
+                                {
+                                    value: "Sub Total",
+                                    background: "#496cad",
+                                    color: "#ffffff"
+                                },
+                                {
+                                    value: "Cash Receipt",
+                                    background: "#496cad",
+                                    color: "#ffffff"
+                                },
+                                {
+                                    value: "Discount",
+                                    background: "#496cad",
+                                    color: "#ffffff"
+                                },
+                                {
+                                    value: "Ending Balance",
+                                    background: "#496cad",
+                                    color: "#ffffff"
+                                },
+                            ]
+                        });
+                        $.each(self.dataSource.data(), function(i,v){
+                            total += v.subtotal_amount
+                            self.exArray.push({
+                                cells: [{
+                                        value: v.bloc_name,
+                                    },
+                                    {
+                                        value: v.total_customer,
+                                    },
+                                    {
+                                        value: v.void_customer,
+                                    },
+                                    {
+                                        value: v.total_usage,
+                                    },
+                                    {
+                                        value: v.amount_invoice,
+                                    },
+                                    {
+                                        value: v.amount_maintenance,
+                                    },
+                                    {
+                                        value: v.amount_int,
+                                    },
+                                    {
+                                        value: v.amount_other_service,
+                                    },
+                                    {
+                                        value: v.amount_exemption,
+                                    },
+                                    {
+                                        value: v.amount_fine,
+                                    },
+                                    {
+                                        value: v.balance_last_month,
+                                    },
+                                    {
+                                        value: v.subtotal_amount,
+                                    },
+                                    {
+                                        value: v.amount_receive,
+                                    },
+                                    {
+                                        value: v.discount,
+                                    },
+                                    {
+                                        value: v.ending_balance,
+                                    },
+                                ]
+                            });
+                        });
+                        self.set("total", total);
                     });
                 } else {
                     alert("Please Select License");

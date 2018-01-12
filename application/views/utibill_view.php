@@ -13627,14 +13627,14 @@
 						<div id="invFormContent">
 							<div class="block-title">
 								<h3 data-bind="text: company.name"></h3>
-								<h2 data-bind="text: lang.lang.sale_detail_report">Sale Detail</h2>
+								<h2 data-bind="text: lang.lang.total_sale">Sale Detail</h2>
 								<p data-bind="text: displayDate"></p>
 							</div>
 
 							<div class="row">
 								<div class="col-xs-12 col-sm-3">
 									<div class="total-sale">
-										<p data-bind="text: lang.lang.number_of_customer">Number of Customers</p>
+										<p data-bind="text: lang.lang.number_of_bloc">Number of Customers</p>
 										<span data-bind="text: dataSource.total"></span>
 									</div>
 
@@ -13657,107 +13657,120 @@
 									    { 
 									    	field: 'bloc_name',
 									    	title: langVM.lang.bloc,
-									    	width: '50px', 
+									    	width: '250px', 
 									    	editable: 'false', 
-			                            	attributes: { style: 'text-align: right;' }, width: '120px' 
+			                            	attributes: { style: 'text-align: left;' }
 									    },
 									    { 
 									    	field: 'total_customer',
 									    	title: langVM.lang.customer,
-									    	width: '50px', 
+									    	width: '250px', 
 									    	editable: 'false', 
-			                            	attributes: { style: 'text-align: right;' }, width: '120px' 
+			                            	attributes: { style: 'text-align: center;' }
 									    },
 									    { 
 									    	field: 'void_customer',
 									    	title: langVM.lang.void,
-									    	width: '50px', 
+									    	width: '250px', 
 									    	editable: 'false', 
-			                            	attributes: { style: 'text-align: right;' }, width: '120px' 
+			                            	attributes: { style: 'text-align: center;' }
 									    },
 									    { 
 									    	field: 'total_usage',
 									    	title: langVM.lang.usage,
-									    	width: '50px', 
+									    	width: '250px', 
 									    	editable: 'false', 
-			                            	attributes: { style: 'text-align: right;' }, width: '120px' 
+			                            	attributes: { style: 'text-align: center;' }
 									    },
 									    { 
 									    	field: 'amount_invoice',
 									    	title: langVM.lang.cash,
-									    	width: '50px', 
+									    	width: '250px', 
+									    	format: '{0:n}',
 									    	editable: 'false', 
-			                            	attributes: { style: 'text-align: right;' }, width: '120px' 
+			                            	attributes: { style: 'text-align: right;' }
 									    },
 									    { 
 									    	field: 'amount_maintenance',
 									    	title: langVM.lang.maintenance,
-									    	width: '50px', 
+									    	width: '250px', 
 									    	editable: 'false', 
-			                            	attributes: { style: 'text-align: right;' }, width: '120px' 
+									    	format: '{0:n}',
+			                            	attributes: { style: 'text-align: right;' } 
 									    },
 									    { 
 									    	field: 'amount_int',
 									    	title: langVM.lang.installment,
-									    	width: '50px', 
+									    	width: '250px', 
+									    	format: '{0:n}',
 									    	editable: 'false', 
-			                            	attributes: { style: 'text-align: right;' }, width: '120px' 
+			                            	attributes: { style: 'text-align: right;' }
 									    },
 									    { 
-									    	field: 'amount_other_charge',
+									    	field: 'amount_other_service',
 									    	title: langVM.lang.other_charge,
-									    	width: '50px', 
+									    	width: '250px', 
+									    	hidden: true,
+									    	format: '{0:n}',
 									    	editable: 'false', 
-			                            	attributes: { style: 'text-align: right;' }, width: '120px' 
+			                            	attributes: { style: 'text-align: right;' }
 									    },
 									    { 
 									    	field: 'amount_exemption',
 									    	title: langVM.lang.exemption,
-									    	width: '50px', 
+									    	width: '250px', 
 									    	editable: 'false', 
-			                            	attributes: { style: 'text-align: right;' }, width: '120px' 
+									    	format: '{0:n}',
+			                            	attributes: { style: 'text-align: right;' }
 									    },
 									    { 
 									    	field: 'amount_fine',
 									    	title: langVM.lang.fine,
-									    	width: '50px', 
+									    	width: '250px', 
+									    	format: '{0:n}',
 									    	editable: 'false', 
-			                            	attributes: { style: 'text-align: right;' }, width: '120px' 
+			                            	attributes: { style: 'text-align: right;' }
 									    },
 			                            { 
 									    	field: 'balance_last_month',
 									    	title: langVM.lang.balance_last_month,
-									    	width: '50px', 
+									    	width: '250px', 
 									    	editable: 'false', 
-			                            	attributes: { style: 'text-align: right;' }, width: '120px' 
+									    	hidden: true,
+							    			format: '{0:n}',
+			                            	attributes: { style: 'text-align: right;' }
 									    },
 									    { 
 									    	field: 'subtotal_amount',
-									    	title: langVM.lang.sub_total,
-									    	width: '50px', 
+									    	title: langVM.lang.subtotal,
+									    	width: '250px', 
 									    	editable: 'false', 
-			                            	attributes: { style: 'text-align: right;' }, width: '120px' 
+									    	format: '{0:n}',
+			                            	attributes: { style: 'text-align: right;' }
 									    },
 									    { 
 									    	field: 'amount_receive',
 									    	title: langVM.lang.amount_received,
-									    	width: '50px', 
+									    	width: '250px', 
+									    	format: '{0:n}',
 									    	editable: 'false', 
-			                            	attributes: { style: 'text-align: right;' }, width: '120px' 
+			                            	attributes: { style: 'text-align: right;' }
 									    },
 									    { 
 									    	field: 'discount',
 									    	title: langVM.lang.discount,
-									    	width: '50px', 
+									    	width: '250px', 
+									    	format: '{0:n}',
 									    	editable: 'false', 
-			                            	attributes: { style: 'text-align: right;' }, width: '120px' 
+			                            	attributes: { style: 'text-align: right;' }
 									    },
 									    { 
 									    	field: 'ending_balance',
 									    	title: langVM.lang.ending_balance,
-									    	width: '50px', 
+									    	width: '250px', 
+									    	format: '{0:n}',
 									    	editable: 'false', 
-			                            	attributes: { style: 'text-align: right;' }, width: '120px' 
+			                            	attributes: { style: 'text-align: right;' },
 									    }
 			                         ]"
 			                         data-auto-bind="false"

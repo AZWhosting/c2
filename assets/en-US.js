@@ -1513,5 +1513,8 @@ var	en_US = {
 	"reading_device": "Reading Device",
 	"alert_error": "Please Reload Page. If still alert this error please contact our team.",
 	"note_recieve": "Recieve Note",
-
+	"balance_last_month": "Balance Last Month",
+	"ending_balance": "Ending Balance",
+	"number_of_bloc": "Number of Bloc",
+	"maintenance": "Maintenance",
 }

@@ -119,13 +119,21 @@ pre {
 }
 .inv1 .content .left {
 	float: left;	
-	width: 100% !important;
 	margin-bottom: 0;
 	padding-bottom: 0;
+}
+.left .dotted-ruler{
+	width: 100% !important;
 }
 .inv1 .content .left p {
 	font-size: 12px;
 	line-height: 18px;
+}
+.inv1 .cover-name-company .vattin p{
+	float: left;
+}
+.inv1 .cover-name-company .vattin span{
+	float: left;
 }
 .inv1 .content .left span {
 	font-size: 12px;
@@ -189,6 +197,7 @@ pre {
 	clear: both;	
 	margin-top: 5px;
 	overflow: hidden;
+	width: 58%;
 }
 .inv1 .vattin p {
 	font-weight: bold;

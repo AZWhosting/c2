@@ -222,7 +222,7 @@ class UtibillReports extends REST_Controller {
 		$obj->where("main_pole", 0);
 		$obj->order_by("id", "asc");
 		$obj->get_iterated();
-		
+		$data["count"] = $obj->result_count();
 		if($obj->exists()){
 			foreach ($obj as $value) {
 				$blockname = $value->name;
@@ -238,6 +238,9 @@ class UtibillReports extends REST_Controller {
 				$intamount = 0;
 				$examount = 0;
 				$fineamount = 0;
+				$amountreceive = 0;
+				$amountdiscount = 0;
+				$amountOwed = 0;
 				foreach($con as $meter){
 					if($meter->status == 2){
 						$void += 1;
@@ -245,14 +248,10 @@ class UtibillReports extends REST_Controller {
 					$txn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 					//Filter		
 					if(!empty($filter) && isset($filter)){
-				    	foreach ($filter["filters"] as $value) {
-				    		if(isset($value['operator'])){
-				    			$txn->{$value['operator']}($value['field'], $value['value']);
-				    		} else {
-				    			if($value['field'] == "month_of"){
-				    				$txn->where($value['field'], $value['value']);
-				    			}
-				    		}
+				    	foreach ($filter["filters"] as $v) {
+			    			if($v['field'] == "month_of"){
+			    				$txn->where($v['field'], $v['value']);
+			    			}
 						}
 					}
 					$txn->where("meter_id", $meter->id)->get_iterated();
@@ -279,21 +278,58 @@ class UtibillReports extends REST_Controller {
 						//Amount Invoice
 						if($tran->type == "Utility_Invoice"){
 							$invamount += floatval($tran->amount);
+							//Ending Balance
+							if($tran->status != 1){
+								$amountOwed += $rem->amount;
+								if($tran->status == 2) {
+									$qu = $tran->transaction->select('amount')->where('type', 'Cash_Receipt')->get();
+									foreach($qu as $q){
+										$amountOwed -= $q->amount;
+									};
+								}
+							}
+						}elseif($tran->type == "Cash_Receipt"){
+							$amountreceive += floatval($tran->amount);
+							$amountdiscount += floatval($tran->discount);
+						}
+						//Ending Balance
+						$remain = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						$remain->where("meter_id", $meter->id);
+						$remain->where("type", "Utility_Invoice");
+						$remain->where("deleted", 0);
+						$remain->where("status <>", 1)->get_iterated();
+						$amountOwed = 0;
+						foreach($remain as $rem) {
+							$amountOwed += $rem->amount;
+							if($rem->status == 2) {
+								$qu = $rem->transaction->select('amount')->where('type', 'Cash_Receipt')->get();
+								foreach($qu as $q){
+									$amountOwed -= $q->amount;
+								};
+							}
 						}
 					}
 				}
 				//Result
+				$subtotal = $invamount + $mainamount + $intamount + $examount + $fineamount;
 				$data["results"][] = array(
 		 			"id" 				=> $value->id,
 		 			"bloc_name" 		=> $blockname,
 		 			"total_customer" 	=> $customertotal,
 		 			"void_customer" 	=> $void,
-		 			"total_usage" 		=> $usage
+		 			"total_usage" 		=> $usage,
+		 			"amount_invoice" 	=> $invamount,
+		 			"amount_maintenance" => $mainamount,
+		 			"amount_int" 		=> $intamount,
+		 			"amount_other_service" => 0,
+		 			"amount_exemption" 	=> $examount,
+		 			"amount_fine" 		=> $fineamount,
+		 			"balance_last_month" => 0,
+		 			"subtotal_amount" 	=> $subtotal,
+		 			"amount_receive" 	=> $amountreceive,
+		 			"discount" 			=> $amountdiscount,
+		 			"ending_balance" 	=> $amountOwed
 		 		);
-			}
-
-			foreach ($objList as $value) {
-				$data["results"][] = $value;
 			}
 			$data["count"] = count($data["results"]);
 		}

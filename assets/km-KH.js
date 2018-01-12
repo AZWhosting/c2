@@ -1487,5 +1487,8 @@ var	km_KH = {
 	"reading_device": "ឧបករណ៍ធ្វើអំណាន",
 	"alert_error": "សូមធ្វើការ Refresh Page។ ប្រសិនបើមានបញ្ហាកើតឡើងបន្ទាប់ពី ​Refresh សូមទាក់ទងមកកាន់ផ្នាក់ងារ។",
 	"note_recieve": "ក្រដាសប្រាក់ទទួល",
-	
+	"balance_last_month": "បំណុលខែមុន",
+	"ending_balance": "បំណុលចុងគ្រា",
+	"number_of_bloc": "ចំនួនទីតាំង",
+	"maintenance": "ថែទាំ",
 }
