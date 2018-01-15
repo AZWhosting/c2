@@ -215,9 +215,6 @@ class Item_lines extends REST_Controller {
 		$data["results"] = [];
 		$data["count"] = 0;
 		$typeList = array("Cash_Purchase","Credit_Purchase","Commercial_Invoice","Vat_Invoice","Invoice","Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale","Sale_Return","Payment_Refund","Purchase_Return","Cash_Refund","Item_Adjustment","Internal_Usage");
-		$purchaseList = array("Cash_Purchase","Credit_Purchase", "Sale_Return","Cash_Refund");
-		$saleList = array("Commercial_Invoice","Vat_Invoice","Invoice","Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale","Purchase_Return","Payment_Refund");
-		$inventoryList = array("Item_Adjustment","Internal_Usage");
 
 		foreach ($models as $value) {
 			$obj = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
@@ -238,7 +235,7 @@ class Item_lines extends REST_Controller {
 					
 					if($transaction->exists()){
 						//Trigger movement
-						$referenceTxn = $transaction->transaction->get();
+						/*$referenceTxn = $transaction->transaction->get();
 
 						if($transaction->type=="Cash_Purchase" || $transaction->type=="Credit_Purchase" || $transaction->type=="GRN"){
 							$value->movement = 1;
@@ -262,59 +259,32 @@ class Item_lines extends REST_Controller {
 									}
 								}
 							}
-						}
+						}*/
 						//End trigger movement
 						
 						//Calculate weighted average cost
-						if(in_array($transaction->type, $typeList)){
+						// if(in_array($transaction->type, $typeList)){
+						if($value->movement==0){}else{
 							//Find Item Quantity and Amount
-							$unitOnHand = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);							
-							$unitOnHand->select_sum("quantity * conversion_ratio * movement", "total");
-							$unitOnHand->where_related("transaction", "is_recurring <>", 1);
-							$unitOnHand->where_related("transaction", "deleted <>", 1);
-							$unitOnHand->where("item_id", $value->item_id);
-							$unitOnHand->where("movement <>", 0);
-							$unitOnHand->where("deleted <>", 1);
-							$unitOnHand->get();
-
-							$purchases = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-							$purchases->select_sum("(quantity * conversion_ratio * cost) + inventory_adjust_value", "total");
-							$purchases->where_in_related("transaction", "type", $purchaseList);
-							$purchases->where_related("transaction", "is_recurring <>", 1);
-							$purchases->where_related("transaction", "deleted <>", 1);
-							$purchases->where("item_id", $value->item_id);
-							$purchases->where("deleted <>", 1);
-							$purchases->get();
-
-							$costOfSales = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-							$costOfSales->select_sum("(quantity * conversion_ratio * cost) + inventory_adjust_value", "total");
-							$costOfSales->where_in_related("transaction", "type", $saleList);
-							$costOfSales->where_related("transaction", "is_recurring <>", 1);
-							$costOfSales->where_related("transaction", "deleted <>", 1);
-							$costOfSales->where("item_id", $value->item_id);
-							$costOfSales->where("deleted <>", 1);
-							$costOfSales->get();
-
-							$inventoryCosts = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-							$inventoryCosts->select_sum("(quantity * conversion_ratio * cost) + inventory_adjust_value", "total");
-							$inventoryCosts->where_in_related("transaction", "type", $inventoryList);
-							$inventoryCosts->where_related("transaction", "is_recurring <>", 1);
-							$inventoryCosts->where_related("transaction", "deleted <>", 1);
-							$inventoryCosts->where("item_id", $value->item_id);
-							$inventoryCosts->where("movement <>", 0);
-							$inventoryCosts->where("deleted <>", 1);
-							$inventoryCosts->get();
+							$itemLines = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);							
+							$itemLines->select_sum('quantity * conversion_ratio * movement', "totalQuantity");
+							$itemLines->select_sum('(quantity * conversion_ratio * movement * cost) + inventory_adjust_value', "totalAmount");
+							$itemLines->where_related("transaction", "is_recurring <>", 1);
+							$itemLines->where_related("transaction", "deleted <>", 1);
+							$itemLines->where('item_id', $value->item_id);
+							$itemLines->where('movement <>', 0);
+							$itemLines->where("deleted <>", 1);
+							$itemLines->get();
 							
 							//Quantity
 							$currentQuantity = floatval($value->quantity) * floatval($value->conversion_ratio) * floatval($value->movement);
-							$totalQuantity = floatval($unitOnHand->total) + $currentQuantity;
+							$totalQty = floatval($itemLines->totalQuantity) + $currentQuantity;
 
-							//Additional cost
+							//Amount
 							$additionalCost = 0;
 							if(isset($value->additional_cost)){
 								$additionalCost = floatval($value->additional_cost);
 							}
-
 							$currentAmount = ($currentQuantity * floatval($value->cost) + $additionalCost) / floatval($value->rate);
 							$totalAmount = floatval($itemLines->totalAmount) + $currentAmount;
 

@@ -210,8 +210,8 @@ class Items extends REST_Controller {
 		
 		$obj->where("nature <>", "main_variant");
 		$obj->where("is_pattern <>", 1);
-		$obj->where("deleted <>", 1);			
-		
+		$obj->where("deleted <>", 1);
+
 		//Results
 		if($page && $limit){
 			$obj->get_paged_iterated($page, $limit);
@@ -252,10 +252,10 @@ class Items extends REST_Controller {
 
 	//POST
 	function index_post() {
-		$models = json_decode($this->post('models'));				
+		$models = json_decode($this->post('models'));
 		$data["results"] = [];
-		$data["count"] = 0;				
-		
+		$data["count"] = 0;
+
 		foreach ($models as $value) {
 			$obj = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
@@ -513,58 +513,75 @@ class Items extends REST_Controller {
 		$data["results"] = [];
 		$data["count"] = 1;
 
-		$obj = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+		$purchaseList = array("Cash_Purchase","Credit_Purchase", "Sale_Return","Cash_Refund");
+		$saleList = array("Commercial_Invoice","Vat_Invoice","Invoice","Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale","Purchase_Return","Payment_Refund");
+		$inventoryList = array("Item_Adjustment","Internal_Usage");
+		
+		$unitOnHand = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$purchases = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$additionalCosts = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$costOfSales = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$inventoryCosts = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$zeroQty = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-
-		//Sort
-		if(!empty($sort) && isset($sort)){
-			foreach ($sort as $value) {
-				if(isset($value['operator'])){
-					$obj->{$value['operator']}($value["field"], $value["dir"]);
-				}else{
-					$obj->order_by($value["field"], $value["dir"]);
-				}
-			}
-		}
 		
 		//Filter		
 		if(!empty($filter['filters']) && isset($filter['filters'])){
 	    	foreach ($filter['filters'] as $value) {
 	    		if(isset($value['operator'])) {
-					$obj->{$value['operator']}($value['field'], $value['value']);
+					$unitOnHand->{$value['operator']}($value['field'], $value['value']);
+					$purchases->{$value['operator']}($value['field'], $value['value']);
 					$additionalCosts->{$value['operator']}($value['field'], $value['value']);
+					$costOfSales->{$value['operator']}($value['field'], $value['value']);
+					$inventoryCosts->{$value['operator']}($value['field'], $value['value']);
 					$zeroQty->{$value['operator']}($value['field'], $value['value']);
 				} else {
-	    			$obj->where($value["field"], $value["value"]);
+	    			$unitOnHand->where($value["field"], $value["value"]);
+	    			$purchases->where($value["field"], $value["value"]);
 	    			$additionalCosts->where($value["field"], $value["value"]);
+	    			$costOfSales->where($value["field"], $value["value"]);
+	    			$inventoryCosts->where($value["field"], $value["value"]);
 	    			$zeroQty->where($value["field"], $value["value"]);
 				}
 			}
 		}
 
-		$obj->select_sum('quantity * conversion_ratio * movement', "totalQuantity");
-		$obj->select_sum('(quantity * conversion_ratio * movement * cost) + inventory_adjust_value', "totalAmount");
-		$obj->where_related("transaction", "is_recurring <>", 1);
-		$obj->where_related("transaction", "deleted <>", 1);
-		// $obj->where_related("item", "item_type_id", 1);
-		$obj->where('movement <>', 0);
-		$obj->where("deleted <>", 1);
-		$obj->get();
+		$unitOnHand->select_sum("quantity * conversion_ratio * movement", "total");
+		$unitOnHand->where_related("transaction", "is_recurring <>", 1);
+		$unitOnHand->where_related("transaction", "deleted <>", 1);
+		$unitOnHand->where("movement <>", 0);
+		$unitOnHand->where("deleted <>", 1);
+		$unitOnHand->get();
 		
-		$additionalCosts->select_sum("additional_cost");
-		$additionalCosts->where_related("transaction", "is_recurring <>", 1);
-		$additionalCosts->where_related("transaction", "deleted <>", 1);
-		$additionalCosts->where_related("item", "item_type_id", 1);
-		$additionalCosts->where('movement <>', 0);
-		$additionalCosts->where("deleted <>", 1);
-		$additionalCosts->get();
+		$purchases->select_sum("(quantity * conversion_ratio * cost) + item_lines.additional_cost + inventory_adjust_value", "total");
+		$purchases->where_in_related("transaction", "type", $purchaseList);
+		$purchases->where_related("transaction", "is_recurring <>", 1);
+		$purchases->where_related("transaction", "deleted <>", 1);
+		$purchases->where("deleted <>", 1);
+		$purchases->get();
+
+		$costOfSales->select_sum("(quantity * conversion_ratio * cost) + inventory_adjust_value", "total");
+		$costOfSales->where_in_related("transaction", "type", $saleList);
+		$costOfSales->where_related("transaction", "is_recurring <>", 1);
+		$costOfSales->where_related("transaction", "deleted <>", 1);
+		$costOfSales->where("deleted <>", 1);
+		$costOfSales->get();
+
+		$inventoryCosts->select_sum("(quantity * conversion_ratio * movement * cost) + inventory_adjust_value", "total");
+		$inventoryCosts->where_in_related("transaction", "type", $inventoryList);
+		$inventoryCosts->where_related("transaction", "is_recurring <>", 1);
+		$inventoryCosts->where_related("transaction", "deleted <>", 1);
+		$inventoryCosts->where("movement <>", 0);
+		$inventoryCosts->where("deleted <>", 1);
+		$inventoryCosts->get();
+
+		//Inventory Total Cost
+		$inventoryTotalCost = floatval($purchases->total) - floatval($costOfSales->total) + floatval($inventoryCosts->total);
 
 		$cost = 0;
-		if(floatval($obj->totalQuantity)==0){
+		if(floatval($unitOnHand->total)==0){
+			$zeroQty->where_in_related("transaction", "type", $saleList);
 			$zeroQty->where_related("transaction", "is_recurring <>", 1);
 			$zeroQty->where_related("transaction", "deleted <>", 1);
-			$zeroQty->where('movement', -1);
 			$zeroQty->where("deleted <>", 1);
 			$zeroQty->order_by_related("transaction", "issued_date", "DESC");
 			$zeroQty->limit(1);
@@ -574,14 +591,14 @@ class Items extends REST_Controller {
 				$cost = floatval($zeroQty->cost) / floatval($zeroQty->rate);
 			}
 		}else{
-			$cost = (floatval($obj->totalAmount) + floatval($additionalCosts->additional_cost)) / floatval($obj->totalQuantity);
+			$cost = $inventoryTotalCost / floatval($unitOnHand->total);
 		}
 		
 		$data["results"][] = array(
 			"id" 		=> 0,
-			"quantity"	=> floatval($obj->totalQuantity),
+			"quantity"	=> floatval($unitOnHand->total),
 			"cost"		=> $cost,
-			"amount"	=> floatval($obj->totalAmount)
+			"amount"	=> $inventoryTotalCost
 		);
 
 		//Response Data		
@@ -730,7 +747,6 @@ class Items extends REST_Controller {
 		//Response data
 		$this->response($data, 200);
 	}
-		
 
 	//GET ITEM CONTACT
 	function contact_get() {		
@@ -741,7 +757,7 @@ class Items extends REST_Controller {
 		$data["results"] = array();
 		$data["count"] = 0;
 
-		$obj = new Item_contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+		$obj = new Item_contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 		//Sort
 		if(!empty($sort) && isset($sort)){					
@@ -749,7 +765,7 @@ class Items extends REST_Controller {
 				$obj->order_by($value["field"], $value["dir"]);
 			}
 		}
-		
+
 		//Filter		
 		if(!empty($filters) && isset($filters)){
 	    	foreach ($filters as $value) {
@@ -780,7 +796,7 @@ class Items extends REST_Controller {
 		//Response Data		
 		$this->response($data, 200);		
 	}
-	
+
 	//POST ITEM CONTACT
 	function contact_post() {
 		$models = json_decode($this->post('models'));
@@ -804,7 +820,7 @@ class Items extends REST_Controller {
 		}
 		$data["count"] = count($data["results"]);
 		
-		$this->response($data, 201);						
+		$this->response($data, 201);
 	}
 
 	//PUT ITEM CONTACT
@@ -880,7 +896,7 @@ class Items extends REST_Controller {
 		  	break;
 		case "8":
 		  	$header = "TRA";
-		  	break;									
+		  	break;
 		default:
 		  	$header = "INP";
 		}
@@ -911,7 +927,7 @@ class Items extends REST_Controller {
 		}else{
 			$no++;
 		}
-								
+
 		$number = $headerWithDate . str_pad($no, 5, "0", STR_PAD_LEFT);					
 		
 		return $number;				
@@ -1027,7 +1043,7 @@ class Items extends REST_Controller {
 		$data["results"] = array();
 		$data["count"] = 0;
 
-		$obj = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+		$obj = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 		//Sort
 		if(!empty($sort) && isset($sort)){					
@@ -1076,7 +1092,7 @@ class Items extends REST_Controller {
 					"price_avg" 	=> floatval($record->price_avg)
 				);
 			}
-		}		
+		}
 
 		//Response Data		
 		$this->response($data, 200);	
@@ -1133,7 +1149,7 @@ class Items extends REST_Controller {
 					"item" 			=> $value->item->get_raw()->result()				
 				);
 			}
-		}				
+		}
 
 		//Response Data		
 		$this->response($data, 200);	
@@ -1148,7 +1164,7 @@ class Items extends REST_Controller {
 		$data["results"] = array();
 		$data["count"] = 0;
 
-		$obj = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+		$obj = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 		//Sort
 		if(!empty($sort) && isset($sort)){					
@@ -1156,14 +1172,14 @@ class Items extends REST_Controller {
 				$obj->order_by($value["field"], $value["dir"]);
 			}
 		}
-		
+
 		$obj->where("item_type_id", 1);
 		$obj->where("is_catalog", 0);
-		$obj->where("is_assembly", 0);		
-		
+		$obj->where("is_assembly", 0);
+
 		//Results
 		$obj->get_paged_iterated($page, $limit);
-		$data["count"] = $obj->paged->total_rows;							
+		$data["count"] = $obj->paged->total_rows;
 
 		if($obj->result_count()>0){
 			foreach ($obj as $value) {
@@ -1198,7 +1214,7 @@ class Items extends REST_Controller {
 					"cost" 			=> $cost
 				);
 			}
-		}		
+		}
 
 		//Response Data		
 		$this->response($data, 200);	
@@ -1208,7 +1224,7 @@ class Items extends REST_Controller {
 	function inventory_turnover_list_get() {		
 		$filters 	= $this->get("filter")["filters"];		
 		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
 		$sort 	 	= $this->get("sort");		
 		$data["results"] = array();
 		$data["count"] = 0;
@@ -1228,7 +1244,7 @@ class Items extends REST_Controller {
 		
 		//Results
 		$obj->get_paged_iterated($page, $limit);
-		$data["count"] = $obj->paged->total_rows;							
+		$data["count"] = $obj->paged->total_rows;
 
 		if($obj->result_count()>0){
 			foreach ($obj as $value) {
@@ -1279,7 +1295,7 @@ class Items extends REST_Controller {
 					"days" 			=> $days
 				);
 			}
-		}		
+		}
 
 		//Response Data		
 		$this->response($data, 200);	
@@ -1289,12 +1305,12 @@ class Items extends REST_Controller {
 	function inventory_movement_summary_get() {		
 		$filters 	= $this->get("filter")["filters"];		
 		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
 		$sort 	 	= $this->get("sort");		
 		$data["results"] = [];
 		$data["count"] = 0;
 
-		$obj = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+		$obj = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 		//Sort
 		if(!empty($sort) && isset($sort)){					
@@ -1309,7 +1325,7 @@ class Items extends REST_Controller {
 		
 		//Results
 		$obj->get_paged_iterated($page, $limit);
-		$data["count"] = $obj->paged->total_rows;							
+		$data["count"] = $obj->paged->total_rows;
 
 		if($obj->exists()){
 			foreach ($obj as $value) {
@@ -1442,7 +1458,7 @@ class Items extends REST_Controller {
 		$data["results"] = [];
 		$data["count"] = 0;
 
-		$obj = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+		$obj = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 		//Sort
 		if(!empty($sort) && isset($sort)){					
@@ -1493,7 +1509,7 @@ class Items extends REST_Controller {
 	function purchase_by_vendor_detail_get() {		
 		$filters 	= $this->get("filter")["filters"];		
 		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
 		$sort 	 	= $this->get("sort");		
 		$data["results"] = [];
 		$data["count"] = 0;
@@ -1551,7 +1567,7 @@ class Items extends REST_Controller {
 		$sort 	 	= $this->get("sort");
 		$data["results"] = [];
 		$data["count"] = 0;
-		
+
 		$obj = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 		//Sort
