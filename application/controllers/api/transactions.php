@@ -43,7 +43,6 @@ class Transactions extends REST_Controller {
 		$this->response($data, 200);
 	}
 
-
 	//GET
 	function index_get() {
 		$filter 	= $this->get("filter");
