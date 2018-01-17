@@ -5144,6 +5144,7 @@
         },
         setCashierItems: function() {
             var self = this;
+            this.cashierItemDS.data([]);
             $.each(this.currencyDS.data(), function(i, v) {
                 self.cashierItemDS.add({
                     cashier_session_id: "",

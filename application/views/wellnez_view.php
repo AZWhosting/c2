@@ -239,11 +239,9 @@
 *	Water Section      	  *
 **************************** -->
 <script id="wDashBoard" type="text/x-kendo-template">
-	<div class="container">
-		<!-- <img style="margin: 0 0 5px -21px;" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/water_logo/utibill_logo.png" width="300" > -->
+	<div class="container" style="margin-top: 50px;">
 		<div class="row" style="margin-top: 30px;">
 			<div class="col-md-6">
-				
 				<div class="col-md-12" style="padding: 0; margin: 0; ">
 					<ul id="module-image">
 						<li style="text-align: center;">
@@ -568,13 +566,13 @@
 						            	</a>
 						            </li>
 						            <li>
-						            	<a href="#ComDetail" data-bind="click: goComDetail" class="glyphicons retweet_2" data-toggle="tab">
-						            		<i></i><span class="strong"><span >Company Detail</span></span>
+						            	<a href="#Branch" data-bind="click: goBranch" class="glyphicons calculator" data-toggle="tab">
+						            		<i></i><span class="strong"><span >Branch</span></span>
 						            	</a>
 						            </li>
 						            <li>
-						            	<a href="#Branch" data-bind="click: goBranch" class="glyphicons calculator" data-toggle="tab">
-						            		<i></i><span class="strong"><span >Branch</span></span>
+						            	<a href="#Room" data-bind="click: goRoom" class="glyphicons calculator" data-toggle="tab">
+						            		<i></i><span class="strong"><span >Room</span></span>
 						            	</a>
 						            </li>
 						            <li>
@@ -628,135 +626,68 @@
 										        </tbody>
 							            	</table>
 							            </div>
-							            <div class="tab-pane" id="ComDetail">
-							                <div class="row">
-							                    <div class="col-xs-12 col-md-12 col-lg-12">
-							                        <section class="box-typical edit-company">
-							                        	<div class="row-fluid">
-								                        	<div class="col-sm-6">
-									                            <img width="240px" data-bind="attr: {src: company.url}" />
-									                            <input 
-									                            	data-role="upload" 
-									                            	id="companyLogo" 
-									                            	class="form-control col-md-7 col-xs-12" 
-									                            	type="file" 
-									                            	data-bind="events: {select: upload}" 
-									                            	data-show-file-list="false" />
-									                        </div>
-									                        <div class="col-sm-6">
-									                        	<div class="row-fluid">
-																	<div id="map" class="col-xs-12 col-sm-12" style="height: 200px;"></div>
-																</div>
-																<div class="separator line bottom"></div>
-																<div class="row-fluid">	
-																	<div class="col-xs-12 col-sm-6">
-																		<div class="control-group">
-															    			<label for="latitute"><span data-bind="text: lang.lang.latitute"></span> </label>
-																			<div class="input-prepend">
-																				<span style="float: left;" class="add-on glyphicons direction"><i></i></span>
-																				<input style="float: left;  width: 77%; padding: 4px 8px; border: 1px solid #efefef; line-height: 20px; box-shadow: none;" type="text" class="input-large span12" data-bind="value: company.latitute, events:{change: loadMap}" placeholder="012345.67897">
-																			</div>
-																		</div>
-																	</div>
-																	<div class="col-xs-12 col-sm-6">
-																		<div class="control-group">
-															    			<label for="longtitute"><span data-bind="text: lang.lang.longtitute"></span> </label>
-															    			<div class="input-prepend">
-																				<span style="float: left;" class="add-on glyphicons google_maps"><i></i></span>
-																				<input style="float: left;  width: 77%;  box-shadow: none;padding: 4px 8px; border: 1px solid #efefef; line-height: 20px; box-shadow: none;" type="text" class="input-large span12" data-bind="value: company.longtitute, events:{change: loadMap}" placeholder="012345.67897">
-																			</div>										
-																		</div>
-																	</div>										
-																</div>
-									                        </div>
-									                    </div>
-									                    <div class="row-fluid">
-							                            	<div class="col-sm-6">
-								                            	<div class="col-sm-4">
-								                            		<span data-bind="text: lang.lang.company_name"></span>
-								                            	</div>
-								                            	<div class="col-sm-8">
-								                            		<input type="text" 
-								                            			class="k-textbox"" id="" placeholder="" 
-								                            			data-bind="value: company.name">
-								                            	</div>
-								                            </div>
-								                            <div class="col-sm-6">
-								                            	<div class="col-sm-4">
-								                            		<span data-bind="text: lang.lang.telephone"></span>
-								                            	</div>
-								                            	<div class="col-sm-8">
-								                            		<input type="text" 
-								                            			class="k-textbox" id="" placeholder="" 
-								                            			data-bind="value: company.telephone">
-								                            	</div>
-								                            </div>
-								                        </div>
-								                        <div class="row-fluid">
-							                            	<div class="col-sm-6">
-								                            	<div class="col-sm-4">
-								                            		<span data-bind="text: lang.lang.email"></span>
-								                            	</div>
-								                            	<div class="col-sm-8">
-								                            		<input type="text" 
-								                            			class="k-textbox" id="" placeholder="" 
-								                            			data-bind="value: company.email">
-								                            	</div>
-								                            </div>
-								                            <div class="col-sm-6">
-								                            	<div class="col-sm-4">
-								                            		<span data-bind="text: lang.lang.address"></span>
-								                            	</div>
-								                            	<div class="col-sm-8">
-								                            		<input type="text" 
-								                            			class="k-textbox" id="" placeholder="" 
-								                            			data-bind="value: company.address">
-								                            	</div>
-								                            </div>
-								                        </div>
-							                            <div class="row-fluid">
-							                            	<div class="col-sm-6">
-								                            	<div class="col-sm-4">
-								                            		<span data-bind="text: lang.lang.city"></span>
-								                            	</div>
-								                            	<div class="col-sm-8">
-								                            		<input type="text" 
-								                            			class="k-textbox" id="" placeholder="" 
-								                            			data-bind="value: company.city">
-								                            	</div>
-								                            </div>
-								                            <div class="col-sm-6">
-								                            	<div class="col-sm-4">
-								                            		<span data-bind="text: lang.lang.country"></span>
-								                            	</div>
-								                            	<div class="col-sm-8">
-								                            		 <input type="text" 
-								                            		 	class="form-control" 
-								                            		 	data-role="dropdownlist" 
-								                            		 	data-bind="source: countryDS,
-								                            		 		value: company.country_id" 
-								                            		 	data-text-field="name" data-value-field="id">
-								                            	</div>
-								                            </div>
-								                        </div>
-							                        </section>
-							                    </div>
-							                </div>
-							            </div>
 							            <div class="tab-pane" id="Branch">
-							            	<a class="btn-icon btn-primary glyphicons circle_plus" style="width: 80px; padding: 5px 7px 5px 35px !important; text-align: left;" href="#/add_license"><i></i><span data-bind="text: lang.lang.add">Add</span></a>
+							            	<a class="btn-icon btn-primary glyphicons circle_plus" style="width: 80px; padding: 5px 7px 5px 35px !important; text-align: left;" href="#/branch"><i></i><span data-bind="text: lang.lang.add">Add</span></a>
 							            	<table style="width: 100%;" class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 							            		<thead>
 							            			<tr>
 							            				<th style="vertical-align: top; text-align: center;" ><span data-bind="text: lang.lang.name">Name</span></th>
-							            				<th style="vertical-align: top; text-align: center;" ><span data-bind="text: lang.lang.code">Code</span></th>
+							            				<th style="vertical-align: top; text-align: center;" ><span data-bind="text: lang.lang.mobile">Code</span></th>
 							            				<th style="vertical-align: top; text-align: center;" ><span data-bind="text: lang.lang.telephone">Telephone</span></th>
 							            				<th style="vertical-align: top; text-align: center;" ><span data-bind="text: lang.lang.action">Action</span></th>
 							            			</tr>
 							            		</thead>
-							            		<tbody data-role="listview"
+							            		<tbody 
+							            			data-role="listview"
 									                data-template="branch-template"
-									                data-bind="source: brachDS"></tbody>
+									                data-bind="source: branchDS">
+									            </tbody>
+							            	</table>
+							            </div>
+							            <div class="tab-pane" id="Room">
+							            	<div style="clear: both;">
+								            	<input data-role="dropdownlist"
+								            	   class="span3"
+								            	   style="padding-right: 1px;height: 32px;"
+						            			   data-option-label="(--- Branch ---)"
+						            			   data-auto-bind="false"
+								                   data-value-primitive="true"
+								                   data-text-field="name"
+								                   data-value-field="id"
+								                   data-bind="value: roomBranch,
+								                              source: branchDS,
+								                              events: {change: branchRChange}"/>
+								            	<input 
+								            		data-bind="value: roomName, attr: {placeholder: lang.lang.name}" 
+								            		type="text" placeholder="Location" style="height: 32px; padding: 5px; margin-right: 10px; margin-left: 10px;"  class="span3 k-textbox k-invalid" />
+								            	<input 
+								            		data-bind="value: roomNumber, attr: {placeholder: lang.lang.number}" type="text" placeholder="Abbr" style="height: 32px; padding: 5px; margin-right: 10px;" class="span3 k-textbox k-invalid" />
+								            	<input data-role="dropdownlist"    
+									               data-value-primitive="true"
+									               data-text-field="name"
+									               data-value-field="id"
+									               data-bind="
+									               		value: roomStatus,
+									                    source: statusAR" />
+								            	<a class="btn-icon btn-primary glyphicons circle_plus cutype-icon" style="width: 80px; padding: 5px 7px 5px 35px !important; text-align: left;" data-bind="click: addRoom"><i></i><span data-bind="text: lang.lang.add">Add</span></a>
+								            </div>
+
+							            	<table style="width: 100%;" class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
+							            		<thead>
+							            			<tr>
+							            				<th style="vertical-align: top; text-align: center;" ><span >Branch</span></th>
+							            				<th style="vertical-align: top; text-align: center;" ><span data-bind="text: lang.lang.name">Code</span></th>
+							            				<th style="vertical-align: top; text-align: center;" ><span data-bind="text: lang.lang.number">Telephone</span></th>
+							            				<th style="vertical-align: top; text-align: center;" ><span data-bind="text: lang.lang.status">Telephone</span></th>
+							            				<th style="vertical-align: top; text-align: center;" ><span data-bind="text: lang.lang.action">Action</span></th>
+							            			</tr>
+							            		</thead>
+							            		<tbody 
+							            			data-role="listview"
+									                data-template="room-template"
+									                data-edit-template="room-edit-template"
+									                data-bind="source: roomDS">
+									            </tbody>
 							            	</table>
 							            </div>
 							        </div>
@@ -770,6 +701,64 @@
 			</div>
 		</div>
 	</div>
+</script>
+<script id="room-template" type="text/x-kendo-tmpl">
+    <tr>
+    	<td>
+    		#= branch_name#
+   		</td>
+   		<td align="center">
+    		#= name#
+   		</td>
+   		<td align="center">
+    		#= number#
+   		</td>
+   		<td align="center">   			   
+		    #if(status == 1){#
+		    	Active
+		    #}else{#
+		    	Inactive
+		    #}#
+   		</td> 
+   		<td>
+   			<span style="cursor: pointer;" class="k-edit-button"><i class="icon-edit"></i> <span data-bind="text: lang.lang.edit">Edit</span></span>
+   		</td> 		
+   	</tr>
+</script>
+<script id="room-edit-template" type="text/x-kendo-tmpl">
+	<tr>
+		<td>
+            <input data-role="dropdownlist"
+			   data-option-label="(--- Select ---)"       
+               data-value-primitive="true"
+               data-text-field="name"
+               data-value-field="id"
+               data-bind="
+               		value: branch_id,
+                    source: branchDS" />
+        </td>
+		<td align="center">
+            <input type="text" class="k-textbox" data-bind="value:name" name="ProductName" required="required" validationMessage="required" />
+        </td>
+		<td align="center">
+            <input type="text" class="k-textbox" data-bind="value:number" name="abbr" required="required" validationMessage="required" />
+        </td>
+        <td align="center">
+            <input data-role="dropdownlist"    
+               data-value-primitive="true"
+               data-text-field="name"
+               data-value-field="id"
+               data-bind="
+               		value: status,
+                    source: statusAR" />
+        </td>
+		<td align="center">
+	        <div class="edit-buttons">
+	            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-i-check"></span></a>
+	            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
+	        </div>
+	    </td>
+	</tr>
 </script>
 <script id="custType-template" type="text/x-kendo-tmpl">
     <tr>
@@ -928,13 +917,13 @@
     		#= name#
    		</td>
    		<td align="center">
-    		#= code#
+    		#= mobile#
    		</td>
    		<td align="center">
     		#= telephone#
    		</td>
    		<td align="center">   			   
-		    <a class="btn-action glyphicons pencil btn-success k-edit-button" href="\\#/branch/#= id#"><i></i></a>
+		    <a class="btn-action glyphicons pencil btn-success" href="\\#/branch/#= id#"><i></i></a>
    		</td>   		
    	</tr>
 </script>
@@ -1083,7 +1072,7 @@
 	</span>
 	<span style="width:15%; text-align: right; float: right; padding-right: 15px; text-transform: capitalize;">#=type#</span>
 </script>
-<script id="addLicense" type="text/x-kendo-template">
+<script id="Branch" type="text/x-kendo-template">
 	<div class="container">
 		<div class="row-fluid">
 			<div class="background">
@@ -1092,19 +1081,16 @@
 						<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
 					</div>
 					<div id="example" class="k-content">
-						<h2 data-bind="text: lang.lang.add_license">Add License</h2>
+						<h2>Branch</h2>
 						<div class="hidden-print pull-right">
 				    		<span class="glyphicons no-js remove_2" 
 								data-bind="click: cancel"><i></i></span>
 						</div>
-
 						<div class="clear"></div>
-			        
-				        <div class="row">
+				        <!-- <div class="row">
 				        	<div class="col-xs-12 col-sm-3">
-								<!-- Group -->
 								<div class="control-group">
-									<label><span data-bind="text: lang.lang.type">Type</span> <span style="color:red">*</span></label>
+									<label><span data-bind="text: lang.lang.type">Is Center</span> <span style="color:red">*</span></label>
 			              			<br>
 			              			<select data-role="dropdownlist"
 					                   data-value-primitive="true"
@@ -1114,32 +1100,16 @@
 					                   	source: selectMeterType,
 					                   	value: obj.type"
 					                   style="width: 100%; margin-bottom: 15px;" ></select>
-								</div>
-								<!-- // Group END -->											
+								</div>			
 							</div>
-						</div>
-				        <!-- Top Part -->
+						</div> -->
 				    	<div class="row-fluid">
 				    		<div class="col-xs-12 col-sm-12 well">
 								<div class="row">
-									<div class=col-xs-12 col-sm-3">
-										<!-- Group -->
-										<div class="control-group">
-											<label ><span data-bind="text: lang.lang.license_no">License No.</span> <span style="color:red">*</span></label>
-											<input 
-												class="k-textbox" 
-								            	data-bind="value: obj.number, attr: {placeholder: lang.lang.license_no}"
-								            	placeholder="License No." 
-								              	required data-required-msg="required"
-								              	style="width: 100%;" />
-										</div>
-										<!-- // Group END -->
-									</div>
-
 									<div class="col-xs-12 col-sm-3" >	
 										<!-- Group -->
 										<div class="control-group">
-											<label ><span data-bind="text: lang.lang.license_name">License Name</span></label>										
+											<label ><span>Name</span></label>
 					              			<br>
 					              			<input
 					              				class="k-textbox" 
@@ -1147,11 +1117,8 @@
 							              		placeholder="Name" 
 							              		style="width: 100%;" />
 										</div>
-										<!-- // Group END -->
 									</div>
-
 									<div class="col-xs-12 col-sm-3">
-										<!-- Group -->
 										<div class="control-group">
 											<label ><span data-bind="text: lang.lang.abbr">Abbr</span></label>
 								            <input 
@@ -1160,16 +1127,14 @@
 							            		data-bind="value: obj.abbr, attr: {placeholder: lang.lang.abbr}" 
 							              		style="width: 100%;" />
 										</div>
-										<!-- // Group END -->
 									</div>
-
 									<div class="col-xs-12 col-sm-3">
 										<div class="control-group">
 											<label ><span data-bind="text: lang.lang.representative">Representative</span></label>
 											<input 
 								            	class="k-textbox" 
 								            	placeholder="Representative" 
-							            		data-bind="value: obj.representative, attr: {placeholder: lang.lang.representative}" 
+							            		data-bind="value: obj.representative, attr: {placeholder: lang.lang.representative}"
 							              		style="width: 100%;" />
 										</div>
 									</div>
@@ -1187,11 +1152,8 @@
 										</div>
 									</div>
 								</div>
-								
 								<div class="row">
-									
 									<div class="col-xs-12 col-sm-3">
-										<!-- Group -->
 										<div class="control-group">
 											<label ><span data-bind="text: lang.lang.currency">Currency</span></label>
 											<select data-role="dropdownlist"
@@ -1203,11 +1165,8 @@
 							                   	value: obj.currency"
 							                   style="width: 100%; margin-bottom: 15px;" ></select>
 							    		</div>
-										<!-- // Group END -->
 									</div>
-
 									<div class="col-xs-12 col-sm-3">
-										<!-- Group -->
 										<div class="control-group">
 											<label ><span data-bind="text: lang.lang.status">Status</span> </label>
 								            <select data-role="dropdownlist"
@@ -1219,11 +1178,8 @@
 							                   	value: obj.status"
 							                   style="width: 100%;" ></select>
 										</div>
-										<!-- // Group END -->
 									</div>
-
 									<div class="col-xs-12 col-sm-3">
-										<!-- Group -->
 										<div class="control-group">
 											<label ><span data-bind="text: lang.lang.expire_date">Expire Date</span></label>
 								            <input type="text" 
@@ -1231,12 +1187,11 @@
 							                	data-role="datepicker"
 							                	data-format="dd-MM-yyyy"
 							                	placeholder="dd-mm-yyyy" 
-									           	data-bind="value: obj.expire_date,
-									           			  	min: toDay" />
+									           	data-bind="value: 
+									           		obj.expire_date,
+									           		min: toDay" />
 										</div>
-										<!-- // Group END -->
 									</div>
-
 									<div class="col-xs-12 col-sm-3">
 										<div class="control-group">
 											<label ><span data-bind="text: lang.lang.maximum_household">Maximum Household</span> <span style="color:red">*</span></label>
@@ -1248,7 +1203,6 @@
 										</div>
 									</div>
 								</div>
-
 								<div class="row">
 									<div class="col-xs-12 col-sm-12">
 										<div class="control-group">
@@ -1260,15 +1214,10 @@
 										</div>
 									</div>
 								</div>
-
 							</div>
-							
 						</div>
-								
-						<!-- // Bottom Tabs -->
 						<div class="row-fluid">
 							<div class="box-generic" >
-							    <!-- //Tabs Heading -->
 							    <div class="tabsbar tabsbar-1" style="background: #203864 !important; color: #fff;">
 							        <ul class="row-fluid row-merge">
 							            <li class="span2 glyphicons nameplate_alt active">
@@ -1282,11 +1231,7 @@
 							            </li>
 							        </ul>
 							    </div>
-							    <!-- // Tabs Heading END -->
-
 							    <div class="tab-content">
-
-							    	<!-- //GENERAL INFO -->
 							        <div class="tab-pane active" id="tab1">
 							        	<div class="row" style="margin-bottom: 15px;">
 							        		<div class="col-xs-12 col-sm-3">
@@ -1367,9 +1312,6 @@
 							              	</div>
 							        	</div>
 						        	</div>
-							        <!-- //GENERAL INFO END -->
-
-							        <!-- //ACCOUNTING -->
 							        <div class="tab-pane" id="tab2">
 							        	<div class="row-fluid">
 							        		<div class="controls">
@@ -1381,37 +1323,21 @@
 								                </textarea>
 					                      	</div>			        		
 							            </div>
-							            <div class="row">
-							            	<div class="col-xs-12 col-sm-3">
-							        			<span data-bind="text: lang.lang.day_to_be_disconnected">ចំនួនថ្ងៃដែលត្រូវប្តាច់</span>
-							        		</div>
-							        		<div class="col-xs-12 col-sm-3">
-							        			<input class="k-textbox" 
-							        				data-bind="value: obj.day_disconnect, attr: {placeholder: lang.lang.day}" placeholder="Mobile" 
-							        				style="width: 100%;">
-							        		</div>
-							            </div>
 						        	</div>
-							        <!-- //ACCOUNTING END -->
-
-							        <!-- //CONTACT PERSON -->
 							        <div class="tab-pane" id="tab3">
 							        	<p><span >File Type</span>: [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>	
-							        	<img data-bind="attr: { src: obj.image_url, alt: obj.name, title: obj.name }" width="120px" style="margin-bottom: 15px; border: 1px solid #ddd;">	
+							        	<img data-bind="attr: { src: obj.image_url, alt: obj.name, title: obj.name }" width="120px" style="margin-bottom: 15px; border: 1px solid #ddd;">
 							            <input id="files" name="files"
-							                   type="file"
-							                   data-role="upload"
-							                   data-show-file-list="false"
-							                   data-bind="events: { 
-					                   				select: onSelect
-							                   }">
+						                   type="file"
+						                   data-role="upload"
+						                   data-show-file-list="false"
+						                   data-bind="events: { 
+				                   				select: onSelect
+						                   }">
 						        	</div>
-							        <!-- //CONTACT PERSON END -->
 							    </div>
 							</div>
 						</div>
-
-				    	<!-- Form actions -->
 						<div class="box-generic bg-action-button">
 							<div id="ntf1" data-role="notification"></div>
 							<div class="row">
@@ -1427,7 +1353,6 @@
 								</div>
 							</div>
 						</div>
-						<!-- // Form actions END -->
 					</div>		
 				</div>						
 			</div>
@@ -12815,7 +12740,6 @@
 </script>
 <script id="waterMenu" type="text/x-kendo-template">
 	<ul class="topnav pull-left">
-	  	<!-- <li><a href='#/' style="padding-left: 11px; padding-right: 15px;"><img src="<?php echo base_url();?>assets/water/utibill(v2).png" style="width: 37px;"></a></li> -->
 	  	<li><a href='#/center'><span data-bind="text: lang.lang.center"></span></a></li>
 	  	<li role='presentation' class='dropdown'>
 	  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><i class="text-t"></i> <span class='caret'></span></a>
@@ -12830,9 +12754,6 @@
   				<li><a href='#/print_bill'><span >3. Print Bill</span></a></li>
   				<li><a href='#/receipt'><span >4. Cash Receipt</span></a></li>
   				<li><span class="li-line"></span></li>
-  				<!-- <li><a href='#/imports'><span >Import</span></a></li>
-  				<li><span class="li-line"></span></li>
-  				<li><a href='#/backup'><span >Back Up</span></a></li> -->
   				<li><a href='#/offline'><span >Offline</span></a></li>
   			</ul>
 	  	</li>

@@ -24,6 +24,10 @@ class Profiles extends REST_Controller {
 		}
 	}
 
+	public function index_options() {
+		header('Allow-Access-Control-Headers: Institute');
+	}
+
 	// get user information
 	// @param: optional userId
 	// return userdata

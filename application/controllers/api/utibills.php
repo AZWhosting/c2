@@ -3866,6 +3866,93 @@ class Utibills extends REST_Controller {
 		$data["count"] = count($data["results"]);
 		$this->response($data, 201);
 	}
+
+	//Spa
+	//Tablet
+	function room_get() {
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
+		$data["count"] = 0;
+
+		$obj = new Spa_room(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		//Results
+		if($page && $limit){
+			$obj->get_paged_iterated($page, $limit);
+			$data["count"] = $obj->paged->total_rows;
+		}else{
+			$obj->get_iterated();
+			$data["count"] = $obj->result_count();
+		}
+		if($obj->exists()){
+			foreach ($obj as $value) {
+				$br = new Branch(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$br->where("id", $value->branch_id)->limit(1)->get();
+				$data["results"][] = array(
+					"id" 						=> $value->id,
+					"number" 					=> $value->number,
+					"name" 						=> $value->name,
+					"branch_id" 				=> $value->branch_id,
+					"branch_name" 				=> $br->name,
+					"status" 					=> $value->status
+				);
+			}
+		}
+
+		//Response Data
+		$this->response($data, 200);
+	}
+	function room_post() {
+		$models = json_decode($this->post('models'));
+		$data["results"] = [];
+		$data["count"] = 0;
+
+		foreach ($models as $value) {
+			
+			$obj = new Spa_room(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+			isset($value->branch_id) 				? $obj->branch_id 					= $value->branch_id : "";
+			isset($value->name) 				? $obj->name 					= $value->name : "";
+			isset($value->number) 				? $obj->number 					= $value->number : "";
+		   	isset($value->status) 				? $obj->status 					= $value->status : "";
+
+	   		if($obj->save()){
+			   	$data["results"][] = array(
+			   		"id" 						=> $obj->id,
+			   	);
+		    }
+		}
+
+		$data["count"] = count($data["results"]);
+		$this->response($data, 201);
+	}
+	function room_put() {
+		$models = json_decode($this->put('models'));
+		$data["results"] = [];
+		$data["count"] = 0;
+
+		foreach ($models as $value) {
+			$obj = new Spa_room(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$obj->get_by_id($value->id);
+
+			isset($value->branch_id) 				? $obj->branch_id 					= $value->branch_id : "";
+			isset($value->name) 				? $obj->name 					= $value->name : "";
+			isset($value->number) 				? $obj->number 					= $value->number : "";
+		   	isset($value->status) 				? $obj->status 					= $value->status : "";
+			
+			if($obj->save()){
+				//Results
+				$data["results"][] = array(
+					"id" 						=> $obj->id
+				);
+			}
+		}
+		$data["count"] = count($data["results"]);
+
+		$this->response($data, 200);
+	}
 }
 /* End of file meters.php */
 /* Location: ./application/controllers/api/utibills.php */

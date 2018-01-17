@@ -224,7 +224,6 @@
         pageSize: 1
     });
     banhji.allowed;
-
     function checkRole(arg) {
         var dfd = $.Deferred();
         // var roleName = $(location).attr('hash').substr(2);
@@ -1223,7 +1222,6 @@
             });
         }
     });
-
     function getDB() {
         var entity = null;
         if (banhji.userManagement.getLogin()) {
@@ -4953,6 +4951,9 @@
                 notificat.success(self.lang.lang.field_required_message);
             }
         },
+        goBranch: function() {
+
+        },
         pageLoad: function() {
             this.txnTemplateDS.filter({
                 field: "moduls",
@@ -4990,6 +4991,45 @@
             this.tariffFlatType[0].set("name", this.lang.lang.not_flat);
             this.tariffFlatType[1].set("name", this.lang.lang.flat);
         },
+        //Room
+        roomDS: dataStore(apiUrl + "utibills/room"),
+        goRoom: function() {},
+        statusAR: [
+            {name: "Active", id: 1},
+            {name: "Inactive", id: 0}
+        ],
+        branchName: "",
+        branchRChange: function(e){
+            this.set("branchName", e.sender.span[0].innerText);
+        },
+        roomStatus: 1,
+        addRoom: function(){
+            if(this.get("roomBranch") && this.get("roomName") && this.get("roomNumber")){
+                var self = this;
+                this.roomDS.add({
+                    branch_id: this.get("roomBranch"),
+                    branch_name: this.get("branchName"),
+                    name: this.get("roomName"),
+                    number: this.get("roomNumber"),
+                    status: this.get("roomStatus")
+                });
+                this.roomDS.sync();
+                this.roomDS.bind("requestEnd", function(e){
+                    var notificat = $("#ntf1").data("kendoNotification");
+                    notificat.hide();
+                    notificat.success(self.lang.lang.success_message);
+                    self.set("roomBranch", "");
+                    self.set("roomName", "");
+                    self.set("roomNumber", "");
+                    self.set("roomStatus", 1);
+                    self.set("branchName", "");
+                });
+            }else{
+                var notificat = $("#ntf1").data("kendoNotification");
+                    notificat.hide();
+                    notificat.error(self.lang.lang.error_input);
+            }
+        },
         cancel: function() {
             this.licenseDS.cancelChanges();
             banhji.router.navigate("/");
@@ -5005,7 +5045,7 @@
         readerDS        : dataStore(apiUrl + "utibills/reader"),
         readingDeviceDS : dataStore(apiUrl + "utibills/device"),
     });
-    banhji.addLicense = kendo.observable({
+    banhji.Branch = kendo.observable({
         lang: langVM,
         dataSource: dataStore(apiUrl + "branches"),
         provinceDS: dataStore(apiUrl + "provinces"),
@@ -5209,14 +5249,10 @@
         },
         save: function() {
             var self = this;
-            if (this.get("obj").number && this.get("obj").max_customer) {
-                if (this.attachmentDS.hasChanges() == true) {
-                    this.uploadFile();
-                } else {
-                    this.saveDataSource();
-                }
+            if (this.attachmentDS.hasChanges() == true) {
+                this.uploadFile();
             } else {
-                alert("License Number required!");
+                this.saveDataSource();
             }
         },
         saveDataSource: function() {
@@ -28207,6 +28243,66 @@
         }
     });
     //End Customer
+    // banhji.Branch = kendo.observable({
+    //     lang                : langVM,
+    //     dataSource          : dataStore(apiUrl + "companies"),
+    //     obj                 : null,
+    //     pageLoad            : function(id){
+    //         if (id) {
+    //             this.loadObj(id);
+    //         }else{
+    //             this.clearForm();
+    //         }
+    //     },
+    //     loadObj: function(id) {
+    //         var self = this;
+    //         this.dataSource.query({
+    //             filter: {field: "id", value: id},
+    //             pageSize: 1
+    //         }).then(function(e){
+    //             var view = self.dataSource.view();
+    //             self.set("obj", view[0]);
+    //         });
+    //     },
+    //     clearForm: function(){
+    //         this.set("obj", "");
+    //         this.dataSource.insert(0, {
+    //             currency_id         : "",
+    //             province_id          : "",
+    //             country_id            : "",
+    //             name            : "",
+    //             description            : "",
+    //             abbr        : "",
+    //             representative          : "",
+    //             email        : "",
+    //             mobile      : "",
+    //             phone         : "",
+    //             address      : "",
+    //             exp     : "",
+    //             district_id     : "",
+    //             total_area      : "",
+    //             area_of_servic  : "",
+    //             building_type   : "",
+    //             mobile          : "",
+    //             telephone       : "",
+    //             email           : "",
+    //             area_for_rent   : "",
+    //             common_area     : "",
+    //             near_by         : "",
+    //             terms_condition : "",
+    //             img1            : "",
+    //             img2            : "",
+    //             img3            : "",
+    //             amenity_line : [],
+    //             space_line : [], 
+    //         });
+    //         this.set("obj", this.dataSource.data()[0]);
+    //     },
+    //     cancel              : function(){
+    //         this.dataSource.cancelChanges();
+    //         banhji.userManagement.removeMultiTask("cash_receipt");
+    //     },
+    // });
     /* views and layout */
     banhji.view = {
         layout: new kendo.Layout('#layout', {
@@ -28441,6 +28537,9 @@
         cashReceipt: new kendo.Layout("#cashReceipt", {model: banhji.cashReceipt}),
         waterInvoice: new kendo.Layout("#waterInvoice", {
             model: banhji.waterInvoice
+        }),
+        Branch: new kendo.Layout("#Branch", {
+            model: banhji.Branch
         })
     };
     /* views and layout */
@@ -30034,7 +30133,14 @@
             vm.pageLoad(id);
         }
     });
-
+    banhji.router.route("/branch(/:id)", function(id){
+        banhji.view.layout.showIn("#content", banhji.view.Branch);
+        banhji.view.layout.showIn('#menu', banhji.view.menu);
+        banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+        var vm = banhji.Branch;
+        banhji.userManagement.addMultiTask("Branch", "branch", null);
+        vm.pageLoad(id);
+    });
     $(function() {
         
         banhji.accessMod.query({

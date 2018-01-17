@@ -2299,6 +2299,124 @@ class Sales extends REST_Controller {
 		$this->response($data, 200);
 	}
 
+	function statement_get() {
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
+		$data["count"] = 0;
+		$totalAmount = 0;
+
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
+			}
+		}
+		
+		//Filter		
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value['operator'])){
+	    			$obj->{$value['operator']}($value['field'], $value['value']);	    		
+	    		} else {
+	    			$obj->where($value['field'], $value['value']);
+	    		}
+			}
+		}
+
+		//Results
+		$obj->where_in("type", array("Cash_Sale", "Invoice", "Cash_Receipt", "Sale_Return", "Deposit"));
+		$obj->include_related("job", array("name"));
+		$obj->include_related("contact", array("abbr", "number", "name", "phone", "address"));
+		$obj->where("is_recurring <>", 1);
+		$obj->where("deleted <>", 1);
+		$obj->get_iterated();
+		
+		if($obj->exists()){
+			$objList = [];
+			
+			foreach ($obj as $value) {
+
+				if($value->type == "Cash_Receipt" || $value->type == "Sale_Return" || $value->type == "Deposit"){
+					$amount = (floatval($value->amount)/floatval($value->rate))*-1;
+				}else{
+					$amount = floatval($value->amount)/floatval($value->rate);
+				}
+				if($value->type == "Cash_Sale"){
+					$totalAmount += 0;
+				}else{
+					$totalAmount += floatval($value->amount)/floatval($value->rate);
+				}
+
+				if(isset($objList[$value->contact_id])){
+					$objList[$value->contact_id]["line"][] = array(
+						"id"		=> $value->id,
+						"date"		=> $value->issued_date,
+						"type"		=> $value->type,
+						"status"	=> $value->status,
+						"job"		=> $value->job_name,
+						"number"	=> $value->number,
+						"amount"	=> $amount,
+
+					);
+				}else{
+
+					$balance_forward = 0;
+
+					$bf = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$obj->where_in("type", array("Cash_Sale", "Invoice", "Cash_Receipt", "Sale_Return", "Deposit"));		
+					$bf->where("issued_date <", $value->issued_date);
+					$bf->where("is_recurring <>", 1);		
+					$bf->where("deleted <>", 1);
+					$bf->get_iterated();
+
+					foreach ($bf as $val) {
+						if($val->type == "Cash_Sale" || $val->type == "Invoice"){
+							$balance_forward += floatval($val->amount)/floatval($val->rate);
+						}else{
+							$balance_forward = 0;
+						}
+					}
+
+
+					$objList[$value->contact_id]["id"] 				= $value->id;
+					$objList[$value->contact_id]["name"] 	= $value->contact_abbr.$value->contact_number." ".$value->contact_name;
+					$objList[$value->contact_id]["phone"] 			= $value->contact_phone;
+					$objList[$value->contact_id]["address"] 		= $value->contact_address;
+					$objList[$value->contact_id]["balance_forward"] = $balance_forward;
+					$objList[$value->contact_id]["line"][] 	= array(
+						"id"		=> $value->id,
+						"date"		=> $value->issued_date,
+						"type"		=> $value->type,
+						"status"	=> $value->status,
+						"job"		=> $value->job_name,
+						"number"	=> $value->number,
+						"amount"	=> $amount,
+
+					);
+				}
+			}
+			
+			foreach ($objList as $value) {
+				$data["results"][] = $value;
+			}
+			$data["count"] = count($data["results"]);
+		}
+
+		$data["totalAmount"] = $totalAmount;
+
+		//Response Data
+		$this->response($data, 200);
+	}
+
 
 
 	//BY HEANG #############################################################################
@@ -3520,7 +3638,7 @@ class Sales extends REST_Controller {
 		$this->response($data, 200);
 	}
 
-	function statement_get() {
+	function statement1_get() {
 		$filters 	= $this->get("filter")["filters"];
 		$page 		= $this->get('page') !== false ? $this->get('page') : 1;
 		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;

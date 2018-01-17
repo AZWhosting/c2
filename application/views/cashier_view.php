@@ -1155,15 +1155,19 @@
 			#: kendo.toString(new Date(start_date), "dd-MMMM-yyyy", "km-KH")#
 		</td>
 		<td style="border-left: 0; border-bottom: 0;">
-			#: kendo.toString(new Date(end_date), "dd-MMMM-yyyy", "km-KH")#
+			#if(end_date != "0000-00-00 00:00:00"){#
+				#: kendo.toString(new Date(end_date), "dd-MMMM-yyyy", "km-KH")#
+			#}#
 		</td>
 		<td style="border-left: 0; border-bottom: 0; text-align: center;">
 			#if(status == 1){#
-				<span style="cursor: pointer; margin-top: 3px;" title="Finish" class="btn-action glyphicons ok_2 btn-success"><i></i></span>
+				<span style="cursor: pointer; margin-top: 3px;" title="Finish" class="btn-action glyphicons ok_2 btn-success"><i></i></span> Done
+			#}else if(status == 2){#
+				<a style="cursor: pointer;" class="btn-action glyphicons btn-success" href="\\#/reconcile/#= id # ">Save Draft</a>
 			#}else{#
-				<span style="cursor: pointer;background-color: \\#a22314;border-color: \\#a22314;" title="Reconcile" class="btn-action glyphicons retweet_2 btn-danger"><i></i></span>
+				<a style="cursor: pointer;" href="\\#/reconcile/#= id # ">Reconcile</a>
 			#}#
-			<a style="cursor: pointer;" class="btn-action glyphicons pencil btn-success" href="\\#/reconcile/#= id # "><i></i></a>
+			<!-- <a style="cursor: pointer;" class="btn-action glyphicons pencil btn-success" href="\\#/reconcile/#= id # "><i></i></a> -->
 		</td>
 	</tr>
 </script>

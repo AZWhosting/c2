@@ -21,6 +21,10 @@ class Employees extends REST_Controller {
 		}
 	}
 
+	public function index_options() {
+		header('Allow-Access-Control-Headers: Institute');
+	}
+
 	public function index_get() {
 		$requested_data = $this->get('filter');
 		$filters = $requested_data['filters'];
