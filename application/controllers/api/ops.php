@@ -86,14 +86,8 @@ class Ops extends REST_Controller {
 				// 	// 	"null" 		=> FALSE,
 				// 	// 	"default" 	=> 0
 				// 	// ),
-				// 	"bin_location_id" => array(
-				// 		"type" 		=> "INT",
-				// 		"constraint"=> "11",
-				// 		"null" 		=> FALSE,
-				// 		"default" 	=> 0
-				// 	)
 				// );
-				// $data['results'][] = $this->dbforge->add_column("item_line_locations", $fields);
+				// $data['results'][] = $this->dbforge->add_column("transactions", $fields);
 				
 			    // Modify fields
 			 	// 	$fields = array(
