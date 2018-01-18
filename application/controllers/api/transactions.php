@@ -169,6 +169,21 @@ class Transactions extends REST_Controller {
 					);
 				}
 
+				//Driver
+				$driver = [];
+				if($value->driver_id>0){
+					$drivers = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$drivers->select("abbr, number, name");
+					$drivers->get_by_id($value->driver_id);
+
+					$driver = array(
+						"id" 				=> $value->driver_id,
+						"abbr" 				=> $drivers->abbr,
+						"number" 			=> $drivers->number,
+						"name" 				=> $drivers->name
+					);
+				}
+
 				$data["results"][] = array(
 					"id" 						=> $value->id,
 					"company_id" 				=> $value->company_id,
@@ -238,7 +253,7 @@ class Transactions extends REST_Controller {
 				   	"meter_id"					=> $value->meter_id,
 				   	"amount_paid"				=> $amount_paid,
 
-				   	"track_number"				=> $value->track_number,
+				   	"truck_number"				=> $value->truck_number,
 				   	"driver_id"					=> $value->driver_id,
 				   	"time_batched"				=> $value->time_batched,
 				   	"time_of_discharge"			=> $value->time_of_discharge,
@@ -248,6 +263,7 @@ class Transactions extends REST_Controller {
 
 				   	"contact" 					=> $contact,
 				   	"employee" 					=> $employee,
+				   	"driver" 					=> $driver,
 				   	"references" 				=> $value->transaction->get_raw()->result()
 				);
 			}
@@ -349,8 +365,7 @@ class Transactions extends REST_Controller {
 		   	isset($value->deleted) 					? $obj->deleted 					= $value->deleted : "";
 		   	isset($value->meter_id) 				? $obj->meter_id 					= $value->meter_id : "";
 
-		   	isset($value->track_number) 			? $obj->track_number 				= $value->track_number : "";
-		   	
+		   	isset($value->truck_number) 			? $obj->truck_number 				= $value->truck_number : "";		   	
 		   	isset($value->time_batched) 			? $obj->time_batched 				= $value->time_batched : "";
 		   	isset($value->time_of_discharge) 		? $obj->time_of_discharge 			= $value->time_of_discharge : "";
 		   	isset($value->time_of_completion) 		? $obj->time_of_completion 			= $value->time_of_completion : "";
@@ -470,7 +485,7 @@ class Transactions extends REST_Controller {
 				   	"meter_id"					=> $obj->meter_id,
 				   	"amount_paid"				=> 0,
 
-				   	"track_number"				=> $obj->track_number,
+				   	"truck_number"				=> $obj->truck_number,
 				   	"driver_id"					=> $obj->driver_id,
 				   	"time_batched"				=> $obj->time_batched,
 				   	"time_of_discharge"			=> $obj->time_of_discharge,
@@ -564,7 +579,7 @@ class Transactions extends REST_Controller {
 		   	isset($value->deleted) 					? $obj->deleted 					= $value->deleted : "";
 		   	isset($value->meter_id) 				? $obj->meter_id 					= $value->meter_id : "";
 
-		   	isset($value->track_number) 			? $obj->track_number 				= $value->track_number : "";
+		   	isset($value->truck_number) 			? $obj->truck_number 				= $value->truck_number : "";
 		   	isset($value->driver_id) 				? $obj->driver_id 					= $value->driver_id : "";
 		   	isset($value->time_batched) 			? $obj->time_batched 				= $value->time_batched : "";
 		   	isset($value->time_of_discharge) 		? $obj->time_of_discharge 			= $value->time_of_discharge : "";
@@ -696,7 +711,7 @@ class Transactions extends REST_Controller {
 				   	"meter_id"					=> $obj->meter_id,
 				   	"amount_paid"				=> 0,
 
-				   	"track_number"				=> $obj->track_number,
+				   	"truck_number"				=> $obj->truck_number,
 				   	"driver_id"					=> $obj->driver_id,
 				   	"time_batched"				=> $obj->time_batched,
 				   	"time_of_discharge"			=> $obj->time_of_discharge,

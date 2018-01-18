@@ -816,16 +816,16 @@ class Sales extends REST_Controller {
 						$cashSale++;
 					}
 
-					if(isset($objList[$employee->id])){
-						$objList[$value->contact_id]["invoice_count"] 	+= $invoice;
-						$objList[$value->contact_id]["cash_sale_count"] += $cashSale;
-						$objList[$value->contact_id]["amount"] 			+= $amount;
+					if(isset($objList[$employee->contact_id])){
+						$objList[$value->employee_id]["invoice_count"] 	+= $invoice;
+						$objList[$value->employee_id]["cash_sale_count"] += $cashSale;
+						$objList[$value->employee_id]["amount"] 			+= $amount;
 					}else{
-						$objList[$value->contact_id]["id"] 				= $value->contact_id;
-						$objList[$value->contact_id]["name"] 			= $employee->abbr.$employee->number." ".$employee->name;
-						$objList[$value->contact_id]["invoice_count"]	= $invoice;
-						$objList[$value->contact_id]["cash_sale_count"]	= $cashSale;
-						$objList[$value->contact_id]["amount"]			= $amount;
+						$objList[$value->employee_id]["id"] 				= $value->employee_id;
+						$objList[$value->employee_id]["name"] 			= $employee->abbr.$employee->number." ".$employee->name;
+						$objList[$value->employee_id]["invoice_count"]	= $invoice;
+						$objList[$value->employee_id]["cash_sale_count"]	= $cashSale;
+						$objList[$value->employee_id]["amount"]			= $amount;
 					}
 				}
 			}
@@ -889,7 +889,7 @@ class Sales extends REST_Controller {
 					$employee->get();							
 					$amount = (floatval($value->amount) - floatval($value->deposit)) / floatval($value->rate);
 					
-					if(isset($objList[$employee->contact_id])){
+					if(isset($objList[$value->contact_id])){
 						$objList[$value->contact_id]["line"][] = array(
 							"id" 				=> $value->id,
 							"type" 				=> $value->type,
@@ -899,7 +899,7 @@ class Sales extends REST_Controller {
 							"amount" 			=> $amount
 						);
 					}else{
-						$objList[$value->contact_id]["id"] 		= $value->contact_id;
+						$objList[$value->contact_id]["id"] 		= $employee->contact_id;
 						$objList[$value->contact_id]["name"] 	= $employee->abbr.$employee->number." ".$employee->name;
 						$objList[$value->contact_id]["line"][]	= array(
 							"id" 				=> $value->id,
@@ -2353,7 +2353,7 @@ class Sales extends REST_Controller {
 				if($value->type == "Cash_Sale"){
 					$totalAmount += 0;
 				}else{
-					$totalAmount += floatval($value->amount)/floatval($value->rate);
+					$totalAmount += $amount;
 				}
 
 				if(isset($objList[$value->contact_id])){

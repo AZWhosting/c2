@@ -8,7 +8,7 @@ class Ops extends REST_Controller {
 		$this->load->dbutil();
 		$this->load->dbforge();
 		$dbs = $this->dbutil->list_databases();
-		$companyList = array("api","banhji","banhji0055","choeun_reeco","banhji_center","banhji_mac","information_schema","innodb","mysql","performance_schema","tmp");
+		$companyList = array("db_1505276837","api","banhji","banhji0055","choeun_reeco","banhji_center","banhji_mac","information_schema","innodb","mysql","performance_schema","tmp");
 		$data["results"] = [];
 		$data["count"] = 0;
 		$startQ = false;
@@ -90,16 +90,14 @@ class Ops extends REST_Controller {
 				// $data['results'][] = $this->dbforge->add_column("transactions", $fields);
 				
 			    // Modify fields
-			 	// 	$fields = array(
-				// 	// 'unit_value' => array(
-				// 	// 	'name' 		=> 'conversion_ratio',//New Field Name 
-				// 	// 	'type'		=> 'DECIMAL',
-				// 	// 	'constraint'=> '30,15',
-				// 	// 	'null' 		=> FALSE,
-				// 	// 	'default' 	=> 1
-				// 	// ),
+		 	// 	$fields = array(
+				// 	'track_number' => array(
+				// 		'name' 		=> 'truck_number',//New Field Name 
+				// 		'type'		=> 'CHAR',
+				// 		"constraint"=> "50"
+				// 	)
 				// );
-				// $data['results'][] = $this->dbforge->modify_column('contacts_locations', $fields);
+				// $data['results'][] = $this->dbforge->modify_column('transactions', $fields);
 
 			 	//Remove column, 'table_name', 'column_to_drop'
 				// $this->dbforge->drop_column('attribute_values_items', 'variant_attribute_id');
