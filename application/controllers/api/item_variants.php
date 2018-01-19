@@ -21,26 +21,47 @@ class Item_variants extends REST_Controller {
 		}
 	}
 
-	function test_get(){
-		$traits = array(
-			"00" => array("Red","Blue"),
-			"11" => array("S","M","L")
-		);
+	function generate_get(){
+		$filter 			= $this->get("filter");
+		$data["results"] 	= [];
+		$data["count"] 		= 0;
 
-		$permutations = $this->permutations($traits);
+		$traits = [];
+		// $traits = array(
+		// 	"00" => array("Red","Blue"),
+		// 	"11" => array("S","M","L")
+		// );
+		foreach ($filter['filters'] as $value) {
+			//Variants
+			$variants = [];			
+			if(isset($value->variants)){
+				foreach ($value->variants as $v) {
+					array_push($variants, $v->id);					
+				}
+			}
+			$traits[$value->variant_attribute->id] = $variants;
+		}		
+
+		//Permutations
+		$permutations = [];
+		// if(count($traits)>1){
+		// 	$permutations = $this->permutations($traits);
+		// }else{
+		// 	$permutations = $traits;
+		// }
 
 		$items = [];
-		for ($i=0; $i < count($permutations); $i++) { 
-			foreach ($permutations[$i] as $value) {
-				$items[] = $value;
-			}
-		}
+		// for ($i=0; $i < count($permutations); $i++) { 
+		// 	foreach ($permutations[$i] as $value) {
+		// 		$items[] = $value;
+		// 	}
+		// }
 
 		$data["traits"] = $traits;
 		$data["permutations"] = $permutations;
 		$data["items"] = $items;
 
-		$this->response($data, 201);
+		$this->response($data, 200);
 	}
 
 	//GET 

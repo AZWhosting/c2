@@ -126,6 +126,24 @@ class Transactions extends REST_Controller {
 					$amount_paid = floatval($paid->amount) + floatval($paid->received);
 				}
 
+				//Single Reference
+				$reference = [];
+				if($value->reference_id>0){
+					$references = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$references->select("number, type, amount, deposit, rate, issued_date");
+					$references->get_by_id($value->reference_id);
+
+					$reference = array(
+						"id" 				=> $value->reference_id,
+						"number" 			=> $drivers->number,
+						"name" 				=> $drivers->type,
+						"number" 			=> $drivers->amount,
+						"name" 				=> $drivers->deposit,
+						"number" 			=> $drivers->rate,
+						"name" 				=> $drivers->issued_date
+					);
+				}
+
 				//Meter By Choeun
 				$meter = "";
 				$meterNum = "";
@@ -264,6 +282,7 @@ class Transactions extends REST_Controller {
 				   	"contact" 					=> $contact,
 				   	"employee" 					=> $employee,
 				   	"driver" 					=> $driver,
+				   	"reference" 				=> $reference,
 				   	"references" 				=> $value->transaction->get_raw()->result()
 				);
 			}

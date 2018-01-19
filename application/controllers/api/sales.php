@@ -758,6 +758,7 @@ class Sales extends REST_Controller {
 	}
 
 	//SALE BY EMPLOYEE
+	//SALE BY EMPLOYEE
 	function sale_summary_by_employee_get() {
 		$filter 	= $this->get("filter");
 		$page 		= $this->get('page');
@@ -811,21 +812,21 @@ class Sales extends REST_Controller {
 					$invoice = 0;
 					$cashSale = 0;
 					if($value->type=="Commercial_Invoice" || $value->type=="Vat_Invoice" || $value->type=="Invoice"){
-						$invoice++;
+						$invoice = 1;
 					}else{
-						$cashSale++;
+						$cashSale = 1;
 					}
 
-					if(isset($objList[$employee->contact_id])){
-						$objList[$value->employee_id]["invoice_count"] 	+= $invoice;
-						$objList[$value->employee_id]["cash_sale_count"] += $cashSale;
+					if(isset($objList[$employee->employee_id])){
+						$objList[$value->employee_id]["invoice_count"] 		+= $invoice;
+						$objList[$value->employee_id]["cash_sale_count"]	+= $cashSale;
 						$objList[$value->employee_id]["amount"] 			+= $amount;
 					}else{
 						$objList[$value->employee_id]["id"] 				= $value->employee_id;
-						$objList[$value->employee_id]["name"] 			= $employee->abbr.$employee->number." ".$employee->name;
-						$objList[$value->employee_id]["invoice_count"]	= $invoice;
+						$objList[$value->employee_id]["name"] 				= $employee->abbr.$employee->number." ".$employee->name;
+						$objList[$value->employee_id]["invoice_count"]		= $invoice;
 						$objList[$value->employee_id]["cash_sale_count"]	= $cashSale;
-						$objList[$value->employee_id]["amount"]			= $amount;
+						$objList[$value->employee_id]["amount"]				= $amount;
 					}
 				}
 			}
@@ -889,8 +890,8 @@ class Sales extends REST_Controller {
 					$employee->get();							
 					$amount = (floatval($value->amount) - floatval($value->deposit)) / floatval($value->rate);
 					
-					if(isset($objList[$value->contact_id])){
-						$objList[$value->contact_id]["line"][] = array(
+					if(isset($objList[$employee->employee_id])){
+						$objList[$value->employee_id]["line"][] = array(
 							"id" 				=> $value->id,
 							"type" 				=> $value->type,
 							"number" 			=> $value->number,
@@ -899,9 +900,9 @@ class Sales extends REST_Controller {
 							"amount" 			=> $amount
 						);
 					}else{
-						$objList[$value->contact_id]["id"] 		= $employee->contact_id;
-						$objList[$value->contact_id]["name"] 	= $employee->abbr.$employee->number." ".$employee->name;
-						$objList[$value->contact_id]["line"][]	= array(
+						$objList[$value->employee_id]["id"] 		= $value->employee_id;
+						$objList[$value->employee_id]["name"] 		= $employee->abbr.$employee->number." ".$employee->name;
+						$objList[$value->employee_id]["line"][]		= array(
 							"id" 				=> $value->id,
 							"type" 				=> $value->type,
 							"number" 			=> $value->number,
@@ -1783,7 +1784,9 @@ class Sales extends REST_Controller {
 			$objList = [];
 			foreach ($obj as $value) {
 				//Reference
-				$ref = $value->reference->select("type, number, issued_date, amount, deposit, rate")->get();				
+				$ref = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$ref->select("type, number, issued_date, amount, deposit, rate");
+				$ref->get_by_id($value->reference_id);				
 				$refAmount = (floatval($ref->amount) - floatval($ref->deposit)) / floatval($ref->rate);
 
 				$amount = (floatval($value->amount) - floatval($value->deposit)) / floatval($value->rate);
