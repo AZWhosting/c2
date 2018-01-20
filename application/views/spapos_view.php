@@ -334,314 +334,377 @@
 		<div class="row-fluid">
 			<div style="overflow: hidden;">
 				<div class="">
-					<div class="">
-						<div class="span6" style="padding: 0;padding-right: 10px;">
-							<div class="demo-section k-content wide">
-								<div class="demo-section k-content wide">
-									<div 
-										id="productListView"
-										data-role="listview"
-										data-template="item-list-view-template"
-										data-auto-bind="true"
-										data-bind="source: itemsDS">
+					<div style="position: relative;overflow: hidden;">
+						<div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 100%;margin-top: -15px;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
+							<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
+						</div>
+						<div class="row-fluid" style="padding: 0;">
+							<div class="span12">
+								<div class="row">
+									<div class="listWrapper span6" >
+										<div class="innerAll" style="height: 65px;">
+											<div class="widget-search separator bottom" style="padding: 0;">
+												<a class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></a>
+												<div class="overflow-hidden">
+													<input style="line-height: 16px;border:1px solid #ccc;" type="search" placeholder="Number or Name..." data-bind="value: searchText, events:{change: search}">
+												</div>
+											</div>
+										</div>
 									</div>
-									<div id="pager" class="k-pager-wrap"
-								    	 data-role="pager"
-								    	 data-auto-bind="true"
-							             data-bind="source: itemsDS">
-							        </div>
-								</div>
-							</div>
-							<div class="box-generic">
-								<h3 data-bind="text: lang.lang.category"></h3>
-								<div 
-									class="favorite-category"
-									data-bind="source: categoryDS"
-									data-template="favorite-category-list-template">        
-								</div>
-							</div>
-							<div class="box-generic" style="background: #eee;border: 1px solid #ccc;">
-								<h3 data-bind="text: lang.lang.group"></h3>
-								<div 
-									class="favorite-category"
-									data-bind="source: itemGroupDS"
-									data-template="item-group-list-template">        
-								</div>
-							</div>
-							<div class="box-generic">
-								<div class="span6">
-									<div data-bind="visible: emSelect">
+									<div class="span3" style="padding-top: 15px;">
 										<input 
-											id="cbbContact" 
-											name="cbbContact" 
 											data-role="dropdownlist"
-											data-template="contact-list-tmpl" 
 											data-auto-bind="false" 
-											data-value-primitive="false" 
+											data-value-primitive="true" 
 											data-filter="startswith" 
 											data-text-field="name" 
 											data-value-field="id"
 											data-bind="
-												value: employeeSelected,
-				                              	source: employeeDS,
-				                              	events: {change: addEmployee}" 
-				                            data-option-label="Select Employee..."
+												value: catSelected,
+				                              	source: categoryDS,
+				                              	events: {change: catChange}" 
+				                            data-option-label="Category ..."
 				                            required="" 
 				                            data-required-msg="required" 
 				                            style="width: 100%;" 
 				                            aria-invalid="true" 
 				                            class="k-invalid"
 				                        />
-				                        <ul class="topnav addNew" >
-											<li role="presentation" class="dropdown ">
-										  		<a class="dropdown-toggle" data-bind="click: selectOutsource" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-										  			<span>Outsource</span>
-										  		</a>
-										  	</li>
-										</ul>
-				                    </div>
-				                   	<div data-bind="invisible: emSelect">
+									</div>
+									<div class="span3" style="padding-top: 15px;">
 										<input 
 											data-role="dropdownlist"
-											data-template="contact-list-tmpl" 
 											data-auto-bind="false" 
-											data-value-primitive="false" 
+											data-value-primitive="true" 
 											data-filter="startswith" 
 											data-text-field="name" 
 											data-value-field="id"
 											data-bind="
-												value: employeeSelected,
-				                              	source: supplierDS,
-				                              	events: {change: addEmployee}" 
-				                            data-option-label="Select Supplier..." 
+												value: groupSelected,
+				                              	source: itemGroupDS,
+				                              	events: {change: groupChange}" 
+				                            data-option-label="Group ..."
 				                            required="" 
 				                            data-required-msg="required" 
 				                            style="width: 100%;" 
 				                            aria-invalid="true" 
 				                            class="k-invalid"
 				                        />
-				                        <ul class="topnav addNew">
-											<li role="presentation" class="dropdown ">
-										  		<a class="dropdown-toggle" data-bind="click: selectEmployee" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-										  			<span>Employee</span>
-										  		</a>
-										  	</li>
-										</ul>
+									</div>
+								</div>
+								<div class="demo-section k-content wide span12" style="padding: 0;">
+									<div class="demo-section k-content wide">
+										<div 
+											id="productListView"
+											data-role="listview"
+											data-template="item-list-view-template"
+											data-auto-bind="true"
+											data-bind="source: itemsDS">
+										</div>
+										<div id="pager" class="k-pager-wrap"
+									    	 data-role="pager"
+									    	 data-auto-bind="true"
+								             data-bind="source: itemsDS">
+								        </div>
+									</div>
+								</div>
+							</div>
+							<div class="span12" style="padding: 0;">
+								<div class="span4">
+									<div class="box-generic">
+										<div data-bind="visible: emSelect">
+											<input 
+												data-role="dropdownlist"
+												data-template="contact-list-tmpl" 
+												data-auto-bind="false" 
+												data-value-primitive="true" 
+												data-filter="startswith" 
+												data-text-field="name" 
+												data-value-field="id"
+												data-bind="
+													value: employeeSelected,
+					                              	source: employeeDS,
+					                              	events: {change: addEmployee}" 
+					                            data-option-label="Select Employee..."
+					                            required="" 
+					                            data-required-msg="required" 
+					                            style="width: 69%; float: left;" 
+					                            aria-invalid="true" 
+					                            class="k-invalid"
+					                        />
+					                        <ul class="topnav addNew" style="float: right;" >
+												<li role="presentation" class="dropdown ">
+											  		<a class="dropdown-toggle" data-bind="click: selectOutsource" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+											  			<span>Outsource</span>
+											  		</a>
+											  	</li>
+											</ul>
+					                    </div>
+					                   	<div data-bind="invisible: emSelect">
+											<input 
+												data-role="dropdownlist"
+												data-template="contact-list-tmpl" 
+												data-auto-bind="false" 
+												data-value-primitive="true" 
+												data-filter="startswith" 
+												data-text-field="name" 
+												data-value-field="id"
+												data-bind="
+													value: employeeSelected,
+					                              	source: supplierDS,
+					                              	events: {change: addEmployee}" 
+					                            data-option-label="Select Supplier..." 
+					                            required="" 
+					                            data-required-msg="required" 
+					                            style="width: 69%; float: left;" 
+					                            aria-invalid="true" 
+					                            class="k-invalid"
+					                        />
+					                        <ul class="topnav addNew">
+												<li role="presentation" class="dropdown" style="float: right;">
+											  		<a class="dropdown-toggle" data-bind="click: selectEmployee" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+											  			<span>Employee</span>
+											  		</a>
+											  	</li>
+											</ul>
+					                    </div>
+					                    <table class="table table-bordered table-primary table-striped table-vertical-center" style="margin-top: 15px;">
+									        <thead>
+									            <tr>
+									            	<th style="vertical-align: top;" data-bind="text: lang.lang.no_"></th>
+									            	<th style="vertical-align: top;" data-bind="text: lang.lang.name"></th>
+									            </tr>
+									        </thead>
+									        <tbody data-role="listview" 
+								        		data-template="employee-list-tmpl" 
+								        		data-auto-bind="false"
+								        		data-bind="source: employeeAR"></tbody>
+									    </table>
 				                    </div>
-				                    <table class="table table-bordered table-primary table-striped table-vertical-center" style="margin-top: 15px;">
-								        <thead>
-								            <tr>
-								            	<th style="vertical-align: top;" data-bind="text: lang.lang.no_"></th>
-								            	<th style="vertical-align: top;" data-bind="text: lang.lang.name"></th>
-								            </tr>
-								        </thead>
-								        <tbody data-role="listview" 
-							        		data-template="employee-list-tmpl" 
-							        		data-auto-bind="false"
-							        		data-bind="source: employeeAR"></tbody>
-								    </table>
-			                    </div>
-			                    <div class="span6">
-			                    	<input 
-										data-role="dropdownlist"
-										data-template="room-list-tmpl" 
-										data-auto-bind="false" 
-										data-value-primitive="false" 
-										data-filter="startswith" 
-										data-text-field="name" 
-										data-value-field="id"
-										data-bind="
-											value: roomSelected,
-			                              	source: roomDS,
-			                              	events: {change: addRoom}" 
-			                            data-option-label="Select Room..." 
-			                            required="" 
-			                            data-required-msg="required" 
-			                            style="width: 100%;" 
-			                            aria-invalid="true" 
-			                            class="k-invalid"
-			                        />
-			                        <table class="table table-bordered table-primary table-striped table-vertical-center" style="margin-top: 15px;">
-								        <thead>
-								            <tr>
-								            	<th style="vertical-align: top;" data-bind="text: lang.lang.no_"></th>
-								            	<th style="vertical-align: top;" data-bind="text: lang.lang.name"></th>
-								            </tr>
-								        </thead>
-								        <tbody data-role="listview" 
-							        		data-template="room-select-list-tmpl" 
-							        		data-auto-bind="false"
-							        		data-bind="source: roomAR"></tbody>
-								    </table>
-			                    </div>
+				                </div>
+				                <div class="span4">
+				                    <div class="box-generic span4">
+				                    	<input 
+											data-role="dropdownlist"
+											data-template="room-list-tmpl" 
+											data-auto-bind="false" 
+											data-value-primitive="true" 
+											data-filter="startswith" 
+											data-text-field="name" 
+											data-value-field="id"
+											data-bind="
+												value: roomSelected,
+				                              	source: roomDS,
+				                              	events: {change: addRoom}" 
+				                            data-option-label="Select Room..." 
+				                            required="" 
+				                            data-required-msg="required" 
+				                            style="width: 100%;" 
+				                            aria-invalid="true" 
+				                            class="k-invalid"
+				                        />
+				                        <table class="table table-bordered table-primary table-striped table-vertical-center" style="margin-top: 15px;">
+									        <thead>
+									            <tr>
+									            	<th style="vertical-align: top;" data-bind="text: lang.lang.no_"></th>
+									            	<th style="vertical-align: top;" data-bind="text: lang.lang.name"></th>
+									            </tr>
+									        </thead>
+									        <tbody data-role="listview" 
+								        		data-template="room-select-list-tmpl" 
+								        		data-auto-bind="false"
+								        		data-bind="source: roomAR"></tbody>
+									    </table>
+				                    </div>
+				                </div>
+				                <div class="span4">
+									<div class="box-generic span4">
+										<input 
+											data-role="dropdownlist"
+											data-template="contact-list-tmpl" 
+											data-auto-bind="false" 
+											data-value-primitive="true" 
+											data-filter="startswith" 
+											data-text-field="name" 
+											data-value-field="id"
+											data-option-label="Select Customer..."
+											data-bind="
+												value: customerSelected,
+				                              	source: contactDS,
+				                              	events: {change: addCustomer}"
+				                            style="width: 49%; float: left;margin-right: 2%;" 
+				                            aria-invalid="true" 
+				                            class="k-invalid"
+				                        />
+				                        <input type="text" 
+						                	style="width: 49%;" 
+						                	data-role="datetimepicker"
+								           	data-bind="
+								           		value: dateSelected,
+								           		events: {change: dateChange}
+								           	" />
+										<table class="table table-bordered table-primary table-striped table-vertical-center" style="margin-top: 15px;">
+									        <thead>
+									            <tr>
+									            	<th style="vertical-align: top;" data-bind="text: lang.lang.no_"></th>
+									            	<th style="vertical-align: top;" data-bind="text: lang.lang.name"></th>
+									            </tr>
+									        </thead>
+									        <tbody data-role="listview" 
+								        		data-template="customer-select-list-tmpl" 
+								        		data-auto-bind="false"
+								        		data-bind="source: customerAR">
+								        	</tbody>
+									    </table>
+									</div>
+								</div>
 							</div>
 						</div> 
-						<div class="span6 posProductItems" style="padding: 0;padding-left: 10px;">
-							<div class="box-generic">
-								<input 
-									data-role="dropdownlist"
-									data-template="contact-list-tmpl" 
-									data-auto-bind="false" 
-									data-value-primitive="false" 
-									data-filter="startswith" 
-									data-text-field="name" 
-									data-value-field="id"
-									data-option-label="Select Customer..."
-									data-bind="
-										value: customerSelected,
-		                              	source: contactDS,
-		                              	events: {change: addCustomer}"
-		                            style="width: 49%; float: left;margin-right: 2%;" 
-		                            aria-invalid="true" 
-		                            class="k-invalid"
-		                        />
-		                        <input type="text" 
-				                	style="width: 49%;" 
-				                	data-role="datepicker"
-				                	data-format="dd-MM-yyyy"
-				                	placeholder="dd-mm-yyyy" 
-						           	data-bind="value: dateSelected,
-						           			  	min: toDay" />
-								<table class="table table-bordered table-primary table-striped table-vertical-center" style="margin-top: 15px;">
-							        <thead>
-							            <tr>
-							            	<th style="vertical-align: top;" data-bind="text: lang.lang.no_"></th>
-							            	<th style="vertical-align: top;" data-bind="text: lang.lang.name"></th>
-							            </tr>
-							        </thead>
-							        <tbody data-role="listview" 
-						        		data-template="customer-select-list-tmpl" 
-						        		data-auto-bind="false"
-						        		data-bind="source: customerAR"></tbody>
-							    </table>
+						<div class="row-fluid posProductItems" style="padding: 0;padding-left: 10px;">
+							<div class="span9" style="padding-left: 0;">
+								<div id="posProductList" class="box-generic-noborder" style="min-height: 150px!important; height: 150px;">
+									<div data-role="grid" class="costom-grid"
+								    	 data-column-menu="true"
+								    	 data-reorderable="true"
+								    	 data-scrollable="false"
+								    	 data-resizable="true"
+								    	 data-editable="true"
+						                 data-columns="[
+										    { 
+										    	title:'NO',
+										    	width: '50px', 
+										    	attributes: { style: 'text-align: center;' }, 
+										        template: function (dataItem) {
+										        	var rowIndex = banhji.pos.lineDS.indexOf(dataItem)+1;
+										        	return '<i class=icon-trash data-bind=click:removeRow></i>' + ' ' + rowIndex;
+										      	}
+										    },
+						                 	{ 
+						                 		field: 'item', 
+						                 		title: 'PRODUCTS/SERVICES', 
+						                 		editor: itemEditor, 
+						                 		editable: 'false', 
+						                 		template: '#=item.name#', 
+						                 		width: '170px' },
+				                            { 
+				                            	field: 'description', title:'DESCRIPTION', 
+				                            	width: '250px' 
+				                            },                            
+				                            {
+											    field: 'quantity',
+											    title: 'QTY',
+											    format: '{0:n}',
+											    editor: numberTextboxEditor,
+											    width: '120px',
+											    attributes: { style: 'text-align: right;' },
+											    template: function(dataItem){
+											    	banhji.pos.changes();
+											    	dataItem.set('amount', dataItem.price * dataItem.quantity);
+													return dataItem.quantity;
+												}
+											},
+				                            { 
+				                            	field: 'measurement', 
+				                            	title: 'UOM', 
+				                            	editable: 'false', 
+				                            	editor: measurementEditor, 
+				                            	template: '#=measurement?measurement.measurement:banhji.emptyString#', 
+				                            	width: '80px' 
+				                            },
+				                            {
+											    field: 'price',
+											    title: 'PRICE',
+											    format: '{0:n}',
+											    editor: numberTextboxEditor,
+											    width: '120px',
+											    attributes: { style: 'text-align: right;' },
+											    template: function(dataItem){
+											    	banhji.pos.changes();
+											    	dataItem.set('amount', dataItem.price * dataItem.quantity);
+													return dataItem.price;
+												}
+											},
+											{
+											    field: 'discount',
+											    title: 'DISCOUNT VALUE',
+											    hidden: true,
+											    format: '{0:n}',
+											    editor: numberTextboxEditor,
+											    width: '120px',
+											    attributes: { style: 'text-align: right;' },
+											    template: function(dataItem){
+											    	banhji.pos.changes();
+											    	return dataItem.discount;
+												}
+											},
+				                            { 
+				                            	field: 'amount', 
+				                            	title:'AMOUNT', 
+				                            	format: '{0:n}', 
+				                            	editable: 'false', 
+				                            	attributes: { style: 'text-align: right;' }, 
+				                            	width: '120px' 
+				                            },                            
+				                            { 
+				                            	field: 'tax_item', 
+				                            	title:'TAX', 
+				                            	editor: taxForSaleEditor, 
+				                            	template: function(dataItem){
+				                            		banhji.pos.changes();
+				                            		return dataItem.tax_item.name;
+				                            	}, 
+				                            	width: '90px' 
+				                            }
+				                         ]"
+				                         data-auto-bind="false"
+						                 data-bind="source: lineDS" >
+						            </div>
+								</div>
 							</div>
-							<div id="posProductList" class="box-generic-noborder">
-								<div data-role="grid" class="costom-grid"
-									data-column-menu="true"
-									data-reorderable="true"
-									data-scrollable="false"
-									data-resizable="true"
-									data-editable="true"
-									data-columns="[
-									{ 
-										title:'NO',
-										width: '50px', 
-										attributes: { style: 'text-align: center;' }, 
-										template: function (dataItem) {
-										var rowIndex = banhji.pos.lineDS.indexOf(dataItem)+1;
-										return '<i class=icon-trash data-bind=click:removeRow></i>' + ' ' + rowIndex;
-									}
-									},
-									{ 
-										field: 'item', 
-										title: 'PRODUCTS/SERVICES',
-										template: '#=item.name#',
-										editable: 'false', 
-										width: '170px' 
-									},
-									{
-										field: 'quantity',
-										title: 'QTY',
-										format: '{0:n}',
-										editor: numberTextboxEditor,
-										width: '120px',
-										attributes: { style: 'text-align: right;' },
-										template: function (dataItem) {
-											dataItem.set('amount', dataItem.price * dataItem.quantity);
-											banhji.pos.changes();
-											return dataItem.quantity;
-										}
-									},
-									{ 
-										field: 'measurement', 
-										title: 'UOM', 
-										editor: measurementEditor, 
-										template: '#=measurement.measurement#', 
-										width: '80px',
-										editable: 'false', 
-									},
-									{
-										field: 'price',
-										title: 'PRICE',
-										format: '{0:n}',
-										editor: numberTextboxEditor,
-										width: '120px',
-										attributes: { style: 'text-align: right;' },
-										template: function (dataItem) {
-											dataItem.set('amount', dataItem.price * dataItem.quantity);
-											banhji.pos.changes();
-											return dataItem.price;
-										}
-									},
-									{
-										field: 'discount',
-										title: 'DISCOUNT VALUE',
-										hidden: true,
-										format: '{0:n}',
-										width: '120px',
-										attributes: { style: 'text-align: right;' }
-									},
-									{
-										field: 'discount_percentage',
-										title: 'DISCOUNT %',
-										hidden: true,
-										format: '{0:p}',
-										width: '120px',
-										attributes: { style: 'text-align: right;' }
-									},
-									{ 
-										field: 'amount', 
-										title:'AMOUNT', 
-										format: '{0:n}', 
-										editable: 'false', 
-										editor: '',
-										attributes: { 
-										style: 'text-align: right;' 
-									}, 
-									width: '120px' 
-									},
-									]"
-									data-auto-bind="false"
-									data-bind="source: lineDS">
-								</div>  
+							<div class="span3" style="padding: 1px;">
+								<div class="posSaleSummary cover-block" style="width: 100%; float:right;box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
+									<table class="table table-condensed table-striped table-white">
+										<tbody>
+											<tr>
+												<td class="right" style="width: 60%;"><span data-bind="text: lang.lang.subtotal" style="font-size: 15px; font-weight: 700;"></span></td>
+												<td class="right strong" width="40%"><span data-format="n" data-bind="text: obj.sub_total" style="font-size: 15px; font-weight: 700;"></span></td>
+											</tr>               
+											<tr>
+												<td class="right"><span data-bind="text: lang.lang.total_discount"></span></td>
+												<td class="right ">
+													<span data-format="n" data-bind="text: obj.discount"></span>
+												</td>
+											</tr>               
+											<tr>
+												<td class="right"><span data-bind="text: lang.lang.total_tax"></span></td>
+												<td class="right "><span data-format="n" data-bind="text: obj.tax"></span></td>
+											</tr>                             
+											<tr>
+												<td class="right"><h4 span data-bind="text: lang.lang.total" style="font-weight: 700;"></h4></td>
+												<td class="right strong"><h4 data-bind="text: total" style="font-weight: 700;"></h4></td>
+											</tr>               
+										</tbody>
+									</table>
+								</div>
 							</div>
-							<div class="span6 width-50 box-shadow box-generic">
+						</div>
+						<div class="row-fluid">
+							<div class="span4 width-50 box-shadow box-generic">
 								<button class="btn-btn btn-width-100 btn-center-text btn-md margin" data-bind="click: addInvoice, text: lang.lang.save">
 								</button>
-								<button class="btn-btn btn-width-100 btn-center-text btn-md margin" data-bind="click: saveDraft, text: lang.lang.save_draft">
-									Cancel
+								<button class="btn-btn btn-width-100 btn-center-text btn-md margin" data-bind="click: addBook">
+									Book
 								</button>
-							</div>
-							<div class="span6 posSaleSummary cover-block" style="width: 50%; float:right;box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
-								<table class="table table-condensed table-striped table-white">
-									<tbody>
-										<tr>
-											<td class="right" style="width: 60%;"><span data-bind="text: lang.lang.subtotal" style="font-size: 15px; font-weight: 700;"></span></td>
-											<td class="right strong" width="40%"><span data-format="n" data-bind="text: obj.sub_total" style="font-size: 15px; font-weight: 700;"></span></td>
-										</tr>               
-										<tr>
-											<td class="right"><span data-bind="text: lang.lang.total_discount"></span></td>
-											<td class="right ">
-												<span data-format="n" data-bind="text: obj.discount"></span>
-											</td>
-										</tr>               
-										<tr>
-											<td class="right"><span data-bind="text: lang.lang.total_tax"></span></td>
-											<td class="right "><span data-format="n" data-bind="text: obj.tax"></span></td>
-										</tr>                             
-										<tr>
-											<td class="right"><h4 span data-bind="text: lang.lang.total" style="font-weight: 700;"></h4></td>
-											<td class="right strong"><h4 data-bind="text: total" style="font-weight: 700;"></h4></td>
-										</tr>               
-									</tbody>
-								</table>
-							</div>
-							<div class="span12 box-shadow box-generic">
-								<div class="bg-action-button">
-									<span class="btn-btn btn-width-100 btn-center-text btn-lg" data-bind="click: payPopup">
-										<span>Pay</span>
-									</span>
+								<div class="span12 box-shadow box-generic">
+									<div class="bg-action-button">
+										<span class="btn-btn btn-width-100 btn-center-text btn-lg" data-bind="click: payPopup">
+											<span>Print</span>
+										</span>
+									</div>
 								</div>
+							</div>
+							<div class="span8">
+								
 							</div>
 							<div id="dialog" style="display:none">
 								<div class="span6">
@@ -677,8 +740,7 @@
 										</table>
 									</div>
 								</div>
-							</div>
-							<div class="span4">
+								<div class="span4">
 								<div class="cover-block box-shadow">
 									<h1>Pay</h1>
 									<input class="k-textbox" id="pay_amount" name="pay_amount" />
@@ -696,7 +758,7 @@
 	</div>
 </script>
 <script id="item-list-view-template" type="text/x-kendo-template">
-	<div class="product" style="width: 23%;" data-bind="click:addRow">
+	<div class="product" data-bind="click:addRow">
 		<img src="#= image_url #" />
 		<h3>#:name#</h3>
 		<p>#=kendo.toString(price, locale=="km-KH"?"c0":"c", locale)#</p>
@@ -5392,617 +5454,11 @@
 </script>
 
 <!--  List Templates -->
-<script>
-	function itemComboBoxEditor(container, options) {
-        $('<input name="' + options.field + '"/>')
-        .appendTo(container)
-        .kendoComboBox({
-        	placeholder: "Select Item",
-            dataTextField: "name",
-            dataValueField: "id",
-            autoWidth: true,
-            height: 200,
-            template: kendo.template($("#item-list-tmpl").html()),
-            dataSource: banhji.source.itemList
-        });
-    }
-
-    function itemEditor(container, options) {
-        $('<input name="' + options.field + '" />')
-        .appendTo(container)
-        .kendoDropDownList({
-        	filter: "contains",        	
-            dataTextField: "name",
-            dataValueField: "id",
-            autoWidth: true,
-            height: 200,
-            template: kendo.template($("#item-list-tmpl").html()),
-            dataSource: {
-            	transport: {
-					read 	: {
-						url: apiUrl + "items",
-						type: "GET",
-						headers: banhji.header,
-						dataType: 'json'
-					},
-					parameterMap: function(options, operation) {
-						if(operation === 'read') {
-							return {
-								page: options.page,
-								limit: options.pageSize,
-								filter: options.filter,
-								sort: options.sort
-							};
-						} else {
-							return {models: kendo.stringify(options.models)};
-						}
-					}
-				},
-				schema 	: {
-					model: {
-						id: 'id'
-					},
-					data: 'results',
-					total: 'count'
-				},
-				filter:{ field: "item_type_id <>", value: 3 },
-				sort: [
-					{ field:"item_type_id", dir:"asc" },
-					{ field:"number", dir:"asc" }
-				],
-				batch: true,
-				serverFiltering: true,
-				serverSorting: true,
-				serverPaging: true,
-				page: 1,
-				pageSize: 50
-            }
-        });
-    }
-
-    function variantAttributeEditor(container, options) {
-        $('<input name="' + options.field + '" />')
-        .appendTo(container)
-        .kendoDropDownList({
-        	valuePrimitive: false,
-        	filter: "startswith",        	
-            dataTextField: "name",
-            dataValueField: "id",
-            autoWidth: true,
-            height: 200,
-            dataSource: dataStore(apiUrl + "variant_attributes")
-        });
-    }
-
-    function attributeValueEditor(container, options) {
-        $('<input name="' + options.field + '" />')
-        .appendTo(container)
-        .kendoMultiSelect({
-        	valuePrimitive: false,
-            dataTextField: "name",
-            dataValueField: "id",
-            autoBind: false,
-            dataSource: {
-            	transport: {
-					read 	: {
-						url: apiUrl + "attribute_values",
-						type: "GET",
-						headers: banhji.header,
-						dataType: 'json'
-					},
-					parameterMap: function(options, operation) {
-						if(operation === 'read') {
-							return {
-								page: options.page,
-								limit: options.pageSize,
-								filter: options.filter,
-								sort: options.sort
-							};
-						} else {
-							return {models: kendo.stringify(options.models)};
-						}
-					}
-				},
-				schema 	: {
-					model: {
-						id: 'id'
-					},
-					data: 'results',
-					total: 'count'
-				},
-				filter:{ field: "variant_attribute_id", value: options.model.variant_attribute.id },
-				sort: { field:"name", dir:"asc" },
-				batch: true,
-				serverFiltering: true,
-				serverSorting: true,
-				serverPaging: true,
-				page: 1,
-				pageSize: 100
-            }
-        });
-    }
-
-    function locationTypeEditor(container, options) {
-        $('<input name="' + options.field + '" />')
-        .appendTo(container)
-        .kendoDropDownList({
-            dataTextField: "name",
-            dataValueField: "id",
-            autoWidth: true,
-            height: 200,
-            dataSource: {
-            	transport: {
-					read 	: {
-						url: apiUrl + "location_types",
-						type: "GET",
-						headers: banhji.header,
-						dataType: 'json'
-					},
-					parameterMap: function(options, operation) {
-						if(operation === 'read') {
-							return {
-								page: options.page,
-								limit: options.pageSize,
-								filter: options.filter,
-								sort: options.sort
-							};
-						} else {
-							return {models: kendo.stringify(options.models)};
-						}
-					}
-				},
-				schema 	: {
-					model: {
-						id: 'id'
-					},
-					data: 'results',
-					total: 'count'
-				},
-				batch: true,
-				serverFiltering: true,
-				serverSorting: true,
-				serverPaging: true,
-				page: 1,
-				pageSize: 100
-            }
-        });
-    }
-
-    function inventoryForSaleEditor(container, options) {
-        $('<input name="' + options.field + '" />')
-        .appendTo(container)
-        .kendoDropDownList({
-        	filter: "contains",        	
-            dataTextField: "name",
-            dataValueField: "id",
-            autoWidth: true,
-            height: 200,
-            template: kendo.template($("#item-list-tmpl").html()),
-            dataSource: {
-            	transport: {
-					read 	: {
-						url: apiUrl + "items",
-						type: "GET",
-						headers: banhji.header,
-						dataType: 'json'
-					},
-					parameterMap: function(options, operation) {
-						if(operation === 'read') {
-							return {
-								page: options.page,
-								limit: options.pageSize,
-								filter: options.filter,
-								sort: options.sort
-							};
-						} else {
-							return {models: kendo.stringify(options.models)};
-						}
-					}
-				},
-				schema 	: {
-					model: {
-						id: 'id'
-					},
-					data: 'results',
-					total: 'count'
-				},
-				filter:{ field: "item_type_id", value: 1 },
-				sort: { field:"number", dir:"asc" },
-				batch: true,
-				serverFiltering: true,
-				serverSorting: true,
-				serverPaging: true,
-				page: 1,
-				pageSize: 100
-            }
-        });
-    }
-
-    function accountEditor(container, options) {
-        $('<input name="' + options.field + '" />')
-        .appendTo(container)
-        .kendoDropDownList({
-        	filter: "contains",        	
-            dataTextField: "name",
-            dataValueField: "id",
-            autoWidth: true,
-            height: 200,
-            template: kendo.template($("#account-list-tmpl").html()),
-            dataSource: {
-            	data: banhji.source.accountList,
-			  	sort: [
-				  	{ field: "account_type_id", dir: "asc" },
-				  	{ field: "number", dir: "asc" }
-				]
-            }
-        });
-    }
-
-    function toAccountEditor(container, options) {
-        $('<input name="' + options.field + '" />')
-        .appendTo(container)
-        .kendoDropDownList({
-        	filter: "contains",        	
-            dataTextField: "name",
-            dataValueField: "id",
-            autoWidth: true,
-            height: 200,
-            template: kendo.template($("#account-list-tmpl").html()),
-            dataSource: {
-            	data: banhji.source.accountList,
-            	filter: [
-			      	{ field: "account_type_id", operator:"neq", value: 10 },
-			      	{ field: "account_type_id", operator:"neq", value: 11 },
-			      	{ field: "account_type_id", operator:"neq", value: 12 }
-			    ],
-			  	sort: [
-				  	{ field: "account_type_id", dir: "asc" },
-				  	{ field: "number", dir: "asc" }
-				]
-            }
-        });
-    }
-
-    function whtAccountEditor(container, options) {
-        $('<input name="' + options.field + '" />')
-        .appendTo(container)
-        .kendoDropDownList({
-        	filter: "contains",        	
-            dataTextField: "name",
-            dataValueField: "id",
-            autoWidth: true,
-            height: 200,
-            template: kendo.template($("#account-list-tmpl").html()),
-            dataSource: {
-            	data: banhji.source.accountList,
-            	filter: {
-		      		logic: "or",
-				    filters: [
-				      	{ field: "account_type_id", value: 13 },//Inventory
-				      	{ field: "account_type_id", value: 16 },//Fixed Asset
-				      	{ field: "account_type_id", value: 17 },//Intangible Assets
-				      	{ field: "account_type_id", value: 36 },//Expense
-				      	{ field: "account_type_id", value: 37 },
-				      	{ field: "account_type_id", value: 38 },
-				      	{ field: "account_type_id", value: 40 },
-				      	{ field: "account_type_id", value: 41 },
-				      	{ field: "account_type_id", value: 42 },
-				      	{ field: "account_type_id", value: 43 }
-				    ]
-				},
-			  	sort: [
-				  	{ field: "account_type_id", dir: "asc" },
-				  	{ field: "number", dir: "asc" }
-				]
-            }
-        });
-    }    
-
-    function measurementEditor(container, options) {
-        $('<input name="' + options.field + '"/>')
-        .appendTo(container)
-        .kendoDropDownList({       	
-            dataTextField: "measurement",
-            dataValueField: "measurement_id",
-            autoWidth: true,
-            height: 200,
-            dataSource: {
-            	transport: {
-					read 	: {
-						url: apiUrl + "item_prices",
-						type: "GET",
-						headers: banhji.header,
-						dataType: 'json'
-					},
-					parameterMap: function(options, operation) {
-						if(operation === 'read') {
-							return {
-								page: options.page,
-								limit: options.pageSize,
-								filter: options.filter,
-								sort: options.sort
-							};
-						} else {
-							return {models: kendo.stringify(options.models)};
-						}
-					}
-				},
-				schema 	: {
-					model: {
-						id: 'id'
-					},
-					data: 'results',
-					total: 'count'
-				},
-				filter:[
-					{ field:"item_id", value: options.model.item_id },
-					{ field:"assembly_id", value: 0 }
-				],
-				batch: true,
-				serverFiltering: true,
-				serverSorting: true,
-				serverPaging: true,
-				page: 1,
-				pageSize: 100
-            }
-        });
-    }
-
-    function discountEditor(container, options) {
-        $('<input name="' + options.field + '" type="number" class="k-textbox" style="width: 95%;" min="0" max="1" />')
-        .appendTo(container);
-    }
-
-    function taxForSaleEditor(container, options) {
-        $('<input name="' + options.field + '"/>')
-        .appendTo(container)
-        .kendoDropDownList({
-            dataTextField: "name",
-            dataValueField: "id",
-            autoWidth: true,
-            height: 200,
-            dataSource: {
-            	data: banhji.source.taxList,
-			  	filter:{
-				    logic: "or",
-				    filters: [
-				      	{ field: "tax_type_id", value: 3 },//Customer Tax
-				      	{ field: "tax_type_id", value: 9 }
-				    ]
-				},
-			  	sort: [
-				  	{ field: "tax_type_id", dir: "asc" },
-				  	{ field: "name", dir: "asc" }
-				]
-            }
-        });
-    }
-
-    function taxForPurchaseEditor(container, options) {
-        $('<input name="' + options.field + '"/>')
-        .appendTo(container)
-        .kendoDropDownList({
-            dataTextField: "name",
-            dataValueField: "id",
-            autoWidth: true,
-            height: 200,
-            dataSource: {
-            	data: banhji.source.taxList,
-			  	filter:{
-				    logic: "or",
-				    filters: [
-				      	{ field: "tax_type_id", value: 1 },//Supplier Tax
-				      	{ field: "tax_type_id", value: 2 },
-				      	{ field: "tax_type_id", value: 3 },
-				      	{ field: "tax_type_id", value: 9 }
-				    ]
-				},
-			  	sort: [
-				  	{ field: "tax_type_id", dir: "asc" },
-				  	{ field: "name", dir: "asc" }
-				]
-            }
-        });
-    } 
-
-    function segmentEditor(container, options) {
-        $('<input name="' + options.field + '" />')
-        .appendTo(container)
-        .kendoDropDownList({
-        	filter: "startswith",        	
-            dataTextField: "name",
-            dataValueField: "id",
-            autoWidth: true,
-            height: 200,
-            dataSource: {
-            	transport: {
-					read 	: {
-						url: apiUrl + "segments",
-						type: "GET",
-						headers: banhji.header,
-						dataType: 'json'
-					},
-					parameterMap: function(options, operation) {
-						if(operation === 'read') {
-							return {
-								page: options.page,
-								limit: options.pageSize,
-								filter: options.filter,
-								sort: options.sort
-							};
-						} else {
-							return {models: kendo.stringify(options.models)};
-						}
-					}
-				},
-				schema 	: {
-					model: {
-						id: 'id'
-					},
-					data: 'results',
-					total: 'count'
-				},
-				serverFiltering: true,
-				serverSorting: true,
-				serverPaging: true,
-				page: 1,
-				pageSize: 100
-            }
-        });
-    }
-
-    function segmentItemEditor(container, options) {
-        $('<input name="' + options.field + '" />')
-        .appendTo(container)
-        .kendoDropDownList({
-        	filter: "startswith",        	
-            dataTextField: "name",
-            dataValueField: "id",
-            autoWidth: true,
-            height: 200,
-            template: kendo.template($("#segment-list-tmpl").html()),
-            dataSource: {
-            	transport: {
-					read 	: {
-						url: apiUrl + "segments/item",
-						type: "GET",
-						headers: banhji.header,
-						dataType: 'json'
-					},
-					parameterMap: function(options, operation) {
-						if(operation === 'read') {
-							return {
-								page: options.page,
-								limit: options.pageSize,
-								filter: options.filter,
-								sort: options.sort
-							};
-						} else {
-							return {models: kendo.stringify(options.models)};
-						}
-					}
-				},
-				schema 	: {
-					model: {
-						id: 'id'
-					},
-					data: 'results',
-					total: 'count'
-				},
-				filter:{ field: "segment_id", value: options.model.segment.id },
-				serverFiltering: true,
-				serverSorting: true,
-				serverPaging: true,
-				page: 1,
-				pageSize: 100
-            }
-        });
-    }
-
-    function numberTextboxEditor(container, options) {
-        $('<input name="' + options.field + '" type="number" class="k-textbox" style="width: 95%;" />')
-        .appendTo(container);
-    }
-
-    function dateEditor(container, options) {
-        $('<input name="' + options.field + '" />')
-        .appendTo(container)
-        .kendoDatePicker({
-        	format: "dd-MM-yyyy",
-        	parseFormats: ["yyyy-MM-dd"]
-        });
-    }
-
-    function customBoolEditor(container, options) {
-        $('<input class="k-checkbox" type="checkbox" name="applyAdditionalCostChk" data-type="boolean" data-bind="checked:additional_applied">').appendTo(container);
-        $('<label class="k-checkbox-label">&#8203;</label>').appendTo(container);
-    }
-
-    function supplierEditor(container, options) {
-        $('<input name="' + options.field + '" />')
-        .appendTo(container)
-        .kendoDropDownList({
-        	filter: "contains",        	
-            dataTextField: "name",
-            dataValueField: "id",
-            autoWidth: true,
-            height: 200,
-            template: kendo.template($("#contact-list-tmpl").html()),
-            dataSource: {
-            	transport: {
-					read 	: {
-						url: apiUrl + "contacts",
-						type: "GET",
-						headers: banhji.header,
-						dataType: 'json'
-					},
-					parameterMap: function(options, operation) {
-						if(operation === 'read') {
-							return {
-								page: options.page,
-								limit: options.pageSize,
-								filter: options.filter,
-								sort: options.sort
-							};
-						} else {
-							return {models: kendo.stringify(options.models)};
-						}
-					}
-				},
-				schema 	: {
-					model: {
-						id: 'id'
-					},
-					data: 'results',
-					total: 'count'
-				},
-				filter:{ field: "parent_id", operator:"where_related_contact_type", value: 2 },
-				sort: [
-					{ field:"contact_type_id", dir:"asc" },
-					{ field:"number", dir:"asc" }
-				],
-				batch: true,
-				serverFiltering: true,
-				serverSorting: true,
-				serverPaging: true,
-				page: 1,
-				pageSize: 100
-            }
-        });
-    }
-    
-</script>
-
-
-
-
-
 <!-- #############################################
 ##################################################
 #	MENU VIEW 					 			 	#
 ##################################################
 ############################################## -->
 <script id="saleMenu" type="text/x-kendo-template">
-	<ul class="topnav">
-	  	<!-- <li><a href='#/sale_center' class='glyphicons show_big_thumbnails'><i></i></a></li> -->
-	  	<li><a href='#/sale_center'><span data-bind="text: lang.lang.center" style="color: #fff;"></span></a></li>
-	  	<li role='presentation' class='dropdown'>
-	  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><i class="text-t"></i> <span class='caret'></span></a>
-  			<ul class='dropdown-menu'>
-  				<li><a href='#/customer'><span data-bind="text: lang.lang.add_customer"></span></a></li> 
-  				<li ><a href='rrd/#/job'><span data-bind="text: lang.lang.add_job"></span></a></li>	
-  				<!-- <li><a href='#/item_catalog'><span data-bind="text: lang.lang.add_new_catalog"></span></a></li> -->
-  				<li><a href='rrd/#/item_assembly'><span data-bind="text: lang.lang.build_assembly"></span></a></li>
-  				<li> <span class="li-line"></span></li>
-  				<!-- <li ><a href='#/sale'>Mobile Sale</a></li> -->
-  				<li ><a href='#/quote'><span data-bind="text: lang.lang.create_quotation"></span></a></li>
-  				<li><a href='#/sale_order'><span data-bind="text: lang.lang.create_sale_order"></span></a></li>
-  				<li><a href='#/customer_deposit'><span data-bind="text: lang.lang.create_customer_deposit"></span></a></li>
-  				<li> <span class="li-line"></span></li>
-  				<li><a href='#/sale_recurring'>Recurring</a></li>
-  				<!-- <li><a href='#/imports'><span ></span>Imports</a></li> -->
-  			</ul>
-	  	</li>
-	  	<li><a href="#/sale_report_center" style="color: #fff;">Reports</a></li>
-	</ul>
+	
 </script>
