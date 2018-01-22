@@ -1886,9 +1886,11 @@ class Utibills extends REST_Controller {
 		   			$line->type 			= isset($value->type) ? $value->type:"";
 		   			
 		   			if($value->type == 'installment') {
+		   				$ints = new Installment(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		   				$ints->where("meter_id", $value->meter_id)->limit(1)->get();
 						$updateInstallSchedule = new Installment_schedule(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 						$updateInstallSchedule->where('invoiced', 0 );
-						$updateInstallSchedule->where('id', $value->item_id)->limit(1);
+						$updateInstallSchedule->where('installment_id', $ints->id)->limit(1)->get();
 						$updateInstallSchedule->invoiced = 1;
 						$updateInstallSchedule->save();
 		   			}
@@ -2001,9 +2003,11 @@ class Utibills extends REST_Controller {
 				foreach($remain as $rem) {
 					$amountOwed += $rem->amount;
 					if($rem->status == 2) {
-						$qu = $rem->transaction->select('amount')->where('type', 'Cash_Receipt')->get();
+						$qu = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						$qu->where("type", "Cash_Receipt");
+						$qu->where("reference_id", $rem->id)->get();
 						foreach($qu as $q){
-							$amountOwed -= $q->amount;
+							$amountOwed -= floatval($q->amount);
 						};
 					}
 				}
