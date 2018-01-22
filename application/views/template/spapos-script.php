@@ -4182,7 +4182,11 @@
                     locale              : item.locale,
                     movement            : 0,
                     discount_percentage : 0,
-                    item                : { id:item.id, name:item.name , item_type_id: item.item_type_id},
+                    item                : { 
+                        id:item.id, 
+                        name:item.name , 
+                        item_type_id: item.item_type_id
+                    },
                     measurement         : item.measurement,
                     tax_item            : { id:"", name:"" }
                 });
@@ -4808,7 +4812,8 @@
                                     locale : this.get("invLocale"),
                                     rate : rate,
                                     account_id : 7,
-                                    contact_id : this.customerAR[0].id
+                                    contact_id : this.customerAR[0].id,
+                                    phone: this.get("customerPhone")
                                 });
                                 this.workDS.sync();
                                 this.workDS.bind("requestEnd", function(e){
@@ -4900,7 +4905,6 @@
                             if(this.get("dateSelected")){
                                 $("#loadImport").css("display", "block");
                                 var rate = banhji.source.getRate(this.get("invLocale"), new Date(this.get("dateSelected")));
-                                this.bookDS.data([]);
                                 this.bookDS.add({
                                     items : this.lineDS.data(),
                                     employee : this.employeeAR,
@@ -4913,13 +4917,19 @@
                                     discount : this.get("invDiscount"),
                                     locale : this.get("invLocale"),
                                     rate : rate,
+                                    phone : this.get("customerPhone"),
                                     account_id : 7,
                                     contact_id : this.customerAR[0].id
                                 });
+                                var f = 0;
                                 this.bookDS.sync();
                                 this.bookDS.bind("requestEnd", function(e){
                                     self.addWorkSuccess();
                                     $("#loadImport").css("display", "none");
+                                    if(f == 0){
+                                        self.bookDS.query();
+                                    }
+                                    f = 1;
                                 });
                             }else{
                                 this.alertRequiredMSG();
@@ -4937,6 +4947,58 @@
                 this.alertRequiredMSG();
             }
         },
+        editBook: function(e){
+            var data = e.data;
+            var self = this;
+            console.log(data);
+            //Customer
+            $.each(data.customer_ar, function(i,v){
+                self.customerAR.push(v);
+            });
+            //Employee
+            $.each(data.employee_ar, function(i,v){
+                self.employeeAR.push(v);
+            });
+            //Room
+            $.each(data.room_ar, function(i,v){
+                self.roomAR.push(v);
+            });
+            //Item
+            $.each(data.items, function(i,v){
+                self.lineDS.add({
+                    tax_item_id         : v.tax_item_id,
+                    item_id             : v.item_id,
+                    assembly_id         : v.assembly_id,
+                    measurement_id      : v.measurement_id,
+                    description         : v.description,
+                    quantity            : v.quantity,
+                    conversion_ratio    : v.conversion_ratio,
+                    cost                : v.cost,
+                    price               : v.price,
+                    amount              : v.amount,
+                    avarage_cost        : v.avarage_cost,
+                    discount            : v.discount,
+                    rate                : v.rate,
+                    locale              : v.locale,
+                    movement            : v.movement,
+                    discount_percentage : 0,
+                    item                : { 
+                        id: v.item_id, 
+                        name: v.item_name, 
+                        item_type_id: v.item_type_id},
+                    measurement         : {
+                        measurement_id : v.measurement_id,
+                        measurement : v.measurement_name
+                    },
+                    tax_item            : { 
+                        id: v.tax_item_id, 
+                        name: v.tax_item_name 
+                    }
+                });
+            });
+            this.set("dateSelected", new Date(data.date));
+            this.set("customerPhone", data.phone);
+        }
     });
 
     banhji.receipt = kendo.observable({

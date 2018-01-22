@@ -576,9 +576,11 @@ class Winvoices extends REST_Controller {
 				foreach($remain as $rem) {
 					$amountOwed += $rem->amount;
 					if($rem->status == 2) {
-						$qu = $rem->transaction->select('amount')->where('type', 'Cash_Receipt')->get();
+						$qu = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						$qu->where("type", "Cash_Receipt");
+						$qu->where("reference_id", $rem->id)->get();
 						foreach($qu as $q){
-							$amountOwed -= $q->amount;
+							$amountOwed -= floatval($q->amount);
 						};
 					}
 				}

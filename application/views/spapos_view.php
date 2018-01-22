@@ -543,6 +543,12 @@
 								           		value: dateSelected,
 								           		events: {change: dateChange}
 								           	" />
+								        <input type="text" 
+						                	style="width: 100%;" 
+						                	placeholder="Phone Number" 
+								           	data-bind="
+								           		value: customerPhone
+								           	" />
 										<table class="table table-bordered table-primary table-striped table-vertical-center" style="margin-top: 15px;">
 									        <thead>
 									            <tr>
@@ -689,7 +695,7 @@
 							</div>
 						</div>
 						<div class="row-fluid">
-							<div class="span4 width-50 box-shadow box-generic">
+							<div class="span4 box-shadow">
 								<button class="btn-btn btn-width-100 btn-center-text btn-md margin" data-bind="click: addInvoice, text: lang.lang.save">
 								</button>
 								<button class="btn-btn btn-width-100 btn-center-text btn-md margin" data-bind="click: addBook">
@@ -704,7 +710,24 @@
 								</div>
 							</div>
 							<div class="span8">
-								
+								<h3>Book List</h3>
+								<table class="table table-bordered table-primary table-striped table-vertical-center" style="margin-top: 15px;">
+							        <thead>
+							            <tr>
+							            	<th style="vertical-align: top;" data-bind="text: lang.lang.no_"></th>
+							            	<th style="vertical-align: top;" data-bind="text: lang.lang.name"></th>
+							            	<th style="vertical-align: top;" data-bind="text: lang.lang.phone"></th>
+							            	<th style="vertical-align: top;" data-bind="text: lang.lang.room"></th>
+							            	<th style="vertical-align: top;" data-bind="text: lang.lang.employee"></th>
+							            	<th style="vertical-align: top;" data-bind="text: lang.lang.date"></th>
+							            	<th style="vertical-align: top;" data-bind="text: lang.lang.action"></th>
+							            </tr>
+							        </thead>
+							        <tbody data-role="listview" 
+						        		data-template="book-list-tmpl" 
+						        		data-auto-bind="true"
+						        		data-bind="source: bookDS"></tbody>
+							    </table>
 							</div>
 							<div id="dialog" style="display:none">
 								<div class="span6">
@@ -818,6 +841,25 @@
 <script id="room-list-tmpl" type="text/x-kendo-tmpl">
 	<span>#=number#</span>	
 	<span>#=name#</span>	
+</script>
+<script id="book-list-tmpl" type="text/x-kendo-template">
+	<tr data-uid="#: uid #">
+		<td>
+			<i class="icon-trash" data-bind="events: { click: rmBook }"></i>
+			#:banhji.pos.bookDS.indexOf(data)+1#      
+		</td>
+		<td>#= name#</td>
+		<td>#= phone#</td>
+		<td>#= room#</td>
+		<td>#= employee#</td>
+		<td>#= date#</td>
+		<td align="center">   			
+   			<div class="edit-buttons">       
+		        <a class="k-button" data-bind="click: editBook"><span class="k-icon k-i-edit"></span></a>
+			    <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-i-delete"></span></a>
+		   	</div>		   	
+   		</td>
+	</tr>
 </script>
 
 <!-- Receipt -->
