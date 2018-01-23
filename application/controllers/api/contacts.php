@@ -7,6 +7,7 @@ class Contacts extends REST_Controller {
 	public $server_host;
 	public $server_user;
 	public $server_pwd;
+	public $noImageUrl = "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/no_image.jpg";
 	//CONSTRUCTOR
 	function __construct() {
 		parent::__construct();
@@ -127,7 +128,7 @@ class Contacts extends REST_Controller {
 					"bill_to" 					=> $value->bill_to,
 					"ship_to" 					=> $value->ship_to,
 					"memo" 						=> $value->memo,
-					"image_url" 				=> $value->image_url,
+					"image_url" 				=> $value->image_url!="" ? $value->image_url : $this->noImageUrl,
 					"invoice_note" 				=> $value->invoice_note,
 					"company" 					=> $value->company,
 					"company_en" 				=> $value->company_en,
