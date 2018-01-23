@@ -312,7 +312,7 @@ class Items extends REST_Controller {
 				$itemPrice->measurement_id 		= $obj->measurement_id;
 				$itemPrice->quantity 			= 1;
 				$itemPrice->conversion_ratio 	= 1;
-				$itemPrice->price 				= $obj->price;			
+				$itemPrice->price 				= $obj->price;
 				$itemPrice->locale 				= $obj->locale;
 				$itemPrice->save();
 

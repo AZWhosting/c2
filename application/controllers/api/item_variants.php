@@ -215,6 +215,16 @@ class Item_variants extends REST_Controller {
   			$subItems->deleted 				= $items->deleted;
 
   			if($subItems->save()){
+  				//Item Price
+	   			$itemPrice = new Item_price(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	   			$itemPrice->item_id 			= $subItems->id;
+				$itemPrice->measurement_id 		= $subItems->measurement_id;
+				$itemPrice->quantity 			= 1;
+				$itemPrice->conversion_ratio 	= 1;
+				$itemPrice->price 				= $subItems->price;
+				$itemPrice->locale 				= $subItems->locale;
+				$itemPrice->save();
+				
 				foreach ($permutations[$i] as $value) {
 					$attributeValues = new Attribute_value(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 					$attributeValues->get_by_id($value);
