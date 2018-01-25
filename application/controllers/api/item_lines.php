@@ -220,6 +220,11 @@ class Item_lines extends REST_Controller {
 
 		foreach ($models as $value) {
 			$obj = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+			//Cost
+			if(isset($value->cost)){
+				$obj->cost = $value->cost;
+			}		   	
 			
 			//Record Item Movement
 			if($value->item_id>0){
@@ -333,7 +338,7 @@ class Item_lines extends REST_Controller {
 								$cost = $inventoryTotalCost / floatval($unitOnHand->total);
 							}
 							
-							//Quantity							
+							//Quantity
 							$movement = 1;
 							if(in_array($transaction->type, $saleList)){
 								$movement = -1;
@@ -348,22 +353,19 @@ class Item_lines extends REST_Controller {
 							$additionalCost = 0;
 							if(isset($value->additional_cost)){
 								$additionalCost = floatval($value->additional_cost);
-							}							
+							}
 
 							$currentAmount = ($currentQuantity * floatval($value->cost) + $additionalCost) / floatval($value->rate);
 							$totalAmount = $inventoryTotalCost + $currentAmount;
-
-							//Item Cost = $totalAmount / $totalQuantity;
-							$itemCost = 0;
-							if($totalQuantity==0){}else{
-								$itemCost = $totalAmount / $totalQuantity;
-							}
 
 							$journalLines = [];
 
 							//If sale with zero cost
 							if(in_array($transaction->type, $saleList) && floatval($value->cost)==0){
-								$zeroCostAmt = $currentQuantity * $itemCost / floatval($value->rate);
+								$zeroCostAmt = $currentQuantity * $cost / floatval($value->rate);
+
+								//Fill zero cost
+								$obj->cost = $cost;
 
 								//COGS on Dr
 								$journalLines[] = array(
@@ -469,7 +471,7 @@ class Item_lines extends REST_Controller {
 		   	isset($value->quantity)				? $obj->quantity 			= $value->quantity : "";
 		   	isset($value->quantity_adjusted) 	? $obj->quantity_adjusted 	= $value->quantity_adjusted : "";
 		   	// isset($value->conversion_ratio)		? $obj->conversion_ratio 	= $value->conversion_ratio : $obj->conversion_ratio = 1;
-		   	isset($value->cost)					? $obj->cost 				= $value->cost : "";
+		   	// isset($value->cost)					? $obj->cost 				= $value->cost : "";
 		   	isset($value->price)				? $obj->price 				= $value->price : "";
 		   	//isset($value->price_avg)			? $obj->price_avg 			= $value->price_avg : "";		   	
 		   	isset($value->amount)				? $obj->amount 				= $value->amount : "";
