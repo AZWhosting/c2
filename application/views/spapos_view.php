@@ -220,6 +220,25 @@
 	html body > .container-fluid,html.no-touch.sticky-top:not(.animations-gpu) #content {
 		background: #e9ebee;
 	}
+	.box-generic{
+		background: #ccc;
+		padding: 15px 15px 0;
+		padding-left: 15px !important;
+		margin: 15px 0 0 !important;
+	}
+	.table.table-bordered.table-primary.table-striped.table-vertical-center tr td{
+		border: 1px solid #c5c5c5;
+	}
+	.table-fixed tbody {
+	  height: 100px;
+	  overflow-y: auto;
+	  width: 100%;
+	}
+	.list-item {
+		padding: 10px;
+		overflow: hidden;
+		border-bottom: 1px solid #ccc;
+	}
 </style>
 <!-- Dash Board -->
 <script id="dashBoard" type="text/x-kendo-template">
@@ -331,18 +350,18 @@
 <script id="pos" type="text/x-kendo-template">
 	<div id="ntf1" data-role="notification"></div>
 	<div id="wrapper" style="background: #fff;margin-top: 0;padding: 15px;border: 1px solid #ccc;">
-		<div class="row-fluid">
+		<div class="row">
 			<div style="overflow: hidden;">
-				<div class="">
+				<div class="span6">
 					<div style="position: relative;overflow: hidden;">
 						<div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 100%;margin-top: -15px;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
 							<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
 						</div>
-						<div class="row-fluid" style="padding: 0;">
+						<div class="row" style="padding: 0;">
 							<div class="span12">
 								<div class="row">
 									<div class="listWrapper span6" >
-										<div class="innerAll" style="height: 65px;">
+										<div class="innerAll" style="height: 49px; padding-bottom: 0;">
 											<div class="widget-search separator bottom" style="padding: 0;">
 												<a class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></a>
 												<div class="overflow-hidden">
@@ -351,7 +370,7 @@
 											</div>
 										</div>
 									</div>
-									<div class="span3" style="padding-top: 15px;">
+									<div class="span3" style="padding-top: 15px; padding-left: 0;">
 										<input 
 											data-role="dropdownlist"
 											data-auto-bind="false" 
@@ -371,7 +390,7 @@
 				                            class="k-invalid"
 				                        />
 									</div>
-									<div class="span3" style="padding-top: 15px;">
+									<div class="span3" style="padding-top: 15px; padding-left: 0;">
 										<input 
 											data-role="dropdownlist"
 											data-auto-bind="false" 
@@ -409,147 +428,41 @@
 									</div>
 								</div>
 							</div>
-							<div class="span12" style="padding: 0;">
-								<div class="span4">
-									<div class="box-generic">
-										<div data-bind="visible: emSelect">
-											<input 
-												data-role="dropdownlist"
-												data-template="contact-list-tmpl" 
-												data-auto-bind="false" 
-												data-value-primitive="true" 
-												data-filter="startswith" 
-												data-text-field="name" 
-												data-value-field="id"
-												data-bind="
-													value: employeeSelected,
-					                              	source: employeeDS,
-					                              	events: {change: addEmployee}" 
-					                            data-option-label="Select Employee..."
-					                            required="" 
-					                            data-required-msg="required" 
-					                            style="width: 69%; float: left;" 
-					                            aria-invalid="true" 
-					                            class="k-invalid"
-					                        />
-					                        <ul class="topnav addNew" style="float: right;" >
-												<li role="presentation" class="dropdown ">
-											  		<a class="dropdown-toggle" data-bind="click: selectOutsource" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-											  			<span>Outsource</span>
-											  		</a>
-											  	</li>
-											</ul>
-					                    </div>
-					                   	<div data-bind="invisible: emSelect">
-											<input 
-												data-role="dropdownlist"
-												data-template="contact-list-tmpl" 
-												data-auto-bind="false" 
-												data-value-primitive="true" 
-												data-filter="startswith" 
-												data-text-field="name" 
-												data-value-field="id"
-												data-bind="
-													value: employeeSelected,
-					                              	source: supplierDS,
-					                              	events: {change: addEmployee}" 
-					                            data-option-label="Select Supplier..." 
-					                            required="" 
-					                            data-required-msg="required" 
-					                            style="width: 69%; float: left;" 
-					                            aria-invalid="true" 
-					                            class="k-invalid"
-					                        />
-					                        <ul class="topnav addNew">
-												<li role="presentation" class="dropdown" style="float: right;">
-											  		<a class="dropdown-toggle" data-bind="click: selectEmployee" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-											  			<span>Employee</span>
-											  		</a>
-											  	</li>
-											</ul>
-					                    </div>
-					                    <table class="table table-bordered table-primary table-striped table-vertical-center" style="margin-top: 15px;">
-									        <thead>
-									            <tr>
-									            	<th style="vertical-align: top;" data-bind="text: lang.lang.no_"></th>
-									            	<th style="vertical-align: top;" data-bind="text: lang.lang.name"></th>
-									            </tr>
-									        </thead>
-									        <tbody data-role="listview" 
-								        		data-template="employee-list-tmpl" 
-								        		data-auto-bind="false"
-								        		data-bind="source: employeeAR"></tbody>
-									    </table>
-				                    </div>
-				                </div>
-				                <div class="span4">
-				                    <div class="box-generic span4">
-				                    	<input 
-											data-role="dropdownlist"
-											data-template="room-list-tmpl" 
-											data-auto-bind="false" 
-											data-value-primitive="true" 
-											data-filter="startswith" 
-											data-text-field="name" 
-											data-value-field="id"
-											data-bind="
-												value: roomSelected,
-				                              	source: roomDS,
-				                              	events: {change: addRoom}" 
-				                            data-option-label="Select Room..." 
-				                            required="" 
-				                            data-required-msg="required" 
-				                            style="width: 100%;" 
-				                            aria-invalid="true" 
-				                            class="k-invalid"
-				                        />
-				                        <table class="table table-bordered table-primary table-striped table-vertical-center" style="margin-top: 15px;">
-									        <thead>
-									            <tr>
-									            	<th style="vertical-align: top;" data-bind="text: lang.lang.no_"></th>
-									            	<th style="vertical-align: top;" data-bind="text: lang.lang.name"></th>
-									            </tr>
-									        </thead>
-									        <tbody data-role="listview" 
-								        		data-template="room-select-list-tmpl" 
-								        		data-auto-bind="false"
-								        		data-bind="source: roomAR"></tbody>
-									    </table>
-				                    </div>
-				                </div>
-				                <div class="span4">
-									<div class="box-generic span4">
-										<input 
-											data-role="dropdownlist"
-											data-template="contact-list-tmpl" 
-											data-auto-bind="false" 
-											data-value-primitive="true" 
-											data-filter="startswith" 
-											data-text-field="name" 
-											data-value-field="id"
-											data-option-label="Select Customer..."
-											data-bind="
-												value: customerSelected,
-				                              	source: contactDS,
-				                              	events: {change: addCustomer}"
-				                            style="width: 49%; float: left;margin-right: 2%;" 
-				                            aria-invalid="true" 
-				                            class="k-invalid"
-				                        />
-				                        <input type="text" 
-						                	style="width: 49%;" 
-						                	data-role="datetimepicker"
-								           	data-bind="
-								           		value: dateSelected,
-								           		events: {change: dateChange}
-								           	" />
-								        <input type="text" 
-						                	style="width: 100%;" 
-						                	placeholder="Phone Number" 
-								           	data-bind="
-								           		value: customerPhone
-								           	" />
-										<table class="table table-bordered table-primary table-striped table-vertical-center" style="margin-top: 15px;">
+
+							<div class="span12">
+								<div class="box-generic" >
+									<input 
+										data-role="dropdownlist"
+										data-template="contact-list-tmpl" 
+										data-auto-bind="false" 
+										data-value-primitive="true" 
+										data-filter="startswith" 
+										data-text-field="name" 
+										data-value-field="id"
+										data-option-label="Select Customer..."
+										data-bind="
+											value: customerSelected,
+			                              	source: contactDS,
+			                              	events: {change: addCustomer}"
+			                            style="width: 49%; float: left;margin-right: 2%;" 
+			                            aria-invalid="true" 
+			                            class="k-invalid"
+			                        />
+			                        <input type="text" 
+					                	style="width: 49%;" 
+					                	data-role="datetimepicker"
+							           	data-bind="
+							           		value: dateSelected,
+							           		events: {change: dateChange}
+							           	" />
+							        <input type="text" 
+					                	style="width: 100%; border: 1px solid #c5c5c5; padding: 3px; margin-top: 10px;" 
+					                	placeholder="Phone Number" 
+							           	data-bind="
+							           		value: customerPhone
+							           	" />
+							        <div>
+										<table class="table-fixed table-customer table table-bordered table-primary table-striped table-vertical-center" style="margin-top: 15px;">
 									        <thead>
 									            <tr>
 									            	<th style="vertical-align: top;" data-bind="text: lang.lang.no_"></th>
@@ -564,180 +477,297 @@
 									    </table>
 									</div>
 								</div>
+
+								<div class="box-generic" style="margin-bottom: 15px;">
+									<div data-bind="visible: emSelect">
+										<input 
+											data-role="dropdownlist"
+											data-template="contact-list-tmpl" 
+											data-auto-bind="false" 
+											data-value-primitive="true" 
+											data-filter="startswith" 
+											data-text-field="name" 
+											data-value-field="id"
+											data-bind="
+												value: employeeSelected,
+				                              	source: employeeDS,
+				                              	events: {change: addEmployee}" 
+				                            data-option-label="Select Employee..."
+				                            required="" 
+				                            data-required-msg="required" 
+				                            style="width: 69%; float: left;" 
+				                            aria-invalid="true" 
+				                            class="k-invalid"
+				                        />
+				                        <ul class="topnav addNew" style="float: right;" >
+											<li role="presentation" class="dropdown ">
+										  		<a class="dropdown-toggle" data-bind="click: selectOutsource" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+										  			<span>Outsource</span>
+										  		</a>
+										  	</li>
+										</ul>
+				                    </div>
+				                   	<div data-bind="invisible: emSelect">
+										<input 
+											data-role="dropdownlist"
+											data-template="contact-list-tmpl" 
+											data-auto-bind="false" 
+											data-value-primitive="true" 
+											data-filter="startswith" 
+											data-text-field="name" 
+											data-value-field="id"
+											data-bind="
+												value: employeeSelected,
+				                              	source: supplierDS,
+				                              	events: {change: addEmployee}" 
+				                            data-option-label="Select Supplier..." 
+				                            required="" 
+				                            data-required-msg="required" 
+				                            style="width: 69%; float: left;" 
+				                            aria-invalid="true" 
+				                            class="k-invalid"
+				                        />
+				                        <ul class="topnav addNew">
+											<li role="presentation" class="dropdown" style="float: right;">
+										  		<a class="dropdown-toggle" data-bind="click: selectEmployee" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+										  			<span>Employee</span>
+										  		</a>
+										  	</li>
+										</ul>
+				                    </div>
+				                    <table class="table table-bordered table-primary table-striped table-vertical-center" style="margin-top: 15px; width: 100%; float: left;">
+								        <thead>
+								            <tr>
+								            	<th style="vertical-align: top;" data-bind="text: lang.lang.no_"></th>
+								            	<th style="vertical-align: top;" data-bind="text: lang.lang.name"></th>
+								            </tr>
+								        </thead>
+								        <tbody data-role="listview" 
+							        		data-template="employee-list-tmpl" 
+							        		data-auto-bind="false"
+							        		data-bind="source: employeeAR"></tbody>
+								    </table>
+			                    </div>
 							</div>
 						</div> 
-						<div class="row-fluid posProductItems" style="padding: 0;padding-left: 10px;">
-							<div class="span9" style="padding-left: 0;">
-								<div id="posProductList" class="box-generic-noborder" style="min-height: 150px!important; height: 150px;">
-									<div data-role="grid" class="costom-grid"
-								    	 data-column-menu="true"
-								    	 data-reorderable="true"
-								    	 data-scrollable="false"
-								    	 data-resizable="true"
-								    	 data-editable="true"
-						                 data-columns="[
-										    { 
-										    	title:'NO',
-										    	width: '50px', 
-										    	attributes: { style: 'text-align: center;' }, 
-										        template: function (dataItem) {
-										        	var rowIndex = banhji.pos.lineDS.indexOf(dataItem)+1;
-										        	return '<i class=icon-trash data-bind=click:removeRow></i>' + ' ' + rowIndex;
-										      	}
-										    },
-						                 	{ 
-						                 		field: 'item', 
-						                 		title: 'PRODUCTS/SERVICES', 
-						                 		editor: itemEditor, 
-						                 		editable: 'false', 
-						                 		template: '#=item.name#', 
-						                 		width: '170px' },
-				                            { 
-				                            	field: 'description', title:'DESCRIPTION', 
-				                            	width: '250px' 
-				                            },                            
-				                            {
-											    field: 'quantity',
-											    title: 'QTY',
-											    format: '{0:n}',
-											    editor: numberTextboxEditor,
-											    width: '120px',
-											    attributes: { style: 'text-align: right;' },
-											    template: function(dataItem){
-											    	banhji.pos.changes();
-											    	dataItem.set('amount', dataItem.price * dataItem.quantity);
-													return dataItem.quantity;
-												}
-											},
-				                            { 
-				                            	field: 'measurement', 
-				                            	title: 'UOM', 
-				                            	editable: 'false', 
-				                            	editor: measurementEditor, 
-				                            	template: '#=measurement?measurement.measurement:banhji.emptyString#', 
-				                            	width: '80px' 
-				                            },
-				                            {
-											    field: 'price',
-											    title: 'PRICE',
-											    format: '{0:n}',
-											    editor: numberTextboxEditor,
-											    width: '120px',
-											    attributes: { style: 'text-align: right;' },
-											    template: function(dataItem){
-											    	banhji.pos.changes();
-											    	dataItem.set('amount', dataItem.price * dataItem.quantity);
-													return dataItem.price;
-												}
-											},
-											{
-											    field: 'discount',
-											    title: 'DISCOUNT VALUE',
-											    hidden: true,
-											    format: '{0:n}',
-											    editor: numberTextboxEditor,
-											    width: '120px',
-											    attributes: { style: 'text-align: right;' },
-											    template: function(dataItem){
-											    	banhji.pos.changes();
-											    	return dataItem.discount;
-												}
-											},
-				                            { 
-				                            	field: 'amount', 
-				                            	title:'AMOUNT', 
-				                            	format: '{0:n}', 
-				                            	editable: 'false', 
-				                            	attributes: { style: 'text-align: right;' }, 
-				                            	width: '120px' 
-				                            },                            
-				                            { 
-				                            	field: 'tax_item', 
-				                            	title:'TAX', 
-				                            	editor: taxForSaleEditor, 
-				                            	template: function(dataItem){
-				                            		banhji.pos.changes();
-				                            		return dataItem.tax_item.name;
-				                            	}, 
-				                            	width: '90px' 
-				                            }
-				                         ]"
-				                         data-auto-bind="false"
-						                 data-bind="source: lineDS" >
-						            </div>
-								</div>
-							</div>
-							<div class="span3" style="padding: 1px;">
-								<div class="posSaleSummary cover-block" style="width: 100%; float:right;box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
-									<table class="table table-condensed table-striped table-white">
-										<tbody>
-											<tr>
-												<td class="right" style="width: 60%;"><span data-bind="text: lang.lang.subtotal" style="font-size: 15px; font-weight: 700;"></span></td>
-												<td class="right strong" width="40%"><span data-format="n" data-bind="text: obj.sub_total" style="font-size: 15px; font-weight: 700;"></span></td>
-											</tr>               
-											<tr>
-												<td class="right"><span data-bind="text: lang.lang.total_discount"></span></td>
-												<td class="right ">
-													<span data-format="n" data-bind="text: obj.discount"></span>
-												</td>
-											</tr>               
-											<tr>
-												<td class="right"><span data-bind="text: lang.lang.total_tax"></span></td>
-												<td class="right "><span data-format="n" data-bind="text: obj.tax"></span></td>
-											</tr>                             
-											<tr>
-												<td class="right"><h4 span data-bind="text: lang.lang.total" style="font-weight: 700;"></h4></td>
-												<td class="right strong"><h4 data-bind="text: total" style="font-weight: 700;"></h4></td>
-											</tr>               
-										</tbody>
-									</table>
-								</div>
-							</div>
-						</div>
-						<div class="row-fluid">
-							<div class="span4 box-shadow">
-								<button class="btn-btn btn-width-100 btn-center-text btn-md margin" data-bind="click: addInvoice, text: lang.lang.save">
-								</button>
-								<button class="btn-btn btn-width-100 btn-center-text btn-md margin" data-bind="click: addBook">
-									Book
-								</button>
-								<div class="span12 box-shadow box-generic">
-									<div class="bg-action-button">
-										<span class="btn-btn btn-width-100 btn-center-text btn-lg" data-bind="click: payPopup">
-											<span>Print</span>
-										</span>
-									</div>
-								</div>
-							</div>
-							<div class="span8">
-								<h3>Book List</h3>
-								<table class="table table-bordered table-primary table-striped table-vertical-center" style="margin-top: 15px;">
+					</div>
+				</div>
+				<div class="span6">
+					<div class="row">
+						<div class="span12">
+		                    <div class="box-generic"  style="margin-top: 0 !important;">
+		                    	<input 
+									data-role="dropdownlist"
+									data-template="room-list-tmpl" 
+									data-auto-bind="false" 
+									data-value-primitive="true" 
+									data-filter="startswith" 
+									data-text-field="name" 
+									data-value-field="id"
+									data-bind="
+										value: roomSelected,
+		                              	source: roomDS,
+		                              	events: {change: addRoom}" 
+		                            data-option-label="Select Room..." 
+		                            required="" 
+		                            data-required-msg="required" 
+		                            style="width: 100%;" 
+		                            aria-invalid="true" 
+		                            class="k-invalid"
+		                        />
+		                        <table class="table table-bordered table-primary table-striped table-vertical-center" style="margin-top: 15px;">
 							        <thead>
 							            <tr>
 							            	<th style="vertical-align: top;" data-bind="text: lang.lang.no_"></th>
 							            	<th style="vertical-align: top;" data-bind="text: lang.lang.name"></th>
-							            	<th style="vertical-align: top;" data-bind="text: lang.lang.phone"></th>
-							            	<th style="vertical-align: top;" data-bind="text: lang.lang.room"></th>
-							            	<th style="vertical-align: top;" data-bind="text: lang.lang.employee"></th>
-							            	<th style="vertical-align: top;" data-bind="text: lang.lang.date"></th>
-							            	<th style="vertical-align: top;" data-bind="text: lang.lang.action"></th>
 							            </tr>
 							        </thead>
 							        <tbody data-role="listview" 
-						        		data-template="book-list-tmpl" 
-						        		data-auto-bind="true"
-						        		data-bind="source: bookDS"></tbody>
+						        		data-template="room-select-list-tmpl" 
+						        		data-auto-bind="false"
+						        		data-bind="source: roomAR"></tbody>
 							    </table>
+		                    </div>		                
+						</div>
+					</div>
+
+					<div class="row posProductItems" style="padding: 0; padding-left: 10px; margin-top: 15px;">
+						<div class="span12" style="padding-left: 0;">
+							<div id="posProductList" class="box-generic-noborder" style="min-height: 140px!important; height: 140px; padding-bottom: 0;">
+								<div data-role="grid" class="costom-grid"
+							    	 data-column-menu="true"
+							    	 data-reorderable="true"
+							    	 data-scrollable="false"
+							    	 data-resizable="true"
+							    	 data-editable="true"
+					                 data-columns="[
+									    { 
+									    	title:'NO',
+									    	width: '50px', 
+									    	attributes: { style: 'text-align: center;' }, 
+									        template: function (dataItem) {
+									        	var rowIndex = banhji.pos.lineDS.indexOf(dataItem)+1;
+									        	return '<i class=icon-trash data-bind=click:removeRow></i>' + ' ' + rowIndex;
+									      	}
+									    },
+					                 	{ 
+					                 		field: 'item', 
+					                 		title: 'Name', 
+					                 		editor: itemEditor, 
+					                 		editable: 'false', 
+					                 		template: '#=item.name#', 
+					                 		width: '170px' },
+			                            { 
+			                            	field: 'description', title:'DESCRIPTION', 
+			                            	hidden: true,
+			                            	width: '250px' 
+			                            },                            
+			                            {
+										    field: 'quantity',
+										    title: 'QTY',
+										    format: '{0:n}',
+										    editor: numberTextboxEditor,
+										    width: '120px',
+										    attributes: { style: 'text-align: right;' },
+										    template: function(dataItem){
+										    	banhji.pos.changes();
+										    	dataItem.set('amount', dataItem.price * dataItem.quantity);
+												return dataItem.quantity;
+											}
+										},
+			                            { 
+			                            	field: 'measurement', 
+			                            	title: 'UOM', 
+			                            	editable: 'false',
+			                            	editor: measurementEditor, 
+			                            	template: '#=measurement?measurement.measurement:banhji.emptyString#', 
+			                            	width: '80px' 
+			                            },
+			                            {
+										    field: 'price',
+										    title: 'PRICE',
+										    format: '{0:n}',
+										    hidden: true,
+										    editor: numberTextboxEditor,
+										    width: '120px',
+										    attributes: { style: 'text-align: right;' },
+										    template: function(dataItem){
+										    	banhji.pos.changes();
+										    	dataItem.set('amount', dataItem.price * dataItem.quantity);
+												return dataItem.price;
+											}
+										},
+										{
+										    field: 'discount',
+										    title: 'DISCOUNT VALUE',
+										    hidden: true,
+										    format: '{0:n}',
+										    editor: numberTextboxEditor,
+										    width: '120px',
+										    attributes: { style: 'text-align: right;' },
+										    template: function(dataItem){
+										    	banhji.pos.changes();
+										    	return dataItem.discount;
+											}
+										},
+			                            { 
+			                            	field: 'amount', 
+			                            	title:'AMOUNT', 
+			                            	format: '{0:n}', 
+			                            	editable: 'false', 
+			                            	attributes: { style: 'text-align: right;' }, 
+			                            	width: '120px' 
+			                            },                            
+			                            { 
+			                            	field: 'tax_item', 
+			                            	title:'TAX', 
+			                            	hidden: true,
+			                            	editor: taxForSaleEditor, 
+			                            	template: function(dataItem){
+			                            		banhji.pos.changes();
+			                            		return dataItem.tax_item.name;
+			                            	}, 
+			                            	width: '90px' 
+			                            }
+			                         ]"
+			                         data-auto-bind="false"
+					                 data-bind="source: lineDS" >
+					            </div>
 							</div>
-							<div id="dialog" style="display:none">
-								<div class="span6">
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="span7" style="">
+							<div class="posSaleSummary cover-block" style="width: 100%; float:right;box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1; padding: 0 15px 0 0;">
+								<table class="table table-condensed table-striped table-white" style="margin: 5px 0 0;">
+									<tbody>
+										<tr>
+											<td class="right" style="width: 60%;"><span data-bind="text: lang.lang.subtotal" style="font-size: 15px; font-weight: 700;"></span></td>
+											<td class="right strong" width="40%"><span data-format="n" data-bind="text: obj.sub_total" style="font-size: 15px; font-weight: 700;"></span></td>
+										</tr>               
+										<tr>
+											<td class="right"><span>Discount</span></td>
+											<td class="right ">
+												<span data-format="n" data-bind="text: obj.discount"></span>
+											</td>
+										</tr>               
+										<tr>
+											<td class="right"><span data-bind="text: lang.lang.total_tax"></span></td>
+											<td class="right "><span data-format="n" data-bind="text: obj.tax"></span></td>
+										</tr>                             
+										<tr>
+											<td class="right"><h4 span data-bind="text: lang.lang.total" style="font-weight: 700;"></h4></td>
+											<td class="right strong"><h4 data-bind="text: total" style="font-weight: 700;"></h4></td>
+										</tr>               
+									</tbody>
+								</table>
+							</div>
+						</div>
+
+						<div class="span5 " style="margin-top: 1px; padding-left: 0">
+							<button style="width: 100% !important; float: left; margin-right: 8px;" class="btn-btn btn-width-100 btn-center-text btn-md margin" data-bind="click: payPopup">Pay
+							</button>
+							<button style="width: 105px !important; float: left; margin-right: 10px;" class="btn-btn btn-width-100 btn-center-text btn-md margin" data-bind="click: payPopup">
+								Cancel
+							</button>
+							<button style="width: 105px !important; float: left;" class="btn-btn btn-width-100 btn-center-text btn-md margin" data-bind="click: addBook">
+								Book
+							</button>
+						</div>
+
+						<!-- <div class="span12">
+							<h3>Book List</h3>
+							<table class="table table-bordered table-primary table-striped table-vertical-center" style="margin-top: 15px;">
+						        <thead>
+						            <tr>
+						            	<th style="vertical-align: top;" data-bind="text: lang.lang.no_"></th>
+						            	<th style="vertical-align: top;" data-bind="text: lang.lang.name"></th>
+						            	<th style="vertical-align: top;" data-bind="text: lang.lang.phone"></th>
+						            	<th style="vertical-align: top;" data-bind="text: lang.lang.room"></th>
+						            	<th style="vertical-align: top;" data-bind="text: lang.lang.employee"></th>
+						            	<th style="vertical-align: top;" data-bind="text: lang.lang.date"></th>
+						            	<th style="vertical-align: top;" data-bind="text: lang.lang.action"></th>
+						            </tr>
+						        </thead>
+						        <tbody data-role="listview" 
+					        		data-template="book-list-tmpl" 
+					        		data-auto-bind="true"
+					        		data-bind="source: bookDS"></tbody>
+						    </table>
+						</div> -->
+						
+						<div id="dialog" style="display:none; padding: 15px !important;">
+							<div class="row">
+								<div class="span5">
 									<div class="cover-block box-shadow">
 										<h1>Sale Summary</h1>
 										<div class="posSaleSummary cover-block "
 										data-template="sale-summary-template"
 										data-auto-bind="false"
 										data-bind="source: lineDS">
-									</div> 
+										</div>
+									</div>
 									<div class="posSaleSummary cover-block">
 										<table class="table table-white">
 											<tbody>
@@ -763,25 +793,116 @@
 										</table>
 									</div>
 								</div>
-								<div class="span4">
-								<div class="cover-block box-shadow">
-									<h1>Pay</h1>
-									<input class="k-textbox" id="pay_amount" name="pay_amount" />
-									<br>
-									<button class="btn margin btn-inverse btn-center-text btn-lg width-100" data-bind="click: payCash">
-										Cash
-									</button> 
+								<div class="span6" style="padding-right: 0;">
+									<div class="cover-block box-shadow" style="padding: 15px;">
+										<h1>Pay</h1>
+										<input class="k-textbox" id="pay_amount" name="pay_amount" />
+										<br>
+										<button style="width: 92%; margin-bottom: 0;" class="btn margin btn-inverse btn-center-text btn-lg width-100" data-bind="click: payCash">
+											Cash
+										</button> 
+									</div>
+									<div class="row-fluid">
+										<div class="box-generic" style="width: 95%; margin: 0 !important; padding: 0 !important;">
+										    <!-- //Tabs Heading -->
+										    <div class="tabsbar tabsbar-1">
+										        <ul class="row-fluid row-merge">
+										            <li class="span2 glyphicons nameplate_alt active">
+										            	<a href="#tab1" data-toggle="tab"><i></i> <span><span data-bind="text: lang.lang.info"></span></span></a>
+										            </li>
+										            <li class="span2 glyphicons usd">
+										            	<a href="#tab2" data-toggle="tab"><i></i> <span><span data-bind="text: lang.lang.account"></span></span></a>
+										            </li>
+										        </ul>
+										    </div>
+										    <!-- // Tabs Heading END -->
+
+										    <div class="tab-content">
+
+										        
+										        <div class="tab-pane active" id="tab1">
+									            	abc
+									        	</div>
+										        
+										        <div class="tab-pane" id="tab2">
+										        	
+													dgdfghsfh
+									        	</div>
+										      
+
+										    </div>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
+
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </script>
+
+<!-- <script id="item-selected-list-tmpl" type="text/x-kendo-template">
+	<div class="k-edit-button list-item">
+		<div style="font-weight: bold;float: left; width: 10%;text-align: center;">
+			<i class="icon-angle-right"></i>
+			<input
+				class="k-textbox" 
+        		data-bind="value: quantity, events:{change: changes}"
+	      		style="width: 100%;" 
+	      	/>
+		</div>
+		<div style="text-align: left;width: 50%;float: left;">
+			#=item.name#
+		</div>
+		<div style="text-align: right; width: 30%;float: left;">
+			#=kendo.toString(amount, obj.locale=="km-KH"?"c0":"c", obj.locale)#
+		</div>
+		<div style="text-align: center;width: 10%; float: right;">
+			<i class="icon-trash" data-bind="click:removeRow"></i>
+		</div>
+	</div>
+</script>
+<script id="item-edit-selected-list-tmpl" type="text/x-kendo-tmpl">
+	<div class="list-item k-cancel-button">
+		<div style="font-weight: bold;float: left; width: 10%;text-align: center;">
+			<i class="icon-angle-down"></i> 
+			<span data-bind="text: quantity"></span>
+		</div>
+		<div style="text-align: left;width: 50%;float: left;">#=item.name#</div>
+		<div style="text-align: right; width: 30%;float: left;">#=kendo.toString(amount, obj.locale=="km-KH"?"c0":"c", obj.locale)#</div>
+		<div style="text-align: center;width: 10%; float: right;"><i class="icon-trash" data-bind="click:removeRow"></i></div>
+	</div>
+	<div>
+		<div class="control-group span4" style="margin-left: 10px;padding-right: 12px;width: 30%;">
+			<label><span>#: langVM.lang.quantity#</span></label>
+			<br>
+			
+		</div>
+		<div class="control-group span4" style="width: 30%;padding-right:0;">
+			<label ><span>#: langVM.lang.price#</span></label>
+			<br>
+			<input
+				class="k-textbox" 
+        		data-bind="value: price" 
+	      		style="width: 100%;" 
+	      	/>
+		</div>
+		<div class="control-group span4" style="width: 30%;float: right;">
+			<label ><span>#: langVM.lang.discount#</span></label>
+			<br>
+			<input
+				class="k-textbox" 
+        		data-bind="value: discount" 
+	      		style="width: 100%;" 
+	      	/>
+		</div>
+	</div>
+</script> -->
 <script id="item-list-view-template" type="text/x-kendo-template">
-	<div class="product" data-bind="click:addRow">
+	<div class="product" data-bind="click:addRow" style="width: 98px; text-align: center;">
 		<img src="#= image_url #" />
 		<h3>#:name#</h3>
 		<p>#=kendo.toString(price, locale=="km-KH"?"c0":"c", locale)#</p>
@@ -5403,7 +5524,7 @@
 	</span>
 	-
 	<span>#=name#</span>
-</script>
+</script><div class="span6"><div class="span6">
 
 <script id="tax-header-tmpl" type="text/x-kendo-tmpl">
 	<strong>
@@ -5503,4 +5624,4 @@
 ############################################## -->
 <script id="saleMenu" type="text/x-kendo-template">
 	
-</script>
+</script>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                

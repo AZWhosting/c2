@@ -98,6 +98,7 @@
                             <button style="background-color: #B2C1D1;" type="button" class="btn btn-block goto-banhji" data-bind="visible:users.showAdmin, click: goCompany">Company Info</button>
                             <button style="background-color: #B2C1D1;" type="button" class="btn btn-block goto-banhji" data-bind="visible:users.showAdmin, click: goUser">Users List</button>
                             <button style="background-color: #B2C1D1;" type="button" class="btn btn-block goto-banhji" data-bind="visible:users.showAdmin, click: goEmployee">Employees List</button>
+                            <button style="background-color: #B2C1D1;" type="button" class="btn btn-block goto-banhji" data-bind="visible:users.showAdmin, click: goApp">App Access</button>
                             
                           </div>
                           
@@ -1377,6 +1378,38 @@
         <p id="waterActivationMessage">You are about to activate for water</p>
         <button class="btn btn-primary" data-bind="click: activate">Activate Now</button>
       </div>
+    </script>
+
+    <script type="text/x-kendo-template" id="client-access">
+      <button class="btn btn-primary" data-bind="click:addClient">Access Client</button>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Summary</th>
+            <th>Description</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody data-role="listview" data-bind="source: accesses" data-template="client-access-list">
+        </tbody>
+      </table>
+    </script>
+    <script type="text/x-kendo-template" id="client-access-form">
+    <input data-role="dropdownlist" data-bind="source: clients, events: {change: onClientChange}", value" data-text-field="name" data-value-field="id">
+    <button class="btn btn-primary" data-bind="click: add">Allow</button>
+    <button class="btn btn-alert" data-bind="click:close">X</button><br>
+      <span>Name:</span>&nbsp;<span data-bind="text: current.name"></span><br>
+      <span>Summary:</span>&nbsp;<span data-bind="text: current.summary"></span><br>
+      <span>Description:</span>&nbsp;<span data-bind="text: current.description"></span><br>
+    </script>
+    <script type="text/x-kendo-template" id="client-access-list">
+      <tr>
+        <td>#=name#</td>
+        <td>#=summary#</td>
+        <td>#=description#</td>
+        <td><span data-bind="click: revoked" style="cursor: crosshair;">revoke</span></td>
+      </tr>
     </script>
     <!-- cognito -->
     
@@ -3257,6 +3290,10 @@
           // mainDash.showIn("#placeholder", instituteModule);
           banhji.router.navigate("");
         },
+        goApp       : function() {
+          banhji.router.navigate("client");
+          console.log('dfjkslfjds');
+        },
         goProfile   : function() {
           banhji.router.navigate("profile");
         },
@@ -3450,6 +3487,130 @@
         }
       });
 
+      banhji.client = kendo.observable({
+        name: "client",
+        current: '',
+        clients: new kendo.data.DataSource({
+          transport: {
+            read  : {
+              url: baseUrl + 'api/clients',
+              type: "GET",
+              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).institute.id : 0 },
+              dataType: 'json'
+            },
+            parameterMap: function(options, operation) {
+              if(operation === 'read') {
+                return {
+                  limit: options.take,
+                  page: options.page,
+                  filter: options.filter
+                };
+              } else {
+                return {models: kendo.stringify(options.models)};
+              }
+            }
+          },
+          schema  : {
+            model: {
+              id: 'id'
+            },
+            data: 'results',
+            total: 'count'
+          },
+          batch: true,
+          serverFiltering: true,
+          serverPaging: true,
+          pageSize: 100
+        }),
+        accesses: new kendo.data.DataSource({
+          transport: {
+            read  : {
+              url: baseUrl + 'api/clients/access',
+              type: "GET",
+              headers: { Institute: JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).institute.id : 0 },
+              dataType: 'json'
+            },
+            create  : {
+              url: baseUrl + 'api/clients/access',
+              type: "POST",
+              dataType: 'json'
+            },
+            destroy  : {
+              url: baseUrl + 'api/clients/access',
+              type: "DELETE",
+              dataType: 'json'
+            },
+            parameterMap: function(options, operation) {
+              if(operation === 'read') {
+                return {
+                  limit: options.take,
+                  page: options.page,
+                  filter: options.filter
+                };
+              } else {
+                return {models: kendo.stringify(options.models)};
+              }
+            }
+          },
+          schema  : {
+            model: {
+              id: 'id'
+            },
+            data: 'results',
+            total: 'count'
+          },
+          batch: true,
+          serverFiltering: true,
+          serverPaging: true,
+          pageSize: 100
+        }),
+        revoked: function(e) {
+          var revoked = confirm("Revoke client access right?");
+          if(revoked) {
+            this.accesses.remove(e.data);
+            this.accesses.sync()
+            .then(function(e) {
+              console.log(e);
+            });
+          }
+        },
+        addClient: function() {
+          this.accesses.insert(0, {
+            clientId: '',
+            name: '',
+            summary: '',
+            description: '',
+            institute: {
+              id: JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).institute.id : 0,
+              name: null
+            }
+          });
+          this.set('current', this.accesses.at(0));
+          mainDash.showIn("#placeholder", clientForm);
+        },
+        onClientChange: function(e) {
+          var selected = e.sender.selectedIndex;
+          var data = e.sender.dataSource._data;
+          this.get('current').set('clientId', data[selected].id);
+          this.get('current').set('name', data[selected].name);
+          this.get('current').set('summary', data[selected].summary);
+          this.get('current').set('description', data[selected].description);
+        },
+        add: function() {
+          this.accesses.sync();
+          this.accesses.bind('requestEnd', function(e){
+            if(e.response.results.length > 0 ) {
+              mainDash.showIn("#placeholder", client);
+            }
+          });
+        },
+        cancel: function() {},
+        close: function() {
+          this.accesses.cancelChanges();
+          mainDash.showIn("#placeholder", client);
+        }
+      });
+
       banhji.app = kendo.observable({
         cache: null,
         userDS: banhji.profile.dataSource,
@@ -3492,6 +3653,9 @@
         goModule    : function() {
           banhji.router.navigate("");
         },
+        goApp       : function() {
+          banhji.router.navigate("client");
+        },
         goProfile   : function() {
           banhji.profile.set('currentID', this.userDS.data()[0]);
           banhji.router.navigate("profile");
@@ -3522,6 +3686,8 @@
       var password = new kendo.View('#template-user-password', {model: banhji.profile});
       var role = new kendo.View('#template-assign-role-to-page', {model: banhji.userFX});
       var water = new kendo.View('#water', {model: banhji.modules});
+      var client = new kendo.View('#client-access', {model: banhji.client});
+      var clientForm = new kendo.View('#client-access-form', {model: banhji.client});
       // router initization
       banhji.router = new kendo.Router({
         init: function() {
@@ -3679,6 +3845,11 @@
         layout.showIn("#container", mainDash);
         
         mainDash.showIn("#placeholder", water);
+      });
+
+      banhji.router.route('client', function() {
+        layout.showIn("#container", mainDash); 
+        mainDash.showIn("#placeholder", client);
       });
 
       $(document).ready(function() {

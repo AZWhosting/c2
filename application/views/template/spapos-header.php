@@ -166,6 +166,7 @@ var themerPrimaryColor = primaryColor;
 	});
 </script>
 <!--start kendo localization in Khmer-->
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
 <!-- Le fav and touch icons -->
 <link rel="shortcut icon" href="<?php echo base_url();?>assets/update/banhji.jpg">

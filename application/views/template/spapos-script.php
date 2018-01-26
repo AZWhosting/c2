@@ -3065,7 +3065,7 @@
             serverSorting: true,
             serverPaging: true,
             page: 1,
-            pageSize: 9
+            pageSize: 8
         }),
         employeeDS          : new kendo.data.DataSource({
             transport: {
@@ -4634,7 +4634,7 @@
             console.log('payVisible', this.payVisible);
             $("#dialog").kendoWindow({
                 title: "",
-                width: "50%",
+                width: "70%",
                 height: "50%",
                 actions: [ "close" ],
                 draggable: false,

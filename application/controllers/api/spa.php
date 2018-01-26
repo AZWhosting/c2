@@ -362,9 +362,12 @@ class Spa extends REST_Controller {
 					foreach($it as $item){
 						$measurement = new Measurement(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 						$measurement->where("id", $item->measurement_id)->get();
-						$tax = new Measurement(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-						$tax->where("id", $item->tax_item_id)->get();
-
+						$taxname = "";
+						if($item->tax_item_id > 0){
+							$tax = new Measurement(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+							$tax->where("id", $item->tax_item_id)->get();
+							$taxname = $tax->name;
+						}
 						$i = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 						$i->where("id", $item->item_id)->limit(1)->get();
 						$itemar[] = array(
@@ -375,8 +378,8 @@ class Spa extends REST_Controller {
 							"contact_id" 	=> intval($item->contact_id),
 							"measurement_id" => intval($item->measurement_id),
 							"measurement_name" => $measurement->name,
-							"tax_item_id" 	=> intval($item->tax_item_id),
-							"tax_item_name" => $tax->name,
+							"tax_item_id" 	=> $item->tax_item_id,
+							"tax_item_name" => $taxname,
 							"assembly_id" 	=> intval($item->assembly_id),
 							"description" 	=> $item->description,
 							"quantity" 		=> intval($item->quantity),

@@ -47,16 +47,7 @@ class Institute extends DataMapper {
 		'module',
 		'role', 
 		'login',
-		'institute' => array(
-			'class' => 'institute',
-			'other_field' => 'access_institute',
-			'reciprocal' => TRUE
-		),
-		'access_institute' => array(
-			'class' => 'institute',
-			'other_field' => 'institute',
-			'reciprocal' => TRUE
-		)
+		'client'
 	);
 
 	public function __construct() {	
