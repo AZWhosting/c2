@@ -2360,7 +2360,7 @@
           batch: true,
           serverFiltering: true,
           serverPaging: true,
-          pageSize: 50
+          pageSize: 200
         }),
         users : banhji.userDS,
         genders  : [{id: "M", value: "Male"}, {id: "F", value: "Female"}],
