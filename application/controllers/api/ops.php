@@ -86,8 +86,14 @@ class Ops extends REST_Controller {
 				// 	// 	"null" 		=> FALSE,
 				// 	// 	"default" 	=> 0
 				// 	// ),
+				// 	"reference_no" => array(
+				// 		"type" 		=> "VARCHAR",
+				// 		"constraint"=> 255,
+				// 		"null" 		=> FALSE,
+				// 		"default" 	=> ""
+				// 	)
 				// );
-				// $data['results'][] = $this->dbforge->add_column("transactions", $fields);
+				// $data['results'][] = $this->dbforge->add_column("item_lines", $fields);
 				
 			    // Modify fields
 		 	// 	$fields = array(

@@ -191,7 +191,8 @@ class Item_lines extends REST_Controller {
 				   	"locale" 			=> $value->locale,
 				   	"movement" 			=> $value->movement,
 				   	"required_date"		=> $value->required_date,
-				   	"deleted"			=> $value->deleted,
+				   	"reference_no" 		=> $value->reference_no,
+				   	"deleted"			=> $value->deleted,				   	
 				   	
 				   	"item" 				=> $item,
 				   	"measurement" 		=> $measurement,
@@ -485,6 +486,7 @@ class Item_lines extends REST_Controller {
 		   	isset($value->additional_applied)	? $obj->additional_applied  = $value->additional_applied : "";
 		   	isset($value->movement)				? $obj->movement 			= $value->movement : "";
 		   	isset($value->required_date)		? $obj->required_date 		= $value->required_date : "";
+		   	isset($value->reference_no) 		? $obj->reference_no 			= $value->reference_no : "";
 		   	isset($value->deleted) 				? $obj->deleted 			= $value->deleted : "";
 
 		   	//Conversion ratio
@@ -566,6 +568,7 @@ class Item_lines extends REST_Controller {
 				   	"locale" 			=> $obj->locale,
 				   	"movement" 			=> $obj->movement,
 				   	"required_date"		=> $obj->required_date,
+				   	"reference_no" 		=> $obj->reference_no,
 				   	"deleted"			=> $obj->deleted
 			   	);
 		    }
@@ -616,9 +619,10 @@ class Item_lines extends REST_Controller {
 		   	isset($value->locale)			? $obj->locale 				= $value->locale : "";
 		   	isset($value->additional_cost)	? $obj->additional_cost  	= $value->additional_cost : "";
 		   	isset($value->inventory_quantity)	? $obj->inventory_quantity  	= $value->inventory_quantity : "";
-		   	isset($value->inventory_value)		? $obj->inventory_value  		= $value->inventory_value : "";
+		   	isset($value->inventory_value)	? $obj->inventory_value  		= $value->inventory_value : "";
 		   	isset($value->movement)			? $obj->movement 			= $value->movement : "";
 		   	isset($value->required_date)	? $obj->required_date 		= $value->required_date : "";
+		   	isset($value->reference_no) 	? $obj->reference_no 			= $value->reference_no : "";
 		   	isset($value->deleted) 			? $obj->deleted 			= $value->deleted : "";
 
 		   	//Conversion ratio
@@ -754,6 +758,7 @@ class Item_lines extends REST_Controller {
 				   	"locale" 			=> $obj->locale,
 				   	"movement" 			=> $obj->movement,
 				   	"required_date"		=> $obj->required_date,
+				   	"reference_no" 		=> $obj->reference_no,
 				   	"deleted"			=> $obj->deleted
 				);
 			}
