@@ -115,6 +115,22 @@ class Item_lines extends REST_Controller {
 					);
 				}
 
+				//Reference
+				$reference = [];
+				if($value->reference_id>0){
+					$references = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$references->select("number, amount, status, issued_date");
+					$references->get_by_id($value->reference_id);
+
+					$reference = array(
+						"id" 			=> $value->reference_id,
+						"number" 		=> $references->number,
+						"amount" 		=> $references->amount,
+						"status" 		=> $references->status,
+						"issued_date" 	=> $references->issued_date
+					);
+				}
+
 				//Contact
 				$contact = array(
 					"id" 						=> $value->contact_id,
@@ -202,7 +218,8 @@ class Item_lines extends REST_Controller {
 				   	"contact" 			=> $contact,
 				   	"item_serials"		=> $itemSerials->get_raw()->result(),
 				   	"bin_locations"		=> $bin_locations,
-				   	"new_bin_locations"	=> $new_bin_locations
+				   	"new_bin_locations"	=> $new_bin_locations,
+				   	"reference" 		=> $reference
 				);
 			}
 		}
