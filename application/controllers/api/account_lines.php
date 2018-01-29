@@ -185,7 +185,7 @@ class Account_lines extends REST_Controller {
 				   	"deleted"			=> $obj->deleted,
 
 				   	"account" 			=> isset($value->account) ? $value->account : [],
-				   	"contact" 			=> isset($value->contact) ? $value->contact : [],
+				   	"contact" 			=> isset($value->contact) ? $value->contact : []
 			   	);
 		    }
 		}		

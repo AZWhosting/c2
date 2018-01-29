@@ -19,6 +19,10 @@ class Job extends DataMapper {
 		'account_line' => array(
 			'class' => 'account_line',
 			'other_field' => 'job'
+		),
+		'journal_line' => array(
+			'class' => 'journal_line',
+			'other_field' => 'job'
 		)
 	);
 

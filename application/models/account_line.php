@@ -29,6 +29,13 @@ class Account_line extends DataMapper {
 			'class' => 'payment_method',
 			'other_field' => 'account_line'
 		)		
+	);
+
+	public $has_many = array(
+		'segmentitem' => array(
+			'class' => 'segmentitem',
+			'other_field' => 'account_line'
+		)
 	);	
 		
 	public function __construct($id = null, $server_name = null, $server_username = null, $server_password = null, $db = null) {   

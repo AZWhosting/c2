@@ -19,6 +19,10 @@ class Segmentitem extends DataMapper {
 		'journal_line' => array(
 			'class' => 'journal_line',
 			'other_field' => 'segmentitem'
+		),
+		'account_line' => array(
+			'class' => 'account_line',
+			'other_field' => 'segmentitem'
 		)
 	);
 	

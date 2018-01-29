@@ -16,7 +16,11 @@ class Journal_line extends DataMapper {
 		'contact' => array(
 			'class' => 'contact',
 			'other_field' => 'journal_line'
-		)		
+		),
+		'job' => array(
+			'class' => 'job',
+			'other_field' => 'journal_line'
+		)
 	);
 
 	public $has_many = array(
