@@ -90,6 +90,16 @@ class Items extends REST_Controller {
 
 		if($obj->exists()){
 			foreach ($obj as $value) {
+				//Price
+				$price = floatval($value->price);
+				$itemPrices = new Item_price(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$itemPrices->where("conversion_ratio", 1);
+				$itemPrices->limit(1);
+				$itemPrices->get();
+				if($itemPrices->exists()){
+					$price = floatval($itemPrices->price);
+				}
+
 				//Measurement
 				$measurement = [];
 				if($value->measurement_id>0){
@@ -131,7 +141,7 @@ class Items extends REST_Controller {
 				   	"barcode"					=> $value->barcode,
 				   	"catalogs" 					=> explode(",",$value->catalogs),
 				   	"cost" 						=> floatval($value->cost),
-				   	"price" 					=> floatval($value->price),
+				   	"price" 					=> $price,
 				   	"amount" 					=> floatval($value->amount),
 				   	"rate" 						=> floatval($value->rate),
 				   	"locale" 					=> $value->locale,
