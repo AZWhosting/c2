@@ -57,6 +57,7 @@ class Journal_lines extends REST_Controller {
 
 		$obj->include_related("contact", array("abbr","number","name"));
 		$obj->include_related("account", array("number","name"));
+		$obj->include_related("job", array("number","name"));
 		$obj->where("deleted <>", 1);
 		
 		//Results
@@ -85,14 +86,34 @@ class Journal_lines extends REST_Controller {
 					"name" 		=> $value->contact_name ? $value->contact_name : ""
 				);
 
+				//Job
+				$job = array(
+					"id" 		=> $value->job_id,
+					"number" 	=> $value->job_number ? $value->job_number : "", 
+					"name" 		=> $value->job_name ? $value->job_name : ""
+				);
+
+				$segments = [];
+				$segs = $value->segmentitem->include_related("segment", array("name"))->get_raw()->result();
+				foreach ($segs as $val) {
+					$segments[] = array(
+						"id" 			=> $val->id,
+						"segment_id" 	=> $val->segment_id,
+						"code" 			=> $val->code,
+						"name" 			=> $val->name,
+						"segment" 		=> array("id"=>$val->segment_id, "name"=>$val->segment_name)
+					);
+				}
+
 				$data["results"][] = array(
 					"id" 				=> $value->id,
 			   		"transaction_id"	=> $value->transaction_id,			   		
 					"account_id" 		=> $value->account_id,
-					"contact_id" 		=> $value->contact_id,								   	
+					"contact_id" 		=> $value->contact_id,
+					"job_id" 			=> $value->job_id,								   	
 				   	"description" 		=> $value->description,
 				   	"reference_no" 		=> $value->reference_no,
-				   	"segments" 			=> explode(",",intval($value->segments)),
+				   	// "segments" 			=> explode(",",intval($value->segments)),
 				   	"dr" 				=> floatval($value->dr),			   				   	
 				   	"cr" 				=> floatval($value->cr),
 				   	"rate"				=> floatval($value->rate),
@@ -101,6 +122,8 @@ class Journal_lines extends REST_Controller {
 
 				   	"account" 			=> $account,
 				   	"contact" 			=> $contact,
+				   	"job" 				=> $job,
+				   	"segments" 			=> $segments,
 
 				   	"donor"				=> ""
 				);
@@ -120,32 +143,58 @@ class Journal_lines extends REST_Controller {
 
 			isset($value->transaction_id) 	? $obj->transaction_id 		= $value->transaction_id : "";			
 			isset($value->account_id)		? $obj->account_id			= $value->account_id : "";
-			isset($value->contact_id)		? $obj->contact_id			= $value->contact_id : "";			
+			isset($value->contact_id)		? $obj->contact_id			= $value->contact_id : "";
+			isset($value->job_id)			? $obj->job_id				= $value->job_id : "";
 		   	isset($value->description)		? $obj->description 		= $value->description : "";
 		   	isset($value->reference_no)		? $obj->reference_no 		= $value->reference_no : "";
-		   	isset($value->segments) 		? $obj->segments 			= implode(",",$value->segments) : "";
+		   	// isset($value->segments) 		? $obj->segments 			= implode(",",$value->segments) : "";
 		   	isset($value->dr)				? $obj->dr 					= $value->dr : "";
 		   	isset($value->cr)				? $obj->cr 					= $value->cr : "";
 		   	isset($value->rate)				? $obj->rate 				= $value->rate : "";
 		   	isset($value->locale)			? $obj->locale 				= $value->locale : "";
 		   	isset($value->deleted)			? $obj->deleted  			= $value->deleted : "";		   
 
-		   	$relatedsegmentitem = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		   	//Account
+			if(isset($value->account)){
+				$obj->account_id = $value->account->id;
+			}
+
+			//Contact
+			if(isset($value->contact)){
+				$obj->contact_id = $value->contact->id;
+			}
+
+			//Job
+			if(isset($value->job)){
+				$obj->job_id = $value->job->id;
+			}
+
+			$related = [];
+
+			//Segments
 			if(isset($value->segments)){
-				if(count($value->segments)>0){
-					$relatedsegmentitem->where_in("id", $value->segments)->get();
+				$ids = [];
+				foreach ($value->segments as $val) {
+					array_push($ids, $val->id);
+				}
+
+				if(count($ids)>0){
+					$segmentitems = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$segmentitems->where_in("id", $ids)->get();
+					array_push($related, $segmentitems->all);
 				}
 			}
 
-		   	if($obj->save($relatedsegmentitem->all)){
+		   	if($obj->save($related)){
 			   	$data["results"][] = array(
 			   		"id" 				=> $obj->id,
 			   		"transaction_id"	=> $obj->transaction_id,
 					"account_id" 		=> $obj->account_id,
 					"contact_id" 		=> $obj->contact_id,
+					"job_id" 			=> $obj->job_id,
 				   	"description" 		=> $obj->description,
 				   	"reference_no" 		=> $obj->reference_no,
-				   	"segments" 			=> explode(",",$obj->segments),
+				   	// "segments" 			=> explode(",",$obj->segments),
 				   	"dr" 				=> floatval($obj->dr),
 				   	"cr" 				=> floatval($obj->cr),
 				   	"rate"				=> floatval($obj->rate),
@@ -179,35 +228,58 @@ class Journal_lines extends REST_Controller {
 
 			isset($value->transaction_id) 	? $obj->transaction_id 		= $value->transaction_id : "";			
 			isset($value->account_id)		? $obj->account_id			= $value->account_id : "";
-			isset($value->contact_id)		? $obj->contact_id			= $value->contact_id : "";			
+			isset($value->contact_id)		? $obj->contact_id			= $value->contact_id : "";
+			isset($value->job_id)			? $obj->job_id				= $value->job_id : "";
 		   	isset($value->description)		? $obj->description 		= $value->description : "";
 		   	isset($value->reference_no)		? $obj->reference_no 		= $value->reference_no : "";
-		   	isset($value->segments) 		? $obj->segments 			= implode(",",$value->segments) : "";
+		   	// isset($value->segments) 		? $obj->segments 			= implode(",",$value->segments) : "";
 		   	isset($value->dr)				? $obj->dr 					= $value->dr : "";
 		   	isset($value->cr)				? $obj->cr 					= $value->cr : "";
 		   	isset($value->rate)				? $obj->rate 				= $value->rate : "";
 		   	isset($value->locale)			? $obj->locale 				= $value->locale : "";
 		   	isset($value->deleted)			? $obj->deleted  			= $value->deleted : "";
 
-			if($obj->save()){
-				//Update new segments
-				if(isset($value->segments)){
-					foreach ($value->segments as $sg) {
-						$relatedsegmentitem = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-						$relatedsegmentitem->get_by_id($sg);
-						$relatedsegmentitem->save($obj);
-					}
-				}
+		   	if(isset($value->account)){
+				$obj->account_id = $value->account->id;
+			}
 
+			if(isset($value->contact)){
+				$obj->contact_id = $value->contact->id;
+			}
+
+			if(isset($value->job)){
+				$obj->job_id = $value->job->id;
+			}
+
+			$related = [];
+
+			//Segments
+			if(isset($value->segments)){
+				$segmentitemDel = $obj->segmentitem->get();
+				$obj->delete($segmentitemDel->all);
+
+				$ids = [];
+				foreach ($value->segments as $val) {
+					array_push($ids, $val->id);
+				}
+				if(count($ids)>0){
+					$segmentitems = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$segmentitems->where_in("id", $ids)->get();
+					array_push($related, $segmentitems->all);
+				}
+			}
+
+			if($obj->save($related)){
 				//Results
 				$data["results"][] = array(
 					"id" 				=> $obj->id,
 			   		"transaction_id"	=> $obj->transaction_id,
 					"account_id" 		=> $obj->account_id,
 					"contact_id" 		=> $obj->contact_id,
+					"job_id" 			=> $obj->job_id,
 				   	"description" 		=> $obj->description,
 				   	"reference_no" 		=> $obj->reference_no,
-				   	"segments" 			=> explode(",",$obj->segments),
+				   	// "segments" 			=> explode(",",$obj->segments),
 				   	"dr" 				=> floatval($obj->dr),
 				   	"cr" 				=> floatval($obj->cr),
 				   	"rate"				=> floatval($obj->rate),
