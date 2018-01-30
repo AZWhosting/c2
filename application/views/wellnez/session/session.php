@@ -5,8 +5,8 @@
 </div>
 <!-- template section starts -->
 <script type="text/x-kendo-template" id="layout">
-	<div id="menu" class="menu"></div>
-	<div id="content" class="container"></div>
+	<!-- <div id="menu" class="menu"></div> -->
+	<div id="content" ></div>
 </script>
 <script type="text/x-kendo-template" id="blank-tmpl">
 </script>
@@ -234,181 +234,89 @@
     	</a>
     </li>	
 </script>
-
+<style>
+	@media (min-width: 768px){
+		html.no-touch.sticky-top:not(.animations-gpu) #content {
+		    padding-top: 0;
+		}
+	}
+	.session .example{
+		background: #0eac00;
+	    width: 100%;
+	    text-align: center;
+	    position: relative; 
+	    padding: 15px;
+	    border-radius: 20px;
+	    float: left;
+	    box-shadow: 2px 0px 12px 0px rgba(68,68,68,1);
+	    
+	}
+	.session .example h2{
+		color: #fff;
+		text-align: left;
+		margin-bottom: 10px;
+	}
+	.session .example table th{
+		text-transform: uppercase;
+	}
+</style>
 <!-- ***************************
 *	Water Section      	  *
 **************************** -->
 <script id="Index" type="text/x-kendo-template">
-	<div class="container" style="margin-top: 50px;">
-		<div class="row" style="margin-top: 30px;">
-			<div class="col-md-6">
-				<div class="col-md-12" style="padding: 0; margin: 0; ">
-					<ul id="module-image">
-						<li style="text-align: center;">
-							<a href="#/client_center">
-								<img title="" src="<?php echo base_url()?>assets/spa/clients.png"  />
-								<span data-bind="" style=" text-transform: uppercase; color: #000; font-weight: 600; margin-top: 8px; display: inline-block;">Clients</span>
-							</a>
-						</li>
-						<li style="text-align: center;">
-							<a href="#/staff_center">
-								<img  title="" src="<?php echo base_url()?>assets/spa/staffs.png"  />
-								<span data-bind="" style="text-transform: uppercase; color: #000; font-weight: 600; margin-top: 8px; display: inline-block;">Staffs</span>
-							</a>
-						</li>
-						<li style="text-align: center;">
-							<a href="#/service_center">
-								<img title="" src="<?php echo base_url()?>assets/spa/service.png"   />
-								<span data-bind="" style="text-transform: uppercase; color: #000; font-weight: 600; margin-top: 8px; display: inline-block;">Services</span>
-							</a>
-						</li>
-						<li style="text-align: center;">
-							<a href="#/report">
-								<img  title="" src="<?php echo base_url()?>assets/spa/report.png"  />
-								<span data-bind=""  style=" text-transform: uppercase; color: #000; font-weight: 600; margin-top: 8px; display: inline-block;">Reports</span>
-							</a>
-						</li>
-					</ul>
-				</div>
-				<div class="cash-bg" style="margin-top: 15px; margin-bottom: 10px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1; width: 97%">				
-					<div class="row-fluid" >
-						<div class="col-xs-3 col-sm-3 col-md-3" style="text-align: center;">
-							<a href="#/calendar">
-								<img  title="" src="<?php echo base_url()?>assets/spa/calender.png"  />
-								<span data-bind="" style="text-transform: uppercase; color: #000; font-weight: 600; margin-top: 8px; display: inline-block;">Calendar</span>
-							</a>
-						</div>
-						<div class="col-xs-3 col-sm-3 col-md-3" style="text-align: center;">
-							<a href="#/cash_sale">
-								<img title="" src="<?php echo base_url()?>assets/spa/expense.png"  />
-								<span  style=" text-transform: uppercase; color: #000; font-weight: 600; margin-top: 8px; display: inline-block;">Cash Sale</span>
-							</a>
-						</div>
-						<div class="col-xs-3 col-sm-3 col-md-3" style="text-align: center;">
-							<a href="#/invoice">
-								<img title="" src="<?php echo base_url()?>assets/spa/invoce.png"   />
-								<span data-bind="" style="text-transform: uppercase; color: #000; font-weight: 600; margin-top: 8px; display: inline-block;">Invoices</span>
-							</a>
-						</div>
-						<div class="col-xs-3 col-sm-3 col-md-3" style="text-align: center;">
-							<a href="#/receipt">
-								<img title="" src="<?php echo base_url()?>assets/spa/receipt.png"  />
-								<span data-bind="text: lang.lang.wreceipt"  style=" text-transform: uppercase; color: #000; font-weight: 600; margin-top: 8px; display: inline-block;">Receipt</span>
-							</a>
-						</div>			
+	<div class="container">
+		<div class="row session">
+			<div class="span12">
+				<div class="example">
+					<h2>Session Management</h2>
+					<div data-bind="visible: noSession">
+						<table class="table table-bordered table-primary table-striped table-vertical-center" style="margin-top: 15px;">
+					        <thead>
+					            <tr>
+					            	<th style="vertical-align: top;" data-bind="text: lang.lang.no_"></th>
+					            	<th style="vertical-align: top;" data-bind="text: lang.lang.employee"></th>
+					            	<th style="vertical-align: top;" data-bind="text: lang.lang.start"></th>
+					            	<th style="vertical-align: top;" data-bind="text: lang.lang.end"></th>
+					            	<th style="vertical-align: top;" data-bind="text: lang.lang.status"></th>
+					            	<th style="vertical-align: top;" data-bind="text: lang.lang.action"></th>
+					            </tr>
+					        </thead>
+					        <tbody data-role="listview" 
+				        		data-template="session-list-template" 
+				        		data-auto-bind="true"
+				        		data-bind="source: sessionDS"></tbody>
+					    </table>
+					    <ul class="topnav addNew">
+							<li role="presentation" class="dropdown ">
+						  		<a class="dropdown-toggle" data-bind="click: addNewSession" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+						  			<span data-bind="text: lang.lang.add_new"></span>
+						  		</a>
+						  	</li>
+						</ul>
 					</div>
-				</div>
-				<div class="row">
-					<div class="col-xs-12 col-sm-6 col-md-6">
-						<div class="cash-bg" style=" margin-bottom: 10px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
-							
-							<a href="http://app.banhji.com/c2/rrd/">
-								<div class="col-md-12" style="padding-left: 0;">
-								 	<img style="height: 50px" src="<?php echo base_url();?>assets/water/banhji-logo.png" >
-								</div>
-							</a>
-						</div>
-					</div>
-					<div class="col-xs-12 col-sm-6 col-md-6" style="padding-left: 0">
-						<div class="cash-bg" style="width:94%; margin-bottom: 10px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
-							<a href="#" target="_blank"><img style="width: auto;height: 50px;margin-left: 15px;" src="<?php echo base_url();?>assets/spa/wellnez-blue.png"></a>
-						</div>
-					</div>
-				</div>
-				<div class="home-chart row-fluid" style="width:97%; margin-bottom: 15px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1; float: left; background: #fff;">
-					<div class="col-xs-12 col-sm-12">
-						<div class="chart" >
-						</div>
+					<div data-bind="invisible: noSession" style="display: none;">
+						<table class="table table-bordered table-primary table-striped table-vertical-center">
+					        <thead>
+					            <tr>
+					                <th class="center" style="width: 50px;"><span data-bind="text: lang.lang.no_">No.</span></th>
+					                <th><span data-bind="text: lang.lang.currency">Currency</span></th>
+					                <th><span data-bind="text: lang.lang.amount">Amount</span></th>
+					            </tr> 
+					        </thead>
+					        <tbody data-role="listview" 
+				        		data-template="cashier-session-template" 
+				        		data-auto-bind="false"
+				        		data-bind="source: cashierItemDS"></tbody>
+					    </table>
+					    <span class="btn btn-icon btn-primary glyphicons ok_2" style="width: 135px;float: left; margin-bottom: 0px;" data-bind="click: addSession"><i></i><span data-bind="text: lang.lang.add">Save</span></span>
+					    <span  class="btn btn-icon btn-primary glyphicons remove_2" style="background: red;width: 135px;float: left; margin-bottom: 0px;"><i></i><span data-bind="text: lang.lang.cancel, click: backSession">Cancel</span></span>
 					</div>
 				</div>
 			</div>
 
-		    <div class="col-md-6" >
-		    	<div class="cash-bg" style="margin-bottom: 10px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
-		    		<div class="board-chart">
-						<div class="span12">
-							<h4> Company Name</h4>
-							<span style="color: #000000;"><span data-bind="text: lang.lang.as_of"></span>:&nbsp;<span id="today-date" data-bind="text: today"></span></span><br/>
-						</div>
-					</div>
-		    	</div>
-
-		    	<div class="cash-bg" style="margin-bottom: 10px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
-		    		<div class="row-fluid" >
-						<div class="col-xs-12 col-sm-6 col-md-7" style="background: #232F3E; padding-bottom: 15px; padding-top: 15px; padding-right: 0;">
-							<a href="#/customer_aging_sum_list">
-								<div class="widget-body alert-info welcome-nopadding" style="width: 100%; background: #232F3E; height: 120px;">
-									<p style="color: #fff; font-size: 25px; margin-bottom: 30px;"><span data-bind="text: lang.lang.sale"></span></p>
-									<table width="100%" style="color: #fff;">
-										<tbody>
-											<tr align="center">
-												<td>
-													<span style="font-size: 25px;"><span data-bind="text: invoice"></span></span>
-													<br>
-													<span style="text-transform: capitalize;" data-bind="text: lang.lang.customers"></span>
-												</td>
-												<td>
-													<span style="font-size: 25px;"><span data-bind="text: invCust"></span></span>
-													<br>
-													<span data-bind="text: lang.lang.product"></span>
-												</td>
-												<td>
-													<span style="font-size: 25px;"><span data-bind="text: overDue"></span></span>
-													<br>
-													<span data-bind="text: lang.lang.order"></span>
-												</td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-							</a>
-						</div>
-						<div class="col-xs-12 col-sm-6 col-md-5" style="background: #203864; padding-bottom: 15px; padding-top: 15px; padding-right: 0;">
-							<a href="#/customer_list">
-								<div class="widget-body alert-info welcome-nopadding" style="width: 100%; background: #203864; height: 120px;">
-									<p style="color: #fff; font-size: 25px; margin-bottom: 30px;"><span data-bind="text: lang.lang.sale_order"></span></p>
-									<table width="100%" style="color: #fff; ">
-										<tbody>
-											<tr align="center">
-												<td>
-													<span style="font-size: 25px;" data-bind="text: totalCust"></span>
-													<br>
-													<span data-bind="text: lang.lang.average"></span>
-												</td>
-												<td>
-													<span style="font-size: 25px;" data-bind="text: voidCust"></span>
-													<br>
-													<span data-bind="text: lang.lang.order_open"></span>
-												</td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-							</a>
-						</div>
-					</div>
-		    	</div>
-		    	<div class="row">
-		    		<div class="col-xs-12 col-sm-6">
-						<table class="table table-bordered table-primary table-striped table-vertical-center" style="font-size: 12px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
-					        <thead>
-					            <tr>
-					                <th class="center" colspan="2" style="background: #203864;"><span data-bind="text: lang.lang.top_5_customers"></span></th>
-					            </tr>
-					        </thead>
-					    </table>
-					</div>
-		    		<div class="col-xs-12 col-sm-6">
-						<table class="table table-bordered table-primary table-striped table-vertical-center" style="font-size: 12px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
-					        <thead>
-					            <tr>
-					                <th class="center" colspan="2" style="background: #203864;"><span data-bind="text: lang.lang.top_5_products"></span></th>
-					            </tr>
-					        </thead>
-					    </table>
-					</div>
-		    	</div>
-		   	</div>
-		</div>		
+			<div class="span12" style="margin-top: 20px;">
+				<p data-bind="text: today"></span>
+			</div>
+		</div>
 	</div>
 </script>

@@ -175,6 +175,7 @@ var themerPrimaryColor = primaryColor;
 		width: 100%;
 		height: auto;
 		color: #fff;
+		font-family: 'Preahvihear', 'Roboto Slab' !important;
 	}
 	#content{
 		background: transparent;
@@ -186,20 +187,20 @@ var themerPrimaryColor = primaryColor;
 	.menu{
 		height: 80px;
 		float: left;
-		margin-top: 40px;
+		margin-top: 10px;
 	}
 	.menu img{
-		width: 100%;
+		width: 90%;
 	}
 	.icon-search:before {
 	    content: "\f002";
 	    color: #333;
 	}
 	.menu .span9{
-		margin-top: 40px;
+		margin-top: 10px;
 	}
 	.menu .span6{
-		text-align: right;
+		text-align: left;
 	}
 	.search-menu .search-query{
 		color: #333;
@@ -223,7 +224,7 @@ var themerPrimaryColor = primaryColor;
 	}
 	.menu .span6.logout{
 		text-align: right;
-		margin-top: 20px;
+		margin-top: 10px;
 	}
 	.menu .span6.logout a{
 		color: #fff;
@@ -244,7 +245,7 @@ var themerPrimaryColor = primaryColor;
 			<div class="row">
 				<div class="span12 menu">
 					<div class="row">
-						<div class="span3">
+						<div class="span2">
 							<a href="<?php echo base_url();?>wellnez" >
 				                <img src="<?php echo base_url();?>assets/spa/wellnez-01.png" >
 				            </a>
@@ -275,4 +276,4 @@ var themerPrimaryColor = primaryColor;
 		        </div>
 		    </div>
 		</div>
-	</div>
+	</div>  

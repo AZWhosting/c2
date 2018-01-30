@@ -3001,7 +3001,8 @@
         },
         cancel: function() {
             window.history.back();
-        }
+        },
+        today   : new Date()
     });
     /* views and layout */
     banhji.view = {
