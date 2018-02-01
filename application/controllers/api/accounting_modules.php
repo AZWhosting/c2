@@ -2995,22 +2995,7 @@ class Accounting_modules extends REST_Controller {
 
 		//Response Data		
 		$this->response($data, 200);	
-	}
-
-	//CASH POSITION
-	function cash_position_get() {
-		$data["results"] = [];
-		$data["count"] = 1;	
-
-		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);	
-		
-		
-		$data["results"] = 0;
-
-		//Response Data		
-		$this->response($data, 200);	
-	}
-	
+	}	
 }
 /* End of file accounting_modules.php */
 /* Location: ./application/controllers/api/accounting_modules.php */
