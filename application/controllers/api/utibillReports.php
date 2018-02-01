@@ -184,6 +184,7 @@ class UtibillReports extends REST_Controller {
 		$this->response($data, 200);
 	}
 	function sale_total_get() {
+		ini_set('memory_limit', '2048M');
 		$filter 	= $this->get("filter");
 		$page 		= $this->get('page');
 		$limit 		= $this->get('limit');

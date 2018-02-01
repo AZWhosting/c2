@@ -231,8 +231,6 @@ class Waterdash extends REST_Controller {
 		//Disconnect
 		$transaction = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$transaction->where("type", "Utility_Invoice");
-		$transaction->where("month_of >=", "2018-01-01");
-		$transaction->where("month_of <=", "2018-01-31");
 		$transaction->where("deleted", 0)->get_iterated();
 		$disCount = 0;
 		$overDue = 0;
