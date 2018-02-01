@@ -2331,7 +2331,8 @@
         equity: 0,
         pageLoad: function() {
             var self = this;
-            banhji.wDashBoard.dashSource.read();
+            banhji.wDashBoard.meterDS.read();
+            banhji.wDashBoard.txnDS.read();
         }
     });
     banhji.searchAdvanced = kendo.observable({
@@ -9212,6 +9213,7 @@
                     "locale": Locale,
                     "type": "total_usage"
                 });
+                Usage = 0;
                 Total = Usage * aTariff;
                 //Plus Round Money KH
                 var AddH = 0;
@@ -12012,7 +12014,7 @@
             }).then(function(e) {
                 var view = self.receiveDS.view();
                 self.set("numCustomer", view[0].total_contact);
-                self.set("paymentReceiptToday", view[0].total_amount);
+                self.set("paymentReceiptToday", kendo.toString(view[0].total_amount,banhji.locale == "km-KH" ? "c0" : "c", banhji.locale));
             });
         },
         setDefaultReceiptCurrency: function(firstReceipt) {
@@ -23051,10 +23053,90 @@
         totalCust: 0,
         voidCust: 0,
         totalAmount: 0,
-        dashSource: new kendo.data.DataSource({
+        // dashSource: new kendo.data.DataSource({
+        //     transport: {
+        //         read: {
+        //             url: baseUrl + 'api/waterdash/board',
+        //             type: "GET",
+        //             dataType: 'json',
+        //             headers: {
+        //                 Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id
+        //             }
+        //         },
+        //         parameterMap: function(options, operation) {
+        //             if (operation === 'read') {
+        //                 return {
+        //                     limit: options.take,
+        //                     page: options.page,
+        //                     filter: options.filter
+        //                 };
+        //             } else {
+        //                 return {
+        //                     models: kendo.stringify(options.models)
+        //                 };
+        //             }
+        //         }
+        //     },
+        //     schema: {
+        //         model: {
+        //             id: 'id'
+        //         },
+        //         data: 'results',
+        //         total: 'count'
+        //     },
+        //     change: function(e) {
+        //         var vm = banhji.wDashboard;
+        //         var totalCust = 0,
+        //             invCust = 0,
+        //             overDue = 0,
+        //             voided = 0,
+        //             invoice = 0,
+        //             amount = 0,
+        //             activeCust = 0,
+        //             inActiveCust = 0;
+        //             totalSale = 0;
+        //             totalUsage = 0;
+        //             totalDisconnect = 0;
+        //             totalConnect = 0;
+
+        //         $.each(this.data(), function(index, value) {
+        //             activeCust += value.activeCustomer;
+        //             totalCust += value.totalCustomer;
+        //             invCust += value.invoiceCust;
+        //             overDue += value.overDue;
+        //             invoice += value.totalInvoice;
+        //             inActiveCust += value.inActiveCustomer;
+        //             voided += value.void;
+        //             amount += value.total;
+        //             totalSale += value.totalSale;
+        //             totalUsage += value.totalUsage;
+        //             totalDisconnect += value.totalDisconnect;
+        //             totalConnect += value.totalConnect;
+        //         });
+        //         banhji.wDashBoard.set('activeCust', kendo.toString(activeCust, "n0", banhji.locale));
+        //         banhji.wDashBoard.set('inActiveCust', inActiveCust);
+        //         banhji.wDashBoard.set('invoice', kendo.toString(invoice, "n0", banhji.locale));
+        //         banhji.wDashBoard.set('invCust', kendo.toString(invCust, "n0", banhji.locale));
+        //         banhji.wDashBoard.set('overDue', kendo.toString(overDue, "n0", banhji.locale));
+                
+        //         banhji.wDashBoard.set('voidCust', voided);
+        //         banhji.wDashBoard.set('voidCust', kendo.toString(voided, "n0", banhji.locale));
+        //         banhji.wDashBoard.set('totalAmount', kendo.toString(amount, banhji.locale == "km-KH" ? "c0" : "c", banhji.locale));
+        //         banhji.wDashBoard.set('totalSale', kendo.toString(totalSale, banhji.locale == "km-KH" ? "c0" : "c", banhji.locale));
+        //         banhji.wDashBoard.set('totalUsage', kendo.toString(totalUsage, "n0", banhji.locale));
+        //         banhji.wDashBoard.set('totalDisconnect', kendo.toString(totalDisconnect, "n0", banhji.locale));
+        //         banhji.wDashBoard.set('totalConnect', kendo.toString(totalConnect, "n0", banhji.locale));
+            
+        //     },
+        //     batch: true,
+        //     serverFiltering: true,
+        //     serverPaging: true,
+        //     pageSize: 100
+        // }),
+        meterDS: new kendo.data.DataSource({
             transport: {
                 read: {
-                    url: baseUrl + 'api/waterdash/board',
+                    url: baseUrl + 'api/waterdash/customer',
                     type: "GET",
                     dataType: 'json',
                     headers: {
@@ -23084,54 +23166,64 @@
             },
             change: function(e) {
                 var vm = banhji.wDashboard;
-                var totalCust = 0,
-                    invCust = 0,
-                    overDue = 0,
-                    voided = 0,
-                    invoice = 0,
-                    amount = 0,
-                    activeCust = 0,
-                    inActiveCust = 0;
-                    totalSale = 0;
-                    totalUsage = 0;
-                    totalDisconnect = 0;
-                    totalConnect = 0;
-
-                $.each(this.data(), function(index, value) {
-                    activeCust += value.activeCustomer;
-                    totalCust += value.totalCustomer;
-                    invCust += value.invoiceCust;
-                    overDue += value.overDue;
-                    invoice += value.totalInvoice;
-                    inActiveCust += value.inActiveCustomer;
-                    voided += value.void;
-                    amount += value.total;
-                    totalSale += value.totalSale;
-                    totalUsage += value.totalUsage;
-                    totalDisconnect += value.totalDisconnect;
-                    totalConnect += value.totalConnect;
-                });
-                banhji.wDashBoard.set('activeCust', kendo.toString(activeCust, "n0", banhji.locale));
-                banhji.wDashBoard.set('inActiveCust', inActiveCust);
-                banhji.wDashBoard.set('invoice', kendo.toString(invoice, "n0", banhji.locale));
-                banhji.wDashBoard.set('invCust', kendo.toString(invCust, "n0", banhji.locale));
-                banhji.wDashBoard.set('overDue', kendo.toString(overDue, "n0", banhji.locale));
-                banhji.wDashBoard.set('totalCust', kendo.toString(totalCust, "n0", banhji.locale));
-                banhji.wDashBoard.set('voidCust', voided);
-                banhji.wDashBoard.set('voidCust', kendo.toString(voided, "n0", banhji.locale));
-                banhji.wDashBoard.set('totalAmount', kendo.toString(amount, banhji.locale == "km-KH" ? "c0" : "c", banhji.locale));
-                banhji.wDashBoard.set('totalSale', kendo.toString(totalSale, banhji.locale == "km-KH" ? "c0" : "c", banhji.locale));
-                banhji.wDashBoard.set('totalUsage', kendo.toString(totalUsage, "n0", banhji.locale));
-                banhji.wDashBoard.set('totalDisconnect', kendo.toString(totalDisconnect, "n0", banhji.locale));
-                banhji.wDashBoard.set('totalConnect', kendo.toString(totalConnect, "n0", banhji.locale));
-            
+                banhji.wDashBoard.set('totalMeter', kendo.toString(this.data()[0].totalMeter, "n0", banhji.locale));
+                banhji.wDashBoard.set('activeCust', kendo.toString(this.data()[0].aMeter, "n0", banhji.locale));
+                banhji.wDashBoard.set('voidCust', kendo.toString(this.data()[0].void, "n0", banhji.locale));
+                banhji.wDashBoard.set('totalConnect', kendo.toString(this.data()[0].totalConnect, "n0", banhji.locale));
             },
             batch: true,
             serverFiltering: true,
             serverPaging: true,
             pageSize: 100
         }),
-
+        totalDisConnect: 0,
+        txnDS: new kendo.data.DataSource({
+            transport: {
+                read: {
+                    url: baseUrl + 'api/waterdash/txn',
+                    type: "GET",
+                    dataType: 'json',
+                    headers: {
+                        Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id
+                    }
+                },
+                parameterMap: function(options, operation) {
+                    if (operation === 'read') {
+                        return {
+                            limit: options.take,
+                            page: options.page,
+                            filter: options.filter
+                        };
+                    } else {
+                        return {
+                            models: kendo.stringify(options.models)
+                        };
+                    }
+                }
+            },
+            schema: {
+                model: {
+                    id: 'id'
+                },
+                data: 'results',
+                total: 'count'
+            },
+            change: function(e) {
+                console.log(this.data());
+                // var vm = banhji.wDashboard;
+                banhji.wDashBoard.set('overDue', kendo.toString(this.data()[0].totalOverDue, "n0", banhji.locale));
+                banhji.wDashBoard.set('totalAmount', kendo.toString(this.data()[0].totalAmount, banhji.locale == "km-KH" ? "c0" : "c", banhji.locale));
+                banhji.wDashBoard.set('totalDisConnect', kendo.toString(this.data()[0].totalDisconnect, "n0", banhji.locale));
+                banhji.wDashBoard.set('invoice', kendo.toString(this.data()[0].totalInvoice, "n0", banhji.locale));
+                banhji.wDashBoard.set('invCust', kendo.toString(this.data()[0].totalCustomer, "n0", banhji.locale));
+                banhji.wDashBoard.set('totalSale', kendo.toString(this.data()[0].totalSale, banhji.locale == "km-KH" ? "c0" : "c", banhji.locale));
+                banhji.wDashBoard.set('totalUsage', kendo.toString(this.data()[0].totalUsage, "n0", banhji.locale));
+            },
+            batch: true,
+            serverFiltering: true,
+            serverPaging: true,
+            pageSize: 100
+        }),
     });
     banhji.waterCenter = kendo.observable({
         lang: langVM,

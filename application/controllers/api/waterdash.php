@@ -127,10 +127,6 @@ class Waterdash extends REST_Controller {
 
 		$trxSale->select('amount, contact_id as contact');
 		$trxSale->where('type', 'Utility_Invoice');
-		$trxSale->where_related("winvoice_line", "description", "usage");
-		$trxSale->where("is_recurring <>", 1);
-		$trxSale->where("deleted <>", 1);
-		$trxSale->order_by("issued_date", "asc");
 		$trxSale->get_iterated();
 		$sale = 0;
 		foreach($trxSale as $invoice) {
@@ -164,6 +160,140 @@ class Waterdash extends REST_Controller {
 		$this->response(array('results' => $data, 'count' => 1), 200);
 	}
 
+	// Customer
+	function customer_get() {
+		$meter = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		// $contact->where('deleted', 0);
+		$totalMeter = $meter->count();
+		$totalICust = 0;
+		$totalConnect = 0;
+		$totalACust = 0;
+		$totalVCust = 0;
+		$meter->get_iterated();
+		foreach($meter as $con){
+			//Inactive Cstomer
+			if($con->status == 0){
+			 	if($con->activated == 1){
+					$totalICust += 1;
+				}
+			}elseif($con->status == 1){
+				if($con->activated == 1){
+					$totalACust += 1;
+				}elseif($con->activated == 0){
+					$totalConnect += 1;
+				}
+			}
+		}
+
+		$totalVCust = $totalMeter - ($totalICust + $totalACust);
+		// $tc = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		// $tc->where('deleted', 0);
+		// $totalCustomer = $tc->count();
+		//Disconnect
+		// $dis = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		// $dis->where("type", "Utility_Invoice");
+		// $dis->where("status", 0);
+		// $dis->where("deleted", 0)->get_iterated();
+		// $disCount = 0;
+		// foreach($dis as $d){
+		// 	$br = new Branch(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		// 	$br->where("id", $d->branch_id)->limit(1)->get();
+		// 	$dayDis = intval($br->day_disconnect);
+		// 	$dueDate = new DateTime($d->due_date);
+		// 	$ddate = $dueDate->getTimestamp();
+		// 	$fineDate = new DateTime(date('Y-m-d'));
+		// 	$fdate = $fineDate->getTimestamp();
+		// 	if($fdate > $ddate){
+		// 		$fineDate = $fineDate->diff($dueDate)->days;
+		// 		$fineDateAmount = $dayDis;
+		// 		if($fineDate >= $fineDateAmount){
+		// 			$disCount += 1;
+		// 		}
+		// 	}
+		// }
+
+		$data[] = array(
+			// 'totalCustomer' => $totalCustomer,
+			'totalMeter' => $totalMeter,
+			'iMeter' => $totalICust,
+			'aMeter' => $totalACust,
+			'void' => $totalVCust,
+			'totalConnect' =>$totalConnect,
+			// 'totalDisconnect' =>$disCount,
+		);
+
+		$this->response(array('results' => $data, 'count' => 1), 200);
+	}
+
+	//Txn
+	function txn_get() {
+		ini_set('memory_limit', '2048M');
+		//Disconnect
+		$transaction = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$transaction->where("type", "Utility_Invoice");
+		$transaction->where("month_of >=", "2018-01-01");
+		$transaction->where("month_of <=", "2018-01-31");
+		$transaction->where("deleted", 0)->get_iterated();
+		$disCount = 0;
+		$overDue = 0;
+		$totalINV = 0;
+		$totalAmount = 0;
+		$totalSale = 0;
+		$usage =0;
+		$customer = array();
+
+		foreach($transaction as $txn){
+			if($txn->status == 0){
+				//Total INV
+				$totalINV += 1;
+				//Discounted
+				$br = $txn->location->include_related("branch", array("id", "day_disconnect"))->get();
+				$dayDis = intval($br->branch_day_disconnect);
+				$dueDate = new DateTime($txn->due_date);
+				$ddate = $dueDate->getTimestamp();
+				$fineDate = new DateTime(date('Y-m-d'));
+				$fdate = $fineDate->getTimestamp();
+				if($fdate > $ddate){
+					$fDay = $fineDate->diff($dueDate)->days;
+					if($fDay >= $dayDis){
+						$disCount += 1;
+					}
+					//Over Due
+					$overDue += 1;
+				}
+				$totalAmount += floatval($txn->amount) / floatval($txn->rate);
+				if(isset($customer[$txn->contact_id])) {
+					$customer[$txn->contact_id]['count'] +=1;
+				} else {
+					$customer[$txn->contact_id]['count'] = 1;
+				}
+			}
+			//Total Sale
+			$totalSale += floatval($txn->amount) / floatval($txn->rate);
+			//Usage
+			$usages = $txn->winvoice_line->get();
+			$usages->get_iterated();
+			
+			foreach($usages as $u) {
+				if($u->type == 'usage'){
+					$usage += $u->quantity;
+				}
+			}
+		}
+		
+
+		$data[] = array(
+			'totalDisconnect' => $disCount,
+			'totalOverDue' 	=> $overDue,
+			'totalInvoice' => $totalINV,
+			'totalAmount' => $totalAmount,
+			'totalCustomer' => count($customer),
+			'totalSale' => $totalSale,
+			'totalUsage' => $usage
+		);
+
+		$this->response(array('results' => $data, 'count' => 1), 200);
+	}
 	function license_get() {
 		$filter 	= $this->get("filter");		
 		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		

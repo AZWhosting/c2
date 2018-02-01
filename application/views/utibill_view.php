@@ -284,8 +284,8 @@
 								<div class="span10" style="padding-left: 0; text-align: left;">
 									<span data-bind="text: lang.lang.disconnect_meter" style="font-size:15px; "></span>
 								</div>
-								<div class="span2" style=" text-align: center; font-size: 18px; font-weight: 600; padding: 0;">
-									0
+								<div class="span2" style=" text-align: center; font-size: 18px; font-weight: 600; padding: 0;" data-bind="text: totalDisConnect" >
+									
 								</div>
 							</div>
 						</a>
@@ -348,14 +348,14 @@
 										<tbody>
 											<tr align="center">
 												<td>
-													<span style="font-size: 25px;" data-bind="text: totalCust"></span>
+													<span style="font-size: 25px;" data-bind="text: totalMeter"></span>
 													<br>
 													<span data-bind="text: lang.lang.meter">Meter</span>
 												</td>
 												<td>
 													<span style="font-size: 25px;" data-bind="text: voidCust"></span>
 													<br>
-													<span data-bind="text: lang.lang.customers">Customers</span>
+													<span data-bind="text: lang.lang.void">Customers</span>
 												</td>
 											</tr>
 										</tbody>
