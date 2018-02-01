@@ -247,6 +247,7 @@ class Transactions extends REST_Controller {
 				   	"check_no" 					=> $value->check_no,
 				   	"reference_no" 				=> $value->reference_no,
 				   	"segments" 					=> $value->segments!="" ? array_map('intval', explode(",", $value->segments)) : [],
+				   	"driver_name" 				=> $value->driver_name,
 				   	"bill_to" 					=> $value->bill_to,
 				   	"ship_to" 					=> $value->ship_to,
 				   	"memo" 						=> $value->memo,
@@ -362,6 +363,7 @@ class Transactions extends REST_Controller {
 		   	isset($value->reference_no) 			? $obj->reference_no 				= $value->reference_no : "";
 		   	// isset($value->references) 				? $obj->references 					= implode(",", $value->references) : "";
 		   	isset($value->segments) 				? $obj->segments 					= implode(",", $value->segments) : "";
+		   	isset($value->driver_name) 				? $obj->driver_name 				= $value->driver_name : "";
 		   	isset($value->bill_to) 					? $obj->bill_to 					= $value->bill_to : "";
 		   	isset($value->ship_to) 					? $obj->ship_to 					= $value->ship_to : "";
 		   	isset($value->memo) 					? $obj->memo 						= $value->memo : "";
@@ -481,6 +483,7 @@ class Transactions extends REST_Controller {
 				   	"reference_no" 				=> $obj->reference_no,
 				   	"references" 				=> $obj->references!="" ? array_map('intval', explode(",", $obj->references)) : [],
 				   	"segments" 					=> $obj->segments!="" ? array_map('intval', explode(",", $obj->segments)) : [],
+				   	"driver_name" 				=> $obj->driver_name,
 				   	"bill_to" 					=> $obj->bill_to,
 				   	"ship_to" 					=> $obj->ship_to,
 				   	"memo" 						=> $obj->memo,
@@ -576,6 +579,7 @@ class Transactions extends REST_Controller {
 		   	isset($value->reference_no) 			? $obj->reference_no 				= $value->reference_no : "";
 		   	// isset($value->references) 				? $obj->references 					= implode(",", $value->references) : "";
 		   	isset($value->segments) 				? $obj->segments 					= implode(",", $value->segments) : "";
+		   	isset($value->driver_name) 				? $obj->driver_name 				= $value->driver_name : "";
 		   	isset($value->bill_to) 					? $obj->bill_to 					= $value->bill_to : "";
 		   	isset($value->ship_to) 					? $obj->ship_to 					= $value->ship_to : "";
 		   	isset($value->memo) 					? $obj->memo 						= $value->memo : "";
@@ -707,6 +711,7 @@ class Transactions extends REST_Controller {
 				   	"reference_no" 				=> $obj->reference_no,
 				   	"references" 				=> $obj->references!="" ? array_map('intval', explode(",", $obj->references)) : [],
 				   	"segments" 					=> $obj->segments!="" ? array_map('intval', explode(",", $obj->segments)) : [],
+				   	"driver_name" 				=> $obj->driver_name,
 				   	"bill_to" 					=> $obj->bill_to,
 				   	"ship_to" 					=> $obj->ship_to,
 				   	"memo" 						=> $obj->memo,

@@ -11,7 +11,7 @@ class Accounting_modules extends REST_Controller {
 	public $startFiscalDate;
 	public $endFiscalDate;
 	//CONSTRUCTOR
-	    function __construct() {
+	function __construct() {
 		parent::__construct();
 		$institute = new Institute();
 		$institute->where('id', $this->input->get_request_header('Institute'))->get();
@@ -2992,6 +2992,20 @@ class Accounting_modules extends REST_Controller {
 			}
 			$data["count"] = count($data["results"]);
 		}
+
+		//Response Data		
+		$this->response($data, 200);	
+	}
+
+	//CASH POSITION
+	function cash_position_get() {
+		$data["results"] = [];
+		$data["count"] = 1;	
+
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);	
+		
+		
+		$data["results"] = 0;
 
 		//Response Data		
 		$this->response($data, 200);	
