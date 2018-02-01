@@ -227,7 +227,7 @@ class Waterdash extends REST_Controller {
 
 	//Txn
 	function txn_get() {
-		ini_set('memory_limit', '2048M');
+		// ini_set('memory_limit', '2048M');
 		//Disconnect
 		$transaction = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$transaction->where("type", "Utility_Invoice");
