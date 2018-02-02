@@ -5,8 +5,8 @@
 </div>
 <!-- template section starts -->
 <script type="text/x-kendo-template" id="layout">
-	<div id="menu" class="menu"></div>
-	<div id="content" class="container"></div>
+	<!-- <div id="menu" class="menu"></div> -->
+	<div id="content" ></div>
 </script>
 <script type="text/x-kendo-template" id="blank-tmpl">
 </script>
@@ -234,181 +234,124 @@
     	</a>
     </li>	
 </script>
-
+<style>
+	@media (min-width: 768px){
+		html.no-touch.sticky-top:not(.animations-gpu) #content {
+		    padding-top: 0;
+		}
+	}
+	.book .example{
+		background: #0eac00;
+	    width: 100%;
+	    text-align: center;
+	    position: relative; 
+	    padding: 15px;
+	    border-radius: 20px;
+	    float: left;
+	    box-shadow: 2px 0px 12px 0px rgba(68,68,68,1);	    
+	}
+	.book .example table{
+		width: 100%;
+	    background: #fff;
+	    float: left;
+	    color: #333;
+	    border: 1px solid #ddd;
+	    text-align: left;
+	}
+	.book .example table tr th, 
+	.book .example table tr td {
+	    padding: 8px;
+	    border: 1px solid #ddd;
+	}
+	.book .example table th {
+	    text-transform: uppercase;
+	    background: #1c3b19;
+	    color: #fff;
+	}
+	
+</style>
 <!-- ***************************
 *	Water Section      	  *
 **************************** -->
 <script id="Index" type="text/x-kendo-template">
-	<div class="container" style="margin-top: 50px;">
-		<div class="row" style="margin-top: 30px;">
-			<div class="col-md-6">
-				<div class="col-md-12" style="padding: 0; margin: 0; ">
-					<ul id="module-image">
-						<li style="text-align: center;">
-							<a href="#/client_center">
-								<img title="" src="<?php echo base_url()?>assets/spa/clients.png"  />
-								<span data-bind="" style=" text-transform: uppercase; color: #000; font-weight: 600; margin-top: 8px; display: inline-block;">Clients</span>
-							</a>
-						</li>
-						<li style="text-align: center;">
-							<a href="#/staff_center">
-								<img  title="" src="<?php echo base_url()?>assets/spa/staffs.png"  />
-								<span data-bind="" style="text-transform: uppercase; color: #000; font-weight: 600; margin-top: 8px; display: inline-block;">Staffs</span>
-							</a>
-						</li>
-						<li style="text-align: center;">
-							<a href="#/service_center">
-								<img title="" src="<?php echo base_url()?>assets/spa/service.png"   />
-								<span data-bind="" style="text-transform: uppercase; color: #000; font-weight: 600; margin-top: 8px; display: inline-block;">Services</span>
-							</a>
-						</li>
-						<li style="text-align: center;">
-							<a href="#/report">
-								<img  title="" src="<?php echo base_url()?>assets/spa/report.png"  />
-								<span data-bind=""  style=" text-transform: uppercase; color: #000; font-weight: 600; margin-top: 8px; display: inline-block;">Reports</span>
-							</a>
-						</li>
-					</ul>
-				</div>
-				<div class="cash-bg" style="margin-top: 15px; margin-bottom: 10px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1; width: 97%">				
-					<div class="row-fluid" >
-						<div class="col-xs-3 col-sm-3 col-md-3" style="text-align: center;">
-							<a href="#/calendar">
-								<img  title="" src="<?php echo base_url()?>assets/spa/calender.png"  />
-								<span data-bind="" style="text-transform: uppercase; color: #000; font-weight: 600; margin-top: 8px; display: inline-block;">Calendar</span>
-							</a>
-						</div>
-						<div class="col-xs-3 col-sm-3 col-md-3" style="text-align: center;">
-							<a href="#/cash_sale">
-								<img title="" src="<?php echo base_url()?>assets/spa/expense.png"  />
-								<span  style=" text-transform: uppercase; color: #000; font-weight: 600; margin-top: 8px; display: inline-block;">Cash Sale</span>
-							</a>
-						</div>
-						<div class="col-xs-3 col-sm-3 col-md-3" style="text-align: center;">
-							<a href="#/invoice">
-								<img title="" src="<?php echo base_url()?>assets/spa/invoce.png"   />
-								<span data-bind="" style="text-transform: uppercase; color: #000; font-weight: 600; margin-top: 8px; display: inline-block;">Invoices</span>
-							</a>
-						</div>
-						<div class="col-xs-3 col-sm-3 col-md-3" style="text-align: center;">
-							<a href="#/receipt">
-								<img title="" src="<?php echo base_url()?>assets/spa/receipt.png"  />
-								<span data-bind="text: lang.lang.wreceipt"  style=" text-transform: uppercase; color: #000; font-weight: 600; margin-top: 8px; display: inline-block;">Receipt</span>
-							</a>
-						</div>			
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-xs-12 col-sm-6 col-md-6">
-						<div class="cash-bg" style=" margin-bottom: 10px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
-							
-							<a href="http://app.banhji.com/c2/rrd/">
-								<div class="col-md-12" style="padding-left: 0;">
-								 	<img style="height: 50px" src="<?php echo base_url();?>assets/water/banhji-logo.png" >
-								</div>
-							</a>
+	<div class="container">
+		<div class="row book">
+			<div class="span12">	
+				<div class="row ">
+					<div class="span3 ">
+						<div class="example">
+							<table>
+								<tr>
+									<th>NO.</th>
+									<th>CUSTOMER</th>
+									<th>AMOUNT</th>
+								</tr>
+								<tr>
+									<td>1</td>
+									<td>2</td>
+									<td>3</td>
+								</tr>
+								<tr>
+									<td>1</td>
+									<td>2</td>
+									<td>3</td>
+								</tr>
+								<tr>
+									<td>1</td>
+									<td>2</td>
+									<td>3</td>
+								</tr>
+								<tr>
+									<td>1</td>
+									<td>2</td>
+									<td>3</td>
+								</tr>
+								<tr>
+									<td>1</td>
+									<td>2</td>
+									<td>3</td>
+								</tr>
+							</table>					
 						</div>
 					</div>
-					<div class="col-xs-12 col-sm-6 col-md-6" style="padding-left: 0">
-						<div class="cash-bg" style="width:94%; margin-bottom: 10px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
-							<a href="#" target="_blank"><img style="width: auto;height: 50px;margin-left: 15px;" src="<?php echo base_url();?>assets/spa/wellnez-blue.png"></a>
+					<div class="span9">
+						<div class="example">
+							<h2>Books Calendar</h2>
+							<input type="text" 
+								style="width: 100%; border: 1px solid #c5c5c5; padding: 3px; height: 30px;" 
+								placeholder="" 
+								data-bind="value: customerPhone">	
+							<p style="margin-top: 15px; margin-bottom: 0; font-size: 14px;">Amount Rec</p>
+							<table class="table table-condensed table-striped table-white" style="margin: 15px 0;">
+								<tbody>
+									<tr>
+										<td class="right" style="width: 60%;"><span style="font-size: 15px; font-weight: 700;">KHR</span></td>
+										<td class="right strong" width="40%"><span style="font-size: 15px; font-weight: 700;">0.00</span></td>
+									</tr>               
+									<tr>
+										<td class="right"><span>USD</span></td>
+										<td class="right ">
+											<span data-format="n" >0.00</span>
+										</td>
+									</tr>
+									<tr>
+										<td class="right"><span >Tender:</span></td>
+										<td class="right "><span data-format="n">0.00</span></td>
+									</tr>
+								</tbody>
+							</table>
+							<input type="text" 
+								style="width: 100%; border: 1px solid #c5c5c5; padding: 3px; height: 30px;" 
+								placeholder="" 
+								data-bind="value: customerPhone">				
 						</div>
 					</div>
-				</div>
-				<div class="home-chart row-fluid" style="width:97%; margin-bottom: 15px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1; float: left; background: #fff;">
-					<div class="col-xs-12 col-sm-12">
-						<div class="chart" >
-						</div>
-					</div>
+
 				</div>
 			</div>
-
-		    <div class="col-md-6" >
-		    	<div class="cash-bg" style="margin-bottom: 10px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
-		    		<div class="board-chart">
-						<div class="span12">
-							<h4> Company Name</h4>
-							<span style="color: #000000;"><span data-bind="text: lang.lang.as_of"></span>:&nbsp;<span id="today-date" data-bind="text: today"></span></span><br/>
-						</div>
-					</div>
-		    	</div>
-
-		    	<div class="cash-bg" style="margin-bottom: 10px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
-		    		<div class="row-fluid" >
-						<div class="col-xs-12 col-sm-6 col-md-7" style="background: #232F3E; padding-bottom: 15px; padding-top: 15px; padding-right: 0;">
-							<a href="#/customer_aging_sum_list">
-								<div class="widget-body alert-info welcome-nopadding" style="width: 100%; background: #232F3E; height: 120px;">
-									<p style="color: #fff; font-size: 25px; margin-bottom: 30px;"><span data-bind="text: lang.lang.sale"></span></p>
-									<table width="100%" style="color: #fff;">
-										<tbody>
-											<tr align="center">
-												<td>
-													<span style="font-size: 25px;"><span data-bind="text: invoice"></span></span>
-													<br>
-													<span style="text-transform: capitalize;" data-bind="text: lang.lang.customers"></span>
-												</td>
-												<td>
-													<span style="font-size: 25px;"><span data-bind="text: invCust"></span></span>
-													<br>
-													<span data-bind="text: lang.lang.product"></span>
-												</td>
-												<td>
-													<span style="font-size: 25px;"><span data-bind="text: overDue"></span></span>
-													<br>
-													<span data-bind="text: lang.lang.order"></span>
-												</td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-							</a>
-						</div>
-						<div class="col-xs-12 col-sm-6 col-md-5" style="background: #203864; padding-bottom: 15px; padding-top: 15px; padding-right: 0;">
-							<a href="#/customer_list">
-								<div class="widget-body alert-info welcome-nopadding" style="width: 100%; background: #203864; height: 120px;">
-									<p style="color: #fff; font-size: 25px; margin-bottom: 30px;"><span data-bind="text: lang.lang.sale_order"></span></p>
-									<table width="100%" style="color: #fff; ">
-										<tbody>
-											<tr align="center">
-												<td>
-													<span style="font-size: 25px;" data-bind="text: totalCust"></span>
-													<br>
-													<span data-bind="text: lang.lang.average"></span>
-												</td>
-												<td>
-													<span style="font-size: 25px;" data-bind="text: voidCust"></span>
-													<br>
-													<span data-bind="text: lang.lang.order_open"></span>
-												</td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-							</a>
-						</div>
-					</div>
-		    	</div>
-		    	<div class="row">
-		    		<div class="col-xs-12 col-sm-6">
-						<table class="table table-bordered table-primary table-striped table-vertical-center" style="font-size: 12px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
-					        <thead>
-					            <tr>
-					                <th class="center" colspan="2" style="background: #203864;"><span data-bind="text: lang.lang.top_5_customers"></span></th>
-					            </tr>
-					        </thead>
-					    </table>
-					</div>
-		    		<div class="col-xs-12 col-sm-6">
-						<table class="table table-bordered table-primary table-striped table-vertical-center" style="font-size: 12px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
-					        <thead>
-					            <tr>
-					                <th class="center" colspan="2" style="background: #203864;"><span data-bind="text: lang.lang.top_5_products"></span></th>
-					            </tr>
-					        </thead>
-					    </table>
-					</div>
-		    	</div>
-		   	</div>
-		</div>		
+			<div class="span12" style="margin-top: 20px;">
+				<p data-bind="text: today"></span>
+			</div>
+		</div>
 	</div>
 </script>

@@ -133,14 +133,14 @@ class Transactions extends REST_Controller {
 					$references->select("number, type, amount, deposit, rate, issued_date");
 					$references->get_by_id($value->reference_id);
 
-					$reference = array(
-						"id" 				=> $value->reference_id,
-						"number" 			=> $drivers->number,
-						"name" 				=> $drivers->type,
-						"number" 			=> $drivers->amount,
-						"name" 				=> $drivers->deposit,
-						"number" 			=> $drivers->rate,
-						"name" 				=> $drivers->issued_date
+					$reference[] = array(
+						"id" 			=> $value->reference_id,
+						"number" 		=> $references->number,
+						"type" 			=> $references->type,
+						"amount" 		=> $references->amount,
+						"deposit" 		=> $references->deposit,
+						"rate" 			=> $references->rate,
+						"issued_date" 	=> $references->issued_date
 					);
 				}
 
