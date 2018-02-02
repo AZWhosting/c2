@@ -39,6 +39,13 @@ class Ops extends REST_Controller {
 			    // $this->dbforge->add_field("created_at date DEFAULT NULL");
 			    // $this->dbforge->add_field("updated_at date DEFAULT NULL");
 			    // $this->dbforge->create_table('measurement_categories');
+
+			    //Create new table
+			    // $this->dbforge->add_field('id');
+			    // $this->dbforge->add_field("item_id int(11) NOT NULL DEFAULT '0'");
+			    // $this->dbforge->add_field("assembly_id int(11) NOT NULL DEFAULT '0'");
+			    // $this->dbforge->add_field("assembly_id int(11) NOT NULL DEFAULT '0'");
+			    // $this->dbforge->create_table('item_assemblies');
 			    
 
 				//Rename Table 'old_table_name' to 'new_table_name'

@@ -134,7 +134,7 @@ class Transactions extends REST_Controller {
 					$references->get_by_id($value->reference_id);
 
 					$ref_amount_paid = 0;
-					if($value->type=="Commercial_Invoice" || $value->type=="Vat_Invoice" || $value->type=="Invoice" || $value->type=="Credit_Purchase" || $value->type=="Utility_Invoice"){
+					if($references->type=="Commercial_Invoice" || $references->type=="Vat_Invoice" || $references->type=="Invoice" || $references->type=="Credit_Purchase" || $references->type=="Utility_Invoice"){
 						$paid = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 						$paid->select_sum("amount");
 						$paid->select_sum("discount");
@@ -144,7 +144,7 @@ class Transactions extends REST_Controller {
 						$paid->where("deleted <>",1);
 						$paid->get();
 						$ref_amount_paid = floatval($paid->amount) + floatval($paid->discount);
-					}else if($value->type=="Cash_Advance"){
+					}else if($references->type=="Cash_Advance"){
 						$paid = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 						$paid->select_sum("amount");
 						$paid->select_sum("received");
