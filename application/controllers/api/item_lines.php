@@ -55,7 +55,7 @@ class Item_lines extends REST_Controller {
 		}
 
 		$obj->include_related("contact", array("abbr","number","name","payment_term_id","payment_method_id","credit_limit","locale","bill_to","ship_to","deposit_account_id","trade_discount_id","settlement_discount_id","account_id","ra_id"));
-		$obj->include_related("item", array("item_type_id","abbr","number","name","cost","price","locale","income_account_id","expense_account_id","inventory_account_id"));
+		$obj->include_related("item", array("item_type_id","abbr","number","name","cost","price","locale","income_account_id","expense_account_id","inventory_account_id","nature"));
 		$obj->include_related("measurement", array("name"));
 		$obj->include_related("tax_item", array("tax_type_id","account_id","name","rate"));
 		$obj->where("deleted <>", 1);
@@ -85,6 +85,15 @@ class Item_lines extends REST_Controller {
 					"expense_account_id" 	=> $value->item_expense_account_id, 
 					"inventory_account_id" 	=> $value->item_inventory_account_id
 				);
+
+				//Variant
+				$variant = [];
+				if($value->item_nature=="variant"){
+					$itemVariants = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$itemVariants->get_by_id($value->item_id);
+
+					$variant = $itemVariants->attribute_value->get_raw()->result();
+				}
 
 				//Measurement
 				$measurement = array(
@@ -219,7 +228,8 @@ class Item_lines extends REST_Controller {
 				   	"item_serials"		=> $itemSerials->get_raw()->result(),
 				   	"bin_locations"		=> $bin_locations,
 				   	"new_bin_locations"	=> $new_bin_locations,
-				   	"reference" 		=> $reference
+				   	"reference" 		=> $reference,
+				   	"variant" 			=> $variant
 				);
 			}
 		}
