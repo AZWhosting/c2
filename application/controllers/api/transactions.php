@@ -109,7 +109,7 @@ class Transactions extends REST_Controller {
 					$paid->select_sum("amount");
 					$paid->select_sum("discount");
 					$paid->where_in("type", array("Cash_Receipt", "Offset_Invoice", "Cash_Payment", "Offset_Bill"));					
-					$paid->where("reference_id", $value->id);					
+					$paid->where("reference_id", $value->id);
 					$paid->where("is_recurring <>",1);
 					$paid->where("deleted <>",1);
 					$paid->get();
@@ -130,8 +130,31 @@ class Transactions extends REST_Controller {
 				$reference = [];
 				if($value->reference_id>0){
 					$references = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-					$references->select("number, type, amount, deposit, rate, issued_date");
+					$references->select("account_id, number, type, amount, deposit, rate, issued_date");
 					$references->get_by_id($value->reference_id);
+
+					$ref_amount_paid = 0;
+					if($value->type=="Commercial_Invoice" || $value->type=="Vat_Invoice" || $value->type=="Invoice" || $value->type=="Credit_Purchase" || $value->type=="Utility_Invoice"){
+						$paid = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						$paid->select_sum("amount");
+						$paid->select_sum("discount");
+						$paid->where_in("type", array("Cash_Receipt", "Offset_Invoice", "Cash_Payment", "Offset_Bill"));					
+						$paid->where("reference_id", $value->reference_id);
+						$paid->where("is_recurring <>",1);
+						$paid->where("deleted <>",1);
+						$paid->get();
+						$ref_amount_paid = floatval($paid->amount) + floatval($paid->discount);
+					}else if($value->type=="Cash_Advance"){
+						$paid = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						$paid->select_sum("amount");
+						$paid->select_sum("received");
+						$paid->where("type", "Advance_Settlement");
+						$paid->where("reference_id", $value->reference_id);
+						$paid->where("is_recurring <>",1);
+						$paid->where("deleted <>",1);
+						$paid->get();
+						$ref_amount_paid = floatval($paid->amount) + floatval($paid->received);
+					}
 
 					$reference[] = array(
 						"id" 			=> $value->reference_id,
@@ -140,7 +163,9 @@ class Transactions extends REST_Controller {
 						"amount" 		=> $references->amount,
 						"deposit" 		=> $references->deposit,
 						"rate" 			=> $references->rate,
-						"issued_date" 	=> $references->issued_date
+						"issued_date" 	=> $references->issued_date,
+						"account_id" 	=> $references->account_id,
+						"amount_paid" 	=> $ref_amount_paid
 					);
 				}
 
