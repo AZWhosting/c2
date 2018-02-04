@@ -353,9 +353,9 @@
 													<span data-bind="text: lang.lang.meter">Meter</span>
 												</td>
 												<td>
-													<span style="font-size: 25px;" data-bind="text: voidCust"></span>
+													<span style="font-size: 25px;" data-bind="text: NumCus"></span>
 													<br>
-													<span data-bind="text: lang.lang.void">Customers</span>
+													<span data-bind="text: lang.lang.customer">Customers</span>
 												</td>
 											</tr>
 										</tbody>

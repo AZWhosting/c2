@@ -526,32 +526,32 @@
         margin-left: -66px;
     }
     .chat a.enquiries {
-        background: url(//storage.googleapis.com/instapage-user-media/e315080c/8593373-0-s-bg.jpg) no-repeat 15px center #1F4774;
+        background: url(//storage.googleapis.com/instapage-user-media/e315080c/8593373-0-s-bg.jpg) no-repeat right center #1F4774;
         background-size: 23px;
     }
     a.enquiries:hover {
-        left: -95px;
+        left: 95px;
     }
     a.referral:hover {
         margin-left: -56px;
     }
-    .cover-rightfixed {
+    /*.cover-rightfixed {
         position: fixed;
         top: 39.7%;
         right: -95px;
         z-index: 999;
         text-align: left;
-    }
+    }*/
     .enquiry-content {
         background: #fff;
         border: 1px solid #D7D7D7;
         padding: 10px 10px 0;
         position: absolute;
         width: 142px;
-        right: -120px;
+        left: -120px;
         font-size: 12px;
         text-align: center;
-        bottom: -152px;
+        bottom: -130px;
         -webkit-transition: all .5s;
         transition: all .5s;
         padding-bottom: 10px;
@@ -559,7 +559,7 @@
         z-index: -1;
     }
     a.enquiries:hover .enquiry-content, .enquiry-content:hover {
-           right: 0;
+           left: 0;
     }    
     .cover {
         position: relative;
@@ -578,6 +578,172 @@
         background: #a22314;
         display: none;
     }
+    .cover-rightfixed {
+        position: fixed;
+        top: 39.7%;
+        left: -95px;
+        z-index: 999;
+        text-align: left;
+    }
+    .text-t.rightfixed {
+	    position: relative;
+	    background: red;
+	    padding: 15px 10px;
+	    z-index: 99;
+	    color: #fff;
+	    border-radius: 3px;
+	    font-size: 12px;
+	    padding-right: 50px;
+	    cursor: pointer;
+	    -webkit-transition: all .5s;
+	    transition: all .5s;
+	    text-decoration: none;
+	    opacity: 1;
+	    margin-bottom: 1px;
+	    clear: both;
+	    float: none;
+	    left: 0;
+	    font-size: 15px; 
+	    float:left; 
+	    background: url(<?php echo base_url();?>assets/spa/plus.png) no-repeat right center red; background-size: 23px;
+	}
+	.text-t.rightfixed:hover {
+	  opacity: 1;
+	  z-index: 9999999;
+	}
+	.text-t.rightfixed i::before {
+	    color: #fff;
+	    top: 10px;
+	    left: 7px;
+	    font-size: 20px;
+	}
+	.text-t.feedback:hover {
+	    margin-left: -66px;
+	}
+	.text-t.enquiries:hover {
+	    left: 95px;
+	    width: 313px;
+	}
+	.text-t.referral:hover {
+	    margin-left: -56px;
+	}
+	.text-t.enquiries:hover .enquiry-content, .enquiry-content:hover {
+	    left: 0px;
+
+	}
+	.text-t .enquiry-content ul {
+		padding: 0;
+		margin: 0;
+	}
+	.text-t .enquiry-content ul li{
+		display: inline-block;
+		list-style: none;
+		width: 100%;
+		padding-bottom: 5px;
+	}
+
+	.text-t .enquiry-content ul li.divider{
+	    border-bottom: 1px #000 solid;
+	    width: 100%;
+	    float: left;
+	    margin-bottom: 5px;
+	}
+	.text-t .enquiry-content ul li a{
+		color: #000;
+		padding: 5px;
+		font-size: 14px;
+	}
+	.text-t .enquiry-content ul li a:hover{
+		color: #203864;
+		text-decoration: underline;
+	}
+	.text-t  .enquiry-content {
+		bottom: -233px;
+	    left: -313px;
+	    width: 313px;
+	}
+
+
+
+	.multiple-list.rightfixed {
+	    position: relative;
+	   /* background: green;*/
+	    padding: 15px 25px;
+	    z-index: 99;
+	    color: #fff;
+	    border-radius: 3px;
+	    font-size: 12px;
+	    padding-left: 46px;
+	    cursor: pointer;
+	    -webkit-transition: all .5s;
+	    transition: all .5s;
+	    text-decoration: none;
+	    opacity: 1;
+	    margin-bottom: 1px;
+	    clear: both;
+	    float: none;
+	    left: 0;
+	    background: url(<?php echo base_url();?>assets/spa/multi.png) no-repeat right center green; 
+	    background-size: 23px;
+	}
+	.multiple-list.rightfixed:hover {
+		opacity: 1;
+		z-index: 9999999;
+	}
+	.multiple-list.rightfixed i::before {
+	    color: #fff;
+	    top: 10px;
+	    left: 7px;
+	    font-size: 20px;
+	}
+	.multiple-list.feedback:hover {
+	    margin-right: -66px;
+	}
+
+	.multiple-list.enquiries:hover {
+	    left: 95px;
+	    width: 313px;
+	}
+	.multiple-list.referral:hover {
+	    margin-right: -56px;
+	}
+	.multiple-list.enquiries:hover .enquiry-content, .enquiry-content:hover {
+	    left: 0;
+	}
+	.multiple-list .enquiry-content ul {
+		padding: 0;
+		margin: 0;
+	}
+	.multiple-list .enquiry-content ul li{
+		display: inline-block;
+		list-style: none;
+		width: 100%;
+		padding-bottom: 5px;
+	    text-align: left;
+	}
+	.multiple-list .enquiry-content ul li a{
+		color: #000;
+		padding: 5px;
+		font-size: 14px;
+	}
+	.multiple-list .enquiry-content ul li a:hover{
+		color: #203864;
+		text-decoration: underline;
+	}
+	.multiple-list  .enquiry-content {
+		bottom: -97px;
+	    width: 313px;
+	    left: -219px
+	}
+	.cover-rightfixed.chat{
+	    top: 52%;
+	}
+	.glyphicons.remove_2 i:before {
+	    cursor: pointer;
+	    color: #000 !important;
+	    top: 0 !important;
+	}
+
 </style>
 <!-- ***************************
 *	Water Section      	  *
@@ -984,7 +1150,7 @@
 								</button>
 							</div> -->
 
-							<div class="span6 botton">
+							<div class="span6 botton" style="padding-left: 0;">
 								<div class="row">
 									<div class="span12 ">
 										<div class="button-service">
@@ -1112,7 +1278,7 @@
 
 <!-- Side fix right -->
 <div class="cover-rightfixed cover-rightfixed1 " style="z-index: 99999;">
-    <div class="rightfixed enquiries text-t btn-rounded  no-js " style="font-size: 15px; float:left; background: url(<?php echo base_url();?>/assets/spa/plus.png) no-repeat 15px center red; background-size: 23px;">
+    <div class="rightfixed enquiries text-t btn-rounded  no-js " style="">
         Transaction
         <div class="enquiry-content">
             <ul style="text-align: left; font-size: 13px; color: #000; ">
@@ -1130,7 +1296,7 @@
         </div>
     </div>
 </div>
-<div class="cover-rightfixed " style="top: 45.9%; z-index: 9999;">
+<div class="cover-rightfixed " style="top: 45.9%; z-index: 9999; right: -97px;">
     <div class="rightfixed enquiries multiple-list  btn-rounded glyphicons glyphicons-plus no-js " style="float:left;  font-size: 15px;">
         Multitasks
         <div class="enquiry-content">
@@ -1163,8 +1329,8 @@
         </div>
     </div>
 </div>
-<div class="cover-rightfixed chat" style=" z-index: 999">
-    <a class="rightfixed enquiries btn-rounded glyphicons no-js conversation" style="width: 142px;float:left;">
+<div class="cover-rightfixed chat" style=" z-index: 999; right: -92px;">
+    <a class="rightfixed enquiries btn-rounded glyphicons no-js conversation" style="width: 146px;float:left;">
         Support
         <div class="enquiry-content">
             <p style="font-size: 14px;">Call us by<br><span style="font-weight: bold;font-size: 16px">+855 10 413 777</span><br>Mon-Fri<br>09:00 - 18:00</p>
@@ -1258,4 +1424,4 @@
 		   	</div>		   	
    		</td>
 	</tr>
-</script>
+</script>                                             

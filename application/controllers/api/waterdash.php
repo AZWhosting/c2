@@ -161,7 +161,7 @@ class Waterdash extends REST_Controller {
 	}
 
 	// Customer
-	function customer_get() {
+	function meters_get() {
 		$meter = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		// $contact->where('deleted', 0);
 		$totalMeter = $meter->count();
@@ -217,7 +217,7 @@ class Waterdash extends REST_Controller {
 			'totalMeter' => $totalMeter,
 			'iMeter' => $totalICust,
 			'aMeter' => $totalACust,
-			'void' => $totalVCust,
+			'numCustomer' => $totalCust,
 			'totalConnect' =>$totalConnect,
 			// 'totalDisconnect' =>$disCount,
 		);

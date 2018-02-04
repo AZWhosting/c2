@@ -317,33 +317,50 @@
 					<div class="span9">
 						<div class="example">
 							<h2>Books Calendar</h2>
-							<input type="text" 
-								style="width: 100%; border: 1px solid #c5c5c5; padding: 3px; height: 30px;" 
-								placeholder="" 
-								data-bind="value: customerPhone">	
-							<p style="margin-top: 15px; margin-bottom: 0; font-size: 14px;">Amount Rec</p>
-							<table class="table table-condensed table-striped table-white" style="margin: 15px 0;">
-								<tbody>
-									<tr>
-										<td class="right" style="width: 60%;"><span style="font-size: 15px; font-weight: 700;">KHR</span></td>
-										<td class="right strong" width="40%"><span style="font-size: 15px; font-weight: 700;">0.00</span></td>
-									</tr>               
-									<tr>
-										<td class="right"><span>USD</span></td>
-										<td class="right ">
-											<span data-format="n" >0.00</span>
-										</td>
-									</tr>
-									<tr>
-										<td class="right"><span >Tender:</span></td>
-										<td class="right "><span data-format="n">0.00</span></td>
-									</tr>
-								</tbody>
-							</table>
-							<input type="text" 
-								style="width: 100%; border: 1px solid #c5c5c5; padding: 3px; height: 30px;" 
-								placeholder="" 
-								data-bind="value: customerPhone">				
+							<table>
+								<tr>
+									<th>testing</th>
+									<th>testing</th>
+									<th>testing</th>
+									<th>testing</th>
+									<th>testing</th>
+								</tr>
+								<tr>
+									<td>1</td>
+									<td>2</td>
+									<td>3</td>
+									<td>4</td>
+									<td>5</td>
+								</tr>
+								<tr>
+									<td>1</td>
+									<td>2</td>
+									<td>3</td>
+									<td>4</td>
+									<td>5</td>
+								</tr>
+								<tr>
+									<td>1</td>
+									<td>2</td>
+									<td>3</td>
+									<td>4</td>
+									<td>5</td>
+								</tr>
+								<tr>
+									<td>1</td>
+									<td>2</td>
+									<td>3</td>
+									<td>4</td>
+									<td>5</td>
+								</tr>
+								<tr>
+									<td>1</td>
+									<td>2</td>
+									<td>3</td>
+									<td>4</td>
+									<td>5</td>
+								</tr>
+							</table>			
 						</div>
 					</div>
 
@@ -354,4 +371,4 @@
 			</div>
 		</div>
 	</div>
-</script>
+</script>      

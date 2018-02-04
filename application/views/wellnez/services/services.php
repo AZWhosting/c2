@@ -294,7 +294,7 @@
 	    background: #f4f5f8 !important;
 	}
 	.botton .button-service{
-		background: #0eac00;
+		background: #fff;
 	    padding: 10px;
 	    float: left;
 	    width: 100%;
@@ -302,6 +302,7 @@
 	    margin-bottom: 1px;
 	    cursor: pointer;
 	    box-shadow: 2px 0px 12px 0px rgba(68,68,68,1);
+	    color: #0eac00;
 	}
 	.botton .button-service .img{
 		width: 40px;
@@ -322,10 +323,11 @@
 	    border-radius: 0 0 0 5px;
 	    cursor: pointer;
 	    box-shadow: 2px 0px 12px 0px rgba(68,68,68,1);
+	    color: #0eac00;
 	}
 	.botton .button-book .img{
 		width: 38px;
-	    margin-left: 8px;
+	    margin-left: 9px;
 	    margin-bottom: 4px;
 	}
 	.botton .button-book .img img{
@@ -337,16 +339,16 @@
 
 	.botton .button-pay{
 		background: #fff;
-	    padding: 17px 17px 10px 17px;
+	    padding: 16px 16px 10px 16px;
 	    text-align: center;
 	    margin-left: 1px;
-	    text-align: center;
 	    cursor: pointer;
 	    box-shadow: 2px 0px 12px 0px rgba(68,68,68,1);
+	    color: #0eac00;
 	}
 	.botton .button-pay .img{
 		width: 38px;
-	    margin-left: 8px;
+	    margin-left: 13px;
 	    margin-bottom: 4px;
 	}
 	.botton .button-pay .img img{
@@ -365,6 +367,7 @@
 	    line-height: 39px;
 	    cursor: pointer;
 	    box-shadow: 2px 0px 12px 0px rgba(68,68,68,1);
+	    color: #0eac00;
 	}
 	.button-cancel span{
 		font-size: 45px;
@@ -503,7 +506,7 @@
 						<div class="example" style="box-shadow: 2px 0px 12px 0px rgba(68,68,68,1); border-radius: 0 0 20px 20px;">
 							<div class="row ">
 								<div class="span6 ">
-									<table class="table table-condensed table-striped table-white" style="margin: 5px 0 0;">
+									<table class="table table-condensed table-striped table-white" >
 										<tbody>
 											<tr>
 												<td class="right" style="width: 60%;"><span data-bind="text: lang.lang.subtotal" style="font-size: 15px; font-weight: 700;"></span></td>
@@ -526,14 +529,14 @@
 										</tbody>
 									</table>
 								</div>
-								<div class="span6 botton">
+								<div class="span6 botton" style="padding-left: 0;">
 									<div class="row">
 										<div class="span12 ">
 											<div class="button-service">
 												<div class="img">
-													<img src="<?php echo base_url();?>assets/spa/icon/serving.png" >
+													<img src="<?php echo base_url();?>assets/spa/icon/pay-green.png" >
 												</div>
-												<p class="textBig">Servicing </p>
+												<p class="textBig">Print </p>
 											</div>
 										</div>
 									</div>
@@ -541,21 +544,21 @@
 										<div class="span4 " style="padding-right: 0;">
 											<div class="button-book">
 												<div class="img">
-													<img src="<?php echo base_url();?>assets/spa/icon/book.png" >
+													<img src="<?php echo base_url();?>assets/spa/icon/pay-green.png" >
 												</div>
-												<p class="textSmall">Booking</p>
+												<p class="textSmall">Loyalty</p>
 											</div>
 										</div>
 										<div class="span4 " style="padding: 0;">
 											<div class="button-pay">
 												<div class="img">
-													<img src="<?php echo base_url();?>assets/spa/icon/pay.png" >
+													<img src="<?php echo base_url();?>assets/spa/icon/pay-green.png" >
 												</div>
-												<p class="textSmall">Pay</p>
+												<p class="textSmall">Gift Card</p>
 											</div>
 										</div>
 										<div class="span4 " style="padding-left: 0;">
-											<p class="button-cancel"><span>X</span> <br> Cancel</p>
+											<p class="button-cancel"><span>X</span> <br> Split</p>
 										</div>
 									</div>
 								</div>
@@ -570,4 +573,4 @@
 			</div>
 		</div>
 	</div>
-</script>
+</script>                                                      

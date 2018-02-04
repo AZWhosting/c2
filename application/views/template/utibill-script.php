@@ -23136,7 +23136,7 @@
         meterDS: new kendo.data.DataSource({
             transport: {
                 read: {
-                    url: baseUrl + 'api/waterdash/customer',
+                    url: baseUrl + 'api/waterdash/meters',
                     type: "GET",
                     dataType: 'json',
                     headers: {
@@ -23168,7 +23168,7 @@
                 var vm = banhji.wDashboard;
                 banhji.wDashBoard.set('totalMeter', kendo.toString(this.data()[0].totalMeter, "n0", banhji.locale));
                 banhji.wDashBoard.set('activeCust', kendo.toString(this.data()[0].aMeter, "n0", banhji.locale));
-                banhji.wDashBoard.set('voidCust', kendo.toString(this.data()[0].void, "n0", banhji.locale));
+                banhji.wDashBoard.set('NumCus', kendo.toString(this.data()[0].numberCustomer, "n0", banhji.locale));
                 banhji.wDashBoard.set('totalConnect', kendo.toString(this.data()[0].totalConnect, "n0", banhji.locale));
             },
             batch: true,
