@@ -3957,6 +3957,442 @@ class Utibills extends REST_Controller {
 
 		$this->response($data, 200);
 	}
+
+	//Assembly
+	function ass_items_get() {		
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
+		$data["count"] = 0;
+		$is_pattern = 0;
+		$no_nature = true;
+		
+		$obj = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
+			}
+		}
+		
+		//Filter		
+		if(!empty($filter["filters"]) && isset($filter["filters"])){
+	    	foreach ($filter['filters'] as $value) {
+	    		if(isset($value['operator'])) {
+	    			if($value['operator']=="startswith"){
+	    				$obj->like($value['field'], $value['value'], 'after');
+	    			}else if($value['operator']=="contains"){
+	    				$obj->like($value['field'], $value['value'], 'both');
+	    			}else{
+						$obj->{$value['operator']}($value['field'], $value['value']);
+	    			}
+				} else {
+					if($value["field"]=="is_pattern"){
+	    				$is_pattern = $value["value"];
+	    			}else if($value["field"]=="nature"){
+	    				$no_nature = false;
+	    			}else{
+	    				$obj->where($value["field"], $value["value"]);
+	    			}
+				}
+			}
+		}
+
+		if($no_nature){
+			$obj->where("nature <>", "main_variant");
+		}
+		
+		$obj->include_related("category", "name");
+		$obj->include_related("measurement", array("name"));
+		$obj->where("is_pattern", $is_pattern);
+		$obj->where("deleted <>", 1);
+		
+		//Results
+		if($page && $limit){
+			$obj->get_paged_iterated($page, $limit);
+			$data["count"] = $obj->paged->total_rows;
+		}else{
+			$obj->get_iterated();
+			$data["count"] = $obj->result_count();
+		}
+
+		if($obj->exists()){
+			foreach ($obj as $value) {
+				//Price
+				$price = floatval($value->price);
+				$itemPrices = new Item_price(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$itemPrices->where("conversion_ratio", 1);
+				$itemPrices->limit(1);
+				$itemPrices->get();
+				if($itemPrices->exists()){
+					$price = floatval($itemPrices->price);
+				}
+
+				//Measurement
+				$measurement = [];
+				if($value->measurement_id>0){
+					$measurement = array(
+						"measurement_id" 	=> $value->measurement_id,
+						"measurement"		=> $value->measurement_name ? $value->measurement_name : ""
+					);
+				}
+
+				//Variant
+				$variant = [];
+				if($value->nature=="variant"){
+					$variant = $value->attribute_value->get_raw()->result();
+				}
+
+				$data["results"][] = array(
+					"id" 						=> $value->id,
+					"company_id" 				=> $value->company_id,
+					"contact_id" 				=> $value->contact_id,
+					"currency_id" 				=> $value->currency_id,
+					"item_type_id"				=> $value->item_type_id,					
+					"category_id" 				=> $value->category_id,
+					"item_group_id"				=> $value->item_group_id,
+					"item_sub_group_id"			=> $value->item_sub_group_id,
+					"brand_id" 					=> $value->brand_id,					
+					"measurement_id" 			=> $value->measurement_id,					
+					"sub_of_id" 				=> $value->sub_of_id,
+					"abbr" 						=> $value->abbr,
+					"number" 					=> $value->number,
+					"international_code" 		=> $value->international_code,
+					"imei" 						=> $value->imei,
+					"serial_number" 			=> $value->serial_number,
+					"supplier_code"				=> $value->supplier_code,
+					"color_code" 				=> $value->color_code,
+				   	"name" 						=> $value->name,
+				   	"purchase_description" 		=> $value->purchase_description,
+				   	"sale_description" 			=> $value->sale_description,
+				   	"measurements"				=> $value->measurements,
+				   	"barcode"					=> $value->barcode,
+				   	"catalogs" 					=> explode(",",$value->catalogs),
+				   	"cost" 						=> floatval($value->cost),
+				   	"price" 					=> $price,
+				   	"amount" 					=> floatval($value->amount),
+				   	"rate" 						=> floatval($value->rate),
+				   	"locale" 					=> $value->locale,
+				   	"on_hand" 					=> 0,
+				   	"on_po" 					=> floatval($value->on_po),
+				   	"on_so" 					=> floatval($value->on_so),
+				   	"order_point" 				=> intval($value->order_point),
+				   	"income_account_id" 		=> $value->income_account_id,
+				   	"expense_account_id"		=> $value->expense_account_id,
+				   	"inventory_account_id"		=> $value->inventory_account_id,   				   	
+				   	"preferred_vendor_id" 		=> $value->preferred_vendor_id,
+				   	"image_url" 				=> $value->image_url!="" ? $value->image_url : $this->noImageUrl,
+				   	"thumbnail_url" 			=> $value->thumbnail_url!="" ? $value->thumbnail_url : $this->noImageUrl,
+				   	"favorite" 					=> $value->favorite=="true"?true:false,
+				   	"is_catalog" 				=> intval($value->is_catalog),
+				   	"is_assembly" 				=> intval($value->is_assembly),
+				   	"is_pattern" 				=> intval($value->is_pattern),
+				   	"tags" 						=> explode(",",$value->tags),
+				   	"nature" 					=> $value->nature,
+				   	"status" 					=> $value->status,
+				   	"deleted" 					=> $value->deleted,
+				   	"is_system" 				=> $value->is_system,
+
+				   	"category" 					=> $value->category_name,
+				   	"measurement" 				=> $measurement,
+				   	"variant" 					=> $variant
+				);
+			}
+		}
+		
+		$data['pageSize'] = $limit;
+		$data['skip'] = $limit * $page;	
+
+		//Response Data		
+		$this->response($data, 200);	
+	}
+
+	//POST
+	function ass_items_post() {
+		$models = json_decode($this->post('models'));
+		$data["results"] = [];
+		$data["count"] = 0;
+
+		foreach ($models as $value) {
+			$obj = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+			isset($value->company_id) 				? $obj->company_id 				= $value->company_id : "";
+			isset($value->contact_id) 				? $obj->contact_id 				= $value->contact_id : "";			
+			isset($value->currency_id) 				? $obj->currency_id 			= $value->currency_id : "";
+			isset($value->item_type_id) 			? $obj->item_type_id			= $value->item_type_id : "";			
+			isset($value->category_id) 				? $obj->category_id 			= $value->category_id : "";
+			isset($value->item_group_id) 			? $obj->item_group_id 			= $value->item_group_id : "";
+			isset($value->item_sub_group_id) 		? $obj->item_sub_group_id 		= $value->item_sub_group_id : "";
+			isset($value->brand_id) 				? $obj->brand_id 				= $value->brand_id : "";
+			isset($value->measurement_id) 			? $obj->measurement_id 			= $value->measurement_id : "";		
+			isset($value->sub_of_id) 				? $obj->sub_of_id 				= $value->sub_of_id : "";
+			isset($value->abbr) 					? $obj->abbr 					= $value->abbr : "";
+			isset($value->number) 					? $obj->number 					= $value->number : "";
+			isset($value->international_code) 		? $obj->international_code 		= $value->international_code : "";
+			isset($value->imei) 					? $obj->imei 					= $value->imei : "";
+			isset($value->serial_number) 			? $obj->serial_number 			= $value->serial_number : "";
+			isset($value->supplier_code) 			? $obj->supplier_code 			= $value->supplier_code : "";
+			isset($value->color_code) 				? $obj->color_code 				= $value->color_code : "";
+		   	isset($value->name) 					? $obj->name 					= $value->name :  "";
+		   	isset($value->purchase_description) 	? $obj->purchase_description 	= $value->purchase_description : "";
+		   	isset($value->sale_description) 		? $obj->sale_description 		= $value->sale_description : "";
+		   	isset($value->measurements) 			? $obj->measurements 			= $value->measurements : "";
+		   	isset($value->barcode) 					? $obj->barcode 				= $value->barcode : "";
+		   	isset($value->catalogs) 				? $obj->catalogs 				= implode(",",$value->catalogs) : "";
+		   	isset($value->cost) 					? $obj->cost 					= $value->cost : "";
+		   	isset($value->price) 					? $obj->price 					= $value->price : "";
+		   	isset($value->amount) 					? $obj->amount 					= $value->amount : "";
+		   	isset($value->rate) 					? $obj->rate 					= $value->rate : "";
+		   	isset($value->locale) 					? $obj->locale 					= $value->locale : "";
+		   	isset($value->on_hand) 					? $obj->on_hand 				= $value->on_hand : "";
+		   	isset($value->on_po) 					? $obj->on_po 					= $value->on_po : "";
+		   	isset($value->on_so) 					? $obj->on_so 					= $value->on_so : "";
+		   	isset($value->order_point) 				? $obj->order_point 			= $value->order_point : "";
+		   	isset($value->income_account_id) 		? $obj->income_account_id 		= $value->income_account_id : "";
+		   	isset($value->expense_account_id) 		? $obj->expense_account_id 		= $value->expense_account_id : "";
+		   	isset($value->inventory_account_id) 	? $obj->inventory_account_id 	= $value->inventory_account_id : "";
+		   	isset($value->preferred_vendor_id) 		? $obj->preferred_vendor_id 	= $value->preferred_vendor_id : "";
+		   	isset($value->image_url) 				? $obj->image_url				= $value->image_url : "";
+		   	isset($value->favorite) 				? $obj->favorite 				= $value->favorite : "";
+		   	isset($value->is_catalog) 				? $obj->is_catalog 				= $value->is_catalog : "";
+		   	isset($value->is_assembly) 				? $obj->is_assembly 			= $value->is_assembly : "";
+		   	isset($value->is_pattern) 				? $obj->is_pattern 				= $value->is_pattern : "";
+		   	isset($value->tags) 					? $obj->tags 					= implode(",",$value->tags) : "";
+		   	isset($value->nature) 					? $obj->nature 					= $value->nature : "";
+		   	isset($value->status) 					? $obj->status 					= $value->status : "";
+		   	isset($value->deleted) 					? $obj->deleted 				= $value->deleted : "";
+
+	   		if($obj->save()){
+	   			$table = new Plan_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				//$tmp = isset($row->is_flat) ? $row->is_flat:FALSE;
+				$table->is_flat = 0;
+				$table->currency_id = $value->currency_id;
+				$table->type = "service";
+				$table->unit = 0;
+				$table->amount = $value->price;
+				$table->usage = 0;
+				$table->name = $obj->name;
+				$table->account_id = $obj->income_account_id;
+				$table->is_active = 1;
+				$table->assembly_id = $obj->id;
+				$table->save();
+	   			//Item Price
+	   			$itemPrice = new Item_price(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	   			$itemPrice->item_id 			= $obj->id;
+				$itemPrice->measurement_id 		= $obj->measurement_id;
+				$itemPrice->quantity 			= 1;
+				$itemPrice->conversion_ratio 	= 1;
+				$itemPrice->price 				= $obj->price;
+				$itemPrice->locale 				= $obj->locale;
+				$itemPrice->save();
+
+			   	$data["results"][] = array(
+			   		"id" 						=> $obj->id,
+					"company_id" 				=> $obj->company_id,
+					"contact_id" 				=> $obj->contact_id,
+					"currency_id" 				=> $obj->currency_id,
+					"item_type_id"				=> $obj->item_type_id,					
+					"category_id" 				=> $obj->category_id,
+					"item_group_id"				=> $obj->item_group_id,
+					"item_sub_group_id"			=> $obj->item_sub_group_id,
+					"brand_id" 					=> $obj->brand_id,					
+					"measurement_id" 			=> $obj->measurement_id,					
+					"sub_of_id" 				=> $obj->sub_of_id,
+					"abbr" 						=> $obj->abbr,
+					"number" 					=> $obj->number,
+					"international_code" 		=> $obj->international_code,
+					"imei" 						=> $obj->imei,
+					"serial_number" 			=> $obj->serial_number,
+					"supplier_code"				=> $obj->supplier_code,
+					"color_code" 				=> $obj->color_code,
+				   	"name" 						=> $obj->name,
+				   	"purchase_description" 		=> $obj->purchase_description,
+				   	"sale_description" 			=> $obj->sale_description,
+				   	"measurements"				=> $obj->measurements,
+				   	"barcode"					=> $obj->barcode,
+				   	"catalogs" 					=> explode(",",$obj->catalogs),
+				   	"cost" 						=> floatval($obj->cost),
+				   	"price" 					=> floatval($obj->price),
+				   	"amount" 					=> floatval($obj->amount),
+				   	"rate" 						=> floatval($obj->rate),
+				   	"locale" 					=> $obj->locale,
+				   	"on_hand" 					=> floatval($obj->on_hand),
+				   	"on_po" 					=> floatval($obj->on_po),
+				   	"on_so" 					=> floatval($obj->on_so),
+				   	"order_point" 				=> intval($obj->order_point),
+				   	"income_account_id" 		=> $obj->income_account_id,
+				   	"expense_account_id"		=> $obj->expense_account_id,
+				   	"inventory_account_id"		=> $obj->inventory_account_id,
+				   	"preferred_vendor_id" 		=> $obj->preferred_vendor_id,
+				   	"image_url" 				=> $obj->image_url!="" ? $obj->image_url : $this->noImageUrl,
+				   	"favorite" 					=> $obj->favorite=="true"?true:false,
+				   	"is_catalog" 				=> $obj->is_catalog,
+				   	"is_assembly" 				=> $obj->is_assembly,
+				   	"is_pattern" 				=> intval($obj->is_pattern),
+				   	"tags" 						=> explode(",",$obj->tags),
+				   	"nature" 					=> $obj->nature,
+				   	"status" 					=> $obj->status,
+				   	"deleted" 					=> $obj->deleted,
+				   	"is_system" 				=> $obj->is_system
+			   	);
+		    }	
+		}
+		
+		$data["count"] = count($data["results"]);
+		$this->response($data, 201);		
+	}
+	
+	//PUT
+	function ass_items_put() {
+		$models = json_decode($this->put('models'));
+		$data["results"] = array();
+		$data["count"] = 0;
+
+		foreach ($models as $value) {			
+			$obj = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$obj->get_by_id($value->id);
+
+			isset($value->company_id) 				? $obj->company_id 				= $value->company_id : "";
+			isset($value->contact_id) 				? $obj->contact_id 				= $value->contact_id : "";			
+			isset($value->currency_id) 				? $obj->currency_id 			= $value->currency_id : "";
+			isset($value->item_type_id) 			? $obj->item_type_id			= $value->item_type_id : "";			
+			isset($value->category_id) 				? $obj->category_id 			= $value->category_id : "";
+			isset($value->item_group_id) 			? $obj->item_group_id 			= $value->item_group_id : "";
+			isset($value->item_sub_group_id) 		? $obj->item_sub_group_id 		= $value->item_sub_group_id : "";
+			isset($value->brand_id) 				? $obj->brand_id 				= $value->brand_id : "";
+			isset($value->measurement_id) 			? $obj->measurement_id 			= $value->measurement_id : "";		
+			isset($value->sub_of_id) 				? $obj->sub_of_id 				= $value->sub_of_id : "";
+			isset($value->abbr) 					? $obj->abbr 					= $value->abbr : "";
+			isset($value->number) 					? $obj->number 					= $value->number : "";
+			isset($value->international_code) 		? $obj->international_code 		= $value->international_code : "";
+			isset($value->imei) 					? $obj->imei 					= $value->imei : "";
+			isset($value->serial_number) 			? $obj->serial_number 			= $value->serial_number : "";
+			isset($value->supplier_code) 			? $obj->supplier_code 			= $value->supplier_code : "";
+			isset($value->color_code) 				? $obj->color_code 				= $value->color_code : "";
+		   	isset($value->name) 					? $obj->name 					= $value->name :  "";
+		   	isset($value->purchase_description) 	? $obj->purchase_description 	= $value->purchase_description : "";
+		   	isset($value->sale_description) 		? $obj->sale_description 		= $value->sale_description : "";
+		   	isset($value->measurements) 			? $obj->measurements 			= $value->measurements : "";
+		   	isset($value->barcode) 					? $obj->barcode 				= $value->barcode : "";
+		   	isset($value->catalogs) 				? $obj->catalogs 				= implode(",",$value->catalogs) : "";
+		   	isset($value->cost) 					? $obj->cost 					= $value->cost : "";
+		   	isset($value->price) 					? $obj->price 					= $value->price : "";
+		   	isset($value->amount) 					? $obj->amount 					= $value->amount : "";
+		   	isset($value->rate) 					? $obj->rate 					= $value->rate : "";
+		   	isset($value->locale) 					? $obj->locale 					= $value->locale : "";
+		   	isset($value->on_hand) 					? $obj->on_hand 				= $value->on_hand : "";
+		   	isset($value->on_po) 					? $obj->on_po 					= $value->on_po : "";
+		   	isset($value->on_so) 					? $obj->on_so 					= $value->on_so : "";
+		   	isset($value->order_point) 				? $obj->order_point 			= $value->order_point : "";
+		   	isset($value->income_account_id) 		? $obj->income_account_id 		= $value->income_account_id : "";
+		   	isset($value->expense_account_id) 		? $obj->expense_account_id 		= $value->expense_account_id : "";
+		   	isset($value->inventory_account_id) 	? $obj->inventory_account_id 	= $value->inventory_account_id : "";
+		   	isset($value->preferred_vendor_id) 		? $obj->preferred_vendor_id 	= $value->preferred_vendor_id : "";
+		   	isset($value->image_url) 				? $obj->image_url				= $value->image_url : "";
+		   	isset($value->favorite) 				? $obj->favorite 				= $value->favorite : "";
+		   	isset($value->is_catalog) 				? $obj->is_catalog 				= $value->is_catalog : "";
+		   	isset($value->is_assembly) 				? $obj->is_assembly 			= $value->is_assembly : "";
+		   	isset($value->is_pattern) 				? $obj->is_pattern 				= $value->is_pattern : "";
+		   	isset($value->tags) 					? $obj->tags 					= implode(",",$value->tags) : "";
+		   	isset($value->nature) 					? $obj->nature 					= $value->nature : "";
+		   	isset($value->status) 					? $obj->status 					= $value->status : "";	   	
+		   	isset($value->deleted) 					? $obj->deleted 				= $value->deleted : "";
+
+			if($obj->save()){
+				$table = new Plan_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$table->where("assembly_id", $obj->id)->get();
+				$table->is_flat = 0;
+				$table->currency_id = $value->currency_id;
+				$table->type = "service";
+				$table->unit = 0;
+				$table->amount = $value->price;
+				$table->usage = 0;
+				$table->name = $obj->name;
+				$table->account_id = $obj->income_account_id;
+				$table->is_active = 1;
+				$table->assembly_id = $obj->id;
+				$table->save();			
+				//Results
+				$data["results"][] = array(
+					"id" 						=> $obj->id,
+					"company_id" 				=> $obj->company_id,
+					"contact_id" 				=> $obj->contact_id,
+					"currency_id" 				=> $obj->currency_id,
+					"item_type_id"				=> $obj->item_type_id,					
+					"category_id" 				=> $obj->category_id,
+					"item_group_id"				=> $obj->item_group_id,
+					"item_sub_group_id"			=> $obj->item_sub_group_id,
+					"brand_id" 					=> $obj->brand_id,					
+					"measurement_id" 			=> $obj->measurement_id,					
+					"sub_of_id" 				=> $obj->sub_of_id,
+					"abbr" 						=> $obj->abbr,
+					"number" 					=> $obj->number,
+					"international_code" 		=> $obj->international_code,
+					"imei" 						=> $obj->imei,
+					"serial_number" 			=> $obj->serial_number,
+					"supplier_code"				=> $obj->supplier_code,
+					"color_code" 				=> $obj->color_code,
+				   	"name" 						=> $obj->name,
+				   	"purchase_description" 		=> $obj->purchase_description,
+				   	"sale_description" 			=> $obj->sale_description,
+				   	"measurements"				=> $obj->measurements,
+				   	"barcode"					=> $obj->barcode,
+				   	"catalogs" 					=> explode(",",$obj->catalogs),				   	
+				   	"cost" 						=> floatval($obj->cost),
+				   	"price" 					=> floatval($obj->price),
+				   	"amount" 					=> floatval($obj->amount),
+				   	"rate" 						=> floatval($obj->rate),
+				   	"locale" 					=> $obj->locale,
+				   	"on_hand" 					=> floatval($obj->on_hand),
+				   	"on_po" 					=> floatval($obj->on_po),
+				   	"on_so" 					=> floatval($obj->on_so),
+				   	"order_point" 				=> intval($obj->order_point),
+				   	"income_account_id" 		=> $obj->income_account_id,
+				   	"expense_account_id"		=> $obj->expense_account_id,
+				   	"inventory_account_id"		=> $obj->inventory_account_id,
+				   	"preferred_vendor_id" 		=> $obj->preferred_vendor_id,
+				   	"image_url" 				=> $obj->image_url!="" ? $obj->image_url : $this->noImageUrl,
+				   	"favorite" 					=> $obj->favorite=="true"?true:false,
+				   	"is_catalog" 				=> $obj->is_catalog,
+				   	"is_assembly" 				=> $obj->is_assembly,
+				   	"is_pattern" 				=> intval($obj->is_pattern),
+				   	"tags" 						=> explode(",",$obj->tags),
+				   	"nature" 					=> $obj->nature,				  
+				   	"status" 					=> $obj->status,
+				   	"deleted" 					=> $obj->deleted,
+				   	"is_system" 				=> $obj->is_system
+				);						
+			}
+		}
+		$data["count"] = count($data["results"]);
+
+		$this->response($data, 200);
+	}
+	
+	//DELETE
+	function ass_items_delete() {
+		$models = json_decode($this->delete('models'));
+
+		foreach ($models as $key => $value) {
+			$obj = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$obj->where("id", $value->id)->get();
+			
+			$data["results"][] = array(
+				"data"   => $value,
+				"status" => $obj->delete()
+			);							
+		}
+
+		//Response data
+		$this->response($data, 200);
+	}
 }
 /* End of file meters.php */
 /* Location: ./application/controllers/api/utibills.php */

@@ -918,7 +918,7 @@
 							            </div>
 							            <div class="tab-pane" id="tab7">
 							            	<div style="clear: both;">
-							            		<input data-bind="value: serviceName, attr: {placeholder: lang.lang.name}" type="text" placeholder="Name" style="height: 32px; padding: 5px; margin-right: 10px;"  class="span2 k-textbox k-invalid" />
+							            		<!-- <input data-bind="value: serviceName, attr: {placeholder: lang.lang.name}" type="text" placeholder="Name" style="height: 32px; padding: 5px; margin-right: 10px;"  class="span2 k-textbox k-invalid" />
 								            	<input data-role="dropdownlist"
 								            	   class="span2"
 								            	   style="padding-right: 1px; height: 32px; margin-right: 10px;" 
@@ -940,8 +940,8 @@
 								                   data-value-field="id"
 								                   data-bind="enabled: sFalse, value: serviceCurrency,
 						                              source: scurrencyDS"/>
-								            	<input data-bind="enabled: sFalse,value: servicePrice, attr: {placeholder: lang.lang.price}" type="text" placeholder="Price" style="height: 32px; padding: 5px; margin-right: 10px;" class="span2 k-textbox k-invalid" />
-								            	<a class="btn-icon btn-primary glyphicons circle_plus cutype-icon" style="width: 80px; padding: 5px 7px 5px 35px !important; text-align: left;" data-bind="click: addService"><i></i><span data-bind="text: lang.lang.add">Add</span></a>
+								            	<input data-bind="enabled: sFalse,value: servicePrice, attr: {placeholder: lang.lang.price}" type="text" placeholder="Price" style="height: 32px; padding: 5px; margin-right: 10px;" class="span2 k-textbox k-invalid" /> -->
+								            	<a class="btn-icon btn-primary glyphicons circle_plus cutype-icon" style="width: 80px; padding: 5px 7px 5px 35px !important; text-align: left;" href="#/item_assembly" ><i></i><span data-bind="text: lang.lang.add">Add</span></a>
 								            </div>
 							            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 							            		<thead>
@@ -1675,7 +1675,7 @@
     		#= kendo.toString(amount, _currency.locale=="km-KH"?"c0":"c", _currency.locale)#
    		</td>
    		<td align="center">
-		    <a class="btn-action glyphicons pencil btn-success k-edit-button"><i></i></a>
+		    <a href="\\#/item_assembly/#:assembly.id#" class="btn-action glyphicons pencil btn-success"><i></i></a>
    		</td>
    	</tr>
 </script>
@@ -2176,6 +2176,7 @@
 		#= code#
 	</div>
 </script>
+
 <script id="addLicense" type="text/x-kendo-template">
 	<div class="container">
 		<div class="row-fluid">
@@ -16191,5 +16192,274 @@
 				</div>
 			</div>
 		</div>
+	</div>
+</script>
+
+<script id="itemAssembly" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">					
+				<div id="example" class="k-content">
+
+					<span class="glyphicons no-js remove_2 pull-right" 
+		    				onclick="javascript:window.history.back()"
+							data-bind="click: cancel"><i></i></span>
+
+			        <h2 data-bind="text: lang.lang.build_assembly"></h2>
+			        <br>
+
+			        <!-- Upper Part -->
+					<div class="row">
+						<div class="span6">
+							<div class="box-generic well" style="height: 190px;">				
+								<div class="row">
+									<div class="span6">	
+							
+										<!-- Group -->
+										<div class="control-group">							
+											<label for="txtNumber"><span data-bind="text: lang.lang.no_"></span><span style="color:red">*</span></label>
+					              			<br>
+					              			<input id="txtAbbr" name="txtAbbr" class="k-textbox"
+						              				data-bind="value: obj.abbr, 
+						              						   disabled: obj.is_pattern" 
+						              				placeholder="eg. AB" style="width: 55px;" />
+					              			-
+					              			<input id="txtNumber" name="txtNumber" class="k-textbox"
+						              				data-bind="value: obj.number, 
+						              							disabled: obj.is_pattern,
+						              							events:{change: checkExistingNumber}" 
+						              				placeholder="e.g. 0001" 
+						              				required data-required-msg="required"
+						              				style="width: 128px;" />
+										</div>
+										<!-- // Group END -->
+									
+									</div>
+
+									<div class="span6">									
+										<div class="control-group">
+											<label for="txtName"><span data-bind="text: lang.lang.name"></span> <span style="color:red">*</span></label>
+						              		<input id="txtName" name="txtName" class="k-textbox" data-bind="value: obj.name" 
+								              		placeholder="Items Name..." required data-required-msg="required"
+								              		style="width: 100%;" />
+										</div>									
+									</div>								
+								</div>
+
+								<div class="row">
+									<div class="span12">
+										<div class="control-group">
+											<label for="ddlIncome"><span data-bind="text: lang.lang.income_account"></span><span style="color:red">*</span></label>											
+											<input id="ddlIncome" name="ddlIncome"
+												   data-role="dropdownlist"
+												   data-header-template="account-header-tmpl"
+												   data-template="account-list-tmpl"
+								                   data-value-primitive="true"
+								                   data-text-field="name"
+								                   data-value-field="id"
+								                   data-bind="value: obj.income_account_id,
+								                              source: incomeAccountDS"
+								                   data-option-label="Select Account..."
+								                   required data-required-msg="required" style="width: 100%;" />
+										</div>
+									</div>
+									<div class="span12">								
+										<div class="control-group">								
+											<label for="ddlStatus"><span data-bind="text: lang.lang.status"></span><span style="color:red">*</span></label>
+								            <input id="ddlStatus" name="ddlStatus" 
+					              				data-role="dropdownlist"
+							            		data-text-field="name"
+				           						data-value-field="id"
+				           						data-value-primitive="true" 
+							            		data-bind="source: statusList, value: obj.status"
+							            		data-option-label="(--- Select ---)"
+							            		required data-required-msg="required" style="width: 100%;" />
+										</div>																	
+									</div>																								
+								</div>
+
+							</div>						
+						</div>					   
+
+						<div class="span6" style="padding-left:0;">
+							<div class="row">
+								<div class="span6">
+									<!-- Group -->
+									<div class="control-group">								
+										<label for="ddlCurrency"><span data-bind="text: lang.lang.currency"></span> <span style="color:red">*</span></label>							            
+							            <input id="ddlCurrency" name="ddlCurrency"							            	 
+				              				data-role="dropdownlist"
+				              				data-option-label="(--- Select ---)"
+				              				data-template="currency-list-tmpl"
+				              				data-value-primitive="true"
+						            		data-text-field="code"
+			           						data-value-field="locale"			           						 
+						            		data-bind="source: currencyDS, value: obj.locale, events: {change: currencyChange}"						            		
+						            		required data-required-msg="required" style="width: 100%;" />						            		
+									</div>																		
+									<!-- // Group END -->
+								</div>
+								<div class="span6">
+									<!-- Group -->
+									<div class="control-group">								
+										<label for="txtPrice"><span data-bind="text: lang.lang.price"></span></label>
+							            <input id="txtPrice" name="txtPrice" 
+							               data-role="numerictextbox"
+							               data-spinners="false"
+						                   data-format="n"
+						                   data-min="0"						                   
+						                   data-bind="value: obj.price"
+						                   required data-required-msg="required" style="width: 100%">
+									</div>																		
+									<!-- // Group END -->
+								</div>
+							</div>
+							<div class="row">
+								<div class="span6">
+									<!-- Group -->
+									<div class="control-group">								
+										<label for="txtPurchaseDescription"><span data-bind="text: lang.lang.purchase_description"></span></label>
+							            <textarea id="txtPurchaseDescription" class="k-textbox" 
+											data-bind="value: obj.purchase_description" style="resize:none; width: 100%;height:60px;"></textarea>
+									</div>																		
+									<!-- // Group END -->
+								</div>
+								<div class="span6">
+									<!-- Group -->
+									<div class="control-group">								
+										<label for="txtSaleDescription"><span data-bind="text: lang.lang.sale_description"></span></label>
+							            <textarea id="txtSaleDescription" class="k-textbox" 
+											data-bind="value: obj.sale_description" style="resize:none; width: 100%;height:60px;"></textarea>
+									</div>																		
+									<!-- // Group END -->
+								</div>
+							</div>
+					    </div>					   
+					</div>
+
+					<div class="row">
+						<div class="span12">
+							<table class="table table-bordered table-primary table-striped table-vertical-center">
+						        <thead>
+						            <tr>
+						            	<th style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></th>				                
+						                <th ><span data-bind="text: lang.lang.items"></span></th>
+						                <th ><span data-bind="text: lang.lang.quantity"></span></th>
+						                <th ><span data-bind="text: lang.lang.cost"></span></th>
+						                <th ><span data-bind="text: lang.lang.amount"></span></th>
+						            </tr>
+						        </thead>
+						        <tbody data-role="listview"
+						        		data-auto-bind="false" 
+						        		data-template="itemAssembly-row-template"				        		
+						        		data-bind="source: lineDS"></tbody>				        
+						    </table>					    				    
+
+						    <button class="btn btn-inverse" data-bind="click: addRow"><i class="icon-plus icon-white"></i></button>
+							<!--End Add New Item -->
+
+						    <div class="strong" align="right" style="font-size: large;">
+						    	<span data-bind="text: lang.lang.total"></span> <span data-bind="text: total"></span>
+						    </div>
+					    </div>
+				    </div>
+
+				    <!-- Form actions -->
+					<div class="box-generic bg-action-button">
+						<div id="ntf1" data-role="notification"></div>
+
+						<!-- Delete Confirmation -->
+						<div data-role="window"
+			                 data-title="Delete Confirmation"
+			                 data-width="350"
+			                 data-height="200"
+			                 data-iframe="true"
+			                 data-modal="true"
+			                 data-visible="false"
+			                 data-position="{top:'40%',left:'35%'}"
+			                 data-actions="{}"
+			                 data-resizable="false"
+			                 data-bind="visible: showConfirm"
+			                 style="text-align:center;">
+			                <p style="font-size:25px; margin: 15px 0 25px;" class="delete-message" data-bind="text: confirmMessage"></p>
+						    <button style="font-size:14px; border:none; background:#496cad; color:#fff; padding:5px 25px;" data-bind="click:delete"><span data-bind="text: lang.lang.yes"></span></button> 
+						    <button style="font-size:14px; border:none; background:red; color:#fff; padding:5px 25px;" data-bind="click:closeConfirm"><span data-bind="text: lang.lang.no"></span></button>
+			            </div>
+			            <!-- // Delete Confirmation -->
+
+						<div class="row">
+							<div class="span4" style="padding-left: 15px;"><a style="color: #fff; float: left;"></a></div>
+							<div class="span8" align="right">
+								<span class="btn-btn" onclick="javascript:window.history.back()" data-bind="click: cancel"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
+							  	<span class="btn-btn" id="saveClose"><span data-bind="text: lang.lang.save_close"></span></span>
+							</div>
+						</div>
+					</div>
+					<!-- // Form actions END -->
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="itemAssembly-row-template" type="text/x-kendo-tmpl">
+	<tr data-uid="#: uid #">
+		<td>
+			<i class="icon-trash" data-bind="events: { click: removeRow }"></i>
+			#:banhji.itemAssembly.lineDS.indexOf(data)+1#
+		</td>		
+		<td>
+			<input id="ccbItem" name="ccbItem-#:uid#"
+				   data-role="dropdownlist"
+				   data-template="item-list-tmpl2"
+				   data-filter="startswith"
+                   data-text-field="name"
+                   data-value-field="id"
+                   data-bind="value: item_id, 
+                   			  source: itemDS,
+                   			  events:{change: itemChanges}"
+                   data-option-label="Add Item..." 
+                   required data-required-msg="required" style="width: 100%" />			
+		</td>
+		<td>
+			<input id="txtQuantity-#:uid#" name="txtQuantity-#:uid#" 
+					data-role="numerictextbox"
+					data-spinners="false" 
+					data-format="n0" data-min="0"					
+					data-bind="value: quantity,
+                   				events:{change: onChanges}"
+					required data-required-msg="required" style="width: 48%;" />
+
+			<input data-role="dropdownlist"
+				   data-option-label="UM"
+                   data-auto-bind="false"
+                   data-value-primitive="true"
+                   data-text-field="name"
+                   data-value-field="id"
+                   data-bind="source: measurementDS, 
+                   			value: measurement_id"
+                   style="width: 50%;" />
+		</td>
+		<td class="right">
+			<span data-format="n" data-bind="text: price"></span> 						
+		</td>
+		<td class="right">
+			<span data-format="n" data-bind="text: amount"></span> 						
+		</td>	
+	</tr>
+</script>
+<script id="item-list-tmpl2" type="text/x-kendo-tmpl">
+	<div class="pull-left">
+		#=abbr##=number# #=name#
+		&nbsp;&nbsp;
+		#if(variant.length>0){#
+			[
+			#for(var i=0; i < variant.length; i++){# 
+				#=variant[i].name#, 
+			#}#
+			]
+		#}#
+	</div>
+	<div class="pull-right">
+		#=category#
 	</div>
 </script>
