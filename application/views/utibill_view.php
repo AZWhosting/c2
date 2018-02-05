@@ -4993,6 +4993,25 @@
 							                		data-template="reading-Error11-template">
 							                	</tbody>
 											</table>
+											<div data-bind="visible: haveMonthOfShow" style="overflow: hidden;">
+												<p>Reading in this Month Of</p>
+												<table  class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
+													<thead>
+														<tr>
+															<th class="center"><span data-bind="text: lang.lang.meter_number">Meter Number</span></th>
+															<th class="center"><span data-bind="text: lang.lang.previous">Previus</span></th>
+															<th class="center"><span data-bind="text: lang.lang.current">Current</span></th>
+															<th class="center"><span data-bind="text: lang.lang.status">Status</span></th>
+														</tr>
+													</thead>
+													<tbody 
+								                		data-bind="source: existReading" 
+								                		data-auto-bind="true" 
+								                		data-role="listview" 
+								                		data-template="reading-month-of-template">
+								                	</tbody>
+												</table>
+											</div>
 											<div data-bind="visible: existShow" style="overflow: hidden;">
 												<p data-bind="text: lang.lang.exist_meter">Exist Meter</p>
 												<table  class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
@@ -5070,6 +5089,22 @@
     		#= previous#
    		</td>
    		<td align="center" style="font-weight: bold;color:red">
+    		#= current#
+   		</td>
+   		<td align="center">
+   			<span><i class="icon-remove"></i></span>
+   		</td>	
+   	</tr>
+</script>
+<script id="reading-month-of-template" type="text/x-kendo-tmpl">
+    <tr>
+    	<td style="font-weight: bold;color:red">
+    		#= meter_number#
+   		</td>
+   		<td align="center">
+    		#= previous#
+   		</td>
+   		<td align="center" >
     		#= current#
    		</td>
    		<td align="center">
@@ -13544,6 +13579,19 @@
 									<div class="tab-content">
 								        <div class="tab-pane active" id="tab-1">
 											<div class="row">
+												<div class="col-xs-12 col-sm-2">
+													<input 
+														data-role="dropdownlist" 
+														style="width: 100%;" 
+														data-option-label="License ..." 
+														data-auto-bind="false" 
+														data-value-primitive="true" 
+														data-text-field="name" 
+														data-value-field="id" 
+														data-bind="
+															value: licenseSelect,
+						                  					source: licenseDS">
+												</div>
 												<div class="col-xs-12 col-sm-2">
 													<input 
 														data-role="dropdownlist" 

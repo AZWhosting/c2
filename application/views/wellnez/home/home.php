@@ -150,12 +150,12 @@
 	and (max-device-width : 1024px) 
 	and (orientation : landscape) {
 		.nopadding-right .height250.top-left .textBig{
-			padding: 60px 0 0 0;
+			padding: 20px 0 0 0;
 		    font-size: 55px;
 		    width: 202px;
 		}
 		.nopadding-right .height250 .textBig {
-			padding-top: 85px;
+			padding-top: 45px;
     		font-size: 35px;
     		width: 195px
 		}
@@ -174,23 +174,23 @@
 		.nopadding-right .height250.top-left .img img,
 		.nopadding-right .height250 .img img{
 			width: 140px;
-		    margin-top: 70px;
+		    margin-top: 35px;
 		    margin-left: 55px;
 		}
 		.nopadding-right .height250.top-left .textBig{
-			padding: 85px 0 0 0;
+			padding: 45px 0 0 0;
 		    font-size: 40px;
 		    width: 146px;
 		}
 		.nopadding-right .height250 .textBig{
-		    padding: 106px 0 0 0;
+		    padding: 70px 0 0 0;
 		    font-size: 25px;
 		    width: 146px;
 		}
 		.paddingLeftRigth .height250 .img, 
 		.nopadding-left .height250.top-rigth .img, 
 		.nopadding-left .height250 .img{
-			padding: 70px 0 20px 25%;
+			padding: 20px 0 10px 25%;
 		}
 		.paddingLeftRigth .height250 .textSmall, 
 		.nopadding-left .height250.top-rigth .textSmall, 
@@ -204,7 +204,7 @@
 		.paddingLeftRigth .height100 .img, 
 		.no-padding .height100 .img, 
 		.paddingLeft .height100.bottom-rigth .img{
-			padding: 7% 0 8px 28%;
+			padding: 5% 0 8px 28%;
 		}
 	}
 	@media (min-width: 1200px){

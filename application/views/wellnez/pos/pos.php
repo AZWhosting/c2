@@ -528,6 +528,7 @@
     .chat a.enquiries {
         background: url(//storage.googleapis.com/instapage-user-media/e315080c/8593373-0-s-bg.jpg) no-repeat right center #1F4774;
         background-size: 23px;
+        background-position-x: 110px;
     }
     a.enquiries:hover {
         left: 95px;
@@ -535,13 +536,7 @@
     a.referral:hover {
         margin-left: -56px;
     }
-    /*.cover-rightfixed {
-        position: fixed;
-        top: 39.7%;
-        right: -95px;
-        z-index: 999;
-        text-align: left;
-    }*/
+    
     .enquiry-content {
         background: #fff;
         border: 1px solid #D7D7D7;
@@ -593,7 +588,7 @@
 	    color: #fff;
 	    border-radius: 3px;
 	    font-size: 12px;
-	    padding-right: 50px;
+	    padding-left: 50px;
 	    cursor: pointer;
 	    -webkit-transition: all .5s;
 	    transition: all .5s;
@@ -605,11 +600,17 @@
 	    left: 0;
 	    font-size: 15px; 
 	    float:left; 
-	    background: url(<?php echo base_url();?>assets/spa/plus.png) no-repeat right center red; background-size: 23px;
+	    background: url(<?php echo base_url();?>assets/spa/multi.png) no-repeat right center red;
+	    background-size: 23px;
+	    background-position-x: 275px;
+	    margin-left: -168px;
+	    width: 313px;
+	    text-align: left;
 	}
 	.text-t.rightfixed:hover {
-	  opacity: 1;
-	  z-index: 9999999;
+		opacity: 1;
+		z-index: 9999999;
+		margin-left: 0
 	}
 	.text-t.rightfixed i::before {
 	    color: #fff;
@@ -658,22 +659,19 @@
 		text-decoration: underline;
 	}
 	.text-t  .enquiry-content {
-		bottom: -233px;
+		bottom: -283px;
 	    left: -313px;
 	    width: 313px;
 	}
 
-
-
 	.multiple-list.rightfixed {
 	    position: relative;
-	   /* background: green;*/
-	    padding: 15px 25px;
+	   	padding: 15px 10px;
+	   	padding-left: 50px;
 	    z-index: 99;
 	    color: #fff;
 	    border-radius: 3px;
 	    font-size: 12px;
-	    padding-left: 46px;
 	    cursor: pointer;
 	    -webkit-transition: all .5s;
 	    transition: all .5s;
@@ -683,12 +681,17 @@
 	    clear: both;
 	    float: none;
 	    left: 0;
-	    background: url(<?php echo base_url();?>assets/spa/multi.png) no-repeat right center green; 
+	    background: url(<?php echo base_url();?>assets/spa/icon-report.png) no-repeat right center green; 
 	    background-size: 23px;
+	    background-position-x: 275px;
+	    margin-left: -168px;
+	    width: 313px;
+	    text-align: left;
 	}
 	.multiple-list.rightfixed:hover {
 		opacity: 1;
 		z-index: 9999999;
+		margin-left: 0;
 	}
 	.multiple-list.rightfixed i::before {
 	    color: #fff;
@@ -930,7 +933,7 @@
 									    </table>
 				                    </div>		                
 								</div>
-								<div class="span6">
+								<div class="span6" style="padding-left: 0">
 									<div class="box-generic" style="background: #c4c2d2; padding: 0; border: none; margin-bottom: 0; padding-bottom: 15px;">
 										<div data-bind="visible: emSelect">
 											<input 
@@ -1279,18 +1282,21 @@
 <!-- Side fix right -->
 <div class="cover-rightfixed cover-rightfixed1 " style="z-index: 99999;">
     <div class="rightfixed enquiries text-t btn-rounded  no-js " style="">
-        Transaction
+        Menu
         <div class="enquiry-content">
             <ul style="text-align: left; font-size: 13px; color: #000; ">
-                <li><a href="#/calendar">Create Calendar</a></li>
-                <li><a href="#/cash-sale">Create Cash Sale</a></li>
-                <li><a href="#/receipt">Create Receipt</a></li>
-                <li><a href="#/invoice">Create Invoice</a></li>
-                <li><a href="#/expenses">Create Expenses</a></li>
+                <li><a href="#/pos">Point of Sale</a></li>
+                <li><a href="#/sessions">Session Management</a></li>
+                <li><a href="#/books">Booking Management</a></li>
+                <li><a href="#/service">Servicing Customer</a></li>
+                <li><a href="#/reconciliation">Reconciliation</a></li>
+                <!-- <li class="divider"></li> -->
+                <li><a href="#/pay">Print & Pay</a></li>
                 <li class="divider"></li>
-                <li><a href="#/add_customer">Add New Customer</a></li>
-                <li><a href="#/add_staff">Add New Staff</a></li>
-                <li><a href="#/add_service">Add New Service</a></li>
+                <li><a href="#/customer">Customer</a></li>
+                <li><a href="#/rooms">Rooms / Facilities</a></li>
+                <li><a href="#/therapist">Therapist</a></li>
+                <li><a href="#/report">Reports</a></li>
             </ul>
         
         </div>
@@ -1298,7 +1304,7 @@
 </div>
 <div class="cover-rightfixed " style="top: 45.9%; z-index: 9999; right: -97px;">
     <div class="rightfixed enquiries multiple-list  btn-rounded glyphicons glyphicons-plus no-js " style="float:left;  font-size: 15px;">
-        Multitasks
+        Reports
         <div class="enquiry-content">
             <ul data-template="multiTaskList-row-template" data-bind="source: multiTaskList">
                 <li>
@@ -1330,7 +1336,7 @@
     </div>
 </div>
 <div class="cover-rightfixed chat" style=" z-index: 999; right: -92px;">
-    <a class="rightfixed enquiries btn-rounded glyphicons no-js conversation" style="width: 146px;float:left;">
+    <a class="rightfixed enquiries btn-rounded glyphicons no-js conversation" style="width: 142px;float:left;">
         Support
         <div class="enquiry-content">
             <p style="font-size: 14px;">Call us by<br><span style="font-weight: bold;font-size: 16px">+855 10 413 777</span><br>Mon-Fri<br>09:00 - 18:00</p>
@@ -1424,4 +1430,4 @@
 		   	</div>		   	
    		</td>
 	</tr>
-</script>                                             
+</script>

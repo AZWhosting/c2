@@ -4188,24 +4188,30 @@
                 });
             }
             para.push({
-                field: "month_of >",
+                field: "month_of >=",
                 value: monthOf
             }, {
                 field: "month_of <=",
                 value: monthL
             });
-            para.push({
-                field: "invoiced",
-                value: 0
-            });
+            // para.push({
+            //     field: "invoiced",
+            //     value: 0
+            // });
             this.existReading.query({
                 filter: para
             })
             .then(function(e) {
                 self.set("toDateDisabled", false);
                 $("#loadImport").css("display", "none");
+                if(self.existReading.data().length > 0){
+                    self.set("haveMonthOfShow", true);
+                }else{
+                    self.set("haveMonthOfShow", false);
+                }
             });
         },
+        haveMonthOfShow: false,
         selectMonthTo: function(e) {
             if (this.get("monthOfUpload") && this.get("toDateUpload")) {
                 this.set("MonthTo", true);
