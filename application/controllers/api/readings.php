@@ -49,13 +49,9 @@ class Readings extends REST_Controller {
 		if(!empty($filter) && isset($filter)){
 	    	foreach ($filter["filters"] as $value) {
 	    		if(isset($value["operator"])) {
-					//$obj->{$value["operator"]}($value["field"], $value["value"]);
+					$obj->{$value["operator"]}($value["field"], $value["value"]);
 				} else {
-					if($value["field"]=="is_recurring"){
-	    				$is_recurring = $value["value"];
-	    			}else{
-	    				$obj->where($value["field"], $value["value"]);
-	    			}
+	    			$obj->where($value["field"], $value["value"]);
 				}
 			}
 		}			

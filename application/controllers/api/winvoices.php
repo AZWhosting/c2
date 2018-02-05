@@ -269,52 +269,53 @@ class Winvoices extends REST_Controller {
 		$data["count"] = 0;
 		$number = "";
 		foreach ($models as $value) {
-			if($value->type == ""){
-				$value->type = "WI";
-			}
-			if($value->issued_date == ""){
-				$value->issued_date= "2017-01-01";
-			}
-			if(isset($value->is_recurring)){
-				if($value->is_recurring==0){
-					$number = $this->_generate_number($value->type, $value->issued_date);
-				}
-			}else{
-				$number = $this->_generate_number($value->type, $value->issued_date);
-			}
+			$number = $this->_generate_number($value->type, $value->issued_date);
+			$month_of = "";
+			$m = isset($value->month_of) ? $value->month_of : "";
+			$d = new DateTime($m);
+		    $d->modify('first day of this month');
+		    $month_of = $d->format('Y-m-d');
+
 			$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			// $obj->company_id 		= $value->company_id;
 			$obj->location_id 		= isset($value->location_id) ? $value->location_id : "";
 			$obj->contact_id 		= isset($value->contact->id) ? $value->contact->id : "";
-			$obj->payment_term_id	= isset($value->payment_term_id) ? $value->payment_term_id : "";
-			$obj->payment_method_id = isset($value->payment_method_id) ? $value->payment_method_id : "";
+			$obj->payment_term_id	= isset($value->contact->payment_term_id) ? $value->payment_term_id : 0;
+			$obj->payment_method_id = isset($value->contact->payment_method_id) ? $value->payment_method_id : 0;
 			$obj->reference_id 		= isset($value->reference_id) ? $value->reference_id:0;
 			$obj->account_id 		= isset($value->contact->account_id) ? $value->contact->account_id : "";
-			$obj->vat_id 			= isset($value->contact->vat) ? $value->contact->vat: 0;
 			$obj->biller_id 		= isset($value->biller_id) ? $value->biller_id : "";
 		   	$obj->number 			= isset($number) ? $number : "";
 		   	$obj->type 				= isset($value->type) ? $value->type : "";
 		   	$obj->amount 			= isset($value->amount) ? $value->amount : "";
-		   	$obj->vat 				= isset($value->vat) ? $value->vat : "";
 		   	$obj->rate 				= isset($value->rate) ? $value->rate : "";
 		   	$obj->locale 			= isset($value->locale) ? $value->locale : "";
-		   	$obj->month_of 			= isset($value->month_of) ? $value->month_of : "";
+		   	$obj->month_of 			= $month_of;
 		   	$obj->issued_date 		= isset($value->issued_date) ? $value->issued_date : "";
 		   	$obj->bill_date 		= isset($value->bill_date) ? $value->bill_date : "";
 		   	$obj->due_date 			= date('Y-m-d', strtotime($value->due_date));
 		   	$obj->is_journal 		= 1;
-		   	$obj->check_no 			= isset($value->check_no) ? $value->check_no : "";
-		   	$obj->memo 				= isset($value->memo) ? $value->memo: "";
-		   	$obj->memo2 			= isset($value->memo2) ? $value->memo2: "";
 		   	$obj->meter_id 			= isset($value->meter_id) ? $value->meter_id: "";
-		   	$obj->status 			= isset($value->status) ? $value->status: "";
+		   	$obj->status 			= 0;
 		   	$obj->sub_total 		= isset($value->amount) ? $value->amount : "";
 		   	$obj->pole_id 			= isset($value->pole_id) ? $value->pole_id : 0;
 		   	$obj->box_id 			= isset($value->box_id) ? $value->box_id : 0;
-		   	$obj->payment_term_id 	= 5;
 		   	$obj->user_id 			= isset($value->biller_id) ? $value->biller_id : 0;
 		   	$obj->sync 				= 1;
 	   		if($obj->save()){
+	   			//Temp total
+	   			$totalsale = new Tmp_total_sale(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	   			$totalsale->where("location_id", $obj->location_id);
+	   			$totalsale->where("month_of", $month_of)->limit(1)->get();
+	   			if($totalsale->exists()){
+	   				$totalsale->amount += floatval($obj->amount);
+	   			}else{
+	   				$totalsale->location_id = $obj->location_id;
+	   				$totalsale->month_of = $month_of;
+	   				$totalsale->amount += floatval($obj->amount);
+	   			}
+
+	   			//Jounal
 	   			$journal = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 	   			$journal->transaction_id 	= $obj->id;
 	   			$journal->account_id 		= $value->contact->account_id;
@@ -370,6 +371,14 @@ class Winvoices extends REST_Controller {
 		   			$line->has_vat 			= isset($row->has_vat) ? $row->has_vat : "";
 		   			$line->type 			= isset($row->type)?$row->type:"";
 		   			$line->item_id 			= isset($row->item_id)?$row->item_id:"";
+		   			//Total Sale
+		   			if($row->type == 'maintenance') {
+		   				$totalsale->maintenance += floatval($row->amount);
+		   			}elseif($row->type == 'exemption'){
+		   				$totalsale->exemption += floatval($row->amount);
+		   			}elseif($row->type == 'usage'){
+		   				$totalsale->usage += intval($row->quantity);
+		   			}
 		   			if($row->type == 'installment') {
 		   				//Update Installment Schedule Invoice = 1
 						$updateInstallSchedule = new Installment_schedule(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
@@ -377,6 +386,8 @@ class Winvoices extends REST_Controller {
 						$updateInstallSchedule->invoiced = 1;
 						$updateInstallSchedule->sync = 2;
 						$updateInstallSchedule->save();
+						//Total Sale
+						$totalsale->installment += floatval($updateInstallSchedule->amount);
 		   			}
 		   			//to do: add to accouting line
 		   			$updateInstallSchedule = isset($updateInstallSchedule) ? $updateInstallSchedule : "";
@@ -399,6 +410,8 @@ class Winvoices extends REST_Controller {
 		   				);
 		   			}
 		   		}
+		   		//Save Total
+		   		$totalsale->save();
 			   	$data["results"][] = array(
 			   		"id" 				=> $obj->id,
 					"company_id" 		=> $obj->company_id,

@@ -71,6 +71,10 @@ class Item extends DataMapper {
 		'item_price' => array(
 			'class' => 'item_price',
 			'other_field' => 'item'
+		),
+		'item_assembly' => array(
+			'class' => 'item_assembly',
+			'other_field' => 'item'
 		),				
 		'assembly' => array(
 			'class' => 'item_price',

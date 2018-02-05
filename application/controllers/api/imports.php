@@ -511,10 +511,10 @@ class Imports extends REST_Controller {
 
 			if($meter->save()) {
 				$reading = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$reading->previous = 0;
+				$reading->previous = $meter->startup_reader;
 				$reading->current = $meter->startup_reader;
 				$reading->meter_id = $meter->id;
-				$reading->usage = $meter->startup_reader;
+				$reading->usage = 0;
 				$reading->month_of = $meter->date_used;
 				$reading->from_date = $meter->date_used;
 				$reading->to_date = $meter->date_used;

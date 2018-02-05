@@ -449,6 +449,22 @@ class Utibills extends REST_Controller {
 		   	isset($value->amount_fine) 				? $obj->fine 						= $value->amount_fine : 0;
 		   	$obj->sync = 1;
 	   		if($obj->save()){
+	   			$month_of = "";
+				$m = isset($value->month_of) ? $value->month_of : "";
+				$d = new DateTime($m);
+			    $d->modify('first day of this month');
+			    $month_of = $d->format('Y-m-d');
+	   			//Temp total
+	   			$totalsale = new Tmp_total_sale(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	   			$totalsale->where("location_id", $obj->location_id);
+	   			$totalsale->where("month_of", $month_of)->limit(1)->get();
+	   			if($totalsale->exists()){
+	   				$totalsale->amount_recieved += floatval($obj->amount);
+	   			}else{
+	   				$totalsale->location_id = $obj->location_id;
+	   				$totalsale->month_of = $month_of;
+	   				$totalsale->amount_recieved += floatval($obj->amount);
+	   			}
 	   			//Journal DR
 	   			$journal = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 	   			$journal->transaction_id = $obj->id;
@@ -461,6 +477,8 @@ class Utibills extends REST_Controller {
 	   			$journal->locale 	 = $obj->locale;
 	   			$journal->save();
 	   			if($obj->discount > 0){
+	   				//Total Sale
+					$totalsale->discount += floatval($obj->discount);
 	   				$journalD = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		   			$journalD->transaction_id = $obj->id;
 		   			$journalD->account_id 	= $obj->account_id;
@@ -516,11 +534,18 @@ class Utibills extends REST_Controller {
 	   					$samount += $oreciept->amount;
 	   				}
 	   			}
+	   			if($value->discount > 0) {
+	   				$samount += floatval($value->discount);
+	   			}
 	   			if($famount == $samount){
 	   				$oldtran->status = 1;
 	   			}else{
 	   				$oldtran->status = 2;
+	   				$asb = $samount - $famount;
+	   				//Total Sale
+					$totalsale->ending_ballance += floatval($asb);
 	   			}
+	   			$totalsale->save();
 	   			$oldtran->save();
 	   			//Session Recieve
 	   			if($value->session_id){

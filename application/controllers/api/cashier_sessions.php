@@ -362,8 +362,8 @@ class Cashier_sessions extends REST_Controller {
 		$CountContact = 0;
 		$con_id = array();
 		//Results
-		$obj->get_paged_iterated($page, $limit);
-		$data["count"] = $obj->paged->total_rows;
+		$obj->get_iterated();
+		$data["count"] = $obj->result_count();
 		if($obj->result_count()>0){
 			foreach ($obj as $value) {
 		 		$Total += $value->amount;
