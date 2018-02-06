@@ -635,6 +635,11 @@ class Transactions extends REST_Controller {
 		   	isset($value->cubic_meter) 				? $obj->cubic_meter 				= $value->cubic_meter : "";
 		   	isset($value->total_batch) 				? $obj->total_batch 				= $value->total_batch : "";
 
+		   	$contact = [];
+			if(isset($value->contact)){
+				$contact = $value->contact;
+			}
+
 		   	$related = [];
 
 		   	//References
@@ -768,7 +773,7 @@ class Transactions extends REST_Controller {
 				   	"cubic_meter"				=> $obj->cubic_meter,
 				   	"total_batch"				=> $obj->total_batch,
 
-				   	"contact" 					=> [],
+				   	"contact" 					=> $contact,
 				   	"driver" 					=> []
 				);
 			}
