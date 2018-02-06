@@ -23,6 +23,10 @@ class Measurement extends DataMapper {
 		'item_price' => array(
 			'class' => 'item_price',
 			'other_field' => 'measurement'
+		),
+		'item_assembly' => array(
+			'class' => 'item_assembly',
+			'other_field' => 'measurement'
 		)		
 	);
 

@@ -7,6 +7,10 @@ class Item_assembly extends DataMapper {
 		'item' => array(
 			'class' => "item",
 			'other_field' => 'item_assembly'
+		),
+		'measurement' => array(
+			'class' => "measurement",
+			'other_field' => 'item_assembly'
 		)
 	);
 

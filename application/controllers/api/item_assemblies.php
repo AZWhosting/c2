@@ -68,9 +68,11 @@ class Item_assemblies extends REST_Controller {
 			foreach ($obj as $value) {				
 				//Results				
 				$data["results"][] = array(
-					"id" 			=> $value->id,					
-					"assembly_id" 	=> $value->assembly_id,
-					"item_id" 		=> $value->item_id
+					"id" 				=> $value->id,					
+					"assembly_id" 		=> $value->assembly_id,
+					"item_id" 			=> $value->item_id,
+					"quantity" 			=> $value->quantity,
+					"measurement_id"	=> $value->measurement_id
 				);
 			}
 		}
@@ -81,19 +83,23 @@ class Item_assemblies extends REST_Controller {
 	
 	//POST
 	function index_post() {
-		$models = json_deitem_id($this->post('models'));
+		$models = json_decode($this->post('models'));
 
 		foreach ($models as $value) {
 			$obj = new Item_assembly(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);			
 			
-			isset($value->assembly_id) 	? $obj->assembly_id = $value->assembly_id : "";
-			isset($value->item_id) 		? $obj->item_id 	= $value->item_id : "";
+			isset($value->assembly_id) 		? $obj->assembly_id 	= $value->assembly_id : "";
+			isset($value->item_id) 			? $obj->item_id 		= $value->item_id : "";
+			isset($value->quantity) 		? $obj->quantity 		= $value->quantity : "";
+			isset($value->measurement_id) 	? $obj->measurement_id 	= $value->measurement_id : "";
 						
 			if($obj->save()){
 				$data["results"][] = array(
-					"id" 			=> $obj->id,					
-					"assembly_id" 	=> $obj->assembly_id,
-					"item_id" 		=> $obj->item_id
+					"id" 				=> $obj->id,					
+					"assembly_id" 		=> $obj->assembly_id,
+					"item_id" 			=> $obj->item_id,
+					"quantity" 			=> $obj->quantity,
+					"measurement_id"	=> $obj->measurement_id
 				);
 			}
 		}
@@ -104,7 +110,7 @@ class Item_assemblies extends REST_Controller {
 
 	//PUT
 	function index_put() {
-		$models = json_deitem_id($this->put('models'));
+		$models = json_decode($this->put('models'));
 		$data["results"] = array();
 		$data["count"] = 0;
 
@@ -112,14 +118,18 @@ class Item_assemblies extends REST_Controller {
 			$obj = new Item_assembly(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->get_by_id($value->id);
 
-			isset($value->assembly_id) 	? $obj->assembly_id = $value->assembly_id : "";
-			isset($value->item_id) 		? $obj->item_id 	= $value->item_id : "";
+			isset($value->assembly_id) 		? $obj->assembly_id 	= $value->assembly_id : "";
+			isset($value->item_id) 			? $obj->item_id 		= $value->item_id : "";
+			isset($value->quantity) 		? $obj->quantity 		= $value->quantity : "";
+			isset($value->measurement_id) 	? $obj->measurement_id 	= $value->measurement_id : "";
 
 			if($obj->save()){				
 				$data["results"][] = array(
-					"id" 			=> $obj->id,					
-					"assembly_id" 	=> $obj->assembly_id,
-					"item_id" 		=> $obj->item_id
+					"id" 				=> $obj->id,					
+					"assembly_id" 		=> $obj->assembly_id,
+					"item_id" 			=> $obj->item_id,
+					"quantity" 			=> $obj->quantity,
+					"measurement_id"	=> $obj->measurement_id
 				);		
 			}
 		}
@@ -130,7 +140,7 @@ class Item_assemblies extends REST_Controller {
 	
 	//DELETE
 	function index_delete() {
-		$models = json_deitem_id($this->delete('models'));
+		$models = json_decode($this->delete('models'));
 
 		foreach ($models as $key => $value) {
 			$obj = new Item_assembly(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
