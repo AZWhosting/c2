@@ -33,20 +33,20 @@ class Ops extends REST_Controller {
 
 			    //Create new table
 			    // $this->dbforge->add_field('id');
-			    // $this->dbforge->add_field("journal_line_id int(11) NOT NULL DEFAULT '0'");
-			    // $this->dbforge->add_field("name varchar(255) NOT NULL DEFAULT ''");
-			    // $this->dbforge->add_field("is_system tinyint(1) NOT NULL DEFAULT '0'");
+			    // $this->dbforge->add_field("location_id int(11) NOT NULL DEFAULT '0'");
+			    // $this->dbforge->add_field("month_of date DEFAULT NULL");
+			    // $this->dbforge->add_field("usage int(11) NOT NULL DEFAULT '0'");
+			    // $this->dbforge->add_field("amount decimal(30,15) DEFAULT NULL");
+			    // $this->dbforge->add_field("maintenance decimal(30,15) DEFAULT NULL");
+			    // $this->dbforge->add_field("installment decimal(30,15) DEFAULT NULL");
+			    // $this->dbforge->add_field("other_charge decimal(30,15) DEFAULT NULL");
+			    // $this->dbforge->add_field("exemption decimal(30,15) DEFAULT NULL");
+			    // $this->dbforge->add_field("amount_recieved decimal(30,15) DEFAULT NULL");
+			    // $this->dbforge->add_field("discount decimal(30,15) DEFAULT NULL");
+			    // $this->dbforge->add_field("ending_ballance decimal(30,15) DEFAULT NULL");
 			    // $this->dbforge->add_field("created_at date DEFAULT NULL");
 			    // $this->dbforge->add_field("updated_at date DEFAULT NULL");
-			    // $this->dbforge->create_table('measurement_categories');
-
-			    //Create new table
-			    // $this->dbforge->add_field('id');
-			    // $this->dbforge->add_field("item_id int(11) NOT NULL DEFAULT '0'");
-			    // $this->dbforge->add_field("assembly_id int(11) NOT NULL DEFAULT '0'");
-			    // $this->dbforge->add_field("assembly_id int(11) NOT NULL DEFAULT '0'");
-			    // $this->dbforge->create_table('item_assemblies');
-			    
+			    // $this->dbforge->create_table('tmp_total_sales', TRUE);			    
 
 				//Rename Table 'old_table_name' to 'new_table_name'
 			    // $this->dbforge->rename_table('item_locations', 'bin_locations');
@@ -93,25 +93,29 @@ class Ops extends REST_Controller {
 				// 	// 	"null" 		=> FALSE,
 				// 	// 	"default" 	=> 0
 				// 	// ),
-				// 	"driver_name" => array(
-				// 		"type" 		=> "VARCHAR",
-				// 		"constraint"=> 255
-				// 	)
+				// 	// "tags" => array(
+				// 	// 	"type" 		=> "DECIMAL",
+				// 	// 	"constraint"=> "30,15",
+				// 	// 	"null" 		=> FALSE,
+				// 	// 	"default" 	=> 0
+				// 	// )
 				// );
-				// $data['results'][] = $this->dbforge->add_column("transactions", $fields);
+				// $data['results'][] = $this->dbforge->add_column("item_assemblies", $fields);
 				
 			    // Modify fields
 		 	// 	$fields = array(
-				// 	'track_number' => array(
-				// 		'name' 		=> 'truck_number',//New Field Name 
-				// 		'type'		=> 'CHAR',
-				// 		"constraint"=> "50"
+				// 	"conversion_ratio" => array(
+				// 		"name" 		=> "conversion_ratio",//New Field Name 
+				// 		"type" 		=> "DECIMAL",
+				// 		"constraint"=> "30,15",
+				// 		"null" 		=> FALSE,
+				// 		"default" 	=> 1
 				// 	)
 				// );
-				// $data['results'][] = $this->dbforge->modify_column('transactions', $fields);
+				// $data['results'][] = $this->dbforge->modify_column('item_assemblies', $fields);
 
 			 	//Remove column, 'table_name', 'column_to_drop'
-				// $this->dbforge->drop_column('attribute_values_items', 'variant_attribute_id');
+				// $this->dbforge->drop_column('item_assemblies', 'conversion_ratio');
 
 				//Custom
 				// $dsn = 'mysql://'.$this->db->username.':'.$this->db->password.'@'.$this->db->hostname.'/'.$db;
@@ -132,6 +136,13 @@ class Ops extends REST_Controller {
 			    // 		$data['results'][] = $db;
 			    // 	}
 			    // } 
+			 	//    $fields = array(
+			    //                     'usage' => array(
+			    //                     	'type' => 'INT',
+			    //                     	'constraint' => 11
+			    //                     )
+				// );
+				// $this->dbforge->add_column('tmp_total_sales', $fields);
 
 			}//End If
 		}//End Foreach

@@ -17,13 +17,19 @@ class Choeun extends CI_Controller {
 		// $ddate = new DateTime('2017-10-15');
 		// echo $b = $ddate->getTimestamp().'<br>';
 
-		echo $a = sha1('pX1209$16@'.date('Y-m-d').'842');
-		$b = 'pX1209$16@'.date('Y-m-d').'842';
-		if($a == sha1($b)){
-			echo 'Yes';
-		}else{
-			echo 'No';
-		}
+		// echo $a = sha1('pX1209$16@'.date('Y-m-d').'842');
+		// $b = 'pX1209$16@'.date('Y-m-d').'842';
+		// if($a == sha1($b)){
+		// 	echo 'Yes';
+		// }else{
+		// 	echo 'No';
+		// }
+		$d = new DateTime('2010-01-19');
+		$d->modify('-1 month');
+	    $d->modify('first day of this month');
+	    echo $d->format('Y-m-d');
+		// $date = strtotime('2012-05-01 -1 months');
+		// echo $date;
 	}
 }
 

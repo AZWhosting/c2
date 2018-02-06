@@ -161,7 +161,7 @@ class Waterdash extends REST_Controller {
 	}
 
 	// Customer
-	function meters_get() {
+	function customer_get() {
 		$meter = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		// $contact->where('deleted', 0);
 		$totalMeter = $meter->count();
@@ -217,7 +217,7 @@ class Waterdash extends REST_Controller {
 			'totalMeter' => $totalMeter,
 			'iMeter' => $totalICust,
 			'aMeter' => $totalACust,
-			'numCustomer' => $totalCust,
+			'void' => $totalVCust,
 			'totalConnect' =>$totalConnect,
 			// 'totalDisconnect' =>$disCount,
 		);
@@ -227,11 +227,10 @@ class Waterdash extends REST_Controller {
 
 	//Txn
 	function txn_get() {
-		// ini_set('memory_limit', '2048M');
-		//Disconnect
-		$transaction = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$transaction->where("type", "Utility_Invoice");
-		$transaction->where("deleted", 0)->get_iterated();
+		$filters 	= $this->get("filter")["filters"];		
+		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
+		$sort 	 	= $this->get("sort");
 		$disCount = 0;
 		$overDue = 0;
 		$totalINV = 0;
@@ -239,49 +238,91 @@ class Waterdash extends REST_Controller {
 		$totalSale = 0;
 		$usage =0;
 		$customer = array();
-
-		foreach($transaction as $txn){
-			if($txn->status == 0){
-				//Total INV
-				$totalINV += 1;
-				//Discounted
-				$br = $txn->location->include_related("branch", array("id", "day_disconnect"))->get();
-				$dayDis = intval($br->branch_day_disconnect);
-				$dueDate = new DateTime($txn->due_date);
-				$ddate = $dueDate->getTimestamp();
-				$fineDate = new DateTime(date('Y-m-d'));
-				$fdate = $fineDate->getTimestamp();
-				if($fdate > $ddate){
-					$fDay = $fineDate->diff($dueDate)->days;
-					if($fDay >= $dayDis){
-						$disCount += 1;
-					}
-					//Over Due
-					$overDue += 1;
-				}
-				$totalAmount += floatval($txn->amount) / floatval($txn->rate);
-				if(isset($customer[$txn->contact_id])) {
-					$customer[$txn->contact_id]['count'] +=1;
-				} else {
-					$customer[$txn->contact_id]['count'] = 1;
-				}
+		$invoices = 0;
+		$customer = array();
+		$overDue = 0;
+		$today = date('Y-m-d');
+		$amount = 0;
+		//Sort
+		if(!empty($sort) && isset($sort)){					
+			foreach ($sort as $value) {
+				$obj->order_by($value["field"], $value["dir"]);
 			}
-			//Total Sale
-			$totalSale += floatval($txn->amount) / floatval($txn->rate);
-			//Usage
-			$usages = $txn->winvoice_line->get();
-			$usages->get_iterated();
-			
-			foreach($usages as $u) {
-				if($u->type == 'usage'){
-					$usage += $u->quantity;
+		}
+		//Filter		
+		if(!empty($filters) && isset($filters)){
+	    	foreach ($filters as $value) {
+	    		if(isset($value['operator'])) {
+					$obj->{$value['operator']}($value['field'], $value['value']);
+				} else {
+	    			$obj->where($value["field"], $value["value"]);
 				}
 			}
 		}
-		
+
+		$trx = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$trx->select('amount, contact_id as contact');
+		$trx->where('type', 'Utility_Invoice');
+		$trx->where('status <>', 1);
+		$trx->where('deleted <>', 1);
+		$trx->get_iterated();
+		foreach ($trx as $key) {
+			if(isset($customer[$key->contact])) {
+				$customer[$key->contact]['count'] +=1;
+			} else {
+				$customer[$key->contact]['count'] = 1;
+			}
+
+		}
+
+		$invoices = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$invoices->where("type", "Utility_Invoice");
+		$invoices->where_in("status", [0,2]);
+		$invoices->where("deleted <>", 1);
+		$totalINV = $invoices->count();	
+
+		$overDueInvs = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$overDueInvs->where("type", "Utility_Invoice");
+		$overDueInvs->where_in("status", [0,2]);
+		$overDueInvs->where("deleted <>", 1);
+		$overDueInvs->get_iterated();
+		foreach ($overDueInvs as $value) {
+			if($value->due_date < $today) {
+				$overDue +=1;
+			}
+			$totalAmount += $value->amount;
+		}
+
+		// $dis = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		// $dis->where("type", "Utility_Invoice");
+		// $dis->where_in("status", [0,2]);
+		// $dis->where("deleted <>", 1);
+		// $dis->get_iterated();
+		// foreach ($dis as $value) {
+		// 	if($value->status == 0){
+		// 		//Discounted
+		// 		$br = $value->location->include_related("branch", array("id", "day_disconnect"))->get();
+		// 		$dayDis = intval($br->branch_day_disconnect);
+		// 		$dueDate = new DateTime($value->due_date);
+		// 		$ddate = $dueDate->getTimestamp();
+		// 		$fineDate = new DateTime(date('Y-m-d'));
+		// 		$fdate = $fineDate->getTimestamp();
+		// 		if($fdate > $ddate){
+		// 			$fDay = $fineDate->diff($dueDate)->days;
+		// 			if($fDay >= $dayDis){
+		// 				$disCount += 1;
+		// 			}
+		// 		}
+		// 	}
+		// }
+
+		$amount = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$amount->where("type", "Utility_Invoice");
+		$amount->select_sum('amount');
+		$amount->where("deleted <>", 1);
+		$totalSale += $amount->amount;		
 
 		$data[] = array(
-			'totalDisconnect' => $disCount,
 			'totalOverDue' 	=> $overDue,
 			'totalInvoice' => $totalINV,
 			'totalAmount' => $totalAmount,

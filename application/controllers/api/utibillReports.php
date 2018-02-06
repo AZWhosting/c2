@@ -231,107 +231,63 @@ class UtibillReports extends REST_Controller {
 				$con = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				$con->where("location_id", $value->id)->get_iterated();
 				$customertotal = $con->result_count();
-				//Void
-				$void = 0;
-				$usage = 0;
-				$invamount = 0;
-				$mainamount = 0;
-				$intamount = 0;
-				$examount = 0;
-				$fineamount = 0;
-				$amountreceive = 0;
-				$amountdiscount = 0;
-				$amountOwed = 0;
-				foreach($con as $meter){
-					if($meter->status == 2){
-						$void += 1;
-					}
-					$txn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-					//Filter		
-					if(!empty($filter) && isset($filter)){
-				    	foreach ($filter["filters"] as $v) {
-			    			if($v['field'] == "month_of"){
-			    				$txn->where($v['field'], $v['value']);
+				//void
+				$conv = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$conv->where("location_id", $value->id);
+				$conv->where("status", 2)->get_iterated();
+				$customerv = $conv->result_count();
+				//Temp Data
+				$tmp = new Tmp_total_sale(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$lastmonth = 0;
+				$mo = "";
+				//Filter		
+				if(!empty($filter) && isset($filter)){
+					$ii = 1;
+			    	foreach ($filter["filters"] as $v) {
+			    		if(isset($v['operator'])){
+			    			$tmp->{$v['operator']}($v['field'], $v['value']);
+			    		} else {
+			    			if($v['field'] != "branch_id"){
+			    				$tmp->where($v['field'], $v['value']);
+			    				if($ii == 1){
+			    					$mo = $v['value'];
+			    				}
+			    				$ii++;
 			    			}
-						}
-					}
-					$txn->where("meter_id", $meter->id)->get_iterated();
-					foreach($txn as $tran){
-						$winvoice = $tran->winvoice_line->get();
-						foreach($winvoice as $w){
-							if($w->type == "usage"){
-								//Total Usage
-								$usage += intval($w->quantity);
-							}elseif($w->type == "maintenance"){
-								//Total Maintenance
-								$mainamount += floatval($w->amount);
-							}elseif($w->type == "installment"){
-								//Total Installment
-								$intamount += floatval($w->amount);
-							}elseif($w->type == "exemption"){
-								//Total Exemption
-								$examount += floatval($w->amount);
-							}elseif($w->type == "fine"){
-								//Total Fine
-								$fineamount += floatval($w->amount);
-							}
-						}
-						//Amount Invoice
-						if($tran->type == "Utility_Invoice"){
-							$invamount += floatval($tran->amount);
-							//Ending Balance
-							if($tran->status != 1){
-								$amountOwed += $rem->amount;
-								if($tran->status == 2) {
-									$qu = $tran->transaction->select('amount')->where('type', 'Cash_Receipt')->get();
-									foreach($qu as $q){
-										$amountOwed -= $q->amount;
-									};
-								}
-							}
-						}elseif($tran->type == "Cash_Receipt"){
-							$amountreceive += floatval($tran->amount);
-							$amountdiscount += floatval($tran->discount);
-						}
-						//Ending Balance
-						$remain = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-						$remain->where("meter_id", $meter->id);
-						$remain->where("type", "Utility_Invoice");
-						$remain->where("deleted", 0);
-						$remain->where("status <>", 1)->get_iterated();
-						$amountOwed = 0;
-						foreach($remain as $rem) {
-							$amountOwed += $rem->amount;
-							if($rem->status == 2) {
-								$qu = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-								$qu->where('type', 'Cash_Receipt');
-								$qu->where('reference_id', $rem->id)->get();
-								foreach($qu as $q){
-									$amountOwed -= $q->amount;
-								};
-							}
-						}
+			    		}
 					}
 				}
+				$tmp->where("location_id", $value->id)->limit(1)->get();
+				//old ballance
+				$d = new DateTime($mo);
+				$d->modify('-1 month');
+			    $d->modify('first day of this month');
+			    $ob = new Tmp_total_sale(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			    $date = $d->format('Y-m-d');
+			    $ob->where("month_of", "$date");
+			    $ob->where("location_id", $value->id)->limit(1)->get();
+			    if($ob->exists()){
+			    	$lastmonth = floatval($ob->ending_ballance);
+			    }
 				//Result
-				$subtotal = $invamount + $mainamount + $intamount + $examount + $fineamount;
+				$subtotal = $tmp->amount + $tmp->maintenance + $tmp->installment + $tmp->exemption;
 				$data["results"][] = array(
 		 			"id" 				=> $value->id,
 		 			"bloc_name" 		=> $blockname,
-		 			"total_customer" 	=> $customertotal,
-		 			"void_customer" 	=> $void,
-		 			"total_usage" 		=> $usage,
-		 			"amount_invoice" 	=> $invamount,
-		 			"amount_maintenance" => $mainamount,
-		 			"amount_int" 		=> $intamount,
-		 			"amount_other_service" => 0,
-		 			"amount_exemption" 	=> $examount,
-		 			"amount_fine" 		=> $fineamount,
-		 			"balance_last_month" => 0,
-		 			"subtotal_amount" 	=> $subtotal,
-		 			"amount_receive" 	=> $amountreceive,
-		 			"discount" 			=> $amountdiscount,
-		 			"ending_balance" 	=> $amountOwed
+		 			"total_customer" 	=> intval($customertotal),
+		 			"void_customer" 	=> intval($customerv),
+		 			"total_usage" 		=> intval($tmp->usage),
+		 			"amount_invoice" 	=> floatval($tmp->amount),
+		 			"amount_maintenance" => floatval($tmp->maintenance),
+		 			"amount_int" 		=> floatval($tmp->installment),
+		 			"amount_other_service" => floatval($tmp->other_charge),
+		 			"amount_exemption" 	=> floatval($tmp->exemption),
+		 			"amount_fine" 		=> 0,
+		 			"balance_last_month" => $lastmonth,
+		 			"subtotal_amount" 	=> floatval($subtotal),
+		 			"amount_receive" 	=> floatval($tmp->amount_received),
+		 			"discount" 			=> floatval($tmp->discount),
+		 			"ending_balance" 	=> floatval($tmp->ending_ballance)
 		 		);
 			}
 			$data["count"] = count($data["results"]);
@@ -1696,11 +1652,12 @@ class UtibillReports extends REST_Controller {
 	//To be Disconnection List
 	function to_be_disconnection_list_get() {
 		$filter 	= $this->get("filter");
-		$page 		= $this->get('page');
-		$limit 		= $this->get('limit');
-		$sort 	 	= $this->get("sort");
+		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
+		$sort 	 	= $this->get("sort");		
 		$data["results"] = [];
 		$data["count"] = 0;
+		$total = 0;
 
 		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
@@ -1727,16 +1684,25 @@ class UtibillReports extends REST_Controller {
 		}
 
 		//Results
-		$obj->include_related("contact", array("abbr", "number", "name", "address"));
+		$obj->include_related("contact", array("abbr", "number", "name", "phone"));
 		$obj->include_related("location", "name");
+		$obj->include_related("meter", "number");
+		$obj->include_related("meter/branch", "name");
+		$obj->include_related("meter/location", "name");
 		$obj->where("type", "Utility_Invoice");
 		$obj->where_in("status", array(0,2));
-		$obj->where("is_recurring <>", 1);
 		$obj->where("deleted <>", 1);
-		$obj->get_paged_iterated($page, $limit);
+		$obj->get_iterated();
 		
 		if($obj->exists()){
+			$objList = [];
+			$contactCount = 1;
 			foreach ($obj as $value) {
+				$ref = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$ref->where("id", $value->box_id);
+				$ref->get();
+
+
 				$amount = floatval($value->amount) / floatval($value->rate);
 
 				if($value->status=="2"){
@@ -1750,23 +1716,70 @@ class UtibillReports extends REST_Controller {
 					$paid->get();
 					$amount -= floatval($paid->amount) + floatval($paid->discount);
 				}
-				
-				$data["results"][] = array(
-					"id" 				=> $value->id,
-					"name" 				=> $value->contact_abbr.$value->contact_number." ".$value->contact_name,
-					"type" 				=> $value->type,
-					"number" 			=> $value->number,
-					"issued_date" 		=> $value->issued_date,
-					"due_date" 			=> $value->due_date,
-					"location" 			=> $value->location_name,
-					"status"			=> $value->status,
-					"rate" 				=> $value->rate,
-					"address" 			=> $value->contact_address
-				);
-			}
 
-			$data["count"] = $obj->paged->total_rows;
-			$data["currentPage"] = $obj->paged->current_page;
+				if(isset($objList[$value->location_id])){
+
+					if(isset($objList[$value->contact_id])){
+						$objList[$value->contact_id]["line"][] = array(
+						"id" 				=> $value->id,
+						"phone"				=> $value->contact_phone,
+						"meter_number"		=> $value->meter_number,
+						"due_date"			=> $value->due_date,
+						"box"				=> $ref->name,	
+						"contactCount"		=> $contactCount,
+						"amount" 			=> $amount
+						);
+					}else{
+						$objList[$value->contact_id]["id"] 	= $value->contact_id;
+						$objList[$value->contact_id]["name"] 	= $value->contact_abbr.$value->contact_number." ".$value->contact_name;
+						$objList[$value->contact_id]["location_name"] 	= "";
+						$objList[$value->contact_id]["line"][]	= array(
+						"id" 				=> $value->id,
+						"phone"				=> $value->contact_phone,
+						"meter_number"		=> $value->meter_number,
+						"due_date"			=> $value->due_date,
+						"box"				=> $ref->name,
+						"contactCount"		=> $contactCount,
+						"amount" 			=> $amount
+						);
+					}
+					
+				}else{
+					$objList[$value->location_id]["id"] 	= $value->location_id;
+					$objList[$value->location_id]["location_name"] 	= $value->location_name;
+					$objList[$value->location_id]["line"] 	= [];
+					if(isset($objList[$value->contact_id])){
+						$objList[$value->contact_id]["line"][] = array(
+						"id" 				=> $value->id,
+						"phone"				=> $value->contact_phone,
+						"meter_number"		=> $value->meter_number,
+						"due_date"			=> $value->due_date,
+						"box"				=> $ref->name,	
+						"contactCount"		=> $contactCount,
+						"amount" 			=> $amount
+						);
+					}else{
+						$objList[$value->contact_id]["id"] 	= $value->contact_id;
+						$objList[$value->contact_id]["name"] 	= $value->contact_abbr.$value->contact_number." ".$value->contact_name;
+						$objList[$value->contact_id]["location_name"] 	= "";
+						$objList[$value->contact_id]["line"][]	= array(
+						"id" 				=> $value->id,
+						"phone"				=> $value->contact_phone,
+						"meter_number"		=> $value->meter_number,
+						"due_date"			=> $value->due_date,
+						"box"				=> $ref->name,
+						"contactCount"		=> $contactCount,
+						"amount" 			=> $amount
+						);
+					}
+				}
+				$total += $amount;
+			}
+			foreach ($objList as $value) {
+				$data["results"][] = $value;
+			}
+			$data["count"] = count($data["results"]);
+			$data['total'] = $total;
 		}
 
 		//Response Data

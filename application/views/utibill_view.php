@@ -353,9 +353,9 @@
 													<span data-bind="text: lang.lang.meter">Meter</span>
 												</td>
 												<td>
-													<span style="font-size: 25px;" data-bind="text: NumCus"></span>
+													<span style="font-size: 25px;" data-bind="text: voidCust"></span>
 													<br>
-													<span data-bind="text: lang.lang.customer">Customers</span>
+													<span data-bind="text: lang.lang.void">Void</span>
 												</td>
 											</tr>
 										</tbody>
@@ -12535,6 +12535,7 @@
 						onclick="javascript:window.history.back()"><i></i></span>
 						</div>
 						<div class="clear"></div>
+
 					    <!-- Tabs -->
 						<div class="relativeWrap" data-toggle="source-code">
 							<div class="widget widget-tabs widget-tabs-gray report-tab">
@@ -12551,8 +12552,10 @@
 								        <div class="tab-pane active" id="tab-1">
 								        	<div class="row">
 												<div class="col-xs-12-3 col-sm-2">
+													<label ><span data-bind="text: lang.lang.license">License</span></label>
 													<input 
 														data-role="dropdownlist" 
+														style="width: 100%;" 
 														data-option-label="License ..." 
 														data-auto-bind="false" 
 														data-value-primitive="true" 
@@ -12561,22 +12564,43 @@
 														data-bind="
 															value: licenseSelect,
 						                  					source: licenseDS,
-						                  					events: {change: licenseChange}" style="width: 100%;">
+						                  					events: {change: licenseChange}">
 						                  		</div>
 												<div class="col-xs-12-3 col-sm-2">
+													<label ><span data-bind="text: lang.lang.location">Location</span></label>
 											        <input 
 														data-role="dropdownlist" 
+														style="width: 100%;" 
 														data-option-label="Location ..." 
 														data-auto-bind="false" 
-														data-value-primitive="false" 
+														data-value-primitive="true" 
 														data-text-field="name" 
 														data-value-field="id" 
 														data-bind="
 															value: blocSelect,
-															enabled: haveBloc,
-						                  					source: blocDS" style="width: 100%;">
+															enabled: haveLicense,
+						                  					source: blocDS,
+						                  					events: {change: onLocationChange}">
+												</div>
+												<div class="col-xs-12 col-sm-3">
+													<div class="control-group">								
+														<label ><span data-bind="text: lang.lang.sub_location">Location</span></label>
+														<input 
+															data-role="dropdownlist" 
+															style="width: 100%;" 
+															data-option-label="Sub Location ..." 
+															data-auto-bind="false" 
+															data-value-primitive="true" 
+															data-text-field="name" 
+															data-value-field="id" 
+															data-bind="
+																value: subLocationSelect,
+																enabled: haveLocation,
+							                  					source: subLocationDS">
+							                  		</div>
 												</div>
 												<div class="col-xs-12-3 col-sm-1">
+													<label ><span data-bind="text: lang.lang.search">search</span></label>	
 												  	<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>							
 									    		</div>
 									    	</div>
@@ -12593,33 +12617,51 @@
 								</div>
 							</div>
 						</div>
-						<!-- // Tabs END -->						
-					
+						<!-- // Tabs END -->
 						<div id="invFormContent">
 							<div class="block-title">
-								<h3 data-bind="text: institute.name"></h3>
+								<h3 data-bind="text: company.name"></h3>
 								<h2 data-bind="text: lang.lang.to_be_disconnect_list">To Be Disconnect Customer List</h2>
+								<p data-bind="text: displayDate"></p>
 							</div>
+
+							<div class="row">
+								<div class="col-xs-12 col-sm-5">
+									<div class="total-sale">
+										<p data-bind="text: lang.lang.number_of_customer"></p>
+										<span data-bind="text: dataSource.total"></span>
+									</div>
+								</div>
+								<div class="col-xs-12 col-sm-7">
+									<div class="total-sale">
+										<p data-bind="text: lang.lang.total_customer_balance"></p>
+										<span data-bind="text: total"></span>						
+									</div>
+								</div>
+							</div>
+
 							<table style="margin-bottom: 0;" class="table table-bordered table-condensed table-striped table-primary table-vertical-center">
 								<thead>
-									<tr>
-										<th style="vertical-align: top;"><span data-bind="text: lang.lang.customer_name">Customer Name</span></th>
-										<th style="vertical-align: top;"><span data-bind="text: lang.lang.date"></span></th>
-										<th style="vertical-align: top;"><span data-bind="text: lang.lang.reference">Reference</span></th>										
-										<th style="vertical-align: top; text-align: center;"><span data-bind="text: lang.lang.status">Status</span></th>
-										<th style="vertical-align: top;"><span data-bind="text: lang.lang.address"></span></th>
+									<tr>										
+										<th style="vertical-align: top;" data-bind="text: lang.lang.customer_name"></th>
+										<th style="text-align: left; vertical-align: top;" data-bind="text: lang.lang.phone"></th>
+										<th style="text-align: left; vertical-align: top;" data-bind="text: lang.lang.box"></th>		
+										<th style="text-align: left; vertical-align: top;" data-bind="text: lang.lang.meter_number"></th>	
+										<th style="text-align: right; vertical-align: top; text-align: center;" data-bind="text: lang.lang.due_date"></th>	
+										<th style="text-align: right; vertical-align: top; text-align: center;" data-bind="text: lang.lang.status"></th>
+										<th style="vertical-align: top; text-align: right;" data-bind="text: lang.lang.balance"></th>
 									</tr>
 								</thead>
 								<tbody data-role="listview"
-											 data-bind="source: dataSource"
-											 data-template="to_be_disconnectList-temp"
+									 data-auto-bind="false"
+									 data-bind="source: dataSource"										 
+									 data-template="to_be_disconnectList-template"
 								></tbody>
 							</table>
 							<div id="pager" class="k-pager-wrap"
 			            		 data-role="pager"
 						    	 data-auto-bind="false"
-					             data-bind="source: dataSource"></div>	
-					             
+					             data-bind="source: dataSource"></div>
 						</div>
 					</div>
 				</div>
@@ -12627,21 +12669,36 @@
 		</div>
 	</div>
 </script>
-<script id="to_be_disconnectList-temp" type="text/x-kendo-template" >
+<script id="to_be_disconnectList-template" type="text/x-kendo-template">
+	<tr style="font-weight: bold">
+		<td colspan="7">
+		#=location_name#</td>
+	</tr>	
 	<tr>
-		<td>#=name#</td>
-		<td>#=kendo.toString(new Date(issued_date),"dd-MM-yyyy")#</td>
-		<td>#=number#</td>
-		<td style="text-align: center;">
-			# var date = new Date(), dueDates = new Date(due_date).getTime(), toDay = new Date(date).getTime(); #
-			#if(dueDates < toDay) {#
-				Over Due #:Math.floor((toDay - dueDates)/(1000*60*60*24))# days
-			#} else {#
-				#:Math.floor((dueDates - toDay)/(1000*60*60*24))# days to pay
-			#}#
-		</td>
-		<td style="text-align: right;">#=location#</td>
+		<td colspan="7">#=name#</td>
 	</tr>
+	# var amount = 0;#
+	# var contactCount = 0;#
+	#for(var i= 0; i < line.length; i++) {#
+		# amount += kendo.parseFloat(line[i].amount);#
+		# contactCount += kendo.parseFloat(line[i].contactCount);#
+		<tr>
+			<td></td>
+			<td style="text-align: left;">#=line[i].phone#</td>	
+			<td style="text-align: left;">#=line[i].box#</td>
+			<td style="text-align: left;">#=line[i].meter_number#</td>	
+			<td style="text-align: left;">#=kendo.toString(new Date(line[i].due_date), "dd-MM-yyyy")#</td>	
+			<td style="text-align: center;">
+				# var date = new Date(), dueDates = new Date(line[i].due_date).getTime(), toDay = new Date(date).getTime(); #
+				#if(dueDates < toDay) {#
+					Over Due #:Math.floor((toDay - dueDates)/(1000*60*60*24))# days
+				#} else {#
+					#:Math.floor((dueDates - toDay)/(1000*60*60*24))# days to pay
+				#}#
+			</td>	
+			<td style="text-align: right;">#=kendo.toString(line[i].amount, "c2", banhji.locale)#</td>
+		</tr>
+	#}#
 </script>
 <script id="newCustomerList" type="text/x-kendo-template">
 	<div class="container">
@@ -13593,19 +13650,6 @@
 						                  					source: licenseDS">
 												</div>
 												<div class="col-xs-12 col-sm-2">
-													<input 
-														data-role="dropdownlist" 
-														style="width: 100%;" 
-														data-option-label="License ..." 
-														data-auto-bind="false" 
-														data-value-primitive="true" 
-														data-text-field="name" 
-														data-value-field="id" 
-														data-bind="
-															value: licenseSelect,
-						                  					source: licenseDS">
-												</div>
-												<div class="col-xs-12 col-sm-2">
 													<input type="text" 
 									                	style="width: 100%;" 
 									                	data-role="datepicker"
@@ -13721,6 +13765,7 @@
 									    	field: 'void_customer',
 									    	title: langVM.lang.void,
 									    	width: '250px', 
+									    	hidden: true,
 									    	editable: 'false', 
 			                            	attributes: { style: 'text-align: center;' }
 									    },
@@ -13745,6 +13790,7 @@
 									    	width: '250px', 
 									    	editable: 'false', 
 									    	format: '{0:n}',
+									    	hidden: true,
 			                            	attributes: { style: 'text-align: right;' } 
 									    },
 									    { 
@@ -13752,6 +13798,7 @@
 									    	title: langVM.lang.installment,
 									    	width: '250px', 
 									    	format: '{0:n}',
+									    	hidden: true,
 									    	editable: 'false', 
 			                            	attributes: { style: 'text-align: right;' }
 									    },
@@ -13761,6 +13808,7 @@
 									    	width: '250px', 
 									    	hidden: true,
 									    	format: '{0:n}',
+									    	hidden: true,
 									    	editable: 'false', 
 			                            	attributes: { style: 'text-align: right;' }
 									    },
@@ -13768,7 +13816,8 @@
 									    	field: 'amount_exemption',
 									    	title: langVM.lang.exemption,
 									    	width: '250px', 
-									    	editable: 'false', 
+									    	editable: 'false',
+									    	hidden: true, 
 									    	format: '{0:n}',
 			                            	attributes: { style: 'text-align: right;' }
 									    },
@@ -13778,6 +13827,7 @@
 									    	width: '250px', 
 									    	format: '{0:n}',
 									    	editable: 'false', 
+									    	hidden: true,
 			                            	attributes: { style: 'text-align: right;' }
 									    },
 			                            { 
@@ -13809,6 +13859,7 @@
 									    	field: 'discount',
 									    	title: langVM.lang.discount,
 									    	width: '250px', 
+									    	hidden: true,
 									    	format: '{0:n}',
 									    	editable: 'false', 
 			                            	attributes: { style: 'text-align: right;' }

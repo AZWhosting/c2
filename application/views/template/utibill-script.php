@@ -14915,13 +14915,14 @@
         dataSource: dataStore(apiUrl + "utibillReports/to_be_disconnection_list"),
         licenseDS: dataStore(apiUrl + "branches"),
         blocDS: dataStore(apiUrl + "locations"),
+        subLocationDS: dataStore(apiUrl + "locations"),
         licenseSelect: null,
-        blocSelect: null,
         company: banhji.institute,
+        blocSelect: null,
+        exArray: [],
         pageLoad: function() {
             this.licenseDS.read();
-            this.search();
-            this.set("haveBloc", false);
+            // this.search();
         },
         printGrid: function() {
             var gridElement = $('#grid'),
@@ -14963,120 +14964,169 @@
             }, 2000);
         },
         licenseChange: function(e) {
-            var data = e.data;
-            var license = this.licenseDS.at(e.sender.selectedIndex - 1);
-            this.set("licenseSelect", license);
-            this.blocDS.filter({
-                field: "branch_id",
-                value: license.id
-            });
-            this.set("haveBloc", true);
-        },
-        search: function() {
-            var self = this,
-                para = [],
-                license = this.get("licenseSelect"),
-                bloc = this.get("blocSelect");
-
-            if (license) {
-                para.push({
+            var self = this;
+            this.blocDS.data([]);
+            this.set("locationSelect", "");
+            this.set("haveLicense", false)
+            this.set("haveLocation", false);
+            this.blocDS.filter([{
                     field: "branch_id",
-                    value: license.id
-                });
+                    value: this.get("licenseSelect")
+                },
+                {
+                    field: "main_bloc",
+                    value: 0
+                },
+                {
+                    field: "main_pole",
+                    value: 0
+                }
+            ]);
+            this.set("haveLicense", true);
+        },
+        onLocationChange: function(e) {
+            var self = this;           
+            if (this.get("blocSelect")) {
+                this.subLocationDS.query({
+                        filter: [{
+                                field: "branch_id",
+                                value: this.get("licenseSelect")
+                            },
+                            {
+                                field: "main_bloc",
+                                value: this.get("blocSelect")
+                            },
+                            {
+                                field: "main_pole",
+                                value: 0
+                            }
+                        ],
+                        page: 1
+                    })
+                    .then(function(e) {
+                        if (self.subLocationDS.data().length > 0) {
+                            self.set("haveLocation", true);
+                        } else {
+                            self.set("haveLocation", false);
+                            self.subLocationDS.data([]);
+                        }
+                    });
             }
+            this.set("loSelectName", e.sender.span[0].innerText);
+        },        
+        search: function() {
+            var pole_id = this.get("subLocationSelect");
+                license_id = this.get("licenseSelect"),
+                bloc_id = this.get("blocSelect");
 
-            if (bloc) {
-                para.push({
-                    field: "location_id",
-                    value: bloc.id
-                });
-            }
-            this.dataSource.filter(para);
-            this.dataSource.bind("requestEnd", function(e) {
-                if (e.type == "read") {
+            var para = [];
+            
+                if(license_id){
+                    para.push({
+                        field: "branch_id",
+                        operator: "where_related_meter",
+                        value: license_id
+                    });
+                }
+
+                if (bloc_id){
+                    para.push({
+                        field: "location_id",
+                        operator: "where_related_meter",
+                        value: bloc_id
+                    });
+                }
+
+                if (pole_id) {
+                    para.push({
+                        field: "pole_id",
+                        operator: "where_related_meter",
+                        value: pole_id
+                    });
+                } 
+                this.dataSource.query({
+                    filter: para,
+                    limit: 300
+                });  
+             
+            this.dataSource.bind("requestEnd", function(e){             
+                if(e.type=="read"){
                     var response = e.response;
                     self.exArray = [];
 
+                    // self.exArray.push({
+                    //     cells: [
+                    //         { value: self.institute.name, textAlign: "center", colSpan: 7}
+                    //     ]
+                    // });
                     self.exArray.push({
-                        cells: [{
-                            value: self.company.name,
-                            textAlign: "center",
-                            colSpan: 5
-                        }]
-                    });
-                    self.exArray.push({
-                        cells: [{
-                            value: "To Be Disconnect Customer List",
-                            bold: true,
-                            fontSize: 20,
-                            textAlign: "center",
-                            colSpan: 5
-                        }]
-                    });
-                    self.exArray.push({
-                        cells: [{
-                            value: "",
-                            colSpan: 5
-                        }]
-                    });
-                    self.exArray.push({
-                        cells: [{
-                                value: "Customer",
-                                background: "#496cad",
-                                color: "#ffffff"
-                            },
-                            {
-                                value: "Date",
-                                background: "#496cad",
-                                color: "#ffffff"
-                            },
-                            {
-                                value: "Reference",
-                                background: "#496cad",
-                                color: "#ffffff"
-                            },
-                            {
-                                value: "Status",
-                                background: "#496cad",
-                                color: "#ffffff"
-                            },
-                            {
-                                value: "Location",
-                                background: "#496cad",
-                                color: "#ffffff"
-                            }
+                        cells: [
+                            { value: "To Be Disconnect Customer List",bold: true, fontSize: 20, textAlign: "center", colSpan: 7 }
                         ]
                     });
-                    for (var i = 0; i < response.results.length; i++) {
-                        var date = new Date(),
-                            dueDates = new Date(response.results[i].due_date).getTime(),
-                            overDue, toDay = new Date(date).getTime();
-                        if (dueDates < toDay) {
-                            overDue = Math.floor((toDay - dueDates) / (1000 * 60 * 60 * 24)) + "days";
-                        } else {
-                            overDue = Math.floor((dueDates - toDay) / (1000 * 60 * 60 * 24)) + "days to pay";
-                        }
+                    self.exArray.push({
+                        cells: [
+                            { value: "", colSpan: 7 }
+                        ]
+                    });
+                    self.exArray.push({ 
+                        cells: [
+                            { value: "Customer Name", background: "#496cad", color: "#ffffff" },
+                            { value: "Phone", background: "#496cad", color: "#ffffff" },
+                            { value: "Box", background: "#496cad", color: "#ffffff" },
+                            { value: "Meter Number", background: "#496cad", color: "#ffffff" },
+                            { value: "Due Date", background: "#496cad", color: "#ffffff" },
+                            { value: "Status", background: "#496cad", color: "#ffffff" },
+                            { value: "Balance", background: "#496cad", color: "#ffffff" },
+                        ]
+                    });
+                    for (var i = 0; i < response.results.length; i++){
                         self.exArray.push({
-                            cells: [{
-                                    value: response.results[i].name
-                                },
-                                {
-                                    value: response.results[i].issued_date
-                                },
-                                {
-                                    value: response.results[i].number
-                                },
-                                {
-                                    value: overDue
-                                },
-                                {
-                                    value: response.results[i].location
-                                },
+                            cells: [
+                                { value: response.results[i].location_name, bold: true, },
+                                { value: "" },
+                                { value: "" },
+                                { value: "" },
+                                { value: "" },
+                                { value: "" },
+                                { value: "" },
                             ]
+                            
                         });
+                        self.exArray.push({
+                            cells: [
+                                { value: response.results[i].name, },
+                                { value: "" },
+                                { value: "" },
+                                { value: "" },
+                                { value: "" },
+                                { value: "" },
+                                { value: "" },
+                            ]
+                            
+                        });
+                        for(var j = 0; j < response.results[i].line.length; j++){
+                            var date = new Date(), dueDates = new Date(response.results[i].line[j].due_date).getTime(),overDue, toDay = new Date(date).getTime();
+                            if(dueDates < toDay) {
+                                overDue = "Over Due "+Math.floor((toDay - dueDates)/(1000*60*60*24))+"days";
+                            } else {
+                                overDue = Math.floor((dueDates - toDay)/(1000*60*60*24))+"days to pay";
+                            }
+                            self.exArray.push({
+                                cells: [
+                                    { value: "" },
+                                    { value: response.results[i].line[j].phone },
+                                    { value: response.results[i].line[j].box },
+                                    { value: response.results[i].line[j].meter_number},
+                                    { value: response.results[i].line[j].due_date },
+                                    { value: overDue},
+                                    { value: response.results[i].line[j].amount },
+                                ]
+                            });
+                        }
                     }
                 }
-            });
+            });                  
         },
         cancel: function() {
             this.contact.cancelChanges();
@@ -15099,16 +15149,25 @@
                         },
                         {
                             autoWidth: true
+                        },
+                        {
+                            autoWidth: true
+                        },
+                        {
+                            autoWidth: true
+                        },
+                        {
+                            autoWidth: true
                         }
                     ],
-                    title: "To Be Disconnect Customer List",
+                    title: "To Be Disconnect",
                     rows: this.exArray
                 }]
             });
             //save the file as Excel file with extension xlsx
             kendo.saveAs({
                 dataURI: workbook.toDataURL(),
-                fileName: "tobeDisconnect.xlsx"
+                fileName: "ToBeDisconnect.xlsx"
             });
         }
     });
@@ -16969,6 +17028,57 @@
         lang: langVM,
         dataSource: dataStore(apiUrl + "utibillReports/sale_total"),
         licenseDS: dataStore(apiUrl + "branches"),
+        blocDS: new kendo.data.DataSource({
+            transport: {
+                read: {
+                    url: apiUrl + "locations",
+                    type: "GET",
+                    headers: banhji.header,
+                    dataType: 'json'
+                },
+                parameterMap: function(options, operation) {
+                    if (operation === 'read') {
+                        return {
+                            page: options.page,
+                            limit: options.pageSize,
+                            filter: options.filter,
+                            sort: options.sort
+                        };
+                    } else {
+                        return {
+                            models: kendo.stringify(options.models)
+                        };
+                    }
+                }
+            },
+            schema: {
+                model: {
+                    id: 'id'
+                },
+                data: 'results',
+                total: 'count'
+            },
+            filter: [
+                {
+                    field: "main_bloc",
+                    value: 0
+                },
+                {
+                    field: "main_pole",
+                    value: 0
+                }
+            ],
+            sort: {
+                field: "id",
+                dir: "asc"
+            },
+            batch: true,
+            serverFiltering: true,
+            serverSorting: true,
+            serverPaging: true,
+            page: 1,
+            pageSize: 100
+        }),
         total: 0,
         exArray: [],
         pageLoad: function() {
@@ -17006,6 +17116,7 @@
                         field: "branch_id",
                         value: this.get("licenseSelect")
                     });
+                    
                     this.dataSource.query({
                         filter: para,
                     }).then(function(e){
@@ -23142,7 +23253,7 @@
         meterDS: new kendo.data.DataSource({
             transport: {
                 read: {
-                    url: baseUrl + 'api/waterdash/meters',
+                    url: baseUrl + 'api/waterdash/customer',
                     type: "GET",
                     dataType: 'json',
                     headers: {
@@ -23174,7 +23285,7 @@
                 var vm = banhji.wDashboard;
                 banhji.wDashBoard.set('totalMeter', kendo.toString(this.data()[0].totalMeter, "n0", banhji.locale));
                 banhji.wDashBoard.set('activeCust', kendo.toString(this.data()[0].aMeter, "n0", banhji.locale));
-                banhji.wDashBoard.set('NumCus', kendo.toString(this.data()[0].numberCustomer, "n0", banhji.locale));
+                banhji.wDashBoard.set('voidCust', kendo.toString(this.data()[0].void, "n0", banhji.locale));
                 banhji.wDashBoard.set('totalConnect', kendo.toString(this.data()[0].totalConnect, "n0", banhji.locale));
             },
             batch: true,
@@ -25740,6 +25851,13 @@
                 banhji.pageLoaded["to_be_disconnectList"] = true;
 
             }
+            banhji.to_be_disconnectList.dataSource.bind('requestEnd', function(e) {
+                if (e.response) {
+                    banhji.to_be_disconnectList.set('count', e.response.count);
+                    kendo.culture(banhji.locale);
+                    banhji.to_be_disconnectList.set('total', kendo.toString(e.response.total, 'c2'));
+                }
+            });
             vm.pageLoad();
         }
     });
