@@ -55,6 +55,9 @@ class Item_assemblies extends REST_Controller {
 			}
 		}
 
+		$obj->include_related("item", array("item_type_id","abbr","number","name","cost","price","locale","income_account_id","expense_account_id","inventory_account_id","nature"));
+		$obj->include_related("measurement", array("name"));
+
 		//Results
 		if($page && $limit){
 			$obj->get_paged_iterated($page, $limit);
@@ -65,14 +68,38 @@ class Item_assemblies extends REST_Controller {
 		}
 
 		if($obj->exists()){
-			foreach ($obj as $value) {				
+			foreach ($obj as $value) {
+				//Item
+				$item = array(
+					"id" 					=> $value->item_id,
+					"item_type_id" 			=> $value->item_item_type_id,
+					"abbr"					=> $value->item_abbr, 
+					"number" 				=> $value->item_number, 
+					"name" 					=> $value->item_name,
+					"cost"					=> $value->item_cost,
+					"price"					=> $value->item_price,
+					"locale"				=> $value->item_locale,
+					"income_account_id"		=> $value->item_income_account_id, 
+					"expense_account_id" 	=> $value->item_expense_account_id, 
+					"inventory_account_id" 	=> $value->item_inventory_account_id
+				);
+				
+				//Measurement
+				$measurement = array(
+					"measurement_id" 	=> $value->measurement_id,
+					"measurement"		=> $value->measurement_name ? $value->measurement_name : ""
+				);
+
 				//Results				
 				$data["results"][] = array(
 					"id" 				=> $value->id,					
 					"assembly_id" 		=> $value->assembly_id,
 					"item_id" 			=> $value->item_id,
 					"quantity" 			=> $value->quantity,
-					"measurement_id"	=> $value->measurement_id
+					"measurement_id"	=> $value->measurement_id,
+
+					"item" 				=> $item,
+					"measurement" 		=> $measurement
 				);
 			}
 		}

@@ -17386,6 +17386,30 @@
                         },
                         {
                             autoWidth: true
+                        },
+                        {
+                            autoWidth: true
+                        },
+                        {
+                            autoWidth: true
+                        },
+                        {
+                            autoWidth: true
+                        },
+                        {
+                            autoWidth: true
+                        },
+                        {
+                            autoWidth: true
+                        },
+                        {
+                            autoWidth: true
+                        },
+                        {
+                            autoWidth: true
+                        },
+                        {
+                            autoWidth: true
                         }
                     ],
                     title: "Sale Detail",

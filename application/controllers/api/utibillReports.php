@@ -285,7 +285,7 @@ class UtibillReports extends REST_Controller {
 		 			"amount_fine" 		=> 0,
 		 			"balance_last_month" => $lastmonth,
 		 			"subtotal_amount" 	=> floatval($subtotal),
-		 			"amount_receive" 	=> floatval($tmp->amount_received),
+		 			"amount_receive" 	=> floatval($tmp->amount_recieved),
 		 			"discount" 			=> floatval($tmp->discount),
 		 			"ending_balance" 	=> floatval($tmp->ending_ballance)
 		 		);
