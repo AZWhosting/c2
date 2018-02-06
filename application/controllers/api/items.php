@@ -22,6 +22,21 @@ class Items extends REST_Controller {
 		}
 	}
 
+	function test_get() {		
+		$filter 	= $this->get("filter");
+		$data["results"] = [];
+		$data["count"] = 0;
+		
+		$obj = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$obj->get_by_id(5);
+
+		$data["results"] = $obj->item_assembly->include_related("item",array("number","name"),FALSE)->get_raw()->result();
+		
+
+		//Response Data		
+		$this->response($data, 200);	
+	}
+
 
 	//GET 
 	function index_get() {		
@@ -115,6 +130,19 @@ class Items extends REST_Controller {
 					$variant = $value->attribute_value->get_raw()->result();
 				}
 
+				//Assembly
+				$assembly = $value->item_assembly->include_related("item",array(
+					"id",
+					"item_type_id",
+					"abbr",
+					"number",
+					"name",
+					"locale",
+					"income_account_id", 
+					"expense_account_id", 
+					"inventory_account_id"
+				),FALSE)->get_raw()->result();
+
 				$data["results"][] = array(
 					"id" 						=> $value->id,
 					"company_id" 				=> $value->company_id,
@@ -167,7 +195,8 @@ class Items extends REST_Controller {
 
 				   	"category" 					=> $value->category_name,
 				   	"measurement" 				=> $measurement,
-				   	"variant" 					=> $variant
+				   	"variant" 					=> $variant,
+				   	"assembly" 					=> $assembly
 				);
 			}
 		}
