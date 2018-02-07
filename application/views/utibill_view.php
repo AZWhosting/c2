@@ -6,7 +6,7 @@
 <!-- template section starts -->
 <script type="text/x-kendo-template" id="layout">
 	<div id="menu" class="menu"></div>
-	<div id="content" class="container"></div>
+	<div id="content" class="container" style="padding-top: 45px !important;"></div>
 </script>
 <script type="text/x-kendo-template" id="blank-tmpl">
 </script>
@@ -2152,7 +2152,7 @@
                data-auto-bind="true"
                data-value-field="id"
                data-bind="value: item, 
-               			  source: itemDS,
+               			  source: itemAR,
                			  events:{ change: onChange }"
                placeholder="Select ..." 
                required data-required-msg="required" style="width: 100%" />	
@@ -4397,7 +4397,6 @@
 									            		data-role="datepicker"	 		
 						            					data-bind="value: issued_date, events: {change: addReading}" 
 						            					data-format="dd-MM-yyyy"
-						            					data-parse-formats="yyyy-MM-dd" 
 						            					placeholder="dd-MM-yyyy" 
 						            					required data-required-msg="required" 
 						            					style="width: 80%" />
@@ -6272,7 +6271,7 @@
 							</div>	
 							<div class="col-xs-12 col-sm-3">
 								<div class="control-group">								
-									<label ><span data-bind="text: lang.lang.due_date">Due Date</span></label>
+									<label ><span data-bind="text: lang.lang.expire_date">Due Date</span></label>
 									<input type="text" 
 					                	style="width: 100%;" 
 					                	data-role="datepicker"

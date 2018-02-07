@@ -93,12 +93,12 @@ class Ops extends REST_Controller {
 				// 	// 	"null" 		=> FALSE,
 				// 	// 	"default" 	=> 0
 				// 	// ),
-				// 	// "tags" => array(
-				// 	// 	"type" 		=> "DECIMAL",
-				// 	// 	"constraint"=> "30,15",
-				// 	// 	"null" 		=> FALSE,
-				// 	// 	"default" 	=> 0
-				// 	// )
+				// 	"amount" => array(
+				// 		"type" 		=> "DECIMAL",
+				// 		"constraint"=> "30,15",
+				// 		"null" 		=> FALSE,
+				// 		"default" 	=> 0
+				// 	)
 				// );
 				// $data['results'][] = $this->dbforge->add_column("item_assemblies", $fields);
 				
@@ -115,7 +115,7 @@ class Ops extends REST_Controller {
 				// $data['results'][] = $this->dbforge->modify_column('item_assemblies', $fields);
 
 			 	//Remove column, 'table_name', 'column_to_drop'
-				// $this->dbforge->drop_column('item_assemblies', 'conversion_ratio');
+				// $this->dbforge->drop_column('item_assemblies', 'amount');
 
 				//Custom
 				// $dsn = 'mysql://'.$this->db->username.':'.$this->db->password.'@'.$this->db->hostname.'/'.$db;

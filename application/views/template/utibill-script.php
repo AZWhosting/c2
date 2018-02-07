@@ -5986,14 +5986,20 @@
             data.set("amount", dataitemDs.amount);
             myData.set('dirty', true);
         },
+        itemAR: [],
         currencyChange: function(e) {
             var data = e.data;
-            this.itemDS.filter({
-                field: "currency_id",
-                value: this.current.currency
+            this.itemAR = [];
+            var self = this;
+            this.itemDS.query({
+                filter: {field: "currency_id", value: this.current.currency}
+            }).then(function(e){
+                $.each(self.itemDS.data(), function(i,v){
+                    self.itemAR.push(v);
+                });
+                self.get("current").items.splice(0, self.get("current").items.length);
+                self.addItem();
             });
-            this.get("current").items.splice(0, this.get("current").items.length);
-            this.addItem();
         },
         setCurrent: function(current) {
             this.set('current', current);
@@ -6822,16 +6828,10 @@
             this.planDS.fetch();
             this.setWords();
         },
-        typeList            : new kendo.data.DataSource({
-            data: banhji.source.prefixList,
-            filter:{
-                logic: "or",
-                filters: [
-                    { field: "type", value: "Commercial_Invoice" },
-                    { field: "type", value: "Invoice" }
-                ]
-            }
-        }),
+        typeList            : [
+            {name: "Invoice", type: "Invoice"},
+            {name: "Commercial Invoice", type: "Commercial_Invoice"},
+        ],
         licenseData: [],
         otherINFO: false,
         licenseID: "",
@@ -7404,7 +7404,7 @@
             }
             return rate;
         },
-        itemDS: dataStore(apiUrl + "items"),
+        itemDS: dataStore(apiUrl + "utibills/ass_items"),
         lineDS: dataStore(apiUrl + "item_lines"),
         Locale: "km-KH",
         isPlanEdit: false,
@@ -7417,7 +7417,7 @@
             var assID = "";
             this.set("isPlanEdit", false);
             this.set("changeLine", true);
-            this.get("obj").set("invoice_type", "invoice");
+            this.get("obj").set("invoice_type", "Invoice");
             this.lineDS.data([]);
             this.assemblyLineDS.data([]);
             $.each(this.planDS.data()[IND -1].items, function(i,v){
@@ -8173,7 +8173,7 @@
                     self.createInstallment(amountOw);
                 });
             }else if(amountOw == 0){
-                var SDAmount = Dep + Ser;
+                var SDAmount = Ser;
                 this.receiveByMeterDS.data([]);
                 this.receiveByMeterDS.insert(0, {
                     meter_number: this.get("meterObj").meter_number,
@@ -23368,7 +23368,8 @@
     });
     banhji.waterCenter = kendo.observable({
         lang: langVM,
-        summaryDS: dataStore(apiUrl + "transactions"),
+        // summaryDS: dataStore(apiUrl + "transactions"),
+        summaryDS: dataStore(apiUrl + "utibills/center_summary"),
         noteDS: dataStore(apiUrl + 'notes'),
         attachmentDS: dataStore(apiUrl + "attachments"),
         meterDS: dataStore(apiUrl + "utibills/meters"),
@@ -23717,7 +23718,7 @@
                     {
                         field: "type",
                         operator: "where_in",
-                        value: ["Utility_Deposit", "Utility_Invoice"]
+                        value: ["Customer_Deposit", "Utility_Invoice"]
                     },
                     {
                         field: "status",
@@ -23738,10 +23739,12 @@
                     today = new Date();
 
                 $.each(view, function(index, value) {
-                    if (value.type == "Utility_Deposit") {
-                        deposit += kendo.parseFloat(value.amount);
+                    var amount = value.amount / value.rate;
+                    var amountpaid = value.amount_paid / value.rate;
+                    if (value.type == "Customer_Deposit") {
+                        deposit += kendo.parseFloat(amount);
                     } else {
-                        balance += (kendo.parseFloat(value.amount) - kendo.parseFloat(value.deposit)) - kendo.parseFloat(value.amount_paid);
+                        balance += (kendo.parseFloat(amount) - kendo.parseFloat(value.deposit)) - kendo.parseFloat(amountpaid);
                         open++;
                         if (new Date(value.due_date) < today) {
                             over++;
@@ -23864,6 +23867,7 @@
             this.goMonthlyTab();
             var data = e.data,
                 self = this;
+            console.log(data);
             this.set('meter_visible', true);
             this.set('propertyID', data.id);
             this.meterDS.query({
@@ -24702,10 +24706,7 @@
             page:1,
             pageSize: 100
         }),
-        currencyDS              : new kendo.data.DataSource({
-            data: banhji.source.currencyList,
-            filter: { field:"status", value: 1 }
-        }),
+        currencyDS              : dataStore(apiUrl + "utibills/currency"),
         measurementDS           : banhji.source.measurementDS,
         statusList              : banhji.source.statusList,
         confirmMessage          : banhji.source.confirmMessage,
@@ -24834,12 +24835,10 @@
         //Obj
         loadObj                 : function(id){
             var self = this;
-
             this.dataSource.query({             
                 filter: { field:"id", value: id }
             }).then(function(e){
-                var view = self.dataSource.view();
-                                
+                var view = self.dataSource.view(); 
                 self.set("obj", view[0]);
                 self.lineDS.filter({ field:"assembly_id", value:id });
             });
@@ -24892,7 +24891,7 @@
             return dfd;                     
         }, 
         currencyChange          : function(e){
-            this.get("obj").set("currency_id", this.currencyDS.data()[e.sender.selectedIndex - 1].id);
+            this.get("obj").set("currency_id", this.currencyDS.data()[e.sender.selectedIndex - 1].currency_id);
         },   
         save                    : function(){
             var self = this, obj = this.get("obj");
@@ -24925,7 +24924,7 @@
                     //Save Close
                     self.set("saveClose", false);
                     self.cancel();
-                    banhji.router.navigator("/setting");
+                    banhji.router.navigate("/setting");
                 }else{
                     //Save New
                     self.addEmpty();

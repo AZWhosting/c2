@@ -1,3 +1,210 @@
+<style >
+	/*@media (min-width: 768px){
+		html.no-touch.sticky-top:not(.animations-gpu) #content {
+		    
+		}
+	}*/
+	.home .bg-green{
+		background: #0eac00;
+		width: 100%;
+		text-align: center;
+		position: relative;
+		box-shadow: 2px 0px 12px 0px rgba(68,68,68,1);
+	}
+	.height250{
+		height: 200px;
+	}
+	.height100{
+		height: 100px;
+	}
+	.no-padding{
+		padding: 0;
+	}
+	.no-paddingLeft{
+		padding-left: 0;
+		padding-right: 2px;
+	}
+	.nopadding-right{
+		padding-right: 0
+	}
+	.nopadding-left{
+		padding-left: 0
+	}
+	.paddingLeftRigth{
+		padding: 0 2px;
+	}
+	.paddingTopBottom{
+		padding: 2px 0;
+	}
+	.top-left{
+		border-radius: 20px 0 0 0;
+	}
+	.top-rigth{
+		border-radius: 0 20px 0 0;
+	}
+	.bottom-left{
+		border-radius: 0 0 0 20px ;
+	}
+	.bottom-rigth{
+		border-radius: 0 0 20px 0;
+	}
+	.paddingLeft{
+		padding-left: 2px;
+	}	
+	.nopadding-right .height250.top-left .img img,
+	.nopadding-left .height250.top-left .img img,
+	.nopadding-right .height250 .img img,
+	.paddingLeft .height250 .img img{
+		width: 120px;
+	    margin-top: 40px;
+	    float: left;
+	    margin-left: 70px;
+	}
+	.paddingLeftRigth .height250 .img,
+	.nopadding-left .height250.top-rigth .img,
+	.nopadding-left .height250 .img{
+		width: 100%;
+	    float: left;
+	    padding: 18% 0 20px 32%;
+	    text-align: center;
+	}
+	.paddingLeftRigth .height250 .img img,
+	.nopadding-left .height250.top-rigth .img img,
+	.nopadding-left .height250 .img img{
+		width: 100px;
+	    float: left;
+	}
+	.bg-green.height250.top-left .textBig{
+		float: right;
+	    padding: 35px 35px 0 0;
+	    font-size: 50px;
+	    width: 245px;
+	    text-align: left;
+	}
+	.nopadding-right .height250 .textBig{
+		float: right;
+	    padding: 35px 35px 0 0;
+	    font-size: 35px;
+	    width: 245px;
+	    text-align: left;
+	}
+	.paddingLeft .height250 .textBig{
+		float: right;
+	    padding: 27px 35px 0 0;
+	    font-size: 35px;
+	    width: 245px;
+	    text-align: left;
+	}
+	.paddingLeftRigth .height250 .textSmall,
+	.nopadding-left .height250.top-rigth .textSmall,
+	.nopadding-left .height250 .textSmall{
+		font-size: 17px;
+	    margin-bottom: 0;
+	    float: left;
+	    text-align: center;
+	    width: 100%;
+	}
+	.nopadding-right .height100.bottom-left .img,
+	.paddingLeftRigth .height100 .img,
+	.no-padding .height100 .img,
+	.paddingLeft .height100.bottom-rigth .img{
+		width: 100%;
+	    float: left;
+	    padding: 7% 0 8px 36%;
+	    text-align: center;
+	}
+
+	.nopadding-right .height100.bottom-left .img img,
+	.paddingLeftRigth .height100 .img img, 
+	.no-padding .height100 .img img,
+	.paddingLeft .height100.bottom-rigth .img img{
+		width: 50px;
+	    float: left;
+	}
+	.paddingLeft .height100.bottom-rigth .img{
+		padding: 3% 0 0 32%;
+	    width: 50%;
+	    text-align: center;
+	}
+	.paddingLeft .height100.bottom-rigth .img img{
+		width:  70px;
+	}
+
+	@media only screen 
+	and (min-device-width : 768px) 
+	and (max-device-width : 1024px) 
+	and (orientation : landscape) {
+		.nopadding-right .height250.top-left .textBig{
+			padding: 20px 0 0 0;
+		    font-size: 55px;
+		    width: 202px;
+		}
+		.nopadding-right .height250 .textBig {
+			padding-top: 45px;
+    		font-size: 35px;
+    		width: 195px
+		}
+	}
+
+	@media only screen 
+	and (min-device-width : 768px) 
+	and (max-device-width : 1024px) 
+	and (orientation : portrait) {
+		.menu .span9 {
+		    margin-top: 12px;
+		}
+		.search-menu .search-query{
+			width: 210px;
+		}
+		.nopadding-right .height250.top-left .img img,
+		.nopadding-right .height250 .img img{
+			width: 140px;
+		    margin-top: 35px;
+		    margin-left: 55px;
+		}
+		.nopadding-right .height250.top-left .textBig{
+			padding: 45px 0 0 0;
+		    font-size: 40px;
+		    width: 146px;
+		}
+		.nopadding-right .height250 .textBig{
+		    padding: 70px 0 0 0;
+		    font-size: 25px;
+		    width: 146px;
+		}
+		.paddingLeftRigth .height250 .img, 
+		.nopadding-left .height250.top-rigth .img, 
+		.nopadding-left .height250 .img{
+			padding: 20px 0 10px 25%;
+		}
+		.paddingLeftRigth .height250 .textSmall, 
+		.nopadding-left .height250.top-rigth .textSmall, 
+		.nopadding-left .height250 .textSmall{
+			font-size: 22px;
+		}
+		.paddingLeft .height100.bottom-rigth .img{
+			padding: 3% 0 0 24%;
+		}
+		.nopadding-right .height100.bottom-left .img, 
+		.paddingLeftRigth .height100 .img, 
+		.no-padding .height100 .img, 
+		.paddingLeft .height100.bottom-rigth .img{
+			padding: 5% 0 8px 28%;
+		}
+	}
+	@media (min-width: 1200px){
+		.container {
+		    width: 1024px;
+		}
+	}
+	.fixed-bottom{
+		position: fixed;
+	    bottom: 20px;
+	    text-align: center;
+	    margin: 0 auto;
+	    width: 78%;
+	}
+</style>
 <div id="wrapperApplication" class="container-fluid"></div>
 <!-- template section starts -->
 <script type="text/x-kendo-template" id="layout">
@@ -53,10 +260,114 @@
 </script>
 <script type="text/x-kendo-template" id="index">
 	
-	<a href="#/sale_center"><h1>WELCOME</h1></a>
+	<!-- <a href="#/sale_center"><h1>WELCOME</h1></a> -->
+	<div class="container" >
+		<div class="row home" style="padding-top: 100px !important;">
+			<div class="span12">
+				<div class="row">
+					<div class="span6 nopadding-right">
+						<a href="#/sale_center">
+							<div class="bg-green height250 top-left" style="background: #fff; color: #0eac00; box-shadow: none; box-shadow: 2px 0px 12px 0px rgba(68,68,68,1);">
+								<div class="img">
+									<img src="<?php echo base_url();?>assets/spa/icon/pos-green.png" >
+								</div>
+								<p class="textBig">Sale Module</p>
+							</div>
+						</a>
+					</div>
+					<div class="span6" >
+						<div class="row">
+							<div class="span6 paddingLeftRigth">
+								<div class="bg-green height250">
+									<div class="img">
+										<img src="<?php echo base_url();?>assets/spa/icon/session.png" >
+									</div>
+									<p class="textSmall">Outlet</p>
+								</div>
+							</div>
+							<div class="span6 nopadding-left">
+								<div class="bg-green height250 top-rigth">
+									<div class="img">
+										<img src="<?php echo base_url();?>assets/spa/icon/book.png" >
+									</div>
+									<p class="textSmall">Inventory</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="span12">
+				<div class="row paddingTopBottom">
+					<div class="span6 nopadding-right">
+						<div class="bg-green height250">
+							<div class="img">
+								<img src="<?php echo base_url();?>assets/spa/icon/serving.png" >
+							</div>
+							<p class="textBig">Employee</p>
+						</div>
+					</div>
+					<div class="span6 paddingLeft">
+						<div class="bg-green height250 bottom-rigth" >							
+							<div class="img">
+								<img src="<?php echo base_url();?>assets/spa/icon/report.png">
+							</div>
+							<p class="textBig">Sale Management Reports</p>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- <div class="span12">
+				<div class="row">
+					<div class="span6" >
+						<div class="row">
+							<div class="span4 nopadding-right">
+								<div class="bg-green height100 bottom-left">
+									<div class="img">
+										<img src="<?php echo base_url();?>assets/spa/icon/customers.png" >
+									</div>
+									<p>Customer</p>
+								</div>
+							</div>
+							<div class="span4 paddingLeftRigth">
+								<div class="bg-green height100">
+									<div class="img">
+										<img src="<?php echo base_url();?>assets/spa/icon/rooms-facilities.png" >
+									</div>
+									<p>Rooms/ facilities</p>
+								</div>
+							</div>
+							<div class="span4 no-padding">
+								<div class="bg-green height100">
+									<div class="img">
+										<img src="<?php echo base_url();?>assets/spa/icon/serving.png" >
+									</div>
+									<p>Therapist</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="span6 paddingLeft">
+						<div class="bg-green height100 bottom-rigth" >							
+							<div class="img">
+								<img src="<?php echo base_url();?>assets/spa/icon/report.png">
+							</div>
+							<p style="margin-bottom: 0; font-size: 40px; padding: 20px 0 0;  width: 50%; float: left; text-align: left; ">Reports</p>
+						</div>
+					</div>
+				</div>
+			</div> -->
+
+			<div class="span12" style="margin-top: 20px;">
+				<p data-bind="text: today"></span>
+			</div>
+		</div>
+	</div>
 	
 	<div class="row-fluid">
-		<div style="margin-top: 10px; margin-left: 0;" align="center">
+		<div class="fixed-bottom">
 			<p>&copy; <?php echo date('Y'); ?><span data-bind="text: lang.lang.all_rights_reserved"></span></p>
 		</div>	
 	</div>		
@@ -12773,4 +13084,4 @@
 		    createCookie(name,"");
 		}
 	});
-</script>
+</script>                                                                                            

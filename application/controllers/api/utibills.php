@@ -595,6 +595,8 @@ class Utibills extends REST_Controller {
 					$data["results"][] = array(
 						"id" 		=> $rates->id,
 						"code" 		=> $value->code,
+						"country" 	=> $value->code,
+						"currency_id" => $value->id,
 						"locale" 	=> $rates->locale,
 						"rate" 		=> $rates->rate,
 						"date" 		=> $rates->date
@@ -1989,6 +1991,7 @@ class Utibills extends REST_Controller {
 			}
 		}
 		$obj->where("activated", 1);
+		$obj->where("status", 1);
 		$obj->order_by("worder", "asc");
 		//Results
 		if($page && $limit){
@@ -3391,6 +3394,7 @@ class Utibills extends REST_Controller {
 				   	isset($value->date_used) 				? $txn->issued_date 				= $value->date_used : "";
 				   	$txn->status = 0;
 				   	$txn->is_journal = 1;
+				   	$txn->memo = "Activate_Meter";
 				   	isset($obj->id) 						? $txn->meter_id 					= $obj->id : "";
 				   	if($txn->save()){
 				   		//DR
@@ -4050,15 +4054,6 @@ class Utibills extends REST_Controller {
 
 		if($obj->exists()){
 			foreach ($obj as $value) {
-				//Price
-				$price = floatval($value->price);
-				$itemPrices = new Item_price(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$itemPrices->where("conversion_ratio", 1);
-				$itemPrices->limit(1);
-				$itemPrices->get();
-				if($itemPrices->exists()){
-					$price = floatval($itemPrices->price);
-				}
 
 				//Measurement
 				$measurement = [];
@@ -4101,7 +4096,7 @@ class Utibills extends REST_Controller {
 				   	"barcode"					=> $value->barcode,
 				   	"catalogs" 					=> explode(",",$value->catalogs),
 				   	"cost" 						=> floatval($value->cost),
-				   	"price" 					=> $price,
+				   	"price" 					=> floatval($value->price),
 				   	"amount" 					=> floatval($value->amount),
 				   	"rate" 						=> floatval($value->rate),
 				   	"locale" 					=> $value->locale,
@@ -4114,7 +4109,6 @@ class Utibills extends REST_Controller {
 				   	"inventory_account_id"		=> $value->inventory_account_id,   				   	
 				   	"preferred_vendor_id" 		=> $value->preferred_vendor_id,
 				   	"image_url" 				=> $value->image_url!="" ? $value->image_url : $this->noImageUrl,
-				   	"thumbnail_url" 			=> $value->thumbnail_url!="" ? $value->thumbnail_url : $this->noImageUrl,
 				   	"favorite" 					=> $value->favorite=="true"?true:false,
 				   	"is_catalog" 				=> intval($value->is_catalog),
 				   	"is_assembly" 				=> intval($value->is_assembly),
@@ -4416,6 +4410,74 @@ class Utibills extends REST_Controller {
 		}
 
 		//Response data
+		$this->response($data, 200);
+	}
+	//Load Center Summary
+	function center_summary_get() {
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
+		$data["count"] = 0;
+		$is_recurring = 0;
+
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
+			}
+		}
+
+		//Filter
+		if(!empty($filter["filters"]) && isset($filter["filters"])){
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value['operator'])) {
+					$obj->{$value['operator']}($value['field'], $value['value']);
+				} else {
+	    			$obj->where($value["field"], $value["value"]);
+				}
+			}
+		}
+		$obj->where("deleted <>", 1);
+		//Results
+		if($page && $limit){
+			$obj->get_paged_iterated($page, $limit);
+			$data["count"] = $obj->paged->total_rows;
+		}else{
+			$obj->get_iterated();
+			$data["count"] = $obj->result_count();
+		}
+
+		if($obj->exists()){
+			foreach ($obj as $value) {
+				$amount_paid = 0;
+				$paid = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$paid->select_sum("amount");
+				$paid->select_sum("discount");
+				$paid->where("type", "Cash_Receipt");					
+				$paid->where("reference_id", $value->id);
+				$paid->where("deleted <>",1);
+				$paid->get();
+				$amount_paid = floatval($paid->amount) + floatval($paid->discount);
+				$data["results"][] = array(
+					"id" 				=> $value->id,
+					"amount" 			=> floatval($value->amount),
+					"deposit" 			=> floatval($value->deposit),
+					"amount_paid" 		=> floatval($amount_paid),
+					"rate" 				=> floatval($value->rate),
+					"type"				=> $value->type,
+				);
+			}
+		}
+
+		//Response Data
 		$this->response($data, 200);
 	}
 }
