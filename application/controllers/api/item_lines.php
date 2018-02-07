@@ -516,6 +516,11 @@ class Item_lines extends REST_Controller {
 		   	isset($value->reference_no) 		? $obj->reference_no 			= $value->reference_no : "";
 		   	isset($value->deleted) 				? $obj->deleted 			= $value->deleted : "";
 
+		   	//Item
+		   	if(isset($value->item)){
+				$obj->item_id = $value->item->id;
+			}
+
 		   	//Conversion ratio
 			$conversion_ratio = 1;
 			if(isset($value->conversion_ratio)){
@@ -652,6 +657,11 @@ class Item_lines extends REST_Controller {
 		   	isset($value->reference_no) 	? $obj->reference_no 			= $value->reference_no : "";
 		   	isset($value->deleted) 			? $obj->deleted 			= $value->deleted : "";
 
+		   	//Item
+		   	if(isset($value->item)){
+				$obj->item_id = $value->item->id;
+			}
+			
 		   	//Conversion ratio
 			$conversion_ratio = 1;
 			if(isset($value->conversion_ratio)){

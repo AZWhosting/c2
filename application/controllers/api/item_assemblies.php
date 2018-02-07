@@ -31,7 +31,7 @@ class Item_assemblies extends REST_Controller {
 		$data["results"] = [];
 		$data["count"] = 0;
 
-		$obj = new Item_assembly(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+		$obj = new Item_assembly(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 		//Sort
 		if(!empty($sort) && isset($sort)){
@@ -86,9 +86,20 @@ class Item_assemblies extends REST_Controller {
 				
 				//Measurement
 				$measurement = array(
+					"id" 				=> $value->measurement_id,
+					"name"				=> $value->measurement_name ? $value->measurement_name : "",
 					"measurement_id" 	=> $value->measurement_id,
 					"measurement"		=> $value->measurement_name ? $value->measurement_name : ""
 				);
+
+				//Conversion ratio
+				$conversion_ratio = 1;
+				$itemPrices = new Item_price(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$itemPrices->where("measurement_id", $value->measurement_id);
+				$itemPrices->get();
+				if($itemPrices->exists()){
+					$conversion_ratio = $itemPrices->conversion_ratio;
+				}
 
 				//Results				
 				$data["results"][] = array(
@@ -97,6 +108,7 @@ class Item_assemblies extends REST_Controller {
 					"item_id" 			=> $value->item_id,
 					"quantity" 			=> $value->quantity,
 					"measurement_id"	=> $value->measurement_id,
+					"conversion_ratio"	=> $value->conversion_ratio,
 
 					"item" 				=> $item,
 					"measurement" 		=> $measurement
@@ -119,7 +131,12 @@ class Item_assemblies extends REST_Controller {
 			isset($value->item_id) 			? $obj->item_id 		= $value->item_id : "";
 			isset($value->quantity) 		? $obj->quantity 		= $value->quantity : "";
 			isset($value->measurement_id) 	? $obj->measurement_id 	= $value->measurement_id : "";
-						
+			
+			//Measurement
+			if(isset($value->measurement)){
+				$obj->measurement_id = $value->measurement->id;
+			}
+
 			if($obj->save()){
 				$data["results"][] = array(
 					"id" 				=> $obj->id,					

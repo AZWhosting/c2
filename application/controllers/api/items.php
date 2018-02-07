@@ -107,18 +107,23 @@ class Items extends REST_Controller {
 			foreach ($obj as $value) {
 				//Price
 				$price = floatval($value->price);
-				$itemPrices = new Item_price(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$itemPrices->where("conversion_ratio", 1);
-				$itemPrices->limit(1);
-				$itemPrices->get();
-				if($itemPrices->exists()){
-					$price = floatval($itemPrices->price);
+
+				if($value->is_assembly==0 && $value->is_catalog==0){
+					$itemPrices = new Item_price(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$itemPrices->where("conversion_ratio", 1);
+					$itemPrices->limit(1);
+					$itemPrices->get();
+					if($itemPrices->exists()){
+						$price = floatval($itemPrices->price);
+					}
 				}
 
 				//Measurement
 				$measurement = [];
 				if($value->measurement_id>0){
 					$measurement = array(
+						"id" 				=> $value->measurement_id,
+						"name"				=> $value->measurement_name ? $value->measurement_name : "",
 						"measurement_id" 	=> $value->measurement_id,
 						"measurement"		=> $value->measurement_name ? $value->measurement_name : ""
 					);
@@ -344,16 +349,23 @@ class Items extends REST_Controller {
 		   	isset($value->status) 					? $obj->status 					= $value->status : "";
 		   	isset($value->deleted) 					? $obj->deleted 				= $value->deleted : "";
 
+		   	//Measurement
+			if(isset($value->measurement)){
+				$obj->measurement_id = $value->measurement->id;
+			}
+			
 	   		if($obj->save()){
-	   			//Item Price
-	   			$itemPrice = new Item_price(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-	   			$itemPrice->item_id 			= $obj->id;
-				$itemPrice->measurement_id 		= $obj->measurement_id;
-				$itemPrice->quantity 			= 1;
-				$itemPrice->conversion_ratio 	= 1;
-				$itemPrice->price 				= $obj->price;
-				$itemPrice->locale 				= $obj->locale;
-				$itemPrice->save();
+	   			if($obj->is_assembly==0 && $obj->is_catalog==0){
+		   			//Item Price
+		   			$itemPrice = new Item_price(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		   			$itemPrice->item_id 			= $obj->id;
+					$itemPrice->measurement_id 		= $obj->measurement_id;
+					$itemPrice->quantity 			= 1;
+					$itemPrice->conversion_ratio 	= 1;
+					$itemPrice->price 				= $obj->price;
+					$itemPrice->locale 				= $obj->locale;
+					$itemPrice->save();
+				}
 
 			   	$data["results"][] = array(
 			   		"id" 						=> $obj->id,

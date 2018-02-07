@@ -56,7 +56,7 @@ class Journal_lines extends REST_Controller {
 		}
 
 		$obj->include_related("contact", array("abbr","number","name"));
-		$obj->include_related("account", array("number","name"));
+		$obj->include_related("account", array("number","name","account_type_id"));
 		$obj->include_related("job", array("number","name"));
 		$obj->where("deleted <>", 1);
 		
@@ -73,9 +73,10 @@ class Journal_lines extends REST_Controller {
 			foreach ($obj as $value) {
 				//Account
 				$account = array(
-					"id" 		=> $value->account_id,
-					"number" 	=> $value->account_number ? $value->account_number : "", 
-					"name" 		=> $value->account_name ? $value->account_name : ""
+					"id" 				=> $value->account_id,
+					"number" 			=> $value->account_number ? $value->account_number : "", 
+					"name" 				=> $value->account_name ? $value->account_name : "",
+					"account_type_id" 	=> $value->account_account_type_id ? $value->account_account_type_id : 0
 				);
 
 				//Contact
@@ -239,14 +240,17 @@ class Journal_lines extends REST_Controller {
 		   	isset($value->locale)			? $obj->locale 				= $value->locale : "";
 		   	isset($value->deleted)			? $obj->deleted  			= $value->deleted : "";
 
+		   	//Account
 		   	if(isset($value->account)){
 				$obj->account_id = $value->account->id;
 			}
 
+			//Contact
 			if(isset($value->contact)){
 				$obj->contact_id = $value->contact->id;
 			}
 
+			//Job
 			if(isset($value->job)){
 				$obj->job_id = $value->job->id;
 			}

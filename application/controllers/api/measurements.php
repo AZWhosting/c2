@@ -45,6 +45,10 @@ class Measurements extends REST_Controller {
 	    		if(isset($value['operator'])) {
 					if($value["operator"]=="measurement_category") {
 	    				$obj->include_related("measurement_category", array("name"));
+	    			}else if($value['operator']=="startswith"){
+	    				$obj->like($value['field'], $value['value'], 'after');
+	    			}else if($value['operator']=="contains"){
+	    				$obj->like($value['field'], $value['value'], 'both');
 					}else{
 						$obj->{$value["operator"]}($value["field"], $value["value"]);
 					}
