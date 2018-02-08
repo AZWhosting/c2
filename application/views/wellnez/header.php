@@ -219,8 +219,11 @@ var themerPrimaryColor = primaryColor;
 	    padding: 8px 14px;
 	    border: none;
 	    height: 35px;
-	    margin-top: -4px;
+	    margin-top: -3px;
 	    border-radius: 0 3px 3px 0;
+	}
+	.search-menu button:hover{
+		background: #fff;
 	}
 	.menu .span6.logout{
 		text-align: right;
@@ -246,7 +249,7 @@ var themerPrimaryColor = primaryColor;
 				<div class="span12 menu">
 					<div class="row">
 						<div class="span2">
-							<a href="<?php echo base_url();?>wellnez" >
+							<a href="<?php echo base_url();?>wellnez/home" >
 				                <img src="<?php echo base_url();?>assets/spa/wellnez-01.png" >
 				            </a>
 				        </div>

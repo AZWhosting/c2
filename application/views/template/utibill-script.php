@@ -4194,10 +4194,10 @@
                 field: "month_of <=",
                 value: monthL
             });
-            // para.push({
-            //     field: "invoiced",
-            //     value: 0
-            // });
+            para.push({
+                field: "invoiced",
+                value: 0
+            });
             this.existReading.query({
                 filter: para
             })

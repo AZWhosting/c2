@@ -4992,7 +4992,7 @@
 							                		data-template="reading-Error11-template">
 							                	</tbody>
 											</table>
-											<div data-bind="visible: haveMonthOfShow" style="overflow: hidden;">
+											<!-- <div data-bind="visible: haveMonthOfShow" style="overflow: hidden;">
 												<p>Reading in this Month Of</p>
 												<table  class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 													<thead>
@@ -5010,7 +5010,7 @@
 								                		data-template="reading-month-of-template">
 								                	</tbody>
 												</table>
-											</div>
+											</div> -->
 											<div data-bind="visible: existShow" style="overflow: hidden;">
 												<p data-bind="text: lang.lang.exist_meter">Exist Meter</p>
 												<table  class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">

@@ -27,6 +27,9 @@
 		    padding-top: 0;
 		}
 	}
+	.span6 a{
+		color: #fff;
+	}
 	.home .bg-green{
 		background: #0eac00;
 		width: 100%;
@@ -222,31 +225,37 @@
 			<div class="span12">
 				<div class="row">
 					<div class="span6 nopadding-right">
-						<div class="bg-green height250 top-left" style="background: #fff; color: #0eac00; box-shadow: none;">
-							<div class="img">
-								<img src="<?php echo base_url();?>assets/spa/icon/pos-green.png" >
+						<a href="pos">
+							<div class="bg-green height250 top-left" style="background: #fff; color: #0eac00; box-shadow: none;">
+								<div class="img">
+									<img src="<?php echo base_url();?>assets/spa/icon/pos-green.png" >
+								</div>
+								<p class="textBig">Point of Sale</p>
 							</div>
-							<p class="textBig">Point of Sale</p>
-						</div>
+						</a>
 					</div>
 					<div class="span6" >
 						<div class="row">
-							<div class="span6 paddingLeftRigth">
-								<div class="bg-green height250">
-									<div class="img">
-										<img src="<?php echo base_url();?>assets/spa/icon/session.png" >
+							<a href="session">
+								<div class="span6 paddingLeftRigth">
+									<div class="bg-green height250">
+										<div class="img">
+											<img src="<?php echo base_url();?>assets/spa/icon/session.png" >
+										</div>
+										<p class="textSmall">Session Management</p>
 									</div>
-									<p class="textSmall">Session Management</p>
 								</div>
-							</div>
-							<div class="span6 nopadding-left">
-								<div class="bg-green height250 top-rigth">
-									<div class="img">
-										<img src="<?php echo base_url();?>assets/spa/icon/book.png" >
+							</a>
+							<a href="books">
+								<div class="span6 nopadding-left">
+									<div class="bg-green height250 top-rigth">
+										<div class="img">
+											<img src="<?php echo base_url();?>assets/spa/icon/book.png" >
+										</div>
+										<p class="textSmall">Booking Management</p>
 									</div>
-									<p class="textSmall">Booking Management</p>
 								</div>
-							</div>
+							</a>
 						</div>
 					</div>
 				</div>
@@ -255,12 +264,14 @@
 			<div class="span12">
 				<div class="row paddingTopBottom">
 					<div class="span6 nopadding-right">
-						<div class="bg-green height250">
-							<div class="img">
-								<img src="<?php echo base_url();?>assets/spa/icon/serving.png" >
+						<a href="services">
+							<div class="bg-green height250">
+								<div class="img">
+									<img src="<?php echo base_url();?>assets/spa/icon/serving.png" >
+								</div>
+								<p class="textBig">Servicing Customers</p>
 							</div>
-							<p class="textBig">Servicing Customers</p>
-						</div>
+						</a>
 					</div>
 					<div class="span6" >
 						<div class="row">
@@ -273,12 +284,14 @@
 								</div>
 							</div>
 							<div class="span6 nopadding-left">
-								<div class="bg-green height250">
-									<div class="img">
-										<img src="<?php echo base_url();?>assets/spa/icon/pay.png" >
+								<a href="pay">
+									<div class="bg-green height250">
+										<div class="img">
+											<img src="<?php echo base_url();?>assets/spa/icon/pay.png" >
+										</div>
+										<p class="textSmall">Print & Pay</p>
 									</div>
-									<p class="textSmall">Print & Pay</p>
-								</div>
+								</a>
 							</div>
 						</div>
 					</div>
