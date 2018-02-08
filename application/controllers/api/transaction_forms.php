@@ -60,36 +60,29 @@ class Transaction_forms extends REST_Controller {
 		if($obj->result_count()>0){	
 		 		
 			foreach ($obj as $value) {
-				if($value->id != 47 && $value->id != 48 && $value->id != 50){		
-					//Results				
+				//Results
+				if(intval($value->institute_id) > 0){
+					if($this->int == intval($value->institute_id)){
+						$data["results"][] = array(
+							"id" 			=> $value->id,
+							"type" 			=> $value->type,
+							"title" 	 	=> $value->title,
+							"moduls" 	 	=> $value->moduls,
+							"note" 	 		=> $value->note,
+							"image_url" 	=> $value->image_url,
+							"institute_id" 	=> intval($value->institute_id)
+						);
+					}
+				}else{
 					$data["results"][] = array(
-						"id" 			=> $value->id,					
+						"id" 			=> $value->id,
 						"type" 			=> $value->type,
 						"title" 	 	=> $value->title,
 						"moduls" 	 	=> $value->moduls,
 						"note" 	 		=> $value->note,
-						"image_url" 	=> $value->image_url	
+						"image_url" 	=> $value->image_url,
+						"institute_id" 	=> intval($value->institute_id)
 					);
-				}else{
-					if($this->int == 267 && $value->id != 50){
-						$data["results"][] = array(
-							"id" 			=> $value->id,					
-							"type" 			=> $value->type,
-							"title" 	 	=> $value->title,
-							"moduls" 	 	=> $value->moduls,
-							"note" 	 		=> $value->note,
-							"image_url" 	=> $value->image_url	
-						);
-					}else{
-						$data["results"][] = array(
-							"id" 			=> $value->id,					
-							"type" 			=> $value->type,
-							"title" 	 	=> $value->title,
-							"moduls" 	 	=> $value->moduls,
-							"note" 	 		=> $value->note,
-							"image_url" 	=> $value->image_url	
-						);
-					}
 				}
 			}
 		}

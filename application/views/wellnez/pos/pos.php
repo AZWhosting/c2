@@ -462,7 +462,7 @@
 											<div class="span6" style="padding-right: 1px; width: 50%;">
 												<div class="innerAll" style="height: 45px; padding-bottom: 0; padding: 15px 0 0 15px; float: left; width: 100%;">
 													<div class="widget-search separator bottom" style="padding: 0;">
-														<a class="btn btn-default pull-right" data-bind="click: search" style="padding: 7px 10px;"><i class="icon-search"></i></a>
+														<a class="btn btn-default pull-right" data-bind="click: search" style="padding: 4px 10px;"><i class="icon-search"></i></a>
 														<div class="overflow-hidden">
 															<input style="height: 30px; padding: 5px; border: 1px solid #ccc; color: #333;" type="search" placeholder="Number or Name..." data-bind="value: searchText, events:{change: search}">
 														</div>
@@ -626,7 +626,7 @@
 									    </table>
 				                    </div>		                
 								</div>
-								<div class="span6" style="padding-left: 0">
+								<div class="span6">
 									<div class="box-generic" style="background: #c4c2d2; padding: 0; border: none; margin-bottom: 0; padding-bottom: 15px;">
 										<div data-bind="visible: emSelect">
 											<input 
@@ -716,7 +716,7 @@
 										    	width: '50px', 
 										    	attributes: { style: 'text-align: center;' }, 
 										        template: function (dataItem) {
-										        	var rowIndex = banhji.pos.lineDS.indexOf(dataItem)+1;
+										        	var rowIndex = banhji.Index.lineDS.indexOf(dataItem)+1;
 										        	return '<i class=icon-trash data-bind=click:removeRow></i>' + ' ' + rowIndex;
 										      	}
 										    },
@@ -740,7 +740,7 @@
 											    width: '120px',
 											    attributes: { style: 'text-align: right;' },
 											    template: function(dataItem){
-											    	banhji.pos.changes();
+											    	banhji.Index.changes();
 											    	dataItem.set('amount', dataItem.price * dataItem.quantity);
 													return dataItem.quantity;
 												}
@@ -762,7 +762,7 @@
 											    width: '120px',
 											    attributes: { style: 'text-align: right;' },
 											    template: function(dataItem){
-											    	banhji.pos.changes();
+											    	banhji.Index.changes();
 											    	dataItem.set('amount', dataItem.price * dataItem.quantity);
 													return dataItem.price;
 												}
@@ -776,7 +776,7 @@
 											    width: '120px',
 											    attributes: { style: 'text-align: right;' },
 											    template: function(dataItem){
-											    	banhji.pos.changes();
+											    	banhji.Index.changes();
 											    	return dataItem.discount;
 												}
 											},
@@ -794,7 +794,7 @@
 				                            	hidden: true,
 				                            	editor: taxForSaleEditor, 
 				                            	template: function(dataItem){
-				                            		banhji.pos.changes();
+				                            		banhji.Index.changes();
 				                            		return dataItem.tax_item.name;
 				                            	}, 
 				                            	width: '90px' 
@@ -846,7 +846,7 @@
 								</button>
 							</div> -->
 
-							<div class="span6 botton" style="padding-left: 0;">
+							<div class="span6 botton">
 								<div class="row">
 									<div class="span12 ">
 										<div class="button-service">
@@ -964,7 +964,6 @@
 					</div>
 				</div>
 			</div>
-
 			<div class="span12" style="margin-top: 20px;">
 				<p data-bind="text: today"></span>
 			</div>
@@ -1007,7 +1006,7 @@
 	<tr data-uid="#: uid #">
 		<td>
 			<i class="icon-trash" data-bind="events: { click: rmEmployee }"></i>
-			#:banhji.pos.employeeAR.indexOf(data)+1#      
+			#:banhji.Index.employeeAR.indexOf(data)+1#      
 		</td>
 		<td>#= name#</td>
 	</tr>
@@ -1016,7 +1015,7 @@
 	<tr data-uid="#: uid #">
 		<td>
 			<i class="icon-trash" data-bind="events: { click: rmRoom }"></i>
-			#:banhji.pos.roomAR.indexOf(data)+1#      
+			#:banhji.Index.roomAR.indexOf(data)+1#      
 		</td>
 		<td>#= name#</td>
 	</tr>
@@ -1025,7 +1024,7 @@
 	<tr data-uid="#: uid #">
 		<td>
 			<i class="icon-trash" data-bind="events: { click: rmCustomer }"></i>
-			#:banhji.pos.customerAR.indexOf(data)+1#      
+			#:banhji.Index.customerAR.indexOf(data)+1#      
 		</td>
 		<td>#= name#</td>
 	</tr>
@@ -1038,7 +1037,7 @@
 	<tr data-uid="#: uid #">
 		<td>
 			<i class="icon-trash" data-bind="events: { click: rmBook }"></i>
-			#:banhji.pos.bookDS.indexOf(data)+1#      
+			#:banhji.Index.bookDS.indexOf(data)+1#      
 		</td>
 		<td>#= name#</td>
 		<td>#= phone#</td>

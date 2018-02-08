@@ -3934,9 +3934,8 @@
         isVisible          : true,
         isEnabled          : true,
         pageLoad           : function(id){
-            // if(sessionID == 0){
-            //     banhji.router.navigate("/");
-            // }
+            var x = banhji.userData.username;
+            $("#userCut").text(x);
             if(id){
                 this.set("isEdit", true);
                 this.loadObj(id);
@@ -3944,6 +3943,11 @@
                 if(this.get("isEdit") || this.dataSource.total()==0){
                     this.addEmpty();
                 }
+            }
+            if(JSON.parse(localStorage.getItem('userData/cashier_id')) > 0){
+            }else{
+                alert("You didn't have session yet.");
+                window.location.href = "<?php echo base_url(); ?>wellnez/session";
             }
         },
         millisToMinutesAndSeconds: function(millis) {
@@ -5792,4 +5796,4 @@
         var Href1 = '<?php echo base_url(); ?>assets/water/winvoice-res.css';
         var Href2 = '<?php echo base_url(); ?>assets/water/winvoice-print.css';
     });
-</script> 
+</script>

@@ -580,15 +580,15 @@ class Waterdash extends REST_Controller {
 
 		$obj->where('type', 'Utility_Invoice');
 		$obj->where('deleted', 0);
-		$obj->where("issued_date >=", date("Y")."-01-01");
-		$obj->where("issued_date <=", date("Y")."-12-31");						
-		$obj->order_by("issued_date");	
+		$obj->where("month_of >=", date("Y")."-01-01");
+		$obj->where("month_of <=", date("Y")."-12-31");						
+		$obj->order_by("month_of");	
 		$obj->get_iterated();
 		$temp = array();
 
 		if($obj->exists()){
 			foreach ($obj as $value) {
-				$invoiceMonth = date('F', strtotime($value->issued_date));
+				$invoiceMonth = date('F', strtotime($value->month_of));
 				if(isset($temp["$invoiceMonth"])) {
 					$temp["$invoiceMonth"]['amount'] += floatval($value->amount);
 				} else {
