@@ -376,7 +376,7 @@ class Item_lines extends REST_Controller {
 							}
 							$currentQuantity = floatval($value->quantity) * floatval($value->conversion_ratio) * $movement;
 							$totalQuantity = floatval($unitOnHand->total) + $currentQuantity;
-
+							
 							//Additional cost
 							$additionalCost = 0;
 							if(isset($value->additional_cost)){
@@ -390,7 +390,7 @@ class Item_lines extends REST_Controller {
 
 							//If sale with zero cost
 							if(in_array($transaction->type, $saleList) && floatval($value->cost)==0){
-								$zeroCostAmt = $currentQuantity * $cost / floatval($value->rate);
+								$zeroCostAmt = $currentQuantity * $cost;
 
 								//Fill zero cost
 								$obj->cost = $cost;

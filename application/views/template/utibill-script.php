@@ -14422,19 +14422,23 @@
             });
         }
     });
-    banhji.connectionList = kendo.observable({
+    banhji.to_be_connectionList = kendo.observable({
         lang: langVM,
         institute: banhji.institute,
-        dataSource: dataStore(apiUrl + "utibillReports/connection_list"),
+        dataSource: dataStore(apiUrl + "utibillReports/to_be_connection_list"),
         licenseDS: dataStore(apiUrl + "branches"),
         blocDS: dataStore(apiUrl + "locations"),
         subLocationDS: dataStore(apiUrl + "locations"),
         boxDS: dataStore(apiUrl + "locations"),
-        company: banhji.institute,
         licenseSelect: null,
+        company: banhji.institute,
         blocSelect: null,
+        loSelectName: "",
+        monthOf: "",
+        monthOfUpload: null,
         pageLoad: function() {
             this.licenseDS.read();
+            this.set("monthOfUpload", "<?php echo date('Y-m-d');?>");
             this.search();
         },
         printGrid: function() {
@@ -14587,10 +14591,10 @@
                 monthL = kendo.toString(monthL, "yyyy-MM-dd");
 
                 para.push({
-                    field: "created_at >=",
+                    field: "updated_at >=",
                     value: monthOf
                 }, {
-                    field: "created_at <=",
+                    field: "updated_at <=",
                     value: monthL
                 });
                 this.set("monthOf", monthOf);
@@ -14598,7 +14602,7 @@
                         if(license_id){
                             para.push({
                                 field: "branch_id",
-                                operator: "where_related_meter",
+                                operator: "where",
                                 value: license_id
                             });
                         }
@@ -14606,7 +14610,7 @@
                         if (box_id) {
                             para.push({
                                 field: "box_id",
-                                operator: "where_related_meter",
+                                operator: "where",
                                 value: box_id
                             });
                         } 
@@ -14614,7 +14618,7 @@
                         if (pole_id) {
                             para.push({
                                 field: "pole_id",
-                                operator: "where_related_meter",
+                                operator: "where",
                                 value: pole_id
                             });
                         } 
@@ -14622,7 +14626,7 @@
                         if (bloc_id){
                             para.push({
                                 field: "location_id",
-                                operator: "where_related_meter",
+                                operator: "where",
                                 value: bloc_id
                             });
                         }
@@ -14649,19 +14653,260 @@
                         },
                         {
                             autoWidth: true
-                        },
-                        {
-                            autoWidth: true
                         }
                     ],
-                    title: "Disconnect Customer List",
+                    title: "Customer List",
                     rows: this.exArray
                 }]
             });
             //save the file as Excel file with extension xlsx
             kendo.saveAs({
                 dataURI: workbook.toDataURL(),
-                fileName: "disconnectCustomer.xlsx"
+                fileName: "customerList.xlsx"
+            });
+        }
+    });
+    banhji.connectionList = kendo.observable({
+        lang: langVM,
+        institute: banhji.institute,
+        dataSource: dataStore(apiUrl + "utibillReports/connection_list"),
+        licenseDS: dataStore(apiUrl + "branches"),
+        blocDS: dataStore(apiUrl + "locations"),
+        subLocationDS: dataStore(apiUrl + "locations"),
+        boxDS: dataStore(apiUrl + "locations"),
+        licenseSelect: null,
+        company: banhji.institute,
+        blocSelect: null,
+        loSelectName: "",
+        monthOf: "",
+        monthOfUpload: null,
+        pageLoad: function() {
+            this.licenseDS.read();
+            this.set("monthOfUpload", "<?php echo date('Y-m-d');?>");
+            this.search();
+        },
+        printGrid: function() {
+            var gridElement = $('#grid'),
+                printableContent = '',
+                win = window.open('', '', 'width=900, height=700'),
+                doc = win.document.open();
+            var htmlStart =
+                '<!DOCTYPE html>' +
+                '<html>' +
+                '<head>' +
+                '<meta charset="utf-8" />' +
+                '<title></title>' +
+                '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />' +
+                '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
+                '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
+                '<link href="<?php echo base_url(); ?>assets/responsive.css" rel="stylesheet" >' +
+                '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
+                '<style>' +
+                '*{  } html { font: 11pt sans-serif; }' +
+                '.k-grid { border-top-width: 0; }' +
+                '.k-grid, .k-grid-content { height: auto !important; }' +
+                '.k-grid-content { overflow: visible !important; }' +
+                'div.k-grid table { table-layout: auto; width: 100% !important; }' +
+                '.k-grid .k-grid-header th { border-top: 1px solid; }' +
+                '.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
+                '</style><style type="text/css" media="print"> @page { size: landscape; margin:0mm; } .saleSummaryCustomer .total-customer, .saleSummaryCustomer .total-sale { background-color: #DDEBF7!important; -webkit-print-color-adjust:exact; }.saleSummaryCustomer .table.table-borderless.table-condensed  tr th { background-color: #1E4E78!important;-webkit-print-color-adjust:exact;}.saleSummaryCustomer .table.table-borderless.table-condensed  tr th span{ color: #fff!important; }.saleSummaryCustomer .table.table-borderless.table-condensed tr:nth-child(2n+1) td {  background-color: #fff!important; -webkit-print-color-adjust:exact;} .saleSummaryCustomer .table.table-borderless.table-condensed tr td { background-color: #F2F2F2!important;-webkit-print-color-adjust:exact; } </style>' +
+                '</head>' +
+                '<body><div id="example" class="k-content saleSummaryCustomer" style="padding: 30px;">';
+            var htmlEnd =
+                '</div></body>' +
+                '</html>';
+
+            printableContent = $('#invFormContent').html();
+            doc.write(htmlStart + printableContent + htmlEnd);
+            doc.close();
+            setTimeout(function() {
+                win.print();
+                win.close();
+            }, 2000);
+        },
+        licenseChange: function(e) {
+            var self = this;
+            this.blocDS.data([]);
+            this.set("locationSelect", "");
+            this.set("haveLicense", false)
+            this.subLocationDS.data([]);
+            this.boxDS.data([]);
+            this.set("boxSelect", "");
+            this.set("haveLocation", false);
+            this.set("haveSubLocation", false);
+            this.blocDS.filter([{
+                    field: "branch_id",
+                    value: this.get("licenseSelect")
+                },
+                {
+                    field: "main_bloc",
+                    value: 0
+                },
+                {
+                    field: "main_pole",
+                    value: 0
+                }
+            ]);
+            this.set("haveLicense", true);
+            this.set("liSelectName", e.sender.span[0].innerText);
+        },        
+        onLocationChange: function(e) {
+            var self = this;
+            this.subLocationDS.data([]);
+            this.boxDS.data([]);
+            this.set("boxSelect", "");
+            this.set("haveSubLocation", false);
+            if (this.get("blocSelect")) {
+                this.subLocationDS.query({
+                        filter: [{
+                                field: "branch_id",
+                                value: this.get("licenseSelect")
+                            },
+                            {
+                                field: "main_bloc",
+                                value: this.get("blocSelect")
+                            },
+                            {
+                                field: "main_pole",
+                                value: 0
+                            }
+                        ],
+                        page: 1
+                    })
+                    .then(function(e) {
+                        if (self.subLocationDS.data().length > 0) {
+                            self.set("haveLocation", true);
+                        } else {
+                            self.set("haveLocation", false);
+                            self.set("subLocationSelect", "");
+                            self.subLocationDS.data([]);
+                        }
+                    });
+            }
+            this.set("loSelectName", e.sender.span[0].innerText);
+        },
+        onSubLocationChange: function(e) {
+            var self = this;
+            if (this.get("subLocationSelect")) {
+                this.boxDS.query({
+                        filter: [{
+                                field: "branch_id",
+                                value: this.get("licenseSelect")
+                            },
+                            {
+                                field: "main_bloc",
+                                value: this.get("blocSelect")
+                            },
+                            {
+                                field: "main_pole",
+                                value: this.get("subLocationSelect")
+                            }
+                        ]
+                    })
+                    .then(function(e) {
+                        if (self.boxDS.data().length > 0) {
+                            self.set("haveSubLocation", true);
+                        } else {
+                            self.set("haveSubLocation", false);
+                            self.set("boxSelect", "");
+                            self.boxDS.data([]);
+                        }
+                    });
+            }
+        },
+        search: function() {
+            var monthOfSearch = this.get("monthOfUpload"),
+                license_id = this.get("licenseSelect"),
+                bloc_id = this.get("blocSelect");
+                pole_id = this.get("subLocationSelect");
+                box_id = this.get("boxSelect");
+
+            var para = [];
+            var monthPara = [];
+            var monthOf = new Date(monthOfSearch);
+                monthOf.setDate(1);
+                monthOf = kendo.toString(monthOf, "yyyy-MM-dd");
+
+                var monthL = new Date(monthOfSearch);
+                var lastDayOfMonth = new Date(monthL.getFullYear(), monthL.getMonth() + 1, 0);
+                lastDayOfMonth = lastDayOfMonth.getDate();
+
+                monthL.setDate(lastDayOfMonth);
+                monthL = kendo.toString(monthL, "yyyy-MM-dd");
+
+                para.push({
+                    field: "updated_at >=",
+                    value: monthOf
+                }, {
+                    field: "updated_at <=",
+                    value: monthL
+                });
+                this.set("monthOf", monthOf);
+                //this.dataSource.filter(para);
+                        if(license_id){
+                            para.push({
+                                field: "branch_id",
+                                operator: "where",
+                                value: license_id
+                            });
+                        }
+
+                        if (box_id) {
+                            para.push({
+                                field: "box_id",
+                                operator: "where",
+                                value: box_id
+                            });
+                        } 
+
+                        if (pole_id) {
+                            para.push({
+                                field: "pole_id",
+                                operator: "where",
+                                value: pole_id
+                            });
+                        } 
+
+                        if (bloc_id){
+                            para.push({
+                                field: "location_id",
+                                operator: "where",
+                                value: bloc_id
+                            });
+                        }
+                        this.dataSource.query({
+                            filter: para,
+                            limit: 300
+                        });                     
+        },
+        cancel: function() {
+            this.contact.cancelChanges();
+            window.history.back();
+        },
+        ExportExcel: function() {
+            var workbook = new kendo.ooxml.Workbook({
+                sheets: [{
+                    columns: [{
+                            autoWidth: true
+                        },
+                        {
+                            autoWidth: true
+                        },
+                        {
+                            autoWidth: true
+                        },
+                        {
+                            autoWidth: true
+                        }
+                    ],
+                    title: "Customer List",
+                    rows: this.exArray
+                }]
+            });
+            //save the file as Excel file with extension xlsx
+            kendo.saveAs({
+                dataURI: workbook.toDataURL(),
+                fileName: "customerList.xlsx"
             });
         }
     });
@@ -25123,6 +25368,9 @@
         connectionList: new kendo.Layout("#connectionList", {
             model: banhji.connectionList
         }),
+        to_be_connectionList: new kendo.Layout("#to_be_connectionList", {
+            model: banhji.to_be_connectionList
+        }),
         to_be_disconnectList: new kendo.Layout("#to_be_disconnectList", {
             model: banhji.to_be_disconnectList
         }),
@@ -25825,7 +26073,24 @@
             vm.pageLoad();
         }
     });
-    banhji.router.route("/connect_list", function() {
+    banhji.router.route("/to_be_connection_list", function() {
+        if (!banhji.userManagement.getLogin()) {
+            banhji.router.navigate('/manage');
+        } else {
+            banhji.view.layout.showIn("#content", banhji.view.to_be_connectionList);
+            banhji.view.layout.showIn('#menu', banhji.view.menu);
+            banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+
+            var vm = banhji.to_be_connectionList;
+            banhji.userManagement.addMultiTask("Customer To Be Connected", "to_be_connection_list", null);
+            if (banhji.pageLoaded["to_be_connection_list"] == undefined) {
+                banhji.pageLoaded["to_be_connection_list"] = true;
+
+            }
+            vm.pageLoad();
+        }
+    });
+    banhji.router.route("/connection_list", function() {
         if (!banhji.userManagement.getLogin()) {
             banhji.router.navigate('/manage');
         } else {
@@ -25834,9 +26099,9 @@
             banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
 
             var vm = banhji.connectionList;
-            banhji.userManagement.addMultiTask("Connected List", "connect_list", null);
-            if (banhji.pageLoaded["disconnect_list"] == undefined) {
-                banhji.pageLoaded["disconnect_list"] = true;
+            banhji.userManagement.addMultiTask("Customer List", "connection_list", null);
+            if (banhji.pageLoaded["connection_list"] == undefined) {
+                banhji.pageLoaded["connection_list"] = true;
 
             }
             vm.pageLoad();
