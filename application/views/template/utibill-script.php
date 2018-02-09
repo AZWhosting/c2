@@ -17383,15 +17383,13 @@
                                 colSpan: 15
                             }]
                         });
-                        if (self.displayDate) {
-                            self.exArray.push({
-                                cells: [{
-                                    value: self.get("monthOfSelect"),
-                                    textAlign: "center",
-                                    colSpan: 15
-                                }]
-                            });
-                        }
+                        self.exArray.push({
+                            cells: [{
+                                value: kendo.toString(monthOf, "MM-yyyy"),
+                                textAlign: "center",
+                                colSpan: 15
+                            }]
+                        });
                         self.exArray.push({
                             cells: [{
                                 value: "",
@@ -17400,77 +17398,77 @@
                         });
                         self.exArray.push({
                             cells: [{
-                                    value: "Bloc",
+                                    value: "ប្លុក | Bloc",
                                     background: "#496cad",
                                     color: "#ffffff"
                                 },
                                 {
-                                    value: "Customer",
+                                    value: "ចំ​នួនអតិថិជនសរុប | Total Customer",
                                     background: "#496cad",
                                     color: "#ffffff"
                                 },
                                 {
-                                    value: "Void",
+                                    value: "ចំ​នួនអតិថិជនផ្អាកប្រើ | Void",
                                     background: "#496cad",
                                     color: "#ffffff"
                                 },
                                 {
-                                    value: "Usage",
+                                    value: "បរិមាណប្រើប្រាស់ | Usage",
                                     background: "#496cad",
                                     color: "#ffffff"
                                 },
                                 {
-                                    value: "Cash",
+                                    value: "ជាសាច់ប្រាក់ | Cash",
                                     background: "#496cad",
                                     color: "#ffffff"
                                 },
                                 {
-                                    value: "Maintenance",
+                                    value: "សេវាថែទាំ | Maintenance",
                                     background: "#496cad",
                                     color: "#ffffff"
                                 },
                                 {
-                                    value: "Installment",
+                                    value: "រំលោះ | Installment",
                                     background: "#496cad",
                                     color: "#ffffff"
                                 },
                                 {
-                                    value: "Other Service",
+                                    value: "សេវាផ្សេងៗ | Other Service",
                                     background: "#496cad",
                                     color: "#ffffff"
                                 },
                                 {
-                                    value: "Exemption",
+                                    value: "អនុគ្រោះ | Exemption",
                                     background: "#496cad",
                                     color: "#ffffff"
                                 },
                                 {
-                                    value: "Fine",
+                                    value: "ពិន័យ | Fine",
                                     background: "#496cad",
                                     color: "#ffffff"
                                 },
                                 {
-                                    value: "Balance Last Month",
+                                    value: "បំណុលខែមុន | Balance Last Month",
                                     background: "#496cad",
                                     color: "#ffffff"
                                 },
                                 {
-                                    value: "Sub Total",
+                                    value: "សរុបរួម | Sub Total",
                                     background: "#496cad",
                                     color: "#ffffff"
                                 },
                                 {
-                                    value: "Cash Receipt",
+                                    value: "សាច់ប្រាក់ទទួលបាន | Cash Receipt",
                                     background: "#496cad",
                                     color: "#ffffff"
                                 },
                                 {
-                                    value: "Discount",
+                                    value: "បញ្ចុះតម្លៃ | Discount",
                                     background: "#496cad",
                                     color: "#ffffff"
                                 },
                                 {
-                                    value: "Ending Balance",
+                                    value: "បំណុលចុងគ្រា | Ending Balance",
                                     background: "#496cad",
                                     color: "#ffffff"
                                 },
@@ -17527,7 +17525,7 @@
                                 ]
                             });
                         });
-                        self.set("total", total);
+                        self.set("total", kendo.toString(total, banhji.locale == "km-KH" ? "c0" : "c", banhji.locale));
                     });
                 } else {
                     alert("Please Select License");
@@ -17615,6 +17613,9 @@
             var workbook = new kendo.ooxml.Workbook({
                 sheets: [{
                     columns: [{
+                            autoWidth: true
+                        },
+                        {
                             autoWidth: true
                         },
                         {
@@ -24778,6 +24779,7 @@
     banhji.cashReAuto = kendo.observable({
         lang: langVM,
         dataSource: dataStore(apiUrl + "utibills/receiptauto"),
+        invoiceDS: dataStore(apiUrl + "transactions"),
         onSelected: function(e) {
             $('li.k-file').remove();
             var self = this;
@@ -24884,6 +24886,59 @@
                     self.cusDS.data([]);
                 });
             }
+        },
+        invAR: [],
+        noInvAR: [],
+        noInvShow: false,
+        onInvSelected: function(e){
+            $('li.k-file').remove();
+            var self = this;
+            var files = e.files;
+            var reader = new FileReader();
+            this.invoiceDS.data([]);
+            this.invAR = [];
+            this.noInvAR = [];
+            reader.onload = function() {
+                var data = reader.result;
+                var result = {};
+                var workbook = XLSX.read(data, {
+                    type: 'binary'
+                });
+                workbook.SheetNames.forEach(function(sheetName) {
+                    var roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+                    if (roa.length > 0) {
+                        result[sheetName] = roa;
+                        for (var i = 0; i < roa.length; i++) {
+                            self.invoiceDS.query({
+                                filter: {field: "number", value: roa[i].number},
+                                pageSize: 1
+                            }).then(function(e){
+                                var v = self.invoiceDS.view();
+                                if(v.length > 0){
+                                    self.invAR.push({
+                                        number: v[0].number,
+                                        amount: v[0].amount,
+                                        contact: v[0].contact.name,
+                                        received: roa[i].received,
+                                    });
+                                }else{
+                                    self.noInvAR.push({
+                                        line: i + 1,
+                                        number: roa[i].number,
+                                        amount: roa[i].received
+                                    });
+                                }
+                            });
+                        }
+                        if(self.noInvAR.length > 0){
+                            self.set("noInvShow", true);
+                        }else{
+                            self.set("noInvShow", false);
+                        }
+                    }
+                });
+            }
+            reader.readAsBinaryString(files[0].rawFile);
         },
         cancel: function(e) {
             window.history.back();

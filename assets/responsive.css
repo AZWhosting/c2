@@ -144,9 +144,19 @@ div.k-window{
   float: left;
   width: 95%;
   background: #fff;
-  padding: 10px 15px 0 5px;
+  padding: 10px 5px;
   margin-bottom: 15px;
 
+}
+.cover-block .table-condensed td{
+  padding: 5px 6px!important;
+}
+.cover-block .table-condensed td a img{
+  height: 130px;
+  width: 102px;
+}
+.table-bordered tr  th{
+      text-transform: uppercase !important;
 }
 .k-draghandle.k-state-selected:hover, .k-ghost-splitbar-horizontal, .k-ghost-splitbar-vertical, .k-list>.k-state-highlight, .k-list>.k-state-selected, .k-marquee-color, .k-panel>.k-state-selected, .k-scheduler .k-scheduler-toolbar .k-state-selected, .k-scheduler .k-today.k-state-selected, .k-state-selected, .k-state-selected:link, .k-state-selected:visited{
   background-color: #21abf6 !important;
@@ -3572,4 +3582,4 @@ html.top-full .navbar.main .topnav .dropdown > a .caret{
 .product-view.k-widget{
   padding: 10px;
   margin-bottom: 10px;
-}
+}    

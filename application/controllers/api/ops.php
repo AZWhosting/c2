@@ -46,7 +46,29 @@ class Ops extends REST_Controller {
 			    // $this->dbforge->add_field("ending_ballance decimal(30,15) DEFAULT NULL");
 			    // $this->dbforge->add_field("created_at date DEFAULT NULL");
 			    // $this->dbforge->add_field("updated_at date DEFAULT NULL");
-			    // $this->dbforge->create_table('tmp_total_sales', TRUE);			    
+			    // $this->dbforge->create_table('tmp_total_sales', TRUE);
+			    // $this->dbforge->add_field('id');
+			    // $this->dbforge->add_field("type char(1) DEFAULT 'w'");
+			    // $this->dbforge->add_field("attachment_id int(11) DEFAULT '0'");
+			    // $this->dbforge->add_field("number varchar(20) DEFAULT NULL");
+			    // $this->dbforge->add_field("name varchar(100) DEFAULT NULL");
+			    // $this->dbforge->add_field("abbr varchar(10) DEFAULT NULL");
+			    // $this->dbforge->add_field("representative varchar(100) DEFAULT NULL");
+			    // $this->dbforge->add_field("currency_id varchar(10) DEFAULT NULL");
+			    // $this->dbforge->add_field("status varchar(10) DEFAULT NULL");
+			    // $this->dbforge->add_field("expire_date date DEFAULT NULL");
+			    // $this->dbforge->add_field("max_customer int(10) DEFAULT NULL");
+			    // $this->dbforge->add_field("description varchar(300) DEFAULT NULL");
+			    // $this->dbforge->add_field("address varchar(200) DEFAULT NULL");
+			    // $this->dbforge->add_field("province varchar(100) DEFAULT NULL");
+			    // $this->dbforge->add_field("district varchar(200) DEFAULT NULL");
+			    // $this->dbforge->add_field("email varchar(100) DEFAULT NULL");
+			    // $this->dbforge->add_field("mobile varchar(100) DEFAULT NULL");
+			    // $this->dbforge->add_field("telephone varchar(100) DEFAULT NULL");
+			    // $this->dbforge->add_field("term_of_condition varchar(500) DEFAULT NULL");
+			    // $this->dbforge->add_field("created_at date DEFAULT NULL");
+			    // $this->dbforge->add_field("updated_at date DEFAULT NULL");
+			    // $this->dbforge->create_table('branches', TRUE);			    
 
 				//Rename Table 'old_table_name' to 'new_table_name'
 			    // $this->dbforge->rename_table('item_locations', 'bin_locations');

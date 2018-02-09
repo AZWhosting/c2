@@ -13837,9 +13837,9 @@
 										<li class="active">
 											<a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date">Date</span></a>
 										</li>	
-										<li>
+										<!-- <li>
 											<a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.filter">Filter</span></a>
-										</li>
+										</li> -->
 										<li>
 											<a class="glyphicons print" href="#tab-3" data-toggle="tab" ><i></i><span data-bind="text: lang.lang.print_export">Print/Export</span></a>
 										</li>
@@ -13963,21 +13963,18 @@
 									    { 
 									    	field: 'bloc_name',
 									    	title: langVM.lang.bloc,
-									    	width: '250px', 
 									    	editable: 'false', 
 			                            	attributes: { style: 'text-align: left;' }
 									    },
 									    { 
 									    	field: 'total_customer',
 									    	title: langVM.lang.customer,
-									    	width: '250px', 
 									    	editable: 'false', 
 			                            	attributes: { style: 'text-align: center;' }
 									    },
 									    { 
 									    	field: 'void_customer',
 									    	title: langVM.lang.void,
-									    	width: '250px', 
 									    	hidden: true,
 									    	editable: 'false', 
 			                            	attributes: { style: 'text-align: center;' }
@@ -13985,14 +13982,12 @@
 									    { 
 									    	field: 'total_usage',
 									    	title: langVM.lang.usage,
-									    	width: '250px', 
 									    	editable: 'false', 
 			                            	attributes: { style: 'text-align: center;' }
 									    },
 									    { 
 									    	field: 'amount_invoice',
 									    	title: langVM.lang.cash,
-									    	width: '250px', 
 									    	format: '{0:n}',
 									    	editable: 'false', 
 			                            	attributes: { style: 'text-align: right;' }
@@ -14000,7 +13995,6 @@
 									    { 
 									    	field: 'amount_maintenance',
 									    	title: langVM.lang.maintenance,
-									    	width: '250px', 
 									    	editable: 'false', 
 									    	format: '{0:n}',
 									    	hidden: true,
@@ -14009,7 +14003,6 @@
 									    { 
 									    	field: 'amount_int',
 									    	title: langVM.lang.installment,
-									    	width: '250px', 
 									    	format: '{0:n}',
 									    	hidden: true,
 									    	editable: 'false', 
@@ -14018,26 +14011,20 @@
 									    { 
 									    	field: 'amount_other_service',
 									    	title: langVM.lang.other_charge,
-									    	width: '250px', 
-									    	hidden: true,
 									    	format: '{0:n}',
-									    	hidden: true,
 									    	editable: 'false', 
 			                            	attributes: { style: 'text-align: right;' }
 									    },
 									    { 
 									    	field: 'amount_exemption',
 									    	title: langVM.lang.exemption,
-									    	width: '250px', 
 									    	editable: 'false',
-									    	hidden: true, 
 									    	format: '{0:n}',
 			                            	attributes: { style: 'text-align: right;' }
 									    },
 									    { 
 									    	field: 'amount_fine',
 									    	title: langVM.lang.fine,
-									    	width: '250px', 
 									    	format: '{0:n}',
 									    	editable: 'false', 
 									    	hidden: true,
@@ -14046,7 +14033,6 @@
 			                            { 
 									    	field: 'balance_last_month',
 									    	title: langVM.lang.balance_last_month,
-									    	width: '250px', 
 									    	editable: 'false', 
 									    	hidden: true,
 							    			format: '{0:n}',
@@ -14055,7 +14041,6 @@
 									    { 
 									    	field: 'subtotal_amount',
 									    	title: langVM.lang.subtotal,
-									    	width: '250px', 
 									    	editable: 'false', 
 									    	format: '{0:n}',
 			                            	attributes: { style: 'text-align: right;' }
@@ -14063,7 +14048,6 @@
 									    { 
 									    	field: 'amount_receive',
 									    	title: langVM.lang.amount_received,
-									    	width: '250px', 
 									    	format: '{0:n}',
 									    	editable: 'false', 
 			                            	attributes: { style: 'text-align: right;' }
@@ -14071,7 +14055,6 @@
 									    { 
 									    	field: 'discount',
 									    	title: langVM.lang.discount,
-									    	width: '250px', 
 									    	hidden: true,
 									    	format: '{0:n}',
 									    	editable: 'false', 
@@ -14080,7 +14063,6 @@
 									    { 
 									    	field: 'ending_balance',
 									    	title: langVM.lang.ending_balance,
-									    	width: '250px', 
 									    	format: '{0:n}',
 									    	editable: 'false', 
 			                            	attributes: { style: 'text-align: right;' },
@@ -16423,10 +16405,11 @@
   				<li><a href='#/run_bill'><span >2. Run Bill</span></a></li> 
   				<li><a href='#/print_bill'><span >3. Print Bill</span></a></li>
   				<li><a href='#/receipt'><span >4. Cash Receipt</span></a></li>
+  				<li><a href='#/cash_auto'><span >Cash Receipt Auto</span></a></li>
   				<li><span class="li-line"></span></li>
   				<!-- <li><a href='#/imports'><span >Import</span></a></li>
-  				<li><span class="li-line"></span></li>
-  				<li><a href='#/backup'><span >Back Up</span></a></li> -->
+  				<li><span class="li-line"></span></li> -->
+  				
   				<li><a href='#/offline'><span >Offline</span></a></li>
   			</ul>
 	  	</li>
@@ -16460,19 +16443,51 @@
 			    		<span class="glyphicons no-js remove_2" 
 							data-bind="click: cancel"><i></i></span>	
 					</div>
-			        <h2 style="padding:0 15px;">Import</h2>
+			        <h2 style="padding:0 15px;">Cash Recieve Auto</h2>
 					<br />
 					<div class="relativeWrap" data-toggle="source-code">
 						<div class="widget widget-tabs widget-tabs-double-2 widget-tabs-gray">
 							<div class="widget-head">
 								<ul style="padding-left: 1px;">
-									<li class="active"><a class="glyphicons group" href="#tabMeter" data-toggle="tab"><i></i><span style="line-height: 55px;">Meter</span></a></li>
-									<li><a class="glyphicons group" href="#tabContact" data-toggle="tab"><i></i><span style="line-height: 55px;">Customer Number</span></a></li>
+									<li class="active"><a class="glyphicons group" href="#tabNum" data-toggle="tab"><i></i><span style="line-height: 55px;">Invoice Number</span></a></li>
+									<!-- <li><a class="glyphicons group" href="#tabMeter" data-toggle="tab"><i></i><span style="line-height: 55px;">Meter Number</span></a></li>
+									<li><a class="glyphicons group" href="#tabContact" data-toggle="tab"><i></i><span style="line-height: 55px;">Customer Number</span></a></li> -->
 								</ul>
 							</div>
 							<div class="widget-body">
 								<div class="tab-content">
-									<div id="tabMeter" style="border: 1px solid #ccc" class="tab-pane active widget-body-regular">
+									<div id="tabNum" style="border: 1px solid #ccc" class="tab-pane active widget-body-regular">
+										<h4 class="separator bottom" style="margin-top: 10px;">Recieve By Invoice Number</h4>
+										<a href="<?php echo base_url(); ?>assets/water/invoice_cash_auto.xlsx" download>
+											<span id="saveClose" class="btn btn-icon btn-success glyphicons download" >
+												<i></i> 
+												<span data-bind="text: lang.lang.download_file_example">Download file example</span>
+											</span>
+										</a>
+										<div class="fileupload fileupload-new margin-none" data-provides="fileupload">
+										  	<input type="file"  
+										  		data-role="upload" 
+										  		data-show-file-list="true" 
+										  		data-bind="events: {select: onInvSelected}" 
+										  		id="myFile"  class="margin-none" />
+										</div>
+										<div data-bind="visible: noInvShow">
+											<table style="margin-bottom: 0;" class="table table-borderless table-condensed cart_total">
+												<thead>
+													<th>Line</th>
+													<th>Invoice Number</th>
+													<th>Amount</th>
+												</thead>
+								            	<tbody data-role="listview" 
+									        		data-template="cash-auto-no-inv-template" 
+									        		data-auto-bind="false"
+									        		data-bind="source: noInvAR"></tbody>
+											</table>
+										</div>
+										<span class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: noInvShow" style="width: 160px!important;"><i></i>
+										<span data-bind="click: save">Start Import</span></span>
+									</div>
+									<div id="tabMeter" style="border: 1px solid #ccc" class="tab-pane widget-body-regular">
 										<h4 class="separator bottom" style="margin-top: 10px;">Recieve By Meter ID</h4>
 										<div class="fileupload fileupload-new margin-none" data-provides="fileupload">
 										  	<input type="file"  
@@ -16506,7 +16521,19 @@
 		</div>
 	</div>
 </script>
-
+<script id="cash-auto-no-inv-template" type="text/x-kendo-tmpl">
+	<tr>
+		<td>
+			#: line#
+		</td>
+		<td>
+			#: number#
+		</td>
+		<td>
+			#: amount#
+		</td>
+	</tr>
+</script>
 <script id="itemAssembly" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background">
