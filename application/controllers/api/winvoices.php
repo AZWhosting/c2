@@ -309,10 +309,12 @@ class Winvoices extends REST_Controller {
 	   			$totalsale->where("month_of", $month_of)->limit(1)->get();
 	   			if($totalsale->exists()){
 	   				$totalsale->amount += floatval($obj->amount);
+	   				$totalsale->ending_ballance += floatval($obj->amount);
 	   			}else{
 	   				$totalsale->location_id = $obj->location_id;
 	   				$totalsale->month_of = $month_of;
 	   				$totalsale->amount += floatval($obj->amount);
+	   				$totalsale->ending_ballance += floatval($obj->amount);
 	   			}
 
 	   			//Jounal

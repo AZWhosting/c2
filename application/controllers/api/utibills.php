@@ -460,10 +460,16 @@ class Utibills extends REST_Controller {
 	   			$totalsale->where("month_of", $month_of)->limit(1)->get();
 	   			if($totalsale->exists()){
 	   				$totalsale->amount_recieved += floatval($obj->amount);
+	   				if(floatval($totalsale->ending_ballance) >= floatval($obj->amount)){
+	   					$totalsale->ending_ballance -= floatval($obj->amount);
+	   				}else{
+	   					$totalsale->ending_ballance = 0;
+	   				}
 	   			}else{
 	   				$totalsale->location_id = $obj->location_id;
 	   				$totalsale->month_of = $month_of;
 	   				$totalsale->amount_recieved += floatval($obj->amount);
+	   				$totalsale->ending_ballance -= floatval($obj->amount);
 	   			}
 	   			//Journal DR
 	   			$journal = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);

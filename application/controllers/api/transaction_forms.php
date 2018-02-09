@@ -81,7 +81,7 @@ class Transaction_forms extends REST_Controller {
 						"moduls" 	 	=> $value->moduls,
 						"note" 	 		=> $value->note,
 						"image_url" 	=> $value->image_url,
-						"institute_id" 	=> intval($value->institute_id)
+						"institute_id" 	=> intval($value->institute_id),
 					);
 				}
 			}
