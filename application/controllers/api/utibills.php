@@ -2062,6 +2062,7 @@ class Utibills extends REST_Controller {
 
 				$recorda = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				$recorda->where("meter_id", $value->id)->order_by("id", "desc")->limit(1)->get();
+
 				$data["results"][] = array(
 					"branch_id" 		=> $value->branch_id,
 					"meter_id" 			=> $value->id,
@@ -2089,6 +2090,113 @@ class Utibills extends REST_Controller {
 
 		//Response Data
 		$this->response($data, 200);
+	}
+	//Offline meter Temp
+	function offline_temp_meter_get() {
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
+		$data["count"] = 0;
+
+		$obj = new Offline_temp_meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		//Results
+		if($page && $limit){
+			$obj->get_paged_iterated($page, $limit);
+			$data["count"] = $obj->paged->total_rows;
+		}else{
+			$obj->get_iterated();
+			$data["count"] = $obj->result_count();
+		}
+
+		if($obj->exists()){
+			foreach ($obj as $value) {
+				$data["results"][] = array(
+					"id" 				=> $value->id,
+					"branch_id" 		=> intval($value->branch_id),
+					"meter_id" 			=> intval($value->meter_id),
+					"meter_number" 		=> $value->meter_number,
+					"multiplier" 		=> $value->multiplier,
+					"previous" 			=> intval($value->previous),
+					"from_date" 		=> $value->from_date,
+					"contact_id" 		=> intval($value->contact_id),
+					"contact_name" 		=> $value->contact_name,
+					"contact_code" 		=> $value->contact_code,
+					"location_id" 		=> intval($value->location_id),
+					"location_name" 	=> $value->location_name,
+					"pole_id" 			=> intval($value->pole_id),
+					"pole_name" 		=> $value->pole_name,
+					"box_id" 			=> intval($value->box_id),
+					"box_name" 			=> $value->box_name,
+					"balance" 			=> floatval($value->balance),
+					"plan_id" 			=> intval($value->plan_id),
+					"number_digit" 		=> intval($value->number_digit),
+					"installment" 		=> floatval($value->installment),
+					"month_of" 			=> $value->month_of,
+					"to_date" 			=> $value->to_date,
+					"issue_date" 		=> $value->issue_date,
+					"bill_date" 		=> $value->bill_date,
+					"due_date" 			=> $value->due_date,
+					"reader_id" 		=> intval($value->reader_id),
+					"tablet_id" 		=> intval($value->tablet_id),
+					"tablet_abbr" 		=> $value->tablet_abbr,
+					"institute_id" 		=> intval($value->institute_id)
+				);
+			}
+		}
+
+		//Response Data
+		$this->response($data, 200);
+	}
+	function offline_temp_meter_post() {
+		$models = json_decode($this->post('models'));
+		$data["results"] = [];
+		$data["count"] = 0;
+		$lobj = new Offline_temp_meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$lobj->truncate();
+		foreach ($models as $value) {
+			$obj = new Offline_temp_meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			//Push to temp DB
+			$obj->branch_id 		= $value->branch_id;
+			$obj->meter_id 			= $value->meter_id;
+			$obj->meter_number 		= $value->meter_number;
+			$obj->multiplier 		= $value->multiplier;
+			$obj->previous 			= intval($value->previous);
+			$obj->from_date 		= $value->from_date;
+			$obj->contact_id 		= $value->contact_id;
+			$obj->contact_name 		= $value->contact_name;
+			$obj->contact_code 		= $value->contact_code;
+			$obj->location_id 		= $value->location_id;
+			$obj->location_name 	= $value->location_name;
+			$obj->pole_id 			= $value->pole_id;
+			$obj->pole_name 		= $value->pole_name;
+			$obj->box_id 			= $value->box_id;
+			$obj->box_name 			= $value->box_name;
+			$obj->balance 			= $value->balance;
+			$obj->plan_id 			= $value->plan_id;
+			$obj->number_digit 		= $value->number_digit;
+			$obj->installment 		= $value->installment;
+			$obj->month_of 			= $value->month_of;
+			$obj->to_date 			= $value->to_date;
+			$obj->issue_date 		= $value->issue_date;
+			$obj->bill_date 		= $value->bill_date;
+			$obj->due_date 			= $value->due_date;
+			$obj->reader_id 		= $value->reader_id;
+			$obj->tablet_id 		= $value->tablet_id;
+			$obj->tablet_abbr 		= $value->tablet_abbr;
+			$obj->institute_id 		= $value->institute_id;
+
+			$obj->save();
+	   		if($obj->save()){
+			   	$data["results"][] = array(
+			   		"id" 			=> $obj->id
+			   	);
+		    }
+		}
+
+		$data["count"] = count($data["results"]);
+		$this->response($data, 201);
 	}
 	//Tablet
 	function tablet_get() {
