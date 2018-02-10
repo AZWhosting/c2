@@ -2198,6 +2198,103 @@ class Utibills extends REST_Controller {
 		$data["count"] = count($data["results"]);
 		$this->response($data, 201);
 	}
+	function offline_setting_get() {
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
+		$data["count"] = 0;
+
+		$plan = new Plan(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$plan->order_by("id", "asc")->get();
+		$planar = [];
+		foreach($plan as $p){
+			$planar[][] = array(
+				"id" 			=> $p->id,
+				"currency_id"  	=> intval($p->currency_id),
+				"name" 			=> $p->name,
+				"code" 			=> $p->code,
+				"type" 			=> $p->type
+			);
+		}
+		$planitem = new Plan_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$planitem->order_by("id", "asc")->get();
+		$planitemar = [];
+		foreach($planitem as $pi){
+			$planitemar[][] = array(
+				"id" 			=> $pi->id,
+				"tariff_id" 	=> intval($pi->tariff_id),
+				"currency_id" 	=> intval($pi->currency_id),
+				"name" 			=> $pi->name,
+				"is_flat" 		=> intval($pi->is_flat),
+				"type" 			=> $pi->type,
+				"unit" 			=> $pi->unit,
+				"amount" 		=> floatval($pi->amount),
+				"usage" 		=> intval($pi->usage),
+				"account_id" 	=> intval($pi->account_id),
+				"is_active" 	=> intval($pi->is_active),
+				"assembly_id" 	=> intval($pi->assembly_id),
+			);
+		}
+		$pip = new Plan_items_plan(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$pip->order_by("id", "asc")->get();
+		$pipar = [];
+		foreach($pip as $ip){
+			$pipar[][] = array(
+				"id" 			=> $ip->id,
+				"plan_id" 		=> intval($ip->plan_id),
+				"plan_item_id" 	=> intval($ip->plan_item_id)
+			);
+		}
+		$crate = new Currency_rate(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$crate->order_by("id", "asc")->get();
+		$cratear = [];
+		foreach($crate as $r){
+			$cratear[][] = array(
+				"id" 			=> $r->id,
+				"currency_id" 	=> intval($r->currency_id),
+				"user_id" 		=> intval($r->user_id),
+				"rate" 			=> floatval($r->rate),
+				"locale" 		=> $r->locale,
+				"source" 		=> $r->source,
+				"method" 		=> $r->method,
+				"date" 			=> $r->date,
+				"is_system" 	=> intval($r->is_system)
+			);
+		}
+		$branch = new Branch(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$branch->order_by("id", "asc")->get();
+		$branchar = [];
+		foreach($branch as $b){
+			$branchar[][] = array(
+				"id" 			=> $b->id,
+				"type" 			=> $b->type,
+				"number" 		=> $b->number,
+				"name" 			=> $b->name,
+				"abbr" 			=> $b->abbr,
+				"currency_id" 	=> intval($b->currency_id),
+				"description" 	=> $b->description,
+				"address" 		=> $b->address,
+				"province" 		=> $b->province,
+				"district" 		=> $b->district,
+				"email" 		=> $b->email,
+				"mobile" 		=> $b->mobile,
+				"telephone" 	=> $b->telephone,
+				"term_of_condition" => $b->term_of_condition,
+			);
+		}
+		$data["results"][] = array(
+			"plan" 				=> $planar,
+			"plan_item" 		=> $planitemar,
+			"plan_items_plan" 	=> $pipar, 	
+			"currency_rate" 	=> $cratear,
+			"branch" 			=> $branchar
+		);
+
+		//Response Data
+		$this->response($data, 200);
+	}
 	//Tablet
 	function tablet_get() {
 		$filter 	= $this->get("filter");
