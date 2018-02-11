@@ -51,7 +51,7 @@
 <link href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/common/theme/fonts/glyphicons/css/glyphicons.css" rel="stylesheet" />
 
 <link rel="stylesheet" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/common/theme/fonts/font-awesome/css/font-awesome.min.css">
-<link rel="stylesheet" href="http://fontawesome.io/assets/font-awesome/css/font-awesome.css">
+<link rel="stylesheet" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/common/theme/fonts/font-awesome/css/font-awesome.min.css">
 <!--[if IE 7]><link rel="stylesheet" href="../../../../../common/theme/fonts/font-awesome/css/font-awesome-ie7.min.css"><![endif]-->
 
 <!-- Uniform Pretty Checkboxes -->
@@ -219,11 +219,8 @@ var themerPrimaryColor = primaryColor;
 	    padding: 8px 14px;
 	    border: none;
 	    height: 35px;
-	    margin-top: -3px;
+	    margin-top: -4px;
 	    border-radius: 0 3px 3px 0;
-	}
-	.search-menu button:hover{
-		background: #fff;
 	}
 	.menu .span6.logout{
 		text-align: right;
@@ -240,9 +237,6 @@ var themerPrimaryColor = primaryColor;
 </head>
 
 <body class="document-body ">
-<?php
-	//mail('loat.choeun@gmail.com', 'test', 'test', 'test');
-?>
 	<div class="wrapper">
 		<div class="container ">
 			<div class="row">
@@ -270,7 +264,7 @@ var themerPrimaryColor = primaryColor;
 									</form>
 				        		</div>
 				        		<div class="span6 logout">
-				        			<span>Hello [Full Name] |
+				        			<span>Hello [<span id="userCut"></span>] |
 				        			<a href="" >Logout</a></span>
 				        		</div>
 				        	</div>
@@ -279,4 +273,4 @@ var themerPrimaryColor = primaryColor;
 		        </div>
 		    </div>
 		</div>
-	</div>  
+	</div>

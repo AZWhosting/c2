@@ -40,6 +40,8 @@
             createCookie(name,"");
         }
         jQuery(function(){
+            var x = banhji.userData.username;
+            $("#userCut").text(x); 
             var quickfitText=function(reset) {
                 var quickFitClass="text-large";             //Base class of elements to adapt
                 var quickFitGroupClass="quickfitGroup";     //Elements in a group will all have the same size

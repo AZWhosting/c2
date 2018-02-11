@@ -303,20 +303,24 @@
 					<div class="span6" >
 						<div class="row">
 							<div class="span4 nopadding-right">
-								<div class="bg-green height100 bottom-left">
-									<div class="img">
-										<img src="<?php echo base_url();?>assets/spa/icon/customers.png" >
+								<a href="customer">
+									<div class="bg-green height100 bottom-left">
+										<div class="img">
+											<img src="<?php echo base_url();?>assets/spa/icon/customers.png" >
+										</div>
+										<p>Customer</p>
 									</div>
-									<p>Customer</p>
-								</div>
+								</a>
 							</div>
 							<div class="span4 paddingLeftRigth">
-								<div class="bg-green height100">
-									<div class="img">
-										<img src="<?php echo base_url();?>assets/spa/icon/rooms-facilities.png" >
+								<a href="rooms">
+									<div class="bg-green height100">
+										<div class="img">
+											<img src="<?php echo base_url();?>assets/spa/icon/rooms-facilities.png" >
+										</div>
+										<p>Rooms/ facilities</p>
 									</div>
-									<p>Rooms/ facilities</p>
-								</div>
+								</a>
 							</div>
 							<div class="span4 no-padding">
 								<div class="bg-green height100">
