@@ -304,76 +304,88 @@
         color: #000 !important;
         top: 0 !important;
     }
-
+    .cover-fix-menu {
+        position: fixed;
+        left: 0; 
+        width: 52px;
+        height: 100%;
+        overflow: hidden;
+        z-index: 9999999;
+    }
+    .cover-fix-menu:hover {
+        width: 350px;
+    }
 </style>
-<!-- Side fix right -->
-<div class="cover-rightfixed cover-rightfixed1 " style="z-index: 99999;">
-    <div class="rightfixed enquiries text-t btn-rounded  no-js " style="">
-        Menu
-        <div class="enquiry-content">
-            <ul style="text-align: left; font-size: 13px; color: #000; ">
-                <li><a href="pos">Point of Sale</a></li>
-                <li><a href="session">Session Management</a></li>
-                <li><a href="books">Booking Management</a></li>
-                <li><a href="services">Servicing Customer</a></li>
-                <li><a href="session">Reconciliation</a></li>
-                <!-- <li class="divider"></li> -->
-                <li><a href="pay">Print & Pay</a></li>
-                <li class="divider"></li>
-                <li><a href="customer">Customer</a></li>
-                <li><a href="rooms">Rooms / Facilities</a></li>
-                <li><a href="therapist">Therapist</a></li>
-               <!--  <li><a href="report">Reports</a></li> -->
-            </ul>
-        
+<div class="cover-fix-menu" style="position: fixed;left: 0;">
+    <!-- Side fix right -->
+    <div class="cover-rightfixed cover-rightfixed1 " style="z-index: 99999;">
+        <div class="rightfixed enquiries text-t btn-rounded  no-js " style="">
+            Menu
+            <div class="enquiry-content">
+                <ul style="text-align: left; font-size: 13px; color: #000; ">
+                    <li><a href="pos">Point of Sale</a></li>
+                    <li><a href="session">Session Management</a></li>
+                    <li><a href="books">Booking Management</a></li>
+                    <li><a href="services">Servicing Customer</a></li>
+                    <li><a href="session">Reconciliation</a></li>
+                    <!-- <li class="divider"></li> -->
+                    <li><a href="pay">Print & Pay</a></li>
+                    <li class="divider"></li>
+                    <li><a href="customer">Customer</a></li>
+                    <li><a href="rooms">Rooms / Facilities</a></li>
+                    <li><a href="therapist">Therapist</a></li>
+                   <!--  <li><a href="report">Reports</a></li> -->
+                </ul>
+            
+            </div>
         </div>
     </div>
-</div>
-<div class="cover-rightfixed " style="top: 45.9%; z-index: 9999; left: -95px;">
-    <div class="rightfixed enquiries multiple-list  btn-rounded glyphicons glyphicons-plus no-js " style="float:left;  font-size: 15px;">
-        Reports
-        <div class="enquiry-content">
-            <ul data-template="multiTaskList-row-template" data-bind="source: multiTaskList">
-                <li>
-                    <a href="#/calendar">
-                        Create Calendar
-                        <!-- <span title="Remove" class="multiTaskList glyphicons remove_2 pull-right" data-bind="click: removeLink">
-                            <i></i>
-                        </span> -->
-                    </a>
-                </li>
-                <li>
-                    <a href="#/receipt">
-                        Create Receipt
-                        <!-- <span title="Remove" class="multiTaskList glyphicons remove_2 pull-right" data-bind="click: removeLink">
-                            <i class="icon-remove"></i>
-                        </span> -->
-                    </a>
-                </li>
-                <li>
-                    <a href="#/invoice">
-                        Create Invoice
-                       <!--  <span title="Remove" class="multiTaskList glyphicons remove_2 pull-right" data-bind="click: removeLink">
-                            <i class="icon-remove"></i>
-                        </span> -->
-                    </a>
-                </li>
-            </ul>
+    <div class="cover-rightfixed " style="top: 45.9%; z-index: 9999; left: -95px;">
+        <div class="rightfixed enquiries multiple-list  btn-rounded glyphicons glyphicons-plus no-js " style="float:left;  font-size: 15px;">
+            Reports
+            <div class="enquiry-content">
+                <ul data-template="multiTaskList-row-template" data-bind="source: multiTaskList">
+                    <li>
+                        <a href="#/calendar">
+                            Create Calendar
+                            <!-- <span title="Remove" class="multiTaskList glyphicons remove_2 pull-right" data-bind="click: removeLink">
+                                <i></i>
+                            </span> -->
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#/receipt">
+                            Create Receipt
+                            <!-- <span title="Remove" class="multiTaskList glyphicons remove_2 pull-right" data-bind="click: removeLink">
+                                <i class="icon-remove"></i>
+                            </span> -->
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#/invoice">
+                            Create Invoice
+                           <!--  <span title="Remove" class="multiTaskList glyphicons remove_2 pull-right" data-bind="click: removeLink">
+                                <i class="icon-remove"></i>
+                            </span> -->
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
+    <div class="cover-rightfixed chat" style=" z-index: 999; left: -92px;">
+        <a class="rightfixed enquiries btn-rounded glyphicons no-js conversation" style="width: 142px;float:left;">
+            Support
+            <div class="enquiry-content">
+                <p style="font-size: 14px;">Call us by<br><span style="font-weight: bold;font-size: 16px">+855 10 413 777</span><br>Mon-Fri<br>09:00 - 18:00</p>
+                <div class="fb-messengermessageus" 
+                    messenger_app_id="1301847836514973" 
+                    page_id="298877880530498"
+                    color="blue"
+                    width="180"
+                    size="standard" ></div>
+            </div>
+        </a>
+    </div>
+    <!-- End -->
 </div>
-<div class="cover-rightfixed chat" style=" z-index: 999; left: -92px;">
-    <a class="rightfixed enquiries btn-rounded glyphicons no-js conversation" style="width: 142px;float:left;">
-        Support
-        <div class="enquiry-content">
-            <p style="font-size: 14px;">Call us by<br><span style="font-weight: bold;font-size: 16px">+855 10 413 777</span><br>Mon-Fri<br>09:00 - 18:00</p>
-            <div class="fb-messengermessageus" 
-                messenger_app_id="1301847836514973" 
-                page_id="298877880530498"
-                color="blue"
-                width="180"
-                size="standard" ></div>
-        </div>
-    </a>
-</div>
-<!-- End -->

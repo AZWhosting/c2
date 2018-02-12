@@ -433,12 +433,39 @@
 	    margin-bottom: 1px;
 	    width: 100%;
 	    float: left;
-	    border-radius: 20px 20px 0 0;
+	    border-radius: 10px 10px 0 0;
 	    box-shadow: 2px 0px 12px 0px rgba(68,68,68,1);
 	}
 	.table.table-white {
 	    background: #fff;
 	    color: #333;
+	}
+	#posProductList .k-grid table{
+		color: #333;
+	}
+	#posProductList .k-grid table td:first-child{
+		cursor: pointer;
+	}
+	.span6.botton a{
+		color: #fff;
+	}
+	.k-link.k-link-date{
+		padding-top: 8px;
+	    float: left;
+	    margin-left: 5px !important;
+	}
+	.k-link.k-link-time{
+		padding-top: 8px;
+    	float: left;
+	}
+	.k-header .k-icon{
+		margin-top: 6px;
+	}
+	.k-icon.k-i-seek-w,
+	.k-icon.k-i-arrow-w,
+	.k-icon.k-i-arrow-e,
+	.k-icon.k-i-seek-e{
+		margin-top: 5px;
 	}
 </style>
 <!-- ***************************
@@ -462,7 +489,7 @@
 											<div class="span6" style="padding-right: 1px; width: 50%;">
 												<div class="innerAll" style="height: 45px; padding-bottom: 0; padding: 15px 0 0 15px; float: left; width: 100%;">
 													<div class="widget-search separator bottom" style="padding: 0;">
-														<a class="btn btn-default pull-right" data-bind="click: search" style="padding: 4px 10px;"><i class="icon-search"></i></a>
+														<a class="btn btn-default pull-right" data-bind="click: search" style="padding: 7px 10px;"><i class="icon-search"></i></a>
 														<div class="overflow-hidden">
 															<input style="height: 30px; padding: 5px; border: 1px solid #ccc; color: #333;" type="search" placeholder="Number or Name..." data-bind="value: searchText, events:{change: search}">
 														</div>
@@ -531,7 +558,7 @@
 								</div>
 
 								<div class="span12">
-									<div class="box-generic" style="background: #0eac00; border: none; box-shadow: 2px 0px 12px 0px rgba(68,68,68,1); margin-bottom: 0; border-radius: 0 0 20px 20px;">
+									<div class="box-generic" style="background: #0eac00; border: none; box-shadow: 2px 0px 12px 0px rgba(68,68,68,1); margin-bottom: 0; border-radius: 0 0 10px 10px;">
 										<div class="row">
 											<div class="span6">
 												<input 
@@ -555,8 +582,7 @@
 								                	style="width: 100%; margin-bottom: 5px;" 
 								                	data-role="datetimepicker"
 										           	data-bind="
-										           		value: dateSelected,
-										           		events: {change: dateChange}
+										           		value: dateSelected
 										           	" />
 										        <input type="text" 
 								                	style="width: 100%; border: 1px solid #c5c5c5; padding: 3px; height: 30px;" 
@@ -589,7 +615,7 @@
 						</div>
 					</div>
 					<div class="span6" style="padding-left: 0;">
-						<div class="span12" style="background: #c4c2d2; margin-bottom: 1px; box-shadow: 2px 0px 12px 0px rgba(68,68,68,1); border-radius: 20px 20px 0 0;">
+						<div class="span12" style="background: #c4c2d2; margin-bottom: 1px; box-shadow: 2px 0px 12px 0px rgba(68,68,68,1); border-radius: 10px 10px 0 0;">
 							<div class="row" style="margin-top: 15px; ">
 								<div class="span6">
 				                    <div class="box-generic"  style="background: #c4c2d2; margin: 0 !important; padding: 0; border: none;">
@@ -807,7 +833,7 @@
 							</div>
 						</div>
 
-						<div class="row" style="background: #fff; margin-left: 0; margin-top: 1px; margin-right: 0; padding: 15px 0; box-shadow: 2px 0px 12px 0px rgba(68,68,68,1); border-radius: 0 0 20px 20px;">
+						<div class="row" style="background: #fff; margin-left: 0; margin-top: 1px; margin-right: 0; padding: 15px 0; box-shadow: 2px 0px 12px 0px rgba(68,68,68,1); border-radius: 0 0 10px 10px;">
 							<div class="span6" style="padding-right: 0;">
 								<div class="posSaleSummary cover-block" style="width: 100%; float:right; padding: 0 15px 0 0;">
 									<table class="table table-condensed table-striped table-white" style="margin: 5px 0 0;">
@@ -849,7 +875,7 @@
 							<div class="span6 botton">
 								<div class="row">
 									<div class="span12 ">
-										<div class="button-service">
+										<div class="button-service" data-bind="click: addInvoice">
 											<div class="img">
 												<img src="<?php echo base_url();?>assets/spa/icon/serving.png" >
 											</div>
@@ -859,7 +885,7 @@
 								</div>
 								<div class="row">
 									<div class="span4 " style="padding-right: 0;">
-										<div class="button-book">
+										<div class="button-book" data-bind="click: addBook">
 											<div class="img">
 												<img src="<?php echo base_url();?>assets/spa/icon/book.png" >
 											</div>
@@ -867,15 +893,17 @@
 										</div>
 									</div>
 									<div class="span4 " style="padding: 0;">
-										<div class="button-pay">
-											<div class="img">
-												<img src="<?php echo base_url();?>assets/spa/icon/pay.png" >
+										<a href="pay">
+											<div class="button-pay" >
+												<div class="img">
+													<img src="<?php echo base_url();?>assets/spa/icon/pay.png" >
+												</div>
+												<p class="textSmall">Pay</p>
 											</div>
-											<p class="textSmall">Pay</p>
-										</div>
+										</a>
 									</div>
-									<div class="span4 " style="padding-left: 0;">
-										<p class="button-cancel"><span>X</span> <br> Cancel</p>
+									<div class="span4 " style="padding-left: 0;" data-bind="click: addWorkSuccess">
+										<p class="button-cancel" ><span>X</span> <br> Cancel</p>
 									</div>
 								</div>
 							</div>
@@ -958,6 +986,7 @@
 											</div>
 										</div>
 									</div>
+									<div id="ntf1" data-role="notification"></div>
 								</div>
 							</div>
 						</div>

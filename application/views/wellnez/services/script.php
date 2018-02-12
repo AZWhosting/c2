@@ -1,3 +1,794 @@
+<script>
+    function itemComboBoxEditor(container, options) {
+        $('<input name="' + options.field + '"/>')
+        .appendTo(container)
+        .kendoComboBox({
+            placeholder: "Select Item",
+            dataTextField: "name",
+            dataValueField: "id",
+            autoWidth: true,
+            height: 200,
+            template: kendo.template($("#item-list-tmpl").html()),
+            dataSource: {
+                transport: {
+                    read    : {
+                        url: apiUrl + "items",
+                        type: "GET",
+                        headers: banhji.header,
+                        dataType: 'json'
+                    },
+                    parameterMap: function(options, operation) {
+                        if(operation === 'read') {
+                            return {
+                                page: options.page,
+                                limit: options.pageSize,
+                                filter: options.filter,
+                                sort: options.sort
+                            };
+                        } else {
+                            return {models: kendo.stringify(options.models)};
+                        }
+                    }
+                },
+                schema  : {
+                    model: {
+                        id: 'id'
+                    },
+                    data: 'results',
+                    total: 'count'
+                },
+                filter:{ field: "item_type_id <>", value: 3 },
+                sort: [
+                    { field:"item_type_id", dir:"asc" },
+                    { field:"number", dir:"asc" }
+                ],
+                batch: true,
+                serverFiltering: true,
+                serverSorting: true,
+                serverPaging: true,
+                page: 1,
+                pageSize: 50
+            }
+        });
+    }
+
+    function itemEditor(container, options) {
+        $('<input name="' + options.field + '" />')
+        .appendTo(container)
+        .kendoDropDownList({
+            filter: "contains",         
+            dataTextField: "name",
+            dataValueField: "id",
+            autoWidth: true,
+            height: 200,
+            template: kendo.template($("#item-list-tmpl").html()),
+            dataSource: {
+                transport: {
+                    read    : {
+                        url: apiUrl + "items",
+                        type: "GET",
+                        headers: banhji.header,
+                        dataType: 'json'
+                    },
+                    parameterMap: function(options, operation) {
+                        if(operation === 'read') {
+                            return {
+                                page: options.page,
+                                limit: options.pageSize,
+                                filter: options.filter,
+                                sort: options.sort
+                            };
+                        } else {
+                            return {models: kendo.stringify(options.models)};
+                        }
+                    }
+                },
+                schema  : {
+                    model: {
+                        id: 'id'
+                    },
+                    data: 'results',
+                    total: 'count'
+                },
+                filter:{ field: "item_type_id <>", value: 3 },
+                sort: [
+                    { field:"item_type_id", dir:"asc" },
+                    { field:"number", dir:"asc" }
+                ],
+                batch: true,
+                serverFiltering: true,
+                serverSorting: true,
+                serverPaging: true,
+                page: 1,
+                pageSize: 50
+            }
+        });
+    }
+
+    function itemPurchaseEditor(container, options) {
+        $('<input name="' + options.field + '" />')
+        .appendTo(container)
+        .kendoDropDownList({
+            filter: "contains",         
+            dataTextField: "name",
+            dataValueField: "id",
+            autoWidth: true,
+            height: 200,
+            template: kendo.template($("#item-list-tmpl").html()),
+            dataSource: {
+                transport: {
+                    read    : {
+                        url: apiUrl + "items",
+                        type: "GET",
+                        headers: banhji.header,
+                        dataType: 'json'
+                    },
+                    parameterMap: function(options, operation) {
+                        if(operation === 'read') {
+                            return {
+                                page: options.page,
+                                limit: options.pageSize,
+                                filter: options.filter,
+                                sort: options.sort
+                            };
+                        } else {
+                            return {models: kendo.stringify(options.models)};
+                        }
+                    }
+                },
+                schema  : {
+                    model: {
+                        id: 'id'
+                    },
+                    data: 'results',
+                    total: 'count'
+                },
+                filter:[
+                    { field: "item_type_id <>", value: 3 },
+                    { field: "is_assembly", value: 0 }
+                ],
+                sort: [
+                    { field:"item_type_id", dir:"asc" },
+                    { field:"number", dir:"asc" }
+                ],
+                batch: true,
+                serverFiltering: true,
+                serverSorting: true,
+                serverPaging: true,
+                page: 1,
+                pageSize: 50
+            }
+        });
+    }
+
+    function variantAttributeEditor(container, options) {
+        $('<input name="' + options.field + '" />')
+        .appendTo(container)
+        .kendoDropDownList({
+            valuePrimitive: false,
+            filter: "startswith",           
+            dataTextField: "name",
+            dataValueField: "id",
+            autoWidth: true,
+            height: 200,
+            dataSource: dataStore(apiUrl + "variant_attributes")
+        });
+    }
+
+    function attributeValueEditor(container, options) {
+        $('<input name="' + options.field + '" />')
+        .appendTo(container)
+        .kendoMultiSelect({
+            valuePrimitive: false,
+            dataTextField: "name",
+            dataValueField: "id",
+            autoBind: false,
+            dataSource: {
+                transport: {
+                    read    : {
+                        url: apiUrl + "attribute_values",
+                        type: "GET",
+                        headers: banhji.header,
+                        dataType: 'json'
+                    },
+                    parameterMap: function(options, operation) {
+                        if(operation === 'read') {
+                            return {
+                                page: options.page,
+                                limit: options.pageSize,
+                                filter: options.filter,
+                                sort: options.sort
+                            };
+                        } else {
+                            return {models: kendo.stringify(options.models)};
+                        }
+                    }
+                },
+                schema  : {
+                    model: {
+                        id: 'id'
+                    },
+                    data: 'results',
+                    total: 'count'
+                },
+                filter:{ field: "variant_attribute_id", value: options.model.variant_attribute.id },
+                sort: { field:"name", dir:"asc" },
+                batch: true,
+                serverFiltering: true,
+                serverSorting: true,
+                serverPaging: true,
+                page: 1,
+                pageSize: 100
+            }
+        });
+    }
+
+    function locationTypeEditor(container, options) {
+        $('<input name="' + options.field + '" />')
+        .appendTo(container)
+        .kendoDropDownList({
+            dataTextField: "name",
+            dataValueField: "id",
+            autoWidth: true,
+            height: 200,
+            dataSource: {
+                transport: {
+                    read    : {
+                        url: apiUrl + "location_types",
+                        type: "GET",
+                        headers: banhji.header,
+                        dataType: 'json'
+                    },
+                    parameterMap: function(options, operation) {
+                        if(operation === 'read') {
+                            return {
+                                page: options.page,
+                                limit: options.pageSize,
+                                filter: options.filter,
+                                sort: options.sort
+                            };
+                        } else {
+                            return {models: kendo.stringify(options.models)};
+                        }
+                    }
+                },
+                schema  : {
+                    model: {
+                        id: 'id'
+                    },
+                    data: 'results',
+                    total: 'count'
+                },
+                batch: true,
+                serverFiltering: true,
+                serverSorting: true,
+                serverPaging: true,
+                page: 1,
+                pageSize: 100
+            }
+        });
+    }
+
+    function inventoryForSaleEditor(container, options) {
+        $('<input name="' + options.field + '" />')
+        .appendTo(container)
+        .kendoDropDownList({
+            filter: "contains",         
+            dataTextField: "name",
+            dataValueField: "id",
+            autoWidth: true,
+            height: 200,
+            template: kendo.template($("#item-list-tmpl").html()),
+            dataSource: {
+                transport: {
+                    read    : {
+                        url: apiUrl + "items",
+                        type: "GET",
+                        headers: banhji.header,
+                        dataType: 'json'
+                    },
+                    parameterMap: function(options, operation) {
+                        if(operation === 'read') {
+                            return {
+                                page: options.page,
+                                limit: options.pageSize,
+                                filter: options.filter,
+                                sort: options.sort
+                            };
+                        } else {
+                            return {models: kendo.stringify(options.models)};
+                        }
+                    }
+                },
+                schema  : {
+                    model: {
+                        id: 'id'
+                    },
+                    data: 'results',
+                    total: 'count'
+                },
+                filter:{ field: "item_type_id", value: 1 },
+                sort: { field:"number", dir:"asc" },
+                batch: true,
+                serverFiltering: true,
+                serverSorting: true,
+                serverPaging: true,
+                page: 1,
+                pageSize: 100
+            }
+        });
+    }
+
+    function accountEditor(container, options) {
+        $('<input name="' + options.field + '" />')
+        .appendTo(container)
+        .kendoDropDownList({
+            filter: "contains",         
+            dataTextField: "name",
+            dataValueField: "id",
+            autoWidth: true,
+            height: 200,
+            template: kendo.template($("#account-list-tmpl").html()),
+            dataSource: {
+                data: banhji.source.accountList,
+                sort: [
+                    { field: "account_type_id", dir: "asc" },
+                    { field: "number", dir: "asc" }
+                ]
+            }
+        });
+    }
+
+    function toAccountEditor(container, options) {
+        $('<input name="' + options.field + '" />')
+        .appendTo(container)
+        .kendoDropDownList({
+            filter: "contains",         
+            dataTextField: "name",
+            dataValueField: "id",
+            autoWidth: true,
+            height: 200,
+            template: kendo.template($("#account-list-tmpl").html()),
+            dataSource: {
+                data: banhji.source.accountList,
+                filter: [
+                    { field: "account_type_id", operator:"neq", value: 10 },
+                    { field: "account_type_id", operator:"neq", value: 11 },
+                    { field: "account_type_id", operator:"neq", value: 12 }
+                ],
+                sort: [
+                    { field: "account_type_id", dir: "asc" },
+                    { field: "number", dir: "asc" }
+                ]
+            }
+        });
+    }
+
+    function whtAccountEditor(container, options) {
+        $('<input name="' + options.field + '" />')
+        .appendTo(container)
+        .kendoDropDownList({
+            filter: "contains",         
+            dataTextField: "name",
+            dataValueField: "id",
+            autoWidth: true,
+            height: 200,
+            template: kendo.template($("#account-list-tmpl").html()),
+            dataSource: {
+                data: banhji.source.accountList,
+                filter: {
+                    logic: "or",
+                    filters: [
+                        { field: "account_type_id", value: 13 },//Inventory
+                        { field: "account_type_id", value: 16 },//Fixed Asset
+                        { field: "account_type_id", value: 17 },//Intangible Assets
+                        { field: "account_type_id", value: 36 },//Expense
+                        { field: "account_type_id", value: 37 },
+                        { field: "account_type_id", value: 38 },
+                        { field: "account_type_id", value: 40 },
+                        { field: "account_type_id", value: 41 },
+                        { field: "account_type_id", value: 42 },
+                        { field: "account_type_id", value: 43 }
+                    ]
+                },
+                sort: [
+                    { field: "account_type_id", dir: "asc" },
+                    { field: "number", dir: "asc" }
+                ]
+            }
+        });
+    }    
+
+    function measurementEditor(container, options) {
+        $('<input name="' + options.field + '"/>')
+        .appendTo(container)
+        .kendoDropDownList({        
+            dataTextField: "measurement",
+            dataValueField: "measurement_id",
+            autoWidth: true,
+            height: 200,
+            dataSource: {
+                transport: {
+                    read    : {
+                        url: apiUrl + "item_prices",
+                        type: "GET",
+                        headers: banhji.header,
+                        dataType: 'json'
+                    },
+                    parameterMap: function(options, operation) {
+                        if(operation === 'read') {
+                            return {
+                                page: options.page,
+                                limit: options.pageSize,
+                                filter: options.filter,
+                                sort: options.sort
+                            };
+                        } else {
+                            return {models: kendo.stringify(options.models)};
+                        }
+                    }
+                },
+                schema  : {
+                    model: {
+                        id: 'id'
+                    },
+                    data: 'results',
+                    total: 'count'
+                },
+                filter:[
+                    { field:"item_id", value: options.model.item_id },
+                    { field:"assembly_id", value: 0 }
+                ],
+                batch: true,
+                serverFiltering: true,
+                serverSorting: true,
+                serverPaging: true,
+                page: 1,
+                pageSize: 100
+            }
+        });
+    }
+
+    function discountEditor(container, options) {
+        $('<input name="' + options.field + '" type="number" class="k-textbox" style="width: 95%;" min="0" max="1" />')
+        .appendTo(container);
+    }
+
+    function taxForSaleEditor(container, options) {
+        $('<input name="' + options.field + '"/>')
+        .appendTo(container)
+        .kendoDropDownList({
+            dataTextField: "name",
+            dataValueField: "id",
+            autoWidth: true,
+            height: 200,
+            dataSource: {
+                data: banhji.source.taxList,
+                filter:{
+                    logic: "or",
+                    filters: [
+                        { field: "tax_type_id", value: 3 },//Customer Tax
+                        { field: "tax_type_id", value: 9 }
+                    ]
+                },
+                sort: [
+                    { field: "tax_type_id", dir: "asc" },
+                    { field: "name", dir: "asc" }
+                ]
+            }
+        });
+    }
+
+    function taxForPurchaseEditor(container, options) {
+        $('<input name="' + options.field + '"/>')
+        .appendTo(container)
+        .kendoDropDownList({
+            dataTextField: "name",
+            dataValueField: "id",
+            autoWidth: true,
+            height: 200,
+            dataSource: {
+                data: banhji.source.taxList,
+                filter:{
+                    logic: "or",
+                    filters: [
+                        { field: "tax_type_id", value: 1 },//Supplier Tax
+                        { field: "tax_type_id", value: 2 },
+                        { field: "tax_type_id", value: 3 },
+                        { field: "tax_type_id", value: 9 }
+                    ]
+                },
+                sort: [
+                    { field: "tax_type_id", dir: "asc" },
+                    { field: "name", dir: "asc" }
+                ]
+            }
+        });
+    } 
+
+    function segmentEditor(container, options) {
+        $('<input name="' + options.field + '" />')
+        .appendTo(container)
+        .kendoDropDownList({
+            filter: "startswith",           
+            dataTextField: "name",
+            dataValueField: "id",
+            autoWidth: true,
+            height: 200,
+            dataSource: {
+                transport: {
+                    read    : {
+                        url: apiUrl + "segments",
+                        type: "GET",
+                        headers: banhji.header,
+                        dataType: 'json'
+                    },
+                    parameterMap: function(options, operation) {
+                        if(operation === 'read') {
+                            return {
+                                page: options.page,
+                                limit: options.pageSize,
+                                filter: options.filter,
+                                sort: options.sort
+                            };
+                        } else {
+                            return {models: kendo.stringify(options.models)};
+                        }
+                    }
+                },
+                schema  : {
+                    model: {
+                        id: 'id'
+                    },
+                    data: 'results',
+                    total: 'count'
+                },
+                serverFiltering: true,
+                serverSorting: true,
+                serverPaging: true,
+                page: 1,
+                pageSize: 100
+            }
+        });
+    }
+
+    function segmentItemEditor(container, options) {
+        $('<input name="' + options.field + '" />')
+        .appendTo(container)
+        .kendoDropDownList({
+            filter: "startswith",           
+            dataTextField: "name",
+            dataValueField: "id",
+            autoWidth: true,
+            height: 200,
+            template: kendo.template($("#segment-list-tmpl").html()),
+            dataSource: {
+                transport: {
+                    read    : {
+                        url: apiUrl + "segments/item",
+                        type: "GET",
+                        headers: banhji.header,
+                        dataType: 'json'
+                    },
+                    parameterMap: function(options, operation) {
+                        if(operation === 'read') {
+                            return {
+                                page: options.page,
+                                limit: options.pageSize,
+                                filter: options.filter,
+                                sort: options.sort
+                            };
+                        } else {
+                            return {models: kendo.stringify(options.models)};
+                        }
+                    }
+                },
+                schema  : {
+                    model: {
+                        id: 'id'
+                    },
+                    data: 'results',
+                    total: 'count'
+                },
+                filter:{ field: "segment_id", value: options.model.segment.id },
+                serverFiltering: true,
+                serverSorting: true,
+                serverPaging: true,
+                page: 1,
+                pageSize: 100
+            }
+        });
+    }
+
+    function numberTextboxEditor(container, options) {
+        $('<input name="' + options.field + '" type="number" class="k-textbox" style="width: 95%;" />')
+        .appendTo(container);
+    }
+
+    function oneDigitMaskedTextboxEditor(container, options) {
+        $('<input name="' + options.field + '" class="k-textbox" style="width: 95%;" />')
+        .appendTo(container)
+        .kendoMaskedTextBox({
+            mask: "A",
+            promptChar: "_"
+        });;
+    }
+
+    function twoDigitMaskedTextboxEditor(container, options) {
+        $('<input name="' + options.field + '" class="k-textbox" style="width: 95%;" />')
+        .appendTo(container)
+        .kendoMaskedTextBox({
+            mask: "AA",
+            promptChar: "_"
+        });;
+    }
+
+    function dateEditor(container, options) {
+        $('<input name="' + options.field + '" />')
+        .appendTo(container)
+        .kendoDatePicker({
+            format: "dd-MM-yyyy",
+            parseFormats: ["yyyy-MM-dd"]
+        });
+    }
+
+    function customBoolEditor(container, options) {
+        $('<input class="k-checkbox" type="checkbox" name="applyAdditionalCostChk" data-type="boolean" data-bind="checked:additional_applied">').appendTo(container);
+        $('<label class="k-checkbox-label">&#8203;</label>').appendTo(container);
+    }
+
+    function supplierEditor(container, options) {
+        $('<input name="' + options.field + '" />')
+        .appendTo(container)
+        .kendoDropDownList({
+            filter: "contains",         
+            dataTextField: "name",
+            dataValueField: "id",
+            autoWidth: true,
+            height: 200,
+            template: kendo.template($("#contact-list-tmpl").html()),
+            dataSource: {
+                transport: {
+                    read    : {
+                        url: apiUrl + "contacts",
+                        type: "GET",
+                        headers: banhji.header,
+                        dataType: 'json'
+                    },
+                    parameterMap: function(options, operation) {
+                        if(operation === 'read') {
+                            return {
+                                page: options.page,
+                                limit: options.pageSize,
+                                filter: options.filter,
+                                sort: options.sort
+                            };
+                        } else {
+                            return {models: kendo.stringify(options.models)};
+                        }
+                    }
+                },
+                schema  : {
+                    model: {
+                        id: 'id'
+                    },
+                    data: 'results',
+                    total: 'count'
+                },
+                filter:{ field: "parent_id", operator:"where_related_contact_type", value: 2 },
+                sort: [
+                    { field:"contact_type_id", dir:"asc" },
+                    { field:"number", dir:"asc" }
+                ],
+                batch: true,
+                serverFiltering: true,
+                serverSorting: true,
+                serverPaging: true,
+                page: 1,
+                pageSize: 100
+            }
+        });
+    }
+
+    function contactEditor(container, options) {
+        $('<input name="' + options.field + '" />')
+        .appendTo(container)
+        .kendoDropDownList({
+            filter: "contains",         
+            dataTextField: "name",
+            dataValueField: "id",
+            autoWidth: true,
+            height: 200,
+            template: kendo.template($("#contact-list-tmpl").html()),
+            dataSource: {
+                transport: {
+                    read    : {
+                        url: apiUrl + "contacts",
+                        type: "GET",
+                        headers: banhji.header,
+                        dataType: 'json'
+                    },
+                    parameterMap: function(options, operation) {
+                        if(operation === 'read') {
+                            return {
+                                page: options.page,
+                                limit: options.pageSize,
+                                filter: options.filter,
+                                sort: options.sort
+                            };
+                        } else {
+                            return {models: kendo.stringify(options.models)};
+                        }
+                    }
+                },
+                schema  : {
+                    model: {
+                        id: 'id'
+                    },
+                    data: 'results',
+                    total: 'count'
+                },
+                sort: [
+                    { field:"contact_type_id", dir:"asc" },
+                    { field:"number", dir:"asc" }
+                ],
+                batch: true,
+                serverFiltering: true,
+                serverSorting: true,
+                serverPaging: true,
+                page: 1,
+                pageSize: 20
+            }
+        });
+    }
+
+    function jobEditor(container, options) {
+        $('<input name="' + options.field + '" />')
+        .appendTo(container)
+        .kendoDropDownList({
+            filter: "contains",         
+            dataTextField: "name",
+            dataValueField: "id",
+            autoWidth: true,
+            height: 200,
+            dataSource: {
+                transport: {
+                    read    : {
+                        url: apiUrl + "jobs",
+                        type: "GET",
+                        headers: banhji.header,
+                        dataType: 'json'
+                    },
+                    parameterMap: function(options, operation) {
+                        if(operation === 'read') {
+                            return {
+                                page: options.page,
+                                limit: options.pageSize,
+                                filter: options.filter,
+                                sort: options.sort
+                            };
+                        } else {
+                            return {models: kendo.stringify(options.models)};
+                        }
+                    }
+                },
+                schema  : {
+                    model: {
+                        id: 'id'
+                    },
+                    data: 'results',
+                    total: 'count'
+                },
+                batch: true,
+                serverFiltering: true,
+                serverSorting: true,
+                serverPaging: true,
+                page: 1,
+                pageSize: 20
+            }
+        });
+    }
+</script>
 <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/js/libs/localforage.min.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jszip/2.4.0/jszip.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.js"></script>
@@ -2993,11 +3784,47 @@
         lang: langVM,
         institute: banhji.institute,
         actualCash: 0,
-        actualDS: dataStore(apiUrl + "utibills/cashier_actual"),
-        sessionDS: dataStore(apiUrl + "utibills/session"),
+        obj: [],
+        workDS: dataStore(apiUrl + "spa/work"),
+        lineDS: dataStore(apiUrl + "item_lines"),
         pageLoad: function() {
         },
         save: function() {
+        },
+        selectRow: function(e){
+            console.log(e.data);
+            this.lineDS.data([]);
+            this.lineDS.filter({
+                field: "transaction_id",
+                value: e.data.transaction_id,
+            })
+            this.set("obj", e.data);
+        },
+        addRow              : function(){
+            var obj = this.get("obj");
+            this.lineDS.add({
+                transaction_id      : obj.transaction_id,
+                tax_item_id         : 0,
+                item_id             : 0,
+                assembly_id         : 0,
+                measurement_id      : 0,
+                description         : "",
+                quantity            : 1,
+                conversion_ratio    : 1,
+                cost                : 0,
+                price               : 0,
+                amount              : 0,
+                discount            : 0,
+                discount_percentage : 0,
+                tax                 : 0,
+                rate                : obj.rate,
+                locale              : obj.locale,
+                movement            : -1,
+                reference_no        : "",
+                item                : { id:"", name:"" },
+                measurement         : { measurement_id:"", measurement:"" },
+                tax_item            : { id:"", name:"" }
+            });
         },
         cancel: function() {
             window.history.back();

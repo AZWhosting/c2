@@ -204,6 +204,9 @@
 	    margin: 0 auto;
 	    width: 78%;
 	}
+	.span6 .row a p{
+		color: #333;
+	}
 </style>
 <div id="wrapperApplication" class="container-fluid"></div>
 <!-- template section starts -->
@@ -285,14 +288,16 @@
 									<p class="textSmall">Outlet</p>
 								</div>
 							</div>
-							<div class="span6 nopadding-left">
-								<div class="bg-green height250 top-rigth">
-									<div class="img">
-										<img src="<?php echo base_url();?>assets/spa/icon/book.png" >
+							<a href="rrd/#/inventory_position_summary">
+								<div class="span6 nopadding-left">
+									<div class="bg-green height250 top-rigth">
+										<div class="img">
+											<img src="<?php echo base_url();?>assets/spa/icon/book.png" >
+										</div>
+										<p class="textSmall">Inventory</p>
 									</div>
-									<p class="textSmall">Inventory</p>
 								</div>
-							</div>
+							</a>
 						</div>
 					</div>
 				</div>

@@ -5,7 +5,7 @@
 <!--[if gt IE 8]> <html class="animations ie gt-ie8 fluid top-full menuh-top sticky-top"> <![endif]-->
 <!--[if !IE]><!--><html class="animations fluid top-full menuh-top sticky-top"><!-- <![endif]-->
 <head>
-<title>Wellnez | BanhJi</title>
+<title>Wellnez | Online Spa Management System</title>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
@@ -14,7 +14,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE" />
 <meta name="description" content="" />
 <meta name="keywords" content="" />
-<meta name="author" content="BanhJi" />
+<meta name="author" content="" />
 <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:300" rel="stylesheet">
 
 <!-- CSS Kendo By DAWINE -->
@@ -51,7 +51,7 @@
 <link href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/common/theme/fonts/glyphicons/css/glyphicons.css" rel="stylesheet" />
 
 <link rel="stylesheet" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/common/theme/fonts/font-awesome/css/font-awesome.min.css">
-<link rel="stylesheet" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/common/theme/fonts/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/common/theme/fonts/font-awesome/css/font-awesome.css">
 <!--[if IE 7]><link rel="stylesheet" href="../../../../../common/theme/fonts/font-awesome/css/font-awesome-ie7.min.css"><![endif]-->
 
 <!-- Uniform Pretty Checkboxes -->
@@ -99,7 +99,7 @@
 <link href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/common/bootstrap/extend/bootstrap-image-gallery/css/bootstrap-image-gallery.min.css" rel="stylesheet" />
 
 <!-- Customize CSS-->
-<!-- <link rel="stylesheet" href="<?php echo base_url()?>assets/responsive.css" > -->
+<link rel="stylesheet" href="<?php echo base_url()?>assets/responsive.css" >
 
 <!-- jcarousel-->
 <script src="<?php echo base_url()?>assets/app_center/jquery.js" ></script>
@@ -169,6 +169,7 @@ var themerPrimaryColor = primaryColor;
 
 <!-- Le fav and touch icons -->
 <link rel="shortcut icon" href="<?php echo base_url();?>assets/update/banhji.jpg">
+
 <style >
 	.document-body {
 		background: radial-gradient(grey, black);
@@ -219,8 +220,13 @@ var themerPrimaryColor = primaryColor;
 	    padding: 8px 14px;
 	    border: none;
 	    height: 35px;
-	    margin-top: -4px;
+	    margin-top: -3px;
 	    border-radius: 0 3px 3px 0;
+	    cursor: pointer;
+	}
+	.btn-inverse:hover, .btn-inverse:focus{
+		background: #fff;
+		color: #fff;
 	}
 	.menu .span6.logout{
 		text-align: right;

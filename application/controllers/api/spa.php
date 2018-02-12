@@ -29,7 +29,7 @@ class Spa extends REST_Controller {
 		$data["results"] = [];
 		$data["count"] = 0;
 		$is_pattern = 0;
-		$obj = new Choulr_space(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$obj = new Spa_work(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		//Sort
 		if(!empty($sort) && isset($sort)){
 			foreach ($sort as $value) {
@@ -60,10 +60,70 @@ class Spa extends REST_Controller {
 		}
 		if($obj->exists()){
 			foreach ($obj as $value) {
+				//Transaction
+				$tran = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$tran->where("id", $value->transaction_id)->limit(1)->get();
+				//Customer
+				$con = new Spa_work_customer(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$con->where("work_id", $value->id)->get_iterated();
+				if($con->exists()){
+					$conar = [];
+					foreach($con as $c){
+						$sc = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						$sc->where("id", $c->customer_id)->limit(1)->get();
+						$conar[] = array(
+							"id" 	=> $sc->id,
+							"name" 	=> $sc->name,
+						);
+					}
+				}
+				//Room
+				$room = new Spa_work_room(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$room->where("work_id", $value->id)->get_iterated();
+				$roomar = [];
+				if($room->exists()){
+					foreach($room as $r){
+						$sroom = new Spa_room(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						$sroom->where("id", $r->room_id)->limit(1)->get();
+						$roomar[] = array(
+							"id" => $sroom->id,
+							"name" => $sroom->name,
+						);
+					}
+				}
+				//Item
+				$item = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$item->where("transaction_id", $value->transaction_id)->get_iterated();
+				$itemar = [];
+				if($item->exists()){
+					foreach($item as $i){
+						$me = new Measurement(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						$me->where("id", $i->measurement_id)->limit(1)->get();
+						$itemar[] = array(
+							"id" 			=> $i->id,
+							"description" 	=> $i->description,
+							"quantity" 		=> intval($i->quantity),
+							"measurement" 	=> array("id" => $me->id, "name" => $me->name),
+							"price" 		=> floatval($i->price),
+							"amount" 		=> floatval($i->amount),
+							"rate" 			=> floatval($i->rate),
+							"locale" 		=> $i->locale
+						);
+					}
+				}
+
 		 		$data["results"][] = array(
-		 			"id" 		=> $value->id,
-		 			"name" 		=> $value->name,
-		 			"is_system" => $value->is_system
+		 			"id" 			=> $value->id,
+		 			"transaction_id" 	=> $value->transaction_id,
+		 			"rate" 			=> floatval($tran->rate),
+		 			"locale" 		=> $tran->locale,
+		 			"sub_total" 	=> floatval($tran->sub_total),
+		 			"amount" 		=> floatval($tran->amount),
+		 			"tax" 			=> floatval($tran->tax),
+		 			"discount" 		=> floatval($tran->discount),
+		 			"room" 			=> $roomar,
+		 			"item" 			=> $itemar,
+		 			"customer" 		=> $conar,
 		 		);
 		 	}
 		}
@@ -101,7 +161,7 @@ class Spa extends REST_Controller {
 				$work = new Spa_work(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				$work->transaction_id = $txn->id;
 				$work->date = date('Y-m-d H:i:s', strtotime($value->date));
-				$work->phone = $value->phone;
+				$work->phone = isset($value->phone) ? $value->phone: "";
 				$work->save();
 				//Item
 				$allcost = 0;
@@ -605,6 +665,10 @@ class Spa extends REST_Controller {
 
 		//Response data
 		$this->response($data, 200);
+	}
+	//Room
+	function room_get(){
+
 	}
 	//Generate invoice number
 	public function _generate_number($type, $date){

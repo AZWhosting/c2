@@ -22357,6 +22357,7 @@
             }
         },
         offLineDB           : dataStore(apiUrl + "utibills/offlinework"),
+        offlineTempMeterDS  : dataStore(apiUrl + "utibills/offline_temp_meter"),
         rows                : [],
         TabletAbbr          : "",
         getOfflineDB        : function(){
@@ -22372,6 +22373,7 @@
                 }else{
                     para.push({field: "location_id", value: this.get("locationSelect")});
                 }
+                this.offlineTempMeterDS.data([]);
                 this.offLineDB.query({
                     filter: para
                 }).then(function(e){
@@ -22417,6 +22419,7 @@
                         var IssueDate = kendo.toString(new Date(self.get("IssueDate")), "yyyy-M-dd");
                         var BillingDate = kendo.toString(new Date(self.get("BillingDate")), "yyyy-M-dd");
                         var DueDate = kendo.toString(new Date(self.get("DueDate")), "yyyy-M-dd");
+
                         $.each(view, function(i,v){
                             self.rows.push({
                                 cells: [
@@ -22450,6 +22453,36 @@
                                     { value: v.installment},
                                     { value: banhji.institute.id}
                                 ]
+                            });
+                            self.offlineTempMeterDS.add({
+                                branch_id: v.branch_id,
+                                meter_id: v.meter_id,
+                                meter_number: v.meter_number,
+                                multiplier: v.multiplier,
+                                previous: v.previous,
+                                from_date: v.from_date,
+                                contact_id: v.contact_id,
+                                contact_name: v.contact_name,
+                                contact_code: v.contact_code,
+                                location_id: v.location_id,
+                                location_name: v.location_name,
+                                pole_id: v.pole_id,
+                                pole_name: v.pole_name,
+                                box_id: v.box_id,
+                                box_name: v.box_name,
+                                balance: v.balance,
+                                plan_id: v.plan_id,
+                                number_digit: v.number_digit,
+                                month_of: MonthOf,
+                                to_date: ToDate,
+                                issue_date: IssueDate,
+                                bill_date: BillingDate,
+                                due_date: DueDate,
+                                reader_id: self.get("readerSelect"),
+                                tablet_id: self.get("tabletSelect"),
+                                tablet_abbr: self.get("TabletAbbr"),
+                                installment: v.installment,
+                                institute_id: banhji.institute.id
                             });
                         });
                         var workbook = new kendo.ooxml.Workbook({
@@ -22493,6 +22526,7 @@
                             dataURI: workbook.toDataURL(),
                             fileName: "offline-"+"<?php echo date('d-M-Y H:s'); ?>" + ".xlsx"
                         });
+                        self.offlineTempMeterDS.sync();
                         $("#loadImport").css("display", "none");
                     }else{
                         var notifi = $("#ntf1").data("kendoNotification");

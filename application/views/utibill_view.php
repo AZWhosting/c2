@@ -10559,7 +10559,7 @@
 											        		<div class="row">
 										        				<div class="col-xs-12 col-sm-6">
 																	<div class="control-group">
-																		<label ><span data-bind="text: lang.lang.due_date" >Due Date</span> <span style="color:red">*</span></label>
+																		<label ><span data-bind="text: lang.lang.expire_date" >Due Date</span> <span style="color:red">*</span></label>
 															            <input type="text" 
 														                	style="width: 100%;" 
 														                	data-role="datepicker"
@@ -10607,6 +10607,25 @@
 													</div>
 												</div>
 											</div>
+											<div class="row-fluid" style="overflow: hidden;">
+												<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
+											        <thead>
+											            <tr>
+											                <th align="center" style="text-align: left; vertical-align: top;" data-bind="text: lang.lang.name"></th>
+											                <th style="vertical-align: top;"><span data-bind="text: lang.lang.meter">Customer</span></th>
+											                <th style="vertical-align: top;"><span data-bind="text: lang.lang.location">Previous</span></th>
+											                <th style="vertical-align: top;"><span data-bind="text: lang.lang.previous">Previous</span></th>
+											                <th style="vertical-align: top;"><span data-bind="text: lang.lang.month_of">Current</span></th>
+											                <th style="vertical-align: top;"><span data-bind="text: lang.lang.balance">Total</span></th>	                    
+											            </tr>
+											        </thead>
+											        <tbody data-role="listview" 
+										        		data-template="temp-meter-template" 
+										        		data-auto-bind="true" 
+										        		data-bind="source: offlineTempMeterDS">
+										        	</tbody>
+											    </table>
+											</div>
 										</div>
 										<div id="Upload" style="border: 1px solid #ccc; overflow: hidden;" class="tab-pane widget-body-regular">
 											<div class="span12" style="border: 1px solid #ccc;padding-bottom: 10px;min-height: 131px;">
@@ -10639,6 +10658,16 @@
 	</div>
 </script>
 <!-- Report -->
+<script id="temp-meter-template" type="text/x-kendo-tmpl">
+	<tr>
+		<td style="text-align: left;">#= contact_name#</td>
+		<td style="text-align: left;">#= meter_number#</td>
+		<td style="text-align: left;">#= location_name#</td>
+		<td style="text-align: left;">#= previous#</td>
+		<td style="text-align: left;">#= month_of#</td>
+		<td style="text-align: left;">#= balance#</td>
+	</tr>
+</script>
 <script id="Reports" type="text/x-kendo-template">
 	<div class="container">
 		<div class="row-fluid">

@@ -386,7 +386,16 @@
 				<div class="row ">
 					<div class="span6 ">
 						<div class="example">
-							<div class="row-fluid ">
+							<div id="formStyle"
+								 data-role="listview"
+								 data-auto-bind="true"
+								 data-selectable="true"
+				                 data-template="work-list-tmpl"
+				                 data-bind="source: workDS"
+				                 style="overflow: auto;width: 100%;">
+				            </div>
+							<!-- <div class="row-fluid ">
+								<div data
 								<div class="block-number">
 									1
 								</div>
@@ -470,38 +479,104 @@
 								<div class="block-number">
 									25
 								</div>
-							</div>							
+							</div>	 -->						
 						</div>
 					</div>
 					<div class="span6">
 						<div class="example" style="box-shadow: 2px 0px 12px 0px rgba(68,68,68,1); border-radius: 20px 20px 0 0 ; margin-bottom: 1px;">
-							<table >
-								<tr>
-									<th>Services</th>
-									<th>Qty</th>
-									<th>UOM</th>
-								</tr>
-								<tr>
-									<td>1</td>
-									<td>2</td>
-									<td>3</td>
-								</tr>
-								<tr>
-									<td>1</td>
-									<td>2</td>
-									<td>3</td>
-								</tr>
-								<tr>
-									<td>1</td>
-									<td>2</td>
-									<td>3</td>
-								</tr>
-								<tr>
-									<td>1</td>
-									<td>2</td>
-									<td>3</td>
-								</tr>
-							</table>
+							<div data-role="grid" class="costom-grid"
+						    	data-column-menu="true"
+						    	data-reorderable="true"
+						    	data-scrollable="false"
+						    	data-resizable="true"
+						    	data-editable="true"
+				                data-columns="[
+								    { 
+								    	title:'NO',
+								    	width: '50px', 
+								    	attributes: { style: 'text-align: center;' }, 
+								        template: function (dataItem) {
+								        	var rowIndex = banhji.Index.lineDS.indexOf(dataItem)+1;
+								        	return '<i class=icon-trash data-bind=click:removeRow></i>' + ' ' + rowIndex;
+								      	}
+								    },
+				                 	{ 
+				                 		field: 'item', 
+				                 		title: 'PRODUCTS/SERVICES', 
+				                 		editor: itemEditor, 
+				                 		template: '#=item.name#', 
+				                 		width: '170px' 
+				                 	},
+		                            { 
+		                            	field: 'description', 
+		                            	title:'DESCRIPTION', 
+		                            	width: '250px' 
+		                            },                            
+		                            {
+									    field: 'quantity',
+									    title: 'QTY',
+									    format: '{0:n}',
+									    editor: numberTextboxEditor,
+									    width: '120px',
+									    attributes: { style: 'text-align: right;' }
+									},
+		                            { 
+		                            	field: 'measurement', 
+		                            	title: 'UOM', 
+		                            	editor: measurementEditor, 
+		                            	template: '#=measurement?measurement.measurement:banhji.emptyString#', 
+		                            	width: '80px' 
+		                            },
+		                            {
+									    field: 'price',
+									    title: 'PRICE',
+									    format: '{0:n}',
+									    hidden: 'true',
+									    editor: numberTextboxEditor,
+									    width: '120px',
+									    attributes: { style: 'text-align: right;' }
+									},
+									{
+									    field: 'discount',
+									    title: 'DISCOUNT VALUE',
+									    hidden: true,
+									    format: '{0:n}',
+									    editor: numberTextboxEditor,
+									    width: '120px',
+									    attributes: { style: 'text-align: right;' }
+									},
+									{
+									    field: 'discount_percentage',
+									    title: 'DISCOUNT %',
+									    hidden: true,
+									    format: '{0:p}',
+									    editor: discountEditor,
+									    width: '120px',
+									    attributes: { style: 'text-align: right;' }
+									},
+		                            { 
+		                            	field: 'amount', 
+		                            	title:'AMOUNT', 
+		                            	format: '{0:n}', 
+		                            	editable: 'false', 
+		                            	attributes: { style: 'text-align: right;' }, 
+		                            	width: '120px' },
+		                            { 
+		                            	field: 'tax_item', 
+		                            	title:'TAX', 
+		                            	hidden: 'true',
+		                            	editor: taxForSaleEditor, 
+		                            	template: '#=tax_item.name#', width: '90px' },
+		                            { 
+		                            	field: 'reference_no', 
+		                            	title:'REFERENCE NO.',
+		                            	hidden: true, 
+		                            	width: '120px' }
+		                        ]"
+		                        data-auto-bind="false"
+				                data-bind="source: lineDS" >
+				            </div>
+				            <button class="btn btn-inverse" data-bind="click: addRow"><i class="icon-plus icon-white"></i></button>
 						</div>
 						<div class="example" style="box-shadow: 2px 0px 12px 0px rgba(68,68,68,1); border-radius: 0 0 20px 20px;">
 							<div class="row ">
@@ -572,5 +647,26 @@
 				<p data-bind="text: today"></span>
 			</div>
 		</div>
+	</div>
+</script>
+<script id="item-list-tmpl" type="text/x-kendo-tmpl">
+	<div class="pull-left">
+		#=abbr##=number# #=name#
+		&nbsp;&nbsp;
+		#if(variant.length>0){#
+			[
+			#for(var i=0; i < variant.length; i++){# 
+				#=variant[i].name#, 
+			#}#
+			]
+		#}#
+	</div>
+	<div class="pull-right">
+		#=category#
+	</div>
+</script>
+<script id="work-list-tmpl" type="text/x-kendo-tmpl">
+	<div class="block-number" data-bind="click: selectRow">
+		#: customer[0].name#
 	</div>
 </script>
