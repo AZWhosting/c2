@@ -111,6 +111,7 @@ class Items extends REST_Controller {
 				if($value->is_assembly==0 && $value->is_catalog==0){
 					$itemPrices = new Item_price(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 					$itemPrices->where("conversion_ratio", 1);
+					$itemPrices->where("item_id", $value->id);
 					$itemPrices->limit(1);
 					$itemPrices->get();
 					if($itemPrices->exists()){

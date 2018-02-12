@@ -273,6 +273,9 @@ class Inventory_modules extends REST_Controller {
 
 			//Inventory Total Cost
 			$inventoryTotalCost = floatval($purchases->total) - floatval($costOfSales->total) + floatval($inventoryCosts->total);
+			
+			$quantity = floatval($unitOnHand->total);
+			$amount = $inventoryTotalCost;
 
 			$cost = 0;
 			if(floatval($unitOnHand->total)==0){
@@ -342,10 +345,10 @@ class Inventory_modules extends REST_Controller {
 			"measurement" 	=> $obj->measurement_name,
 			"currency_code" => $currency->code,
 			"locale" 		=> $obj->locale,
-			"quantity" 		=> floatval($unitOnHand->total),
+			"quantity" 		=> $quantity,
 			"cost" 			=> $cost,
 			"price" 		=> floatval($itemPrice->price),
-			"amount" 		=> $inventoryTotalCost,
+			"amount" 		=> $amount,
 			"txn" 			=> $txnCount,
 			"po" 			=> $po,
 			"so" 			=> $so
