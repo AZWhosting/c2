@@ -16194,11 +16194,11 @@
                 end.setDate(end.getDate() + 1);
 
                 para.push({
-                    field: "month_of >=",
+                    field: "issued_date >=",
                     value: kendo.toString(start, "yyyy-MM-dd")
                 });
                 para.push({
-                    field: "month_of <",
+                    field: "issued_date <",
                     value: kendo.toString(end, "yyyy-MM-dd")
                 });
             } else if (start) {
@@ -16206,7 +16206,7 @@
                 displayDate = "On " + kendo.toString(start, "dd-MM-yyyy");
 
                 para.push({
-                    field: "month_of",
+                    field: "issued_date",
                     value: kendo.toString(start, "yyyy-MM-dd")
                 });
             } else if (end) {
@@ -16215,7 +16215,7 @@
                 end.setDate(end.getDate() + 1);
 
                 para.push({
-                    field: "month_of <",
+                    field: "issued_date <",
                     value: kendo.toString(end, "yyyy-MM-dd")
                 });
             } else {
@@ -16967,11 +16967,11 @@
                 end.setDate(end.getDate() + 1);
 
                 para.push({
-                    field: "month_of >=",
+                    field: "issued_date >=",
                     value: kendo.toString(start, "yyyy-MM-dd")
                 });
                 para.push({
-                    field: "month_of <",
+                    field: "issued_date <",
                     value: kendo.toString(end, "yyyy-MM-dd")
                 });
             } else if (start) {
@@ -16979,7 +16979,7 @@
                 displayDate = "On " + kendo.toString(start, "dd-MM-yyyy");
 
                 para.push({
-                    field: "month_of",
+                    field: "issued_date",
                     value: kendo.toString(start, "yyyy-MM-dd")
                 });
             } else if (end) {
@@ -16988,7 +16988,7 @@
                 end.setDate(end.getDate() + 1);
 
                 para.push({
-                    field: "month_of <",
+                    field: "issued_date <",
                     value: kendo.toString(end, "yyyy-MM-dd")
                 });
             } else {
