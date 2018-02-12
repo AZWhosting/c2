@@ -246,7 +246,7 @@
 	    text-align: center;
 	    position: relative; 
 	    padding: 15px;
-	    border-radius: 20px;
+	    border-radius: 10px;
 	    float: left;
 	    box-shadow: 2px 0px 12px 0px rgba(68,68,68,1);	    
 	}
@@ -278,7 +278,7 @@
 		<div class="row pay">
 			<div class="span12">	
 				<div class="row ">
-					<div class="span6 ">
+					<div class="span6 " style="padding-right: 0;">
 						<div class="example">
 							<table>
 								<tr>
