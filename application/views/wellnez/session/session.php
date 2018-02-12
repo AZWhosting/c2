@@ -241,12 +241,12 @@
 		}
 	}
 	.session .example{
-		background: #0eac00;
+		background: #fff;
 	    width: 100%;
 	    text-align: center;
 	    position: relative; 
 	    padding: 15px;
-	    border-radius: 20px;
+	    border-radius: 10px;
 	    float: left;
 	    box-shadow: 2px 0px 12px 0px rgba(68,68,68,1);
 	    
@@ -258,6 +258,7 @@
 	}
 	.session .example table th{
 		text-transform: uppercase;
+		background: #1c3b19;
 	}
 </style>
 <!-- ***************************
@@ -268,7 +269,14 @@
 		<div class="row session">
 			<div class="span12">
 				<div class="example">
-					<h2>Session Management</h2>
+					<h2 style="width: 30%; float: left;">Session Management</h2>
+					<ul class="topnav addNew" style="float: left;width: 14%; background: #0eac00">
+						<li role="presentation" class="dropdown ">
+					  		<a class="dropdown-toggle" data-bind="click: addNewSession" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+					  			<span > Add New Session</span>
+					  		</a>
+					  	</li>
+					</ul>
 					<div data-bind="visible: noSession">
 						<table class="table table-bordered table-primary table-striped table-vertical-center" style="margin-top: 15px;">
 					        <thead>
@@ -286,13 +294,7 @@
 				        		data-auto-bind="true"
 				        		data-bind="source: sessionDS"></tbody>
 					    </table>
-					    <ul class="topnav addNew">
-							<li role="presentation" class="dropdown ">
-						  		<a class="dropdown-toggle" data-bind="click: addNewSession" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-						  			<span data-bind="text: lang.lang.add_new"></span>
-						  		</a>
-						  	</li>
-						</ul>
+					    
 					</div>
 					<div data-bind="invisible: noSession" style="display: none;">
 						<table class="table table-bordered table-primary table-striped table-vertical-center">
@@ -585,7 +587,7 @@
 			#}else{#
 				<a style="cursor: pointer;" href="\\#/reconcile/#= id # ">Reconcile</a>
 			#}#
-			<!-- <a style="cursor: pointer;" class="btn-action glyphicons pencil btn-success" href="\\#/reconcile/#= id # "><i></i></a> -->
+			<a style="cursor: pointer;" class="btn-action glyphicons pencil btn-success" href="\\#/reconcile/#= id # "><i></i></a>
 		</td>
 	</tr>
 </script> -->
@@ -728,4 +730,4 @@
 			#}#
 		</td>
 	</tr>
-</script>
+</script>         

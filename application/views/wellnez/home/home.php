@@ -323,12 +323,14 @@
 								</a>
 							</div>
 							<div class="span4 no-padding">
-								<div class="bg-green height100">
-									<div class="img">
-										<img src="<?php echo base_url();?>assets/spa/icon/serving.png" >
+								<a href="employee">
+									<div class="bg-green height100">
+										<div class="img">
+											<img src="<?php echo base_url();?>assets/spa/icon/serving.png" >
+										</div>
+										<p>Therapist</p>
 									</div>
-									<p>Therapist</p>
-								</div>
+								</a>
 							</div>
 						</div>
 					</div>

@@ -442,6 +442,7 @@
 	}
 	#posProductList .k-grid table{
 		color: #333;
+    	font-size: 13px;
 	}
 	#posProductList .k-grid table td:first-child{
 		cursor: pointer;
@@ -729,7 +730,7 @@
 
 						<div class="row posProductItems" >
 							<div class="span12" >
-								<div id="posProductList" class="box-generic-noborder" style="min-height: 140px!important; height: 140px; padding-bottom: 0;">
+								<div id="posProductList" class="box-generic-noborder" style="min-height: 140px!important; height: 230px; padding-bottom: 0;">
 									<div data-role="grid" class="costom-grid"
 								    	 data-column-menu="true"
 								    	 data-reorderable="true"
@@ -763,7 +764,7 @@
 											    title: 'QTY',
 											    format: '{0:n}',
 											    editor: numberTextboxEditor,
-											    width: '120px',
+											    width: '50px',
 											    attributes: { style: 'text-align: right;' },
 											    template: function(dataItem){
 											    	banhji.Index.changes();
@@ -1080,4 +1081,4 @@
 		   	</div>		   	
    		</td>
 	</tr>
-</script>
+</script> 

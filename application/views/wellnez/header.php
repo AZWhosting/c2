@@ -99,7 +99,7 @@
 <link href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/common/bootstrap/extend/bootstrap-image-gallery/css/bootstrap-image-gallery.min.css" rel="stylesheet" />
 
 <!-- Customize CSS-->
-<link rel="stylesheet" href="<?php echo base_url()?>assets/responsive.css" >
+<link rel="stylesheet" href="<?php echo base_url()?>assets/spa/wellnez.css" >
 
 <!-- jcarousel-->
 <script src="<?php echo base_url()?>assets/app_center/jquery.js" ></script>
@@ -279,4 +279,4 @@ var themerPrimaryColor = primaryColor;
 		        </div>
 		    </div>
 		</div>
-	</div>
+	</div>         

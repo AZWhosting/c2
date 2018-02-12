@@ -246,7 +246,7 @@
 	    text-align: center;
 	    position: relative; 
 	    padding: 15px;
-	    border-radius: 20px;
+	    border-radius: 10px;
 	    float: left;
 	    box-shadow: 2px 0px 12px 0px rgba(68,68,68,1);	    
 	}
@@ -278,7 +278,7 @@
 		<div class="row book">
 			<div class="span12">	
 				<div class="row ">
-					<div class="span3 ">
+					<div class="span3 " style="padding-right: 0;">
 						<div class="example">
 							<div style="width: 100%; float: left; padding: 15px; background: #fff; margin-bottom: 15px; color: #333; font-weight: 700; font-size: 20px;">
 								3 Books

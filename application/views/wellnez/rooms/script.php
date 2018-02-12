@@ -3694,100 +3694,7 @@
         attachmentDS        : dataStore(apiUrl + "attachments"),
         assemblyDS          : dataStore(apiUrl + "item_prices"),
         wacDS               : dataStore(apiUrl + "items/weighted_average_costing"),
-        itemsDS             : new kendo.data.DataSource({
-            transport: {
-                read: {
-                    url: apiUrl + "items",
-                    type: "GET",
-                    headers: banhji.header,
-                    dataType: 'json'
-                },
-                parameterMap: function(options, operation) {
-                    if (operation === 'read') {
-                        return {
-                            page: options.page,
-                            limit: options.pageSize,
-                            filter: options.filter,
-                            sort: options.sort
-                        };
-                    } else {
-                        return {
-                            models: kendo.stringify(options.models)
-                        };
-                    }
-                }
-            },
-            schema: {
-                model: {
-                    id: 'id'
-                },
-                data: 'results',
-                total: 'count'
-            },
-            filter: [
-                {
-                    field: "is_system",
-                    value: 0
-                }
-            ],
-            sort: {
-                field: "id",
-                dir: "asc"
-            },
-            batch: true,
-            serverFiltering: true,
-            serverSorting: true,
-            serverPaging: true,
-            page: 1,
-            pageSize: 8
-        }),
-        employeeDS          : new kendo.data.DataSource({
-            transport: {
-                read: {
-                    url: apiUrl + "contacts",
-                    type: "GET",
-                    headers: banhji.header,
-                    dataType: 'json'
-                },
-                parameterMap: function(options, operation) {
-                    if (operation === 'read') {
-                        return {
-                            page: options.page,
-                            limit: options.pageSize,
-                            filter: options.filter,
-                            sort: options.sort
-                        };
-                    } else {
-                        return {
-                            models: kendo.stringify(options.models)
-                        };
-                    }
-                }
-            },
-            schema: {
-                model: {
-                    id: 'id'
-                },
-                data: 'results',
-                total: 'count'
-            },
-            filter: [
-                {
-                    field: "contact_type_id",
-                    value: 9
-                }
-            ],
-            sort: {
-                field: "id",
-                dir: "asc"
-            },
-            batch: true,
-            serverFiltering: true,
-            serverSorting: true,
-            serverPaging: true,
-            page: 1,
-            pageSize: 4
-        }),        
+        roomDS              : dataStore(apiUrl + "spa/rooms"),      
         customerItemsDS     : dataStore(apiUrl + "items/less", 9),
         journalLineDS       : dataStore(apiUrl + "journal_lines"),
         referenceDS         : dataStore(apiUrl + "transactions"),
@@ -4161,8 +4068,6 @@
                 value: data.id
             });
         },
-        //Room
-        roomDS       : dataStore(apiUrl + "utibills/room"),
         roomAR          : [],
         emSelect: true,
         supplierDS : new kendo.data.DataSource({
@@ -5556,11 +5461,6 @@
                         field: "name",
                         operator: "like",
                         value: searchText
-                    },
-                    {
-                        field: "abbr",
-                        operator: "or_where",
-                        value: searchText
                     }
                 );
                 if(textParts[1]){
@@ -5571,7 +5471,7 @@
                     });
                 }
             }
-            this.itemsDS.filter(para);
+            this.roomDS.filter(para);
         },
         bookDS : dataStore(apiUrl + "spa/book"),
         addBook : function(e){

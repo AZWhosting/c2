@@ -14,6 +14,11 @@
 	<div id="grid"></div>
 </body>
 	<script>
+		var url      = window.location.href;
+		var pathname = window.location.pathname;
+		if(pathname == '/c2/wellnez/'){
+			window.location.href = url + 'home';
+		}
 		$(function(){
 			$('#grid').kendoGrid({
 				dataSource: new kendo.data.DataSource({

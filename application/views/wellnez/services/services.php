@@ -246,7 +246,7 @@
 	    text-align: center;
 	    position: relative; 
 	    padding: 15px;
-	    border-radius: 20px;
+	    border-radius: 10px;
 	    float: left;
 	    box-shadow: 2px 0px 12px 0px rgba(68,68,68,1);	    
 	}
@@ -266,10 +266,10 @@
 		
 	.services .example table{
 		width: 100%;
-		background: #fff;
+		background: none;
 		float: left;
 		color: #333;
-		border: 1px solid #ddd;
+		border: none;
 		text-align: left;
 	}
 	.services .example table th{
@@ -283,26 +283,37 @@
 		padding: 8px;
 		border: 1px solid #ddd;
 	}
+
+	.services .example table tr{
+		border-bottom: 1px solid #fff;
+	}
 	.table-condensed tr td {
 	    border: none !important;
+	    
+	}
+	.table-striped > tbody > tr:nth-of-type(odd){
+		background: none;
 	}
 	.table-condensed th, .table-condensed td {
 	    padding: 5px 5px 5px 10px !important;
 	}
 	.table-striped tbody tr:nth-child(odd) td, 
 	.table-striped tbody tr:nth-child(odd) th {
-	    background: #f4f5f8 !important;
+	    background: #none !important;
+	}
+	.services .example table tr td{
+		background: none !important;
 	}
 	.botton .button-service{
 		background: #fff;
 	    padding: 10px;
 	    float: left;
 	    width: 100%;
-	    border-radius: 5px 5px 0 0;
-	    margin-bottom: 1px;
+	    border-radius:  0 0 5px 5px;
 	    cursor: pointer;
 	    box-shadow: 2px 0px 12px 0px rgba(68,68,68,1);
 	    color: #0eac00;
+	    margin-top: 1px;
 	}
 	.botton .button-service .img{
 		width: 40px;
@@ -320,7 +331,7 @@
 	.botton .button-book{
 		background: #fff;
 	    padding: 13px;
-	    border-radius: 0 0 0 5px;
+	    border-radius: 5px 0 0 0 ;
 	    cursor: pointer;
 	    box-shadow: 2px 0px 12px 0px rgba(68,68,68,1);
 	    color: #0eac00;
@@ -362,12 +373,13 @@
 	    width: 100%;
 	    text-align: center;
 	    margin-left: 1px;
-	    margin-bottom: 0;
-	    border-radius: 0 0 5px 0;
-	    line-height: 39px;
+	    border-radius: 0  5px 0 0;
+	    line-height: 38px;
 	    cursor: pointer;
 	    box-shadow: 2px 0px 12px 0px rgba(68,68,68,1);
 	    color: #0eac00;
+	    margin-bottom: 0;
+	    height: 87px;
 	}
 	.button-cancel span{
 		font-size: 45px;
@@ -483,7 +495,7 @@
 						</div>
 					</div>
 					<div class="span6">
-						<div class="example" style="box-shadow: 2px 0px 12px 0px rgba(68,68,68,1); border-radius: 20px 20px 0 0 ; margin-bottom: 1px;">
+						<div class="example" style="box-shadow: 2px 0px 12px 0px rgba(68,68,68,1); border-radius: 10px 10px 0 0 ; margin-bottom: 1px;">
 							<div data-role="grid" class="costom-grid"
 						    	data-column-menu="true"
 						    	data-reorderable="true"
@@ -576,45 +588,35 @@
 		                        data-auto-bind="false"
 				                data-bind="source: lineDS" >
 				            </div>
-				            <button class="btn btn-inverse" data-bind="click: addRow"><i class="icon-plus icon-white"></i></button>
+				            <button style="background: #1c3b19" class="btn btn-inverse" data-bind="click: addRow"><i class="icon-plus icon-white"></i><span style="float: right; margin-left: 10px;">Add Serving</span></button>
 						</div>
-						<div class="example" style="box-shadow: 2px 0px 12px 0px rgba(68,68,68,1); border-radius: 0 0 20px 20px;">
+						<div class="example" style="box-shadow: 2px 0px 12px 0px rgba(68,68,68,1); border-radius: 0 0 10px 10px;">
 							<div class="row ">
 								<div class="span6 ">
 									<table class="table table-condensed table-striped table-white" >
 										<tbody>
 											<tr>
-												<td class="right" style="width: 60%;"><span data-bind="text: lang.lang.subtotal" style="font-size: 15px; font-weight: 700;"></span></td>
+												<td style="width: 60%;"><span data-bind="text: lang.lang.subtotal" style="font-size: 15px; font-weight: 700;"></span></td>
 												<td class="right strong" width="40%"><span data-format="n" data-bind="text: obj.sub_total" style="font-size: 15px; font-weight: 700;"></span></td>
 											</tr>               
 											<tr>
-												<td class="right"><span>Discount</span></td>
+												<td><span>Discount</span></td>
 												<td class="right ">
 													<span data-format="n" data-bind="text: obj.discount"></span>
 												</td>
 											</tr>               
 											<tr>
-												<td class="right"><span data-bind="text: lang.lang.total_tax"></span></td>
+												<td><span data-bind="text: lang.lang.total_tax"></span></td>
 												<td class="right "><span data-format="n" data-bind="text: obj.tax"></span></td>
 											</tr>                             
 											<tr>
-												<td class="right"><h4 span data-bind="text: lang.lang.total" style="font-weight: 700;"></h4></td>
-												<td class="right strong"><h4 data-bind="text: total" style="font-weight: 700;"></h4></td>
+												<td><h4 span data-bind="text: lang.lang.total" style="font-weight: 700;"></h4></td>
+												<td class="right strong"><h4 data-bind="text: obj.amount" style="font-weight: 700;"></h4></td>
 											</tr>               
 										</tbody>
 									</table>
 								</div>
 								<div class="span6 botton" style="padding-left: 0;">
-									<div class="row">
-										<div class="span12 ">
-											<div class="button-service">
-												<div class="img">
-													<img src="<?php echo base_url();?>assets/spa/icon/pay-green.png" >
-												</div>
-												<p class="textBig">Print </p>
-											</div>
-										</div>
-									</div>
 									<div class="row">
 										<div class="span4 " style="padding-right: 0;">
 											<div class="button-book">
@@ -633,7 +635,17 @@
 											</div>
 										</div>
 										<div class="span4 " style="padding-left: 0;">
-											<p class="button-cancel"><span>X</span> <br> Split</p>
+											<p class="button-cancel"><span>/</span> <br> Split</p>
+										</div>
+									</div>
+									<div class="row">
+										<div class="span12 ">
+											<div class="button-service">
+												<div class="img">
+													<img src="<?php echo base_url();?>assets/spa/icon/pay-green.png" >
+												</div>
+												<p class="textBig">Print </p>
+											</div>
 										</div>
 									</div>
 								</div>
@@ -669,4 +681,4 @@
 	<div class="block-number" data-bind="click: selectRow">
 		#: customer[0].name#
 	</div>
-</script>
+</script>          

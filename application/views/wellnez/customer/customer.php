@@ -234,222 +234,105 @@
     </li>	
 </script>
 <style >
-	#productListView{
-		border: none;
-	}
-	.demo-section.span12{
-		padding: 15px;
-		margin-bottom: 1px;
-		background: #0eac00;
-	}
-	.product {
-	    float: left;
-	    position: relative;
-	    width: 99px;
-	    height: 180px;
-	    padding: 15px;
-	    cursor: pointer;
+	.customerCenter .listWrapper {
 	    background: #fff;
-	    margin-right: 2px;
-	    margin-bottom: 1px;
-	}
-	.listWrapper{
-		padding-right: 0;
-		width: 47%;
-	}
-	.product img {	    
-	    height: 110px;
-	    margin-bottom: 5px;
-	    border-bottom: 1px solid #0eac00;
-	    width: 100%;
-	    padding-bottom: 15px;
-	}
-	.product h3 {
-	    margin: 0 auto;
-	    width: 75%;
-	    overflow: hidden;
-	    line-height: 1.5em;
-	    font-size: .9em;
-	    text-transform: uppercase;
-	    color: #333;
-	    font-weight: 700;
-	    text-align: center;
-	    height: 35px;
-	}
-	.topnav.addNew {
-	    display: inline-block;
-	    background: #203864;
-	    padding: 3px 10px 3px 10px;
-	    margin: 0;
-	    line-height: 23px;
-	    border: 1px solid #fff;
-	    border-radius: 3px;
-	}
-	.topnav.addNew li {
-	    list-style: none;
-	}
-	.topnav.addNew li a {
-	    color: #fff;
-	}
-	#posProductList {
-	    overflow: scroll;
-	    border: #ccc 1px solid;
-	    background: #fff;
-	    padding: 15px;
+	    border: none;
 	    box-shadow: 2px 0px 12px 0px rgba(68,68,68,1);
-	}
-	.costom-grid {
-	    clear: both;
-	    margin-bottom: 15px;
-	    border-radius: 0px;
-	    border-width: 1px 0px 2px 0px;
-	    border-style: solid;
-	    border-color: rgb(221, 221, 221);
-	    overflow-x: auto;
-	    overflow-y: auto;
-	}
-	.costom-grid table tr th {
-	    font-weight: 700 !important;
-	    font-size: 13px !important;
-	    background: #1c3b19 !important;
-	    color: #fff;
-	}
-	.table-condensed tr td {
-	    border: none !important;
-	}
-	.table-condensed th, .table-condensed td {
-	    padding: 5px 5px 5px 10px !important;
-	}
-	.table-striped tbody tr:nth-child(odd) td, 
-	.table-striped tbody tr:nth-child(odd) th {
-	    background: #f4f5f8 !important;
-	}
-	.btn-center-text {
-	    background: #213863;
-	    display: flex;
-	    align-items: center;
-	    justify-content: space-around;
-	    border-radius: 5px !important;
-	}
-	#pager{
-		margin-top: 15px;
-	    float: left;
-	    width: 98.2%;
-	}
-	.pos table.table-customer th{
-		background: #1c3b19;
-		
-	}
-	.pos table th{
-		background: #203864 ;
-	}
-	@media (min-width: 768px){
-		html.no-touch.sticky-top:not(.animations-gpu) #content {
-		    padding-top: 0;
-		}
-	}
-	.botton .button-service{
-		background: #0eac00;
-	    padding: 10px;
-	    float: left;
-	    width: 100%;
-	    border-radius: 5px 5px 0 0;
-	    margin-bottom: 1px;
-	    cursor: pointer;
-	    box-shadow: 2px 0px 12px 0px rgba(68,68,68,1);
-	}
-	.botton .button-service .img{
-		width: 40px;
-	    float: left;
-	    margin-right: 15px;
-	    margin-left: 30px;
-	}
-	.botton .button-service .img img{
-		width: 100%
-	}
-	.botton .button-service p{
-		font-size: 27px;
-	}
-	
-	.botton .button-book{
-		background: #0eac00;
-	    padding: 13px;
-	    border-radius: 0 0 0 5px;
-	    cursor: pointer;
-	    box-shadow: 2px 0px 12px 0px rgba(68,68,68,1);
-	}
-	.botton .button-book .img{
-		width: 38px;
-	    margin-left: 8px;
-	    margin-bottom: 4px;
-	}
-	.botton .button-book .img img{
-		width: 100%
-	}
-	.botton .button-book p{
-		margin-bottom: 0;
-	}
-
-	.botton .button-pay{
-		background: #0eac00;
-	    padding: 17px 17px 10px 17px;
-	    text-align: center;
-	    margin-left: 1px;
-	    text-align: center;
-	    cursor: pointer;
-	    box-shadow: 2px 0px 12px 0px rgba(68,68,68,1);
-	}
-	.botton .button-pay .img{
-		width: 38px;
-	    margin-left: 8px;
-	    margin-bottom: 4px;
-	}
-	.botton .button-pay .img img{
-		width: 100%
-	}
-	.botton .button-pay p{
-		margin-bottom: 0
-	}
-	.button-cancel{
-		background: #1c3b19;
-	    width: 100%;
-	    text-align: center;
-	    margin-left: 1px;
 	    margin-bottom: 0;
-	    border-radius: 0 0 5px 0;
-	    line-height: 39px;
-	    cursor: pointer;
-	    box-shadow: 2px 0px 12px 0px rgba(68,68,68,1);
-	}
-	.button-cancel span{
-		font-size: 45px;
-	    padding: 5px;
+	    border-radius: 10px;
 	    float: left;
 	    width: 100%;
+	    padding: 15px;
 	}
-	.listWrapper{
-		background: #0eac00;
-	    padding: 0 0 15px 0;
-	    margin-bottom: 1px;
-	    width: 100%;
-	    float: left;
-	    border-radius: 20px 20px 0 0;
+	.customerCenter .detailsWrapper {
+		background: #fff;
+	    border: none;
 	    box-shadow: 2px 0px 12px 0px rgba(68,68,68,1);
+	    margin-bottom: 0;
+	    border-radius: 10px;
+	    padding: 15px;
 	}
-	.table.table-white {
+	.customerCenter .k-icon.k-i-arrow-60-down{
+		margin-top:  7px;
+	}
+	.customerCenter .listWrapper .results {
+	    float: left;
+	    height: 25px;
+	    width: 100%;
+	    background: #0077c5;
+	    text-align: center;
+	    line-height: 23px;
+	}
+	.customerCenter .listWrapper .table.table-condensed{
+		float: left;
+	    width: 99.3%;
+	    color: #333;
+	}
+	.customerCenter .listWrapper .k-grid-content .k-virtual-scrollable-wrap table tr td .media-body span:first-child {
+	    font-size: 12.5px;
+	    color: #333;
+	    text-align: left;
+	}
+	.customerCenter .listWrapper .k-grid-content .k-virtual-scrollable-wrap table tr td .media-body span:last-child {
+	    font-size: 12.5px;
+	    color: #333;
+	    text-align: left;
+	}
+	.customerCenter .listWrapper .k-grid-content.k-auto-scrollable .k-virtual-scrollable-wrap table tr:hover .media-body span{
+	    background: #0077c5 !important;
+	    color: #fff;
+	}
+	.customerCenter .detailsWrapper .table.table-white {
 	    background: #fff;
 	    color: #333;
+	    font-size: 13px;
+	    margin-top: 15px;
+	}
+	.customerCenter .detailsWrapper .table.table-white tr th{
+		text-transform: uppercase;
+	}
+	.customerCenter .detailsWrapper .widget-head{
+		margin-bottom: 10px;
+	    float: left;
+	    width: 100%;
+	}
+	.customerCenter .detailsWrapper .btn-inverse:hover,
+	.customerCenter .detailsWrapper .btn-inverse:focus {
+	    background: #424242;
+   		border-color: #424242;
+	    color: #fff;
+	}
+	.k-icon.k-i-seek-w,
+	.k-icon.k-i-arrow-w,
+	.k-icon.k-i-arrow-e,
+	.k-icon.k-i-seek-e{
+		margin-top: 5px;
+	}
+	.k-header .k-i-calendar{
+		margin-top: 6px;
+	}
+	.customerCenter .detailsWrapper button{
+		height: 30px;
+		cursor: pointer;
+	}
+	.customerCenter .listWrapper a.addCustomer{
+		padding: 8px;
+	    width: 100%;
+	    background: #0077c5;
+	    color: #fff;
+	    float: left;
+	    text-align: center;
 	}
 </style>
 <!-- ***************************
 *	Water Section      	  *
 **************************** -->
 <script id="customerCenter" type="text/x-kendo-template">
-	<div class="widget widget-heading-simple widget-body-gray widget-employees">		
+	<!-- <div class="widget widget-heading-simple widget-body-gray widget-employees">
 		<div class="widget-body padding-none">			
 			<div class="row-fluid row-merge">
 				<div class="span3 listWrapper" >
-					<div class="innerAll">							
+					<div class="innerAll">
 						<form autocomplete="off" class="form-inline">
 							
 							<div class="widget-search separator bottom">
@@ -466,7 +349,7 @@
 					                   data-value-field="id"
 					                   data-bind="value: contact_type_id,
 					                              source: contactTypeDS"
-					                   style="width: 100%;" />							
+					                   style="width: 100%;" />
 							</div>
 						</form>					
 					</div>
@@ -487,14 +370,14 @@
 						<div class="span6">
 							<div class="widget widget-4 widget-tabs-icons-only margin-bottom-none">
 
-							    <!-- Widget Heading -->
+							    
 							    <div class="widget-head">
 							    	<input type="text" name="" data-bind="value: obj.name" disabled="disabled" style="border: none; width: 69%; font-size: 20px; font-weight: 600; margin-top: -11px; margin-left: 11px; background: #fff;">
-							        <!-- Tabs -->
+							        
 							        <ul class="pull-right">
 
 							            <li class="glyphicons text_bigger active"><span data-toggle="tab" data-target="#tab1-4"><i></i></span>
-							            </li>							            							            
+							            </li>
 							            <li class="glyphicons circle_info"><span data-toggle="tab" data-target="#tab2-4"><i></i></span>
 							            </li>							            
 							            <li class="glyphicons pen"><span data-toggle="tab" data-target="#tab3-4"><i></i></span>
@@ -503,15 +386,15 @@
 							            </li>							            							            
 							        </ul>
 							        <div class="clearfix"></div>
-							        <!-- // Tabs END -->
+							      
 
 							    </div>
-							    <!-- Widget Heading END -->
+							   
 
 							    <div class="widget-body">
 							        <div class="tab-content">
 
-							            <!-- Transactions Tab content -->
+							          
 							            <div id="tab1-4" class="tab-pane active box-generic">
 							            	<table class="table table-borderless table-condensed cart_total cash-table">
 								            	<tr>
@@ -557,9 +440,7 @@
 								            	</tr>
 							            	</table>
 							            </div>
-							            <!-- // Transactions Tab content END -->							           					            
-
-							            <!-- INFO Tab content -->
+							           
 							            <div id="tab2-4" class="tab-pane box-generic" style="float: left; margin-bottom: 0;">
 							            	<div class="row-fluid">
 							            		<div class="span6" style="padding: 0 15px 0 0;">
@@ -586,13 +467,7 @@
 																<td>
 																	<span data-bind="text: obj.name"></span>
 																</td>
-															</tr>
-															<!-- <tr>
-																<td><span data-bind="text: lang.lang.billed_address"></span></td>
-																<td>
-																	<span data-bind="text: obj.address"></span>
-																</td>
-															</tr> -->								
+															</tr>							
 															<tr>
 																<td><span data-bind="text: lang.lang.phone"></span></td>
 																<td>
@@ -612,9 +487,7 @@
 												</div>
 											</div>
 							            </div>
-							            <!-- // INFO Tab content END -->
-
-							            <!-- NOTE Tab content -->
+							            
 							            <div id="tab3-4" class="tab-pane">
 
 										    <div>
@@ -637,9 +510,7 @@
 												 data-scrollable="{virtual: true}"></div>
 											
 							            </div>
-							            <!-- // NOTE Tab content END -->
-
-							            <!-- Attach Tab content -->
+							            
 								        <div id="tab4-4" class="tab-pane" >							            	
 								            <p><span data-bind="text: lang.lang.file_type"></span> [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>
 								            <input id="files" name="files"
@@ -673,7 +544,7 @@
 										    <span class="btn btn-icon btn-success glyphicons ok_2" data-bind="click: uploadFile" style="color: #fff; padding: 5px 38px; text-align: left; width: 98px !important; display: inline-block; margin-top: 10px;"><i></i> <span data-bind="text: lang.lang.save"></span></span>
 
 								        </div>
-								        <!-- // Attach Tab content END -->							            								            
+								           
 
 							        </div>
 							    </div>
@@ -769,7 +640,326 @@
 				</div>
 			</div>			
 		</div>
-	</div>		
+	</div> -->	
+	<div class="container">
+		<div class="row customerCenter">
+			<div class="span3">
+				<div class="listWrapper">
+					<a href="" class="addCustomer">Add Customer</a>
+					<div class="innerAll" style="width: 100%; float: left; background: #424242;">
+						<form autocomplete="off" class="form-inline" style="margin-bottom: 0;">
+							
+							<div class="widget-search separator bottom">
+								<button style="height: 34px;" type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></button>
+								<div class="overflow-hidden">
+									<input type="search" placeholder="Number or Name..." data-bind="value: searchText">
+								</div>
+							</div>						
+							<div class="select2-container" style="width: 100%;  margin-bottom: 0px;">
+								<input data-role="dropdownlist"
+					                   data-option-label="Select Type..."
+					                   data-value-primitive="true"
+					                   data-text-field="name"
+					                   data-value-field="id"
+					                   data-bind="value: contact_type_id,
+					                              source: contactTypeDS"
+					                   style="width: 100%;" />
+							</div>
+						</form>					
+					</div>
+
+					<div class="results">
+						<span data-bind="text: contactDS.total"></span>
+						<span data-bind="text: lang.lang.found_search"></span>
+					</div>
+
+					<div class="table table-condensed " style="height: 580px;"
+						 data-role="grid"
+						 data-bind="source: contactDS"
+						 data-row-template="customerCenter-customer-list-tmpl"
+						 data-columns="[{title: ''}]"
+						 data-selectable=true
+						 data-height="600"
+						 data-scrollable="{virtual: true}"></div>
+				</div>
+			</div>
+			<div class="span9" style="padding-left: 0">
+				<div class="detailsWrapper">
+					<div class="row">
+						<div class="span6">
+							<div class="widget widget-4 widget-tabs-icons-only margin-bottom-none">
+
+							    
+							    <div class="widget-head" >
+							    	<input type="text" name="" data-bind="value: obj.name" disabled="disabled" style="border: none; width: 69%; height: 30px; float: left; font-size: 16px; font-weight: 600;  background: #fff; padding-left: 5px;">
+							        
+							        <ul class="pull-right">
+
+							            <li class="glyphicons text_bigger active"><span data-toggle="tab" data-target="#tab1-4"><i></i></span>
+							            </li>
+							            <li class="glyphicons circle_info"><span data-toggle="tab" data-target="#tab2-4"><i></i></span>
+							            </li>							            
+							            <li class="glyphicons pen"><span data-toggle="tab" data-target="#tab3-4"><i></i></span>
+							            </li>
+							            <li class="glyphicons paperclip"><span data-toggle="tab" data-target="#tab4-4"><i></i></span>
+							            </li>							            							            
+							        </ul>
+							        <div class="clearfix"></div>
+							      
+
+							    </div>
+							   
+
+							    <div class="widget-body">
+							        <div class="tab-content">
+
+							          
+							            <div id="tab1-4" class="tab-pane active box-generic">
+							            	<table class="table table-borderless table-condensed cart_total cash-table">
+								            	<tr>
+								            		<td width="50%">
+								            			<span class="btn btn-block btn-inverse" data-bind="click: goQuote"><span><span data-bind="text: lang.lang.quote"></span></span>
+								            		</td>
+								            		<td width="50%">
+								            			<span class="btn btn-block btn-primary" data-bind="click: goDeposit"><span><span data-bind="text: lang.lang.c_deposit"></span></span>								            			
+								            		</td>
+								            	</tr>
+								            	<tr>
+								            		<td>
+								            			<span class="btn btn-block btn-inverse" data-bind="click: goSaleOrder"><span><span data-bind="text: lang.lang.sale_order"></span></span>
+								            		</td>
+								            		<td>
+								            			<span class="btn btn-block btn-primary" data-bind="click: goCashSale"><span><span data-bind="text: lang.lang.cash_sale"></span></span>								            											            			
+								            		</td>
+								            	</tr>
+								            	<tr>
+								            		<td>
+								            			<span class="btn btn-block btn-primary" data-bind="click: goSaleReturn"><span data-bind="text: lang.lang.sale_return1"></span></span>
+								            		</td>
+								            		<td>
+								            			<span class="btn btn-block btn-primary" data-bind="click: goInvoice"><span data-bind="text: lang.lang.invoice"></span></span>								            											            			
+								            		</td>
+								            	</tr>
+								            	<tr>								            		
+								            		<td>
+								            			<span class="btn btn-block btn-inverse" data-bind="click: goGDN"><span data-bind="text:lang.lang.c_gdn"></span></span>
+								            		</td>
+								            		<td class="center">
+								            			<span class="btn btn-block btn-primary" data-bind="click: goCashReceipt"><span data-bind="text: lang.lang.cash_receipt"></span></span>								            			
+
+								            		</td>
+								            	</tr>
+								            	<tr>
+								            		<td>
+								            			<span class="btn btn-block btn-inverse" data-bind="click: goStatement"><span data-bind="text: lang.lang.statement"></span></span>
+								            		</td>
+								            		<td>
+								            			<span class="btn btn-block btn-primary" data-bind="click: goCashRefound"><span >CASH REFUND</span></span>
+								            		</td>
+								            	</tr>
+							            	</table>
+							            </div>
+							           
+							            <div id="tab2-4" class="tab-pane box-generic" style="float: left; margin-bottom: 0;">
+							            	<div class="row-fluid">
+							            		<div class="span6" style="padding: 0 15px 0 0;">
+						            				<img class="main-image" data-bind="attr: { src: obj.image_url, alt: obj.name, title: obj.name }" style="border: 1px solid #ddd; height: auto !important;">
+						            			</div>
+						            			<div class="span6">
+								            		<div class="accounCetner-textedit">
+										            	<table width="100%">
+															<tr>
+																<td width="40%"><span data-bind="text: lang.lang.customer_type"></span></td>
+																<td width="60%">
+																	<span class="strong" data-bind="text: obj.contact_type"></span>
+																</td>
+															</tr>
+															<tr>
+																<td><span data-bind="text: lang.lang.number"></span></td>
+																<td>
+																	<span class="strong" data-bind="text: obj.abbr"></span>
+																	<span class="strong" data-bind="text: obj.number"></span>
+																</td>
+															</tr>
+															<tr>
+																<td><span data-bind="text: lang.lang.name"></span></td>
+																<td>
+																	<span data-bind="text: obj.name"></span>
+																</td>
+															</tr>							
+															<tr>
+																<td><span data-bind="text: lang.lang.phone"></span></td>
+																<td>
+																	<span data-bind="text: obj.phone"></span>
+																</td>
+															</tr>
+															<tr>
+																<td><span data-bind="text: lang.lang.currency"></span></td>
+																<td>										
+																	<span data-bind="text: currencyCode"></span>
+																</td>
+															</tr>
+														</table>
+
+														<span class="btn btn-primary btn-icon glyphicons edit pull-right" data-bind="click: goEdit"><i></i><span data-bind="text: lang.lang.view_edit_profile"></span></span>
+													</div>
+												</div>
+											</div>
+							            </div>
+							            
+							            <div id="tab3-4" class="tab-pane">
+
+										    <div>
+												<input type="text" class="k-textbox" 
+														data-bind="value: note" 
+														placeholder="Add memo ..." 
+														style="width: 366px;" />
+												<span class="btn btn-primary" data-bind="click: saveNote"><span data-bind="text: lang.lang.add"></span></span>
+											</div>
+
+											<br>
+
+											<div class="table table-condensed" style="height: 100;"						 
+												 data-role="grid"
+												 data-auto-bind="false"						 
+												 data-bind="source: noteDS"
+												 data-row-template="customerCenter-note-tmpl"
+												 data-columns="[{title: ''}]"
+												 data-height="100"						 
+												 data-scrollable="{virtual: true}"></div>
+											
+							            </div>
+							            
+								        <div id="tab4-4" class="tab-pane" >							            	
+								            <p><span data-bind="text: lang.lang.file_type"></span> [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>
+								            <input id="files" name="files"
+							                   type="file"
+							                   data-role="upload"
+							                   data-show-file-list="false"
+							                   data-bind="events: { 
+					                   				select: onSelect
+							                   }">
+
+								            <table class="table table-bordered">
+										        <thead>
+										            <tr>			                
+										                <th><span data-bind="text: lang.lang.file_name"></span></th>
+										                <th><span data-bind="text: lang.lang.description"></span></th>
+										                <th><span data-bind="text: lang.lang.date"></span></th>
+										                <th style="width: 13%;"></th>                			                
+										            </tr> 
+										        </thead>
+										        <tbody data-role="listview" 
+										        		data-template="attachment-list-tmpl" 
+										        		data-auto-bind="false"
+										        		data-bind="source: attachmentDS"></tbody>			        
+										    </table>
+
+										    <div id="pager" class="k-pager-wrap"
+										    	 data-role="pager"
+										    	 data-auto-bind="false"
+									             data-bind="source: attachmentDS"></div>
+
+										    <span class="btn btn-icon btn-success glyphicons ok_2" data-bind="click: uploadFile" style="color: #fff; padding: 5px 38px; text-align: left; width: 98px !important; display: inline-block; margin-top: 10px;"><i></i> <span data-bind="text: lang.lang.save"></span></span>
+
+								        </div>
+								           
+
+							        </div>
+							    </div>
+							</div>
+						</div>
+
+						<div class="span6" style="padding-left: : 0px;">
+							<div class="row">
+								<div class="span6" style="padding: 0">
+									<div class="widget-stats widget-stats-primary widget-stats-5" data-bind="click: loadBalance" style="cursor: pointer; background: #0077c5; margin-left: 0">
+										<span class="glyphicons coins"><i></i></span>
+										<span class="txt" style="padding-right: 18px;"><span data-bind="text: lang.lang.balance"></span><span data-bind="text: balance" style="font-size:medium;"></span></span>
+										<div class="clearfix"></div>
+									</div>
+								</div>
+								<div class="span6" style="padding-left: 0;">
+									<div class="widget-stats widget-stats-inverse widget-stats-5" data-bind="click: loadDeposit" style="cursor: pointer; margin-left: 1px;">
+										<span class="glyphicons briefcase"><i></i></span>
+										<span class="txt"><span data-bind="text: lang.lang.deposit"></span><span data-bind="text: deposit" style="font-size:medium;"></span></span>
+										<div class="clearfix"></div>
+									</div>
+								</div>
+							</div>							
+							
+							<div class="row">
+								<div class="span6" style="padding: 0">
+									<div class="widget-stats widget-stats-info widget-stats-5" data-bind="click: loadBalance" style="cursor: pointer; background: #21abf6; margin-left: 0">
+										<span class="glyphicons circle_exclamation_mark"><i></i></span>
+										<span class="txt"><span data-bind="text: outInvoice"></span> <span data-bind="text: lang.lang.open_invoice"></span></span>
+										<div class="clearfix"></div>
+									</div>
+								</div>
+								<div class="span6" style="padding-left: 0;">
+									<div class="widget-stats widget-stats-default widget-stats-5" data-bind="click: loadOverInvoice" style="cursor: pointer; margin-left: 1px;"> 
+										<span class="glyphicons turtle"><i></i></span>
+										<span class="txt"><span data-bind="text: overInvoice"></span> <span data-bind="text: lang.lang.over_due"></span></span>
+										<div class="clearfix"></div>
+									</div>
+								</div>
+							</div>														
+						</div>
+					</div>
+					
+					<div>
+						<input data-role="dropdownlist"
+							   class="sorter"                  
+					           data-value-primitive="true"
+					           data-text-field="text"
+					           data-value-field="value"
+					           data-bind="value: sorter,
+					                      source: sortList,                              
+					                      events: { change: sorterChanges }" />
+
+						<input data-role="datepicker"
+							   class="sdate"
+							   data-format="dd-MM-yyyy"
+					           data-bind="value: sdate,
+					           			  max: edate"
+					           placeholder="From ..." >
+
+					    <input data-role="datepicker"
+					    	   class="edate"
+					    	   data-format="dd-MM-yyyy"
+					           data-bind="value: edate,
+					                      min: sdate"
+					           placeholder="To ..." >
+
+					  	<button type="button" data-role="button" data-bind="click: searchTransaction"><i class="icon-search"></i></button>
+					</div>
+
+					<table class="table table-bordered table-striped table-white">
+						<thead>
+							<tr>
+								<th><span data-bind="text: lang.lang.date"></span></th>
+								<th><span data-bind="text: lang.lang.type"></span></th>								
+								<th><span data-bind="text: lang.lang.reference_no"></span></th>
+								<th><span data-bind="text: lang.lang.amount"></span></th>
+								<th><span data-bind="text: lang.lang.status"></span></th>
+								<th><span data-bind="text: lang.lang.action"></span></th>
+							</tr>
+						</thead>
+	            		<tbody data-role="listview"
+	            				data-auto-bind="false"
+				                data-template="customerCenter-transaction-tmpl"
+				                data-bind="source: transactionDS" >
+				        </tbody>
+	            	</table>
+
+	            	<div id="pager" class="k-pager-wrap"
+	            		 data-role="pager"
+				    	 data-auto-bind="false"
+			             data-bind="source: transactionDS"></div>	            	
+				</div>
+			</div>
+		</div>
+	</div>	
 </script>
 <script id="customerCenter-transaction-tmpl" type="text/x-kendo-tmpl">
     <tr>    	  	
@@ -1416,4 +1606,4 @@
 	</span>
 	-
 	<span>#=name#</span>
-</script>
+</script>      
