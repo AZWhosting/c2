@@ -204,6 +204,42 @@ class Customer_modules extends REST_Controller {
 			}
 		}
 
+		$topCustomers = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);			
+		$topCustomers->select_sum("amount / rate", "total");
+		$topCustomers->include_related("contact", array("name"), FALSE);
+		$topCustomers->where_in("type", array("Commercial_Invoice","Vat_Invoice","Invoice","Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale","Sale_Return","Cash_Refund"));			
+		$topCustomers->where("issued_date >=", $this->startFiscalDate);
+		$topCustomers->where("issued_date <", $this->endFiscalDate);
+		$topCustomers->where("is_recurring <>", 1);
+		$topCustomers->where("deleted <>", 1);
+		$topCustomers->order_by("total", "desc");
+		$topCustomers->group_by("contact_id");
+		$topCustomers->limit(5);
+		$top_customer = $topCustomers->get_raw()->result();
+
+		$topAR = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);			
+		$topAR->select_sum("amount / rate", "total");
+		$topAR->include_related("contact", array("name"), FALSE);
+		$topAR->where_in("type", array("Commercial_Invoice","Vat_Invoice","Invoice","Sale_Return"));
+		$topAR->where_in("status", array(0,2));
+		$topAR->where("is_recurring <>", 1);
+		$topAR->where("deleted <>", 1);
+		$topAR->order_by("total", "desc");
+		$topAR->group_by("contact_id");
+		$topAR->limit(5);
+		$top_ar = $topAR->get_raw()->result();
+
+		$topCashReceipts = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);			
+		$topCashReceipts->select_sum("amount / rate", "total");
+		$topCashReceipts->include_related("contact", array("name"), FALSE);
+		$topCashReceipts->where("type", "Cash_Receipt");
+		$topCashReceipts->where("is_recurring <>", 1);
+		$topCashReceipts->where("deleted <>", 1);
+		$topCashReceipts->order_by("total", "desc");
+		$topCashReceipts->group_by("contact_id");
+		$topCashReceipts->limit(5);
+		$top_cash_receipt = $topCashReceipts->get_raw()->result();
+
 		//Results
 		$data["results"][] = array(
 			'id' 				=> 0,
@@ -220,6 +256,10 @@ class Customer_modules extends REST_Controller {
 			'ar_overdue' 		=> $arOverDue,
 			'collection_day' 	=> 0,
 			'totalCashPosition' => $totalCashPosition,
+
+			'top_customer' 		=> $top_customer,
+			'top_ar' 			=> $top_ar,
+			'top_cash_receipt'  => $top_cash_receipt
 		);
 
 		$data["count"] = count($data["results"]);
