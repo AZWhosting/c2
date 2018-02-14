@@ -3075,49 +3075,134 @@
     });
     
     $(function() {
-        
-        banhji.accessMod.query({
-            filter: {
-                field: 'username',
-                value: JSON.parse(localStorage.getItem('userData/user')).username
-            }
-        }).then(function(e) {
-            var allowed = false;
-            if (banhji.accessMod.data().length > 0) {
-                for (var i = 0; i < banhji.accessMod.data().length; i++) {
-                    if ("utibill" == banhji.accessMod.data()[i].name.toLowerCase()) {
-                        allowed = true;
-                        break;
+        // banhji.accessMod.query({
+        //     filter: {
+        //         field: 'username',
+        //         value: JSON.parse(localStorage.getItem('userData/user')).username
+        //     }
+        // }).then(function(e) {
+        //     var allowed = false;
+        //     if (banhji.accessMod.data().length > 0) {
+        //         for (var i = 0; i < banhji.accessMod.data().length; i++) {
+        //             if ("utibill" == banhji.accessMod.data()[i].name.toLowerCase()) {
+        //                 allowed = true;
+        //                 break;
+        //             }
+        //         }
+        //     }
+        //     if (!allowed) {
+        //         window.location.replace(baseUrl + "admin");
+        //         // banhji.view.layout.showIn("#content", banhji.view.wDashBoard);
+        //     }
+            
+        //     // banhji.source.loadData();
+        //     banhji.source.pageLoad();
+        // });
+
+        // function loadStyle(href) {
+        //     // avoid duplicates
+        //     for (var i = 0; i < document.styleSheets.length; i++) {
+        //         if (document.styleSheets[i].href == href) {
+        //             return;
+        //         }
+        //     }
+        //     var head = document.getElementsByTagName('head')[0];
+        //     var link = document.createElement('link');
+        //     link.rel = 'stylesheet';
+        //     link.type = 'text/css';
+        //     link.href = href;
+        //     head.appendChild(link);
+        // }
+        // var Href1 = '<?php echo base_url(); ?>assets/water/winvoice-res.css';
+        // var Href2 = '<?php echo base_url(); ?>assets/water/winvoice-print.css';
+        //Schedule
+        $("#scheduler").kendoScheduler({
+            date: new Date(),
+            allDaySlot: false,
+            startTime: new Date(),
+            eventHeight: 50,
+            majorTick: 60,
+            views: [ "timeline", "timelineWeek", "timelineWorkWeek", {
+                type: "timelineMonth",
+                startTime: new Date("2013/6/13 00:00 AM"),
+                majorTick: 1440
+            }],
+            timezone: "Etc/UTC",
+            dataSource: {
+                batch: true,
+                transport: {
+                    read: {
+                        url: apiUrl + "spa/calendar",
+                        dataType: "jsonp"
+                    },
+                    update: {
+                        url: "https://demos.telerik.com/kendo-ui/service/meetings/update",
+                        dataType: "jsonp"
+                    },
+                    create: {
+                        url: "https://demos.telerik.com/kendo-ui/service/meetings/create",
+                        dataType: "jsonp"
+                    },
+                    destroy: {
+                        url: "https://demos.telerik.com/kendo-ui/service/meetings/destroy",
+                        dataType: "jsonp"
+                    },
+                    parameterMap: function (options, operation) {
+                        if (operation !== "read" && options.models) {
+                            return { models: kendo.stringify(options.models) };
+                        }
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "meetingID",
+                        fields: {
+                            meetingID: { from: "MeetingID", type: "number" },
+                            title: { from: "Title", defaultValue: "No title", validation: { required: true } },
+                            start: { type: "date", from: "Start" },
+                            end: { type: "date", from: "End" },
+                            startTimezone: { from: "StartTimezone" },
+                            endTimezone: { from: "EndTimezone" },
+                            description: { from: "Description" },
+                            recurrenceId: { from: "RecurrenceID" },
+                            recurrenceRule: { from: "RecurrenceRule" },
+                            recurrenceException: { from: "RecurrenceException" },
+                            roomId: { from: "RoomID", nullable: true },
+                            attendees: { from: "Attendees", nullable: true },
+                            isAllDay: { type: "boolean", from: "IsAllDay" }
+                        }
                     }
                 }
-            }
-            if (!allowed) {
-                window.location.replace(baseUrl + "admin");
-                // banhji.view.layout.showIn("#content", banhji.view.wDashBoard);
-            }
-            $("#holdpageloadhide").css("display", "none");
-        });
-        banhji.source.contactDS.read().then(function() {
-            banhji.router.start();
-            // banhji.source.loadData();
-            banhji.source.pageLoad();
-        });
-
-        function loadStyle(href) {
-            // avoid duplicates
-            for (var i = 0; i < document.styleSheets.length; i++) {
-                if (document.styleSheets[i].href == href) {
-                    return;
+            },
+            group: {
+                resources: ["Rooms", "Attendees"],
+                orientation: "vertical"
+            },
+            resources: [
+                {
+                    field: "roomId",
+                    name: "Rooms",
+                    dataSource: [
+                        { text: "Meeting Room 101", value: 1, color: "#6eb3fa" },
+                        { text: "Meeting Room 201", value: 2, color: "#f58a8a" }
+                    ],
+                    title: "Room"
+                },
+                {
+                    field: "attendees",
+                    name: "Attendees",
+                    dataSource: [
+                        { text: "Alex", value: 1, color: "#f8a398" },
+                        { text: "Bob", value: 2, color: "#51a0ed" },
+                        { text: "Charlie", value: 3, color: "#56ca85" }
+                    ],
+                    multiple: true,
+                    title: "Attendees"
                 }
-            }
-            var head = document.getElementsByTagName('head')[0];
-            var link = document.createElement('link');
-            link.rel = 'stylesheet';
-            link.type = 'text/css';
-            link.href = href;
-            head.appendChild(link);
-        }
-        var Href1 = '<?php echo base_url(); ?>assets/water/winvoice-res.css';
-        var Href2 = '<?php echo base_url(); ?>assets/water/winvoice-print.css';
+            ]
+        });
+        //End Schedule
+        $("#holdpageloadhide").css("display", "none");
+        // banhji.router.start();
     });
 </script>

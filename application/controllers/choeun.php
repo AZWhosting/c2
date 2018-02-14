@@ -9,8 +9,8 @@ class Choeun extends CI_Controller {
 	public function index() {	
 		// $fineDate = new DateTime(date('Y-m-d'));
 		// echo $a = $fineDate->getTimestamp().'<br>';
-		// $fdate = new DateTime('2017-10-14');
-		// echo $b = $fdate->getTimestamp().'<br>';
+		$fdate = new DateTime(date(''));
+		echo $b = $fdate->getTimestamp().'<br>';
 		// echo $c = $b - $a."<br>";
 		// echo $b + $c."<br>";
 
@@ -24,10 +24,10 @@ class Choeun extends CI_Controller {
 		// }else{
 		// 	echo 'No';
 		// }
-		$d = new DateTime('2010-01-19');
-		$d->modify('-1 month');
-	    $d->modify('first day of this month');
-	    echo $d->format('Y-m-d');
+		// $d = new DateTime('2010-01-19');
+		// $d->modify('-1 month');
+	 //    $d->modify('first day of this month');
+	 //    echo $d->format('Y-m-d');
 		// $date = strtotime('2012-05-01 -1 months');
 		// echo $date;
 	}

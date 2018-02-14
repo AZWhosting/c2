@@ -1,4 +1,58 @@
-<div id="wrapperApplication" class="wrapper"></div>
+<div id="wrapperApplication" class="wrapper">
+	<div class="container">
+		<div class="row book">
+			<div class="span12">	
+				<div class="row ">
+					<div class="span3 " style="padding-right: 0;">
+						<div class="example">
+							<div style="width: 100%; float: left; padding: 15px; background: #fff; margin-bottom: 15px; color: #333; font-weight: 700; font-size: 20px;">
+								3 Books
+							</div>
+							<table>
+								<tr>
+									<th>NO.</th>
+									<th>CUSTOMER</th>
+								</tr>
+								<tr>
+									<td>1</td>
+									<td>2</td>
+								</tr>
+								<tr>
+									<td>1</td>
+									<td>2</td>
+								</tr>
+								<tr>
+									<td>1</td>
+									<td>2</td>
+								</tr>
+								<tr>
+									<td>1</td>
+									<td>2</td>
+								</tr>
+								<tr>
+									<td>1</td>
+									<td>2</td>
+								</tr>
+							</table>					
+						</div>
+					</div>
+					<div class="span9">
+						<div class="example">
+							<h2>Books Calendar</h2>
+							<div>
+								<div id="scheduler"></div>
+							</div>			
+						</div>
+					</div>
+
+				</div>
+			</div>
+			<div class="span12" style="margin-top: 20px;">
+				<p data-bind="text: today"></span>
+			</div>
+		</div>
+	</div>
+</div>
 <!--load before somthing not yet done -->
 <div id="holdpageloadhide" style="display:block;text-align: center;position: fixed;top: 0; left: 0;width: 100%; height: 100%;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
 	<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 45%;left: 45%"></i>
@@ -320,50 +374,9 @@
 					<div class="span9">
 						<div class="example">
 							<h2>Books Calendar</h2>
-							<table>
-								<tr>
-									<th>testing</th>
-									<th>testing</th>
-									<th>testing</th>
-									<th>testing</th>
-									<th>testing</th>
-								</tr>
-								<tr>
-									<td>1</td>
-									<td>2</td>
-									<td>3</td>
-									<td>4</td>
-									<td>5</td>
-								</tr>
-								<tr>
-									<td>1</td>
-									<td>2</td>
-									<td>3</td>
-									<td>4</td>
-									<td>5</td>
-								</tr>
-								<tr>
-									<td>1</td>
-									<td>2</td>
-									<td>3</td>
-									<td>4</td>
-									<td>5</td>
-								</tr>
-								<tr>
-									<td>1</td>
-									<td>2</td>
-									<td>3</td>
-									<td>4</td>
-									<td>5</td>
-								</tr>
-								<tr>
-									<td>1</td>
-									<td>2</td>
-									<td>3</td>
-									<td>4</td>
-									<td>5</td>
-								</tr>
-							</table>			
+							<div>
+								<div id="scheduler"></div>
+							</div>			
 						</div>
 					</div>
 

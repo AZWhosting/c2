@@ -452,6 +452,18 @@
 	    float: left;
 	    width: 99.5%;
 	}
+	.addRooms{
+		padding: 8px 15px;
+		float: left;
+		text-align: center;
+		background: #1c3b19;
+		color: #fff;
+		margin-top: 15px;
+		margin-left: 15px;
+	}
+	a:hover {
+		color: #fff;
+	}
 </style>
 <!-- ***************************
 *	Water Section      	  *
@@ -469,7 +481,9 @@
 						<div class="span12">
 							<div class="listWrapper">
 								<div class="row">
+									
 									<div class="span6" style="padding-right: 1px; width: 50%;">
+										<a href="" class="addRooms">Add Room</a>
 										<div class="innerAll" style="height: 45px; padding-bottom: 0; padding: 15px 0 0 15px; float: left; width: 100%;">
 											<div class="widget-search separator bottom" style="padding: 0;">
 												<a class="btn btn-default pull-right" data-bind="click: search" style="padding: 7px 10px;"><i class="icon-search"></i></a>

@@ -278,7 +278,7 @@
 	}
 	.topnav.addNew {
 	    display: inline-block;
-	    background: #203864;
+	    background: #1c3b19;
 	    padding: 3px 10px 3px 10px;
 	    margin: 0;
 	    line-height: 23px;
@@ -341,7 +341,7 @@
 		
 	}
 	.pos table th{
-		background: #203864 ;
+		background: #1c3b19 ;
 	}
 	@media (min-width: 768px){
 		html.no-touch.sticky-top:not(.animations-gpu) #content {
@@ -490,9 +490,9 @@
 											<div class="span6" style="padding-right: 1px; width: 50%;">
 												<div class="innerAll" style="height: 45px; padding-bottom: 0; padding: 15px 0 0 15px; float: left; width: 100%;">
 													<div class="widget-search separator bottom" style="padding: 0;">
-														<a class="btn btn-default pull-right" data-bind="click: search" style="padding: 7px 10px;"><i class="icon-search"></i></a>
+														<a class="btn btn-default pull-right" data-bind="click: search" style="padding: 6px 10px;"><i class="icon-search"></i></a>
 														<div class="overflow-hidden">
-															<input style="height: 30px; padding: 5px; border: 1px solid #ccc; color: #333;" type="search" placeholder="Number or Name..." data-bind="value: searchText, events:{change: search}">
+															<input style="height: 28px; padding: 5px; border: 1px solid #ccc; color: #333;" type="search" placeholder="Number or Name..." data-bind="value: searchText, events:{change: search}">
 														</div>
 													</div>
 												</div>
@@ -594,7 +594,7 @@
 										        
 										    </div>
 
-										        <div class="span6" style="padding-left: 0;">
+										        <div class="span6" style="padding-left: 0; font-size: 12px;">
 													<table class="table-fixed table-customer table table-bordered table-primary table-striped table-vertical-center">
 												        <thead>
 												            <tr>
@@ -639,7 +639,7 @@
 				                            aria-invalid="true" 
 				                            class="k-invalid"
 				                        />
-				                        <table class="table table-bordered table-primary table-striped table-vertical-center" style="margin-top: 15px;">
+				                        <table class="table table-bordered table-primary table-striped table-vertical-center" style="margin-top: 15px; font-size: 12px;">
 									        <thead>
 									            <tr>
 									            	<th style="vertical-align: top;" data-bind="text: lang.lang.no_"></th>
@@ -711,7 +711,7 @@
 											  	</li>
 											</ul>
 					                    </div>
-					                    <table class="table table-bordered table-primary table-striped table-vertical-center" style="margin-top: 15px; width: 100%; float: left;">
+					                    <table class="table table-bordered table-primary table-striped table-vertical-center" style="margin-top: 15px; width: 100%; float: left; font-size: 12px;">
 									        <thead>
 									            <tr>
 									            	<th style="vertical-align: top;" data-bind="text: lang.lang.no_"></th>
@@ -946,47 +946,6 @@
 											</table>
 										</div>
 									</div>
-									<div class="span6" style="padding-right: 0;">
-										<div class="cover-block box-shadow" style="padding: 15px;">
-											<h1>Pay</h1>
-											<input class="k-textbox" id="pay_amount" name="pay_amount" />
-											<br>
-											<button style="width: 92%; margin-bottom: 0;" class="btn margin btn-inverse btn-center-text btn-lg width-100" data-bind="click: payCash">
-												Cash
-											</button> 
-										</div>
-										<div class="row-fluid">
-											<div class="box-generic" style="width: 95%; margin: 0 !important; padding: 0 !important;">
-											   
-											    <div class="tabsbar tabsbar-1">
-											        <ul class="row-fluid row-merge">
-											            <li class="span2 glyphicons nameplate_alt active">
-											            	<a href="#tab1" data-toggle="tab"><i></i> <span><span data-bind="text: lang.lang.info"></span></span></a>
-											            </li>
-											            <li class="span2 glyphicons usd">
-											            	<a href="#tab2" data-toggle="tab"><i></i> <span><span data-bind="text: lang.lang.account"></span></span></a>
-											            </li>
-											        </ul>
-											    </div>
-											    
-
-											    <div class="tab-content">
-
-											        
-											        <div class="tab-pane active" id="tab1">
-										            	abc
-										        	</div>
-											        
-											        <div class="tab-pane" id="tab2">
-											        	
-														dgdfghsfh
-										        	</div>
-											      
-
-											    </div>
-											</div>
-										</div>
-									</div>
 									<div id="ntf1" data-role="notification"></div>
 								</div>
 							</div>
@@ -1081,4 +1040,4 @@
 		   	</div>		   	
    		</td>
 	</tr>
-</script> 
+</script>

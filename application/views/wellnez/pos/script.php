@@ -1,4 +1,3 @@
-
 <script>
     function itemComboBoxEditor(container, options) {
         $('<input name="' + options.field + '"/>')
@@ -3840,12 +3839,7 @@
                 data: 'results',
                 total: 'count'
             },
-            filter: [
-                {
-                    field: "contact_type_id",
-                    value: 4
-                }
-            ],
+            filter:{ field:"parent_id", operator:"where_related_contact_type", value:1 },
             sort: {
                 field: "id",
                 dir: "asc"
@@ -4230,6 +4224,7 @@
                     });
                     h = 0;
                 }
+                this.set("employeeSelected", 0);
             }
         },
         addRoom : function(e){
@@ -4249,6 +4244,7 @@
                     });
                     h = 0;
                 }
+                this.set("roomSelected", 0);
             }
         },
         rmRoom : function(e){
@@ -4279,6 +4275,7 @@
                     });
                     h = 0;
                 }
+                this.set("customerSelected", 0);
             }
         },
         rmCustomer : function(e){
@@ -5524,9 +5521,10 @@
                 noti.hide();
                 noti.success(this.lang.lang.success_message);
             this.lineDS.data([]);
-            this.employeeAR = [];
-            this.roomAR = [];
-            this.customerAR = [];
+
+            this.employeeAR.splice(0,this.employeeAR.length);
+            this.roomAR.splice(0,this.roomAR.length);
+            this.customerAR.splice(0,this.customerAR.length);
             this.changes();
             this.set("dateSelected", new Date());
         },
@@ -5604,10 +5602,6 @@
                                 this.bookDS.bind("requestEnd", function(e){
                                     self.addWorkSuccess();
                                     $("#loadImport").css("display", "none");
-                                    if(f == 0){
-                                        self.bookDS.query();
-                                    }
-                                    f = 1;
                                 });
                             }else{
                                 this.alertRequiredMSG();

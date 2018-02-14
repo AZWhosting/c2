@@ -248,10 +248,11 @@
 	    padding: 15px;
 	    border-radius: 10px;
 	    float: left;
-	    box-shadow: 2px 0px 12px 0px rgba(68,68,68,1);	    
+	    box-shadow: 2px 0px 12px 0px rgba(68,68,68,1);
+
 	}
 	.block-number{
-		width: 19.7%;
+		width: 27% !important;
 	    float: left;
 	    background: #fff;
 	    color: #333;
@@ -259,8 +260,8 @@
 	    margin-right: 1px;
 	    padding: 15px;
 	    margin-bottom: 1px;
-	    font-size: 25px;
-	    font-weight: 700;
+	    font-size: 14px;	    
+	    cursor: pointer;
 	    box-shadow: 2px 0px 12px 0px rgba(68,68,68,1)
 	}
 		
@@ -268,13 +269,13 @@
 		width: 100%;
 		background: none;
 		float: left;
-		color: #333;
+		color: #fff;
 		border: none;
 		text-align: left;
 	}
 	.services .example table th{
 		text-transform: uppercase;
-		background: #1c3b19;
+		background: #1c3b19 !important;
 		color: #fff;
 
 	}
@@ -311,7 +312,7 @@
 	    width: 100%;
 	    border-radius:  0 0 5px 5px;
 	    cursor: pointer;
-	    box-shadow: 2px 0px 12px 0px rgba(68,68,68,1);
+	    /*box-shadow: 2px 0px 12px 0px rgba(68,68,68,1);*/
 	    color: #0eac00;
 	    margin-top: 1px;
 	}
@@ -333,7 +334,7 @@
 	    padding: 13px;
 	    border-radius: 5px 0 0 0 ;
 	    cursor: pointer;
-	    box-shadow: 2px 0px 12px 0px rgba(68,68,68,1);
+	   /* box-shadow: 2px 0px 12px 0px rgba(68,68,68,1);*/
 	    color: #0eac00;
 	}
 	.botton .button-book .img{
@@ -354,7 +355,7 @@
 	    text-align: center;
 	    margin-left: 1px;
 	    cursor: pointer;
-	    box-shadow: 2px 0px 12px 0px rgba(68,68,68,1);
+	    /*box-shadow: 2px 0px 12px 0px rgba(68,68,68,1);*/
 	    color: #0eac00;
 	}
 	.botton .button-pay .img{
@@ -376,7 +377,7 @@
 	    border-radius: 0  5px 0 0;
 	    line-height: 38px;
 	    cursor: pointer;
-	    box-shadow: 2px 0px 12px 0px rgba(68,68,68,1);
+	    /*box-shadow: 2px 0px 12px 0px rgba(68,68,68,1);*/
 	    color: #0eac00;
 	    margin-bottom: 0;
 	    height: 87px;
@@ -387,6 +388,14 @@
 	    float: left;
 	    width: 100%;
 	}
+	.example .k-grid table {
+	    color: #333;
+	    font-size: 13px;
+	}
+	.block-number.k-state-selected{
+		background: #1c3b19 !important;
+		color: #fff !important;
+	}
 </style>
 <!-- ***************************
 *	Water Section      	  *
@@ -394,10 +403,13 @@
 <script id="Index" type="text/x-kendo-template">
 	<div class="container">
 		<div class="row services">
-			<div class="span12">	
+			<div class="span12">
+				<div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 100%;margin-top: -15px;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
+					<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
+				</div>
 				<div class="row ">
 					<div class="span6 ">
-						<div class="example">
+						<div class="example" style="height: 633px; overflow-y: scroll;padding-bottom: 15px;">
 							<div id="formStyle"
 								 data-role="listview"
 								 data-auto-bind="true"
@@ -405,104 +417,18 @@
 				                 data-template="work-list-tmpl"
 				                 data-bind="source: workDS"
 				                 style="overflow: auto;width: 100%;">
-				            </div>
-							<!-- <div class="row-fluid ">
-								<div data
-								<div class="block-number">
-									1
-								</div>
-								<div class="block-number">
-									2
-								</div>
-								<div class="block-number">
-									3
-								</div>
-								<div class="block-number">
-									4
-								</div>
-								<div class="block-number">
-									5
-								</div>
-							</div>
-							<div class="row-fluid ">
-								<div class="block-number">
-									6
-								</div>
-								<div class="block-number">
-									7
-								</div>
-								<div class="block-number">
-									8
-								</div>
-								<div class="block-number">
-									9
-								</div>
-								<div class="block-number">
-									10
-								</div>
-							</div>
-							<div class="row-fluid ">
-								<div class="block-number">
-									11
-								</div>
-								<div class="block-number">
-									12
-								</div>
-								<div class="block-number">
-									13
-								</div>
-								<div class="block-number">
-									14
-								</div>
-								<div class="block-number">
-									15
-								</div>
-							</div>
-							<div class="row-fluid ">
-								<div class="block-number">
-									16
-								</div>
-								<div class="block-number">
-									17
-								</div>
-								<div class="block-number">
-									18
-								</div>
-								<div class="block-number">
-									19
-								</div>
-								<div class="block-number">
-									20
-								</div>
-							</div>
-							<div class="row-fluid ">
-								<div class="block-number">
-									21
-								</div>
-								<div class="block-number">
-									22
-								</div>
-								<div class="block-number">
-									23
-								</div>
-								<div class="block-number">
-									24
-								</div>
-								<div class="block-number">
-									25
-								</div>
-							</div>	 -->						
+				            </div>						
 						</div>
 					</div>
 					<div class="span6">
 						<div class="example" style="box-shadow: 2px 0px 12px 0px rgba(68,68,68,1); border-radius: 10px 10px 0 0 ; margin-bottom: 1px;">
 							<div data-role="grid" class="costom-grid"
-						    	data-column-menu="true"
-						    	data-reorderable="true"
-						    	data-scrollable="false"
-						    	data-resizable="true"
-						    	data-editable="true"
-				                data-columns="[
+						    	 data-column-menu="true"
+						    	 data-reorderable="true"
+						    	 data-scrollable="false"
+						    	 data-resizable="true"
+						    	 data-editable="true"
+				                 data-columns="[
 								    { 
 								    	title:'NO',
 								    	width: '50px', 
@@ -514,15 +440,15 @@
 								    },
 				                 	{ 
 				                 		field: 'item', 
-				                 		title: 'PRODUCTS/SERVICES', 
+				                 		title: 'Name', 
 				                 		editor: itemEditor, 
-				                 		template: '#=item.name#', 
-				                 		width: '170px' 
+				                 		template: '#=item.name#', width: '170px' 
 				                 	},
 		                            { 
 		                            	field: 'description', 
 		                            	title:'DESCRIPTION', 
-		                            	width: '250px' 
+		                            	width: '250px',
+		                            	hidden: 'true', 
 		                            },                            
 		                            {
 									    field: 'quantity',
@@ -542,8 +468,8 @@
 		                            {
 									    field: 'price',
 									    title: 'PRICE',
+									    hidden: true,
 									    format: '{0:n}',
-									    hidden: 'true',
 									    editor: numberTextboxEditor,
 									    width: '120px',
 									    attributes: { style: 'text-align: right;' }
@@ -571,24 +497,28 @@
 		                            	title:'AMOUNT', 
 		                            	format: '{0:n}', 
 		                            	editable: 'false', 
-		                            	attributes: { style: 'text-align: right;' }, 
-		                            	width: '120px' },
+		                            	attributes: { style: 'text-align: right;' }, width: '120px' 
+		                            },
 		                            { 
 		                            	field: 'tax_item', 
 		                            	title:'TAX', 
-		                            	hidden: 'true',
+		                            	hidden: true,
 		                            	editor: taxForSaleEditor, 
-		                            	template: '#=tax_item.name#', width: '90px' },
+		                            	template: '#=tax_item.name#', width: '90px' 
+		                            },
 		                            { 
 		                            	field: 'reference_no', 
-		                            	title:'REFERENCE NO.',
-		                            	hidden: true, 
-		                            	width: '120px' }
-		                        ]"
-		                        data-auto-bind="false"
-				                data-bind="source: lineDS" >
-				            </div>
-				            <button style="background: #1c3b19" class="btn btn-inverse" data-bind="click: addRow"><i class="icon-plus icon-white"></i><span style="float: right; margin-left: 10px;">Add Serving</span></button>
+		                            	title:'REFERENCE NO.', 
+		                            	hidden: true, width: '120px' 
+		                            }
+		                         ]"
+		                         data-auto-bind="false"
+				                 data-bind="source: lineDS" >
+		                 	</div>
+		                 	<div data-bind="visible: haveWork">
+					            <button style="background: #1c3b19; float:left;" class="btn btn-inverse" data-bind="click: addRow"><i class="icon-plus icon-white"></i><span style="float: right; margin-left: 10px;">Add Serving</span></button>
+					            <button style="background: darkred;float: left;border: 1px solid darkred;" class="btn btn-inverse" data-bind="click: saveWork"><i class="icon-plus icon-white"></i><span style="float: right; margin-left: 10px;" data-bind="text: lang.lang.save">Add Serving</span></button>
+					        </div>
 						</div>
 						<div class="example" style="box-shadow: 2px 0px 12px 0px rgba(68,68,68,1); border-radius: 0 0 10px 10px;">
 							<div class="row ">
@@ -610,8 +540,8 @@
 												<td class="right "><span data-format="n" data-bind="text: obj.tax"></span></td>
 											</tr>                             
 											<tr>
-												<td><h4 span data-bind="text: lang.lang.total" style="font-weight: 700;"></h4></td>
-												<td class="right strong"><h4 data-bind="text: obj.amount" style="font-weight: 700;"></h4></td>
+												<td><h4 span data-bind="text: lang.lang.total" style="font-weight: 700;  color: #fff !important;"></h4></td>
+												<td class="right strong"><h4 data-bind="text: total" style="font-weight: 700; color: #fff !important;"></h4></td>
 											</tr>               
 										</tbody>
 									</table>
@@ -619,17 +549,19 @@
 								<div class="span6 botton" style="padding-left: 0;">
 									<div class="row">
 										<div class="span4 " style="padding-right: 0;">
-											<div class="button-book">
-												<div class="img">
-													<img src="<?php echo base_url();?>assets/spa/icon/pay-green.png" >
+											<a href="loyalty">
+												<div class="button-book">
+													<div class="img">
+														<img src="<?php echo base_url();?>assets/spa/icon/loyalty-green.png" >
+													</div>
+													<p class="textSmall">Loyalty</p>
 												</div>
-												<p class="textSmall">Loyalty</p>
-											</div>
+											</a>
 										</div>
 										<div class="span4 " style="padding: 0;">
 											<div class="button-pay">
 												<div class="img">
-													<img src="<?php echo base_url();?>assets/spa/icon/pay-green.png" >
+													<img src="<?php echo base_url();?>assets/spa/icon/gift-green.png" >
 												</div>
 												<p class="textSmall">Gift Card</p>
 											</div>
@@ -652,7 +584,7 @@
 							</div>
 						</div>
 					</div>
-
+					<div id="ntf1" data-role="notification"></div>
 				</div>
 			</div>
 			<div class="span12" style="margin-top: 20px;">
@@ -678,7 +610,9 @@
 	</div>
 </script>
 <script id="work-list-tmpl" type="text/x-kendo-tmpl">
-	<div class="block-number" data-bind="click: selectRow">
-		#: customer[0].name#
+	<div class="block-number" style="width: 27.4%;min-height: 175px;" data-bind="click: selectRow">
+		<p style="text-align: center;"><b>Customer:</b><br /> <span style="text-align: center;font-size: 12px;">#: customer[0].name#</span></p>
+		<p style="text-align: center"><b>Start:</b><br /> <span style="text-align: center;font-size: 12px;">#: date#</span></p>
+		<p style="text-align: center;"><b>Room:</b><br /> <span style="text-align: center;font-size: 12px;">#: roomshow#</span></p>
 	</div>
-</script>          
+</script>

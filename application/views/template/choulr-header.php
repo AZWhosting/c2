@@ -5,7 +5,7 @@
 <!--[if gt IE 8]> <html class="animations ie gt-ie8 fluid top-full menuh-top sticky-top"> <![endif]-->
 <!--[if !IE]><!--><html class="animations fluid top-full menuh-top sticky-top"><!-- <![endif]-->
 <head>
-<title>Choulr | ជួល</title>
+<title>Choulr</title>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
@@ -99,9 +99,13 @@
 <link rel="stylesheet" href="<?php echo base_url()?>assets/bootstrap.css" />
 <script src="<?php echo base_url()?>assets/kendo/js/jquery.min.js"></script>
 <script src="<?php echo base_url()?>assets/bootstrap.min.js"></script>
+<script defer src="/static/fontawesome/fontawesome-all.js"></script>
 
 <!-- Customize CSS-->
 <!-- <link rel="stylesheet" href="<?php echo base_url()?>assets/responsive.css" > -->
+
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/choulr/hover.css" />
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/choulr/pk.css" />
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/water/water.css" />
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/invoice/invoice.css" />
 
@@ -129,7 +133,6 @@ var themerPrimaryColor = primaryColor;
 //]]>
 </script>
 <!-- cognito -->
-
 <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/jsbn.js"></script>
 <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/jsbn2.js"></script>
 <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/sjcl.js"></script>
@@ -172,21 +175,13 @@ var themerPrimaryColor = primaryColor;
 <!--start kendo localization in Khmer-->
 
 <!-- Le fav and touch icons -->
-<link rel="shortcut icon" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/banhji-logo.png">
-<!-- Global Site Tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-106967397-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments)};
-  gtag('js', new Date());
+<!-- <link rel="shortcut icon" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/banhji-logo.png"> -->
 
-  gtag('config', 'UA-106967397-1');
-</script>
-<!-- Choulr CSS -->
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/choulr/choulr.css" />
+<link rel="icon" type="text/jpg" href="assets/choulr/img/images.jpg">
 
 </head>
-<body class="document-body ">
+<body class="document-body " style="">
+
 <?php
 	//mail('loat.choeun@gmail.com', 'test', 'test', 'test');
 ?>
@@ -423,3 +418,5 @@ var themerPrimaryColor = primaryColor;
 			<a href="#" class="btn btn-primary" id="referralSend">Send</a>
 		</div>
 	</div>
+	
+	

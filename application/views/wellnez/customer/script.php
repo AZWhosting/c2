@@ -6716,8 +6716,7 @@
             this.dataSource.data([]);
             this.contactPersonDS.data([]);
             this.set("contact_type_id", 0);
-
-            banhji.userManagement.removeMultiTask("customer");
+            banhji.router.navigate('/');
         },
         delete                  : function(){
             var obj = this.get("obj");
@@ -6928,4 +6927,4 @@
         var Href1 = '<?php echo base_url(); ?>assets/water/winvoice-res.css';
         var Href2 = '<?php echo base_url(); ?>assets/water/winvoice-print.css';
     });
-</script>
+</script>                       

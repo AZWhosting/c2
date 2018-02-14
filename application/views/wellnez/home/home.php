@@ -220,7 +220,7 @@
 *	Water Section      	  *
 **************************** -->
 <script id="Index" type="text/x-kendo-template">
-	<div class="container" >
+	<div class="container" id="myDiv">
 		<div class="row home">
 			<div class="span12">
 				<div class="row">
@@ -350,4 +350,4 @@
 			</div>
 		</div>
 	</div>
-</script>
+</script> 

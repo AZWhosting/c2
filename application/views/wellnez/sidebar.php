@@ -133,7 +133,7 @@
     }
     .cover-rightfixed {
         position: fixed;
-        top: 39.7%;
+        top: 27%;
         left: -95px;
         z-index: 999;
         text-align: left;
@@ -198,7 +198,6 @@
         display: inline-block;
         list-style: none;
         width: 100%;
-        padding-bottom: 5px;
     }
 
     .text-t .enquiry-content ul li.divider{
@@ -209,15 +208,16 @@
     }
     .text-t .enquiry-content ul li a{
         color: #000;
-        padding: 5px;
-        font-size: 14px;
+        padding: 10px 8px;
+        font-size: 15px;
+        float: left;
     }
     .text-t .enquiry-content ul li a:hover{
         color: #203864;
         text-decoration: underline;
     }
     .text-t  .enquiry-content {
-        bottom: -255px;
+        bottom: -397px;
         left: -313px;
         width: 313px;
     }
@@ -279,25 +279,25 @@
         display: inline-block;
         list-style: none;
         width: 100%;
-        padding-bottom: 5px;
         text-align: left;
     }
     .multiple-list .enquiry-content ul li a{
         color: #000;
-        padding: 5px;
-        font-size: 14px;
+        padding: 10px 8px;
+        font-size: 15px;
+        float: left;
     }
     .multiple-list .enquiry-content ul li a:hover{
         color: #203864;
         text-decoration: underline;
     }
     .multiple-list  .enquiry-content {
-        bottom: -97px;
+        bottom: -145px;
         width: 313px;
         left: -219px
     }
     .cover-rightfixed.chat{
-        top: 52%;
+        top: 41%;
     }
     .glyphicons.remove_2 i:before {
         cursor: pointer;
@@ -340,7 +340,7 @@
             </div>
         </div>
     </div>
-    <div class="cover-rightfixed " style="top: 45.9%; z-index: 9999; left: -95px;">
+    <div class="cover-rightfixed " style="top: 34%; z-index: 9999; left: -95px;">
         <div class="rightfixed enquiries multiple-list  btn-rounded glyphicons glyphicons-plus no-js " style="float:left;  font-size: 15px;">
             Reports
             <div class="enquiry-content">
@@ -388,4 +388,4 @@
         </a>
     </div>
     <!-- End -->
-</div>
+</div>                              
