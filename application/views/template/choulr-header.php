@@ -49,7 +49,7 @@
 <link href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/common/theme/fonts/glyphicons/css/glyphicons.css" rel="stylesheet" />
 
 <link rel="stylesheet" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/common/theme/fonts/font-awesome/css/font-awesome.min.css">
-<link rel="stylesheet" href="http://fontawesome.io/assets/font-awesome/css/font-awesome.css">
+<link rel="stylesheet" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/common/theme/fonts/font-awesome/css/font-awesome.css">
 <!--[if IE 7]><link rel="stylesheet" href="../../../../../common/theme/fonts/font-awesome/css/font-awesome-ie7.min.css"><![endif]-->
 
 <!-- Uniform Pretty Checkboxes -->
@@ -99,7 +99,7 @@
 <link rel="stylesheet" href="<?php echo base_url()?>assets/bootstrap.css" />
 <script src="<?php echo base_url()?>assets/kendo/js/jquery.min.js"></script>
 <script src="<?php echo base_url()?>assets/bootstrap.min.js"></script>
-<script defer src="/static/fontawesome/fontawesome-all.js"></script>
+<!-- <script defer src="/static/fontawesome/fontawesome-all.js"></script> -->
 
 <!-- Customize CSS-->
 <!-- <link rel="stylesheet" href="<?php echo base_url()?>assets/responsive.css" > -->
