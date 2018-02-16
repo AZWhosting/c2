@@ -180,6 +180,45 @@ class Vendor_modules extends REST_Controller {
 			}
 		}
 
+		//Top supplier
+		$topSuppliers = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);			
+		$topSuppliers->select_sum("amount / rate", "total");
+		$topSuppliers->include_related("contact", array("name"), FALSE);
+		$topSuppliers->where_in("type", array("Cash_Purchase", "Credit_Purchase", "Purchase_Return", "Payment_Refund"));
+		$topSuppliers->where("issued_date >=", $this->startFiscalDate);
+		$topSuppliers->where("issued_date <", $this->endFiscalDate);
+		$topSuppliers->where("is_recurring <>", 1);
+		$topSuppliers->where("deleted <>", 1);
+		$topSuppliers->order_by("total", "desc");
+		$topSuppliers->group_by("contact_id");
+		$topSuppliers->limit(5);
+		$top_supplier = $topSuppliers->get_raw()->result();
+
+		//Top AP
+		$topAP = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);			
+		$topAP->select_sum("amount / rate", "total");
+		$topAP->include_related("contact", array("name"), FALSE);
+		$topAP->where_in("type", array("Credit_Purchase","Purchase_Return"));
+		$topAP->where_in("status", array(0,2));
+		$topAP->where("is_recurring <>", 1);
+		$topAP->where("deleted <>", 1);
+		$topAP->order_by("total", "desc");
+		$topAP->group_by("contact_id");
+		$topAP->limit(5);
+		$top_ap = $topAP->get_raw()->result();
+
+		//Top cash payment
+		$topCashPayments = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);			
+		$topCashPayments->select_sum("amount / rate", "total");
+		$topCashPayments->include_related("contact", array("name"), FALSE);
+		$topCashPayments->where("type", "Cash_Payment");
+		$topCashPayments->where("is_recurring <>", 1);
+		$topCashPayments->where("deleted <>", 1);
+		$topCashPayments->order_by("total", "desc");
+		$topCashPayments->group_by("contact_id");
+		$topCashPayments->limit(5);
+		$top_cash_payment = $topCashPayments->get_raw()->result();
+
 		//Results
 		$data["results"][] = array(
 			'id' 				=> 0,
@@ -194,7 +233,11 @@ class Vendor_modules extends REST_Controller {
 			'ap_open' 			=> $apOpen,
 			'ap_supplier' 		=> count($apSupplier),
 			'ap_overdue' 		=> $apOverDue,
-			'payable_payment_day' => 0
+			'payable_payment_day' => 0,
+
+			'top_supplier' 		=> $top_supplier,
+			'top_ap' 			=> $top_ap,
+			'top_cash_payment'  => $top_cash_payment
 		);
 
 		$data["count"] = count($data["results"]);		
@@ -288,71 +331,17 @@ class Vendor_modules extends REST_Controller {
 			}
 		}
 
-		$obj->include_related("contact", array("name"));
+		$obj->select_sum("amount", "total");
+		$obj->include_related("contact", array("name"), FALSE);
 		$obj->where_in("type", array("Cash_Purchase", "Credit_Purchase", "Purchase_Return", "Payment_Refund"));
 		$obj->where("issued_date >=", $this->startFiscalDate);
 		$obj->where("issued_date <", $this->endFiscalDate);
 		$obj->where("is_recurring <>", 1);
 		$obj->where("deleted <>", 1);
-
-		//Results
-		if($page && $limit){
-			$obj->get_paged_iterated($page, $limit);
-			$data["count"] = $obj->paged->total_rows;
-		}else{
-			$obj->get_iterated();
-			$data["count"] = $obj->result_count();
-		}
-
-		if($obj->exists()){
-			$top = [];
-			$contactList = [];
-
-			//Group by contact_id
-			foreach($obj as $value) {
-				$amount = floatval($value->amount) / floatval($value->rate);
-
-				if(isset($contactList[$value->contact_id])){
-					if($value->type=="Purchase_Return" || $value->type=="Payment_Refund"){
-						$contactList[$value->contact_id]['amount'] -= $amount;
-					}else{
-						$contactList[$value->contact_id]['amount'] += $amount;
-					}					
-				} else {
-					if($value->type=="Purchase_Return" || $value->type=="Payment_Refund"){
-						$contactList[$value->contact_id]['name'] = $value->contact_name;
-						$contactList[$value->contact_id]['amount'] = $amount*-1;
-					}else{
-						$contactList[$value->contact_id]['name'] = $value->contact_name;
-						$contactList[$value->contact_id]['amount'] = $amount;
-					}
-				}
-			}
-
-			//Sort amount DESC
-			foreach($contactList as $value) {
-				$top[] = array('amount' => (float)$value['amount']);
-			}
-			rsort($top);
-
-			//Add Results
-			$counter = 0;
-			foreach ($top as $value) {
-				foreach($contactList as $row) {
-					if($row['amount'] === $value['amount'] && $counter < 5) {
-						$data["results"][] = array(
-							'id' 			=> 0,
-							'name' 			=> $row['name'],
-							'amount' 		=> $value['amount']
-						);
-
-						$counter++;
-
-						break;
-					}
-				}
-			}
-		}			
+		$obj->order_by("total", "desc");
+		$obj->group_by("contact_id");
+		$obj->limit(5);
+		$data["results"] = $obj->get_raw()->result();
 
 		//Response Data		
 		$this->response($data, 200);	

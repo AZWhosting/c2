@@ -100,30 +100,6 @@ class Inventory_modules extends REST_Controller {
 
 		//Inventory Total Cost
 		$totalInventory = floatval($purchases->total) - floatval($costOfSales->total) + floatval($inventoryCosts->total);
-
-		// $inventory = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		// $inventory->include_related("transaction", array("rate"));
-		// $inventory->where_related("account", "account_type_id", 13);
-		// $inventory->where_related("transaction", "issued_date <", $asOftoday);
-		// $inventory->where_related("transaction", "status <>", 4);
-		// $inventory->where_related("transaction", "is_recurring <>", 1);
-		// $inventory->where_related("transaction", "deleted <>", 1);
-		// $inventory->where("deleted <>", 1);
-		// $inventory->get_iterated();
-		
-		// //Sum Dr and Cr
-		// $inventoryDr = 0;
-		// $inventoryCr = 0;
-		// foreach ($inventory as $value) {
-		// 	if($value->dr>0){
-		// 		$inventoryDr += floatval($value->dr) / floatval($value->transaction_rate);
-		// 	}
-		// 	if($value->cr>0){
-		// 		$inventoryCr += floatval($value->cr) / floatval($value->transaction_rate);
-		// 	}	
-		// }
-		
-		// $totalInventory = $inventoryDr - $inventoryCr;
 		//END INVENTORY
 
 		//SALE (Begin FiscalDate To As Of)
@@ -187,12 +163,69 @@ class Inventory_modules extends REST_Controller {
 			$gpm =	($totalSale - $totalCOGS) / $totalSale;
 		}
 
+		//Top customer
+		$topCustomers = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);			
+		$topCustomers->select_sum("amount / rate", "total");
+		$topCustomers->include_related("contact", array("name"), FALSE);
+		$topCustomers->where_in("type", array("Commercial_Invoice","Vat_Invoice","Invoice","Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale","Sale_Return","Cash_Refund"));			
+		$topCustomers->where("issued_date >=", $this->startFiscalDate);
+		$topCustomers->where("issued_date <", $this->endFiscalDate);
+		$topCustomers->where("is_recurring <>", 1);
+		$topCustomers->where("deleted <>", 1);
+		$topCustomers->order_by("total", "desc");
+		$topCustomers->group_by("contact_id");
+		$topCustomers->limit(5);
+		$top_customer = $topCustomers->get_raw()->result();
+
+		//Top supplier
+		$topSuppliers = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);			
+		$topSuppliers->select_sum("amount / rate", "total");
+		$topSuppliers->include_related("contact", array("name"), FALSE);
+		$topSuppliers->where_in("type", array("Cash_Purchase", "Credit_Purchase", "Purchase_Return", "Payment_Refund"));
+		$topSuppliers->where("issued_date >=", $this->startFiscalDate);
+		$topSuppliers->where("issued_date <", $this->endFiscalDate);
+		$topSuppliers->where("is_recurring <>", 1);
+		$topSuppliers->where("deleted <>", 1);
+		$topSuppliers->order_by("total", "desc");
+		$topSuppliers->group_by("contact_id");
+		$topSuppliers->limit(5);
+		$top_supplier = $topSuppliers->get_raw()->result();
+
+		$topCashReceipts = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);			
+		$topCashReceipts->select_sum("amount / rate", "total");
+		$topCashReceipts->include_related("contact", array("name"), FALSE);
+		$topCashReceipts->where("type", "Cash_Receipt");
+		$topCashReceipts->where("is_recurring <>", 1);
+		$topCashReceipts->where("deleted <>", 1);
+		$topCashReceipts->order_by("total", "desc");
+		$topCashReceipts->group_by("contact_id");
+		$topCashReceipts->limit(5);
+		$top_cash_receipt = $topCashReceipts->get_raw()->result();
+
+		$topProducts = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);			
+		$topProducts->select_sum("quantity * conversion_ratio", "total");
+		$topProducts->include_related("item", array("name"), FALSE);
+		$topProducts->where_in_related("transaction", "type", array("Commercial_Invoice","Vat_Invoice","Invoice","Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale"));	
+		$topProducts->where_related("transaction", "is_recurring <>", 1);
+		$topProducts->where_related("transaction", "deleted <>", 1);
+		$topProducts->where_related("item", "item_type_id", 1);
+		$topProducts->where("item_id >", 0);
+		$topProducts->where("deleted <>", 1);				
+		$topProducts->order_by("total", "desc");
+		$topProducts->group_by("item_id");
+		$topProducts->limit(5);
+		$top_product = $topProducts->get_raw()->result();
+
 		//Results
 		$data["results"][] = array(
 			"id" 					=> 0,
 			"inventory_value" 		=> $totalInventory,
 			"inventory_turnover_day"=> $inventoryTurnOver,
-		   	"gross_profit_margin"	=> $gpm
+		   	"gross_profit_margin"	=> $gpm,
+
+		   	"top_customer" 			=> $top_customer,
+		   	"top_supplier" 			=> $top_supplier,
+		   	"top_product" 			=> $top_product
 		);
 
 		$data["count"] = count($data["results"]);		
