@@ -13,159 +13,6 @@
 </script>
 <script type="text/x-kendo-template" id="blank-tmpl">
 </script>
-<!-- <script type="text/x-kendo-template" id="menu-tmpl">
-    <!-- <nav class="navbar navbar-inverse " role="navigation">
-        <div class="container-fluid"> -->
-            <!-- Brand and toggle get grouped for better mobile display -->
-         <!--    <div class="navbar-header" style="margin: 0;">
-           -->      <!-- Menu Phone -->
-              <!--   <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
- -->
-                <!-- Menu Phone Multipel Task-->
-               <!--  <button type="button" class="navbar-toggle phone-multitasklist" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2">
-                    <span class="icon-th-list"></span>
-                </button>
- -->
-                <!-- Menu Phone Langauge-->
-               <!--  <button type="button" class="navbar-toggle phone-lang" data-toggle="collapse" data-target="#bs-example-navbar-collapse-4">
-                    <span data-bind="text: lang.localeCode"></span>
-                </button> -->
-
-                <!-- Menu Phone Search-->
-             <!--    <button type="button" class="navbar-toggle phone-search" data-toggle="collapse" data-target="#bs-example-navbar-collapse-3">
-                    <span class="icon-search"></span>
-                </button> -->
-
-                <!--Logo-->
-           <!--      <a class="navbar-brand" href="#/" style="padding-left: 15px;">
-                    <img src="<?php echo base_url();?>/assets/choulr/img/logo.png" >
-                </a>
-            </div> -->
-
-            <!-- Search Desktop-->
-          <!--   <form class="navbar-form pull-left hidden-xs">
-                <input id="search-placeholder" class="span2 search-query" type="text" placeholder="Search" data-bind="value: searchText" />
-                <button class="btn btn-inverse" type="submit" data-bind="click: search" style="background-color: #56882e !important;border-radius: 2px;">
-                    <i class="icon-search iconsearch"></i>
-                </button>
-            </form> -->
-
-            <!-- Secondary Menu -->
-         <!--    <ul class="topnav hidden-xs hidden-sm" id="secondary-menu">
-            </ul>
- -->
-            <!-- Menu rigth Desktop -->
-        <!--     <ul class="menu-right col-sm-3 topnav pull-right hidden-xs">
-                <li role="presentation" class="setting dropdown">
-                    <a style="color: #fff;" class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">[<span data-bind="text: getUsername"></span>]</a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a href="#" data-bind="click: lang.changeToKh">
-                                <img class="kh-flag" src="https://lipis.github.io/flag-icon-css/flags/4x3/kh.svg">
-                                <span>ភាសាខ្មែរ</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" data-bind="click: lang.changeToEn">
-                                <img class="en-flag" src="https://lipis.github.io/flag-icon-css/flags/4x3/gb.svg">
-                                <span>English</span>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#/manage" data-bind="click: logout">
-                                <i class="icon-power-off"></i>
-                                <span>Logout</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li role="presentation" class="dropdown multitasklist">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                        <i class="icon-th-list"></i>
-                    </a>
-                    <ul class="dropdown-menu ul-multiTaskList" data-template="multiTaskList-row-template" data-bind="source: multiTaskList">
-                    </ul>
-                </li>
-            </ul> -->
-            <!-- Menu Phone -->
-           <!--  <div class="menu-phone collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav hidden-lg hidden-md hidden-sm">
-                    <li><a href='#/' class='glyphicons show_big_thumbnails'><i></i><span >Dashnboard</span></a></li>
-                    <li><a href='#/center'><span data-bind="text: lang.lang.center"></span></a></li>
-                    <li role='presentation' class='dropdown'>
-                        <a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><i class="text-t"></i> <span style="margin-top: 12px;" class='caret'></span></a>
-                        <ul class='dropdown-menu'>
-                            <li><a href='#/contract_center'><span >Contract Center</span></a></li>
-                            <li><span class="li-line"></span></li>
-                            <li><a href='#/customer_center'><span >Costomer Center</span></a></li>
-                            <li><span class="li-line"></span></li>
-                            <li><a href='#/lease_unit_center'><span >Lease Unit Center</span></a></li>
-                            <li><span class="li-line"></span></li>
-                            <li><a href='#/utility_center'><span >Utility Center</span></a></li>
-                            <li><span class="li-line"></span></li>
-                            <li><a href='#/run_bill'><span >1. Run Bill</span></a></li>
-                            <li><a href='#/print_bill'><span >2. Print Bill</span></a></li>
-                            <li><a href='#/make_invoice'><span >3. Make Invoice</span></a></li>
-                            <li><a href='#/cash_receipt'><span >4. Cash Receipt</span></a></li>
-                            <li><span class="li-line"></span></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#/reports">
-                            <span>REPORTS</span>
-                        </a>
-                    </li>
-                    <li style="width: 92px;">
-                        <a style="font-size: 17px;font-weight: 700;" href='#/setting' class='glyphicons settings'>
-                            <i></i>
-                            <span>Setting</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#/manage" data-bind="click: logout">
-                            <i class="icon-power-off"></i>
-                            <span>Logout</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <div class="hidden-lg hidden-md collapse navbar-collapse" id="bs-example-navbar-collapse-2">
-                <ul class="dropdown-menu ul-multiTaskList" data-template="multiTaskList-row-template" data-bind="source: multiTaskList">
-                </ul>
-            </div>
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-3">
-                <form class="navbar-form pull-left hidden-lg hidden-md hidden-sm">
-                    <input id="search-placeholder" class="span2 search-query" type="text" placeholder="Search" data-bind="value: searchText" />
-                    <button class="btn btn-inverse" type="submit" data-bind="click: search">
-                        <i class="icon-search "></i>
-                    </button>
-                </form>
-            </div>
-            <div class="menu-phone collapse navbar-collapse" id="bs-example-navbar-collapse-4">
-                <ul class=" nav navbar-nav hidden-lg hidden-md hidden-sm phone-language">
-                    <li>
-                        <a href="#" data-bind="click: lang.changeToKh">
-                            <img class="kh-flag" src="https://lipis.github.io/flag-icon-css/flags/4x3/kh.svg">
-                            <span style="margin-left: 0;">ភាសាខ្មែរ</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" data-bind="click: lang.changeToEn">
-                            <img class="en-flag" src="https://lipis.github.io/flag-icon-css/flags/4x3/gb.svg">
-                            <span>English</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav> -->
-<!-- </script> --> 
 <script id="multiTaskList-row-template" type="text/x-kendo-template">
     <li>
         <a href="\#/#=url#">
@@ -181,323 +28,190 @@
     <style type="text/css">
         .cash-bg {
             background: rgba(255, 255, 255, .15);
+            border-radius: 0;
         }
     </style>
     <div class="container" style="margin-top: 100px;">
-        <div class="row">
-            <div class="col-md-10">
-                <div class="col-md-12" style="padding: 0;padding-right: 5px;">
+    <div class="row">
+        <div class="col-md-10">
+            <div class="col-md-12" style="padding: 0;padding-right: 5px;">
                 <div class="cash-bg " style="padding: 5px;background: #45ce54;">
-                <div class="col-md-6"> 
-                    <div class="col-md-12" style="margin-top: 10px;">
-                    <a " href="/" style="float:left;">
-                    <img src="<?php echo base_url();?>/assets/choulr/img/logo.png" width="50">
-                     </a>
-                     <span><b style="color: #fff;font-size: 20px;float: left;padding-top: 15px;">Choulr</b></span> 
-                   
-                      
-                    <form class="navbar-form pull-left hidden-xs">
-                    <input id="search-placeholder" class="span2 search-query" type="text" placeholder="Search" data-bind="value: searchText" style="width: 220px;" />
-                    <button class="btn btn-inverse" type="submit" data-bind="click: search" style="background-color: #56882e !important;border-radius: 2px;">
-                        <i class="icon-search iconsearch"></i>
-                    </button>
-                    </form>
-                    </div>
-                  
-                </div>
-                <div class="col-md-6">
-                    <div class="col-md-2"> 
-                    <a href="#/contract" class="hvr-float">
-                        <img title="add contract" src="assets/choulr/img/add-contract.png" width="60">
-                     </a>
-                    </div>
-                    <div class="col-md-2"> 
-                    <a href="#/lease_unit" class="hvr-float">
-                        <img title="add lease unit" src="assets/choulr/img/add-lease-unit.png" width="60">
-                     </a>
-                    </div>
-                </div> 
-               
-                         
-                </div>
-                </div>
-
-                <div class="col-md-6">
-                <div class="cash-bg ">
-                    
-                    <div class="row-fluid">
-
-                        <div class="col-xs-12 col-sm-12 col-md-12 pk1">
-                            <a href="#/contract" class="hvr-float">
-                                <img title="contract" src="assets/choulr/img/contract-01.png" width="355">
-                            </a>
-                        </div>
-     
-                    </div>
-                </div>
-                </div>
-            
-                <div class="col-md-6">
-                <div class="cash-bg ">
-                    <div class="row-fluid">
-                    
-                        <div class="col-xs-12 col-sm-12 col-md-12 pk1">
-                            <a href="#/lease_unit_center" class="hvr-float">
-                                <img title="Add Create Invoice" src="assets/choulr/img/lish-01.png" width="355">
-                            </a>
-                        </div>
-     
-                    </div>
-                </div>
-                </div>
-
-                <div class="col-md-6">
-                <div class="cash-bg ">
-                    <div class="row-fluid">
-                    
-                        <div class="col-xs-12 col-sm-12 col-md-12 pk1">
-                             <a href="#/print_bill" class="hvr-float">
-                                <img title="Add Print Invoice" src="assets/choulr/img/print-bill-01.png" width="355" >
-                                
-                            </a>
-                        </div>
-     
-                    </div>
-                </div>
-                </div>
-
-             
-            
                     <div class="col-md-6">
-                    <div class="cash-bg ">
+                        <div class="col-md-12" style="margin-top: 10px;">
+                            <a " href="/ " style="float:left; ">
+                             <img src="<?php echo base_url();?>assets/choulr/img/logo.png" width="50">
+                             </a>
+                                    <span><b style="color: #fff;font-size: 20px;float: left;padding-top: 15px;">Choulr</b></span>
+                                    <form class="navbar-form pull-left hidden-xs">
+                                        <input id="search-placeholder" class="span2 search-query" type="text" placeholder="Search" data-bind="value: searchText" style="width: 220px;" />
+                                        <button class="btn btn-inverse" type="submit" data-bind="click: search" style="background-color: #56882e !important;border-radius: 2px;">
+                                <i class="icon-search iconsearch"></i>
+                                </button>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="col-md-2">
+                                    <a href="#/contract" class="hvr-float">
+                             <img title="add contract" src="<?php echo base_url();?>assets/choulr/img/add-contract.png" width="60">
+                             </a>
+                                </div>
+                                <div class="col-md-2">
+                                    <a href="#/lease_unit" class="hvr-float">
+                             <img title="add lease unit" src="<?php echo base_url();?>assets/choulr/img/add-lease-unit.png" width="60">
+                             </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="cash-bg ">
+                            <div class="row-fluid">
+                                <div class="col-xs-12 col-sm-12 col-md-12 pk1">
+                                    <a href="#/contract_center" class="hvr-float">
+                                        <img title="contract" src="<?php echo base_url();?>assets/choulr/img/contract-01.png" width="355">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="cash-bg ">
+                            <div class="row-fluid">
+                                <div class="col-xs-12 col-sm-12 col-md-12 pk1">
+                                    <a href="#/lease_unit_center" class="hvr-float">
+                             <img title="Add Create Invoice" src="<?php echo base_url();?>assets/choulr/img/lish-01.png" width="355">
+                             </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="cash-bg ">
+                            <div class="row-fluid">
+                                <div class="col-xs-12 col-sm-12 col-md-12 pk1">
+                                    <a href="#/print_bill" class="hvr-float">
+                             <img title="Add Print Invoice" src="<?php echo base_url();?>assets/choulr/img/print-bill-01.png" width="355" >
+                             </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="cash-bg ">
+                            <div class="row-fluid">
+                                <div class="col-xs-12 col-sm-12 col-md-12 pk1">
+                                    <a href="#/receipt" class="hvr-float">
+                             <img title="Receive Water Bill Payment" src="<?php echo base_url();?>assets/choulr/img/receipt-01.png" width="355">
+                             </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="cash-bg " style="padding: 0;">
+                            <a href="#/customer_deposit_report">
+                                <div class="cash-invoice" style="margin-bottom: 0;background:#45ce54;color: #fff;">
+                                    <div class="span3" style="padding-left: 0;">
+                                        <span data-bind="text: lang.lang.deposit" style="font-weight: 600;font-size: 16px;color: #fff; ">DEPOSIT</span>
+                                        <br>
+                                        <p style="margin: 0;"><span style="color: ##fff;" data-bind="text: totalUser"></span>
+                                            <span style="color: #fff;" data-bind="text: lang.lang.meter">Meters</span>
+                                        </p>
+                                    </div>
+                                    <div class="span9" style=" text-align: center; font-size: 34px; font-weight: 600; padding: 0;">
+                                        <span style="float: right;" data-bind="text: totalDeposit"></span>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="cash-bg " style="padding: 0;">
+                            <a href="#/sale_summary">
+                                <div class="cash-invoice" style="margin-bottom: 0;background: #72ec7f;color: #fff;">
+                                    <div class="span4" style="padding-left: 0;">
+                                        <span data-bind="text: lang.lang.total_sale" style=" text-transform: uppercase;font-weight: 600;font-size: 16px; color: #fff;">TOTAL SALE</span>
+                                        <br>
+                                        <span style="color: #fff;" data-bind="text: totalUsage"></span>
+                                        <span style="color: #fff;">Usage</span>
+                                    </div>
+                                    <div class="span8" style="color: #fff; text-align: center; font-size: 34px; font-weight: 600; padding: 0;">
+                                        <span style="float: right;" data-bind="text: totalSale"></span>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-6" style="padding: 0;padding-right: 5px;">
+                        <div class="cash-bg " style="padding: 5px;">
+                            <div class="col-md-12">
+                                <div style="color: #fff;">
+                                    <p>Address<br> #134 , 7 th Floor, St.230, Sangkat Tuek Laork III,Khan Toul Kork, Phnom Penh, Cambodia
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="cash-bg pk" style="background: #379a6a;">
                         <div class="row-fluid">
-                        
                             <div class="col-xs-12 col-sm-12 col-md-12 pk1">
-                                <a href="#/receipt" class="hvr-float" >
-                                    <img title="Receive Water Bill Payment" src="assets/choulr/img/receipt-01.png" width="355">
-                                   
-                                </a>
+                                <a href="#/reports" class="hvr-shrink">
+                          <img title="reports" src="<?php echo base_url();?>assets/choulr/img/report.png" width="90">
+                          <span style="text-transform: uppercase; color: #fff; font-weight: 600; margin-top: 8px; display: inline-block;">Reports</span>
+                          </a>
                             </div>
-         
                         </div>
                     </div>
+                    <div class="cash-bg pk" style="background: #45ce54;">
+                        <div class="row-fluid">
+                            <div class="col-xs-12 col-sm-12 col-md-12 pk1">
+                                <a href="#/center" class="hvr-shrink">
+                          <img title="center" src="<?php echo base_url();?>assets/choulr/img/center.png" width="90">
+                          <span style="text-transform: uppercase; color: #fff; font-weight: 600; margin-top: 8px; display: inline-block;">Center</span>
+                          </a>
+                            </div>
+                        </div>
                     </div>
-
-
-                <div class="col-md-6">
-                <div class="cash-bg " style="padding: 0;">
-                    <a href="#/customer_deposit_report">
-                        <div class="cash-invoice" style="margin-bottom: 0;background:#45ce54;color: #fff;">
-                            <div class="span3" style="padding-left: 0;">
-                                <span data-bind="text: lang.lang.deposit" style="font-weight: 600;font-size: 16px;color: #fff; ">DEPOSIT</span>
-                                <br>
-                                <p style="margin: 0;"><span style="color: ##fff;" data-bind="text: totalUser"></span>
-                                    <span style="color: #fff;" data-bind="text: lang.lang.meter">Meters</span></p>
-                            </div>
-                            <div class="span9" style=" text-align: center; font-size: 34px; font-weight: 600; padding: 0;">
-                                <span style="float: right;" data-bind="text: totalDeposit"></span>
+                    <div class="cash-bg pk" style="background: #72ec7f;">
+                        <div class="row-fluid">
+                            <div class="col-xs-12 col-sm-12 col-md-12 pk1">
+                                <a href="#/setting" class="hvr-shrink">
+                          <img title="setting" src="<?php echo base_url();?>assets/choulr/img/setting.png" width="90">
+                          <span style="text-transform: uppercase; color: #fff; font-weight: 600; margin-top: 8px; display: inline-block;">Setting</span>
+                          </a>
                             </div>
                         </div>
-                    </a>
-                </div> 
-                </div> 
-
-                <div class="col-md-6">
-                <div class="cash-bg " style="padding: 0;">    
-
-                    <a href="#/sale_summary">
-                        <div class="cash-invoice" style="margin-bottom: 0;background: #72ec7f;color: #fff;">
-                            <div class="span4" style="padding-left: 0;">
-                               <span data-bind="text: lang.lang.total_sale" style=" text-transform: uppercase;font-weight: 600;font-size: 16px; color: #fff;">TOTAL SALE</span>
-                                <br>
-                                <span style="color: #fff;" data-bind="text: totalUsage"></span>
-                                <span style="color: #fff;">Usage</span>
-                            </div>
-                            <div class="span8" style="color: #fff; text-align: center; font-size: 34px; font-weight: 600; padding: 0;">
-                                <span style="float: right;" data-bind="text: totalSale"></span>
+                    </div>
+                    <div class="cash-bg pk" style="background: #ec4d4d;">
+                        <div class="row-fluid">
+                            <div class="col-xs-12 col-sm-12 col-md-12 pk1">
+                                <a href="#/setting" class="hvr-shrink">
+                          <img title="feedback" src="<?php echo base_url();?>assets/choulr/img/feedback.png" width="90">
+                          <span style="text-transform: uppercase; color: #fff; font-weight: 600; margin-top: 8px; display: inline-block;">Feedback</span>
+                          </a>
                             </div>
                         </div>
-                    </a>
+                    </div>
+                    <div class="cash-bg pk" style="background: #2e879e;">
+                        <div class="row-fluid">
+                            <div class="col-xs-12 col-sm-12 col-md-12 pk1">
+                                <a href="#/setting" class="hvr-shrink">
+                          <span style="text-transform: uppercase; color: #fff; font-weight: 600; margin-top: 8px; display: inline-block;text-align: center;font-size: 11px;">
+                          Contact us by<br> 078 79 33 22<br> Mon-Fri<br>09:00-18:00am
+                          </span>
+                          </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                </div>
-                <div class="col-md-6" style="padding: 0;padding-right: 5px;">
-                <div class="cash-bg " style="padding: 5px;">
-
-
-                <div class="col-md-12">
-
-                    <div style="color: #fff;"><p>Address<br> #134 , 7 th Floor, St.230, Sangkat Tuek Laork III,Khan Toul Kork, Phnom Penh, Cambodia
-                     </p></div>
-                </div>    
-
-               
-                 
-               
-                         
-                </div>
-                </div>
-
-          
-
             </div>
-
-            <div class="col-md-2">
-
-                <div class="cash-bg pk" style="background: #379a6a;">
-                    <div class="row-fluid">
-                    
-                        <div class="col-xs-12 col-sm-12 col-md-12 pk1">
-                            <a href="#/reports" class="hvr-shrink">
-                                <img title="reports" src="assets/choulr/img/report.png" width="90">
-                                <span style="text-transform: uppercase; color: #fff; font-weight: 600; margin-top: 8px; display: inline-block;">Reports</span>
-                            </a>
-                        </div>
-     
-                    </div>
-                </div>
-                <div class="cash-bg pk" style="background: #45ce54;">
-                    <div class="row-fluid">
-                    
-                        <div class="col-xs-12 col-sm-12 col-md-12 pk1">
-                            <a href="#/center" class="hvr-shrink">
-                                <img title="center" src="assets/choulr/img/center.png" width="90">
-                                <span style="text-transform: uppercase; color: #fff; font-weight: 600; margin-top: 8px; display: inline-block;">Center</span>
-                            </a>
-                        </div>
-     
-                    </div>
-                </div>
-                <div class="cash-bg pk" style="background: #72ec7f;">
-                    <div class="row-fluid">
-                    
-                        <div class="col-xs-12 col-sm-12 col-md-12 pk1">
-                            <a href="#/setting" class="hvr-shrink" >
-                                <img title="setting" src="assets/choulr/img/setting.png" width="90">
-                                <span style="text-transform: uppercase; color: #fff; font-weight: 600; margin-top: 8px; display: inline-block;">Setting</span>
-                            </a>
-                        </div>
-     
-                    </div>
-                </div>
-                
-
-                <div class="cash-bg pk" style="background: #ec4d4d;">
-                    <div class="row-fluid">
-                    
-                        <div class="col-xs-12 col-sm-12 col-md-12 pk1">
-                            <a href="#/setting" class="hvr-shrink" >
-                                <img title="feedback" src="assets/choulr/img/feedback.png" width="90">
-                                <span style="text-transform: uppercase; color: #fff; font-weight: 600; margin-top: 8px; display: inline-block;">Feedback</span>
-                            </a>
-                        </div>
-     
-                    </div>
-                </div>
-                <div class="cash-bg pk" style="background: #2e879e;">
-                    <div class="row-fluid">
-                    
-                        <div class="col-xs-12 col-sm-12 col-md-12 pk1">
-                            <a href="#/setting" class="hvr-shrink"  >
-                                
-                                <span style="text-transform: uppercase; color: #fff; font-weight: 600; margin-top: 8px; display: inline-block;text-align: center;font-size: 11px;">
-                                    Contact us by<br> 078 79 33 22<br> Mon-Fri<br>09:00-18:00am
-                                </span>
-                            </a>
-                        </div>
-     
-                    </div>
-                </div>
-    
-            </div>
-
-           
         </div>
-
-       
-            <!-- <div class="cash-bg pk" style="margin-bottom: 10px;">
-                <div class="row-fluid">
-                    <div class="col-xs-12 col-sm-6 col-md-7" style="background: rgba(68, 174, 79, 0.5); padding-bottom: 15px; padding-top: 15px; padding-right: 0;">
-                        <a href="#/customer_aging_sum_list">
-                            <div class="widget-body alert-info welcome-nopadding" style="width: 100%; background: none;">
-                                <p style="color: #fff;font-size: 16px;"><span data-bind="text: lang.lang.expected_due">Expected due</span></p>
-
-                                <div class="strong" align="center" style="color: #fff; font-size: 40px; margin-top: 23px; margin-bottom:  23px;"><span data-bind="text: totalAmount"></span></div>
-
-                                <table width="100%" style="color: #fff;">
-                                    <tbody>
-                                        <tr align="center">
-                                            <td>
-                                                <span style="font-size: 25px;"><span data-bind="text: invoice"></span></span>
-                                                <br>
-                                                <span data-bind="text: lang.lang.invoice">Invoices</span>
-                                            </td>
-                                            <td>
-                                                <span style="font-size: 25px;"><span data-bind="text: invCust"></span></span>
-                                                <br>
-                                                <span data-bind="text: lang.lang.customers">Customers</span>
-                                            </td>
-                                            <td>
-                                                <span style="font-size: 25px;"><span data-bind="text: overDue"></span></span>
-                                                <br>
-                                                <span data-bind="text: lang.lang.overdue">Overdue</span>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-5" style="background: rgba(68, 174, 79, 0.2); padding-bottom: 15px; padding-top: 15px; padding-right: 0;">
-                        <a href="#/customer_list">
-                            <div class="widget-body alert-info welcome-nopadding" style="width: 100%; background: none;">
-                                <p style="color: #fff;font-size: 16px;"><span data-bind="text: lang.lang.active_meter">Active Meter</span></p>
-
-                                <div class="strong" align="center" style="color: #fff; font-size: 40px; margin-top:  23px; margin-bottom: 23px;"><span data-bind="text: activeCust"></span></div>
-
-                                <table width="100%" style="color: #fff;">
-                                    <tbody>
-                                        <tr align="center">
-                                            <td>
-                                                <span style="font-size: 25px;" data-bind="text: totalCust"></span>
-                                                <br>
-                                                <span data-bind="text: lang.lang.meter">Meter</span>
-                                            </td>
-                                            <td>
-                                                <span style="font-size: 25px;" data-bind="text: voidCust"></span>
-                                                <br>
-                                                <span data-bind="text: lang.lang.customers">Customers</span>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div> -->
-        <!-- 
-           <div class="col-md-12 water-tableList hidden-xs">
-                <table class=" table table-borderless table-condensed " style="margin-left: 15.5px;width: 97.5%;">
-                    <thead>
-                        <tr>
-                            <th style="vertical-align: top;"><span data-bind="text: lang.lang.no">No.</span></th>
-                            <th style="vertical-align: top;"><span data-bind="text: lang.lang.license">License</span></th>
-                            <th style="vertical-align: top;"><span data-bind="text: lang.lang.no_of_bloc">No.of Bloc</span></th>
-                            <th style="vertical-align: top;"><span data-bind="text: lang.lang.active_meter">Active Meter</span></th>
-                            <th style="vertical-align: top;"><span data-bind="text: lang.lang.inactive_meter">Inactive Meter</span></th>
-                            <th style="vertical-align: top;"><span data-bind="text: lang.lang.deposit">Deposit</span></th>
-                            <th style="vertical-align: top;">m<sup>3</sup>/kWh</th>
-                            <th style="vertical-align: top;"><span data-bind="text: lang.lang.sale_amount">Sale Amount</span></th>
-                            <th style="vertical-align: top;"><span data-bind="text: lang.lang.balance">Balance</span></th>
-                        </tr>
-                    </thead>
-                    <tbody style="border: none;" data-role="listview" data-bind="source: dataSource" data-template="dashboard-template-table-list">             
-                    </tbody>
-                </table>
-            </div> -->
     </div>
-    </div>
+</div>
+</div>
 </script>
 <!--Setting-->
 <script id="Setting" type="text/x-kendo-template">
@@ -554,8 +268,13 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#tab8" data-bind="click: goMaintenance" class="glyphicons rotation_lock" data-toggle="tab">
+                                        <a href="<?php echo base_url(); ?>rrd#/item_service" target="_blank" class="glyphicons rotation_lock">
                                             <i></i><span class="strong"><span>Services</span></span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#tab6" data-bind="click: goDeposit" class="glyphicons wallet" data-toggle="tab">
+                                            <i></i><span class="strong"><span data-bind="text: lang.lang.deposit">Deposit</span></span>
                                         </a>
                                     </li>
                                     <li>
@@ -564,11 +283,6 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#tab9" data-bind="click: goPlan" class="glyphicons list" data-toggle="tab">
-                                            <i></i><span class="strong"><span data-bind="text: lang.lang.plans">Plans</span></span>
-                                        </a>
-                                    </li> 
-                                     <li>
                                         <a href="#tab10" class="glyphicons nameplate_alt" data-toggle="tab">
                                             <i></i><span class="strong"><span data-bind="text: lang.lang.custom_forms">Custom Forms</span></span>
                                         </a>
@@ -807,7 +521,6 @@
                                                         data-bind="source: spaceDS"></tbody>
                                             </table>
                                         </div>
-                                      
                                         <div class="tab-pane" id="tab5">
                                             <div style="clear: both; ">
                                                 <input data-bind="value: tariffName, attr: {placeholder: lang.lang.name}" type="text" placeholder="Name" style="height: 32px; padding: 5px; margin-right: 10px;"  class="span3 k-textbox k-invalid" />
@@ -930,7 +643,6 @@
                                             </div>
                                         </div>
                                         <div class="tab-pane" id="tab6">
-                                        
                                             <div style="clear: both;">
                                                 <input data-bind="value: depositName, attr: {placeholder: lang.lang.name}" type="text" placeholder="Name" style="height: 32px; padding: 5px; margin-right: 10px;"  class="span2 k-textbox k-invalid" />
                                                 <input data-role="dropdownlist"
@@ -938,23 +650,21 @@
                                                    style="padding-right: 1px; height: 32px; margin-right: 10px;" 
                                                    data-option-label="(--- Acount ---)"
                                                    data-auto-bind="false"                              
-                                                   data-value-primitive="false"
+                                                   data-value-primitive="true"
                                                    data-text-field="name"
                                                    data-value-field="id"
                                                    data-bind="value: depositAccount,
                                                               source: depositAccDS"/>
-
                                                 <input data-role="dropdownlist"
                                                    class="span2"
                                                    style="padding-right: 1px; height: 32px; margin-right: 10px;" 
                                                    data-option-label="(--- Currency ---)"
-                                                   data-auto-bind="false"                              
+                                                   data-auto-bind="false"         
                                                    data-value-primitive="true"
                                                    data-text-field="code"
                                                    data-value-field="id"
                                                    data-bind="value: depositCurrency,
                                                               source: currencyDS"/>
-
                                                 <input data-bind="value: depositPrice, attr: {placeholder: lang.lang.price}" type="text" placeholder="Price" style="height: 32px; padding: 5px; margin-right: 10px;" class="span2 k-textbox k-invalid" />
 
                                                 <a class="btn-icon btn-primary glyphicons circle_plus cutype-icon" style="width: 80px; padding: 5px 7px 5px 35px !important; text-align: left;" data-bind="click: addDeposit"><i></i><span data-bind="text: lang.lang.add">Add</span></a>
@@ -1074,8 +784,8 @@
                                                    class="span2"
                                                    style="padding-right: 1px; height: 32px; margin-right: 10px;" 
                                                    data-option-label="-Acount-"
-                                                   data-auto-bind="false"                              
-                                                   data-value-primitive="false"
+                                                   data-auto-bind="false" 
+                                                   data-value-primitive="true"
                                                    data-text-field="name"
                                                    data-value-field="id"
                                                    data-bind="value: fineAccount,
@@ -1216,7 +926,7 @@
                                                    style="padding-right: 1px; height: 32px; margin-right: 10px;" 
                                                    data-option-label="(--- Acount ---)"
                                                    data-auto-bind="false"       
-                                                   data-value-primitive="false"
+                                                   data-value-primitive="true"
                                                    data-text-field="name"
                                                    data-value-field="id"
                                                    data-bind="value: rentAccount,
@@ -2737,6 +2447,7 @@
 <script id="Contract" type="text/x-kendo-template">
     <style type="text/css"></style>
     <div class="container">
+        <form action="">
         <div class="row-fluid">
             <div class="background">
                 <div class="row-fluid">
@@ -2768,6 +2479,7 @@
                                                     source: contactDS"
                                                 style="width: 100%; float: left;margin-right: 2%;" 
                                                 aria-invalid="true" 
+                                                required
                                                 class="k-invalid"
                                             />
                                         </div>
@@ -2775,14 +2487,14 @@
                                     <div class="col-xs-12 col-sm-6">
                                         <div class="control-group">
                                             <label for="ddlContactType">
-                                                <span data-bind="text: lang.lang.registered_date"></span> <span style="color:red">*</span>
+                                                <span data-bind="text: lang.lang.register_date"></span> <span style="color:red">*</span>
                                             </label>
                                             <input id="issuedDate" name="issuedDate" 
                                                 data-role="datepicker"
                                                 data-format="dd-MM-yyyy"
                                                 data-parse-formats="yyyy-MM-dd"
                                                 data-bind="value: obj.issued_date" 
-                                                required data-required-msg="required"
+                                                required
                                                 style="width:100%;" />
                                         </div>
                                     </div>
@@ -2797,7 +2509,7 @@
                                                 name="fullname" 
                                                 class="k-textbox" 
                                                 data-bind="value: obj.name" 
-                                                required data-required-msg="required"
+                                                required
                                                 style="width: 100%;" />
                                         </div>
                                     </div>
@@ -2815,19 +2527,19 @@
                                                   source: leaseunitDS,
                                                   events: {change: onLeaseUnitChange}"
                                        data-option-label="(--- Select ---)"
-                                       required data-required-msg="required" style="width: 100%;" /> 
+                                       required 
+                                       style="width: 100%;" /> 
                                 </div>
                                 <div class="row">
                                     <div class="col-xs-12 col-sm-12">
                                         <div class="control-group"> 
                                             <label for="fullname">
-                                                <span>Memo</span> <span style="color:red">*</span>
+                                                <span>Memo</span>
                                             </label>
                                             <input id="fullname" 
                                                 name="fullname" 
                                                 class="k-textbox" 
-                                                data-bind="value: obj.memo" 
-                                                required data-required-msg="required"
+                                                data-bind="value: obj.memo"
                                                 style="width: 100%;" />
                                         </div>
                                     </div>
@@ -2838,28 +2550,26 @@
                                     <div class="col-xs-12 col-sm-6">
                                         <div class="control-group">
                                             <label for="ddlContactType">
-                                                <span>Start</span> <span style="color:red">*</span>
+                                                <span>Start</span>
                                             </label>
                                             <input id="issuedDate" name="issuedDate" 
                                                 data-role="datepicker"
                                                 data-format="dd-MM-yyyy"
                                                 data-parse-formats="yyyy-MM-dd"
-                                                data-bind="value: obj.start_date" 
-                                                required data-required-msg="required"
+                                                data-bind="value: obj.start_date"
                                                 style="width:100%;" />
                                         </div>
                                     </div>
                                     <div class="col-xs-12 col-sm-6">
                                         <div class="control-group">
                                             <label for="ddlContactType">
-                                                <span>End</span> <span style="color:red">*</span>
+                                                <span>End</span>
                                             </label>
                                             <input id="issuedDate" name="issuedDate" 
                                                 data-role="datepicker"
                                                 data-format="dd-MM-yyyy"
                                                 data-parse-formats="yyyy-MM-dd"
-                                                data-bind="value: obj.end_date" 
-                                                required data-required-msg="required"
+                                                data-bind="value: obj.end_date"
                                                 style="width:100%;" />
                                         </div>
                                     </div>
@@ -2881,7 +2591,13 @@
                                         </li>
                                         <li class="span2 glyphicons parents">
                                             <a href="#Utility" data-toggle="tab"><i></i> <span><span ></span>Utility</span></a>
-                                        </li>             
+                                        </li>
+                                        <li class="span2 glyphicons parents">
+                                            <a href="#Deposit" data-toggle="tab"><i></i> <span><span data-bind="text: lang.lang.deposit"></span></span></a>
+                                        </li>
+                                        <li class="span2 glyphicons parents">
+                                            <a href="#Fine" data-toggle="tab"><i></i> <span><span data-bind="text: lang.lang.fine"></span></span></a>
+                                        </li>        
                                     </ul>
                                 </div>
                                 <!-- // Tabs Heading END -->
@@ -2903,6 +2619,21 @@
                                                data-option-label="(----select----)"
                                                required data-required-msg="required" style="width: 100%;" />
                                         </div>
+                                        <br />
+                                        <table class="table-fixed table-customer table table-bordered table-primary table-striped table-vertical-center">
+                                            <thead>
+                                                <tr>
+                                                    <th style="vertical-align: top;" data-bind="text: lang.lang.no_"></th>
+                                                    <th style="vertical-align: top;" data-bind="text: lang.lang.name"></th>
+                                                    <th style="vertical-align: top;" data-bind="text: lang.lang.price"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody data-role="listview" 
+                                                data-template="rent-list-tmpl" 
+                                                data-auto-bind="false"
+                                                data-bind="source: rentAR">
+                                            </tbody>
+                                        </table>
                                     </div>
                                     <div class="tab-pane" id="Other">
                                         <!-- Item List -->
@@ -2924,14 +2655,13 @@
                                                 },
                                                 { 
                                                     field: 'item', 
-                                                    title: 'PRODUCTS/SERVICES', 
+                                                    title: 'SERVICES', 
                                                     editor: itemEditor, 
                                                     template: '#=item.name#', 
-                                                    width: '170px' 
+                                                    width: '170px'
                                                 },
                                                 { 
-                                                    field: 'description', title:'DESCRIPTION', 
-                                                    hidden: true,
+                                                    field: 'description', title:'DESCRIPTION',
                                                     width: '250px' 
                                                 },                            
                                                 {
@@ -2952,27 +2682,8 @@
                                                 {
                                                     field: 'price',
                                                     title: 'PRICE',
-                                                    hidden: true,
                                                     format: '{0:n}',
                                                     editor: numberTextboxEditor,
-                                                    width: '120px',
-                                                    attributes: { style: 'text-align: right;' }
-                                                },
-                                                {
-                                                    field: 'discount',
-                                                    title: 'DISCOUNT VALUE',
-                                                    hidden: true,
-                                                    format: '{0:n}',
-                                                    editor: numberTextboxEditor,
-                                                    width: '120px',
-                                                    attributes: { style: 'text-align: right;' }
-                                                },
-                                                {
-                                                    field: 'discount_percentage',
-                                                    title: 'DISCOUNT %',
-                                                    hidden: true,
-                                                    format: '{0:p}',
-                                                    editor: discountEditor,
                                                     width: '120px',
                                                     attributes: { style: 'text-align: right;' }
                                                 },
@@ -2983,30 +2694,20 @@
                                                     editable: 'false', 
                                                     attributes: { style: 'text-align: right;' }, 
                                                     width: '120px' 
-                                                },
-                                                { 
-                                                    field: 'tax_item', 
-                                                    title:'TAX',
-                                                    hidden: true,
-                                                    editor: taxForSaleEditor, 
-                                                    template: '#=tax_item.name#', width: '90px' 
-                                                },
-                                                { 
-                                                    field: 'reference_no', title:'REFERENCE NO.', 
-                                                    hidden: true, width: '120px' 
                                                 }
                                              ]"
                                              data-auto-bind="false"
                                              data-bind="source: lineDS" > 
                                         </div>
-                                        <button class="btn btn-inverse" data-bind="click: addRow">
+                                        <br />
+                                        <a class="btn btn-inverse" data-bind="click: addRow">
                                             <i class="icon-plus icon-white"></i> Add
-                                        </button>
+                                        </a>
                                     </div>
                                     <div class="tab-pane" id="Utility">
                                         <div class="control-group">
                                             <label for="ddlContactType">
-                                                <span>Water Meter</span> <span style="color:red">*</span>
+                                                <span>Water Meter</span>
                                             </label>
                                             <input 
                                                 data-role="dropdownlist"
@@ -3026,7 +2727,7 @@
                                         </div>
                                         <div class="control-group">
                                             <label for="ddlContactType">
-                                                <span>Eeletricity Meter</span> <span style="color:red">*</span>
+                                                <span>Eeletricity Meter</span>
                                             </label>
                                             <input 
                                                 data-role="dropdownlist"
@@ -3046,35 +2747,55 @@
                                             />
                                         </div>
                                     </div>
+                                    <div class="tab-pane" id="Deposit">
+                                        <div class="control-group">
+                                            <label for="ddlContactType">
+                                                <span data-bind="text: lang.lang.deposit"></span>
+                                            </label>
+                                            <input 
+                                               data-role="dropdownlist"
+                                               data-template="rent_price-list-tmpl"
+                                               data-text-field="name"
+                                               data-value-primitive="true"
+                                               data-value-field="id"
+                                               data-bind="value: obj.deposit_id,
+                                                          source: contractDepositDS"
+                                               data-option-label="(----select----)"
+                                               required data-required-msg="required" style="width: 100%;" />
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane" id="Fine">
+                                        <div class="control-group">
+                                            <label for="ddlContactType">
+                                                <span data-bind="text: lang.lang.fine"></span>
+                                            </label>
+                                            <input 
+                                               data-role="dropdownlist"
+                                               data-template="rent_price-list-tmpl"
+                                               data-text-field="name"
+                                               data-value-primitive="true"
+                                               data-value-field="id"
+                                               data-bind="value: obj.fine_id,
+                                                          source: fineDS"
+                                               data-option-label="(----select----)"
+                                               required data-required-msg="required" style="width: 100%;" />
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="row-fluid">
                             <div class="box-generic bg-action-button">
                                 <div id="ntf1" data-role="notification"></div>
-                                <div data-role="window"
-                                     data-title="Delete Confirmation"
-                                     data-width="350"
-                                     data-height="200"
-                                     data-iframe="true"
-                                     data-modal="true"
-                                     data-visible="false"
-                                     data-position="{top:'40%',left:'35%'}"
-                                     data-actions="{}"
-                                     data-resizable="false"
-                                     data-bind="visible: showConfirm"
-                                     style="text-align:center;">
-                                    <p style="font-size:25px; margin: 15px 0 25px;" class="delete-message" data-bind="text: confirmMessage"></p>
-                                    <button style="font-size:14px; border:none; background:#496cad; color:#fff; padding:5px 25px;" data-bind="click:delete"><span data-bind="text: lang.lang.yes"></span></button> 
-                                    <button style="font-size:14px; border:none; background:red; color:#fff; padding:5px 25px;" data-bind="click:closeConfirm"><span data-bind="text: lang.lang.no"></span></button>
-                                </div>
                                 <div class="row">
                                     <div class="col-sm-3">
                                     </div>
                                     <div class="col-sm-9" align="right">
                                         <span class="btn-btn" data-bind="click: openConfirm, visible: isEdit"><span data-bind="text: lang.lang.delete"></span></span>
                                         <span id="saveClose" data-bind="click: cancel" class="btn-btn"><span data-bind="text: lang.lang.cancel">Cancel</span></span>
-                                        <span id="saveNew" class="btn-btn" data-bind="click: save" ><span data-bind="text: lang.lang.save">Save</span></span>
+                                        <span id="saveNew" class="btn-btn" data-bind="click: save" >
+                                            <span data-bind="text: lang.lang.save">Save</span>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -3083,6 +2804,7 @@
                 </div>
             </div>
         </div>
+        </form>
     </div>
 </script>
 <!-- Customer -->
@@ -4565,10 +4287,10 @@
         </td>  
         <td>
             <input style="width: 100%;" data-role="dropdownlist"      
-                   data-value-primitive="false"
+                   data-value-primitive="true"
                    data-text-field="name"
                    data-value-field="id"
-                   data-bind="value: account,
+                   data-bind="value: account_id,
                               source: tariffAccDS" />
         </td>
         <td>
@@ -4606,11 +4328,11 @@
         </td>  
         <td>
             <input style="width: 100%;" data-role="dropdownlist"      
-                   data-value-primitive="false"
+                   data-value-primitive="true"
                    data-text-field="name"
                    data-auto-bind="true"
                    data-value-field="id"
-                   data-bind="value: account,
+                   data-bind="value: account_id,
                               source: depositAccDS" />
         </td>    
         <td>
@@ -4772,11 +4494,11 @@
         </td>       
         <td>
             <input style="width: 100%;" data-role="dropdownlist"      
-                   data-value-primitive="false"
+                   data-value-primitive="true"
                    data-text-field="name"
                    data-auto-bind="true"
                    data-value-field="id"
-                   data-bind="value: account,
+                   data-bind="value: account_id,
                               source: tariffAccDS" />
         </td>  
         <td>
@@ -5418,7 +5140,7 @@
 <!-- Contract -->
 <script id="rent_price-list-tmpl" type="text/x-kendo-tmpl">
     <span>#=name#</span>    
-    <span>#=amount#</span>
+    <span> #= kendo.toString(amount, _currency.locale=="km-KH"?"c0":"c", _currency.locale)#</span>
 </script>
 <script id="contract-list-tmpl" type="text/x-kendo-tmpl">
     <tr data-bind="click: selectedRow">
@@ -5472,6 +5194,16 @@
                 <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
             </div>
         </td>
+    </tr>
+</script>
+<script id="rent-list-tmpl" type="text/x-kendo-tmpl">
+    <tr data-uid="#: uid #">
+        <td>
+            <i class="icon-trash" data-bind="events: { click: rmRent }"></i>
+            #:banhji.Contract.rentAR.indexOf(data)+1#      
+        </td>
+        <td>#= name#</td>
+        <td>#= kendo.toString(price, _currency.locale=="km-KH"?"c0":"c", _currency.locale)#</td>
     </tr>
 </script>
 <!-- Customer -->
