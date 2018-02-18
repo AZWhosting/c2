@@ -89,10 +89,15 @@
                     <div class="col-md-6">
                         <div class="cash-bg ">
                             <div class="row-fluid">
-                                <div class="col-xs-12 col-sm-12 col-md-12 pk1">
+                                <div class="col-xs-6 col-sm-6 col-md-6 pk1">
+                                    <a href="#/run_bill" class="hvr-float">
+                                     <img title="Add Print Invoice" src="<?php echo base_url();?>assets/choulr/img/run-bill.png" height="153" style="width: auto;" />
+                                     </a>
+                                </div>
+                                <div class="col-xs-6 col-sm-6 col-md-6 pk1">
                                     <a href="#/print_bill" class="hvr-float">
-                             <img title="Add Print Invoice" src="<?php echo base_url();?>assets/choulr/img/print-bill-01.png" width="355" >
-                             </a>
+                                     <img title="Add Print Invoice" src="<?php echo base_url();?>assets/choulr/img/print-bill.png" height="153" style="width: auto;" />
+                                     </a>
                                 </div>
                             </div>
                         </div>
@@ -102,8 +107,8 @@
                             <div class="row-fluid">
                                 <div class="col-xs-12 col-sm-12 col-md-12 pk1">
                                     <a href="#/receipt" class="hvr-float">
-                             <img title="Receive Water Bill Payment" src="<?php echo base_url();?>assets/choulr/img/receipt-01.png" width="355">
-                             </a>
+                                        <img title="Receive Water Bill Payment" src="<?php echo base_url();?>assets/choulr/img/receipt-01.png" width="355" >
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -168,9 +173,9 @@
                     <div class="cash-bg pk" style="background: #45ce54;">
                         <div class="row-fluid">
                             <div class="col-xs-12 col-sm-12 col-md-12 pk1">
-                                <a href="#/center" class="hvr-shrink">
+                                <a href="#/utility_center" class="hvr-shrink">
                           <img title="center" src="<?php echo base_url();?>assets/choulr/img/center.png" width="90">
-                          <span style="text-transform: uppercase; color: #fff; font-weight: 600; margin-top: 8px; display: inline-block;">Center</span>
+                          <span style="text-transform: uppercase; color: #fff; font-weight: 600; margin-top: 8px; display: inline-block;font-size: 12px;">Meter Center</span>
                           </a>
                             </div>
                         </div>
@@ -3669,7 +3674,7 @@
                             </div>  
                             <div class="col-sx-12 col-sm-2">
                                 <div class="control-group">                             
-                                    <label ><span data-bind="text: lang.lang.license">License</span></label>
+                                    <label ><span data-bind="text: lang.lang.property">License</span></label>
                                     <input 
                                         data-role="dropdownlist" 
                                         style="width: 100%;" 
@@ -3804,7 +3809,17 @@
                         <div class="box-generic bg-action-button">
                             <div id="ntf1" data-role="notification"></div>
                             <div class="row">
-                                <div class="span12" align="right">
+                                <div class="span4" style="padding-left: 15px;">
+                                    <input data-role="dropdownlist"
+                                           data-value-primitive="true"
+                                           data-text-field="name"
+                                           data-value-field="id"
+                                           data-bind="value: obj.transaction_template_id,
+                                                      source: txnTemplateDS"
+                                           data-option-label="Select Template..." />
+                                    
+                                </div>
+                                <div class="span8" align="right">
                                     <span class="btn-btn" data-bind="click: save, visible: showButton" ><i></i> <span data-bind="text: lang.lang.run_bill">Run Bill</span></span>                                   
                                     <span class="btn-btn" data-bind="click: cancel" ><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
                                 </div>
@@ -3816,6 +3831,142 @@
             </div>
         </div>
     </div>          
+</script>
+<script id="printBill" type="text/x-kendo-template">
+    <div class="container">
+        <div class="row-fluid">
+            <div class="background">
+                <div class="row-fluid">
+                    <div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 100%;margin-top: -15px;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
+                        <i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
+                    </div>
+                    <div id="example" class="k-content">
+                        <h2 data-bind="text: lang.lang.print_bill">Print Bill</h2>
+                        <div class="hidden-print pull-right">
+                            <span class="glyphicons no-js remove_2" 
+                                data-bind="click: cancel"><i></i></span>
+                        </div>
+                        <div class="clear"></div>
+
+                        <div class=" row" style="clear:both;">
+                            <div class="col-sx-12 col-sm-2"">
+                                <!-- Group -->
+                                <div class="control-group">
+                                    <label ><span data-bind="text: lang.lang.month_of">Month Of</span></label>
+                                    <input type="text" 
+                                        style="width: 100%;" 
+                                        data-role="datepicker"
+                                        data-format="MM-yyyy"
+                                        data-start="year" 
+                                        data-depth="year" 
+                                        placeholder="Moth of ..." 
+                                        data-bind="value: monthSelect" />
+                                </div>
+                                <!-- // Group END -->
+                            </div>
+                            <div class="col-sx-12 col-sm-2"" >
+                                <div class="control-group">
+                                    <label ><span data-bind="text: lang.lang.property">License</span></label>
+                                    <input 
+                                        data-role="dropdownlist" 
+                                        style="width: 100%;" 
+                                        data-option-label="Property ..." 
+                                        data-auto-bind="true" 
+                                        data-value-primitive="true" 
+                                        data-text-field="name" 
+                                        data-value-field="id" 
+                                        data-bind="
+                                            value: propertySelect,
+                                            source: propertyDS">
+                                </div>
+                            </div>
+                            
+                            <div class="col-sx-12 col-sm-2"">
+                                <div class="control-group"> 
+                                    <label ><span data-bind="text: lang.lang.action">Action</span></label>  
+                                    <div class="row" style="margin: 0;">             
+                                        <button type="button" data-role="button" data-bind="click: search" class="k-button" role="button" aria-disabled="false" tabindex="0"><i class="icon-search"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row saleSummaryCustomer" style="margin-top: 15px;">
+                            <div class="col-sm-6" >
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="total-customer" style="width: 100%; background: #f4f5f8; padding: 15px; margin-bottom: 15px;">
+                                            <p data-bind="text: lang.lang.total_invoice">Total Invoice</p>
+                                            <span data-bind="text: totalInv"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="total-customer" style="width: 100%; background: #f4f5f8; padding: 15px; margin-bottom: 15px;">
+                                            <p data-bind="text: lang.lang.no_print">No Print</p>
+                                            <span data-bind="text: noPrint, click: goNoPrint" style="cursor: pointer;"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="total-customer" style="width: 100%; background: #f4f5f8; padding: 15px; margin-bottom: 15px;">
+                                            <p>m<sup>3</sup>/kWh</p>
+                                            <span data-bind="text: totalMeter"></span>                                              
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6" >
+                                <div class="total-customer" style="background: #203864; color: #fff; padding: 15px;">
+                                    <p data-bind="text: lang.lang.amount">Amount</p>
+                                    <span data-bind="text: amountTotal"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row-fluid" style="margin-bottom: 15px" data-bind="visible: selectInv">
+                            <table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align:center"><input type="checkbox" data-bind="checked: chkAll, events: {change : checkAll}" /></th>                
+                                        <th><span data-bind="text: lang.lang.customer">Customer</span></th>              
+                                        <th><span data-bind="text: lang.lang.number">Number</span></th>
+                                        <th align="center"><span >Usage</span></th>
+                                        <th align="right"><span data-bind="text: lang.lang.amount">Amount</span></th>
+                                    </tr>
+                                </thead>
+                                <tbody data-role="listview" 
+                                        data-template="printbill-row-template" 
+                                        data-auto-bind="false" 
+                                        data-bind="source: invoiceCollection.dataSource"></tbody>
+                                <tfoot data-template="printbill-footer-template" 
+                                            data-bind="source: this"></tfoot>               
+                            </table>                        
+                        </div>
+
+                        <div class="box-generic bg-action-button">
+                            <div id="ntf1" data-role="notification"></div>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <input data-role="dropdownlist"
+                                           data-value-primitive="true"
+                                           data-text-field="name"
+                                           data-value-field="id"
+                                           data-auto-bind="false"
+                                           data-bind="value: TemplateSelect,
+                                                      source: txnTemplateDS"
+                                           data-option-label="Select Template..." />
+                                </div>
+                                <div class="col-sm-9" align="right">
+                                    <span class="btn-btn" data-bind="click: cancel" ><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
+                                    <span class="btn-btn" data-bind="click: printBill" ><i></i> <span data-bind="text: lang.lang.print_bill">Print Bill</span></span>                                   
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>      
 </script>
 <!--Template-->
 <!-- General -->
@@ -5412,6 +5563,22 @@
     <tr>        
         <td class="right" colspan="8" style="font-size:30px;">
             <span data-bind="text: lang.lang.total"></span>: <span data-bind="text: meterSold"></span>  m<sup>3</sup>/kWh
+        </td>
+    </tr>
+</script>
+<script id="printbill-row-template" type="text/x-kendo-tmpl">
+    <tr>
+        <td align="center"><input type="checkbox" data-bind="checked: printed, events: {change: isCheck}" /></td>
+        <td>#= contact.name#</td>
+        <td>#= meter.meter_number#</td>
+        <td align="center">#= consumption#</td>
+        <td align="right">#= kendo.toString(amount, "c0", locale)#</td>
+    </tr>
+</script>
+<script id="printbill-footer-template" type="text/x-kendo-template">
+    <tr>        
+        <td class="right" colspan="8" style="font-size:30px;">
+            <span data-bind="text: lang.lang.total"></span>: <span data-bind="text: totalMeter"></span>m<sup>3</sup>/kWh
         </td>
     </tr>
 </script>

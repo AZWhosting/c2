@@ -2508,21 +2508,28 @@ class Choulr extends REST_Controller {
 					}
 				}
 				//Rent Price
-				$p = new Plan_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$p->where("id", $value->rent_price_id)->limit(1)->get();
-				$c = new Currency_rate(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$c->where("currency_id", $p->currency_id)->order_by("date", "desc")->limit(1)->get();
+				$cp = new Choulr_contracts_rent(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$cp->where("contract_id", $value->id)->get();
 				$rent = [];
-				$rent = array(
-					"id" 		=> $p->id,
-					"rate" 		=> floatval($c->rate),
-					"locale" 	=> $c->locale,
-					"amount" 	=> floatval($p->amount),
-					"name" 		=> $p->name,
-				);
-				$rentprice = floatval($p->amount) / floatval($rate);
+				$rentprice = 0;
+				if($cp->exists()){
+					foreach($cp as $cpp){
+						$p = new Plan_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						$p->where("id", $cpp->rent_id)->limit(1)->get();
+						$c = new Currency_rate(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						$c->where("currency_id", $p->currency_id)->order_by("date", "desc")->limit(1)->get();
+						$rent[] = array(
+							"id" 		=> $p->id,
+							"rate" 		=> floatval($c->rate),
+							"locale" 	=> $c->locale,
+							"amount" 	=> floatval($p->amount),
+							"name" 		=> $p->name,
+						);
+						$rentprice += floatval($p->amount) / floatval($rate);
+					}
+				}
 				//Total
-				$total = floatval($p->amount) + $wprice + $eprice;
+				$total = floatval($rentprice) + $wprice + $eprice;
 				//Result Respone
 				$data["results"][] = array(
 					"id" 					=> $value->id,
