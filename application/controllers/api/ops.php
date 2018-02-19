@@ -115,14 +115,14 @@ class Ops extends REST_Controller {
 				// 	// 	"null" 		=> FALSE,
 				// 	// 	"default" 	=> 0
 				// 	// ),
-				// 	"amount" => array(
-				// 		"type" 		=> "DECIMAL",
-				// 		"constraint"=> "30,15",
+				// 	"reuse" => array(
+				// 		"type" 		=> "TINYINT",
+				// 		"constraint"=> 1,
 				// 		"null" 		=> FALSE,
 				// 		"default" 	=> 0
 				// 	)
 				// );
-				// $data['results'][] = $this->dbforge->add_column("item_assemblies", $fields);
+				// $data['results'][] = $this->dbforge->add_column("transactions", $fields);
 				
 			    // Modify fields
 		 	// 	$fields = array(

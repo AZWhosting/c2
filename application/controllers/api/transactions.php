@@ -286,6 +286,7 @@ class Transactions extends REST_Controller {
 					"day" 						=> $value->day,
 					"week" 						=> $value->week,
 					"month" 					=> $value->month,
+				   	"reuse" 					=> intval($value->reuse),
 				   	"status" 					=> intval($value->status),
 				   	"progress" 					=> $value->progress,
 				   	"is_recurring" 				=> intval($value->is_recurring),
@@ -402,6 +403,7 @@ class Transactions extends REST_Controller {
 		   	isset($value->day) 						? $obj->day 						= $value->day : "";
 		   	isset($value->week) 					? $obj->week 						= $value->week : "";
 		   	isset($value->month) 					? $obj->month 						= $value->month : "";
+		   	isset($value->reuse) 					? $obj->reuse 						= $value->reuse : "";
 		   	isset($value->status) 					? $obj->status 						= $value->status : "";
 		   	isset($value->progress) 				? $obj->progress 					= $value->progress : "";
 		   	isset($value->is_recurring) 			? $obj->is_recurring 				= $value->is_recurring : "";
@@ -522,6 +524,7 @@ class Transactions extends REST_Controller {
 					"day" 						=> $obj->day,
 					"week" 						=> $obj->week,
 					"month" 					=> $obj->month,
+					"reuse" 					=> intval($obj->reuse),
 				   	"status" 					=> intval($obj->status),
 				   	"progress" 					=> $obj->progress,
 				   	"is_recurring" 				=> floatval($obj->is_recurring),
@@ -618,6 +621,7 @@ class Transactions extends REST_Controller {
 		   	isset($value->day) 						? $obj->day 						= $value->day : "";
 		   	isset($value->week) 					? $obj->week 						= $value->week : "";
 		   	isset($value->month) 					? $obj->month 						= $value->month : "";
+		   	isset($value->reuse) 					? $obj->reuse 						= $value->reuse : "";
 		   	isset($value->status) 					? $obj->status 						= $value->status : "";
 		   	isset($value->progress) 				? $obj->progress 					= $value->progress : "";
 		   	isset($value->is_recurring) 			? $obj->is_recurring 				= $value->is_recurring : "";
@@ -755,6 +759,7 @@ class Transactions extends REST_Controller {
 					"day" 						=> $obj->day,
 					"week" 						=> $obj->week,
 					"month" 					=> $obj->month,
+					"reuse" 					=> intval($obj->reuse),
 				   	"status" 					=> intval($obj->status),
 				   	"progress" 					=> $obj->progress,
 				   	"is_recurring" 				=> floatval($obj->is_recurring),
@@ -798,6 +803,32 @@ class Transactions extends REST_Controller {
 		}
 
 		//Response data
+		$this->response($data, 200);
+	}
+
+	function number_get() {
+		$filter 	= $this->get("filter");
+		$data["results"] = [];
+		$data["count"] = 0;
+
+		$connection = 'use ' . $this->_database;
+		$this->db->query($connection);
+
+		//Filter
+		if(!empty($filter["filters"]) && isset($filter["filters"])){
+	    	foreach ($filter["filters"] as $value) {
+	    		$this->db->where($value["field"], $value["value"]); 
+			}
+		}
+
+		$this->db->select("(SELECT SUBSTRING(number, -5)) AS number", FALSE);
+		$this->db->order_by("number", "desc");
+		$this->db->limit(1); 
+		$query = $this->db->get('transactions');
+
+		$data["results"] = $query->result();
+				
+		
 		$this->response($data, 200);
 	}	
 
