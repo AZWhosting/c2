@@ -2152,7 +2152,7 @@
                data-auto-bind="true"
                data-value-field="id"
                data-bind="value: item, 
-               			  source: itemAR,
+               			  source: itemDS,
                			  events:{ change: onChange }"
                placeholder="Select ..." 
                required data-required-msg="required" style="width: 100%" />	
@@ -11132,9 +11132,9 @@
 					            <li >
 					            	<a href="#tab6" data-toggle="tab"><span data-bind="text: lang.lang.cash_receipt_report"></span></a>
 					            </li>
-					            <li data-bind="click: viewMap">
+					           <!--  <li data-bind="click: viewMap">
 					            	<a href="#tab7" data-toggle="tab"><span data-bind="text: lang.lang.meter_report_map" ></span></a>
-					            </li>
+					            </li> -->
 					        </ul>
 					    </div>
 					    <!-- // Tabs Heading END -->
@@ -11149,24 +11149,24 @@
 					  				data-value-primitive="true"
 									data-text-field="name" 
 					  				data-value-field="id"
-					  				data-bind="value: licenseSelect,
+					  				data-bind="value: summarySelect,
 					  							source: licenseDS, events: {change: onLicenseChange}"
 					  				data-option-label="Select Licenses..." style="margin-bottom: 15px" />
 								<table style="margin-bottom: 0;" class="table table-bordered table-condensed table-striped table-primary table-vertical-center">
 									<thead>
 										<tr>
-											<th style="vertical-align: top; text-align: center"><span data-bind="text: lang.lang.no">No.</span></th>
-											<th style="vertical-align: top; text-align: center"><span data-bind="text: lang.lang.license">License</span></th>
-											<th style="vertical-align: top; text-align: center"><span data-bind="text: lang.lang.no_of_bloc">No.of Bloc</span></th>
-											<th style="vertical-align: top; text-align: center"><span data-bind="text: lang.lang.active_meter">Active Meter</span></th>
-											<th style="vertical-align: top; text-align: center"><span data-bind="text: lang.lang.inactive_meter">Inactive Meter</span></th>
-											<th style="vertical-align: top; text-align: right"><span data-bind="text: lang.lang.deposit">Deposit</span></th>
-											<th style="vertical-align: top; text-align: right">m<sup>3</sup>/kWh</th>
-											<th style="vertical-align: top; text-align: right"><span data-bind="text: lang.lang.sale_amount">Sale Amount</span></th>
-											<th style="vertical-align: top; text-align: right"><span data-bind="text: lang.lang.balance">Balance</span></th>
+											<th style="vertical-align: top; text-align: center; font-size: 12px;"><span data-bind="text: lang.lang.no">No.</span></th>
+											<th style="vertical-align: top; text-align: center; font-size: 12px;"><span data-bind="text: lang.lang.bloc">bloc</span></th>
+											<th style="vertical-align: top; text-align: center; font-size: 12px;"><span data-bind="text: lang.lang.active_meter">Active Meter</span></th>
+											<th style="vertical-align: top; text-align: center; font-size: 12px;"><span data-bind="text: lang.lang.inactive_meter">Inactive Meter</span></th>
+											<th style="vertical-align: top; text-align: center; font-size: 12px;"><span data-bind="text: lang.lang.deposit">Deposit</span></th>
+											<th style="vertical-align: top; text-align: center; font-size: 12px;"><span data-bind="text: lang.lang.quantity_sold"></span><span>m<sup>3</sup>/kWh
+											</span></th>
+											<th style="vertical-align: top; text-align: center; font-size: 12px;"><span data-bind="text: lang.lang.sale_amount">Sale Amount</span></th>
+											<th style="vertical-align: top; text-align: center"><span data-bind="text: lang.lang.balance">Balance</span></th>
 										</tr>
 									</thead>
-									<tbody style="border: none;" data-role="listview" data-bind="source: dataSourceSummary" data-template="dashboard-template-table-list" data-auto-bind="false">				
+									<tbody style="border: none;" data-role="listview" data-bind="source: dataSource" data-template="summary-template-table-list" data-auto-bind="false">				
 									</tbody>
 								</table>
 							</div>
@@ -11486,7 +11486,14 @@
 												</tr>
 												<tr>
 													<td>
-														<h3><a href="#/total_sale" >Total Sale Report</a></h3>
+														<h3><a href="#/discount_report" data-bind="text: lang.lang.discount_report">Discount Report</a></h3>
+													</td>
+												</tr>
+												<tr>
+													<td >
+														<p style="padding-right: 25px;"  data-bind="text: lang.lang.discount_report_description">
+														Lists individual discount by date for each customer with a period of time.
+														</p>
 													</td>
 												</tr>
 											</table>
@@ -11594,15 +11601,15 @@
 					        <!-- //ACCOUNTING END -->
 
 
-					        <div class="tab-pane" id="tab7" >
+					       <!--  <div class="tab-pane" id="tab7" >
 								<div class="row-fluid sale-report">
 									<h1 style="text-align: center; padding: 20px;">Coming Soon !!</h1>
-									<!-- <h2 style="margin-bottom: 10px;" data-bind="text: lang.lang.meter_report_map"></h2>
+									<h2 style="margin-bottom: 10px;" data-bind="text: lang.lang.meter_report_map"></h2>
 									<div id="map" style="border: 1px solid green; height: 70%; width: 100%">
 										sdklasdj
-									</div> -->
+									</div>
 								</div>
-							</div>
+							</div> -->
 					    </div>
 					</div>
 				</div>
@@ -11612,29 +11619,28 @@
 		</div>
 	</div>
 </script>
-<script id="dashboard-template-table-list" type="text/x-kendo-tmpl">
+<script id="summary-template-table-list" type="text/x-kendo-tmpl">
 	<tr>
-		<td style="text-align: center;">#=banhji.Reports.dataSourceSummary.indexOf(banhji.Reports.dataSourceSummary.get(id)) +1 #</td>
-		<td style="text-align: left;">#=name#</td>
-		<td style="text-align: center; padding-right: 5px !important;">#=kendo.toString(blocCount, "n0", banhji.locale)#</td>
-		<td style="text-align: center; padding-right: 5px !important;">#=kendo.toString(activeCustomer, "n0", banhji.locale)#</td>
-		<td style="text-align: center; padding-right: 5px !important;">#=kendo.toString(inActiveCustomer, "n0", banhji.locale)#</td>
-		<td style="text-align: right; padding-right: 5px !important;">#= kendo.toString(deposit, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#</td>
-		<td style="text-align: right; padding-right: 5px !important;">#=kendo.toString(usage, "n0", banhji.locale)#</td>
-		<td style="text-align: right; padding-right: 5px !important;">#= kendo.toString(sale, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#</td>
-		<td style="text-align: right; padding-right: 5px !important;">#= kendo.toString(balance, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#</td>
+		<td style="text-align: center;">#=banhji.Reports.dataSource.indexOf(banhji.Reports.dataSource.get(id)) +1 #</td>
+		<td style="text-align: left;">#=bloc_name#</td>
+		<td style="text-align: center; padding-right: 5px !important;">#=kendo.toString(activeCount, "n0", banhji.locale)#</td>
+		<td style="text-align: center; padding-right: 5px !important;">#=kendo.toString(inactiveCount, "n0", banhji.locale)#</td>
+		<td style="text-align: right; padding-right: 5px !important;">#= kendo.toString(totalDeposit, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#</td>
+		<td style="text-align: center; padding-right: 5px !important;">#=kendo.toString(totalUsage, "n0", banhji.locale)# m3/kwh</td>
+		<td style="text-align: right; padding-right: 5px !important;">#= kendo.toString(totalSale, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#</td>
+		<td style="text-align: right; padding-right: 5px !important;">#= kendo.toString(totalBalance, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#</td>
 	</tr>
 </script>
 <script id="kpi-template-table-list" type="text/x-kendo-tmpl">
 	<tr>
 		<td style="text-align: center;">#=banhji.Reports.dataSourceKPI.indexOf(banhji.Reports.dataSourceKPI.get(id)) +1 #</td>
 		<td style="text-align: left;">#=name#</td>
-		<td style="text-align: center; padding-right: 5px !important;">#=kendo.toString(totalActiveCustomer, "n2", banhji.locale)#</td>
-		<td style="text-align: center; padding-right: 5px !important;">#=kendo.toString(totalAllowCustomer, "n2", banhji.locale)#</td>
+		<td style="text-align: center; padding-right: 5px !important;">#=kendo.toString(totalActiveCustomer, "p", banhji.locale)#</td>
+		<td style="text-align: center; padding-right: 5px !important;">#=kendo.toString(totalAllowCustomer, "p", banhji.locale)#</td>
 		<td style="text-align: center; padding-right: 5px !important;">#=kendo.toString(totalCustomer, "n0", banhji.locale)#</td>
 		<td style="text-align: right; padding-right: 5px !important;">#= kendo.toString(avgIncome, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#</td>
-		<td style="text-align: right; padding-right: 5px !important;">#=kendo.toString(avgUsage, "n0", banhji.locale)#</td>
-		<td style="text-align: right; padding-right: 5px !important;">#=kendo.toString(totalUsage, "n0", banhji.locale)#</td>
+		<td style="text-align: center; padding-right: 5px !important;">#=kendo.toString(avgUsage, "n0", banhji.locale)# m3</td>
+		<td style="text-align: right; padding-right: 5px !important;">#=kendo.toString(totalUsage, "n0", banhji.locale)# m3</td>
 		<td style="text-align: right; padding-right: 5px !important;">#= kendo.toString(totalAmount, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#</td>
 	</tr>
 </script>
@@ -14300,6 +14306,198 @@
     	<td colspan="6">&nbsp;</td>
     </tr>
 </script>
+<script id="discountReport" type="text/x-kendo-template">
+	<div class="container">
+		<div class="row-fluid">
+			<div id="waterreport" class="background">
+				<div class="row-fluid">
+					<div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 100%;margin-top: -15px;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
+						<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
+					</div>
+					<div id="example" class="k-content">
+						<div class="hidden-print pull-right" style="margin-bottom: 15px;">
+				    		<span class="pull-right glyphicons no-js remove_2"
+						onclick="javascript:window.history.back()"><i></i></span>
+						</div>
+						<div class="clear"></div>
+
+					    <!-- Tabs -->
+						<div class="relativeWrap" data-toggle="source-code">
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+							
+								<!-- Tabs Heading -->
+								<div class="widget-head">
+									<ul>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date">Date</span></a></li>	
+										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.filter">Filter</span></a></li>
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab" ><i></i><span data-bind="text: lang.lang.print_export">Print/Export</span></a></li>
+									</ul>
+								</div>
+								<!-- // Tabs Heading END -->
+								<div class="widget-body">
+									<div class="tab-content">
+								        <!-- //Date -->
+								        <div class="tab-pane active" id="tab-1">
+											<div class="row">
+												<div class="col-xs-12 col-sm-2">
+													<input data-role="dropdownlist"
+														   class="sorter"
+												           data-value-primitive="true"
+												           data-text-field="text"
+												           data-value-field="value"
+												           data-bind="value: sorter,
+												                      source: sortList,
+												                      events: { change: sorterChanges }" style="width: 100%" />
+												</div>
+												<div class="col-xs-12 col-sm-2">
+													<input data-role="datepicker"
+														   class="sdate"
+														   data-format="dd-MM-yyyy"
+												           data-bind="value: sdate,
+												           			  max: edate"
+												           placeholder="From ..." style="width: 100%" >
+												</div>
+												<div class="col-xs-12 col-sm-2">
+												    <input data-role="datepicker"
+												    	   class="edate"
+												    	   data-format="dd-MM-yyyy"
+												           data-bind="value: edate,
+												                      min: sdate"
+												           placeholder="To ..." style="width: 100%" >
+												</div>
+												<div class="col-xs-12 col-sm-1">
+												  	<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+												</div>
+											</div>
+							        	</div>
+
+								    	<!-- Filter -->
+								        <div class="tab-pane" id="tab-2">
+											<div class="row">
+												<div class="col-xs-12 col-sm-3">
+													<span data-bind="text: lang.lang.license">Licenses</span>
+													<input 
+														data-role="dropdownlist" 
+														data-option-label="License ..." 
+														data-auto-bind="false" 
+														data-value-primitive="true" 
+														data-text-field="name" 
+														data-value-field="id" 
+														data-bind="
+															value: licenseSelect,
+																source: licenseDS,
+																events: {change: licenseChange}" style="width: 100%">
+												</div>
+												<div class="col-xs-12 col-sm-3">
+													<span data-bind="text: lang.lang.location">Locations</span>
+														<input 
+															data-role="dropdownlist" 
+															data-option-label="Location ..." 
+															data-auto-bind="false" 
+															data-value-primitive="false" 
+															data-text-field="name" 
+															data-value-field="id" 
+															data-bind="
+																value: blocSelect,
+																enabled: haveBloc,
+																source: blocDS" style="width: 100%">
+												</div>
+												<div class="col-xs-12 col-sm-1">											
+										  			<button style="margin-top: 20px;" type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+												</div>														
+											</div>		
+							        	</div>
+							        	<!-- PRINT/EXPORT  -->
+								        <div class="tab-pane report" id="tab-3">
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" ><i></i> Print</span>
+											<span id="excel" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" >
+												<i class="fa fa-file-excel-o"></i>
+												Export to Excel
+											</span>
+							        	</div>	
+								    </div>
+								</div>
+							</div>
+						</div>
+						<!-- // Tabs END -->						
+					
+
+						<div id="invFormContent">
+							<div class="block-title">
+								<h3 data-bind="text: company.name"></h3>
+								<h2 data-bind="text: lang.lang.discount_report">Discount Report</h2>
+								<p data-bind="text: displayDate"></p>
+							</div>
+
+							<div class="row">
+								<div class="col-xs-12 col-sm-3">
+									<div class="total-sale">
+										<p data-bind="text: lang.lang.number_of_customer">Number of Customers</p>
+										<span data-bind="text: dataSource.total"></span>
+									</div>
+
+								</div>
+								<div class="col-xs-12 col-sm-9">
+									<div class="total-sale">
+										<p data-bind="text: lang.lang.amount">Amount</p>
+										<span data-bind="text: total"></sapn>
+									</div>
+								</div>
+							</div>
+
+							<table style="margin-bottom: 0;" class="table table-bordered table-condensed table-striped table-primary table-vertical-center">
+								<thead>
+									<tr>									
+										<th style="vertical-align: top;"><span data-bind="text: lang.lang.type">Type</span></th>
+										<th style="vertical-align: top;"><span data-bind="text: lang.lang.date">Date</span></th>
+										<th style="vertical-align: top;"><span data-bind="text: lang.lang.location">Location</span></th>
+										<th style="vertical-align: top;"><span data-bind="text: lang.lang.reference">Reference</span></th>
+										<th style="vertical-align: top;"><span data-bind="text: lang.lang.amount">Amount</span></th>
+									</tr>
+								</thead>
+								<tbody data-role="listview"
+										data-template="discountReport-template"
+										data-auto-bind="false" 
+										data-bind="source: dataSource">
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="discountReport-template" type="text/x-kendo-template">
+	<tr style="font-weight: bold">
+		<td>#=name#</td>
+		<td></td>
+		<td></td>
+	</tr>	
+	# var amount = 0;#
+	#for(var i= 0; i <line.length; i++) {#
+		# amount += line[i].amount;#
+		<tr>
+			<td style="padding-left: 20px !important;">#=line[i].type#</td>
+			<td>#=kendo.toString(new Date(line[i].date), "dd-MM-yyyy")#</td>
+			<td>#=line[i].location#</td>
+			<td>#=line[i].number#</td>		
+			<td style="text-align: right;">#=kendo.toString(line[i].amount, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#</td>
+		</tr>
+	#}#
+	<tr>
+    	<td style="font-weight: bold; color: black;">Total</td>
+    	<td></td>
+    	<td></td>
+    	<td></td>
+    	<td class="right" style="font-weight: bold; border-top: 1px solid black !important; color: black;">
+    		#=kendo.toString(amount, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#
+    	</td>
+    </tr>
+    <tr>
+    	<td colspan="6">&nbsp;</td>
+    </tr>
+</script>
 <script id="report-sale-detail-template" type="text/x-kendo-template">
 	<tr>
 		<td>#=contact_number#</td>
@@ -16479,8 +16677,6 @@
 							<div class="widget-head">
 								<ul style="padding-left: 1px;">
 									<li class="active"><a class="glyphicons group" href="#tabNum" data-toggle="tab"><i></i><span style="line-height: 55px;">Invoice Number</span></a></li>
-									<!-- <li><a class="glyphicons group" href="#tabMeter" data-toggle="tab"><i></i><span style="line-height: 55px;">Meter Number</span></a></li>
-									<li><a class="glyphicons group" href="#tabContact" data-toggle="tab"><i></i><span style="line-height: 55px;">Customer Number</span></a></li> -->
 								</ul>
 							</div>
 							<div class="widget-body">
@@ -16497,7 +16693,7 @@
 										  	<input type="file"  
 										  		data-role="upload" 
 										  		data-show-file-list="true" 
-										  		data-bind="events: {select: onInvSelected}" 
+										  		data-bind="events: {select: onSelected}" 
 										  		id="myFile"  class="margin-none" />
 										</div>
 										<div data-bind="visible: noInvShow">
@@ -16514,7 +16710,7 @@
 											</table>
 										</div>
 										<span class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: noInvShow" style="width: 160px!important;"><i></i>
-										<span data-bind="click: save">Start Import</span></span>
+										<span data-bind="click: save">Pay</span></span>
 									</div>
 									<div id="tabMeter" style="border: 1px solid #ccc" class="tab-pane widget-body-regular">
 										<h4 class="separator bottom" style="margin-top: 10px;">Recieve By Meter ID</h4>

@@ -25,6 +25,221 @@ class UtibillReports extends REST_Controller {
 	}
 
 	//****************HEANG******************
+	//Summmary DashBoard
+	function utillBill_summary_get() {
+		ini_set('memory_limit', '2048M');
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
+		$data["count"] = 0;
+		$activeCount = 0;
+		$inactiveCount = 0;
+		$totalDeposit = 0;
+		$totalSale = 0;
+		$totalBalance = 0;
+		$totalUsage = 0;
+		$total = 0;
+
+		$obj = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
+			}
+		}
+		
+		//Filter		
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value['operator'])){
+	    			$obj->{$value['operator']}($value['field'], $value['value']);
+	    		} else {
+	    			if($value['field'] == "branch_id"){
+	    				$obj->where($value['field'], $value['value']);
+	    			}
+	    		}
+			}
+		}
+
+		//Results
+		$obj->where("main_bloc", 0);
+		$obj->where("main_pole", 0);
+		$obj->order_by("id", "asc");
+		$obj->get_iterated();
+		$data["count"] = $obj->result_count();
+		if($obj->exists()){
+			foreach ($obj as $value) {
+				$blockname = $value->name;
+				//Number Of Custoemr active and inactive
+				$con = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$con->where("location_id", $value->id)->get_iterated();
+				foreach ($con as $key) {
+					if ($key->status ==1){
+						$activeCount += 1;
+					}else{
+						$inactiveCount += 1;
+					}
+				}
+				//Total Sale and Balance
+				$sale = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$sale->where("is_recurring <>", 1);
+				$sale->where("deleted <>", 1);
+				$sale->where("location_id", $value->id)->get_iterated();
+
+				foreach ($sale as $txn) {
+					if ($txn->type=="Utility_Deposit"){
+						$totalDeposit += $txn->amount;
+					}else if ($txn->type=="Utility_Invoice"){
+						if($txn->status == 1){
+							$totalSale += $txn->amount;
+						}else{
+							$totalBalance += $txn->amount;
+						}
+
+					}else{
+						$total += $txn->amount;
+					}
+				}
+
+				$meter = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$meter->include_related('record', 'usage');
+				$meter->where("location_id", $value->id)->get_iterated();
+				foreach ($meter as $usage) {
+					$totalUsage += $usage->record_usage;
+				}
+
+
+				$data["results"][] = array(
+		 			"id" 				=> $value->id,
+		 			"bloc_name" 		=> $blockname,
+		 			"activeCount"		=> $activeCount,
+		 			"inactiveCount"		=> $inactiveCount,
+		 			"totalSale"			=> $totalSale,
+		 			"totalDeposit"		=> $totalDeposit,
+		 			"totalBalance"		=> $totalBalance,
+		 			"totalUsage"		=> $totalUsage
+			 	);
+			}
+			$data["count"] = count($data["results"]);
+		}
+
+		//Response Data
+		$this->response($data, 200);
+	}
+
+	//KPI Summmary
+	function kpi_summary_get() {
+		$filter     = $this->get("filter");		
+		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
+		$sort 	 	= $this->get("sort");		
+		$data["results"] = array();
+		$data["count"] = 0;
+
+
+		$obj = new Branch(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$obj->order_by('id', 'asc');
+			//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
+			}
+		}
+		
+		//Filter		
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value['operator'])){
+	    			$obj->{$value['operator']}($value['field'], $value['value']);	    		
+	    		} else {
+	    			$obj->where($value['field'], $value['value']);
+	    		}
+			}
+		}
+
+		$obj->get_iterated();
+		foreach($obj as $value) {
+			$location = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$location->where('branch_id', $value->id);
+			$location->where('main_bloc', 0);
+			$location->where('main_pole', 0);
+			$location->get_iterated();
+			$nActiveMeter = 0;
+			$totalAllowCustomer = 0;
+			$totalActiveCustomer = 0;
+			$totalAmount = 0;
+			$avgIncome = 0;
+			$totalUsage = 0;
+			$nContact = 0;
+			$avg = 0;
+			$activeCount =0;
+			$inActiveCount = 0;
+			foreach($location as $loc) {
+				$meter = $loc->meter->where('activated', 1)->get_iterated();
+				foreach($meter as $c) {
+					if($c->status == 1) {
+						$activeCount += 1;
+					} else {
+						$inActiveCount += 1;
+					}
+				}
+
+				$contact = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$contact->where('use_water', '1');
+				$nContact 		= $contact->count();
+
+				$totalActiveCustomer = $value->max_customer == 0 ? 0: $activeCount / $value->max_customer;
+
+				$totalAllowCustomer = $value->max_customer == 0 ? 0: ($nContact / intval($value->max_customer));
+
+		
+				$trxSale = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$trxSale->where('type', 'Utility_Invoice');
+				$trxSale->where('location_id', $loc->id)->get_iterated();
+				foreach ($trxSale as $key) {
+					$totalAmount += $key->amount;
+				}
+				
+
+				$avgIncome = $activeCount == 0 ? 0 : ($totalAmount  / $activeCount);
+
+				$meter = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$meter->include_related('record', 'usage');
+				$meter->where("location_id", $value->id)->get_iterated();
+				foreach ($meter as $usage) {
+					$totalUsage += $usage->record_usage;
+				}
+
+				//AVG usage per connection
+				$AVGUsage = $totalUsage / $activeCount;
+
+			}
+			$data['results'][] = array(
+				'id' => $value->id,
+				'name'=>$value->name,
+				'totalCustomer' => $activeCount,
+				'totalAllowCustomer' => $totalAllowCustomer,
+				'totalActiveCustomer' => $totalActiveCustomer,
+				'avgIncome' => $avgIncome,
+				'totalUsage' => $totalUsage,
+				'avgUsage' => $AVGUsage,
+				'totalAmount' => $totalAmount,
+			);
+		}
+		$this->response($data, 200);
+	}
+
 	//Water Sale
 	function sale_summary_get() {
 		$filter 	= $this->get("filter");
@@ -344,6 +559,90 @@ class UtibillReports extends REST_Controller {
 			$objList = [];
 			foreach ($obj as $value) {								
 				$amount = floatval($value->cr)/ floatval($value->rate);
+				
+				if(isset($objList[$value->contact_id])){
+					$objList[$value->contact_id]["line"][] = array(
+						"id" 				=> $value->id,
+						"type" 				=> $value->description,
+						"date" 				=> $value->transaction_issued_date,
+						"location" 			=> $value->transaction_location_name,
+						"number" 			=> $value->transaction_number,
+						"amount"			=> $amount
+					);
+				}else{
+					$objList[$value->contact_id]["id"] 		= $value->contact_id;
+					$objList[$value->contact_id]["name"] 	= $value->contact_abbr.$value->contact_number." ".$value->contact_name;
+					$objList[$value->contact_id]["line"][]	= array(
+						"id" 				=> $value->id,
+						"type" 				=> $value->description,
+						"date" 				=> $value->transaction_issued_date,
+						"location" 			=> $value->transaction_location_name,
+						"number" 			=> $value->transaction_number,
+						"amount"			=> $amount
+					);
+				}
+				$total +=  $amount;
+			}
+
+			foreach ($objList as $value) {
+				$data["results"][] = $value;
+			}
+			$data['total'] = $total;
+			$data["count"] = count($data["results"]);
+		}
+
+		//Response Data
+		$this->response($data, 200);
+	}
+
+	//Discount Report
+	function discount_get() {
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
+		$data["count"] = 0;
+		$total = 0;
+
+		$obj = new Journal_Line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
+			}
+		}
+		
+		//Filter		
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value['operator'])){
+	    			$obj->{$value['operator']}($value['field'], $value['value']);	    		
+	    		} else {
+	    			$obj->where($value['field'], $value['value']);
+	    		}
+			}
+		}
+
+		//Results
+
+		$obj->include_related("transaction", array("issued_date", "number"));
+		$obj->include_related("contact", array("abbr", "number", "name"));
+		$obj->include_related('transaction/location', "name");
+		$obj->where("description", "Utility Discount");
+		$obj->where("account_id", "7");
+		$obj->where("deleted <>", 1);
+		$obj->get_iterated();
+		
+		if($obj->exists()){
+			$objList = [];
+			foreach ($obj as $value) {								
+				$amount = floatval($value->dr)/ floatval($value->rate);
 				
 				if(isset($objList[$value->contact_id])){
 					$objList[$value->contact_id]["line"][] = array(

@@ -210,7 +210,7 @@ class Inventory_modules extends REST_Controller {
 		$topProducts->where_related("transaction", "deleted <>", 1);
 		$topProducts->where_related("item", "item_type_id", 1);
 		$topProducts->where("item_id >", 0);
-		$topProducts->where("deleted <>", 1);				
+		$topProducts->where("deleted <>", 1);
 		$topProducts->order_by("total", "desc");
 		$topProducts->group_by("item_id");
 		$topProducts->limit(5);
