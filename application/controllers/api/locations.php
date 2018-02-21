@@ -76,9 +76,13 @@ class Locations extends REST_Controller {
 		}
 		
 		if($obj->result_count()>0){
-			foreach ($obj as $value) {	
-				$license = $value->branch->get();
-
+			foreach ($obj as $value) {
+				$branch = [];
+				if($value->branch_id>0){	
+					$license = $value->branch->get();
+					$branch = array('id' => $license->id, 'name' => $license->name);
+				}
+				
 				$location_type = [];
 				if($value->location_type_id>0){
 					$locationTypes = new Location_type();
@@ -96,7 +100,7 @@ class Locations extends REST_Controller {
 				   	"type" 				=> $value->type,
 				   	"main_bloc" 		=> intval($value->main_bloc),
 				   	"main_pole" 		=> intval($value->main_pole),
-				   	"branch" 			=> array('id' => $license->id, 'name' => $license->name),
+				   	"branch" 			=> $branch,
 				   	"location_type" 	=> $location_type			
 		 		);
 			}
