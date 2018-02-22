@@ -24,15 +24,27 @@ class Choulr extends REST_Controller {
 	}
 	//DashBorad
 	function dashboard_get(){
+		$data["results"] = [];
+		$data["count"] = 1;
 		//Contract
-		$contract = new Choulr_contract(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database)->get();
+		$contract = new Choulr_contract(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$contract->get();
 		$contracttotal = $contract->count();
 		//Lease Unit
-		$leasunit = new Choulr_lease_unit(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database)->get();
+		$leasunit = new Choulr_lease_unit(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$leasunit->get();
 		$leasunittotal = $leasunit->count();
 		//Meter
-		$meter = new Choulr_meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database)->get();
+		$meter = new Choulr_meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$meter->get();
 		$metertotal = $meter->count();
+		$data["results"][] = array(
+			"contracttotal" 		=> $contracttotal,
+			"leaseunittotal" 		=> $leasunittotal,
+			"metertotal" 			=> $metertotal
+		);
+		//Response Data
+		$this->response($data, 200);
 	}
 	//Property Type
 	function property_type_get(){

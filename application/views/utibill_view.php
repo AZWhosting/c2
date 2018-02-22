@@ -7817,7 +7817,7 @@
 	</div>
 </script>
 <script id="formFrame" type="text/x-kendo-tmpl">
-  	<div class="container winvoice-print" style="page-break-after: always;width: 800px;min-height: 1120px;position: relative;">
+  	<div class="container winvoice-print" style="page-break-after: always;width: 800px;min-height: 1135px;position: relative;">
   		<style type="text/css">
 			* {
 				-webkit-print-color-adjust:true;

@@ -82,7 +82,7 @@
                                 <a href="#/contract_center" class="hvr-float">
                                     <h1 style="font-size: 22px;font-weight: bold;color: #fff !important;">CONTRACT</h1>
                                     <h2 style="font-size: 18px;color: #fff !important;margin-top: 15px;">Number of Contract</h2>
-                                    <h3 style="font-size: 30px;color: #72ec7f !important;margin-top: 15px;">1000,000</h3>
+                                    <h3 style="font-size: 30px;color: #72ec7f !important;margin-top: 15px;" data-bind="text: totalContract"></h3>
                                 </a>
                             </div>
                         </div>
@@ -99,8 +99,8 @@
                             <div class="col-md-8 pk1" style="padding-left: 50px;padding-top: 5px">
                                 <a href="#/lease_unit_center" class="hvr-float">
                                     <h1 style="font-size: 22px;font-weight: bold;color: #fff !important;text-transform: uppercase;">lease unit</h1>
-                                    <h2 style="font-size: 18px;color: #fff !important;margin-top: 15px;">Number of Lish Unit</h2>
-                                    <h3 style="font-size: 30px;color: #72ec7f !important;margin-top: 15px;">1000,000</h3>
+                                    <h2 style="font-size: 18px;color: #fff !important;margin-top: 15px;">Number of Lease Unit</h2>
+                                    <h3 style="font-size: 30px;color: #72ec7f !important;margin-top: 15px;" data-bind="text: totalLeaseUnit"></h3>
                                 </a>
                             </div>
                         </div>
@@ -139,7 +139,7 @@
                                 <a href="#/receipt" class="hvr-float">
                                     <h1 style="font-size: 22px;font-weight: bold;color: #fff !important;text-transform: uppercase;">meter center</h1>
                                     <h2 style="font-size: 18px;color: #fff !important;margin-top: 15px;">Number of Meter</h2>
-                                    <h3 style="font-size: 30px;color: #72ec7f !important;margin-top: 15px;">1000,000</h3>
+                                    <h3 style="font-size: 30px;color: #72ec7f !important;margin-top: 15px;" data-bind="text: totalMeter"></h3>
                                 </a>
                             </div>
                         </div>
