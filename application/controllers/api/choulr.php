@@ -22,6 +22,18 @@ class Choulr extends REST_Controller {
 			date_default_timezone_set("$conn->time_zone");
 		}
 	}
+	//DashBorad
+	function dashboard_get(){
+		//Contract
+		$contract = new Choulr_contract(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database)->get();
+		$contracttotal = $contract->count();
+		//Lease Unit
+		$leasunit = new Choulr_lease_unit(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database)->get();
+		$leasunittotal = $leasunit->count();
+		//Meter
+		$meter = new Choulr_meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database)->get();
+		$metertotal = $meter->count();
+	}
 	//Property Type
 	function property_type_get(){
 		$data["results"] = [];

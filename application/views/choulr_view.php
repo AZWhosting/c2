@@ -30,193 +30,201 @@
             background: rgba(255, 255, 255, .15);
             border-radius: 0;
         }
+        .pk2 {padding-top: 7.4px;}
     </style>
     <div class="container" style="margin-top: 100px;">
-    <div class="row">
-        <div class="col-md-10">
-            <div class="col-md-12" style="padding: 0;padding-right: 5px;">
-                <div class="cash-bg " style="padding: 5px;background: #45ce54;">
-                    <div class="col-md-6">
-                        <div class="col-md-12" style="margin-top: 10px;">
-                            <a " href="/ " style="float:left; ">
-                             <img src="<?php echo base_url();?>assets/choulr/img/logo.png" width="50">
-                             </a>
+        <div class="row">
+            <div class="col-md-10">
+                <div class="col-md-12" style="padding: 0;padding-right: 5px;">
+                    <div class="cash-bg " style="padding: 5px;background: #0eac00;">
+                        <div class="col-md-8">
+                            <div class="col-md-12" style="margin-top: 10px;">
+                                <a " href="./choulr" style="float:left; ">
+                                    <img src="<?php echo base_url();?>assets/choulr/img/logo.png" style="float: left;" width="50">
                                     <span><b style="color: #fff;font-size: 20px;float: left;padding-top: 15px;">Choulr</b></span>
-                                    <form class="navbar-form pull-left hidden-xs">
-                                        <input id="search-placeholder" class="span2 search-query" type="text" placeholder="Search" data-bind="value: searchText" style="width: 220px;" />
-                                        <button class="btn btn-inverse" type="submit" data-bind="click: search" style="background-color: #56882e !important;border-radius: 2px;">
-                                <i class="icon-search iconsearch"></i>
-                                </button>
-                                    </form>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="col-md-2">
-                                    <a href="#/contract" class="hvr-float">
-                             <img title="add contract" src="<?php echo base_url();?>assets/choulr/img/add-contract.png" width="60">
-                             </a>
-                                </div>
-                                <div class="col-md-2">
-                                    <a href="#/lease_unit" class="hvr-float">
-                             <img title="add lease unit" src="<?php echo base_url();?>assets/choulr/img/add-lease-unit.png" width="60">
-                             </a>
-                                </div>
+                                </a>
+                                <form class="navbar-form pull-left hidden-xs">
+                                    <input id="search-placeholder" class="span2 search-query" type="text" placeholder="Search" data-bind="value: searchText" style="width: 220px;" />
+                                    <button class="btn btn-inverse" type="submit" data-bind="click: search" style="background-color: #56882e !important;border-radius: 2px;">
+                                        <i class="icon-search iconsearch"></i>
+                                    </button>
+                                </form>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="cash-bg ">
-                            <div class="row-fluid">
-                                <div class="col-xs-12 col-sm-12 col-md-12 pk1">
-                                    <a href="#/contract_center" class="hvr-float">
-                                        <img title="contract" src="<?php echo base_url();?>assets/choulr/img/contract-01.png" width="355">
-                                    </a>
-                                </div>
+                        <div class="col-md-4" style="padding-left: 0px;padding-right: 10px;">
+                            <div class="col-md-4"> 
+                                <a href="#/contract" class="hvr-float">
+                                    <img title="add contract" src="<?php echo base_url(); ?>assets/choulr/img/add-contract.png" width="60">
+                                </a>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="cash-bg ">
-                            <div class="row-fluid">
-                                <div class="col-xs-12 col-sm-12 col-md-12 pk1">
-                                    <a href="#/lease_unit_center" class="hvr-float">
-                             <img title="Add Create Invoice" src="<?php echo base_url();?>assets/choulr/img/lish-01.png" width="355">
-                             </a>
-                                </div>
+                            <div class="col-md-4"> 
+                                <a href="#/lease_unit" class="hvr-float">
+                                    <img title="add lease unit" src="<?php echo base_url(); ?>assets/choulr/img/add-lease-unit.png" width="60">
+                                </a>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="cash-bg ">
-                            <div class="row-fluid">
-                                <div class="col-xs-6 col-sm-6 col-md-6 pk1">
-                                    <a href="#/run_bill" class="hvr-float">
-                                     <img title="Add Print Invoice" src="<?php echo base_url();?>assets/choulr/img/run-bill.png" height="153" style="width: auto;" />
-                                     </a>
-                                </div>
-                                <div class="col-xs-6 col-sm-6 col-md-6 pk1">
-                                    <a href="#/print_bill" class="hvr-float">
-                                     <img title="Add Print Invoice" src="<?php echo base_url();?>assets/choulr/img/print-bill.png" height="153" style="width: auto;" />
-                                     </a>
-                                </div>
+                            <div class="col-md-4"> 
+                                <a href="#/lease_unit" class="hvr-float">
+                                    <img title="add mater" src="<?php echo base_url(); ?>assets/choulr/img/add_mater.png" width="60">
+                                </a>
                             </div>
-                        </div>
+                        </div> 
                     </div>
-                    <div class="col-md-6">
-                        <div class="cash-bg ">
-                            <div class="row-fluid">
-                                <div class="col-xs-12 col-sm-12 col-md-12 pk1">
-                                    <a href="#/receipt" class="hvr-float">
-                                        <img title="Receive Water Bill Payment" src="<?php echo base_url();?>assets/choulr/img/receipt-01.png" width="355" >
-                                    </a>
-                                </div>
+                </div>
+                <div class="col-md-6" >
+                    <div class="cash-bg " style="padding-left: 25px;">
+                        <div class="row-fluid">
+                            <div class="col-md-4 pk1">
+                                <a href="#/contract_center" class="hvr-float">
+                                    <img title="contract" src="<?php echo base_url();?>assets/choulr/img/contract-01.png" height="153" style="width: auto;" />
+                                </a>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="cash-bg " style="padding: 0;">
-                            <a href="#/customer_deposit_report">
-                                <div class="cash-invoice" style="margin-bottom: 0;background:#45ce54;color: #fff;">
-                                    <div class="span3" style="padding-left: 0;">
-                                        <span data-bind="text: lang.lang.deposit" style="font-weight: 600;font-size: 16px;color: #fff; ">DEPOSIT</span>
-                                        <br>
-                                        <p style="margin: 0;"><span style="color: ##fff;" data-bind="text: totalUser"></span>
-                                            <span style="color: #fff;" data-bind="text: lang.lang.meter">Meters</span>
-                                        </p>
-                                    </div>
-                                    <div class="span9" style=" text-align: center; font-size: 34px; font-weight: 600; padding: 0;">
-                                        <span style="float: right;" data-bind="text: totalDeposit"></span>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="cash-bg " style="padding: 0;">
-                            <a href="#/sale_summary">
-                                <div class="cash-invoice" style="margin-bottom: 0;background: #72ec7f;color: #fff;">
-                                    <div class="span4" style="padding-left: 0;">
-                                        <span data-bind="text: lang.lang.total_sale" style=" text-transform: uppercase;font-weight: 600;font-size: 16px; color: #fff;">TOTAL SALE</span>
-                                        <br>
-                                        <span style="color: #fff;" data-bind="text: totalUsage"></span>
-                                        <span style="color: #fff;">Usage</span>
-                                    </div>
-                                    <div class="span8" style="color: #fff; text-align: center; font-size: 34px; font-weight: 600; padding: 0;">
-                                        <span style="float: right;" data-bind="text: totalSale"></span>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-md-6" style="padding: 0;padding-right: 5px;">
-                        <div class="cash-bg " style="padding: 5px;">
-                            <div class="col-md-12">
-                                <div style="color: #fff;">
-                                    <p>Address<br> #134 , 7 th Floor, St.230, Sangkat Tuek Laork III,Khan Toul Kork, Phnom Penh, Cambodia
-                                    </p>
-                                </div>
+                            <div class="col-md-8 pk1" style="padding-left: 50px;padding-top: 5px">
+                                <a href="#/contract_center" class="hvr-float">
+                                    <h1 style="font-size: 22px;font-weight: bold;color: #fff !important;">CONTRACT</h1>
+                                    <h2 style="font-size: 18px;color: #fff !important;margin-top: 15px;">Number of Contract</h2>
+                                    <h3 style="font-size: 30px;color: #72ec7f !important;margin-top: 15px;">1000,000</h3>
+                                </a>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-2">
-                    <div class="cash-bg pk" style="background: #379a6a;">
+                <div class="col-md-6" >
+                    <div class="cash-bg " style="padding-left: 25px;">
                         <div class="row-fluid">
-                            <div class="col-xs-12 col-sm-12 col-md-12 pk1">
-                                <a href="#/reports" class="hvr-shrink">
-                          <img title="reports" src="<?php echo base_url();?>assets/choulr/img/report.png" width="90">
-                          <span style="text-transform: uppercase; color: #fff; font-weight: 600; margin-top: 8px; display: inline-block;">Reports</span>
-                          </a>
+                            <div class="col-md-4 pk1">
+                                <a href="#/lease_unit_center" class="hvr-float">
+                                    <img title="lease unit" src="<?php echo base_url();?>assets/choulr/img/lish-01.png" height="153" style="width: auto;" />
+                                </a>
+                            </div>
+                            <div class="col-md-8 pk1" style="padding-left: 50px;padding-top: 5px">
+                                <a href="#/lease_unit_center" class="hvr-float">
+                                    <h1 style="font-size: 22px;font-weight: bold;color: #fff !important;text-transform: uppercase;">lease unit</h1>
+                                    <h2 style="font-size: 18px;color: #fff !important;margin-top: 15px;">Number of Lish Unit</h2>
+                                    <h3 style="font-size: 30px;color: #72ec7f !important;margin-top: 15px;">1000,000</h3>
+                                </a>
                             </div>
                         </div>
                     </div>
-                    <div class="cash-bg pk" style="background: #45ce54;">
+                </div>
+                <div class="col-md-6" >
+                    <div class="cash-bg " style="padding-left: 25px;">
                         <div class="row-fluid">
-                            <div class="col-xs-12 col-sm-12 col-md-12 pk1">
-                                <a href="#/utility_center" class="hvr-shrink">
-                          <img title="center" src="<?php echo base_url();?>assets/choulr/img/center.png" width="90">
-                          <span style="text-transform: uppercase; color: #fff; font-weight: 600; margin-top: 8px; display: inline-block;font-size: 12px;">Meter Center</span>
-                          </a>
+                            <div class="col-md-4 pk1">
+                                <a href="#/run_bill" class="hvr-float">
+                                    <img title="run bill" src="<?php echo base_url();?>assets/choulr/img/run-bill.png" height="153" style="width: auto;" />
+                                </a>
+                            </div>
+                            <div class="col-md-4 pk1">
+                                <a href="#/print_bill" class="hvr-float">
+                                    <img title="Add Print Invoice" src="<?php echo base_url();?>assets/choulr/img/print-bill-V1.png" height="153" style="width: auto;" />
+                                </a>
+                            </div>
+                            <div class="col-md-4 pk1">
+                                <a href="#/receipt" class="hvr-float">
+                                    <img title="receipt" src="<?php echo base_url();?>assets/choulr/img/receipt-V1.png" height="153" style="width: auto;" />
+                                </a>
                             </div>
                         </div>
                     </div>
-                    <div class="cash-bg pk" style="background: #72ec7f;">
+                </div>
+                <div class="col-md-6">
+                    <div class="cash-bg " style="padding-left: 25px;">
                         <div class="row-fluid">
-                            <div class="col-xs-12 col-sm-12 col-md-12 pk1">
-                                <a href="#/setting" class="hvr-shrink">
-                          <img title="setting" src="<?php echo base_url();?>assets/choulr/img/setting.png" width="90">
-                          <span style="text-transform: uppercase; color: #fff; font-weight: 600; margin-top: 8px; display: inline-block;">Setting</span>
-                          </a>
+                            <div class="col-md-4 pk1">
+                                <a href="#/utility_center" class="hvr-float">
+                                    <img title="add meter" src="<?php echo base_url();?>assets/choulr/img/mater-center.png" height="153" style="width: auto;" />
+                                </a>
+                            </div>
+                            <div class="col-md-8 pk1" style="padding-left: 50px;padding-top: 5px">
+                                <a href="#/receipt" class="hvr-float">
+                                    <h1 style="font-size: 22px;font-weight: bold;color: #fff !important;text-transform: uppercase;">meter center</h1>
+                                    <h2 style="font-size: 18px;color: #fff !important;margin-top: 15px;">Number of Meter</h2>
+                                    <h3 style="font-size: 30px;color: #72ec7f !important;margin-top: 15px;">1000,000</h3>
+                                </a>
                             </div>
                         </div>
                     </div>
-                    <div class="cash-bg pk" style="background: #ec4d4d;">
-                        <div class="row-fluid">
-                            <div class="col-xs-12 col-sm-12 col-md-12 pk1">
-                                <a href="#/setting" class="hvr-shrink">
-                          <img title="feedback" src="<?php echo base_url();?>assets/choulr/img/feedback.png" width="90">
-                          <span style="text-transform: uppercase; color: #fff; font-weight: 600; margin-top: 8px; display: inline-block;">Feedback</span>
-                          </a>
+                </div>
+                <div class="col-md-6">
+                    <div class="cash-bg " style="padding: 0;">
+                        <a href="#/customer_deposit_report">
+                            <div class="cash-invoice" style="margin-bottom: 0;background:#45ce54;color: #fff;padding: 17px;">
+                                <div class="span3" style="padding-left: 0;">
+                                    <span data-bind="text: lang.lang.deposit" style="font-weight: 600;font-size: 16px;color: #fff; ">DEPOSIT</span>
+                                    <br>
+                                    <p style="margin: 0;"><span style="color: ##fff;" data-bind="text: totalUser"></span>
+                                        <span style="color: #fff;" data-bind="text: lang.lang.meter">Meters</span>
+                                    </p>
+                                </div>
+                                <div class="span9" style=" text-align: center; font-size: 34px; font-weight: 600; padding: 0;">
+                                    <span style="float: right;" data-bind="text: totalDeposit"></span>
+                                </div>
                             </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="cash-bg " style="padding: 0;">
+                        <a href="#/sale_summary">
+                            <div class="cash-invoice" style="margin-bottom: 0;background: #72ec7f;color: #fff;padding: 17px;">
+                                <div class="span4" style="padding-left: 0;">
+                                    <span data-bind="text: lang.lang.total_sale" style=" text-transform: uppercase;font-weight: 600;font-size: 16px; color: #fff;">TOTAL SALE</span>
+                                    <br>
+                                    <span style="color: #fff;" data-bind="text: totalUsage"></span>
+                                    <span style="color: #fff;">Usage</span>
+                                </div>
+                                <div class="span8" style="color: #fff; text-align: center; font-size: 34px; font-weight: 600; padding: 0;">
+                                    <span style="float: right;" data-bind="text: totalSale"></span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="cash-bg pk" style="background: #0eac00;">
+                    <div class="row-fluid">
+                        <div class="col-xs-12 col-sm-12 col-md-12 pk2">
+                            <a href="#/setting" class="hvr-shrink">
+                                <img title="setting" src="<?php echo base_url();?>assets/choulr/img/setting.png" width="90">
+                                <span style="text-transform: uppercase; color: #fff; font-weight: 600; margin-top: 8px; display: inline-block;">Setting</span>
+                            </a>
                         </div>
                     </div>
-                    <div class="cash-bg pk" style="background: #2e879e;">
-                        <div class="row-fluid">
-                            <div class="col-xs-12 col-sm-12 col-md-12 pk1">
-                                <a href="#/setting" class="hvr-shrink">
-                          <span style="text-transform: uppercase; color: #fff; font-weight: 600; margin-top: 8px; display: inline-block;text-align: center;font-size: 11px;">
-                          Contact us by<br> 078 79 33 22<br> Mon-Fri<br>09:00-18:00am
-                          </span>
-                          </a>
-                            </div>
+                </div>
+                <div class="cash-bg pk" style="background: #45ce54;">
+                    <div class="row-fluid">
+                        <div class="col-xs-12 col-sm-12 col-md-12 pk2">
+                            <a href="#/reports" class="hvr-shrink">
+                                <img title="reports" src="<?php echo base_url();?>assets/choulr/img/report.png" width="90">
+                                <span style="text-transform: uppercase; color: #fff; font-weight: 600; margin-top: 8px; display: inline-block;">Reports</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="cash-bg pk" style="background: #72ec7f;">
+                    <div class="row-fluid">
+                        <div class="col-xs-12 col-sm-12 col-md-12 pk2">
+                            <a href="./rrd" target="_blank" class="hvr-shrink">
+                                <img title="center" src="<?php echo base_url();?>assets/choulr/img/go-to-banhji.png" width="90">
+                                <span style="text-transform: uppercase; color: #fff; font-weight: 600; margin-top: 8px; display: inline-block;font-size: 12px;">Go To Banhji</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="cash-bg pk" style="background: #ec4d4d;">
+                    <div class="row-fluid">
+                        <div class="col-xs-12 col-sm-12 col-md-12 pk2">
+                            <a href="#/setting" class="hvr-shrink">
+                                <img title="feedback" src="<?php echo base_url();?>assets/choulr/img/feedback.png" width="90">
+                                <span style="text-transform: uppercase; color: #fff; font-weight: 600; margin-top: 8px; display: inline-block;">Feedback</span>
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-</div>
 </script>
 <!--Setting-->
 <script id="Setting" type="text/x-kendo-template">
@@ -1540,25 +1548,11 @@
                         </div>   
                     </div>
                 </div>
-                <div class="col-md-3">
-                    <div class="row-fluid">
-                        <div class="col-xs-12 col-sm-12 col-md-12 pk1 hvr-shrink">
-                             <img src="<?php echo base_url();?>/assets/choulr/img/no_image.png"/>
-                                <p>Name....................</p>
-                                <p>Status...................</p>
-                                <p>Contract...............</p>
-                        </div>
-                        <form class="navbar-form pull-left hidden-xs">
-                        <button class="btn btn-inverse" type="edit" data-bind="click: search" style="background-color: #254809 !important;border-radius: 1px;">
-                            <i class="icon-idit">Edit</i>
-                        </button>
-                        <button class="btn btn-inverse" type="edit" data-bind="click: search" style="background-color: #45ce54 !important;border-radius: 1px;margin-left: 0px;">
-                            <i class="icon-idit">Maintenance</i>
-                        </button>
-                        </form>
-                    </div>
+                <div data-role="listview"
+                    data-template="lease-unit-item-list"
+                    data-bind="source: leaseUnitDS"
+                    style="height: 300px; overflow: auto">
                 </div>
-                
                 <div class="col-md-12" style="padding-left: 0px;padding-right: 5px;margin-bottom: 5px;" >
                     <div style="background: #0eac00;height: 50px;">
                     </div>
@@ -1567,7 +1561,6 @@
             <div class="col-md-2" style="background: #fff;padding: 10px;height: 669px;">
                 <div style="margin-bottom: 25px;">
                     <img src="<?php echo base_url();?>/assets/choulr/img/no_image1.png" width="100%" />
-                           
                 </div>
                 <div>
                     <h1 style="margin-bottom: 20px;"><b>LEASE UNIT INFO</b></h1>
@@ -1585,6 +1578,26 @@
             </div>
         </div>
     </div>
+    </div>
+</script>
+<script id="lease-unit-item-list" type="text/x-kendo-template">
+    <div class="col-md-3">
+        <div class="row-fluid">
+            <div class="col-xs-12 col-sm-12 col-md-12 pk1 hvr-shrink">
+                 <img src="<?php echo base_url();?>/assets/choulr/img/no_image.png"/>
+                    <p>Name....................</p>
+                    <p>Status...................</p>
+                    <p>Contract...............</p>
+            </div>
+            <form class="navbar-form pull-left hidden-xs">
+            <button class="btn btn-inverse" type="edit" data-bind="click: search" style="background-color: #254809 !important;border-radius: 1px;">
+                <i class="icon-idit">Edit</i>
+            </button>
+            <button class="btn btn-inverse" type="edit" data-bind="click: search" style="background-color: #45ce54 !important;border-radius: 1px;margin-left: 0px;">
+                <i class="icon-idit">Maintenance</i>
+            </button>
+            </form>
+        </div>
     </div>
 </script>
 <script id="leaseUnit" type="text/x-kendo-template">

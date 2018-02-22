@@ -7877,7 +7877,7 @@
 			</div>
 		</div>
 		<!-- Content -->
-		<div style="max-height: 485px; height: 485px; float: left; width: 100%;position: relative;">
+		<div style="max-height: 485px; height: 470px; float: left; width: 100%;position: relative;">
 			<table class="span12 table table-bordered footerTbl" style="width: 755px; padding:0;margin-top: 110px; border-radius: 3px;border-collapse: inherit;margin-left: 0px;#= banhji.InvoicePrint.formBorder#">
 				
 				<tbody>
@@ -7960,7 +7960,7 @@
 				</tbody>
 			</table>
 		</div>
-
+		<div style="position: relative;width: 100%;height: 30px;clear:both;background: none;border: none;"></div>
 		<!-- Footer -->
 		<div style="position: absolute;bottom:0; width: 600px;left: 15px;">
 			<table class="span12 table table-bordered footerTbl" style="width: 755px; padding:0;margin-bottom:15px;border-collapse: inherit; border: none; border-radius: 3px;margin-left: 0px#= banhji.InvoicePrint.formBorder#">

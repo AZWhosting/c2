@@ -3671,7 +3671,7 @@
         dataSource: new kendo.data.DataSource({
             transport: {
                 read: {
-                    url: baseUrl + 'api/waterdash/license',
+                    url: apiUrl + 'choulr/dashboard',
                     type: "GET",
                     dataType: 'json',
                     headers: {
@@ -3720,166 +3720,7 @@
             serverFiltering: true,
             serverPaging: true,
             pageSize: 100
-        }),
-        graphDS: new kendo.data.DataSource({
-            transport: {
-                read: {
-                    url: apiUrl + 'waterdash/graph',
-                    type: "GET",
-                    headers: banhji.header,
-                    dataType: 'json'
-                },
-                parameterMap: function(options, operation) {
-                    if (operation === 'read') {
-                        return {
-                            page: options.page,
-                            filter: options.filter
-                        };
-                    }
-                }
-            },
-            schema: {
-                data: 'results',
-                total: 'count'
-            },
-            // group: {
-            //  field: 'month',
-            //  aggregates: [
-            //    {field: 'amount', aggregate: 'sum'}
-            //  ]
-            // },
-            batch: true,
-            serverFiltering: true,
-            serverPaging: true,
-            pageSize: 1000
-        }),   
-        graphWater: new kendo.data.DataSource({
-            transport: {
-                read: {
-                    url: apiUrl + 'waterdash/graph_water',
-                    type: "GET",
-                    headers: banhji.header,
-                    dataType: 'json'
-                },
-                parameterMap: function(options, operation) {
-                    if (operation === 'read') {
-                        return {
-                            page: options.page,
-                            filter: options.filter
-                        };
-                    }
-                }
-            },
-            schema: {
-                data: 'results',
-                total: 'count'
-            },
-            // group: {
-            //  field: 'month',
-            //  aggregates: [
-            //    {field: 'amount', aggregate: 'sum'}
-            //  ]
-            // },
-            batch: true,
-            serverFiltering: true,
-            serverPaging: true,
-            pageSize: 1000
-        }),      
-        backupdbDS: dataStore(apiUrl + "localsync"),
-        pageLoad: function(id) {
-            if (id) {
-                this.loadObj();
-            } else {
-
-            }
-        },
-        invoice: 0,
-        activeCust: 0,
-        invCust: 0,
-        overDue: 0,
-        totalCust: 0,
-        voidCust: 0,
-        totalAmount: 0,
-        dashSource: new kendo.data.DataSource({
-            transport: {
-                read: {
-                    url: baseUrl + 'api/waterdash/board',
-                    type: "GET",
-                    dataType: 'json',
-                    headers: {
-                        Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id
-                    }
-                },
-                parameterMap: function(options, operation) {
-                    if (operation === 'read') {
-                        return {
-                            limit: options.take,
-                            page: options.page,
-                            filter: options.filter
-                        };
-                    } else {
-                        return {
-                            models: kendo.stringify(options.models)
-                        };
-                    }
-                }
-            },
-            schema: {
-                model: {
-                    id: 'id'
-                },
-                data: 'results',
-                total: 'count'
-            },
-            change: function(e) {
-                var vm = banhji.wDashboard;
-                var totalCust = 0,
-                    invCust = 0,
-                    overDue = 0,
-                    voided = 0,
-                    invoice = 0,
-                    amount = 0,
-                    activeCust = 0,
-                    inActiveCust = 0;
-                    totalSale = 0;
-                    totalUsage = 0;
-                    totalDisconnect = 0;
-                    totalConnect = 0;
-
-                $.each(this.data(), function(index, value) {
-                    activeCust += value.activeCustomer;
-                    totalCust += value.totalCustomer;
-                    invCust += value.invoiceCust;
-                    overDue += value.overDue;
-                    invoice += value.totalInvoice;
-                    inActiveCust += value.inActiveCustomer;
-                    voided += value.void;
-                    amount += value.total;
-                    totalSale += value.totalSale;
-                    totalUsage += value.totalUsage;
-                    totalDisconnect += value.totalDisconnect;
-                    totalConnect += value.totalConnect;
-                });
-                banhji.wDashBoard.set('activeCust', kendo.toString(activeCust, "n0", banhji.locale));
-                banhji.wDashBoard.set('inActiveCust', inActiveCust);
-                banhji.wDashBoard.set('invoice', kendo.toString(invoice, "n0", banhji.locale));
-                banhji.wDashBoard.set('invCust', kendo.toString(invCust, "n0", banhji.locale));
-                banhji.wDashBoard.set('overDue', kendo.toString(overDue, "n0", banhji.locale));
-                banhji.wDashBoard.set('totalCust', kendo.toString(totalCust, "n0", banhji.locale));
-                banhji.wDashBoard.set('voidCust', voided);
-                banhji.wDashBoard.set('voidCust', kendo.toString(voided, "n0", banhji.locale));
-                banhji.wDashBoard.set('totalAmount', kendo.toString(amount, banhji.locale == "km-KH" ? "c0" : "c", banhji.locale));
-                banhji.wDashBoard.set('totalSale', kendo.toString(totalSale, banhji.locale == "km-KH" ? "c0" : "c", banhji.locale));
-                banhji.wDashBoard.set('totalUsage', kendo.toString(totalUsage, "n0", banhji.locale));
-                banhji.wDashBoard.set('totalDisconnect', kendo.toString(totalDisconnect, "n0", banhji.locale));
-                banhji.wDashBoard.set('totalConnect', kendo.toString(totalConnect, "n0", banhji.locale));
-            
-            },
-            batch: true,
-            serverFiltering: true,
-            serverPaging: true,
-            pageSize: 100
-        }),
+        })
     });
     //Setting
     banhji.Setting = kendo.observable({
@@ -5669,13 +5510,14 @@
             var self = this;
             this.dataSource.sync();
             this.dataSource.bind("requestEnd", function(e){
-                if(e.type==="update"){
+                if(e.response.type != "read"){
+                    successSend();
                     self.cancel();
                 }
             });
         },
         cancel  : function(){
-            banhji.router.navigate("/lease_unit_center");
+            banhji.router.navigate("/");
         }
     });
     //Utility
