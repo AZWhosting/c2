@@ -7816,17 +7816,17 @@
 		</table> -->
 	</div>
 </script>
-<script id="formFrame" type="text/x-kendo-tmpl">	
-	<style >
-		* {
-			-webkit-print-color-adjust:true;
-		}
-		.table-bordered > tbody > tr > td {
-			border: none !important;
-			padding: 5px;
-		}
-	</style>
+<script id="formFrame" type="text/x-kendo-tmpl">
   	<div class="container winvoice-print" style="page-break-after: always;width: 800px;min-height: 1120px;position: relative;">
+  		<style type="text/css">
+			* {
+				-webkit-print-color-adjust:true;
+			}
+			.table-bordered > tbody > tr > td {
+				border: none !important;
+				padding: 5px;
+			}
+		</style>
 		<div class="span12 headerinv " style="    height: 100px;margin-bottom:0;  border-bottom: 2px solid \#000;padding: 15px 0;padding-bottom: 30px;#= banhji.InvoicePrint.formVisible#">
             <img class="logoP" style="position: absolute;left: 0;top: 20px;width: auto;height: 90px;" src="#: banhji.InvoicePrint.license.image_url#" alt="#: banhji.InvoicePrint.license.name#" title="#: banhji.InvoicePrint.license.name#" />
 			<div class="span12" align="center">
@@ -7949,7 +7949,7 @@
 					<tr>
 						
 						<td colspan="5" class="greyy" style="background: \\#ccc;#= banhji.InvoicePrint.formVisible#;">ប្រាក់​ត្រូវ​បង់ TOTAL DUE</td>
-						<td style="text-align: right"><strong>#= kendo.toString(amount + amount_remain, locale=="km-KH"?"c0":"c", locale)#</strong></td>
+						<td style="text-align: right"><strong style="font-weight: bold;font-family: Arial!important;font-size: 16px;">#= kendo.toString(amount + amount_remain, locale=="km-KH"?"c0":"c", locale)#</strong></td>
 					</tr>
 					<tr>
 						<td colspan="5" class="greyy"  style="background: \\#ccc;#= banhji.InvoicePrint.formVisible#">ថ្ងៃផុតកំណត់ DUE DATE</td>
@@ -7981,7 +7981,7 @@
 						<td class="greyy" style="display: none; padding: 5px; background: \\#ccc;border-bottom:1px solid \\#fff;#= banhji.InvoicePrint.formVisible#">ថ្ងៃបង់ប្រាក់ PAY DATE</td>
 						<td width="270" class="greyy"  style="display: none; padding: 5px; background: \\#ccc;border-bottom:1px solid \\#fff;#= banhji.InvoicePrint.formVisible#">ប្រាក់​ត្រូវ​បង់ TOTAL DUE</td>
 						<td width="270" class="greyy"  style="display: none; background: \\#ccc;border-bottom:1px solid \\#fff;#= banhji.InvoicePrint.formVisible#">ប្រាក់​ត្រូវ​បង់ TOTAL DUE</td>
-						<td width="180" align="right" ><strong>#= kendo.toString(amount + amount_remain, locale=="km-KH"?"c0":"c", locale)#</strong></td>
+						<td width="180" align="right" ><strong style="font-weight: bold;font-family: Arial!important;font-size: 16px;">#= kendo.toString(amount + amount_remain, locale=="km-KH"?"c0":"c", locale)#</strong></td>
 					</tr>
 					<tr>
 						<td style="padding: 5px;"><p>អតិថិជន</p></td>

@@ -276,20 +276,22 @@
 					<div class="span6" >
 						<div class="row">
 							<div class="span6 paddingLeftRigth">
-								<div class="bg-green height250">
-									<div class="img">
-										<img src="<?php echo base_url();?>assets/spa/icon/recon.png" >
-									</div>
-									<p class="textSmall">Reconciliation</p>
-								</div>
-							</div>
-							<div class="span6 nopadding-left">
 								<a href="pay">
 									<div class="bg-green height250">
 										<div class="img">
 											<img src="<?php echo base_url();?>assets/spa/icon/pay.png" >
 										</div>
-										<p class="textSmall">Print & Pay</p>
+										<p class="textSmall">Receipt</p>
+									</div>
+								</a>
+							</div>
+							<div class="span6 nopadding-left">
+								<a href="reports">
+									<div class="bg-green height250">
+										<div class="img">
+											<img src="<?php echo base_url();?>assets/spa/icon/report.png" >
+										</div>
+										<p class="textSmall">Reports</p>
 									</div>
 								</a>
 							</div>
@@ -334,12 +336,41 @@
 							</div>
 						</div>
 					</div>
-					<div class="span6 paddingLeft">
-						<div class="bg-green height100 bottom-rigth" >							
-							<div class="img">
-								<img src="<?php echo base_url();?>assets/spa/icon/report.png">
+					<div class="span6 ">
+						<div class="row">
+							<div class="span6">
+								<div class="row">
+									<div class="span6 paddingLeftRigth">
+										<a href="<?php echo base_url()?>loyalty">
+											<div class="bg-green height100">
+												<div class="img" style="padding-left: 31%; padding-top: 10%;">
+													<img src="<?php echo base_url();?>assets/spa/icon/loyalty.png" >
+												</div>
+												<p>Loyalty</p>
+											</div>
+										</a>
+									</div>
+									<div class="span6 no-padding" style="padding-right: 2px;">
+										<a href="setting">
+											<div class="bg-green height100">
+												<div class="img" style="padding-left: 31%; padding-top: 10%;">
+													<img src="<?php echo base_url();?>assets/spa/icon/loyalty.png" > 
+												</div>
+												<p>Setting</p>
+											</div>
+										</a>
+									</div>
+								</div>
 							</div>
-							<p style="margin-bottom: 0; font-size: 40px; padding: 20px 0 0;  width: 50%; float: left; text-align: left; ">Reports</p>
+							<div class="span6 paddingLeft" style="padding-left: 0;">
+								<a href="<?php echo base_url()?>rrd" target="_blank">
+									<div class="bg-green height100 bottom-rigth" style="background: #0e213e;">
+										<div class="img" style="width: 100%; padding: 22px 0 0;">
+											<img src="<?php echo base_url();?>assets/spa/banhji-logo.png" style="width: 100%;">
+										</div>
+									</div>
+								</a>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -350,4 +381,4 @@
 			</div>
 		</div>
 	</div>
-</script> 
+</script>     

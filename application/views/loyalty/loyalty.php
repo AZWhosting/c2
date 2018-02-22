@@ -249,10 +249,23 @@
 	    color: #0eac00 !important;
 	    text-align: left;
 	    margin-bottom: 10px;
+	    float: left;
+	}
+	.loyatyNext{
+		background: #0eac00;
+	    border-radius: 2px;
+	    padding: 8px 25px;
+	    color: #fff;
+	    float: right;
+	    margin-top: -5px; 
+	}
+	.example a.loyatyNext:hover{
+		color: #fff;
 	}
 	.loyalty .example #tab1 h3{
 		color: #0eac00 !important;
 	}
+	/*Tab: Rules */
 	#tab1 .box-generic{
 		border: none;
 	    width: 90%;
@@ -261,13 +274,14 @@
 	#tab1 .tabsbar{
 		height: 140px;
 		background: none !important;
-		width: 130%;
+		width: auto;
 	}
 	#tab1 .tabsbar ul li{
 		margin-right: 20px;
 		border:1px solid #adafb1;
 		height: 140px;
 		border-radius: 5px;
+		width: 210px;
 	}
 	#tab1 .tabsbar ul li a{
 		line-height: 23px;
@@ -280,44 +294,246 @@
 		height: 139px;
 		border: 1px solid #0eac00;
 		border-radius: 5px;
-	}
-	
+	}	
 	#tab1 .tabsbar ul li a .textBlue{
 		color: #0eac00 ;
 	}
 
-	#tab1 .box-generic{
+	/*Tab1-3*/
+	#tab1-3 .box-generic {
+	    border: none;
+	    width: 100%;
+	    padding-left: 0;
+	}
+	#tab1-3 .tabsbar {
+	    height: 40px;
+	    background: none !important;
+	    width: 100%;
+	    padding-left: 4%;
+	}
+	#tab1-3 .tabsbar ul li {
+	    margin-right: 0;
+	    border-radius: 0;
+	    height: 40px;
+	    border: 1px solid #333;
+	    width: 40%;
+	}
+	#tab1-3 .tabsbar ul li a {
+	    line-height: 15px;
+	    padding: 10px 15px;
+	    height: 40px;
+	}
+	#tab1-3 .tabsbar ul li.active a {
+	    line-height: 15px;
+	    padding: 10px 15px;
+	    height: 39px;
+	    border: 1px solid #333;
+	    border-radius: 0;
+	    background: #333;
+	    color: #fff;
+	}
+	#tab2-1 table{
+		width: 100%;
+		float: left;		
+		border: 1px solid #d6d7d8;
+	}
+	#tab2-1 table tr th{
+		padding: 8px;
+		border: 1px solid #d6d7d8;
+		background: #ebecec;
+	}
+	#tab2-1 table tr td{
+		padding: 8px;
+		border: 1px solid #d6d7d8;
+	}
+	#tab1-3 .tab-content{
+		margin-top: 20px; 
+		width: 85%;
+	}
+
+	#tab2-2 table{
+		width: 100%;
+		float: left;		
+		border: 1px solid #d6d7d8;
+	}
+	#tab2-2 table tr th{
+		padding: 8px;
+		border: 1px solid #d6d7d8;
+		background: #ebecec;
+	}
+	#tab2-2 table tr td{
+		padding: 8px;
+		border: 1px solid #d6d7d8;
+	}
+
+	/*Tab2*/
+	#tab2 .box-generic{
 		border: none;
 	    width: 90%;
 	    padding-left: 14%;
 	}
-	#tab1 .tabsbar{
-		height: 140px;
+	#tab2 .tabsbar{
+		height: 160px;
 		background: none !important;
 		width: 130%;
 	}
-	#tab1 .tabsbar ul li{
+	#tab2 .tabsbar ul li{
 		margin-right: 20px;
 		border:1px solid #adafb1;
-		height: 140px;
+		height: 160px;
 		border-radius: 5px;
 	}
-	#tab1 .tabsbar ul li a{
+	#tab2 .tabsbar ul li a{
 		line-height: 23px;
 		padding: 10px 15px;
-		height: 140px;
+		height: 160px;
 	}
-	#tab1 .tabsbar ul li.active a{
+	#tab2 .tabsbar ul li.active a{
 		line-height: 23px;
 		padding:10px 15px;
-		height: 139px;
+		height: 159px;
 		border: 1px solid #0eac00;
 		border-radius: 5px;
-	}
-	
-	#tab1 .tabsbar ul li a .textBlue{
+	}	
+	#tab2 .tabsbar ul li a .textBlue{
 		color: #0eac00 ;
 	}
+
+	/*Rewards Tab 2*/
+	#tab3-2 .box-generic {
+	    border: none;
+	    width: 100%;
+	    padding-left: 0;
+	}
+	#tab3-2 .tabsbar {
+	    height: 40px;
+	    background: none !important;
+	    width: 100%;
+	    padding-left: 4%;
+	}
+	#tab3-2 .tabsbar ul li {
+	    margin-right: 0;
+	    border-radius: 0;
+	    height: 40px;
+	    border: 1px solid #333;
+	    width: 40%;
+	}
+	#tab3-2 .tabsbar ul li a {
+	    line-height: 15px;
+	    padding: 10px 15px;
+	    height: 40px;
+	}
+	#tab3-2 .tabsbar ul li.active a {
+	    line-height: 15px;
+	    padding: 10px 15px;
+	    height: 39px;
+	    border: 1px solid #333;
+	    border-radius: 0;
+	    background: #333;
+	    color: #fff;
+	}
+	#tab4-1 table{
+		width: 85%;
+		float: left;		
+		border: 1px solid #d6d7d8;
+	}
+	#tab4-1 table tr th{
+		padding: 8px;
+		border: 1px solid #d6d7d8;
+		background: #ebecec;
+	}
+	#tab4-1 table tr td{
+		padding: 8px;
+		border: 1px solid #d6d7d8;
+	}
+	#tab4-1 .tab-content{
+		margin-top: 20px; 
+		width: 85%;
+	}
+
+	#tab4-2 table{
+		width: 85%;
+		float: left;		
+		border: 1px solid #d6d7d8;
+	}
+	#tab4-2  table tr th{
+		padding: 8px;
+		border: 1px solid #d6d7d8;
+		background: #ebecec;
+	}
+	#tab4-2  table tr td{
+		padding: 8px;
+		border: 1px solid #d6d7d8;
+	}
+
+	/*Rewards Tab 3*/
+	#tab3-3 .box-generic {
+	    border: none;
+	    width: 100%;
+	    padding-left: 0;
+	}
+	#tab3-3 .tabsbar {
+	    height: 40px;
+	    background: none !important;
+	    width: 100%;
+	    padding-left: 4%;
+	}
+	#tab3-3 .tabsbar ul li {
+	    margin-right: 0;
+	    border-radius: 0;
+	    height: 40px;
+	    border: 1px solid #333;
+	    width: 40%;
+	}
+	#tab3-3 .tabsbar ul li a {
+	    line-height: 15px;
+	    padding: 10px 15px;
+	    height: 40px;
+	}
+	#tab3-3 .tabsbar ul li.active a {
+	    line-height: 15px;
+	    padding: 10px 15px;
+	    height: 39px;
+	    border: 1px solid #333;
+	    border-radius: 0;
+	    background: #333;
+	    color: #fff;
+	}
+	#tab5-1 table{
+		width: 85%;
+		float: left;		
+		border: 1px solid #d6d7d8;
+	}
+	#tab5-1 table tr th{
+		padding: 8px;
+		border: 1px solid #d6d7d8;
+		background: #ebecec;
+	}
+	#tab5-1 table tr td{
+		padding: 8px;
+		border: 1px solid #d6d7d8;
+	}
+	#tab5-1 .tab-content{
+		margin-top: 20px; 
+		width: 85%;
+	}
+
+	#tab5-2 table{
+		width: 85%;
+		float: left;		
+		border: 1px solid #d6d7d8;
+	}
+	#tab5-2  table tr th{
+		padding: 8px;
+		border: 1px solid #d6d7d8;
+		background: #ebecec;
+	}
+	#tab5-2  table tr td{
+		padding: 8px;
+		border: 1px solid #d6d7d8;
+	}
+
+
 </style>
 <!-- ***************************
 *	Water Section      	  *
@@ -329,36 +545,44 @@
 			<div class="span12">
 				<div class="example">
 					<h2>Create Loyalty Program</h2>
-
+					<a href="" class="loyatyNext">Next</a>
 					<div class="row">
 						<div class="span12">
 							<div class="box-generic">
 						    
 							    <div class="tabsbar tabsbar-1">
 							        <ul class="row-fluid row-merge">
-							            <li class="span2  active">
+							        	<li class="span2  active">
+							            	<a href="#tab0" data-toggle="tab"><span>Name</span></a>
+							            </li>
+							            <li class="span2  ">
 							            	<a href="#tab1" data-toggle="tab"><span>Rules</span></a>
 							            </li>
-							            <li class="span2 usd">
+							            <li class="span2">
 							            	<a href="#tab2" data-toggle="tab"><span>Rewards</span></a>
 							            </li>
-							            <li class="span2 parents">
-							            	<a href="#tab3" data-toggle="tab"><span>Incentives</span></a>
+							            <li class="span2">
+							            	<a href="#tab3" data-toggle="tab"><span>Location</span></a>
 							            </li>
-							            <li class="span2 notes">
-							            	<a href="#tab4" data-toggle="tab"><span>Location</span></a>
+							            <li class="span2 ">
+							            	<a href="#tab4" data-toggle="tab"><span>Customer</span></a>
 							            </li>
 							        </ul>
 							    </div>
 
 							    <div class="tab-content">
-							        <div class="tab-pane active" id="tab1">
+							    	<div class="tab-pane active" id="tab0">
+							    		<h3>Name of Loyalty</h3>
+						            	<p>-------</p>
+							    	</div>
+
+							        <div class="tab-pane " id="tab1">
 						            	<h3>Choose how your customers will earn stars.</h3>
 						            	<p>Select one of the options below to determine how your customers will earn stars.</p>
 
 						            	<div class="row">
 											<div class="span12">
-												<div class="box-generic" style="border: none;">											    
+												<div class="box-generic" style="border: none;">
 												    <div class="tabsbar tabsbar-1">
 												        <ul class="row-fluid row-merge">
 												            <li class="span2  active">
@@ -426,11 +650,90 @@
 
 																	    <div class="tab-content">
 																	        <div class="tab-pane active" id="tab2-1">
-																            	1-1-1
+																            	<div class="row">
+																            		<div class="span12">
+																            			<table>
+																            				<tr>
+																            					<th>Category</th>
+																            					<th style="text-align: center;">Star Value</th>
+																            				</tr>
+																            				<tr>
+																            					<td>
+																            						<input 
+																										data-role="dropdownlist"
+																										data-template="contact-list-tmpl" 
+																										data-auto-bind="false" 
+																										data-value-primitive="true" 
+																										data-filter="startswith" 
+																										data-text-field="name" 
+																										data-value-field="id"
+																										data-option-label="Select a Category..."
+																										data-bind=""
+																			                            style="width: 100%; float: left; height: 30px; padding: 5px;" 
+																			                            aria-invalid="true" 
+																			                            class="k-invalid"
+																			                        />
+																            					</td>
+																            					<td>
+																            						<input 
+																            							style="width: 100%; height: 30px; padding: 5px; border: 1px solid #ccc; color: #333;" 
+																            							type="number" 
+																            							placeholder="Number..." 
+																            							data-bind="">
+																            					</td>
+																            				</tr>
+																            			</table>
+																            			<div style="margin-top: 20px; float: left;width: 100%; text-align: left;">
+																		            		
+																		            		<span style="padding: 10px 75px 10px 20px; background: #ddd; line-height: 34px; border-width: 1px 0 1px 1px;   border-style: solid; border-color: #ccc; font-weight: 700">Stars for a reward</span>
+																		            		<input style="height: 41px; padding: 8px; border-width: 1px 1px 1px 1px; border-style: solid; border-color: #ccc; color: #333; margin-left: -4px; width: 68%;" type="search" placeholder="Number or Name..." >
+																		            		<p style="margin-top: 10px; float: left;">Set the number of stars required to earn a reward.</p>
+																		            	</div>
+																            		</div>
+																            	</div>
 																        	</div>
 																	        
 																	        <div class="tab-pane" id="tab2-2">
-																	        	2-2-2
+																	        	<div class="row">
+																            		<div class="span12">
+																            			<table>
+																            				<tr>
+																            					<th>Item</th>
+																            					<th style="text-align: center;">Star Value</th>
+																            				</tr>
+																            				<tr>
+																            					<td>
+																            						<input 
+																										data-role="dropdownlist"
+																										data-template="contact-list-tmpl" 
+																										data-auto-bind="false" 
+																										data-value-primitive="true" 
+																										data-filter="startswith" 
+																										data-text-field="name" 
+																										data-value-field="id"
+																										data-option-label="Select an Item..."
+																										data-bind=""
+																			                            style="width: 100%; float: left; height: 30px; padding: 5px;" 
+																			                            aria-invalid="true" 
+																			                            class="k-invalid" />
+																            					</td>
+																            					<td>
+																            						<input 
+																            							style="width: 100%; height: 30px; padding: 5px; border: 1px solid #ccc; color: #333;" 
+																            							type="number" 
+																            							placeholder="Number..." 
+																            							data-bind="">
+																            					</td>
+																            				</tr>
+																            			</table>
+																            			<div style="margin-top: 20px; float: left;width: 100%; text-align: left;">
+																		            		
+																		            		<span style="padding: 10px 75px 10px 20px; background: #ddd; line-height: 34px; border-width: 1px 0 1px 1px;   border-style: solid; border-color: #ccc; font-weight: 700">Stars for a reward</span>
+																		            		<input style="height: 41px; padding: 8px; border-width: 1px 1px 1px 1px; border-style: solid; border-color: #ccc; color: #333; margin-left: -4px; width: 68%;" type="search" placeholder="Number or Name..." >
+																		            		<p style="margin-top: 10px; float: left;">Set the number of stars required to earn a reward.</p>
+																		            	</div>
+																            		</div>
+																            	</div>
 																        	</div>																	        
 																	        
 																	    </div>
@@ -445,26 +748,318 @@
 
 						        	</div>
 							        
-							        <div class="tab-pane" id="tab2">
-							        	2222
+							        <div class="tab-pane " id="tab2">
+						            	<h3>Choose how your customers will redeem their rewards.</h3>
+						            	<p>Select one of the options below to determine how your customers will redeem stars for rewards.</p>
+
+						            	<div class="row">
+											<div class="span12">
+												<div class="box-generic" style="border: none;">
+												    <div class="tabsbar tabsbar-1">
+												        <ul class="row-fluid row-merge">
+												            <li class="span2  active">
+												            	<a href="#tab3-1" data-toggle="tab">
+												            		<span class="textBlue">Discount the Entire Sale</span>
+												            		 <br><span>Set a fixed amount or a percentage off the entire sale.</span>
+												            	</a>
+												            </li>
+												            <li class="span2 usd">
+												            	<a href="#tab3-2" data-toggle="tab">
+												            		<span class="textBlue">Discount an Item or Category</span>
+												            		 <br><span>Set a fixed amount or a percentage off specific items or any item within a category.</span>
+												            	</a>
+												            </li>
+												            <li class="span2 parents">
+												            	<a href="#tab3-3" data-toggle="tab">
+												            		<span class="textBlue">Redeem a Free Item</span>
+												            		 <br><span>Select an item your customers can redeem for free.</span>
+												            	</a>
+												            </li>
+												        </ul>
+												    </div>
+
+												    <div class="tab-content">
+												        <div class="tab-pane active" id="tab3-1">
+											            	<div style="margin-top: 20px; float: left;width: 100%; text-align: left;">
+											            		<span style="padding: 7px 62px 7px 20px; background: #ddd; line-height: 34px; border-width: 1px 0 0 1px; border-style: solid; border-color: #ccc; font-weight: 700; float: left;">Discount amount</span>
+											            		<div style="height: 49px; padding: 8px; border-width: 1px 1px 0 1px; border-style: solid; border-color: #ccc; color: #333; width: 59%; float: left;" type="search" placeholder="Number or Name..." >
+											            			<input  type="search" placeholder="Number or Name..." style="float: left; width: 76%; border: none;">
+											            			<a style="padding: 5px 10px; border: 1px solid #333; float: left; text-align: center;">%</a>
+											            			<a style="padding: 5px 10px; border: 1px solid #333; float: left; text-align: center;">Amount</a>
+											            		</div>
+											            		<div class="clear"></div>
+											            		<span style="float: left; padding: 3px 62px 3px 20px; background: #ddd; line-height: 34px; border-width: 1px 0 0 1px; border-style: solid; border-color: #ccc; font-weight: 700">Maximum discount</span>
+											            		<input style="float: left; height: 41px; padding: 8px; border-width: 1px 1px 0 1px; border-style: solid; border-color: #ccc; color: #333; width: 57%; float: left;" type="search" placeholder="Number or Name..." >
+											            		<div class="clear"></div>
+											            		<span style="padding: 2px 75px 2px 20px; background: #ddd; line-height: 34px; border-width: 1px 0 1px 1px; border-style: solid; border-color: #ccc; font-weight: 700; float: left;">Expiration</span>
+											            	
+										            			<input 
+																	data-role="dropdownlist"
+																	data-template="contact-list-tmpl" 
+																	data-auto-bind="false" 
+																	data-value-primitive="true" 
+																	data-filter="startswith" 
+																	data-text-field="name" 
+																	data-value-field="id"
+																	data-option-label="Select a Category..."
+																	data-bind=""
+										                            style="height: 40px; padding: 8px; border-width: 1px 1px 1px 1px; border-style: solid; border-color: #ccc; color: #333; margin-left: 0px; width: 63%; float: left;"
+										                            aria-invalid="true" 
+										                            class="k-invalid"
+										                        />
+											            	
+											            		<p style="margin-top: 10px; float: left;">Set the number of stars required to earn a reward.</p>
+											            	</div>
+											        	</div>
+												        
+												        <div class="tab-pane" id="tab3-2">
+												        	<div class="row">
+																<div class="span12">
+																	<div class="box-generic" style="border: none;">
+																	    <div class="tabsbar tabsbar-1">
+																	        <ul class="row-fluid row-merge">
+																	            <li class="span2  active">
+																	            	<a href="#tab4-1" data-toggle="tab">
+																	            		Categories
+																	            	</a>
+																	            </li>
+																	            <li class="span2 usd">
+																	            	<a href="#tab4-2" data-toggle="tab">
+																	            		Specific Items
+																	            	</a>
+																	            </li>
+																	        </ul>
+																	    </div>
+
+																	    <div class="tab-content">
+																	        <div class="tab-pane active" id="tab4-1">
+																            	<div class="row">
+																            		<div class="span12">
+																            			<table>
+																            				<tr>
+																            					<th>Category</th>
+																            				</tr>
+																            				<tr>
+																            					<td>
+																            						<input 
+																										data-role="dropdownlist"
+																										data-template="contact-list-tmpl" 
+																										data-auto-bind="false" 
+																										data-value-primitive="true" 
+																										data-filter="startswith" 
+																										data-text-field="name" 
+																										data-value-field="id"
+																										data-option-label="Select a Category..."
+																										data-bind=""
+																			                            style="width: 100%; float: left; height: 30px; padding: 5px;" 
+																			                            aria-invalid="true" 
+																			                            class="k-invalid"
+																			                        />
+																            					</td>																            					
+																            				</tr>
+																            			</table>
+																            		</div>
+																            	</div>
+																        	</div>
+																	        
+																	        <div class="tab-pane" id="tab4-2">
+																	        	<div class="row">
+																            		<div class="span12">
+																            			<table>
+																            				<tr>
+																            					<th>Item</th>
+																            				</tr>
+																            				<tr>
+																            					<td>
+																            						<input 
+																										data-role="dropdownlist"
+																										data-template="contact-list-tmpl" 
+																										data-auto-bind="false" 
+																										data-value-primitive="true" 
+																										data-filter="startswith" 
+																										data-text-field="name" 
+																										data-value-field="id"
+																										data-option-label="Select an Item..."
+																										data-bind=""
+																			                            style="width: 100%; float: left; height: 30px; padding: 5px;" 
+																			                            aria-invalid="true" 
+																			                            class="k-invalid" />
+																            					</td>																            					
+																            				</tr>
+																            			</table>
+																            		</div>
+																            	</div>
+																        	</div>
+																	    </div>
+
+																	    <div style="margin-top: 20px; float: left;width: 100%; text-align: left;">
+														            		<span style="padding: 7px 62px 7px 20px; background: #ddd; line-height: 34px; border-width: 1px 0 0 1px; border-style: solid; border-color: #ccc; font-weight: 700; float: left;">Discount amount</span>
+														            		<div style="height: 49px; padding: 8px; border-width: 1px 1px 0 1px; border-style: solid; border-color: #ccc; color: #333; width: 59%; float: left;" type="search" placeholder="Number or Name..." >
+														            			<input  type="search" placeholder="Number or Name..." style="float: left; width: 75%; border: none;">
+														            			<a style="padding: 5px 10px; border: 1px solid #333; float: left; text-align: center;">%</a>
+														            			<a style="padding: 5px 10px; border: 1px solid #333; float: left; text-align: center;">Amount</a>
+														            		</div>
+														            		<div class="clear"></div>
+														            		<span style="float: left; padding: 3px 62px 3px 20px; background: #ddd; line-height: 34px; border-width: 1px 0 0 1px; border-style: solid; border-color: #ccc; font-weight: 700">Maximum discount</span>
+														            		<input style="float: left; height: 41px; padding: 8px; border-width: 1px 1px 0 1px; border-style: solid; border-color: #ccc; color: #333; width: 57%; float: left;" type="search" placeholder="Number or Name..." >
+														            		<div class="clear"></div>
+														            		<span style="padding: 2px 75px 2px 20px; background: #ddd; line-height: 34px; border-width: 1px 0 1px 1px; border-style: solid; border-color: #ccc; font-weight: 700; float: left;">Expiration</span>
+														            	
+													            			<input 
+																				data-role="dropdownlist"
+																				data-template="contact-list-tmpl" 
+																				data-auto-bind="false" 
+																				data-value-primitive="true" 
+																				data-filter="startswith" 
+																				data-text-field="name" 
+																				data-value-field="id"
+																				data-option-label="Select a Category..."
+																				data-bind=""
+													                            style="height: 40px; padding: 8px; border-width: 1px 1px 1px 1px; border-style: solid; border-color: #ccc; color: #333; margin-left: 0px; width: 63%; float: left;"
+													                            aria-invalid="true" 
+													                            class="k-invalid"
+													                        />
+														            	
+														            		<p style="margin-top: 10px; float: left;">Set the number of stars required to earn a reward.</p>
+														            	</div>
+																	</div>
+																</div>
+															</div>
+											        	</div>
+												        
+												        <div class="tab-pane" id="tab3-3">
+												        	<div class="row">
+																<div class="span12">
+																	<div class="box-generic" style="border: none;">
+																	    <div class="tabsbar tabsbar-1">
+																	        <ul class="row-fluid row-merge">
+																	            <li class="span2  active">
+																	            	<a href="#tab5-1" data-toggle="tab">
+																	            		Categories
+																	            	</a>
+																	            </li>
+																	            <li class="span2 usd">
+																	            	<a href="#tab5-2" data-toggle="tab">
+																	            		Specific Items
+																	            	</a>
+																	            </li>
+																	        </ul>
+																	    </div>
+
+																	    <div class="tab-content">
+																	        <div class="tab-pane active" id="tab5-1">
+																            	<div class="row">
+																            		<div class="span12">
+																            			<table>
+																            				<tr>
+																            					<th>Category</th>
+																            				</tr>
+																            				<tr>
+																            					<td>
+																            						<input 
+																										data-role="dropdownlist"
+																										data-template="contact-list-tmpl" 
+																										data-auto-bind="false" 
+																										data-value-primitive="true" 
+																										data-filter="startswith" 
+																										data-text-field="name" 
+																										data-value-field="id"
+																										data-option-label="Select a Category..."
+																										data-bind=""
+																			                            style="width: 100%; float: left; height: 30px; padding: 5px;" 
+																			                            aria-invalid="true" 
+																			                            class="k-invalid"
+																			                        />
+																            					</td>																            					
+																            				</tr>
+																            			</table>
+																            		</div>
+																            	</div>
+																        	</div>
+																	        
+																	        <div class="tab-pane" id="tab5-2">
+																	        	<div class="row">
+																            		<div class="span12">
+																            			<table>
+																            				<tr>
+																            					<th>Item</th>
+																            				</tr>
+																            				<tr>
+																            					<td>
+																            						<input 
+																										data-role="dropdownlist"
+																										data-template="contact-list-tmpl" 
+																										data-auto-bind="false" 
+																										data-value-primitive="true" 
+																										data-filter="startswith" 
+																										data-text-field="name" 
+																										data-value-field="id"
+																										data-option-label="Select an Item..."
+																										data-bind=""
+																			                            style="width: 100%; float: left; height: 30px; padding: 5px;" 
+																			                            aria-invalid="true" 
+																			                            class="k-invalid" />
+																            					</td>																            					
+																            				</tr>
+																            			</table>
+																            		</div>
+																            	</div>
+																        	</div>
+																	    </div>
+
+																	    <div style="margin-top: 20px; float: left;width: 100%; text-align: left;">														            		
+														            		<span style="padding: 2px 75px 2px 20px; background: #ddd; line-height: 34px; border-width: 1px 1px 1px 1px; border-style: solid; border-color: #ccc; font-weight: 700; float: left;">Expiration</span>
+														            	
+													            			<input 
+																				data-role="dropdownlist"
+																				data-template="contact-list-tmpl" 
+																				data-auto-bind="false" 
+																				data-value-primitive="true" 
+																				data-filter="startswith" 
+																				data-text-field="name" 
+																				data-value-field="id"
+																				data-option-label="Select a Category..."
+																				data-bind=""
+													                            style="height: 40px; padding: 8px; border-width: 1px 1px 1px 0px; border-style: solid; border-color: #ccc; color: #333; margin-left: 0px; width: 64%; float: left;"
+													                            aria-invalid="true" 
+													                            class="k-invalid"
+													                        />
+														            	</div>
+																	</div>
+																</div>
+															</div>
+											        	</div>
+												    </div>
+												</div>
+											</div>
+										</div>
+
 						        	</div>
 							        
 							        <div class="tab-pane" id="tab3">
-							        	333
+							        	<h3>Decide where to run your Loyalty Program.</h3>
+						            	<p>After your free trial, the cost is $25 per month for each location.</p>
+
+						            	<span style="font-size: 60px; font-weight: 100;">$0</span>
+						            	<span style="margin-left: 12px; font-weight: 400; line-height: 1.715; font-size: 14px;">/ mo</span>
+						            	<p style="color: #5c6063;">0 locations selected</p>
+
+						            	<div style="margin: 20px 0 0 20px; float: left;width: 100%; ">
+						            		<span style="padding: 10px 75px 10px 20px; background: #ddd; line-height: 34px; border-width: 1px 0 1px 1px;   border-style: solid; border-color: #ccc; font-weight: 700">Locations</span>
+						            		<input style="height: 41px; padding: 8px; border-width: 1px 1px 1px 1px; border-style: solid; border-color: #ccc; color: #333; margin-left: -4px; width: 55%;" type="search" placeholder="Number or Name..." >
+						            		
+						            	</div>
 						        	</div>
 							        
 							        <div class="tab-pane" id="tab4">
-							        	444
-						        	</div>
-							        
+							        	<h3>Customer</h3>
+						            	<p>-------</p>
+						        	</div>							        
 
 							    </div>
 							</div>
 						</div>
 					</div>
-
-					
-
 				</div>
 			</div>
 			<div class="span12" style="margin-top: 20px;">

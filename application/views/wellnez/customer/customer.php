@@ -235,7 +235,7 @@
 </script>
 <style >
 	.customerCenter .listWrapper {
-	    background: #fff;
+	    background: #fff; 
 	    border: none;
 	    box-shadow: 2px 0px 12px 0px rgba(68,68,68,1);
 	    margin-bottom: 0;
@@ -289,7 +289,9 @@
 	    margin-top: 15px;
 	}
 	.customerCenter .detailsWrapper .table.table-white tr th{
-		text-transform: uppercase;
+		text-transform: uppercase !important;
+		background: #1c3b19;
+		color: #fff;
 	}
 	.customerCenter .detailsWrapper .widget-head{
 		margin-bottom: 10px;
@@ -396,7 +398,8 @@
 						 data-columns="[{title: ''}]"
 						 data-selectable=true
 						 data-height="600"
-						 data-scrollable="{virtual: true}"></div>
+						 data-scrollable="{virtual: true}">
+					</div>
 				</div>
 			</div>
 			<div class="span9" style="padding-left: 0">
@@ -427,9 +430,7 @@
 							   
 
 							    <div class="widget-body">
-							        <div class="tab-content">
-
-							          
+							        <div class="tab-content">							          
 							            <div id="tab1-4" class="tab-pane active box-generic">
 							            	<table class="table table-borderless table-condensed cart_total cash-table">
 								            	<tr>
@@ -507,7 +508,6 @@
 							            </div>
 							            
 							            <div id="tab3-4" class="tab-pane">
-
 										    <div>
 												<input type="text" class="k-textbox" 
 														data-bind="value: note" 
@@ -522,8 +522,7 @@
 												 data-row-template="customerCenter-note-tmpl"
 												 data-columns="[{title: ''}]"
 												 data-height="100"						 
-												 data-scrollable="{virtual: true}"></div>
-											
+												 data-scrollable="{virtual: true}"></div>											
 							            </div>
 							            
 								        <div id="tab4-4" class="tab-pane" >
@@ -538,11 +537,11 @@
 
 								            <table class="table table-bordered">
 										        <thead>
-										            <tr>			                
+										            <tr>
 										                <th><span data-bind="text: lang.lang.file_name"></span></th>
 										                <th><span data-bind="text: lang.lang.description"></span></th>
 										                <th><span data-bind="text: lang.lang.date"></span></th>
-										                <th style="width: 13%;"></th>                			                
+										                <th style="width: 13%;"></th>
 										            </tr> 
 										        </thead>
 										        <tbody data-role="listview" 
@@ -557,8 +556,7 @@
 									             data-bind="source: attachmentDS"></div>
 
 										    <span class="btn btn-icon btn-success glyphicons ok_2" data-bind="click: uploadFile" style="color: #fff; padding: 5px 38px; text-align: left; width: 98px !important; display: inline-block; margin-top: 10px;"><i></i> <span data-bind="text: lang.lang.save"></span></span>
-
-								        </div>
+										</div>
 								           
 
 							        </div>
@@ -582,7 +580,7 @@
 										<div class="clearfix"></div>
 									</div>
 								</div>
-							</div>							
+							</div>
 							
 							<div class="row">
 								<div class="span6" style="padding: 0">
@@ -599,7 +597,7 @@
 										<div class="clearfix"></div>
 									</div>
 								</div>
-							</div>														
+							</div>
 						</div>
 					</div>
 					
@@ -610,7 +608,7 @@
 					           data-text-field="text"
 					           data-value-field="value"
 					           data-bind="value: sorter,
-					                      source: sortList,                              
+					                      source: sortList,
 					                      events: { change: sorterChanges }" />
 
 						<input data-role="datepicker"
@@ -634,7 +632,7 @@
 						<thead>
 							<tr>
 								<th><span data-bind="text: lang.lang.date"></span></th>
-								<th><span data-bind="text: lang.lang.type"></span></th>								
+								<th><span data-bind="text: lang.lang.type"></span></th>
 								<th><span data-bind="text: lang.lang.reference_no"></span></th>
 								<th><span data-bind="text: lang.lang.amount"></span></th>
 								<th><span data-bind="text: lang.lang.status"></span></th>
@@ -651,7 +649,7 @@
 	            	<div id="pager" class="k-pager-wrap"
 	            		 data-role="pager"
 				    	 data-auto-bind="false"
-			             data-bind="source: transactionDS"></div>	            	
+			             data-bind="source: transactionDS"></div>
 				</div>
 			</div>
 		</div>

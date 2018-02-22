@@ -58,7 +58,7 @@ class Spa extends REST_Controller {
 			$obj->get_iterated();
 			$data["count"] = $obj->result_count();
 		}
-		$obj->order_by("date", "asc");
+		$obj->order_by("start_date", "asc");
 		if($obj->exists()){
 			foreach ($obj as $value) {
 				//Transaction
@@ -69,6 +69,7 @@ class Spa extends REST_Controller {
 				$con->where("work_id", $value->id)->get_iterated();
 				if($con->exists()){
 					$conar = [];
+					$customer_name = "";
 					foreach($con as $c){
 						$sc = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 						$sc->where("id", $c->customer_id)->limit(1)->get();
@@ -76,6 +77,7 @@ class Spa extends REST_Controller {
 							"id" 	=> $sc->id,
 							"name" 	=> $sc->name,
 						);
+						$customer_name .= $sc->name." ";
 					}
 				}
 				//Room
@@ -114,13 +116,30 @@ class Spa extends REST_Controller {
 						);
 					}
 				}
-				$d = new DateTime($value->date);
+				$d = new DateTime($value->start_date);
+				//Service Charge
+				$scamount = 0;
+				$scar = [];
+				$sc = new Spa_service_charge(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$sc->where("status", 1)->limit(1)->get();
+				if($sc->exists()){
+					$scamount = (floatval($tran->sub_total) * floatval($sc->percentage)) / 100;
+					$scitem = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$scitem->where("id", $sc->item_id)->limit(1)->get();
+					$scar = array(
+						"id" 		=> $sc->id,
+						"item_id" 	=> $sc->item_id,
+						"item_name" 	=> $scitem->name
+					);
+				}
 		 		$data["results"][] = array(
 		 			"id" 			=> $value->id,
-		 			"transaction_id" 	=> $value->transaction_id,
+		 			"transaction_id" 	=> intval($value->transaction_id),
 		 			"rate" 			=> floatval($tran->rate),
 		 			"locale" 		=> $tran->locale,
 		 			"sub_total" 	=> floatval($tran->sub_total),
+		 			"service_charge" => $scamount,
+		 			"service_charge_ar" => $scar,
 		 			"amount" 		=> floatval($tran->amount),
 		 			"tax" 			=> floatval($tran->tax),
 		 			"discount" 		=> floatval($tran->discount),
@@ -128,8 +147,9 @@ class Spa extends REST_Controller {
 		 			"roomshow" 		=> $roomshow,
 		 			"item" 			=> $itemar,
 		 			"dateshow" 		=> $d->format('Y-m-d g:i A'),
-		 			"date" 			=> $value->date,
+		 			"start_date"  	=> $value->start_date,
 		 			"customer" 		=> $conar,
+		 			"customer_name" => $customer_name,
 		 		);
 		 	}
 		}
@@ -155,8 +175,8 @@ class Spa extends REST_Controller {
 			$today = date("Y-m-d");
 			$number = $this->_generate_number("Sale_Order", $today);
 			$txn->type = "Sale_Order";
-			$txn->start_date = date('Y-m-d H:i:s', strtotime($value->date));
-			$txn->issued_date = date('Y-m-d H:i:s', strtotime($value->date));
+			$txn->start_date = date('Y-m-d H:i:s', strtotime($value->start_date));
+			$txn->issued_date = date('Y-m-d H:i:s', strtotime($value->start_date));
 			$txn->frequency = "Daily";
 			$txn->month_option = "Day";
 			$txn->intval = 1;
@@ -317,8 +337,8 @@ class Spa extends REST_Controller {
 			$today = date("Y-m-d");
 			$number = $this->_generate_number("Sale_Order", $today);
 			$txn->type = "Sale_Order";
-			$txn->start_date = date('Y-m-d H:i:s', strtotime($value->date));
-			$txn->issued_date = date('Y-m-d H:i:s', strtotime($value->date));
+			$txn->start_date = date('Y-m-d H:i:s', strtotime($value->start_date));
+			$txn->issued_date = date('Y-m-d H:i:s', strtotime($value->start_date));
 			$txn->frequency = "Daily";
 			$txn->month_option = "Day";
 			$txn->intval = 1;
@@ -328,7 +348,7 @@ class Spa extends REST_Controller {
 				//Work
 				$work = new Spa_work(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				$work->transaction_id = $txn->id;
-				$work->date = date('Y-m-d H:i:s', strtotime($value->date));
+				$work->start_date = date('Y-m-d H:i:s', strtotime($value->start_date));
 				$work->phone = isset($value->phone) ? $value->phone: "";
 				$work->save();
 				//Item
@@ -387,24 +407,24 @@ class Spa extends REST_Controller {
 		$data["count"] = count($data["results"]);
 		$this->response($data, 201);
 	}
-	function work_put(){
-		$models = json_decode($this->put('models'));
-		$data["results"] = array();
-		$data["count"] = 0;
-		foreach ($models as $value) {
-			$obj = new Choulr_space(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$obj->get_by_id($value->id);
-			isset($value->name) 		? $obj->name 	= $value->name : "";
-	   		if($obj->save()){
-			   	$data["results"][] = array(
-			   		"id" 			=> $obj->id,
-			   		"name" 			=> $obj->name
-			   	);
-		    }
-		}
-		$data["count"] = count($data["results"]);
-		$this->response($data, 200);
-	}
+	// function work_put(){
+	// 	$models = json_decode($this->put('models'));
+	// 	$data["results"] = array();
+	// 	$data["count"] = 0;
+	// 	foreach ($models as $value) {
+	// 		$obj = new Choulr_space(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	// 		$obj->get_by_id($value->id);
+	// 		isset($value->name) 		? $obj->name 	= $value->name : "";
+	//    		if($obj->save()){
+	// 		   	$data["results"][] = array(
+	// 		   		"id" 			=> $obj->id,
+	// 		   		"name" 			=> $obj->name
+	// 		   	);
+	// 	    }
+	// 	}
+	// 	$data["count"] = count($data["results"]);
+	// 	$this->response($data, 200);
+	// }
 	function work_delete() {
 		$models = json_decode($this->delete('models'));
 		foreach ($models as $key => $value) {
@@ -449,8 +469,8 @@ class Spa extends REST_Controller {
 			$today = date("Y-m-d");
 			$number = $this->_generate_number("Sale_Order", $today);
 			$txn->type = "Sale_Order";
-			$txn->start_date = $value->date;
-			$txn->issued_date = $value->date;
+			$txn->start_date = $value->start_date;
+			$txn->issued_date = $value->start_date;
 			$txn->frequency = "Daily";
 			$txn->month_option = "Day";
 			$txn->intval = 1;
@@ -633,7 +653,8 @@ class Spa extends REST_Controller {
 		 			"room_ar" => $srmar,
 		 			"employee" => $emp,
 		 			"employee_ar" => $empar,
-		 			"date" => $value->date,
+		 			"start_date" => $value->start_date,
+		 			"end_date" => $value->end_date,
 		 			"items" => $itemar,
 		 		);
 		 	}
@@ -648,7 +669,7 @@ class Spa extends REST_Controller {
 		foreach ($models as $value) {
 			//Work
 			$work = new Spa_book(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$work->date = date('Y-m-d H:i:s', strtotime($value->date));
+			$work->start_date = date('Y-m-d H:i:s', strtotime($value->start_date));
 			$work->deleted = 0;
 			$work->phone = $value->phone;
 			$work->save();
@@ -696,7 +717,7 @@ class Spa extends REST_Controller {
 				$sr->save();
 				$room = new Spa_room(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				$room->where("id", $r->id)->limit(1)->get();
-				$room->book_time = $work->date;
+				$room->book_time = $work->start_date;
 				$room->save();
 			}
 			$data["results"][] = array(
@@ -714,7 +735,7 @@ class Spa extends REST_Controller {
 			//Work
 			$work = new Spa_book(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$work->get_by_id($value->id);
-			$work->date = date('Y-m-d H:i:s', strtotime($value->date));
+			$work->start_date = date('Y-m-d H:i:s', strtotime($value->start_date));
 			$work->deleted = 0;
 			$work->phone = $value->phone;
 			$work->save();
@@ -783,7 +804,7 @@ class Spa extends REST_Controller {
 				$sr->save();
 				$room = new Spa_room(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				$room->where("id", $r->id)->limit(1)->get();
-				$room->book_time = $work->date;
+				$room->book_time = $work->start_date;
 				$room->save();
 			}
 			$data["results"][] = array(
@@ -905,6 +926,232 @@ class Spa extends REST_Controller {
  		);
 		//Response Data		
 		$this->response($data, 200);
+	}
+	//Invoicing
+	function invoice_post(){
+		$models = json_decode($this->post('models'));
+		$data["results"] = [];
+		$data["count"] = 0;
+		foreach ($models as $value) {
+			//Sale Order
+			$saleorder = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$saleorder->where("id", $value->transaction_id)->limit(1)->get();
+			//Invoice
+			$txn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$number = $this->_generate_number("Invoice", $value->issued_date);
+			$txn->amount = $saleorder->amount;
+			$txn->number = $number;
+			$txn->issued_date = $value->issued_date;
+			$txn->contact_id = $saleorder->contact_id;
+			$txn->payment_term_id = 5;
+			$txn->payment_method_id = 1;
+			$txn->user_id = $value->user_id;
+			$txn->type = 'Invoice';
+			$txn->sub_total = $saleorder->sub_total;
+			$txn->discount = $saleorder->discount;
+			$txn->tax = $saleorder->tax;
+			$txn->fine = $saleorder->fine;
+			$txn->rate = $saleorder->rate;
+			$txn->locale = $saleorder->locale;
+			$txn->start_date = $value->issued_date;
+			$txn->frequency = 'Daily';
+			$txn->month_option = 'Day';
+			$txn->interval = 1;
+			$txn->day = 1;
+			$txn->status = 0;
+			$txn->is_journal = 1;
+			if($txn->save()){
+				//Item
+				foreach($value->items as $item){
+					$it = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$it->transaction_id = $txn->id;
+					$it->contact_id = $txn->contact_id;
+					$it->measurement_id = $item->measurement_id;
+					$it->tax_item_id = $item->tax_item_id;
+					$it->item_id = $item->item_id;
+					$it->assembly_id = $item->assembly_id;
+					$it->description = isset($item->description) ? $item->description : $item->item->name;
+					$it->quantity = $item->quantity;
+					$it->conversion_ratio = $item->conversion_ratio;
+					$it->cost = $item->cost;
+					$it->price = $item->price;
+					$it->amount = $item->amount;
+					$it->discount = $item->discount;
+					$it->tax = $item->tax;
+					$it->rate = $item->rate;
+					$it->locale = $item->locale;
+					if($item->item->item_type_id == 4){
+						$it->movement = 0;
+					}else{
+						$it->movement = -1;
+					}
+					$it->reference_id = $saleorder->id;
+					$it->reference_no = $saleorder->number;
+					$it->save();
+				}
+			}
+			$saleorder->status = 1;
+			$saleorder->save();
+			//Work
+			$work = new Spa_work(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$work->where("id", $value->work_id)->limit(1)->get();
+			$work->end_date = date('Y-m-d H:i:s', strtotime($value->issued_date));
+			$work->status = 1;
+			$work->transaction_id = $txn->id;
+			$work->save();
+			//contact
+			$con = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$con->where("id", $txn->contact_id)->limit(1)->get();
+			$conar = array(
+				"id" 	=> $con->id,
+				"name" 	=> $con->name,
+				"address" 	=> $con->address,
+				"phone" 	=> $con->phone,
+				"number" 	=> $con->number,
+				"abbr" 		=> $con->abbr,
+			);
+			$data["results"][] = array(
+		   		"id" 			=> $txn->id,
+		   		"number" 		=> $txn->number,
+		   		"amount" 		=> floatval($txn->amount),
+		   		"sub_total" 	=> floatval($txn->sub_total),
+		   		"discount" 		=> floatval($txn->discount),
+		   		"tax" 			=> floatval($txn->tax),
+		   		"rate" 			=> floatval($txn->rate),
+		   		"locale" 		=> $txn->locale,
+		   		"issued_date" 	=> $txn->issued_date,
+		   		"items" 		=> $value->items,
+		   		"contact" 		=> $conar
+		   	);
+		}
+		$data["count"] = count($data["results"]);
+		$this->response($data, 201);
+	}
+	//Service Charge
+	function service_charge_get(){
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
+		$data["count"] = 0;
+		$is_pattern = 0;
+		$obj = new Spa_service_charge(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
+			}
+		}
+		//Filter
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value["operator"])) {
+					$obj->{$value["operator"]}($value["field"], $value["value"]);
+				} else {
+	    			$obj->where($value["field"], $value["value"]);
+				}
+			}
+		}
+		$obj->where("deleted", 0);
+		//Results
+		if($page && $limit){
+			$obj->get_paged_iterated($page, $limit);
+			$data["count"] = $obj->paged->total_rows;
+		}else{
+			$obj->get_iterated();
+			$data["count"] = $obj->result_count();
+		}
+		if($obj->exists()){
+			foreach ($obj as $value) {
+				$data["results"][] = array(
+		 			"id" 			=> $value->id,
+		 			"item_id" 		=> intval($value->item_id),
+		 			"percentage" 	=> floatval($value->percentage),
+		 			"status" 		=> intval($value->status),
+		 			"register" 		=> $value->status == 1 ? true:false,
+		 		);
+		 	}
+		}
+		//Response Data		
+		$this->response($data, 200);
+	}
+	function service_charge_post(){
+		$models = json_decode($this->post('models'));
+		$data["results"] = [];
+		$data["count"] = 0;
+		foreach ($models as $value) {
+			//Work
+			$obj = new Spa_service_charge(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$obj->item_id 		= isset($value->item_id) 	? $value->item_id : 0;
+			$obj->percentage 	= isset($value->percentage) ? $value->percentage : 0;
+			$obj->status 		= $value->register == false ? 0 : 1;
+			//Check Item
+			if($obj->item_id == 0){
+				//Add Transace Item
+				$it = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$it->item_type_id = 5;
+				$it->category_id = 4;
+				$it->name = 'Service Charge';
+				$it->sale_description = 'Service Charge';
+				$it->locale = $value->locale;
+				$it->inventory_account_id = 71;
+				$it->status = 1;
+				if($it->save()){
+					$obj->item_id = $it->id;
+				}
+			}
+			$obj->save();
+			$data["results"][] = array(
+		   		"id" 			=> $obj->id,
+		   		"item_id" 		=> $obj->item_id,
+		   		"percentage" 	=> $obj->percentage,
+		   		"status" 		=> $obj->status,
+		   	);
+		}
+		$data["count"] = count($data["results"]);
+		$this->response($data, 201);
+	}
+	function service_charge_put(){
+		$models = json_decode($this->put('models'));
+		$data["results"] = [];
+		$data["count"] = 0;
+		foreach ($models as $value) {
+			//Work
+			$obj = new Spa_service_charge(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$obj->get_by_id($value->id);
+			$obj->item_id 		= isset($value->item_id) 	? $value->item_id : 0;
+			$obj->percentage 	= isset($value->percentage) ? $value->percentage : 0;
+			$obj->status 		= $value->register == false ? 0 : 1;
+			//Check Item
+			if($obj->item_id == 0){
+				//Add Transace Item
+				$it = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$it->item_type_id = 5;
+				$it->category_id = 4;
+				$it->name = 'Service Charge';
+				$it->sale_description = 'Service Charge';
+				$it->locale = $value->locale;
+				$it->inventory_account_id = 71;
+				$it->status = 1;
+				if($it->save()){
+					$obj->item_id = $it->id;
+				}
+			}
+			$obj->save();
+			$data["results"][] = array(
+		   		"id" 			=> $obj->id,
+		   		"item_id" 		=> $obj->item_id,
+		   		"percentage" 	=> $obj->percentage,
+		   		"status" 		=> $obj->status,
+		   	);
+		}
+		$data["count"] = count($data["results"]);
+		$this->response($data, 201);
 	}
 	//Generate invoice number
 	public function _generate_number($type, $date){

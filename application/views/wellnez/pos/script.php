@@ -3081,7 +3081,7 @@
         pageLoad: function() {
             this.loadAccounts();
             // this.accountTypeDS.read();
-            // this.loadTaxes();
+            this.loadTaxes();
             // this.loadJobs();
             this.loadSegmentItems();
             this.loadCurrencies();
@@ -5479,7 +5479,7 @@
                                     employee : this.employeeAR,
                                     room : this.roomAR,
                                     customer : this.customerAR,
-                                    date : this.get("dateSelected"),
+                                    start_date : this.get("dateSelected"),
                                     amount : this.get("invAmount"),
                                     tax : this.get("invTax"),
                                     sub_total : this.get("invSubTotal"),
@@ -5488,7 +5488,8 @@
                                     rate : rate,
                                     account_id : 7,
                                     contact_id : this.customerAR[0].id,
-                                    phone: this.get("customerPhone")
+                                    phone: this.get("customerPhone"),
+                                    user_id : banhji.userData.id,
                                 });
                                 this.workDS.sync();
                                 this.workDS.bind("requestEnd", function(e){
@@ -5586,7 +5587,7 @@
                                     employee : this.employeeAR,
                                     room : this.roomAR,
                                     customer : this.customerAR,
-                                    date : this.get("dateSelected"),
+                                    start_date : this.get("dateSelected"),
                                     amount : this.get("invAmount"),
                                     tax : this.get("invTax"),
                                     sub_total : this.get("invSubTotal"),
@@ -5595,7 +5596,8 @@
                                     rate : rate,
                                     phone : this.get("customerPhone"),
                                     account_id : 7,
-                                    contact_id : this.customerAR[0].id
+                                    contact_id : this.customerAR[0].id,
+                                    user_id : banhji.userData.id,
                                 });
                                 var f = 0;
                                 this.bookDS.sync();

@@ -474,42 +474,12 @@
 									    width: '120px',
 									    attributes: { style: 'text-align: right;' }
 									},
-									{
-									    field: 'discount',
-									    title: 'DISCOUNT VALUE',
-									    hidden: true,
-									    format: '{0:n}',
-									    editor: numberTextboxEditor,
-									    width: '120px',
-									    attributes: { style: 'text-align: right;' }
-									},
-									{
-									    field: 'discount_percentage',
-									    title: 'DISCOUNT %',
-									    hidden: true,
-									    format: '{0:p}',
-									    editor: discountEditor,
-									    width: '120px',
-									    attributes: { style: 'text-align: right;' }
-									},
 		                            { 
 		                            	field: 'amount', 
 		                            	title:'AMOUNT', 
 		                            	format: '{0:n}', 
 		                            	editable: 'false', 
 		                            	attributes: { style: 'text-align: right;' }, width: '120px' 
-		                            },
-		                            { 
-		                            	field: 'tax_item', 
-		                            	title:'TAX', 
-		                            	hidden: true,
-		                            	editor: taxForSaleEditor, 
-		                            	template: '#=tax_item.name#', width: '90px' 
-		                            },
-		                            { 
-		                            	field: 'reference_no', 
-		                            	title:'REFERENCE NO.', 
-		                            	hidden: true, width: '120px' 
 		                            }
 		                         ]"
 		                         data-auto-bind="false"
@@ -530,9 +500,9 @@
 												<td class="right strong" width="40%"><span data-format="n" data-bind="text: obj.sub_total" style="font-size: 15px; font-weight: 700;"></span></td>
 											</tr>               
 											<tr>
-												<td><span>Discount</span></td>
+												<td><span>Service Charge</span></td>
 												<td class="right ">
-													<span data-format="n" data-bind="text: obj.discount"></span>
+													<span data-format="n" data-bind="text: obj.service_charge"></span>
 												</td>
 											</tr>               
 											<tr>
@@ -572,7 +542,7 @@
 									</div>
 									<div class="row">
 										<div class="span12 ">
-											<div class="button-service">
+											<div class="button-service" data-bind="click: printBill">
 												<div class="img">
 													<img src="<?php echo base_url();?>assets/spa/icon/pay-green.png" >
 												</div>
@@ -611,8 +581,149 @@
 </script>
 <script id="work-list-tmpl" type="text/x-kendo-tmpl">
 	<div class="block-number" style="width: 27.4%;min-height: 175px;" data-bind="click: selectRow">
-		<p style="text-align: center;"><b>Customer:</b><br /> <span style="text-align: center;font-size: 12px;">#: customer[0].name#</span></p>
-		<p style="text-align: center"><b>Start:</b><br /> <span style="text-align: center;font-size: 12px;">#: date#</span></p>
+		<p style="text-align: center;"><b>Customer:</b><br /> <span style="text-align: center;font-size: 12px;">#: customer_name#</span></p>
+		<p style="text-align: center"><b>Start:</b><br /> <span style="text-align: center;font-size: 12px;">#: dateshow#</span></p>
 		<p style="text-align: center;"><b>Room:</b><br /> <span style="text-align: center;font-size: 12px;">#: roomshow#</span></p>
 	</div>
+</script>
+
+<script id="print" type="text/x-kendo-template">
+    <div id="slide-form">
+        <div class="customer-background" style="overflow: hidden;margin-top: 15px;">
+            <div>                 
+                <div id="example" class="k-content">
+                    <span id="savePrint" class="btn btn-icon btn-primary glyphicons print" data-bind="click: printGrid" style="width: 100px;margin-bottom:0;position: absolute;left:45%;"><i></i><span data-bind="text: lang.lang.print">Save PDF</span></span>
+                    <div class="hidden-print pull-right">
+                        <span style="padding: 5px 0 11px 35px;" class="glyphicons no-js remove_2" 
+                            data-bind="click: cancel"><i></i></span>    
+                    </div>
+                    <h2 data-bind="text: lang.lang.invoice_preview">Invoice Preview</h2>
+                    <br>
+                    <div id="invoicecontent" style="width: 350px!important; margin: 0 auto;"></div>
+                    <div class="box-generic" align="right" style="background-color: #0B0B3B;">
+                        <span id="notification"></span>
+                        <span id="savePrint" class="btn btn-icon btn-primary glyphicons print" data-bind="click: printGrid" style="width: 100px;margin-bottom:0!important;"><i></i><span data-bind="text: lang.lang.print">Save PDF</span></span>
+                        <span class="btn btn-icon btn-warning glyphicons remove_2" data-bind="click: cancel" style="width: 90px;"><i></i> <span data-bind="text: lang.lang.cancel">Cancel </span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>  
+</script>
+<script id="invoiceform" type="text/x-kendo-tmpl">
+    <div class="row-fluid" style="overflow: hidden;padding-bottom: 20px;margin-top: 20px;">
+        <style type="text/css">
+            * {
+                -webkit-print-color-adjust:exact; 
+            }
+        </style>
+        <div class="col-md-8 col-md-offset-2" inv1" style="width: 250px!important;margin-top: 10px;padding: 0px;float:none!important;margin: 0 auto!important">
+            <div class="head" style="width: 100%;margin: 5px 0px;overflow: hidden;position: relative;">
+                <div style="text-align: center; width: 25%;float:left;">
+                    <img src="<?php echo base_url(); ?>assets/logo.png" style="width: 100%;margin-bottom: 10px;" />
+                </div>
+                <div class="cover-name-company" style="width: 65%;margin: 5px 0;float: right;">
+                    <h2 style="text-align: center;margin-bottom: 5px;width: 100%;font-size: 12px;line-height: 18px;font-weight: bold;margin-top: 5px;">
+                        #: banhji.institute.name#
+                    </h2>
+                    <p style="width: 100%;float: left;text-align: center;margin-bottom: 0;font-size: 10px;">Tel: #: banhji.institute.telephone #</p>
+                </div>
+            </div>
+            <h2 style="text-align: center; font-weight: 700;line-height: 20px;;color: \\#000!important; margin: 5px 0; width: 100%;font-size: 15px;">វិក្កយបត្រ INVOICE</h2>
+            <div class="row" style="margin-bottom: 5px;">
+            	<div class="span12" style="padding: 0;margin: 0;">
+            		<table style="width: 100%; float: left;">
+            			<tr >
+                            <td>ល.វិ.ក :</td>
+                            <td style="font-weight: bold;background: \\#000!important;color: \\#fff!important;text-align: center;">#: number#</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="span6" style="padding: 0;margin: 0;">
+                    <table style="width: 100%; float: left;">
+                        <tr>
+                            <td>ឈ្មោះ :</td>
+                            <td>#: contact.name#</td>
+                        </tr>
+                        <tr>
+                            <td>លេខទូរស័ព្ទ :</td>
+                            <td>#: contact.phone#</td>
+                        </tr>
+                        
+                    </table>
+                </div>
+                <div class="span6" style="padding: 0;margin: 0;float: right;">
+                    <table style="width: 100%; float: right; text-align: right;">
+                        <tr>
+                            <td>អស័យដ្ឋាន :</td>
+                            <td>#: contact.address#</td>
+                        </tr>
+                        <tr>
+                            <td>ចេញវិ.ក :</td>
+                            <td>#=kendo.toString(new Date(issued_date), "dd-MMMM-yyyy", "km-KH")#</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="table-content" style="margin-bottom: 5px;font-weight: 600; float: none;overflow: hidden; width: 100%;">
+                <table style="width: 100%">
+                    <thead>
+                        <tr>
+                            <th style="background: \\#000!important; border: 1px solid \\#000;color: \\#fff!important;text-align: center!important;padding: 5px 0!important;line-height: 15px;">បរិយាយ <br> DESCRIPTION</th>
+                            <th style="background: \\#000!important; border: 1px solid \\#000;color: \\#fff!important;text-align: center!important;padding: 5px 0!important;line-height: 15px;">ចំនួន <br> QTY</th>
+                            <th style="background: \\#000!important; border: 1px solid \\#000;color: \\#fff!important;text-align: center!important;padding: 5px 0!important;line-height: 15px;">តម្លៃ <br> PRICE</th>
+                            <th style="background: \\#000!important; border: 1px solid \\#000;color: \\#fff!important;text-align: center!important;padding: 5px 0!important;line-height: 15px;">សរុប <br> AMOUNT</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        #$.each(items, function(i,v){#
+                            <tr>
+                                <td style="padding: 10px;text-align: right; border: 1px solid \\#000;">
+                                    <span style="color: \\#333; font-size: 12px;padding-left: 20px;">
+                                        #: v.item.name#
+                                    </span>
+                                </td>
+                                <td style="padding: 10px;font-weight: 700; text-align: right; border: 1px solid \\#000;">
+                                    <span style="color: \\#333; font-size: 12px;padding-left: 20px;">
+                                        #: v.quantity#
+                                    </span>
+                                </td>
+                                <td style="padding: 10px;font-weight: 700; text-align: right; border: 1px solid \\#000;">
+                                    <span style="color: \\#333; font-size: 12px;padding-left: 20px;">
+                                        #: v.price#
+                                    </span>
+                                </td>
+                                <td style="padding: 10px;font-weight: 700; text-align: right; border: 1px solid \\#000;">
+                                    <span style="color: \\#333; font-size: 12px;padding-left: 20px;">
+                                        #: v.amount#
+                                    </span>
+                                </td>
+                            </tr>
+                        #})#
+                    </tbody>
+                    <tfoot>
+                    	<tr>
+                    		<td colspan="3" style="text-align: right">សរុប</td>
+                    		<td style="text-align: right">#: sub_total#</td>
+                    	</tr>
+                    	#if(tax > 0){#
+	                    	<tr>
+	                    		<td colspan="3" style="text-align: right">ពន្ធ</td>
+	                    		<td style="text-align: right">#: tax#</td>
+	                    	</tr>
+	                    #}#
+	                    #if(discount > 0){#
+	                    	<tr>
+	                    		<td colspan="3" style="text-align: right">បញ្ចុះតម្លៃ</td>
+	                    		<td style="text-align: right">#: discount#</td>
+	                    	</tr>
+	                    #}#
+                    </tfoot>
+                </table>
+            </div>
+            <div class="row">
+                <p style="border-top: 1px solid \\#000;font-size: 10px;text-align: center;margin-top: 5px;padding-top: 5px;">Power By: Banhji</p>
+            </div>
+        </div>
+    </div>
 </script>

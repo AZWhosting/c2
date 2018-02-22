@@ -9830,27 +9830,50 @@
         formColor: "#355176",
         formVisible: "visibility: visible;",
         formBorder: "border: 1px solid #000!important;",
-        pageLoad: function(id) {
+        pageLoad: function() {
             if (this.dataSource.length <= 0) {
                 banhji.router.navigate('/print_bill');
             }
             var self = this,
                 TempForm = "";
-            if (this.txnFormID == "45") {
-                TempForm = $("#InvoiceFormTemplate2").html();
-            } else if (this.txnFormID == "49") {
-                TempForm = $("#InvoiceFormElectric").html();
-            } else if (this.txnFormID == "32"){
-                TempForm = $("#invoiceServiceNormal").html();
-            } else if (this.txnFormID == "1"){
-                TempForm = $("#invoiceServiceCommercial").html();
-            } else if (this.txnFormID == "7"){
-                TempForm = $("#depositForm").html();
-            } else if (this.txnFormID == "44"){
-                TempForm = $("#formFrame").html();
-            } else {
-                TempForm = $("#InvoiceFormTemplate1").html();
+            switch(this.txnFormID){
+                case "45":
+                    TempForm = $("#InvoiceFormTemplate2").html();
+                    break;
+                case "49":
+                    TempForm = $("#InvoiceFormElectric").html();
+                    break;
+                case "32":
+                    TempForm = $("#invoiceServiceNormal").html();
+                    break;
+                case "1":
+                    TempForm = $("#invoiceServiceCommercial").html();
+                    break;
+                case "7":
+                    TempForm = $("#depositForm").html();
+                    break;
+                case "44":
+                    TempForm = $("#formFrame").html();
+                    break;
+                default:
+                    TempForm = $("#InvoiceFormTemplate1").html();
             }
+            // if (this.txnFormID == "45") {
+            //     TempForm = $("#InvoiceFormTemplate2").html();
+            // } else if (this.txnFormID == "49") {
+            //     TempForm = $("#InvoiceFormElectric").html();
+            // } else if (this.txnFormID == "32"){
+            //     TempForm = $("#invoiceServiceNormal").html();
+            // } else if (this.txnFormID == "1"){
+            //     TempForm = $("#invoiceServiceCommercial").html();
+            // } else if (this.txnFormID == "7"){
+            //     TempForm = $("#depositForm").html();
+            // } else if (this.txnFormID == "44"){
+            //     TempForm = $("#formFrame").html();
+            // } else {
+            //     TempForm = $("#InvoiceFormTemplate1").html();
+            // }
+            console.log(TempForm);
             $("#wInvoiceContent").kendoListView({
                 dataSource: this.dataSource,
                 template: kendo.template(TempForm)

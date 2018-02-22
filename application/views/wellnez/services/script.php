@@ -5520,8 +5520,130 @@
             }
         },
         printDS             : dataStore(apiUrl + "spa/invoice"),
-        printInv            : function(){
-            // this.printDS.
+        printBill            : function(){
+            var self = this, obj = this.get("obj");
+            this.printDS.data([]);
+            this.printDS.add({
+                transaction_id  : obj.transaction_id,
+                work_id         : obj.id,
+                issued_date     : new Date(),
+                user_id         : banhji.userData.id,
+                items           : this.lineDS.data()
+            });
+            this.printDS.sync();
+            this.printDS.bind("requestEnd", function(e){
+                var type = e.type;
+                console.log(e);
+                if (type !== 'read') {
+                    var data = e.response.results[0];
+                    banhji.print.dataSource = [];
+                    banhji.print.dataSource.push(data);
+                    banhji.router.navigate('/print');
+                }
+            });
+        }
+    });
+    //Print
+    banhji.print = kendo.observable({
+        lang                : langVM,
+        dataSource          : [],
+        BranchName          : "",
+        BranchPhone         : "",
+        voidMeter           : "",
+        pageLoad            : function(id){
+            if(this.dataSource.length <= 0){
+                banhji.router.navigate('/');
+            }
+            var self = this, TempForm = "";
+            TempForm = $("#invoiceform").html();
+            $("#invoicecontent").kendoListView({
+                dataSource: this.dataSource,
+                template: kendo.template(TempForm)
+            });
+        },
+        printGrid       : function(){
+            var self = this, Win, pHeight, pWidth, ts;
+            Win = window.open('', '', 'width=800, height=900');
+            pHeight = "210mm";
+            pWidth = "150mm";
+            var gridElement = $('#grid'),
+                printableContent = '',
+                win = Win,
+                doc = win.document.open();
+            var htmlStart =
+                    '<!DOCTYPE html>' +
+                    '<html>' +
+                    '<head>' +
+                    '<meta charset="utf-8" />' +
+                    '<title></title>' +
+                    '<link rel="stylesheet" href="<?php echo base_url(); ?>resources/js/kendoui/styles/kendo.bootstrap.min.css">'+
+                    '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/bootstrap.css">'+
+                    '<link href="<?php echo base_url(); ?>assets/css/water/water.css" rel="stylesheet" />'+
+                    '<link href="<?php echo base_url(); ?>assets/css/offline/offline.css" rel="stylesheet" />'+
+                    '<link href="<?php echo base_url(); ?>assets/css/water/winvoice-print.css" rel="stylesheet" />'+
+                    '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">'+
+                    '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">'+
+                    '<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Battambang&amp;subset=khmer" media="all">'+
+                    '<style type="text/css" media="print">' +
+                        '@page { size: portrait; margin:0.05cm;' +
+                            
+                        '} '+
+                        '@media print {' +
+                            'html, body {' +
+                            '}' +
+                            '.main-color {' +
+                                '-webkit-print-color-adjust:exact; ' +
+                            '} ' +
+                        '}' +
+                        '.main-color {' +
+                            '-webkit-print-color-adjust:exact; ' +
+                        '} ' +
+                        '.inv1 .light-blue-td { ' +
+                            'background-color: #c6d9f1!important;' +
+                            'text-align: left;' +
+                            'padding-left: 5px;' +
+                            '-webkit-print-color-adjust:exact; ' +
+                        '}' +
+                        '.logoP{ max-height 50px;max-width100px}' +
+                        '.inv1 thead tr {'+
+                            'background-color: rgb(242, 242, 242)!important;'+
+                            '-webkit-print-color-adjust:exact; ' +
+                        '}'+
+                        '.pcg .mid-title div {}' +
+                        '.pcg .mid-header {' +
+                            'background-color: #dce6f2!important; ' +
+                            '-webkit-print-color-adjust:exact; ' +
+                        '}'+
+                        '.winvoice-print table thead .darkbblue, .winvoice-print table tbody td.darkbblue { ' +
+                            'background-color: #355176!important;' +
+                            'color: #fff!important;' +
+                            '-webkit-print-color-adjust:exact; ' +
+                        '}' +
+                        '.winvoice-print table td.greyy {' +
+                        'background-color: #ccc!important;-webkit-print-color-adjust:exact;' +
+                        '}' +
+                        '.inv1 span.total-amount { ' +
+                            'color:#fff!important;' +
+                        '}</style>' +
+                    '</head>' + 
+                    '<body><div class="row-fluid" ><div id="invoicecontent" class="k-content">';
+            var htmlEnd =
+                    '</div></div></body>' +
+                    '</html>';
+            printableContent = $('#invoicecontent').html();
+            doc.write(htmlStart + printableContent + htmlEnd);
+            doc.close();
+            setTimeout(function(){
+                win.print();    
+                win.close();
+            },1000);
+        },
+        cancel              : function(){
+            this.dataSource = [];
+            banhji.offline.NextReading();
+            banhji.router.navigate('/');
+            this.barcod("reset");
+            window.location.reload();
         }
     });
     /* views and layout */
@@ -5542,7 +5664,8 @@
         //------------------------------------
         Index: new kendo.Layout("#Index", {
             model: banhji.Index
-        })
+        }),
+        print: new kendo.Layout("#print", {model: banhji.print}),
     };
     /* views and layout */
     banhji.router = new kendo.Router({
@@ -5599,6 +5722,12 @@
 
             vm.lineDS.bind("change", vm.lineDSChanges);
         }
+    });
+    //Print
+    banhji.router.route('/print', function(){
+        var blank = new kendo.View('#blank-tmpl');
+        banhji.view.layout.showIn('#content', banhji.view.print);
+        banhji.print.pageLoad();
     });
     
     $(function() {

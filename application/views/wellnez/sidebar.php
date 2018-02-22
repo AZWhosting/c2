@@ -217,7 +217,7 @@
         text-decoration: underline;
     }
     .text-t  .enquiry-content {
-        bottom: -397px;
+        bottom: -485px;
         left: -313px;
         width: 313px;
     }
@@ -327,14 +327,15 @@
                     <li><a href="session">Session Management</a></li>
                     <li><a href="books">Booking Management</a></li>
                     <li><a href="services">Servicing Customer</a></li>
-                    <li><a href="session">Reconciliation</a></li>
-                    <!-- <li class="divider"></li> -->
-                    <li><a href="pay">Print & Pay</a></li>
+                    <li><a href="pay">Receipt</a></li>
                     <li class="divider"></li>
                     <li><a href="customer">Customer</a></li>
                     <li><a href="rooms">Rooms / Facilities</a></li>
                     <li><a href="therapist">Therapist</a></li>
-                   <!--  <li><a href="report">Reports</a></li> -->
+                    <li><a href="<?php echo base_url()?>loyalty">Loyalty</a></li>
+                    <li><a href="setting">Setting</a></li>
+                    <li class="divider"></li>
+                    <li><a href="<?php echo base_url()?>rrd" target="_blank">Back to BanhJi</a></li>
                 </ul>
             
             </div>
@@ -388,4 +389,4 @@
         </a>
     </div>
     <!-- End -->
-</div>                              
+</div>                                                                 
