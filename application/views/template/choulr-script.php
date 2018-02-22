@@ -5051,43 +5051,101 @@
     //Lease Unit
     banhji.leaseUnitCenter = kendo.observable({
         lang                : langVM,
-        leaseUnitDS         : dataStore(apiUrl + "choulr/lease_unit"),
+        leaseUnitDS         : new kendo.data.DataSource({
+            transport: {
+                read: {
+                    url: apiUrl + "choulr/lease_unit",
+                    type: "GET",
+                    headers: banhji.header,
+                    dataType: 'json'
+                },
+                parameterMap: function(options, operation) {
+                    if (operation === 'read') {
+                        return {
+                            page: options.page,
+                            limit: options.pageSize,
+                            filter: options.filter,
+                            sort: options.sort
+                        };
+                    } else {
+                        return {
+                            models: kendo.stringify(options.models)
+                        };
+                    }
+                }
+            },
+            schema: {
+                model: {
+                    id: 'id'
+                },
+                data: 'results',
+                total: 'count'
+            },
+            filter: [
+                {
+                    field: "deleted",
+                    value: 0
+                }
+            ],
+            sort: {
+                field: "id",
+                dir: "asc"
+            },
+            batch: true,
+            serverFiltering: true,
+            serverSorting: true,
+            serverPaging: true,
+            page: 1,
+            pageSize: 12
+        }),
+        contractDS          : dataStore(apiUrl + "choulr/contract"),
         pageLoad            : function(id) {
-            if (id) {
-                this.loadObj(id);
-            }else {
-                this.selectedRow();
-            }
         },
-        obj: "",
-        loadObj: function(id){
-            var self = this;
-            this.leaseUnitDS.query({
-                filter: {field: "id", value: id},
-                pageSize: 1
-            }).then(function(e){
-                var view = self.leaseUnitDS.view();
-                self.set("obj", view[0]);
-                self.selectedRow();
-            });
-        },
-        LUID: "",
-        selectedRow:         function(e) {
-            var self = this; 
-            this.set("obj", e.data);
-            this.set("LUID", e.data.id);
-            if(e.data.status == 1){
-                this.get("obj").set("status_detail", "Available");
-            }else if(e.data.status == 0){
-                this.get("obj").set("status_detail", "Vacant");
-            }else if(e.data.status == 2){
-                this.get("obj").set("status_detail", "Maintenance");
+        obj                 : "",
+        contractobj         : "",
+        selectedRow         : function(e){
+            var data = e.data;
+            this.set("obj", data);
+            if(data.img1){
+                this.get("obj").set("img1", data.img1);
             }else{
-                this.get("obj").set("status_detail", "Rented");
+                this.get("obj").set("img1", "<?php echo base_url();?>/assets/choulr/img/no_image.png");
+            }
+            if(data.contract_id > 0){
+                var self = this;
+                this.contractDS.data([]);
+                this.contractDS.query({
+                    filter: {field: "id", value: data.contract_id},
+                    pageSize: 1
+                }).then(function(e){
+                    var view = self.contractDS.view();
+                    if(view.length > 0){
+                        self.set("contractobj", view[0]);
+                        self.getContactObj(view[0].customer_id);
+                    }else{
+                        self.set("contractobj", []);
+                        self.getContactObj(0);
+                    }
+                });
+            }else{
+                this.set("contractobj", []);
+                this.set("contactobj", []);
             }
         },
-        goLU: function(){
-            banhji.router.navigate("/lease_unit/"+this.get("LUID"));
+        contactobj          : "",
+        contactDS           : dataStore(apiUrl + "contacts"),
+        getContactObj       : function(id){
+            var self = this;
+            this.contactDS.query({
+                filter: {field: "id", value: id}
+            }).then(function(e){
+                var v = self.contactDS.view();
+                if(v.length > 0){
+                    self.set("contactobj", v[0]);
+                }else{
+                    self.set("contactobj", []);
+                }
+            });
         }
     });
     banhji.leaseUnit = kendo.observable({
@@ -6002,6 +6060,7 @@
             }
         },
         clearform: function(){
+            this.dataSource.data([]);
             this.set("obj", "");
             this.dataSource.insert(0, {
                 type        : "w",
@@ -6021,9 +6080,11 @@
         },
         save: function(){
             var self = this;
+            $("#loadImport").css("display", "block");
             this.dataSource.sync();
             this.dataSource.bind("requestEnd", function(e){
                 if(e.type != "read"){
+                    $("#loadImport").css("display", "none");
                     var notifi = $("#ntf1").data("kendoNotification");
                     notifi.hide();
                     notifi.success(self.lang.lang.success_message);
@@ -6032,9 +6093,9 @@
             });
         },
         cancel: function() {
-            this.dataSource.data([]);
+            this.clearform();
             banhji.utilityCenter.meterListDS.query();
-            banhji.router.navigate("/utility_center");
+            window.history.back();
         },
     });
     //Contract
@@ -7675,7 +7736,7 @@
             page: 1,
             pageSize: 100
         }),
-        leaseunitDS: dataStore(apiUrl + "choulr/lease_unit"),
+        leaseunitDS: dataStore(apiUrl + "choulr/lease_unit_name"),
         rentDS: new kendo.data.DataSource({
             transport: {
                 read: {
@@ -7927,6 +7988,7 @@
             });
         },
         save            :function(){
+            $("#loadImport").css("display", "block");
             var self = this;
             var obj = this.get("obj");
             if(obj.customer_id && obj.issued_date && obj.lease_unit_id && obj.name){
@@ -7939,15 +8001,15 @@
                         });
                         this.dataSource.data()[0].set("service_items", lineAR);
                     }
-                    // this.dataSource.sync();
-                    // this.dataSource.bind("requestEnd", function(e){
-                    //     if(e.type != "read"){
-                    //         successSend();
-                    //         banhji.contractCenter.contractDS.query();
-                    //         successSend();
-                    //         self.cancel();
-                    //     }
-                    // });
+                    this.dataSource.sync();
+                    this.dataSource.bind("requestEnd", function(e){
+                        if(e.type != "read"){
+                            $("#loadImport").css("display", "none");
+                            successSend();
+                            banhji.contractCenter.contractDS.query();
+                            self.cancel();
+                        }
+                    });
                 }else{
                     requireField();
                 }

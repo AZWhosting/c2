@@ -39,7 +39,7 @@
                     <div class="cash-bg " style="padding: 5px;background: #0eac00;">
                         <div class="col-md-8">
                             <div class="col-md-12" style="margin-top: 10px;">
-                                <a " href="./choulr" style="float:left; ">
+                                <a href="<?php echo base_url(); ?>choulr" style="float:left;">
                                     <img src="<?php echo base_url();?>assets/choulr/img/logo.png" style="float: left;" width="50">
                                     <span><b style="color: #fff;font-size: 20px;float: left;padding-top: 15px;">Choulr</b></span>
                                 </a>
@@ -63,7 +63,7 @@
                                 </a>
                             </div>
                             <div class="col-md-4"> 
-                                <a href="#/lease_unit" class="hvr-float">
+                                <a href="#/meter" class="hvr-float">
                                     <img title="add mater" src="<?php echo base_url(); ?>assets/choulr/img/add_mater.png" width="60">
                                 </a>
                             </div>
@@ -136,7 +136,7 @@
                                 </a>
                             </div>
                             <div class="col-md-8 pk1" style="padding-left: 50px;padding-top: 5px">
-                                <a href="#/receipt" class="hvr-float">
+                                <a href="#/utility_center" class="hvr-float">
                                     <h1 style="font-size: 22px;font-weight: bold;color: #fff !important;text-transform: uppercase;">meter center</h1>
                                     <h2 style="font-size: 18px;color: #fff !important;margin-top: 15px;">Number of Meter</h2>
                                     <h3 style="font-size: 30px;color: #72ec7f !important;margin-top: 15px;" data-bind="text: totalMeter"></h3>
@@ -1471,10 +1471,13 @@
 <script id="leaseUnitCenter" type="text/x-kendo-template">  
     <style>
         /*.col-md-3{box-shadow: 2px 0px 12px 0px rgba(68,68,68,1);}*/
+        .cash-bg {
+            border-radius: 0;
+        }
         .col-md-3 {
             float: left;
             position: relative;
-            width: 154.5px;
+            width: 151px;
             height: 258px;
             padding: 0px;
             cursor: pointer;
@@ -1512,17 +1515,31 @@
         .pk1{
             padding: 1px;
         }
+        .btn {
+            padding: 6px 11px;
+        }
+        .k-pager-wrap {
+            background: #0eac00!important;
+        }
+        h4 span {
+            font-style: normal;
+            color: #000;
+            font-weight: bold;
+        }
     </style>
     <div class="container" style="margin-top: 100px;">
         <div class="row">
             <div class="col-md-10">
                 <div class="col-md-12" style="padding: 0;padding-right: 5px;">
                     <div class="cash-bg " style="padding: 5px;background: #0eac00;">
-                        <div class="col-md-8"> 
+                        <div class="col-md-8">
                             <div class="col-md-12" style="margin-top: 10px;">
-                                <span><b style="color: #fff;font-size: 20px;float: left;padding-top: 15px;">LEASE UNIT</b></span>
+                                <a href="<?php echo base_url(); ?>choulr" style="float:left;">
+                                    <img src="<?php echo base_url();?>assets/choulr/img/logo.png" style="float: left;" width="50">
+                                    <span><b style="color: #fff;font-size: 20px;float: left;padding-top: 15px;">Choulr</b></span>
+                                </a>
                                 <form class="navbar-form pull-left hidden-xs">
-                                    <input id="search-placeholder" class="span2 search-query" type="text" placeholder="Search" data-bind="value: searchText" style="width: 222px;" />
+                                    <input id="search-placeholder" class="span2 search-query" type="text" placeholder="Search" data-bind="value: searchText" style="width: 220px;" />
                                     <button class="btn btn-inverse" type="submit" data-bind="click: search" style="background-color: #56882e !important;border-radius: 2px;">
                                         <i class="icon-search iconsearch"></i>
                                     </button>
@@ -1533,40 +1550,48 @@
                             <div class="col-md-4"> 
                                 <a href="#/contract" class="hvr-float">
                                     <img title="add contract" src="<?php echo base_url(); ?>assets/choulr/img/add-contract.png" width="60">
-                                 </a>
+                                </a>
                             </div>
                             <div class="col-md-4"> 
                                 <a href="#/lease_unit" class="hvr-float">
                                     <img title="add lease unit" src="<?php echo base_url(); ?>assets/choulr/img/add-lease-unit.png" width="60">
-                                 </a>
+                                </a>
                             </div>
                             <div class="col-md-4"> 
-                                <a href="#/lease_unit" class="hvr-float">
+                                <a href="#/meter" class="hvr-float">
                                     <img title="add mater" src="<?php echo base_url(); ?>assets/choulr/img/add_mater.png" width="60">
-                                 </a>
+                                </a>
                             </div>
-                        </div>   
+                        </div> 
                     </div>
                 </div>
                 <div data-role="listview"
                     data-template="lease-unit-item-list"
                     data-bind="source: leaseUnitDS"
-                    style="height: 300px; overflow: auto">
+                    style="height: 535px; overflow: auto;width: 99.3%;margin-left: 0;">
                 </div>
                 <div class="col-md-12" style="padding-left: 0px;padding-right: 5px;margin-bottom: 5px;" >
-                    <div style="background: #0eac00;height: 50px;">
+                    <div style="background: #0eac00;height: 40px;">
+                        <div id="pager" class="k-pager-wrap"
+                             data-role="pager"
+                             data-auto-bind="true"
+                             data-bind="source: leaseUnitDS">
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="col-md-2" style="background: #fff;padding: 10px;height: 669px;">
-                <div style="margin-bottom: 25px;">
-                    <img src="<?php echo base_url();?>/assets/choulr/img/no_image1.png" width="100%" />
+                <div style="margin-bottom: 25px;overflow:hidden;max-height: 150px; height: 150px; width: 150px;max-width: 150px;">
+                    <img data-bind="attr: { src: obj.img1, alt: obj.name, title: obj.name }" />
                 </div>
                 <div>
                     <h1 style="margin-bottom: 20px;"><b>LEASE UNIT INFO</b></h1>
-                    <h4><b>Lease Unit</b>
-                        <p>Lease Unit No: 101 <br>Property: ABC Co., Ltd <br> Contract No: PMC101-0001 <br>Customer Name: Mr. Peng Pos <br>Sale Person        :</p>
-
+                    <h4>
+                        <b>Lease Unit</b>
+                        Lease Unit No: <span data-bind="text: obj.name"></span><br>
+                        Property: <span data-bind="text: obj.property_name"></span><br>
+                        Contract No: <span data-bind="text: contractobj.name"></span><br>
+                        Customer Name: <span data-bind="text: contactobj.name"></span><br></p>
                     </h4>
                     <h4><b>Area</b>
                         <p>Vacant From:  <br>Contract End:<br>Statue: Rented, Vacant, <br>Maintenance<br>Object Area : 60 m2<br>Amenity :<br>Other :</p>
@@ -1578,31 +1603,33 @@
             </div>
         </div>
     </div>
-    </div>
 </script>
 <script id="lease-unit-item-list" type="text/x-kendo-template">
     <div class="col-md-3">
-        <div class="row-fluid">
-            <div class="col-xs-12 col-sm-12 col-md-12 pk1 hvr-shrink">
-                 <img src="<?php echo base_url();?>/assets/choulr/img/no_image.png"/>
-                    <p>Name....................</p>
-                    <p>Status...................</p>
-                    <p>Contract...............</p>
+        <div class="row-fluid" style="overflow: hidden;">
+            <div class="col-xs-12 col-sm-12 col-md-12 pk1 hvr-shrink" data-bind="click: selectedRow">
+                <div style="overflow:hidden;max-height: 150px; height: 150px; width: 150px;max-width: 150px;">
+                    <img style="height: 100%;height: auto;width: 100%;width: auto;" src="#if(img1){# #=img1# #}else{#<?php echo base_url();?>/assets/choulr/img/no_image.png #}#"/>
+                </div>
+                <p>Name: #= name#</p>
+                <p>Status: #= status#</p>
+                <p>Contract: #= contract_id#</p>
             </div>
-            <form class="navbar-form pull-left hidden-xs">
-            <button class="btn btn-inverse" type="edit" data-bind="click: search" style="background-color: #254809 !important;border-radius: 1px;">
+            <a href="\#/lease_unit/#= id#" class="btn btn-inverse" type="edit" style="background-color: \#254809 !important;border-radius: 1px;">
                 <i class="icon-idit">Edit</i>
-            </button>
-            <button class="btn btn-inverse" type="edit" data-bind="click: search" style="background-color: #45ce54 !important;border-radius: 1px;margin-left: 0px;">
+            </a>
+            <a class="btn btn-inverse" type="edit" style="background-color: \#45ce54 !important;border-radius: 1px;margin-left: 0px;">
                 <i class="icon-idit">Maintenance</i>
-            </button>
-            </form>
+            </a>
         </div>
     </div>
 </script>
 <script id="leaseUnit" type="text/x-kendo-template">
     <div class="container">
         <div class="row-fluid">
+            <div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 100%;margin-top: -15px;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
+                <i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
+            </div>
             <div class="background">
                 <div class="row-fluid">
                     <div id="example" class="k-content">
@@ -2075,6 +2102,9 @@
 <script id="Meter" type="text/x-kendo-template">
     <div class="container">
         <div class="row-fluid">
+            <div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 100%;margin-top: -15px;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
+                <i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
+            </div>
             <div class="background">
                 <div class="row-fluid">
                     <div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 100%;margin-top: -15px;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
@@ -2538,8 +2568,10 @@
 <script id="Contract" type="text/x-kendo-template">
     <style type="text/css"></style>
     <div class="container">
-        <form action="">
         <div class="row-fluid">
+            <div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 100%;margin-top: -15px;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
+                <i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
+            </div>
             <div class="background">
                 <div class="row-fluid">
                     <div id="example" class="k-content">
@@ -2895,7 +2927,6 @@
                 </div>
             </div>
         </div>
-        </form>
     </div>
 </script>
 <!-- Customer -->

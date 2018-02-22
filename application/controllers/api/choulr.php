@@ -1336,10 +1336,12 @@ class Choulr extends REST_Controller {
 						);
 					}
 				}
-
+				$prop = new Choulr_property(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$prop->where("id", $value->property_id)->limit(1)->get();
 				$data["results"][] = array(
 					"id" 			=> $value->id,
-					"property_id"	=> $value->property_id,
+					"property_id"	=> intval($value->property_id),
+					"property_name" => $prop->name,
 					"name"			=> $value->name,
 					"code"			=> $value->code,
 					"abbr"			=> $value->abbr,
@@ -1360,7 +1362,8 @@ class Choulr extends REST_Controller {
 					"img6"			=> $value->img6,
 					"amenity_id" 	=> $amenitem,
 					"space_id"		=> $spaceitem,
-					"visitor_number" => $value->visitor_number
+					"visitor_number" => $value->visitor_number,
+					"contract_id" 	=> intval($value->contract_id),
 				);
 			}
 		}
@@ -1500,6 +1503,62 @@ class Choulr extends REST_Controller {
 
 		$data["count"] = count($data["results"]);
 		$this->response($data, 201);
+	}
+	function lease_unit_name_get(){
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
+		$data["count"] = 0;
+
+		$obj = new Choulr_lease_unit(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
+			}
+		}
+
+		//Filter
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value["operator"])) {
+					$obj->{$value["operator"]}($value["field"], $value["value"]);
+				} else {
+					if($value["field"]=="is_recurring"){
+	    				$is_recurring = $value["value"];
+	    			}else{
+	    				$obj->where($value["field"], $value["value"]);
+	    			}
+				}
+			}
+		}
+
+		//Results
+		if($page && $limit){
+			$obj->get_paged_iterated($page, $limit);
+			$data["count"] = $obj->paged->total_rows;
+		}else{
+			$obj->get_iterated();
+			$data["count"] = $obj->result_count();
+		}
+
+		if($obj->exists()){
+			foreach ($obj as $value) {
+				$data["results"][] = array(
+					"id" 			=> $value->id,
+					"name"			=> $value->name,
+				);
+			}
+		}
+		//Response Data
+		$this->response($data, 200);
 	}
 	//Lease Unit ceter 
 	function lease_unit_ceter_get(){
@@ -2163,14 +2222,16 @@ class Choulr extends REST_Controller {
 					$ccr->save();
 				}
 			   	//Item
-			   	foreach($value->service_items as $si){
-					$cci = new Choulr_contracts_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-					$cci->contract_id = $obj->id;
-					$cci->item_id = $si->item->id;
-					$cci->quantity = $si->item->quantity;
-					$cci->price = $si->item->price;
-					$cci->description = $si->item->description;
-					$cci->save();
+			   	if(isset($value->service_items)){
+				   	foreach($value->service_items as $si){
+						$cci = new Choulr_contracts_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						$cci->contract_id = $obj->id;
+						$cci->item_id = $si->item->id;
+						$cci->quantity = $si->quantity;
+						$cci->price = $si->item->price;
+						$cci->description = $si->description;
+						$cci->save();
+					}
 				}
 				//Meter
 				if($obj->water_meter_id > 0){
@@ -2305,14 +2366,16 @@ class Choulr extends REST_Controller {
 	   			if($os->exists()){
 	   				$os->delete_all();
 	   			}
-			   	foreach($value->service_items as $si){
-					$cci = new Choulr_contracts_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-					$cci->contract_id = $obj->id;
-					$cci->item_id = $si->item->id;
-					$cci->quantity = $si->quantity;
-					$cci->price = $si->price;
-					$cci->description = $si->description;
-					$cci->save();
+	   			if(isset($value->service_items)){
+				   	foreach($value->service_items as $si){
+						$cci = new Choulr_contracts_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						$cci->contract_id = $obj->id;
+						$cci->item_id = $si->item->id;
+						$cci->quantity = $si->quantity;
+						$cci->price = $si->price;
+						$cci->description = $si->description;
+						$cci->save();
+					}
 				}
 				//Meter
 				$owm = new Choulr_meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
