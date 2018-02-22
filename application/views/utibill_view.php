@@ -7821,13 +7821,14 @@
   		<style type="text/css">
 			* {
 				-webkit-print-color-adjust:true;
+				font-size: 20px!important;
 			}
 			.table-bordered > tbody > tr > td {
 				border: none !important;
 				padding: 5px;
 			}
 		</style>
-		<div class="span12 headerinv " style="    height: 100px;margin-bottom:0;  border-bottom: 2px solid \#000;padding: 15px 0;padding-bottom: 30px;#= banhji.InvoicePrint.formVisible#">
+		<div class="span12 headerinv " style="margin-top: 20px; height: 100px;margin-bottom:0;border-bottom: 2px solid \#000;padding: 15px 0;padding-bottom: 30px;#= banhji.InvoicePrint.formVisible#">
             <img class="logoP" style="position: absolute;left: 0;top: 20px;width: auto;height: 90px;" src="#: banhji.InvoicePrint.license.image_url#" alt="#: banhji.InvoicePrint.license.name#" title="#: banhji.InvoicePrint.license.name#" />
 			<div class="span12" align="center">
 				<h4 style="line-height: 40px;">#: banhji.InvoicePrint.license.name#</h4>					

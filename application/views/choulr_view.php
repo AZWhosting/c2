@@ -1461,57 +1461,130 @@
 <!--End Setting-->
 <!-- Lease Unit Center -->
 <script id="leaseUnitCenter" type="text/x-kendo-template">  
-    <div class="container">
-        <div class="row" style="margin-top: 30px;">
-            <div class="col-xs-12 col-sm-4 col-md-3" >
-                <div class="listWrapper" style="border: 1px solid #ddd;">
-                    <a href="#/lease_unit" style="width: 100%;clear: both;position: relative;text-align: center;float: none!important;padding: 10px 0;font-weight: bold;" class="btn btn-primary btn-icon glyphicons edit pull-right">Add Lease Unit</a>
-                    <div class="innerAll" style="height: 55px;">
-                        <div class="widget-search separator bottom" style="padding: 0;">
-                            <a class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></a>
-                            <div class="overflow-hidden">
-                                <input style="line-height: 26px;" type="search" placeholder="Number or Name..." data-bind="value: searchText, events:{change: search}">
+    <style>
+        /*.col-md-3{box-shadow: 2px 0px 12px 0px rgba(68,68,68,1);}*/
+        .col-md-3 {
+            float: left;
+            position: relative;
+            width: 154.5px;
+            height: 258px;
+            padding: 0px;
+            cursor: pointer;
+            background: #fff;
+            margin-right: 5.5px;
+            margin-bottom: 5.5px;
+        }
+        .col-md-5 {
+            background: #fff;
+        }
+        h3  {
+            font-size: 14px;
+            text-align: center;
+        }
+        .col-md-3 p  {
+            font-size: 14px;
+            text-align: center;
+            margin-bottom: 0px;
+        }
+        h1{
+            font-size: 17px;
+            color:#0eac00!important; 
+        }
+        .col-md-3 form  {
+            padding-right: 0px;
+            padding-left: 4px;
+        }
+        .col-md-2 p  {
+            font-size: 12px;
+            margin-top: 5px;
+        }
+        h4{
+            font-size: 14px ;
+        }
+        .pk1{
+            padding: 1px;
+        }
+    </style>
+    <div class="container" style="margin-top: 100px;">
+        <div class="row">
+            <div class="col-md-10">
+                <div class="col-md-12" style="padding: 0;padding-right: 5px;">
+                    <div class="cash-bg " style="padding: 5px;background: #0eac00;">
+                        <div class="col-md-8"> 
+                            <div class="col-md-12" style="margin-top: 10px;">
+                                <span><b style="color: #fff;font-size: 20px;float: left;padding-top: 15px;">LEASE UNIT</b></span>
+                                <form class="navbar-form pull-left hidden-xs">
+                                    <input id="search-placeholder" class="span2 search-query" type="text" placeholder="Search" data-bind="value: searchText" style="width: 222px;" />
+                                    <button class="btn btn-inverse" type="submit" data-bind="click: search" style="background-color: #56882e !important;border-radius: 2px;">
+                                        <i class="icon-search iconsearch"></i>
+                                    </button>
+                                </form>
                             </div>
                         </div>
+                        <div class="col-md-4" style="padding-left: 0px;padding-right: 10px;">
+                            <div class="col-md-4"> 
+                                <a href="#/contract" class="hvr-float">
+                                    <img title="add contract" src="<?php echo base_url(); ?>assets/choulr/img/add-contract.png" width="60">
+                                 </a>
+                            </div>
+                            <div class="col-md-4"> 
+                                <a href="#/lease_unit" class="hvr-float">
+                                    <img title="add lease unit" src="<?php echo base_url(); ?>assets/choulr/img/add-lease-unit.png" width="60">
+                                 </a>
+                            </div>
+                            <div class="col-md-4"> 
+                                <a href="#/lease_unit" class="hvr-float">
+                                    <img title="add mater" src="<?php echo base_url(); ?>assets/choulr/img/add_mater.png" width="60">
+                                 </a>
+                            </div>
+                        </div>   
                     </div>
-                    <span class="results"><span data-bind="text: contactDS.total"></span> <span data-bind="text: lang.lang.found_search"></span></span>
-                    <div class="table table-condensed" id="listContact" style="height: 580px; margin-bottom: 0;"
-                         data-role="grid"
-                         data-bind="source: leaseUnitDS"
-                         data-row-template="lease-unit-list-tmpl"
-                         data-columns="[{title: 'Lease Units'}]"
-                         data-selectable="true"
-                         data-height="475"
-                         data-auto-bind="true"
-                         data-scrollable="{virtual: true}">
-                    </div>
-                </div>  
-            </div>
-            <div class="col-xs-12 col-sm-8 col-md-9 ">
-                <div class="listWrapper" style="border: 1px solid #ddd;min-height: 652px;width: 50%;">
-                    <div class="row" style="margin-bottom: 15px;">
-                        <div class="col-xs-12 col-xs-6" style="margin-bottom: 15px;">
-                            <button style="width: 100% !important; float: left; margin-right: 8px;" class="btn-btn btn-width-100 btn-center-text btn-md margin" data-bind="click: goLU">Edit Lease Unit
-                            </button>
-                            <table>
-                                <tr>
-                                    <td data-bind="text: lang.lang.name"></td>
-                                    <td data-bind="text: obj.name"></td>
-                                </tr>
-                                <tr>
-                                    <td data-bind="text: lang.lang.status"></td>
-                                    <td data-bind="text: obj.status_detail"></td>
-                                </tr>
-                                <tr>
-                                    <td>Visitor Number</td>
-                                    <td data-bind="text: obj.visitor_number"></td>
-                                </tr>
-                            </table>
+                </div>
+                <div class="col-md-3">
+                    <div class="row-fluid">
+                        <div class="col-xs-12 col-sm-12 col-md-12 pk1 hvr-shrink">
+                             <img src="<?php echo base_url();?>/assets/choulr/img/no_image.png"/>
+                                <p>Name....................</p>
+                                <p>Status...................</p>
+                                <p>Contract...............</p>
                         </div>
+                        <form class="navbar-form pull-left hidden-xs">
+                        <button class="btn btn-inverse" type="edit" data-bind="click: search" style="background-color: #254809 !important;border-radius: 1px;">
+                            <i class="icon-idit">Edit</i>
+                        </button>
+                        <button class="btn btn-inverse" type="edit" data-bind="click: search" style="background-color: #45ce54 !important;border-radius: 1px;margin-left: 0px;">
+                            <i class="icon-idit">Maintenance</i>
+                        </button>
+                        </form>
+                    </div>
+                </div>
+                
+                <div class="col-md-12" style="padding-left: 0px;padding-right: 5px;margin-bottom: 5px;" >
+                    <div style="background: #0eac00;height: 50px;">
                     </div>
                 </div>
             </div>
+            <div class="col-md-2" style="background: #fff;padding: 10px;height: 669px;">
+                <div style="margin-bottom: 25px;">
+                    <img src="<?php echo base_url();?>/assets/choulr/img/no_image1.png" width="100%" />
+                           
+                </div>
+                <div>
+                    <h1 style="margin-bottom: 20px;"><b>LEASE UNIT INFO</b></h1>
+                    <h4><b>Lease Unit</b>
+                        <p>Lease Unit No: 101 <br>Property: ABC Co., Ltd <br> Contract No: PMC101-0001 <br>Customer Name: Mr. Peng Pos <br>Sale Person        :</p>
+
+                    </h4>
+                    <h4><b>Area</b>
+                        <p>Vacant From:  <br>Contract End:<br>Statue: Rented, Vacant, <br>Maintenance<br>Object Area : 60 m2<br>Amenity :<br>Other :</p>
+                    </h4>
+                    <h4><b>Lease Unit Statistic</b>
+                        <p>Turn Over :<br>Balance : 60 m2<br>Invoice :<br>Avg Invoice :<br>Rent Num :</p>
+                    </h4>
+                </div>
+            </div>
         </div>
+    </div>
     </div>
 </script>
 <script id="leaseUnit" type="text/x-kendo-template">
