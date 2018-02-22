@@ -7821,7 +7821,7 @@
   		<style type="text/css">
 			* {
 				-webkit-print-color-adjust:true;
-				font-size: 20px!important;
+				font-size: 16px!important;
 			}
 			.table-bordered > tbody > tr > td {
 				border: none !important;
