@@ -16678,6 +16678,7 @@
 							<div class="widget-head">
 								<ul style="padding-left: 1px;">
 									<li class="active"><a class="glyphicons group" href="#tabNum" data-toggle="tab"><i></i><span style="line-height: 55px;">Invoice Number</span></a></li>
+									<li><a class="glyphicons group" href="#tabMeter" data-toggle="tab"><i></i><span style="line-height: 55px;">By Meter</span></a></li>
 								</ul>
 							</div>
 							<div class="widget-body">
@@ -16719,11 +16720,11 @@
 										  	<input type="file"  
 										  		data-role="upload" 
 										  		data-show-file-list="true" 
-										  		data-bind="events: {select: onSelected}" 
+										  		data-bind="events: {select: onMeterSelected}" 
 										  		id="myFile"  class="margin-none" />
 										</div>
 										<span class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 160px!important;"><i></i>
-										<span data-bind="click: save">Start Import</span></span>
+										<span data-bind="click: saveMeter">Start Import</span></span>
 									</div>
 									<div id="tabContact" style="border: 1px solid #ccc" class="tab-pane widget-body-regular">
 										<h4 class="separator bottom" style="margin-top: 10px;">Recieve By Customer Number</h4>

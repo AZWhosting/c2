@@ -1210,7 +1210,7 @@ class Utibills extends REST_Controller {
 
 		return $number;
 	}
-	function receiptauto_post(){
+	function receiptautometer_post(){
 		$models = json_decode($this->post('models'));
 		$data["results"] = [];
 		$data["count"] = 0;
@@ -1218,13 +1218,13 @@ class Utibills extends REST_Controller {
 		foreach ($models as $value) {
 			$val = floatval($value->receive);
 			if($val > 0){
+				$IsD = $value->issued_date;
 				$meter = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				$meter->where('number', $value->meter_number)->order_by("id", "desc")->limit(1)->get();
 				if($meter->exists()){
 					$tran = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 					$tran->where("meter_id", $meter->id)->order_by("id", "desc")->limit(1)->get();
 					if($tran->exists()){
-						$IsD = date('Y-m-d');
 						// Generate Number
 						$number = $this->_generate_number("Cash_Receipt", $IsD);
 						$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
@@ -1404,13 +1404,13 @@ class Utibills extends REST_Controller {
 		$number = "";
 		foreach ($models as $value) {
 			if($value->receive > 0){
+				$IsD = $value->issued_date;
 				$contact = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				$contact->where('number', $value->contact_number)->order_by("id", "desc")->limit(1)->get();
 				if($contact->exists()){
 					$tran = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 					$tran->where("contact_id", $contact->id)->order_by("id", "desc")->limit(1)->get();
 					if($tran->exists()){
-						$IsD = date('Y-m-d');
 						// Generate Number
 						$number = $this->_generate_number("Cash_Receipt", $IsD);
 						$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
