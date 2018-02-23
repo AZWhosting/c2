@@ -2615,8 +2615,26 @@ class Choulr extends REST_Controller {
 						$rentprice += floatval($p->amount) / floatval($rate);
 					}
 				}
+				//Item
+				$item = new Choulr_contracts_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$item->where("contract_id", $value->id)->get_iterated();
+				$itemar = [];
+				$itemamount = 0;
+				if($item->exists()){
+					foreach($item as $it){
+						$itemar[] = array(
+							"contract_id" 	=> intval($it->contract_id),
+							"item_id" 		=> intval($it->item_id),
+							"description" 	=> $it->description,
+							"price" 		=> floatval($it->price),
+							"quantity" 		=> floatval($it->quantity),
+							"amount" 		=> floatval($it->quantity) * floatval($it->price),
+						);
+						$itemamount += floatval($it->price) * floatval($it->quantity);
+					}
+				}
 				//Total
-				$total = floatval($rentprice) + $wprice + $eprice;
+				$total = floatval($rentprice) + $wprice + $eprice + $itemamount;
 				//Result Respone
 				$data["results"][] = array(
 					"id" 					=> $value->id,
@@ -2638,6 +2656,7 @@ class Choulr extends REST_Controller {
 					"rent_ar" 				=> $rent,
 					"lease_unit" 			=> $leaseunit,
 					"total" 				=> $total,
+					"item_ar" 				=> $itemar,
 				);	
 			}
 		}
@@ -2739,11 +2758,40 @@ class Choulr extends REST_Controller {
 		   				$record->invoiced = 1;
 		   				$record->save();
 		   			}
+		   			//Upload Item
+		   			if($row->type == 'item'){
+			   			$item = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			   			$item->where("id", $row->item_id)->limit(1)->get();
+			   			$i = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						$i->transaction_id = $obj->id;
+						$i->item_id = $row->item_id;
+						$i->contact_id = $obj->contact_id;
+						$i->measurement_id = $item->measurement_id;
+						$i->description = $row->name;
+						$i->quantity = $row->usage;
+						$i->conversion_ratio = 1;
+						$i->price = $row->price;
+						$i->amount = $row->amount;
+						$i->rate = $row->rate;
+						$i->locale = $row->locale;
+						$i->movement = 0;
+						$i->save();
+					}
 		   		}
+		   		$contactar = array(
+		   			"id" 		=> $con->id,
+		   			"name" 		=> $con->name,
+		   			"number" 	=> $con->number,
+		   			"address" 	=> $con->address,
+		   			"phone" 	=> $con->phone,
+		   			"email" 	=> $con->email,
+		   			"vat_no" 	=> $con->vat_no,
+		   		);
 			   	$data["results"][] = array(
 			   		"id" 				=> $obj->id,
 					"location_id" 		=> $obj->location_id,
 					"contact_id" 		=> $obj->contact_id,
+					"contactar" 		=> $contactar,
 					"account_id" 		=> $obj->account_id,
 					"vat_id"			=> $obj->vat_id,
 					"biller_id" 		=> $obj->biller_id,

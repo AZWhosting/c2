@@ -9194,8 +9194,6 @@
                 logic: "or",
                 filters: [
                     { field: "type", value: "Commercial_Invoice" },
-                    { field: "type", value: "Vat_Invoice" },
-                    { field: "type", value: "Invoice" }
                 ]
             }
         }),
@@ -9343,17 +9341,36 @@
                         "type": "electricity_meter"
                     });
                 }
+                //Item
+                if(v.item_ar.length > 0){
+                    $.each(v.item_ar, function(l,m){
+                        if(v.price > 0){
+                            invoiceItems.push({
+                                "item_id": m.item_id, //Meter Record ID
+                                "rate": v.rate,
+                                "name": m.description,
+                                "price": m.price,
+                                "amount": m.amount,
+                                "locale": v.locale,
+                                "usage": m.quantity,
+                                "type": "item"
+                            });
+                        }
+                    });
+                }
                 //price rent
-                if(v.rent_price > 0) {
-                    invoiceItems.push({
-                        "item_id": v.rent_ar.id, //Meter Record ID
-                        "rate": v.rent_ar.rate,
-                        "name": v.rent_ar.name,
-                        "price": v.rent_ar.price,
-                        "amount": v.rent_ar.amount,
-                        "locale": v.rent_ar.locale,
-                        "usage": 0,
-                        "type": "rent"
+                if(v.rent_ar.length > 0) {
+                    $.each(v.rent_ar, function(j,k){
+                        invoiceItems.push({
+                            "item_id": k.id,
+                            "rate": k.rate,
+                            "name": k.name,
+                            "price": 0,
+                            "amount": k.amount,
+                            "locale": k.locale,
+                            "usage": 0,
+                            "type": "rent"
+                        });
                     });
                 }
                 var Total = v.total;
@@ -9394,7 +9411,7 @@
             this.invoiceCollection.add({
                 contact_id: Contact,
                 biller_id: banhji.userData.id,
-                type: "Invoice",
+                type: "Commercial_Invoice",
                 amount: Total,
                 rate: rate,
                 locale: locale,
@@ -9413,11 +9430,18 @@
             var self = this;
             if (this.get("FmonthSelect") && this.get("BillingDate") && this.get("IssueDate") && this.get("DueDate")) {
                 $("#loadImport").css("display", "block");
-                if(this.tmpGroup.length > 0){
-                    this.calGroupInv();
-                }else{
-                    this.saveInoices();
-                }
+                this.invoiceCollection.sync();
+                this.invoiceCollection.bind("requestEnd", function(e){
+                    if(e.response.type != 'read'){
+                        successSend();
+                        $("#loadImport").css("display", "none");
+                        banhji.previewInvoice.dataSource = [];
+                        $.each(e.response.results, function(i,v){
+                            banhji.previewInvoice.dataSource.push(v);
+                        });
+                        banhji.router.navigate('/preview_invoice');
+                    }
+                });
             } else {
                 alert("Fields Required!");
             }
@@ -9922,6 +9946,212 @@
         cancel: function() {
             this.clearAll();
             banhji.router.navigate("/");
+        }
+    });
+    banhji.previewInvoice = kendo.observable({
+        lang: langVM,
+        dataSource: [],
+        isVisible: true,
+        company: banhji.institute,
+        license: [],
+        TemplateSelect: null,
+        txnFormID: null,
+        user_id: banhji.userManagement.getLogin() === null ? '' : banhji.userManagement.getLogin().id,
+        pageLoad: function() {
+            if (this.dataSource.length <= 0) {
+                banhji.router.navigate('/print_bill');
+            }
+            var self = this,
+                TempForm = $("#commercialInvoice").html();
+            // switch(this.txnFormID){
+            //     case "45":
+            //         TempForm = $("#InvoiceFormTemplate2").html();
+            //         break;
+            //     case "49":
+            //         TempForm = $("#InvoiceFormElectric").html();
+            //         break;
+            //     case "32":
+            //         TempForm = $("#invoiceServiceNormal").html();
+            //         break;
+            //     case "1":
+            //         TempForm = $("#invoiceServiceCommercial").html();
+            //         break;
+            //     case "7":
+            //         TempForm = $("#depositForm").html();
+            //         break;
+            //     case "44":
+            //         TempForm = $("#formFrame").html();
+            //         break;
+            //     default:
+            //         TempForm = $("#InvoiceFormTemplate1").html();
+            // }
+            $("#wInvoiceContent").kendoListView({
+                dataSource: this.dataSource,
+                template: kendo.template(TempForm)
+            });
+            // this.barcod("do");
+        },
+        barcod: function(re) {
+            var view = this.dataSource;
+            for (var i = 0; i < view.length; i++) {
+                var d = view[i];
+                if (re == "reset") {
+                    $("#secondwnumber" + d.id).css("height", "0px").data("kendoBarcode").resize();
+                    $("#footwnumber" + d.id).css("height", "0px").data("kendoBarcode").resize();
+                } else {
+                    $("#secondwnumber" + d.id).kendoBarcode({
+                        renderAs: "svg",
+                        value: d.number,
+                        type: "code128",
+                        width: 200,
+                        height: 25,
+                        text: {
+                            visible: false
+                        }
+                    });
+                    $("#footwnumber" + d.id).kendoBarcode({
+                        renderAs: "svg",
+                        value: d.number,
+                        type: "code128",
+                        width: 200,
+                        height: 25,
+                        text: {
+                            visible: false
+                        }
+                    });
+                }
+                var DataM = [],
+                    MonthM = [];
+                $.each(d.minusMonth, function(i, v) {
+                    DataM.push(v.usage);
+                    MonthM.push(v.month);
+                });
+                $("#monthchart" + d.id).kendoChart({
+                    title: {
+                        text: ""
+                    },
+                    series: [{
+                        name: "",
+                        data: DataM,
+                        color: '#236DA4',
+                        overlay: {
+                            gradient: 'none'
+                        }
+                    }],
+                    categoryAxis: {
+                        categories: MonthM
+                    }
+                });
+            }
+        },
+        printGrid: function() {
+            var self = this,
+                Win, pHeight, pWidth, ts;
+            Win = window.open('', '', 'width=1050, height=900');
+            pHeight = "215mm";
+            pWidth = "297mm";
+            var colorM = this.formColor;
+            if (colorM == '#000000' || colorM == '#1f497d' || colorM == null) {
+                ts = 'color: #fff!important;';
+            } else {
+                ts = 'color: #333;';
+            }
+            banhji.invoice.dataSource.sync();
+            var gridElement = $('#grid'),
+                printableContent = '',
+                win = Win,
+                doc = win.document.open();
+            var htmlStart =
+                '<!DOCTYPE html>' +
+                '<html>' +
+                '<head>' +
+                '<meta charset="utf-8" />' +
+                '<title></title>' +
+                '<link rel="stylesheet" href="<?php echo base_url(); ?>resources/js/kendoui/styles/kendo.bootstrap.min.css">' +
+                '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
+                '<link href="<?php echo base_url(); ?>assets/water/water.css" rel="stylesheet" />' +
+                '<link href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/js/kendoui/styles/kendo.common.min.css" rel="stylesheet" />' +
+                '<link href="<?php echo base_url(); ?>assets/water/winvoice-print.css" rel="stylesheet" />' +
+                '<link href="<?php echo base_url(); ?>assets/invoice/invoice.css" rel="stylesheet" />' +
+                '<link href="<?php echo base_url(); ?>assets/responsive.css" rel="stylesheet" />' +
+                '<link href="https://fonts.googleapis.com/css?family=Preahvihear" rel="stylesheet" />' +
+                '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
+                '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
+                '<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Battambang&amp;subset=khmer" media="all">' +
+                '<style type="text/css" media="print">' +
+                '@page { size: portrait; margin:0.1cm;' +
+                'size: A4;' +
+                '} ' +
+                '* {font-weight: lighter!important;}' +
+                '@media print {' +
+                'html, body {' +
+                'max-width: ' + pWidth + ';' +
+                'max-height: ' + pHeight + ';' +
+                'min-width: ' + pWidth + ';' +
+                'min-height: ' + pHeight + ';' +
+                '}' +
+                '.main-color {' +
+                'background-color: ' + colorM + '!important; ' + ts +
+                '-webkit-print-color-adjust:exact; ' +
+                '} ' +
+                '}' +
+                '.main-color {' +
+                'background-color: ' + colorM + '!important; ' + ts +
+                '-webkit-print-color-adjust:exact; ' +
+                '} ' +
+                '.inv1 .light-blue-td { ' +
+                'background-color: #c6d9f1!important;' +
+                'text-align: left;' +
+                'padding-left: 5px;' +
+                '-webkit-print-color-adjust:exact; ' +
+                '}' +
+                '.logoP{ max-height 50px;max-width100px}' +
+                '.inv1 thead tr {' +
+                'background-color: rgb(242, 242, 242)!important;' +
+                '-webkit-print-color-adjust:exact; ' +
+                '}' +
+                '.pcg .mid-title div {}' +
+                '.pcg .mid-header {' +
+                'background-color: #dce6f2!important; ' +
+                '-webkit-print-color-adjust:exact; ' +
+                '}' +
+                '.winvoice-print table thead .darkbblue, .winvoice-print table tbody td.darkbblue { ' +
+                'background-color: #355176!important;' +
+                'color: #fff!important;' +
+                '-webkit-print-color-adjust:exact; ' +
+                '}' +
+                '.winvoice-print table td.greyy {' +
+                'background-color: #ccc!important;-webkit-print-color-adjust:exact;' +
+                '}' +
+                '.inv1 span.total-amount { ' +
+                'color:#fff!important;' +
+                '}</style>' +
+                '</head>' +
+                '<body style="background: #fff;"><div class="row-fluid" ><div id="example" class="k-content" style="width: 1000px;overflow: hidden">';
+            var htmlEnd =
+                '</div></div></body>' +
+                '</html>';
+            printableContent = $('#wInvoiceContent').html();
+            doc.write(htmlStart + printableContent + htmlEnd);
+            doc.close();
+            setTimeout(function() {
+                win.print();
+                //win.close();
+            }, 2000);
+        },
+        hideFrameInvoice: function(e) {
+            var printBtn = e.target;
+            if (printBtn.checked) {
+                $(".hiddenPrint").css("visibility", "hidden");
+            } else {
+                $(".hiddenPrint").css("visibility", "visible");
+            }
+        },
+        cancel: function() {
+            this.dataSource = [];
+            var listview = $("#wInvoiceContent").data("kendoListView");
+            listview.refresh();
+            window.history.back();
         }
     });
     banhji.Receipt = kendo.observable({
@@ -19774,6 +20004,9 @@
         Receipt: new kendo.Layout("#Receipt", {
             model: banhji.Receipt
         }),
+        previewInvoice: new kendo.Layout("#previewInvoice", {
+            model: banhji.previewInvoice
+        }),
         Reports: new kendo.Layout("#Reports", {
             model: banhji.Reports
         }),
@@ -20119,6 +20352,18 @@
             banhji.pageLoaded["print_bill"] = true;
         }
         vm.pageLoad();
+    });
+    banhji.router.route("/preview_invoice", function() {
+        if (!banhji.userManagement.getLogin()) {
+            banhji.router.navigate('/manage');
+        } else {
+            banhji.view.layout.showIn("#content", banhji.view.previewInvoice);
+            var vm = banhji.previewInvoice;
+            if (banhji.pageLoaded["preview_invoice"] == undefined) {
+                banhji.pageLoaded["preview_invoice"] = true;
+            }
+            vm.pageLoad();
+        }
     });
     banhji.router.route("/receipt", function() {
         localforage.getItem('user')

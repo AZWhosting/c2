@@ -3771,10 +3771,8 @@
                                 data-bind="click: cancel"><i></i></span>
                         </div>
                         <div class="clear"></div>
-
                         <div class="row" style="clear:both;">
                             <div class="col-sx-12 col-sm-2">
-                                <!-- Group -->
                                 <div class="control-group">                             
                                     <label ><span data-bind="text: lang.lang.month_of">Month Of</span></label>
                                     <input type="text" 
@@ -3786,8 +3784,6 @@
                                         placeholder="Moth of ..." 
                                         data-bind="value: monthSelect" />
                                 </div>
-                                                                                                    
-                                    <!-- // Group END -->
                             </div>  
                             <div class="col-sx-12 col-sm-2">
                                 <div class="control-group">                             
@@ -3814,7 +3810,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="row saleSummaryCustomer" style="margin-top: 15px;">
                             <div class="col-sm-12" >
                                 <div class="row">
@@ -3831,9 +3826,9 @@
                                         </div>
                                     </div>
                                     <div class="col-xs-12 col-sm-4">
-                                        <div class="total-customer" style="width: 100%; background: #f4f5f8; padding: 15px;">                                           
+                                        <div class="total-customer" style="width: 100%; background: #f4f5f8; padding: 15px;">
                                             <p data-bind="text: lang.lang.amount">Amount</p>
-                                            <span data-bind="text: amountSold"></span>                                          
+                                            <span data-bind="text: amountSold"></span> 
                                         </div>
                                     </div>
                                 </div>
@@ -3850,7 +3845,7 @@
                                         <th style="vertical-align: top;"><span>Meter m3</span></th>
                                         <th style="vertical-align: top;"><span>Meter kwh</span></th>
                                         <th style="vertical-align: top;"><span >Rent</span></th>
-                                        <th style="vertical-align: top;"><span data-bind="text: lang.lang.total">Total</span></th>                      
+                                        <th style="vertical-align: top;"><span data-bind="text: lang.lang.total">Total</span></th>        
                                     </tr>
                                 </thead>
                                 <tbody data-role="listview" 
@@ -3864,10 +3859,8 @@
                                  data-auto-bind="false"
                                  data-role="pager" data-bind="source: invoiceDS"></div>
                         </div>
-
                         <div class="row" style="margin-bottom: 15px;">
                             <div class="col-xs-12 col-sm-3">
-                                <!-- Group -->
                                 <div class="control-group">                             
                                     <label ><span data-bind="text: lang.lang.month_of">Month Of</span></label>
                                     <input type="text" 
@@ -3922,7 +3915,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="box-generic bg-action-button">
                             <div id="ntf1" data-role="notification"></div>
                             <div class="row">
@@ -3931,13 +3923,12 @@
                                            data-value-primitive="true"
                                            data-text-field="name"
                                            data-value-field="id"
-                                           data-bind="value: obj.transaction_template_id,
+                                           data-bind="value: txnForm,
                                                       source: txnTemplateDS"
                                            data-option-label="Select Template..." />
-                                    
                                 </div>
                                 <div class="span8" align="right">
-                                    <span class="btn-btn" data-bind="click: save, visible: showButton" ><i></i> <span data-bind="text: lang.lang.run_bill">Run Bill</span></span>                                   
+                                    <span class="btn-btn" data-bind="click: save, visible: showButton" ><i></i> <span data-bind="text: lang.lang.run_bill">Run Bill</span></span>      
                                     <span class="btn-btn" data-bind="click: cancel" ><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
                                 </div>
                             </div>
@@ -4084,6 +4075,171 @@
             </div>
         </div>
     </div>      
+</script>
+<script id="previewInvoice" type="text/x-kendo-template">
+    <div class="container">
+        <div class="row-fluid">
+            <div class="background">
+                <div class="row-fluid">
+                    <div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 100%;margin-top: -15px;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
+                        <i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
+                    </div>
+                    <div id="example" class="k-content">
+                        <div style="clear:both;position: relative;">
+                            <h2 data-bind="text: lang.lang.invoice_preview">Invoice Preview</h2>
+                            <div class="hidden-print pull-right">
+                                <span class="glyphicons no-js remove_2" 
+                                    data-bind="click: cancel"><i></i></span>
+                            </div>
+                        </div>
+
+                        <span id="savePrint" class="btn btn-icon btn-primary glyphicons print" data-bind="click: printGrid" style="width: 120px; margin-bottom: 15px; float: none; clear: both;"><i></i><span data-bind="text: lang.lang.save_pdf">Save PDF</span></span>
+                        <div class="clear"></div>
+
+                        <div id="wInvoiceContent" style="margin-bottom: 15px;"></div>
+
+                        <!-- Form actions -->
+                        <div class="box-generic bg-action-button" align="right">
+                            <span id="notification"></span>
+                            <span class="btn-btn" data-bind="click: cancel" ><span data-bind="text: lang.lang.cancel">Cancel </span></span> 
+                            <span id="savePrint" class="btn-btn" data-bind="click: printGrid"><span data-bind="text: lang.lang.save_pdf">Save PDF</span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+<!-- Invoice Form-->
+<script id="invoiceForm1" type="text/x-kendo-template">
+    <div class="inv1">
+        <div class="head" style="width: 90%">
+            <div class="logo">
+                <img class="logoP" style="position: absolute;left: 0;top: 20px;width: auto;height: 90px;" src="#: banhji.institute.logo.url#" alt="#: banhji.institute.name#" title="#: banhji.institute.name#" />
+            </div>
+            <div class="cover-name-company" style="margin-left: 20px;width: 50%;float: left;">              
+                <h3 style="text-align:left;"># :banhji.institute.name#</h3>
+                <div class="vattin">
+                    <p>លេខ​អត្ត​សញ្ញាណ​កម្ម អតប (VATTIN)</p><span id="vat_number" >#: banhji.institute.vat_number#</span>
+                </div>
+                <div class="clear">                 
+                    <p style="font-size: 10px;">ទូរស័ព្ទលេខ HP <span style="font-size: 12px;">#: banhji.institute.telephone#</span></p>
+                    <p style="font-size: 10px;">អាស័យ​ដ្ឋាន Address: <span>#: banhji.institute.address#</span></p>
+                </div>
+            </div>
+        </div>
+        <div class="content">
+            <div style="overflow: hidden;padding:10px 0;">
+                <h1>វិក្កយបត្រ</h1>
+                <h2>Invoice</h2>
+            </div>
+            <div class="clear mid-header" style="padding: 10px;background: \#dce6f2;padding-bottom: 10px;">
+                <div class="cover-customer">
+                    <h5>ព័ត៌មានអតិថិជន​ CUSTOMER INFO:</h5>
+                    <div class="clear">
+                        <div class="left dotted-ruler" style="width: 62%;">
+                            <p style="font-size: 12px; line-height: 20px;">ឈ្មោះ Name : <span>#: contactar.name#</span><br>
+                            អាស័យ​ដ្ឋាន Address : <span>#: contactar.address#</span><br>
+                            លេខទូរស័ព្ទ Tel : <span>#: contactar.phone#</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="vattin">
+                    <p>លេខ​អត្ត​សញ្ញាណ​កម្ម អតប (VATTIN)</p><span id="vat_number">#: contactar.vat_no"></span><p style="font-size:8px;font-weight:normal;margin-left: 8px;">(ប្រសិន​បើ​មាន / If any)</p>
+                    </div>
+                </div>
+                <div class="cover-inv-number" style="width: 42%;">
+                    <div class="clear">
+                        <div class="left">
+                            <p>លេខ No. :</p>
+                        </div>
+                        <div class="left dotted-ruler" style="width: 42%;">
+                            <span>#: number#</span>-<span style="font-weight:bold">#: banhji.institute.id#</span>
+                        </div>
+                    </div>
+                    <div class="clear">
+                        <div class="left">
+                            <p>កាល​បរិច្ឆេទ Date:</p>
+                        </div>
+                        <div class="left dotted-ruler" style="width: 57%;">
+                            <p style="font-weight:bold">#: issued_date#</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clear">
+                <table cellpadding="0" cellspacing="0" border="1" class="span12">
+                    <thead>
+                        <tr class="main-color" style="height: 45px;">
+                            <th style="text-align: center;">ល.រ<br />N<sup>0</sup></th>
+                            <th style="text-align: center;">បរិយាយ​មុខ​ទំនិញ<br />Description</th>
+                            <th style="text-align: center;">បរិមាណ<br />Quantity</th>
+                            <th style="text-align: center;">ថ្លៃឯកតា​<br />Unit Price</th>
+                            <th style="text-align: center;">ថ្លៃ​ទំនិញ<br />Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody style="margin-top: 2px" id="formListView">
+                        #$.each(invoice_lines, function(i,v){#
+                            #if(v.type == 'electricity_meter'){#
+                                <tr>
+                                    <td><i>#:i+1#</i>&nbsp;</td>
+                                    <td class="lside">#: name# (#: usage#kwh)</td>
+                                    <td>1</td>
+                                    <td class="rside" width="70">#= kendo.toString(v.price, "c", locale) #</td>
+                                    <td class="rside">#= kendo.toString(v.amount, "c", locale) #</td>
+                                </tr>
+                            #}else if(v.type == 'water_meter'){#
+                                <tr>
+                                    <td><i>#:i+1#</i>&nbsp;</td>
+                                    <td class="lside">#: name# (#: usage#kwh)</td>
+                                    <td>1</td>
+                                    <td class="rside" width="70">#= kendo.toString(v.price, "c", locale) #</td>
+                                    <td class="rside">#= kendo.toString(v.amount, "c", locale) #</td>
+                                </tr>
+                            #}else{#
+                                <tr>
+                                    <td><i>#:i+1#</i>&nbsp;</td>
+                                    <td class="lside">#: name#</td>
+                                    <td>1</td>
+                                    <td class="rside" width="70">#= kendo.toString(v.price, "c", locale) #</td>
+                                    <td class="rside">#= kendo.toString(v.amount, "c", locale) #</td>
+                                </tr>
+                            #}#
+                        #})#
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">បញ្ចុះតម្លៃ Discount</td>
+                            <td style="text-align: right; padding-right: 5px;"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">សរុប (បូក​បញ្ចូល​ទាំង​អាករ)​ Total (VAT included)</td>
+                            <td style="text-align: right; padding-right: 5px;">#: amount#</td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">ប្រាក់កក់ Deposit</td>
+                            <td style="text-align: right; padding-right: 5px;"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">សាច់ប្រាក់ត្រូវទូទាត់ Amount Due</td>
+                            <td style="text-align: right; padding-right: 5px;"></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        <div class="foot">
+            <div class="cover-signature">
+                <div class="singature" style="float:left">
+                    <p>ហត្ថលេខា និងឈ្មោះ​អ្នក​ទិញ<br />Customer's Signature & Name</p>
+                </div>
+                <div class="singature" style="float:right">
+                    <p>ហត្ថលេខា និងឈ្មោះ​អ្នកលក់<br />Seller's Signature & Name</p>
+                </div>
+            </div>
+            <h6 style="padding-left: 35px;">សម្គាល់៖ <span>ច្បាប់​ដើម​សម្រាប់​អ្នក​ទិញ ច្បាប់​ចម្លង​សម្រាប់​អ្នក​លក់</span><br /><span style="font-size: 10px"><strong>Note:</strong> Original invoice for customer, copied invoice for seller</span></h6>
+        </div>
+    </div>
 </script>
 <!--Template-->
 <!-- General -->

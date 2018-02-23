@@ -4317,8 +4317,6 @@
                             $("#loadImport").css("display", "none");
                             $('li.k-file').remove();
                             self.dataSource.data([]);
-                            self.set("monthOfUpload", "");
-                            self.set("toDateUpload", "");
                             banhji.router.navigate("/run_bill");
                         }
                     }
