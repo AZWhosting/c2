@@ -1223,7 +1223,9 @@ class Utibills extends REST_Controller {
 				$meter->where('number', $value->meter_number)->order_by("id", "desc")->limit(1)->get();
 				if($meter->exists()){
 					$tran = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-					$tran->where("meter_id", $meter->id)->order_by("id", "desc")->limit(1)->get();
+					$tran->where("meter_id", $meter->id)->order_by("id", "desc");
+					$tran->where("status", 1)->limit(1)->get();
+					
 					if($tran->exists()){
 						// Generate Number
 						$number = $this->_generate_number("Cash_Receipt", $IsD);
