@@ -34,13 +34,7 @@ class UtibillReports extends REST_Controller {
 		$sort 	 	= $this->get("sort");
 		$data["results"] = [];
 		$data["count"] = 0;
-		$activeCount = 0;
-		$inactiveCount = 0;
-		$totalDeposit = 0;
-		$totalSale = 0;
-		$totalBalance = 0;
-		$totalUsage = 0;
-		$total = 0;
+		
 
 		$obj = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
@@ -76,6 +70,13 @@ class UtibillReports extends REST_Controller {
 		$data["count"] = $obj->result_count();
 		if($obj->exists()){
 			foreach ($obj as $value) {
+				$activeCount = 0;
+				$inactiveCount = 0;
+				$totalDeposit = 0;
+				$totalSale = 0;
+				$totalBalance = 0;
+				$totalUsage = 0;
+				$total = 0;
 				$blockname = $value->name;
 				//Number Of Custoemr active and inactive
 				$con = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
