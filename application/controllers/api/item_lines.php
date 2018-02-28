@@ -101,6 +101,31 @@ class Item_lines extends REST_Controller {
 					"measurement"		=> $value->measurement_name ? $value->measurement_name : ""
 				);
 
+				//Item Price
+				$item_price = [];
+				if($value->measurement_id>0){
+					$itemPrices = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$itemPrices->where("item_id", $value->item_id);
+					$itemPrices->where("measurement_id", $value->measurement_id);
+					$itemPrices->where("assembly_id", 0);
+					$itemPrices->limit(1);
+					$itemPrices->get();
+					if($itemPrices->exists()){
+						$item_price = array(
+							"id" 				=> $itemPrices->id,
+							"item_id" 			=> $itemPrices->item_id,
+							"assembly_id" 		=> $itemPrices->assembly_id,
+							"measurement_id" 	=> $itemPrices->measurement_id,
+							"quantity" 			=> floatval($itemPrices->quantity),
+							"conversion_ratio" 	=> floatval($itemPrices->conversion_ratio),
+							"price" 			=> floatval($itemPrices->price),
+							"amount" 			=> floatval($itemPrices->amount),
+							"locale" 			=> $itemPrices->locale,
+							"measurement" 		=> $value->measurement_name
+						);
+					}
+				}
+
 				//Tax Item
 				$tax_item = array(
 					"id" 			=> $value->tax_item_id,
@@ -221,6 +246,7 @@ class Item_lines extends REST_Controller {
 				   	
 				   	"item" 				=> $item,
 				   	"measurement" 		=> $measurement,
+				   	"item_price" 		=> $item_price,
 				   	"tax_item" 			=> $tax_item,
 				   	"wht_account" 		=> $wht_account,
 				   	"item_prices"		=> $measurement,
