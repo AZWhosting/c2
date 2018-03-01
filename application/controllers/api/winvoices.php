@@ -588,8 +588,25 @@ class Winvoices extends REST_Controller {
 				$remain->where("deleted", 0);
 				$remain->where("status <>", 1)->get_iterated();
 				$amountOwed = 0;
+				$fineAmount = 0;
 				foreach($remain as $rem) {
-					$amountOwed += $rem->amount;
+					$fine = new Winvoice_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$fine->where("transaction_id", $rem->id);
+					$fine->where("type", "fine")->order_by("id", "desc")->limit(1)->get();
+					if($fine->exists()){
+						$dueDate = new DateTime($rem->due_date);
+						$ddate = $dueDate->getTimestamp();
+						$fineDate = new DateTime(date('Y-m-d'));
+						$fdate = $fineDate->getTimestamp();
+						if($fdate > $ddate){
+							$fineDate = $fineDate->diff($dueDate)->days;
+							$fineDateAmount = intval($fine->quantity);
+							if($fineDate >= $fineDateAmount){
+								$fineAmount = floatval($fine->amount);
+							}
+						}
+					}
+					$amountOwed += $rem->amount + $fineAmount;
 					if($rem->status == 2) {
 						$qu = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 						$qu->where("type", "Cash_Receipt");
