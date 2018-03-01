@@ -2452,11 +2452,7 @@ class Sales extends REST_Controller {
 				}else{
 					$amount = floatval($value->amount)/floatval($value->rate);
 				}
-				if($value->type == "Cash_Sale"){
-					$totalAmount += 0;
-				}else{
-					$totalAmount += $amount;
-				}
+				
 
 				if(isset($objList[$value->contact_id])){
 					$objList[$value->contact_id]["line"][] = array(
@@ -2505,6 +2501,11 @@ class Sales extends REST_Controller {
 
 					);
 				}
+				if($value->type == "Cash_Sale"){
+					$totalAmount += 0 + $balance_forward;
+				}else{
+					$totalAmount += $amount + $balance_forward;
+				}
 			}
 			
 			foreach ($objList as $value) {
@@ -2519,6 +2520,94 @@ class Sales extends REST_Controller {
 		$this->response($data, 200);
 	}
 
+	function saleOrder_detail_by_product_get() {
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
+		$data["count"] = 0;
+
+		$obj = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
+			}
+		}
+		
+		//Filter		
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value['operator'])){
+	    			$obj->{$value['operator']}($value['field'], $value['value']);	    		
+	    		} else {
+	    			$obj->where($value['field'], $value['value']);
+	    		}
+			}
+		}
+
+		//Results
+		$obj->include_related("item", array("abbr", "number", "name", "measurement_id"));
+		$obj->where_related("item", "item_type_id", array(1,4));
+		$obj->include_related("measurement", array("name"));
+		$obj->include_related("transaction", array("type","number","issued_date","amount","deposit","rate"));
+		$obj->where_related("transaction", "type", "Sale_Order");
+		$obj->where_related("transaction", "status", 0);
+		$obj->where_related("transaction", "is_recurring <>", 1);
+		$obj->where_related("transaction", "deleted <>", 1);
+		$obj->include_related('transaction/contact', array("abbr", "number", "name"));
+		$obj->order_by_related("transaction", "issued_date", "asc");
+		$obj->get_iterated();
+		
+		if($obj->exists()){
+			$objList = [];
+			foreach ($obj as $value) {
+				$amount = floatval($value->amount) / floatval($value->transaction_rate);
+								
+				if(isset($objList[$value->item_id])){
+					$objList[$value->item_id]["line"][]		= array(
+						"id" 			=> $value->transaction_id,
+						"type" 			=> $value->transaction_type,
+						"customer"		=> $value->transaction_contact_name,
+						"number" 		=> $value->transaction_number,
+						"issued_date" 	=> $value->transaction_issued_date,
+						"quantity" 		=> $value->quantity,
+						"measurement"	=> $value->measurement_name,
+						"price" 		=> $value->price,
+						"amount" 		=> $amount
+					);
+				}else{
+					$objList[$value->item_id]["id"] 		= $value->item_id;
+					$objList[$value->item_id]["name"] 		= $value->item_abbr.$value->item_number." ".$value->item_name;
+					$objList[$value->item_id]["line"][]		= array(
+						"id" 			=> $value->transaction_id,
+						"type" 			=> $value->transaction_type,
+						"customer"		=> $value->transaction_contact_name,
+						"number" 		=> $value->transaction_number,
+						"issued_date" 	=> $value->transaction_issued_date,
+						"quantity" 		=> $value->quantity,
+						"measurement"	=> $value->measurement_name,
+						"price" 		=> $value->price,
+						"amount" 		=> $amount
+					);
+				}
+			}
+			
+			foreach ($objList as $value) {
+				$data["results"][] = $value;
+			}
+			$data["count"] = count($data["results"]);
+		}
+
+		//Response Data
+		$this->response($data, 200);
+	}
 
 
 	//BY HEANG #############################################################################

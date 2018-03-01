@@ -284,7 +284,7 @@
 								<div class="span10" style="padding-left: 0; text-align: left;">
 									<span data-bind="text: lang.lang.disconnect_meter" style="font-size:15px; "></span>
 								</div>
-								<div class="span2" style=" text-align: center; font-size: 18px; font-weight: 600; padding: 0;" data-bind="text: totalDisConnect" >
+								<div class="span2" style=" text-align: center; font-size: 18px; font-weight: 600; padding: 0;" data-bind="text: totalDisconnect" >
 									
 								</div>
 							</div>
@@ -294,10 +294,8 @@
 						<div class="cash-invoice" style="margin-bottom: 0; background: #203864; color: #fff;">
 							<div class="span4" style="padding-left: 0;">
 								<span data-bind="text: lang.lang.total_sale" style="font-size: 24px; color: #fff;">TOTAL SALE</span><br>
-								<span style="color: #9EA7B8;" data-bind="text: totalUsage"></span>
-								<span style="color: #9EA7B8;">Usage</span>
 							</div>
-							<div class="span8" style="color: #fff; text-align: center; font-size: 35px; font-weight: 600; padding: 0;">
+							<div class="span8" style="color: #fff; text-align: center; font-size: 30px; font-weight: 600; padding: 0;">
 								<span style="float: right;" data-bind="text: totalSale"></span>
 							</div>										
 						</div>

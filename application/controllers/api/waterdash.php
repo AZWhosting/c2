@@ -169,6 +169,7 @@ class Waterdash extends REST_Controller {
 		$totalConnect = 0;
 		$totalACust = 0;
 		$totalVCust = 0;
+		$totalDisconnect = 0;
 		$meter->get_iterated();
 		foreach($meter as $con){
 			//Inactive Cstomer
@@ -186,6 +187,13 @@ class Waterdash extends REST_Controller {
 		}
 
 		$totalVCust = $totalMeter - ($totalICust + $totalACust);
+
+		// $disconnect = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		// $disconnect->where("type", "Utility_Invoice");
+		// $disconnect->where_in("status", 0);
+		// $disconnect->where("is_recurring <>", 1);
+		// $disconnect->where("deleted <>", 1);
+		// $totalDisconnect = $disconnect->count();
 		// $tc = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		// $tc->where('deleted', 0);
 		// $totalCustomer = $tc->count();
@@ -219,7 +227,7 @@ class Waterdash extends REST_Controller {
 			'aMeter' => $totalACust,
 			'void' => $totalVCust,
 			'totalConnect' =>$totalConnect,
-			// 'totalDisconnect' =>$disCount,
+			'totalDisconnect' =>$totalDisconnect,
 		);
 
 		$this->response(array('results' => $data, 'count' => 1), 200);
@@ -320,14 +328,14 @@ class Waterdash extends REST_Controller {
 		$amount->where("type", "Utility_Invoice");
 		$amount->select_sum('amount');
 		$amount->where("deleted <>", 1);
-		$totalSale += $amount->amount;		
+		$amount->get();	
 
 		$data[] = array(
 			'totalOverDue' 	=> $overDue,
 			'totalInvoice' => $totalINV,
 			'totalAmount' => $totalAmount,
 			'totalCustomer' => count($customer),
-			'totalSale' => $totalSale,
+			'totalSale' => floatval($amount->amount),
 			'totalUsage' => $usage
 		);
 
@@ -644,6 +652,7 @@ class Waterdash extends REST_Controller {
 		$obj->where("month_of >=", date("Y")."-01-01");
 		$obj->where("month_of <=", date("Y")."-12-31");						
 		$obj->order_by("month_of");	
+		$obj->where("invoiced", 1);
 		$obj->get_iterated();
 		$temp = array();
 

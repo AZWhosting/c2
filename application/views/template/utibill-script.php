@@ -24111,6 +24111,7 @@
                 banhji.wDashBoard.set('activeCust', kendo.toString(this.data()[0].aMeter, "n0", banhji.locale));
                 banhji.wDashBoard.set('voidCust', kendo.toString(this.data()[0].void, "n0", banhji.locale));
                 banhji.wDashBoard.set('totalConnect', kendo.toString(this.data()[0].totalConnect, "n0", banhji.locale));
+                banhji.wDashBoard.set('totalDisconnect', kendo.toString(this.data()[0].totalDisconnect, "n0", banhji.locale));
             },
             batch: true,
             serverFiltering: true,
@@ -24153,8 +24154,7 @@
                 console.log(this.data());
                 // var vm = banhji.wDashboard;
                 banhji.wDashBoard.set('overDue', kendo.toString(this.data()[0].totalOverDue, "n0", banhji.locale));
-                banhji.wDashBoard.set('totalAmount', kendo.toString(this.data()[0].totalAmount, banhji.locale == "km-KH" ? "c0" : "c", banhji.locale));
-                banhji.wDashBoard.set('totalDisConnect', kendo.toString(this.data()[0].totalDisconnect, "n0", banhji.locale));
+                banhji.wDashBoard.set('totalAmount', kendo.toString(this.data()[0].totalAmount, banhji.locale == "km-KH" ? "c0" : "c", banhji.locale));               
                 banhji.wDashBoard.set('invoice', kendo.toString(this.data()[0].totalInvoice, "n0", banhji.locale));
                 banhji.wDashBoard.set('invCust', kendo.toString(this.data()[0].totalCustomer, "n0", banhji.locale));
                 banhji.wDashBoard.set('totalSale', kendo.toString(this.data()[0].totalSale, banhji.locale == "km-KH" ? "c0" : "c", banhji.locale));
