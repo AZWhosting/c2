@@ -332,7 +332,8 @@
     		#= phone#
    		</td>
    		<td align="center">
-    		
+    		<a style="cursor: pointer;padding: 5px;background: red; color: \\#fff;" data-bind="click: addServing">Serving</a> | 
+			<a style="cursor: pointer;padding: 5px;background: green; color: \\#fff;" data-bind="click: cancelBook">Cancel</a>
    		</td>		
    	</tr>
-</script>                         
+</script>

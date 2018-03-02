@@ -4152,6 +4152,7 @@
                     noti.success(self.lang.lang.success_message);
                     self.cancel();
                 }
+                    
             });
         },
         cancel      : function(e){

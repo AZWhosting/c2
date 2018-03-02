@@ -364,7 +364,7 @@ class Spa extends REST_Controller {
 					$i->measurement_id = $item->measurement->measurement_id;
 					$i->tax_item_id = $item->tax_item->id;
 					$i->assembly_id = $item->assembly_id;
-					$i->description = isset($item->description) ? $item->description : $item->name;
+					$i->description = isset($item->description) ? $item->description : $item->item->name;
 					$i->quantity = $item->quantity;
 					$i->conversion_ratio = 1;
 					$i->cost = $item->avarage_cost;
@@ -542,9 +542,9 @@ class Spa extends REST_Controller {
 				//Customer
 				$con = new Spa_work_customer(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				$con->where("book_id", $value->id)->get_iterated();
+				$conar = [];
+				$customer_name = "";
 				if($con->exists()){
-					$conar = [];
-					$customer_name = "";
 					foreach($con as $c){
 						$sc = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 						$sc->where("id", $c->customer_id)->limit(1)->get();
@@ -572,14 +572,18 @@ class Spa extends REST_Controller {
 					}
 				}
 				//Employee
-				//Customer
 				$em = new Spa_work_employee(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				$em->where("book_id", $value->id)->get_iterated();
 				$employee_name = "";
+				$emnar = [];
 				if($em->exists()){
 					foreach($em as $e){
 						$ec = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 						$ec->where("id", $e->employee_id)->limit(1)->get();
+						$emnar[] = array(
+							"id" 	=> $ec->id,
+							"name" 	=> $ec->name,
+						);
 						$employee_name .= $ec->name." ";
 					}
 				}
@@ -593,11 +597,29 @@ class Spa extends REST_Controller {
 						$me->where("id", $i->measurement_id)->limit(1)->get();
 						$itemar[] = array(
 							"id" 			=> $i->id,
+							"transaction_id" => $i->transaction_id,
+							"item_id" 		=> $i->item_id,
+							"item" 			=> array("id" => $i->item_id, "name" => $i->name),
+							"contact_id" 	=> $i->contact_id,
+							"measurement_id" => $i->measurement_id,
+							"tax_item_id" 	=> $i->tax_item_id,
+							"assembly_id" 	=> $i->assembly_id,
 							"description" 	=> $i->description,
+							"quantity" 		=> $i->quantity,
+							"avarage_cost" 	=> $i->avarage_cost, 			
 							"quantity" 		=> intval($i->quantity),
-							"measurement" 	=> array("id" => $me->id, "name" => $me->name),
+							"measurement" 	=> array(
+								"id" => $me->id, 
+								"name" => $me->name,
+								"measurement_id" => $me->id,
+							),
+							"tax_item" 		=> array(
+								"id" => $i->tax_item_id
+							),
 							"price" 		=> floatval($i->price),
 							"amount" 		=> floatval($i->amount),
+							"discount" 		=> $i->discount,
+							"tax" 			=> $i->tax,
 							"rate" 			=> floatval($i->rate),
 							"locale" 		=> $i->locale
 						);
@@ -621,7 +643,8 @@ class Spa extends REST_Controller {
 		 			"customer" 		=> $conar,
 		 			"customer_name" => $customer_name,
 		 			"phone" 		=> $value->phone,
-		 			"employee_name" => $employee_name
+		 			"employee_name" => $employee_name,
+		 			"employee" 		=> $emnar,
 		 		);
 		 	}
 		}
@@ -673,7 +696,7 @@ class Spa extends REST_Controller {
 					$i->measurement_id = $item->measurement->measurement_id;
 					$i->tax_item_id = $item->tax_item->id;
 					$i->assembly_id = $item->assembly_id;
-					$i->description = isset($item->description) ? $item->description : $item->name;
+					$i->description = isset($item->description) ? $item->description : $item->item->name;
 					$i->quantity = $item->quantity;
 					$i->conversion_ratio = 1;
 					$i->cost = $item->avarage_cost;

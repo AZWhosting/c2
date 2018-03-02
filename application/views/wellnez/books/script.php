@@ -2996,6 +2996,36 @@
         },
         save: function() {
         },
+        workDS : dataStore(apiUrl + "spa/work"),
+        addServing: function(e){
+            var data = e.data;
+            this.workDS.data([]);
+            this.workDS.add({
+                items : data.item,
+                employee : data.employee,
+                room : data.room,
+                customer : data.customer,
+                start_date : new Date(),
+                amount : data.amount,
+                tax : data.tax,
+                sub_total : data.sub_total,
+                discount : data.discount,
+                locale : data.locale,
+                rate : data.rate,
+                account_id : 7,
+                contact_id : data.customer[0].id,
+                phone: data.phone,
+                user_id : banhji.userData.id,
+            });
+            // this.workDS.sync();
+            // this.workDS.bind("requestEnd", function(e){
+            //     self.addWorkSuccess();
+            //     $("#loadImport").css("display", "none");
+            // });
+        },
+        cancelBook: function(e){
+            console.log(e.data);
+        },
         cancel: function() {
             window.history.back();
         }
