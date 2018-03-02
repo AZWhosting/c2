@@ -11487,11 +11487,19 @@
 													<td>
 														<h3><a href="#/discount_report" data-bind="text: lang.lang.discount_report">Discount Report</a></h3>
 													</td>
+													<td>
+														<h3><a href="#/total_sale" data-bind="text: lang.lang.summary_report">Summary Report</a></h3>
+													</td>
 												</tr>
 												<tr>
 													<td >
 														<p style="padding-right: 25px;"  data-bind="text: lang.lang.discount_report_description">
 														Lists individual discount by date for each customer with a period of time.
+														</p>
+													</td>
+													<td >
+														<p style="padding-right: 25px;"  data-bind="text: lang.lang.summmary_report_description">
+														Summarizes total sales for the company by each month so you can see which ones generate the most revenue for you.
 														</p>
 													</td>
 												</tr>

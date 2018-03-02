@@ -766,7 +766,12 @@
         <article class="profile-info-item">
           <table >
             <tr>
-              <td>Company Name</td>
+              <td>Company Name (Local)</td>
+              <td>:</td>
+              <td><span data-bind="text:current.name"></span></td>
+            </tr>
+            <tr>
+              <td>Company Name (English)</td>
               <td>:</td>
               <td><span data-bind="text:current.name"></span></td>
             </tr>
@@ -781,7 +786,12 @@
               <td><span data-bind="text:current.email"></span></td>
             </tr>
             <tr>
-              <td>Address</td>
+              <td>Address (Local)</td>
+              <td>:</td>
+              <td><span data-bind="text:current.address"></span></td>
+            </tr>
+            <tr>
+              <td>Address (Khmer)</td>
               <td>:</td>
               <td><span data-bind="text:current.address"></span></td>
             </tr>

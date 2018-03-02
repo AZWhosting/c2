@@ -51,6 +51,16 @@ input[type="radio"], input[type="checkbox"]{
 .k-autocomplete.k-state-default, .k-dropdown-wrap.k-state-default, .k-numeric-wrap.k-state-default, .k-picker-wrap.k-state-default{
   background: #fff !important;
 }
+#cuswindow{
+  padding: 10px 10px 0;
+  height:  95%;
+}
+.test .k-grid-header th.k-header{
+      background: green !important;
+    color: #fff;
+    font-weight: 700 !important;
+}
+
 
 .box-generic.bg-action-button .span4 a:hover{
   text-decoration: underline;

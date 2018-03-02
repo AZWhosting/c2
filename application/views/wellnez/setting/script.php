@@ -4557,6 +4557,10 @@
                         notificat.success(self.lang.lang.success_message);
                 }
             });
+        },
+        cancellationDS : dataStore(apiUrl + "spa/cancel_reason"),
+        goCancellation : function(e){
+            
         }
     });
     banhji.Branch = kendo.observable({
@@ -4790,11 +4794,8 @@
             }
         },
         cancel: function() {
-            this.dataSource.cancelChanges();
             this.dataSource.data([]);
-            this.attachmentDS.cancelChanges();
-            this.attachmentDS.data([]);
-            banhji.router.navigate("/setting");
+            banhji.router.navigate("/");
         }
     });
     /* views and layout */

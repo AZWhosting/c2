@@ -1,58 +1,4 @@
-<div id="wrapperApplication" class="wrapper">
-	<div class="container">
-		<div class="row book">
-			<div class="span12">	
-				<div class="row ">
-					<div class="span3 " style="padding-right: 0;">
-						<div class="example">
-							<div style="width: 100%; float: left; padding: 15px; background: #fff; margin-bottom: 15px; color: #333; font-weight: 700; font-size: 20px;">
-								3 Books
-							</div>
-							<table>
-								<tr>
-									<th>NO.</th>
-									<th>CUSTOMER</th>
-								</tr>
-								<tr>
-									<td>1</td>
-									<td>2</td>
-								</tr>
-								<tr>
-									<td>1</td>
-									<td>2</td>
-								</tr>
-								<tr>
-									<td>1</td>
-									<td>2</td>
-								</tr>
-								<tr>
-									<td>1</td>
-									<td>2</td>
-								</tr>
-								<tr>
-									<td>1</td>
-									<td>2</td>
-								</tr>
-							</table>					
-						</div>
-					</div>
-					<div class="span9">
-						<div class="example">
-							<h2>Books Calendar</h2>
-							<div>
-								<div id="scheduler"></div>
-							</div>			
-						</div>
-					</div>
-
-				</div>
-			</div>
-			<div class="span12" style="margin-top: 20px;">
-				<p data-bind="text: today"></span>
-			</div>
-		</div>
-	</div>
-</div>
+<div id="wrapperApplication" class="wrapper"></div>
 <!--load before somthing not yet done -->
 <div id="holdpageloadhide" style="display:block;text-align: center;position: fixed;top: 0; left: 0;width: 100%; height: 100%;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
 	<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 45%;left: 45%"></i>
@@ -322,7 +268,6 @@
 	    background: #1c3b19;
 	    color: #fff;
 	}
-	
 </style>
 <!-- ***************************
 *	Water Section      	  *
@@ -332,54 +277,32 @@
 		<div class="row book">
 			<div class="span12">	
 				<div class="row ">
-					<div class="span3 " style="padding-right: 0;">
+					<div class="span12 " >
 						<div class="example">
 							<div style="width: 100%; float: left; padding: 15px; background: #fff; margin-bottom: 15px; color: #333; font-weight: 700; font-size: 20px;">
 								3 Books
 							</div>
-							<table>
-								<tr>
-									<th>NO.</th>
-									<th>CUSTOMER</th>
-									<th>AMOUNT</th>
-								</tr>
-								<tr>
-									<td>1</td>
-									<td>2</td>
-									<td>3</td>
-								</tr>
-								<tr>
-									<td>1</td>
-									<td>2</td>
-									<td>3</td>
-								</tr>
-								<tr>
-									<td>1</td>
-									<td>2</td>
-									<td>3</td>
-								</tr>
-								<tr>
-									<td>1</td>
-									<td>2</td>
-									<td>3</td>
-								</tr>
-								<tr>
-									<td>1</td>
-									<td>2</td>
-									<td>3</td>
-								</tr>
+							<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
+								<thead>
+									<tr>
+										<th style="vertical-align: top;"><span data-bind="text: lang.lang.name">name</span></th>
+										<th style="vertical-align: top;"><span data-bind="text: lang.lang.date"></span></th>
+										<th style="vertical-align: top;"><span data-bind="text: lang.lang.employee"></span></th>
+										<th style="vertical-align: top;"><span data-bind="text: lang.lang.room"></span></th>
+										<th style="vertical-align: top;"><span data-bind="text: lang.lang.amount"></span></th>
+										<th style="vertical-align: top;"><span data-bind="text: lang.lang.phone"></span></th>
+										<th style="vertical-align: top;"><span data-bind="text: lang.lang.action"></span></th>
+									</tr>
+								</thead>
+								<tbody 
+			                		data-bind="source: bookDS" 
+			                		data-auto-bind="true" 
+			                		data-role="listview" 
+			                		data-template="book-template">
+			                	</tbody>
 							</table>					
 						</div>
 					</div>
-					<div class="span9">
-						<div class="example">
-							<h2>Books Calendar</h2>
-							<div>
-								<div id="scheduler"></div>
-							</div>			
-						</div>
-					</div>
-
 				</div>
 			</div>
 			<div class="span12" style="margin-top: 20px;">
@@ -388,3 +311,28 @@
 		</div>
 	</div>
 </script>
+<script id="book-template" type="text/x-kendo-tmpl">
+    <tr>
+    	<td>
+    		#= customer_name#
+   		</td>
+    	<td>
+    		#= dateshow#
+   		</td>
+   		<td align="center">
+    		#= employee_name#
+   		</td>
+   		<td align="center">
+    		#= roomshow#
+   		</td>
+   		<td align="center">
+    		#= amount#
+   		</td>
+   		<td align="center">
+    		#= phone#
+   		</td>
+   		<td align="center">
+    		
+   		</td>		
+   	</tr>
+</script>                         

@@ -4825,49 +4825,38 @@
         },
         averageCostDS : dataStore(apiUrl + "items/weighted_average_costing"),
         addRow        : function(e){
-            $("#loadImport").css("display", "block");
             var obj = this.get("obj");
             var item = e.data;
             var self = this;
-            this.averageCostDS.query({
-                filter:[
-                    { field:"item_id", value: item.id },
-                    { field:"issued_date <=", operator:"where_related_transaction", value: kendo.toString(new Date(this.get("dateSelected")),"yyyy-MM-dd HH:mm:ss") }
-                ]
-            }).then(function(e){
-                var view = self.averageCostDS.view();
-                var rate = banhji.source.getRate(item.locale, self.get("dateSelected"));
-                var cost = view[0].cost * rate;
-                var price = item.price / rate;
-                self.lineDS.add({
-                    transaction_id      : obj.id,
-                    tax_item_id         : "",
-                    item_id             : "",
-                    assembly_id         : 0,
-                    measurement_id      : 0,
-                    description         : "",
-                    quantity            : 1,
-                    conversion_ratio    : 0,
-                    cost                : item.cost,
-                    price               : price,
-                    amount              : price,
-                    avarage_cost        : cost,
-                    discount            : 0,
-                    rate                : rate,
-                    locale              : item.locale,
-                    movement            : 0,
-                    discount_percentage : 0,
-                    item                : { 
-                        id:item.id, 
-                        name:item.name , 
-                        item_type_id: item.item_type_id
-                    },
-                    measurement         : item.measurement,
-                    tax_item            : { id:"", name:"" }
-                });
-                self.changes();
-                $("#loadImport").css("display", "none");
+            var rate = banhji.source.getRate(item.locale, this.get("dateSelected"));
+            var price = item.price / rate;
+            this.lineDS.add({
+                transaction_id      : obj.id,
+                tax_item_id         : "",
+                item_id             : "",
+                assembly_id         : 0,
+                measurement_id      : 0,
+                description         : "",
+                quantity            : 1,
+                conversion_ratio    : 0,
+                cost                : 0,
+                price               : price,
+                amount              : price,
+                avarage_cost        : 0,
+                discount            : 0,
+                rate                : rate,
+                locale              : item.locale,
+                movement            : 0,
+                discount_percentage : 0,
+                item                : { 
+                    id:item.id, 
+                    name:item.name , 
+                    item_type_id: item.item_type_id
+                },
+                measurement         : item.measurement,
+                tax_item            : { id:"", name:"" }
             });
+            this.changes();
         },
         addExtraRow     : function(uid){
             var row = this.lineDS.getByUid(uid),
@@ -5528,6 +5517,9 @@
             this.customerAR.splice(0,this.customerAR.length);
             this.changes();
             this.set("dateSelected", new Date());
+            this.set("customerPhone", "");
+            this.bookDS.data([]);
+            this.workDS.data([]);
         },
         catChange: function(e){
             if(this.get("catSelected")){

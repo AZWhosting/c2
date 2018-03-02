@@ -420,29 +420,6 @@
 						                   style="width: 100%;" ></select>
 									</div>
 								</div>
-								<div class="col-xs-12 col-sm-3">
-									<div class="control-group">
-										<label ><span data-bind="text: lang.lang.expire_date">Expire Date</span></label>
-							            <input type="text" 
-						                	style="width: 100%;" 
-						                	data-role="datepicker"
-						                	data-format="dd-MM-yyyy"
-						                	placeholder="dd-mm-yyyy" 
-								           	data-bind="value: 
-								           		obj.expire_date,
-								           		min: toDay" />
-									</div>
-								</div>
-								<div class="col-xs-12 col-sm-3">
-									<div class="control-group">
-										<label ><span data-bind="text: lang.lang.maximum_household">Maximum Household</span> <span style="color:red">*</span></label>
-										<input 
-							            	class="k-textbox" 
-							            	placeholder="Maximum Houshold" 
-						            		data-bind="value: obj.max_customer, attr: {placeholder: lang.lang.maximum_household}" 
-						              		style="width: 100%;" />
-									</div>
-								</div>
 							</div>
 							<div class="row">
 								<div class="col-xs-12 col-sm-12">
@@ -631,21 +608,21 @@
 					            		<i></i><span class="strong"><span >Service Charge</span></span>
 					            	</a>
 					            </li>
-					            <li>
+					            <!-- <li>
 					            	<a href="#RefSource" class="glyphicons list" data-toggle="tab">
 					            		<i></i><span class="strong"><span >Referral Sources</span></span>
 					            	</a>
-					            </li>
+					            </li> -->
 					            <li>
-					            	<a href="#CancelReason" class="glyphicons lock" data-toggle="tab">
+					            	<a href="#CancelReason" class="glyphicons lock" data-toggle="tab" data-bind="click: goCancellation">
 					            		<i></i><span class="strong"><span>Cancellation Reasons</span></span>
 					            	</a>
 					            </li>
-					            <li>
+					            <!-- <li>
 					            	<a href="#PayType" class="glyphicons nameplate_alt" data-toggle="tab">
 					            		<i></i><span class="strong"><span >Payment Type</span></span>
 					            	</a>
-					            </li>
+					            </li> -->
 					        </ul>
 					    </div>
 					    <div class="widget-body col-xs-12 col-sm-9 setting">
@@ -673,18 +650,19 @@
 						            </div>
 						            <div class="tab-pane" id="ServiceCharge">
 						            	<div class="row" style="clear:both;">
-								        	<div class="col-sx-12 col-sm-2">
+								        	<div class="col-sx-12 col-sm-12">
 												<!-- Group -->
-												<div class="control-group">
+												<div class="control-group col-sm-3" style="text-align: left;width: 15%;">
 													<label ><span>Activated</span></label>
 										            <input type="checkbox" data-bind="checked: serviceobj.register" />
 												</div>
-												<input type="text" data-bind="value: serviceobj.percentage"> %
-
-												<a class="btn-icon btn-primary glyphicons circle_plus" style="width: 80px; padding: 5px 7px 5px 35px !important; text-align: left;" data-bind="click: saveServiceCharge">
-								            		<i></i><span data-bind="text: lang.lang.save">Add</span>
-								            	</a>
-
+												<div class="col-sm-3" style="width: 22%; text-align: left; padding: 0;"><input type="text" data-bind="value: serviceobj.percentage" style="height: 30px; padding: 4px;"> %
+												</div>
+												<div class="col-sm-3" style="text-align: left; float: left; ">
+													<a class="btn-icon btn-primary glyphicons circle_plus" style="width: 100px; padding: 5px 7px 5px 35px !important; text-align: left; float: left;" data-bind="click: saveServiceCharge">
+									            		<i></i><span data-bind="text: lang.lang.save">Add</span>
+									            	</a>
+									            </div>
 								            	<table style="width: 100%;" class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 								            		<thead>
 								            			<tr>
@@ -702,6 +680,23 @@
 								            	</table>
 											</div>
 										</div>
+						            </div>
+						            <div class="tab-pane" id="CancelReason">
+						            	<div class="row">
+						            		<style type="text/css">
+						            			td {
+						            				color: #000!important;
+						            			}
+						            		</style>
+						            		<div data-role="grid"
+							                 data-editable="true"
+							                 data-toolbar="['create', 'save']"
+							                 data-columns="[
+							                                 { 'field': 'description', 'width': 670 },
+							                              ]"
+							                 data-bind="source: cancellationDS"
+							                 style="height: 200px"></div>
+						            	</div>
 						            </div>
 						        </div>
 						    </div>
@@ -1108,5 +1103,4 @@
 		#=name#
 	</span>
 	<span style="width:15%; text-align: right; float: right; padding-right: 15px; text-transform: capitalize;">#=type#</span>
-</script>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+</script>                

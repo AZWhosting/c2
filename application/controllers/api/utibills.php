@@ -1303,6 +1303,99 @@ class Utibills extends REST_Controller {
 		$data["count"] = count($data["results"]);
 		$this->response($data, 201);
 	}
+	function receiptauto_post(){
+		$models = json_decode($this->post('models'));
+		$data["results"] = [];
+		$data["count"] = 0;
+		$number = "";
+		foreach ($models as $value) {
+			$val = floatval($value->receive);
+			if($val > 0){
+				$IsD = date("Y-m-d");
+				$meter = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$meter->where('number', $value->meter_number)->order_by("id", "desc")->limit(1)->get();
+				if($meter->exists()){
+					$tran = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$tran->where("meter_id", $meter->id)->order_by("id", "desc");
+					$tran->where("status", 0)->limit(1)->get();
+					
+					if($tran->exists()){
+						// Generate Number
+						$number = $this->_generate_number("Cash_Receipt", $IsD);
+						$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						isset($tran->company_id) 		? $obj->company_id 		= $tran->company_id : "";
+						isset($tran->location_id) 		? $obj->location_id 	= $tran->location_id : 0;
+						isset($tran->pole_id) 			? $obj->pole_id 		= $tran->pole_id : 0;
+						isset($tran->box_id) 			? $obj->box_id 			= $tran->box_id : 0;
+						isset($tran->contact_id) 		? $obj->contact_id 		= $tran->contact_id : "";
+						isset($tran->payment_term_id) 	? $obj->payment_term_id 	= $tran->payment_term_id : 5;
+						$obj->reference_id = $tran->id;
+						isset($tran->user_id) 	? $obj->user_id 	= $tran->user_id : "";
+						$obj->number = $number;
+					   	$obj->type = "Cash_Receipt";
+					   	$obj->sub_total = floatval($val);
+					   	$obj->amount = floatval($val);
+					   	isset($tran->rate) 			? $obj->rate 					= $tran->rate : 1;
+					   	isset($tran->locale) 		? $obj->locale 					= $tran->locale : "";
+					   	isset($tran->month_of) 		? $obj->month_of 				= $tran->month_of : "";
+					   	$obj->issued_date = $IsD;
+					   	isset($tran->bill_date) 	? $obj->bill_date 				= $tran->bill_date : "";
+					   	isset($tran->payment_date) 	? $obj->payment_date 			= $tran->payment_date : "";
+					   	isset($tran->due_date) 		? $obj->due_date 				= $tran->due_date : "";
+					   	isset($tran->deposit_date) 	? $obj->deposit_date 			= $tran->deposit_date : "";
+					   	$obj->reference_no 			= $tran->number;
+					   	$obj->status 				= 1;
+					   	$obj->is_journal 			= 1;
+					   	$obj->account_id = 10;
+					   	isset($tran->meter_id) 		? $obj->meter_id 		= $tran->meter_id : 0;
+				   		if($obj->save()){
+				   			//Journal DR
+				   			$journal = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				   			$journal->transaction_id = $obj->id;
+				   			$journal->account_id = $obj->account_id;
+				   			$journal->contact_id = $obj->contact_id;
+				   			$journal->dr  		 = $obj->amount;
+				   			$journal->description = "Utility Invoice";
+				   			$journal->cr 		 = 0.00;
+				   			$journal->rate 		 = $obj->rate;
+				   			$journal->locale 	 = $obj->locale;
+				   			$journal->save();
+				   			//Journal CR
+				   			$journal2 = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				   			$journal2->transaction_id = $obj->id;
+				   			$journal2->account_id = 10;
+				   			$journal2->contact_id = $obj->contact_id;
+				   			$journal2->dr 		  = 0.00;
+				   			$journal2->cr 		  = $obj->amount;
+				   			$journal2->description = "Utility Invoice";
+				   			$journal2->rate 	  = $obj->rate;
+				   			$journal2->locale 	  = $obj->locale;
+				   			$journal2->save();
+				   			if(floatval($tran->amount) == floatval($val)){
+				   				$tran->status = 1; 
+				   			}else{
+				   				$tran->status = 2;
+				   			}
+				   			$tran->save();
+				   			$data["results"][] = array(
+								"id" 			=> $tran->id
+							);
+					    }
+					}else{
+						$data["results"][] = array(
+					   		"meter_number" => $value->meter_number
+					   	);
+					}
+				}else{
+					$data["results"][] = array(
+				   		"meter_number" => $value->meter_number
+				   	);
+				}
+			}
+		}
+		$data["count"] = count($data["results"]);
+		$this->response($data, 201);
+	}
 	function cashauto_post(){
 		$models = json_decode($this->post('models'));
 		$data["results"] = [];

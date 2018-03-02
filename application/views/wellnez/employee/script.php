@@ -1,4 +1,3 @@
-
 <script>
     function itemComboBoxEditor(container, options) {
         $('<input name="' + options.field + '"/>')
@@ -3977,339 +3976,187 @@
         },
         today   : new Date()
     });
-    banhji.employee = kendo.observable({
-        lang                    : langVM,
-        dataSource              : dataStore(apiUrl + "contacts"),
-        patternDS               : dataStore(apiUrl + "contacts"),
-        deleteDS                : dataStore(apiUrl + "transactions"),
-        existingDS              : dataStore(apiUrl + "contacts"),
-        businessTypeDS          : dataStore(apiUrl + "businesstypes"),
-        contactTypeDS           : banhji.source.employeeTypeDS,
-        contactPersonDS         : dataStore(apiUrl + "contact_persons"),
-        adDS                    : banhji.source.ADAcountDS,
-        saDS                    : banhji.source.SAAcountDS,
+    banhji.Employees = kendo.observable({
+        lang        : langVM,
+        dataSource  : dataStore(apiUrl + "employees"),
+        roleDS      : dataStore(apiUrl + "employees/roles"),
+        payrollDS   : dataStore(apiUrl + "payrolls"),
+        advanceAccDS: new kendo.data.DataSource({
+            transport: {
+                read  : {
+                  url: baseUrl + "api/accounts",
+                  type: "GET",
+                  headers: { Institute: banhji.institute.id },
+                  dataType: 'json'
+                },        
+                parameterMap: function(options, operation) {
+                  if(operation === 'read') {
+                    return {
+                      page: options.page,
+                      limit: options.pageSize,
+                      filter: options.filter,
+                      sort: options.sort
+                    };
+                  } else {
+                    return {models: kendo.stringify(options.models)};
+                  }
+                }
+            },
+            schema  : {
+                model: {
+                  id: 'id'
+                },
+                data: 'results',
+                total: 'count'
+            },
+            filter: [
+                { field:"account_type_id", value: 11 },
+                { field:"status", value: 1 }
+            ],
+            sort: { field:"number", dir:"asc" },
+            batch: true,
+            serverFiltering: true,
+            serverSorting: true,
+            serverPaging: true,
+            page:1,
+            pageSize: 100
+        }),
+        salaryAccDS: new kendo.data.DataSource({
+            transport: {
+                read  : {
+                  url: baseUrl + "api/accounts",
+                  type: "GET",
+                  headers: { Institute: banhji.institute.id },
+                  dataType: 'json'
+                },        
+                parameterMap: function(options, operation) {
+                  if(operation === 'read') {
+                    return {
+                      page: options.page,
+                      limit: options.pageSize,
+                      filter: options.filter,
+                      sort: options.sort
+                    };
+                  } else {
+                    return {models: kendo.stringify(options.models)};
+                  }
+                }
+            },
+            schema  : {
+                model: {
+                  id: 'id'
+                },
+                data: 'results',
+                total: 'count'
+            },
+            filter: [
+                { field:"account_type_id", value: 37 },
+                { field:"status", value: 1 }
+            ],
+            sort: { field:"number", dir:"asc" },
+            batch: true,
+            serverFiltering: true,
+            serverSorting: true,
+            serverPaging: true,
+            page:1,
+            pageSize: 100
+        }),
         currencyDS              : new kendo.data.DataSource({
             data: banhji.source.currencyList,
             filter: { field:"status", value: 1 }
         }),
-        genders                 : banhji.source.genderList,
-        statusList              : banhji.source.statusList,
-        obj                     : null,
-        originalNo              : null,
-        isDuplicateNumber       : false,
-        isCompany               : false,
-        isEdit                  : false,
-        pageLoad                : function(id){
+        marriedAR   : [
+            {id: 0, name: 'Single'},
+            {id: 1, name: 'Married'}
+        ],
+        pageLoad    : function(id){
             if(id){
-                this.set("isEdit", true);                           
                 this.loadObj(id);
-                this.loadContactPerson(id);             
-            }else{              
-                if(this.get("isEdit")){
-                    this.set("isEdit", false);
-                                        
-                    this.dataSource.data([]);                   
-                    
-                    this.addEmpty();
-                }else if(this.dataSource.total()==0){
-                    this.addEmpty();                    
-                }else{
-                    var obj = this.get("obj");
-
-                    obj.set("is_pattern", false);   
-                }                               
-            }           
-        },
-        setPattern              : function(id){
-            var obj = this.get("obj");
-
-            obj.set("contact_type_id", id);
-            obj.set("is_pattern", true);
-        },
-        loadPattern             : function(id){
-            var self = this;
-
-            this.patternDS.query({
-                filter: [
-                    { field:"contact_type_id", value: id },
-                    { field:"is_pattern", value: true }
-                ],
-                page: 1,
-                pageSize: 1
-            }).then(function(data){
-                var view = self.patternDS.view(),
-                obj = self.get("obj");
-
-                if(view.length>0){
-                    obj.set("account_id", view[0].account_id);
-                    obj.set("discount_account_id", view[0].discount_account_id);
-                    obj.set("deposit_account_id", view[0].deposit_account_id);
-                    obj.set("tax_item_id", view[0].tax_item_id);
-                    obj.set("currency_id", view[0].currency_id);
-                    obj.set("credit_limit", view[0].credit_limit);
-
-                    obj.set("payment_term_id", view[0].payment_term_id);
-                    obj.set("payment_method_id", view[0].payment_method_id);
-                    obj.set("business_type_id", view[0].business_type_id);
-                }else{
-                    obj.set("account_id", 0);
-                    obj.set("discount_account_id", 0);
-                    obj.set("deposit_account_id", 0);
-                    obj.set("tax_item_id", 0);
-                    obj.set("currency_id", 0);
-                    obj.set("credit_limit", 0);
-
-                    obj.set("payment_term_id", 0);
-                    obj.set("payment_method_id", 0);
-                    obj.set("business_type_id", 0);
-                }
-            });
-        },
-        loadObj                 : function(id){
-            var self = this;
-
-            this.dataSource.query({
-                filter:{ "field":"id", value: id },
-                page: 1,
-                pageSize: 100
-            }).then(function(e){
-                var view = self.dataSource.view();
-
-                if(view[0].contact_type_id=="6" || view[0].contact_type_id=="7" || view[0].contact_type_id=="8"){
-                    self.set("isCompany", true);
-                }else{
-                    self.set("isCompany", false);
-                }
-
-                self.set("obj", view[0]);
-                self.loadMap();
-                self.set("originalNo", view[0].number);                                         
-            });
-        },
-        loadPatternEdit         : function(id){
-            var self = this;
-
-            this.dataSource.query({
-                filter:[
-                    { "field":"id", value: id },
-                    { "field":"is_pattern", value: 1 }
-                ],
-                page: 1,
-                pageSize: 100
-            }).then(function(e){
-                var view = self.dataSource.view();              
-
-                self.set("obj", view[0]);                                                       
-            });
-        },
-        loadContactPerson       : function(id){
-            this.contactPersonDS.query({
-                filter: { "field":"contact_id", value: id },
-                page: 1,
-                pageSize: 100
-            });
-        },
-        copyBillTo              : function(){
-            var obj = this.get("obj");
-
-            obj.set("ship_to", obj.bill_to);
-        },
-        contactTypeChanges      : function(){
-            var obj = this.get("obj");
-
-            if(obj.contact_type_id>0){
-                this.loadPattern(obj.contact_type_id);
-            }
-        },
-        checkExistingNumber     : function(){
-            var self = this;    
-            
-            var number = this.get("obj").number;
-            var originalNo = this.get("originalNo");
-            
-            if(number.length>0 && number!==originalNo){
-                this.existingDS.query({
-                    filter: { field:"number", value: number },
-                    page: 1,
-                    pageSize: 100
-                }).then(function(e){
-                    var view = self.existingDS.view();
-                    
-                    if(view.length>0){
-                        self.set("isDuplicateNumber", true);                        
-                    }else{
-                        self.set("isDuplicateNumber", false);
-                    }
-                });                         
             }else{
-                this.set("isDuplicateNumber", false);
-            }           
-        },
-        addEmptyContactPerson   : function(){
-            var contact_id = 0;
-            if(this.get("isEdit")){
-                contact_id = this.get("obj").id;
-            }
-
-            this.contactPersonDS.add({                              
-                contact_id          : contact_id,
-                prefix              : "",               
-                name                : "",
-                department          : "",
-                phone               : "",
-                email               : ""
-            });                             
-        },
-        deleteContactPerson     : function(e){
-            if (confirm("Are you sure, you want to delete it?")) {
-                var d = e.data,
-                obj = this.contactPersonDS.getByUid(d.uid);
-
-                this.contactPersonDS.remove(obj);
+                this.addEmpty();
             }
         },
+        obj         : null,
+        payrollobj  : null,
         addEmpty                : function(){
             this.dataSource.data([]);
             this.set("obj", null);
-
-            this.dataSource.add({
-                "company_id"            : 0,
-                "ebranch_id"            : 0,
-                "elocation_id"          : 0,
-                "wbranch_id"            : 0,
-                "wlocation_id"          : 0,            
-                "currency_id"           : 0,
-                "user_id"               : 0,
-                "contact_type_id"       : 0,                            
-                "number"                : "",
-                "enumber"               : "",
-                "wnumber"               : "",
-                "surname"               : "",
-                "name"                  : "",
-                "gender"                : "M",
-                "dob"                   : "",
-                "pob"                   : "",
-                "latitute"              : "",
-                "longtitute"            : "",
-                "credit_limit"          : 0,                
-                "id_number"             : "",
-                "phone"                 : "",
-                "email"                 : "",
-                "website"               : "",           
-                "job"                   : "",               
-                "vat_no"                : "",
-                "family_member"         : "",
-                "address"               : "",
-                "bill_to"               : "",
-                "ship_to"               : "",
-                "memo"                  : "",               
-                "image_url"             : "",
-                "company"               : "",
-                "company_en"            : "",       
-                "bank_name"             : "",
-                "bank_address"          : "",
-                "bank_account_name"     : "",
-                "bank_account_number"   : "",
-                "name_on_cheque"        : "",               
-                "business_type_id"      : 0,
-                "payment_term_id"       : 0,
-                "payment_method_id"     : 0,
-                "deposit_account_id"    : 0,
-                "discount_account_id"   : 0,                
-                "account_id"            : 0,
-                "salary_account_id"     : 0,
-                "ra_id"                 : 0,
-                "tax_item_id"           : 0,                
-                "phase_id"              : 0,
-                "voltage_id"            : 0,
-                "ampere_id"             : 0,
-                "registered_date"       : new Date(),           
-                "use_electricity"       : 0,
-                "use_water"             : 0,
-                "is_local"              : 0,
-                "is_pattern"            : 0,                
-                "status"                : 1                         
-            });         
-
-            var data = this.dataSource.data();          
-            var obj = data[data.length - 1];            
-            this.set("obj", obj);   
+            this.dataSource.insert(0, {
+                "current_is_fulltime"  : "",
+                "current_role"         : "M",
+                "current_name"         : "",
+                "current_abbr"         : "",
+                "current_user_id"      : "",
+                "current_number"       : "",
+                "current_status"       : 1,
+                "current_gender"       : "",
+                "current_account"      : "",
+                "current_salary"       : "",
+                "current_currency"     : "",
+                "payroll_nationality"  : "",
+                "current_email"        : "",
+                "current_phone"        : "",
+                "current_address"      : "",
+                "current_memo"         : "",
+                "payroll_nationality"  : "",
+                "payroll_employeement_date" : "",
+                "payroll_married_status"    : "",
+                "payroll_children"     : "",
+                "payroll_city"         : "",
+                "payroll_emergency_number"  : "",
+                "payroll_emergency_name"    : "",
+                "payroll_country"       : "",
+                "current_account"      : [
+                    {id: 9, name: 'Cash Advance'}
+                ],
+                "salary"        : [
+                    {id: 78, name: 'Salary'}
+                ],
+                "registered_date" : new Date()
+            });
+            var obj = this.dataSource.at(0);
+            this.set("obj", obj);
+            //Payroll
+            this.payrollDS.data([]);
+            this.set("payrollobj", null);
+            this.payrollDS.insert(0, {
+                "payroll_children"  : 0,
+                "payroll_city"      : "",
+                "payroll_country"   : "",
+                "payroll_emergency_name" : "",
+                "payroll_married_status" : "",
+                "payroll_nationality"    : "" 
+                "contact_id"        : "",
+            });
+            var payrollobj = this.payrollDS.at(0);
+            this.set("payrollobj", payrollobj);
         },
-        contactSync             : function(){
-            var dfd = $.Deferred();         
-
+        loadObj                 : function(id){
+            var self = this;
+            this.dataSource.query({
+                filter: {field: "id", id},
+                page: 1,
+                pageSize: 1
+            }).then(function(e){
+                var view = self.dataSource.view();
+                self.set("obj", view[0]);
+            });
+        },
+        save        : function(e){
+            var self = this;
             this.dataSource.sync();
-            this.dataSource.bind("requestEnd", function(e){                 
-                dfd.resolve(e.response.results);                    
+            this.dataSource.bind("requestEnd", function(e){
+                if(e.response.type != 'read'){
+                    var noti = $("#ntf1").data("kendoNotification");
+                    noti.hide();
+                    noti.success(self.lang.lang.success_message);
+                    self.cancel();
+                }
             });
-
-            return dfd;                     
         },
-        save                    : function(){
-            var self = this, saved = false;
-
-            if(this.get("isEdit")){
-                this.dataSource.sync();
-                this.contactPersonDS.sync();
-            }else{
-                this.contactSync().then(function(data){
-                    self.saveContactPerson(data[0].id);
-
-                    if(data[0].is_pattern){
-                        self.savePattern(data[0].contact_type_id, data[0].id);
-                    }
-                }).then(function(){
-                    self.contactPersonDS.data([]);
-
-                    self.addEmpty();
-                });
-            }
-        },
-        delete                  : function(){
-            var self = this,
-            obj = this.get("obj"),
-            id = obj.id;
-
-            if (confirm("Are you sure, you want to delete it?")) {              
-                this.deleteDS.query({
-                    filter: { field: "contact_id", value: id },
-                    page: 1,
-                    pageSize: 1
-                }).then(function() {
-                    var view = self.deleteDS.view();
-
-                    if(view.length>0){
-                        alert("Sorry, you can not delete it because it is using now.");
-                    }else{
-                        var data = self.dataSource.get(id);
-                        self.dataSource.remove(data);
-                        self.save();
-
-                        window.history.back();
-                    }
-                });
-            }
-        },
-        cancel                  : function(){
-            this.dataSource.cancelChanges();
-            this.contactPersonDS.cancelChanges();
-
-            window.history.back();
-        },
-        saveContactPerson       : function(id){
-            $.each(this.contactPersonDS.data(), function(index, value) {
-                value.set("contact_id", id);
-            });
-
-            this.contactPersonDS.sync();
-        },
-        savePattern             : function(contact_type_id, contact_id){
-            var data = this.contactTypeDS.get(contact_type_id);
-            data.set("contact_id", contact_id);
-            this.contactTypeDS.sync();
-
-            banhji.vendorSetting.contactTypeDS.fetch();
-            window.history.back();
+        cancel      : function(e){
+            this.dataSource.data([]);
+            banhji.router.navigate("/");
         }
     });
     banhji.customerCenter = kendo.observable({
@@ -5442,7 +5289,7 @@
             model: banhji.Index
         }),
         customerCenter: new kendo.Layout("#customerCenter", {model: banhji.customerCenter}),
-        customer: new kendo.Layout("#customer", {model: banhji.customer}),
+        Employees: new kendo.Layout("#Employees", {model: banhji.Employees}),
     };
     /* views and layout */
     banhji.router = new kendo.Router({
@@ -5512,6 +5359,11 @@
         });
 
         vm.pageLoad(id, is_pattern);
+    });
+    banhji.router.route("/employee(/:id)", function(id){
+        banhji.view.layout.showIn("#content", banhji.view.Employees);
+        kendo.fx($("#slide-form")).slideIn("down").play();
+        banhji.Employees.pageLoad(id);
     });
     
     $(function() {

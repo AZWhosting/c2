@@ -325,6 +325,16 @@
 	    float: left;
 	    text-align: center;
 	}
+	.customerCenter .example {
+	    background: #fff;
+	    width: 100%;
+	    text-align: left;
+	    position: relative;
+	    padding: 15px;
+	    border-radius: 10px;
+	    float: left;
+	    box-shadow: 2px 0px 12px 0px rgba(68,68,68,1);
+	}
 </style>
 <!-- ***************************
 *	Water Section      	  *
@@ -334,6 +344,7 @@
 		<div class="row customerCenter">
 			<div class="span3">
 				<div class="listWrapper">
+					<a href="#/employee" class="addCustomer">Add Employee</a>
 					<div class="innerAll" style="width: 100%;float: left;background: #424242;">
 						<form autocomplete="off" class="form-inline" style="margin-bottom: 0;">
 							<div class="widget-search separator bottom"  style="padding-bottom: 0;">
@@ -342,8 +353,6 @@
 									<input style="height: 34px;" type="search" placeholder="Employee ..." data-bind="value: searchText, events:{change: enterSearch}">
 								</div>
 							</div>
-							<!-- <div class="select2-container" style="width: 100%;">
-							</div> -->
 						</form>					
 					</div>
 					
@@ -987,3 +996,539 @@
 		</td>		
 	</tr>
 </script>
+<script id="currency-list-tmpl" type="text/x-kendo-tmpl">
+	<span>
+		#=code# - #=country#
+	</span>
+</script>
+<script id="customerCenter-note-tmpl" type="text/x-kendo-template">
+	<tr>
+		<td>			
+			<blockquote>
+				<small class="author">
+					<span class="strong">#=creator#</span> :
+					<cite>#=kendo.toString(new Date(noted_date), "g")#</cite>
+				</small>					
+				<p>#=note#</p>
+			</blockquote>				
+		</td>
+	</tr>	
+</script>
+<script id="customerCenter-transaction-tmpl" type="text/x-kendo-tmpl">
+    <tr>    	  	
+    	<td>#=kendo.toString(new Date(issued_date), "dd-MM-yyyy")#</td>
+    	<td>#=type#</td>
+        <!-- Reference -->
+        <td>
+        	#if(type=="Customer_Deposit" && amount<0){#			
+				<a data-bind="click: goReference">#=number#</a>			
+			#}else{#
+				<a href="\#/#=type.toLowerCase()#/#=id#"><i></i> #=number#</a>
+			#}#        	
+        </td>
+        <!-- Amount -->
+    	<td class="right">
+    		#if(type=="GDN"){#
+    			#=kendo.toString(amount, "n0")#
+    		#}else if(type=="Commercial_Invoice" || type=="Vat_Invoice" || type=="Invoice" || type=="Commercial_Cash_Sale" || type=="Vat_Cash_Sale" || type=="Cash_Sale"){#
+    			#=kendo.toString(amount-deposit, locale=="km-KH"?"c0":"c", locale)#
+    		#}else{#
+    			#=kendo.toString(amount, locale=="km-KH"?"c0":"c", locale)#
+    		#}#
+    	</td>
+    	<!-- Status -->
+    	<td align="center">
+    		#if(status=="4") {#
+    			#=progress#
+    		#}#
+
+    		#if(type=="Quote"){#       		
+				#if(status=="0"){#
+        			Open      			
+        		#}#
+        	#}else if(type=="Sale_Order"){#
+        		#if(status=="0"){#
+        			Open
+        		#}else{#
+        			Done        			
+        		#}#
+        	#}else if(type=="GDN"){#
+        		Delivered
+        	#}else if(type=="Commercial_Invoice" || type=="Vat_Invoice" || type=="Invoice"){#
+        		#if(status=="0" || status=="2") {#
+        			# var date = new Date(), dueDate = new Date(due_date).getTime(), toDay = new Date(date).getTime(); #
+					#if(dueDate < toDay) {#
+						Over Due #:Math.floor((toDay - dueDate)/(1000*60*60*24))# days
+					#} else {#
+						#:Math.floor((dueDate - toDay)/(1000*60*60*24))# days to pay
+					#}#
+				#} else if(status=="1") {#
+					Paid
+				#} else if(status=="3") {#
+					Returned
+				#}#        	
+        	#}#        				
+		</td>
+		<!-- Actions -->
+    	<td align="center">
+			#if(type=="Commercial_Invoice" || type=="Vat_Invoice" || type=="Invoice"){#
+				#if(status=="0" || status=="2") {#
+        			<a data-bind="click: payInvoice"><i></i> <span data-bind="text: lang.lang.receive_payment"></span></a>
+        		#}#
+        	#}#
+
+        	#if(status=="4") {#
+				<a href="\#/#=type.toLowerCase()#/#=id#"><i></i> Use</a>
+    		#}#
+		</td>     	
+    </tr>
+</script>
+
+<!-- Employee -->
+<script type="text/x-kendo-template" id="Employees">
+	<style type="text/css">
+		* {
+			color: #000!important;
+		}
+		.nav > li > a:hover {
+			background: none!important;
+		}
+		.profile-info-item table tr td {
+		    padding: 5px;
+		}
+		.form-control{
+			height: 28px;
+			border: none;
+		}
+		.tabs-section-nav.tabs-section-nav-inline {
+		    border: none;
+		}
+
+		.tabs-section-nav {
+		    overflow: auto;
+		    width: 100%;
+		    text-align: center;
+		    font-size: 1rem;
+		    border-top: solid 1px #d8e2e7;
+		}
+		.tabs-section-nav .nav-link {
+		    display: block;
+		    color: #6c7a86;
+		    font-weight: 600;
+		    border: 1px solid #d8e2e7;
+		    border-left-color: transparent;
+		    border-right-color: transparent;
+		    border-top: none;
+		}
+		.tabs-section-nav.tabs-section-nav-inline .nav {
+		    display: block;
+		    border: 1px solid #d8e2e7;
+		    zoom: 1;
+		    background: #f6f8fa;
+		}
+		.tabs-section-nav.tabs-section-nav-inline .nav-item {
+		    display: block;
+		    float: left;
+		    background: 0 0;
+		    margin: 0 20px -1px;
+		}
+		.tabs-section-nav.tabs-section-nav-inline .nav-link {
+		    border: none;
+		    border-bottom: 1px solid #d8e2e7;
+		    height: 45px;
+		    padding: 12px 0 0;
+		    background: 0 0!important;
+		    font-size: 13px;
+		}
+		.tabs-section-nav.tabs-section-nav-inline .nav-link {
+		    border: none;
+		    border-bottom: 1px solid #d8e2e7;
+		    height: 45px;
+		    padding: 12px 0 0;
+		    background: 0 0!important;
+		}
+		.tabs-section-nav.tabs-section-nav-inline .nav-item.active a{
+		    border-bottom: solid 3px #41619b;
+		}
+		.tabs-section-nav .nav-item:first-child .nav-link {
+		    border-left-color: #d8e2e7;
+
+		}
+
+		.tabs-section>.tab-content:not(.no-styled) {
+		    background: #fff;
+		    border: 1px solid #d8e2e7;
+		    border-top: none;
+		    -webkit-border-radius: 0 0 5px 5px;
+		    border-radius: 0 0 5px 5px;
+		    padding: 15px;
+		}
+		.tab-content>.active {
+		    display: block;
+		}
+		.fade.in {
+		    opacity: 1;
+		}
+		.bootstrap-table .table, .fixed-table-body .table, .table {
+		    font-size: 13px;
+		    margin-bottom: 0;
+		    background: #fff;
+		}
+		.bootstrap-table .table td, .fixed-table-body .table td, .table td {
+		    height: 50px;
+		}
+		.bootstrap-table .table td, .bootstrap-table .table th, .fixed-table-body .table td, .fixed-table-body .table th, .table td, .table th {
+		    vertical-align: middle;
+		    border-top-color: #d8e2e7;
+		    padding: 11px 10px 10px;
+		}
+		.table td, .table th {
+		    line-height: 1.5;
+		    border-top: 1px solid #eceeef;
+		}
+
+		.box-generic {
+		    background: #0B0B3B;
+		    clear: both;
+		    display: inline-block;
+		    height: auto !important;
+		    padding: 15px;
+		    position: relative;
+		    width: 100%;
+		    text-align: right;
+		}
+		.box-generic .btn-save {
+		    background: #609450;
+		    color: #fff;
+		}
+	</style>
+  	<!--Add User-->
+  	<div class="container">
+		<div class="row customerCenter">
+			<div class="span12">
+				<div class="example">
+					<span class="glyphicons no-js remove_2 pull-right" data-bind="click: cancel"><i></i></span>
+					<h2 style="margin-bottom: 15px;">Employee Form</h2>
+
+					<section class="box-typical edit-company">
+						<article  style="position: relative; width: 100%;overflow: hidden; padding: 10px 0;" class="col-md-12 col-lg-12 profile-info-item edit-table rows">
+	                    
+		                    <div class="span12" style="background: #eee;">
+			                    <table style="width: 100%; float: left; font-size: 14px; margin: 15px 0;">
+		                  			<tr>
+		                    			<td style="width: 15%;">Employee Type</td>
+		                    			<td style="width: 20px;">:</td>
+		                        		<td style="width: 30%;">
+		                              		<input type="checkbox" data-bind="checked: obj.current_is_fulltime">&nbsp;
+		                              		Full-Time
+		                        		</td>
+		                        		<td style="width: 20%;">Role</td>
+		                        		<td style="width: 20px;">:</td>
+		                        		<td>
+			                                <input id="type" 
+			                                    data-role="dropdownlist"
+			                                    data-bind="source: roleDS, 
+			                                    		value: obj.current_role,
+			                                    		events: {change: typeChange}"
+			                                    data-text-field="name"
+			                                    data-value-field="id"
+			                                    class="form-control col-md-7 col-xs-12"
+			                                    type="text"
+			                                    data-option-label="--Select--"
+			                                >
+		                                </td>
+		                  			</tr>
+		                    		<tr>
+		                      			<td>Name</td>
+		                      			<td>:</td>
+		                          		<td>
+		                             		<input type="text" 
+		                             			data-bind="value: obj.current_name" 
+		                             			class="form-control"  
+		                             			id="" placeholder="">
+		                          		</td>
+		                      			<td>Link User</td>
+		                      			<td style="width: 20px;">:</td>
+		                      			<td>
+		                                    <input id="type"
+		                                      data-role="dropdownlist"
+		                                      data-bind="source: userDS, 
+		                                      			value: obj.current_user_id"
+		                                      data-text-field="username"
+		                                      data-value-field="id"
+		                                      data-primitive-value="true"
+		                                      class="form-control col-md-7 col-xs-12"
+		                                      type="text"
+		                                      data-option-label="--Select--"
+		                                    >
+		                      			</td>
+		                    		</tr>
+		                    		<tr>
+		                        		<td>Employment Number</td>
+		                        		<td style="width: 20px;">:</td>
+		                        		<td>
+		                                    <input id="type"
+		                                        data-bind="value: obj.current_abbr"
+		                                        class="form-control col-md-7 col-xs-12"
+		                                        type="text"
+		                                        style="width: 50px;"> 
+		                                    <input id="type"
+		                                        data-bind="value: obj.current_number"
+		                                        class="form-control col-md-7 col-xs-12"
+		                                        type="text"
+		                                        style="width: 150px;">
+		                        		</td>
+		                        		<td>Status</td>
+		                        		<td style="width: 20px;">:</td>
+		                        		<td>
+		                                    <input id="type"
+		                                        data-role="dropdownlist"
+		                                        data-bind="source: statusDS, 
+		                                        		value: obj.current_status"
+		                                        data-text-field="value"
+		                                        data-value-field="id"
+		                                        data-value-primitive="true"
+		                                        class="form-control col-md-7 col-xs-12"
+		                                        type="text">
+		                        		</td>
+		                    		</tr> 
+		                    		<tr>
+		                      			<td>Gender</td>
+		                      			<td>:</td>
+		                      			<td>
+		                                    <input id="type"
+		                                        data-role="dropdownlist"
+		                                        data-bind="source: genderDS, 
+		                                       			 value: obj.current_gender"
+		                                        data-text-field="value"
+		                                        data-value-field="id"
+		                                        data-value-primitive="true"
+		                                        class="form-control col-md-7 col-xs-12"
+		                                        type="text">
+		                                </td>
+		                      			<td></td>
+		                      			<td></td>
+		                    		</tr>
+		                		</table>
+	              			</div>
+	            		</article>
+	            		<section class="tabs-section" style="position: relative;width: 100%;overflow: hidden;">
+	                  		<div class="tabs-section-nav tabs-section-nav-inline">
+	                    		<ul class="nav" role="tablist">
+	                      			<li class="nav-item active">
+	                        			<a class="nav-link " href="#tabs-4-tab-1" role="tab" data-toggle="tab" aria-expanded="false">
+	                          				Information
+	                        			</a>
+	                      			</li>
+	                      			<li class="nav-item">
+	                        			<a class="nav-link" href="#tabs-4-tab-2" role="tab" data-toggle="tab" aria-expanded="false">
+	                          				Accounts
+	                    				</a>
+	                      			</li>
+	                      			<li class="nav-item">
+	                    				<a class="nav-link" href="#tabs-4-tab-3" role="tab" data-toggle="tab" aria-expanded="false">
+	                          				Payroll Information
+	                        			</a>
+	                      			</li>
+	                      			<li class="nav-item">
+	                        			<a class="nav-link" href="#tabs-4-tab-4" role="tab" data-toggle="tab" aria-expanded="false">
+	                          				Document
+	                        			</a>
+	                      			</li>
+	                    		</ul>
+	                  		</div><!--.tabs-section-nav-->
+
+	                  		<div class="tab-content">
+	                    		<div role="tabpanel" class="tab-pane fade in active" id="tabs-4-tab-1" aria-expanded="false">
+	                      			<table class="table">
+	                        			<tr>
+	                          				<td>email</td>
+	                          				<td><input type="email" 
+			                          				class="k-textbox" d
+			                          				ata-bind="value: obj.current_email"></td>
+	                          				<td></td>
+	                          				<td>phone</td>
+	                          				<td><input type="phone" 
+		                          					class="k-textbox" 
+		                          					data-bind="value: obj.current_phone"></td>
+	                        			</tr>
+	                        			<tr>
+	                          				<td>address</td>
+	                          				<td><input type="text" 
+	                          						class="k-textbox" 
+	                          						data-bind="value: obj.current_address"></td>
+	                          				<td></td>
+	                          				<td>memo</td>
+	                          				<td><input type="text" 
+	                          						class="k-textbox" 
+	                          						data-bind="value: obj.current_memo" 
+	                          						style="border-color: #c5c5c5"></td>
+	                        			</tr>
+	                      			</table>
+	                    		</div><!--.tab-pane-->
+	                    		<div role="tabpanel" class="tab-pane fade" id="tabs-4-tab-2" aria-expanded="false">
+	                      			<table class="table">
+	                        			<tr>
+	                          				<td>
+	                            				Advance Account<br>
+	                            				<input id="type"
+			                                      data-role="dropdownlist"
+			                                      data-bind="source: advanceAC, 
+			                                      			value: obj.current_account"
+			                                      data-text-field="name"
+			                                      data-value-field="id"
+			                                      data-value-primitive="false"
+			                                      data-template="employee-account-list"
+			                                      data-option-label="--Select One--"
+			                                      class="form-control col-md-7 col-xs-12"
+			                                      type="text"
+			                                    >
+	                          				</td>
+	                          				<td>
+	                            				Salary Account<br>
+				                                <input id="type"
+				                                      data-role="dropdownlist"
+				                                      data-bind="source: salaryAC, 
+				                                      			value: obj.current_salary"
+				                                      data-text-field="name"
+				                                      data-value-field="id"
+				                                      data-value-primitive="false"
+				                                      data-template="employee-account-list"
+				                                      data-option-label="--Select One--"
+				                                      class="form-control col-md-7 col-xs-12"
+				                                      type="text">
+	                          				</td>
+	                          				<td>
+	                            				Currency<br>
+			                                    <input id="type"
+			                                      data-role="dropdownlist"
+			                                      data-bind="source: currentDS, 
+			                                      			value: obj.current_currency"
+			                                      data-text-field="country"
+			                                      data-value-field="locale"
+			                                      data-value-primitive="true"
+			                                      data-option-label="--Select Currency"
+			                                      class="form-control col-md-7 col-xs-12"
+			                                      type="text">
+	                          				</td>
+	                        			</tr>
+	                      			</table>
+	                    		</div><!--.tab-pane-->
+	                    		<div role="tabpanel" class="tab-pane fade" id="tabs-4-tab-3" aria-expanded="false">
+	                      			<table class="table">
+	                        			<tr>
+	                          				<td>Nationality</td>
+	                          				<td>
+			                                    <input id="type"                                     
+			                                     data-bind="value:obj.payroll_nationality"
+			                                     class="k-textbox"
+			                                     type="text">
+	                            			</td>
+	                          				<td></td>
+	                          				<td>Employment Date</td>
+	                          				<td>
+			                                    <input type="text" 
+			                                      data-role="datepicker" 
+			                                      data-bind="value: obj.payroll_employeement_date"
+			                                      data-format="dd-MM-yyyy"
+			                                      data-parse-formats="yyyy-MM-dd">
+	                          				</td>
+	                        			</tr>
+	                        			<tr>
+	                          				<td>Married Status</td>
+		                                  	<td>
+			                                    <input id="type"
+			                                    	data-bind="source: marriedStatusDS,
+			                                    			value: obj.payroll_married_status"
+			                                     	data-role="dropdownlist"
+			                                     	data-text-field="name"
+			                                     	data-value-field="id"
+			                                     	data-value-primitive="true"
+			                                     	class="k-textbox"
+			                                     	type="text">
+	                            			</td>
+	                          				<td></td>
+	                          				<td>Children</td>
+	                          				<td>
+			                                    <input type="text" 
+			                                      data-role="numerictextbox" 
+			                                      data-bind="value: obj.payroll_children">
+	                          				</td>
+	                        			</tr>
+	                        			<tr>
+	                          				<td>City/Province</td>
+	                          				<td>
+			                                    <input id="type"                                     
+			                                     data-bind="value: obj.payroll_city"
+			                                     class="k-textbox"
+			                                     type="text">
+	                            			</td>
+	                          				<td></td>
+	                          				<td>Country</td>
+	                          				<td>
+			                                    <input type="text" 
+			                                      data-bind="value: obj.payroll_country"
+			                                      class="k-textbox">
+	                          				</td>
+	                        			</tr>
+	                        			<tr>
+	                          				<td>Emmergency Number</td>
+	                          				<td>
+			                                    <input id="type"                                     
+			                                     data-bind="value: obj.payroll_emergency_number"
+			                                     class="k-textbox"
+			                                     type="text">
+	                            			</td>
+	                          				<td></td>
+	                          				<td>Emmergency Name</td>
+	                          				<td>
+			                                    <input type="text" 
+			                                      data-bind="value: obj.payroll_emergency_name"
+			                                      class="k-textbox"
+			                                      >
+	                          				</td>
+	                        			</tr>
+	                      			</table>
+	                    		</div><!--.tab-pane-->
+	                    			<div role="tabpanel" class="tab-pane fade" id="tabs-4-tab-4" aria-expanded="false">
+	                      				<input data-role="upload" type="file" 
+	                      						data-bind="events: {select: fileMan.onSelected}" data-show-file-list="false">
+			                            <table class="table">
+			                                <tbody 
+			                                  data-role="listview"
+			                                  data-auto-bind="false"
+			                                  data-bind="source: fileMan.dataSource" 
+			                                  data-template="attachment-list"></tbody>
+			                            </table>
+	                    			</div><!--.tab-pane-->
+	                  			</div><!--.tab-content-->
+	            		</section>
+	            		<div class="box-generic">
+	              			<button data-role="button" class="k-button btn-save" role="button" aria-disabled="false" tabindex="0" data-bind="click: save">
+	                  		<span class="glyphicon glyphicon-ok"><i></i></span>
+	                  			&nbsp; Save
+	              			</button>
+	              			&nbsp;
+	              			<button data-role="button" class="k-button btn-cancel" role="button " aria-disabled="false" tabindex="0" data-bind="click: cancel">
+	                  			<span class="glyphicon glyphicon-remove"><i></i></span>
+	                  				&nbsp; Cancel
+	                		</button>
+	            		</div>
+	            	</section>
+
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+</script>
+<script type="text/x-kendo-template" id="employee-account-list">
+  	<div>
+    	<span>#=number#</span>-<span>#=name#</span>
+  	</div>
+</script>
+<script type="text/x-kendo-template" id="attachment-list">
+  	<tr>
+    	<td>#=name# </td><td><button data-bind="click: onRemove">X</button></td>
+  	</tr>

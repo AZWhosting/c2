@@ -2991,10 +2991,7 @@
     //-----------------------------------------
     banhji.Index = kendo.observable({
         lang: langVM,
-        institute: banhji.institute,
-        actualCash: 0,
-        actualDS: dataStore(apiUrl + "utibills/cashier_actual"),
-        sessionDS: dataStore(apiUrl + "utibills/session"),
+        bookDS: dataStore(apiUrl + "spa/book"),
         pageLoad: function() {
         },
         save: function() {
@@ -3116,91 +3113,92 @@
         // var Href1 = '<?php echo base_url(); ?>assets/water/winvoice-res.css';
         // var Href2 = '<?php echo base_url(); ?>assets/water/winvoice-print.css';
         //Schedule
-        $("#scheduler").kendoScheduler({
-            date: new Date(),
-            allDaySlot: false,
-            startTime: new Date(),
-            eventHeight: 50,
-            majorTick: 60,
-            views: [ "timeline", "timelineWeek", "timelineWorkWeek", {
-                type: "timelineMonth",
-                startTime: new Date("2013/6/13 00:00 AM"),
-                majorTick: 1440
-            }],
-            timezone: "Etc/UTC",
-            dataSource: {
-                batch: true,
-                transport: {
-                    read: {
-                        url: apiUrl + "spa/calendar",
-                        dataType: "jsonp"
-                    },
-                    update: {
-                        url: "https://demos.telerik.com/kendo-ui/service/meetings/update",
-                        dataType: "jsonp"
-                    },
-                    create: {
-                        url: "https://demos.telerik.com/kendo-ui/service/meetings/create",
-                        dataType: "jsonp"
-                    },
-                    destroy: {
-                        url: "https://demos.telerik.com/kendo-ui/service/meetings/destroy",
-                        dataType: "jsonp"
-                    },
-                    parameterMap: function (options, operation) {
-                        if (operation !== "read" && options.models) {
-                            return { models: kendo.stringify(options.models) };
-                        }
-                    }
-                },
-                schema: {
-                    model: {
-                        id: "meetingID",
-                        fields: {
-                            meetingID: { from: "MeetingID", type: "number" },
-                            title: { from: "Title", defaultValue: "No title", validation: { required: true } },
-                            start: { type: "date", from: "Start" },
-                            end: { type: "date", from: "End" },
-                            startTimezone: { from: "StartTimezone" },
-                            endTimezone: { from: "EndTimezone" },
-                            description: { from: "Description" },
-                            recurrenceId: { from: "RecurrenceID" },
-                            recurrenceRule: { from: "RecurrenceRule" },
-                            recurrenceException: { from: "RecurrenceException" },
-                            roomId: { from: "RoomID", nullable: true },
-                            attendees: { from: "Attendees", nullable: true },
-                            isAllDay: { type: "boolean", from: "IsAllDay" }
-                        }
-                    }
-                }
-            },
-            group: {
-                resources: ["Rooms", "Attendees"],
-                orientation: "vertical"
-            },
-            resources: [
-                {
-                    field: "roomId",
-                    name: "Rooms",
-                    dataSource: [
-                        { text: "Meeting Room 101", value: 1, color: "#6eb3fa" },
-                        { text: "Meeting Room 201", value: 2, color: "#f58a8a" }
-                    ],
-                    title: "Room"
-                },
-                {
-                    field: "attendees",
-                    name: "Attendees",
-                    dataSource: [
-                        { text: "Alex", value: 1, color: "#f8a398" },
-                        { text: "Bob", value: 2, color: "#51a0ed" },
-                        { text: "Charlie", value: 3, color: "#56ca85" }
-                    ],
-                    multiple: true,
-                    title: "Attendees"
-                }
-            ]
-        });
+        // $("#scheduler").kendoScheduler({
+        //     date: new Date(),
+        //     allDaySlot: false,
+        //     startTime: new Date(),
+        //     eventHeight: 50,
+        //     majorTick: 60,
+        //     views: [ "timeline", "timelineWeek", "timelineWorkWeek", {
+        //         type: "timelineMonth",
+        //         startTime: new Date("2013/6/13 00:00 AM"),
+        //         majorTick: 1440
+        //     }],
+        //     timezone: "Etc/UTC",
+        //     dataSource: {
+        //         batch: true,
+        //         transport: {
+        //             read: {
+        //                 url: apiUrl + "spa/calendar",
+        //                 dataType: "jsonp"
+        //             },
+        //             update: {
+        //                 url: "https://demos.telerik.com/kendo-ui/service/meetings/update",
+        //                 dataType: "jsonp"
+        //             },
+        //             create: {
+        //                 url: "https://demos.telerik.com/kendo-ui/service/meetings/create",
+        //                 dataType: "jsonp"
+        //             },
+        //             destroy: {
+        //                 url: "https://demos.telerik.com/kendo-ui/service/meetings/destroy",
+        //                 dataType: "jsonp"
+        //             },
+        //             parameterMap: function (options, operation) {
+        //                 if (operation !== "read" && options.models) {
+        //                     return { models: kendo.stringify(options.models) };
+        //                 }
+        //             }
+        //         },
+        //         schema: {
+        //             model: {
+        //                 id: "meetingID",
+        //                 fields: {
+        //                     meetingID: { from: "MeetingID", type: "number" },
+        //                     title: { from: "Title", defaultValue: "No title", validation: { required: true } },
+        //                     start: { type: "date", from: "Start" },
+        //                     end: { type: "date", from: "End" },
+        //                     startTimezone: { from: "StartTimezone" },
+        //                     endTimezone: { from: "EndTimezone" },
+        //                     description: { from: "Description" },
+        //                     recurrenceId: { from: "RecurrenceID" },
+        //                     recurrenceRule: { from: "RecurrenceRule" },
+        //                     recurrenceException: { from: "RecurrenceException" },
+        //                     roomId: { from: "RoomID", nullable: true },
+        //                     attendees: { from: "Attendees", nullable: true },
+        //                     isAllDay: { type: "boolean", from: "IsAllDay" }
+        //                 }
+        //             }
+        //         }
+        //     },
+        //     group: {
+        //         resources: ["Rooms", "Attendees"],
+        //         orientation: "vertical"
+        //     },
+        //     resources: [
+        //         {
+        //             field: "roomId",
+        //             name: "Rooms",
+        //             dataSource: [
+        //                 { text: "Meeting Room 101", value: 1, color: "#6eb3fa" },
+        //                 { text: "Meeting Room 201", value: 2, color: "#f58a8a" }
+        //             ],
+        //             title: "Room"
+        //         },
+        //         {
+        //             field: "attendees",
+        //             name: "Attendees",
+        //             dataSource: [
+        //                 { text: "Alex", value: 1, color: "#f8a398" },
+        //                 { text: "Bob", value: 2, color: "#51a0ed" },
+        //                 { text: "Charlie", value: 3, color: "#56ca85" }
+        //             ],
+        //             multiple: true,
+        //             title: "Attendees"
+        //         }
+        //     ]
+        // });
+        banhji.router.start();
         //End Schedule
         $("#holdpageloadhide").css("display", "none");
         // banhji.router.start();

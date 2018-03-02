@@ -118,14 +118,14 @@ class Branches extends REST_Controller {
 			
 			if($obj->save()){
 				//Respsone
-				$currency = $obj->currency->get();
+				// $currency = $obj->currency->get();
 				$data["results"][] = array(					
 					"id" 				=> $obj->id,
 					"number" 			=> $obj->number,
 					"name" 				=> $obj->name,
 					"abbr" 				=> $obj->abbr,
 					"representative" 	=> $obj->representative,
-					"currency" 			=> array('id'=> $currency->id, 'name' => $currency->name),
+					"currency_id" 		=> $obj->currency_id,
 					"status" 			=> $obj->status,
 					"expire_date" 		=> $obj->expire_date,
 					"max_customer"		=> $obj->max_customer,
