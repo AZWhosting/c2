@@ -5543,6 +5543,7 @@
                     var data = e.response.results[0];
                     banhji.print.dataSource = [];
                     banhji.print.dataSource.push(data);
+                    self.lineDS.data([]);
                     banhji.router.navigate('/print');
                 }
             });

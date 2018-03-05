@@ -275,82 +275,711 @@
 **************************** -->
 <script id="Index" type="text/x-kendo-template">
 	<div class="container">
-		<div class="row pay">
-			<div class="span12">	
-				<div class="row ">
-					<div class="span6 " style="padding-right: 0;">
-						<div class="example">
-							<table>
-								<tr>
-									<th>NO.</th>
-									<th>CUSTOMER</th>
-									<th>AMOUNT</th>
-								</tr>
-								<tr>
-									<td>1</td>
-									<td>2</td>
-									<td>3</td>
-								</tr>
-								<tr>
-									<td>1</td>
-									<td>2</td>
-									<td>3</td>
-								</tr>
-								<tr>
-									<td>1</td>
-									<td>2</td>
-									<td>3</td>
-								</tr>
-								<tr>
-									<td>1</td>
-									<td>2</td>
-									<td>3</td>
-								</tr>
-								<tr>
-									<td>1</td>
-									<td>2</td>
-									<td>3</td>
-								</tr>
-							</table>					
-						</div>
+		<div class="row ">
+			<div class="span12">
+					<div class="hidden-print hidden-lg hidden-md pull-right">
+			    		<span class="glyphicons no-js remove_2" 
+							data-bind="click: cancel"><i></i></span>
 					</div>
-					<div class="span6">
-						<div class="example">
-							<input type="text" 
-								style="width: 100%; border: 1px solid #c5c5c5; padding: 3px; height: 30px;" 
-								placeholder="" 
-								data-bind="value: customerPhone">	
-							<p style="margin-top: 15px; margin-bottom: 0; font-size: 14px;">Amount Rec</p>
-							<table class="table table-condensed table-striped table-white" style="margin: 15px 0;">
-								<tbody>
-									<tr>
-										<td class="right" style="width: 60%;"><span style="font-size: 15px; font-weight: 700;">KHR</span></td>
-										<td class="right strong" width="40%"><span style="font-size: 15px; font-weight: 700;">0.00</span></td>
-									</tr>               
-									<tr>
-										<td class="right"><span>USD</span></td>
-										<td class="right ">
-											<span data-format="n" >0.00</span>
-										</td>
-									</tr>
-									<tr>
-										<td class="right"><span >Tender:</span></td>
-										<td class="right "><span data-format="n">0.00</span></td>
-									</tr>
-								</tbody>
-							</table>
-							<input type="text" 
-								style="width: 100%; border: 1px solid #c5c5c5; padding: 3px; height: 30px;" 
-								placeholder="" 
-								data-bind="value: customerPhone">				
+ <!--End Session-->
+					<div id="loadING" style="display:none;text-align: center;position: absolute;top: 0; left: 0;width: 100%; height: 100%;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
+						<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 45%;left: 45%"></i>
+					</div>
+					<div class="row" style="background: #fff; float: left; width: 100%; padding: 15px; border-radius: 10px;">
+						<div class="row" >
+							<div class="col-xs-12 col-sm-6">
+								<div class="widget widget-heading-simple widget-body-primary widget-employees">
+									<div class="widget-body padding-none" style="background: none; width: 100%; float: left; border: none; padding: 0;">
+										<div class="row-fluid row-merge">
+											<div class="listWrapper" style="min-height: 0; margin-bottom: 15px; padding: 0;">
+												<div class="innerAll" style="padding: 15px 15px 0;overflow: hidden; background: #424242;">
+													<div class="widget-search separator bottom" data-bind="visible: haveSearchInv">
+														<button class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></button>
+														<div class="overflow-hidden">
+															<input style="line-height: 11px; padding: 5px;" type="text" placeholder="Invoice Number..." data-bind="
+																value: searchText,
+																events: {change: search}
+															">
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="strong" style="margin-bottom: 15px; width: 100%; padding: 10px; float: left;" align="center"
+									data-bind="style: { backgroundColor: amtDueColor}">
+									<div align="left"><span style="color: #333;" data-bind="text: lang.lang.amount_received"></span></div>
+									<h2 data-bind="text: total_received" align="right"></h2>
+								</div>
+							</div>
+							<div class="col-xs-12 col-sm-6" style="padding-left: 0;">
+								<div class="box-generic-noborder" style="margin-bottom: 0; padding-bottom: 0;">
+								    <div class="tab-content" style="padding: 15px;">
+								    	<!-- Options Tab content -->
+								        <div class="tab-pane active" id="tab1-1">
+								            <table style="margin-bottom: 0; color: #333;" class="table table-borderless table-condensed cart_total">
+								            	<tr>
+													<td><span data-bind="text: lang.lang.date"></span></td>
+													<td class="right">
+														<input id="issuedDate" name="issuedDate" 
+															data-role="datepicker"
+															data-format="dd-MM-yyyy"
+															data-parse-formats="yyyy-MM-dd HH:mm:ss"
+															data-bind="value: obj.issued_date, 
+																		events:{ change : issuedDateChanges }" 
+															required data-required-msg="required"
+															style="width:100%;" />
+													</td>
+												</tr>
+												<tr>
+									            	<td><span data-bind="text: lang.lang.cash_account"></span></td>
+								            		<td>
+														<input id="ddlCashAccount" name="ddlCashAccount" 
+															data-role="dropdownlist"
+															data-header-template="account-header-tmpl"
+															data-template="account-list-tmpl"
+								              				data-value-primitive="true"
+															data-text-field="name" 
+								              				data-value-field="id"
+								              				data-bind="value: obj.account_id,
+								              							source: accountDS"
+								              				data-option-label="Select Account..."
+								              				required data-required-msg="required" 
+								              				style="width: 100%" />
+													</td>
+									            </tr>
+								            </table>
+								        </div>
+								    </div>
+								</div>
+						    </div>
 						</div>
+						<table class="table table-bordered table-primary table-striped table-vertical-center" style="margin-top: 0px; color: #333;">
+					        <thead>
+					            <tr>
+					            	<th style="vertical-align: top; background: #1c3b19;" data-bind="text: lang.lang.no_"></th>
+					            	<th style="vertical-align: top; background: #1c3b19;" data-bind="text: lang.lang.date"></th>
+					            	<th style="vertical-align: top; background: #1c3b19;" data-bind="text: lang.lang.name"></th>
+					            	<th style="vertical-align: top; background: #1c3b19;" data-bind="text: lang.lang.number"></th>
+					            	<th style="vertical-align: top; background: #1c3b19;" data-bind="text: lang.lang.amount"></th>
+					            	<th style="vertical-align: top; background: #1c3b19;" data-bind="visible: chhDiscount, text: lang.lang.discount"></th>
+					            	<th style="vertical-align: top; background: #1c3b19;" data-bind="text: lang.lang.receive"></th>
+					            </tr>
+					        </thead>
+					        <tbody data-role="listview" 
+				        		data-template="cashReceipt-list-template" 
+				        		data-auto-bind="false"
+				        		data-bind="source: dataSource"></tbody>
+					    </table>
+			            <div class="row">
+							<div class="col-xs-12 col-sm-5"> 
+								<div class="btn-group">
+									<div class="leadcontainer">
+									</div>
+									<a style="margin-bottom: 15px" class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-list"></i> </a>
+									<ul class="dropdown-menu" style="padding: 5px; border-radius:0;">
+										<li>
+											<input type="checkbox" id="chhDiscount" class="k-checkbox" data-bind="checked: chhDiscount">
+		  									<label style="color: #333;" class="k-checkbox-label" for="chhDiscount"><span data-bind="text: lang.lang.discount"></span></label>
+		  								</li>
+									</ul>
+								</div>
+								<br>
+							</div>
+							<div class="col-xs-12 col-sm-7">
+								<table class="table table-condensed table-striped table-white" style="color: #333;">
+									<tbody>
+										<tr>
+											<td class="right"><span data-bind="text: lang.lang.total_received"></span>:</td>
+											<td class="right strong"><span data-bind="text: total_received"></span></td>
+											<td class="right"><span data-bind="text: lang.lang.subtotal"></span>:</td>
+											<td class="right strong" width="40%"><span data-format="n2" data-bind="text: obj.sub_total"></span></td>
+										</tr>
+										<tr>
+											<td class="right"><span data-bind="text: lang.lang.remaining"></span>:</td>
+											<td class="right strong"><span data-format="n2" data-bind="text: obj.remaining"></span></td>
+											<td class="right"><span data-bind="text: lang.lang.total_discount"></span>:</td>
+											<td class="right strong">
+												<span data-format="n2" data-bind="text: obj.discount"></span>
+		                   					</td>
+										</tr>
+										<tr data-bind="visible: haveFine">
+											<td></td>
+											<td></td>
+											<td class="right">
+												<span data-bind="text: lang.lang.fine"></span>
+											</td>
+											<td class="right strong">
+												<span data-format="n2" data-bind="text: amountFine"></span>
+											</td>
+										</tr>
+										<tr>
+											<td></td>
+											<td></td>
+											<td class="right"><h4 data-bind="text: lang.lang.total"></h4></td>
+											<td class="right strong"><h4 data-bind="text: total"></h4></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-xs-12 col-sm-12 col-md-5" >
+								<div class="well" style="overflow: hidden;">
+									<textarea cols="0" rows="2" class="k-textbox" style="width:100% !important;" data-bind="value: obj.memo" placeholder="memo for external ..."></textarea>
+									<textarea cols="0" rows="2" class="k-textbox" style="width:100% !important;" data-bind="value: obj.memo2" placeholder="memo for internal ..."></textarea>
+								</div>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-7" data-bind="visible: btnActive">
+								<table class="table table-bordered table-primary table-striped table-vertical-center">
+							        <thead>
+							            <tr>
+							                <th style="vertical-align: top;"><span data-bind="text: lang.lang.no_">No.</span></th>
+							                <th style="vertical-align: top;"><span data-bind="text: lang.lang.currency">Currency</span></th>
+							                <th style="vertical-align: top;"><span data-bind="text: lang.lang.cash_receipt">Cash Receipt</span></th>
+							            </tr> 
+							        </thead>
+							        <tbody data-role="listview" 
+						        		data-template="cash-currency-template" 
+						        		data-auto-bind="false"
+						        		data-bind="source: receipCurrencyDS"></tbody>
+							    </table>
+							    <div class="row-fluid" data-bind="visible: haveChangeMoney">
+							    	<h5 data-bind="text: lang.lang.change_currency"></h5><br>
+							    	<table class="table table-bordered table-primary table-striped table-vertical-center">
+								        <thead>
+								            <tr>
+								                <th class="center" style="width: 50px;"><span data-bind="text: lang.lang.no_">No.</span></th>
+								                <th><span data-bind="text: lang.lang.currency">Currency</span></th>
+								                <th><span data-bind="text: lang.lang.cash_receipt">Cash Receipt</span></th>
+								            </tr> 
+								        </thead>
+								        <tbody data-role="listview" 
+							        		data-template="change-currency-receipt-template" 
+							        		data-auto-bind="false"
+							        		data-bind="source: receipChangeDS"></tbody>
+								    </table>
+							    </div>
+							</div>
+						</div>
+						<div class="box-generic bg-action-button">
+							<div id="ntf1" data-role="notification"></div>
+							<div class="row">
+								<div class="col-sm-12" align="right">
+									<span class="btn-btn" data-bind="click: cancel" ><span data-bind="text: lang.lang.cancel"></span></span>
+									<span id="saveNew" class="btn-btn" data-bind="visible: btnActive, click: save" ><span data-bind="text: lang.lang.save"></span></span>		
+								</div>
+							</div>
+						</div>
+						
 					</div>
 
-				</div>
-			</div>
-			<div class="span12" style="margin-top: 20px;">
-				<p data-bind="text: today"></span>
+
+			
 			</div>
 		</div>
 	</div>
+</script>
+
+<script id="cashier-session-template" type="text/x-kendo-template">
+	<tr>
+		<td>
+			#:banhji.Receipt.cashierItemDS.indexOf(data)+1#	
+		</td>
+		<td>
+			<input style="text-align: right;" id="numeric" class="k-formatted-value k-input" type="number" value="17" min="0" data-bind="value: amount" step="1" />
+		</td>
+		<td>
+			<p> #: currency# </p>
+		</td>
+	</tr>
+</script>
+<script id="cashReceipt-template" type="text/x-kendo-template">
+	<tr data-uid="#: uid #">		
+		<td>
+			<i class="icon-trash" data-bind="events: { click: removeRow }"></i>
+			#:banhji.Receipt.dataSource.indexOf(data)+1#			
+		</td>		
+		<td>#=kendo.toString(new Date(due_date), "dd-MM-yyyy")#</td>
+		<td>#=contact.name#</td>		
+		<td>#=number#</td>
+		<td data-bind="visible: showCheckNo">
+			<input type="text" class="k-textbox" 
+					data-bind="value: check_no"
+					style="width: 100%; margin-bottom: 0;" />
+		</td>	
+		<td class="center">
+			#=amount#
+		</td>	
+		<td> 
+			<input data-role="numerictextbox"
+				   data-spinners="false"
+				   data-culture=""
+                   data-decimals="2"
+                   data-min="0"                   
+                   data-bind="value: discount"
+                   style="width: 100%;">
+        </td>
+		<td class="center">
+			<input data-role="numerictextbox"
+				   data-spinners="false"
+				   data-culture=""
+				   data-format="c"
+                   data-decimals="3"
+                   data-min="0"                   
+                   data-bind="value: received,
+                              events: { change: changes }"
+                   style="width: 100%;">			
+		</td>
+    </tr> 
+</script>
+<script id="cashReceipt" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">					
+				<div id="example" class="k-content">					
+				    
+			    	<span class="glyphicons no-js remove_2 pull-right" 
+		    				onclick="javascript:window.history.back()"
+							data-bind="click: cancel"><i></i></span>
+
+			        <h2 data-bind="text: lang.lang.cash_receipt"></h2>			    		   
+
+				    <br>				   				
+						
+					<!-- Upper Part -->
+				<div class="row-fluid">
+					<div class="span4">
+						<div class="widget widget-heading-simple widget-body-primary widget-employees">		
+							<div class="widget-body padding-none">			
+								<div class="row-fluid row-merge">
+									<div class="listWrapper">
+										<div class="innerAll" style="padding: 15px 15px 19px;">							
+											<form autocomplete="off" class="form-inline">
+												<div class="widget-search separator bottom" style="padding-bottom: 0;">
+													<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></button>
+													<div class="overflow-hidden">
+														<input type="search" placeholder="Invoice Number..." data-bind="value: searchText, events:{change: search}">
+													</div>
+												</div>
+											</form>					
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<div class="strong" style="margin-bottom:0; width: 100%; padding: 10px; background: #D5DBDB;" align="center">
+							<div align="left"><span >AMOUNT RECEIVED</span></div>
+							<h2 align="right">0</h2>
+						</div>												
+					</div>					   
+
+					<div class="span8" style="padding-right: 0; padding-left: 0;">
+
+						<div class="box-generic-noborder" style="padding: 10px 10px 10px 10px">
+					            
+				            <table style="margin-bottom: 0;" class="table table-borderless table-condensed cart_total">
+				            	<tr>
+									<td><span >Date</span></td>
+									<td class="right">
+										<input id="issuedDate" name="issuedDate" 
+												data-role="datepicker"
+												data-format="dd-MM-yyyy"
+												data-parse-formats="yyyy-MM-dd" 
+												data-bind="value: obj.issued_date, 
+														   events:{ change : issuedDateChanges }" 
+												required data-required-msg="required"
+												style="width:100%;" />
+									</td>
+								</tr>							            
+								<tr>
+					            	<td>
+					            		<span >Payment Term</span>
+					            	</td>				
+									<td>
+										<input id="ddlPaymentMethod" name="ddlPaymentMethod"
+												data-role="dropdownlist"								
+												data-header-template="customer-payment-method-header-tmpl"
+					              				data-value-primitive="true"
+												data-text-field="name" 
+					              				data-value-field="id"
+					              				data-bind="value: obj.payment_method_id,
+					              							source: paymentMethodDS"
+					              				data-option-label="Select Method..."
+					              				required data-required-msg="required" 
+					              				style="width: 100%" />
+									</td>
+								</tr>
+								<tr>
+					            	<td><span >Cash Account</span></td>							            	
+				            		<td>
+										<input id="ddlCashAccount" name="ddlCashAccount" 
+											data-role="dropdownlist"
+											data-header-template="account-header-tmpl"
+											data-template="account-list-tmpl"
+				              				data-value-primitive="true"
+											data-text-field="name" 
+				              				data-value-field="id"
+				              				data-bind="value: obj.account_id,
+				              							source: accountDS"
+				              				data-option-label="Select Account..."
+				              				required data-required-msg="required" 
+				              				style="width: 100%" />
+									</td>							            	
+					            </tr>							            
+					            <tr>
+									<td><span >Segment</span></td>
+									<td>
+										<select data-role="multiselect"
+											   data-value-primitive="true"
+											   data-header-template="segment-header-tmpl"
+											   data-item-template="segment-list-tmpl"				    
+											   data-value-field="id" 
+											   data-text-field="code"
+											   data-bind="value: obj.segments, 
+											   			source: segmentItemDS,
+											   			events:{ change: segmentChanges }"
+											   data-placeholder="Add Segment.."				   
+											   style="width: 100%" /></select>
+									</td>
+								</tr>											
+				            </table>						            
+						       
+						</div>         
+				    </div>
+				</div>
+
+				<!-- Item List -->
+				<table class="table table-bordered table-primary table-striped table-vertical-center">
+			        <thead>
+			            <tr>
+			                <th class="center" style="width: 50px;" data-bind="text: lang.lang.no_"></th>			                
+			                <th data-bind="text: lang.lang.date"></th>
+			                <th data-bind="text: lang.lang.name"></th>
+			                <th data-bind="text: lang.lang.invoice"></th>
+			                <th style="width: 15%" data-bind="text: lang.lang.amount"></th>
+			                <th style="width: 15%" data-bind="text: lang.lang.discount"></th>
+			                <th style="width: 15%">RECEIVE</th>
+			            </tr> 
+			        </thead>
+			        <tbody data-role="listview" 
+			        		data-template="cashReceipt-template" 
+			        		data-auto-bind="false"
+			        		data-bind="source: dataSource"></tbody>			        
+			    </table>			    
+								
+	            <!-- Bottom part -->
+	            <div class="row-fluid">
+		
+					<!-- Column -->
+					<div class="span5" style="padding-left: 0;">
+						
+						<div class="btn-group">
+							<div class="leadcontainer">
+								
+							</div>
+							<a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-list"></i> </a>
+							<ul class="dropdown-menu" style="padding: 5px; border-radius:0;">
+								<li>
+									<input type="checkbox" id="chbCheckNo" class="k-checkbox" data-bind="checked: showCheckNo">
+  									<label class="k-checkbox-label" for="chbCheckNo"><span data-bind="text: lang.lang.check_number"></span></label>
+								</li>															
+							</ul>
+						</div>
+
+						<br>
+						<div class="well" style="overflow: hidden;">
+							<textarea cols="0" rows="2" class="k-textbox" style="width:100% !important;" data-bind="value: obj.memo" placeholder="memo for external ..."></textarea>												
+							<textarea cols="0" rows="2" class="k-textbox" style="width:100% !important;" data-bind="value: obj.memo2" placeholder="memo for internal ..."></textarea>
+						</div>
+					</div>
+					<!-- Column END -->
+					
+					<!-- Column -->
+					<div class="span7" style="padding-left: 0;">
+						<table class="table table-condensed table-striped table-white">
+							<tbody>
+								<tr>
+									<td class="right"data-bind="text: lang.lang.total_received"></td>
+									<td class="right strong" data-bind="text: pay"></td>
+									<td class="right" data-bind="text: lang.lang.subtotal"></td>
+									<td class="right strong" width="40%" data-bind="text: sub_total"></td>
+								</tr>								
+								<tr>
+									<td class="right" data-bind="text: lang.lang.remaining"></td>
+									<td class="right strong"><span data-bind="text: remain"></span></td>
+									<td class="right" data-bind="text: lang.lang.total_discount"></td>
+									<td class="right strong">
+										<span data-bind="text: discount"></span>
+                   					</td>
+								</tr>
+								<tr>
+									<td class="right"><span >Fine</span>:</td>
+									<td class="right strong"><span data-bind="text: fine"></span></td>
+									<td></td>
+									<td></td>							
+							</tbody>
+						</table>
+
+						<table class="table table-bordered table-primary table-striped table-vertical-center">
+					        <thead>
+					            <tr>
+					                <th class="center" style="width: 50px;"><span >No.</span></th>             
+					                <th><span >Currency</span></th>
+					                <th><span >Cash Receipt</span></th>			                			                			                			                
+					            </tr> 
+					        </thead>
+					        <tbody data-role="listview" 
+				        		data-template="cash-currency-template" 
+				        		data-auto-bind="false"
+				        		data-bind="source: reconReceipt.dataSource"></tbody>			        
+					    </table>
+
+					    <button style="margin-bottom: 15px;" class="btn btn-inverse" data-bind="click: reconReceipt.addRow"><i class="icon-plus icon-white"></i></button>
+						
+						<table class="table table-condensed table-striped table-white">
+							<tbody>																
+								<tr>
+									<td></td>
+									<td></td>
+									<td class="right"><h4><span >Total Due</span>:</h4></td>
+									<td class="right strong"><h4 data-bind="text: total"></h4></td>
+								</tr>								
+							</tbody>
+						</table>
+						
+					</div>
+					<!-- // Column END -->
+					
+				</div>	           
+				
+				<!-- Form actions -->
+				<div class="box-generic bg-action-button">
+					<div id="ntf1" data-role="notification"></div>
+
+					<div class="row">
+						<div class="span3">
+							<input data-role="dropdownlist"
+				                   data-value-primitive="true"
+				                   data-text-field="name"
+				                   data-value-field="id"
+				                   data-bind="value: obj.transaction_template_id,
+				                              source: txnTemplateDS"
+				                   data-option-label="Select Template..." />
+						</div>
+						<div class="span9" align="right">
+							<span class="btn btn-icon btn-default glyphicons print" style="width: 120px;color:#444;margin-bottom: 0;"><i></i><span data-bind="click:printReciept, text: lang.lang.save_print">Save Print</span></span>
+							<span class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit, click: save" style="width: 100px;"><i></i><span >Save</span></span>			
+						</div>
+					</div>
+				</div>
+				<!-- // Form actions END -->
+				<!-- Upper Part -->								
+
+				</div>							
+			</div>
+		</div>
+	</div>
+</script>
+<script id="cashReceipt-list-template" type="text/x-kendo-tmpl">
+	<tr data-uid="#: uid #">
+		<td>
+			<i class="icon-trash" data-bind="events: { click: removeRow }"></i>
+			#:banhji.Index.dataSource.indexOf(data)+1#			
+		</td>
+		<td>#=kendo.toString(new Date(invissued_date), "dd-MMMM-yyyy", "km-KH")#</td>
+		<td>#=contact_name#</td>
+		<td>#=invnumber#</td>
+		<td class="center">
+			#=kendo.toString(amountshow, locale=="km-KH"?"c0":"c", locale)#		
+		</td>
+		<td class="center" data-bind="visible: chhDiscount">
+			<input data-role="numerictextbox"
+				   data-spinners="false"
+				   data-format="c0"
+				   data-culture="#:locale#"
+                   data-min="0"                   
+                   data-bind="value: discount,
+                              events: { change: changes }"
+                   style="width: 100%; text-align: right;">			
+		</td>
+		
+		<td class="center">
+			<input data-role="numerictextbox"
+				   data-spinners="false"
+				   data-format="c"
+				   data-culture="#:locale#"
+                   data-min="0"
+                   data-decimals="3"               
+                   data-bind="value: amount,
+                              events: { change: changes }"
+                   style="width: 100%; text-align: right;">			
+		</td>
+    </tr>   
+</script>
+<script id="customerDeposit" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">					
+				<div id="example" class="k-content">					
+				    
+			    	<span class="glyphicons no-js remove_2 pull-right" 
+		    				onclick="javascript:window.history.back()"
+							data-bind="click: cancel"><i></i></span>
+
+			        <h2 data-bind="text: lang.lang.customer_deposit"></h2>			    		   
+
+				    <br>				   				
+						
+					<!-- Upper Part -->
+					<div class="row-fluid">
+						<div class="span4">
+							<div class="box-generic well" style="height: 150px;">				
+								<table class="table table-borderless table-condensed cart_total" style="margin-bottom:10;">		
+									<tr data-bind="visible: isEdit">				
+										<td><span data-bind="text: lang.lang.no_"></span></td>
+										<td><input class="k-textbox" data-bind="value: obj.number" style="width:100%;" /></td>
+									</tr>
+									<tr>
+										<td><span data-bind="text: lang.lang.date"></span></td>
+										<td class="right">
+											<input id="issuedDate" name="issuedDate" 
+													data-role="datepicker"
+													data-format="dd-MM-yyyy"
+													data-parse-formats="yyyy-MM-dd" 
+													data-bind="value: obj.issued_date, 
+																events:{ change : setRate }" 
+													required data-required-msg="required"
+													style="width:100%;" />
+										</td>
+									</tr>
+								</table>
+
+								<div class="strong" style="margin-bottom:0; width: 100%; padding: 10px;" align="left"
+									data-bind="style: {backgroundColor: amtDueColor}">
+									<div align="left"><span>Customer Infomation</span></div>
+									<p style="font-weight: lighter;">Name: <span data-bind="text: contact.name"></span></p>
+								</div>
+
+							</div>
+						</div>					   
+
+						<div class="span8">
+
+							<div class="box-generic-noborder" style="height: 155px;">
+
+							    <!-- Tabs Heading -->
+							    <div class="tabsbar tabsbar-2">
+							        <ul class="row-fluid row-merge">
+							        	<li class="span1 glyphicons notes active"><a href="#tab1" data-toggle="tab"><i></i> </a>
+							            </li>
+							        </ul>
+							    </div>
+							    <!-- // Tabs Heading END -->
+
+							    <div class="tab-content">
+							        	<p style="font-weight: bold;">Amount Deposit</p>
+										<h2 style="font-size: 35px;margin-top: 22px;">$123,123.00</h2>	
+							    </div>
+							</div>
+
+					    </div>
+					    <!-- Form actions -->
+					<div class="box-generic bg-action-button">
+						<div id="ntf1" data-role="notification"></div>
+					    <div class="row">
+							<div class="span3">
+								
+							</div>
+							<div class="span9" align="right">
+								<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="visible: obj.isNew" style="width: 80px;margin:0;"><i></i> Deposit</span>
+
+								<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;"><i></i> <span>Print</span></span>
+
+								<span class="btn btn-icon btn-warning glyphicons remove_2" onclick="javascript:window.history.back()" data-bind="click: cancel" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
+							</div>
+						</div>
+					</div>		
+				</div>							
+			</div>
+		</div>
+	</div>
+</script>
+<script id="cash-currency-template" type="text/x-kendo-template">
+	<tr>
+		<td> #:banhji.Receipt.receipCurrencyDS.indexOf(data) +1#</td>
+		<td>
+			<input style="text-align: left;background: none;border:none;" id="numeric" class="k-formatted-value k-input" type="text" data-bind="value: currency, enabled: false"  />
+		</td>
+		<td>
+			<input style="text-align: right;" id="numeric" class="k-formatted-value k-input" type="number" value="17" min="0" data-format="n0" data-bind="value: amount, events: {change: checkChange}" step="1" />
+		</td>
+	</tr>
+</script>
+<script id="change-currency-receipt-template" type="text/x-kendo-template">
+	<tr>
+		<td>
+			#:banhji.Receipt.receipChangeDS.indexOf(data) +1#</td>
+		<td>
+			<input style="text-align: left;background: none;border: none;" id="numeric" class="k-formatted-value k-input" type="text" data-bind="value: currency, enabled: false"  />
+		</td>
+		<td>
+			<input style="text-align: right;" id="numeric" class="k-formatted-value k-input" type="number" value="17" min="0" data-bind="value: amount, events: {change: checkChangeMoney}" step="1" />
+		</td>
+	</tr>
+</script>
+<script id="account-header-tmpl" type="text/x-kendo-tmpl">
+    <strong>
+    	<a href="\#/account">+ Add New Account</a>
+    </strong>
+</script>
+<script id="account-list-tmpl" type="text/x-kendo-tmpl">
+	<span>
+		#=number#				
+	</span>
+	-
+	<span>
+		#if(name.length>25){#
+			#=name.substring(0, 25)#..
+		#}else{#
+			#=name#
+		#}#
+	</span>
+</script>
+<script id="attachment-list-tmpl" type="text/x-kendo-tmpl">
+	<tr>
+		<td>
+			<input id="txtName-#:uid#" name="txtName-#:uid#" 
+					type="text" class="k-textbox" 
+					data-bind="value: name" />
+		</td>
+		<td>
+			<input id="txtDescription-#:uid#" name="txtDescription-#:uid#" 
+					type="text" class="k-textbox" 
+					data-bind="value: description"
+					style="width: 100%; margin-bottom: 0;" />
+		</td>
+		<td>#=kendo.toString(created_at, "dd-MM-yyyy")#</td>
+		<td>
+			#if(id){#
+				<a href="#=url#" target="_blank" class="btn-action glyphicons download btn-default"><i></i></a>
+			#}#
+			<span class="btn-action glyphicons remove_2 btn-danger" data-bind="click: removeFile"><i></i></span>			
+		</td>
+	</tr>
+</script>
+<script id="segment-header-tmpl" type="text/x-kendo-tmpl">
+    <strong>
+    	<a href="\#/segment">+ Add New Segment</a>
+    </strong>
+</script>
+<script id="segment-list-tmpl" type="text/x-kendo-tmpl">
+	<span>#=code#</span> <span>#=name#</span>
+</script>
+<script id="customer-payment-method-header-tmpl" type="text/x-kendo-tmpl">
+	<strong>
+    	<a href="\#/customer_setting">+ Add New Payment Method</a>
+    </strong>	
 </script>
