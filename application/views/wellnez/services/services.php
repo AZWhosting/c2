@@ -718,7 +718,7 @@
                 </table>
             </div>
             <div class="row" style="margin: 0;">
-                <p style="border-top: 1px solid \\#000;font-size: 10px;text-align: center;margin-top: 5px;padding-top: 5px;">Power By: Banhji</p>
+                <p style="border-top: 1px solid \\#000;font-size: 10px;text-align: center;margin-top: 5px;padding-top: 5px;">Power By: Wellnez</p>
             </div>
         </div>
     </div>

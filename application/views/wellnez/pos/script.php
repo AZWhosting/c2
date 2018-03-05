@@ -4157,7 +4157,7 @@
             });
         },
         //Room
-        roomDS       : dataStore(apiUrl + "utibills/room"),
+        roomDS       : dataStore(apiUrl + "spa/roomname"),
         roomAR          : [],
         emSelect: true,
         supplierDS : new kendo.data.DataSource({

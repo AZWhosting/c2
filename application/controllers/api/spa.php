@@ -1176,6 +1176,159 @@ class Spa extends REST_Controller {
 			);
 		}
 	}
+	//Room
+	function room_get(){
+		$data["results"] = [];
+		$data["count"] = 0;
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$obj = new Spa_room(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		//Filter
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter["filters"] as $value) {
+	    		$obj->where($value["field"], $value["value"]);
+			}
+		}
+		//Results
+		if($page && $limit){
+			$obj->get_paged_iterated($page, $limit);
+			$data["count"] = $obj->paged->total_rows;
+		}else{
+			$obj->get_iterated();
+			$data["count"] = $obj->result_count();
+		}
+		if($obj->exists()){
+			foreach ($obj as $value) {
+				$items = [];
+				$sri = new Spa_rooms_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$sri->where("room_id", $value->id)->get_iterated();
+				if($sri->exists()){
+					foreach($sri as $si){
+						$items[] = array(
+							"id" 	=> $si->item_id,
+							"name" 	=> $si->item_name,
+						);
+					}
+				}
+				$data["results"][] = array(
+					"id" 				=> $value->id,
+					"name" 				=> $value->name,
+					"description"		=> $value->description,
+					"status"			=> $value->status,
+					"square_meter" 		=> $value->square_meter,
+					"branch_id" 		=> $value->branch_id,
+					"items" 			=> $items,
+				);
+			}
+		}
+		//Response Data
+		$this->response($data, 200);
+	}
+	function room_post(){
+		$models = json_decode($this->post('models'));
+		$data["results"] = [];
+		$data["count"] = 0;
+		foreach ($models as $value) {
+			$obj = new Spa_room(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			isset($value->name) 		? $obj->name 			= $value->name : "";
+			isset($value->branch_id) 	? $obj->branch_id 		= $value->branch_id : "";
+			isset($value->description) 	? $obj->description 	= $value->description : "";
+			isset($value->square_meter) ? $obj->square_meter 	= $value->square_meter : 0;
+			$obj->status = 1;
+			$obj->work_id = 0;
+	   		if($obj->save()){
+	   			foreach($value->items as $i){
+	   				$sri = new Spa_rooms_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	   				$sri->room_id = $obj->id;
+	   				$sri->item_id = $i->id;
+	   				$sri->item_name = $i->name;
+	   				$sri->save();
+	   			}
+			   	$data["results"][] = array(
+			   		"id" 			=> $obj->id
+			   	);
+		    }
+		}
+		$data["count"] = count($data["results"]);
+		$this->response($data, 201);	
+	}
+	function room_put() {
+		$models = json_decode($this->put('models'));
+		$data["results"] = array();
+		$data["count"] = 0;
+		foreach ($models as $value) {
+			$obj = new Spa_room(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$obj->get_by_id($value->id);
+			isset($value->name) 		? $obj->name 			= $value->name : "";
+			isset($value->branch_id) 	? $obj->branch_id 		= $value->branch_id : "";
+			isset($value->description) 	? $obj->description 	= $value->description : "";
+			isset($value->square_meter) ? $obj->square_meter 	= $value->square_meter : 0;
+			$obj->status = 1;
+			$obj->work_id = 0;
+	   		if($obj->save()){
+	   			//Delete old items
+	   			$oit = new Spa_rooms_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$oit->where("room_id", $obj->id)->get_iterated();
+				if($oit->exists()){
+					$oit->delete_all();
+				}
+	   			foreach($value->items as $i){
+	   				$sri = new Spa_rooms_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	   				$sri->room_id = $obj->id;
+	   				$sri->item_id = $i->id;
+	   				$sri->item_name = $i->name;
+	   				$sri->save();
+	   			}
+			   	$data["results"][] = array(
+			   		"id" 			=> $obj->id
+			   	);
+		    }
+		}
+		$data["count"] = count($data["results"]);
+		$this->response($data, 200);
+	}
+	function room_delete() {
+		$models = json_decode($this->delete('models'));
+
+		foreach ($models as $key => $value) {
+			$obj = new Spa_cancel_reason(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$obj->get_by_id($value->id);
+
+			$data["results"][] = array(
+				"data"   => $value,
+				"status" => $obj->delete()
+			);
+		}
+	}
+	function roomname_get(){
+		$data["results"] = [];
+		$data["count"] = 0;
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$obj = new Spa_room(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		//Results
+		if($page && $limit){
+			$obj->get_paged_iterated($page, $limit);
+			$data["count"] = $obj->paged->total_rows;
+		}else{
+			$obj->get_iterated();
+			$data["count"] = $obj->result_count();
+		}
+		if($obj->exists()){
+			foreach ($obj as $value) {
+				$data["results"][] = array(
+					"id" 				=> $value->id,
+					"name" 				=> $value->name
+				);
+			}
+		}
+		//Response Data
+		$this->response($data, 200);
+	}
 	//Generate invoice number
 	public function _generate_number($type, $date){
 		$YY = date("y");

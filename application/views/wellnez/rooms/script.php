@@ -1,4 +1,3 @@
-
 <script>
     function itemComboBoxEditor(container, options) {
         $('<input name="' + options.field + '"/>')
@@ -5579,6 +5578,101 @@
         },
         today   : new Date()
     });
+    banhji.Room = kendo.observable({
+        lang        : langVM,
+        dataSource  : dataStore(apiUrl + "spa/room"),
+        itemDS   : new kendo.data.DataSource({
+            transport: {
+                read  : {
+                  url: baseUrl + "api/items",
+                  type: "GET",
+                  headers: { Institute: banhji.institute.id },
+                  dataType: 'json'
+                },        
+                parameterMap: function(options, operation) {
+                  if(operation === 'read') {
+                    return {
+                      page: options.page,
+                      limit: options.pageSize,
+                      filter: options.filter,
+                      sort: options.sort
+                    };
+                  } else {
+                    return {models: kendo.stringify(options.models)};
+                  }
+                }
+            },
+            schema  : {
+                model: {
+                  id: 'id'
+                },
+                data: 'results',
+                total: 'count'
+            },
+            filter: [
+                { field:"item_type_id",operator: "where_in", value: [1,4] }
+            ],
+            sort: { field:"number", dir:"asc" },
+            batch: true,
+            serverFiltering: true,
+            serverSorting: true,
+            serverPaging: true,
+            page:1,
+            pageSize: 100
+        }),
+        branchDS    : dataStore(apiUrl + "branches"),
+        isEdit      : false,
+        pageLoad    : function(id){
+            if(id){
+                this.loadObj(id);
+                this.set("isEdit", true);
+            }else{
+                this.addEmpty();
+            }
+        },
+        obj         : null,
+        addEmpty    : function(){
+            this.dataSource.data([]);
+            this.set("obj", null);
+            this.dataSource.insert(0, {
+                "name"          : "",
+                "branch_id"     : "",
+                "square_meter"  : 0,
+                "description"   : "",
+                "items"         : [],
+                "status"        : 1,
+            });
+            var obj = this.dataSource.at(0);
+            this.set("obj", obj);
+        },
+        loadObj                 : function(id){
+            var self = this;
+            this.dataSource.query({
+                filter: {field: "id", value: id},
+                page: 1,
+                pageSize: 1
+            }).then(function(e){
+                var view = self.dataSource.view();
+                self.set("obj", view[0]);
+            });
+        },
+        clearItem   : function(){
+            this.get("obj").set("items", []);
+        },
+        save        : function(e){
+            var self = this;
+            this.dataSource.sync();
+            this.dataSource.bind("requestEnd", function(e){
+                if(e.response.type != 'read'){
+                    
+                }
+            });
+        },
+        cancel      : function(e){
+            this.dataSource.data([]);
+            banhji.router.navigate("/");
+        }
+    });
     /* views and layout */
     banhji.view = {
         layout: new kendo.Layout('#layout', {
@@ -5597,6 +5691,9 @@
         //------------------------------------
         Index: new kendo.Layout("#Index", {
             model: banhji.Index
+        }),
+        Room: new kendo.Layout("#Room", {
+            model: banhji.Room
         })
     };
     /* views and layout */
@@ -5648,6 +5745,11 @@
         var blank = new kendo.View('#blank-tmpl');
         banhji.view.layout.showIn('#content', banhji.view.Index);
         banhji.Index.pageLoad();
+    });
+    banhji.router.route('/room(/:id)', function(id) {
+        var blank = new kendo.View('#blank-tmpl');
+        banhji.view.layout.showIn('#content', banhji.view.Room);
+        banhji.Room.pageLoad(id);
     });
     
     $(function() {

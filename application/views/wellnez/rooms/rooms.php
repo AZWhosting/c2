@@ -246,9 +246,9 @@
 	.product {
 	    float: left;
 	    position: relative;
-	    width: 99px;
+	    width: 129px;
 	    height: 180px;
-	    padding: 15px;
+	    padding: 0;
 	    cursor: pointer;
 	    background: #fff;
 	    margin-right: 2px;
@@ -267,15 +267,17 @@
 	}
 	.product h3 {
 	    margin: 0 auto;
-	    width: 75%;
+	    width: 100%;
 	    overflow: hidden;
-	    line-height: 1.5em;
 	    font-size: .9em;
 	    text-transform: uppercase;
 	    color: #333;
 	    font-weight: 700;
 	    text-align: center;
 	    height: 35px;
+	    padding: 0;
+	    margin: 0;
+	    background: #ccc;
 	}
 	.topnav.addNew {
 	    display: inline-block;
@@ -464,6 +466,41 @@
 	a:hover {
 		color: #fff;
 	}
+	.customerCenter .example {
+	    background: #fff;
+	    width: 100%;
+	    text-align: left;
+	    position: relative;
+	    padding: 15px;
+	    border-radius: 10px;
+	    float: left;
+	    color: #333;
+	    box-shadow: 2px 0px 12px 0px rgba(68,68,68,1);
+	}
+	.box-generic {
+	    background: #0B0B3B;
+	    clear: both;
+	    display: inline-block;
+	    height: auto !important;
+	    padding: 15px;
+	    position: relative;
+	    width: 100%;
+	    text-align: right;
+	    margin-top: 15px;
+	}
+	.box-generic .btn-save {
+	    background: #609450;
+	    color: #fff;
+	    border: none;
+	    padding: 3px 20px;
+	}
+	.box-generic .btn-main {
+	    background: #609450;
+	    color: #fff;
+	    border: none;
+	    padding: 3px 20px;
+	    float: left;
+	}
 </style>
 <!-- ***************************
 *	Water Section      	  *
@@ -483,7 +520,7 @@
 								<div class="row">
 									
 									<div class="span6" style="padding-right: 1px; width: 50%;">
-										<a href="" class="addRooms">Add Room</a>
+										<a href="#/room" class="addRooms">Add Room</a>
 										<div class="innerAll" style="height: 45px; padding-bottom: 0; padding: 15px 0 0 15px; float: left; width: 100%;">
 											<div class="widget-search separator bottom" style="padding: 0;">
 												<a class="btn btn-default pull-right" data-bind="click: search" style="padding: 7px 10px;"><i class="icon-search"></i></a>
@@ -526,8 +563,9 @@
 <script id="item-list-view-template" type="text/x-kendo-template">
 	<div class="product" style="text-align: center;">
 		<h3>#:name#</h3>
-		<p style="text-align: center">#:square_meter# m2</p>
-		<a data-bind="click: editRoom, text: langVM.lang.edit"></a>
+		<p style="text-align: center">#:square_meter# sqm</p>
+		
+		<a href="\#/room/#= id#">Edit</a>
 	</div>
 </script>
 <script id="sale-summary-template" type="text/x-kendo-template">
@@ -603,4 +641,99 @@
 		   	</div>		   	
    		</td>
 	</tr>
-</script>                                                                       
+</script>
+
+<script id="Room" type="text/x-kendo-template">
+	<div class="container">
+		<div class="row customerCenter">
+			<div class="span12">
+				<div class="example">
+					<span class="glyphicons no-js remove_2 pull-right" data-bind="click: cancel"><i></i></span>
+					<div class="row">
+						<div class="span6">
+							<h2 style="margin-bottom: 15px;">Add Room</h2>
+							<div style="overflow: hidden">
+								<div class="span6" style="padding-left: 0;">
+									<p>Branch</p>
+									<input data-role="dropdownlist"
+						                   data-auto-bind="false"
+						                   data-value-primitive="true"
+						                   data-text-field="name"
+						                   data-value-field="id"
+						                   data-bind="value: obj.branch_id,
+						                              source: branchDS"
+						                   style="width: 100%; height: 30px;"
+						            />
+								</div>
+								<div class="span6">
+									<p>Sqm</p>
+									<input type="text" class="k-textbox" 
+										data-bind="value: obj.square_meter"
+										placeholder="Sqm... " style="width: 100%; margin-bottom: 15px;border: 1px solid #ccc; height: 30px;"/>
+								</div>
+								<div class="span12" style="padding-left: 0;">
+									<p>Name</p>
+									<input type="text" class="k-textbox" 
+										data-bind="value: obj.name"
+										placeholder="Name... " style="width: 100%; margin-bottom: 15px;border: 1px solid #ccc; height: 30px;"/>
+								</div>
+							</div>
+							<div class="span12" style="padding-right: 0;"><a style="float: right; padding: 5px 15px;    background: green; color: #fff; margin-bottom: 5px;" data-bind="visible: isEdit, click: clearItem">Clear</a></div>
+					    	<select id="listbox1" data-role="listbox"
+				                data-text-field="name"
+				                data-value-field="id" 
+				                data-toolbar='{
+				                	tools: ["moveUp", "moveDown", "transferTo", "transferFrom", "transferAllTo", "transferAllFrom", "remove"]
+				            	}'
+				                data-connect-with="listbox2"
+				                data-auto-bind="true"
+				                data-bind="source: itemDS" style="width: 50%; min-height: 550px;">
+				            </select>
+				           	
+				            <select id="listbox2" data-role="listbox"
+				                data-connect-with="listbox1"
+				                data-text-field="name"
+				                data-value-field="id"
+				                data-auto-bind="false"
+				                data-bind="source: obj.items"
+				                style="width: 49%; min-height: 550px;">
+				            </select>
+				            <br>
+				            <div id="pager" class="k-pager-wrap"
+			            		 data-role="pager"
+						    	 data-auto-bind="false"
+					             data-bind="source: itemDS"></div>
+						</div>
+						<div class="span6" style="padding-left:0; margin-top: 35px;">
+							<h2 style="margin-bottom: 15px;">Information</h2>
+							<textarea style="resize: none;border: 1px solid #ccc;" class="span12" rows="8" data-bind="value: obj.description" placeholder=""></textarea>
+						</div>
+					</div>
+
+					<div class="box-generic">
+						<button data-role="button" class="k-button btn-main" role="button" aria-disabled="false" tabindex="0" data-bind="click: save">
+                  			Maintenance
+              			</button>
+
+              			<button data-role="button" class="k-button btn-save" role="button" aria-disabled="false" tabindex="0" data-bind="click: save">
+                  			Save
+              			</button>
+              			&nbsp;
+              			<button data-role="button" class="k-button btn-cancel" role="button " aria-disabled="false" tabindex="0" data-bind="click: cancel">
+                  			Cancel
+                		</button>
+            		</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="customerGroup-template" type="text/x-kendo-tmpl">
+	<tr data-uid="#: uid #">
+		<td>#=name#</td>
+		<td class="right">#=contacts.length#</td>
+		<td>
+			<span class="k-button" data-bind="click: edit">View/Edit</span>
+		</td>
+    </tr>   
+</script>

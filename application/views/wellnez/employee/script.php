@@ -4221,7 +4221,7 @@
         loadObj                 : function(id){
             var self = this;
             this.dataSource.query({
-                filter: {field: "id", id},
+                filter: {field: "id", value: id},
                 page: 1,
                 pageSize: 1
             }).then(function(e){

@@ -625,18 +625,14 @@
 											data-template="room-list-tmpl" 
 											data-auto-bind="false" 
 											data-value-primitive="true" 
-											data-filter="startswith" 
 											data-text-field="name" 
 											data-value-field="id"
 											data-bind="
 												value: roomSelected,
 				                              	source: roomDS,
 				                              	events: {change: addRoom}" 
-				                            data-option-label="Select Room..." 
-				                            required="" 
-				                            data-required-msg="required" 
+				                            data-option-label="Select Room..."
 				                            style="width: 100%;" 
-				                            aria-invalid="true" 
 				                            class="k-invalid"
 				                        />
 				                        <table class="table table-bordered table-primary table-striped table-vertical-center" style="margin-top: 15px; font-size: 12px;">
@@ -861,18 +857,6 @@
 									</table>
 								</div>
 							</div>
-
-							<!-- <div class="span5 " style="margin-top: 1px; padding-left: 0">
-								<button style="width: 100% !important; float: left; margin-right: 8px;" class="btn-btn btn-width-100 btn-center-text btn-md margin" data-bind="click: payPopup">Pay
-								</button>
-								<button style="width: 105px !important; float: left; margin-right: 10px;" class="btn-btn btn-width-100 btn-center-text btn-md margin" data-bind="click: payPopup">
-									Cancel
-								</button>
-								<button style="width: 105px !important; float: left;" class="btn-btn btn-width-100 btn-center-text btn-md margin" data-bind="click: addBook">
-									Book
-								</button>
-							</div> -->
-
 							<div class="span6 botton">
 								<div class="row">
 									<div class="span12 ">
@@ -1019,7 +1003,6 @@
 	</tr>
 </script>
 <script id="room-list-tmpl" type="text/x-kendo-tmpl">
-	<span>#=number#</span>	
 	<span>#=name#</span>	
 </script>
 <script id="book-list-tmpl" type="text/x-kendo-template">

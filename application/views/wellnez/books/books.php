@@ -291,7 +291,7 @@
 										<th style="vertical-align: top;"><span data-bind="text: lang.lang.name">name</span></th>
 										<th style="vertical-align: top;"><span data-bind="text: lang.lang.date"></span></th>
 										<th style="vertical-align: top;"><span data-bind="text: lang.lang.employee"></span></th>
-										<th style="vertical-align: top;"><span data-bind="text: lang.lang.room"></span></th>
+										<th style="vertical-align: top;"><span >Room</span></th>
 										<th style="vertical-align: top;"><span data-bind="text: lang.lang.amount"></span></th>
 										<th style="vertical-align: top;"><span data-bind="text: lang.lang.phone"></span></th>
 										<th style="vertical-align: top;"><span data-bind="text: lang.lang.action"></span></th>
