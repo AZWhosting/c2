@@ -614,10 +614,15 @@
     <div class="row-fluid" style="overflow: hidden;padding-bottom: 20px;margin-top: 20px;">
         <style type="text/css">
             * {
-                -webkit-print-color-adjust:exact; 
+                -webkit-print-color-adjust:exact;
+                color: \#000;
+                font-size: 12px;
+            }
+            tr {
+            	margin-bottom: 5px;
             }
         </style>
-        <div class="col-md-8 col-md-offset-2" inv1" style="width: 250px!important;margin-top: 10px;padding: 0px;float:none!important;margin: 0 auto!important">
+        <div class="inv1" style="width: 255px!important;margin-top: 10px;padding: 0px;float:none!important;margin: 0 auto!important">
             <div class="head" style="width: 100%;margin: 5px 0px;overflow: hidden;position: relative;">
                 <div style="text-align: center; width: 25%;float:left;">
                     <img src="<?php echo base_url(); ?>assets/logo.png" style="width: 100%;margin-bottom: 10px;" />
@@ -630,17 +635,13 @@
                 </div>
             </div>
             <h2 style="text-align: center; font-weight: 700;line-height: 20px;;color: \\#000!important; margin: 5px 0; width: 100%;font-size: 15px;">វិក្កយបត្រ INVOICE</h2>
-            <div class="row" style="margin-bottom: 5px;">
+            <div class="row" style="margin-bottom: 5px;margin: 0;">
             	<div class="span12" style="padding: 0;margin: 0;">
             		<table style="width: 100%; float: left;">
             			<tr >
                             <td>ល.វិ.ក :</td>
                             <td style="font-weight: bold;background: \\#000!important;color: \\#fff!important;text-align: center;">#: number#</td>
                         </tr>
-                    </table>
-                </div>
-                <div class="span6" style="padding: 0;margin: 0;">
-                    <table style="width: 100%; float: left;">
                         <tr>
                             <td>ឈ្មោះ :</td>
                             <td>#: contact.name#</td>
@@ -649,11 +650,6 @@
                             <td>លេខទូរស័ព្ទ :</td>
                             <td>#: contact.phone#</td>
                         </tr>
-                        
-                    </table>
-                </div>
-                <div class="span6" style="padding: 0;margin: 0;float: right;">
-                    <table style="width: 100%; float: right; text-align: right;">
                         <tr>
                             <td>អស័យដ្ឋាន :</td>
                             <td>#: contact.address#</td>
@@ -678,24 +674,24 @@
                     <tbody>
                         #$.each(items, function(i,v){#
                             <tr>
-                                <td style="padding: 10px;text-align: right; border: 1px solid \\#000;">
+                                <td style="padding: 3px;text-align: right; border: 1px solid \\#000;">
                                     <span style="color: \\#333; font-size: 12px;padding-left: 20px;">
                                         #: v.item.name#
                                     </span>
                                 </td>
-                                <td style="padding: 10px;font-weight: 700; text-align: right; border: 1px solid \\#000;">
+                                <td style="padding: 3px;font-weight: 700; text-align: right; border: 1px solid \\#000;">
                                     <span style="color: \\#333; font-size: 12px;padding-left: 20px;">
                                         #: v.quantity#
                                     </span>
                                 </td>
-                                <td style="padding: 10px;font-weight: 700; text-align: right; border: 1px solid \\#000;">
+                                <td style="padding: 3px;font-weight: 700; text-align: right; border: 1px solid \\#000;">
                                     <span style="color: \\#333; font-size: 12px;padding-left: 20px;">
-                                        #: v.price#
+                                        #: kendo.toString(v.price, v.locale=="km-KH"?"c0":"c", v.locale)#
                                     </span>
                                 </td>
-                                <td style="padding: 10px;font-weight: 700; text-align: right; border: 1px solid \\#000;">
+                                <td style="padding: 3px;font-weight: 700; text-align: right; border: 1px solid \\#000;">
                                     <span style="color: \\#333; font-size: 12px;padding-left: 20px;">
-                                        #: v.amount#
+                                        #: kendo.toString(v.amount, v.locale=="km-KH"?"c0":"c", v.locale)#
                                     </span>
                                 </td>
                             </tr>
@@ -704,24 +700,24 @@
                     <tfoot>
                     	<tr>
                     		<td colspan="3" style="text-align: right">សរុប</td>
-                    		<td style="text-align: right">#: sub_total#</td>
+                    		<td style="text-align: right">#: kendo.toString(amount, locale=="km-KH"?"c0":"c", locale)#</td>
                     	</tr>
                     	#if(tax > 0){#
 	                    	<tr>
 	                    		<td colspan="3" style="text-align: right">ពន្ធ</td>
-	                    		<td style="text-align: right">#: tax#</td>
+	                    		<td style="text-align: right">#: kendo.toString(tax, locale=="km-KH"?"c0":"c", locale)#</td>
 	                    	</tr>
 	                    #}#
 	                    #if(discount > 0){#
 	                    	<tr>
 	                    		<td colspan="3" style="text-align: right">បញ្ចុះតម្លៃ</td>
-	                    		<td style="text-align: right">#: discount#</td>
+	                    		<td style="text-align: right">#: kendo.toString(discount, locale=="km-KH"?"c0":"c", locale)#</td>
 	                    	</tr>
 	                    #}#
                     </tfoot>
                 </table>
             </div>
-            <div class="row">
+            <div class="row" style="margin: 0;">
                 <p style="border-top: 1px solid \\#000;font-size: 10px;text-align: center;margin-top: 5px;padding-top: 5px;">Power By: Banhji</p>
             </div>
         </div>

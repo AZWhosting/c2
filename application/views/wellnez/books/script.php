@@ -2994,10 +2994,10 @@
         bookDS: dataStore(apiUrl + "spa/book"),
         pageLoad: function() {
         },
-        save: function() {
-        },
         workDS : dataStore(apiUrl + "spa/work"),
         addServing: function(e){
+            $("#loadImport").css("display", "block");
+            var self = this;
             var data = e.data;
             this.workDS.data([]);
             this.workDS.add({
@@ -3017,15 +3017,70 @@
                 phone: data.phone,
                 user_id : banhji.userData.id,
             });
-            // this.workDS.sync();
-            // this.workDS.bind("requestEnd", function(e){
-            //     self.addWorkSuccess();
-            //     $("#loadImport").css("display", "none");
-            // });
+            this.workDS.sync();
+            this.workDS.bind("requestEnd", function(e){
+                if(e.response.type != "read"){
+                    self.updateBook(e.response.results[0].work_id, data.id);
+                }
+            });
         },
+        updateWorkDS: dataStore(apiUrl + "spa/updatebook"),
+        updateBook: function(work_id, book_id){
+            var self = this;
+            var now=new Date();
+            var localDate = new Date(now.getTime()-now.getTimezoneOffset()*60000).toISOString().substring(0,19);
+            this.updateWorkDS.data([]);
+            this.updateWorkDS.add({
+                work_id: work_id,
+                end_date: localDate,
+                book_id: book_id,
+            });
+            this.updateWorkDS.sync();
+            this.updateWorkDS.bind("requestEnd", function(e){
+                if(e.response.type != "read"){
+                    var noti = $("#ntf1").data("kendoNotification");
+                    noti.hide();
+                    noti.success(self.lang.lang.success_message);
+                    $("#loadImport").css("display", "none");
+                    self.bookDS.query({});
+                }
+            });
+        },
+        cancelVisible: false,
+        cancelBookID: 0,
         cancelBook: function(e){
-            console.log(e.data);
+            this.set("cancelBookID", e.data.id);
+            this.set("cancelVisible", true);
         },
+        closeCancel: function(){
+            this.set("cancelVisible", false);
+        },
+        cancelBookDS: dataStore(apiUrl + "spa/cancel_book"),
+        saveCancel: function(){
+            if(this.get("cancelReason")){
+                var self = this;
+                var now=new Date();
+                var localDate = new Date(now.getTime()-now.getTimezoneOffset()*60000).toISOString().substring(0,19);
+                this.cancelBookDS.data([]);
+                this.cancelBookDS.add({
+                    book_id: this.get("cancelBookID"),
+                    reason_id: this.get("cancelReason"),
+                    end_date: localDate,
+                });
+                this.cancelBookDS.sync();
+                this.cancelBookDS.bind("requestEnd", function(e){
+                    if(e.response.type != "read"){
+                        self.closeCancel();
+                        self.set("cancelReason", "");
+                        self.set("cancelBookID", "");
+                        self.bookDS.query({});
+                    }
+                });
+            }else{
+                alert("Please select reason");
+            }
+        },
+        cancelDS: dataStore(apiUrl + "spa/cancel_reason"),
         cancel: function() {
             window.history.back();
         }

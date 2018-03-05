@@ -16615,6 +16615,70 @@
 		</div>
 	</div>
 </script>
+<script id="autoAddBallance" type="text/x-kendo-template">
+	<div class="container">
+		<div class="row-fluid">
+			<div class="background">
+				<div class="row-fluid">
+					<div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 100%;margin-top: -15px;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
+						<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
+					</div>
+					<div id="example" class="k-content">
+						<h2 data-bind="text: lang.lang.imports" style="margin-bottom: 25px;">Imports</h2>
+						<div class="hidden-print pull-right">
+				    		<span class="glyphicons no-js remove_2" 
+								data-bind="click: cancel"><i></i></span>
+						</div>
+						<div class="clear"></div>
+
+						<!-- Tabs -->
+						<div class="relativeWrap" data-toggle="source-code">
+							<div class="widget widget-tabs widget-tabs-double-2 widget-tabs-gray">
+							
+								<!-- Tabs Heading -->
+								<div class="widget-head" style="background: #203864 !important; color: #fff;">
+									<ul>
+										<li class="active"><a class="glyphicons user" href="#tabContact" data-toggle="tab"><i></i><span style="line-height: 55px;" data-bind="text: lang.lang.meter"></span></a></li>				
+									</ul>
+								</div>
+								<!-- // Tabs Heading END -->
+								<div class="widget-body">
+									<div class="tab-content">
+										<div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 70%;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
+											<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
+										</div>
+										<!-- Tab content -->
+										<div id="tabContact" class="tab-pane active widget-body-regular">
+											<div class="row-fluid">
+												<h4 class="separator bottom" data-bind="text: lang.lang.please_upload_contacts_file">Please upload contacts file</h4>
+												<!-- <a href="<?php echo base_url(); ?>assets/water/wcontact_import_form_excel.xlsx" download>
+													<span id="saveClose" class="btn btn-icon btn-success glyphicons download" >
+														<i></i> 
+														<span data-bind="text: lang.lang.download_file_example">Download file example</span>
+													</span>
+												</a> -->
+												<div class="fileupload fileupload-new margin-none" data-provides="fileupload">
+												  	<input type="file"  data-role="upload" data-show-file-list="true" data-bind="events: {select: onSelected}" id="myFile"  class="margin-none" />
+												</div>
+												<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="invisible: isEdit" style="width: 120px!important; margin-bottom: 0;"><i></i>
+													<span data-bind="click: save, text: lang.lang.imports">Import Contact</span>
+												</span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div id="ntf1" data-role="notification"></div>
+								<!-- // Tabs END -->
+							</div>
+						</div>
+
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
 <!-- ***************************
 *	Menu Section         	  *
 **************************** -->

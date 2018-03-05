@@ -279,8 +279,11 @@
 				<div class="row ">
 					<div class="span12 " >
 						<div class="example">
+							<div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 100%;margin-top: -15px;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
+								<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
+							</div>
 							<div style="width: 100%; float: left; padding: 15px; background: #fff; margin-bottom: 15px; color: #333; font-weight: 700; font-size: 20px;">
-								3 Books
+								<span>Books</span>
 							</div>
 							<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 								<thead>
@@ -300,8 +303,42 @@
 			                		data-role="listview" 
 			                		data-template="book-template">
 			                	</tbody>
-							</table>					
+							</table>	
+							<div id="addPole"
+				            	data-role="window"
+				                data-width="260"
+				                data-height="120"
+				                data-actions="{}"
+				                data-resizable="false"
+				                data-title="Cancellation"
+				                data-position="{top: '30%', left: '37%'}"
+				                data-bind="visible: cancelVisible">
+			            		<table>
+									<tr style="border-bottom: 8px solid #fff;">
+										<td width="35%"><span style="color: #000;">Reasons</span></td>
+										<td>
+											<input data-role="dropdownlist"
+							            	   class="span3"
+							            	   style="padding-right: 1px;height: 32px;width: 100%;"
+					            			   data-option-label="(--- Select ---)"
+					            			   data-auto-bind="true"
+							                   data-value-primitive="true"
+							                   data-text-field="description"
+							                   data-value-field="id"
+							                   data-bind="value: cancelReason,
+							                              source: cancelDS"
+							                />
+										</td>
+									</tr>
+								</table>
+								<br>
+								<div style="text-align: center;">
+									<span style="margin-bottom: 0;" class="btn btn-success btn-icon glyphicons ok_2" data-bind="click: saveCancel"><i></i><span data-bind="text: lang.lang.save"></span></span>
+									<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closeCancel"><i></i><span data-bind="text: lang.lang.close"></span></span>  
+								</div>
+							</div>				
 						</div>
+						<div id="ntf1" data-role="notification"></div>
 					</div>
 				</div>
 			</div>

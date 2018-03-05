@@ -25885,7 +25885,70 @@
             this.set("showConfirm", false);
         }
     });
-    //
+    //auto add ballance
+    banhji.autoAddBallance = kendo.observable({
+        lang: langVM,
+        dataSource: dataStore(apiUrl + "utibills/auto_add_ballance"),
+        onSelected: function(e) {
+            $('li.k-file').remove();
+            var self = this;
+            var files = e.files;
+            var reader = new FileReader();
+            this.dataSource.data([]);
+            reader.onload = function() {
+                var data = reader.result;
+                var result = {};
+                var workbook = XLSX.read(data, {
+                    type: 'binary'
+                });
+                workbook.SheetNames.forEach(function(sheetName) {
+                    var roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+                    if (roa.length > 0) {
+                        result[sheetName] = roa;
+                        for (var i = 0; i < roa.length; i++) {
+                            self.dataSource.add(roa[i]);
+                        }
+                    }
+                });
+            }
+            reader.readAsBinaryString(files[0].rawFile);
+        },
+        save: function() {
+            var self = this;
+            if (this.dataSource.data().length === 0) {
+                var notifi = $("#ntf1").data("kendoNotification");
+                notifi.hide();
+                notifi.error(this.lang.lang.error_message);
+            } else {
+                $("#loadImport").css("display", "block");
+                this.dataSource.sync();
+                this.dataSource.bind("requestEnd", function(e) {
+                    if (e.response) {
+                        var notifi = $("#ntf1").data("kendoNotification");
+                        notifi.hide();
+                        notifi.success(self.lang.lang.success_message);
+                        $("#loadImport").css("display", "none");
+                        $('li.k-file').remove();
+                        self.dataSource.data([]);
+                    }
+                });
+                this.dataSource.bind("error", function(e) {
+                    var notifi = $("#ntf1").data("kendoNotification");
+                    notifi.hide();
+                    notifi.error(self.lang.lang.error_message);
+                    $("#loadImport").css("display", "none");
+                    $('li.k-file').remove();
+                    self.dataSource.data([]);
+                });
+            }
+        },
+        cancel: function(e) {
+            this.contact.dataSource.data([]);
+            this.item.dataSource.data([]);
+            this.property.dataSource.cancelChanges();
+            banhji.router.navigate("/");
+        }
+    });
 
     //End Customer
     /* views and layout */
@@ -26126,7 +26189,9 @@
         waterInvoice: new kendo.Layout("#waterInvoice", {
             model: banhji.waterInvoice
         }),
-
+        autoAddBallance: new kendo.Layout("#autoAddBallance", {
+            model: banhji.autoAddBallance
+        }),
         //
         itemAssembly: new kendo.Layout("#itemAssembly", {model: banhji.itemAssembly}),
     };
@@ -27294,6 +27359,10 @@
         });
     });
     //
+    banhji.router.route("/auto_add_ballance", function(){
+        banhji.view.layout.showIn("#content", banhji.view.autoAddBallance);
+    });
+    
 
     /*************************
      *   Import Section   *

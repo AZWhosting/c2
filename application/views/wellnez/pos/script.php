@@ -3725,8 +3725,9 @@
             },
             filter: [
                 {
-                    field: "is_system",
-                    value: 0
+                    field: "item_type_id",
+                    operator: "where_in",
+                    value: [1, 4]
                 }
             ],
             sort: {
@@ -5561,8 +5562,13 @@
                         value: textParts[1]
                     });
                 }
+                para.push({
+                    field: "item_type_id",
+                    operator: "where_in",
+                    value: [1,4]
+                });
+                this.itemsDS.filter(para);
             }
-            this.itemsDS.filter(para);
         },
         bookDS : dataStore(apiUrl + "spa/book"),
         addBook : function(e){

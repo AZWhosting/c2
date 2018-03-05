@@ -4880,48 +4880,50 @@ class Utibills extends REST_Controller {
 		$data["count"] = 0;
 
 		foreach ($models as $value) {
-			
-			$ar = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$ar->type = "Utility_Invoice";
-			$ar->contact_id = $customer->id;
-			$ar->journal_type = "journal";
-			$ar->is_journal = 1;
-			$ar->meter_id = $meter->id;
-			$ar->rate = 1.000000000000000;
-			$ar->locale = $this->locale;
-			$ar->due_date = date('Y-m-d');
-			$ar->month_of = date('Y-m-d', strtotime($row->date_used));
-			$ar->location_id = $location->id;
-			$ar->number = "JV".$this->_generate_number($ar->type, $meter->date_used);
-			$ar->issued_date = date('Y-m-d', strtotime($row->date_used));
-			$ar->amount = $row->balance;
-			$ar->sub_total = $row->balance;
-			$ar->status = 0;
-			if($ar->save()) {
-				$ar1 = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$ar1->transaction_id = $ar->id;
-				$ar1->account_id = $customer->account_id;
-				$ar1->description= "Utility Opening Balance";
-				$ar1->contact_id = $ar->contact_id;
-				$ar1->dr = isset($row->balance) ? $row->balance : 0;
-				$ar1->cr = 0.00;
-				$ar1->save();
+			$meter = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$meter->where("number", $value->meter_number)->limit(1)->get();
+			if($meter->exists()){
+				$con = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$con->where("id", $meter->contact_id)->limit(1)->get();
+				$ar = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$ar->type = "Utility_Invoice";
+				$ar->contact_id = $meter->contact_id;
+				$ar->journal_type = "journal";
+				$ar->is_journal = 1;
+				$ar->meter_id = $meter->id;
+				$ar->rate = 1.000000000000000;
+				$ar->locale = $con->locale;
+				$ar->due_date = date('Y-m-d');
+				$ar->month_of = date('Y-m-d');
+				$ar->location_id = $meter->location_id;
+				$ar->number = "JV".$this->_generate_number($ar->type, date('Y-m-d'));
+				$ar->issued_date = date('Y-m-d');
+				$ar->amount = $value->amount;
+				$ar->sub_total = $value->amount;
+				$ar->status = 0;
+				if($ar->save()) {
+					$ar1 = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$ar1->transaction_id = $ar->id;
+					$ar1->account_id = $con->account_id;
+					$ar1->description= "Utility Opening Balance";
+					$ar1->contact_id = $ar->contact_id;
+					$ar1->dr = isset($value->amount) ? $value->amount : 0;
+					$ar1->cr = 0.00;
+					$ar1->save();
 
-				$ar2 = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$ar2->transaction_id = $ar->id;
-				$ar2->account_id = 70;
-				$ar2->description= "Utility Opening Balance";
-				$ar2->contact_id = $ar->contact_id;
-				$ar2->dr = 0.00;
-				$ar2->cr = isset($row->balance) ? $row->balance : 0;
-				$ar2->save();
+					$ar2 = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$ar2->transaction_id = $ar->id;
+					$ar2->account_id = 70;
+					$ar2->description= "Utility Opening Balance";
+					$ar2->contact_id = $ar->contact_id;
+					$ar2->dr = 0.00;
+					$ar2->cr = isset($value->amount) ? $value->amount : 0;
+					$ar2->save();
+					$data["results"][] = array(
+				   		"id" 						=> $ar->id,
+				   	);
+				}
 			}
-
-	   		if($obj->save()){
-			   	$data["results"][] = array(
-			   		"id" 						=> $obj->id,
-			   	);
-		    }
 		}
 
 		$data["count"] = count($data["results"]);

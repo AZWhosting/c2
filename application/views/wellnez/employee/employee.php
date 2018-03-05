@@ -364,10 +364,10 @@
 					<div class="table table-condensed" style="height: 580px;"
 						 data-role="grid" 
 						 data-bind="source: contactDS"
-						 data-auto-bind="false" 
+						 data-auto-bind="true" 
 						 data-row-template="employeeCenter-customer-list-tmpl"
 						 data-columns="[{title: ''}]"
-						 data-selectable=true
+						 data-selectable="true"
 						 data-height="600"
 						 data-scrollable="{virtual: true}">
 						 
@@ -682,7 +682,7 @@
 		<td>
 			<div class="media-body">
 				<span class="strong">
-					#=number# #=fullname#				
+					#=number# #=name#				
 				</span>
 			</div>
 		</td>
@@ -1212,7 +1212,6 @@
 
 					<section class="box-typical edit-company">
 						<article  style="position: relative; width: 100%;overflow: hidden; padding: 10px 0;" class="col-md-12 col-lg-12 profile-info-item edit-table rows">
-	                    
 		                    <div class="span12" style="background: #eee;">
 			                    <table style="width: 100%; float: left; font-size: 14px; margin: 15px 0;">
 		                  			<tr>
@@ -1228,7 +1227,7 @@
 			                                <input id="type" 
 			                                    data-role="dropdownlist"
 			                                    data-bind="source: roleDS, 
-			                                    		value: obj.current_role,
+			                                    		value: obj.role,
 			                                    		events: {change: typeChange}"
 			                                    data-text-field="name"
 			                                    data-value-field="id"
@@ -1243,7 +1242,7 @@
 		                      			<td>:</td>
 		                          		<td>
 		                             		<input type="text" 
-		                             			data-bind="value: obj.current_name" 
+		                             			data-bind="value: obj.name" 
 		                             			class="form-control"  
 		                             			id="" placeholder="">
 		                          		</td>
@@ -1253,7 +1252,7 @@
 		                                    <input id="type"
 		                                      data-role="dropdownlist"
 		                                      data-bind="source: userDS, 
-		                                      			value: obj.current_user_id"
+		                                      			value: obj.user_id"
 		                                      data-text-field="username"
 		                                      data-value-field="id"
 		                                      data-primitive-value="true"
@@ -1268,12 +1267,12 @@
 		                        		<td style="width: 20px;">:</td>
 		                        		<td>
 		                                    <input id="type"
-		                                        data-bind="value: obj.current_abbr"
+		                                        data-bind="value: obj.abbr"
 		                                        class="form-control col-md-7 col-xs-12"
 		                                        type="text"
 		                                        style="width: 50px;"> 
 		                                    <input id="type"
-		                                        data-bind="value: obj.current_number"
+		                                        data-bind="value: obj.number"
 		                                        class="form-control col-md-7 col-xs-12"
 		                                        type="text"
 		                                        style="width: 150px;">
@@ -1284,7 +1283,7 @@
 		                                    <input id="type"
 		                                        data-role="dropdownlist"
 		                                        data-bind="source: statusDS, 
-		                                        		value: obj.current_status"
+		                                        		value: obj.status"
 		                                        data-text-field="value"
 		                                        data-value-field="id"
 		                                        data-value-primitive="true"
@@ -1299,7 +1298,7 @@
 		                                    <input id="type"
 		                                        data-role="dropdownlist"
 		                                        data-bind="source: genderDS, 
-		                                       			 value: obj.current_gender"
+		                                       			 value: obj.gender"
 		                                        data-text-field="value"
 		                                        data-value-field="id"
 		                                        data-value-primitive="true"
@@ -1330,11 +1329,11 @@
 	                          				Payroll Information
 	                        			</a>
 	                      			</li>
-	                      			<li class="nav-item">
+	                      			<!-- <li class="nav-item">
 	                        			<a class="nav-link" href="#tabs-4-tab-4" role="tab" data-toggle="tab" aria-expanded="false">
 	                          				Document
 	                        			</a>
-	                      			</li>
+	                      			</li> -->
 	                    		</ul>
 	                  		</div><!--.tabs-section-nav-->
 
@@ -1345,23 +1344,23 @@
 	                          				<td>email</td>
 	                          				<td><input type="email" 
 			                          				class="k-textbox" d
-			                          				ata-bind="value: obj.current_email"></td>
+			                          				ata-bind="value: obj.email"></td>
 	                          				<td></td>
 	                          				<td>phone</td>
 	                          				<td><input type="phone" 
 		                          					class="k-textbox" 
-		                          					data-bind="value: obj.current_phone"></td>
+		                          					data-bind="value: obj.phone"></td>
 	                        			</tr>
 	                        			<tr>
 	                          				<td>address</td>
 	                          				<td><input type="text" 
 	                          						class="k-textbox" 
-	                          						data-bind="value: obj.current_address"></td>
+	                          						data-bind="value: obj.address"></td>
 	                          				<td></td>
 	                          				<td>memo</td>
 	                          				<td><input type="text" 
 	                          						class="k-textbox" 
-	                          						data-bind="value: obj.current_memo" 
+	                          						data-bind="value: obj.memo" 
 	                          						style="border-color: #c5c5c5"></td>
 	                        			</tr>
 	                      			</table>
@@ -1373,8 +1372,8 @@
 	                            				Advance Account<br>
 	                            				<input id="type"
 			                                      data-role="dropdownlist"
-			                                      data-bind="source: advanceAC, 
-			                                      			value: obj.current_account"
+			                                      data-bind="source: advanceAccDS, 
+			                                      			value: obj.account"
 			                                      data-text-field="name"
 			                                      data-value-field="id"
 			                                      data-value-primitive="false"
@@ -1388,8 +1387,8 @@
 	                            				Salary Account<br>
 				                                <input id="type"
 				                                      data-role="dropdownlist"
-				                                      data-bind="source: salaryAC, 
-				                                      			value: obj.current_salary"
+				                                      data-bind="source: salaryAccDS, 
+				                                      			value: obj.salary"
 				                                      data-text-field="name"
 				                                      data-value-field="id"
 				                                      data-value-primitive="false"
@@ -1403,7 +1402,7 @@
 			                                    <input id="type"
 			                                      data-role="dropdownlist"
 			                                      data-bind="source: currentDS, 
-			                                      			value: obj.current_currency"
+			                                      			value: obj.currency"
 			                                      data-text-field="country"
 			                                      data-value-field="locale"
 			                                      data-value-primitive="true"
@@ -1419,8 +1418,8 @@
 	                        			<tr>
 	                          				<td>Nationality</td>
 	                          				<td>
-			                                    <input id="type"                                     
-			                                     data-bind="value:obj.payroll_nationality"
+			                                    <input id="type"               
+			                                     data-bind="value: payrollobj.nationality"
 			                                     class="k-textbox"
 			                                     type="text">
 	                            			</td>
@@ -1429,7 +1428,7 @@
 	                          				<td>
 			                                    <input type="text" 
 			                                      data-role="datepicker" 
-			                                      data-bind="value: obj.payroll_employeement_date"
+			                                      data-bind="value: payrollobj.employeement_date"
 			                                      data-format="dd-MM-yyyy"
 			                                      data-parse-formats="yyyy-MM-dd">
 	                          				</td>
@@ -1438,8 +1437,8 @@
 	                          				<td>Married Status</td>
 		                                  	<td>
 			                                    <input id="type"
-			                                    	data-bind="source: marriedStatusDS,
-			                                    			value: obj.payroll_married_status"
+			                                    	data-bind="source: marriedAR,
+			                                    			value: payrollobj.married_status"
 			                                     	data-role="dropdownlist"
 			                                     	data-text-field="name"
 			                                     	data-value-field="id"
@@ -1452,14 +1451,14 @@
 	                          				<td>
 			                                    <input type="text" 
 			                                      data-role="numerictextbox" 
-			                                      data-bind="value: obj.payroll_children">
+			                                      data-bind="value: payrollobj.children">
 	                          				</td>
 	                        			</tr>
 	                        			<tr>
 	                          				<td>City/Province</td>
 	                          				<td>
-			                                    <input id="type"                                     
-			                                     data-bind="value: obj.payroll_city"
+			                                    <input id="type"                        
+			                                     data-bind="value: payrollobj.city"
 			                                     class="k-textbox"
 			                                     type="text">
 	                            			</td>
@@ -1467,15 +1466,15 @@
 	                          				<td>Country</td>
 	                          				<td>
 			                                    <input type="text" 
-			                                      data-bind="value: obj.payroll_country"
+			                                      data-bind="value: payrollobj.payroll_country"
 			                                      class="k-textbox">
 	                          				</td>
 	                        			</tr>
 	                        			<tr>
 	                          				<td>Emmergency Number</td>
 	                          				<td>
-			                                    <input id="type"                                     
-			                                     data-bind="value: obj.payroll_emergency_number"
+			                                    <input id="type"                     
+			                                     data-bind="value: payrollobj.emergency_number"
 			                                     class="k-textbox"
 			                                     type="text">
 	                            			</td>
@@ -1483,25 +1482,25 @@
 	                          				<td>Emmergency Name</td>
 	                          				<td>
 			                                    <input type="text" 
-			                                      data-bind="value: obj.payroll_emergency_name"
+			                                      data-bind="value: payrollobj.emergency_name"
 			                                      class="k-textbox"
 			                                      >
 	                          				</td>
 	                        			</tr>
 	                      			</table>
 	                    		</div><!--.tab-pane-->
-	                    			<div role="tabpanel" class="tab-pane fade" id="tabs-4-tab-4" aria-expanded="false">
-	                      				<input data-role="upload" type="file" 
-	                      						data-bind="events: {select: fileMan.onSelected}" data-show-file-list="false">
-			                            <table class="table">
-			                                <tbody 
-			                                  data-role="listview"
-			                                  data-auto-bind="false"
-			                                  data-bind="source: fileMan.dataSource" 
-			                                  data-template="attachment-list"></tbody>
-			                            </table>
-	                    			</div><!--.tab-pane-->
-	                  			</div><!--.tab-content-->
+                    			<!-- <div role="tabpanel" class="tab-pane fade" id="tabs-4-tab-4" aria-expanded="false">
+                      				<input data-role="upload" type="file" 
+                      						data-bind="events: {select: fileMan.onSelected}" data-show-file-list="false">
+		                            <table class="table">
+		                                <tbody 
+		                                  data-role="listview"
+		                                  data-auto-bind="false"
+		                                  data-bind="source: fileMan.dataSource" 
+		                                  data-template="attachment-list"></tbody>
+		                            </table>
+                    			</div> --><!--.tab-pane-->
+                  			</div><!--.tab-content-->
 	            		</section>
 	            		<div class="box-generic">
 	              			<button data-role="button" class="k-button btn-save" role="button" aria-disabled="false" tabindex="0" data-bind="click: save">
@@ -1515,13 +1514,11 @@
 	                		</button>
 	            		</div>
 	            	</section>
-
-
+	            	<div id="ntf1" data-role="notification"></div>
 				</div>
 			</div>
 		</div>
 	</div>
-
 </script>
 <script type="text/x-kendo-template" id="employee-account-list">
   	<div>

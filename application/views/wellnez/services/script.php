@@ -4394,7 +4394,9 @@
             obj.set("tax", tax);
             obj.set("amount", total);
             obj.set("remaining", remaining);
-
+            if(obj.service_charge > 0){
+                total += obj.service_charge;
+            }
             this.set("total", kendo.toString(total, "c", obj.locale));
             this.set("amount_due", kendo.toString(amount_due, "c", obj.locale));
             
@@ -4412,7 +4414,6 @@
             //Check invoice paid
             if(obj.status=="1" && this.lineDS.hasChanges()){
                 this.lineDS.cancelChanges();
-
                 $("#ntf1").data("kendoNotification").warning(banhji.source.noChangeInvoicePaidMessage);
             }
         },
@@ -5477,9 +5478,11 @@
             return dfd;
         },
         haveWork            : false,
-        workDS           : dataStore(apiUrl + "spa/work"),
-        saveWorkDS           : dataStore(apiUrl + "spa/updatework"),
+        workDS              : dataStore(apiUrl + "spa/work"),
+        saveWorkDS          : dataStore(apiUrl + "spa/updatework"),
+        serviceChargeItem   : dataStore(apiUrl + "items"),
         selectRow: function(e){
+            var self = this;
             this.lineDS.data([]);
             this.lineDS.filter({
                 field: "transaction_id",
@@ -5521,6 +5524,7 @@
         },
         printDS             : dataStore(apiUrl + "spa/invoice"),
         printBill            : function(){
+            $("#loadImport").css("display", "block");
             var self = this, obj = this.get("obj");
             this.printDS.data([]);
             this.printDS.add({
@@ -5535,6 +5539,7 @@
                 var type = e.type;
                 console.log(e);
                 if (type !== 'read') {
+                    $("#loadImport").css("display", "none");
                     var data = e.response.results[0];
                     banhji.print.dataSource = [];
                     banhji.print.dataSource.push(data);
@@ -5639,11 +5644,9 @@
             },1000);
         },
         cancel              : function(){
-            this.dataSource = [];
-            banhji.offline.NextReading();
+            this.dataSource.splice(0, this.dataSource.length);
             banhji.router.navigate('/');
-            this.barcod("reset");
-            window.location.reload();
+            banhji.Index.workDS.query({});
         }
     });
     /* views and layout */

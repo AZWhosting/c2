@@ -3684,7 +3684,45 @@
     banhji.Index = kendo.observable({
         lang                : langVM,
         transactionDS       : dataStore(apiUrl + 'transactions'),
-        contactDS           : dataStore(apiUrl + 'contacts'),
+        contactDS           : new kendo.data.DataSource({
+            transport: {
+                read  : {
+                  url: baseUrl + "api/contacts",
+                  type: "GET",
+                  headers: { Institute: banhji.institute.id },
+                  dataType: 'json'
+                },        
+                parameterMap: function(options, operation) {
+                  if(operation === 'read') {
+                    return {
+                      page: options.page,
+                      limit: options.pageSize,
+                      filter: options.filter,
+                      sort: options.sort
+                    };
+                  } else {
+                    return {models: kendo.stringify(options.models)};
+                  }
+                }
+            },
+            schema  : {
+                model: {
+                  id: 'id'
+                },
+                data: 'results',
+                total: 'count'
+            },
+            filter: [
+                { field:"contact_type_id",operator: "where_in", value: [8,9,10] }
+            ],
+            sort: { field:"number", dir:"asc" },
+            batch: true,
+            serverFiltering: true,
+            serverSorting: true,
+            serverPaging: true,
+            page:1,
+            pageSize: 100
+        }),
         noteDS              : dataStore(apiUrl + 'notes'),
         summaryDS           : dataStore(apiUrl + "transactions"),
         currencyDS              : new kendo.data.DataSource({
@@ -3879,6 +3917,21 @@
                     { field: "name", operator: "or_like", value: txtSearch },
                     { field: "company", operator: "or_like", value: txtSearch }
                 );
+                para.push(
+                    { field: "contact_type_id", operator: "where_in", value: [8,9,10]}
+                )
+                this.contactDS.filter(para);
+                var loaded = false;
+                this.contactDS.bind("requestEnd", function(){
+                    if(loaded==false){
+                        loaded = true;
+
+                        //Clear search filters
+                        self.set("searchText", "");                 
+                        self.set("contact_type_id", 0);
+                        self.set("currency_id", 0);
+                    }
+                });
             }           
 
             if(contact_type_id){
@@ -3891,18 +3944,7 @@
                 para.push({ field: "currency_id", value: currency_id });
             }           
 
-            this.contactDS.filter(para);
-            var loaded = false;
-            this.contactDS.bind("requestEnd", function(){
-                if(loaded==false){
-                    loaded = true;
-
-                    //Clear search filters
-                    self.set("searchText", "");                 
-                    self.set("contact_type_id", 0);
-                    self.set("currency_id", 0);
-                }
-            });                 
+                           
         },
         searchTransaction   : function(){
             var self = this,
@@ -3975,6 +4017,53 @@
             }
         },
         today   : new Date()
+    });
+    banhji.userDS = new kendo.data.DataSource({
+        transport: {
+          read  : {
+            url: baseUrl + 'api/users',
+            type: "GET",
+            dataType: 'json'
+          },
+          create  : {
+            url: baseUrl + 'api/users',
+            type: "POST",
+            dataType: 'json'
+          },
+          destroy  : {
+            url: baseUrl + 'api/users',
+            type: "DELETE",
+            dataType: 'json'
+          },
+          update  : {
+            url: baseUrl + 'api/users',
+            type: "PUT",
+            dataType: 'json'
+          },
+          parameterMap: function(options, operation) {
+            if(operation === 'read') {
+              return {
+                limit: options.take,
+                page: options.page,
+                filter: options.filter
+              };
+            } else {
+              return {models: kendo.stringify(options.models)};
+            }
+          }
+        },
+        schema  : {
+          model: {
+            id: 'id'
+          },
+          data: 'results',
+          total: 'count'
+        },
+        batch: true,
+        serverFiltering: true,
+        serverPaging: true,
+        filter: {field: 'id', value: JSON.parse(localStorage.getItem('userData/user')).institute.id},
+        pageSize: 50
     });
     banhji.Employees = kendo.observable({
         lang        : langVM,
@@ -4078,41 +4167,37 @@
         },
         obj         : null,
         payrollobj  : null,
+        statusDS  : [
+            {id: 0, value: "inactive"},
+            {id: 1, value: "active"}
+        ],
+        genderDS  : [
+            {id: "M", value: "Male"},
+            {id: "F", value: "Female"}
+        ],
+        userDS : banhji.userDS,
         addEmpty                : function(){
             this.dataSource.data([]);
             this.set("obj", null);
             this.dataSource.insert(0, {
-                "current_is_fulltime"  : "",
-                "current_role"         : "M",
-                "current_name"         : "",
-                "current_abbr"         : "",
-                "current_user_id"      : "",
-                "current_number"       : "",
-                "current_status"       : 1,
-                "current_gender"       : "",
-                "current_account"      : "",
-                "current_salary"       : "",
-                "current_currency"     : "",
-                "payroll_nationality"  : "",
-                "current_email"        : "",
-                "current_phone"        : "",
-                "current_address"      : "",
-                "current_memo"         : "",
-                "payroll_nationality"  : "",
-                "payroll_employeement_date" : "",
-                "payroll_married_status"    : "",
-                "payroll_children"     : "",
-                "payroll_city"         : "",
-                "payroll_emergency_number"  : "",
-                "payroll_emergency_name"    : "",
-                "payroll_country"       : "",
-                "current_account"      : [
-                    {id: 9, name: 'Cash Advance'}
-                ],
-                "salary"        : [
-                    {id: 78, name: 'Salary'}
-                ],
-                "registered_date" : new Date()
+                "name"          :"",
+                "gender"        :"M",
+                "number"        :"",
+                "is_fulltime"   :false,
+                "role"          : "",
+                "status"        :1,
+                "phone"         :"",
+                "email"         :"",
+                "address"       :"",
+                "memo"          :"",
+                "bill_to"       :"",
+                "ship_to"       :"",
+                "abbr"          :"",
+                "currency"      :"km-KH",
+                "userid"        :0,
+                "account"       :{id: 9, name: 'Cash Advance'},
+                "salary"        :{id: 78, name: 'Salary'},
+                "registered_date":new Date()
             });
             var obj = this.dataSource.at(0);
             this.set("obj", obj);
@@ -4120,13 +4205,15 @@
             this.payrollDS.data([]);
             this.set("payrollobj", null);
             this.payrollDS.insert(0, {
-                "payroll_children"  : 0,
-                "payroll_city"      : "",
-                "payroll_country"   : "",
-                "payroll_emergency_name" : "",
-                "payroll_married_status" : "",
-                "payroll_nationality"    : "" 
+                "children"          : 0,
+                "city"              : "",
+                "country"           : "",
                 "contact_id"        : "",
+                "emergency_name"    : "",
+                "employeement_date" : "",
+                "emergency_number"  : "", 
+                "married_status"    : 0,
+                "nationality"       : "",
             });
             var payrollobj = this.payrollDS.at(0);
             this.set("payrollobj", payrollobj);
@@ -4142,17 +4229,26 @@
                 self.set("obj", view[0]);
             });
         },
+        typeChange: function(e) {
+          var type = this.roleDS.data()[e.sender.selectedIndex - 1];
+          this.get('obj').set('abbr', type.abbr);
+        },
         save        : function(e){
             var self = this;
             this.dataSource.sync();
             this.dataSource.bind("requestEnd", function(e){
                 if(e.response.type != 'read'){
-                    var noti = $("#ntf1").data("kendoNotification");
-                    noti.hide();
-                    noti.success(self.lang.lang.success_message);
-                    self.cancel();
+                    $.each(self.payrollDS.data(), function(i,v){
+                        v.set("contact_id", e.response.results[0].id);
+                    });
+                    self.payrollDS.sync();
+                    self.payrollDS.bind("requestEnd", function(e){
+                        self.cancel();
+                        var noti = $("#ntf1").data("kendoNotification");
+                        noti.hide();
+                        noti.success(self.lang.lang.success_message);
+                    });
                 }
-                    
             });
         },
         cancel      : function(e){
@@ -4176,34 +4272,36 @@
         }),
         contactDS           : new kendo.data.DataSource({
             transport: {
-                read    : {
-                    url: apiUrl + "contacts",
-                    type: "GET",
-                    headers: banhji.header,
-                    dataType: 'json'
-                },              
+                read  : {
+                  url: baseUrl + "api/contacts",
+                  type: "GET",
+                  headers: { Institute: banhji.institute.id },
+                  dataType: 'json'
+                },        
                 parameterMap: function(options, operation) {
-                    if(operation === 'read') {
-                        return {
-                            page: options.page,
-                            limit: options.pageSize,
-                            filter: options.filter,
-                            sort: options.sort
-                        };
-                    } else {
-                        return {models: kendo.stringify(options.models)};
-                    }
+                  if(operation === 'read') {
+                    return {
+                      page: options.page,
+                      limit: options.pageSize,
+                      filter: options.filter,
+                      sort: options.sort
+                    };
+                  } else {
+                    return {models: kendo.stringify(options.models)};
+                  }
                 }
             },
             schema  : {
                 model: {
-                    id: 'id'
+                  id: 'id'
                 },
                 data: 'results',
                 total: 'count'
             },
-            filter:{ field:"parent_id", operator:"where_related_contact_type", value:1 },
-            sort:{ field:"number", dir:"asc" },
+            filter: [
+                { field:"contact_type_id",operator: "where_in", value: [8,9,10] }
+            ],
+            sort: { field:"number", dir:"asc" },
             batch: true,
             serverFiltering: true,
             serverSorting: true,
@@ -4544,22 +4642,14 @@
             
             if(searchText){
                 var textParts = searchText.replace(/([a-z]+)/i, "$1 ").split(/[^0-9a-z]+/ig);
-
                 para.push(
                     { field: "abbr", value: textParts[0] },
                     { field: "number", value: textParts[1] },
                     { field: "name", operator: "or_like", value: searchText }
                 );
+                para.push({ field: "contact_type_id", operator: "where_in", value: [8,9,10]});
+                this.contactDS.filter(para);
             }
-
-            if(contact_type_id){
-                para.push({ field: "contact_type_id", value: contact_type_id });
-            }else{
-                para.push({ field: "parent_id", operator:"where_related_contact_type", value: 1 });
-            }
-
-            this.contactDS.filter(para);
-            
             //Clear search filters
             self.set("searchText", "");
             self.set("contact_type_id", 0);
