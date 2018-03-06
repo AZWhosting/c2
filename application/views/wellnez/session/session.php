@@ -260,6 +260,9 @@
 		text-transform: uppercase;
 		background: #1c3b19;
 	}
+	.session .example table tr td{
+		font-size: 13px;
+	}
 </style>
 <!-- ***************************
 *	Water Section      	  *

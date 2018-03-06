@@ -55,251 +55,256 @@ class Utibills extends REST_Controller {
 			$obj->get_iterated();
 			$data["count"] = $obj->result_count();
 		}
+		$idcheck = [];
 		if($obj->exists()){
 			foreach ($obj as $value) {
-				//Calulate Fine
-				$fineAmount = 0;
-				if($value->status == 0){
-					//Chhayhout Find module
-					if($this->_database == 'db_1501212262'){
-						$fine = new Winvoice_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-						$fine->where("transaction_id", $value->id);
-						$fine->where("type", "fine")->order_by("id", "desc")->limit(1)->get();
-						if($fine->exists()){
-							$dueDate = new DateTime($value->due_date);
-							$ddate = $dueDate->getTimestamp();
-							$fineDate = new DateTime(date('Y-m-d'));
-							$fdate = $fineDate->getTimestamp();
-							if($fdate > $ddate){
-								$fDay = $fineDate->diff($dueDate)->days;
-								$fineDay = $fDay * 500;
-								$fineAmount = floatval($fineDay);
-								if($fDay >= 10){
-									$fineAmount += 10000;
+				if (!in_array($value->id, $idcheck)) {
+					array_push($idcheck, $value->id);
+					//Calulate Fine
+					$fineAmount = 0;
+					if($value->status == 0){
+						//Chhayhout Find module
+						if($this->_database == 'db_1501212262'){
+							$fine = new Winvoice_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+							$fine->where("transaction_id", $value->id);
+							$fine->where("type", "fine")->order_by("id", "desc")->limit(1)->get();
+							if($fine->exists()){
+								$dueDate = new DateTime($value->due_date);
+								$ddate = $dueDate->getTimestamp();
+								$fineDate = new DateTime(date('Y-m-d'));
+								$fdate = $fineDate->getTimestamp();
+								if($fdate > $ddate){
+									$fDay = $fineDate->diff($dueDate)->days;
+									$fineDay = $fDay * 500;
+									$fineAmount = floatval($fineDay);
+									if($fDay >= 10){
+										$fineAmount += 10000;
+									}
 								}
 							}
-						}
-					//Borey Kamakor
-					}elseif($this->_database == 'db_1508214577'){
-						// $fine = new Winvoice_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-						// $fine->where("transaction_id", $value->id);
-						// $fine->where("type", "fine")->order_by("id", "desc")->limit(1)->get();
-						// if($fine->exists()){
-						// 	$dueDate = new DateTime($value->due_date);
-						// 	$ddate = $dueDate->getTimestamp();
-						// 	$fineDate = new DateTime(date('Y-m-d'));
-						// 	$fdate = $fineDate->getTimestamp();
-						// 	if($fdate > $ddate){
-						// 		$fDay = $fineDate->diff($dueDate)->days;
-						// 		$fDay;
-						// 		$fineAmount = (floatval($value->amount) * intval($fDay)) / 100 ;
-						// 	}
-						// }
-						$fineAmount = 0;
-					//Normal fine
-					}else{
-						$fine = new Winvoice_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-						$fine->where("transaction_id", $value->id);
-						$fine->where("type", "fine")->order_by("id", "desc")->limit(1)->get();
-						if($fine->exists()){
-							$dueDate = new DateTime($value->due_date);
-							$ddate = $dueDate->getTimestamp();
-							$fineDate = new DateTime(date('Y-m-d'));
-							$fdate = $fineDate->getTimestamp();
-							if($fdate > $ddate){
-								$fineDate = $fineDate->diff($dueDate)->days;
-								$fineDateAmount = intval($fine->quantity);
-								if($fineDate >= $fineDateAmount){
-									$fineAmount = floatval($fine->amount);
+						//Borey Kamakor
+						}elseif($this->_database == 'db_1508214577'){
+							// $fine = new Winvoice_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+							// $fine->where("transaction_id", $value->id);
+							// $fine->where("type", "fine")->order_by("id", "desc")->limit(1)->get();
+							// if($fine->exists()){
+							// 	$dueDate = new DateTime($value->due_date);
+							// 	$ddate = $dueDate->getTimestamp();
+							// 	$fineDate = new DateTime(date('Y-m-d'));
+							// 	$fdate = $fineDate->getTimestamp();
+							// 	if($fdate > $ddate){
+							// 		$fDay = $fineDate->diff($dueDate)->days;
+							// 		$fDay;
+							// 		$fineAmount = (floatval($value->amount) * intval($fDay)) / 100 ;
+							// 	}
+							// }
+							$fineAmount = 0;
+						//Normal fine
+						}else{
+							$fine = new Winvoice_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+							$fine->where("transaction_id", $value->id);
+							$fine->where("type", "fine")->order_by("id", "desc")->limit(1)->get();
+							if($fine->exists()){
+								$dueDate = new DateTime($value->due_date);
+								$ddate = $dueDate->getTimestamp()."AA";
+								$fineDate = new DateTime(date('Y-m-d'));
+								$fdate = $fineDate->getTimestamp();
+								if($fdate > $ddate){
+									$fineDate = $fineDate->diff($dueDate)->days;
+									$fineDateAmount = intval($fine->quantity);
+									if($fineDate >= $fineDateAmount){
+										$fineAmount = floatval($fine->amount);
+									}
 								}
 							}
 						}
 					}
-				}
-				//Sum amount paid
-				$amount_paid = 0;
-				//Check Pastsoldpaid
-				if($value->status == 2){
-					$paid = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-					$paid->select_sum("amount");
-					$paid->select_sum("discount");
-					$paid->where_in("type", "Cash_Receipt");					
-					$paid->where("reference_id", $value->id);
-					$paid->where("deleted <>",1);
-					$paid->get();
-					$amount_paid = floatval($paid->amount) + floatval($paid->discount);
-				}
-				$meter = "";
-				$meterNum = "";
-				if($value->meter_id != 0){
-					$meter = $value->meter->get();
-					$meterNum = $meter->get()->number;
-				}
-				isset($value->payment_term_id) ? $value->payment_term_id = $value->payment_term_id : 5;
-				$contact = $value->contact->get();
-				$data["results"][] = array(
-					"id" 						=> $value->id,
-					"company_id" 				=> $value->company_id,
-					"location_id" 				=> $value->location_id,
-					"pole_id" 					=> $value->pole_id,
-					"box_id" 					=> $value->box_id,
-					"contact_id" 				=> intval($value->contact_id),
-					"contact_name" 				=> $contact->name,
-					"payment_term_id" 			=> $value->payment_term_id,
-					"transaction_template_id" 	=> $value->transaction_template_id,
-					"reference_id" 				=> intval($value->reference_id),
-					"account_id" 				=> intval($value->account_id),
-					"item_id" 					=> $value->item_id,
-					"tax_item_id" 				=> $value->tax_item_id,
-					"wht_account_id"			=> $value->wht_account_id,
-					"user_id" 					=> $value->user_id,
-				   	"number" 					=> $value->number,
-				   	"type" 						=> $value->type,
-				   	"journal_type" 				=> $value->journal_type,
-				   	"sub_total"					=> floatval($value->sub_total),
-				   	"discount" 					=> floatval($value->discount),
-				   	"tax" 						=> floatval($value->tax),
-				   	"amount" 					=> floatval($value->amount),
-				   	"fine" 						=> floatval($value->fine),
-				   	"deposit"					=> floatval($value->deposit),
-				   	"remaining" 				=> floatval($value->remaining),
-				   	"rate" 						=> floatval($value->rate),
-				   	"locale" 					=> $value->locale,
-				   	"month_of"					=> $value->month_of,
-				   	"issued_date"				=> $value->issued_date,
-				   	"bill_date"					=> $value->bill_date,
-				   	"payment_date" 				=> $value->payment_date,
-				   	"due_date" 					=> $value->due_date,
-				   	"reference_no" 				=> $value->reference_no,
-				   	"references" 				=> $value->references!="" ? array_map('intval', explode(",", $value->references)) : [],
-				   	"memo" 						=> $value->memo,
-				   	"memo2" 					=> $value->memo2,
-				   	"status" 					=> intval($value->status),
-				   	"is_journal" 				=> $value->is_journal,
-				   	"print_count" 				=> $value->print_count,
-				   	"amount_fine" 				=> $fineAmount,
-				   	"meter"						=> $meterNum,
-				   	"meter_id"					=> $value->meter_id,
-				   	"amount_paid"				=> $amount_paid
-				);
-				//Check Relate Invoice
-				$relateinv = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$relateinv->where("type", "Utility_Invoice");
-				$relateinv->where("meter_id", $value->meter_id);
-				$relateinv->where("id <>", $value->id);
-				$relateinv->where("status <>", 1);
-				$relateinv->where("deleted <>", 1);
-				$relateinv->get_iterated();
-				if($relateinv->exists()){
-					foreach ($relateinv as $relate) {
-						//Calulate Fine
-						//Chhayhout Find module
-						$fineAmount = 0;
-						if($relateinv->status == 0){
-							if($this->_database == 'db_1501212262'){
-								$fine = new Winvoice_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-								$fine->where("transaction_id", $value->id);
-								$fine->where("type", "fine")->order_by("id", "desc")->limit(1)->get();
-								if($fine->exists()){
-									$dueDate = new DateTime($value->due_date);
-									$ddate = $dueDate->getTimestamp();
-									$fineDate = new DateTime(date('Y-m-d'));
-									$fdate = $fineDate->getTimestamp();
-									if($fdate > $ddate){
-										$fDay = $fineDate->diff($dueDate)->days;
-										$fineDay = $fDay * 500;
-										$fineAmount = floatval($fineDay);
-										if($fDay >= 10){
-											$fineAmount += 10000;
+					//Sum amount paid
+					$amount_paid = 0;
+					//Check Pastsoldpaid
+					if($value->status == 2){
+						$paid = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						$paid->select_sum("amount");
+						$paid->select_sum("discount");
+						$paid->where_in("type", "Cash_Receipt");					
+						$paid->where("reference_id", $value->id);
+						$paid->where("deleted <>",1);
+						$paid->get();
+						$amount_paid = floatval($paid->amount) + floatval($paid->discount);
+					}
+					$meter = "";
+					$meterNum = "";
+					if($value->meter_id != 0){
+						$meter = $value->meter->get();
+						$meterNum = $meter->get()->number;
+					}
+					isset($value->payment_term_id) ? $value->payment_term_id = $value->payment_term_id : 5;
+					$contact = $value->contact->get();
+					$data["results"][] = array(
+						"id" 						=> $value->id,
+						"company_id" 				=> $value->company_id,
+						"location_id" 				=> $value->location_id,
+						"pole_id" 					=> $value->pole_id,
+						"box_id" 					=> $value->box_id,
+						"contact_id" 				=> intval($value->contact_id),
+						"contact_name" 				=> $contact->name,
+						"payment_term_id" 			=> $value->payment_term_id,
+						"transaction_template_id" 	=> $value->transaction_template_id,
+						"reference_id" 				=> intval($value->reference_id),
+						"account_id" 				=> intval($value->account_id),
+						"item_id" 					=> $value->item_id,
+						"tax_item_id" 				=> $value->tax_item_id,
+						"wht_account_id"			=> $value->wht_account_id,
+						"user_id" 					=> $value->user_id,
+					   	"number" 					=> $value->number,
+					   	"type" 						=> $value->type,
+					   	"journal_type" 				=> $value->journal_type,
+					   	"sub_total"					=> floatval($value->sub_total),
+					   	"discount" 					=> floatval($value->discount),
+					   	"tax" 						=> floatval($value->tax),
+					   	"amount" 					=> floatval($value->amount),
+					   	"fine" 						=> floatval($value->fine),
+					   	"deposit"					=> floatval($value->deposit),
+					   	"remaining" 				=> floatval($value->remaining),
+					   	"rate" 						=> floatval($value->rate),
+					   	"locale" 					=> $value->locale,
+					   	"month_of"					=> $value->month_of,
+					   	"issued_date"				=> $value->issued_date,
+					   	"bill_date"					=> $value->bill_date,
+					   	"payment_date" 				=> $value->payment_date,
+					   	"due_date" 					=> $value->due_date,
+					   	"reference_no" 				=> $value->reference_no,
+					   	"references" 				=> $value->references!="" ? array_map('intval', explode(",", $value->references)) : [],
+					   	"memo" 						=> $value->memo,
+					   	"memo2" 					=> $value->memo2,
+					   	"status" 					=> intval($value->status),
+					   	"is_journal" 				=> $value->is_journal,
+					   	"print_count" 				=> $value->print_count,
+					   	"amount_fine" 				=> $fineAmount,
+					   	"meter"						=> $meterNum,
+					   	"meter_id"					=> $value->meter_id,
+					   	"amount_paid"				=> $amount_paid
+					);
+					//Check Relate Invoice
+					$relateinv = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$relateinv->where("type", "Utility_Invoice");
+					$relateinv->where("meter_id", $value->meter_id);
+					$relateinv->where("id <>", $value->id);
+					$relateinv->where("status <>", 1);
+					$relateinv->where("deleted <>", 1);
+					$relateinv->get_iterated();
+					if($relateinv->exists()){
+						foreach ($relateinv as $relate) {
+							array_push($idcheck, $relate->id);
+							//Calulate Fine
+							//Chhayhout Find module
+							$fineAmount = 0;
+							if($relate->status == 0){
+								if($this->_database == 'db_1501212262'){
+									$fine = new Winvoice_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+									$fine->where("transaction_id", $value->id);
+									$fine->where("type", "fine")->order_by("id", "desc")->limit(1)->get();
+									if($fine->exists()){
+										$dueDate = new DateTime($value->due_date);
+										$ddate = $dueDate->getTimestamp();
+										$fineDate = new DateTime(date('Y-m-d'));
+										$fdate = $fineDate->getTimestamp();
+										if($fdate > $ddate){
+											$fDay = $fineDate->diff($dueDate)->days;
+											$fineDay = $fDay * 500;
+											$fineAmount = floatval($fineDay);
+											if($fDay >= 10){
+												$fineAmount += 10000;
+											}
 										}
 									}
-								}
-							//Normal fine
-							}else{
-								$fine = new Winvoice_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-								$fine->where("transaction_id", $value->id);
-								$fine->where("type", "fine")->order_by("id", "desc")->limit(1)->get();
-								if($fine->exists()){
-									$dueDate = new DateTime($value->due_date);
-									$ddate = $dueDate->getTimestamp();
-									$fineDate = new DateTime(date('Y-m-d'));
-									$fdate = $fineDate->getTimestamp();
-									if($fdate > $ddate){
-										$fineDate = $fineDate->diff($dueDate)->days;
-										$fineDateAmount = intval($fine->quantity);
-										if($fineDate >= $fineDateAmount){
-											$fineAmount = floatval($fine->amount);
+								//Normal fine
+								}else{
+									$fine = new Winvoice_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+									$fine->where("transaction_id", $value->id);
+									$fine->where("type", "fine")->order_by("id", "desc")->limit(1)->get();
+									if($fine->exists()){
+										$dueDate = new DateTime($relate->due_date);
+										$ddate = $dueDate->getTimestamp();
+										$fineDate = new DateTime(date('Y-m-d'));
+										$fdate = $fineDate->getTimestamp();
+										if($fdate > $ddate){
+											$fineDate = $fineDate->diff($dueDate)->days;
+											$fineDateAmount = intval($fine->quantity);
+											if($fineDate >= $fineDateAmount){
+												$fineAmount = floatval($fine->amount);
+											}
 										}
 									}
 								}
 							}
+							//Sum amount paid
+							$amount_paid = 0;
+							//Check Pastsoldpaid
+							if($relate->status == 2){
+								$paid = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+								$paid->select_sum("amount");
+								$paid->select_sum("discount");
+								$paid->where_in("type", "Cash_Receipt");					
+								$paid->where("reference_id", $relate->id);
+								$paid->where("deleted <>",1);
+								$paid->get();
+								$amount_paid = floatval($paid->amount) + floatval($paid->discount);
+							}
+							$meter = "";
+							$meterNum = "";
+							if($relate->meter_id != 0){
+								$meter = $relate->meter->get();
+								$meterNum = $meter->get()->number;
+							}
+							isset($relate->payment_term_id) ? $relate->payment_term_id = $relate->payment_term_id : 5;
+							$contact = $relate->contact->get();
+							$data["results"][] = array(
+								"id" 						=> $relate->id,
+								"company_id" 				=> $relate->company_id,
+								"location_id" 				=> $relate->location_id,
+								"pole_id" 					=> $relate->pole_id,
+								"box_id" 					=> $relate->box_id,
+								"contact_id" 				=> intval($relate->contact_id),
+								"contact_name" 				=> $contact->name,
+								"payment_term_id" 			=> $relate->payment_term_id,
+								"transaction_template_id" 	=> $relate->transaction_template_id,
+								"reference_id" 				=> intval($relate->reference_id),
+								"account_id" 				=> intval($relate->account_id),
+								"item_id" 					=> $relate->item_id,
+								"tax_item_id" 				=> $relate->tax_item_id,
+								"wht_account_id"			=> $relate->wht_account_id,
+								"user_id" 					=> $relate->user_id,
+							   	"number" 					=> $relate->number,
+							   	"type" 						=> $relate->type,
+							   	"journal_type" 				=> $relate->journal_type,
+							   	"sub_total"					=> floatval($relate->sub_total),
+							   	"discount" 					=> floatval($relate->discount),
+							   	"tax" 						=> floatval($relate->tax),
+							   	"amount" 					=> floatval($relate->amount),
+							   	"fine" 						=> floatval($relate->fine),
+							   	"deposit"					=> floatval($relate->deposit),
+							   	"remaining" 				=> floatval($relate->remaining),
+							   	"rate" 						=> floatval($relate->rate),
+							   	"locale" 					=> $relate->locale,
+							   	"month_of"					=> $relate->month_of,
+							   	"issued_date"				=> $relate->issued_date,
+							   	"bill_date"					=> $relate->bill_date,
+							   	"payment_date" 				=> $relate->payment_date,
+							   	"due_date" 					=> $relate->due_date,
+							   	"reference_no" 				=> $relate->reference_no,
+							   	"references" 				=> $relate->references!="" ? array_map('intval', explode(",", $relate->references)) : [],
+							   	"memo" 						=> $relate->memo,
+							   	"memo2" 					=> $relate->memo2,
+							   	"status" 					=> intval($relate->status),
+							   	"is_journal" 				=> $relate->is_journal,
+							   	"print_count" 				=> $relate->print_count,
+							   	"meter"						=> $meterNum,
+							   	"amount_fine" 				=> $fineAmount,
+							   	"meter_id"					=> $relate->meter_id,
+							   	"amount_paid"				=> $amount_paid
+							);
 						}
-						//Sum amount paid
-						$amount_paid = 0;
-						//Check Pastsoldpaid
-						if($relate->status == 2){
-							$paid = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-							$paid->select_sum("amount");
-							$paid->select_sum("discount");
-							$paid->where_in("type", "Cash_Receipt");					
-							$paid->where("reference_id", $relate->id);
-							$paid->where("deleted <>",1);
-							$paid->get();
-							$amount_paid = floatval($paid->amount) + floatval($paid->discount);
-						}
-						$meter = "";
-						$meterNum = "";
-						if($relate->meter_id != 0){
-							$meter = $relate->meter->get();
-							$meterNum = $meter->get()->number;
-						}
-						isset($relate->payment_term_id) ? $relate->payment_term_id = $relate->payment_term_id : 5;
-						$contact = $relate->contact->get();
-						$data["results"][] = array(
-							"id" 						=> $relate->id,
-							"company_id" 				=> $relate->company_id,
-							"location_id" 				=> $relate->location_id,
-							"pole_id" 					=> $relate->pole_id,
-							"box_id" 					=> $relate->box_id,
-							"contact_id" 				=> intval($relate->contact_id),
-							"contact_name" 				=> $contact->name,
-							"payment_term_id" 			=> $relate->payment_term_id,
-							"transaction_template_id" 	=> $relate->transaction_template_id,
-							"reference_id" 				=> intval($relate->reference_id),
-							"account_id" 				=> intval($relate->account_id),
-							"item_id" 					=> $relate->item_id,
-							"tax_item_id" 				=> $relate->tax_item_id,
-							"wht_account_id"			=> $relate->wht_account_id,
-							"user_id" 					=> $relate->user_id,
-						   	"number" 					=> $relate->number,
-						   	"type" 						=> $relate->type,
-						   	"journal_type" 				=> $relate->journal_type,
-						   	"sub_total"					=> floatval($relate->sub_total),
-						   	"discount" 					=> floatval($relate->discount),
-						   	"tax" 						=> floatval($relate->tax),
-						   	"amount" 					=> floatval($relate->amount),
-						   	"fine" 						=> floatval($relate->fine),
-						   	"deposit"					=> floatval($relate->deposit),
-						   	"remaining" 				=> floatval($relate->remaining),
-						   	"rate" 						=> floatval($relate->rate),
-						   	"locale" 					=> $relate->locale,
-						   	"month_of"					=> $relate->month_of,
-						   	"issued_date"				=> $relate->issued_date,
-						   	"bill_date"					=> $relate->bill_date,
-						   	"payment_date" 				=> $relate->payment_date,
-						   	"due_date" 					=> $relate->due_date,
-						   	"reference_no" 				=> $relate->reference_no,
-						   	"references" 				=> $relate->references!="" ? array_map('intval', explode(",", $relate->references)) : [],
-						   	"memo" 						=> $relate->memo,
-						   	"memo2" 					=> $relate->memo2,
-						   	"status" 					=> intval($relate->status),
-						   	"is_journal" 				=> $relate->is_journal,
-						   	"print_count" 				=> $relate->print_count,
-						   	"meter"						=> $meterNum,
-						   	"amount_fine" 				=> $fineAmount,
-						   	"meter_id"					=> $relate->meter_id,
-						   	"amount_paid"				=> $amount_paid
-						);
 					}
 				}
 			}

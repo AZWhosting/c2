@@ -173,13 +173,7 @@ var themerPrimaryColor = primaryColor;
 <link rel="shortcut icon" href="<?php echo base_url();?>assets/update/banhji.jpg">
 
 <style >
-	.document-body {
-		background: radial-gradient(grey, black);
-		width: 100%;
-		height: auto;
-		color: #fff;
-		font-family: 'Preahvihear', 'Roboto Slab' !important;
-	}
+	
 	#content{
 		background: transparent;
 	}

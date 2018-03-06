@@ -621,6 +621,236 @@ class Inventory_modules extends REST_Controller {
 		$this->response($data, 200);
 	}
 
+	//POSITION SUMMARY BY LOCATION
+	function position_summary_location_get() {
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
+		$data["count"] = 0;
+		$asOf = date("Y-m-d");
+
+		$purchaseList = array("Cash_Purchase","Credit_Purchase", "Sale_Return","Cash_Refund");
+		$saleList = array("Commercial_Invoice","Vat_Invoice","Invoice","Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale","Purchase_Return","Payment_Refund");
+		$inventoryList = array("Item_Adjustment","Internal_Usage");
+
+		$obj = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$allItems = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		
+		//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
+			}
+		}
+		
+		//Filter		
+		if(!empty($filter["filters"]) && isset($filter["filters"])){
+	    	foreach ($filter['filters'] as $value) {
+	    		if(isset($value['operator'])) {
+	    			if($value['operator']=="as_of"){
+	    				$asOf = $value['value'];
+	    			}else{
+						$obj->{$value['operator']}($value['field'], $value['value']);
+						$allItems->{$value['operator']}($value['field'], $value['value']);
+	    			}
+				} else {
+					$obj->where($value["field"], $value["value"]);
+					$allItems->where($value["field"], $value["value"]);
+				}
+			}
+		}
+		//Add 1 day
+		// $asOf = date("Y-m-d", strtotime($asOf . "+1 days"));
+
+		$obj->select("id, abbr, number, name");
+		$obj->include_related("category", "name");
+		$obj->include_related("measurement", "name");
+		$obj->where("item_type_id", 1);
+		$obj->where("nature <>", "main_variant");
+		$obj->where("is_pattern <>", 1);
+		$obj->where("deleted <>", 1);
+
+		//TOTAL INVENTORY
+		$allItems->select("id");
+		$allItems->where("item_type_id", 1);
+		$allItems->where("nature <>", "main_variant");
+		$allItems->where("is_pattern <>", 1);
+		$allItems->where("deleted <>", 1);
+		$allItems->get_iterated();
+
+		$ids = [];
+		foreach ($allItems as $value) {
+			array_push($ids, $value->id);
+		}
+
+		$allunitOnHand = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);							
+		$allunitOnHand->select_sum("quantity * conversion_ratio * movement", "total");
+		$allunitOnHand->where_related("transaction", "issued_date <", $asOf);
+		$allunitOnHand->where_related("transaction", "is_recurring <>", 1);
+		$allunitOnHand->where_related("transaction", "deleted <>", 1);
+		$allunitOnHand->where_in('item_id', $ids);
+		$allunitOnHand->where("movement <>", 0);
+		$allunitOnHand->where("deleted <>", 1);
+		$allunitOnHand->get();
+
+		$allpurchases = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$allpurchases->select_sum("(quantity * conversion_ratio * cost) + item_lines.additional_cost + inventory_adjust_value", "total");
+		$allpurchases->where_in_related("transaction", "type", $purchaseList);
+		$allpurchases->where_related("transaction", "issued_date <", $asOf);
+		$allpurchases->where_related("transaction", "is_recurring <>", 1);
+		$allpurchases->where_related("transaction", "deleted <>", 1);
+		$allpurchases->where_in('item_id', $ids);
+		$allpurchases->where("deleted <>", 1);
+		$allpurchases->get();
+
+		$allcostOfSales = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$allcostOfSales->select_sum("(quantity * conversion_ratio * cost) + inventory_adjust_value", "total");
+		$allcostOfSales->where_in_related("transaction", "type", $saleList);
+		$allcostOfSales->where_related("transaction", "issued_date <", $asOf);
+		$allcostOfSales->where_related("transaction", "is_recurring <>", 1);
+		$allcostOfSales->where_related("transaction", "deleted <>", 1);
+		$allcostOfSales->where_in('item_id', $ids);
+		$allcostOfSales->where("deleted <>", 1);
+		$allcostOfSales->get();
+
+		$allinventoryCosts = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$allinventoryCosts->select_sum("(quantity * conversion_ratio * movement * cost) + inventory_adjust_value", "total");
+		$allinventoryCosts->where_in_related("transaction", "type", $inventoryList);
+		$allinventoryCosts->where_related("transaction", "issued_date <", $asOf);
+		$allinventoryCosts->where_related("transaction", "is_recurring <>", 1);
+		$allinventoryCosts->where_related("transaction", "deleted <>", 1);
+		$allinventoryCosts->where_in('item_id', $ids);
+		$allinventoryCosts->where("movement <>", 0);
+		$allinventoryCosts->where("deleted <>", 1);
+		$allinventoryCosts->get();
+
+		//Inventory Total Cost
+		$allinventoryTotalCost = floatval($allpurchases->total) - floatval($allcostOfSales->total) + floatval($allinventoryCosts->total);
+
+		$data["totalAmount"] = $allinventoryTotalCost;
+		//End TOTAL INVENTORY
+		
+		//Results
+		if($page && $limit){
+			$obj->get_paged_iterated($page, $limit);
+			$data["count"] = $obj->paged->total_rows;
+		}else{
+			$obj->get_iterated();
+			$data["count"] = $obj->result_count();
+		}
+
+		if($obj->exists()){
+			foreach ($obj as $value) {
+				$unitOnHand = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);							
+				$unitOnHand->select_sum("quantity * conversion_ratio * movement", "total");
+				$unitOnHand->where_related("transaction", "issued_date <", $asOf);
+				$unitOnHand->where_related("transaction", "is_recurring <>", 1);
+				$unitOnHand->where_related("transaction", "deleted <>", 1);
+				$unitOnHand->where("item_id", $value->id);
+				$unitOnHand->where("movement <>", 0);
+				$unitOnHand->where("deleted <>", 1);
+				$unitOnHand->get();
+
+				$purchases = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$purchases->select_sum("(item_lines.quantity * conversion_ratio * item_lines.cost) + item_lines.additional_cost + inventory_adjust_value", "total");
+				$purchases->where_in_related("transaction", "type", $purchaseList);
+				$purchases->where_related("transaction", "issued_date <", $asOf);
+				$purchases->where_related("transaction", "is_recurring <>", 1);
+				$purchases->where_related("transaction", "deleted <>", 1);
+				$purchases->where("item_id", $value->id);
+				$purchases->where("deleted <>", 1);
+				$purchases->get();
+
+				$costOfSales = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$costOfSales->select_sum("(item_lines.quantity * conversion_ratio * item_lines.cost) + inventory_adjust_value", "total");
+				$costOfSales->where_in_related("transaction", "type", $saleList);
+				$costOfSales->where_related("transaction", "issued_date <", $asOf);
+				$costOfSales->where_related("transaction", "is_recurring <>", 1);
+				$costOfSales->where_related("transaction", "deleted <>", 1);
+				$costOfSales->where("item_id", $value->id);
+				$costOfSales->where("deleted <>", 1);
+				$costOfSales->get();
+
+				$inventoryCosts = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$inventoryCosts->select_sum("(item_lines.quantity * conversion_ratio * movement * item_lines.cost) + inventory_adjust_value", "total");
+				$inventoryCosts->where_in_related("transaction", "type", $inventoryList);
+				$inventoryCosts->where_related("transaction", "issued_date <", $asOf);
+				$inventoryCosts->where_related("transaction", "is_recurring <>", 1);
+				$inventoryCosts->where_related("transaction", "deleted <>", 1);
+				$inventoryCosts->where("item_id", $value->id);
+				$inventoryCosts->where("movement <>", 0);
+				$inventoryCosts->where("deleted <>", 1);
+				$inventoryCosts->get();
+
+				//Inventory Total Cost
+				$inventoryTotalCost = floatval($purchases->total) - floatval($costOfSales->total) + floatval($inventoryCosts->total);
+
+				$cost = 0;
+				if(floatval($unitOnHand->total)==0){
+					$zeroQty = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$zeroQty->where_in_related("transaction", "type", $saleList);
+					$zeroQty->where_related("transaction", "issued_date <", $asOf);
+					$zeroQty->where_related("transaction", "is_recurring <>", 1);
+					$zeroQty->where_related("transaction", "deleted <>", 1);
+					$zeroQty->where("item_id", $value->id);
+					$zeroQty->where("deleted <>", 1);
+					$zeroQty->order_by_related("transaction", "issued_date", "DESC");
+					$zeroQty->limit(1);
+					$zeroQty->get();
+
+					if($zeroQty->exists()){
+						$cost = floatval($zeroQty->cost) / floatval($zeroQty->rate);
+					}
+				}else{
+					$cost = $inventoryTotalCost / floatval($unitOnHand->total);
+				}
+
+				//On PO
+				$po = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+				$po->select_sum("quantity * conversion_ratio", "totalQuantity");
+				$po->where_related("transaction", "issued_date <", $asOf);
+				$po->where_related("transaction", "type", "Purchase_Order");
+				$po->where_related("transaction", "is_recurring <>", 1);
+				$po->where_related("transaction", "deleted <>", 1);
+				$po->where("item_id", $value->id);
+				$po->where("deleted <>", 1);
+				$po->get();
+
+				//On SO
+				$so = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$so->select_sum("quantity * conversion_ratio", "totalQuantity");
+				$so->where_related("transaction", "issued_date <", $asOf);
+				$so->where_related("transaction", "type", "Sale_Order");
+				$so->where_related("transaction", "is_recurring <>", 1);
+				$so->where_related("transaction", "deleted <>", 1);
+				$so->where("item_id", $value->id);
+				$so->where("deleted <>", 1);		
+				$so->get();
+
+				if($cost<>0){
+					$data["results"][] = array(
+						"id" 			=> $value->id,
+						"name" 			=> $value->abbr . $value->number ." ". $value->name,
+						"measurement"	=> $value->measurement_name,
+						"quantity" 		=> floatval($unitOnHand->total),
+						"on_po" 		=> floatval($po->totalQuantity),
+						"on_so" 		=> floatval($so->totalQuantity),
+						"cost" 			=> $cost,
+						"amount" 		=> $inventoryTotalCost
+					);
+				}
+			}
+		}
+		
+		$this->response($data, 200);
+	}
+
 	//POSITION DETAIL BY DAWINE
 	function position_detail_get() {
 		$filter 	= $this->get("filter");
