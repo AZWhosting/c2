@@ -194,39 +194,42 @@ class Utibills extends REST_Controller {
 					foreach ($relateinv as $relate) {
 						//Calulate Fine
 						//Chhayhout Find module
-						if($this->_database == 'db_1501212262'){
-							$fine = new Winvoice_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-							$fine->where("transaction_id", $value->id);
-							$fine->where("type", "fine")->order_by("id", "desc")->limit(1)->get();
-							if($fine->exists()){
-								$dueDate = new DateTime($value->due_date);
-								$ddate = $dueDate->getTimestamp();
-								$fineDate = new DateTime(date('Y-m-d'));
-								$fdate = $fineDate->getTimestamp();
-								if($fdate > $ddate){
-									$fDay = $fineDate->diff($dueDate)->days;
-									$fineDay = $fDay * 500;
-									$fineAmount = floatval($fineDay);
-									if($fDay >= 10){
-										$fineAmount += 10000;
+						$fineAmount = 0;
+						if($relateinv->status == 1){
+							if($this->_database == 'db_1501212262'){
+								$fine = new Winvoice_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+								$fine->where("transaction_id", $value->id);
+								$fine->where("type", "fine")->order_by("id", "desc")->limit(1)->get();
+								if($fine->exists()){
+									$dueDate = new DateTime($value->due_date);
+									$ddate = $dueDate->getTimestamp();
+									$fineDate = new DateTime(date('Y-m-d'));
+									$fdate = $fineDate->getTimestamp();
+									if($fdate > $ddate){
+										$fDay = $fineDate->diff($dueDate)->days;
+										$fineDay = $fDay * 500;
+										$fineAmount = floatval($fineDay);
+										if($fDay >= 10){
+											$fineAmount += 10000;
+										}
 									}
 								}
-							}
-						//Normal fine
-						}else{
-							$fine = new Winvoice_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-							$fine->where("transaction_id", $value->id);
-							$fine->where("type", "fine")->order_by("id", "desc")->limit(1)->get();
-							if($fine->exists()){
-								$dueDate = new DateTime($value->due_date);
-								$ddate = $dueDate->getTimestamp();
-								$fineDate = new DateTime(date('Y-m-d'));
-								$fdate = $fineDate->getTimestamp();
-								if($fdate > $ddate){
-									$fineDate = $fineDate->diff($dueDate)->days;
-									$fineDateAmount = intval($fine->quantity);
-									if($fineDate >= $fineDateAmount){
-										$fineAmount = floatval($fine->amount);
+							//Normal fine
+							}else{
+								$fine = new Winvoice_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+								$fine->where("transaction_id", $value->id);
+								$fine->where("type", "fine")->order_by("id", "desc")->limit(1)->get();
+								if($fine->exists()){
+									$dueDate = new DateTime($value->due_date);
+									$ddate = $dueDate->getTimestamp();
+									$fineDate = new DateTime(date('Y-m-d'));
+									$fdate = $fineDate->getTimestamp();
+									if($fdate > $ddate){
+										$fineDate = $fineDate->diff($dueDate)->days;
+										$fineDateAmount = intval($fine->quantity);
+										if($fineDate >= $fineDateAmount){
+											$fineAmount = floatval($fine->amount);
+										}
 									}
 								}
 							}
