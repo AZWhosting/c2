@@ -254,9 +254,6 @@ var themerPrimaryColor = primaryColor;
 							<a href="<?php echo base_url();?>wellnez/home" >
 				                <img src="<?php echo base_url();?>assets/spa/wellnez-01.png" >
 				            </a>
-				            <p>
-							  <button id="btnFullscreen" type="button">Toggle Fullscreen</button>
-							</p>
 				        </div>
 				        <div class="span9">
 				        	<div class="row">
