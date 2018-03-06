@@ -195,7 +195,7 @@ class Utibills extends REST_Controller {
 						//Calulate Fine
 						//Chhayhout Find module
 						$fineAmount = 0;
-						if($relateinv->status == 1){
+						if($relateinv->status == 0){
 							if($this->_database == 'db_1501212262'){
 								$fine = new Winvoice_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 								$fine->where("transaction_id", $value->id);
