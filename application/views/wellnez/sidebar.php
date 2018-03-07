@@ -332,7 +332,7 @@
                     <li><a href="customer">Customer</a></li>
                     <li><a href="rooms">Rooms / Facilities</a></li>
                     <li><a href="therapist">Therapist</a></li>
-                    <li><a href="<?php echo base_url()?>loyalty">Loyalty</a></li>
+                    <li><a href="loyalty">Loyalty</a></li>
                     <li><a href="setting">Setting</a></li>
                     <li class="divider"></li>
                     <li><a href="<?php echo base_url()?>rrd" target="_blank">Back to BanhJi</a></li>
@@ -389,4 +389,4 @@
         </a>
     </div>
     <!-- End -->
-</div>                                                                 
+</div>

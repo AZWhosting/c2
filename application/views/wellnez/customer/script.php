@@ -1,4 +1,3 @@
-
 <script>
     function itemComboBoxEditor(container, options) {
         $('<input name="' + options.field + '"/>')
@@ -6882,7 +6881,6 @@
     });
     
     $(function() {
-        
         banhji.accessMod.query({
             filter: {
                 field: 'username',
@@ -6892,14 +6890,23 @@
             var allowed = false;
             if (banhji.accessMod.data().length > 0) {
                 for (var i = 0; i < banhji.accessMod.data().length; i++) {
-                    if ("utibill" == banhji.accessMod.data()[i].name.toLowerCase()) {
-                        allowed = true;
+                    if ("wellnez" == banhji.accessMod.data()[i].name.toLowerCase()) {
+                        if(banhji.userData.role == 1){
+                            allowed = true;
+                        }else{
+                            $.each(banhji.userData.roles, function(i,v){
+                                if(v.name == 'wnz_customer'){
+                                    allowed = true;
+                                }
+                            });
+                        }
                         break;
                     }
                 }
             }
             if (!allowed) {
-                window.location.replace(baseUrl + "admin");
+                alert("You don't have permission to access this page!");
+                window.location.replace(baseUrl + "wellnez/home");
                 // banhji.view.layout.showIn("#content", banhji.view.wDashBoard);
             }
             $("#holdpageloadhide").css("display", "none");
@@ -6927,4 +6934,4 @@
         var Href1 = '<?php echo base_url(); ?>assets/water/winvoice-res.css';
         var Href2 = '<?php echo base_url(); ?>assets/water/winvoice-print.css';
     });
-</script>                       
+</script>

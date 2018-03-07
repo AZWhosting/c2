@@ -259,7 +259,7 @@
 	    float: left;
 	    height: 25px;
 	    width: 100%;
-	    background: #0077c5;
+	    background: #0eac00;
 	    text-align: center;
 	    line-height: 23px;
 	}
@@ -320,12 +320,19 @@
 	.customerCenter .listWrapper a.addCustomer{
 		padding: 8px;
 	    width: 100%;
-	    background: #0077c5;
+	    background: #0eac00;
 	    color: #fff;
 	    float: left;
 	    text-align: center;
 	}
-
+	.customerCenter .listWrapper .k-animation-container .k-list-container .k-list-scroller ul li:hover, 
+	.customerCenter .listWrapper .table .k-grid-content.k-auto-scrollable .k-virtual-scrollable-wrap table tr:hover {
+		background: #0eac00 !important;
+	}
+	.accounCetner-textedit .btn.btn-primary.btn-icon.glyphicons.edit.pull-right{
+		background: #0eac00;
+		border: none;
+	}
 
 	/*Add Customer*/
 	.addCusto .example {
@@ -364,7 +371,7 @@
 			<div class="span3">
 				<div class="listWrapper">
 					<a href="#/customer" class="addCustomer">Add Customer</a>
-					<div class="innerAll" style="width: 100%; float: left; background: #424242;">
+					<div class="innerAll" style="width: 100%; float: left; background: #1c3b19;">
 						<form autocomplete="off" class="form-inline" style="margin-bottom: 0;">
 							
 							<div class="widget-search separator bottom">
@@ -414,9 +421,9 @@
 							        
 							        <ul class="pull-right">
 
-							            <li class="glyphicons text_bigger active"><span data-toggle="tab" data-target="#tab1-4"><i></i></span>
-							            </li>
-							            <li class="glyphicons circle_info"><span data-toggle="tab" data-target="#tab2-4"><i></i></span>
+							            <!-- <li class="glyphicons text_bigger active"><span data-toggle="tab" data-target="#tab1-4"><i></i></span>
+							            </li> -->
+							            <li class="glyphicons circle_info active"><span data-toggle="tab" data-target="#tab2-4"><i></i></span>
 							            </li>							            
 							            <li class="glyphicons pen"><span data-toggle="tab" data-target="#tab3-4"><i></i></span>
 							            </li>
@@ -431,7 +438,7 @@
 
 							    <div class="widget-body">
 							        <div class="tab-content">							          
-							            <div id="tab1-4" class="tab-pane active box-generic">
+							            <!-- <div id="tab1-4" class="tab-pane active box-generic">
 							            	<table class="table table-borderless table-condensed cart_total cash-table">
 								            	<tr>
 								            		<td width="50%">
@@ -458,9 +465,9 @@
 								            		</td>
 								            	</tr>								            	
 							            	</table>
-							            </div>
+							            </div> -->
 							           
-							            <div id="tab2-4" class="tab-pane box-generic" style="float: left; margin-bottom: 10px;">
+							            <div id="tab2-4" class="tab-pane box-generic active" style="float: left; margin-bottom: 10px;">
 							            	<div class="row-fluid">
 							            		<div class="span6" style="padding: 0 15px 0 0;">
 						            				<img class="main-image" data-bind="attr: { src: obj.image_url, alt: obj.name, title: obj.name }" style="border: 1px solid #ddd; ">

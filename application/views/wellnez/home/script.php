@@ -3076,7 +3076,6 @@
     });
     
     $(function() {
-        
         banhji.accessMod.query({
             filter: {
                 field: 'username',
@@ -3086,13 +3085,14 @@
             var allowed = false;
             if (banhji.accessMod.data().length > 0) {
                 for (var i = 0; i < banhji.accessMod.data().length; i++) {
-                    if ("utibill" == banhji.accessMod.data()[i].name.toLowerCase()) {
+                    if ("wellnez" == banhji.accessMod.data()[i].name.toLowerCase()) {
                         allowed = true;
                         break;
                     }
                 }
             }
             if (!allowed) {
+                alert("You don't have permission to access this page!");
                 window.location.replace(baseUrl + "admin");
                 // banhji.view.layout.showIn("#content", banhji.view.wDashBoard);
             }
@@ -3121,4 +3121,4 @@
         var Href1 = '<?php echo base_url(); ?>assets/water/winvoice-res.css';
         var Href2 = '<?php echo base_url(); ?>assets/water/winvoice-print.css';
     });
-</script>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+</script>

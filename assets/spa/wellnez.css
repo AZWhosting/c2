@@ -1,6 +1,5 @@
 .document-body {
-    background-image: radial-gradient(grey, black);
-    background-repeat: repeat-x;
+    background: radial-gradient(grey, black);
     width: 100%;
     height: auto;
     color: #fff;

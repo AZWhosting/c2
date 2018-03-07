@@ -727,7 +727,8 @@
 						<div class="row posProductItems" >
 							<div class="span12" >
 								<div id="posProductList" class="box-generic-noborder" style="min-height: 140px!important; height: 230px; padding-bottom: 0;">
-									<div data-role="grid" class="costom-grid"
+									<!-- Item List -->
+								    <div data-role="grid" class="costom-grid"
 								    	 data-column-menu="true"
 								    	 data-reorderable="true"
 								    	 data-scrollable="false"
@@ -736,7 +737,7 @@
 						                 data-columns="[
 										    { 
 										    	title:'NO',
-										    	width: '50px', 
+										    	width: '50px',
 										    	attributes: { style: 'text-align: center;' }, 
 										        template: function (dataItem) {
 										        	var rowIndex = banhji.Index.lineDS.indexOf(dataItem)+1;
@@ -745,82 +746,46 @@
 										    },
 						                 	{ 
 						                 		field: 'item', 
-						                 		title: 'Name', 
-						                 		editor: itemEditor, 
-						                 		editable: 'false', 
-						                 		template: '#=item.name#', 
-						                 		width: '170px' },
-				                            { 
-				                            	field: 'description', title:'DESCRIPTION', 
-				                            	hidden: true,
-				                            	width: '250px' 
-				                            },                            
+						                 		title: 'SERVICES', 
+						                 		editable: 'false',
+						                 		editor: itemEditor, template: '#=item.name#', width: '170px' 
+						                 	},                         
 				                            {
 											    field: 'quantity',
 											    title: 'QTY',
 											    format: '{0:n}',
 											    editor: numberTextboxEditor,
-											    width: '50px',
-											    attributes: { style: 'text-align: right;' },
-											    template: function(dataItem){
-											    	banhji.Index.changes();
-											    	dataItem.set('amount', dataItem.price * dataItem.quantity);
-													return dataItem.quantity;
-												}
+											    width: '120px',
+											    attributes: { style: 'text-align: right;' }
 											},
 				                            { 
-				                            	field: 'measurement', 
+				                            	field: 'item_price', 
 				                            	title: 'UOM', 
-				                            	editable: 'false',
 				                            	editor: measurementEditor, 
-				                            	template: '#=measurement?measurement.measurement:banhji.emptyString#', 
+				                            	template: '#=item_price?item_price.measurement:banhji.emptyString#', 
 				                            	width: '80px' 
 				                            },
 				                            {
 											    field: 'price',
 											    title: 'PRICE',
-											    format: '{0:n}',
-											    hidden: true,
-											    editor: numberTextboxEditor,
-											    width: '120px',
-											    attributes: { style: 'text-align: right;' },
-											    template: function(dataItem){
-											    	banhji.Index.changes();
-											    	dataItem.set('amount', dataItem.price * dataItem.quantity);
-													return dataItem.price;
-												}
-											},
-											{
-											    field: 'discount',
-											    title: 'DISCOUNT VALUE',
-											    hidden: true,
+											    hidden: 'true',
 											    format: '{0:n}',
 											    editor: numberTextboxEditor,
 											    width: '120px',
-											    attributes: { style: 'text-align: right;' },
-											    template: function(dataItem){
-											    	banhji.Index.changes();
-											    	return dataItem.discount;
-												}
+											    attributes: { style: 'text-align: right;' }
 											},
 				                            { 
 				                            	field: 'amount', 
 				                            	title:'AMOUNT', 
 				                            	format: '{0:n}', 
 				                            	editable: 'false', 
-				                            	attributes: { style: 'text-align: right;' }, 
-				                            	width: '120px' 
-				                            },                            
+				                            	attributes: { style: 'text-align: right;' }, width: '120px' },
 				                            { 
 				                            	field: 'tax_item', 
 				                            	title:'TAX', 
-				                            	hidden: true,
 				                            	editor: taxForSaleEditor, 
-				                            	template: function(dataItem){
-				                            		banhji.Index.changes();
-				                            		return dataItem.tax_item.name;
-				                            	}, 
-				                            	width: '90px' 
+				                            	hidden: 'true',
+				                            	template: '#=tax_item.name#', width: '90px' 
 				                            }
 				                         ]"
 				                         data-auto-bind="false"
