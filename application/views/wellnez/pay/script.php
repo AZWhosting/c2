@@ -3404,6 +3404,7 @@
         cashierItemDS: dataStore(apiUrl + "cashier_sessions/item"),
         sessionReceiveDS: dataStore(apiUrl + "cashier_sessions/receive"),
         CashierID: "",
+        sessionDS: dataStore(apiUrl + "cashier"),
         pageLoad: function() {
             var self = this;
             // this.get("obj").set("account_id", 7);
@@ -3454,6 +3455,19 @@
             //         $("#loadING").css("display", "none");
             //     }
             // });
+            var self = this;
+            this.sessionDS.query({
+                filter: [
+                    {field: "cashier_id", value: banhji.userData.id},
+                    {field: "active", value: 1}
+                ],
+                pageSize: 1
+            }).then(function(e){
+                if(self.sessionDS.data().length <= 0){
+                    alert("You didn't have session yet.");
+                    window.location.href = "<?php echo base_url(); ?>wellnez/session";
+                }
+            })
         },
         setCashierItems: function() {
             var self = this;

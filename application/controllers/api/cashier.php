@@ -107,6 +107,26 @@ class Cashier extends REST_Controller {
 		$data["count"] = count($data["results"]);
 		$this->response($data, 201);
 	}
+	function at_active_post(){
+		$models = json_decode($this->post('models'));
+		$data["results"] = [];
+		$data["count"] = 0;
+		foreach ($models as $value) {
+			$obj = new Cashier_session(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$obj->where("cashier_id", $value->cashier_id);
+			$obj->update_all("active", 0);
+			$active = new Cashier_session(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$active->where("id", $value->session_id)->get();
+			$active->active = 1;
+	   		if($active->save()){
+			   	$data["results"][] = array(
+			   		"id" 			=> $active->id
+			   	);
+		    }
+		}
+		$data["count"] = count($data["results"]);
+		$this->response($data, 201);
+	}
 	function index_put(){
 		$models = json_decode($this->put('models'));
 		$data["results"] = array();

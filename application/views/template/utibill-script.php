@@ -14041,7 +14041,8 @@
                     }
                     this.dataSource.query({
                         filter: para,
-                        limit: 300
+                        page: 1,
+                        pageSize: 100
                     }).then(function(e) {
                     // if (e.type == "read") {
                         var response = self.dataSource.view();
@@ -14501,7 +14502,8 @@
                         }
                         this.dataSource.query({
                             filter: para,
-                            limit: 300
+                            page: 1,
+                            pageSize: 100
                         });                     
         },
         cancel: function() {
@@ -14745,7 +14747,8 @@
                         }
                         this.dataSource.query({
                             filter: para,
-                            limit: 300
+                            page: 1,
+                            pageSize: 100
                         });                     
         },
         cancel: function() {
@@ -14989,7 +14992,8 @@
                         }
                         this.dataSource.query({
                             filter: para,
-                            limit: 300
+                            page: 1,
+                            pageSize: 100
                         });                     
         },
         cancel: function() {
@@ -15233,7 +15237,8 @@
                         }
                         this.dataSource.query({
                             filter: para,
-                            limit: 300
+                            page: 1,
+                            pageSize: 100
                         });                     
         },
         cancel: function() {
@@ -15404,7 +15409,8 @@
                 } 
                 this.dataSource.query({
                     filter: para,
-                    limit: 300
+                    page: 1,
+                    pageSize: 100
                 });  
              
             this.dataSource.bind("requestEnd", function(e){             
@@ -15961,8 +15967,11 @@
 
             }
             this.set("displayDate", displayDate);
-
-            this.dataSource.filter(para);
+            this.dataSource.query({
+                filter: para,
+                page: 1,
+                pageSize: 100
+            });
             this.dataSource.bind("requestEnd", function(e) {
                 if (e.type == "read") {
                     var response = e.response;
@@ -16337,7 +16346,9 @@
             this.set("displayDate", displayDate);
 
             this.dataSource.query({
-                filter: para
+                filter: para,
+                page: 1,
+                pageSize: 50,
             }).then(function() {
                 var view = self.dataSource.view();
 
@@ -16718,7 +16729,9 @@
             this.set("displayDate", displayDate);
 
             this.dataSource.query({
-                filter: para
+                filter: para,
+                page: 1,
+                pageSize: 50,
             }).then(function() {
                 var view = self.dataSource.view();
 
@@ -17110,7 +17123,9 @@
             this.set("displayDate", displayDate);
 
             this.dataSource.query({
-                filter: para
+                filter: para,
+                page: 1,
+                pageSize: 50
             }).then(function() {
                 var view = self.dataSource.view();
 
@@ -17935,7 +17950,9 @@
             this.set("displayDate", displayDate);
 
             this.dataSource.query({
-                filter: para
+                filter: para,
+                page: 1,
+                pageSize: 50,
             }).then(function() {
                 var view = self.dataSource.view();
 
@@ -18342,7 +18359,9 @@
             this.set("displayDate", displayDate);
 
             this.dataSource.query({
-                filter: para
+                filter: para,
+                page: 1,
+                pageSize: 50,
             }).then(function() {
                 var view = self.dataSource.view();
 
@@ -18734,7 +18753,9 @@
             }
 
             this.dataSource.query({
-                filter: para
+                filter: para,
+                 page: 1,
+                pageSize: 50
             }).then(function() {
                 var view = self.dataSource.view();
 
@@ -19088,7 +19109,9 @@
             }
 
             this.dataSource.query({
-                filter: para
+                filter: para,
+                page: 1,
+                pageSize: 50,
             }).then(function() {
                 var view = self.dataSource.view();
 
@@ -19499,7 +19522,9 @@
             this.set("displayDate", displayDate);
 
             this.dataSource.query({
-                filter: para
+                filter: para,
+                page: 1,
+                pageSize: 50
             }).then(function() {
                 var view = self.dataSource.view();
 
@@ -19823,7 +19848,8 @@
 
             this.dataSource.query({
                 filter: para,
-                page: 1
+                page: 1,
+                pageSize: 50,
             }).then(function() {
                 var view = self.dataSource.view();
 
@@ -20065,6 +20091,8 @@
 
             this.dataSource.query({
                 filter: para,
+                page: 1,
+                pageSize: 50,
                 sort: [{
                         field: "issued_date",
                         dir: "asc"
@@ -20286,6 +20314,8 @@
 
             this.dataSource.query({
                 filter: para,
+                 page: 1,
+                pageSize: 50,
                 sort: [{
                         field: "issued_date",
                         dir: "asc"
@@ -20833,7 +20863,9 @@
             }
             this.set("displayDate", displayDate);
             this.dataSource.query({
-                filter: para
+                filter: para,
+                page: 1,
+                pageSize: 50,
             }).then(function() {
                 var view = self.dataSource.view();
 
@@ -21262,7 +21294,9 @@
             }
             this.set("displayDate", displayDate);
             this.dataSource.query({
-                filter: para
+                filter: para,
+                page: 1,
+                pageSize: 50,
             }).then(function() {
                 var view = self.dataSource.view();
 
@@ -21627,7 +21661,9 @@
             }
             this.set("displayDate", displayDate);
             this.dataSource.query({
-                filter: para
+                filter: para,
+                page: 1,
+                pageSize: 50,
             }).then(function() {
                 var view = self.dataSource.view();
 

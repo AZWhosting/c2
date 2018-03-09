@@ -1158,83 +1158,106 @@ class Transactions extends REST_Controller {
 
 	//GET STATEMENT
 	function statement_get() {
-		$filters 	= $this->get("filter")["filters"];
-		$page 		= $this->get('page') !== false ? $this->get('page') : 1;
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
 		$sort 	 	= $this->get("sort");
 		$data["results"] = [];
 		$data["count"] = 0;
-		$startDate = "";
-		$typeList = array("Commercial_Invoice", "Vat_Invoice", "Invoice", "Commercial_Cash_Sale", "Vat_Cash_Sale", "Cash_Sale", "Deposit", "Cash_Receipt", "Sale_Return");
-
+		
 		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$bf = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 		//Sort
 		if(!empty($sort) && isset($sort)){
 			foreach ($sort as $value) {
-				$obj->order_by($value["field"], $value["dir"]);
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
 			}
 		}
 
 		//Filter
-		if(!empty($filters) && isset($filters)){
-	    	foreach ($filters as $value) {
-	    		$obj->where($value["field"], $value["value"]);
+		if(!empty($filter["filters"]) && isset($filter["filters"])){
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value['operator'])) {
+	    			if($value["field"]=="type"){
+						$bf->{$value['operator']}($value['field'], $value['value']);
+					}
 
-	    		if($value["field"]=="issued_date >=" || $value["field"]=="issued_date"){
-	    			$startDate = $value["value"];
-	    		}
+					$obj->{$value['operator']}($value['field'], $value['value']);
+				} else {
+					if($value["field"]=="contact_id"){
+						$bf->where($value["field"], $value["value"]);
+					}
+					$obj->where($value["field"], $value["value"]);
+				}
 			}
 		}
 
-		$obj->where_in("type", $typeList);
-		$obj->where("is_recurring", 0);
-		$obj->where("deleted", 0);
+		$obj->where("is_recurring <>", 1);
+		$obj->where("deleted <>", 1);
 		$obj->order_by("issued_date", "asc");
 		$obj->order_by("number", "asc");
 		$obj->get_iterated();
 
-		//Balance Forward
-		$balance = 0;
-		if($startDate!==""){
-			$bf = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$bf->where("issued_date <", $startDate);
-			$bf->where_in("type", $typeList);
-			$bf->where("is_recurring", 0);
-			$bf->where("deleted", 0);
-			$bf->get_iterated();
-
-			foreach ($bf as $value) {
-				$balance += floatval($value->amount) - floatval($value->deposit);
-			}
-
-		    $bfDate = strtotime($startDate);
-		    $bfDate = strtotime("-1 day", $bfDate);
-
-			$data["results"][] = array(
-				"id" 				=> 0,
-				"issued_date"		=> date('Y-m-d', $bfDate),
-				"type" 				=> "Balance Forward",
-				"job" 				=> "",
-			   	"reference_no" 		=> "",
-			   	"amount" 			=> $balance,
-			   	"balance" 			=> $balance,
-			   	"rate" 				=> $bf->rate,
-			   	"locale" 			=> $bf->locale
-			);
-		}
-
 		if($obj->exists()){
-			foreach ($obj as $value) {
-				$amount = floatval($value->amount) - floatval($value->deposit);
+			$balance = 0;
+			foreach ($obj as $key => $value) {
+				//Balance Brought Forward
+				if($key==0){					
+					$bf->select("locale");
+					$bf->select_sum("(amount - deposit) / rate", "total");
+					$bf->where("issued_date <", $value->issued_date);
+					$bf->where("is_recurring <>", 1);
+					$bf->where("deleted <>", 1);
+					$bf->get();
+
+					if($bf->exists()){
+						$balance += floatval($bf->total);
+						$bfDate = date('Y-m-d', strtotime('-1 day', strtotime($value->issued_date)));
+
+						$data["results"][] = array(
+							"id" 				=> 0,
+							"issued_date"		=> $bfDate,
+							"due_date"			=> "",
+							"type" 				=> "Balance Forward",
+							"job" 				=> "",
+						   	"reference_no" 		=> "",
+						   	"number" 			=> "",
+						   	"status" 			=> "",
+						   	"amount" 			=> floatval($bf->total),
+						   	"balance" 			=> $balance,
+						   	"rate" 				=> 1,
+						   	"locale" 			=> $bf->locale
+						);
+					}
+				}
+
+				//Single Reference
+				$reference = "";
+				if($value->reference_id>0){
+					$references = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$references->select("number");
+					$references->get_by_id($value->reference_id);
+
+					$reference = $references->number;
+				}
+
+				$amount = (floatval($value->amount) - floatval($value->deposit)) / floatval($value->rate);
 				$balance += $amount;
 
 				$data["results"][] = array(
 					"id" 				=> 0,
 					"issued_date"		=> $value->issued_date,
+					"due_date"			=> $value->due_date,
 					"type" 				=> $value->type,
-					"job" 				=> $value->job->get()->name,
-				   	"reference_no" 		=> $value->number,
+					"job" 				=> "",
+				   	"reference_no" 		=> $reference,
+				   	"number" 			=> $value->number,
+				   	"status" 			=> intval($value->status),
 				   	"amount" 			=> $amount,
 				   	"balance" 			=> $balance,
 				   	"rate" 				=> $value->rate,

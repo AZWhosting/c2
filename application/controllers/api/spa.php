@@ -29,135 +29,142 @@ class Spa extends REST_Controller {
 		$data["results"] = [];
 		$data["count"] = 0;
 		$is_pattern = 0;
-		$obj = new Spa_work(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		//Sort
-		if(!empty($sort) && isset($sort)){
-			foreach ($sort as $value) {
-				if(isset($value['operator'])){
-					$obj->{$value['operator']}($value["field"], $value["dir"]);
-				}else{
-					$obj->order_by($value["field"], $value["dir"]);
-				}
-			}
-		}
-		//Filter
-		if(!empty($filter) && isset($filter)){
-	    	foreach ($filter["filters"] as $value) {
-	    		if(isset($value["operator"])) {
-					$obj->{$value["operator"]}($value["field"], $value["value"]);
-				} else {
-	    			$obj->where($value["field"], $value["value"]);
-				}
-			}
-		}
-		//Results
-		$obj->order_by("start_date", "asc");
-		$obj->where("status", 0);
-		if($page && $limit){
-			$obj->get_paged_iterated($page, $limit);
-			$data["count"] = $obj->paged->total_rows;
-		}else{
-			$obj->get_iterated();
-			$data["count"] = $obj->result_count();
-		}
-		if($obj->exists()){
-			foreach ($obj as $value) {
-				//Transaction
-				$tran = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$tran->where("id", $value->transaction_id)->limit(1)->get();
-				//Customer
-				$con = new Spa_work_customer(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$con->where("work_id", $value->id)->get_iterated();
-				if($con->exists()){
-					$conar = [];
-					$customer_name = "";
-					foreach($con as $c){
-						$sc = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-						$sc->where("id", $c->customer_id)->limit(1)->get();
-						$conar[] = array(
-							"id" 	=> $sc->id,
-							"name" 	=> $sc->name,
-						);
-						$customer_name .= $sc->name." ";
-					}
-				}
-				//Room
-				$room = new Spa_work_room(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$room->where("work_id", $value->id)->get_iterated();
-				$roomar = [];
-				$roomshow = "";
-				if($room->exists()){
-					foreach($room as $r){
-						$sroom = new Spa_room(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-						$sroom->where("id", $r->room_id)->limit(1)->get();
-						$roomar[] = array(
-							"id" => $sroom->id,
-							"name" => $sroom->name,
-						);
-						$roomshow .= $sroom->name." ";
-					}
-				}
-				//Item
-				$item = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$item->where("transaction_id", $value->transaction_id)->get_iterated();
-				$itemar = [];
-				//Service Charge
-				$sc = new Spa_service_charge(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$sc->where("status", 1)->limit(1)->get();
-				$scamount = 0;
-				$scar = [];
-				if($item->exists()){
-					foreach($item as $i){
-						$me = new Measurement(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-						$me->where("id", $i->measurement_id)->limit(1)->get();
-						$itemar[] = array(
-							"id" 			=> $i->id,
-							"description" 	=> $i->description,
-							"quantity" 		=> intval($i->quantity),
-							"measurement" 	=> array("id" => $me->id, "name" => $me->name),
-							"price" 		=> floatval($i->price),
-							"amount" 		=> floatval($i->amount),
-							"rate" 			=> floatval($i->rate),
-							"locale" 		=> $i->locale
-						);
-						if($sc->exists()){
-							if($i->item_id == $sc->item_id){
-								$scamount = floatval($i->amount);
+		$roomds = new Spa_room(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$roomds->get_iterated();
+		foreach($roomds as $rooms){
+			$spaworkroom = new Spa_work_room(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$spaworkroom->where("room_id", $rooms->id)->get_iterated();
+			if($spaworkroom->exists()){
+				foreach($spaworkroom as $spwr){
+					$obj = new Spa_work(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$obj->where("id", $spwr->work_id);
+					$obj->get_iterated();
+					if($obj->exists()){
+						foreach ($obj as $value) {
+							//Transaction
+							$tran = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+							$tran->where("id", $value->transaction_id)->limit(1)->get();
+							//Customer
+							$con = new Spa_work_customer(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+							$con->where("work_id", $value->id)->get_iterated();
+							if($con->exists()){
+								$conar = [];
+								$customer_name = "";
+								foreach($con as $c){
+									$sc = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+									$sc->where("id", $c->customer_id)->limit(1)->get();
+									$conar[] = array(
+										"id" 	=> $sc->id,
+										"name" 	=> $sc->name,
+									);
+									$customer_name .= $sc->name." ";
+								}
 							}
-						}
+							//Room
+							$room = new Spa_work_room(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+							$room->where("work_id", $value->id)->get_iterated();
+							$roomar = [];
+							$roomshow = "";
+							if($room->exists()){
+								foreach($room as $r){
+									$sroom = new Spa_room(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+									$sroom->where("id", $r->room_id)->limit(1)->get();
+									$roomar[] = array(
+										"id" => $sroom->id,
+										"name" => $sroom->name,
+									);
+									$roomshow .= $sroom->name." ";
+								}
+							}
+							//Item
+							$item = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+							$item->where("transaction_id", $value->transaction_id)->get_iterated();
+							$itemar = [];
+							//Service Charge
+							$sc = new Spa_service_charge(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+							$sc->where("status", 1)->limit(1)->get();
+							$scamount = 0;
+							$scar = [];
+							if($item->exists()){
+								foreach($item as $i){
+									$me = new Measurement(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+									$me->where("id", $i->measurement_id)->limit(1)->get();
+									$itemar[] = array(
+										"id" 			=> $i->id,
+										"name" 			=> $i->description,
+										"quantity" 		=> intval($i->quantity),
+										"measurement" 	=> array("id" => $me->id, "name" => $me->name),
+										"price" 		=> floatval($i->price),
+										"amount" 		=> floatval($i->amount),
+										"rate" 			=> floatval($i->rate),
+										"locale" 		=> $i->locale
+									);
+									if($sc->exists()){
+										if($i->item_id == $sc->item_id){
+											$scamount = floatval($i->amount);
+										}
+									}
+								}
+							}
+							$d = new DateTime($value->start_date);
+							if($sc->exists()){
+								$scitem = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+								$scitem->where("id", $sc->item_id)->limit(1)->get();
+								$scar = array(
+									"id" 		=> $sc->id,
+									"item_id" 	=> $sc->item_id,
+									"item_name" => $scitem->name
+								);
+							}
+					 		$data["results"][] = array(
+					 			"id" 			=> $value->id,
+					 			"transaction_id" 	=> intval($value->transaction_id),
+					 			"rate" 			=> floatval($tran->rate),
+					 			"locale" 		=> $tran->locale,
+					 			"sub_total" 	=> floatval($tran->sub_total),
+					 			"service_charge" => $scamount,
+					 			"service_charge_ar" => $scar,
+					 			"amount" 		=> floatval($tran->amount),
+					 			"tax" 			=> floatval($tran->tax),
+					 			"discount" 		=> floatval($tran->discount),
+					 			"room" 			=> $roomar,
+					 			"room_id" 		=> $room->id,
+					 			"roomshow" 		=> $roomshow,
+					 			"item" 			=> $itemar,
+					 			"dateshow" 		=> $d->format('Y-m-d g:i A'),
+					 			"start_date"  	=> $value->start_date,
+					 			"customer" 		=> $conar,
+					 			"customer_name" => $customer_name,
+					 			"status" 		=> "Serving"
+					 		);
+					 	}
 					}
 				}
-				$d = new DateTime($value->start_date);
-				if($sc->exists()){
-					$scitem = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-					$scitem->where("id", $sc->item_id)->limit(1)->get();
-					$scar = array(
-						"id" 		=> $sc->id,
-						"item_id" 	=> $sc->item_id,
-						"item_name" => $scitem->name
-					);
-				}
-		 		$data["results"][] = array(
-		 			"id" 			=> $value->id,
-		 			"transaction_id" 	=> intval($value->transaction_id),
-		 			"rate" 			=> floatval($tran->rate),
-		 			"locale" 		=> $tran->locale,
-		 			"sub_total" 	=> floatval($tran->sub_total),
-		 			"service_charge" => $scamount,
-		 			"service_charge_ar" => $scar,
-		 			"amount" 		=> floatval($tran->amount),
-		 			"tax" 			=> floatval($tran->tax),
-		 			"discount" 		=> floatval($tran->discount),
-		 			"room" 			=> $roomar,
-		 			"roomshow" 		=> $roomshow,
-		 			"item" 			=> $itemar,
-		 			"dateshow" 		=> $d->format('Y-m-d g:i A'),
-		 			"start_date"  	=> $value->start_date,
-		 			"customer" 		=> $conar,
-		 			"customer_name" => $customer_name,
+			}else{
+				$data["results"][] = array(
+		 			"id" 			=> "",
+		 			"transaction_id" => "",
+		 			"rate" 			=> "",
+		 			"locale" 		=> "",
+		 			"sub_total" 	=> "",
+		 			"service_charge" => "",
+		 			"service_charge_ar" => "",
+		 			"amount" 		=> "",
+		 			"tax" 			=> "",
+		 			"discount" 		=> "",
+		 			"room" 			=> "",
+		 			"room_id" 		=> $rooms->id,
+		 			"roomshow" 		=> $rooms->name,
+		 			"item" 			=> array(),
+		 			"dateshow" 		=> "",
+		 			"start_date"  	=> "",
+		 			"customer" 		=> "",
+		 			"customer_name" => "",
+		 			"status" 		=> "Available"
 		 		);
-		 	}
+			}
 		}
+		
 		//Response Data		
 		$this->response($data, 200);
 	}
@@ -215,7 +222,7 @@ class Spa extends REST_Controller {
 					$i->measurement_id = $item->measurement->measurement_id;
 					$i->tax_item_id = $item->tax_item->id;
 					$i->assembly_id = $item->assembly_id;
-					$i->description = isset($item->description) ? $item->description : $item->item->name;
+					$i->description = $item->item->name;
 					$i->quantity = $item->quantity;
 					$i->conversion_ratio = 1;
 					$i->cost = $item->avarage_cost;
@@ -1220,6 +1227,7 @@ class Spa extends REST_Controller {
 					"square_meter" 		=> $value->square_meter,
 					"branch_id" 		=> $value->branch_id,
 					"items" 			=> $items,
+					"number_bed" 		=> $value->number_bed,
 				);
 			}
 		}
@@ -1236,6 +1244,7 @@ class Spa extends REST_Controller {
 			isset($value->branch_id) 	? $obj->branch_id 		= $value->branch_id : "";
 			isset($value->description) 	? $obj->description 	= $value->description : "";
 			isset($value->square_meter) ? $obj->square_meter 	= $value->square_meter : 0;
+			isset($value->number_bed) 	? $obj->number_bed 		= $value->number_bed : 1;
 			$obj->status = 1;
 			$obj->work_id = 0;
 	   		if($obj->save()){
@@ -1265,6 +1274,7 @@ class Spa extends REST_Controller {
 			isset($value->branch_id) 	? $obj->branch_id 		= $value->branch_id : "";
 			isset($value->description) 	? $obj->description 	= $value->description : "";
 			isset($value->square_meter) ? $obj->square_meter 	= $value->square_meter : 0;
+			isset($value->number_bed) 	? $obj->number_bed 		= $value->number_bed : 1;
 			$obj->status = 1;
 			$obj->work_id = 0;
 	   		if($obj->save()){

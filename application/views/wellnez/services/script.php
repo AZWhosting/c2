@@ -3865,6 +3865,7 @@
         segment_id          : "",
         segmentitem_id      : "",
         user_id             : banhji.source.user_id,
+        sessionDS           : dataStore(apiUrl + "cashier"),
         pageLoad            : function(id){
             if(id){
                 this.set("isEdit", true);
@@ -3874,6 +3875,19 @@
                     this.addEmpty();
                 }
             }
+            var self = this;
+            this.sessionDS.query({
+                filter: [
+                    {field: "cashier_id", value: banhji.userData.id},
+                    {field: "active", value: 1}
+                ],
+                pageSize: 1
+            }).then(function(e){
+                if(self.sessionDS.data().length <= 0){
+                    alert("You didn't have session yet.");
+                    window.location.href = "<?php echo base_url(); ?>wellnez/session";
+                }
+            })
         },
         loadData            : function(){
             this.setRate();

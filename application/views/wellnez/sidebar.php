@@ -331,7 +331,7 @@
                     <li class="divider"></li>
                     <li><a href="customer">Customer</a></li>
                     <li><a href="rooms">Rooms / Facilities</a></li>
-                    <li><a href="therapist">Therapist</a></li>
+                    <li><a href="employee">Therapist</a></li>
                     <li><a href="loyalty">Loyalty</a></li>
                     <li><a href="setting">Setting</a></li>
                     <li class="divider"></li>
@@ -389,4 +389,4 @@
         </a>
     </div>
     <!-- End -->
-</div>
+</div> 

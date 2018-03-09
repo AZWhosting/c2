@@ -279,7 +279,7 @@
 	    text-align: left;
 	}
 	.customerCenter .listWrapper .k-grid-content.k-auto-scrollable .k-virtual-scrollable-wrap table tr:hover .media-body span{
-	    background: #0077c5 !important;
+	    /*background: #0077c5 !important;*/
 	    color: #fff;
 	}
 	.customerCenter .detailsWrapper .table.table-white {
@@ -333,6 +333,29 @@
 		background: #0eac00;
 		border: none;
 	}
+	.k-draghandle.k-state-selected:hover, 
+	.k-ghost-splitbar-horizontal, 
+	.k-ghost-splitbar-vertical, 
+	.k-list>.k-state-highlight, 
+	.k-list>.k-state-selected, 
+	.k-marquee-color, 
+	.k-panel>.k-state-selected, 
+	.k-scheduler .k-scheduler-toolbar .k-state-selected, 
+	.k-scheduler .k-today.k-state-selected, 
+	.k-state-selected, 
+	.k-state-selected:link, 
+	.k-state-selected:visited {
+	    background-color: #1c3b19 !important;
+	    border-color: #1c3b19 !important;
+	    color: #fff;
+	    background-image: none;
+	}
+	.customerCenter .listWrapper .k-grid-content .k-virtual-scrollable-wrap table tr.k-state-selected td .media-body span {
+	    font-size: 12.5px;
+	    color: #fff;
+	    text-align: left;
+	}
+
 
 	/*Add Customer*/
 	.addCusto .example {
@@ -469,10 +492,10 @@
 							           
 							            <div id="tab2-4" class="tab-pane box-generic active" style="float: left; margin-bottom: 10px;">
 							            	<div class="row-fluid">
-							            		<div class="span6" style="padding: 0 15px 0 0;">
+							            		<div class="span5" style="padding: 0 2px 0 0;">
 						            				<img class="main-image" data-bind="attr: { src: obj.image_url, alt: obj.name, title: obj.name }" style="border: 1px solid #ddd; ">
 						            			</div>
-						            			<div class="span6" style="padding: 0;">
+						            			<div class="span7" style="padding: 0;">
 								            		<div class="accounCetner-textedit">
 										            	<table width="100%" style="font-size: 12px; color: #333;">
 															<tr>
@@ -520,7 +543,7 @@
 														data-bind="value: note" 
 														placeholder="Add memo ..." 
 														style="width: 366px; margin-bottom: 15px;" />
-												<span style="margin-bottom: 10px;" class="btn btn-primary" data-bind="click: saveNote"><span data-bind="text: lang.lang.add" ></span></span>
+												<span style="margin-bottom: 10px; background: #0eac00; border: none;" class="btn btn-primary" data-bind="click: saveNote"><span data-bind="text: lang.lang.add" ></span></span>
 											</div> 
 											<div class="table table-condensed" style="height: 100;"						 
 												 data-role="grid"
@@ -562,7 +585,7 @@
 										    	 data-auto-bind="false"
 									             data-bind="source: attachmentDS"></div>
 
-										    <span class="btn btn-icon btn-success glyphicons ok_2" data-bind="click: uploadFile" style="color: #fff; padding: 5px 38px; text-align: left; width: 98px !important; display: inline-block; margin-top: 10px;"><i></i> <span data-bind="text: lang.lang.save"></span></span>
+										    <span class="btn btn-icon btn-success glyphicons ok_2" data-bind="click: uploadFile" style="color: #fff; padding: 5px 38px; text-align: left; width: 98px !important; display: inline-block; margin-top: 10px; background: #0eac00;"><i></i> <span data-bind="text: lang.lang.save"></span></span>
 										</div>
 								           
 
@@ -574,16 +597,16 @@
 						<div class="span6" style="padding-left: : 0px;">
 							<div class="row">
 								<div class="span6" style="padding: 0">
-									<div class="widget-stats widget-stats-primary widget-stats-5" data-bind="click: loadBalance" style="cursor: pointer; background: #0077c5; margin-left: 0; margin-bottom: 1px;">
+									<div class="widget-stats widget-stats-primary widget-stats-5" data-bind="click: loadBalance" style="cursor: pointer; background: #0eac00; margin-left: 0; margin-bottom: 1px;">
 										<span class="glyphicons coins"><i></i></span>
-										<span class="txt" style="padding-right: 18px;"><span data-bind="text: lang.lang.balance"></span><span data-bind="text: balance" style="font-size:medium;"></span></span>
+										<span class="txt" style="padding-right: 18px;">Total Sales<span data-bind="text: balance" style="font-size:medium;"></span></span>
 										<div class="clearfix"></div>
 									</div>
 								</div>
 								<div class="span6" style="padding-left: 0;">
-									<div class="widget-stats widget-stats-inverse widget-stats-5" data-bind="click: loadDeposit" style="cursor: pointer; margin-left: 1px;">
+									<div class="widget-stats widget-stats-inverse widget-stats-5" data-bind="click: loadDeposit" style="cursor: pointer; margin-left: 1px; background: #1c3b19;">
 										<span class="glyphicons briefcase"><i></i></span>
-										<span class="txt"><span data-bind="text: lang.lang.deposit"></span><span data-bind="text: deposit" style="font-size:medium;"></span></span>
+										<span class="txt">Last Visit<span data-bind="text: deposit" style="font-size:medium;"></span></span>
 										<div class="clearfix"></div>
 									</div>
 								</div>
@@ -591,16 +614,16 @@
 							
 							<div class="row">
 								<div class="span6" style="padding: 0">
-									<div class="widget-stats widget-stats-info widget-stats-5" data-bind="click: loadBalance" style="cursor: pointer; background: #21abf6; margin-left: 0; margin-bottom: 15px;">
+									<div class="widget-stats widget-stats-info widget-stats-5" data-bind="click: loadBalance" style="cursor: pointer; background: #bbbbbb; margin-left: 0; margin-bottom: 15px;">
 										<span class="glyphicons circle_exclamation_mark"><i></i></span>
-										<span class="txt"><span data-bind="text: outInvoice"></span> <span data-bind="text: lang.lang.open_invoice"></span></span>
+										<span class="txt"><span data-bind="text: outInvoice"></span> Earn Points</span>
 										<div class="clearfix"></div>
 									</div>
 								</div>
 								<div class="span6" style="padding-left: 0;">
-									<div class="widget-stats widget-stats-default widget-stats-5" data-bind="click: loadOverInvoice" style="cursor: pointer; margin-left: 1px;"> 
+									<div class="widget-stats widget-stats-default widget-stats-5" data-bind="click: loadOverInvoice" style="cursor: pointer; margin-left: 1px; background: #424242;"> 
 										<span class="glyphicons turtle"><i></i></span>
-										<span class="txt"><span data-bind="text: overInvoice"></span> <span data-bind="text: lang.lang.over_due"></span></span>
+										<span class="txt"><span data-bind="text: overInvoice"></span>Paid Points</span>
 										<div class="clearfix"></div>
 									</div>
 								</div>

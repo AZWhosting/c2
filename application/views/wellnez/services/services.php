@@ -262,7 +262,7 @@
 	    margin-bottom: 1px;
 	    font-size: 14px;	    
 	    cursor: pointer;
-	    box-shadow: 2px 0px 12px 0px rgba(68,68,68,1)
+	    /*box-shadow: 2px 0px 12px 0px rgba(68,68,68,1)*/
 	}
 		
 	.services .example table{
@@ -393,8 +393,16 @@
 	    font-size: 13px;
 	}
 	.block-number.k-state-selected{
-		background: #1c3b19 !important;
+		background: green !important;
 		color: #fff !important;
+	}
+	.serving {
+		background: #f49292;
+	}
+	.circle_plus i:before{
+		font-size: 55px;
+		text-align: center;
+		color: #ccc;
 	}
 </style>
 <!-- ***************************
@@ -416,7 +424,7 @@
 								 data-selectable="true"
 				                 data-template="work-list-tmpl"
 				                 data-bind="source: workDS"
-				                 style="overflow: auto;width: 100%;">
+				                 style="overflow: auto;width: 100%;background: none;">
 				            </div>						
 						</div>
 					</div>
@@ -518,26 +526,26 @@
 								</div>
 								<div class="span6 botton" style="padding-left: 0;">
 									<div class="row">
-										<div class="span4 " style="padding-right: 0;">
+										<div class="span6 " style="padding-right: 0;">
 											<a href="loyalty">
-												<div class="button-book">
-													<div class="img">
+												<div class="button-book" style="margin-right: 1px;">
+													<div class="img" style="margin-left: 33px;">
 														<img src="<?php echo base_url();?>assets/spa/icon/loyalty-green.png" >
 													</div>
 													<p class="textSmall">Loyalty</p>
 												</div>
 											</a>
 										</div>
-										<div class="span4 " style="padding: 0;">
+										<!-- <div class="span4 " style="padding: 0;">
 											<div class="button-pay">
 												<div class="img">
 													<img src="<?php echo base_url();?>assets/spa/icon/gift-green.png" >
 												</div>
 												<p class="textSmall">Gift Card</p>
 											</div>
-										</div>
-										<div class="span4 " style="padding-left: 0;">
-											<p class="button-cancel"><span>/</span> <br> Split</p>
+										</div> -->
+										<div class="span6" style="padding-left: 0;">
+											<p class="button-cancel" style="margin-left: 0;"><span>/</span> <br> Split</p>
 										</div>
 									</div>
 									<div class="row">
@@ -580,10 +588,18 @@
 	</div>
 </script>
 <script id="work-list-tmpl" type="text/x-kendo-tmpl">
-	<div class="block-number" style="width: 27.4%;min-height: 175px;" data-bind="click: selectRow">
-		<p style="text-align: center;"><b>Customer:</b><br /> <span style="text-align: center;font-size: 12px;">#: customer_name#</span></p>
-		<p style="text-align: center"><b>Start:</b><br /> <span style="text-align: center;font-size: 12px;">#: dateshow#</span></p>
-		<p style="text-align: center;"><b>Room:</b><br /> <span style="text-align: center;font-size: 12px;">#: roomshow#</span></p>
+	<div class="block-number #if(status == 'Serving'){# serving #}#" style="position: relative;width: 27.4%;min-height: 175px;" data-bind="click: selectRow">
+		<h2 style="text-align: center; font-size: 14px;background: \#ccc;"><b>#: roomshow#</b></h2>
+		#$.each(item, function(i,v){#
+			<p style="text-align: left;"><b>Name:</b> <span style="text-align: center;font-size: 12px;">#: v.name#</span></p>
+			<p style="text-align: left;"><b>Amount:</b> <span style="text-align: center;font-size: 12px;">#=kendo.toString(v.amount, v.locale=="km-KH"?"c0":"c2", v.locale)#</span></p>
+		#})#
+		<p style="text-align: left;"><b>Status:</b> <span style="text-align: center;font-size: 12px;">#: status#</span></p>
+		#if(status == 'Available'){#
+		<div class="shadow" style="z-index: 9999;position: absolute;top: 0;left: 0;width: 100%;height: 100%;background: rgba(0,0,0,.5)">
+			<a style="padding:28px;top: 80px;" href="<?php echo base_url(); ?>wellnez/pos/\#/room/#:room_id#" class="glyphicons no-js circle_plus"><i ></i></a>
+		</div>
+		#}#
 	</div>
 </script>
 

@@ -426,10 +426,10 @@
 						</div>
 						<div class="row">
 							<div class="col-xs-12 col-sm-12 col-md-5" >
-								<div class="well" style="overflow: hidden;">
+								<!-- <div class="well" style="overflow: hidden;">
 									<textarea cols="0" rows="2" class="k-textbox" style="width:100% !important;" data-bind="value: obj.memo" placeholder="memo for external ..."></textarea>
 									<textarea cols="0" rows="2" class="k-textbox" style="width:100% !important;" data-bind="value: obj.memo2" placeholder="memo for internal ..."></textarea>
-								</div>
+								</div> -->
 							</div>
 							<div class="col-xs-12 col-sm-12 col-md-7" data-bind="visible: btnActive">
 								<table class="table table-bordered table-primary table-striped table-vertical-center">

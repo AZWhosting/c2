@@ -2992,14 +2992,59 @@
     banhji.Index = kendo.observable({
         lang        : langVM,
         currencyDS: dataStore(apiUrl + "utibills/currency"),
-        sessionDS: dataStore(apiUrl + "cashier"),
+        sessionDS: new kendo.data.DataSource({
+            transport: {
+                read: {
+                    url: apiUrl + "cashier",
+                    type: "GET",
+                    headers: banhji.header,
+                    dataType: 'json'
+                },
+                parameterMap: function(options, operation) {
+                    if (operation === 'read') {
+                        return {
+                            page: options.page,
+                            limit: options.pageSize,
+                            filter: options.filter,
+                            sort: options.sort
+                        };
+                    } else {
+                        return {
+                            models: kendo.stringify(options.models)
+                        };
+                    }
+                }
+            },
+            schema: {
+                model: {
+                    id: 'id'
+                },
+                data: 'results',
+                total: 'count'
+            },
+            filter: [
+                {
+                    field: "cashier_id",
+                    value: banhji.userData.id
+                }
+            ],
+            sort: {
+                field: "id",
+                dir: "asc"
+            },
+            batch: true,
+            serverFiltering: true,
+            serverSorting: true,
+            serverPaging: true,
+            page: 1,
+            pageSize: 1,
+        }),
         cashierItemDS: dataStore(apiUrl + "cashier_sessions/item"),
         updateSessionDS: dataStore(apiUrl + "cashier_sessions"),
         noSession: true,
         pageLoad: function(id){
             if(id){
-                localforage.setItem("cashier_id", id);
-                window.location.href = "<?php echo base_url(); ?>wellnez/pos";
+                this.autoAddCashier(banhji.userData.id,id);
             }else{
                 var self = this;
                 this.currencyDS.query({
@@ -3013,6 +3058,20 @@
             }
             var x = banhji.userData.username;
             $("#userCut").text(x); //x.toUpperCase();
+        },
+        autoSessionDS : dataStore(apiUrl + "cashier/at_active"),
+        autoAddCashier : function(cid, sid){
+            this.autoSessionDS.data([]);
+            this.autoSessionDS.add({
+                cashier_id : cid,
+                session_id: sid,
+            });
+            this.autoSessionDS.sync();
+            this.autoSessionDS.bind("requestEnd", function(e){
+                if(e.type != 'read' && e.response.results) {
+                    window.location.replace(baseUrl + "wellnez/pos");
+                }
+            });
         },
         setCashierItems: function() {
             var self = this;
@@ -3035,7 +3094,8 @@
                 status: 0,
                 items: []
             });
-        },        backSession: function(){
+        },        
+        backSession: function(){
             this.set("noSession", true);
         },
         addSession: function() {
@@ -3046,11 +3106,11 @@
                 var ID = e.response.results[0].id;
                 self.set("noSession", true);
                 self.sessionDS.read();
-                self.pageLoad(ID);
+                self.autoAddCashier(banhji.userData.id, ID);
             });
         },
         selectSession: function(e){
-            this.pageLoad(e.data.id);
+            this.autoAddCashier(banhji.userData.id, e.data.id);
         }
     });
     //Reconcile

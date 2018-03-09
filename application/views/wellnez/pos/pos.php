@@ -652,7 +652,7 @@
 								<div class="span6">
 									<div class="box-generic" style="background: #c4c2d2; padding: 0; border: none; margin-bottom: 0; padding-bottom: 15px;">
 										<div data-bind="visible: emSelect">
-											<input 
+											<input id="Emlopyee"
 												data-role="dropdownlist"
 												data-template="contact-list-tmpl" 
 												data-auto-bind="false" 

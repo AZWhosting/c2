@@ -5641,6 +5641,7 @@
                 "description"   : "",
                 "items"         : [],
                 "status"        : 1,
+                "number_bed"    : 1,
             });
             var obj = this.dataSource.at(0);
             this.set("obj", obj);
@@ -5663,9 +5664,24 @@
             var self = this;
             this.dataSource.sync();
             this.dataSource.bind("requestEnd", function(e){
-                if(e.response.type != 'read'){
-                    
+                console.log(e.type);
+                if(e.type != 'read' && e.response.results) {
+                    var notificat = $("#ntf1").data("kendoNotification");
+                    notificat.hide();
+                    notificat.success(self.lang.lang.success_message);
+                    $("#loadImport").css("display", "none");
+                    banhji.Index.roomDS.query({});
+                    self.itemDS.query({
+                        filter: { field:"item_type_id",operator: "where_in", value: [1,4] }
+                    })
+                    self.cancel();
                 }
+            });
+            this.dataSource.bind("error", function(e) {
+                var notificat = $("#ntf1").data("kendoNotification");
+                notificat.hide();
+                notificat.error(self.lang.lang.error_message);
+                $("#loadImport").css("display", "none");
             });
         },
         cancel      : function(e){

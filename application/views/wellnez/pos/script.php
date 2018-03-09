@@ -4027,6 +4027,7 @@
         user_id            : banhji.source.user_id,
         isVisible          : true,
         isEnabled          : true,
+        sessionDS           : dataStore(apiUrl + "cashier"),
         pageLoad           : function(id){
             var x = banhji.userData.username;
             $("#userCut").text(x);
@@ -4038,11 +4039,19 @@
                     this.addEmpty();
                 }
             }
-            if(JSON.parse(localStorage.getItem('userData/cashier_id')) > 0){
-            }else{
-                alert("You didn't have session yet.");
-                window.location.href = "<?php echo base_url(); ?>wellnez/session";
-            }
+            var self = this;
+            this.sessionDS.query({
+                filter: [
+                    {field: "cashier_id", value: banhji.userData.id},
+                    {field: "active", value: 1}
+                ],
+                pageSize: 1
+            }).then(function(e){
+                if(self.sessionDS.data().length <= 0){
+                    alert("You didn't have session yet.");
+                    window.location.href = "<?php echo base_url(); ?>wellnez/session";
+                }
+            })
         },
         millisToMinutesAndSeconds: function(millis) {
             var minutes = Math.floor(millis / 60000);
@@ -6046,6 +6055,7 @@
         category_id         : 0,
         item_group_id       : 0,
         user_id             : banhji.source.user_id,
+        sessionDS           : dataStore(apiUrl + "cashier"),
         pageLoad            : function(){
             // if(id){
             //     this.set("isEdit", true);
@@ -6055,6 +6065,19 @@
                     this.addEmpty();
             //     }
             // }
+            var self = this;
+            this.sessionDS.query({
+                filter: [
+                    {field: "cashier_id", value: banhji.userData.id},
+                    {field: "active", value: 1}
+                ],
+                pageSize: 1
+            }).then(function(e){
+                if(self.sessionDS.data().length <= 0){
+                    alert("You didn't have session yet.");
+                    window.location.href = "<?php echo base_url(); ?>wellnez/session";
+                }
+            });
         },
         loadData            : function(){
             this.setRate();
@@ -6561,10 +6584,16 @@
                 row.set("item", { id:"", name:"" });
             }
         },
-        changes             : function(){
+        invTax : 0,
+        invDiscount: 0,
+        invSubTotal: 0,
+        invAmount: 0,
+        invAccountID : 0,
+        invLocale: banhji.institute.locale,
+        changes       : function(){
             var self = this, obj = this.get("obj"),
                 total = 0, subTotal = 0, discount =0, tax = 0, remaining = 0, amount_due = 0, itemIds = [];
-            
+
             $.each(this.lineDS.data(), function(index, value) {
                 var amt = value.quantity * value.price;
                 subTotal += amt;
@@ -6576,8 +6605,8 @@
                 }
 
                 //Tax by line
-                if(value.tax_item_id>0){
-                    var taxAmount = amt * value.tax_item.rate;
+                if(value.tax_item.id>0){
+                    var taxAmount = amt * parseFloat(value.tax_item.rate);
                     tax += taxAmount;
                     value.set("tax", taxAmount);
                 }else{
@@ -6593,29 +6622,6 @@
 
             //Total
             total = (subTotal + tax) - discount;
-
-            //Apply Deposit
-            if(obj.deposit>0){
-                if(obj.deposit <= this.get("total_deposit")){
-                    if(obj.deposit <= total){
-                        remaining = total - obj.deposit;
-                    }else{
-                        obj.set("deposit", total);
-                    }
-                }else{
-                    obj.set("deposit", 0);
-                    alert("Over deposit to apply!");
-                }
-
-                //Status
-                if(remaining==0){
-                    obj.set("status", 1);
-                }else if(remaining==total){
-                    obj.set("status", 0);
-                }else{
-                    obj.set("status", 2);
-                }
-            }
 
             //Warning over credit allowed
             if(obj.credit_allowed>0 && total>obj.credit_allowed){
@@ -6635,6 +6641,12 @@
             this.set("total", kendo.toString(total, "c", obj.locale));
             this.set("amount_due", kendo.toString(amount_due, "c", obj.locale));
             
+            
+            this.set("invTax", tax);
+            this.set("invDiscount", discount);
+            this.set("invSubTotal", subTotal);
+            this.set("invAmount", total);
+
             //Remove Assembly Item List
             var raw = this.assemblyLineDS.data();
             var item, i;
@@ -6644,13 +6656,6 @@
                 if (jQuery.inArray(kendo.parseInt(item.assembly_id), itemIds)==-1) {
                     this.assemblyLineDS.remove(item);
                 }
-            }
-
-            //Check invoice paid
-            if(obj.status=="1" && this.lineDS.hasChanges()){
-                this.lineDS.cancelChanges();
-
-                $("#ntf1").data("kendoNotification").warning(banhji.source.noChangeInvoicePaidMessage);
             }
         },
         lineDSChanges       : function(arg){
@@ -8227,6 +8232,26 @@
         toDay : new Date(),
         dateSelected: new Date(),
     });
+    banhji.Room = kendo.observable({
+        roomDS      : dataStore(apiUrl + "spa/room"), 
+        pageLoad    : function(id){
+            if(id){
+                var self = this;
+                this.roomDS.query({
+                    filter: {field: "id", value: id}
+                }).then(function(e){
+                    var v = self.roomDS.view();
+                    banhji.Index.roomAR.push({
+                        id: v[0].id,
+                        name: v[0].name,
+                    });
+                    banhji.router.navigate("/");
+                });
+            }else{
+                banhji.router.navigate("/");
+            }
+        }
+    });
     /* views and layout */
     banhji.view = {
         layout: new kendo.Layout('#layout', {
@@ -8303,7 +8328,44 @@
             vm.lineDS.bind("change", vm.lineDSChanges);
         }
     });
-    
+    banhji.router.route('/room(/:id)', function(id) {
+        banhji.Room.pageLoad(id);
+    });
+    banhji.sessionDS = new kendo.data.DataSource({
+        transport: {
+            read: {
+                url: baseUrl + 'api/session',
+                type: "GET",
+                dataType: 'json'
+            },
+            parameterMap: function(options, operation) {
+                if (operation === 'read') {
+                    return {
+                        limit: options.pageSize,
+                        page: options.page,
+                        filter: options.filter
+                    };
+                } else {
+                    return {
+                        models: kendo.stringify(options.models)
+                    };
+                }
+            }
+        },
+        schema: {
+            model: {
+                id: 'id'
+            },
+            data: 'results',
+            total: 'count'
+        },
+        batch: true,
+        serverFiltering: true,
+        serverPaging: true,
+        filter: {
+        },
+        pageSize: 1
+    });
     $(function() {
         banhji.accessMod.query({
             filter: {
@@ -8335,6 +8397,7 @@
             }
             $("#holdpageloadhide").css("display", "none");
         });
+
         banhji.source.contactDS.read().then(function() {
             banhji.router.start();
             // banhji.source.loadData();

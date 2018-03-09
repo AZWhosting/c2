@@ -244,8 +244,8 @@ class UtibillReports extends REST_Controller {
 	//Water Sale
 	function sale_summary_get() {
 		$filter 	= $this->get("filter");
-		$page 		= $this->get('page');
-		$limit 		= $this->get('limit');
+		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 10000;	
 		$sort 	 	= $this->get("sort");
 		$data["results"] = [];
 		$data["count"] = 0;
@@ -283,8 +283,16 @@ class UtibillReports extends REST_Controller {
 		$obj->where("is_recurring <>", 1);
 		$obj->where("deleted <>", 1);
 		$obj->order_by("issued_date", "asc");
-		$obj->get_iterated();
-		
+		// $obj->get_iterated();
+		//Results
+		if($page && $limit){
+			$obj->get_paged_iterated($page, $limit);
+			$data["count"] = $obj->paged->total_rows;
+		}else{
+			$obj->get_iterated();
+			$data["count"] = $obj->result_count();
+		}
+
 		if($obj->exists()){
 			$objList = [];
 			foreach ($obj as $value) {								
@@ -307,7 +315,7 @@ class UtibillReports extends REST_Controller {
 			foreach ($objList as $value) {
 				$data["results"][] = $value;
 			}
-			$data["count"] = count($data["results"]);
+			// $data["count"] = count($data["results"]);
 		}
 
 		//Response Data
@@ -356,8 +364,17 @@ class UtibillReports extends REST_Controller {
 		$obj->where("is_recurring <>", 1);
 		$obj->where("deleted <>", 1);
 		$obj->order_by("issued_date", "asc");
-		$obj->get_iterated();
+		// $obj->get_iterated();
 		
+		//Results
+		if($page && $limit){
+			$obj->get_paged_iterated($page, $limit);
+			$data["count"] = $obj->paged->total_rows;
+		}else{
+			$obj->get_iterated();
+			$data["count"] = $obj->result_count();
+		}
+
 		if($obj->exists()){
 			$objList = [];
 			foreach ($obj as $value) {								
@@ -393,7 +410,7 @@ class UtibillReports extends REST_Controller {
 				$data["results"][] = $value;
 			}
 			$data['total'] = $total;
-			$data["count"] = count($data["results"]);
+			// $data["count"] = count($data["results"]);
 		}
 
 		//Response Data
@@ -1298,7 +1315,14 @@ class UtibillReports extends REST_Controller {
 		$obj->where("is_recurring <>", 1);
 		$obj->where("deleted <>", 1);
 		$obj->order_by("issued_date", "asc");
-		$obj->get_iterated();
+		// $obj->get_iterated();
+		if($page && $limit){
+			$obj->get_paged_iterated($page, $limit);
+			$data["count"] = $obj->paged->total_rows;
+		}else{
+			$obj->get_iterated();
+			$data["count"] = $obj->result_count();
+		}
 		
 		if($obj->exists()){
 			$objList = [];
@@ -1348,7 +1372,7 @@ class UtibillReports extends REST_Controller {
 			}
 			$data['total'] = $total;
 			$data['cashReceipt'] = $cashReceipt;
-			$data["count"] = count($data["results"]);
+			// $data["count"] = count($data["results"]);
 		}
 
 		//Response Data
@@ -1404,9 +1428,9 @@ class UtibillReports extends REST_Controller {
 			foreach ($obj as $value) {
 				//Reference
 				$ref = $value->reference->select("type, number, issued_date, amount, deposit, rate")->get();				
-				$refAmount = (floatval($ref->amount) - floatval($ref->deposit)) / floatval($ref->rate);
+				$refAmount = (floatval($ref->amount) - floatval($ref->deposit));
 
-				$amount = (floatval($value->amount) - floatval($value->deposit)) / floatval($value->rate);
+				$amount = (floatval($value->amount) - floatval($value->deposit));
 
 				if(isset($objList[$value->payment_method_name])){
 					$objList[$value->payment_method_name]["line"][] = array(
@@ -1581,8 +1605,17 @@ class UtibillReports extends REST_Controller {
 		$obj->where("is_recurring <>", 1);
 		$obj->where("deleted <>", 1);
 		$obj->order_by("issued_date", "asc");
-		$obj->get_iterated();
-		
+		// $obj->get_iterated();
+		//page size
+
+		if($page && $limit){
+			$obj->get_paged_iterated($page, $limit);
+			$data["count"] = $obj->paged->total_rows;
+		}else{
+			$obj->get_iterated();
+			$data["count"] = $obj->result_count();
+		}
+
 		if($obj->exists()){
 			$objList = [];
 			foreach ($obj as $value) {								
@@ -1618,7 +1651,7 @@ class UtibillReports extends REST_Controller {
 				$data["results"][] = $value;
 			}
 			$data['total'] = $total;
-			$data["count"] = count($data["results"]);
+			// $data["count"] = count($data["results"]);
 		}
 
 		//Response Data

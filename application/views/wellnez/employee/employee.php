@@ -377,13 +377,13 @@
 			<div class="span9" style="padding-left: 0">
 				<div class="detailsWrapper">
 					<div class="row">
-						<div class="span6">
+						<!-- <div class="span6">
 							<div class="widget widget-4 widget-tabs-icons-only margin-bottom-none">
 
-							    <!-- Widget Heading -->
+							    
 							    <div class="widget-head">
 
-							        <!-- Tabs -->
+							        
 							        <ul class="pull-right">
 							        	<li style="font-size: large; color: black; font-weight: bold;">
 							            	<span data-bind="text: obj.number"></span>
@@ -402,15 +402,15 @@
 							            </li>							            							            							            
 							        </ul>
 							        <div class="clearfix"></div>
-							        <!-- // Tabs END -->
+							        
 
 							    </div>
-							    <!-- Widget Heading END -->
+							    
 
 							    <div class="widget-body">
 							        <div class="tab-content">
 
-							            <!-- Transactions Tab content -->
+							            
 							            <div id="tab1-7" class="tab-pane active ">
 							            	<div class="box-generic" style="padding: 5px;">
 								            	<table class="table table-borderless table-condensed cart_total">
@@ -425,9 +425,9 @@
 								            	</table>
 								            </div>
 							            </div>
-							            <!-- // Transactions Tab content END -->
+							            
 
-							            <!-- SEARCH Tab content -->
+							            
 							            <div id="tab2-7" class="tab-pane ">
 							            	<div class="box-generic" style="padding: 10px;">
 								                <input data-role="dropdownlist"
@@ -452,15 +452,15 @@
 									            <span style="width: 100px;" class="btn btn-primary btn-icon glyphicons search pull-right" data-bind="click: search"><i></i> <span data-bind="text: lang.lang.search">Search</span></span>
 								        	</div>
 								        </div>
-							            <!-- // SEARCH Tab content END -->
+							            
 
-							            <!-- INFO Tab content -->
+							           
 							            <div id="tab3-7" class="tab-pane">
 							            	<div class=" box-generic">
 								            	<div class="row">
 									            	<div class="span6">
 											
-														<!-- Bio -->
+														
 														<div class="widget widget-heading-simple widget-body-gray margin-none">
 															<div class="widget-head">
 																<h4 class="heading glyphicons user"><i></i> <span data-bind="text: obj.wnumber"></span> <span data-bind="text: obj.fullname"></span></h4>
@@ -474,11 +474,11 @@
 																</ul>
 															</div>
 														</div>
-														<!-- // Bio END -->
+														
 														
 													</div>
 													<div class="span6">
-														<!-- Bio -->
+														
 														<div class="widget widget-heading-simple widget-body-gray margin-none">
 															<div class="widget-head">
 																<h4 class="heading glyphicons edit" data-bind="click: goEditContact"><i></i> <span data-bind="text: lang.lang.edit"></span></h4>
@@ -487,14 +487,14 @@
 																<p><i class="icon-home"></i> <span data-bind="text: obj.address"></span></p>
 															</div>
 														</div>
-														<!-- // Bio END -->
+														
 													</div>
 												</div>
 											</div>
 							            </div>
-							            <!-- // INFO Tab content END -->
+							            
 
-							            <!-- NOTE Tab content -->
+							            
 							            <div id="tab4-7" class="tab-pane ">
 							            	<div class="box-generic">
 											    <div class="chat-controls">
@@ -518,7 +518,166 @@
 									            </div>
 											</div>
 							            </div>
-							            <!-- // NOTE Tab content END -->
+							            
+
+							        </div>
+							    </div>
+							</div>
+						</div> -->
+
+						<div class="span6">
+							<div class="widget widget-4 widget-tabs-icons-only margin-bottom-none">
+
+							    
+							    <div class="widget-head" >
+							    	<input type="text" name="" data-bind="value: obj.name" disabled="disabled" style="border: 1px solid #efefef; width: 69%; height: 30px; float: left; font-size: 16px; font-weight: 600;  background: #fff; padding-left: 5px;">
+							        
+							        <ul class="pull-right">
+
+							            <!-- <li class="glyphicons text_bigger active"><span data-toggle="tab" data-target="#tab1-4"><i></i></span>
+							            </li> -->
+							            <li class="glyphicons circle_info active"><span data-toggle="tab" data-target="#tab2-4"><i></i></span>
+							            </li>							            
+							            <li class="glyphicons pen"><span data-toggle="tab" data-target="#tab3-4"><i></i></span>
+							            </li>
+							            <li class="glyphicons paperclip"><span data-toggle="tab" data-target="#tab4-4"><i></i></span>
+							            </li>							            							            
+							        </ul>
+							        <div class="clearfix"></div>
+							      
+
+							    </div>
+							   
+
+							    <div class="widget-body">
+							        <div class="tab-content">							          
+							            <!-- <div id="tab1-4" class="tab-pane active box-generic">
+							            	<table class="table table-borderless table-condensed cart_total cash-table">
+								            	<tr>
+								            		<td width="50%">
+								            			<span class="btn btn-block btn-primary" data-bind="click: goDeposit"><span><span data-bind="text: lang.lang.c_deposit"></span></span>
+								            		</td>
+								            		<td width="50%">
+								            			<span class="btn btn-block btn-inverse" data-bind="click: goSaleOrder"><span><span data-bind="text: lang.lang.sale_order"></span></span>						            			
+								            		</td>
+								            	</tr>
+								            	<tr>
+								            		<td>
+								            			<span class="btn btn-block btn-primary" data-bind="click: goCashSale"><span><span data-bind="text: lang.lang.cash_sale"></span></span>	
+								            		</td>
+								            		<td>
+								            			<span class="btn btn-block btn-primary" data-bind="click: goInvoice"><span data-bind="text: lang.lang.invoice"></span></span>				            			
+								            		</td>
+								            	</tr>
+								            	<tr>
+								            		<td>
+								            			<span class="btn btn-block btn-primary" data-bind="click: goCashReceipt"><span data-bind="text: lang.lang.cash_receipt"></span></span>	
+								            		</td>
+								            		<td>
+								            			<span class="btn btn-block btn-primary" data-bind="click: goCashRefound"><span >CASH REFUND</span></span>
+								            		</td>
+								            	</tr>								            	
+							            	</table>
+							            </div> -->
+							           
+							            <div id="tab2-4" class="tab-pane box-generic active" style="float: left; margin-bottom: 10px;">
+							            	<div class="row-fluid">
+							            		<div class="span5" style="padding: 0 2px 0 0;">
+						            				<img class="main-image" data-bind="attr: { src: obj.image_url, alt: obj.name, title: obj.name }" style="border: 1px solid #ddd; ">
+						            			</div>
+						            			<div class="span7" style="padding: 0;">
+								            		<div class="accounCetner-textedit">
+										            	<table width="100%" style="font-size: 12px; color: #333;">
+															<tr>
+																<td width="40%"><span data-bind="text: lang.lang.customer_type"></span></td>
+																<td width="60%">
+																	<span class="strong" data-bind="text: obj.contact_type"></span>
+																</td>
+															</tr>
+															<tr>
+																<td><span data-bind="text: lang.lang.number"></span></td>
+																<td>
+																	<span class="strong" data-bind="text: obj.abbr"></span>
+																	<span class="strong" data-bind="text: obj.number"></span>
+																</td>
+															</tr>
+															<tr>
+																<td><span data-bind="text: lang.lang.name"></span></td>
+																<td>
+																	<span data-bind="text: obj.name"></span>
+																</td>
+															</tr>							
+															<tr>
+																<td><span data-bind="text: lang.lang.phone"></span></td>
+																<td>
+																	<span data-bind="text: obj.phone"></span>
+																</td>
+															</tr>
+															<tr>
+																<td><span data-bind="text: lang.lang.currency"></span></td>
+																<td>										
+																	<span data-bind="text: currencyCode"></span>
+																</td>
+															</tr>
+														</table>
+
+														<span class="btn btn-primary btn-icon glyphicons edit pull-right" data-bind="click: goEdit"><i></i><span data-bind="text: lang.lang.view_edit_profile"></span></span>
+													</div>
+												</div>
+											</div>
+							            </div>
+							            
+							            <div id="tab3-4" class="tab-pane">
+										    <div>
+												<input type="text" class="k-textbox" 
+														data-bind="value: note" 
+														placeholder="Add memo ..." 
+														style="width: 366px; margin-bottom: 15px;" />
+												<span style="margin-bottom: 10px; background: #0eac00; border: none;" class="btn btn-primary" data-bind="click: saveNote"><span data-bind="text: lang.lang.add" ></span></span>
+											</div> 
+											<div class="table table-condensed" style="height: 100;"						 
+												 data-role="grid"
+												 data-auto-bind="false"						 
+												 data-bind="source: noteDS"
+												 data-row-template="customerCenter-note-tmpl"
+												 data-columns="[{title: ''}]"
+												 data-height="100"						 
+												 data-scrollable="{virtual: true}"></div>											
+							            </div>
+							            
+								        <div id="tab4-4" class="tab-pane" >
+								            <p style="color: #333;"><span data-bind="text: lang.lang.file_type"></span> [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>
+								            <input id="files" name="files"
+							                   type="file"
+							                   data-role="upload"
+							                   data-show-file-list="false"
+							                   data-bind="events: { 
+					                   				select: onSelect
+							                   }">
+
+								            <table class="table table-bordered">
+										        <thead>
+										            <tr>
+										                <th><span data-bind="text: lang.lang.file_name"></span></th>
+										                <th><span data-bind="text: lang.lang.description"></span></th>
+										                <th><span data-bind="text: lang.lang.date"></span></th>
+										                <th style="width: 13%;"></th>
+										            </tr> 
+										        </thead>
+										        <tbody data-role="listview" 
+										        		data-template="attachment-list-tmpl" 
+										        		data-auto-bind="false"
+										        		data-bind="source: attachmentDS"></tbody>			        
+										    </table>
+
+										    <div id="pager" class="k-pager-wrap"
+										    	 data-role="pager"
+										    	 data-auto-bind="false"
+									             data-bind="source: attachmentDS"></div>
+
+										    <span class="btn btn-icon btn-success glyphicons ok_2" data-bind="click: uploadFile" style="color: #fff; padding: 5px 38px; text-align: left; width: 98px !important; display: inline-block; margin-top: 10px; background: #0eac00;"><i></i> <span data-bind="text: lang.lang.save"></span></span>
+										</div>
+								           
 
 							        </div>
 							    </div>
@@ -543,7 +702,7 @@
 								</div>
 							</div>
 								
-							<div class="row">
+							<!-- <div class="row">
 								<div class="span6" style="padding-right: 0">
 									<div class="widget-stats widget-stats-info widget-stats-5" data-bind="click: loadBalance" style="cursor: pointer; background: #21abf6; margin-left: 0; margin-bottom: 15px;">
 										<span class="glyphicons circle_exclamation_mark"><i></i></span>
@@ -558,7 +717,7 @@
 										<div class="clearfix"></div>
 									</div>
 								</div>
-							</div>
+							</div> -->
 						</div>
 					</div>
 					

@@ -11824,6 +11824,9 @@
 											 data-template="customerList-temp"
 								></tbody>
 							</table>
+							<div id="pager" class="k-pager-wrap"						    	
+					             data-role="pager" data-bind="source: dataSource"
+					             data-page-size= "true"></div>
 						</div>
 					</div>
 				</div>
@@ -13271,6 +13274,10 @@
 						                data-bind="source: dataSource" >
 						        </tbody>
 			            	</table>
+			            	<div id="pager" class="k-pager-wrap"
+			            		 data-role="pager"
+						    	 data-auto-bind="false"
+					             data-bind="source: dataSource"></div>
 			            </div>
 			        </span>
 				</div>
@@ -13450,6 +13457,10 @@
 						                data-bind="source: dataSource" >
 						        </tbody>
 			            	</table>
+			            	<div id="pager" class="k-pager-wrap"						    	
+					             data-role="pager" data-bind="source: dataSource"
+					             data-page-size= "true"></div>
+						</div>
 			            </div>
 			        </span>
 				</div>
@@ -13621,6 +13632,9 @@
 										data-bind="source: dataSource">
 								</tbody>
 							</table>
+							<div id="pager" class="k-pager-wrap"						    	
+					             data-role="pager" data-bind="source: dataSource"
+					             data-page-size= "true"></div>
 						</div>
 					</div>
 				</div>
@@ -13818,6 +13832,9 @@
 										data-bind="source: dataSource">
 								</tbody>
 							</table>
+							<div id="pager" class="k-pager-wrap"						    	
+					             data-role="pager" data-bind="source: dataSource"
+					             data-page-size= "true"></div>
 						</div>
 					</div>
 				</div>
@@ -14276,6 +14293,9 @@
 										data-bind="source: dataSource">
 								</tbody>
 							</table>
+							<div id="pager" class="k-pager-wrap"						    	
+					             data-role="pager" data-bind="source: dataSource"
+					             data-page-size= "true"></div>
 						</div>
 					</div>
 				</div>
@@ -14468,6 +14488,9 @@
 										data-bind="source: dataSource">
 								</tbody>
 							</table>
+							<div id="pager" class="k-pager-wrap"						    	
+					             data-role="pager" data-bind="source: dataSource"
+					             data-page-size= "true"></div>
 						</div>
 					</div>
 				</div>
@@ -14850,6 +14873,10 @@
 									 	data-template="accountReceivableList-template"
 								></tbody>
 							</table>
+							<div id="pager" class="k-pager-wrap"
+			            		 data-role="pager"
+						    	 data-auto-bind="false"
+					             data-bind="source: dataSource"></div>
 						</div>
 
 					</div>
@@ -15025,6 +15052,9 @@
 									 	data-template="agingSummary-template"
 								></tbody>
 							</table>
+							<div id="pager" class="k-pager-wrap"						    	
+					             data-role="pager" data-bind="source: dataSource"
+					             data-page-size= "true"></div>
 						</div>
 					</div>
 				</div>
@@ -15211,7 +15241,10 @@
 										 data-template="customerDepositReport-template"
 								></tbody>
 							</table>
-
+							<div id="pager" class="k-pager-wrap"
+			            		 data-role="pager"
+						    	 data-auto-bind="false"
+					             data-bind="source: dataSource"></div>
 						</div>
 					</div>
 				</div>
@@ -15407,8 +15440,11 @@
 								 data-auto-bind="false"
 								 data-bind="source: dataSource"
 								 data-template="agingDetail-template"
-							></tbody>
+								></tbody>
 							</table>
+							<div id="pager" class="k-pager-wrap"						    	
+					             data-role="pager" data-bind="source: dataSource"
+					             data-page-size= "true"></div>
 						</div>
 					</div>
 				</div>
@@ -15546,7 +15582,7 @@
 								<thead>
 									<tr>
 										<th style="text-transform: uppercase; vertical-align: top;" data-bind="text: lang.lang.customer_name"></th>
-										<th style="text-align: right; text-transform: uppercase; vertical-align: top;" data-bind="text: lang.lang.No_of_invoice"></th>
+										<th style="text-align: right; text-transform: uppercase; vertical-align: top;" data-bind="text: lang.lang.no_of_invoice"></th>
 										<th style="vertical-align: top; text-align: right;" data-bind="text: lang.lang.account_receivable_balance"></th>
 									</tr>
 								</thead>
@@ -15556,6 +15592,9 @@
 						                data-bind="source: dataSource" >
 						        </tbody>
 			            	</table>
+			            	<div id="pager" class="k-pager-wrap"						    	
+					             data-role="pager" data-bind="source: dataSource"
+					             data-page-size= "true"></div>
 			            </div>
 			        </div>
 				</div>
@@ -15652,6 +15691,9 @@
 											 data-template="customerBalanceDetail-template"
 								></tbody>
 							</table>
+							<div id="pager" class="k-pager-wrap"						    	
+					             data-role="pager" data-bind="source: dataSource"
+					             data-page-size= "true"></div>
 						</div>
 					</div>
 				</div>
@@ -15978,6 +16020,9 @@
 											 data-template="cashReceiptDetail-template"
 								></tbody>
 							</table>
+							<div id="pager" class="k-pager-wrap"						    	
+					             data-role="pager" data-bind="source: dataSource"
+					             data-page-size= "true"></div>
 						</div>
 					</div>
 				</div>
@@ -16169,6 +16214,9 @@
 										data-bind="source: dataSource">
 								</tbody>
 							</table>
+							<div id="pager" class="k-pager-wrap"						    	
+					             data-role="pager" data-bind="source: dataSource"
+					             data-page-size= "true"></div>
 						</div>
 					</span>
 				</div>
@@ -16358,6 +16406,9 @@
 										data-bind="source: dataSource">
 								</tbody>
 							</table>
+							<div id="pager" class="k-pager-wrap"						    	
+					             data-role="pager" data-bind="source: dataSource"
+					             data-page-size= "true"></div>
 						</div>
 					</span>
 				</div>

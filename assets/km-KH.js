@@ -69,7 +69,8 @@ var	km_KH = {
 	"email" :  "Email",
 	"old_password" :  "លេខ​សម្ងាត់​ចាស់",
 	"new_password" :  "លេខ​សម្ងាត់​ថ្មី",
-	"inventory" :  "ស្តុក",
+	"inventory" :  "ស្តុក", 
+	"inventory_rices" :  "សន្និធិ",
 	"cash_management" :  "ការ​គ្រប់​គ្រង់​សាច់​ប្រាក់",
 	"web_store" : "",
 	//Customer Modual "មណ្ឌល​អតិថិជន",
@@ -1521,5 +1522,5 @@ var	km_KH = {
 	"balance_last_month": "បំណុលខែមុន",
 	"ending_balance": "បំណុលចុងគ្រា",
 	"number_of_bloc": "ចំនួនទីតាំង",
-	"maintenance": "ថែទាំ",
+	"maintenance": "ថែទាំ"
 }

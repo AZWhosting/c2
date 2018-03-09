@@ -241,7 +241,7 @@
 		}
 	}
 	.book .example{
-		background: #0eac00;
+		background: #fff;
 	    width: 100%;
 	    text-align: center;
 	    position: relative; 
@@ -282,8 +282,21 @@
 							<div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 100%;margin-top: -15px;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
 								<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
 							</div>
-							<div style="width: 100%; float: left; padding: 15px; background: #fff; margin-bottom: 15px; color: #333; font-weight: 700; font-size: 20px;">
-								<span>Books</span>
+							<div style="width: 100%; float: left; padding: 15px 15px 15px 0; text-align: left; color: #333; font-weight: 700; font-size: 20px;">
+								<h2 style="width: 30%; float: left;">Booking Management</h2>
+
+								<ul class="topnav addNew" style="float: left; width: 8%; background: #0eac00">
+									<li role="presentation" class="dropdown ">
+								  		<a class="dropdown-toggle" data-bind="click: addNewSession" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+								  			<span style="font-size: 13px;"> Add New</span>
+								  		</a>
+								  	</li>
+								</ul>
+
+
+
+								<span class="glyphicons no-js remove_2 pull-right"
+									data-bind="click: cancel"><i></i></span>
 							</div>
 							<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 								<thead>

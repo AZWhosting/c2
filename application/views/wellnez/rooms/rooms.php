@@ -247,7 +247,7 @@
 	    float: left;
 	    position: relative;
 	    width: 129px;
-	    height: 180px;
+	    height: 215px;
 	    padding: 0;
 	    cursor: pointer;
 	    background: #fff;
@@ -563,9 +563,9 @@
 <script id="item-list-view-template" type="text/x-kendo-template">
 	<div class="product" style="text-align: center;">
 		<h3>#:name#</h3>
-		<p style="text-align: center">#:square_meter# sqm</p>
-		
-		<a href="\#/room/#= id#">Edit</a>
+		<img src="<?php echo base_url(); ?>assets/choulr/img/no_image.png" />
+		<p style="text-align: center;padding-bottom: 7px;margin-bottom: 0;">#:square_meter# sqm</p>
+		<a href="\#/room/#= id#" style="float: left;text-align: center;width: 100%;background: \#ccc;padding: 5px 0;">Edit</a>
 	</div>
 </script>
 <script id="sale-summary-template" type="text/x-kendo-template">
@@ -665,17 +665,23 @@
 						                   style="width: 100%; height: 30px;"
 						            />
 								</div>
+								<div class="span6" style="padding-left: 0;">
+									<p>Name</p>
+									<input type="text" class="k-textbox" 
+										data-bind="value: obj.name"
+										placeholder="Name... " style="width: 100%; margin-bottom: 15px;border: 1px solid #ccc; height: 30px;"/>
+								</div>
 								<div class="span6">
 									<p>Sqm</p>
 									<input type="text" class="k-textbox" 
 										data-bind="value: obj.square_meter"
 										placeholder="Sqm... " style="width: 100%; margin-bottom: 15px;border: 1px solid #ccc; height: 30px;"/>
 								</div>
-								<div class="span12" style="padding-left: 0;">
-									<p>Name</p>
+								<div class="span6">
+									<p>Number of bad</p>
 									<input type="text" class="k-textbox" 
-										data-bind="value: obj.name"
-										placeholder="Name... " style="width: 100%; margin-bottom: 15px;border: 1px solid #ccc; height: 30px;"/>
+										data-bind="value: obj.number_bed"
+										placeholder="Sqm... " style="width: 100%; margin-bottom: 15px;border: 1px solid #ccc; height: 30px;"/>
 								</div>
 							</div>
 							<div class="span12" style="padding-right: 0;"><a style="float: right; padding: 5px 15px;    background: green; color: #fff; margin-bottom: 5px;" data-bind="visible: isEdit, click: clearItem">Clear</a></div>
@@ -708,6 +714,7 @@
 							<h2 style="margin-bottom: 15px;">Information</h2>
 							<textarea style="resize: none;border: 1px solid #ccc;" class="span12" rows="8" data-bind="value: obj.description" placeholder=""></textarea>
 						</div>
+						<div id="ntf1" data-role="notification"></div>
 					</div>
 
 					<div class="box-generic">

@@ -73,6 +73,7 @@ var	en_US = {
 	"old_password" : "Old Password:",
 	"new_password" : "New Password:",
 	"inventory" : "Inventory",
+	"inventory_rices": "Inventory",
 	"cash_management" : "Cash Management",
 	"web_store" : "Web Store",
 	//Customer Modual,
