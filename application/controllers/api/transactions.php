@@ -1237,20 +1237,21 @@ class Transactions extends REST_Controller {
 				}
 
 				//Single Reference
-				$reference = "";
+				$reference = [];
 				if($value->reference_id>0){
 					$references = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 					$references->select("number");
 					$references->get_by_id($value->reference_id);
-
-					$reference = $references->number;
+					array_push($reference, array("number"=>$references->number));
+				}else{
+					$reference = $value->transaction->get_raw()->result();
 				}
 
 				$amount = (floatval($value->amount) - floatval($value->deposit)) / floatval($value->rate);
 				$balance += $amount;
 
 				$data["results"][] = array(
-					"id" 				=> 0,
+					"id" 				=> $value->id,
 					"issued_date"		=> $value->issued_date,
 					"due_date"			=> $value->due_date,
 					"type" 				=> $value->type,
