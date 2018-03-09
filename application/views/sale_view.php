@@ -609,7 +609,8 @@
 								            		<td width="50%">
 								            			<span class="btn btn-block btn-inverse" data-bind="click: goDeposit"><span><span data-bind="text: lang.lang.c_deposit"></span></span>
 								            		</td>
-								            		<td width="50%">								            											            			
+								            		<td width="50%">
+								            			<span class="btn btn-block btn-inverse" data-bind="click: goCashSale"><span><span data-bind="text: lang.lang.cash_sale"></span></span>								            											            			
 								            		</td>
 								            	</tr>
 							            	</table>
@@ -3202,6 +3203,814 @@
 		</td>			
     </tr>   
 </script>
+<script id="cashSale" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">					
+				<div id="example" class="k-content">					
+				    
+			    	<span class="glyphicons no-js remove_2 pull-right" 
+		    				onclick="javascript:window.history.back()"
+							data-bind="click: cancel"><i></i></span>
+
+			        <h2 data-bind="text: lang.lang.cash_sale"></h2>			    		   
+
+				    <br>				   				
+						
+					<!-- Upper Part -->
+					<div class="row-fluid">
+						<div class="span4">
+							<div class="box-generic well" style="height: 190px;">				
+								<table class="table table-borderless table-condensed cart_total">									
+									<tr>
+										<td style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></td>
+										<td>
+											<input id="txtNumber" name="txtNumber" class="k-textbox" 
+													data-bind="value: obj.number,
+																disabled: obj.is_recurring,
+																events:{change:checkExistingNumber}" 
+													required data-required-msg="required" 
+													placeholder="eg. ABC00001" style="width: 83%; float: left; margin-right: 5px;"" />
+											<div style="padding-left: 0; width: 25px; float: left;">
+												<a class="glyphicons no-js qrcode" data-bind="click: generateNumber" title="Generate Number" style="float: left; margin: 2px 0 0 0 ;"><i></i></a>
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<td><span data-bind="text: lang.lang.date"></span></td>
+										<td class="right">
+											<input id="issuedDate" name="issuedDate" 
+													data-role="datepicker"
+													data-format="dd-MM-yyyy"
+													data-parse-formats="yyyy-MM-dd HH:mm:ss"
+													data-bind="value: obj.issued_date, 
+																events:{ change : setRate }" 
+													required data-required-msg="required"
+													style="width: 210px;" />
+										</td>
+									</tr>
+									<tr>
+										<td><span data-bind="text: lang.lang.type"></span></td>
+										<td>
+											<input id="cbbType" name="cbbType"
+												   data-role="dropdownlist"											                    
+								                   data-value-primitive="true"
+								                   data-text-field="name"
+								                   data-value-field="type"
+								                   data-bind="value: obj.type,
+								                              source: typeList,
+								                              events:{ change: typeChanges }"
+								                   required data-required-msg="required" style="width: 210px" />
+										</td>
+									</tr>								
+									<tr>
+										<td><span data-bind="text: lang.lang.customers"></span></td>
+										<td>
+											<input id="cbbContact" name="cbbContact"
+												   data-role="dropdownlist"
+												   data-header-template="contact-header-tmpl"
+								                   data-template="contact-list-tmpl"
+								                   data-auto-bind="false"
+								                   data-value-primitive="false"
+								                   data-filter="startswith"
+								                   data-text-field="name"
+								                   data-value-field="id"
+								                   data-bind="value: obj.contact,
+								                              source: contactDS,
+								                              events: {change: contactChanges}"
+								                   data-option-label="Select Customer..."
+								                   required data-required-msg="required" style="width: 210px;" />
+										</td>
+									</tr>																															
+								</table>
+
+								<div class="strong" style="background: #eee;  border: 1px solid #ddd; width: 100%; padding: 10px;" align="center"
+									data-bind="style: { backgroundColor: amtDueColor}">
+									<div align="left"><span data-bind="text: lang.lang.amount_received"></span></div>
+									<h2 data-bind="text: amount_due" align="right"></h2>
+								</div>
+
+							</div>						
+						</div>					   
+
+						<div class="span8">
+
+							<div class="box-generic-noborder" style="min-height: 234px !important">
+
+							    <!-- Tabs Heading -->
+							    <div class="tabsbar tabsbar-2">
+							        <ul class="row-fluid row-merge">
+							        	<li class="span1 glyphicons cogwheels active"><a href="#tab1-7" data-toggle="tab"><i></i></a>
+							            </li>
+							            <li class="span1 glyphicons adress_book"><a href="#tab2-7" data-toggle="tab"><i></i></a>
+							            </li>
+							            <li class="span1 glyphicons circle_info"><a href="#tab3-7" data-toggle="tab"><i></i></a>
+							            </li>
+							            <li class="span1 glyphicons link"><a href="#tab4-7" data-toggle="tab"><i></i></a>
+							            </li>
+							            <li class="span1 glyphicons sort"><a href="#tab5-7" data-toggle="tab"><i></i></a>
+							            </li>
+							            <li class="span1 glyphicons paperclip"><a href="#tab6-7" data-toggle="tab"><i></i></a>
+							            </li>
+							            <li class="span1 glyphicons history"><a href="#tab7-7" data-toggle="tab"><i></i></a>
+							            </li>
+							        </ul>
+							    </div>
+							    <!-- // Tabs Heading END -->
+
+							    <div class="tab-content">
+
+							    	<!-- Options Tab content -->
+							        <div class="tab-pane active" id="tab1-7">						            
+							            <table style="margin-bottom: 0;" class="table table-borderless table-condensed cart_total">							            
+											<tr>
+												<td>
+													<span data-bind="text: lang.lang.balance"></span>
+													<span data-bind="text: balance"></span>
+												</td>
+												<td>
+													<span data-bind="text: lang.lang.credit_allowed"></span>
+													<span data-format="n" data-bind="text: obj.credit_allowed"></span>
+												</td>
+											</tr>
+											<tr>
+								            	<td><span data-bind="text: lang.lang.payment_method"></span></td>				
+												<td>
+													<input data-role="dropdownlist"
+								              				data-value-primitive="true"
+								              				data-header-template="customer-payment-method-header-tmpl"
+															data-text-field="name" 
+								              				data-value-field="id"
+								              				data-bind="value: obj.payment_method_id,
+								              							source: paymentMethodDS"
+								              				data-option-label="Select method..."							              				 
+								              				style="width: 100%" />
+												</td>
+											</tr>
+								            <tr>
+								            	<td><span data-bind="text: lang.lang.cash_account"></span></td>
+							            		<td>
+							            			<input id="ddlCash" name="ddlCash"
+							            				data-role="dropdownlist"
+							            				data-header-template="account-header-tmpl"
+							            				data-template="account-list-tmpl"
+							              				data-value-primitive="true"
+														data-text-field="name" 
+							              				data-value-field="id"
+							              				data-bind="value: obj.account_id,
+							              							source: cashAccountDS"
+							              				data-option-label="Select Account..." 
+							              				required data-required-msg="required" 
+							              				style="width: 100%" />
+												</td>
+								            </tr>
+								            <tr>
+								            	<td><span data-bind="text: lang.lang.trade_discount"></span></td>
+							            		<td>
+							            			<input id="ddlDiscountAccount" name="ddlDiscountAccount"
+							            				data-role="dropdownlist"
+							            				data-header-template="account-header-tmpl"
+							            				data-template="account-list-tmpl"
+							              				data-value-primitive="true"
+														data-text-field="name" 
+							              				data-value-field="id"
+							              				data-bind="value: obj.discount_account_id,
+							              							source: discountAccountDS"
+							              				data-option-label="Select Account..." 
+							              				required data-required-msg="required" 
+							              				style="width: 100%" />
+												</td>
+								            </tr>
+								            <tr>
+								            	<td><span data-bind="text: lang.lang.check_no"></span></td>							            	
+							            		<td>
+													<input class="k-textbox" placeholder="type check number ..." data-bind="value: obj.check_no" style="width: 100%;">
+												</td>							            	
+								            </tr>
+							            </table>						            
+							        </div>
+							        <!-- // Options Tab content END -->
+
+							        <!-- Address Tab content -->
+							        <div class="tab-pane" id="tab2-7">
+							        	<span data-bind="text: lang.lang.billing_address"></span>
+										<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.bill_to" placeholder="Billing to ..."></textarea>								
+										
+										<span data-bind="text: lang.lang.delivery_address"></span>
+										<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.ship_to" placeholder="Shipping to ..."></textarea>	
+												
+							        </div>
+							        <!-- // Address Tab content END -->
+
+							        <!-- Info Tab content -->
+							        <div class="tab-pane" id="tab3-7">
+							        	
+										<table class="table table-borderless table-condensed cart_total">
+											<tr>
+												<td><span data-bind="text: lang.lang.sale_rep"></span></td>
+												<td>
+													<input id="cbbContact" name="cbbContact"
+														   data-role="dropdownlist"
+														   data-header-template="employee-header-tmpl"
+										                   data-template="contact-list-tmpl"
+										                   data-auto-bind="false"
+										                   data-value-primitive="false"
+										                   data-filter="startswith"
+										                   data-text-field="name"
+										                   data-value-field="id"
+										                   data-bind="value: obj.employee,
+										                              source: employeeDS,
+										                              events: {change: employeeChanges}"
+										                   data-option-label="Select Sale Rep..."
+										                   style="width: 100%;" />
+												</td>
+											</tr>
+											<tr>
+												<td><span data-bind="text: lang.lang.job"></span></td>
+												<td>
+													<input id="ddlJob" name="ddlJob"
+														   data-role="dropdownlist"
+														   data-header-template="job-header-tmpl"
+														   data-template="job-list-tmpl"
+														   data-auto-bind="false"				                
+										                   data-value-primitive="true"	   
+										                   data-text-field="name"
+										                   data-value-field="id"
+										                   data-bind="value: obj.job_id, 
+										                   			source: jobDS"
+										                   data-option-label="Add job..." 
+										                   style="width: 100%" />										
+												</td>
+											</tr>											
+							            </table>
+												
+							        </div>
+							        <!-- // Info Tab content END -->
+
+							        <!-- References -->
+							        <div class="tab-pane" id="tab4-7">
+							            <table style="margin-bottom: 0;" class="table table-borderless table-condensed cart_total">											
+								            <tr>
+												<td style="vertical-align: top;">
+								            		<span data-bind="text: lang.lang.reference"></span>
+								            	</td>
+								            	<td>
+								            		<input data-role="dropdownlist"
+								            			   data-item-template="reference-list-tmpl"
+										                   data-auto-bind="false"
+										                   data-value-primitive="true"
+										                   data-filter="startswith"
+										                   data-text-field="number"
+										                   data-value-field="id"
+										                   data-bind="value: reference_id,
+										                              source: referenceDS,
+										                              events: { change: referenceChanges }"
+										                   data-option-label="Add Reference..."
+										                   style="width: 100%;" />
+										            <br>
+										            <table class="table table-bordered">
+												        <tbody data-template="invoice-reference-template"
+												        		data-bind="source: obj.references"></tbody>
+												    </table>
+												</td>
+											</tr>
+							            </table>
+							        </div>
+							        <!-- // References END -->
+
+							        <!-- Segment -->
+							        <div class="tab-pane" id="tab5-7">
+
+							        	<input id="cbbSegment" name="cbbSegment"
+							        		   data-role="combobox"
+							                   data-value-primitive="true"
+							                   data-filter="startswith"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: segment_id,
+							                              source: segmentDS"
+							                   data-placeholder="Select segment..."
+							                   style="width: 46%" />
+
+							            <input id="cbbSegmentItem" name="cbbSegmentItem"
+							            	   data-role="combobox"
+							            	   data-cascade-from="cbbSegment"
+							            	   data-cascade-from-field="segment_id"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-auto-bind="false"
+							                   data-bind="value: segmentitem_id,
+							                              source: segItemDS"
+							                   data-placeholder="Select segment item..."
+							                   style="width: 46%" />
+
+							            <button class="btn btn-inverse" data-bind="click: addSegmentItem"><i class="icon-plus icon-white"></i></button>
+
+							            <br><br>
+
+							            <div data-role="grid" class="costom-grid"
+							            	 data-editable="true"
+							                 data-columns="[
+							                 	{ field: 'segment', 
+							                 		title: 'SEGMENT',
+							                 		editable: 'false',
+							                 		template: '#=segment.name#'
+							                 	},
+							                 	{ field: 'name', 
+							                 		title: 'SEGMENT ITEM',
+							                 		editable: 'false',
+							                 		template: '#=code# #=name#'
+							                 	},
+							                 	{ command: 'destroy', title: '&nbsp;', width: 150 }
+					                         ]"
+					                         data-auto-bind="false"
+							                 data-bind="source: segmentItemDS"></div>
+
+							        </div>
+							        <!-- // Segment END -->
+
+							        <!-- Attach Tab content -->
+							        <div class="tab-pane" id="tab6-7">
+
+							        	<p><span data-bind="text: lang.lang.file_type"></span>: [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>		
+							            <input id="files" name="files"
+							                   type="file"
+							                   data-role="upload"
+							                   data-show-file-list="false"
+							                   data-bind="events: { 
+					                   				select: onSelect
+							                   }">
+
+							            <table class="table table-bordered">
+									        <thead>
+									            <tr>			                
+									                <th><span data-bind="text: lang.lang.file_name"></span></th>
+									                <th><span data-bind="text: lang.lang.description"></span></th>
+									                <th><span data-bind="text: lang.lang.date"></span></th>
+									                <th style="width: 13%;"></th>                			                
+									            </tr> 
+									        </thead>
+									        <tbody data-role="listview" 
+									        		data-template="attachment-list-tmpl" 
+									        		data-auto-bind="false"
+									        		data-bind="source: attachmentDS"></tbody>			        
+									    </table>
+
+							        </div>
+							        <!-- // Attach Tab content END -->						        
+
+							        <!-- Recuring Tab content -->
+							        <div class="tab-pane" id="tab7-7">							            	
+							            
+							            <table style="width: 100%" class="table borderless">
+							            	<tr align="right">
+							            		<td style="border-top: 0;">
+							            			<span data-bind="text: lang.lang.name"></span>
+							            		</td>
+							            		<td style="border-top: 0;">
+							            			<input id="txtRecurringName" name="txtRecurringName"
+							            					class="k-textbox" 
+							            					data-bind="value: obj.recurring_name" 
+							            					placeholder="Recurring name.." 
+							            					style="width: 43%; " />
+
+							            			<span data-bind="text: lang.lang.start"></span>
+
+									                <input data-role="datepicker"
+															data-format="dd-MM-yyyy"
+															data-parse-formats="yyyy-MM-dd"
+															data-bind="value: obj.start_date"
+															style="width: 40%; " />
+							            		</td>
+							            	</tr>
+							            	<tr align="right">
+							            		<td style="border-top: 0;">
+								            		<span data-bind="text: lang.lang.every"></span>
+								            	</td>
+							            		<td style="border-top: 0;">
+								            		<input data-role="numerictextbox"
+									                   data-format="n0"
+									                   data-min="0"								                   
+									                   data-bind="value: obj.interval"
+									                   style="width: 45%; " />
+
+								            		<input data-role="dropdownlist"									                   
+										                   data-value-primitive="true"
+										                   data-text-field="name"
+										                   data-value-field="id"
+										                   data-bind="value: obj.frequency,
+										                              source: frequencyList,
+										                              events: { change: frequencyChanges }"
+										                   style="width: 45%;" />
+								            	</td>
+							            	</tr>
+								            <tr align="right">
+								            	<td style="border-top: 0;">
+								            		<span data-bind="text: lang.lang.on"></span>
+								            	</td>							            	
+								            	<td style="border-top: 0;">
+
+								            		<input data-role="dropdownlist"									                   
+										                   data-value-primitive="true"
+										                   data-text-field="name"
+										                   data-value-field="id"
+										                   data-bind="value: obj.month,
+										                   			  visible: showMonth,
+										                              source: monthList"										                   
+										                   style="width: 45%;" />
+
+								            		<input data-role="dropdownlist"									                   
+										                   data-value-primitive="true"
+										                   data-text-field="name"
+										                   data-value-field="id"
+										                   data-bind="value: obj.month_option,
+										                   			  visible: showMonthOption,
+										                              source: monthOptionList,
+										                              events: { change: monthOptionChanges }"										                   
+										                   style="width: 45%;" />
+
+								            		<input data-role="dropdownlist"									                   
+										                   data-value-primitive="true"
+										                   data-text-field="name"
+										                   data-value-field="id"
+										                   data-bind="value: obj.week,
+										                   			  visible: showWeek,
+										                              source: weekDayList"										                  
+										                   style="width: 45%;" />										            
+										        
+								            		<input data-role="dropdownlist"									                   
+										                   data-value-primitive="true"
+										                   data-text-field="name"
+										                   data-value-field="id"
+										                   data-bind="value: obj.day,
+										                   			  visible: showDay,
+										                              source: dayList"										                   
+										                   style="width: 45%;" />
+
+								            	</td>
+								            </tr>
+							            </table>
+
+							            <span id="saveRecurring" class="btn btn-icon btn-default glyphicons history" data-bind="visible: obj.isNew" style="float: right; margin-top: -12px;"><i></i> <span data-bind="text: lang.lang.save_recurring"></span></span>								     
+							            
+							        </div>
+							        <!-- // Recuring Tab content END -->						        								        
+
+							        <div class="tab-pane saleSummaryCustomer" id="tab5-6">
+										<table class="table table-borderless table-condensed">
+									        <thead>
+									            <tr>
+									                <th>NUMBER</th>
+									                <th>ACCOUNT</th>                		                
+									                <th class="right">DEBITS (Dr)</th>
+									                <th class="right">CREDITS (Cr)</th>		                
+									            </tr>
+									        </thead> 
+									        <tbody>
+									        	<tr>
+									        		<td>1</td>
+									        		<td>2</td>
+									        		<td class="right">3</td>
+									        		<td class="right">4</td>
+									        	</tr>
+									        	<tr>
+									        		<td>1</td>
+									        		<td>2</td>
+									        		<td class="right">3</td>
+									        		<td class="right">4</td>
+									        	</tr>
+									        </tbody>			        
+									    </table>
+									</div>
+
+							    </div>
+							</div>
+
+					    </div>
+					</div>
+
+					<!-- Item List -->
+					<div data-role="grid" class="costom-grid"
+				    	 data-column-menu="true"
+				    	 data-reorderable="true"
+				    	 data-scrollable="false"
+				    	 data-resizable="true"
+				    	 data-editable="true"
+		                 data-columns="[
+						    { 
+						    	title:'NO',
+						    	width: '50px', 
+						    	attributes: { style: 'text-align: center;' }, 
+						        template: function (dataItem) {
+						        	var rowIndex = banhji.cashSale.lineDS.indexOf(dataItem)+1;
+						        	return '<i class=icon-trash data-bind=click:removeRow></i>' + ' ' + rowIndex;
+						      	}
+						    },
+		                 	{ field: 'item', title: 'PRODUCTS/SERVICES', editor: itemEditor, template: '#=item.name#', width: '170px' },
+                            { field: 'description', title:'DESCRIPTION', width: '250px' },                            
+                            {
+							    field: 'quantity',
+							    title: 'QTY',
+							    format: '{0:n}',
+							    editor: numberTextboxEditor,
+							    width: '120px',
+							    attributes: { style: 'text-align: right;' }
+							},
+                            { 
+                            	field: 'item_price', 
+                            	title: 'UOM', 
+                            	editor: measurementEditor, 
+                            	template: '#=item_price?item_price.measurement:banhji.emptyString#', 
+                            	width: '80px' 
+                            },
+                            {
+							    field: 'price',
+							    title: 'PRICE',
+							    format: '{0:n}',
+							    editor: numberTextboxEditor,
+							    width: '120px',
+							    attributes: { style: 'text-align: right;' }
+							},
+							{
+							    field: 'discount',
+							    title: 'DISCOUNT VALUE',
+							    hidden: true,
+							    format: '{0:n}',
+							    editor: numberTextboxEditor,
+							    width: '120px',
+							    attributes: { style: 'text-align: right;' }
+							},
+							{
+							    field: 'discount_percentage',
+							    title: 'DISCOUNT %',
+							    hidden: true,
+							    format: '{0:p}',
+							    editor: discountEditor,
+							    width: '120px',
+							    attributes: { style: 'text-align: right;' }
+							},
+                            { field: 'amount', title:'AMOUNT', format: '{0:n}', editable: 'false', attributes: { style: 'text-align: right;' }, width: '120px' },                            
+                            { field: 'tax_item', title:'TAX', editor: taxForSaleEditor, template: '#=tax_item.name#', width: '90px' },
+                         	{ field: 'reference_no', title:'REFERENCE NO.', hidden: true, width: '120px' }
+                         ]"
+                         data-auto-bind="false"
+		                 data-bind="source: lineDS" ></div>
+					
+
+					<!-- Window Barcode -->
+					<div data-role="window"
+		                 data-title="Barcode"
+		                 data-width="600"
+		                 data-height="400"
+		                 data-iframe="true"
+		                 data-modal="true"
+		                 data-visible="false"
+		                 data-position="{top:'30%',left:'30%'}"
+		                 data-actions="{}"
+		                 data-resizable="false"
+		                 data-bind="visible: barcodeVisible"
+		                 style="text-align:center;">
+
+		                <table style="margin-bottom: 0;" class="table table-borderless table-condensed cart_total">
+			        		<tr>
+			        			<td>
+			        				<input type="text" class="k-textbox" 
+			        						data-bind="value: barcode,
+			        									events: {change: searchByBarcode}"
+			        						placeholder="Scan barcode ..." style="width: 100%;" />
+			        			</td>
+			        			<td>
+			        				<input id="ddlCategory" id="ddlCategory"
+									   data-role="dropdownlist"
+									   data-option-label="Select Category..."
+									   data-header-template="item-category-header-tmpl"
+					                   data-value-primitive="true"
+					                   data-text-field="name"
+					                   data-value-field="id"
+					                   data-bind="value: category_id,
+					                              source: categoryDS,
+					                              events: {change: search}"
+					                   style="width: 100%;" />
+			        			</td>
+			        			<td>
+			        				<input id="ddlItemGroup" id="ddlItemGroup"
+									   data-role="dropdownlist"
+									   data-header-template="item-group-header-tmpl"
+									   data-option-label="Select Group..."
+									   data-cascade-from="ddlCategory"
+									   data-cascade-from-field="category_id"
+					                   data-value-primitive="true"
+					                   data-text-field="name"
+					                   data-value-field="id"
+					                   data-bind="value: item_group_id,
+					                              source: itemGroupDS,
+					                              events: {change: search}"
+					                   style="width: 100%;" />
+			        			</td>
+			        		</tr>
+			        	</table>
+
+			        	<div data-role="grid"
+			                 data-auto-bind="false"
+			                 data-columns='[
+                                { field: "number", title: "NUMBER", template:"#=abbr##=number#" },
+                                { field: "name", title: "NAME" },
+                                { field: "category", title: "CATEGORY" },
+                                { title: "", template:"<button class=k-button data-bind=click:addSearchItem style=min-width:30px><i class=icon-plus></i></button>", width:"50px" }
+                             ]'
+			                 data-bind="source: itemDS"
+			                 style="height: 212px;"></div>
+
+			            <div id="pager" class="k-pager-wrap"
+				             data-role="pager" 
+				             data-auto-bind="false"
+							 data-bind="source: itemDS"></div>
+						<br>
+
+						<div class="box-generic bg-action-button">
+							<div class="row">
+								<div class="span10">
+									
+								</div>
+								<div class="span2" align="right">
+									<span class="btn-btn" data-bind="click: closeBarcodeWindow"><i></i> <span data-bind="text: lang.lang.close"></span></span>
+								</div>
+							</div>
+						</div>
+
+		            </div>
+		            <!-- // End Window Barcode -->
+
+		            <!-- Bottom part -->
+		            <div class="row-fluid">
+			
+						<!-- Column -->
+						<div class="span4">
+							<button class="btn btn-inverse" data-bind="click: addRow"><i class="icon-plus icon-white"></i></button>												
+							<button class="btn btn-inverse" data-bind="click: openBarcodeWindow" style="background: green !important; margin-left: 0 !important;"><i class="icon-barcode icon-white" style="margin-right: 10px;"></i> Barcode</button>
+
+							<!-- Add New Item -->
+							<ul class="topnav addNew">
+								<li role="presentation" class="dropdown ">
+							  		<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+							  			<span data-bind="text: lang.lang.add_new_item"></span>
+				    					<span class="caret"></span>
+							  		</a>
+						  			<ul class="dropdown-menu addNewItem">  				  				
+						  				<li><a href='#/item'><span data-bind="text: lang.lang.add_inventory_for_sale"></span></a></li>
+						  				<li><a href='#/non_inventory_part'><span data-bind="text: lang.lang.add_noninventory_for_sale"></span></a></li>
+						  				<li><a href='#/item_service'><span data-bind="text: lang.lang.add_services"></span></a></li>
+						  				<li><a href='#/txn_item'><span data-bind="text: lang.lang.add_transaction_item"></span></a></li> 	
+						  			</ul>
+							  	</li>				
+							</ul>
+							<!--End Add New Item -->
+							
+							<br><br>
+							<div class="well">
+								<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.memo2" placeholder="memo for internal ..."></textarea>
+								<br>						
+								<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.memo" placeholder="memo for external ..."></textarea>
+							</div>
+						</div>
+						<!-- Column END -->
+
+						<!-- Column -->
+						<div class="span4" align="center">
+							<div data-bind="visible: isEdit" style="margin-top: 10%;">
+								<h2 data-bind="text: statusObj.text" style="text-transform: uppercase;"></h2>
+								<p data-bind="text: statusObj.date"></p>
+								<a data-bind="text: statusObj.number,
+											attr: { href: statusObj.url }"></a>
+							</div>
+						</div>
+						<!-- Column END -->
+						
+						<!-- Column -->
+						<div class="span4">
+							<table class="table table-condensed table-striped table-white">
+								<tbody>
+									<tr>
+										<td class="right" style="width: 60%;"><span data-bind="text: lang.lang.subtotal" style="font-size: 15px; font-weight: 700;"></span></td>
+										<td class="right" width="40%"><span data-format="n" data-bind="text: obj.sub_total" style="font-size: 15px; font-weight: 700;"></span></td>
+									</tr>								
+									<tr>
+										<td class="right"><span data-bind="text: lang.lang.total_discount"></span></td>
+										<td class="right"><span data-format="n" data-bind="text: obj.discount"></span></td>
+									</tr>
+									<tr>
+										<td class="right"><span data-bind="text: lang.lang.total_tax"></span></td>
+										<td class="right"><span data-format="n" data-bind="text: obj.tax"></span></td>
+									</tr>						
+									<tr>
+										<td class="right" ><h4 data-bind="text: lang.lang.total" style="font-weight: 700;"></h4></td>
+										<td class="right" ><h4 data-bind="text: total" style=" font-weight: 700;"></h4></td>
+									</tr>
+									<tr>
+										<td class="right">
+											<span data-bind="text: lang.lang.deposit"></span>
+											<span data-format="n" data-bind="text: total_deposit"></span>										
+										</td>
+										<td class="right">
+											<input data-role="numerictextbox"
+								                   data-format="n"
+								                   data-spinners="false"
+								                   data-min="0"							                                      
+								                   data-bind="value: obj.deposit,
+								                              events: { change: changes }"
+								                   style="width: 90%; text-align: right;">
+										</td>
+									</tr>
+									<tr>
+										<td class="right">
+											<span data-bind="text: lang.lang.remaining" style="font-size: 15px; font-weight: 700;"></span>
+										</td>
+										<td class="right">
+											<span data-format="n" data-bind="text: obj.remaining" style="font-size: 15px; font-weight: 700;"></span>
+										</td>
+									</tr>								
+								</tbody>
+							</table>
+						</div>
+						<!-- // Column END -->
+						
+					</div>	           
+					
+					<!-- Form actions -->
+					<div class="box-generic bg-action-button">
+						<div id="ntf1" data-role="notification"></div>
+
+						<!-- Delete Confirmation -->
+						<div data-role="window"
+			                 data-title="Delete Confirmation"
+			                 data-width="350"
+			                 data-height="200"
+			                 data-iframe="true"
+			                 data-modal="true"
+			                 data-visible="false"
+			                 data-position="{top:'40%',left:'35%'}"
+			                 data-actions="{}"
+			                 data-resizable="false"
+			                 data-bind="visible: showConfirm"
+			                 style="text-align:center;">
+			                <p style="font-size:25px; margin: 15px 0 25px;" class="delete-message" data-bind="text: confirmMessage"></p>
+						    <button style="font-size:14px; border:none; background:#496cad; color:#fff; padding:5px 25px;" data-bind="click:delete">Yes</button> 
+						    <button style="font-size:14px; border:none; background:red; color:#fff; padding:5px 25px;" data-bind="click:closeConfirm">No</button>
+			            </div>
+			            <!-- // Delete Confirmation -->
+
+						<div class="row">
+							<div class="span4" style="padding-left: 15px;">
+								<input data-role="dropdownlist"
+					                   data-value-primitive="true"
+					                   data-text-field="name"
+					                   data-value-field="id"
+					                   data-bind="value: obj.transaction_template_id,
+					                              source: txnTemplateDS"
+					                   data-option-label="Select Template..." />
+								
+							</div>
+							<div class="span8" align="right">
+								<span class="btn-btn" onclick="javascript:window.history.back()" data-bind="click: cancel"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
+								<span class="btn-btn" data-bind="click: openConfirm, visible: isEdit"><span data-bind="text: lang.lang.delete"></span></span>
+								<span role='presentation' class='dropdown btn-btn' style="padding: 0 0 0 15px; float: right; height: 32px; line-height: 30px;">
+							  		<a style="color: #fff; padding: 0;" class='dropdown-toggle glyphicons' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'>
+							  			<span data-bind="text: lang.lang.save_option"></span>
+							  			<span class="small-btn"><i class='caret '></i></span>
+							  		</a>
+							  		<ul class='dropdown-menu'>
+						  				<li id="saveNew" data-bind="invisible: isEdit"><span data-bind="text: lang.lang.save_new"></span></li>
+						  				<li id="savePrint"><span data-bind="text: lang.lang.save_print"></span></li>
+						  			</ul>
+							  	</span>
+							  	<span class="btn-btn" id="saveClose"><span data-bind="text: lang.lang.save_close"></span></span>
+							  	<span class="btn-btn" id="saveDraft1" data-bind="invisible: isEdit"><span data-bind="text: lang.lang.save_draft"></span></span>
+							</div>
+						</div>
+					</div>
+					<!-- // Form actions END -->								
+
+				</div>							
+			</div>
+		</div>
+	</div>
+</script>
+<script id="invoice-reference-template" type="text/x-kendo-tmpl">
+	<tr>
+		<td>
+			<i class="icon-trash" data-bind="events: { click: referenceRemoveRow }"></i>
+			#=number#
+		</td>
+		<td align="right">
+			#if(type=="GDN"){# 
+				#=kendo.toString(kendo.parseFloat(amount), "n2")#
+			#}else{#
+				#=kendo.toString(kendo.parseFloat(amount), "c2", locale)#
+			#}#
+		</td>
+    </tr>   
+</script>
 <script id="saleRecurring" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background">
@@ -4865,6 +5674,7 @@
   				<!-- <li ><a href='#/sale'>Mobile Sale</a></li> -->
   				<li ><a href='#/quote'><span data-bind="text: lang.lang.create_quotation"></span></a></li>
   				<li><a href='#/sale_order'><span data-bind="text: lang.lang.create_sale_order"></span></a></li>
+  				<li><a href='#/cash_sale'><span data-bind="text: lang.lang.create_cash_sale"></span></a></li>
   				<li><a href='#/customer_deposit'><span data-bind="text: lang.lang.create_customer_deposit"></span></a></li>
   				<li> <span class="li-line"></span></li>
   				<li><a href='#/sale_recurring'>Recurring</a></li>
@@ -7794,6 +8604,14 @@
 			if(obj!==null){
 				banhji.router.navigate('/sale_order');
 				banhji.saleOrder.setContact(obj);
+			}
+		},
+		goCashSale			: function(){
+			var obj = this.get("obj");
+
+			if(obj!==null){
+				banhji.router.navigate('/cash_sale');
+				banhji.cashSale.setContact(obj);
 			}
 		},
 		//Note
@@ -11340,6 +12158,1703 @@
 		    return dfd;
 	    }
 	});
+	banhji.cashSale =  kendo.observable({
+		lang 				: langVM,
+		dataSource 			: dataStore(apiUrl + "transactions"),
+		lineDS  			: dataStore(apiUrl + "item_lines"),
+		assemblyLineDS  	: dataStore(apiUrl + "item_lines"),
+		txnDS 				: dataStore(apiUrl + "transactions"),
+		numberDS 			: dataStore(apiUrl + "transactions/number"),
+		balanceDS 			: dataStore(apiUrl + "transactions/balance"),
+		journalLineDS		: dataStore(apiUrl + "journal_lines"),
+		recurringDS 		: dataStore(apiUrl + "transactions"),
+		recurringLineDS 	: dataStore(apiUrl + "item_lines"),
+		referenceDS			: dataStore(apiUrl + "transactions"),
+		referenceLineDS		: dataStore(apiUrl + "item_lines"),
+		depositDS  			: dataStore(apiUrl + "transactions"),
+		attachmentDS	 	: dataStore(apiUrl + "attachments"),
+		itemDS 				: dataStore(apiUrl + "items"),
+		itemPriceDS			: dataStore(apiUrl + "item_prices"),
+		assemblyDS			: dataStore(apiUrl + "item_assemblies"),
+		wacDS				: dataStore(apiUrl + "items/weighted_average_costing"),
+		segmentDS 			: dataStore(apiUrl + "segments"),
+		segItemDS 			: dataStore(apiUrl + "segments/item"),
+		segmentItemDS 		: dataStore(apiUrl + "segments/item"),
+		typeList  			: new kendo.data.DataSource({
+		  	data: banhji.source.prefixList,
+		  	filter:{
+			    logic: "or",
+			    filters: [
+			      	{ field: "type", value: "Commercial_Cash_Sale" },
+			      	{ field: "type", value: "Vat_Cash_Sale" },
+			      	{ field: "type", value: "Cash_Sale" }
+			    ]
+			}
+		}),
+		txnTemplateDS 		: new kendo.data.DataSource({
+		  	data: banhji.source.txnTemplateList,
+		  	filter:{
+			    logic: "or",
+			    filters: [
+			      	{ field: "type", value: "Commercial_Cash_Sale" },
+			      	{ field: "type", value: "Vat_Cash_Sale" },
+			      	{ field: "type", value: "Cash_Sale" }
+			    ]
+			}
+		}),
+		cashAccountDS  		: new kendo.data.DataSource({
+		  	data: banhji.source.accountList,
+		  	filter:{ field:"account_type_id", value: 10 },
+		  	sort: { field:"number", dir:"asc" }
+		}),
+		discountAccountDS 	: new kendo.data.DataSource({
+		  	data: banhji.source.accountList,
+		  	filter: { field:"id", value: 72 },
+		  	sort: { field:"number", dir:"asc" }
+		}),
+		jobDS 				: new kendo.data.DataSource({
+		  	data: banhji.source.jobList,
+		  	sort: { field: "name", dir: "asc" }
+		}),
+		categoryDS 			: new kendo.data.DataSource({
+		  	data: banhji.source.categoryList,
+		  	filter: [
+		  		{ field:"item_type_id", value: 1 },
+		  		{ field:"id", operator:"neq", value: 5 },
+		  		{ field:"id", operator:"neq", value: 6 }
+		  	]
+		}),
+		itemGroupDS 		: banhji.source.itemGroupDS,
+		employeeDS  		: banhji.source.employeeDS,
+		contactDS  			: banhji.source.customerDS,
+		statusObj 			: banhji.source.statusObj,		
+		paymentMethodDS 	: banhji.source.paymentMethodDS,
+		amtDueColor 		: banhji.source.amtDueColor,
+	    confirmMessage 		: banhji.source.confirmMessage,
+		frequencyList 		: banhji.source.frequencyList,
+		monthOptionList 	: banhji.source.monthOptionList,
+		monthList 			: banhji.source.monthList,
+		weekDayList 		: banhji.source.weekDayList,
+		dayList 			: banhji.source.dayList,
+		showMonthOption 	: false,
+		showMonth 			: false,
+		showWeek 			: false,
+		showDay 			: false,
+		obj 				: null,
+		isEdit 				: false,
+		saveDraft 			: false,
+		saveClose 			: false,
+		savePrint 			: false,
+		saveRecurring 		: false,
+		showConfirm 		: false,
+		notDuplicateNumber  : true,
+		recurring 			: "",
+		recurring_validate 	: false,
+		reference_id 		: 0,
+		balance 			: 0,
+		total_deposit		: 0,
+		total 				: 0,
+		amount_due 			: 0,
+		barcode 			: "",
+		barcodeVisible 		: false,
+		category_id 		: 0,
+		item_group_id 		: 0,
+		segment_id 			: "",
+		segmentitem_id 		: "",
+		user_id				: banhji.source.user_id,
+		pageLoad 			: function(id){
+			if(id){
+				this.set("isEdit", true);
+				this.loadObj(id);
+			}else{				
+				if(this.get("isEdit") || this.dataSource.total()==0){
+					this.addEmpty();
+				}
+			}
+		},
+		loadData 			: function(){
+			var obj = this.get("obj");
+
+			this.setRate();
+	    	this.loadDeposit();
+	    	this.loadBalance();
+	    	this.loadReference();
+		},
+		//Barcode
+		search 				: function(){
+			var self = this, para = [],
+				obj = this.get("obj"),
+				category_id = this.get("category_id"),
+				item_group_id = this.get("item_group_id");
+
+			if(item_group_id>0){
+				para.push({ field:"number", value:item_group_id });
+			}else{
+				if(category_id>0){
+					para.push({ field:"category_id", value:category_id });
+				}
+			}
+
+			this.itemDS.query({
+				filter: para,
+				page:1,
+				pageSize: 10
+			});
+			
+			this.set("category_id", 0);
+			this.set("item_group_id", 0);
+		},
+		searchByBarcode		: function(){
+			var self = this, para = [],
+				obj = this.get("obj"),
+				barcode = this.get("barcode");
+
+			if(barcode!==""){
+				this.itemDS.query({
+					filter: { field: "barcode", value: barcode },
+					page:1,
+					pageSize: 1
+				}).then(function(){
+					var view = self.itemDS.view();
+
+					if(view.length>0){
+						self.insertItem(view[0]);
+					}
+				});
+
+				this.set("barcode", "");
+			}
+		},
+		addSearchItem		: function(e){
+			var data = e.data;
+
+			this.insertItem(data);
+		},
+		openBarcodeWindow 	: function(){
+			this.set("barcodeVisible", true);
+		},
+		closeBarcodeWindow 	: function(){
+			this.set("barcodeVisible", false);
+		},
+		insertItem 		: function(data){
+			var self = this, 
+				obj = this.get("obj"),
+				rate = obj.rate / banhji.source.getRate(data.locale, new Date(obj.issued_date));
+
+			//Get cost
+			this.wacDS.query({
+				filter:[
+					{ field:"item_id", value: data.id },
+					{ field:"issued_date <=", operator:"where_related_transaction", value: kendo.toString(new Date(obj.issued_date),"yyyy-MM-dd  HH:mm:ss") }
+				]
+			}).then(function(){
+	        	var wac = self.wacDS.view();
+	        	
+	        	var item_price = { 
+        			measurement_id 	: data.measurement_id,
+        			price 			: kendo.parseFloat(data.price),
+        			conversion_ratio: 1, 
+        			measurement 	: data.measurement.name 
+        		};
+
+	        	self.lineDS.insert(0, {
+					transaction_id 		: obj.id,
+					tax_item_id 		: 0,
+					item_id 			: data.id,
+					assembly_id 		: 0,
+					measurement_id 		: data.measurement_id,
+					description 		: data.sale_description,
+					quantity 	 		: 1,
+					conversion_ratio 	: 1,
+					cost 				: wac[0].cost * rate,
+					price 				: data.price,
+					amount 				: data.price,
+					discount 			: 0,
+					discount_percentage : 0,
+					tax 				: 0,
+					rate				: rate,
+					locale				: data.locale,
+					movement 			: -1,
+					reference_no  		: "",
+
+					item 				: data,
+					item_price 			: item_price,
+					tax_item 			: { id:"", name:"" }
+				});
+			});
+		},
+		//Upload
+		onSelect 			: function(e){
+	        // Array with information about the uploaded files
+	        var self = this, 
+	        files = e.files,
+	        obj = this.get("obj");
+
+	        // Check the extension of each file and abort the upload if it is not .jpg
+	        $.each(files, function(index, value){
+	            if (value.extension.toLowerCase() === ".jpg"
+	            	|| value.extension.toLowerCase() === ".jpeg"
+	            	|| value.extension.toLowerCase() === ".tiff"
+	            	|| value.extension.toLowerCase() === ".png" 
+	            	|| value.extension.toLowerCase() === ".gif"
+	            	|| value.extension.toLowerCase() === ".pdf"){
+
+	            	var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ value.name;
+
+	            	self.attachmentDS.add({
+	            		user_id 		: self.get("user_id"),
+	            		transaction_id 	: obj.id,
+	            		type 			: "Transaction",
+	            		name 			: value.name,
+	            		description 	: "",
+	            		key 			: key,
+	            		url 			: banhji.s3 + key,
+	            		size 			: value.size,
+	            		created_at 		: new Date(),
+
+	            		file 			: value.rawFile
+	            	});
+	            }else{
+	            	alert("This type of file is not allowed to attach.");
+	            }
+	        });
+	    },
+	    removeFile 			: function(e){
+	    	var data = e.data;
+
+	    	if (confirm(banhji.source.confirmMessage)) {
+	    		this.attachmentDS.remove(data);
+	    	}	    	
+	    },
+	    uploadFile 			: function(){
+	    	$.each(this.attachmentDS.data(), function(index, value){
+		    	if(!value.id){
+			    	var params = { 
+		            	Body: value.file, 
+		            	Key: value.key 
+		            };
+		            bucket.upload(params, function (err, data) {
+	                	// console.log(err, data);
+	                	// var url = data.Location;                
+	            	});
+	        	}
+	        });
+
+	        this.attachmentDS.sync();
+	        var saved = false;
+	        this.attachmentDS.bind("requestEnd", function(e){
+	        	//Delete File
+	        	if(e.type=="destroy"){
+	            	if(saved==false && e.response){
+	            		saved = true;
+
+	            		var response = e.response.results;
+	            		$.each(response, function(index, value){
+		            		var params = {
+							  	//Bucket: 'STRING_VALUE', /* required */
+							 	Delete: { /* required */
+								    Objects: [ /* required */
+								      	{
+									        Key: value.data.key /* required */
+								      	}
+								      /* more items */
+								    ]
+							  	}
+							};
+							bucket.deleteObjects(params, function(err, data) {
+							  	//console.log(err, data);
+							});
+						});
+	            	}
+	        	}
+	        });
+	    },
+		//Deposit
+		loadDeposit 		: function(){
+			var self = this, obj = this.get("obj");
+
+			//Deposits on Edit Mode
+			if(this.get("isEdit")){
+				this.depositDS.filter([
+					{ field:"type", value:"Customer_Deposit" },
+					{ field:"reference_id", value:obj.id }
+				]);
+			}
+
+			if(obj.contact_id>0){
+		    	this.txnDS.query({
+		    		filter:[
+		    			{ field:"amount", operator:"select_sum", value:"amount" },
+		    			{ field:"contact_id", value: obj.contact_id },
+		    			{ field:"type", value: "Customer_Deposit" }
+		    		]
+		    	}).then(function(){
+		    		var view = self.txnDS.view();
+
+		    		self.set("total_deposit", view[0].amount + obj.deposit);
+		    	});
+	    	}
+		},
+		addDeposit 			: function(id){
+			var obj = this.get("obj");
+			
+			this.depositDS.data([]);
+
+			if(obj.deposit>0){
+				this.depositDS.add({
+					contact_id 			: obj.contact_id,
+					reference_id 		: id,
+					user_id 			: this.get("user_id"),
+				   	type				: "Customer_Deposit",
+				   	amount				: obj.deposit*-1,
+				   	rate				: obj.rate,
+				   	locale 				: obj.locale,
+				   	issued_date 		: obj.issued_date
+		    	});
+			}
+		},
+		saveDeposit 		: function(id){
+			var obj = this.get("obj");
+			
+    		if(this.get("isEdit")){
+    			if(this.depositDS.total()>0){
+					var deposit = this.depositDS.at(0);
+					deposit.set("amount", obj.deposit*-1);
+				}else{
+					this.addDeposit(id);
+				}
+    		}else{
+				this.addDeposit(id);
+    		}
+
+			this.depositDS.sync();
+		},
+		//Contact
+		setContact 		: function(contact){
+			var obj = this.get("obj");
+
+		    obj.set("contact", contact);
+		    this.contactChanges();
+	    },
+		contactChanges 		: function(){
+			var self = this, obj = this.get("obj");
+
+	    	if(obj.contact){
+		    	var contact = obj.contact;
+		    	
+		    	obj.set("contact_id", contact.id);
+		    	obj.set("discount_account_id", contact.trade_discount_id);
+		    	obj.set("payment_method_id", contact.payment_method_id);
+		    	obj.set("locale", contact.locale);
+		    	obj.set("bill_to", contact.bill_to);
+		    	obj.set("ship_to", contact.ship_to);
+
+		    	this.loadData();
+		    	this.jobDS.filter({ field:"contact_id", value: contact.id });
+	    	}
+	    	
+		    this.changes();
+	    },
+	    employeeChanges 		: function(){
+			var obj = this.get("obj");
+
+	    	if(obj.employee){
+		    	var employee = obj.employee;
+		    	
+		    	obj.set("employee_id", employee.id);
+	    	}else{
+	    		obj.set("employee_id", 0);
+	    	}
+	    },
+	    loadBalance 		: function(){
+			var self = this, obj = this.get("obj");
+
+			this.balanceDS.query({
+				filter:[
+					{ field:"contact_id", value:obj.contact_id },
+					{ field:"type", operator:"where_in", value:["Commercial_Invoice", "Vat_Invoice", "Invoice"] }
+				]
+		    }).then(function(){
+		    	var view = self.balanceDS.view(),
+		  			contact = obj.contact, 
+					balance = view[0].amount,
+					creditAllowed = 0;
+
+		    	if(contact.credit_limit > balance){
+					creditAllowed = contact.credit_limit - balance;
+				}
+
+		    	self.set("balance", kendo.toString(balance, "c", obj.locale));
+		    	obj.set("credit_allowed", creditAllowed);
+			});
+		},
+	    //Currency Rate
+		setRate 			: function(){
+			var obj = this.get("obj"), 
+			rate = banhji.source.getRate(obj.locale, new Date(obj.issued_date));
+			
+			obj.set("rate", rate);
+
+			//Item Lines
+			$.each(this.lineDS.data(), function(index, value){
+				var itemRate = rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));
+				value.set("rate", itemRate);
+			});
+
+			//Assembly Lines
+			$.each(this.assemblyLineDS.data(), function(index, value){
+				var itemRate = rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));
+				value.set("rate", itemRate);
+			});
+
+			//Deposit
+			$.each(this.depositDS.data(), function(index, value){
+				var itemRate = rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));
+				value.set("rate", itemRate);
+			});
+		},
+		//Segment	
+	    addSegmentItem 		: function(){
+			var obj = this.get("obj"),
+				notExisting = true,
+				segment_id = this.get("segment_id"),
+				segmentitem_id = this.get("segmentitem_id");
+
+			if(segment_id && segmentitem_id){
+				$.each(this.segmentItemDS.data(), function(index, value){
+					if(value.segment_id==segment_id){
+						notExisting = false;
+
+						return false;
+					}
+				});
+
+				if(notExisting){
+					var segments = this.segmentDS.get(segment_id),
+						segmentitems = this.segItemDS.get(segmentitem_id);
+
+					this.segmentItemDS.add({
+						id : segmentitems.id,
+						segment_id: segment_id,
+						code: segmentitems.code,
+						name: segmentitems.name,
+						segment: { id : segment_id, name : segments.name}
+					});
+				}else{
+					$("#ntf1").data("kendoNotification").warning("This segment is already selected!");
+				}
+			}
+
+			this.set("segment_id", ""),
+			this.set("segmentitem_id", "");
+		},
+		//Item
+		addItem 			: function(uid){
+			var self = this,
+				row = this.lineDS.getByUid(uid),
+				obj = this.get("obj"),
+				item = row.item,
+				rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
+
+			row.set("item_id", item.id);
+			row.set("description", item.sale_description);
+			row.set("rate", rate);
+			row.set("locale", item.locale);
+
+			//Item base price
+			var item_price = { 
+    			measurement_id 	: item.measurement_id,
+    			price 			: kendo.parseFloat(item.price),
+    			conversion_ratio: 1, 
+    			measurement 	: item.measurement.name
+    		};
+    		row.set("item_price", item_price);
+
+			//Get cost
+			this.wacDS.query({
+				filter:[
+					{ field:"item_id", value: item.id },
+					{ field:"issued_date <=", operator:"where_related_transaction", value: kendo.toString(new Date(obj.issued_date),"yyyy-MM-dd  HH:mm:ss") }
+				]
+			}).then(function(){
+	        	var wac = self.wacDS.view();
+	        	row.set("cost", wac[0].cost * rate);
+			});
+		},
+		addItemCatalog 		: function(uid){
+			var self = this,
+				row = this.lineDS.getByUid(uid),
+				obj = this.get("obj"),
+				item = row.item;
+
+			this.lineDS.remove(row);
+
+        	$.each(item.catalogs, function(index, value){
+				var catalogItem = banhji.source.itemDS.get(value);
+
+				if(catalogItem){
+					var rate = obj.rate / banhji.source.getRate(catalogItem.locale, new Date(obj.issued_date));
+
+					self.lineDS.add({
+						transaction_id 		: obj.id,
+						tax_item_id 		: 0,
+						item_id 			: catalogItem.id,
+						measurement_id 		: 0,
+						description 		: catalogItem.sale_description,
+						quantity 	 		: 1,
+						conversion_ratio 	: 1,
+						cost 				: catalogItem.cost * rate,
+						price 				: 0,
+						amount 				: 0,
+						discount 			: 0,
+						rate				: rate,
+						locale				: catalogItem.locale,
+						movement 			: -1,
+
+						discount_percentage : 0,
+						item 				: catalogItem,
+						measurement 		: { measurement_id:"", measurement:"" },
+						tax_item 			: { id:"", name:"" }
+					});
+				}
+			});
+		},
+		addItemAssembly 	: function(uid){
+			var self = this,
+				row = this.lineDS.getByUid(uid),
+				obj = this.get("obj"),
+				item = row.item,
+				rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
+
+			var notExist = true;
+			$.each(this.assemblyLineDS.data(), function(index, value){
+				if(value.assembly_id==item.id){
+					notExist = false;
+
+					return false;
+				}
+			});
+
+			if(notExist){
+				row.set("item_id", item.id);
+	    		row.set("description", item.sale_description);
+		        row.set("rate", rate);
+		        row.set("locale", item.locale);
+
+		        var measurement = { 
+        			measurement_id 	: item.measurement_id,
+        			price 			: kendo.parseFloat(item.price * rate),
+        			conversion_ratio: 1, 
+        			measurement 	: item.measurement.name 
+        		};
+        		row.set("measurement", measurement);
+
+		        this.assemblyDS.query({
+		        	filter:{ field:"assembly_id", value:row.item_id }
+		        }).then(function(){
+		        	var view = self.assemblyDS.view();
+
+		        	$.each(view, function(index, value){
+		        		var itemAssembly = value.item, 
+		        			itemAssemblyRate = obj.rate / banhji.source.getRate(itemAssembly.locale, new Date(obj.issued_date));
+
+						self.assemblyLineDS.add({
+							transaction_id 		: obj.id,
+							item_id 			: value.item_id,
+							assembly_id 		: value.assembly_id,
+							measurement_id 		: value.measurement_id,
+							description 		: itemAssembly.sale_description,
+							quantity 	 		: value.quantity,
+							conversion_ratio 	: value.conversion_ratio,
+							cost 				: value.cost,
+							rate				: itemAssemblyRate,
+							locale				: itemAssembly.locale,
+							movement 			: -1,
+
+							item 				: itemAssembly
+						});
+			        });
+		        });
+	    	}else{
+	    		alert("Duplicate Item Assembly!");
+	    		row.set("item_id", 0);
+	    		row.set("item", { id:"", name:"" });
+	    	}
+		},
+		changes				: function(){
+			var self = this, obj = this.get("obj"),
+				total = 0, subTotal = 0, discount =0, tax = 0, remaining = 0, amount_due = 0, itemIds = [];
+
+			$.each(this.lineDS.data(), function(index, value) {
+				var amt = value.quantity * value.price;
+				subTotal += amt;
+
+				//Discount by line
+				if(value.discount>0){
+					amt -= value.discount;
+					discount += value.discount;
+				}
+
+				//Tax by line
+				if(value.tax_item_id>0){
+					var taxAmount = amt * value.tax_item.rate;
+					tax += taxAmount;
+					value.set("tax", taxAmount);
+				}else{
+					value.set("tax", 0);
+				}
+
+				value.set("amount", amt);
+
+				if(value.item_id>0){
+					itemIds.push(value.item_id);
+				}
+	        });
+
+	    	//Total
+	        total = (subTotal + tax) - discount;
+
+	        //Apply Deposit
+	        if(obj.deposit>0){
+	        	if(obj.deposit <= this.get("total_deposit")){
+		        	if(obj.deposit <= total){
+		        		remaining = total - obj.deposit;
+		        	}else{
+		        		obj.set("deposit", total);
+		        	}
+		        }else{
+		        	obj.set("deposit", 0);
+	        		alert("Over deposit to apply!");
+	        	}
+
+	        	//Status
+		        if(remaining==0){
+		    		obj.set("status", 1);
+		    	}else if(remaining==total){
+		    		obj.set("status", 0);
+		    	}else{
+		    		obj.set("status", 2);
+		    	}
+	        }
+
+	        //Warning over credit allowed
+	        if(obj.credit_allowed>0 && total>obj.credit_allowed){
+	        	this.set("amtDueColor", "Gold");
+	        }else{
+	        	this.set("amtDueColor", banhji.source.amtDueColor);
+	        }
+
+	        amount_due = total - obj.deposit;
+
+	        obj.set("sub_total", subTotal);
+	        obj.set("discount", discount);
+	        obj.set("tax", tax);
+			obj.set("amount", total);
+			obj.set("remaining", remaining);
+
+			this.set("total", kendo.toString(total, "c", obj.locale));
+	        this.set("amount_due", kendo.toString(amount_due, "c", obj.locale));
+	    	
+	    	//Remove Assembly Item List
+			var raw = this.assemblyLineDS.data();
+		    var item, i;
+		    for(i=raw.length-1; i>=0; i--){
+		    	item = raw[i];
+
+		    	if (jQuery.inArray(kendo.parseInt(item.assembly_id), itemIds)==-1) {
+			       	this.assemblyLineDS.remove(item);
+			    }
+		    }
+		},
+		lineDSChanges 		: function(arg){
+			var self = banhji.cashSale;
+
+			if(arg.field){
+				if(arg.field=="item"){
+					var dataRow = arg.items[0],
+						item = dataRow.item;
+
+					if(item.is_catalog=="1"){
+						self.addItemCatalog(dataRow.uid);
+					}else if(item.is_assembly=="1"){
+						self.addItemAssembly(dataRow.uid);
+					}else{
+						self.addItem(dataRow.uid);
+					}
+
+					self.addExtraRow(dataRow.uid);
+				}else if(arg.field=="quantity" || arg.field=="price" || arg.field=="discount"){
+					self.changes();
+				}else if(arg.field=="item_price"){
+					var dataRow = arg.items[0];
+					
+					dataRow.set("measurement_id", dataRow.item_price.measurement_id);
+			        dataRow.set("price", dataRow.item_price.price * dataRow.rate);
+			        dataRow.set("conversion_ratio", dataRow.item_price.conversion_ratio);
+			    }else if(arg.field=="discount_percentage"){
+			    	var dataRow = arg.items[0],
+			    		percentageAmount = dataRow.quantity * dataRow.price * dataRow.discount_percentage;
+
+			    	dataRow.set("discount", percentageAmount);
+				}else if(arg.field=="tax_item"){
+					var dataRow = arg.items[0];
+					
+					dataRow.set("tax_item_id", dataRow.tax_item.id);
+					dataRow.set("tax", 0);
+
+					self.changes();
+				}
+			}
+		},
+		typeChanges 		: function(){
+			var obj = this.get("obj");
+
+			$.each(this.txnTemplateDS.data(), function(index, value){
+				if(value.type==obj.type){
+					obj.set("transaction_template_id", value.id);
+
+					return false;
+				}
+			});
+		},
+		//Number
+		checkExistingNumber 	: function(){
+			var self = this, para = [], 
+			obj = this.get("obj");
+			
+			if(obj.number!==""){
+
+				if(obj.isNew()==false){
+					para.push({ field:"id", operator:"where_not_in", value: [obj.id] });
+				}
+				
+				para.push({ field:"number", value: obj.number });
+				para.push({ field:"type", value: obj.type });
+
+				this.txnDS.query({
+					filter: para,
+					page: 1,
+					pageSize: 1
+				}).then(function(e){
+					var view = self.txnDS.view();
+					
+					if(view.length>0){
+				 		self.set("notDuplicateNumber", false);
+					}else{
+						self.set("notDuplicateNumber", true);
+					}
+				});
+			}
+		},
+		generateNumber 		: function(){
+			var self = this, obj = this.get("obj"),
+				issueDate = new Date(obj.issued_date),
+				startDate = new Date(obj.issued_date),
+				endDate = new Date(obj.issued_date);
+
+			this.set("notDuplicateNumber", true);
+
+			startDate.setDate(1);
+			startDate.setMonth(0);//Set to January
+			endDate.setDate(31);
+			endDate.setMonth(11);//Set to November
+
+			this.numberDS.query({
+				filter:[
+					{ field:"type", value:obj.type },
+					{ field:"issued_date >=", value:kendo.toString(startDate, "yyyy-MM-dd") },
+					{ field:"issued_date <=", value:kendo.toString(endDate, "yyyy-MM-dd") }
+				]
+			}).then(function(){
+				var view = self.numberDS.view(),
+				number = 0, str = "";
+
+				if(view.length>0){
+					number = view[0].number.match(/\d+/g).map(Number);
+				}
+
+				number++;
+				str = banhji.source.getPrefixAbbr(obj.type) + kendo.toString(issueDate, "yy") + kendo.toString(issueDate, "MM") + kendo.toString(number, "00000");
+				
+				obj.set("number", str);
+			});
+		},
+		setStatus 			: function(){
+			var self = this,
+				obj = this.get("obj"), 
+				statusObj = this.get("statusObj");
+
+			statusObj.set("text", "");
+	        statusObj.set("date", "");
+	        statusObj.set("number", "");
+	        statusObj.set("url", "");
+
+			switch(obj.status) {
+			    case 3:
+			        statusObj.set("text", "return");
+			        break;
+			    case 4:
+			        statusObj.set("text", "draft");
+			        break;
+			    default:
+			        statusObj.set("text", "paid");
+			}
+		},
+		//Obj
+		loadObj 			: function(id){
+			var self = this, para = [], referenceIds = [];
+
+			para.push({ field:"id", value: id });
+
+			if(this.get("recurring")=="use"){
+				this.set("recurring","");
+				this.addEmpty();
+				this.loadRecurring(id);
+			}else{
+				if(this.get("recurring")=="edit"){
+					this.set("recurring","");
+					para.push({ field:"is_recurring", value: 1 });
+				}
+
+				this.dataSource.query({
+					filter: para,
+					page: 1,
+					pageSize: 100
+				}).then(function(e){
+					var view = self.dataSource.view();
+
+					self.set("obj", view[0]);
+					self.set("total", kendo.toString(view[0].amount, "c2", view[0].locale));
+			        self.set("amount_due", kendo.toString(view[0].amount - view[0].deposit, "c2", view[0].locale));					
+					self.setStatus();
+					self.loadDeposit();
+
+					self.lineDS.query({
+						filter: [
+							{ field: "transaction_id", value: id },
+							{ field: "assembly_id", value: 0 }
+						]
+					});
+
+					self.assemblyLineDS.query({
+						filter:[
+							{ field: "transaction_id", value: id },
+							{ field: "assembly_id >", value: 0 }
+						]
+					});
+
+					self.journalLineDS.query({
+						filter: { field: "transaction_id", value: id }
+					});
+
+					self.attachmentDS.filter({ field: "transaction_id", value: id });
+
+					//Segment
+					var segments = [];
+					$.each(view[0].segments, function(index, value){
+						segments.push(value);
+					});
+					self.segmentItemDS.filter({ field: "id", operator:"where_in", value: segments });
+
+					self.loadReference();
+				});
+			}
+		},
+		addEmpty 		 	: function(){
+			this.dataSource.data([]);
+			this.lineDS.data([]);
+			this.assemblyLineDS.data([]);
+			this.depositDS.data([]);
+			this.journalLineDS.data([]);
+			this.attachmentDS.data([]);
+			this.referenceDS.data([]);
+
+			this.set("isEdit", false);
+			this.set("obj", null);
+			this.set("total", 0);
+			this.set("total_deposit", 0);
+			this.set("amount_due", 0);
+			this.set("amtDueColor", banhji.source.amtDueColor);
+
+			this.dataSource.insert(0, {
+				transaction_template_id: 10,
+				contact_id 			: "",//Customer
+				payment_method_id	: 0,
+				reference_id 		: "",
+				recurring_id 		: "",
+				account_id 			: 1,
+				discount_account_id : 0,
+				job_id 				: 0,
+				user_id 			: this.get("user_id"),
+				employee_id			: "",//Sale Rep
+			   	type				: "Commercial_Cash_Sale",//Required
+			   	number 				: "",
+			   	sub_total 			: 0,
+			   	discount 			: 0,
+			   	tax 				: 0,
+			   	amount				: 0,
+			   	deposit 			: 0,
+			   	remaining 			: 0,
+			   	credit_allowed 		: 0,
+			   	credit 				: 0,
+			   	check_no 			: "",
+			   	rate				: 1,
+			   	locale 				: banhji.locale,
+			   	issued_date 		: new Date(),
+			   	bill_to 			: "",
+			   	ship_to 			: "",
+			   	memo 				: "",
+			   	memo2 				: "",
+			   	status 				: 0,
+			   	segments 			: [],
+			   	is_journal 			: 1,
+			   	//Recurring
+			   	recurring_name 		: "",
+			   	start_date 			: new Date(),
+			   	frequency 			: "Daily",
+			   	month_option 		: "Day",
+			   	interval 			: 1,
+			   	day 				: 1,
+			   	week 				: 0,
+			   	month 				: 0,
+			   	is_recurring 		: 0,
+
+			   	contact 			: { id:"", name:"" },
+			   	references 			: []
+	    	});
+			
+			var obj = this.dataSource.at(0);
+			this.set("obj", obj);
+			this.setRate();
+			this.generateNumber();
+
+			//Default rows
+			for (var i = 0; i < banhji.source.defaultLines; i++) {
+				this.addRow();
+			}
+		},
+		addRow 				: function(){
+			var obj = this.get("obj");
+
+			this.lineDS.add({
+				transaction_id 		: obj.id,
+				tax_item_id 		: "",
+				item_id 			: "",
+				assembly_id 		: 0,
+				measurement_id 		: 0,
+				description 		: "",
+				quantity 	 		: 1,
+				conversion_ratio 	: 0,
+				price 				: 0,
+				amount 				: 0,
+				discount 			: 0,
+				rate				: obj.rate,
+				locale				: obj.locale,
+				movement 			: -1,
+				reference_no  		: "",
+
+				discount_percentage : 0,
+				item 				: { id:"", name:"" },
+				item_price 			: { measurement_id:"", measurement:"" },
+				tax_item 			: { id:"", name:"" }
+			});
+		},
+		addExtraRow 		: function(uid){
+			var row = this.lineDS.getByUid(uid),
+				index = this.lineDS.indexOf(row);
+
+			if(index==this.lineDS.total()-1){
+				this.addRow();
+			}
+		},
+		removeRow 			: function(e){
+			var data = e.data;
+			if(this.lineDS.total()>1){
+				this.lineDS.remove(data);
+		        this.changes();
+	        }
+		},
+		removeEmptyRow 		: function(){
+			var raw = this.lineDS.data();
+		    var item, i;
+		    for(i=raw.length-1; i>=0; i--){
+		    	item = raw[i];
+
+		    	if (item.item_id==0) {
+			       	this.lineDS.remove(item);
+			    }
+		    }
+	    },
+	    objSync 			: function(){
+	    	var dfd = $.Deferred();	        
+
+	    	this.dataSource.sync();
+		    this.dataSource.bind("requestEnd", function(e){
+		    	if(e.response){				
+					dfd.resolve(e.response.results);
+				}
+		    });
+		    this.dataSource.bind("error", function(e){
+				dfd.reject(e.errorThrown);
+		    });
+
+		    return dfd;
+	    },
+		save 				: function(){
+	    	var self = this, obj = this.get("obj"), segments = [];
+
+	    	obj.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
+	    	obj.set("due_date", kendo.toString(new Date(obj.due_date), "yyyy-MM-dd"));
+
+	    	//Warning over credit allowed
+	        if(obj.credit_limit>0 && obj.amount>obj.credit_allowed){
+	        	alert("Over credit allowed!");
+	        }
+
+	        this.removeEmptyRow();
+
+	        //Segment
+	        $.each(this.segmentItemDS.data(), function(index, value){
+	        	segments.push(value.id);
+	        });
+	        obj.set("segments", segments);
+
+	        //Save Draft
+	        if(this.get("saveDraft")){
+	        	obj.set("status", 4); //In progress
+	        	obj.set("progress", "Draft");
+	        	obj.set("is_journal", 0);//No Journal
+	        }
+
+	        //Recurring
+	    	if(this.get("saveRecurring")){
+	    		this.set("saveRecurring", false);
+	    		
+	    		obj.set("number", "");
+	    		obj.set("is_recurring", 1);
+	    	}
+
+	        //Edit Mode
+	    	if(obj.isNew()==false){
+	    		//Use draft
+	    		if(obj.status==4){
+	    			obj.set("status", 0);//Open
+	    			obj.set("progress", "");
+	    			obj.set("is_journal", 1);//Add Journal
+	    		}
+	    	}
+	    	
+			//Save Obj
+			this.objSync()
+			.then(function(data){ //Success
+				if(self.get("isEdit")==false){
+					//Item line
+					$.each(self.lineDS.data(), function(index, value){
+						value.set("transaction_id", data[0].id);
+					});
+
+					//Assembly Item line
+					$.each(self.assemblyLineDS.data(), function(index, value){
+						value.set("transaction_id", data[0].id);
+					});
+
+					//Attachment
+					$.each(self.attachmentDS.data(), function(index, value){
+			    		value.set("transaction_id", data[0].id);
+		            });
+				}
+
+				//Journal
+				if(data[0].is_recurring==0 && data[0].is_journal==1){
+		            self.addJournal(data[0].id);
+		            self.saveDeposit(data[0].id);
+	        	}
+
+				self.lineDS.sync();
+				self.assemblyLineDS.sync();
+				self.uploadFile();
+				
+				return data;
+			}, function(reason) { //Error
+				$("#ntf1").data("kendoNotification").error(reason);
+			}).then(function(result){
+				$("#ntf1").data("kendoNotification").success(banhji.source.successMessage);
+
+				if(self.get("saveDraft") || self.get("saveClose")){
+					//Save Draft or Save Close
+					self.set("saveDraft", false);
+					self.set("saveClose", false);
+					self.cancel();
+				}else if(self.get("savePrint")){
+					//Save Print
+					self.set("savePrint", false);
+					self.clear();
+					if(result[0].transaction_template_id>0){
+						banhji.router.navigate("/invoice_form/"+result[0].id);
+					}
+				}else{
+					//Save New
+					self.addEmpty();
+				}
+			});
+		},
+		clear 				: function(){
+			this.dataSource.cancelChanges();
+			this.lineDS.cancelChanges();
+			this.assemblyLineDS.cancelChanges();
+			this.segmentItemDS.cancelChanges();
+			this.attachmentDS.cancelChanges();
+			this.referenceDS.cancelChanges();
+			
+			this.dataSource.data([]);
+			this.lineDS.data([]);
+			this.assemblyLineDS.data([]);
+			this.segmentItemDS.data([]);
+			this.attachmentDS.data([]);
+			this.referenceDS.data([]);
+
+			banhji.userManagement.removeMultiTask("cash_sale");
+		},
+		cancel 				: function(){
+			this.clear();
+			window.history.back();
+		},
+		delete 				: function(){
+			var self = this, obj = this.get("obj");
+			this.set("showConfirm",false);
+
+	        this.txnDS.query({
+	        	filter:[
+	        		{ field:"reference_id", value:obj.id }
+	        	],
+	        	page:1,
+	        	pageSize:1
+	        }).then(function(){
+	        	var view = self.txnDS.view();
+
+	        	if(view.length>0){
+	        		alert("Sorry, you can not delete it.");
+	        	}else{
+	        		obj.set("deleted", 1);
+
+			        self.dataSource.sync();
+			        self.dataSource.bind("requestEnd", function(e){
+			        	if(e.type==="update"){
+			        		window.history.back();
+			        	}
+			        });
+	        	}
+	        });
+		},
+		openConfirm 		: function(){
+			this.set("showConfirm", true);
+		},
+		closeConfirm 		: function(){
+			this.set("showConfirm", false);
+		},
+		validating 			: function(){
+			var result = true, nonItem = true;
+
+			//Check select non item
+			$.each(this.lineDS.data(), function(index, value){
+				if(value.item_id>0){
+					nonItem = false;
+				}
+			});
+			
+			if(nonItem){
+				$("#ntf1").data("kendoNotification").error("Please select at least one item!");
+
+				result = false;
+			}
+
+			return result;
+		},
+	    //Journal
+	    addJournal 			: function(transaction_id){
+	    	var self = this,
+		    	obj = this.get("obj"),
+		    	contact = obj.contact,
+		    	raw = "", entries = {};
+
+		    //Edit Mode
+		    if(obj.isNew()==false){
+		    	//Delete previous journal
+			    $.each(this.journalLineDS.data(), function(index, value){
+					value.set("deleted", 1);
+				});
+			}
+
+			//Item lines
+			$.each(this.lineDS.data(), function(index, value){
+				var item = value.item;
+
+				//COGS on Dr
+				if(item.item_type_id==1){
+					var cogsID = kendo.parseInt(item.expense_account_id);
+					if(cogsID>0){
+						raw = "dr"+cogsID;
+
+						var cogsAmount = value.amount;
+						if(item.item_type_id==1 || item.item_type_id==4){
+							cogsAmount = (value.quantity*value.conversion_ratio)*value.cost;
+						}
+
+						if(entries[raw]===undefined){
+							entries[raw] = {
+								transaction_id 		: transaction_id,
+								account_id 			: cogsID,
+								contact_id 			: obj.contact_id,
+								description 		: value.description,
+								reference_no 		: "",
+								segments 	 		: obj.segments,
+								dr 	 				: cogsAmount * value.rate,
+								cr 					: 0,
+								rate				: value.rate,
+								locale				: item.locale
+							};
+						}else{
+							entries[raw].dr += cogsAmount;
+						}
+					}
+				}
+
+				//Inventory on Cr
+				var inventoryID = kendo.parseInt(item.inventory_account_id);
+				if(inventoryID>0){
+					raw = "cr"+inventoryID;
+
+					var inventoryAmount = value.amount;
+					if(item.item_type_id==1 || item.item_type_id==4){
+						inventoryAmount = (value.quantity*value.conversion_ratio)*value.cost;
+					}
+					
+					if(entries[raw]===undefined){
+						entries[raw] = {
+							transaction_id 		: transaction_id,
+							account_id 			: inventoryID,
+							contact_id 			: obj.contact_id,
+							description 		: value.description,
+							reference_no 		: "",
+							segments 	 		: obj.segments,
+							dr 	 				: 0,
+							cr 					: inventoryAmount * value.rate,
+							rate				: value.rate,
+							locale				: item.locale
+						};
+					}else{
+						entries[raw].cr += inventoryAmount;
+					}
+				}
+
+				//Sale on Cr
+				var incomeID = kendo.parseInt(item.income_account_id);
+				if(incomeID>0){
+					raw = "cr"+incomeID;
+					
+					var saleAmount = value.quantity * value.price;
+					if(entries[raw]===undefined){
+						entries[raw] = {
+							transaction_id 		: transaction_id,
+							account_id 			: incomeID,
+							contact_id 			: obj.contact_id,
+							description 		: value.description,
+							reference_no 		: "",
+							segments 	 		: obj.segments,
+							dr 	 				: 0,
+							cr 					: saleAmount,
+							rate				: obj.rate,
+							locale				: obj.locale
+						};
+					}else{
+						entries[raw].cr += saleAmount;
+					}
+				}
+
+				//Tax on Cr
+				if(value.tax_item_id>0){
+					var taxItem = value.tax_item,
+						raw = "cr"+taxItem.account_id;
+
+					if(entries[raw]===undefined){
+						entries[raw] = {
+							transaction_id 		: transaction_id,
+							account_id 			: taxItem.account_id,
+							contact_id 			: obj.contact_id,
+							description 		: value.description,
+							reference_no 		: "",
+							segments 	 		: obj.segments,
+							dr 	 				: 0,
+							cr 					: value.tax,
+							rate				: obj.rate,
+							locale				: obj.locale
+						};
+					}else{
+						entries[raw].cr += value.tax;
+					}
+				}
+			});
+
+			//Assembly Item
+			$.each(this.assemblyLineDS.data(), function(index, value){
+				var item = value.item;
+
+				//COGS on Dr
+				if(item.item_type_id==1){
+					var cogsID = kendo.parseInt(item.expense_account_id);
+					if(cogsID>0){
+						raw = "dr"+cogsID;
+						
+						var cogsAmount = value.amount;
+						if(item.item_type_id==1 || item.item_type_id==4){
+							cogsAmount = (value.quantity*value.conversion_ratio)*value.cost;
+						}
+
+						if(entries[raw]===undefined){
+							entries[raw] = {
+								transaction_id 		: transaction_id,
+								account_id 			: cogsID,
+								contact_id 			: obj.contact_id,
+								description 		: value.description,
+								reference_no 		: "",
+								segments 	 		: obj.segments,
+								dr 	 				: cogsAmount * value.rate,
+								cr 					: 0,
+								rate				: value.rate,
+								locale				: item.locale
+							};
+						}else{
+							entries[raw].dr += cogsAmount;
+						}
+					}
+				}
+
+				//Inventory on Cr
+				var inventoryID = kendo.parseInt(item.inventory_account_id);
+				if(inventoryID>0){
+					raw = "cr"+inventoryID;
+
+					var inventoryAmount = value.amount;
+					if(item.item_type_id==1 || item.item_type_id==4){
+						inventoryAmount = (value.quantity*value.conversion_ratio)*value.cost;
+					}
+					
+					if(entries[raw]===undefined){
+						entries[raw] = {
+							transaction_id 		: transaction_id,
+							account_id 			: inventoryID,
+							contact_id 			: obj.contact_id,
+							description 		: value.description,
+							reference_no 		: "",
+							segments 	 		: obj.segments,
+							dr 	 				: 0,
+							cr 					: inventoryAmount * value.rate,
+							rate				: value.rate,
+							locale				: item.locale
+						};
+					}else{
+						entries[raw].cr += inventoryAmount;
+					}
+				}
+			});
+
+			//Obj Account, Cash on Dr
+			var objAccountID = kendo.parseInt(obj.account_id);
+			if(objAccountID>0){
+				raw = "dr"+objAccountID;
+
+				var objAmount = obj.amount - obj.deposit;
+				if(entries[raw]===undefined){
+					entries[raw] = {
+						transaction_id 		: transaction_id,
+						account_id 			: objAccountID,
+						contact_id 			: obj.contact_id,
+						description 		: obj.memo,
+						reference_no 		: obj.reference_no,
+						segments 	 		: obj.segments,
+						dr 	 				: objAmount,
+						cr 					: 0,
+						rate				: obj.rate,
+						locale				: obj.locale
+					};
+				}else{
+					entries[raw].dr += objAmount;
+				}
+			}
+
+			//Discount on Dr			
+			if(obj.discount > 0){
+				var discountAccountId = kendo.parseInt(obj.discount_account_id);
+				if(discountAccountId>0){
+					raw = "dr"+discountAccountId;
+
+					if(entries[raw]===undefined){
+						entries[raw] = {
+							transaction_id 		: transaction_id,
+							account_id 			: discountAccountId,
+							contact_id 			: obj.contact_id,
+							description 		: obj.memo,
+							reference_no 		: obj.reference_no,
+							segments 	 		: obj.segments,
+							dr 	 				: obj.discount,
+							cr 					: 0,
+							rate				: obj.rate,
+							locale				: obj.locale
+						};
+					}else{
+						entries[raw].dr += obj.discount;
+					}
+				}
+			}
+
+			//Deposit on Dr
+			if(obj.deposit > 0){
+				var depositAccountId = kendo.parseInt(contact.deposit_account_id);
+				if(depositAccountId>0){
+					raw = "dr"+depositAccountId;
+
+					if(entries[raw]===undefined){
+						entries[raw] = {
+							transaction_id 		: transaction_id,
+							account_id 			: depositAccountId,
+							contact_id 			: obj.contact_id,
+							description 		: obj.memo,
+							reference_no 		: obj.reference_no,
+							segments 	 		: obj.segments,
+							dr 	 				: obj.deposit,
+							cr 					: 0,
+							rate				: obj.rate,
+							locale				: obj.locale
+						};
+					}else{
+						entries[raw].dr += obj.deposit;
+					}
+				}
+			}
+
+			//Add to journal entry
+			if(!jQuery.isEmptyObject(entries)){
+				$.each(entries, function(index, value){
+					self.journalLineDS.add(value);
+				});
+			}
+
+			this.journalLineDS.sync();
+		},
+		//Reference
+		loadReference 		: function(){
+			var self = this, obj = this.get("obj");
+
+			if(obj.contact_id>0){
+				this.referenceDS.filter([
+					{ field: "contact_id", value: obj.contact_id },
+					{ field: "type", operator:"where_in", value:["Sale_Order", "Quote", "GDN"] },
+					{ field: "status", value:0 },
+					{ field: "reuse", operator:"or_where", value:1 },
+					{ field: "due_date >=", value: kendo.toString(obj.issued_date, "yyyy-MM-dd") }
+				]);
+			}
+		},
+		referenceChanges 	: function(e){
+			var self = this,
+				isExisting = false,
+				obj = this.get("obj"), 
+				reference_id = this.get("reference_id");
+
+			$.each(obj.references, function(index, value){
+				if(value.id==reference_id){
+					isExisting = true;
+
+					return false;
+				}
+			});
+
+			if(reference_id>0 && isExisting==false){
+				var reference = this.referenceDS.get(reference_id),
+					deposit = kendo.parseFloat(reference.deposit) + kendo.parseFloat(obj.deposit);
+
+				obj.set("deposit", deposit);
+				obj.references.push(reference);
+
+			 	this.referenceLineDS.query({
+			 		filter:[
+			 			{ field:"transaction_id", value: reference_id },
+						{ field: "assembly_id", value: 0 }
+					]
+			 	}).then(function(){
+			 		var view = self.referenceLineDS.view();
+
+			 		$.each(view, function(index, value){
+			 			self.lineDS.insert(index, {
+							transaction_id 		: obj.id,
+							reference_id 		: reference.id,
+							tax_item_id 		: value.tax_item_id,
+							item_id 			: value.item_id,
+							measurement_id 		: value.measurement_id,
+							description 		: value.description,
+							quantity 	 		: value.quantity,
+							conversion_ratio 	: value.conversion_ratio,
+							price 				: value.price,
+							amount 				: value.amount,
+							discount 			: value.discount,
+							rate				: value.rate,
+							locale				: value.locale,
+							movement 			: -1,
+							reference_no 		: reference.number,
+
+							item 				: value.item,
+							item_price 			: value.item_price,
+							tax_item 			: value.tax_item
+						});
+			 		});
+
+			 		self.changes();
+			 	});
+		 	}
+
+		 	this.set("reference_id", 0);
+		},
+		referenceRemoveRow 	: function(e){
+			var data = e.data,
+				obj = this.get("obj"),
+				index = obj.references.indexOf(data), 
+				deposit = kendo.parseFloat(obj.deposit) - kendo.parseFloat(data.deposit);
+			
+			obj.set("deposit", deposit);
+
+			obj.references.splice(index, 1);
+		},
+		//Recurring
+		loadRecurring 		: function(id){
+			var self = this;
+
+			this.recurringDS.query({
+				filter:[
+					{ field:"id", value:id },
+					{ field:"is_recurring", value:1 }
+				],
+				page: 1,
+				pageSize: 100
+			}).then(function(){
+				var view = self.recurringDS.view(),
+				obj = self.get("obj");
+				
+				obj.set("contact", view[0].contact);
+				obj.set("contact_id", view[0].contact.id);
+				obj.set("recurring_id", id);
+				obj.set("payment_method_id", view[0].payment_method_id);
+				obj.set("account_id", view[0].account_id);
+				obj.set("employee_id", view[0].employee_id);//Sale Rep
+				obj.set("job_id", view[0].job_id);
+				obj.set("segments", view[0].segments);
+				obj.set("locale", view[0].locale);
+				obj.set("memo", view[0].memo);
+				obj.set("memo2", view[0].memo2);
+				obj.set("bill_to", view[0].bill_to);
+				obj.set("ship_to", view[0].ship_to);
+
+				// self.setContact(view[0].contact);
+			});
+
+			this.recurringLineDS.query({
+				filter:[
+					{ field: "transaction_id", value: id },
+					{ field: "assembly_id", value: 0 }
+				]
+			}).then(function(){
+				var view = self.recurringLineDS.view();
+				self.lineDS.data([]);
+
+				$.each(view, function(index, value){
+					self.lineDS.add({
+						transaction_id 		: 0,
+						tax_item_id 		: value.tax_item_id,
+						item_id 			: value.item_id,
+						measurement_id 		: value.measurement_id,
+						description 		: value.description,
+						quantity 	 		: value.quantity,
+						price 				: value.price,
+						amount 				: value.amount,
+						discount 			: value.discount,
+						rate				: value.rate,
+						locale				: value.locale,
+						movement 			: -1,
+
+						item 				: value.item,
+						item_price 			: value.item_price,
+						tax_item 			: value.tax_item
+					});
+				});
+
+				self.changes();
+			});
+		},
+		frequencyChanges 	: function(){
+			var obj = this.get("obj");
+
+			switch(obj.frequency) {
+			    case "Daily":
+			        this.set("showMonthOption", false);
+			        this.set("showMonth", false);
+			        this.set("showWeek", false);
+			        this.set("showDay", false);
+			       
+			        break;
+			    case "Weekly":
+			        this.set("showMonthOption", false);
+			        this.set("showMonth", false);
+			        this.set("showWeek", true);
+			        this.set("showDay", false);
+
+			        break;
+			    case "Monthly":
+			        this.set("showMonthOption", true);
+			        this.set("showMonth", false);
+			        this.set("showWeek", false);
+			        this.set("showDay", true);
+
+			        break;
+			    case "Annually":
+			        this.set("showMonthOption", false);
+			        this.set("showMonth", true);
+			        this.set("showWeek", false);
+			        this.set("showDay", true);
+
+			        break;
+			    default:
+			        //Default here..
+			}
+		},
+		monthOptionChanges 	: function(){
+			var obj = this.get("obj");
+
+			switch(obj.month_option) {
+			    case "Day":
+			        this.set("showWeek", false);
+			        this.set("showDay", true);
+			       
+			        break;
+			    default:
+			        this.set("showWeek", true);
+			        this.set("showDay", false);
+			}
+		},
+		recurringSync 		: function(){
+	    	var dfd = $.Deferred();
+
+	    	this.recurringDS.sync();
+		    this.recurringDS.bind("requestEnd", function(e){
+		    	if(e.response){
+					dfd.resolve(e.response.results);
+				}
+		    });
+		    this.recurringDS.bind("error", function(e){
+				dfd.reject(e.errorThrown);
+		    });
+
+		    return dfd;
+	    }
+	});
 	banhji.saleRecurring = kendo.observable({
 		lang 				: langVM,
 		dataSource 			: dataStore(apiUrl + "transactions"),
@@ -12465,6 +14980,7 @@
 		quote: new kendo.Layout("#quote", {model: banhji.quote}),
 		saleOrder: new kendo.Layout("#saleOrder", {model: banhji.saleOrder}),
 		customerDeposit: new kendo.Layout("#customerDeposit", {model: banhji.customerDeposit}),
+		cashSale: new kendo.Layout("#cashSale", {model: banhji.cashSale}),
 		sale: new kendo.Layout("#sale", {model: banhji.sale}),
 		saleReportCenter: new kendo.Layout("#saleReportCenter", {model: banhji.saleReportCenter}),
 		saleRecurring : new kendo.Layout("#saleRecurring", {model: banhji.saleRecurring}),
@@ -12523,9 +15039,9 @@
 	banhji.router.route('/', function(){
 		var blank = new kendo.View('#blank-tmpl');
 		var admin = JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).role : 0;
-        if(admin != 1) {
-        	window.location.replace("<?php echo base_url(); ?>admin");
-        } else {
+        // if(admin != 1) {
+        // 	window.location.replace("<?php echo base_url(); ?>admin");
+        // } else {
         	banhji.view.layout.showIn('#content', banhji.view.index);
 			banhji.view.layout.showIn('#menu', banhji.view.menu);
 			$('#main-top-navigation').append('<li><a href="\#">Home</a></li>');
@@ -12534,7 +15050,7 @@
 			banhji.index.getLogo();
 			banhji.index.pageLoad();
 			banhji.pageLoaded["index"] = true;
-        }
+        // }
 	});
 	banhji.router.route("/search_advanced", function(){
 		if(!banhji.userManagement.getLogin()){
@@ -12943,6 +15459,111 @@
 		// 	}
 		// });
 	});
+	banhji.router.route("/cash_sale(/:id)", function(id){
+		banhji.accessPage.query({
+			filter:[
+				{ field:"name", value:"cash_sale" },
+				{ field:'username', operator:"where_related_user", value: JSON.parse(localStorage.getItem('userData/user')).username }
+			]
+		}).then(function(e){
+			if(banhji.accessPage.data().length > 0) {
+				banhji.view.layout.showIn("#content", banhji.view.cashSale);
+				kendo.fx($("#slide-form")).slideIn("down").play();
+
+				var vm = banhji.cashSale;
+				banhji.userManagement.addMultiTask("Cash Sale","cash_sale",vm);
+
+				if(banhji.pageLoaded["cash_sale"]==undefined){
+					banhji.pageLoaded["cash_sale"] = true;
+
+					vm.lineDS.bind("change", vm.lineDSChanges);
+
+					var validator = $("#example").kendoValidator({
+			        	rules: {
+					        customRule1: function(input) {
+					          	if (input.is("[name=txtRecurringName]") && vm.recurring_validate) {
+					          		vm.set("recurring_validate", false);
+					            	return $.trim(input.val()) !== "";
+					          	}
+					          	return true;
+					        },
+					        customRule2: function(input){
+					          	if (input.is("[name=txtNumber]")) {	
+						            return vm.get("notDuplicateNumber");
+						        }
+						        return true;
+					        }
+					    },
+					    messages: {
+					        customRule1: banhji.source.requiredMessage,
+					        customRule2: banhji.source.duplicateNumber
+					    }
+			        }).data("kendoValidator");
+
+			        $("#saveDraft1").click(function(e){
+						e.preventDefault();
+
+						if(validator.validate() && vm.validating()){
+							vm.set("saveDraft", true);
+			            	vm.save();
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
+
+			        $("#saveNew").click(function(e){
+						e.preventDefault();
+
+						if(validator.validate() && vm.validating()){
+			            	vm.save();
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
+
+					$("#saveClose").click(function(e){
+						e.preventDefault();
+
+						if(validator.validate() && vm.validating()){
+							vm.set("saveClose", true);
+			            	vm.save();
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
+
+					$("#savePrint").click(function(e){
+						e.preventDefault();
+						
+						if(validator.validate() && vm.validating()){
+							vm.set("savePrint", true);
+			            	vm.save();
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
+
+					$("#saveRecurring").click(function(e){
+						e.preventDefault();
+
+						vm.set("recurring_validate", true);
+
+						if(validator.validate() && vm.validating()){
+			            	vm.set("saveRecurring", true);
+			            	vm.save();
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
+				}
+
+				vm.pageLoad(id);
+
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}
+		});
+	});
 	banhji.router.route("/sale", function(){
 		banhji.view.layout.showIn("#content", banhji.view.sale);
 		banhji.view.layout.showIn('#menu', banhji.view.menu);
@@ -13089,4 +15710,4 @@
 		    createCookie(name,"");
 		}
 	});
-</script>                                                                                            
+</script>
