@@ -5601,8 +5601,11 @@
                     '<link href="<?php echo base_url(); ?>assets/css/water/water.css" rel="stylesheet" />'+
                     '<link href="<?php echo base_url(); ?>assets/css/offline/offline.css" rel="stylesheet" />'+
                     '<link href="<?php echo base_url(); ?>assets/css/water/winvoice-print.css" rel="stylesheet" />'+
+                    '<link href="<?php echo base_url(); ?>assets/kendo/styles/kendo.common.min.css" rel="stylesheet" />'+
+                    '<link href="<?php echo base_url(); ?>assets/spa/wellnez.css" rel="stylesheet" />'+
                     '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">'+
-                    '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">'+
+                    '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
+                    '<link href="https://fonts.googleapis.com/css?family=Preahvihear" rel="stylesheet">'+
                     '<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Battambang&amp;subset=khmer" media="all">'+
                     '<style type="text/css" media="print">' +
                         '@page { size: portrait; margin:0.05cm;' +
@@ -5615,7 +5618,7 @@
                                 '-webkit-print-color-adjust:exact; ' +
                             '} ' +
                         '}' +
-                        '.main-color {' +
+                        '* {' +
                             '-webkit-print-color-adjust:exact; ' +
                         '} ' +
                         '.inv1 .light-blue-td { ' +
@@ -5655,7 +5658,7 @@
             doc.close();
             setTimeout(function(){
                 win.print();    
-                win.close();
+                // win.close();
             },1000);
         },
         cancel              : function(){

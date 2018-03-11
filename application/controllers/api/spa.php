@@ -876,6 +876,7 @@ class Spa extends REST_Controller {
 		foreach ($models as $value) {
 			//Sale Order
 			$saleorder = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$saleorder->where("type", "Sale_Order");
 			$saleorder->where("id", $value->transaction_id)->limit(1)->get();
 			//Invoice
 			$txn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
@@ -930,6 +931,8 @@ class Spa extends REST_Controller {
 					$it->reference_no = $saleorder->number;
 					$it->save();
 				}
+				//Journal 
+				
 			}
 			$saleorder->status = 1;
 			$saleorder->save();
@@ -951,18 +954,35 @@ class Spa extends REST_Controller {
 				"number" 	=> $con->number,
 				"abbr" 		=> $con->abbr,
 			);
+			//Brach
+			$brar = [];
+			$userbranch = new Spa_user_branch(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$userbranch->where("user_id", $value->user_id)->limit(1)->get();
+			if($userbranch->exists()){
+				$branch = new Branch(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$branch->where("id", $userbranch->branch_id)->limit(1)->get();
+				$brar = array(
+					"id" 	=> $branch->id,
+					"name" 	=> $branch->name,
+					"address" => $branch->address,
+					"telephone" => $branch->telephone,
+				);
+			}
+			$total = floatval($txn->sub_total) - floatval($txn->discount);
 			$data["results"][] = array(
 		   		"id" 			=> $txn->id,
 		   		"number" 		=> $txn->number,
 		   		"amount" 		=> floatval($txn->amount),
 		   		"sub_total" 	=> floatval($txn->sub_total),
+		   		"total" 		=> floatval($total),
 		   		"discount" 		=> floatval($txn->discount),
 		   		"tax" 			=> floatval($txn->tax),
 		   		"rate" 			=> floatval($txn->rate),
 		   		"locale" 		=> $txn->locale,
 		   		"issued_date" 	=> $txn->issued_date,
 		   		"items" 		=> $value->items,
-		   		"contact" 		=> $conar
+		   		"contact" 		=> $conar,
+		   		"branch" 		=> $brar,
 		   	);
 		}
 		$data["count"] = count($data["results"]);

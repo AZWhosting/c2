@@ -6004,7 +6004,7 @@
             filter: [
                 {
                     field: "contact_type_id",
-                    value: 9
+                    value: 10
                 }
             ],
             sort: {
@@ -6016,7 +6016,7 @@
             serverSorting: true,
             serverPaging: true,
             page: 1,
-            pageSize: 4
+            pageSize: 100
         }), 
         itemGroupDS         : banhji.source.itemGroupDS,
         statusObj           : banhji.source.statusObj,
