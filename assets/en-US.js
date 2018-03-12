@@ -82,6 +82,7 @@ var	en_US = {
 	"save_print" : "Save and Print",
 	"save_option" : "Save Options",
 	"save_draft" : "Save as Draft",
+	"save_draft_print" : "Save Draft and Print",
 	"center" : "CENTER",
 	"in_here" : "In here, you can manage your customer information, revenues, collections, and other related transactions.",
 	"add_new_cutomer" : "Add New Customer",
