@@ -279,6 +279,10 @@ class Spa extends REST_Controller {
 					$sr->work_id = $work->id;
 					$sr->room_id = $r->id;
 					$sr->save();
+					$room = new Spa_room(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$room->where("id", $r->id)->limit(1)->get();
+					$room->work_id = $work->id;
+					$room->save();
 				}
 				$data["results"][] = array(
 			   		"transaction_id" 			=> $txn->id,

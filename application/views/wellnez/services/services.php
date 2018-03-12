@@ -397,12 +397,13 @@
 		color: #fff !important;
 	}
 	.serving {
-		background: #f49292;
+		background: #1c3b19;
+		color: #fff;
 	}
 	.circle_plus i:before{
 		font-size: 55px;
 		text-align: center;
-		color: #ccc;
+		color: #0eac00;
 	}
 </style>
 <!-- ***************************
@@ -596,7 +597,7 @@
 		#})#
 		<p style="text-align: left;"><b>Status:</b> <span style="text-align: center;font-size: 12px;">#: status#</span></p>
 		#if(status == 'Available'){#
-		<div class="shadow" style="z-index: 9999;position: absolute;top: 0;left: 0;width: 100%;height: 100%;background: rgba(0,0,0,.5)">
+		<div class="shadow" style="z-index: 9999;position: absolute;top: 0;left: 0;width: 100%;height: 100%;background: rgba(255,255,255.0.5)">
 			<a style="padding:28px;top: 80px;" href="<?php echo base_url(); ?>wellnez/pos/\#/room/#:room_id#" class="glyphicons no-js circle_plus"><i ></i></a>
 		</div>
 		#}#
@@ -762,4 +763,4 @@
 	        </div>
 	    </div>
     </div>
-</script>
+</script> 

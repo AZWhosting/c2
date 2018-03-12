@@ -219,8 +219,8 @@ class Sales extends REST_Controller {
 	//SALE BY PRODUCT
 	function sale_summary_by_product_get() {
 		$filter 	= $this->get("filter");
-		$page 		= $this->get('page');
-		$limit 		= $this->get('limit');
+		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 10000;	
 		$sort 	 	= $this->get("sort");
 		$data["results"] = [];
 		$data["count"] = 0;
@@ -259,7 +259,13 @@ class Sales extends REST_Controller {
 		$obj->where_related("transaction", "deleted <>", 1);
 		$obj->order_by_related("transaction", "issued_date", "asc");
 		$obj->where("deleted <>", 1);
-		$obj->get_iterated();
+		if($page && $limit){
+			$obj->get_paged_iterated($page, $limit);
+			$data["count"] = $obj->paged->total_rows;
+		}else{
+			$obj->get_iterated();
+			$data["count"] = $obj->result_count();
+		}
 		
 		if($obj->exists()){
 			$objList = [];
@@ -452,7 +458,15 @@ class Sales extends REST_Controller {
 		$obj->where_related("transaction", "deleted <>", 1);
 		$obj->order_by_related("transaction", "issued_date", "asc");
 		$obj->where("deleted <>", 1);
-		$obj->get_iterated();
+		// $obj->get_iterated();
+		//Results
+		if($page && $limit){
+			$obj->get_paged_iterated($page, $limit);
+			$data["count"] = $obj->paged->total_rows;
+		}else{
+			$obj->get_iterated();
+			$data["count"] = $obj->result_count();
+		}
 		
 		if($obj->exists()){
 			$objList = [];
@@ -507,7 +521,7 @@ class Sales extends REST_Controller {
 
 				$data["results"][] = $value;
 			}
-			$data["count"] = count($data["results"]);
+			// $data["count"] = count($data["results"]);
 		}
 
 		//Response Data

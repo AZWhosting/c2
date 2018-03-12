@@ -8238,14 +8238,21 @@
             if(id){
                 var self = this;
                 this.roomDS.query({
-                    filter: {field: "id", value: id}
+                    filter: [
+                        {field: "id", value: id},
+                        {field: "work_id", value: 0}
+                    ]
                 }).then(function(e){
-                    var v = self.roomDS.view();
-                    banhji.Index.roomAR.push({
-                        id: v[0].id,
-                        name: v[0].name,
-                    });
-                    banhji.router.navigate("/");
+                    if(self.roomDS.data().length > 0){
+                        var v = self.roomDS.view();
+                        banhji.Index.roomAR.push({
+                            id: v[0].id,
+                            name: v[0].name,
+                        });
+                        banhji.router.navigate("/");
+                    }else{
+                        alert("This room is unavailable!");
+                    }
                 });
             }else{
                 banhji.router.navigate("/");
