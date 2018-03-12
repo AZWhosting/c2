@@ -15371,6 +15371,7 @@
 			} else {
 				window.location.replace(baseUrl + "admin");
 			}
+		});
 	});
 	banhji.router.route("/customer_deposit(/:id)", function(id){
 		banhji.accessPage.query({
@@ -15458,9 +15459,10 @@
 				}
 
 				vm.pageLoad(id);
-		} else {
-				window.location.replace(baseUrl + "admin");
-		}
+			} else {
+					window.location.replace(baseUrl + "admin");
+			}
+		});
 	});
 	banhji.router.route("/cash_sale(/:id)", function(id){
 		banhji.accessPage.query({
