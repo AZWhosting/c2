@@ -1344,6 +1344,16 @@ class Spa extends REST_Controller {
 		$limit 		= $this->get('limit');
 		$sort 	 	= $this->get("sort");
 		$obj = new Spa_room(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		//Filter
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value["operator"])) {
+					$obj->{$value["operator"]}($value["field"], $value["value"]);
+				} else {
+	    			$obj->where($value["field"], $value["value"]);
+				}
+			}
+		}
 		//Results
 		if($page && $limit){
 			$obj->get_paged_iterated($page, $limit);
@@ -1670,6 +1680,45 @@ class Spa extends REST_Controller {
 		}
 		$data["count"] = count($data["results"]);
 		$this->response($data, 201);			
+	}
+	//Room Service
+	function roomservice_get(){
+		$data["results"] = [];
+		$data["count"] = 0;
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$obj = new Spa_rooms_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		//Filter
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value["operator"])) {
+					$obj->{$value["operator"]}($value["field"], $value["value"]);
+				} else {
+	    			$obj->where($value["field"], $value["value"]);
+				}
+			}
+		}
+		//Results
+		if($page && $limit){
+			$obj->get_paged_iterated($page, $limit);
+			$data["count"] = $obj->paged->total_rows;
+		}else{
+			$obj->get_iterated();
+			$data["count"] = $obj->result_count();
+		}
+		if($obj->exists()){
+			$it = [];
+			foreach ($obj as $value) {
+					$it[] = intval($value->item_id);
+			}
+			$data["results"][] = array(
+				"item" 				=> $it,
+			);
+		}
+		//Response Data
+		$this->response($data, 200);
 	}
 	//Generate invoice number
 	public function _generate_number($type, $date){

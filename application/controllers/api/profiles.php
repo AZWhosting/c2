@@ -69,7 +69,7 @@ class Profiles extends REST_Controller {
 				'role' 	=> $user->role,
 				'mobile'	=> $user->mobile,
 				'email' 	=> $user->email,
-				'usertype' 	=> $user->usertype_id,				
+				'usertype' 	=> $user->usertype_id,
 				'created_at'=> $user->created_at,
 				'updated_at'=> $user->updated_at
 			);
@@ -103,8 +103,8 @@ class Profiles extends REST_Controller {
 		foreach($users as $user) {
 			$role = new Role(null);
 			$role->include_related('user', array('id', 'username'));
-			$role->where_related('user', 'id', $user->id);	
-			
+			$role->where_related('user', 'id', $user->id);
+
 			$role->get();
 			foreach($role as $r) {
 				$roles[] = array('name' =>$r->name);
@@ -168,7 +168,7 @@ class Profiles extends REST_Controller {
 				'role' 		=> $User->role,
 				'mobile'	=> $User->mobile,
 				'email' 	=> $User->email,
-				'usertype' 	=> $User->usertype_id,				
+				'usertype' 	=> $User->usertype_id,
 				'created_at'=> $User->created_at,
 				'updated_at'=> $User->updated_at
 				);
@@ -348,10 +348,12 @@ class Profiles extends REST_Controller {
 				$data[] = array(
 					'id' => $u->institute->id,
 					'name'=>$u->institute->name,
+					'name_en' => $u->institute->name_en,
 					'registrationNumber' => $u->institute->registration_number,
 					'email' => $u->institute->email,
 					'telephone' => $u->institute->telephone,
 					'address'=>$u->institute->address,
+					'address_en' => $u->institute->address_en,
 					'logo' => array('id' => $profile_photo->id, 'url' => $profile_photo->url),
 					'description' => $u->institute->description,
 					'vat_number' => $u->institute->vat_number,
@@ -410,7 +412,7 @@ class Profiles extends REST_Controller {
 				$modules->where('is_core', 'true')->get();
 				$fx = new Role(null);
 				$fx->where('type', 'UTB');
-				$fx->get(); 
+				$fx->get();
 
 				$inst = new Institute();
 				$inst->name = $r->name;
@@ -477,9 +479,11 @@ class Profiles extends REST_Controller {
 			$pimage->where('url', $req->logo->url)->get();
 
 			$company->name = $req->name;
+			$company->name_en = $req->name_en;
 			$company->registration_number = $req->registrationNumber;
 			$company->email= isset($req->email) ? $req->email: "";
 			$company->address= isset($req->address) ? $req->address:"";
+			$company->address_en= isset($req->address_en) ? $req->address_en:"";
 			$company->pimage_id = $pimage->id;
 			$company->telephone = isset($req->telephone) ? $req->telephone : "";
 			$company->description= isset($req->description) ? $req->description : "";
@@ -506,9 +510,11 @@ class Profiles extends REST_Controller {
 				$data[] = array(
 					'id' => $company->id,
 					'name'=>$company->name,
+					'name_en' => $company->name_en,
 					'email' => $company->email,
 					'telephone' => $company->telephone,
 					'address'=>$company->address,
+					'address_en' => $company->address_en,
 					'logo' => array('id'=>$pimage->id, 'url' => $pimage->url),
 					'description' => $company->description,
 					'vat_number' => $company->vat_number,

@@ -15164,13 +15164,13 @@
 		});
 	});
 	banhji.router.route("/quote(/:id)", function(id){
-		// banhji.accessPage.query({
-		// 	filter:[
-		// 		{ field:"name", value:"quotation" },
-		// 		{ field:'username', operator:"where_related_user", value: JSON.parse(localStorage.getItem('userData/user')).username }
-		// 	]
-		// }).then(function(e){
-		// 	if(banhji.accessPage.data().length > 0) {
+		banhji.accessPage.query({
+			filter:[
+				{ field:"name", value:"quote" },
+				{ field:'username', operator:"where_related_user", value: JSON.parse(localStorage.getItem('userData/user')).username }
+			]
+		}).then(function(e){
+			if(banhji.accessPage.data().length > 0) {
 
 				banhji.view.layout.showIn("#content", banhji.view.quote);
 				kendo.fx($("#slide-form")).slideIn("down").play();
@@ -15264,118 +15264,122 @@
 
 				vm.pageLoad(id);
 
-		// 	} else {
-		// 		window.location.replace(baseUrl + "admin");
-		// 	}
-		// });
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}
+		});
 	});
 	banhji.router.route("/sale_order(/:id)", function(id){
-		banhji.view.layout.showIn("#content", banhji.view.saleOrder);
-		kendo.fx($("#slide-form")).slideIn("down").play();
+		banhji.accessPage.query({
+			filter:[
+				{ field:"name", value:"sale_order" },
+				{ field:'username', operator:"where_related_user", value: JSON.parse(localStorage.getItem('userData/user')).username }
+			]
+		}).then(function(e){
+			if(banhji.accessPage.data().length > 0) {
+				banhji.view.layout.showIn("#content", banhji.view.saleOrder);
+				kendo.fx($("#slide-form")).slideIn("down").play();
 
-		var vm = banhji.saleOrder;
-		banhji.userManagement.addMultiTask("Sale Order","sale_order",vm);
+				var vm = banhji.saleOrder;
+				banhji.userManagement.addMultiTask("Sale Order","sale_order",vm);
 
-		if(banhji.pageLoaded["sale_order"]==undefined){
-			banhji.pageLoaded["sale_order"] = true;
+				if(banhji.pageLoaded["sale_order"]==undefined){
+					banhji.pageLoaded["sale_order"] = true;
 
-			vm.lineDS.bind("change", vm.lineDSChanges);
+					vm.lineDS.bind("change", vm.lineDSChanges);
 
-			var validator = $("#example").kendoValidator({
-	        	rules: {
-			        customRule1: function(input) {
-			          	if (input.is("[name=txtRecurringName]") && vm.recurring_validate) {
-			          		vm.set("recurring_validate", false);
-			            	return $.trim(input.val()) !== "";
-			          	}
-			          	return true;
-			        },
-			        customRule2: function(input){
-			          	if (input.is("[name=txtNumber]")) {	
-				            return vm.get("notDuplicateNumber");
+					var validator = $("#example").kendoValidator({
+			        	rules: {
+					        customRule1: function(input) {
+					          	if (input.is("[name=txtRecurringName]") && vm.recurring_validate) {
+					          		vm.set("recurring_validate", false);
+					            	return $.trim(input.val()) !== "";
+					          	}
+					          	return true;
+					        },
+					        customRule2: function(input){
+					          	if (input.is("[name=txtNumber]")) {	
+						            return vm.get("notDuplicateNumber");
+						        }
+						        return true;
+					        }
+					    },
+					    messages: {
+					        customRule1: banhji.source.requiredMessage,
+					        customRule2: banhji.source.duplicateNumber
+					    }
+			        }).data("kendoValidator");
+
+			        $("#saveDraft1").click(function(e){
+						e.preventDefault();
+
+						if(validator.validate() && vm.validating()){
+							vm.set("saveDraft", true);
+			            	vm.save();
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
 				        }
-				        return true;
-			        }
-			    },
-			    messages: {
-			        customRule1: banhji.source.requiredMessage,
-			        customRule2: banhji.source.duplicateNumber
-			    }
-	        }).data("kendoValidator");
+					});
 
-	        $("#saveDraft1").click(function(e){
-				e.preventDefault();
+			        $("#saveNew").click(function(e){
+						e.preventDefault();
 
-				if(validator.validate() && vm.validating()){
-					vm.set("saveDraft", true);
-	            	vm.save();
-		        }else{
-		        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-		        }
-			});
+						if(validator.validate() && vm.validating()){
+			            	vm.save();
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
 
-	        $("#saveNew").click(function(e){
-				e.preventDefault();
+					$("#saveClose").click(function(e){
+						e.preventDefault();
 
-				if(validator.validate() && vm.validating()){
-	            	vm.save();
-		        }else{
-		        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-		        }
-			});
+						if(validator.validate() && vm.validating()){
+							vm.set("saveClose", true);
+			            	vm.save();
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
 
-			$("#saveClose").click(function(e){
-				e.preventDefault();
+					$("#savePrint").click(function(e){
+						e.preventDefault();
+						
+						if(validator.validate() && vm.validating()){
+							vm.set("savePrint", true);
+			            	vm.save();
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
 
-				if(validator.validate() && vm.validating()){
-					vm.set("saveClose", true);
-	            	vm.save();
-		        }else{
-		        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-		        }
-			});
+					$("#saveRecurring").click(function(e){
+						e.preventDefault();
 
-			$("#savePrint").click(function(e){
-				e.preventDefault();
-				
-				if(validator.validate() && vm.validating()){
-					vm.set("savePrint", true);
-	            	vm.save();
-		        }else{
-		        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-		        }
-			});
+						vm.set("recurring_validate", true);
 
-			$("#saveRecurring").click(function(e){
-				e.preventDefault();
+						if(validator.validate() && vm.validating()){
+			            	vm.set("saveRecurring", true);
+			            	vm.save();
+				        }else{
+				        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				        }
+					});
+				}
 
-				vm.set("recurring_validate", true);
-
-				if(validator.validate() && vm.validating()){
-	            	vm.set("saveRecurring", true);
-	            	vm.save();
-		        }else{
-		        	$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
-		        }
-			});
-		}
-
-		vm.pageLoad(id);
+				vm.pageLoad(id);
+			} else {
+				window.location.replace(baseUrl + "admin");
+			}
 	});
 	banhji.router.route("/customer_deposit(/:id)", function(id){
-		// banhji.accessMod.query({
-		// 	filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
-		// }).then(function(e){
-		// 	var allowed = false;
-		// 	if(banhji.accessMod.data().length > 0) {
-		// 		for(var i = 0; i < banhji.accessMod.data().length; i++) {
-		// 			if("customer" == banhji.accessMod.data()[i].name.toLowerCase()) {
-		// 				allowed = true;
-		// 				break;
-		// 			}
-		// 		}
-		// 	} 
-		// 	if(allowed) {
+		banhji.accessPage.query({
+			filter:[
+				{ field:"name", value:"deposit" },
+				{ field:'username', operator:"where_related_user", value: JSON.parse(localStorage.getItem('userData/user')).username }
+			]
+		}).then(function(e){
+			if(banhji.accessPage.data().length > 0) {
 				banhji.view.layout.showIn("#content", banhji.view.customerDeposit);
 				kendo.fx($("#slide-form")).slideIn("down").play();
 
@@ -15454,10 +15458,9 @@
 				}
 
 				vm.pageLoad(id);
-		// 	} else {
-		// 		window.location.replace(baseUrl + "admin");
-		// 	}
-		// });
+		} else {
+				window.location.replace(baseUrl + "admin");
+		}
 	});
 	banhji.router.route("/cash_sale(/:id)", function(id){
 		banhji.accessPage.query({

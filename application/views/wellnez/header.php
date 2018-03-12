@@ -170,7 +170,7 @@ var themerPrimaryColor = primaryColor;
 <!--start kendo localization in Khmer-->
 
 <!-- Le fav and touch icons -->
-<link rel="shortcut icon" href="<?php echo base_url();?>assets/update/banhji.jpg">
+<link rel="shortcut icon" href="<?php echo base_url();?>assets/spa/icon-wellnez.png">
 
 <style >
 	

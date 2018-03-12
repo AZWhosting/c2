@@ -8103,7 +8103,54 @@
             });
         },
         //Room
-        roomDS       : dataStore(apiUrl + "spa/roomname"),
+        // roomDS       : dataStore(apiUrl + "spa/roomname"),
+        roomDS          : new kendo.data.DataSource({
+            transport: {
+                read: {
+                    url: apiUrl + "spa/roomname",
+                    type: "GET",
+                    headers: banhji.header,
+                    dataType: 'json'
+                },
+                parameterMap: function(options, operation) {
+                    if (operation === 'read') {
+                        return {
+                            page: options.page,
+                            limit: options.pageSize,
+                            filter: options.filter,
+                            sort: options.sort
+                        };
+                    } else {
+                        return {
+                            models: kendo.stringify(options.models)
+                        };
+                    }
+                }
+            },
+            schema: {
+                model: {
+                    id: 'id'
+                },
+                data: 'results',
+                total: 'count'
+            },
+            filter: [
+                {
+                    field: "work_id",
+                    value: 0
+                }
+            ],
+            sort: {
+                field: "id",
+                dir: "asc"
+            },
+            batch: true,
+            serverFiltering: true,
+            serverSorting: true,
+            serverPaging: true,
+            page: 1,
+            pageSize: 8
+        }),
         roomAR          : [],
         emSelect: true,
         supplierDS : new kendo.data.DataSource({
@@ -8174,8 +8221,10 @@
                 this.set("employeeSelected", 0);
             }
         },
+        relationRoom: dataStore(apiUrl + "spa/roomservice"),
         addRoom : function(e){
             if(this.get("roomSelected")){
+                var self = this;
                 var name = e.sender.span[0].innerText;
                 var id = this.get("roomSelected");
                 var h = 0;
@@ -8191,8 +8240,23 @@
                     });
                     h = 0;
                 }
+                this.relationRoom.query({
+                    filter: {field: "room_id", value: this.get("roomSelected")},
+                    pageSize: 1
+                }).then(function(e){
+                    self.queryItemRoom(self.relationRoom.data()[0].item);
+                });
                 this.set("roomSelected", 0);
             }
+        },
+        queryItemRoom: function(id){
+            var ids = [];
+            $.each(id, function(i,v){
+                ids.push(v);
+            })
+            this.itemsDS.query({
+                filter: {field: "id", operator: "where_in", value: ids}
+            })
         },
         rmRoom : function(e){
             var data = e.data;

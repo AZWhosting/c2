@@ -404,7 +404,7 @@
 <!-- ***************************
 *	Water Section      	  *
 **************************** -->
-<script id="customerCenter" type="text/x-kendo-template">
+<script id="loyaltyCenter" type="text/x-kendo-template">
 	<div class="container">
 		<div class="row customerCenter">
 			<div class="span3">
@@ -412,35 +412,24 @@
 					<a href="#/loyalty" class="addLoyalty">Add Loyalty</a>
 					<div class="innerAll" style="width: 100%; float: left; background: #424242;">
 						<form autocomplete="off" class="form-inline" style="margin-bottom: 0;">
-							
 							<div class="widget-search separator bottom">
 								<button style="height: 34px;" type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></button>
 								<div class="overflow-hidden">
 									<input type="search" placeholder="Number or Name..." data-bind="value: searchText">
 								</div>
-							</div>						
-							<div class="select2-container" style="width: 100%;  margin-bottom: 0px;">
-								<input data-role="dropdownlist"
-					                   data-option-label="Select Type..."
-					                   data-value-primitive="true"
-					                   data-text-field="name"
-					                   data-value-field="id"
-					                   data-bind="value: contact_type_id,
-					                              source: contactTypeDS"
-					                   style="width: 100%;" />
-							</div>
+							</div>	
 						</form>					
 					</div>
 
 					<div class="results">
-						<span data-bind="text: contactDS.total"></span>
+						<span data-bind="text: loyaltyDS.total"></span>
 						<span data-bind="text: lang.lang.found_search"></span>
 					</div>
 
 					<div class="table table-condensed " style="height: 450px; overflow: hidden; margin-bottom: 0;"
 						 data-role="grid"
-						 data-bind="source: contactDS"
-						 data-row-template="customerCenter-customer-list-tmpl"
+						 data-bind="source: loyaltyDS"
+						 data-row-template="loyalty-list-tmpl"
 						 data-columns="[{title: ''}]"
 						 data-selectable=true
 						 data-height="450"
@@ -489,76 +478,7 @@
 		</div>
 	</div>	
 </script>
-<script id="customerCenter-transaction-tmpl" type="text/x-kendo-tmpl">
-    <tr>    	  	
-    	<td>#=kendo.toString(new Date(issued_date), "dd-MM-yyyy")#</td>
-    	<td>#=type#</td>
-        <!-- Reference -->
-        <td>
-        	#if(type=="Customer_Deposit" && amount<0){#			
-				<a data-bind="click: goReference">#=number#</a>			
-			#}else{#
-				<a href="\#/#=type.toLowerCase()#/#=id#"><i></i> #=number#</a>
-			#}#        	
-        </td>
-        <!-- Amount -->
-    	<td class="right">
-    		#if(type=="GDN"){#
-    			#=kendo.toString(amount, "n0")#
-    		#}else if(type=="Commercial_Invoice" || type=="Vat_Invoice" || type=="Invoice" || type=="Commercial_Cash_Sale" || type=="Vat_Cash_Sale" || type=="Cash_Sale"){#
-    			#=kendo.toString(amount-deposit, locale=="km-KH"?"c0":"c", locale)#
-    		#}else{#
-    			#=kendo.toString(amount, locale=="km-KH"?"c0":"c", locale)#
-    		#}#
-    	</td>
-    	<!-- Status -->
-    	<td align="center">
-    		#if(status=="4") {#
-    			#=progress#
-    		#}#
-
-    		#if(type=="Quote"){#       		
-				#if(status=="0"){#
-        			Open      			
-        		#}#
-        	#}else if(type=="Sale_Order"){#
-        		#if(status=="0"){#
-        			Open
-        		#}else{#
-        			Done        			
-        		#}#
-        	#}else if(type=="GDN"){#
-        		Delivered
-        	#}else if(type=="Commercial_Invoice" || type=="Vat_Invoice" || type=="Invoice"){#
-        		#if(status=="0" || status=="2") {#
-        			# var date = new Date(), dueDate = new Date(due_date).getTime(), toDay = new Date(date).getTime(); #
-					#if(dueDate < toDay) {#
-						Over Due #:Math.floor((toDay - dueDate)/(1000*60*60*24))# days
-					#} else {#
-						#:Math.floor((dueDate - toDay)/(1000*60*60*24))# days to pay
-					#}#
-				#} else if(status=="1") {#
-					Paid
-				#} else if(status=="3") {#
-					Returned
-				#}#        	
-        	#}#        				
-		</td>
-		<!-- Actions -->
-    	<td align="center">
-			#if(type=="Commercial_Invoice" || type=="Vat_Invoice" || type=="Invoice"){#
-				#if(status=="0" || status=="2") {#
-        			<a data-bind="click: payInvoice"><i></i> <span data-bind="text: lang.lang.receive_payment"></span></a>
-        		#}#
-        	#}#
-
-        	#if(status=="4") {#
-				<a href="\#/#=type.toLowerCase()#/#=id#"><i></i> Use</a>
-    		#}#
-		</td>     	
-    </tr>
-</script>
-<script id="customerCenter-customer-list-tmpl" type="text/x-kendo-tmpl">
+<script id="loyalty-list-tmpl" type="text/x-kendo-tmpl">
 	<tr data-bind="click: selectedRow">
 		<td>
 			<div class="media-body strong">				
@@ -567,19 +487,6 @@
 			</div>
 		</td>
 	</tr>
-</script>
-<script id="customerCenter-note-tmpl" type="text/x-kendo-template">
-	<tr>
-		<td>			
-			<blockquote>
-				<small class="author">
-					<span class="strong">#=creator#</span> :
-					<cite>#=kendo.toString(new Date(noted_date), "g")#</cite>
-				</small>					
-				<p>#=note#</p>
-			</blockquote>				
-		</td>
-	</tr>	
 </script>
 
 
@@ -907,9 +814,9 @@
 							            <li class="span2">
 							            	<a href="#tab2" data-toggle="tab"><span>Rewards</span></a>
 							            </li>
-							            <li class="span2">
+							            <!-- <li class="span2">
 							            	<a href="#tab3" data-toggle="tab"><span>Location</span></a>
-							            </li>
+							            </li> -->
 							        </ul>
 							    </div>
 
@@ -919,218 +826,24 @@
 						            		<span style="padding: 10px 69px 10px 20px; background: #ddd; line-height: 34px; border-width: 1px 0 0 1px;   border-style: solid; border-color: #ccc; font-weight: 700">Name</span>
 						            		<input style="height: 40px; padding: 8px; border-width: 1px 1px 0 1px; border-style: solid; border-color: #ccc; color: #333; margin-left: -4px; width: 55%;" type="search" placeholder="Name..." >
 						            		<div class="clear"></div>
-						            		<span style="padding: 10px 75px 10px 20px; background: #ddd; line-height: 34px; border-width: 1px 0 1px 1px;   border-style: solid; border-color: #ccc; font-weight: 700">Type</span>
-						            		<input style="height: 41px; padding: 8px; border-width: 1px 1px 1px 1px; border-style: solid; border-color: #ccc; color: #333; margin-left: -4px; width: 55%;" type="search" >						            		
+						            		<span style="padding: 10px 76px 10px 20px; background: #ddd; line-height: 34px; border-width: 1px 0 0 1px;   border-style: solid; border-color: #ccc; font-weight: 700">Base</span>
+						            		<input style="height: 41px; padding: 8px; border-width: 1px 1px 0 1px; border-style: solid; border-color: #ccc; color: #333; margin-left: -4px; width: 55%;" type="search" >						            		
+						            		<div class="clear"></div>
+						            		<span style="padding: 10px 74px 10px 20px; background: #ddd; line-height: 34px; border-width: 1px 0 1px 1px;   border-style: solid; border-color: #ccc; font-weight: 700">Type</span>
+						            		<input style="height: 40px; padding: 8px; border-width: 1px 1px 1px 1px; border-style: solid; border-color: #ccc; color: #333; margin-left: -4px; width: 55.1%;" type="search" >
 						            	</div>
 							    	</div>
 
 							        <div class="tab-pane " id="tab1">
 						            	<h3>Earn by Amount Spent</h3>
 						            	<p>Customers earn stars based on the total amount they spend.</p>
-
-						            	<div style="width: 75%; text-align: left; margin: 20px auto 0;">
-						            		<span style="padding: 7px 62px 7px 20px; background: #ddd; line-height: 34px; border-width: 1px 0 0 1px; border-style: solid; border-color: #ccc; font-weight: 700; float: left;">Amount per Points</span>
-						            		<div style="height: 49px; padding: 8px; border-width: 1px 1px 0 1px ; border-style: solid; border-color: #ccc; color: #333; width: 59%; float: left;" type="search" placeholder="Number..." >
-						            			<input  type="search" placeholder="Number..." style="float: left; width: 76%; border: none;">
-						            			<a style="padding: 5px 10px; border: 1px solid #333; float: left; text-align: center;">%</a>
-						            			<a style="padding: 5px 10px; border: 1px solid #333; float: left; text-align: center;">Amount</a>
-						            		</div>
+						            	<div style="width: 50%; text-align: left; margin: 20px auto 0;">
+						            		<span style="padding: 10px 69px 10px 20px; background: #ddd; line-height: 34px; border-width: 1px 0 0 1px;   border-style: solid; border-color: #ccc; font-weight: 700">Amount per point</span>
+						            		<input style="height: 40px; padding: 8px; border-width: 1px 1px 0 1px; border-style: solid; border-color: #ccc; color: #333; margin-left: -4px; width: 55%;" type="search" placeholder="Name..." >
 						            		<div class="clear"></div>
-					            			<span style="padding: 2px 85px 2px 20px; background: #ddd; line-height: 34px; border-width: 1px 0 1px 1px; border-style: solid; border-color: #ccc; font-weight: 700; float: left;">Expiration</span>										            	
-					            			<input 
-												data-role="dropdownlist"
-												data-template="contact-list-tmpl" 
-												data-auto-bind="false" 
-												data-value-primitive="true" 
-												data-filter="startswith" 
-												data-text-field="name" 
-												data-value-field="id"
-												data-option-label="Select a Category..."
-												data-bind=""
-					                            style="height: 40px; padding: 8px; border-width: 1px 1px 1px 1px; border-style: solid; border-color: #ccc; color: #333; margin-left: 0px; width: 63%; float: left;"
-					                            aria-invalid="true" 
-					                            class="k-invalid"
-					                        />
-						            		<!-- <div class="clear"></div>
-						            		<span style="float: left; padding: 3px 62px 3px 20px; background: #ddd; line-height: 34px; border-width: 1px 0 0 1px; border-style: solid; border-color: #ccc; font-weight: 700">Maximum discount</span>
-						            		<input style="float: left; height: 41px; padding: 8px; border-width: 1px 1px 0 1px; border-style: solid; border-color: #ccc; color: #333; width: 57%; float: left;" type="search" placeholder="Number or Name..." >
-						            		<div class="clear"></div>
-						            		<span style="padding: 2px 75px 2px 20px; background: #ddd; line-height: 34px; border-width: 1px 0 1px 1px; border-style: solid; border-color: #ccc; font-weight: 700; float: left;">Expiration</span> -->
+						            		<span style="padding: 10px 76px 10px 20px; background: #ddd; line-height: 34px; border-width: 1px 0 1px 1px;   border-style: solid; border-color: #ccc; font-weight: 700">Point per reward</span>
+						            		<input style="height: 41px; padding: 8px; border-width: 1px 1px 1px 1px; border-style: solid; border-color: #ccc; color: #333; margin-left: -4px; width: 55%;" type="search" >						            		
 						            	</div>
-
-						            	<!-- <div style="width: 50%; text-align: left; margin: 20px auto 0;">
-						            		<span style="padding: 10px 76px 10px 20px; background: #ddd; line-height: 34px; border-width: 1px 0 0 1px;   border-style: solid; border-color: #ccc; font-weight: 700">Amount per points</span>
-						            		<input style="height: 40px; padding: 8px; border-width: 1px 1px 0 1px; border-style: solid; border-color: #ccc; color: #333; margin-left: -4px; width: 55%;" type="search" placeholder="..." >
-						            		<div class="clear"></div>
-						            		<span style="padding: 10px 75px 10px 20px; background: #ddd; line-height: 34px; border-width: 1px 0 1px 1px;   border-style: solid; border-color: #ccc; font-weight: 700">Points for a reward</span>
-						            		<input style="height: 41px; padding: 8px; border-width: 1px 1px 1px 1px; border-style: solid; border-color: #ccc; color: #333; margin-left: -4px; width: 55%;" type="search" placeholder="..." >
-						            		<p style="margin-top: 10px; float: left;">Set the number of stars required to earn a reward.</p>
-						            	</div> -->
-						            	<!-- <div class="row">
-											<div class="span12">
-												<div class="box-generic" style="border: none;">
-												    <div class="tabsbar tabsbar-1">
-												        <ul class="row-fluid row-merge">
-												            <li class="span2  active">
-												            	<a href="#tab1-1" data-toggle="tab">
-												            		<span class="textBlue">By Visit</span>
-												            		 <br><span>Customers earn one star per qualifying visit.</span>
-												            	</a>
-												            </li>
-												            <li class="span2 usd">
-												            	<a href="#tab1-2" data-toggle="tab">
-												            		<span class="textBlue">Earn by Amount Spent</span>
-												            		 <br><span>Customers earn stars based on the total amount they spend.</span>
-												            	</a>
-												            </li>
-												            <li class="span2 parents">
-												            	<a href="#tab1-3" data-toggle="tab">
-												            		<span class="textBlue">By Item or Category</span>
-												            		 <br><span>Reward stars based on the specific items or categories being purchased.</span>
-												            	</a>
-												            </li>
-												        </ul>
-												    </div>
-
-												    <div class="tab-content">
-												        <div class="tab-pane active" id="tab1-1">
-											            	<div style="margin-top: 20px; float: left;width: 100%; text-align: left;">
-											            		<span style="padding: 10px 62px 10px 20px; background: #ddd; line-height: 34px; border-width: 1px 0 0 1px;   border-style: solid; border-color: #ccc; font-weight: 700">Minimum purchase</span>
-											            		<input style="height: 40px; padding: 8px; border-width: 1px 1px 0 1px; border-style: solid; border-color: #ccc; color: #333; margin-left: -4px; width: 55%;" type="search" placeholder="Number or Name..." >
-											            		<div class="clear"></div>
-											            		<span style="padding: 10px 75px 10px 20px; background: #ddd; line-height: 34px; border-width: 1px 0 1px 1px;   border-style: solid; border-color: #ccc; font-weight: 700">Stars for a reward</span>
-											            		<input style="height: 41px; padding: 8px; border-width: 1px 1px 1px 1px; border-style: solid; border-color: #ccc; color: #333; margin-left: -4px; width: 55%;" type="search" placeholder="Number or Name..." >
-											            		<p style="margin-top: 10px; float: left;">Set the number of stars required to earn a reward.</p>
-											            	</div>
-											        	</div>
-												        
-												        <div class="tab-pane" id="tab1-2">
-												        	<div style="margin-top: 20px; float: left;width: 100%; text-align: left;">
-											            		<span style="padding: 10px 84px 10px 20px; background: #ddd; line-height: 34px; border-width: 1px 0 0 1px;   border-style: solid; border-color: #ccc; font-weight: 700">Amount per star</span>
-											            		<input style="height: 40px; padding: 8px; border-width: 1px 1px 0 1px; border-style: solid; border-color: #ccc; color: #333; margin-left: -4px; width: 55%;" type="search" placeholder="Number or Name..." >
-											            		<div class="clear"></div>
-											            		<span style="padding: 10px 75px 10px 20px; background: #ddd; line-height: 34px; border-width: 1px 0 1px 1px;   border-style: solid; border-color: #ccc; font-weight: 700">Stars for a reward</span>
-											            		<input style="height: 41px; padding: 8px; border-width: 1px 1px 1px 1px; border-style: solid; border-color: #ccc; color: #333; margin-left: -4px; width: 55%;" type="search" placeholder="Number or Name..." >
-											            		<p style="margin-top: 10px; float: left;">Set the number of stars required to earn a reward.</p>
-											            	</div>
-											        	</div>
-												        
-												        <div class="tab-pane" id="tab1-3">
-												        	<div class="row">
-																<div class="span12">
-																	<div class="box-generic" style="border: none;">
-																	    <div class="tabsbar tabsbar-1">
-																	        <ul class="row-fluid row-merge">
-																	            <li class="span2  active">
-																	            	<a href="#tab2-1" data-toggle="tab">
-																	            		Categories
-																	            	</a>
-																	            </li>
-																	            <li class="span2 usd">
-																	            	<a href="#tab2-2" data-toggle="tab">
-																	            		Specific Items
-																	            	</a>
-																	            </li>
-																	        </ul>
-																	    </div>
-
-																	    <div class="tab-content">
-																	        <div class="tab-pane active" id="tab2-1">
-																            	<div class="row">
-																            		<div class="span12">
-																            			<table>
-																            				<tr>
-																            					<th>Category</th>
-																            					<th style="text-align: center;">Star Value</th>
-																            				</tr>
-																            				<tr>
-																            					<td>
-																            						<input 
-																										data-role="dropdownlist"
-																										data-template="contact-list-tmpl" 
-																										data-auto-bind="false" 
-																										data-value-primitive="true" 
-																										data-filter="startswith" 
-																										data-text-field="name" 
-																										data-value-field="id"
-																										data-option-label="Select a Category..."
-																										data-bind=""
-																			                            style="width: 100%; float: left; height: 30px; padding: 5px;" 
-																			                            aria-invalid="true" 
-																			                            class="k-invalid"
-																			                        />
-																            					</td>
-																            					<td>
-																            						<input 
-																            							style="width: 100%; height: 30px; padding: 5px; border: 1px solid #ccc; color: #333;" 
-																            							type="number" 
-																            							placeholder="Number..." 
-																            							data-bind="">
-																            					</td>
-																            				</tr>
-																            			</table>
-																            			<div style="margin-top: 20px; float: left;width: 100%; text-align: left;">
-																		            		
-																		            		<span style="padding: 10px 75px 10px 20px; background: #ddd; line-height: 34px; border-width: 1px 0 1px 1px;   border-style: solid; border-color: #ccc; font-weight: 700">Stars for a reward</span>
-																		            		<input style="height: 41px; padding: 8px; border-width: 1px 1px 1px 1px; border-style: solid; border-color: #ccc; color: #333; margin-left: -4px; width: 68%;" type="search" placeholder="Number or Name..." >
-																		            		<p style="margin-top: 10px; float: left;">Set the number of stars required to earn a reward.</p>
-																		            	</div>
-																            		</div>
-																            	</div>
-																        	</div>
-																	        
-																	        <div class="tab-pane" id="tab2-2">
-																	        	<div class="row">
-																            		<div class="span12">
-																            			<table>
-																            				<tr>
-																            					<th>Item</th>
-																            					<th style="text-align: center;">Star Value</th>
-																            				</tr>
-																            				<tr>
-																            					<td>
-																            						<input 
-																										data-role="dropdownlist"
-																										data-template="contact-list-tmpl" 
-																										data-auto-bind="false" 
-																										data-value-primitive="true" 
-																										data-filter="startswith" 
-																										data-text-field="name" 
-																										data-value-field="id"
-																										data-option-label="Select an Item..."
-																										data-bind=""
-																			                            style="width: 100%; float: left; height: 30px; padding: 5px;" 
-																			                            aria-invalid="true" 
-																			                            class="k-invalid" />
-																            					</td>
-																            					<td>
-																            						<input 
-																            							style="width: 100%; height: 30px; padding: 5px; border: 1px solid #ccc; color: #333;" 
-																            							type="number" 
-																            							placeholder="Number..." 
-																            							data-bind="">
-																            					</td>
-																            				</tr>
-																            			</table>
-																            			<div style="margin-top: 20px; float: left;width: 100%; text-align: left;">
-																		            		
-																		            		<span style="padding: 10px 75px 10px 20px; background: #ddd; line-height: 34px; border-width: 1px 0 1px 1px;   border-style: solid; border-color: #ccc; font-weight: 700">Stars for a reward</span>
-																		            		<input style="height: 41px; padding: 8px; border-width: 1px 1px 1px 1px; border-style: solid; border-color: #ccc; color: #333; margin-left: -4px; width: 68%;" type="search" placeholder="Number or Name..." >
-																		            		<p style="margin-top: 10px; float: left;">Set the number of stars required to earn a reward.</p>
-																		            	</div>
-																            		</div>
-																            	</div>
-																        	</div>																	        
-																	        
-																	    </div>
-																	</div>
-																</div>
-															</div>
-											        	</div>
-												    </div>
-												</div>
-											</div>
-										</div> -->
 						        	</div>
 							        
 							        <div class="tab-pane " id="tab2">
@@ -1138,8 +851,8 @@
 						            	<p>Select one of the options below to determine how your customers will redeem stars for rewards.</p>
 
 						            	<div style="width: 75%; text-align: left; margin: 20px auto 0;">
-						            		<span style="padding: 7px 62px 7px 20px; background: #ddd; line-height: 34px; border-width: 1px 0 0 1px; border-style: solid; border-color: #ccc; font-weight: 700; float: left;">Point for a rewards</span>
-						            		<div style="height: 49px; padding: 8px; border-width: 1px 1px 0 1px ; border-style: solid; border-color: #ccc; color: #333; width: 59%; float: left;" type="search" placeholder="Number..." >
+						            		<span style="padding: 7px 50px 7px 20px; background: #ddd; line-height: 34px; border-width: 1px 0 0 1px; border-style: solid; border-color: #ccc; font-weight: 700; float: left;">Reward amount</span>
+						            		<div style="height: 49px; padding: 8px; border-width: 1px 1px 0 1px ; border-style: solid; border-color: #ccc; color: #333; width: 63%; float: left;" type="search" placeholder="Number..." >
 						            			<input  type="search" placeholder="Number..." style="float: left; width: 76%; border: none;">
 						            			<a style="padding: 5px 10px; border: 1px solid #333; float: left; text-align: center;">%</a>
 						            			<a style="padding: 5px 10px; border: 1px solid #333; float: left; text-align: center;">Amount</a>
@@ -1159,315 +872,10 @@
 					                            style="height: 40px; padding: 8px; border-width: 1px 1px 1px 1px; border-style: solid; border-color: #ccc; color: #333; margin-left: 0px; width: 63%; float: left;"
 					                            aria-invalid="true" 
 					                            class="k-invalid"
-					                        />
-						            		<!-- <div class="clear"></div>
-						            		<span style="float: left; padding: 3px 62px 3px 20px; background: #ddd; line-height: 34px; border-width: 1px 0 0 1px; border-style: solid; border-color: #ccc; font-weight: 700">Maximum discount</span>
-						            		<input style="float: left; height: 41px; padding: 8px; border-width: 1px 1px 0 1px; border-style: solid; border-color: #ccc; color: #333; width: 57%; float: left;" type="search" placeholder="Number or Name..." >
-						            		<div class="clear"></div>
-						            		<span style="padding: 2px 75px 2px 20px; background: #ddd; line-height: 34px; border-width: 1px 0 1px 1px; border-style: solid; border-color: #ccc; font-weight: 700; float: left;">Expiration</span> -->
-						            	</div>
-						            	<!-- <div class="row">
-											<div class="span12">
-												<div class="box-generic" style="border: none;">
-												    <div class="tabsbar tabsbar-1">
-												        <ul class="row-fluid row-merge">
-												            <li class="span2  active">
-												            	<a href="#tab3-1" data-toggle="tab">
-												            		<span class="textBlue">Discount the Entire Sale</span>
-												            		 <br><span>Set a fixed amount or a percentage off the entire sale.</span>
-												            	</a>
-												            </li>
-												            <li class="span2 usd">
-												            	<a href="#tab3-2" data-toggle="tab">
-												            		<span class="textBlue">Discount an Item or Category</span>
-												            		 <br><span>Set a fixed amount or a percentage off specific items or any item within a category.</span>
-												            	</a>
-												            </li>
-												            <li class="span2 parents">
-												            	<a href="#tab3-3" data-toggle="tab">
-												            		<span class="textBlue">Redeem a Free Item</span>
-												            		 <br><span>Select an item your customers can redeem for free.</span>
-												            	</a>
-												            </li>
-												        </ul>
-												    </div>
-
-												    <div class="tab-content">
-												        <div class="tab-pane active" id="tab3-1">
-											            	<div style="margin-top: 20px; float: left;width: 100%; text-align: left;">
-											            		<span style="padding: 7px 62px 7px 20px; background: #ddd; line-height: 34px; border-width: 1px 0 0 1px; border-style: solid; border-color: #ccc; font-weight: 700; float: left;">Discount amount</span>
-											            		<div style="height: 49px; padding: 8px; border-width: 1px 1px 0 1px; border-style: solid; border-color: #ccc; color: #333; width: 59%; float: left;" type="search" placeholder="Number or Name..." >
-											            			<input  type="search" placeholder="Number or Name..." style="float: left; width: 76%; border: none;">
-											            			<a style="padding: 5px 10px; border: 1px solid #333; float: left; text-align: center;">%</a>
-											            			<a style="padding: 5px 10px; border: 1px solid #333; float: left; text-align: center;">Amount</a>
-											            		</div>
-											            		<div class="clear"></div>
-											            		<span style="float: left; padding: 3px 62px 3px 20px; background: #ddd; line-height: 34px; border-width: 1px 0 0 1px; border-style: solid; border-color: #ccc; font-weight: 700">Maximum discount</span>
-											            		<input style="float: left; height: 41px; padding: 8px; border-width: 1px 1px 0 1px; border-style: solid; border-color: #ccc; color: #333; width: 57%; float: left;" type="search" placeholder="Number or Name..." >
-											            		<div class="clear"></div>
-											            		<span style="padding: 2px 75px 2px 20px; background: #ddd; line-height: 34px; border-width: 1px 0 1px 1px; border-style: solid; border-color: #ccc; font-weight: 700; float: left;">Expiration</span>
-											            	
-										            			<input 
-																	data-role="dropdownlist"
-																	data-template="contact-list-tmpl" 
-																	data-auto-bind="false" 
-																	data-value-primitive="true" 
-																	data-filter="startswith" 
-																	data-text-field="name" 
-																	data-value-field="id"
-																	data-option-label="Select a Category..."
-																	data-bind=""
-										                            style="height: 40px; padding: 8px; border-width: 1px 1px 1px 1px; border-style: solid; border-color: #ccc; color: #333; margin-left: 0px; width: 63%; float: left;"
-										                            aria-invalid="true" 
-										                            class="k-invalid"
-										                        />
-											            	
-											            		<p style="margin-top: 10px; float: left;">Set the number of stars required to earn a reward.</p>
-											            	</div>
-											        	</div>
-												        
-												        <div class="tab-pane" id="tab3-2">
-												        	<div class="row">
-																<div class="span12">
-																	<div class="box-generic" style="border: none;">
-																	    <div class="tabsbar tabsbar-1">
-																	        <ul class="row-fluid row-merge">
-																	            <li class="span2  active">
-																	            	<a href="#tab4-1" data-toggle="tab">
-																	            		Categories
-																	            	</a>
-																	            </li>
-																	            <li class="span2 usd">
-																	            	<a href="#tab4-2" data-toggle="tab">
-																	            		Specific Items
-																	            	</a>
-																	            </li>
-																	        </ul>
-																	    </div>
-
-																	    <div class="tab-content">
-																	        <div class="tab-pane active" id="tab4-1">
-																            	<div class="row">
-																            		<div class="span12">
-																            			<table>
-																            				<tr>
-																            					<th>Category</th>
-																            				</tr>
-																            				<tr>
-																            					<td>
-																            						<input 
-																										data-role="dropdownlist"
-																										data-template="contact-list-tmpl" 
-																										data-auto-bind="false" 
-																										data-value-primitive="true" 
-																										data-filter="startswith" 
-																										data-text-field="name" 
-																										data-value-field="id"
-																										data-option-label="Select a Category..."
-																										data-bind=""
-																			                            style="width: 100%; float: left; height: 30px; padding: 5px;" 
-																			                            aria-invalid="true" 
-																			                            class="k-invalid"
-																			                        />
-																            					</td>																            					
-																            				</tr>
-																            			</table>
-																            		</div>
-																            	</div>
-																        	</div>
-																	        
-																	        <div class="tab-pane" id="tab4-2">
-																	        	<div class="row">
-																            		<div class="span12">
-																            			<table>
-																            				<tr>
-																            					<th>Item</th>
-																            				</tr>
-																            				<tr>
-																            					<td>
-																            						<input 
-																										data-role="dropdownlist"
-																										data-template="contact-list-tmpl" 
-																										data-auto-bind="false" 
-																										data-value-primitive="true" 
-																										data-filter="startswith" 
-																										data-text-field="name" 
-																										data-value-field="id"
-																										data-option-label="Select an Item..."
-																										data-bind=""
-																			                            style="width: 100%; float: left; height: 30px; padding: 5px;" 
-																			                            aria-invalid="true" 
-																			                            class="k-invalid" />
-																            					</td>																            					
-																            				</tr>
-																            			</table>
-																            		</div>
-																            	</div>
-																        	</div>
-																	    </div>
-
-																	    <div style="margin-top: 20px; float: left;width: 100%; text-align: left;">
-														            		<span style="padding: 7px 62px 7px 20px; background: #ddd; line-height: 34px; border-width: 1px 0 0 1px; border-style: solid; border-color: #ccc; font-weight: 700; float: left;">Discount amount</span>
-														            		<div style="height: 49px; padding: 8px; border-width: 1px 1px 0 1px; border-style: solid; border-color: #ccc; color: #333; width: 59%; float: left;" type="search" placeholder="Number or Name..." >
-														            			<input  type="search" placeholder="Number or Name..." style="float: left; width: 75%; border: none;">
-														            			<a style="padding: 5px 10px; border: 1px solid #333; float: left; text-align: center;">%</a>
-														            			<a style="padding: 5px 10px; border: 1px solid #333; float: left; text-align: center;">Amount</a>
-														            		</div>
-														            		<div class="clear"></div>
-														            		<span style="float: left; padding: 3px 62px 3px 20px; background: #ddd; line-height: 34px; border-width: 1px 0 0 1px; border-style: solid; border-color: #ccc; font-weight: 700">Maximum discount</span>
-														            		<input style="float: left; height: 41px; padding: 8px; border-width: 1px 1px 0 1px; border-style: solid; border-color: #ccc; color: #333; width: 57%; float: left;" type="search" placeholder="Number or Name..." >
-														            		<div class="clear"></div>
-														            		<span style="padding: 2px 75px 2px 20px; background: #ddd; line-height: 34px; border-width: 1px 0 1px 1px; border-style: solid; border-color: #ccc; font-weight: 700; float: left;">Expiration</span>
-														            	
-													            			<input 
-																				data-role="dropdownlist"
-																				data-template="contact-list-tmpl" 
-																				data-auto-bind="false" 
-																				data-value-primitive="true" 
-																				data-filter="startswith" 
-																				data-text-field="name" 
-																				data-value-field="id"
-																				data-option-label="Select a Category..."
-																				data-bind=""
-													                            style="height: 40px; padding: 8px; border-width: 1px 1px 1px 1px; border-style: solid; border-color: #ccc; color: #333; margin-left: 0px; width: 63%; float: left;"
-													                            aria-invalid="true" 
-													                            class="k-invalid"
-													                        />
-														            	
-														            		<p style="margin-top: 10px; float: left;">Set the number of stars required to earn a reward.</p>
-														            	</div>
-																	</div>
-																</div>
-															</div>
-											        	</div>
-												        
-												        <div class="tab-pane" id="tab3-3">
-												        	<div class="row">
-																<div class="span12">
-																	<div class="box-generic" style="border: none;">
-																	    <div class="tabsbar tabsbar-1">
-																	        <ul class="row-fluid row-merge">
-																	            <li class="span2  active">
-																	            	<a href="#tab5-1" data-toggle="tab">
-																	            		Categories
-																	            	</a>
-																	            </li>
-																	            <li class="span2 usd">
-																	            	<a href="#tab5-2" data-toggle="tab">
-																	            		Specific Items
-																	            	</a>
-																	            </li>
-																	        </ul>
-																	    </div>
-
-																	    <div class="tab-content">
-																	        <div class="tab-pane active" id="tab5-1">
-																            	<div class="row">
-																            		<div class="span12">
-																            			<table>
-																            				<tr>
-																            					<th>Category</th>
-																            				</tr>
-																            				<tr>
-																            					<td>
-																            						<input 
-																										data-role="dropdownlist"
-																										data-template="contact-list-tmpl" 
-																										data-auto-bind="false" 
-																										data-value-primitive="true" 
-																										data-filter="startswith" 
-																										data-text-field="name" 
-																										data-value-field="id"
-																										data-option-label="Select a Category..."
-																										data-bind=""
-																			                            style="width: 100%; float: left; height: 30px; padding: 5px;" 
-																			                            aria-invalid="true" 
-																			                            class="k-invalid"
-																			                        />
-																            					</td>																            					
-																            				</tr>
-																            			</table>
-																            		</div>
-																            	</div>
-																        	</div>
-																	        
-																	        <div class="tab-pane" id="tab5-2">
-																	        	<div class="row">
-																            		<div class="span12">
-																            			<table>
-																            				<tr>
-																            					<th>Item</th>
-																            				</tr>
-																            				<tr>
-																            					<td>
-																            						<input 
-																										data-role="dropdownlist"
-																										data-template="contact-list-tmpl" 
-																										data-auto-bind="false" 
-																										data-value-primitive="true" 
-																										data-filter="startswith" 
-																										data-text-field="name" 
-																										data-value-field="id"
-																										data-option-label="Select an Item..."
-																										data-bind=""
-																			                            style="width: 100%; float: left; height: 30px; padding: 5px;" 
-																			                            aria-invalid="true" 
-																			                            class="k-invalid" />
-																            					</td>																            					
-																            				</tr>
-																            			</table>
-																            		</div>
-																            	</div>
-																        	</div>
-																	    </div>
-
-																	    <div style="margin-top: 20px; float: left;width: 100%; text-align: left;">														            		
-														            		<span style="padding: 2px 75px 2px 20px; background: #ddd; line-height: 34px; border-width: 1px 1px 1px 1px; border-style: solid; border-color: #ccc; font-weight: 700; float: left;">Expiration</span>
-														            	
-													            			<input 
-																				data-role="dropdownlist"
-																				data-template="contact-list-tmpl" 
-																				data-auto-bind="false" 
-																				data-value-primitive="true" 
-																				data-filter="startswith" 
-																				data-text-field="name" 
-																				data-value-field="id"
-																				data-option-label="Select a Category..."
-																				data-bind=""
-													                            style="height: 40px; padding: 8px; border-width: 1px 1px 1px 0px; border-style: solid; border-color: #ccc; color: #333; margin-left: 0px; width: 64%; float: left;"
-													                            aria-invalid="true" 
-													                            class="k-invalid"
-													                        />
-														            	</div>
-																	</div>
-																</div>
-															</div>
-											        	</div>
-												    </div>
-												</div>
-											</div>
-										</div> -->
-						        	</div>
-							        
-							        <div class="tab-pane" id="tab3">
-							        	<h3>Decide where to run your Loyalty Program.</h3>
-						            	<p>After your free trial, the cost is $25 per month for each location.</p>
-
-						            	<span style="font-size: 60px; font-weight: 100;">$0</span>
-						            	<span style="margin-left: 12px; font-weight: 400; line-height: 1.715; font-size: 14px;">/ mo</span>
-						            	<p style="color: #5c6063;">0 locations selected</p>
-
-						            	<div style="margin: 20px 0 0 20px; float: left;width: 100%; ">
-						            		<span style="padding: 10px 75px 10px 20px; background: #ddd; line-height: 34px; border-width: 1px 0 1px 1px;   border-style: solid; border-color: #ccc; font-weight: 700">Locations</span>
-						            		<input style="height: 41px; padding: 8px; border-width: 1px 1px 1px 1px; border-style: solid; border-color: #ccc; color: #333; margin-left: -4px; width: 55%;" type="search" placeholder="Number or Name..." >
-						            		
+					                        />						            		
 						            	</div>
 						        	</div>
-							        
-							        <div class="tab-pane" id="tab4">
-							        	<h3>Customer</h3>
-						            	<p>-------</p>
-						        	</div>							        
+							        						        
 
 							    </div>
 							</div>

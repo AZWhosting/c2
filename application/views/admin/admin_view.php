@@ -99,9 +99,9 @@
                             <button style="background-color: #B2C1D1;" type="button" class="btn btn-block goto-banhji" data-bind="visible:users.showAdmin, click: goUser">Users List</button>
                             <button style="background-color: #B2C1D1;" type="button" class="btn btn-block goto-banhji" data-bind="visible:users.showAdmin, click: goEmployee">Employees List</button>
                             <button style="background-color: #B2C1D1;" type="button" class="btn btn-block goto-banhji" data-bind="visible:users.showAdmin, click: goApp">App Access</button>
-                            
+
                           </div>
-                          
+
                       </section>
                   </div>
 
@@ -150,7 +150,7 @@
                       </section>
 
                       <section class="box-typical user-module" id="placeholder">
-                          
+
                       </section>
                   </div>
                   <div id="userFormConfirm" style="visibility: hidden">
@@ -186,7 +186,7 @@
           </div>
       </div>
     </script>
-    
+
     <script type="text/x-kendo-template" id="employee-list">
       <tr>
           <td>
@@ -267,7 +267,7 @@
                                         class="form-control col-md-7 col-xs-12"
                                         type="text"
                                         style="width: 50px;"
-                                      > 
+                                      >
                                       <input id="type"
                                         data-bind="value: current.number"
                                         class="form-control col-md-7 col-xs-12"
@@ -287,7 +287,7 @@
                                         type="text"
                                       >
                                     </td>
-                                </tr> 
+                                </tr>
                                 <tr>
                                   <td>Gender</td>
                                   <td>:</td>
@@ -303,7 +303,7 @@
                                       ></td>
                                   <td></td>
                                   <td></td>
-                                </tr>                               
+                                </tr>
                             </table>
                           </div>
                         </article>
@@ -404,7 +404,7 @@
                                 <tr>
                                   <td>Nationality</td>
                                   <td>
-                                    <input id="type"                                     
+                                    <input id="type"
                                      data-bind="value: payroll.nationality"
                                      class="k-textbox"
                                      type="text"
@@ -413,8 +413,8 @@
                                   <td></td>
                                   <td>Employment Date</td>
                                   <td>
-                                    <input type="text" 
-                                      data-role="datepicker" 
+                                    <input type="text"
+                                      data-role="datepicker"
                                       data-bind="value: payroll.employeement_date"
                                       data-format="dd-MM-yyyy"
                                       data-parse-formats="yyyy-MM-dd"
@@ -424,7 +424,7 @@
                                 <tr>
                                   <td>Married Status</td>
                                   <td>
-                                    <input id="type"                                     
+                                    <input id="type"
                                      data-bind="source: marriedStatus ,value: payroll.married_status"
                                      data-role="dropdownlist"
                                      data-text-field="name"
@@ -437,8 +437,8 @@
                                   <td></td>
                                   <td>Children</td>
                                   <td>
-                                    <input type="text" 
-                                      data-role="numerictextbox" 
+                                    <input type="text"
+                                      data-role="numerictextbox"
                                       data-bind="value: payroll.children"
                                       >
                                   </td>
@@ -446,7 +446,7 @@
                                 <tr>
                                   <td>City/Province</td>
                                   <td>
-                                    <input id="type"                                     
+                                    <input id="type"
                                      data-bind="value: payroll.city"
                                      class="k-textbox"
                                      type="text"
@@ -455,7 +455,7 @@
                                   <td></td>
                                   <td>Country</td>
                                   <td>
-                                    <input type="text" 
+                                    <input type="text"
                                       data-bind="value: payroll.country"
                                       class="k-textbox"
                                       >
@@ -464,7 +464,7 @@
                                 <tr>
                                   <td>Emmergency Number</td>
                                   <td>
-                                    <input id="type"                                     
+                                    <input id="type"
                                      data-bind="value: payroll.emergency_number"
                                      class="k-textbox"
                                      type="text"
@@ -473,7 +473,7 @@
                                   <td></td>
                                   <td>Emmergency Name</td>
                                   <td>
-                                    <input type="text" 
+                                    <input type="text"
                                       data-bind="value: payroll.emergency_name"
                                       class="k-textbox"
                                       >
@@ -484,10 +484,10 @@
                             <div role="tabpanel" class="tab-pane fade" id="tabs-4-tab-4" aria-expanded="false">
                               <input data-role="upload" type="file" data-bind="events: {select: fileMan.onSelected}" data-show-file-list="false">
                               <table class="table">
-                                <tbody 
+                                <tbody
                                   data-role="listview"
                                   data-auto-bind="false"
-                                  data-bind="source: fileMan.dataSource" 
+                                  data-bind="source: fileMan.dataSource"
                                   data-template="attachment-list"></tbody>
                               </table>
                             </div><!--.tab-pane-->
@@ -518,9 +518,9 @@
     </script>
     <script type="text/x-kendo-template" id="employee-type">
       <button class="btn" data-bind="click: backToEmp">X</button>
-      <div data-role='grid' 
-           data-bind="source: roles" 
-           data-toolbar="['create']" 
+      <div data-role='grid'
+           data-bind="source: roles"
+           data-toolbar="['create']"
            data-editable="inline"
            data-columns="
               [
@@ -552,7 +552,7 @@
                         <img width="240px" data-bind="attr: {src: current.logo.url}" />
                         <input data-role="upload" id="companyLogo" class="form-control col-md-7 col-xs-12" type="file" data-bind="events: {select: upload}" data-show-file-list="false">
                         <br>
-                        
+
                         <div class="divider"></div>
                         <header class="box-typical-header-sm">
                           General Info
@@ -564,6 +564,13 @@
                               <td>:</td>
                               <td>
                                 <input type="text" class="form-control" id="" placeholder="" data-bind="value: current.name">
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>Company Name (English)</td>
+                              <td>:</td>
+                              <td>
+                                <input type="text" class="form-control" id="" placeholder="" data-bind="value: current.name_en">
                               </td>
                             </tr>
                             <tr>
@@ -602,6 +609,13 @@
                               </td>
                             </tr>
                             <tr>
+                              <td>Address (English)</td>
+                              <td>:</td>
+                              <td>
+                                <input type="text" class="form-control" id="" placeholder="" data-bind="value: current.address_en">
+                              </td>
+                            </tr>
+                            <tr>
                               <td>ZIP Code</td>
                               <td>:</td>
                               <td>
@@ -626,8 +640,8 @@
                               <td>Country</td>
                               <td>:</td>
                               <td>
-                                <input type="text" 
-                                  class="form-control" 
+                                <input type="text"
+                                  class="form-control"
                                   data-role="dropdownlist"
                                   data-bind="source: countries, value: current.country"
                                   data-text-field="name"
@@ -638,9 +652,9 @@
                               <td>Industry</td>
                               <td>:</td>
                               <td>
-                                <input type="text" 
+                                <input type="text"
                                   class="form-control"
-                                  data-role="dropdownlist" 
+                                  data-role="dropdownlist"
                                   data-bind="source: industries, value: current.industry.id"
                                   data-text-field="name"
                                   data-value-field="id">
@@ -655,8 +669,8 @@
                                   <td>Accounting Standard</td>
                                   <td>:</td>
                                   <td>
-                                    <input type="text" 
-                                      class="form-control" 
+                                    <input type="text"
+                                      class="form-control"
                                       data-bind="value: current.accounting_standard">
                                   </td>
                                 </tr>
@@ -664,11 +678,11 @@
                                   <td>Fiscal Date(Ending Date) </td>
                                   <td>:</td>
                                   <td>
-                                    <input 
-                                      data-role="datepicker" 
+                                    <input
+                                      data-role="datepicker"
                                       class="form-control"
                                       data-format="dd-MM"
-                                      data-parse-formats="yyyy-MM-dd" 
+                                      data-parse-formats="yyyy-MM-dd"
                                       data-bind="value: current.fiscal_date, events: {change: fiscalChange}">
                                   </td>
                                 </tr>
@@ -676,9 +690,9 @@
                                   <td>Base Currency</td>
                                   <td>:</td>
                                   <td>
-                                    <input type="text" 
-                                      data-role="dropdownlist" 
-                                      class="form-control" 
+                                    <input type="text"
+                                      data-role="dropdownlist"
+                                      class="form-control"
                                       data-bind="source: currencies, value: current.currency.id"
                                       data-value-field="id"
                                       data-text-field="code"
@@ -689,20 +703,20 @@
                                   <td>Reporting Currency</td>
                                   <td>:</td>
                                   <td>
-                                    <input type="text" 
-                                      data-role="dropdownlist" 
-                                      class="form-control" 
+                                    <input type="text"
+                                      data-role="dropdownlist"
+                                      class="form-control"
                                       data-bind="source: currencies, value: current.reportCurrency.id"
                                       data-value-field="id"
                                       data-text-field="code">
                                   </td>
-                                </tr> 
+                                </tr>
                                 <tr>
                                   <td>Tax Regime</td>
                                   <td>:</td>
                                   <td>
-                                    <input type="text" 
-                                      data-role="dropdownlist" 
+                                    <input type="text"
+                                      data-role="dropdownlist"
                                       class="form-control"
                                       data-bind="source: taxRegimes, value: current.tax_regime"
                                       data-text-field="value"
@@ -755,11 +769,11 @@
     <script type="text/x-kendo-template" id="template-placeholder-company">
       <div class="row">
         <article class="profile-info-item">
-          <img width="120px" data-bind="attr: {src: current.logo.url}" style="z-index: 999; position: absolute; top:0; left: 0"> 
-          <div id="map" style="height: 330px;" style="position: relative; top: 0; left: 0;"></div>  
+          <img width="120px" data-bind="attr: {src: current.logo.url}" style="z-index: 999; position: absolute; top:0; left: 0">
+          <div id="map" style="height: 330px;" style="position: relative; top: 0; left: 0;"></div>
         </article>
       </div>
-      
+
       <header class="box-typical-header-sm">
         General Info
       </header>
@@ -871,7 +885,7 @@
               &nbsp;&nbsp;
               <i id="user-spinwhile" class="fa fa-refresh pull-right" data-bind="click: refresh"></i>
           </div>
-          
+
           <div data-role="listview" data-template="user-profile-list" data-bind="source:users.users" data-bind="false" class="row" style="border: 0;">
           </div>
           <div id="ntf1" data-role="notification"></div>
@@ -970,10 +984,10 @@
       </div>
     </script>
     <script type="text/x-kendo-template" id="user-profile-modules">
-      <div style="border: none;" 
-           data-role="listview" 
+      <div style="border: none;"
+           data-role="listview"
            data-bind="source: modules"
-           data-auto-bind="false" 
+           data-auto-bind="false"
            data-template="user-profile-modules-list"></div>
     </script>
     <script type="text/x-kendo-template" id="user-profile-modules-list">
@@ -1024,7 +1038,7 @@
             #}#
           </div>
         </div>
-      </section>   
+      </section>
     </script>
     <script type="text/x-kendo-template" id="template-assign-module-to-page">
       <div class="col-lg-12">
@@ -1168,7 +1182,7 @@
                       </div>
                       <h2>User Detail</h2>
                       <div class="divider"></div>
-                      
+
                         <div class="col-md-3 col-lg-3" >
                             <img width="120px" data-bind="attr: {src: current.profile_photo.url}" />
                             <h3>Profile Picture</h3>
@@ -1203,7 +1217,7 @@
                                     <td>
                                         <input type="text" data-bind="value: current.last_name" class="form-control" id="" placeholder="">
                                     </td>
-                                </tr>                              
+                                </tr>
                                 <tr>
                                     <td>Phone</td>
                                     <td>:</td>
@@ -1234,7 +1248,7 @@
                                 </tr>
                             </table>
                         </article>
-                   
+
                       <div class="box-generic" style="margin-top: 15px;">
                         <button data-role="button" class="k-button btn-save" role="button" aria-disabled="false" tabindex="0" data-bind="click: save">
                             <span class="glyphicon glyphicon-ok"><i></i></span>
@@ -1422,7 +1436,7 @@
       </tr>
     </script>
     <!-- cognito -->
-    
+
     <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/jsbn2.js"></script>
     <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/sjcl.js"></script>
     <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/moment.js"></script>
@@ -1569,22 +1583,22 @@
             //Delete File
             if(e.type=="create"){
               for(var i = 0; i < response.length; i++) {
-                var params = { 
-                  Body: that.dataSource.data()[0].file, 
+                var params = {
+                  Body: that.dataSource.data()[0].file,
                   Key:  that.dataSource.data()[0].key
                 };
-                bucket.upload(params, function (err, data) {                    
+                bucket.upload(params, function (err, data) {
                     // console.log(err, data);
                     // var url = data.Location;
                     if(!err) {
                       dfd.resolve({id: response[0].id, url:response[0].url});
                       // console.log(response[0]);
                       that.dataSource.data([]);
-                    }               
+                    }
                 });
-              } 
+              }
             } else if(e.type == "destroy") {
-              $.each(response, function(index, value){                  
+              $.each(response, function(index, value){
                 var params = {
                   Delete: { /* required */
                     Objects: [ /* required */
@@ -1601,9 +1615,9 @@
             }
           });
           return dfd.promise();
-        } 
+        }
       });
-      
+
       banhji.fileManagement = kendo.observable({
         dataSource: new kendo.data.DataSource({
           transport: {
@@ -1675,18 +1689,18 @@
           });
         },
         save                : function(contact_id){
-          $.each(banhji.fileManagement.dataSource.data(), function(index, value){  
+          $.each(banhji.fileManagement.dataSource.data(), function(index, value){
             if(!value.id){
               banhji.fileManagement.dataSource.at(index).set("contact_id", contact_id);
-              var params = { 
-                Body: value.file, 
+              var params = {
+                Body: value.file,
                 Key: value.key
               };
-              bucket.upload(params, function (err, data) {                    
+              bucket.upload(params, function (err, data) {
                   // console.log(err, data);
-                  // var url = data.Location;               
+                  // var url = data.Location;
               });
-            }                
+            }
           });
           banhji.fileManagement.dataSource.sync();
           var saved = false;
@@ -1696,7 +1710,7 @@
               if(saved==false && e.response){
                 saved = true;
                 var response = e.response.results;
-                $.each(response, function(index, value){                  
+                $.each(response, function(index, value){
                   var params = {
                     Delete: { /* required */
                       Objects: [ /* required */
@@ -2237,7 +2251,7 @@
               Username : userPool.getCurrentUser().username,
               Pool : userPool
           };
-          var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData); 
+          var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
           if(cognitoUser != null) {
             cognitoUser.getSession(function(err, session) {
               if (err) {
@@ -2291,7 +2305,7 @@
           if(banhji.profile.dataSource.hasChanges()) {
             banhji.profileDS.cancelChanges();
             banhji.profile.media.dataSource.cancelChanges();
-            this.set('currentID', banhji.profileDS.data()[0]);         
+            this.set('currentID', banhji.profileDS.data()[0]);
           }
           banhji.router.navigate("");
         },
@@ -2308,7 +2322,7 @@
           } else {
             banhji.profile.dataSource.sync();
           }
-          
+
           banhji.profile.dataSource.bind('requestEnd', function(e){
             var res = e.response;
             if(res.results.length > 0) {
@@ -2381,7 +2395,7 @@
               type: "GET",
               headers: { Institute: JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).institute.id : 0 },
               dataType: 'json'
-            },        
+            },
             parameterMap: function(options, operation) {
               if(operation === 'read') {
                 return {
@@ -2416,7 +2430,7 @@
               type: "GET",
               headers: { Institute: JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).institute.id : 0 },
               dataType: 'json'
-            },        
+            },
             parameterMap: function(options, operation) {
               if(operation === 'read') {
                 return {
@@ -2456,7 +2470,7 @@
               type: "GET",
               headers: { Institute: JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).institute.id : 0 },
               dataType: 'json'
-            },        
+            },
             parameterMap: function(options, operation) {
               if(operation === 'read') {
                 return {
@@ -2518,7 +2532,7 @@
               });
               banhji.employees.set('payroll', banhji.employees.payrollDS.at(0));
             }
-            
+
           });
         },
         marriedStatus: [
@@ -2715,7 +2729,7 @@
                     if(banhji.employees.payrollDS.data()[0].dirty) {
                       banhji.employees.payrollDS.sync();
                     }
-                  }                
+                  }
                   $("#ntf1").data("kendoNotification").success("Data saved.");
                   banhji.router.navigate('employeelist');
                 } else {
@@ -2867,7 +2881,7 @@
             } else if(res.results.length < 0 ) {
               $("#ntf1").data("kendoNotification").error("Operation failed.");
             }
-            
+
           });
         },
         assignTo: function(e) {
@@ -2915,7 +2929,7 @@
               Username : userPool.getCurrentUser().username,
               Pool : userPool
           };
-          var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData); 
+          var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
           if(cognitoUser != null) {
             cognitoUser.getSession(function(err, session) {
               if (err) {
@@ -3146,7 +3160,7 @@
 
           $('#cancelThisUser').click(function(){
               self.o.close();
-          });  
+          });
           $('#removeThisUser').click(function(){
             banhji.users.users.remove(e.data);
             banhji.users.users.sync();
@@ -3156,7 +3170,7 @@
                 self.o.destroy();
               }
             });
-          });          
+          });
         },
         edit: function(e) {
           banhji.router.navigate('userlist/' + e.data.id);
@@ -3186,7 +3200,7 @@
           }
           if(this.get('current').password.length < 8) {
             errors.push({msg:"Password must be at 8 characters with letters and numbers"});
-          } 
+          }
           if(this.get('current').first_name == "") {
             errors.push({msg:"Name is required."});
           }
@@ -3237,14 +3251,14 @@
               }
             }
           }
-          
+
           banhji.userDS.bind('requestEnd', function(e){
             var res = e.response, type = e.type;
             if(res.results.length > 0) {
               if(type != 'read'){
                 $("#ntf1").data("kendoNotification").success("Data saved.");
                 banhji.router.navigate('userlist');
-              }              
+              }
               banhji.router.route('userlist');
             } else {
               $("#ntf1").data("kendoNotification").error("Operation failed.");
@@ -3313,7 +3327,7 @@
         loadMap         : function(){
           var current = this.get("current"), lat = kendo.parseFloat(current.lat),
           lng = kendo.parseFloat(current.long);
-          
+
           if(lat && lng){
             var myLatLng = {lat:lat, lng:lng};
             var mapOptions = {
@@ -3332,7 +3346,7 @@
               map: map,
               title: current.name + " (" + current.lat + ", " + current.long + ")"
             });
-          } 
+          }
         },
         onLogoChange: function() {
           var fileChooser = document.getElementById('companyLogo');
@@ -3399,7 +3413,7 @@
             localforage.getItem('user').then(function(item){
               item.institute.fiscal_date = dd.getTime();
               localforage.setItem('user', item);
-              banhji.app.get('cache').institute.fiscal_date = dd.getTime(); 
+              banhji.app.get('cache').institute.fiscal_date = dd.getTime();
             });
           } else {
             banhji.company.get('current').fiscal_date = banhji.app.get('cache').institute.fiscal_date;
@@ -3411,8 +3425,8 @@
             });
           } else {
             banhji.company.dataStore.sync();
-          } 
-          
+          }
+
           banhji.company.dataStore.bind('requestEnd', function(e){
             var res = e.response;
             if(res.results.length > 0) {
@@ -3423,29 +3437,18 @@
               let m = mnth < 10 ? '0'+mnth : mnth;
               banhji.app.get('cache').institute.fiscal_date = d.getTime();
               banhji.company.get('current').set('fiscal_date', day +"-"+ m);
-              // var appData = JSON.parse(localStorage.getItem('userData/user'));
-              // localforage.removeItem('user').then(function() {
-              //   var data = {id: appData.id, username: appData.username, role: appData.role, institute: res.results[0]};
-              //   localforage.setItem('user', data).then(function (value) {
-              //       // console.log(value);
-              //   }).catch(function(err) {
-              //       // console.log(err);
-              //   });
-              // }).catch(function(err) {
-              //     // This code runs if there were any errors
-              //     // console.log(err);
-              // });
+              
               $("#ntf1").data("kendoNotification").success("");
               localforage.getItem('user').then(function(item){
                 item.institute.name = res.results[0].name;
                 localforage.setItem('user', item);
-                banhji.app.get('cache').institute.name = res.results[0].name; 
+                banhji.app.get('cache').institute.name = res.results[0].name;
               });
               window.location.replace("<?php echo base_url(); ?>admin");
             } else {
               $("#ntf1").data("kendoNotification").error("Operation failed.");
             }
-          });         
+          });
         }
       });
 
@@ -3718,7 +3721,7 @@
               ]})
             .then(function(){
               banhji.company.setCurrent(banhji.companyDS.data()[0]);
-                
+
               for(let i = 0; i < banhji.moduleDS.data().length; i++) {
                 if(banhji.moduleDS.data()[i].id == 12) {
                   banhji.users.set('showWater', false);
@@ -3734,12 +3737,12 @@
               banhji.app.set('appSub', banhji.moduleDS.data().length || 0);
               banhji.app.set('totalUsers', banhji.companyDS.data()[0].users);
               banhji.app.set('lastLogin', banhji.companyDS.data()[0].lastLogin);
-              
+
               banhji.app.userDS.filter([
                 {field: 'id', operator: 'user', value: banhji.app.get('cache').id}
               ]);
             });
-            
+
             banhji.users.modules.filter({field: 'id', value: JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).id : 0});
             banhji.users.modules.bind('requestEnd', function(e){
               if(e.type === 'read' && e.response) {
@@ -3796,7 +3799,7 @@
           banhji.router.navigate("profile/"+banhji.profileDS.data()[0].id);
         } else {
           layout.showIn("#container", instEdit);
-        }        
+        }
       });
 
       banhji.router.route('profile', function() {
@@ -3853,12 +3856,12 @@
 
       banhji.router.route('water', function() {
         layout.showIn("#container", mainDash);
-        
+
         mainDash.showIn("#placeholder", water);
       });
 
       banhji.router.route('client', function() {
-        layout.showIn("#container", mainDash); 
+        layout.showIn("#container", mainDash);
         mainDash.showIn("#placeholder", client);
       });
 
