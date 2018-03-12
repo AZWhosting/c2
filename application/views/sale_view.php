@@ -15166,7 +15166,7 @@
 	banhji.router.route("/quote(/:id)", function(id){
 		banhji.accessPage.query({
 			filter:[
-				{ field:"name", value:"quote" },
+				{ field:"name", value:"quotation" },
 				{ field:'username', operator:"where_related_user", value: JSON.parse(localStorage.getItem('userData/user')).username }
 			]
 		}).then(function(e){
