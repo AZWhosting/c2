@@ -277,8 +277,8 @@ class UtibillReports extends REST_Controller {
 		//Results
 		$obj->include_related("contact", array("abbr", "number", "name"));
 		$obj->include_related("location", "name");
-		$obj->include_related("winvoice_line", array("quantity", "type"));
-		$obj->where_related("winvoice_line", "description", "usage");
+		$obj->include_related("winvoice_line", array("quantity", "type", "amount"));
+		$obj->where_related("winvoice_line", "type", array("usage", "tariff"));
 		$obj->where("type", "Utility_Invoice");
 		$obj->where("is_recurring <>", 1);
 		$obj->where("deleted <>", 1);
@@ -295,20 +295,29 @@ class UtibillReports extends REST_Controller {
 
 		if($obj->exists()){
 			$objList = [];
+			$usage = 0;
+			$amount = 0;
+			$price = 0;
 			foreach ($obj as $value) {								
-				$amount = floatval($value->amount)/floatval($value->rate);
+				if($value->winvoice_line_type=="usage"){
+					$usage = floatval($value->winvoice_line_quantity);
+				}else{
+					$usage = 0;
+					$price = floatval($value->winvoice_line_amount);
+				}
+				$amount = $usage * $price;
 
 				if(isset($objList[$value->contact_id])){
 					$objList[$value->contact_id]["invoice"] 		+= 1;
 					$objList[$value->contact_id]["amount"] 			+= $amount;
-					$objList[$value->contact_id]["usage"]			+=  floatval($value->winvoice_line_quantity);
+					$objList[$value->contact_id]["usage"]			+= $usage;
 				}else{
 					$objList[$value->contact_id]["id"] 				= $value->contact_id;
 					$objList[$value->contact_id]["name"] 			= $value->contact_abbr.$value->contact_number." ".$value->contact_name;
 					$objList[$value->contact_id]["invoice"]			= 1;
 					$objList[$value->contact_id]["location"]		= $value->location_name;
 					$objList[$value->contact_id]["amount"]			= $amount;
-					$objList[$value->contact_id]["usage"]			=  floatval($value->winvoice_line_quantity);
+					$objList[$value->contact_id]["usage"]			= $usage;
 				}
 			}
 
@@ -357,9 +366,9 @@ class UtibillReports extends REST_Controller {
 		//Results
 
 		$obj->include_related("contact", array("abbr", "number", "name"));
-		$obj->include_related("winvoice_line", array("quantity", "type"));
-		$obj->where_related("winvoice_line", "description", "usage");
 		$obj->include_related("location", "name");
+		$obj->include_related("winvoice_line", array("quantity", "type", "amount"));
+		$obj->where_related("winvoice_line", "type", array("usage", "tariff"));
 		$obj->where("type", "Utility_Invoice");
 		$obj->where("is_recurring <>", 1);
 		$obj->where("deleted <>", 1);
@@ -377,8 +386,18 @@ class UtibillReports extends REST_Controller {
 
 		if($obj->exists()){
 			$objList = [];
+			$usage = 0;
+			$amount = 0;
+			$price = 0;
 			foreach ($obj as $value) {								
-				$amount = floatval($value->amount)/ floatval($value->rate);
+				if($value->winvoice_line_type=="usage"){
+					$usage = floatval($value->winvoice_line_quantity);
+					$price = 1;
+				}else{
+					$usage = 0;
+					$price = floatval($value->winvoice_line_amount);
+				}
+				$amount = $usage * $price;
 				
 				if(isset($objList[$value->contact_id])){
 					$objList[$value->contact_id]["line"][] = array(
@@ -387,7 +406,7 @@ class UtibillReports extends REST_Controller {
 						"date" 				=> $value->issued_date,
 						"location" 			=> $value->location_name,
 						"number" 			=> $value->number,
-						"usage" 			=> floatval($value->winvoice_line_quantity),
+						"usage" 			=> $usage,
 						"amount"			=> $amount
 					);
 				}else{
@@ -399,7 +418,7 @@ class UtibillReports extends REST_Controller {
 						"date" 				=> $value->issued_date,
 						"location" 			=> $value->location_name,
 						"number" 			=> $value->number,
-						"usage" 			=> floatval($value->winvoice_line_quantity),
+						"usage" 			=> $usage,
 						"amount"			=> $amount
 					);
 				}
@@ -2340,6 +2359,95 @@ class UtibillReports extends REST_Controller {
 		}
 		$data["count"] = $obj->paged->total_rows;
 		$data["currentPage"] = $obj->paged->current_page;
+	}
+
+	//maintenance
+	function maintenance_get() {
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
+		$data["count"] = 0;
+		$total = 0;
+
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
+			}
+		}
+		
+		//Filter		
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value['operator'])){
+	    			$obj->{$value['operator']}($value['field'], $value['value']);	    		
+	    		} else {
+	    			$obj->where($value['field'], $value['value']);
+	    		}
+			}
+		}
+
+		//Results
+		$obj->include_related("contact", array("abbr", "number", "name"));
+		$obj->include_related('location', "name");
+		$obj->include_related("winvoice_line", array("quantity", "type", "amount", "description"));
+		$obj->where_related("winvoice_line", "type", "maintenance");
+		$obj->where("deleted <>", 1);
+		$obj->order_by("issued_date", "asc");
+		// $obj->get_iterated();
+		//Results
+		if($page && $limit){
+			$obj->get_paged_iterated($page, $limit);
+			$data["count"] = $obj->paged->total_rows;
+		}else{
+			$obj->get_iterated();
+			$data["count"] = $obj->result_count();
+		}
+		
+		if($obj->exists()){
+			$objList = [];
+			foreach ($obj as $value) {												
+				if(isset($objList[$value->contact_id])){
+					$objList[$value->contact_id]["line"][] = array(
+						"id" 				=> $value->id,
+						"type" 				=> $value->winvoice_line_description,
+						"date" 				=> $value->issued_date,
+						"location" 			=> $value->location_name,
+						"number" 			=> $value->number,
+						"amount"			=> floatval($value->winvoice_line_amount),
+					);
+				}else{
+					$objList[$value->contact_id]["id"] 		= $value->contact_id;
+					$objList[$value->contact_id]["name"] 	= $value->contact_abbr.$value->contact_number." ".$value->contact_name;
+					$objList[$value->contact_id]["line"][]	= array(
+						"id" 				=> $value->id,
+						"type" 				=> $value->winvoice_line_description,
+						"date" 				=> $value->issued_date,
+						"location" 			=> $value->location_name,
+						"number" 			=> $value->number,
+						"amount"			=> floatval($value->winvoice_line_amount),
+					);
+				}
+				$total +=  floatval($value->winvoice_line_amount);
+			}
+
+			foreach ($objList as $value) {
+				$data["results"][] = $value;
+			}
+			$data['total'] = $total;
+			$data["count"] = count($data["results"]);
+		}
+
+		//Response Data
+		$this->response($data, 200);
 	}
 
 	//Graph>>>>>>>>>>>>>>>>>>>>>>>>>>>>.

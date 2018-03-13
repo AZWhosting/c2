@@ -267,7 +267,7 @@ var themerPrimaryColor = primaryColor;
 				        		</div>
 				        		<div class="span6 logout">
 				        			<span>Hello [<span id="userCut"></span>] |
-				        			<a href="" >Logout</a></span>
+				        			<a href="<?php echo base_url(); ?>rrd/login" >Logout</a></span>
 				        		</div>
 				        	</div>
 				        </div>
@@ -275,4 +275,4 @@ var themerPrimaryColor = primaryColor;
 		        </div>
 		    </div>
 		</div>
-	</div>         
+	</div>

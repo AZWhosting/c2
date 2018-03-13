@@ -304,6 +304,7 @@ var	en_US = {
 	"no_of_cashReceipt": "Number of Cash Receipt",
 	"fine_collection_report": "Fine Collection",
 	"discount_report": "Discount Report",
+	"maintenance_report": "Maintenance Report",
 	"summary_report": "Discount Report",
 	//Supplier,
 	"in_here_you_can_manage_your_supplier" : "In here, you can manage your supplier information, and other related transactions.",

@@ -302,6 +302,7 @@ var	km_KH = {
 	"no_of_cashReceipt": "ចំនួនសាច់ប្រាក់ដែលទទួល",
 	"fine_collection_report": "របាយការណ៍ប្រាក់ពិន័យ",
 	"discount_report": "របាយការណ៍បញ្ជុះតម្លៃ",
+	"maintenance_report": "របាយការណ៍ថ្លៃថែទាំ",
 	//supplier
 	"in_here_you_can_manage_your_supplier" : "នៅ​ទី​នេះ​ អ្នក អាច​គ្រប់គ្រង​ព័ត៌មាន​របស់​អ្នក​ផ្គត់ផ្គង់​ និង​ ប្រតិបត្តិការ​ផ្សេងៗ​ដែល​ពាក់​ពន្ធ័",
 	"add_supplier" : "បង្កើត​អ្នក​ផ្គត់​ផ្គង់",

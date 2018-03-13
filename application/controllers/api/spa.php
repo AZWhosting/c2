@@ -587,7 +587,7 @@ class Spa extends REST_Controller {
 					$i->measurement_id = $item->measurement->measurement_id;
 					$i->tax_item_id = $item->tax_item->id;
 					$i->assembly_id = $item->assembly_id;
-					$i->description = isset($item->description) ? $item->description : $item->item->name;
+					$i->description = $item->item->name;
 					$i->quantity = $item->quantity;
 					$i->conversion_ratio = 1;
 					$i->cost = $item->avarage_cost;
@@ -1723,6 +1723,146 @@ class Spa extends REST_Controller {
 		}
 		//Response Data
 		$this->response($data, 200);
+	}
+	//Loyalty
+	function loyalty_get(){
+		$data["results"] = [];
+		$data["count"] = 0;
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$obj = new Spa_loyalty(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		//Filter
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value["operator"])) {
+					$obj->{$value["operator"]}($value["field"], $value["value"]);
+				} else {
+	    			$obj->where($value["field"], $value["value"]);
+				}
+			}
+		}
+		//Results
+		if($page && $limit){
+			$obj->get_paged_iterated($page, $limit);
+			$data["count"] = $obj->paged->total_rows;
+		}else{
+			$obj->get_iterated();
+			$data["count"] = $obj->result_count();
+		}
+		if($obj->exists()){
+			foreach ($obj as $value) {
+				$branches = [];
+				$lb = new Spa_loyalty_branch(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$lb->where("loyalty_id", $value->id)->get_iterated();
+				if($lb->exists()){
+					foreach($lb as $bl){
+						$br = new Branch(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						$br->where("id", $bl->branch_id)->limit(1)->get();
+						$branches[] = array(
+							"id" 	=> $br->id,
+							"name"  => $br->name,
+						);
+					}
+				}
+				$data["results"][] = array(
+					"id" 				=> $value->id,
+					"name"				=> $value->name,
+					"base"				=> intval($value->base),
+					"base_type"			=> intval($value->base_type),
+					"amount_per_point"	=> floatval($value->amount_per_point),
+					"point_per_reward"	=> intval($value->point_per_reward),
+					"reward_amount"		=> floatval($value->reward_amount),
+					"reward_type"		=> intval($value->reward_type),
+					"expire"			=> $value->expire,
+					"branches"			=> $branches,
+					"status"			=> intval($value->status),
+				);
+			}
+		}
+		//Response Data
+		$this->response($data, 200);
+	}
+	function loyalty_post(){
+		$models = json_decode($this->post('models'));
+		$data["results"] = [];
+		$data["count"] = 0;
+		foreach ($models as $value) {
+			$obj = new Spa_loyalty(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+			isset($value->name) 				? $obj->name 				= $value->name : "";
+			isset($value->base) 				? $obj->base 				= $value->base : 1;
+			isset($value->base_type) 			? $obj->base_type 			= $value->base_type : 1;
+			isset($value->amount_per_point) 	? $obj->amount_per_point 	= $value->amount_per_point : 1;
+			isset($value->point_per_reward) 	? $obj->point_per_reward 	= $value->point_per_reward : 1;
+			isset($value->reward_amount) 		? $obj->reward_amount 		= $value->reward_amount : 1;
+			isset($value->reward_type) 			? $obj->reward_type 		= $value->reward_type : 1;
+			isset($value->expire) 				? $obj->expire 				= $value->expire : "";
+			$obj->status = 1;
+	   		if($obj->save()){
+	   			foreach ($value->branches as $b) {
+	   				$loyaltybranch = new Spa_loyalty_branch(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+   					$loyaltybranch->loyalty_id = $obj->id;
+   					$loyaltybranch->branch_id = $b->id;
+   					$loyaltybranch->save();
+	   			}
+			   	$data["results"][] = array(
+			   		"id" 			=> $obj->id
+			   	);
+		    }
+		}
+		$data["count"] = count($data["results"]);
+		$this->response($data, 201);	
+	}
+	function loyalty_put() {
+		$models = json_decode($this->put('models'));
+		$data["results"] = array();
+		$data["count"] = 0;
+		foreach ($models as $value) {
+			$obj = new Spa_cancel_reason(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$obj->get_by_id($value->id);
+			isset($value->name) 				? $obj->name 				= $value->name : "";
+			isset($value->base) 				? $obj->base 				= $value->base : 1;
+			isset($value->base_type) 			? $obj->base_type 			= $value->base_type : 1;
+			isset($value->amount_per_point) 	? $obj->amount_per_point 	= $value->amount_per_point : 1;
+			isset($value->point_per_reward) 	? $obj->point_per_reward 	= $value->point_per_reward : 1;
+			isset($value->reward_amount) 		? $obj->reward_amount 		= $value->reward_amount : 1;
+			isset($value->reward_type) 			? $obj->reward_type 		= $value->reward_type : 1;
+			isset($value->expire) 				? $obj->expire 				= $value->expire : "";
+			$obj->status = 1;
+	   		if($obj->save()){
+	   			$oit = new Spa_loyalty_branch(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$oit->where("loyalty_id", $obj->id)->get_iterated();
+				if($oit->exists()){
+					$oit->delete_all();
+				}
+	   			foreach ($value->branches as $b) {
+	   				$loyaltybranch = new Spa_loyalty_branch(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+   					$loyaltybranch->loyalty_id = $obj->id;
+   					$loyaltybranch->branch_id = $b->id;
+   					$loyaltybranch->save();
+	   			}
+			   	$data["results"][] = array(
+			   		"id" 			=> $obj->id
+			   	);
+		    }
+		}
+		$data["count"] = count($data["results"]);
+		$this->response($data, 200);
+	}
+	function loyalty_delete() {
+		$models = json_decode($this->delete('models'));
+
+		foreach ($models as $key => $value) {
+			$obj = new Spa_cancel_reason(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$obj->get_by_id($value->id);
+
+			$data["results"][] = array(
+				"data"   => $value,
+				"status" => $obj->delete()
+			);
+		}
 	}
 	//Generate invoice number
 	public function _generate_number($type, $date){

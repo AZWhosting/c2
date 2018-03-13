@@ -326,6 +326,20 @@
 	.branch .example .tabsbar ul li.active a i:before{
 		color: #333;
 	}
+
+	#CancelReason .k-button.k-button-icontext.k-grid-add{
+		background: #496cad;
+    	color: #fff;
+    	float: left;
+	}
+	#CancelReason .k-button.k-button-icontext.k-grid-save-changes{
+		background: #496cad;
+    	color: #fff;
+    	float: left;
+	}
+	#CancelReason table th{
+		color: #fff;
+	}
 </style>
 <!-- ***************************
 *	Water Section      	  *
@@ -598,11 +612,11 @@
 					            		<i></i><span class="strong"><span>Branch</span></span>
 					            	</a>
 					            </li>
-					            <li>
+					            <!-- <li>
 					            	<a href="<?php echo base_url(); ?>rrd/#/customer_setting" target="_blank" class="glyphicons calculator">
 					            		<i></i><span class="strong"><span data-bind="text: lang.lang.customer_type">Branch</span></span>
 					            	</a>
-					            </li>
+					            </li> -->
 					            <li>
 					            	<a href="#ServiceCharge" class="glyphicons wallet" data-bind="click: goServiceCharge" data-toggle="tab">
 					            		<i></i><span class="strong"><span >Service Charge</span></span>
@@ -683,19 +697,21 @@
 						            </div>
 						            <div class="tab-pane" id="CancelReason">
 						            	<div class="row">
-						            		<style type="text/css">
-						            			td {
-						            				color: #000!important;
-						            			}
-						            		</style>
-						            		<div data-role="grid"
-							                 data-editable="true"
-							                 data-toolbar="['create', 'save']"
-							                 data-columns="[
-							                                 { 'field': 'description', 'width': 670 },
-							                              ]"
-							                 data-bind="source: cancellationDS"
-							                 style="height: 200px"></div>
+						            		<div class="col-sx-12 col-sm-12">
+							            		<style type="text/css">
+							            			td {
+							            				color: #000!important;
+							            			}
+							            		</style>
+							            		<div data-role="grid"
+								                 data-editable="true"
+								                 data-toolbar="['create', 'save']"
+								                 data-columns="[
+								                                 { 'field': 'description', 'width': 670 },
+								                              ]"
+								                 data-bind="source: cancellationDS"
+								                 style="height: 200px"></div>
+								            </div>
 						            	</div>
 						            </div>
 						        </div>
@@ -1103,4 +1119,4 @@
 		#=name#
 	</span>
 	<span style="width:15%; text-align: right; float: right; padding-right: 15px; text-transform: capitalize;">#=type#</span>
-</script>                
+</script>

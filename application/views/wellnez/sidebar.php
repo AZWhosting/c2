@@ -323,17 +323,17 @@
             Menu
             <div class="enquiry-content">
                 <ul style="text-align: left; font-size: 13px; color: #000; ">
-                    <li><a href="pos">Point of Sale</a></li>
-                    <li><a href="session">Session Management</a></li>
-                    <li><a href="books">Booking Management</a></li>
-                    <li><a href="services">Servicing Customer</a></li>
-                    <li><a href="pay">Receipt</a></li>
+                    <li><a href="<?php echo base_url(); ?>wellnez/pos">Point of Sale</a></li>
+                    <li><a href="<?php echo base_url(); ?>wellnez/session">Session Management</a></li>
+                    <li><a href="<?php echo base_url(); ?>wellnez/books">Booking Management</a></li>
+                    <li><a href="<?php echo base_url(); ?>wellnez/services">Servicing Customer</a></li>
+                    <li><a href="<?php echo base_url(); ?>wellnez/pay">Receipt</a></li>
                     <li class="divider"></li>
-                    <li><a href="customer">Customer</a></li>
-                    <li><a href="rooms">Rooms / Facilities</a></li>
-                    <li><a href="employee">Therapist</a></li>
-                    <li><a href="loyalty">Loyalty</a></li>
-                    <li><a href="setting">Setting</a></li>
+                    <li><a href="<?php echo base_url(); ?>wellnez/customer">Customer</a></li>
+                    <li><a href="<?php echo base_url(); ?>wellnez/rooms">Rooms / Facilities</a></li>
+                    <li><a href="<?php echo base_url(); ?>wellnez/employee">Therapist</a></li>
+                    <li><a href="<?php echo base_url(); ?>wellnez/loyalty">Loyalty</a></li>
+                    <li><a href="<?php echo base_url(); ?>wellnez/setting">Setting</a></li>
                     <li class="divider"></li>
                     <li><a href="<?php echo base_url()?>rrd" target="_blank">Back to BanhJi</a></li>
                 </ul>
@@ -389,4 +389,4 @@
         </a>
     </div>
     <!-- End -->
-</div> 
+</div>

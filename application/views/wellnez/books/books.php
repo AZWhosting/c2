@@ -287,7 +287,7 @@
 
 								<ul class="topnav addNew" style="float: left; width: 8%; background: #0eac00">
 									<li role="presentation" class="dropdown ">
-								  		<a class="dropdown-toggle" data-bind="click: addNewSession" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+								  		<a class="dropdown-toggle" href="<?php echo base_url(); ?>wellnez/pos" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
 								  			<span style="font-size: 13px;"> Add New</span>
 								  		</a>
 								  	</li>

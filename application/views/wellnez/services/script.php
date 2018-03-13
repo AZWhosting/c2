@@ -5498,13 +5498,17 @@
         selectRow: function(e){
             var self = this;
             this.lineDS.data([]);
-            this.lineDS.filter({
-                field: "transaction_id",
-                value: e.data.transaction_id,
-            });
-            this.set("obj", e.data);
-            this.set("total", kendo.toString(e.data.amount, "c", e.data.locale));
-            this.set("haveWork", true);
+            if(e.data.status == "Available"){
+                this.set("haveWork", false);
+            }else{
+                this.lineDS.filter({
+                    field: "transaction_id",
+                    value: e.data.transaction_id,
+                });
+                this.set("obj", e.data);
+                this.set("total", kendo.toString(e.data.amount, "c", e.data.locale));
+                this.set("haveWork", true);
+            }
         },
         saveWork            : function(){
             var obj = this.get("obj");
@@ -5561,7 +5565,8 @@
                     banhji.router.navigate('/print');
                 }
             });
-        }
+        },
+        haveWork            : false,
     });
     //Print
     banhji.print = kendo.observable({

@@ -790,45 +790,100 @@
 		padding: 8px;
 		border: 1px solid #d6d7d8;
 	}
+	#tab0 .k-widget.k-dropdown.k-header > .k-dropdown-wrap.k-state-default{
+		height: 40px;
+	}
+	#tab0 .k-dropdown-wrap .k-input{
+		padding: 10px !important;
+	}
+	#tab0 .k-header .k-icon{
+		margin-top: 13px;
+	}
+	#tab2 span.k-datepicker{
+		width: 62.8%;
+	    float: left;
+	    padding: 0;
+	    border: 1px solid #ddd;
+	    height: 38px;
+	    background: none;
+	}
+	#tab2 .k-picker-wrap .k-input{
+		width: 97% !important;
+	    float: left;
+	    padding: 7px 0 0 10px !important;
+	}
+	#tab2 .k-picker-wrap.k-state-default{
+		height: 37px;
+	}
+	#tab2 .k-header .k-i-calendar{
+		margin-top: 10px;
+	}
 </style>
 <script id="Loyalty" type="text/x-kendo-template">	
 	<!-- <div id="ntf1" data-role="notification"></div> -->
 	<div class="container">
 		<div class="row loyalty">
 			<div class="span12">
-				<div class="example">
+				<div class="example" style="overflow: hidden;position: relative;">
+					<div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 100%;margin-top: -15px;background: rgba(142, 159, 167, 0.8);z-index: 9999;margin-left: -15px;">
+						<p style="color: #fff;font-size: 25px;position: absolute;top: 45%;left: 45%;">Loading</p>
+					</div>
 					<h2>Create Loyalty Program</h2>
-					<a href="" class="loyatyNext">Next</a>
+					<a data-bind="click: goNext, invisible: lastStep" class="loyatyNext">Next</a>
+					<a data-bind="click: save, visible: lastStep" class="loyatyNext" style="background: red">Save</a>
 					<div class="row">
 						<div>
 							<div class="box-generic" style="margin-left: 0;">
 							    <div class="tabsbar tabsbar-1">
 							        <ul class="row-fluid row-merge">
-							        	<li class="span2  active">
+							        	<li class="span2  active" data-bind="click: tabeClick">
 							            	<a href="#tab0" data-toggle="tab"><span>Name</span></a>
 							            </li>
-							            <li class="span2  ">
+							            <li class="span2" data-bind="visible: isPointBase, click: tabeClick">
 							            	<a href="#tab1" data-toggle="tab"><span>Rules</span></a>
 							            </li>
 							            <li class="span2">
-							            	<a href="#tab2" data-toggle="tab"><span>Rewards</span></a>
+							            	<a href="#tab2" data-toggle="tab" data-bind="click: tabeClick"><span>Rewards</span></a>
 							            </li>
 							            <li class="span2">
-							            	<a href="#tab3" data-toggle="tab"><span>Branch</span></a>
+							            	<a href="#tab3" data-toggle="tab" data-bind="click: tabeClick"><span>Branch</span></a>
 							            </li>
 							        </ul>
 							    </div>
 							    <div class="tab-content">
 							    	<div class="tab-pane active" id="tab0">
 							    		<div style="width: 50%; text-align: left; margin: 20px auto 0;">
-						            		<span style="padding: 10px 69px 10px 20px; background: #ddd; line-height: 34px; border-width: 1px 0 0 1px;   border-style: solid; border-color: #ccc; font-weight: 700">Name</span>
-						            		<input style="height: 40px; padding: 8px; border-width: 1px 1px 0 1px; border-style: solid; border-color: #ccc; color: #333; margin-left: -4px; width: 55%;" type="search" placeholder="Name..." >
+						            		<span style="float: left; padding: 10px 69px 10px 20px; background: #ddd; border-width: 1px 0 0 1px;   border-style: solid; border-color: #ccc; font-weight: 700">Name</span>
+						            		<input style="float: left; height: 41px; padding: 8px; border-width: 1px 1px 0 1px; border-style: solid; border-color: #ccc; color: #333; margin-left: -4px; width: 54.8%;" type="search" placeholder="Name..." data-bind="value: obj.name">
 						            		<div class="clear"></div>
-						            		<span style="padding: 10px 76px 10px 20px; background: #ddd; line-height: 34px; border-width: 1px 0 0 1px;   border-style: solid; border-color: #ccc; font-weight: 700">Base</span>
-						            		<input style="height: 41px; padding: 8px; border-width: 1px 1px 0 1px; border-style: solid; border-color: #ccc; color: #333; margin-left: -4px; width: 55%;" type="search" >
+						            		<span style="float: left; padding: 10px 72px 10px 20px; background: #ddd; border-width: 1px 0 0 1px;   border-style: solid; border-color: #ccc; font-weight: 700">Base</span>
+						            		<input data-role="dropdownlist"
+								                data-auto-bind="false"
+								                data-value-primitive="true"
+								                data-text-field="name"
+								                data-value-field="id"
+								                data-bind="
+								                	value: obj.base,
+								                    source: baseAR,
+								                    events: {change: baseChange}
+								                    "
+								                style="float: left; width: 55%; height: 41px; background: none;"
+								            />
 						            		<div class="clear"></div>
-						            		<span style="padding: 10px 74px 10px 20px; background: #ddd; line-height: 34px; border-width: 1px 0 1px 1px;   border-style: solid; border-color: #ccc; font-weight: 700">Type</span>
-						            		<input style="height: 40px; padding: 8px; border-width: 1px 1px 1px 1px; border-style: solid; border-color: #ccc; color: #333; margin-left: -4px; width: 55.1%;" type="search" >
+						            		<span style="float: left; padding: 10px 71px 10px 20px; background: #ddd; border-width: 1px 0 1px 1px;   border-style: solid; border-color: #ccc; font-weight: 700" data-bind="invisible: isPointBase">Type</span>
+						            		<input data-role="dropdownlist"
+								                data-auto-bind="false"
+								                data-value-primitive="true"
+								                data-text-field="name"
+								                data-value-field="id"
+								                data-bind="
+								                	invisible: isPointBase,
+								                	value: obj.base_type,
+								                    source: typeAR,
+								                    events: {change: baseTypeChange}
+								                    "
+								                style="width: 54.8%;"
+								            />
 						            	</div>
 							    	</div>
 							        <div class="tab-pane " id="tab1">
@@ -836,10 +891,10 @@
 						            	<p>Customers earn stars based on the total amount they spend.</p>
 						            	<div style="width: 50%; text-align: left; margin: 20px auto 0;">
 						            		<span style="padding: 10px 69px 10px 20px; background: #ddd; line-height: 34px; border-width: 1px 0 0 1px;   border-style: solid; border-color: #ccc; font-weight: 700">Amount per point</span>
-						            		<input style="height: 40px; padding: 8px; border-width: 1px 1px 0 1px; border-style: solid; border-color: #ccc; color: #333; margin-left: -4px; width: 55%;" type="search" placeholder="Name..." >
+						            		<input style="height: 40px; padding: 8px; border-width: 1px 1px 0 1px; border-style: solid; border-color: #ccc; color: #333; margin-left: -4px; width: 55%;" type="search" placeholder="..." data-bind="value: obj.amount_per_point">
 						            		<div class="clear"></div>
 						            		<span style="padding: 10px 76px 10px 20px; background: #ddd; line-height: 34px; border-width: 1px 0 1px 1px;   border-style: solid; border-color: #ccc; font-weight: 700">Point per reward</span>
-						            		<input style="height: 41px; padding: 8px; border-width: 1px 1px 1px 1px; border-style: solid; border-color: #ccc; color: #333; margin-left: -4px; width: 55%;" type="search" >						            		
+						            		<input style="height: 41px; padding: 8px; border-width: 1px 1px 1px 1px; border-style: solid; border-color: #ccc; color: #333; margin-left: -4px; width: 55%;" type="search" data-bind="value: obj.point_per_reward">						            		
 						            	</div>
 						        	</div>
 							        <div class="tab-pane " id="tab2">
@@ -847,35 +902,57 @@
 						            	<p>Select one of the options below to determine how your customers will redeem stars for rewards.</p>
 						            	<div style="width: 75%; text-align: left; margin: 20px auto 0;">
 						            		<span style="padding: 7px 50px 7px 20px; background: #ddd; line-height: 34px; border-width: 1px 0 0 1px; border-style: solid; border-color: #ccc; font-weight: 700; float: left;">Reward amount</span>
-						            		<div style="height: 49px; padding: 8px; border-width: 1px 1px 0 1px ; border-style: solid; border-color: #ccc; color: #333; width: 63%; float: left;" type="search" placeholder="Number..." >
-						            			<input  type="search" placeholder="Number..." style="float: left; width: 76%; border: none;">
-						            			<a style="padding: 5px 10px; border: 1px solid #333; float: left; text-align: center;">%</a>
-						            			<a style="padding: 5px 10px; border: 1px solid #333; float: left; text-align: center;">Amount</a>
+						            		<div style="height: 49px; padding: 8px; border-width: 1px 1px 0 1px ; border-style: solid; border-color: #ccc; color: #333; width: 63%; float: left;" >
+						            			<input  
+						            				placeholder="Number..." 
+						            				style="float: left; width: 76%; border: none;" 
+						            				data-bind="value: obj.reward_amount">
+						            			<div 
+						            				data-role="listview"
+									                data-template="reward_template"
+									                data-bind="source: rewardTypeAR">
+										        </div>
 						            		</div>
 						            		<div class="clear"></div>
-					            			<span style="padding: 2px 85px 2px 20px; background: #ddd; line-height: 34px; border-width: 1px 0 1px 1px; border-style: solid; border-color: #ccc; font-weight: 700; float: left;">Expiration</span>	            	
+					            			<span style="padding: 2px 84px 2px 20px; background: #ddd; line-height: 34px; border-width: 1px 0 1px 1px; border-style: solid; border-color: #ccc; font-weight: 700; float: left;">Expiration</span>
 					            			<input 
-								            	id="txtDueDate" 
-								            	name="txtDueDate" 
 								            	data-role="datepicker" 
 								            	data-format="dd-MM-yyyy" 
 								            	data-parse-formats="yyyy-MM-dd" 
-								            	data-bind="value: obj.due_date" 
-								            	required="" 
-								            	data-required-msg="required" 
+								            	data-bind="value: obj.expire"
 								            	style=" width: 63%; float: left;"
-								            	type="text" class="k-input k-valid">    		
+								            	type="text" class="k-input k-valid"> 
 						            	</div>
 						        	</div>
 						        	<div class="tab-pane " id="tab3">
 						            	<h3>Choose how your customers will redeem their rewards.</h3>
 						            	<p>Select one of the options below to determine how your customers will redeem stars for rewards.</p>
 						            	<div style="width: 75%; text-align: left; margin: 20px auto 0;">
-						            		
+						            		<div class="span12" style="padding-right: 0;"><a style="float: right; padding: 5px 15px;    background: green; color: #fff; margin-bottom: 5px;" data-bind="visible: isEdit, click: clearBranch">Clear</a></div>
+						            		<select id="listbox1" data-role="listbox"
+								                data-text-field="name"
+								                data-value-field="id" 
+								                data-toolbar='{
+								                	tools: ["moveUp", "moveDown", "transferTo", "transferFrom", "transferAllTo", "transferAllFrom", "remove"]
+								            	}'
+								                data-connect-with="listbox2"
+								                data-auto-bind="true"
+								                data-bind="source: branchDS" style="width: 50%; min-height: 550px;">
+								            </select>
+								           	
+								            <select id="listbox2" data-role="listbox"
+								                data-connect-with="listbox1"
+								                data-text-field="name"
+								                data-value-field="id"
+								                data-auto-bind="false"
+								                data-bind="source: obj.branches"
+								                style="width: 49%; min-height: 550px;">
+								            </select>
 						            	</div>
 						        	</div>
 							    </div>
 							</div>
+							<div id="ntf1" data-role="notification"></div>
 						</div>
 					</div>
 				</div>
@@ -885,6 +962,9 @@
 			</div>
 		</div>
 	</div>
+</script>
+<script id="reward_template" type="text/x-kendo-tmpl">
+	<a data-bind="click: typeRewardSelect" class="#if(id == 2){# rewardtypeamt #}else{# rewardtypeper #}#" style="padding: 5px 10px; border: 1px solid \#333; float: left; text-align: center;list-style: none;cursor: pointer;#if(id == 1){#background: \#333; color: \#fff;#}#">#: name#</a>
 </script>
 <script id="contact-person-row-tmpl" type="text/x-kendo-tmpl">
 	<tr>		

@@ -6255,70 +6255,47 @@
             {id: 1, name: 'Promotion'},
             {id: 2, name: 'Point'}
         ],
-        tapeAR   : [
+        typeAR   : [
             {id: 1, name: 'Fixed'},
             {id: 2, name: 'Variant'}
         ],
+        rewardTypeAR : [
+            {id: 1, name: '%'},
+            {id: 2, name: 'Amount'}
+        ],
+        isEdit      : false,
         pageLoad    : function(id){
             if(id){
                 this.loadObj(id);
+                this.set("isEdit", true);
             }else{
                 this.addEmpty();
+                this.set("isEdit", false);
             }
         },
+        clearBranch : function(){
+            this.get("obj").set("branches", []);
+        },
         obj         : null,
-        payrollobj  : null,
-        statusDS  : [
-            {id: 0, value: "inactive"},
-            {id: 1, value: "active"}
-        ],
-        genderDS  : [
-            {id: "M", value: "Male"},
-            {id: "F", value: "Female"}
-        ],
         userDS : banhji.userDS,
         addEmpty                : function(){
             this.dataSource.data([]);
             this.set("obj", null);
             this.dataSource.insert(0, {
-                "name"          :"",
-                "gender"        :"M",
-                "number"        :"",
-                "is_fulltime"   :false,
-                "role"          : "",
-                "status"        :1,
-                "phone"         :"",
-                "email"         :"",
-                "address"       :"",
-                "memo"          :"",
-                "bill_to"       :"",
-                "ship_to"       :"",
-                "abbr"          :"",
-                "currency"      :"km-KH",
-                "userid"        :0,
-                "account"       :{id: 9, name: 'Cash Advance'},
-                "salary"        :{id: 78, name: 'Salary'},
-                "registered_date":new Date()
+                "name"                  : "",
+                "base"                  : 1,
+                "base_type"             : 1,
+                "amount_per_point"      : 1,
+                "point_per_reward"      : 1,
+                "reward_amount"         : 1,
+                "reward_type"           : 1,
+                "expire"                : new Date(),
+                "branches"              : []
             });
             var obj = this.dataSource.at(0);
             this.set("obj", obj);
-            //Payroll
-            this.payrollDS.data([]);
-            this.set("payrollobj", null);
-            this.payrollDS.insert(0, {
-                "children"          : 0,
-                "city"              : "",
-                "country"           : "",
-                "contact_id"        : "",
-                "emergency_name"    : "",
-                "employeement_date" : "",
-                "emergency_number"  : "", 
-                "married_status"    : 0,
-                "nationality"       : "",
-            });
-            var payrollobj = this.payrollDS.at(0);
-            this.set("payrollobj", payrollobj);
         },
+        branchDS                : dataStore(apiUrl + "branches"),
         loadObj                 : function(id){
             var self = this;
             this.dataSource.query({
@@ -6328,34 +6305,106 @@
             }).then(function(e){
                 var view = self.dataSource.view();
                 self.set("obj", view[0]);
+                if(view[0].reward_type == 1){
+                    $(".rewardtypeper").css("color", "#fff");
+                    $(".rewardtypeper").css("background", "#333");
+                    $(".rewardtypeamt").css("color", "#333");
+                    $(".rewardtypeamt").css("background", "#fff");
+                }else{
+                    $(".rewardtypeamt").css("color", "#fff");
+                    $(".rewardtypeamt").css("background", "#333");
+                    $(".rewardtypeper").css("color", "#333");
+                    $(".rewardtypeper").css("background", "#fff");
+                }
+                if(view[0].base == 2){
+                    self.set("isPointBase", true);
+                }
             });
         },
-        typeChange: function(e) {
-          var type = this.roleDS.data()[e.sender.selectedIndex - 1];
-          this.get('obj').set('abbr', type.abbr);
+        typeRewardSelect        : function (e) {
+            var data = e.data.id;
+            if(data == 1){
+                this.get("obj").set("reward_type", 1);
+                $(".rewardtypeper").css("color", "#fff");
+                $(".rewardtypeper").css("background", "#333");
+                $(".rewardtypeamt").css("color", "#333");
+                $(".rewardtypeamt").css("background", "#fff");
+            }else{
+                this.get("obj").set("reward_type", 2);
+                $(".rewardtypeamt").css("color", "#fff");
+                $(".rewardtypeamt").css("background", "#333");
+                $(".rewardtypeper").css("color", "#333");
+                $(".rewardtypeper").css("background", "#fff");
+            }
+        },
+        isPointBase : false,
+        baseChange  : function(e){
+            var data = e.sender.span[0].textContent;
+            if(data == "Point"){
+                this.set("isPointBase", true);
+            }else{
+                this.set("isPointBase", false);
+            }
+        },
+        haveFix        : true,
+        baseTypeChange : function(e){
+            var data = e.sender.span[0].textContent;
+            if(data == "Fixed"){
+                this.set("haveFix", true);
+            }else{
+                this.set("haveFix", false);
+            }
         },
         save        : function(e){
             var self = this;
+            $("#loadImport").css("display", "block");
             this.dataSource.sync();
             this.dataSource.bind("requestEnd", function(e){
                 if(e.response.type != 'read'){
-                    $.each(self.payrollDS.data(), function(i,v){
-                        v.set("contact_id", e.response.results[0].id);
-                    });
-                    self.payrollDS.sync();
-                    self.payrollDS.bind("requestEnd", function(e){
-                        self.cancel();
-                        var noti = $("#ntf1").data("kendoNotification");
-                        noti.hide();
-                        noti.success(self.lang.lang.success_message);
-                    });
+                    self.cancel();
+                    var noti = $("#ntf1").data("kendoNotification");
+                    noti.hide();
+                    noti.success(self.lang.lang.success_message);
+                    self.branchDS.query({});
+                    $("#loadImport").css("display", "none");
                 }
             });
         },
         cancel      : function(e){
             this.dataSource.data([]);
             banhji.router.navigate("/");
-        }    
+            $("#loadImport").css("display", "none");
+        },
+        tabeClick   : function(e){
+            var data = e.currentTarget.children[0].innerText;
+            this.set("lastStep", false);
+            if(data == 'Branch'){
+                this.set("lastStep", true);
+            }
+        },
+        lastStep    : false,
+        goNext      : function(e){
+            var inx = $('li.active')[0].children[0].innerText;
+            $('.tabsbar ul li').removeClass('active');
+            $('.tab-pane').removeClass('active');
+            this.set("lastStep", false);
+            if(inx == 'Name'){
+                if(this.get("isPointBase") == false){
+                    $('.tabsbar ul li').eq(2).addClass('active');
+                    $('.tab-content .tab-pane').eq(2).addClass('active');
+                }else{
+                    $('.tabsbar ul li').eq(1).addClass('active');
+                    $('.tab-content .tab-pane').eq(1).addClass('active');
+                }
+            }else if(inx == 'Rules'){
+                $('.tabsbar ul li').eq(2).addClass('active');
+                $('.tab-content .tab-pane').eq(2).addClass('active');
+            }else if(inx == 'Rewards'){
+                $('.tabsbar ul li').eq(3).addClass('active');
+                $('.tab-content .tab-pane').eq(3).addClass('active');
+                this.set("lastStep", true);
+            }
+        }
     });
     /* views and layout */
     banhji.view = {

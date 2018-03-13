@@ -2992,53 +2992,7 @@
     banhji.Index = kendo.observable({
         lang        : langVM,
         currencyDS: dataStore(apiUrl + "utibills/currency"),
-        sessionDS: new kendo.data.DataSource({
-            transport: {
-                read: {
-                    url: apiUrl + "cashier",
-                    type: "GET",
-                    headers: banhji.header,
-                    dataType: 'json'
-                },
-                parameterMap: function(options, operation) {
-                    if (operation === 'read') {
-                        return {
-                            page: options.page,
-                            limit: options.pageSize,
-                            filter: options.filter,
-                            sort: options.sort
-                        };
-                    } else {
-                        return {
-                            models: kendo.stringify(options.models)
-                        };
-                    }
-                }
-            },
-            schema: {
-                model: {
-                    id: 'id'
-                },
-                data: 'results',
-                total: 'count'
-            },
-            filter: [
-                {
-                    field: "cashier_id",
-                    value: banhji.userData.id
-                }
-            ],
-            sort: {
-                field: "id",
-                dir: "asc"
-            },
-            batch: true,
-            serverFiltering: true,
-            serverSorting: true,
-            serverPaging: true,
-            page: 1,
-            pageSize: 1,
-        }),
+        sessionDS: dataStore(apiUrl + "cashier"),
         cashierItemDS: dataStore(apiUrl + "cashier_sessions/item"),
         updateSessionDS: dataStore(apiUrl + "cashier_sessions"),
         noSession: true,
@@ -3057,7 +3011,10 @@
                 });
             }
             var x = banhji.userData.username;
-            $("#userCut").text(x); //x.toUpperCase();
+            $("#userCut").text(x);
+            if(banhji.userData.role != 1){
+                this.sessionDS.filter({field: "cashier_id", value: banhji.userData.id});
+            }
         },
         autoSessionDS : dataStore(apiUrl + "cashier/at_active"),
         autoAddCashier : function(cid, sid){
