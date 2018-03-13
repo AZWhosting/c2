@@ -272,6 +272,10 @@ class Spa extends REST_Controller {
 					$se->work_id = $work->id;
 					$se->employee_id = $e->id;
 					$se->save();
+					$emudate = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$emudate->where("id", $e->id)->limit(1)->get();
+					$emudate->work_id = $work->id;
+					$emudate->save();
 				}
 				//room
 				foreach($value->room as $r){

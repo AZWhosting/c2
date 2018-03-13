@@ -591,10 +591,19 @@
 <script id="work-list-tmpl" type="text/x-kendo-tmpl">
 	<div class="block-number #if(status == 'Serving'){# serving #}#" style="position: relative;width: 27.4%;min-height: 175px;" data-bind="click: selectRow">
 		<h2 style="text-align: center; font-size: 14px;background: \#ccc;"><b>#: roomshow#</b></h2>
-		#$.each(item, function(i,v){#
-			<p style="text-align: left;"><b>Name:</b> <span style="text-align: center;font-size: 12px;">#: v.name#</span></p>
-			<p style="text-align: left;"><b>Amount:</b> <span style="text-align: center;font-size: 12px;">#=kendo.toString(v.amount, v.locale=="km-KH"?"c0":"c2", v.locale)#</span></p>
-		#})#
+		#if(item.length > 1){#
+		 	#var tt = 0#
+			#$.each(item, function(i,v){#
+				#tt += v.amount#
+			#})#
+			<p style="text-align: left;"><b>Item Name:</b> <span style="text-align: center;font-size: 12px;">--</span></p>
+			<p style="text-align: left;"><b>Amount:</b> <span style="text-align: center;font-size: 12px;">#=kendo.toString(tt, locale=="km-KH"?"c0":"c2", locale)#</span></p>
+		#}else{#
+			#$.each(item, function(i,v){#
+				<p style="text-align: left;"><b>Item Name:</b> <span style="text-align: center;font-size: 12px;">#: v.name#</span></p>
+				<p style="text-align: left;"><b>Amount:</b> <span style="text-align: center;font-size: 12px;">#=kendo.toString(v.amount, v.locale=="km-KH"?"c0":"c2", v.locale)#</span></p>
+			#})#
+		#}#
 		<p style="text-align: left;"><b>Status:</b> <span style="text-align: center;font-size: 12px;">#: status#</span></p>
 		#if(status == 'Available'){#
 		<div class="shadow" style="z-index: 9999;position: absolute;top: 0;left: 0;width: 100%;height: 100%;background: rgba(255,255,255.0.5)">
@@ -763,4 +772,4 @@
 	        </div>
 	    </div>
     </div>
-</script> 
+</script>

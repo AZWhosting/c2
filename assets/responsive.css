@@ -110,7 +110,8 @@ input[type="radio"], input[type="checkbox"]{
 }
 .bg-action-button .btn-btn .dropdown-menu #saveClose,
 .bg-action-button .btn-btn .dropdown-menu #savePrint,
-.bg-action-button .btn-btn .dropdown-menu #saveNew{
+.bg-action-button .btn-btn .dropdown-menu #saveNew,
+.bg-action-button .btn-btn .dropdown-menu #saveDraftPrint{
   width: auto !important;
   padding: 0 !important;
   color: #333 !important;
@@ -1468,6 +1469,11 @@ width: 50% !important;
   color: #fff;
 } 
 #saveNew{
+  width: 120px !important;
+  color: #fff;
+  padding: 5px 35px;
+}
+#saveDraftPrint{
   width: 120px !important;
   color: #fff;
   padding: 5px 35px;

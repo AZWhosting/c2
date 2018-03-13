@@ -6005,6 +6005,10 @@
                 {
                     field: "contact_type_id",
                     value: 10
+                },
+                {   
+                    field: "work_id",
+                    value: 0
                 }
             ],
             sort: {
@@ -8103,7 +8107,6 @@
             });
         },
         //Room
-        // roomDS       : dataStore(apiUrl + "spa/roomname"),
         roomDS          : new kendo.data.DataSource({
             transport: {
                 read: {
