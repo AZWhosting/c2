@@ -782,12 +782,12 @@
             <tr>
               <td>Company Name (Local)</td>
               <td>:</td>
-              <td><span data-bind="text:current.name"></span></td>
+              <td><span data-bind="html:current.name"></span></td>
             </tr>
             <tr>
               <td>Company Name (English)</td>
               <td>:</td>
-              <td><span data-bind="text:current.name"></span></td>
+              <td><span data-bind="html:current.name_en"></span></td>
             </tr>
             <tr>
               <td>Telephone</td>
@@ -802,12 +802,12 @@
             <tr>
               <td>Address (Local)</td>
               <td>:</td>
-              <td><span data-bind="text:current.address"></span></td>
+              <td><span data-bind="html:current.address"></span></td>
             </tr>
             <tr>
-              <td>Address (Khmer)</td>
+              <td>Address (English)</td>
               <td>:</td>
-              <td><span data-bind="text:current.address"></span></td>
+              <td><span data-bind="html:current.address_en"></span></td>
             </tr>
             <tr>
               <td>ZIP Code</td>
@@ -3437,7 +3437,7 @@
               let m = mnth < 10 ? '0'+mnth : mnth;
               banhji.app.get('cache').institute.fiscal_date = d.getTime();
               banhji.company.get('current').set('fiscal_date', day +"-"+ m);
-              
+
               $("#ntf1").data("kendoNotification").success("");
               localforage.getItem('user').then(function(item){
                 item.institute.name = res.results[0].name;

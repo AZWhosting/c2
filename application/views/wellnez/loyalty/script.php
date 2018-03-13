@@ -5678,7 +5678,7 @@
         },
         today   : new Date()
     });
-    banhji.customerCenter = kendo.observable({
+    banhji.loyaltyCenter = kendo.observable({
         lang                : langVM,
         transactionDS       : dataStore(apiUrl + 'transactions'),
         noteDS              : dataStore(apiUrl + 'notes'),
@@ -6249,73 +6249,113 @@
         }
     });
     banhji.Loyalty = kendo.observable({
-        lang                    : langVM,
-        dataSource              : dataStore(apiUrl + "contacts"),
-        save                    : function(){
-            var self = this, obj = this.get("obj");
-
-            obj.set("registered_date", kendo.toString(new Date(obj.registered_date), "yyyy-MM-dd"));
-            if(obj.dob!==""){
-                obj.set("dob", kendo.toString(new Date(obj.dob), "yyyy-MM-dd"));
+        lang        : langVM,
+        dataSource  : dataStore(apiUrl + "spa/loyalty"),
+        baseAR      : [
+            {id: 1, name: 'Promotion'},
+            {id: 2, name: 'Point'}
+        ],
+        tapeAR   : [
+            {id: 1, name: 'Fixed'},
+            {id: 2, name: 'Variant'}
+        ],
+        pageLoad    : function(id){
+            if(id){
+                this.loadObj(id);
+            }else{
+                this.addEmpty();
             }
-
-
-            //Edit Mode
-            if(this.get("isEdit")){
-                //Contact Person has changes
-                if(this.contactPersonDS.hasChanges()){
-                    obj.set("dirty", true);
-                }
-            }
-
-            //Attachment
-            if(this.attachmentDS.total()>0){
-                var att = this.attachmentDS.at(0);
-                obj.set("image_url", att.url);
-            }
-
-            //Save Obj
-            this.objSync()
-            .then(function(data){ //Success
-                if(self.get("isEdit")==false){
-                    //Contact Person
-                    $.each(self.contactPersonDS.data(), function(index, value) {
-                        value.set("contact_id", data[0].id);
+        },
+        obj         : null,
+        payrollobj  : null,
+        statusDS  : [
+            {id: 0, value: "inactive"},
+            {id: 1, value: "active"}
+        ],
+        genderDS  : [
+            {id: "M", value: "Male"},
+            {id: "F", value: "Female"}
+        ],
+        userDS : banhji.userDS,
+        addEmpty                : function(){
+            this.dataSource.data([]);
+            this.set("obj", null);
+            this.dataSource.insert(0, {
+                "name"          :"",
+                "gender"        :"M",
+                "number"        :"",
+                "is_fulltime"   :false,
+                "role"          : "",
+                "status"        :1,
+                "phone"         :"",
+                "email"         :"",
+                "address"       :"",
+                "memo"          :"",
+                "bill_to"       :"",
+                "ship_to"       :"",
+                "abbr"          :"",
+                "currency"      :"km-KH",
+                "userid"        :0,
+                "account"       :{id: 9, name: 'Cash Advance'},
+                "salary"        :{id: 78, name: 'Salary'},
+                "registered_date":new Date()
+            });
+            var obj = this.dataSource.at(0);
+            this.set("obj", obj);
+            //Payroll
+            this.payrollDS.data([]);
+            this.set("payrollobj", null);
+            this.payrollDS.insert(0, {
+                "children"          : 0,
+                "city"              : "",
+                "country"           : "",
+                "contact_id"        : "",
+                "emergency_name"    : "",
+                "employeement_date" : "",
+                "emergency_number"  : "", 
+                "married_status"    : 0,
+                "nationality"       : "",
+            });
+            var payrollobj = this.payrollDS.at(0);
+            this.set("payrollobj", payrollobj);
+        },
+        loadObj                 : function(id){
+            var self = this;
+            this.dataSource.query({
+                filter: {field: "id", value: id},
+                page: 1,
+                pageSize: 1
+            }).then(function(e){
+                var view = self.dataSource.view();
+                self.set("obj", view[0]);
+            });
+        },
+        typeChange: function(e) {
+          var type = this.roleDS.data()[e.sender.selectedIndex - 1];
+          this.get('obj').set('abbr', type.abbr);
+        },
+        save        : function(e){
+            var self = this;
+            this.dataSource.sync();
+            this.dataSource.bind("requestEnd", function(e){
+                if(e.response.type != 'read'){
+                    $.each(self.payrollDS.data(), function(i,v){
+                        v.set("contact_id", e.response.results[0].id);
                     });
-
-                    //Attachment
-                    $.each(self.attachmentDS.data(), function(index, value){
-                        value.set("item_id", data[0].id);
+                    self.payrollDS.sync();
+                    self.payrollDS.bind("requestEnd", function(e){
+                        self.cancel();
+                        var noti = $("#ntf1").data("kendoNotification");
+                        noti.hide();
+                        noti.success(self.lang.lang.success_message);
                     });
-                }
-                self.contactPersonDS.sync();
-                self.saveAttachment();
-                
-                return data;
-            }, function(reason) { //Error
-                $("#ntf1").data("kendoNotification").error(reason);
-            }).then(function(result){
-                $("#ntf1").data("kendoNotification").success(banhji.source.successMessage);
-
-                if(self.get("saveClose")){
-                    //Save Close
-                    self.set("saveClose", false);
-                    self.cancel();
-                    window.history.back();
-                }else{
-                    //Save New
-                    self.addEmpty();
                 }
             });
         },
-        cancel                  : function(){
-            this.dataSource.cancelChanges();
-            this.contactPersonDS.cancelChanges();
+        cancel      : function(e){
             this.dataSource.data([]);
-            this.contactPersonDS.data([]);
-            this.set("contact_type_id", 0);
-            banhji.router.navigate('/');
-        },
+            banhji.router.navigate("/");
+        }    
     });
     /* views and layout */
     banhji.view = {
@@ -6336,7 +6376,7 @@
         Index: new kendo.Layout("#Index", {
             model: banhji.Index
         }),
-        customerCenter: new kendo.Layout("#customerCenter", {model: banhji.customerCenter}),
+        loyaltyCenter: new kendo.Layout("#loyaltyCenter", {model: banhji.loyaltyCenter}),
         Loyalty: new kendo.Layout("#Loyalty", {model: banhji.Loyalty}),
     };
     /* views and layout */
@@ -6385,8 +6425,8 @@
     });
     /* Login page */
     banhji.router.route('/', function() {
-        banhji.view.layout.showIn("#content", banhji.view.customerCenter);
-        var vm = banhji.customerCenter;
+        banhji.view.layout.showIn("#content", banhji.view.loyaltyCenter);
+        var vm = banhji.loyaltyCenter;
         vm.pageLoad();
     });
     banhji.router.route("/loyalty(/:id)", function(id){

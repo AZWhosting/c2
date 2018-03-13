@@ -802,7 +802,6 @@
 					<div class="row">
 						<div>
 							<div class="box-generic" style="margin-left: 0;">
-						    
 							    <div class="tabsbar tabsbar-1">
 							        <ul class="row-fluid row-merge">
 							        	<li class="span2  active">
@@ -814,12 +813,11 @@
 							            <li class="span2">
 							            	<a href="#tab2" data-toggle="tab"><span>Rewards</span></a>
 							            </li>
-							            <!-- <li class="span2">
-							            	<a href="#tab3" data-toggle="tab"><span>Location</span></a>
-							            </li> -->
+							            <li class="span2">
+							            	<a href="#tab3" data-toggle="tab"><span>Branch</span></a>
+							            </li>
 							        </ul>
 							    </div>
-
 							    <div class="tab-content">
 							    	<div class="tab-pane active" id="tab0">
 							    		<div style="width: 50%; text-align: left; margin: 20px auto 0;">
@@ -827,13 +825,12 @@
 						            		<input style="height: 40px; padding: 8px; border-width: 1px 1px 0 1px; border-style: solid; border-color: #ccc; color: #333; margin-left: -4px; width: 55%;" type="search" placeholder="Name..." >
 						            		<div class="clear"></div>
 						            		<span style="padding: 10px 76px 10px 20px; background: #ddd; line-height: 34px; border-width: 1px 0 0 1px;   border-style: solid; border-color: #ccc; font-weight: 700">Base</span>
-						            		<input style="height: 41px; padding: 8px; border-width: 1px 1px 0 1px; border-style: solid; border-color: #ccc; color: #333; margin-left: -4px; width: 55%;" type="search" >						            		
+						            		<input style="height: 41px; padding: 8px; border-width: 1px 1px 0 1px; border-style: solid; border-color: #ccc; color: #333; margin-left: -4px; width: 55%;" type="search" >
 						            		<div class="clear"></div>
 						            		<span style="padding: 10px 74px 10px 20px; background: #ddd; line-height: 34px; border-width: 1px 0 1px 1px;   border-style: solid; border-color: #ccc; font-weight: 700">Type</span>
 						            		<input style="height: 40px; padding: 8px; border-width: 1px 1px 1px 1px; border-style: solid; border-color: #ccc; color: #333; margin-left: -4px; width: 55.1%;" type="search" >
 						            	</div>
 							    	</div>
-
 							        <div class="tab-pane " id="tab1">
 						            	<h3>Earn by Amount Spent</h3>
 						            	<p>Customers earn stars based on the total amount they spend.</p>
@@ -845,11 +842,9 @@
 						            		<input style="height: 41px; padding: 8px; border-width: 1px 1px 1px 1px; border-style: solid; border-color: #ccc; color: #333; margin-left: -4px; width: 55%;" type="search" >						            		
 						            	</div>
 						        	</div>
-							        
 							        <div class="tab-pane " id="tab2">
 						            	<h3>Choose how your customers will redeem their rewards.</h3>
 						            	<p>Select one of the options below to determine how your customers will redeem stars for rewards.</p>
-
 						            	<div style="width: 75%; text-align: left; margin: 20px auto 0;">
 						            		<span style="padding: 7px 50px 7px 20px; background: #ddd; line-height: 34px; border-width: 1px 0 0 1px; border-style: solid; border-color: #ccc; font-weight: 700; float: left;">Reward amount</span>
 						            		<div style="height: 49px; padding: 8px; border-width: 1px 1px 0 1px ; border-style: solid; border-color: #ccc; color: #333; width: 63%; float: left;" type="search" placeholder="Number..." >
@@ -858,25 +853,27 @@
 						            			<a style="padding: 5px 10px; border: 1px solid #333; float: left; text-align: center;">Amount</a>
 						            		</div>
 						            		<div class="clear"></div>
-					            			<span style="padding: 2px 85px 2px 20px; background: #ddd; line-height: 34px; border-width: 1px 0 1px 1px; border-style: solid; border-color: #ccc; font-weight: 700; float: left;">Expiration</span>										            	
+					            			<span style="padding: 2px 85px 2px 20px; background: #ddd; line-height: 34px; border-width: 1px 0 1px 1px; border-style: solid; border-color: #ccc; font-weight: 700; float: left;">Expiration</span>	            	
 					            			<input 
-												data-role="dropdownlist"
-												data-template="contact-list-tmpl" 
-												data-auto-bind="false" 
-												data-value-primitive="true" 
-												data-filter="startswith" 
-												data-text-field="name" 
-												data-value-field="id"
-												data-option-label="Select a Category..."
-												data-bind=""
-					                            style="height: 40px; padding: 8px; border-width: 1px 1px 1px 1px; border-style: solid; border-color: #ccc; color: #333; margin-left: 0px; width: 63%; float: left;"
-					                            aria-invalid="true" 
-					                            class="k-invalid"
-					                        />						            		
+								            	id="txtDueDate" 
+								            	name="txtDueDate" 
+								            	data-role="datepicker" 
+								            	data-format="dd-MM-yyyy" 
+								            	data-parse-formats="yyyy-MM-dd" 
+								            	data-bind="value: obj.due_date" 
+								            	required="" 
+								            	data-required-msg="required" 
+								            	style=" width: 63%; float: left;"
+								            	type="text" class="k-input k-valid">    		
 						            	</div>
 						        	</div>
-							        						        
-
+						        	<div class="tab-pane " id="tab3">
+						            	<h3>Choose how your customers will redeem their rewards.</h3>
+						            	<p>Select one of the options below to determine how your customers will redeem stars for rewards.</p>
+						            	<div style="width: 75%; text-align: left; margin: 20px auto 0;">
+						            		
+						            	</div>
+						        	</div>
 							    </div>
 							</div>
 						</div>
