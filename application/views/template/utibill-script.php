@@ -16347,8 +16347,6 @@
 
             this.dataSource.query({
                 filter: para,
-                page: 1,
-                pageSize: 50,
             }).then(function() {
                 var view = self.dataSource.view();
 
@@ -19163,8 +19161,6 @@
 
             this.dataSource.query({
                 filter: para,
-                 page: 1,
-                pageSize: 50
             }).then(function() {
                 var view = self.dataSource.view();
 

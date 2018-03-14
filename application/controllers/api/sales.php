@@ -805,7 +805,7 @@ class Sales extends REST_Controller {
 		}
 
 		//Results
-		$obj->include_related("contact", array("abbr", "number", "name"));		
+		// $obj->include_related("contact", array("abbr", "number", "name"));		
 		$obj->where_in("type", array("Commercial_Invoice","Vat_Invoice","Invoice", "Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale"));
 		$obj->where("is_recurring <>", 1);
 		$obj->where("deleted <>", 1);
@@ -816,21 +816,21 @@ class Sales extends REST_Controller {
 		if($obj->exists()){
 			$objList = [];
 			foreach ($obj as $value) {		
-				if($value->employee_id>0){
 					$employee = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 					$employee->where("id", $value->employee_id);
 					$employee->get();
-										
-					$amount = (floatval($value->amount) - floatval($value->deposit)) / floatval($value->rate);
+					
 					$invoice = 0;
 					$cashSale = 0;
 					if($value->type=="Commercial_Invoice" || $value->type=="Vat_Invoice" || $value->type=="Invoice"){
-						$invoice = 1;
+						$invoice++;
 					}else{
-						$cashSale = 1;
+						$cashSale++;
 					}
 
-					if(isset($objList[$employee->employee_id])){
+					$amount = (floatval($value->amount) - floatval($value->deposit)) / floatval($value->rate);
+					
+					if(isset($objList[$value->employee_id])){
 						$objList[$value->employee_id]["invoice_count"] 		+= $invoice;
 						$objList[$value->employee_id]["cash_sale_count"]	+= $cashSale;
 						$objList[$value->employee_id]["amount"] 			+= $amount;
@@ -841,7 +841,6 @@ class Sales extends REST_Controller {
 						$objList[$value->employee_id]["cash_sale_count"]	= $cashSale;
 						$objList[$value->employee_id]["amount"]				= $amount;
 					}
-				}
 			}
 
 			foreach ($objList as $value) {
@@ -886,7 +885,7 @@ class Sales extends REST_Controller {
 		}
 
 		//Results
-		$obj->include_related("contact", array("abbr", "number", "name"));		
+		// $obj->include_related("contact", array("abbr", "number", "name"));		
 		$obj->where_in("type", array("Commercial_Invoice","Vat_Invoice","Invoice", "Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale"));
 		$obj->where("is_recurring <>", 1);
 		$obj->where("deleted <>", 1);

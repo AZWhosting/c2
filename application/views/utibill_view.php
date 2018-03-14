@@ -13475,9 +13475,9 @@
 						                data-bind="source: dataSource" >
 						        </tbody>
 			            	</table>
-			            	<div id="pager" class="k-pager-wrap"						    	
+	<!-- 		            	<div id="pager" class="k-pager-wrap"						    	
 					             data-role="pager" data-bind="source: dataSource"
-					             data-page-size= "true"></div>
+					             data-page-size= "true"></div> -->
 						</div>
 			            </div>
 			        </span>
@@ -15086,10 +15086,10 @@
 									 	data-template="accountReceivableList-template"
 								></tbody>
 							</table>
-							<div id="pager" class="k-pager-wrap"
+							<!-- <div id="pager" class="k-pager-wrap"
 			            		 data-role="pager"
 						    	 data-auto-bind="false"
-					             data-bind="source: dataSource"></div>
+					             data-bind="source: dataSource"></div> -->
 						</div>
 
 					</div>

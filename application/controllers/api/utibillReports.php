@@ -299,16 +299,16 @@ class UtibillReports extends REST_Controller {
 			$amount = 0;
 			$price = 0;
 			foreach ($obj as $value) {	
-				if ($value->winvoice_line_transaction_id){
+				if(isset($value->winvoice_line_transaction_id)){
 					if($value->winvoice_line_type=="usage"){
 					$usage = floatval($value->winvoice_line_quantity);
 					}else{
 						$usage = 0;						
 					}
-
+					$price += floatval($value->winvoice_line_amount);
 				}					
-				$price += floatval($value->winvoice_line_amount);
-					$amount = $usage * $price;
+				
+				$amount = $usage * $price;
 				if(isset($objList[$value->contact_id])){
 					$objList[$value->contact_id]["invoice"] 		+= 1;
 					$objList[$value->contact_id]["amount"] 			+= $amount;
