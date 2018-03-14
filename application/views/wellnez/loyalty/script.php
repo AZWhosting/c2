@@ -6227,7 +6227,43 @@
                 alert("Please select a customer and Memo is required");
             }
         },
-        contactDS           : dataStore(apiUrl + "contacts"),
+        contactDS           : new kendo.data.DataSource({
+            transport: {
+                read    : {
+                    url: apiUrl + "contacts",
+                    type: "GET",
+                    headers: banhji.header,
+                    dataType: 'json'
+                },              
+                parameterMap: function(options, operation) {
+                    if(operation === 'read') {
+                        return {
+                            page: options.page,
+                            limit: options.pageSize,
+                            filter: options.filter,
+                            sort: options.sort
+                        };
+                    } else {
+                        return {models: kendo.stringify(options.models)};
+                    }
+                }
+            },
+            schema  : {
+                model: {
+                    id: 'id'
+                },
+                data: 'results',
+                total: 'count'
+            },
+            filter:{ field:"parent_id", operator:"where_related_contact_type", value:1 },
+            sort:{ field:"number", dir:"asc" },
+            batch: true,
+            serverFiltering: true,
+            serverSorting: true,
+            serverPaging: true,
+            page:1,
+            pageSize: 100
+        }),
         conobj              : null,
     });
     banhji.Loyalty = kendo.observable({
