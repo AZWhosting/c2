@@ -396,7 +396,6 @@
 					<a href="#/customer" class="addCustomer">Add Customer</a>
 					<div class="innerAll" style="width: 100%; float: left; background: #1c3b19;">
 						<form autocomplete="off" class="form-inline" style="margin-bottom: 0;">
-							
 							<div class="widget-search separator bottom">
 								<button style="height: 34px;" type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></button>
 								<div class="overflow-hidden">
@@ -415,12 +414,10 @@
 							</div>
 						</form>					
 					</div>
-
 					<div class="results">
 						<span data-bind="text: contactDS.total"></span>
 						<span data-bind="text: lang.lang.found_search"></span>
 					</div>
-
 					<div class="table table-condensed " style="height: 580px;"
 						 data-role="grid"
 						 data-bind="source: contactDS"
@@ -437,59 +434,20 @@
 					<div class="row">
 						<div class="span6">
 							<div class="widget widget-4 widget-tabs-icons-only margin-bottom-none">
-
-							    
 							    <div class="widget-head" >
 							    	<input type="text" name="" data-bind="value: obj.name" disabled="disabled" style="border: 1px solid #efefef; width: 69%; height: 30px; float: left; font-size: 16px; font-weight: 600;  background: #fff; padding-left: 5px;">
-							        
 							        <ul class="pull-right">
-
-							            <!-- <li class="glyphicons text_bigger active"><span data-toggle="tab" data-target="#tab1-4"><i></i></span>
-							            </li> -->
 							            <li class="glyphicons circle_info active"><span data-toggle="tab" data-target="#tab2-4"><i></i></span>
 							            </li>							            
 							            <li class="glyphicons pen"><span data-toggle="tab" data-target="#tab3-4"><i></i></span>
 							            </li>
 							            <li class="glyphicons paperclip"><span data-toggle="tab" data-target="#tab4-4"><i></i></span>
-							            </li>							            							            
+							            </li>					            
 							        </ul>
 							        <div class="clearfix"></div>
-							      
-
 							    </div>
-							   
-
 							    <div class="widget-body">
-							        <div class="tab-content">							          
-							            <!-- <div id="tab1-4" class="tab-pane active box-generic">
-							            	<table class="table table-borderless table-condensed cart_total cash-table">
-								            	<tr>
-								            		<td width="50%">
-								            			<span class="btn btn-block btn-primary" data-bind="click: goDeposit"><span><span data-bind="text: lang.lang.c_deposit"></span></span>
-								            		</td>
-								            		<td width="50%">
-								            			<span class="btn btn-block btn-inverse" data-bind="click: goSaleOrder"><span><span data-bind="text: lang.lang.sale_order"></span></span>						            			
-								            		</td>
-								            	</tr>
-								            	<tr>
-								            		<td>
-								            			<span class="btn btn-block btn-primary" data-bind="click: goCashSale"><span><span data-bind="text: lang.lang.cash_sale"></span></span>	
-								            		</td>
-								            		<td>
-								            			<span class="btn btn-block btn-primary" data-bind="click: goInvoice"><span data-bind="text: lang.lang.invoice"></span></span>				            			
-								            		</td>
-								            	</tr>
-								            	<tr>
-								            		<td>
-								            			<span class="btn btn-block btn-primary" data-bind="click: goCashReceipt"><span data-bind="text: lang.lang.cash_receipt"></span></span>	
-								            		</td>
-								            		<td>
-								            			<span class="btn btn-block btn-primary" data-bind="click: goCashRefound"><span >CASH REFUND</span></span>
-								            		</td>
-								            	</tr>								            	
-							            	</table>
-							            </div> -->
-							           
+							        <div class="tab-content">
 							            <div id="tab2-4" class="tab-pane box-generic active" style="float: left; margin-bottom: 10px;">
 							            	<div class="row-fluid">
 							            		<div class="span5" style="padding: 0 2px 0 0;">
@@ -530,13 +488,11 @@
 																</td>
 															</tr>
 														</table>
-
 														<span class="btn btn-primary btn-icon glyphicons edit pull-right" data-bind="click: goEdit"><i></i><span data-bind="text: lang.lang.view_edit_profile"></span></span>
 													</div>
 												</div>
 											</div>
 							            </div>
-							            
 							            <div id="tab3-4" class="tab-pane">
 										    <div>
 												<input type="text" class="k-textbox" 
@@ -552,7 +508,7 @@
 												 data-row-template="customerCenter-note-tmpl"
 												 data-columns="[{title: ''}]"
 												 data-height="100"						 
-												 data-scrollable="{virtual: true}"></div>											
+												 data-scrollable="{virtual: true}"></div>	
 							            </div>
 							            
 								        <div id="tab4-4" class="tab-pane" >
@@ -597,16 +553,16 @@
 						<div class="span6" style="padding-left: : 0px;">
 							<div class="row">
 								<div class="span6" style="padding: 0">
-									<div class="widget-stats widget-stats-primary widget-stats-5" data-bind="click: loadBalance" style="cursor: pointer; background: #0eac00; margin-left: 0; margin-bottom: 1px;">
+									<div class="widget-stats widget-stats-primary widget-stats-5" style="cursor: pointer; background: #0eac00; margin-left: 0; margin-bottom: 1px;">
 										<span class="glyphicons coins"><i></i></span>
 										<span class="txt" style="padding-right: 18px;">Total Sales<span data-bind="text: balance" style="font-size:medium;"></span></span>
 										<div class="clearfix"></div>
 									</div>
 								</div>
 								<div class="span6" style="padding-left: 0;">
-									<div class="widget-stats widget-stats-inverse widget-stats-5" data-bind="click: loadDeposit" style="cursor: pointer; margin-left: 1px; background: #1c3b19;">
+									<div class="widget-stats widget-stats-inverse widget-stats-5" style="cursor: pointer; margin-left: 1px; background: #1c3b19;">
 										<span class="glyphicons briefcase"><i></i></span>
-										<span class="txt">Last Visit<span data-bind="text: deposit" style="font-size:medium;"></span></span>
+										<span class="txt">Last Visit<span data-bind="text: lastVisit" style="font-size:medium;"></span></span>
 										<div class="clearfix"></div>
 									</div>
 								</div>

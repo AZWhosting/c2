@@ -6246,7 +6246,8 @@
             }else{
                 alert("Please select a customer and Memo is required");
             }
-        }
+        },
+        lastVisit           : kendo.toString(new Date(), "dd-MM-yyyy"),
     });
     banhji.customer = kendo.observable({
         lang                    : langVM,

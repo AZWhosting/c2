@@ -277,7 +277,7 @@ class UtibillReports extends REST_Controller {
 		//Results
 		$obj->include_related("contact", array("abbr", "number", "name"));
 		$obj->include_related("location", "name");
-		$obj->include_related("winvoice_line", array("quantity", "type", "amount"));
+		$obj->include_related("winvoice_line", array("quantity", "type", "amount", "transaction_id"));
 		$obj->where_related("winvoice_line", "type", array("usage", "tariff"));
 		$obj->where("type", "Utility_Invoice");
 		$obj->where("is_recurring <>", 1);
@@ -298,15 +298,16 @@ class UtibillReports extends REST_Controller {
 			$usage = 0;
 			$amount = 0;
 			$price = 0;
-			foreach ($obj as $value) {								
-				if($value->winvoice_line_type=="usage"){
-					$usage = floatval($value->winvoice_line_quantity);
-				}else{
-					$usage = 0;
-					$price = floatval($value->winvoice_line_amount);
-				}
-				$amount = $usage * $price;
-
+			foreach ($obj as $value) {	
+				if ($value->winvoice_line_transaction_id){
+					if($value->winvoice_line_type=="usage"){
+					$usage += floatval($value->winvoice_line_quantity);
+					}else{
+						$usage = 0;
+						$price += floatval($value->winvoice_line_amount);
+					}
+					$amount = $usage * $price;
+				}					
 				if(isset($objList[$value->contact_id])){
 					$objList[$value->contact_id]["invoice"] 		+= 1;
 					$objList[$value->contact_id]["amount"] 			+= $amount;
@@ -391,11 +392,10 @@ class UtibillReports extends REST_Controller {
 			$price = 0;
 			foreach ($obj as $value) {								
 				if($value->winvoice_line_type=="usage"){
-					$usage = floatval($value->winvoice_line_quantity);
-					$price = 1;
+					$usage += floatval($value->winvoice_line_quantity);
 				}else{
 					$usage = 0;
-					$price = floatval($value->winvoice_line_amount);
+					$price += floatval($value->winvoice_line_amount);
 				}
 				$amount = $usage * $price;
 				

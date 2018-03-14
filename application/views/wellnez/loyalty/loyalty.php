@@ -400,6 +400,11 @@
 	    border-left: 1px solid #fff;
 	    margin-left: 10px;
 	}
+	#tab1 h2{
+		float: left;
+		width: 100%;
+		font-size: 20px;
+	}
 </style>
 <!-- ***************************
 *	Water Section      	  *
@@ -459,15 +464,139 @@
 						    <div class="tab-content">						    	
 
 						        <div class="tab-pane active" id="tab1">
-					            	tab1
+					            	<div class="span12">
+					            		<h2>Rules</h2>
+					            		<div style="width: 50%; text-align: left; margin: 20px auto 0;">
+						            		<span style="float: left; padding: 10px 65px 10px 20px; background: #ddd; border-width: 1px 0 0 1px;   border-style: solid; border-color: #ccc; font-weight: 700">Name</span>
+						            		<label style="float: left; height: 41px; padding: 8px; border-width: 1px 1px 0 1px; border-style: solid; border-color: #ccc; color: #333; width: 54.8%; margin-bottom: 0;" data-bind="value: obj.name">ssss</label>
+						            		<div class="clear"></div>
+						            		<span style="float: left; padding: 10px 72px 10px 20px; background: #ddd; border-width: 1px 0 0 1px;   border-style: solid; border-color: #ccc; font-weight: 700">Base</span>
+						            		<label style="float: left; height: 41px; padding: 8px; border-width: 1px 1px 0 1px; border-style: solid; border-color: #ccc; color: #333; width: 54.8%; margin-bottom: 0;" data-bind="value: obj.name">sss</label>
+						            		<div class="clear"></div>
+						            		<span style="float: left; padding: 10px 71px 10px 20px; background: #ddd; border-width: 1px 0 1px 1px;   border-style: solid; border-color: #ccc; font-weight: 700" data-bind="invisible: isPointBase">Type</span>
+						            		<label style="float: left; height: 41px; padding: 8px; border-width: 1px 1px 1px 1px; border-style: solid; border-color: #ccc; color: #333; width: 54.8%; margin-bottom: 0;" data-bind="value: obj.name">sss</label>
+						            	</div>
+					            		<h2>Rewards</h2>
+					            		<div style="width: 50%; text-align: left; margin: 20px auto 0;">
+						            		<span style="float: left; padding: 10px 51px 10px 20px; background: #ddd; border-width: 1px 0 0 1px;   border-style: solid; border-color: #ccc; font-weight: 700">Amount</span>
+						            		<label style="float: left; height: 41px; padding: 8px; border-width: 1px 1px 0 1px; border-style: solid; border-color: #ccc; color: #333; width: 54.8%; margin-bottom: 0;" data-bind="value: obj.name">sss</label>
+						            		<div class="clear"></div>
+						            		<span style="float: left; padding: 10px 72px 10px 20px; background: #ddd; border-width: 1px 0 0 1px;   border-style: solid; border-color: #ccc; font-weight: 700">Type</span>
+						            		<label style="float: left; height: 41px; padding: 8px; border-width: 1px 1px 0 1px; border-style: solid; border-color: #ccc; color: #333; width: 54.8%; margin-bottom: 0;" data-bind="value: obj.name">ss</label>
+						            		<div class="clear"></div>
+						            		<span style="float: left; padding: 10px 36px 10px 20px; background: #ddd; border-width: 1px 0 1px 1px;   border-style: solid; border-color: #ccc; font-weight: 700" data-bind="invisible: isPointBase">Expiration</span>
+						            		<label style="float: left; height: 41px; padding: 8px; border-width: 1px 1px 1px 1px; border-style: solid; border-color: #ccc; color: #333; width: 54.8%; margin-bottom: 0;" data-bind="value: obj.name">sss</label>
+						            	</div>
+					            		<h2>Branch</h2>
+					            		<div class="span12" style="padding-right: 0;">
+					            			<a style="float: right; padding: 5px 15px; background: green; color: #fff; margin-bottom: 5px;" data-bind="visible: isEdit, click: clearBranch">Clear</a>
+					            		</div>
+					            		<div class="rows">
+						            		<select id="listbox1" data-role="listbox"
+								                data-text-field="name"
+								                data-value-field="id" 
+								                data-toolbar='{
+								                	tools: ["moveUp", "moveDown", "transferTo", "transferFrom", "transferAllTo", "transferAllFrom", "remove"]
+								            	}'
+								                data-connect-with="listbox2"
+								                data-auto-bind="true"
+								                data-bind="source: branchDS" style="width: 50%; min-height: 550px;float: left;">
+								            </select>
+								           	
+								            <select id="listbox2" data-role="listbox"
+								                data-connect-with="listbox1"
+								                data-text-field="name"
+								                data-value-field="id"
+								                data-auto-bind="false"
+								                data-bind="source: obj.branches"
+								                style="width: 49%; min-height: 550px;float: left;">
+								            </select>
+						           		</div>
+					            	</div>
 					        	</div>
 						        
 						        <div class="tab-pane" id="tab2">
-						        	tab2
+						        	<div class="span12">
+					            		<div class="span12" style="padding-right: 15px;">
+					            			<a style="float: right; padding: 5px 15px; background: green; color: #fff; margin-bottom: 5px;" data-bind="click: clearBranch">Clear</a>
+					            		</div>
+					            		<div class="rows">
+						            		<select id="listbox1" data-role="listbox"
+								                data-text-field="name"
+								                data-value-field="id" 
+								                data-toolbar='{
+								                	tools: ["moveUp", "moveDown", "transferTo", "transferFrom", "transferAllTo", "transferAllFrom", "remove"]
+								            	}'
+								                data-connect-with="listbox2"
+								                data-auto-bind="true"
+								                data-bind="source: branchDS" style="width: 50%; min-height: 550px;float: left;">
+								            </select>
+								           	
+								            <select id="listbox2" data-role="listbox"
+								                data-connect-with="listbox1"
+								                data-text-field="name"
+								                data-value-field="id"
+								                data-auto-bind="false"
+								                data-bind="source: obj.branches"
+								                style="width: 49%; min-height: 550px;float: left;">
+								            </select>
+						           		</div>
+					            		<a style="float: left; padding: 5px 15px; background: red; color: #fff; margin-top: 5px;" data-bind="click: clearBranch">Save</a>					            		
+					            	</div>
 					        	</div>
 						       
 						        <div class="tab-pane" id="tab3">
-						        	tab3
+						        	<div class="span12">
+					            		<div>
+											<input data-role="dropdownlist"
+												   class="sorter"                  
+										           data-value-primitive="true"
+										           data-text-field="text"
+										           data-value-field="value"
+										           data-bind="value: sorter,
+										                      source: sortList,
+										                      events: { change: sorterChanges }" />
+
+											<input data-role="datepicker"
+												   class="sdate"
+												   data-format="dd-MM-yyyy"
+										           data-bind="value: sdate,
+										           			  max: edate"
+										           placeholder="From ..." >
+
+										    <input data-role="datepicker"
+										    	   class="edate"
+										    	   data-format="dd-MM-yyyy"
+										           data-bind="value: edate,
+										                      min: sdate"
+										           placeholder="To ..." >
+
+										  	<button type="button" data-role="button" data-bind="click: searchTransaction"><i class="icon-search"></i></button>
+										</div>
+
+										<table class="table table-bordered table-striped table-white">
+											<thead>
+												<tr>
+													<th><span data-bind="text: lang.lang.date"></span></th>
+													<th><span data-bind="text: lang.lang.type"></span></th>
+													<th><span data-bind="text: lang.lang.reference_no"></span></th>
+													<th><span data-bind="text: lang.lang.amount"></span></th>
+													<th><span data-bind="text: lang.lang.status"></span></th>
+													<th><span data-bind="text: lang.lang.action"></span></th>
+												</tr>
+											</thead>
+						            		<tbody data-role="listview"
+						            				data-auto-bind="false"
+									                data-template="customerCenter-transaction-tmpl"
+									                data-bind="source: transactionDS" >
+									        </tbody>
+						            	</table>
+
+						            	<div id="pager" class="k-pager-wrap"
+						            		 data-role="pager"
+									    	 data-auto-bind="false"
+								             data-bind="source: transactionDS"></div>
+					            	</div>
 					        	</div>
 						       
 						    </div>
@@ -1023,4 +1152,4 @@
 	<span>
 		#=code# - #=country#
 	</span>
-</script>
+</script>                                                 
