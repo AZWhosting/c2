@@ -5692,43 +5692,7 @@
             data: banhji.source.contactTypeList,
             filter: { field:"parent_id", value: 1 }//Customer
         }),
-        contactDS           : new kendo.data.DataSource({
-            transport: {
-                read    : {
-                    url: apiUrl + "contacts",
-                    type: "GET",
-                    headers: banhji.header,
-                    dataType: 'json'
-                },              
-                parameterMap: function(options, operation) {
-                    if(operation === 'read') {
-                        return {
-                            page: options.page,
-                            limit: options.pageSize,
-                            filter: options.filter,
-                            sort: options.sort
-                        };
-                    } else {
-                        return {models: kendo.stringify(options.models)};
-                    }
-                }
-            },
-            schema  : {
-                model: {
-                    id: 'id'
-                },
-                data: 'results',
-                total: 'count'
-            },
-            filter:{ field:"parent_id", operator:"where_related_contact_type", value:1 },
-            sort:{ field:"number", dir:"asc" },
-            batch: true,
-            serverFiltering: true,
-            serverSorting: true,
-            serverPaging: true,
-            page:1,
-            pageSize: 100
-        }),
+        loyaltyDS           : dataStore(apiUrl + 'spa/loyalty'),
         sortList            : banhji.source.sortList,
         sorter              : "all",
         sdate               : "",
@@ -5750,11 +5714,11 @@
             }
 
             //Refresh
-            if(this.contactDS.total()>0){
-                this.contactDS.fetch();
-                this.searchTransaction();
-                this.loadSummary();
-            }
+            // if(this.contactDS.total()>0){
+            //     this.contactDS.fetch();
+            //     this.searchTransaction();
+            //     this.loadSummary();
+            // }
         },
         sorterChanges       : function(){
             var today = new Date(),
@@ -6046,7 +6010,23 @@
             var data = e.data;
             
             this.set("obj", data);
-            this.loadData();
+            var obj = this.get("obj");
+            if(data.base == 1){
+                obj.set("base", "Promotion");
+            }else{
+                obj.set("base", "Point");
+            }
+            if(data.base_type == 1){
+                obj.set("base_type", "Fixed");
+            }else{
+                obj.set("base_type", "Variant");
+            }
+            if(data.reward_type == 1){
+                obj.set("reward_type", "%");
+            }else{
+                obj.set("reward_type", "Amount");
+            }
+            // this.loadData();
         },
         //Search
         enterSearch         : function(e){
@@ -6246,7 +6226,9 @@
             }else{
                 alert("Please select a customer and Memo is required");
             }
-        }
+        },
+        contactDS           : dataStore(apiUrl + "contacts"),
+        conobj              : null,
     });
     banhji.Loyalty = kendo.observable({
         lang        : langVM,
@@ -6372,6 +6354,7 @@
         },
         cancel      : function(e){
             this.dataSource.data([]);
+            this.addEmpty();
             banhji.router.navigate("/");
             $("#loadImport").css("display", "none");
         },
@@ -6388,7 +6371,7 @@
             $('.tabsbar ul li').removeClass('active');
             $('.tab-pane').removeClass('active');
             this.set("lastStep", false);
-            if(inx == 'Name'){
+            if(inx == 'Info'){
                 if(this.get("isPointBase") == false){
                     $('.tabsbar ul li').eq(2).addClass('active');
                     $('.tab-content .tab-pane').eq(2).addClass('active');

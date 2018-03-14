@@ -468,49 +468,31 @@
 					            		<h2>Rules</h2>
 					            		<div style="width: 50%; text-align: left; margin: 20px auto 0;">
 						            		<span style="float: left; padding: 10px 65px 10px 20px; background: #ddd; border-width: 1px 0 0 1px;   border-style: solid; border-color: #ccc; font-weight: 700">Name</span>
-						            		<label style="float: left; height: 41px; padding: 8px; border-width: 1px 1px 0 1px; border-style: solid; border-color: #ccc; color: #333; width: 54.8%; margin-bottom: 0;" data-bind="value: obj.name">ssss</label>
+						            		<label style="float: left; height: 41px; padding: 8px; border-width: 1px 1px 0 1px; border-style: solid; border-color: #ccc; color: #333; width: 54.8%; margin-bottom: 0;" data-bind="text: obj.name"></label>
 						            		<div class="clear"></div>
 						            		<span style="float: left; padding: 10px 72px 10px 20px; background: #ddd; border-width: 1px 0 0 1px;   border-style: solid; border-color: #ccc; font-weight: 700">Base</span>
-						            		<label style="float: left; height: 41px; padding: 8px; border-width: 1px 1px 0 1px; border-style: solid; border-color: #ccc; color: #333; width: 54.8%; margin-bottom: 0;" data-bind="value: obj.name">sss</label>
+						            		<label style="float: left; height: 41px; padding: 8px; border-width: 1px 1px 0 1px; border-style: solid; border-color: #ccc; color: #333; width: 54.8%; margin-bottom: 0;" data-bind="text: obj.base"></label>
 						            		<div class="clear"></div>
-						            		<span style="float: left; padding: 10px 71px 10px 20px; background: #ddd; border-width: 1px 0 1px 1px;   border-style: solid; border-color: #ccc; font-weight: 700" data-bind="invisible: isPointBase">Type</span>
-						            		<label style="float: left; height: 41px; padding: 8px; border-width: 1px 1px 1px 1px; border-style: solid; border-color: #ccc; color: #333; width: 54.8%; margin-bottom: 0;" data-bind="value: obj.name">sss</label>
+						            		<span style="float: left; padding: 10px 71px 10px 20px; background: #ddd; border-width: 1px 0 1px 1px;   border-style: solid; border-color: #ccc; font-weight: 700">Type</span>
+						            		<label style="float: left; height: 41px; padding: 8px; border-width: 1px 1px 1px 1px; border-style: solid; border-color: #ccc; color: #333; width: 54.8%; margin-bottom: 0;" data-bind="text: obj.base_type"></label>
 						            	</div>
 					            		<h2>Rewards</h2>
 					            		<div style="width: 50%; text-align: left; margin: 20px auto 0;">
 						            		<span style="float: left; padding: 10px 51px 10px 20px; background: #ddd; border-width: 1px 0 0 1px;   border-style: solid; border-color: #ccc; font-weight: 700">Amount</span>
-						            		<label style="float: left; height: 41px; padding: 8px; border-width: 1px 1px 0 1px; border-style: solid; border-color: #ccc; color: #333; width: 54.8%; margin-bottom: 0;" data-bind="value: obj.name">sss</label>
+						            		<label style="float: left; height: 41px; padding: 8px; border-width: 1px 1px 0 1px; border-style: solid; border-color: #ccc; color: #333; width: 54.8%; margin-bottom: 0;" data-bind="text: obj.reward_amount"></label>
 						            		<div class="clear"></div>
 						            		<span style="float: left; padding: 10px 72px 10px 20px; background: #ddd; border-width: 1px 0 0 1px;   border-style: solid; border-color: #ccc; font-weight: 700">Type</span>
-						            		<label style="float: left; height: 41px; padding: 8px; border-width: 1px 1px 0 1px; border-style: solid; border-color: #ccc; color: #333; width: 54.8%; margin-bottom: 0;" data-bind="value: obj.name">ss</label>
+						            		<label style="float: left; height: 41px; padding: 8px; border-width: 1px 1px 0 1px; border-style: solid; border-color: #ccc; color: #333; width: 54.8%; margin-bottom: 0;" data-bind="text: obj.reward_type"></label>
 						            		<div class="clear"></div>
-						            		<span style="float: left; padding: 10px 36px 10px 20px; background: #ddd; border-width: 1px 0 1px 1px;   border-style: solid; border-color: #ccc; font-weight: 700" data-bind="invisible: isPointBase">Expiration</span>
-						            		<label style="float: left; height: 41px; padding: 8px; border-width: 1px 1px 1px 1px; border-style: solid; border-color: #ccc; color: #333; width: 54.8%; margin-bottom: 0;" data-bind="value: obj.name">sss</label>
+						            		<span style="float: left; padding: 10px 36px 10px 20px; background: #ddd; border-width: 1px 0 1px 1px;   border-style: solid; border-color: #ccc; font-weight: 700">Expiration</span>
+						            		<label style="float: left; height: 41px; padding: 8px; border-width: 1px 1px 1px 1px; border-style: solid; border-color: #ccc; color: #333; width: 54.8%; margin-bottom: 0;" data-bind="text: obj.expire"></label>
 						            	</div>
 					            		<h2>Branch</h2>
 					            		<div class="span12" style="padding-right: 0;">
-					            			<a style="float: right; padding: 5px 15px; background: green; color: #fff; margin-bottom: 5px;" data-bind="visible: isEdit, click: clearBranch">Clear</a>
+					            			<a style="float: right; padding: 5px 15px; background: green; color: #fff; margin-bottom: 5px;" data-bind="click: clearBranch">Clear</a>
 					            		</div>
 					            		<div class="rows">
-						            		<select id="listbox1" data-role="listbox"
-								                data-text-field="name"
-								                data-value-field="id" 
-								                data-toolbar='{
-								                	tools: ["moveUp", "moveDown", "transferTo", "transferFrom", "transferAllTo", "transferAllFrom", "remove"]
-								            	}'
-								                data-connect-with="listbox2"
-								                data-auto-bind="true"
-								                data-bind="source: branchDS" style="width: 50%; min-height: 550px;float: left;">
-								            </select>
-								           	
-								            <select id="listbox2" data-role="listbox"
-								                data-connect-with="listbox1"
-								                data-text-field="name"
-								                data-value-field="id"
-								                data-auto-bind="false"
-								                data-bind="source: obj.branches"
-								                style="width: 49%; min-height: 550px;float: left;">
-								            </select>
+						            		
 						           		</div>
 					            	</div>
 					        	</div>
@@ -529,7 +511,7 @@
 								            	}'
 								                data-connect-with="listbox2"
 								                data-auto-bind="true"
-								                data-bind="source: branchDS" style="width: 50%; min-height: 550px;float: left;">
+								                data-bind="source: contactDS" style="width: 50%; min-height: 550px;float: left;">
 								            </select>
 								           	
 								            <select id="listbox2" data-role="listbox"
@@ -537,7 +519,7 @@
 								                data-text-field="name"
 								                data-value-field="id"
 								                data-auto-bind="false"
-								                data-bind="source: obj.branches"
+								                data-bind="source: conobj.contact"
 								                style="width: 49%; min-height: 550px;float: left;">
 								            </select>
 						           		</div>
@@ -587,7 +569,7 @@
 											</thead>
 						            		<tbody data-role="listview"
 						            				data-auto-bind="false"
-									                data-template="customerCenter-transaction-tmpl"
+									                data-template="transaction-list-tmpl"
 									                data-bind="source: transactionDS" >
 									        </tbody>
 						            	</table>
@@ -610,14 +592,81 @@
 <script id="loyalty-list-tmpl" type="text/x-kendo-tmpl">
 	<tr data-bind="click: selectedRow">
 		<td>
-			<div class="media-body strong">				
-				<span>#=abbr##=number#</span>
-				<span>#=name#</span>
+			<div class="media-body strong">
+				<span>#=name#</span><a style="float: right;" href="\#/loyalty/#=id#">Edit</a>
 			</div>
 		</td>
 	</tr>
 </script>
+<script id="transaction-list-tmpl" type="text/x-kendo-tmpl">
+    <tr>    	  	
+    	<td>#=kendo.toString(new Date(issued_date), "dd-MM-yyyy")#</td>
+    	<td>#=type#</td>
+        <!-- Reference -->
+        <td>
+        	#if(type=="Customer_Deposit" && amount<0){#			
+				<a data-bind="click: goReference">#=number#</a>			
+			#}else{#
+				<a href="\#/#=type.toLowerCase()#/#=id#"><i></i> #=number#</a>
+			#}#        	
+        </td>
+        <!-- Amount -->
+    	<td class="right">
+    		#if(type=="GDN"){#
+    			#=kendo.toString(amount, "n0")#
+    		#}else if(type=="Commercial_Invoice" || type=="Vat_Invoice" || type=="Invoice" || type=="Commercial_Cash_Sale" || type=="Vat_Cash_Sale" || type=="Cash_Sale"){#
+    			#=kendo.toString(amount-deposit, locale=="km-KH"?"c0":"c", locale)#
+    		#}else{#
+    			#=kendo.toString(amount, locale=="km-KH"?"c0":"c", locale)#
+    		#}#
+    	</td>
+    	<!-- Status -->
+    	<td align="center">
+    		#if(status=="4") {#
+    			#=progress#
+    		#}#
 
+    		#if(type=="Quote"){#       		
+				#if(status=="0"){#
+        			Open      			
+        		#}#
+        	#}else if(type=="Sale_Order"){#
+        		#if(status=="0"){#
+        			Open
+        		#}else{#
+        			Done        			
+        		#}#
+        	#}else if(type=="GDN"){#
+        		Delivered
+        	#}else if(type=="Commercial_Invoice" || type=="Vat_Invoice" || type=="Invoice"){#
+        		#if(status=="0" || status=="2") {#
+        			# var date = new Date(), dueDate = new Date(due_date).getTime(), toDay = new Date(date).getTime(); #
+					#if(dueDate < toDay) {#
+						Over Due #:Math.floor((toDay - dueDate)/(1000*60*60*24))# days
+					#} else {#
+						#:Math.floor((dueDate - toDay)/(1000*60*60*24))# days to pay
+					#}#
+				#} else if(status=="1") {#
+					Paid
+				#} else if(status=="3") {#
+					Returned
+				#}#        	
+        	#}#        				
+		</td>
+		<!-- Actions -->
+    	<td align="center">
+			#if(type=="Commercial_Invoice" || type=="Vat_Invoice" || type=="Invoice"){#
+				#if(status=="0" || status=="2") {#
+        			<a data-bind="click: payInvoice"><i></i> <span data-bind="text: lang.lang.receive_payment"></span></a>
+        		#}#
+        	#}#
+
+        	#if(status=="4") {#
+				<a href="\#/#=type.toLowerCase()#/#=id#"><i></i> Use</a>
+    		#}#
+		</td>     	
+    </tr>
+</script>
 
 
 <style >
@@ -966,7 +1015,7 @@
 							    <div class="tabsbar tabsbar-1">
 							        <ul class="row-fluid row-merge">
 							        	<li class="span2  active" data-bind="click: tabeClick">
-							            	<a href="#tab0" data-toggle="tab"><span>Name</span></a>
+							            	<a href="#tab0" data-toggle="tab"><span>Info</span></a>
 							            </li>
 							            <li class="span2" data-bind="visible: isPointBase, click: tabeClick">
 							            	<a href="#tab1" data-toggle="tab"><span>Rules</span></a>
@@ -1084,6 +1133,7 @@
 							<div id="ntf1" data-role="notification"></div>
 						</div>
 					</div>
+					<a  class="loyatyNext" data-bind="click: cancel" style="background: #1c3b19; margin-top: 10px;">Cancel</a>
 				</div>
 			</div>
 			<div class="span12" style="margin-top: 20px;">
@@ -1152,4 +1202,4 @@
 	<span>
 		#=code# - #=country#
 	</span>
-</script>                                                 
+</script>

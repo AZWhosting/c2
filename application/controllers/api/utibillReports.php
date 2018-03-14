@@ -301,13 +301,14 @@ class UtibillReports extends REST_Controller {
 			foreach ($obj as $value) {	
 				if ($value->winvoice_line_transaction_id){
 					if($value->winvoice_line_type=="usage"){
-					$usage += floatval($value->winvoice_line_quantity);
+					$usage = floatval($value->winvoice_line_quantity);
 					}else{
-						$usage = 0;
-						$price += floatval($value->winvoice_line_amount);
+						$usage = 0;						
 					}
-					$amount = $usage * $price;
+
 				}					
+				$price += floatval($value->winvoice_line_amount);
+					$amount = $usage * $price;
 				if(isset($objList[$value->contact_id])){
 					$objList[$value->contact_id]["invoice"] 		+= 1;
 					$objList[$value->contact_id]["amount"] 			+= $amount;
