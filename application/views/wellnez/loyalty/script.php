@@ -6265,6 +6265,9 @@
             pageSize: 100
         }),
         conobj              : null,
+        remove: function (e) {
+            console.log("a");
+        },
     });
     banhji.Loyalty = kendo.observable({
         lang        : langVM,

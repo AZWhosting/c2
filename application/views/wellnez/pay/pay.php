@@ -286,8 +286,8 @@
 						<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 45%;left: 45%"></i>
 					</div>
 					<div class="row" style="background: #fff; float: left; width: 100%; padding: 15px; border-radius: 10px;">
-						<div class="row" >
-							<div class="col-xs-12 col-sm-6">
+						<div class="span6">
+							<div class="row" >
 								<div class="widget widget-heading-simple widget-body-primary widget-employees">
 									<div class="widget-body padding-none" style="background: none; width: 100%; float: left; border: none; padding: 0;">
 										<div class="row-fluid row-merge">
@@ -307,15 +307,27 @@
 										</div>
 									</div>
 								</div>
-								<div class="strong" style="margin-bottom: 15px; width: 100%; padding: 10px; float: left;" align="center"
-									data-bind="style: { backgroundColor: amtDueColor}">
-									<div align="left"><span style="color: #333;" data-bind="text: lang.lang.amount_received"></span></div>
-									<h2 data-bind="text: total_received" align="right"></h2>
-								</div>
+
+								<table class="table table-bordered table-primary table-striped table-vertical-center" style="margin-top: 15px; color: #333;">
+							        <thead>
+							            <tr>
+							            	<th style="vertical-align: top; background: #1c3b19;" data-bind="text: lang.lang.no_"></th>
+							            	<th style="vertical-align: top; background: #1c3b19;" data-bind="">ROOM</th>
+							            	<th style="vertical-align: top; background: #1c3b19;" data-bind="">STATUS</th>
+							            	<th style="vertical-align: top; background: #1c3b19;" data-bind="">ACTION</th>
+							            </tr>
+							        </thead>
+							        <tbody data-role="listview" 
+						        		data-template="cashReceipt-list-template" 
+						        		data-auto-bind="false"
+						        		data-bind="source: dataSource"></tbody>
+							    </table>
 							</div>
-							<div class="col-xs-12 col-sm-6" style="padding-left: 0;">
-								<div class="box-generic-noborder" style="margin-bottom: 0; padding-bottom: 0;">
-								    <div class="tab-content" style="padding: 15px;">
+						</div>
+
+						<div class="span6" style="padding-right: 0;">							
+								<div class="box-generic-noborder" style="margin-bottom: 15px; padding-bottom: 0;">
+								    <div class="tab-content" style="padding: 10px;">
 								    	<!-- Options Tab content -->
 								        <div class="tab-pane active" id="tab1-1">
 								            <table style="margin-bottom: 0; color: #333;" class="table table-borderless table-condensed cart_total">
@@ -353,126 +365,134 @@
 								        </div>
 								    </div>
 								</div>
-						    </div>
-						</div>
-						<table class="table table-bordered table-primary table-striped table-vertical-center" style="margin-top: 0px; color: #333;">
-					        <thead>
-					            <tr>
-					            	<th style="vertical-align: top; background: #1c3b19;" data-bind="text: lang.lang.no_"></th>
-					            	<th style="vertical-align: top; background: #1c3b19;" data-bind="text: lang.lang.date"></th>
-					            	<th style="vertical-align: top; background: #1c3b19;" data-bind="text: lang.lang.name"></th>
-					            	<th style="vertical-align: top; background: #1c3b19;" data-bind="text: lang.lang.number"></th>
-					            	<th style="vertical-align: top; background: #1c3b19;" data-bind="text: lang.lang.amount"></th>
-					            	<th style="vertical-align: top; background: #1c3b19;" data-bind="visible: chhDiscount, text: lang.lang.discount"></th>
-					            	<th style="vertical-align: top; background: #1c3b19;" data-bind="text: lang.lang.receive"></th>
-					            </tr>
-					        </thead>
-					        <tbody data-role="listview" 
-				        		data-template="cashReceipt-list-template" 
-				        		data-auto-bind="false"
-				        		data-bind="source: dataSource"></tbody>
-					    </table>
-			            <div class="row">
-							<div class="col-xs-12 col-sm-5"> 
-								<div class="btn-group">
-									<div class="leadcontainer">
-									</div>
-									<a style="margin-bottom: 15px" class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-list"></i> </a>
-									<ul class="dropdown-menu" style="padding: 5px; border-radius:0;">
-										<li>
-											<input type="checkbox" id="chhDiscount" class="k-checkbox" data-bind="checked: chhDiscount">
-		  									<label style="color: #333;" class="k-checkbox-label" for="chhDiscount"><span data-bind="text: lang.lang.discount"></span></label>
-		  								</li>
-									</ul>
+
+								<div class="strong" style="margin-bottom: 15px; width: 100%; padding: 10px; float: left;" align="center"
+									data-bind="style: { backgroundColor: amtDueColor}">
+									<div align="left"><span style="color: #333;" data-bind="text: lang.lang.amount_received"></span></div>
+									<h2 data-bind="text: total_received" align="right"></h2>
 								</div>
-								<br>
-							</div>
-							<div class="col-xs-12 col-sm-7">
-								<table class="table table-condensed table-striped table-white" style="color: #333;">
-									<tbody>
-										<tr>
-											<td class="right"><span data-bind="text: lang.lang.total_received"></span>:</td>
-											<td class="right strong"><span data-bind="text: total_received"></span></td>
-											<td class="right"><span data-bind="text: lang.lang.subtotal"></span>:</td>
-											<td class="right strong" width="40%"><span data-format="n2" data-bind="text: obj.sub_total"></span></td>
-										</tr>
-										<tr>
-											<td class="right"><span data-bind="text: lang.lang.remaining"></span>:</td>
-											<td class="right strong"><span data-format="n2" data-bind="text: obj.remaining"></span></td>
-											<td class="right"><span data-bind="text: lang.lang.total_discount"></span>:</td>
-											<td class="right strong">
-												<span data-format="n2" data-bind="text: obj.discount"></span>
-		                   					</td>
-										</tr>
-										<tr data-bind="visible: haveFine">
-											<td></td>
-											<td></td>
-											<td class="right">
-												<span data-bind="text: lang.lang.fine"></span>
-											</td>
-											<td class="right strong">
-												<span data-format="n2" data-bind="text: amountFine"></span>
-											</td>
-										</tr>
-										<tr>
-											<td></td>
-											<td></td>
-											<td class="right"><h4 data-bind="text: lang.lang.total"></h4></td>
-											<td class="right strong"><h4 data-bind="text: total"></h4></td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-xs-12 col-sm-12 col-md-5" >
-								<!-- <div class="well" style="overflow: hidden;">
-									<textarea cols="0" rows="2" class="k-textbox" style="width:100% !important;" data-bind="value: obj.memo" placeholder="memo for external ..."></textarea>
-									<textarea cols="0" rows="2" class="k-textbox" style="width:100% !important;" data-bind="value: obj.memo2" placeholder="memo for internal ..."></textarea>
-								</div> -->
-							</div>
-							<div class="col-xs-12 col-sm-12 col-md-7" data-bind="visible: btnActive">
-								<table class="table table-bordered table-primary table-striped table-vertical-center">
+
+								<table class="table table-bordered table-primary table-striped table-vertical-center" style="margin-top: 0px; color: #333;">
 							        <thead>
 							            <tr>
-							                <th style="vertical-align: top;"><span data-bind="text: lang.lang.no_">No.</span></th>
-							                <th style="vertical-align: top;"><span data-bind="text: lang.lang.currency">Currency</span></th>
-							                <th style="vertical-align: top;"><span data-bind="text: lang.lang.cash_receipt">Cash Receipt</span></th>
-							            </tr> 
+							            	<th style="vertical-align: top; background: #1c3b19;" data-bind="text: lang.lang.no_"></th>
+							            	<th style="vertical-align: top; background: #1c3b19;" data-bind="text: lang.lang.date"></th>
+							            	<th style="vertical-align: top; background: #1c3b19;" data-bind="text: lang.lang.name"></th>
+							            	<th style="vertical-align: top; background: #1c3b19;" data-bind="text: lang.lang.number"></th>
+							            	<th style="vertical-align: top; background: #1c3b19;" data-bind="text: lang.lang.amount"></th>
+							            	<th style="vertical-align: top; background: #1c3b19;" data-bind="visible: chhDiscount, text: lang.lang.discount"></th>
+							            	<th style="vertical-align: top; background: #1c3b19;" data-bind="text: lang.lang.receive"></th>
+							            </tr>
 							        </thead>
 							        <tbody data-role="listview" 
-						        		data-template="cash-currency-template" 
+						        		data-template="cashReceipt-list-template" 
 						        		data-auto-bind="false"
-						        		data-bind="source: receipCurrencyDS"></tbody>
+						        		data-bind="source: dataSource"></tbody>
 							    </table>
-							    <div class="row-fluid" data-bind="visible: haveChangeMoney">
-							    	<h5 data-bind="text: lang.lang.change_currency"></h5><br>
-							    	<table class="table table-bordered table-primary table-striped table-vertical-center">
-								        <thead>
-								            <tr>
-								                <th class="center" style="width: 50px;"><span data-bind="text: lang.lang.no_">No.</span></th>
-								                <th><span data-bind="text: lang.lang.currency">Currency</span></th>
-								                <th><span data-bind="text: lang.lang.cash_receipt">Cash Receipt</span></th>
-								            </tr> 
-								        </thead>
-								        <tbody data-role="listview" 
-							        		data-template="change-currency-receipt-template" 
-							        		data-auto-bind="false"
-							        		data-bind="source: receipChangeDS"></tbody>
-								    </table>
-							    </div>
-							</div>
-						</div>
-						<div class="box-generic bg-action-button">
-							<div id="ntf1" data-role="notification"></div>
-							<div class="row">
-								<div class="col-sm-12" align="right">
-									<span class="btn-btn" data-bind="click: cancel" ><span data-bind="text: lang.lang.cancel"></span></span>
-									<span id="saveNew" class="btn-btn" data-bind="visible: btnActive, click: save" ><span data-bind="text: lang.lang.save"></span></span>		
+
+					            <div class="row">
+									<div class="col-xs-12 col-sm-5"> 
+										<div class="btn-group">
+											<div class="leadcontainer">
+											</div>
+											<a style="margin-bottom: 15px" class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-list"></i> </a>
+											<ul class="dropdown-menu" style="padding: 5px; border-radius:0;">
+												<li>
+													<input type="checkbox" id="chhDiscount" class="k-checkbox" data-bind="checked: chhDiscount">
+				  									<label style="color: #333;" class="k-checkbox-label" for="chhDiscount"><span data-bind="text: lang.lang.discount"></span></label>
+				  								</li>
+											</ul>
+										</div>
+										<br>
+									</div>
+									<div class="col-xs-12 col-sm-7">
+										<table class="table table-condensed table-striped table-white" style="color: #333;">
+											<tbody>
+												<tr>
+													<td class="right"><span data-bind="text: lang.lang.total_received"></span>:</td>
+													<td class="right strong"><span data-bind="text: total_received"></span></td>
+													<td class="right"><span data-bind="text: lang.lang.subtotal"></span>:</td>
+													<td class="right strong" width="40%"><span data-format="n2" data-bind="text: obj.sub_total"></span></td>
+												</tr>
+												<tr>
+													<td class="right"><span data-bind="text: lang.lang.remaining"></span>:</td>
+													<td class="right strong"><span data-format="n2" data-bind="text: obj.remaining"></span></td>
+													<td class="right"><span data-bind="text: lang.lang.total_discount"></span>:</td>
+													<td class="right strong">
+														<span data-format="n2" data-bind="text: obj.discount"></span>
+				                   					</td>
+												</tr>
+												<tr data-bind="visible: haveFine">
+													<td></td>
+													<td></td>
+													<td class="right">
+														<span data-bind="text: lang.lang.fine"></span>
+													</td>
+													<td class="right strong">
+														<span data-format="n2" data-bind="text: amountFine"></span>
+													</td>
+												</tr>
+												<tr>
+													<td></td>
+													<td></td>
+													<td class="right"><h4 data-bind="text: lang.lang.total"></h4></td>
+													<td class="right strong"><h4 data-bind="text: total"></h4></td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
 								</div>
-							</div>
-						</div>
-						
+
+								<div class="row">
+									<div class="col-xs-12 col-sm-12 col-md-5" >
+										<!-- <div class="well" style="overflow: hidden;">
+											<textarea cols="0" rows="2" class="k-textbox" style="width:100% !important;" data-bind="value: obj.memo" placeholder="memo for external ..."></textarea>
+											<textarea cols="0" rows="2" class="k-textbox" style="width:100% !important;" data-bind="value: obj.memo2" placeholder="memo for internal ..."></textarea>
+										</div> -->
+									</div>
+									<div class="col-xs-12 col-sm-12 col-md-7" data-bind="visible: btnActive">
+										<table class="table table-bordered table-primary table-striped table-vertical-center">
+									        <thead>
+									            <tr>
+									                <th style="vertical-align: top;"><span data-bind="text: lang.lang.no_">No.</span></th>
+									                <th style="vertical-align: top;"><span data-bind="text: lang.lang.currency">Currency</span></th>
+									                <th style="vertical-align: top;"><span data-bind="text: lang.lang.cash_receipt">Cash Receipt</span></th>
+									            </tr> 
+									        </thead>
+									        <tbody data-role="listview" 
+								        		data-template="cash-currency-template" 
+								        		data-auto-bind="false"
+								        		data-bind="source: receipCurrencyDS"></tbody>
+									    </table>
+									    <div class="row-fluid" data-bind="visible: haveChangeMoney">
+									    	<h5 data-bind="text: lang.lang.change_currency"></h5><br>
+									    	<table class="table table-bordered table-primary table-striped table-vertical-center">
+										        <thead>
+										            <tr>
+										                <th class="center" style="width: 50px;"><span data-bind="text: lang.lang.no_">No.</span></th>
+										                <th><span data-bind="text: lang.lang.currency">Currency</span></th>
+										                <th><span data-bind="text: lang.lang.cash_receipt">Cash Receipt</span></th>
+										            </tr> 
+										        </thead>
+										        <tbody data-role="listview" 
+									        		data-template="change-currency-receipt-template" 
+									        		data-auto-bind="false"
+									        		data-bind="source: receipChangeDS"></tbody>
+										    </table>
+									    </div>
+									</div>
+								</div>
+
+								<div class="box-generic bg-action-button">
+									<div id="ntf1" data-role="notification"></div>
+									<div class="row">
+										<div class="col-sm-12" align="right">
+											<span class="btn-btn" data-bind="click: cancel" ><span data-bind="text: lang.lang.cancel"></span></span>
+											<span id="saveNew" class="btn-btn" data-bind="visible: btnActive, click: save" ><span data-bind="text: lang.lang.save"></span></span>		
+										</div>
+									</div>
+								</div>							
+						</div>						
 					</div>
 
 
