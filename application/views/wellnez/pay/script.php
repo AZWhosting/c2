@@ -3617,24 +3617,10 @@
                 para = [],
                 obj = this.get("obj"),
                 searchText =  this.get("searchText");
-            // if(this.get("searchSelect") == 1){
-            //     searchText = this.get("searchText");
                 para.push({
                     field: "number",
                     value: searchText
                 });
-            // }else if(this.get("searchSelect") == 2){
-            //     console.log(this.get("selectedCustomer"));
-            //     para.push({
-            //         field: "contact_id",
-            //         value: this.get("selectedCustomer")
-            //     });
-            // }else if(this.get("searchSelect") == 3){
-            //     para.push({
-            //         field: "meter_id",
-            //         value: this.get("selectedMeter")
-            //     });
-            // }
             $("#loadING").css("display", "block");
             this.exArray = [];
             if (jQuery.inArray(searchText, this.idList) != -1) {
@@ -3656,7 +3642,7 @@
                             }
                             if (jQuery.inArray(v.number, self.idList) != -1) {
                             }else{
-                                var amount_due = v.amount - (v.amount_paid + v.deposit);
+                                var amount_due = v.amount;
                                 self.dataSource.add({
                                     transaction_template_id: 0,
                                     contact_id: v.contact_id,
@@ -4261,7 +4247,8 @@
         cancel: function() {
             this.dataSource.data([]);
             window.history.back();
-        }
+        },
+        invoiceDS : dataStore(apiUrl + "spa/allinvocie"),
     });
     /* views and layout */
     banhji.view = {

@@ -609,6 +609,8 @@
 		<div class="shadow" style="z-index: 9999;position: absolute;top: 0;left: 0;width: 100%;height: 100%;background: rgba(255,255,255.0.5)">
 			<a style="padding:28px;top: 80px;" href="<?php echo base_url(); ?>wellnez/pos/\#/room/#:room_id#" class="glyphicons no-js circle_plus"><i ></i></a>
 		</div>
+		#}else if(status == 'Maintenance'){#
+			<a data-bind="click: availableRoom">Available</a>
 		#}#
 	</div>
 </script>

@@ -8317,6 +8317,12 @@
                             name: v[0].name,
                         });
                         banhji.router.navigate("/");
+                        banhji.Index.relationRoom.query({
+                            filter: {field: "room_id", value: id},
+                            pageSize: 1
+                        }).then(function(e){
+                            banhji.Index.queryItemRoom(banhji.Index.relationRoom.data()[0].item);
+                        });
                     }else{
                         alert("This room is unavailable!");
                     }

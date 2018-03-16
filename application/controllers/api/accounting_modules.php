@@ -997,22 +997,23 @@ class Accounting_modules extends REST_Controller {
 		$sort 	 	= $this->get("sort");
 		$data["results"] = [];
 		$data["count"] = 0;
-		$totalAmount = 0;
-		$totalBalance = 0;
 		$sdate = "";
 
 		$obj = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$plItems = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		
+		$balanceForwards = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
 		//Sort
 		if(!empty($sort) && isset($sort)){
 			foreach ($sort as $value) {
 				if(isset($value['operator'])){
 					$obj->{$value['operator']}($value["field"], $value["dir"]);
 					$plItems->{$value['operator']}($value["field"], $value["dir"]);
+					$balanceForwards->{$value['operator']}($value["field"], $value["dir"]);
 				}else{
 					$obj->order_by($value["field"], $value["dir"]);
 					$plItems->order_by($value["field"], $value["dir"]);
+					$balanceForwards->order_by($value["field"], $value["dir"]);
 				}
 			}
 		}
@@ -1023,6 +1024,11 @@ class Accounting_modules extends REST_Controller {
 	    		if(isset($value['operator'])){
 	    			$obj->{$value['operator']}($value['field'], $value['value']);
 	    			$plItems->{$value['operator']}($value['field'], $value['value']);
+
+	    			//Get start date
+	    			if($value['field']=="issued_date >=" || $value['field']=="issued_date"){
+	    				$sdate = $value['value'];
+	    			}
 	    		} else {
 	    			$obj->where($value['field'], $value['value']);
 	    			$plItems->where($value['field'], $value['value']);
@@ -1054,17 +1060,9 @@ class Accounting_modules extends REST_Controller {
 					$amount = (floatval($value->cr) - floatval($value->dr)) / floatval($value->transaction_rate);					
 				}
 
-				$totalAmount += $amount;
-				$totalBalance += $amount;
-
 				$description = $value->description;
 				if($description==""){
 					$description = $value->transaction_memo;
-				}
-
-				//Get start date
-				if($key==0){
-					$sdate = $value->transaction_issued_date;
 				}
 
 				if(isset($objList[$value->account_id])){
@@ -1098,12 +1096,11 @@ class Accounting_modules extends REST_Controller {
 		//End Balance Sheet Items
 
 		//Balance Forward for BS Items
-		if($sdate <> ""){
-			$balanceForwards = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+		if($sdate <> ""){					
 			$balanceForwards->select("account_id");
 			$balanceForwards->include_related("account", array("number","name"));
 			$balanceForwards->include_related("account/account_type", array("name","nature"));
-			$balanceForwards->select_sum("dr - cr", "total");
+			$balanceForwards->select_sum("(dr - cr) / transactions.rate", "total");
 			$balanceForwards->where_related("transaction", "issued_date <", $sdate);
 			$balanceForwards->where_in_related("account", "account_type_id", [10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34]);
 			$balanceForwards->where_related("transaction", "is_recurring <>", 1);
@@ -1113,20 +1110,18 @@ class Accounting_modules extends REST_Controller {
 			$balanceForwards->get();
 
 			foreach ($balanceForwards as $value) {
-				// if($value->account_account_type_nature=="Dr"){
-					$fbAmount = floatval($value->total);
-				// }else{
-				// 	$fbAmount = floatval($value->total) * -1;
-				// }
-
-				$totalBalance += $fbAmount;
+				if($value->account_account_type_nature=="Dr"){
+					$bfAmount = floatval($value->total);
+				}else{
+					$bfAmount = floatval($value->total) * -1;
+				}
 
 				if(isset($objList[$value->account_id])){
-					$objList[$value->account_id]["balance_forward"] = $fbAmount;
+					$objList[$value->account_id]["balance_forward"] = $bfAmount;
 				}else{
 					$objList[$value->account_id]["id"] 				= $value->account_id;
 					$objList[$value->account_id]["name"] 			= $value->account_number ." ". $value->account_name;
-					$objList[$value->account_id]["balance_forward"] = $fbAmount;
+					$objList[$value->account_id]["balance_forward"] = $bfAmount;
 					$objList[$value->account_id]["line"] 			= [];
 				}
 			}
@@ -1153,9 +1148,6 @@ class Accounting_modules extends REST_Controller {
 				}else{
 					$amount = (floatval($value->cr) - floatval($value->dr)) / floatval($value->transaction_rate);					
 				}
-
-				$totalAmount += $amount;
-				$totalBalance += $amount;
 
 				$description = $value->description;
 				if($description==""){
@@ -1192,8 +1184,6 @@ class Accounting_modules extends REST_Controller {
 						$balance_forward = floatval($bf->total) * -1;
 					}
 
-					$totalBalance += $balance_forward;
-
 					$objList[$value->account_id]["id"] 				= $value->account_id;
 					$objList[$value->account_id]["name"] 			= $value->account_number ." ". $value->account_name;
 					$objList[$value->account_id]["balance_forward"] = $balance_forward;
@@ -1217,9 +1207,6 @@ class Accounting_modules extends REST_Controller {
 		}
 
 		$data["count"] = count($data["results"]);
-
-		$data["totalAmount"] = $totalAmount;
-		$data["totalBalance"] = $totalBalance;
 
 		//Response Data		
 		$this->response($data, 200);	

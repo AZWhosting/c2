@@ -5549,13 +5549,14 @@
                 transaction_id  : obj.transaction_id,
                 work_id         : obj.id,
                 issued_date     : new Date(),
+                employee_id     : obj.employee_id,
                 user_id         : banhji.userData.id,
-                items           : this.lineDS.data()
+                items           : this.lineDS.data(),
+                employee_ar     : obj.employee_ar
             });
             this.printDS.sync();
             this.printDS.bind("requestEnd", function(e){
                 var type = e.type;
-                console.log(e);
                 if (type !== 'read') {
                     $("#loadImport").css("display", "none");
                     var data = e.response.results[0];
@@ -5567,6 +5568,21 @@
             });
         },
         haveWork            : false,
+        roomAvailableDS     : dataStore(apiUrl + "spa/roomavailable"),
+        availableRoom       : function(e){
+            var room_id = e.data.room_id;
+            var self = this;
+            this.roomAvailableDS.data([]);
+            this.roomAvailableDS.add({
+                room_id: room_id
+            });
+            this.roomAvailableDS.sync();
+            this.roomAvailableDS.bind("requestEnd", function(e){
+                if(e.type != 'read' && e.response.results) {
+                    self.workDS.query({});
+                }
+            });
+        }
     });
     //Print
     banhji.print = kendo.observable({
