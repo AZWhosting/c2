@@ -4258,7 +4258,12 @@
         actionChange : function(e){
             var idx = e.sender.selectedIndex;
             var id = e.data.id;
+            var data = this.invoiceDS.data()[id];
+            var obj = this.get("obj");
             if(idx == 1){
+                this.set("total_received", data.amount);
+                this.set("total_received", data.amount);
+                obj.set("sub_total", data.amount);
                 this.payBill(idx - 1);
             }else if(idx == 2){
                 this.addLoyalty(id);
