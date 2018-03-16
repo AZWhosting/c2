@@ -1729,7 +1729,7 @@ class Spa extends REST_Controller {
 		$data["count"] = count($data["results"]);
 		$this->response($data, 201);			
 	}
-	function allinvocie_get(){
+	function allinvoice_get(){
 		$filter 	= $this->get("filter");
 		$page 		= $this->get('page') !== false ? $this->get('page') : 1;
 		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;
@@ -1739,7 +1739,7 @@ class Spa extends REST_Controller {
 		$is_recurring = 0;
 		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		
-		$obj->where("status <>", 1);
+		$obj->where("status", 0);
 		$obj->where("deleted <>", 1);
 		//Results
 		if($page && $limit){
@@ -1751,46 +1751,65 @@ class Spa extends REST_Controller {
 		}
 		if($obj->exists()){
 			foreach ($obj as $value) {
-				$contact = $value->contact->get();
-				$data["results"][] = array(
-					"id" 						=> $value->id,
-					"company_id" 				=> $value->company_id,
-					"contact_id" 				=> intval($value->contact_id),
-					"contact_name" 				=> $contact->name,
-					"payment_term_id" 			=> $value->payment_term_id,
-					"transaction_template_id" 	=> $value->transaction_template_id,
-					"reference_id" 				=> intval($value->reference_id),
-					"account_id" 				=> intval($value->account_id),
-					"item_id" 					=> $value->item_id,
-					"tax_item_id" 				=> $value->tax_item_id,
-					"wht_account_id"			=> $value->wht_account_id,
-					"user_id" 					=> $value->user_id,
-				   	"number" 					=> $value->number,
-				   	"type" 						=> $value->type,
-				   	"journal_type" 				=> $value->journal_type,
-				   	"sub_total"					=> floatval($value->sub_total),
-				   	"discount" 					=> floatval($value->discount),
-				   	"tax" 						=> floatval($value->tax),
-				   	"amount" 					=> floatval($value->amount),
-				   	"fine" 						=> floatval($value->fine),
-				   	"deposit"					=> floatval($value->deposit),
-				   	"remaining" 				=> floatval($value->remaining),
-				   	"rate" 						=> floatval($value->rate),
-				   	"locale" 					=> $value->locale,
-				   	"month_of"					=> $value->month_of,
-				   	"issued_date"				=> $value->issued_date,
-				   	"bill_date"					=> $value->bill_date,
-				   	"payment_date" 				=> $value->payment_date,
-				   	"due_date" 					=> $value->due_date,
-				   	"reference_no" 				=> $value->reference_no,
-				   	"references" 				=> $value->references!="" ? array_map('intval', explode(",", $value->references)) : [],
-				   	"memo" 						=> $value->memo,
-				   	"memo2" 					=> $value->memo2,
-				   	"status" 					=> intval($value->status),
-				   	"is_journal" 				=> $value->is_journal,
-				   	"print_count" 				=> $value->print_count,
-				   	"status" 					=> 'Serving',
-				);
+				$work = new Spa_work(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$work->where("transaction_id", $value->id)->limit(1)->get();
+				if($work->exists()){
+					$roomname = "";
+					$wroom = new Spa_work_room(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$wroom->where("work_id", $work->id)->get();
+					if($wroom->exists()){
+						foreach($wroom as $ro){
+							$room = new Spa_room(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+							$room->where("id", $ro->room_id)->get();
+							if($room->exists()){
+								foreach($room as $r){
+									$roomname .= $r->name.", ";
+								}
+							}
+						}
+					}
+					$contact = $value->contact->get();
+					$data["results"][] = array(
+						"id" 						=> $value->id,
+						"company_id" 				=> $value->company_id,
+						"contact_id" 				=> intval($value->contact_id),
+						"contact_name" 				=> $contact->name,
+						"payment_term_id" 			=> $value->payment_term_id,
+						"transaction_template_id" 	=> $value->transaction_template_id,
+						"reference_id" 				=> intval($value->reference_id),
+						"account_id" 				=> intval($value->account_id),
+						"item_id" 					=> $value->item_id,
+						"tax_item_id" 				=> $value->tax_item_id,
+						"wht_account_id"			=> $value->wht_account_id,
+						"user_id" 					=> $value->user_id,
+					   	"number" 					=> $value->number,
+					   	"type" 						=> $value->type,
+					   	"journal_type" 				=> $value->journal_type,
+					   	"sub_total"					=> floatval($value->sub_total),
+					   	"discount" 					=> floatval($value->discount),
+					   	"tax" 						=> floatval($value->tax),
+					   	"amount" 					=> floatval($value->amount),
+					   	"fine" 						=> floatval($value->fine),
+					   	"deposit"					=> floatval($value->deposit),
+					   	"remaining" 				=> floatval($value->remaining),
+					   	"rate" 						=> floatval($value->rate),
+					   	"locale" 					=> $value->locale,
+					   	"month_of"					=> $value->month_of,
+					   	"issued_date"				=> $value->issued_date,
+					   	"bill_date"					=> $value->bill_date,
+					   	"payment_date" 				=> $value->payment_date,
+					   	"due_date" 					=> $value->due_date,
+					   	"reference_no" 				=> $value->reference_no,
+					   	"references" 				=> $value->references!="" ? array_map('intval', explode(",", $value->references)) : [],
+					   	"memo" 						=> $value->memo,
+					   	"memo2" 					=> $value->memo2,
+					   	"status" 					=> intval($value->status),
+					   	"is_journal" 				=> $value->is_journal,
+					   	"print_count" 				=> $value->print_count,
+					   	"room" 						=> $roomname,
+					   	"status" 					=> 'Serving',
+					);
+				}
 			}
 		}
 		//Response Data

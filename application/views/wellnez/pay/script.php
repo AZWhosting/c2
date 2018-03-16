@@ -4248,7 +4248,44 @@
             this.dataSource.data([]);
             window.history.back();
         },
-        invoiceDS : dataStore(apiUrl + "spa/allinvocie"),
+        invoiceDS : dataStore(apiUrl + "spa/allinvoice"),
+        actionAR : [
+            {id: 1, name: 'Pay'},
+            {id: 1, name: 'Loyalty'},
+            {id: 1, name: 'Split'},
+            {id: 1, name: 'Print'},
+        ],
+        actionChange : function(e){
+            var idx = e.sender.selectedIndex;
+            var id = e.data.id;
+            if(idx == 1){
+                this.payBill(idx - 1);
+            }else if(idx == 2){
+                this.addLoyalty(id);
+            }else if(idx == 3){
+                this.splitBill(id);
+            }else if(idx == 4){
+                this.printBill(id);
+            }
+        },
+        billTxnDS   : dataStore(apiUrl + "transaction"),
+        payBill     : function(id){
+            var self = this;
+            var data = this.invoiceDS.data()[id];
+            this.billTxnDS.data([]);
+            this.billTxnDS.add({
+                transaction_id: data.id,
+                issued_date: this.get("obj").issued_date,
+                payment_method_id: this.get("obj").account_id, 
+            });
+            this.set("btnActive", true);
+        },
+        addLoyalty  : function(id){
+        },
+        splitBill   : function(id){
+        },
+        printBill   : function(id){
+        }
     });
     /* views and layout */
     banhji.view = {

@@ -309,19 +309,17 @@
 							<table class="table table-bordered table-primary table-striped table-vertical-center" style="margin-top: 0px; color: #333;">
 						        <thead>
 						            <tr>
-						            	<th style="vertical-align: top; background: #1c3b19;" data-bind="text: lang.lang.no_"></th>
-						            	<th style="vertical-align: top; background: #1c3b19;" data-bind="text: lang.lang.date"></th>
-						            	<th style="vertical-align: top; background: #1c3b19;" data-bind="text: lang.lang.name"></th>
 						            	<th style="vertical-align: top; background: #1c3b19;" data-bind="text: lang.lang.number"></th>
+						            	<th style="vertical-align: top; background: #1c3b19;" >Room</th>
 						            	<th style="vertical-align: top; background: #1c3b19;" data-bind="text: lang.lang.amount"></th>
-						            	<th style="vertical-align: top; background: #1c3b19;" data-bind="visible: chhDiscount, text: lang.lang.discount"></th>
-						            	<th style="vertical-align: top; background: #1c3b19;" data-bind="text: lang.lang.receive"></th>
+						            	<th style="vertical-align: top; background: #1c3b19;" data-bind="text: lang.lang.action"></th>
 						            </tr>
 						        </thead>
 						        <tbody data-role="listview" 
-					        		data-template="cashReceipt-list-template" 
-					        		data-auto-bind="false"
-					        		data-bind="source: dataSource">
+					        		data-template="invoice-list-template" 
+					        		data-auto-bind="true"
+					        		data-selectable="true"
+					        		data-bind="source: invoiceDS">
 					        	</tbody>
 						    </table>
 						</div>
@@ -356,7 +354,6 @@
 						            		<td>
 												<input id="ddlCashAccount" name="ddlCashAccount" 
 													data-role="dropdownlist"
-													data-header-template="account-header-tmpl"
 													data-template="account-list-tmpl"
 						              				data-value-primitive="true"
 													data-text-field="name" 
@@ -378,13 +375,6 @@
 								<div class="btn-group">
 									<div class="leadcontainer">
 									</div>
-									<a style="margin-bottom: 15px" class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-list"></i> </a>
-									<ul class="dropdown-menu" style="padding: 5px; border-radius:0;">
-										<li>
-											<input type="checkbox" id="chhDiscount" class="k-checkbox" data-bind="checked: chhDiscount">
-		  									<label style="color: #333;" class="k-checkbox-label" for="chhDiscount"><span data-bind="text: lang.lang.discount"></span></label>
-		  								</li>
-									</ul>
 								</div>
 								<br>
 							</div>
@@ -404,16 +394,6 @@
 											<td class="right strong">
 												<span data-format="n2" data-bind="text: obj.discount"></span>
 		                   					</td>
-										</tr>
-										<tr data-bind="visible: haveFine">
-											<td></td>
-											<td></td>
-											<td class="right">
-												<span data-bind="text: lang.lang.fine"></span>
-											</td>
-											<td class="right strong">
-												<span data-format="n2" data-bind="text: amountFine"></span>
-											</td>
 										</tr>
 										<tr>
 											<td></td>
@@ -522,7 +502,7 @@
 				   data-culture=""
 				   data-format="c"
                    data-decimals="3"
-                   data-min="0"                   
+                   data-min="0"
                    data-bind="value: received,
                               events: { change: changes }"
                    style="width: 100%;">			
@@ -816,15 +796,20 @@
 </script>
 <script id="invoice-list-template" type="text/x-kendo-tmpl">
 	<tr data-uid="#: uid #">
-		<td>
-			<i class="icon-trash" data-bind="events: { click: removeRow }"></i>
-			#:banhji.Index.invoiceDS.indexOf(data)+1#			
-		</td>
+		<td>#= number#</td>
 		<td>#= room#</td>
-		<td>#= status#</td>
-		<td>#= invnumber#</td>
+		<td>#=kendo.toString(amount, locale=="km-KH"?"c0":"c2", locale)#</td>
 		<td class="center">
-				
+			<input
+				data-role="dropdownlist"
+  				data-value-primitive="true"
+				data-text-field="name" 
+  				data-value-field="id"
+  				data-bind="value: actionSelected,
+  							source: actionAR,
+  							events: {change: actionChange}"
+  				data-option-label="Action..."
+  				style="width: 100%" />
 		</td>
     </tr>   
 </script>
