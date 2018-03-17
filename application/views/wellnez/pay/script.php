@@ -4255,16 +4255,15 @@
             {id: 1, name: 'Split'},
             {id: 1, name: 'Print'},
         ],
+        account_id : 7,
         actionChange : function(e){
             var idx = e.sender.selectedIndex;
             var id = e.data.id;
             var data = this.invoiceDS.data()[id];
             var obj = this.get("obj");
+            console.log(data);
             if(idx == 1){
-                this.set("total_received", data.amount);
-                this.set("total_received", data.amount);
-                obj.set("sub_total", data.amount);
-                this.payBill(idx - 1);
+                
             }else if(idx == 2){
                 this.addLoyalty(id);
             }else if(idx == 3){
@@ -4273,23 +4272,51 @@
                 this.printBill(id);
             }
         },
-        billTxnDS   : dataStore(apiUrl + "transaction"),
+        billTxnDS   : dataStore(apiUrl + "spa/paybill"),
         payBill     : function(id){
+            $("#loadImport").css("display", "none");
             var self = this;
-            var data = this.invoiceDS.data()[id];
+            var obj = this.get("invobj");
             this.billTxnDS.data([]);
             this.billTxnDS.add({
-                transaction_id: data.id,
-                issued_date: this.get("obj").issued_date,
-                payment_method_id: this.get("obj").account_id, 
+                transaction_id: obj.id,
+                type: "Cash_Receipt",
+                user_id: banhji.userData.id,
+                sub_total: obj.sub_total,
+                amount: obj.amount,
+                issued_date: obj.issued_date,
+                account_id: this.get("account_id"),
             });
-            this.set("btnActive", true);
+            this.billTxnDS.sync();
+            this.billTxnDS.bind("requestEnd", function(e){
+                var type = e.type;
+                if (type !== 'read') {
+                    var noti = $("#ntf1").data("kendoNotification");
+                    noti.hide();
+                    noti.success(self.lang.lang.success_message);
+                    $("#loadImport").css("display", "none");
+                    self.invoiceDS.query({});
+                    self.set("total", 0);
+                    self.set("amountReciept", 0);
+                    self.set("btnActive", false);
+                    self.set("invobj", []);
+                }
+            });
         },
         addLoyalty  : function(id){
         },
         splitBill   : function(id){
         },
         printBill   : function(id){
+        },
+        discount    : 0,
+        invobj      : null,
+        invClick    : function(e){
+            var data = e.data;
+            this.set("total", data.amount);
+            this.set("amountReciept", data.amount);
+            this.set("btnActive", true);
+            this.set("invobj", data);
         }
     });
     /* views and layout */

@@ -1815,6 +1815,124 @@ class Spa extends REST_Controller {
 		//Response Data
 		$this->response($data, 200);
 	}
+	function paybill_post(){
+		$models = json_decode($this->post('models'));
+		$data["results"] = [];
+		$data["count"] = 0;
+		$number = "";
+		foreach ($models as $value) {
+			//Generate Number
+			$number = $this->_generate_number($value->type, $value->issued_date);
+			//Old txn
+			$txn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$txn->where("id", $value->transaction_id)->limit(1)->get();
+			//Work
+			$work = new Spa_work(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$work->where("transaction_id", $txn->id)->limit(1)->get();
+			//obj
+			$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			
+			$obj->contact_id = $txn->contact_id;
+			isset($value->payment_term_id) 			? $obj->payment_term_id 			= $value->payment_term_id : 5;
+			$obj->payment_method_id = 1;
+
+			$obj->reference_id = $txn->id;
+
+			isset($value->account_id) 				? $obj->account_id 					= $value->account_id : "";
+
+			isset($value->user_id) 					? $obj->user_id 					= $value->user_id : "";
+
+			$obj->employee_id = $txn->employee_id;
+			$obj->number = $number;
+		   	$obj->type = "Cash_Receipt";
+		   	$obj->transaction_template_id = 8;
+		   	isset($value->sub_total) ? 				$obj->sub_total 					= $value->sub_total : 0;
+
+		   	isset($value->discount) 				? $obj->discount 					= floatval($value->discount) : 0;
+		   	isset($value->tax) 						? $obj->tax 						= $value->tax : "";
+
+		   	isset($value->amount) 					? $obj->amount 						= floatval($value->amount) : 0;
+			$obj->rate = $txn->rate;
+		   	$obj->locale = $txn->locale;
+		   	$obj->month_of = $value->issued_date;
+		   	isset($value->issued_date) 				? $obj->issued_date 				= $value->issued_date : "";
+		   	$obj->reference_no = $txn->number;
+
+		   	isset($value->status) 					? $obj->status 						= $value->status : 0;
+		   	$obj->is_journal = 1;
+		   	$contact = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		   	$contact->where("id", $obj->contact_id)->limit(1)->get();
+	   		if($obj->save()){
+	   			$month_of = "";
+				$m = isset($value->month_of) ? $value->month_of : "";
+				$d = new DateTime($m);
+			    $d->modify('first day of this month');
+			    $month_of = $d->format('Y-m-d');
+	   			//Journal DR
+	   			$journal = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	   			$journal->transaction_id = $obj->id;
+	   			$journal->account_id = $obj->account_id;
+	   			$journal->contact_id = $obj->contact_id;
+	   			$journal->dr  		 = $obj->amount;
+	   			$journal->description = "Wellnez Cash Reciept";
+	   			$journal->cr 		 = 0.00;
+	   			$journal->rate 		 = $obj->rate;
+	   			$journal->locale 	 = $obj->locale;
+	   			$journal->save();
+	   			if($obj->discount > 0){
+	   				//Total Sale
+					$totalsale->discount += floatval($obj->discount);
+	   				$journalD = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		   			$journalD->transaction_id = $obj->id;
+		   			$journalD->account_id 	= $obj->account_id;
+		   			$journalD->contact_id 	= $obj->contact_id;
+		   			$journalD->dr  		 	= $obj->discount;
+		   			$journalD->description 	= "Wellnez Discount";
+		   			$journalD->cr 		 	= 0.00;
+		   			$journalD->rate 	 	= $obj->rate;
+		   			$journalD->locale 	 	= $obj->locale;
+		   			$journalD->save();
+	   			}
+	   			//Journal CR
+	   			$journal2 = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	   			$journal2->transaction_id = $obj->id;
+	   			$journal2->account_id = $contact->account_id;
+	   			$journal2->contact_id = $obj->contact_id;
+	   			$journal2->dr 		  = 0.00;
+	   			$journal2->cr 		  = $obj->amount + $obj->discount;
+	   			$journal2->description = "Wellnez Cash Reciept";
+	   			$journal2->rate 	  = $obj->rate;
+	   			$journal2->locale 	  = $obj->locale;
+	   			$journal2->save();
+	   			
+	   			//Save old txn
+	   			$txn->status = 1;
+	   			$txn->save();
+	   			//Employee
+	   			$ew = new Spa_work_employee(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	   			$ew->where("work_id", $work->id)->get();
+	   			$emcount = count($ew);
+	   			foreach($ew as $e){
+			   		$emtxn = new Spa_employee_transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			   		$emtxn->transaction_id = $obj->id;
+			   		$emtxn->employee_id = $e->employee_id;
+			   		if($emcount > 1){
+			   			$emtxn->status = 2;
+			   		}else{
+			   			$emtxn->status = 1;
+			   		}
+			   		$emtxn->amount = floatval($txn->amount) / intval($emcount);
+			   		$emtxn->save();
+	   			}
+			   	
+			   	$data["results"][] = array(
+			   		"id" => $obj->id
+			   	);
+		    }
+		}
+		$data["count"] = count($data["results"]);
+		$this->response($data, 201);
+	}
 	//Room Service
 	function roomservice_get(){
 		$data["results"] = [];
