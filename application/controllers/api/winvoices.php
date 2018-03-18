@@ -915,7 +915,7 @@ class Winvoices extends REST_Controller {
 			}
 			$no++;
 
-			$number = $headerWithDate . str_pad($no, 5, "0", STR_PAD_LEFT);
+			$number = $headerWithDate . str_pad($no, 4, "0", STR_PAD_LEFT);
 		}else{
 			//Check existing txn
 			$existTxn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
@@ -925,9 +925,9 @@ class Winvoices extends REST_Controller {
 			$existTxn->get();
 
 			if($existTxn->exists()){
-				$number = $headerWithDate . str_pad(1, 5, "0", STR_PAD_LEFT);
+				$number = $headerWithDate . str_pad(1, 4, "0", STR_PAD_LEFT);
 			}else{
-				$number = $headerWithDate . str_pad($prefix->startup_number, 5, "0", STR_PAD_LEFT);
+				$number = $headerWithDate . str_pad($prefix->startup_number, 4, "0", STR_PAD_LEFT);
 			}
 		}
 
