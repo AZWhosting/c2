@@ -2044,6 +2044,7 @@ class Sales extends REST_Controller {
 		$sort 	 	= $this->get("sort");
 		$data["results"] = [];
 		$data["count"] = 0;
+		$type = "";
 
 		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
@@ -2062,7 +2063,11 @@ class Sales extends REST_Controller {
 		if(!empty($filter) && isset($filter)){
 	    	foreach ($filter["filters"] as $value) {
 	    		if(isset($value['operator'])){
-	    			$obj->{$value['operator']}($value['field'], $value['value']);	    		
+	    			if($value['operator']=="type"){
+	    				$type = $value['value'];
+	    			}else{
+	    				$obj->{$value['operator']}($value['field'], $value['value']);
+	    			}
 	    		} else {
 	    			$obj->where($value['field'], $value['value']);
 	    		}
@@ -2083,13 +2088,27 @@ class Sales extends REST_Controller {
 				$amount = floatval($value->amount) / floatval($value->rate);
 				$deposit = floatval($value->deposit) / floatval($value->rate);
 				
+				//References
 				$reference = [];
 				if($value->reference_id>0){
 					$ref = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 					$ref->where("is_recurring <>", 1);
 					$ref->where("deleted <>", 1);
 					$ref->where("id", $value->reference_id);
-					$reference = $ref->get_raw()->result();
+					
+					array_push($reference, $ref->get_raw()->result());
+				}
+
+				if($type===""){
+					$references = $value->transaction->get_raw()->result();
+					foreach ($references as $ref) {
+						array_push($reference, $ref);
+					}
+				}else{
+					$references = $value->transaction->where("type", $type)->get_raw()->result();
+					foreach ($references as $ref) {
+						array_push($reference, $ref);
+					}
 				}
 								
 				if(isset($objList[$value->contact_id])){

@@ -1307,6 +1307,75 @@ class Inventory_modules extends REST_Controller {
 		$this->response($data, 200);
 	}
 
+	//GET GDN REPORT
+	function gdn_report_get() {
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
+		$data["count"] = 0;
+
+		$obj = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				
+		//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
+			}
+		}
+		
+		//Filter		
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter['filters'] as $value) {
+	    		if(isset($value['operator'])) {
+					$obj->{$value['operator']}($value['field'], $value['value']);
+				} else {
+	    			$obj->where($value["field"], $value["value"]);
+				}
+			}
+		}
+
+		$obj->include_related("transaction/contact", array("abbr", "number", "name"));
+		$obj->include_related("item", array("abbr", "number", "name"));
+		$obj->include_related("measurement", array("name"));
+		$obj->include_related("transaction", array("number", "type", "issued_date", "rate"));
+		$obj->where_related("transaction", "type", "GDN");
+		$obj->where_related("transaction", "status <>", 4);
+		$obj->where_related("transaction", "is_recurring <>", 1);
+		$obj->where_related("transaction", "deleted <>", 1);
+		$obj->where("deleted <>", 1);		
+		$obj->order_by_related("transaction", "issued_date", "desc");
+
+		//Results
+		$obj->get_iterated();
+		
+		if($obj->exists()){
+			foreach ($obj as $value) {
+				$data["results"][] = array(
+					"id" 				=> $value->transaction_id,
+					"type" 				=> $value->transaction_type,
+					"number" 			=> $value->transaction_number,
+					"issued_date" 		=> $value->transaction_issued_date,
+					"rate" 				=> $value->transaction_rate,
+					"quantity" 			=> floatval($value->quantity),
+				   	"conversion_ratio" 	=> floatval($value->conversion_ratio),
+
+				   	"name" 				=> $value->transaction_contact_name,
+				   	"item" 				=> $value->item_name,
+				   	"measurement" 		=> $value->measurement_name
+				);
+			}
+		}
+		$data["count"] = count($data["results"]);
+		
+		$this->response($data, 200);
+	}
+
 	//GET MONTHLY ITEM PURCHASE AND SALE
 	function monthly_item_purchase_sale_get() {		
 		$filter 	= $this->get("filter");
