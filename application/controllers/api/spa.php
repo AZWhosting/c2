@@ -1003,13 +1003,6 @@ class Spa extends REST_Controller {
 			$segmentit = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$segmentit->where("id", $brancht->segment_item_id)->limit(1)->get();
 			if($txn->save($segmentit)){
-				//Add Segment
-				$brancht = new Branch(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$brancht->where("id", $txn->branch_id)->limit(1)->get();
-				$segmentit = new Segmentitems_transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$segmentit->transaction_id = $txn->id;
-				$segmentit->segmentitem_id = $brancht->segment_item_id;
-				$segmentit->save();
 				//Item
 				foreach($value->items as $item){
 					$it = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
