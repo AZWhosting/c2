@@ -402,9 +402,7 @@
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-xs-12 col-sm-12 col-md-5" >
-							</div>
-							<div class="col-xs-12 col-sm-12 col-md-7" data-bind="visible: btnActive">
+							<div class="col-xs-12 col-sm-12 col-md-12">
 								<table class="table table-bordered table-primary table-striped table-vertical-center">
 							        <thead>
 							            <tr>
@@ -418,7 +416,7 @@
 						        		data-auto-bind="false"
 						        		data-bind="source: receipCurrencyDS"></tbody>
 							    </table>
-							    <div class="row-fluid" data-bind="visible: haveChangeMoney">
+							    <div class="row-fluid">
 							    	<h5 data-bind="text: lang.lang.change_currency"></h5><br>
 							    	<table class="table table-bordered table-primary table-striped table-vertical-center">
 								        <thead>
@@ -890,7 +888,7 @@
 </script>
 <script id="cash-currency-template" type="text/x-kendo-template">
 	<tr>
-		<td> #:banhji.Receipt.receipCurrencyDS.indexOf(data) +1#</td>
+		<td> #:banhji.Index.receipCurrencyDS.indexOf(data) +1#</td>
 		<td>
 			<input style="text-align: left;background: none;border:none;" id="numeric" class="k-formatted-value k-input" type="text" data-bind="value: currency, enabled: false"  />
 		</td>
@@ -902,7 +900,7 @@
 <script id="change-currency-receipt-template" type="text/x-kendo-template">
 	<tr>
 		<td>
-			#:banhji.Receipt.receipChangeDS.indexOf(data) +1#</td>
+			#:banhji.Index.receipChangeDS.indexOf(data) +1#</td>
 		<td>
 			<input style="text-align: left;background: none;border: none;" id="numeric" class="k-formatted-value k-input" type="text" data-bind="value: currency, enabled: false"  />
 		</td>

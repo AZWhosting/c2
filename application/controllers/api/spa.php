@@ -256,9 +256,19 @@ class Spa extends REST_Controller {
 			$txn->frequency = "Daily";
 			$txn->month_option = "Day";
 			$txn->intval = 1;
+			$txn->user_id = $value->user_id;
+			//Add Branch
+			$branchuser = new Spa_user_branch(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$branchuser->where("user_id", $value->user_id)->limit(1)->get();
+			$txn->branch_id = isset($branchuser->branch_id) ? $branchuser->branch_id : 1;
 			$txn->day = 1;
 			$txn->number = $number;
-			if($txn->save()){
+			//Add Segment
+			$brancht = new Branch(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$brancht->where("id", $txn->branch_id)->limit(1)->get();
+			$segmentit = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$segmentit->where("id", $brancht->segment_item_id)->limit(1)->get();
+			if($txn->save($segmentit)){
 				//Work
 				$work = new Spa_work(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				$work->transaction_id = $txn->id;
@@ -623,9 +633,25 @@ class Spa extends REST_Controller {
 			$txn->frequency = "Daily";
 			$txn->month_option = "Day";
 			$txn->intval = 1;
+			$txn->user_id = $value->user_id;
+			$branchuser = new Spa_user_branch(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$branchuser->where("user_id", $value->user_id)->limit(1)->get();
+			$txn->branch_id = isset($branchuser->branch_id) ? $branchuser->branch_id : 1;
 			$txn->day = 1;
 			$txn->number = $number;
-			if($txn->save()){
+			//Add Segment
+			$brancht = new Branch(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$brancht->where("id", $txn->branch_id)->limit(1)->get();
+			$segmentit = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$segmentit->where("id", $brancht->segment_item_id)->limit(1)->get();
+			if($txn->save($segmentit)){
+				//Add Segment
+				$brancht = new Branch(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$brancht->where("id", $txn->branch_id)->limit(1)->get();
+				$segmentit = new Segmentitems_transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$segmentit->transaction_id = $txn->id;
+				$segmentit->segmentitem_id = $brancht->segment_item_id;
+				$segmentit->save();
 				//Work
 				$work = new Spa_book(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				$work->transaction_id = $txn->id;
@@ -953,6 +979,9 @@ class Spa extends REST_Controller {
 			$txn->payment_term_id = 5;
 			$txn->payment_method_id = 1;
 			$txn->user_id = $value->user_id;
+			$branchuser = new Spa_user_branch(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$branchuser->where("user_id", $value->user_id)->limit(1)->get();
+			$txn->branch_id = isset($branchuser->branch_id) ? $branchuser->branch_id : 1;
 			$txn->type = 'Invoice';
 			$txn->sub_total = $saleorder->sub_total;
 			$txn->discount = $saleorder->discount;
@@ -968,7 +997,19 @@ class Spa extends REST_Controller {
 			$txn->day = 1;
 			$txn->status = 0;
 			$txn->is_journal = 1;
-			if($txn->save()){
+			//Add Segment
+			$brancht = new Branch(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$brancht->where("id", $txn->branch_id)->limit(1)->get();
+			$segmentit = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$segmentit->where("id", $brancht->segment_item_id)->limit(1)->get();
+			if($txn->save($segmentit)){
+				//Add Segment
+				$brancht = new Branch(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$brancht->where("id", $txn->branch_id)->limit(1)->get();
+				$segmentit = new Segmentitems_transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$segmentit->transaction_id = $txn->id;
+				$segmentit->segmentitem_id = $brancht->segment_item_id;
+				$segmentit->save();
 				//Item
 				foreach($value->items as $item){
 					$it = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
@@ -1093,20 +1134,6 @@ class Spa extends REST_Controller {
 		   		"contact" 		=> $conar,
 		   		"branch" 		=> $brar,
 		   	);
-		   	//Employee
-		   	// $emcount = count($value->employee_ar);
-		   	// foreach($value->employee_ar as $emp){
-		   	// 	$emtxn = new Spa_employee_transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		   	// 	$emtxn->transaction_id = $txn->id;
-		   	// 	$emtxn->employee_id = $emp->id;
-		   	// 	if($emcount > 1){
-		   	// 		$emtxn->status = 2;
-		   	// 	}else{
-		   	// 		$emtxn->status = 1;
-		   	// 	}
-		   	// 	$emtxn->amount = floatval($txn->amount) / intval($emcount);
-		   	// 	$emtxn->save();
-		   	// }
 		}
 		$data["count"] = count($data["results"]);
 		$this->response($data, 201);

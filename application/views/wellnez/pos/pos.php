@@ -476,13 +476,13 @@
 	<div id="ntf1" data-role="notification"></div>
 	<div class="container">
 		<div class="row pos">
-			<div class="span12">
+			<div class="span12" style="overflow: hidden;padding: 0;">
+				<div id="loadImport" style="border-radius: 10px;display:none;text-align: center;position: absolute;width: 100%; height: 100%;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
+					<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 40%;left: 40%">Loading...</i>
+				</div>
 				<div class="row">
 					<div class="span6">
 						<div style="position: relative;overflow: hidden;">
-							<div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 100%;margin-top: -15px;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
-								<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
-							</div>
 							<div class="row" style="padding: 0;">
 								<div class="span12">
 									<div class="listWrapper">
@@ -857,48 +857,9 @@
 									</div>
 								</div>
 							</div>
-							
-							
-							<div id="dialog" style="display:none; padding: 15px !important;">
-								<div class="row">
-									<div class="span5">
-										<div class="cover-block box-shadow">
-											<h1>Sale Summary</h1>
-											<div class="posSaleSummary cover-block "
-											data-template="sale-summary-template"
-											data-auto-bind="false"
-											data-bind="source: lineDS">
-											</div>
-										</div>
-										<div class="posSaleSummary cover-block">
-											<table class="table table-white">
-												<tbody>
-													<tr>
-														<td class="right" style="width: 60%;"><span data-bind="text: lang.lang.subtotal" style="font-size: 15px; font-weight: 700;"></span></td>
-														<td class="right strong" width="40%"><span data-format="n" data-bind="text: obj.sub_total" style="font-size: 15px; font-weight: 700;"></span></td>
-													</tr>               
-													<tr>
-														<td class="right"><span data-bind="text: lang.lang.total_discount"></span></td>
-														<td class="right ">
-															<span data-format="n" data-bind="text: obj.discount"></span>
-														</td>
-													</tr>               
-													<tr>
-														<td class="right"><span data-bind="text: lang.lang.total_tax"></span></td>
-														<td class="right "><span data-format="n" data-bind="text: obj.tax"></span></td>
-													</tr>                             
-													<tr>
-														<td class="right"><h4 span data-bind="text: lang.lang.total" style="font-weight: 700;"></h4></td>
-														<td class="right strong"><h4 data-bind="text: total" style="font-weight: 700;"></h4></td>
-													</tr>               
-												</tbody>
-											</table>
-										</div>
-									</div>
-									<div id="ntf1" data-role="notification"></div>
-								</div>
-							</div>
+							<div id="ntf1" data-role="notification"></div>
 						</div>
+
 					</div>
 				</div>
 			</div>

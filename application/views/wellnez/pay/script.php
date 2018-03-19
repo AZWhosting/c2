@@ -3409,12 +3409,13 @@
             var self = this;
             // this.get("obj").set("account_id", 7);
             // $("#loadING").css("display", "block");
-            // this.currencyDS.query({
-            //     sort: {
-            //         field: "created_at",
-            //         dir: "asc"
-            //     }
-            // }).then(function(e) {
+            this.currencyDS.query({
+                sort: {
+                    field: "created_at",
+                    dir: "asc"
+                }
+            });
+            // .then(function(e) {
             //     self.setCashierItems();
             // });
             // this.addEmpty();
@@ -4098,8 +4099,8 @@
                     self.set("btnActive", false);
                     $("#loadING").css("display", "none");
                 });
-            this.receipCurrencyDS.sync();
-            this.receipChangeDS.sync();
+            // this.receipCurrencyDS.sync();
+            // this.receipChangeDS.sync();
         },
         receiveDS: dataStore(apiUrl + "cashier_sessions/total_receive"),
         setReceive: function() {
@@ -4153,7 +4154,7 @@
             } else {
                 var self = this;
                 var currencyReceipt = 0;
-                var moneyReceipt = parseFloat(this.get("amountReceive"));
+                var moneyReceipt = this.invobj.amount;
                 $.each(this.receipCurrencyDS.data(), function(i, v) {
                     var amountAfterRate = parseFloat(v.amount) / parseFloat(v.rate);
                     currencyReceipt += amountAfterRate;
@@ -4286,22 +4287,26 @@
                 amount: obj.amount,
                 issued_date: obj.issued_date,
                 account_id: this.get("account_id"),
+                receipt_note: this.receipCurrencyDS.data(),
+                change_note: this.receipChangeDS.data()
             });
-            this.billTxnDS.sync();
-            this.billTxnDS.bind("requestEnd", function(e){
-                var type = e.type;
-                if (type !== 'read') {
-                    var noti = $("#ntf1").data("kendoNotification");
-                    noti.hide();
-                    noti.success(self.lang.lang.success_message);
-                    $("#loadImport").css("display", "none");
-                    self.invoiceDS.query({});
-                    self.set("total", 0);
-                    self.set("amountReciept", 0);
-                    self.set("btnActive", false);
-                    self.set("invobj", []);
-                }
-            });
+            // this.billTxnDS.sync();
+            // this.billTxnDS.bind("requestEnd", function(e){
+            //     var type = e.type;
+            //     if (type !== 'read') {
+            //         var noti = $("#ntf1").data("kendoNotification");
+            //         noti.hide();
+            //         noti.success(self.lang.lang.success_message);
+            //         $("#loadImport").css("display", "none");
+            //         self.invoiceDS.query({});
+            //         self.set("total", 0);
+            //         self.set("amountReciept", 0);
+            //         self.set("btnActive", false);
+            //         self.set("invobj", []);
+            //         self.receipChangeDS.data([]);
+            //         self.receipCurrencyDS.data([]);
+            //     }
+            // });
         },
         addLoyalty  : function(id){
         },
@@ -4317,7 +4322,9 @@
             this.set("amountReciept", data.amount);
             this.set("btnActive", true);
             this.set("invobj", data);
-        }
+            this.receipChangeDS.data([]);
+            this.setDefaultReceiptCurrency(data.amount);
+        },
     });
     /* views and layout */
     banhji.view = {

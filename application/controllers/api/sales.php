@@ -373,6 +373,7 @@ class Sales extends REST_Controller {
 		if($obj->exists()){
 			$objList = [];
 			foreach ($obj as $value) {
+				$itemName = $value->item_abbr.$value->item_number." ".$value->item_name;
 				$amount = floatval($value->amount) / floatval($value->transaction_rate);
 								
 				if(isset($objList[$value->item_id])){
@@ -382,6 +383,7 @@ class Sales extends REST_Controller {
 						"customer"		=> $value->transaction_contact_name,
 						"number" 		=> $value->transaction_number,
 						"issued_date" 	=> $value->transaction_issued_date,
+						"item_name" 	=> $itemName,
 						"quantity" 		=> $value->quantity,
 						"measurement"	=> $value->measurement_name,
 						"price" 		=> $value->price,
@@ -389,13 +391,14 @@ class Sales extends REST_Controller {
 					);
 				}else{
 					$objList[$value->item_id]["id"] 		= $value->item_id;
-					$objList[$value->item_id]["name"] 		= $value->item_abbr.$value->item_number." ".$value->item_name;
+					$objList[$value->item_id]["name"] 		= $itemName;
 					$objList[$value->item_id]["line"][]		= array(
 						"id" 			=> $value->transaction_id,
 						"type" 			=> $value->transaction_type,
 						"customer"		=> $value->transaction_contact_name,
 						"number" 		=> $value->transaction_number,
 						"issued_date" 	=> $value->transaction_issued_date,
+						"item_name" 	=> $itemName,
 						"quantity" 		=> $value->quantity,
 						"measurement"	=> $value->measurement_name,
 						"price" 		=> $value->price,
