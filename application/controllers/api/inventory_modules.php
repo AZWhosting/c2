@@ -1356,11 +1356,23 @@ class Inventory_modules extends REST_Controller {
 		
 		if($obj->exists()){
 			foreach ($obj as $value) {
+				//References
+				$reference = [];
+				if($value->reference_id>0){
+					$ref = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$ref->where("is_recurring <>", 1);
+					$ref->where("deleted <>", 1);
+					$ref->where("id", $value->reference_id);
+					
+					$reference = $ref->get_raw()->result();
+				}
+
 				$data["results"][] = array(
 					"id" 				=> $value->transaction_id,
 					"type" 				=> $value->transaction_type,
 					"number" 			=> $value->transaction_number,
 					"issued_date" 		=> $value->transaction_issued_date,
+					"due_date" 			=> $value->transaction_due_date,
 					"rate" 				=> $value->transaction_rate,
 					"quantity" 			=> floatval($value->quantity),
 				   	"conversion_ratio" 	=> floatval($value->conversion_ratio),
@@ -1370,7 +1382,7 @@ class Inventory_modules extends REST_Controller {
 				   	"name" 				=> $value->transaction_contact_name,
 				   	"item" 				=> $value->item_name,
 				   	"measurement" 		=> $value->measurement_name,
-				   	"reference" 		=> []
+				   	"reference" 		=> $reference
 				);
 			}
 		}
