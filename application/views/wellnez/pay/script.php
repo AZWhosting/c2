@@ -3028,21 +3028,52 @@
                 dir: "asc"
             }
         }),
-        accountDS: new kendo.data.DataSource({
-            data: banhji.source.accountList,
-            filter: [{
+        accountDS:  new kendo.data.DataSource({
+            transport: {
+                read: {
+                    url: apiUrl + "accounts",
+                    type: "GET",
+                    headers: banhji.header,
+                    dataType: 'json'
+                },
+                parameterMap: function(options, operation) {
+                    if (operation === 'read') {
+                        return {
+                            page: options.page,
+                            limit: options.pageSize,
+                            filter: options.filter,
+                            sort: options.sort
+                        };
+                    } else {
+                        return {
+                            models: kendo.stringify(options.models)
+                        };
+                    }
+                }
+            },
+            schema: {
+                model: {
+                    id: 'id'
+                },
+                data: 'results',
+                total: 'count'
+            },
+            filter: [
+                {
                     field: "account_type_id",
                     value: 10
-                },
-                {
-                    field: "status",
-                    value: 1
                 }
             ],
             sort: {
-                field: "number",
+                field: "id",
                 dir: "asc"
-            }
+            },
+            batch: true,
+            serverFiltering: true,
+            serverSorting: true,
+            serverPaging: true,
+            page: 1,
+            pageSize: 8
         }),
         paymentTermDS: banhji.source.paymentTermDS,
         paymentMethodDS: banhji.source.paymentMethodDS,
@@ -4290,27 +4321,28 @@
                 receipt_note: this.receipCurrencyDS.data(),
                 change_note: this.receipChangeDS.data()
             });
-            // this.billTxnDS.sync();
-            // this.billTxnDS.bind("requestEnd", function(e){
-            //     var type = e.type;
-            //     if (type !== 'read') {
-            //         var noti = $("#ntf1").data("kendoNotification");
-            //         noti.hide();
-            //         noti.success(self.lang.lang.success_message);
-            //         $("#loadImport").css("display", "none");
-            //         self.invoiceDS.query({});
-            //         self.set("total", 0);
-            //         self.set("amountReciept", 0);
-            //         self.set("btnActive", false);
-            //         self.set("invobj", []);
-            //         self.receipChangeDS.data([]);
-            //         self.receipCurrencyDS.data([]);
-            //     }
-            // });
+            this.billTxnDS.sync();
+            this.billTxnDS.bind("requestEnd", function(e){
+                var type = e.type;
+                if (type !== 'read') {
+                    var noti = $("#ntf1").data("kendoNotification");
+                    noti.hide();
+                    noti.success(self.lang.lang.success_message);
+                    $("#loadImport").css("display", "none");
+                    self.invoiceDS.query({});
+                    self.set("total", 0);
+                    self.set("amountReciept", 0);
+                    self.set("btnActive", false);
+                    self.set("invobj", []);
+                    self.receipChangeDS.data([]);
+                    self.receipCurrencyDS.data([]);
+                }
+            });
         },
         addLoyalty  : function(id){
         },
-        splitBill   : function(id){
+        splitBill   : function(){
+            banhji.router.navigate("/split_bill/"+this.get("invobj").id);
         },
         printBill   : function(id){
         },
@@ -4325,6 +4357,16 @@
             this.receipChangeDS.data([]);
             this.setDefaultReceiptCurrency(data.amount);
         },
+    });
+    banhji.splitBill = kendo.observable({
+        roomDS      : dataStore(apiUrl + "spa/room"), 
+        pageLoad    : function(id){
+            if(id){
+               
+            }else{
+                banhji.router.navigate("/");
+            }
+        }
     });
     /* views and layout */
     banhji.view = {
@@ -4344,7 +4386,10 @@
         //------------------------------------
         Index: new kendo.Layout("#Index", {
             model: banhji.Index
-        })
+        }),
+        splitBill: new kendo.Layout("#splitBill", {
+            model: banhji.splitBill
+        }),
     };
     /* views and layout */
     banhji.router = new kendo.Router({
@@ -4395,6 +4440,11 @@
         var blank = new kendo.View('#blank-tmpl');
         banhji.view.layout.showIn('#content', banhji.view.Index);
         banhji.Index.pageLoad();
+    });
+    banhji.router.route('/split_bill(/:id)', function(id) {
+        var blank = new kendo.View('#blank-tmpl');
+        banhji.view.layout.showIn('#content', banhji.view.splitBill);
+        banhji.splitBill.pageLoad(id);
     });
     
     $(function() {

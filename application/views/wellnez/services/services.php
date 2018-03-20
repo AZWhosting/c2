@@ -310,7 +310,7 @@
 	    padding: 10px;
 	    float: left;
 	    width: 100%;
-	    border-radius:  0 0 5px 5px;
+	    border-radius:  5px;
 	    cursor: pointer;
 	    /*box-shadow: 2px 0px 12px 0px rgba(68,68,68,1);*/
 	    color: #0eac00;
@@ -526,8 +526,8 @@
 									</table>
 								</div>
 								<div class="span6 botton" style="padding-left: 0;">
-									<div class="row">
-										<div class="span6 " style="padding-right: 0;">
+									<!-- <div class="row"> -->
+										<!-- <div class="span6 " style="padding-right: 0;">
 											<a href="loyalty">
 												<div class="button-book" style="margin-right: 1px;">
 													<div class="img" style="margin-left: 33px;">
@@ -536,7 +536,7 @@
 													<p class="textSmall">Loyalty</p>
 												</div>
 											</a>
-										</div>
+										</div> -->
 										<!-- <div class="span4 " style="padding: 0;">
 											<div class="button-pay">
 												<div class="img">
@@ -545,12 +545,12 @@
 												<p class="textSmall">Gift Card</p>
 											</div>
 										</div> -->
-										<div class="span6" style="padding-left: 0;">
+										<!-- <div class="span6" style="padding-left: 0;">
 											<p class="button-cancel" style="margin-left: 0;"><span>/</span> <br> Split</p>
 										</div>
-									</div>
-									<div class="row">
-										<div class="span12 ">
+									</div> -->
+									<div class="">
+										<div class=" ">
 											<div class="button-service" data-bind="click: printBill">
 												<div class="img">
 													<img src="<?php echo base_url();?>assets/spa/icon/pay-green.png" >

@@ -645,13 +645,6 @@ class Spa extends REST_Controller {
 			$segmentit = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$segmentit->where("id", $brancht->segment_item_id)->limit(1)->get();
 			if($txn->save($segmentit)){
-				//Add Segment
-				$brancht = new Branch(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$brancht->where("id", $txn->branch_id)->limit(1)->get();
-				$segmentit = new Segmentitems_transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$segmentit->transaction_id = $txn->id;
-				$segmentit->segmentitem_id = $brancht->segment_item_id;
-				$segmentit->save();
 				//Work
 				$work = new Spa_book(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				$work->transaction_id = $txn->id;
@@ -1944,7 +1937,49 @@ class Spa extends REST_Controller {
 			   		$emtxn->amount = floatval($txn->amount) / intval($emcount);
 			   		$emtxn->save();
 	   			}
-			   	
+	   			//Session
+	   			$session = new Cashier_session(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	   			$session->where("cashier_id", $value->user_id);
+	   			$session->where("active", 1)->limit(1)->order_by("id", "desc")->get();
+	   			$sessionrecieve = new Cashier_session_receive(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	   			$sessionrecieve->cashier_session_id = $session->id;
+   				$sessionrecieve->transaction_id = $obj->reference_id;
+   				$sessionrecieve->contact_id = $obj->contact_id;
+   				$sessionrecieve->amount = $obj->amount;
+   				$sessionrecieve->locale = $obj->locale;
+   				$sessionrecieve->rate = $obj->rate;
+   				$sessionrecieve->time = $value->issued_date;
+   				$sessionrecieve->save();
+   				//Reciept Note
+	   			if(count($value->receipt_note) > 0){
+	   				foreach($value->receipt_note as $vr){
+	   					if($vr->amount > 0){
+		   					$reciepnot = new Cashier_currency(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		   					$reciepnot->cashier_session_id = $session->id;
+		   					$reciepnot->type =0;
+		   					$reciepnot->currency = $vr->currency;
+		   					$reciepnot->locale = $vr->locale;
+		   					$reciepnot->rate = $vr->rate;
+		   					$reciepnot->amount = $vr->amount;
+		   					$reciepnot->save();
+		   				}
+	   				}
+	   			}
+	   			//Change Note
+	   			if(count($value->change_note) > 0){
+	   				foreach($value->change_note as $vc){
+	   					if($vc->amount > 0){
+		   					$reciepnot1 = new Cashier_currency(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		   					$reciepnot1->cashier_session_id = $session->id;
+		   					$reciepnot1->type = 1;
+		   					$reciepnot1->currency = $vc->currency;
+		   					$reciepnot1->locale = $vc->locale;
+		   					$reciepnot1->rate = $vc->rate;
+		   					$reciepnot1->amount = $vc->amount;
+		   					$reciepnot1->save();
+		   				}
+	   				}
+	   			}
 			   	$data["results"][] = array(
 			   		"id" => $obj->id
 			   	);

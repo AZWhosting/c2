@@ -453,7 +453,148 @@
 		</div>
 	</div>
 </script>
+<script id="splitBill" type="text/x-kendo-template">
+	<div class="container">
+		<div class="row ">
+			<style type="text/css">
+				.table-striped tbody tr.k-state-selected td {
+					background: #ccc!important;
+				}
+			</style>
+			<div class="span12">
+				<div class="hidden-print hidden-lg hidden-md pull-right">
+		    		<span class="glyphicons no-js remove_2" 
+						data-bind="click: cancel"><i></i></span>
+				</div>
+				<div class="row" style="overflow: hidden;background: #fff; float: left; width: 100%; padding: 15px; border-radius: 10px;">
+					<div id="loadING" style="display:none;text-align: center;position: absolute;top: 0; left: 0;width: 100%; height: 100%;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
+						<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 45%;left: 45%">Loading</i>
+					</div>
+					<div class="span6" style="padding-right: 0;">	
+						<div class="strong" style="margin-bottom: 15px; width: 100%; padding: 10px; float: left;" align="center"
+							data-bind="style: { backgroundColor: amtDueColor}">
+							<p style="float: left;color: #333;">Amount Recevied</p>
+							<input type="text" name="" style="width: 100%; font-weight: 500; border: 1px solid #ccc; padding: 5px; height: 35px; color: #333;" data-bind="value: amountReciept">
+						</div>
 
+						<div class="box-generic-noborder" style="margin-bottom: 15px; padding-bottom: 0; float: left;width: 100%">
+						    <div class="tab-content" style="padding: 10px;">
+						    	<!-- Options Tab content -->
+						        <div class="tab-pane active" id="tab1-1">
+						            <table style="margin-bottom: 0; color: #333;" class="table table-borderless table-condensed cart_total">
+						            	<tr>
+											<td><span data-bind="text: lang.lang.date"></span></td>
+											<td class="right">
+												<input id="issuedDate" name="issuedDate" 
+													data-role="datepicker"
+													data-format="dd-MM-yyyy"
+													data-parse-formats="yyyy-MM-dd HH:mm:ss"
+													data-bind="value: obj.issued_date, 
+														events:{ change : issuedDateChanges }" 
+													required data-required-msg="required"
+													style="width:100%;" />
+											</td>
+										</tr>
+										<tr>
+							            	<td><span data-bind="text: lang.lang.cash_account"></span></td>
+						            		<td>
+												<input
+													data-role="dropdownlist"
+						              				data-value-primitive="true"
+													data-text-field="name" 
+						              				data-value-field="id"
+						              				data-bind="value: account_id,
+						              					source: accountDS"
+						              				data-option-label="Select Account..."
+						              				required data-required-msg="required" 
+						              				style="width: 100%" />
+											</td>
+							            </tr>
+						            </table>
+						        </div>
+						    </div>
+						</div>
+			            <div class="row">
+							<div class="col-xs-12 col-sm-5"> 
+								<div class="btn-group">
+									<div class="leadcontainer">
+									</div>
+								</div>
+								<br>
+							</div>
+							<div class="col-xs-12 col-sm-7">
+								<table class="table table-condensed table-striped table-white" style="color: #333;">
+									<tbody>
+										<tr>
+											<td class="right"><span data-bind="text: lang.lang.total_received"></span>:</td>
+											<td class="right strong"><span data-bind="text: amountReciept"></span></td>
+											<td class="right"><span data-bind="text: lang.lang.total_discount"></span>:</td>
+											<td class="right strong">
+												<span data-format="n2" data-bind="text: discount"></span>
+		                   					</td>
+										</tr>
+										<tr>
+											<td></td>
+											<td></td>
+											<td class="right"><h4 data-bind="text: lang.lang.total"></h4></td>
+											<td class="right strong"><h4 data-bind="text: total"></h4></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-xs-12 col-sm-12 col-md-12">
+								<table class="table table-bordered table-primary table-striped table-vertical-center">
+							        <thead>
+							            <tr>
+							                <th style="vertical-align: top;"><span data-bind="text: lang.lang.no_">No.</span></th>
+							                <th style="vertical-align: top;"><span data-bind="text: lang.lang.currency">Currency</span></th>
+							                <th style="vertical-align: top;"><span data-bind="text: lang.lang.cash_receipt">Cash Receipt</span></th>
+							            </tr> 
+							        </thead>
+							        <tbody data-role="listview" 
+						        		data-template="cash-currency-template" 
+						        		data-auto-bind="false"
+						        		data-bind="source: receipCurrencyDS"></tbody>
+							    </table>
+							    <div class="row-fluid">
+							    	<h5 data-bind="text: lang.lang.change_currency"></h5><br>
+							    	<table class="table table-bordered table-primary table-striped table-vertical-center">
+								        <thead>
+								            <tr>
+								                <th class="center" style="width: 50px;"><span data-bind="text: lang.lang.no_">No.</span></th>
+								                <th><span data-bind="text: lang.lang.currency">Currency</span></th>
+								                <th><span data-bind="text: lang.lang.cash_receipt">Cash Receipt</span></th>
+								            </tr> 
+								        </thead>
+								        <tbody data-role="listview" 
+							        		data-template="change-currency-receipt-template"
+							        		data-auto-bind="false"
+							        		data-bind="source: receipChangeDS"></tbody>
+								    </table>
+							    </div>
+							</div>
+						</div>
+
+						<div class="box-generic bg-action-button">
+							<div id="ntf1" data-role="notification"></div>
+							<div class="row">
+								<div class="col-sm-12" align="right">
+									<span class="btn-btn" data-bind="visible: btnActive, click: payBill" ><span data-bind="text: lang.lang.pay"></span></span>
+									<span class="btn-btn" data-bind="visible: btnActive, click: addLoyalty" ><span>Loayalty</span></span>
+									<span class="btn-btn" data-bind="visible: btnActive, click: splitBill" ><span>Split Bill</span></span>
+									<span class="btn-btn" data-bind="visible: btnActive, click: printBill" ><span>Print Bill</span></span>
+									<span class="btn-btn" data-bind="click: cancel" ><span data-bind="text: lang.lang.cancel"></span></span>	
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
 <script id="cashier-session-template" type="text/x-kendo-template">
 	<tr>
 		<td>
