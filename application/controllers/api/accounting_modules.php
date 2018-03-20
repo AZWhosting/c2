@@ -841,8 +841,8 @@ class Accounting_modules extends REST_Controller {
 						"dr" 			=> floatval($value->dr),
 						"cr" 			=> floatval($value->cr),
 						"locale" 		=> $value->locale,
-						"account" 		=> $value->account_name,
-						"contact" 		=> $value->contact_name
+						"account" 		=> $value->account_number . " - " . $value->account_name,
+						"contact" 		=> isset($value->contact_name) ? $value->contact_name : "",
 					);
 				}else{
 					$objList[$value->transaction_id]["id"] = $value->transaction_id;
@@ -859,8 +859,8 @@ class Accounting_modules extends REST_Controller {
 						"dr" 			=> floatval($value->dr),
 						"cr" 			=> floatval($value->cr),
 						"locale" 		=> $value->locale,
-						"account" 		=> $value->account_name,
-						"contact" 		=> $value->contact_name
+						"account" 		=> $value->account_number . " - " .$value->account_name,
+						"contact" 		=> isset($value->contact_name) ? $value->contact_name : "",
 					);			
 				}
 			}			
@@ -1078,7 +1078,7 @@ class Accounting_modules extends REST_Controller {
 					);
 				}else{
 					$objList[$value->account_id]["id"] 				= $value->account_id;
-					$objList[$value->account_id]["name"] 			= $value->account_number ." ". $value->account_name;
+					$objList[$value->account_id]["name"] 			= $value->account_number ." - ". $value->account_name;
 					$objList[$value->account_id]["balance_forward"] = 0;
 					$objList[$value->account_id]["line"][] 			= array(
 						"id" 				=> $value->transaction_id,
@@ -1120,7 +1120,7 @@ class Accounting_modules extends REST_Controller {
 					$objList[$value->account_id]["balance_forward"] = $bfAmount;
 				}else{
 					$objList[$value->account_id]["id"] 				= $value->account_id;
-					$objList[$value->account_id]["name"] 			= $value->account_number ." ". $value->account_name;
+					$objList[$value->account_id]["name"] 			= $value->account_number ." - ". $value->account_name;
 					$objList[$value->account_id]["balance_forward"] = $bfAmount;
 					$objList[$value->account_id]["line"] 			= [];
 				}
@@ -1185,7 +1185,7 @@ class Accounting_modules extends REST_Controller {
 					}
 
 					$objList[$value->account_id]["id"] 				= $value->account_id;
-					$objList[$value->account_id]["name"] 			= $value->account_number ." ". $value->account_name;
+					$objList[$value->account_id]["name"] 			= $value->account_number ." - ". $value->account_name;
 					$objList[$value->account_id]["balance_forward"] = $balance_forward;
 					$objList[$value->account_id]["line"][] 			= array(
 						"id" 				=> $value->transaction_id,

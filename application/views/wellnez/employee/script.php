@@ -3942,9 +3942,7 @@
 
             if(currency_id){
                 para.push({ field: "currency_id", value: currency_id });
-            }           
-
-                           
+            }                          
         },
         searchTransaction   : function(){
             var self = this,
@@ -4068,7 +4066,10 @@
     banhji.Employees = kendo.observable({
         lang        : langVM,
         dataSource  : dataStore(apiUrl + "employees"),
-        roleDS      : dataStore(apiUrl + "employees/roles"),
+        roleDS      : [
+            {id: 1, name: "Therapist"},
+            {id: 2, name: "Trainer"},
+        ],
         payrollDS   : dataStore(apiUrl + "payrolls"),
         advanceAccDS: new kendo.data.DataSource({
             transport: {
@@ -4254,9 +4255,13 @@
         cancel      : function(e){
             this.dataSource.data([]);
             banhji.router.navigate("/");
-        }
+        },
+        typeAR      : [
+            {id: 1, name: "Enternal"},
+            {id: 2, name: "Outsource"},
+        ]
     });
-    banhji.customerCenter = kendo.observable({
+    banhji.employeeCenter = kendo.observable({
         lang                : langVM,
         transactionDS       : dataStore(apiUrl + 'transactions'),
         noteDS              : dataStore(apiUrl + 'notes'),
@@ -4818,7 +4823,11 @@
             }else{
                 alert("Please select a customer and Memo is required");
             }
-        }
+        },
+        typeAR              : [
+            {id: 1, name: "Therapist"},
+            {id: 2, name: "Trainer"},
+        ]
     });
     banhji.customer = kendo.observable({
         lang                    : langVM,
@@ -5379,7 +5388,7 @@
         Index: new kendo.Layout("#Index", {
             model: banhji.Index
         }),
-        customerCenter: new kendo.Layout("#customerCenter", {model: banhji.customerCenter}),
+        employeeCenter: new kendo.Layout("#employeeCenter", {model: banhji.employeeCenter}),
         Employees: new kendo.Layout("#Employees", {model: banhji.Employees}),
     };
     /* views and layout */
@@ -5428,28 +5437,9 @@
     });
     /* Login page */
     banhji.router.route('/', function() {
-        banhji.view.layout.showIn("#content", banhji.view.customerCenter);
-        var vm = banhji.customerCenter;
+        banhji.view.layout.showIn("#content", banhji.view.employeeCenter);
+        var vm = banhji.employeeCenter;
         vm.pageLoad();
-    });
-    banhji.router.route("/customer(/:id)(/:is_pattern)", function(id,is_pattern){
-        banhji.view.layout.showIn("#content", banhji.view.customer);
-        kendo.fx($("#slide-form")).slideIn("down").play();
-
-        var vm = banhji.customer;
-
-        $("#saveNew").click(function(e){
-            e.preventDefault();
-            vm.save();
-        });
-
-        $("#saveClose").click(function(e){
-            e.preventDefault();
-            vm.set("saveClose", true);
-            vm.save();
-        });
-
-        vm.pageLoad(id, is_pattern);
     });
     banhji.router.route("/employee(/:id)", function(id){
         banhji.view.layout.showIn("#content", banhji.view.Employees);

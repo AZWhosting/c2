@@ -339,7 +339,7 @@
 <!-- ***************************
 *	Water Section      	  *
 **************************** -->
-<script id="customerCenter" type="text/x-kendo-template">
+<script id="employeeCenter" type="text/x-kendo-template">
 	<div class="container">
 		<div class="row customerCenter">
 			<div class="span3">
@@ -355,12 +355,10 @@
 							</div>
 						</form>					
 					</div>
-					
 					<div class="results">
 						<span data-bind="text: contactDS.total"></span>
 						<span data-bind="text: lang.lang.found_search"></span>
 					</div>
-
 					<div class="table table-condensed" style="height: 580px;"
 						 data-role="grid" 
 						 data-bind="source: contactDS"
@@ -370,216 +368,28 @@
 						 data-selectable="true"
 						 data-height="600"
 						 data-scrollable="{virtual: true}">
-						 
 					</div>
 				</div>
 			</div>
 			<div class="span9" style="padding-left: 0">
 				<div class="detailsWrapper">
 					<div class="row">
-						<!-- <div class="span6">
-							<div class="widget widget-4 widget-tabs-icons-only margin-bottom-none">
-
-							    
-							    <div class="widget-head">
-
-							        
-							        <ul class="pull-right">
-							        	<li style="font-size: large; color: black; font-weight: bold;">
-							            	<span data-bind="text: obj.number"></span>
-							            	
-							            	<span data-bind="text: obj.fullname"></span>
-							            </li>
-							            <li class="glyphicons text_bigger active"><span data-toggle="tab" data-target="#tab1-7"><i></i></span>
-							            </li>							           
-							            <li class="glyphicons riflescope"><span data-toggle="tab" data-target="#tab2-7"><i></i></span>
-							            </li>							            
-							            <li class="glyphicons circle_info"><span data-toggle="tab" data-target="#tab3-7"><i></i></span>
-							            </li>							            
-							            <li class="glyphicons pen"><span data-toggle="tab" data-target="#tab4-7"><i></i></span>
-							            </li>
-							            <li class="glyphicons edit"><span data-bind="click: goEditContact"><i></i></span>
-							            </li>							            							            							            
-							        </ul>
-							        <div class="clearfix"></div>
-							        
-
-							    </div>
-							    
-
-							    <div class="widget-body">
-							        <div class="tab-content">
-
-							            
-							            <div id="tab1-7" class="tab-pane active ">
-							            	<div class="box-generic" style="padding: 5px;">
-								            	<table class="table table-borderless table-condensed cart_total">
-									            	<tr>
-									            		<td width="50%">
-									            			<span class="btn btn-block btn-primary" data-bind="click: goCashadvance">Cash Advance</span>
-									            		</td>
-									            		<td width="50%">
-									            			<span class="btn btn-block btn-primary" data-bind="click: goExpense">Expense</span>								            			
-									            		</td>
-									            	</tr>
-								            	</table>
-								            </div>
-							            </div>
-							            
-
-							            
-							            <div id="tab2-7" class="tab-pane ">
-							            	<div class="box-generic" style="padding: 10px;">
-								                <input data-role="dropdownlist"
-								                	   data-auto-bind="false"
-							            			   data-option-label="Select Customer Type..."					            			   		                   
-									                   data-value-primitive="true"
-									                   data-text-field="name"
-									                   data-value-field="id"
-									                   data-bind="value: contact_type_id,
-									                              source: contactTypeDS"
-									                   style="width: 100%; height: 35px;"/>
-
-								                <input data-role="dropdownlist"
-							            			   data-option-label="Select Currency..."
-							            			   data-template="currency-list-tmpl"					            			   		                   
-									                   data-value-primitive="true"
-									                   data-text-field="code"
-									                   data-value-field="id"
-									                   data-bind="value: currency_id,
-									                              source: currencyDS"
-									                   style="width: 100%; margin: 15px 0;height: 35px; "/>
-									            <span style="width: 100px;" class="btn btn-primary btn-icon glyphicons search pull-right" data-bind="click: search"><i></i> <span data-bind="text: lang.lang.search">Search</span></span>
-								        	</div>
-								        </div>
-							            
-
-							           
-							            <div id="tab3-7" class="tab-pane">
-							            	<div class=" box-generic">
-								            	<div class="row">
-									            	<div class="span6">
-											
-														
-														<div class="widget widget-heading-simple widget-body-gray margin-none">
-															<div class="widget-head">
-																<h4 class="heading glyphicons user"><i></i> <span data-bind="text: obj.wnumber"></span> <span data-bind="text: obj.fullname"></span></h4>
-															</div>
-															<div class="widget-body">
-																<ul class="unstyled icons margin-none">
-																	<li class="glyphicons group"><i></i> <span data-bind="text: obj.contact_type"></span></li>
-																	<li class="glyphicons phone"><i></i> <span data-bind="text: obj.phone"></span></li>
-																	<li class="glyphicons envelope"><i></i> <span data-bind="text: obj.email"></span></li>
-																	<li class="glyphicons calendar"><i></i> <span data-bind="text: obj.registered_date"></span></li>
-																</ul>
-															</div>
-														</div>
-														
-														
-													</div>
-													<div class="span6">
-														
-														<div class="widget widget-heading-simple widget-body-gray margin-none">
-															<div class="widget-head">
-																<h4 class="heading glyphicons edit" data-bind="click: goEditContact"><i></i> <span data-bind="text: lang.lang.edit"></span></h4>
-															</div>
-															<div class="widget-body">
-																<p><i class="icon-home"></i> <span data-bind="text: obj.address"></span></p>
-															</div>
-														</div>
-														
-													</div>
-												</div>
-											</div>
-							            </div>
-							            
-
-							            
-							            <div id="tab4-7" class="tab-pane ">
-							            	<div class="box-generic">
-											    <div class="chat-controls">
-													<form class="margin-none">
-														<div class="row">
-															<div class="span10" style="padding-right: 0; width: 77% !important;">
-																<input style="width: 100%; border: 1px solid #ccc; padding: 5px; float: left;" type="text" name="message" class="input-block-level margin-none" data-bind="value: note" placeholder="កំណត់Memo ...">
-															</div>
-															<div class="span2" style="width: 23%;">
-																<span style="padding: 4px 15px; width: 100%; margin: 0;" class="btn btn-block btn-primary" data-bind="click: saveNote"><span data-bind="text: lang.lang.save">Save</span></span>
-															</div>
-														</div>
-													</form>
-												</div>
-										    	<div data-role="grid"
-										    	 	 data-height="100"
-						 							 data-scrollable="{virtual: true}"
-									                 data-row-template="customerCenter-note-tmpl"
-									                 data-bind="source: noteDS"
-									                 data-columns="[{title: ''}]">
-									            </div>
-											</div>
-							            </div>
-							            
-
-							        </div>
-							    </div>
-							</div>
-						</div> -->
-
 						<div class="span6">
 							<div class="widget widget-4 widget-tabs-icons-only margin-bottom-none">
-
-							    
 							    <div class="widget-head" >
 							    	<input type="text" name="" data-bind="value: obj.name" disabled="disabled" style="border: 1px solid #efefef; width: 69%; height: 30px; float: left; font-size: 16px; font-weight: 600;  background: #fff; padding-left: 5px;">
-							        
 							        <ul class="pull-right">
-
-							            <!-- <li class="glyphicons text_bigger active"><span data-toggle="tab" data-target="#tab1-4"><i></i></span>
-							            </li> -->
 							            <li class="glyphicons circle_info active"><span data-toggle="tab" data-target="#tab2-4"><i></i></span>
 							            </li>							            
 							            <li class="glyphicons pen"><span data-toggle="tab" data-target="#tab3-4"><i></i></span>
 							            </li>
 							            <li class="glyphicons paperclip"><span data-toggle="tab" data-target="#tab4-4"><i></i></span>
-							            </li>							            							            
+							            </li>        
 							        </ul>
 							        <div class="clearfix"></div>
-							      
-
 							    </div>
-							   
-
 							    <div class="widget-body">
-							        <div class="tab-content">							          
-							            <!-- <div id="tab1-4" class="tab-pane active box-generic">
-							            	<table class="table table-borderless table-condensed cart_total cash-table">
-								            	<tr>
-								            		<td width="50%">
-								            			<span class="btn btn-block btn-primary" data-bind="click: goDeposit"><span><span data-bind="text: lang.lang.c_deposit"></span></span>
-								            		</td>
-								            		<td width="50%">
-								            			<span class="btn btn-block btn-inverse" data-bind="click: goSaleOrder"><span><span data-bind="text: lang.lang.sale_order"></span></span>						            			
-								            		</td>
-								            	</tr>
-								            	<tr>
-								            		<td>
-								            			<span class="btn btn-block btn-primary" data-bind="click: goCashSale"><span><span data-bind="text: lang.lang.cash_sale"></span></span>	
-								            		</td>
-								            		<td>
-								            			<span class="btn btn-block btn-primary" data-bind="click: goInvoice"><span data-bind="text: lang.lang.invoice"></span></span>				            			
-								            		</td>
-								            	</tr>
-								            	<tr>
-								            		<td>
-								            			<span class="btn btn-block btn-primary" data-bind="click: goCashReceipt"><span data-bind="text: lang.lang.cash_receipt"></span></span>	
-								            		</td>
-								            		<td>
-								            			<span class="btn btn-block btn-primary" data-bind="click: goCashRefound"><span >CASH REFUND</span></span>
-								            		</td>
-								            	</tr>								            	
-							            	</table>
-							            </div> -->
-							           
+							        <div class="tab-content">
 							            <div id="tab2-4" class="tab-pane box-generic active" style="float: left; margin-bottom: 10px;">
 							            	<div class="row-fluid">
 							            		<div class="span5" style="padding: 0 2px 0 0;">
@@ -620,7 +430,6 @@
 																</td>
 															</tr>
 														</table>
-
 														<span class="btn btn-primary btn-icon glyphicons edit pull-right" data-bind="click: goEdit"><i></i><span data-bind="text: lang.lang.view_edit_profile"></span></span>
 													</div>
 												</div>
@@ -635,16 +444,15 @@
 														style="width: 366px; margin-bottom: 15px;" />
 												<span style="margin-bottom: 10px; background: #0eac00; border: none;" class="btn btn-primary" data-bind="click: saveNote"><span data-bind="text: lang.lang.add" ></span></span>
 											</div> 
-											<div class="table table-condensed" style="height: 100;"						 
+											<div class="table table-condensed" style="height: 100;"
 												 data-role="grid"
 												 data-auto-bind="false"						 
 												 data-bind="source: noteDS"
 												 data-row-template="customerCenter-note-tmpl"
 												 data-columns="[{title: ''}]"
 												 data-height="100"						 
-												 data-scrollable="{virtual: true}"></div>											
+												 data-scrollable="{virtual: true}"></div>
 							            </div>
-							            
 								        <div id="tab4-4" class="tab-pane" >
 								            <p style="color: #333;"><span data-bind="text: lang.lang.file_type"></span> [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>
 								            <input id="files" name="files"
@@ -654,7 +462,6 @@
 							                   data-bind="events: { 
 					                   				select: onSelect
 							                   }">
-
 								            <table class="table table-bordered">
 										        <thead>
 										            <tr>
@@ -669,16 +476,12 @@
 										        		data-auto-bind="false"
 										        		data-bind="source: attachmentDS"></tbody>			        
 										    </table>
-
 										    <div id="pager" class="k-pager-wrap"
 										    	 data-role="pager"
 										    	 data-auto-bind="false"
 									             data-bind="source: attachmentDS"></div>
-
 										    <span class="btn btn-icon btn-success glyphicons ok_2" data-bind="click: uploadFile" style="color: #fff; padding: 5px 38px; text-align: left; width: 98px !important; display: inline-block; margin-top: 10px; background: #0eac00;"><i></i> <span data-bind="text: lang.lang.save"></span></span>
 										</div>
-								           
-
 							        </div>
 							    </div>
 							</div>
@@ -701,23 +504,6 @@
 									</div>
 								</div>
 							</div>
-								
-							<!-- <div class="row">
-								<div class="span6" style="padding-right: 0">
-									<div class="widget-stats widget-stats-info widget-stats-5" data-bind="click: loadBalance" style="cursor: pointer; background: #21abf6; margin-left: 0; margin-bottom: 15px;">
-										<span class="glyphicons circle_exclamation_mark"><i></i></span>
-										<span class="txt"><span data-bind="text: outInvoice"></span> Open</span>
-										<div class="clearfix"></div>
-									</div>
-								</div>
-								<div class="span6" style="padding-left: 0;">
-									<div class="widget-stats widget-stats-default widget-stats-5" data-bind="click: loadOverInvoice" style="cursor: pointer; margin-left: 1px;">
-										<span class="glyphicons turtle"><i></i></span>
-										<span class="txt"><span data-bind="text: overInvoice"></span> Over Due</span>
-										<div class="clearfix"></div>
-									</div>
-								</div>
-							</div> -->
 						</div>
 					</div>
 					
@@ -767,6 +553,28 @@
 			</div>
 		</div>
 	</div>	
+</script>
+<script id="attachment-list-tmpl" type="text/x-kendo-tmpl">
+	<tr>
+		<td>
+			<input id="txtName-#:uid#" name="txtName-#:uid#" 
+					type="text" class="k-textbox" 
+					data-bind="value: name" />
+		</td>
+		<td>
+			<input id="txtDescription-#:uid#" name="txtDescription-#:uid#" 
+					type="text" class="k-textbox" 
+					data-bind="value: description"
+					style="width: 100%; margin-bottom: 0;" />
+		</td>
+		<td>#=kendo.toString(created_at, "dd-MM-yyyy")#</td>
+		<td>
+			#if(id){#
+				<a href="#=url#" target="_blank" class="btn-action glyphicons download btn-default"><i></i></a>
+			#}#
+			<span class="btn-action glyphicons remove_2 btn-danger" data-bind="click: removeFile"><i></i></span>			
+		</td>
+	</tr>
 </script>
 <script id="employeeCenter-transaction-tmpl" type="text/x-kendo-tmpl">
     <tr>    	  	
@@ -1405,13 +1213,13 @@
 		                             			class="form-control"  
 		                             			id="" placeholder="">
 		                          		</td>
-		                      			<td>Link User</td>
+		                      			<td>Type</td>
 		                      			<td style="width: 20px;">:</td>
 		                      			<td>
 		                                    <input id="type"
 		                                      data-role="dropdownlist"
-		                                      data-bind="source: userDS, 
-		                                      			value: obj.user_id"
+		                                      data-bind="source: typeAR, 
+		                                      			value: obj.type"
 		                                      data-text-field="username"
 		                                      data-value-field="id"
 		                                      data-primitive-value="true"
@@ -1488,11 +1296,6 @@
 	                          				Payroll Information
 	                        			</a>
 	                      			</li>
-	                      			<!-- <li class="nav-item">
-	                        			<a class="nav-link" href="#tabs-4-tab-4" role="tab" data-toggle="tab" aria-expanded="false">
-	                          				Document
-	                        			</a>
-	                      			</li> -->
 	                    		</ul>
 	                  		</div><!--.tabs-section-nav-->
 
@@ -1536,7 +1339,6 @@
 			                                      data-text-field="name"
 			                                      data-value-field="id"
 			                                      data-value-primitive="false"
-			                                      data-template="employee-account-list"
 			                                      data-option-label="--Select One--"
 			                                      class="form-control col-md-7 col-xs-12"
 			                                      type="text"
@@ -1551,7 +1353,6 @@
 				                                      data-text-field="name"
 				                                      data-value-field="id"
 				                                      data-value-primitive="false"
-				                                      data-template="employee-account-list"
 				                                      data-option-label="--Select One--"
 				                                      class="form-control col-md-7 col-xs-12"
 				                                      type="text">
@@ -1647,18 +1448,7 @@
 	                          				</td>
 	                        			</tr>
 	                      			</table>
-	                    		</div><!--.tab-pane-->
-                    			<!-- <div role="tabpanel" class="tab-pane fade" id="tabs-4-tab-4" aria-expanded="false">
-                      				<input data-role="upload" type="file" 
-                      						data-bind="events: {select: fileMan.onSelected}" data-show-file-list="false">
-		                            <table class="table">
-		                                <tbody 
-		                                  data-role="listview"
-		                                  data-auto-bind="false"
-		                                  data-bind="source: fileMan.dataSource" 
-		                                  data-template="attachment-list"></tbody>
-		                            </table>
-                    			</div> --><!--.tab-pane-->
+	                    		</div>
                   			</div><!--.tab-content-->
 	            		</section>
 	            		<div class="box-generic">
