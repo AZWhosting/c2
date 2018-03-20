@@ -842,7 +842,7 @@ class Accounting_modules extends REST_Controller {
 						"cr" 			=> floatval($value->cr),
 						"locale" 		=> $value->locale,
 						"account" 		=> $value->account_number . " - " . $value->account_name,
-						"contact" 		=> isset($value->contact_name) ? $value->contact_name : "",
+						"contact" 		=> isset($value->contact_name) ? $value->contact_name : ""
 					);
 				}else{
 					$objList[$value->transaction_id]["id"] = $value->transaction_id;
@@ -860,7 +860,7 @@ class Accounting_modules extends REST_Controller {
 						"cr" 			=> floatval($value->cr),
 						"locale" 		=> $value->locale,
 						"account" 		=> $value->account_number . " - " .$value->account_name,
-						"contact" 		=> isset($value->contact_name) ? $value->contact_name : "",
+						"contact" 		=> isset($value->contact_name) ? $value->contact_name : ""
 					);			
 				}
 			}			
@@ -1038,6 +1038,7 @@ class Accounting_modules extends REST_Controller {
 		
 		//Balance Sheet Items 10-34 balance as_of start date
 		$obj->include_related("transaction", array("type", "number", "issued_date", "memo", "rate"));
+		$obj->include_related("contact", array("abbr","number","name"));
 		$obj->include_related("account", array("number","name"));
 		$obj->include_related("account/account_type", array("name","nature"));
 		// $obj->where_related("transaction", "is_journal", 1);
@@ -1074,7 +1075,8 @@ class Accounting_modules extends REST_Controller {
 						"memo" 				=> $description,
 						"dr" 				=> $dr,
 						"cr" 				=> $cr,
-						"amount" 			=> $amount
+						"amount" 			=> $amount,
+						"contact" 			=> isset($value->contact_name) ? $value->contact_name : ""
 					);
 				}else{
 					$objList[$value->account_id]["id"] 				= $value->account_id;
@@ -1088,7 +1090,8 @@ class Accounting_modules extends REST_Controller {
 						"memo" 				=> $description,
 						"dr" 				=> $dr,
 						"cr" 				=> $cr,
-						"amount" 			=> $amount
+						"amount" 			=> $amount,
+						"contact" 			=> isset($value->contact_name) ? $value->contact_name : ""
 					);			
 				}
 			}
@@ -1129,6 +1132,7 @@ class Accounting_modules extends REST_Controller {
 
 		//PL Items 35-43 balance start FD to start date
 		$plItems->include_related("transaction", array("type", "number", "issued_date", "memo", "rate"));
+		$plItems->include_related("contact", array("abbr","number","name"));
 		$plItems->include_related("account", array("number","name"));
 		$plItems->include_related("account/account_type", array("name","nature"));
 		$plItems->where_in_related("account", "account_type_id", [35,36,37,38,39,40,41,42,43]);
@@ -1163,7 +1167,8 @@ class Accounting_modules extends REST_Controller {
 						"memo" 				=> $description,
 						"dr" 				=> $dr,
 						"cr" 				=> $cr,
-						"amount" 			=> $amount
+						"amount" 			=> $amount,
+						"contact" 			=> isset($value->contact_name) ? $value->contact_name : ""
 					);
 				}else{
 					//Balance Forward
@@ -1195,7 +1200,8 @@ class Accounting_modules extends REST_Controller {
 						"memo" 				=> $description,
 						"dr" 				=> $dr,
 						"cr" 				=> $cr,
-						"amount" 			=> $amount
+						"amount" 			=> $amount,
+						"contact" 			=> isset($value->contact_name) ? $value->contact_name : ""
 					);
 				}
 			}

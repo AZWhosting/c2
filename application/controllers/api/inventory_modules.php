@@ -1343,7 +1343,7 @@ class Inventory_modules extends REST_Controller {
 		$obj->include_related("transaction/contact", array("abbr", "number", "name"));
 		$obj->include_related("item", array("abbr", "number", "name"));
 		$obj->include_related("measurement", array("name"));
-		$obj->include_related("transaction", array("number", "type", "issued_date", "rate", "status"));
+		$obj->include_related("transaction", array("number", "type", "issued_date", "rate", "status", "due_date"));
 		$obj->where_related("transaction", "type", "GDN");
 		$obj->where_related("transaction", "status <>", 4);
 		$obj->where_related("transaction", "is_recurring <>", 1);
