@@ -1536,8 +1536,7 @@
 			<div class="container-960">					
 				<div id="example" class="k-content">					
 				    
-			    	<span class="glyphicons no-js remove_2 pull-right" 
-		    				onclick="javascript:window.history.back()"
+			    	<span class="glyphicons no-js remove_2 pull-right"
 							data-bind="click: cancel"><i></i></span>
 
 			        <h2 data-bind="text: lang.lang.quote"></h2>
@@ -2145,8 +2144,7 @@
 			<div class="container-960">
 				<div id="example" class="k-content">
 
-		    		<span class="glyphicons no-js remove_2 pull-right" 
-		    				onclick="javascript:window.history.back()"
+		    		<span class="glyphicons no-js remove_2 pull-right"
 							data-bind="click: cancel"><i></i></span>
 
 			        <h2>Sale Order</h2>
@@ -2678,7 +2676,6 @@
 				<div id="example" class="k-content">					
 				    
 			    	<span class="glyphicons no-js remove_2 pull-right" 
-		    				onclick="javascript:window.history.back()"
 							data-bind="click: cancel"><i></i></span>
 
 			        <h2 data-bind="text: lang.lang.customer_deposit"></h2>			    		   
@@ -3209,8 +3206,7 @@
 			<div class="container-960">					
 				<div id="example" class="k-content">					
 				    
-			    	<span class="glyphicons no-js remove_2 pull-right" 
-		    				onclick="javascript:window.history.back()"
+			    	<span class="glyphicons no-js remove_2 pull-right"
 							data-bind="click: cancel"><i></i></span>
 
 			        <h2 data-bind="text: lang.lang.cash_sale"></h2>			    		   
@@ -4017,8 +4013,7 @@
 			<div class="container-960">					
 				<div id="example" class="k-content">
 
-		    		<span class="glyphicons no-js remove_2 pull-right" 
-		    				onclick="javascript:window.history.back()"
+		    		<span class="glyphicons no-js remove_2 pull-right"
 							data-bind="click: cancel"><i></i></span>
 
 				    <h2>Sale Recurring</h2>
