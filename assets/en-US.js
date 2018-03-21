@@ -283,7 +283,7 @@ var	en_US = {
 	"the_following_reports_provide_summary" : "The following reports provide summary",
 	"customer_balance_summary" : "Customer Balance Summary",
 	"show_each_customers_total_outstanding_balances" : "Show each customer’s total outstanding balances.",
-	"customer_balance_detail" : "Customer Blance Detail",
+	"customer_balance_detail" : "Customer Balance Detail",
 	"lists_individual_unpaid_invoices_for_each_customer" : "Lists individual unpaid invoices for each customer",
 	"receivable_aging_summary" : "Receivable Aging Summary",
 	"lists_all_unpaid_invoices1" : "Lists all unpaid invoices for the current period, 30, 60, 90, and more than 90 days, grouped by individual customers.",
