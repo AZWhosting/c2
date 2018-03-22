@@ -4359,12 +4359,55 @@
         },
     });
     banhji.splitBill = kendo.observable({
-        roomDS      : dataStore(apiUrl + "spa/room"), 
+        roomDS      : dataStore(apiUrl + "spa/room"),
+        itemDS      : dataStore(apiUrl + "item_lines"),
+        item1       : [],
+        item2       : [],
+        item3       : [],
+        item4       : [],
+        txnID       : "",
+        stopItemM   : false,
+        numSplit    : [],
         pageLoad    : function(id){
             if(id){
-               
+                var self = this;
+                this.item1.slice(0, this.item1.length);
+                this.item2.slice(0, this.item2.length);
+                this.item3.slice(0, this.item3.length);
+                this.item4.slice(0, this.item4.length);
+                this.itemDS.query({
+                    filter: {field: "transaction_id", value: id}
+                }).then(function(e){
+                    if(self.itemDS.data().length == 1){
+                        self.set("stopItemM", true);
+                    }else{
+                        self.set("stopItemM", false);
+                    }
+                });
+                this.set("txnID", id);
             }else{
                 banhji.router.navigate("/");
+            }
+        },
+        splitDS     : dataStore(apiUrl + "spa/splitbill"),
+        saveItem    : function(){
+            if(this.item1.length > 0){
+                if(this.itemDS.data().length > 0){
+                    this.splitDS.data([]);
+                    this.splitDS.add({
+                        transaction_id: this.get("txnID"),
+                        userid: banhji.userData.id,
+                        item: this.itemDS.data(),
+                        item_one: this.item1,
+                        item_two: this.item2,
+                        item_three: this.item3,
+                        item_four: this.item4,
+                    });
+                }else{
+                    alert("Incorrect Input!");
+                }
+            }else{
+                alert("Incorrect Input!");
             }
         }
     });

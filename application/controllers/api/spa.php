@@ -1124,6 +1124,148 @@ class Spa extends REST_Controller {
 		$data["count"] = count($data["results"]);
 		$this->response($data, 201);
 	}
+	function splitbill_post(){
+		$models = json_decode($this->post('models'));
+		$data["results"] = [];
+		$data["count"] = 0;
+		foreach ($models as $value) {
+			if(count($value->item_one) > 0){
+				$this->splitinvoiceitem($value->item_one, $value->transaction_id, $value->userid);
+			}
+			$data["results"][] = array(
+		   		"id" 			=> $txn->id,
+		   	);
+		}
+		$data["count"] = count($data["results"]);
+		$this->response($data, 201);
+	}
+	public function splitinvoiceitem($item, $txnid, $userid){
+		$data["results"] = [];
+		$amount = 0;
+		foreach($item as $i1){
+			$amount += floatval($i1->amount);
+		}
+		$txn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$value = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$value->where("id", $txnid)->limit(1)->get();
+		$number = $this->_generate_number("Invoice", $value->issued_date);
+		$txn->amount = $amount;
+		$txn->number = $number;
+		$txn->issued_date = $value->issued_date;
+		$txn->contact_id = $value->contact_id;
+		$txn->payment_term_id = 5;
+		$txn->payment_method_id = 1;
+		$txn->user_id = $value->user_id;
+		$branchuser = new Spa_user_branch(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$branchuser->where("user_id", $value->user_id)->limit(1)->get();
+		$txn->branch_id = isset($branchuser->branch_id) ? $branchuser->branch_id : 1;
+		$txn->type = 'Invoice';
+		$txn->sub_total = $value->sub_total;
+		$txn->discount = $value->discount;
+		$txn->tax = $value->tax;
+		$txn->fine = $value->fine;
+		$txn->rate = $value->rate;
+		$txn->locale = $value->locale;
+		$txn->start_date = $value->issued_date;
+		$txn->frequency = 'Daily';
+		$txn->month_option = 'Day';
+		$txn->employee_id = $value->employee_id;
+		$txn->interval = 1;
+		$txn->day = 1;
+		$txn->status = 0;
+		$txn->is_journal = 1;
+		//update old transaction amount
+		$oldamount = floatval($value->amount - $amount);
+		$value->amount = $oldamount;
+		$value->sub_total = $oldamount;
+		$value->save();
+		$ojcr = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$ojcr->where("transaction_id", $value->id);
+		$ojcr->where("dr", 0);
+		$ojcr->cr = $oldamount;
+		$ojcr->save();
+		$ojdr = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$ojdr->where("transaction_id", $value->id);
+		$ojdr->where("cr", 0);
+		$ojdr->dr = $oldamount;
+		$ojdr->save();
+		//Add Segment
+		$brancht = new Branch(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$brancht->where("id", $txn->branch_id)->limit(1)->get();
+		$segmentit = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$segmentit->where("id", $brancht->segment_item_id)->limit(1)->get();
+		if($txn->save($segmentit)){
+			//update work
+			$work = new Spa_work(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$work->where("transaction_id", $value->id)->limit(1)->get();
+			$w = new Spa_work(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$w->transaction_id = $txn->id;
+			$w->start_date = $work->start_date;
+			$w->end_date = $work->end_date;
+			$w->phone = $work->phone;
+			$w->status = $work->status;
+			if($w->save()){
+				$work_room = new Spa_work_room(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$work_room->where("work_id", $work->id)->get();
+				if($work_room->exists()){
+					foreach($work_room as $wr){
+						$newroom = new Spa_work_room(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						$newroom->room_id = $wr->room_id;
+						$newroom->work_id = $w->id;
+					}
+				}
+			}
+			foreach($item as $i){
+				$oit = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$oit->where("id", $i->id)->limit(1)->get();
+				$oit->transaction_id = $txn->id;
+				$oit->save();
+			}
+			//journal
+			//CR
+			$j1 = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$j1->transaction_id = $txn->id;
+			$j1->account_id = $ojcr->account_id;
+			$j1->contact_id = $txn->contact_id;
+			$j1->description = "Wellnez Invoice";
+			$j1->dr = 0;
+			$j1->cr = $txn->amount;
+			$j1->rate = $txn->rate;
+			$j1->locale = $txn->locale;
+			$j1->save();
+			//DR
+			$j2 = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$j2->transaction_id = $txn->id;
+			$j2->account_id = $ojdr->account_id;
+			$j2->contact_id = $txn->contact_id;
+			$j2->description = "Wellnez Invoice";
+			$j2->dr = $txn->amount;
+			$j2->cr = 0;
+			$j2->rate = $txn->rate;
+			$j2->locale = $txn->locale;
+			$j2->save();
+			//Cashier
+			$cashier_name = "";
+			$u = new User(null, $this->server_host, $this->server_user, $this->server_pwd, 'banhji');
+			$u->where("id", $userid)->limit(1)->get();
+			if($u->exists()){
+				$cashier_name = $u->first_name." ".$u->last_name;
+			}
+			$data["results"][] = array(
+		   		"id" 			=> $txn->id,
+		   		"number" 		=> $txn->number,
+		   		"amount" 		=> floatval($txn->amount),
+		   		"sub_total" 	=> floatval($txn->sub_total),
+		   		"discount" 		=> floatval($txn->discount),
+		   		"tax" 			=> floatval($txn->tax),
+		   		"rate" 			=> floatval($txn->rate),
+		   		"locale" 		=> $txn->locale,
+		   		"issued_date" 	=> $txn->issued_date,
+		   		"items" 		=> $item,
+		   		"cashier_name" 	=> $cashier_name,
+		   	);
+		}
+	}
 	//Service Charge
 	function service_charge_get(){
 		$filter 	= $this->get("filter");

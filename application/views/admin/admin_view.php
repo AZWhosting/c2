@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/png" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/banhji-logo.png">
+    <link rel="shortcut icon" href="<?php echo base_url();?>assets/update/banhji.jpg">
 
     <title>Banhji | Admin Center</title>
 
@@ -3879,3 +3879,4 @@
     </script>
   </body>
 </html>
+                                 

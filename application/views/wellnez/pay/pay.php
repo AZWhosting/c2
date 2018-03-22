@@ -68,12 +68,6 @@
 		    							<span>English</span>
 		    						</a>
 		    					</li>
-		    					<!-- <li>
-									<a href='#/setting' >
-										<i class="icon-power-off"></i>
-										<span>Setting</span>
-									</a>
-								</li> -->
 								<li class="divider"></li>
 								<li>
 									<a href="#/manage" data-bind="click: logout">
@@ -83,13 +77,6 @@
 								</li>
 				  			</ul>
 					  	</li>
-					  	<!-- <li role="presentation" class="dropdown multitasklist">
-					  		<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-					  			<i class="icon-th-list"></i>
-					  		</a>
-				  			<ul class="dropdown-menu ul-multiTaskList" data-template="multiTaskList-row-template" data-bind="source: multiTaskList">  				  				
-				  			</ul>
-					  	</li> -->
 					  	<li class="question">
 					  		<a style="padding-top: 0;" class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
 					  			<i class="icon-question icon-question1"></i>
@@ -141,30 +128,6 @@
             <div class="menu-phone collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav hidden-lg hidden-md hidden-sm">
                 	<li><a data-toggle="collapse" data-target=".navbar-collapse.in" href='#/' class='glyphicons show_big_thumbnails'><i></i><span >Dashnboard</span></a></li>
-				  	<!-- <li><a data-toggle="collapse" data-target=".navbar-collapse.in" href='#/center'><span data-bind="text: lang.lang.center"></span></a></li>
-				  	<li role='presentation' class='dropdown'>
-				  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><i class="text-t"></i> <span style="margin-top: 12px;" class='caret'></span></a>
-			  			<ul class='dropdown-menu'>
-			  				<li><a data-toggle="collapse" data-target=".navbar-collapse.in" href='#/customer'><span >Add New Customer</span></a></li>
-			  				<li><a data-toggle="collapse" data-target=".navbar-collapse.in" href='#/property'><span >Add New Property</span></a></li> 
-			  				<li ><a data-toggle="collapse" data-target=".navbar-collapse.in" href='#/reorder'><span >Reading Route Management</span></a></li>  				
-			  				<li><span class="li-line"></span></li>
-			  				<li><a data-toggle="collapse" data-target=".navbar-collapse.in" href='#/reading'><span >1. Meter Reading</span></a></li>
-			  				<li><a data-toggle="collapse" data-target=".navbar-collapse.in" href='#/run_bill'><span >2. Run Bill</span></a></li> 
-			  				<li><a data-toggle="collapse" data-target=".navbar-collapse.in" href='#/print_bill'><span >3. Print Bill</span></a></li>
-			  				<li><a data-toggle="collapse" data-target=".navbar-collapse.in" href='#/receipt'><span >4. Cash Receipt</span></a></li>
-			  				<li><span class="li-line"></span></li>
-			  				<li><a data-toggle="collapse" data-target=".navbar-collapse.in" href='#/imports'><span >Import</span></a></li>
-			  				<li><span class="li-line"></span></li>
-			  				<li><a data-toggle="collapse" data-target=".navbar-collapse.in" data-toggle="collapse" data-target=".navbar-collapse" href='#/backup'><span>Back Up</span></a></li>
-			  				<li><a data-toggle="collapse" data-target=".navbar-collapse.in" href='#/offline'><span>Offline</span></a></li>
-			  			</ul>
-				  	</li>
-				  	<li>
-				  		<a data-toggle="collapse" data-target=".navbar-collapse.in" href="#/reports">
-				  			<span>REPORTS</span>
-				  		</a>
-				  	</li> -->
                 	<li>
 						<a data-toggle="collapse" data-target=".navbar-collapse.in" href='#/setting' class='glyphicons settings'>
 							<i ></i>
@@ -186,21 +149,6 @@
             	<ul class="hidden-lg hidden-md hidden-sm ul-multiTaskList nav navbar-nav phone-multiTaskList" data-template="multiTaskList-row-template" data-bind="source: multiTaskList">  				  				
 		  		</ul>
             </div>
-
-            <!-- Menu Phone Search-->
-            <!-- <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-3">
-            	<form class="navbar-form pull-left hidden-lg hidden-md hidden-sm">
-				  	<input id="search-placeholder" class="span2 search-query" 
-				  		type="text" 
-				  		placeholder="Search" 
-				  		data-bind="value: searchText" />
-				  	<button data-toggle="collapse" data-target=".navbar-collapse" class="btn btn-inverse"
-				  		type="submit" 
-				  		data-bind="click: search" >
-				  			<i class="icon-search "></i>
-				  	</button>
-				</form>
-            </div> -->
 
             <!-- Menu Phone Langauge-->
             <div class="menu-phone collapse navbar-collapse" id="bs-example-navbar-collapse-4">
@@ -457,7 +405,6 @@
 	<div class="container">
 		<div class="row ">
 			<div class="box-generic">
-
 			    <div class="tabsbar tabsbar-1">
 			        <ul class="row-fluid row-merge">
 			            <li class="span2 glyphicons nameplate_alt active">
@@ -470,44 +417,88 @@
 			    </div>
 			    
 			    <div class="tab-content">
-
-			        <div class="tab-pane active" id="tab1">
+			        <div class="tab-pane active" id="tab1" style="overflow: hidden;position: relative;">
+			        	<div  data-bind="visible: stopItemM" style="border-radius: 10px;text-align: center;position: absolute;width: 100%; height: 100%;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
+							<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 40%;left: 40%">Loading...</i>
+						</div>
 		            	<div class="span12">
-		            		<div class="span12" style="padding-right: 15px;">
-		            			<a style="float: right; padding: 5px 15px; background: green; color: #fff; margin-bottom: 5px;" data-bind="click: clearBranch">Clear</a>
-		            		</div>
 		            		<div class="rows">
-			            		<select id="listbox1" data-role="listbox"
-					                data-text-field="name"
+			            		<select id="listbox1" 
+			            			data-role="listbox"
+					                data-text-field="item.name"
 					                data-value-field="id" 
 					                data-toolbar='{
 					                	tools: ["moveUp", "moveDown", "transferTo", "transferFrom", "transferAllTo", "transferAllFrom", "remove"]
 					            	}'
 					                data-connect-with="listbox2"
 					                data-auto-bind="true"
-					                data-bind="source: contactDS" style="width: 50%; min-height: 550px;float: left;">
+					                data-draggable="true"
+					                data-bind="source: itemDS" style="width: 20%; min-height: 550px;float: left;">
 					            </select>
 					           	
-					            <select id="listbox2" data-role="listbox"
-					                data-connect-with="listbox1"
-					                data-text-field="name"
+					            <select id="listbox2" 
+					            	data-role="listbox"
+					                data-connect-with="listbox3, listbox1"
+					                data-text-field="item.name"
+					                data-draggable="true"
+					                data-value-field="id"
+					                data-toolbar='{
+					                	tools: ["moveUp", "moveDown", "transferTo", "transferFrom", "transferAllTo", "transferAllFrom", "remove"]
+					            	}'
+					                data-auto-bind="true"
+					                data-bind="source: item1"
+					                style="width: 20%; min-height: 550px;float: left;">
+					            </select>
+
+					            <select id="listbox3" 
+					            	data-role="listbox"
+					                data-connect-with="listbox4, listbox2"
+					                data-text-field="item.name"
+					                data-draggable="true"
+					                data-value-field="id"
+					                data-toolbar='{
+					                	tools: ["moveUp", "moveDown", "transferTo", "transferFrom", "transferAllTo", "transferAllFrom", "remove"]
+					            	}'
+					                data-auto-bind="true"
+					                data-bind="source: item2"
+					                style="width: 20%; min-height: 550px;float: left;">
+					            </select>
+
+					            <select id="listbox4" 
+					            	data-role="listbox"
+					                data-connect-with="listbox5, listbox3"
+					                data-text-field="item.name"
+					                data-draggable="true"
+					                data-value-field="id"
+					                data-toolbar='{
+					                	tools: ["moveUp", "moveDown", "transferTo", "transferFrom", "transferAllTo", "transferAllFrom", "remove"]
+					            	}'
+					                data-auto-bind="false"
+					                data-bind="source: item3"
+					                style="width: 20%; min-height: 550px;float: left;">
+					            </select>
+
+					            <select id="listbox5" 
+					            	data-role="listbox"
+					                data-connect-with="listbox4"
+					                data-text-field="item.name"
+					                data-draggable="true"
 					                data-value-field="id"
 					                data-auto-bind="false"
-					                data-bind="source: conobj.contact"
-					                style="width: 49%; min-height: 550px;float: left;">
+					                data-bind="source: item4"
+					                style="width: 20%; min-height: 550px;float: left;">
 					            </select>
 			           		</div>
-		            		<a style="float: left; padding: 5px 15px; background: red; color: #fff; margin-top: 5px;" data-bind="click: clearBranch">Save</a>					            		
+		            		<a style="float: left; padding: 5px 15px; background: red; color: #fff; margin-top: 5px;" data-bind="click: saveItem">Save</a>
 		            	</div>
 		        	</div>
-			        
 			        <div class="tab-pane" id="tab2">
 			        	<div class="span5">
 			        		<input type="text" 
 			                	style="width: 80%;float: left; border: 1px solid #c5c5c5; padding: 3px; height: 30px;" 
 			                	placeholder="Phone Number" 
 					           	data-bind="
-					           		value: customerPhone
+					           		value: numPeople
 					           	" /><span style="float: left; color: #333; margin-left:  10px;">(%)</span>
 		            	</div>
 		        	</div>
@@ -516,6 +507,9 @@
 			</div>
 		</div>
 	</div>
+</script>
+<script id="split-template" type="text/x-kendo-template">
+	<select id="list#=id"></select>
 </script>
 <script id="cashier-session-template" type="text/x-kendo-template">
 	<tr>
