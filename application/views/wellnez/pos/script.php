@@ -7679,15 +7679,29 @@
                 noti.hide();
                 noti.success(this.lang.lang.success_message);
             this.lineDS.data([]);
-
             this.employeeAR.splice(0,this.employeeAR.length);
+            this.employeeDS.query({
+                filter: {field: "work_id", value: 0}
+            });
             this.roomAR.splice(0,this.roomAR.length);
+            this.roomDS.query({
+                filter: {field: "work_id", value: 0}
+            });
             this.customerAR.splice(0,this.customerAR.length);
+            this.customerAR.push({id: 6, name: "Walk-In Customer"});
             this.changes();
             this.set("dateSelected", new Date());
             this.set("customerPhone", "");
             this.bookDS.data([]);
             this.workDS.data([]);
+            this.itemsDS.query({
+                filter: {
+                    field: "item_type_id",
+                    operator: "where_in",
+                    value: [1, 4]
+                },
+                pageSize: 8,
+            })
         },
         catChange: function(e){
             if(this.get("catSelected")){

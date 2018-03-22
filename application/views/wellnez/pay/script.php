@@ -4403,12 +4403,183 @@
                         item_three: this.item3,
                         item_four: this.item4,
                     });
+                    this.splitDS.sync();
+                    this.splitDS.bind("requestEnd", function(e){
+                        if(e.type != 'read' && e.response.results) {
+                            banhji.printBill.dataSource = [];
+                            banhji.printBill.dataSource = e.response.results;
+                            banhji.router.navigate("/print_bill");
+                        }
+                    });
                 }else{
                     alert("Incorrect Input!");
                 }
             }else{
                 alert("Incorrect Input!");
             }
+        }
+    });
+    banhji.printBill = kendo.observable({
+        lang: langVM,
+        dataSource: [],
+        company: banhji.institute,
+        pageLoad: function() {
+            if (this.dataSource.length <= 0) {
+                banhji.router.navigate('/');
+            }
+            var self = this;
+            var TempForm = $("#invoiceForm").html();
+            $("#invoiceContent").kendoListView({
+                dataSource: this.dataSource,
+                template: kendo.template(TempForm)
+            });
+            this.barcod("do");
+        },
+        barcod: function(re) {
+            var view = this.dataSource;
+            for (var i = 0; i < view.length; i++) {
+                var d = view[i];
+                if (re == "reset") {
+                    $("#secondwnumber" + d.id).css("height", "0px").data("kendoBarcode").resize();
+                    $("#footwnumber" + d.id).css("height", "0px").data("kendoBarcode").resize();
+                } else {
+                    $("#secondwnumber" + d.id).kendoBarcode({
+                        renderAs: "svg",
+                        value: d.number,
+                        type: "code128",
+                        width: 250,
+                        height: 25,
+                        text: {
+                            visible: false
+                        }
+                    });
+                    $("#footwnumber" + d.id).kendoBarcode({
+                        renderAs: "svg",
+                        value: d.number,
+                        type: "code128",
+                        width: 250,
+                        height: 25,
+                        text: {
+                            visible: false
+                        }
+                    });
+                }
+                var DataM = [],
+                    MonthM = [];
+                $.each(d.minusMonth, function(i, v) {
+                    DataM.push(v.usage);
+                    MonthM.push(v.month);
+                });
+                $("#monthchart" + d.id).kendoChart({
+                    title: {
+                        text: ""
+                    },
+                    series: [{
+                        name: "",
+                        data: DataM,
+                        color: '#236DA4',
+                        overlay: {
+                            gradient: 'none'
+                        }
+                    }],
+                    categoryAxis: {
+                        categories: MonthM
+                    }
+                });
+            }
+        },
+        printGrid: function() {
+            var self = this,
+                Win, pHeight, pWidth, ts;
+            Win = window.open('', '', 'width=1000, height=900');
+            pHeight = "210mm";
+            pWidth = "150mm";
+            var gridElement = $('#grid'),
+                printableContent = '',
+                win = Win,
+                doc = win.document.open();
+            var htmlStart =
+                '<!DOCTYPE html>' +
+                '<html>' +
+                '<head>' +
+                '<meta charset="utf-8" />' +
+                '<title></title>' +
+                '<link rel="stylesheet" href="<?php echo base_url(); ?>resources/js/kendoui/styles/kendo.bootstrap.min.css">' +
+                '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
+                '<link href="<?php echo base_url(); ?>assets/water/water.css" rel="stylesheet" />' +
+                '<link href="<?php echo base_url(); ?>assets/water/winvoice-print.css" rel="stylesheet" />' +
+                '<link href="<?php echo base_url(); ?>resources/common/theme/css/style-default-menus-dark.css" rel="stylesheet" />' +
+                '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
+                '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
+                '<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Battambang&amp;subset=khmer" media="all">' +
+                '<style type="text/css" media="print">' +
+                '@page { size: portrait; margin:0.2cm;' +
+                'size: A5;' +
+                '} ' +
+                '@media print {' +
+                'html, body {' +
+                '}' +
+                '.main-color {' +
+                '-webkit-print-color-adjust:exact; ' +
+                '} ' +
+                '}' +
+                '.main-color {' +
+                '-webkit-print-color-adjust:exact; ' +
+                '} ' +
+                '.inv1 .light-blue-td { ' +
+                'background-color: #c6d9f1!important;' +
+                'text-align: left;' +
+                'padding-left: 5px;' +
+                '-webkit-print-color-adjust:exact; ' +
+                '}' +
+                '.logoP{ max-height 50px;max-width100px}' +
+                '.inv1 thead tr {' +
+                'background-color: rgb(242, 242, 242)!important;' +
+                '-webkit-print-color-adjust:exact; ' +
+                '}' +
+                '.pcg .mid-title div {}' +
+                '.pcg .mid-header {' +
+                'background-color: #dce6f2!important; ' +
+                '-webkit-print-color-adjust:exact; ' +
+                '}' +
+                '.winvoice-print table thead .darkbblue, .winvoice-print table tbody td.darkbblue { ' +
+                'background-color: #355176!important;' +
+                'color: #fff!important;' +
+                '-webkit-print-color-adjust:exact; ' +
+                '}' +
+                '.winvoice-print table td.greyy {' +
+                'background-color: #ccc!important;-webkit-print-color-adjust:exact;' +
+                '}' +
+                '.inv1 span.total-amount { ' +
+                'color:#fff!important;' +
+                '}</style>' +
+                '</head>' +
+                '<body style="background: #fff;"><div class="row-fluid" ><div id="example" class="k-content">';
+            var htmlEnd =
+                '</div></div></body>' +
+                '</html>';
+            printableContent = $('#wInvoiceContent').html();
+            doc.write(htmlStart + printableContent + htmlEnd);
+            doc.close();
+            setTimeout(function() {
+                win.print();
+                //win.close();
+            }, 2000);
+        },
+        hideFrameInvoice: function(e) {
+            var printBtn = e.target;
+            if (printBtn.checked) {
+                $(".hiddenPrint").css("visibility", "hidden");
+            } else {
+                $(".hiddenPrint").css("visibility", "visible");
+            }
+        },
+        cancel: function() {
+            this.dataSource = [];
+            this.barcod("reset");
+            var listview = $("#invoiceContent").data("kendoListView");
+            listview.refresh();
+            window.history.back();
         }
     });
     /* views and layout */
@@ -4432,6 +4603,9 @@
         }),
         splitBill: new kendo.Layout("#splitBill", {
             model: banhji.splitBill
+        }),
+        printBill: new kendo.Layout("#printBill", {
+            model: banhji.printBill
         }),
     };
     /* views and layout */
@@ -4488,6 +4662,11 @@
         var blank = new kendo.View('#blank-tmpl');
         banhji.view.layout.showIn('#content', banhji.view.splitBill);
         banhji.splitBill.pageLoad(id);
+    });
+    banhji.router.route('/print_bill', function() {
+        var blank = new kendo.View('#blank-tmpl');
+        banhji.view.layout.showIn('#content', banhji.view.printBill);
+        banhji.printBill.pageLoad();
     });
     
     $(function() {

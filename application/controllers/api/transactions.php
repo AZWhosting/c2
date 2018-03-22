@@ -88,6 +88,7 @@ class Transactions extends REST_Controller {
 		}
 
 		$obj->include_related("contact", array("abbr","number","name","payment_term_id","payment_method_id","credit_limit","locale","bill_to","ship_to","deposit_account_id","trade_discount_id","settlement_discount_id","account_id","ra_id"));
+		$obj->include_related("job", array("name"));
 		$obj->where("is_recurring", $is_recurring);
 		$obj->where("deleted <>", 1);
 
@@ -308,6 +309,7 @@ class Transactions extends REST_Controller {
 
 				   	"contact" 					=> $contact,
 				   	"employee" 					=> $employee,
+				   	"job" 						=> $value->job_name,
 				   	"driver" 					=> $driver,
 				   	"reference" 				=> $reference,
 				   	"references" 				=> $value->transaction->get_raw()->result()

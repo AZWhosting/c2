@@ -412,9 +412,9 @@
 <script id="Index" type="text/x-kendo-template">
 	<div class="container">
 		<div class="row services">
-			<div class="span12">
-				<div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 100%;margin-top: -15px;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
-					<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
+			<div class="span12" style="position: relative;overflow: hidden;padding:0;">
+				<div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 100%;background: rgba(142, 159, 167, 0.8);z-index: 999999;border-radius: 10px;">
+					<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 40%;left: 40%">Loading</i>
 				</div>
 				<div class="row ">
 					<div class="span6 ">
@@ -620,11 +620,13 @@
         <div class="customer-background" style="overflow: hidden;margin-top: 15px;">
             <div>                 
                 <div id="example" class="k-content">
-                    <span id="savePrint" class="btn btn-icon btn-primary glyphicons print" data-bind="click: printGrid" style="width: 100px;margin-bottom:0;position: absolute;left:45%;"><i></i><span data-bind="text: lang.lang.print">Save PDF</span></span>
-                    <div class="hidden-print pull-right">
-                        <span style="padding: 5px 0 11px 35px;" class="glyphicons no-js remove_2" 
-                            data-bind="click: cancel"><i></i></span>    
-                    </div>
+                	<div style="overflow: hidden;position: relative;">
+	                    <span id="savePrint" class="btn btn-icon btn-primary glyphicons print" data-bind="click: printGrid" style="width: 100px;margin-bottom:0;position: absolute;left:45%;"><i></i><span data-bind="text: lang.lang.print">Save PDF</span></span>
+	                    <div class="hidden-print pull-right">
+	                        <span style="padding: 5px 0 11px 35px;" class="glyphicons no-js remove_2" 
+	                            data-bind="click: cancel"><i></i></span>    
+	                    </div>
+	                </div>
                     <br>
                     <div id="invoicecontent" style="width: 70%!important; margin: 0 auto;"></div>
                     <div class="box-generic" align="right" style="background-color: #0B0B3B;">
@@ -638,140 +640,95 @@
     </div>  
 </script>
 <script id="invoiceform" type="text/x-kendo-tmpl">
-    <div class="row-fluid" style="overflow: hidden;padding: 20px;margin-top: 40px;">
-        <style type="text/css">
-            * {
-                -webkit-print-color-adjust:exact;
-                color: \#000;
-                font-size: 12px;
-                margin: 0;
-                padding:0 ;
-                font-family: 'Preahvihear', 'Roboto Slab' !important;
-            }
-            tr {
-            	margin-bottom: 5px;
-            }
-            h1 {
-            	font-family: 'Preahvihear', 'Roboto Slab' !important;
-			    color: \#203864 !important;
-			    font-size: 20px;
-			    line-height: 33px;
-            }
-        </style>
-        <div class="inv1">
-	    	<div class="head" style="width: 100%; overflow: hidden;">
-	        	<div class="logo" style="width: 30%;float: left;">
-	            	<img src="<?php echo base_url(); ?>assets/logo.png" style="width: 100%;margin-bottom: 10px;" />
-	            </div>
-	            <div class="cover-name-company" style="margin-left: 20px;width: 50%;float: left;">            	
-	                <h3 style="text-align:left;">#: branch.name#</h3>
-	                <div class="clear">                	
-	                    <p>ទូរស័ព្ទលេខ HP <span >#: branch.telephone#</span></p>
-	                    <p>អាស័យ​ដ្ឋាន Address: <span>#: branch.address#</span></p>
-	                </div>
-	            </div>
-	        </div>
-	        <div class="content">
-	        	<div style="overflow: hidden;padding:10px 0;text-align: center;">
-	        		<h1>វិក្កយបត្រ</h1>
-	            	<h2>Invoice</h2>
-	        	</div>
-	            <div class="clear mid-header" style="padding: 10px;background: \\#dce6f2!important;padding-bottom: 10px;">
-	                <div class="cover-inv-number" style="width: 42%;">
-	                	<div class="clear">
-	                    	<div class="left" style="overflow: hidden;width: 100%;">
-	                    		<p style="margin: 0;">លេខ No. :</p>
-	                        </div>
-	                        <div class="left dotted-ruler" style="width: 42%;">
-	                        	<span style="font-weight:bold">#: number#</span>-<span style="font-weight:bold" >#:banhji.institute.id#</span>
-	                        </div>
-	                    </div>
-	                    <div class="clear" style="overflow: hidden;margin-top: 20px;">
-	                    	<div class="left" style="width: 100%;overflow: hidden;">
-	                    		<p style="margin: 0;">កាល​បរិច្ឆេទ Date:</p>
-	                        </div>
-	                        <div class="left dotted-ruler" style="width: 57%;">
-	                        	<p style="font-weight:bold">#=kendo.toString(new Date(issued_date), "dd-MMMM-yyyy")#</p>
-	                        </div>
-	                    </div>
-	                </div>
-	            </div>
-	        	<div class="clear" style="overflow: hidden;">
-	            	<table cellpadding="0" cellspacing="0" border="1" class="span12" style="width: 100%;">
-	                	<thead>
-	                        <tr class="main-color" style="height: 45px;" data-bind="style: {backgroundColor: obj.color}">
-	                            <th style="text-align: center;">ល.រ<br />N<sup>0</sup></th>
-	                            <th style="text-align: center;">បរិយាយ​មុខ​ទំនិញ<br />Description</th>
-	                            <th style="text-align: center;">បរិមាណ<br />Quantity</th>
-	                            <th style="text-align: center;">ថ្លៃឯកតា​<br />Unit Price</th>
-	                            <th style="text-align: center;">ថ្លៃ​ទំនិញ<br />Amount</th>
-	                        </tr>
-	                    </thead>
-	                    <tbody style="margin-top: 2px" id="formListView">
-	                    	#$.each(items, function(i,v){#
-	                            <tr>
-	                            	<td style="padding: 3px;text-align: center; border: 1px solid \\#000;">#: i +1#</td>
-	                                <td style="padding: 3px;text-align: left; border: 1px solid \\#000;">
-	                                    <span style="color: \\#333; font-size: 12px;padding-left: 20px;">
-	                                        #: v.item.name#
-	                                    </span>
-	                                </td>
-	                                <td style="padding: 3px;text-align: right; border: 1px solid \\#000;">
-	                                    <span style="color: \\#333; font-size: 12px;padding-left: 20px;">
-	                                        #: v.quantity#
-	                                    </span>
-	                                </td>
-	                                <td style="padding: 3px;text-align: right; border: 1px solid \\#000;">
-	                                    <span style="color: \\#333; font-size: 12px;padding-left: 20px;">
-	                                        #: kendo.toString(v.price, v.locale=="km-KH"?"c0":"c", v.locale)#
-	                                    </span>
-	                                </td>
-	                                <td style="padding: 3px; text-align: right; border: 1px solid \\#000;">
-	                                    <span style="color: \\#333; font-size: 12px;padding-left: 20px;">
-	                                        #: kendo.toString(v.amount, v.locale=="km-KH"?"c0":"c", v.locale)#
-	                                    </span>
-	                                </td>
-	                            </tr>
-	                        #})#
-	                        #var k = 12 - items.length#
-	                        #for(var j = 1; j <= k; j++){#
-	                        	<tr>
-	                            	<td style="padding: 3px;text-align: center; border: 1px solid \\#000;">#: j#</td>
-	                                <td style="padding: 3px;text-align: left; border: 1px solid \\#000;">
-	                                </td>
-	                                <td style="padding: 3px;font-weight: 700; text-align: right; border: 1px solid \\#000;">
-	                                </td>
-	                                <td style="padding: 3px;font-weight: 700; text-align: right; border: 1px solid \\#000;">
-	                                </td>
-	                                <td style="padding: 3px;font-weight: 700; text-align: right; border: 1px solid \\#000;">
-	                                </td>
-	                            </tr>
-	                        #}#
-	                    </tbody>
-	                    <tfoot>
-	                        <tr>
-	                        	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">បញ្ចុះតម្លៃ Discount</td>
-	                            <td style="text-align: right;font-weight: 700; padding-right: 5px;">#: kendo.toString(discount, locale=="km-KH"?"c0":"c", locale)#</td>
-	                        </tr>
-	                        <tr>
-	                        	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">សរុប Total</td>
-	                            <td style="text-align: right;font-weight: 700; padding-right: 5px;">#: kendo.toString(total, locale=="km-KH"?"c0":"c", locale)#</td>
-	                        </tr>
-	                    </tfoot>
-	                </table>
-	            </div>
-	        </div>
-	        <div class="foot" style="overflow: hidden;">
-	        	<div class="cover-signature" style="overflow: hidden;">
-	            	<div class="singature" style="float: left;width: 30%;text-align: center;padding-top: 70px;">
-	                	<p>ហត្ថលេខា និងឈ្មោះ​អ្នក​ទិញ<br />Customer's Signature & Name</p>
-	                </div>
-	                <div class="singature" style="float: right;width: 30%;text-align: center;padding-top: 70px;">
-	                	<p>ហត្ថលេខា និងឈ្មោះ​អ្នកលក់<br />Seller's Signature & Name</p>
-	                </div>
-	            </div>
-	            <h6 style="padding-top: 20px;">សម្គាល់៖ <span>ច្បាប់​ដើម​សម្រាប់​អ្នក​ទិញ ច្បាប់​ចម្លង​សម្រាប់​អ្នក​លក់</span><br /><span style="font-size: 10px"><strong>Note:</strong> Original invoice for customer, copied invoice for seller</span></h6>
-	        </div>
-	    </div>
-    </div>
+    <div class="container winvoice-print" style="page-break-after: always;width: 800px;min-height: 1120px;position: relative;">
+    	<style type="text/css">
+    		* {
+    			color: #000!important;
+    		}
+    		td{
+    			color: #000!important;
+    		}
+    	</style>
+		<div class="span12 headerinv " style="border-bottom: 2px solid \#000!important;padding: 15px 0;padding-bottom: 30px">
+            <img class="logoP" style="position: absolute;left: 0;top: 20px;width: auto;height: 90px;" src="#: banhji.institute.logo.url#" alt="#: banhji.institute.name#" title="#: banhji.institute.name#" />
+			<div class="span12" align="center">
+				<h4 style="line-height: 40px;">#: banhji.institute.name#</h4>					
+				<h5 style="line-height: 30px;">#: banhji.institute.address# 
+				<br>
+				#:typeof banhji.institute.telephone != 'undefined' ? banhji.institute.telephone: ''#</h5>					
+			</div>
+		</div>
+		<div class="span12 cover-customer">
+			<div class="span6">
+				<span id="secondwnumber#= id#" style="margin-left: -14px; float: left;"></span><br />
+				<div class="span12">
+					<table >
+						<tr>
+							<td width="140" style><p>អ្នកគិតលុយ</p></td>
+							<td><p>#: cashier_name#</p></td>
+						</tr>
+						<tr>
+							<td style><p>លេខបន្ទប់</p></td>
+							<td><p>#: room_number#</p></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<div class="span5">
+				<table >
+					<tr>
+						<td width="140" style><p>លេខ​វិក្កយ​បត្រ</p></td>
+						<td><p>#:number#</p></td>
+					</tr>
+					<tr>
+						<td style><p>ថ្ងៃ​ចេញ វិក្កយ​បត្រ</p></td>
+						<td><p>#= kendo.toString(new Date(issued_date), "F")#</p></td>
+					</tr>
+					<tr>
+						<td style><p>សាខា</p></td>
+						<td><p></p></td>
+					</tr>
+				</table>		
+			</div>
+		</div>
+		<table class="span12 table table-bordered footerTbl" style="padding:0;margin-top: 40px; border-radius: 3px;border-collapse: inherit;margin-left: 0px;">
+			<thead style>
+				<tr>
+					<th class="darkbblue main-color" style="width: 20%;border:none!important; vertical-align: top;">បរិយាមុខទំនិញ<br>DESCRIPTION</th>
+					<th class="darkbblue main-color" style="width: 15%;border:none!important; vertical-align: top;">បរិមាណ<br>QTY</th>
+					<th class="darkbblue main-color" style="width: 15%;border:none!important; vertical-align: top;">ឯកតា<br>UOM</th>
+					<th class="darkbblue main-color" style="width: 15%;border:none!important; vertical-align: top;">ថ្លៃឯកតា<br>UNIT PRICE</th>
+					<th class="darkbblue main-color" style="border:none!important; vertical-align: top;">ថ្លៃទំនិញ<br>AMOUNT</th>
+				</tr>
+			</thead>
+			<tbody>
+				#$.each(items, function(i,v){#
+					<tr>
+						<td>#: v.item.name#</td>
+						<td align="center"><strong>#: v.quantity #</strong></td>
+						<td align="center"><strong>#: v.measurement.measurement#</strong></td>
+						<td align="center"><strong>#= kendo.toString(v.price, v.locale=="km-KH"?"c0":"c", v.locale)#</strong></td>
+						<td>#= kendo.toString(v.amount, v.locale=="km-KH"?"c0":"c", v.locale)#</td>
+					</tr>
+				#})#
+				<tr>
+					<td colspan="5">
+						បុគ្គលិក (staff) : #= employee_name#
+					</td>
+				</tr>
+				<tr>
+					<td colspan="4" style="padding-right: 10px;text-align: right;">សរុប TOTAL</td>
+					<td style="border: 1px solid;text-align: right">#= kendo.toString(sub_total, locale=="km-KH"?"c0":"c", locale)#</td>
+				</tr>
+				<tr>
+					<td colspan="4" style="padding-right: 10px;text-align: right;">បញ្ចុះតម្លៃ DISCOUNT</td>
+					<td style="border: 1px solid;text-align: right">#= kendo.toString(discount, locale=="km-KH"?"c0":"c", locale)#</td>
+				</tr>
+				<tr>
+					<td colspan="4" style="padding-right: 10px;text-align: right;">ប្រាក់ត្រូវបង់សរុប SUB TOTAL</td>
+					<td style="border: 1px solid;text-align: right">#= kendo.toString(amount, locale=="km-KH"?"c0":"c", locale)#</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 </script>

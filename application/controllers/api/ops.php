@@ -47,13 +47,36 @@ class Ops extends REST_Controller {
 			    // $this->dbforge->add_field("created_at date DEFAULT NULL");
 			    // $this->dbforge->add_field("updated_at date DEFAULT NULL");
 			    // $this->dbforge->create_table('tmp_total_sales', TRUE);
-			    $this->dbforge->add_field('id');
-			    $this->dbforge->add_field("type varchar(255) NOT NULL DEFAULT ''");
-			    $this->dbforge->add_field("name varchar(255) NOT NULL DEFAULT ''");
-			    $this->dbforge->create_table('contacts_memberships', TRUE);			    
+
+			    // $this->dbforge->add_field('id');
+			    // $this->dbforge->add_field("contact_id int(11) NOT NULL DEFAULT '0'");
+			    // $this->dbforge->add_field("membership_type_id int(11) NOT NULL DEFAULT '0'");
+
+			    // $this->dbforge->add_field("registration_date date DEFAULT NULL");
+			    // $this->dbforge->add_field("membership_date date DEFAULT NULL");
+			    // $this->dbforge->add_field("change_membership_date date DEFAULT NULL");
+			    // $this->dbforge->add_field("membership_status int(1) NOT NULL DEFAULT '0'");
+
+			    // $this->dbforge->add_field("membership_application_status int(1) NOT NULL DEFAULT '0'");
+			    // $this->dbforge->add_field("graduateion_date date DEFAULT NULL");
+			    // $this->dbforge->add_field("fellow_date date DEFAULT NULL");
+
+			    // $this->dbforge->add_field("first_cdp_year date DEFAULT NULL");
+			    // $this->dbforge->add_field("cpd_record_date date DEFAULT NULL");
+			    // $this->dbforge->add_field("cpd_required_credit int(11) NOT NULL DEFAULT '0'");
+
+			    // $this->dbforge->add_field("created_at date DEFAULT NULL");
+			    // $this->dbforge->add_field("updated_at date DEFAULT NULL");
+			    // $this->dbforge->create_table('memberships', TRUE);
+
+			    // $this->dbforge->add_field('id');
+			    // $this->dbforge->add_field("membership_id int(11) NOT NULL DEFAULT '0'");
+			    // $this->dbforge->add_field("name VARCHAR(255) NOT NULL DEFAULT ''");
+			    // $this->dbforge->add_field("attribute_value LONGTEXT");
+			    // $this->dbforge->create_table('membership_properties', TRUE);			    
 
 				//Rename Table 'old_table_name' to 'new_table_name'
-			    // $this->dbforge->rename_table('item_locations', 'bin_locations');
+			    // $this->dbforge->rename_table('memberships', 'membership_types');
 
 				//DROP TABLE IF EXISTS table_name
 			    // $this->dbforge->drop_table('references');

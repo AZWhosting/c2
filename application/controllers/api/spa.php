@@ -1062,6 +1062,7 @@ class Spa extends REST_Controller {
 			//Room
 			$room = new Spa_work_room(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$room->where("work_id", $work->id)->get();
+			$roomshow = "";
 			foreach($room as $r){
 				$rr = new Spa_room(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				$rr->where("id", $r->room_id)->get();
@@ -1069,15 +1070,18 @@ class Spa extends REST_Controller {
 				$rr->work_id = 0;
 				$rr->maintenance_date = date('Y-m-d H:i:s', strtotime($value->issued_date));
 				$rr->save();
+				$roomshow .= $rr->name." ";
 			}
 			//Employee
 			$employee = new Spa_work_employee(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$employee->where("work_id", $work->id)->get();
+			$employee_name = "";
 			foreach($employee as $em){
 				$emc = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				$emc->where("id", $em->employee_id)->get();
 				$emc->work_id = 0;
 				$emc->save();
+				$employee_name .= $emc->abbr."-".$emc->number." ".$emc->name;
 			}
 			//contact
 			$con = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
@@ -1104,21 +1108,28 @@ class Spa extends REST_Controller {
 					"telephone" => $branch->telephone,
 				);
 			}
+			//Cashier
+			$cashier_name = "";
+			$u = new User(null, $this->server_host, $this->server_user, $this->server_pwd, 'banhji');
+			$u->where("id", $value->user_id)->limit(1)->get();
+			if($u->exists()){
+				$cashier_name = $u->first_name." ".$u->last_name;
+			}
 			$total = floatval($txn->sub_total) - floatval($txn->discount);
 			$data["results"][] = array(
 		   		"id" 			=> $txn->id,
 		   		"number" 		=> $txn->number,
 		   		"amount" 		=> floatval($txn->amount),
 		   		"sub_total" 	=> floatval($txn->sub_total),
-		   		"total" 		=> floatval($total),
 		   		"discount" 		=> floatval($txn->discount),
 		   		"tax" 			=> floatval($txn->tax),
 		   		"rate" 			=> floatval($txn->rate),
 		   		"locale" 		=> $txn->locale,
 		   		"issued_date" 	=> $txn->issued_date,
 		   		"items" 		=> $value->items,
-		   		"contact" 		=> $conar,
-		   		"branch" 		=> $brar,
+		   		"cashier_name" 	=> $cashier_name,
+		   		"room_number" 	=> $roomshow,
+		   		"employee_name" => $employee_name,
 		   	);
 		}
 		$data["count"] = count($data["results"]);
@@ -1128,13 +1139,55 @@ class Spa extends REST_Controller {
 		$models = json_decode($this->post('models'));
 		$data["results"] = [];
 		$data["count"] = 0;
+		$i = 1;
 		foreach ($models as $value) {
-			if(count($value->item_one) > 0){
-				$this->splitinvoiceitem($value->item_one, $value->transaction_id, $value->userid);
+			//Cashier
+			$cashier_name = "";
+			$u = new User(null, $this->server_host, $this->server_user, $this->server_pwd, 'banhji');
+			$u->where("id", $value->userid)->limit(1)->get();
+			if($u->exists()){
+				$cashier_name = $u->first_name." ".$u->last_name;
+			}
+			$txn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$txn->where("id", $value->transaction_id)->limit(1)->get();
+			$work = new Spa_work(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$work->where("transaction_id", $txn->id)->limit(1)->get();
+			$roomshow = "";
+			$work_room = new Spa_work_room(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$work_room->where("work_id", $work->id)->get();
+			if($work_room->exists()){
+				foreach($work_room as $wr){
+					$sroom = new Spa_room(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$sroom->where("id", $wr->room_id)->limit(1)->get();
+					$roomshow .= $sroom->name." ";
+				}
 			}
 			$data["results"][] = array(
 		   		"id" 			=> $txn->id,
+		   		"number" 		=> $txn->number,
+		   		"amount" 		=> floatval($txn->amount),
+		   		"sub_total" 	=> floatval($txn->sub_total),
+		   		"discount" 		=> floatval($txn->discount),
+		   		"tax" 			=> floatval($txn->tax),
+		   		"rate" 			=> floatval($txn->rate),
+		   		"locale" 		=> $txn->locale,
+		   		"issued_date" 	=> $txn->issued_date,
+		   		"items" 		=> $value->item,
+		   		"cashier_name" 	=> $cashier_name,
+		   		"room_number" 	=> $roomshow,
 		   	);
+			if(count($value->item_one) > 0){
+				$data["results"][] = $this->splitinvoiceitem($value->item_one, $value->transaction_id, $value->userid);
+			}
+			if(count($value->item_two) > 0){
+				$data["results"][] = $this->splitinvoiceitem($value->item_two, $value->transaction_id, $value->userid);
+			}
+			if(count($value->item_three) > 0){
+				$data["results"][] = $this->splitinvoiceitem($value->item_three, $value->transaction_id, $value->userid);
+			}
+			if(count($value->item_four) > 0){
+				$data["results"][] = $this->splitinvoiceitem($value->item_four, $value->transaction_id, $value->userid);
+			}
 		}
 		$data["count"] = count($data["results"]);
 		$this->response($data, 201);
@@ -1204,6 +1257,7 @@ class Spa extends REST_Controller {
 			$w->end_date = $work->end_date;
 			$w->phone = $work->phone;
 			$w->status = $work->status;
+			$roomshow = "";
 			if($w->save()){
 				$work_room = new Spa_work_room(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				$work_room->where("work_id", $work->id)->get();
@@ -1212,6 +1266,10 @@ class Spa extends REST_Controller {
 						$newroom = new Spa_work_room(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 						$newroom->room_id = $wr->room_id;
 						$newroom->work_id = $w->id;
+						$newroom->save();
+						$sroom = new Spa_room(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						$sroom->where("id", $wr->room_id)->limit(1)->get();
+						$roomshow .= $sroom->name." ";
 					}
 				}
 			}
@@ -1251,7 +1309,7 @@ class Spa extends REST_Controller {
 			if($u->exists()){
 				$cashier_name = $u->first_name." ".$u->last_name;
 			}
-			$data["results"][] = array(
+			$data["results"] = array(
 		   		"id" 			=> $txn->id,
 		   		"number" 		=> $txn->number,
 		   		"amount" 		=> floatval($txn->amount),
@@ -1263,7 +1321,9 @@ class Spa extends REST_Controller {
 		   		"issued_date" 	=> $txn->issued_date,
 		   		"items" 		=> $item,
 		   		"cashier_name" 	=> $cashier_name,
+		   		"room_number" 	=> $roomshow,
 		   	);
+		   	return $data["results"];
 		}
 	}
 	//Service Charge

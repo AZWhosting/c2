@@ -171,7 +171,6 @@ var themerPrimaryColor = primaryColor;
 
 <!-- Le fav and touch icons -->
 <link rel="shortcut icon" href="<?php echo base_url();?>assets/spa/icon-wellnez.png">
-
 <style >
 	
 	#content{
