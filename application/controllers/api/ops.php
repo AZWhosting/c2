@@ -121,26 +121,31 @@ class Ops extends REST_Controller {
 				// 	// 	"null" 		=> FALSE,
 				// 	// 	"default" 	=> 0
 				// 	// ),
-				// 	"reuse" => array(
+				// 	"is_system" => array(
 				// 		"type" 		=> "TINYINT",
 				// 		"constraint"=> 1,
 				// 		"null" 		=> FALSE,
 				// 		"default" 	=> 0
 				// 	)
 				// );
-				// $data['results'][] = $this->dbforge->add_column("transactions", $fields);
+				// $data['results'][] = $this->dbforge->add_column("membership_types", $fields);
 				
 			    // Modify fields
 		 	// 	$fields = array(
-				// 	"conversion_ratio" => array(
-				// 		"name" 		=> "conversion_ratio",//New Field Name 
-				// 		"type" 		=> "DECIMAL",
-				// 		"constraint"=> "30,15",
-				// 		"null" 		=> FALSE,
-				// 		"default" 	=> 1
+				// 	// "conversion_ratio" => array(
+				// 	// 	"name" 		=> "conversion_ratio",//New Field Name 
+				// 	// 	"type" 		=> "DECIMAL",
+				// 	// 	"constraint"=> "30,15",
+				// 	// 	"null" 		=> FALSE,
+				// 	// 	"default" 	=> 1
+				// 	// ),
+				// 	"type" => array(
+				// 		"name" 		=> "description",//New Field Name 
+				// 		"type" 		=> "VARCHAR",
+				// 		"constraint"=> "500"
 				// 	)
 				// );
-				// $data['results'][] = $this->dbforge->modify_column('item_assemblies', $fields);
+				// $data['results'][] = $this->dbforge->modify_column('membership_types', $fields);
 
 			 	//Remove column, 'table_name', 'column_to_drop'
 				// $this->dbforge->drop_column('item_assemblies', 'amount');
