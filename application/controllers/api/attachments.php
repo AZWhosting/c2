@@ -21,13 +21,13 @@ class Attachments extends REST_Controller {
 			$this->allowedStorage = ceil((($institute->storage_space / 1024) / 1024 ) / 1024);
 			$this->server_host = $conn->server_name;
 			$this->server_user = $conn->username;
-			$this->server_pwd = $conn->password;	
+			$this->server_pwd = $conn->password;
 			$this->_database = $conn->inst_database;
 		}
 	}
-	
-	//GET 
-	function index_get() {		
+
+	//GET
+	function index_get() {
 		$filter 	= $this->get("filter");
 		$page 		= $this->get('page');
 		$limit 		= $this->get('limit');
@@ -50,8 +50,8 @@ class Attachments extends REST_Controller {
 			$profileImageSize = ceil((($image->size) / 1024) / 1024);
 		}
 
-		$obj = new Attachment(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
-		
+		$obj = new Attachment(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
 		//Sort
 		if(!empty($sort) && isset($sort)){
 			foreach ($sort as $value) {
@@ -73,7 +73,7 @@ class Attachments extends REST_Controller {
 				}
 			}
 		}
-		
+
 		//Results
 		if($page && $limit){
 			$obj->get_paged_iterated($page, $limit);
@@ -83,8 +83,8 @@ class Attachments extends REST_Controller {
 			$data["count"] = $obj->result_count();
 		}
 
-		if($obj->exists()){			
-			foreach ($obj as $value) {				
+		if($obj->exists()){
+			foreach ($obj as $value) {
 				//Results
 				$attachedTo = array('id' => null, 'name' => null, 'type' => null);
 				if($value->contact_id) {
@@ -110,7 +110,7 @@ class Attachments extends REST_Controller {
 				}
 				$user = $value->user->get();
 				$data["results"][] = array(
-					"id" 				=> $value->id,					
+					"id" 				=> $value->id,
 					"user_id" 			=> $value->user_id,
 					"transaction_id" 	=> $value->transaction_id,
 					"account_id" 		=> $value->account_id,
@@ -119,7 +119,7 @@ class Attachments extends REST_Controller {
 					"type" 				=> $value->type,
 					"name" 				=> $value->name,
 					"description" 		=> $value->description,
-					"key" 				=> $value->key,					
+					"key" 				=> $value->key,
 					"url" 				=> $value->url,
 					"size"				=> (($value->size) / 1024) /1024,
 					"user" 				=> $user->exists() ? array('id' => $user->id, 'name' => $user->name):array(),
@@ -137,17 +137,17 @@ class Attachments extends REST_Controller {
 		$data['contactSize'] = $conSize / 1024;
 		$data['allowedSize'] = $this->allowedStorage;
 		$data['total'] = ($traSize + $conSize + $profileImageSize) / 1024;
-		//Response Data		
-		$this->response($data, 200);		
+		//Response Data
+		$this->response($data, 200);
 	}
-	
+
 	//POST
 	function index_post() {
 		$models = json_decode($this->post('models'));
 
 		foreach ($models as $value) {
-			$obj = new Attachment(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);			
-			
+			$obj = new Attachment(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
 			isset($value->user_id) 			? $obj->user_id 		= $value->user_id : "";
 			isset($value->transaction_id) 	? $obj->transaction_id 	= $value->transaction_id : "";
 			isset($value->account_id) 		? $obj->account_id 		= $value->account_id : "";
@@ -162,11 +162,11 @@ class Attachments extends REST_Controller {
 			isset($value->deleted) 			? $obj->deleted 		= $value->deleted : "";
 			isset($value->size) 			? $obj->size 			= $value->size : "";
 			isset($value->created_at) 		? $obj->created_at 		= $value->created_at : "";
-						
+
 			if($obj->save()){
 				$data["results"][] = array(
 					"id" 				=> $obj->id,
-					"user_id" 			=> $obj->user_id,					
+					"user_id" 			=> $obj->user_id,
 					"transaction_id" 	=> $obj->transaction_id,
 					"account_id" 		=> $obj->account_id,
 					"contact_id" 		=> $obj->contact_id,
@@ -184,8 +184,8 @@ class Attachments extends REST_Controller {
 			}
 		}
 		$data["count"] = count($data["results"]);
-		
-		$this->response($data, 201);						
+
+		$this->response($data, 201);
 	}
 
 	//PUT
@@ -194,7 +194,7 @@ class Attachments extends REST_Controller {
 		$data["results"] = array();
 		$data["count"] = 0;
 
-		foreach ($models as $value) {			
+		foreach ($models as $value) {
 			$obj = new Attachment(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->get_by_id($value->id);
 
@@ -207,15 +207,15 @@ class Attachments extends REST_Controller {
 			isset($value->name) 			? $obj->name 			= $value->name : "";
 			isset($value->description) 		? $obj->description 	= $value->description : "";
 			isset($value->size) 			? $obj->size 			= $value->size : "";
-			isset($value->key) 				? $obj->key 			= $value->key : "";			
+			isset($value->key) 				? $obj->key 			= $value->key : "";
 			isset($value->url) 				? $obj->url 			= $value->url : "";
 			isset($value->license_id) 		? $obj->license_id 		= $value->license_id : "";
 			isset($value->deleted) 			? $obj->deleted 		= $value->deleted : "";
 
-			if($obj->save()){				
+			if($obj->save()){
 				$data["results"][] = array(
 					"id" 				=> $obj->id,
-					"user_id" 			=> $obj->user_id,					
+					"user_id" 			=> $obj->user_id,
 					"transaction_id" 	=> $obj->transaction_id,
 					"account_id" 		=> $obj->account_id,
 					"contact_id" 		=> $obj->contact_id,
@@ -229,14 +229,14 @@ class Attachments extends REST_Controller {
 					"deleted"			=> $obj->deleted,
 					"created_at" 		=> $obj->created_at,
 					"updated_at" 		=> $obj->updated_at
-				);		
+				);
 			}
 		}
 		$data["count"] = count($data["results"]);
 
 		$this->response($data, 200);
 	}
-	
+
 	//DELETE
 	function index_delete() {
 		$models = json_decode($this->delete('models'));
@@ -244,17 +244,17 @@ class Attachments extends REST_Controller {
 		foreach ($models as $key => $value) {
 			$obj = new Attachment(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->where("id", $value->id)->get();
-			
+
 			$data["results"][] = array(
 				"data"   => $value,
 				"status" => $obj->delete()
-			);							
+			);						
 		}
 
 		//Response data
 		$this->response($data, 200);
-	}  
-	
+	}
+
 }
 /* End of file categories.php */
 /* Location: ./application/controllers/api/categories.php */

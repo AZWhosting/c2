@@ -444,6 +444,16 @@
 			</div>
 			<div class="span9" style="padding-left: 0">
 				<div class="detailsWrapper">
+					<div class="row" style="padding: 0 15px; margin-bottom: 15px;">
+						<a class="span6" style="padding: 10px; 
+						text-align: center; background: #0eac00" href="#/">
+							Card Center
+						</a>
+						<div class="span6" style="padding: 10px;
+						text-align: center; background: #1c3b19; color: #fff;" >
+							Loyalty Center
+						</div>
+					</div>
 					<div class="row">
 						<div class="box-generic">
 
@@ -461,7 +471,7 @@
 						        </ul>
 						    </div>
 						    
-						    <div class="tab-content">						    	
+						    <div class="tab-content">
 
 						        <div class="tab-pane active" id="tab1">
 					            	<div class="span12">
@@ -667,8 +677,6 @@
 		</td>     	
     </tr>
 </script>
-
-
 <style >
 	.loyalty .example {
 	    background: #fff;
@@ -1202,4 +1210,241 @@
 	<span>
 		#=code# - #=country#
 	</span>
+</script>
+<!--Card Center-->
+<script id="card-list-tmpl" type="text/x-kendo-tmpl">
+	<tr data-bind="click: selectedRow">
+		<td>
+			<div class="media-body strong">
+				<span>#= name#</span><a style="float: right;" href="\#/card/#=id#">Edit</a>
+			</div>
+		</td>
+	</tr>
+</script>
+<script id="cardCenter" type="text/x-kendo-template">
+	<div class="container">
+		<div class="row customerCenter">
+			<div class="span3">
+				<div class="listWrapper">
+					<a href="#/card" class="addLoyalty">Add Card</a>
+					<div class="innerAll" style="width: 100%; float: left; background: #1c3b19;">
+						<form autocomplete="off" class="form-inline" style="margin-bottom: 0;">
+							<div class="widget-search separator bottom">
+								<button style="height: 34px;" type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></button>
+								<div class="overflow-hidden">
+									<input type="search" placeholder="Number" data-bind="value: searchText">
+								</div>
+							</div>
+						</form>					
+					</div>
+					<div class="results">
+						<span data-bind="text: contactDS.total"></span>
+						<span data-bind="text: lang.lang.found_search"></span>
+					</div>
+					<div class="table table-condensed " style="height: 580px;"
+						 data-role="grid"
+						 data-bind="source: cardDS"
+						 data-row-template="card-list-tmpl"
+						 data-columns="[{title: 'Card'}]"
+						 data-selectable=true
+						 data-height="600"
+						 data-scrollable="{virtual: true}">
+					</div>
+				</div>
+			</div>
+			<div class="span9" style="padding-left: 0">
+				<div class="detailsWrapper">
+					<div class="row" style="padding: 0 15px; margin-bottom: 15px;">
+						<div class="span6" style="padding: 10px;
+						text-align: center; background: #0eac00">
+							Card Center
+						</div>
+						<a class="span6" style="padding: 10px;
+						text-align: center; background: #1c3b19; color: #fff;" href="#/loyalty_center">
+							Loyalty Center
+						</a>
+					</div>
+					<div class="row">
+						<div class="span6" style="padding-left: 0;">
+							<div class="widget widget-4 widget-tabs-icons-only margin-bottom-none">
+							    <div class="widget-head" >
+							        <ul class="pull-right">
+							            <li class="glyphicons circle_info active"><span data-toggle="tab" data-target="#tab2-4"><i></i></span>
+							            </li>			            
+							        </ul>
+							        <div class="clearfix"></div>
+							    </div>
+							    <div class="widget-body">
+							        <div class="tab-content">
+							            <div id="tab2-4" class="tab-pane box-generic active" style="float: left; margin-bottom: 10px;">
+							            	<div class="row-fluid">
+						            			<div class="span12" style="padding: 0;">
+								            		<div class="accounCetner-textedit">
+										            	<table width="100%" style="font-size: 12px; color: #333;">
+										            		<tr>
+																<td><span>Name</span></td>
+																<td>
+																	<span class="strong" data-bind="text: obj.abbr"></span>
+																	<span class="strong" data-bind="text: obj.name"></span>
+																</td>
+															</tr>
+															<tr>
+																<td width="40%"><span data-bind="text: lang.lang.number"></span></td>
+																<td width="60%">
+																	<span class="strong" data-bind="text: obj.number"></span>
+																</td>
+															</tr>
+															<tr>
+																<td><span>Serial</span></td>
+																<td>
+																	<span class="strong" data-bind="text: obj.abbr"></span>
+																	<span class="strong" data-bind="text: obj.serial"></span>
+																</td>
+															</tr>
+															<tr>
+																<td><span data-bind="text: lang.lang.status"></span></td>
+																<td>
+																	<span data-bind="text: obj.status"></span>
+																</td>
+															</tr>
+														</table>
+													</div>
+												</div>
+											</div>
+							            </div>
+							        </div>
+							    </div>
+							</div>
+						</div>
+
+						<div class="span6" style="padding-left: : 0px;">
+							<div class="row">
+								<div class="span6" style="padding: 0">
+									<div class="widget-stats widget-stats-primary widget-stats-5" style="cursor: pointer; background: #0eac00; margin-left: 0; margin-bottom: 1px;">
+										<span class="glyphicons coins"><i></i></span>
+										<span class="txt" style="padding-right: 18px;">Total Sales<span data-bind="text: balance" style="font-size:medium;"></span></span>
+										<div class="clearfix"></div>
+									</div>
+								</div>
+								<div class="span6" style="padding-left: 0;">
+									<div class="widget-stats widget-stats-inverse widget-stats-5" style="cursor: pointer; margin-left: 1px; background: #1c3b19;">
+										<span class="glyphicons briefcase"><i></i></span>
+										<span class="txt">Last Visit<span data-bind="text: lastVisit" style="font-size:medium;"></span></span>
+										<div class="clearfix"></div>
+									</div>
+								</div>
+							</div>
+							
+							<div class="row">
+								<div class="span6" style="padding: 0">
+									<div class="widget-stats widget-stats-info widget-stats-5" data-bind="click: loadBalance" style="cursor: pointer; background: #bbbbbb; margin-left: 0; margin-bottom: 15px;">
+										<span class="glyphicons circle_exclamation_mark"><i></i></span>
+										<span class="txt"><span data-bind="text: outInvoice"></span> Earn Points</span>
+										<div class="clearfix"></div>
+									</div>
+								</div>
+								<div class="span6" style="padding-left: 0;">
+									<div class="widget-stats widget-stats-default widget-stats-5" data-bind="click: loadOverInvoice" style="cursor: pointer; margin-left: 1px; background: #424242;"> 
+										<span class="glyphicons turtle"><i></i></span>
+										<span class="txt"><span data-bind="text: overInvoice"></span>Paid Points</span>
+										<div class="clearfix"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="box-generic" style="padding: 0; margin-left: 0; width: 100%; padding-bottom: 15px;">
+					    <div class="tabsbar tabsbar-1">
+					        <ul class="row-fluid row-merge">
+					            <li class="span2 active">
+					            	<a href="#tab1" data-toggle="tab"><span >Loyalty</span></a>
+					            </li>								            
+					            <li class="span2 ">
+					            	<a href="#tab2" data-toggle="tab"><span >Related</span></a>
+					            </li>					            					            					            
+					        </ul>
+					    </div>
+					    
+					    <div class="tab-content">
+
+					        <div class="tab-pane active" id="tab1">
+				            	<div class="span12">
+				            		<div>
+										<table class="table table-bordered table-striped table-white">
+											<thead>
+												<tr>
+													<th><span data-bind="text: lang.lang.date"></span></th>
+													<th><span data-bind="text: lang.lang.type"></span></th>
+													<th><span data-bind="text: lang.lang.reference_no"></span></th>
+													<th><span data-bind="text: lang.lang.amount"></span></th>
+													<th><span data-bind="text: lang.lang.status"></span></th>
+													<th><span data-bind="text: lang.lang.action"></span></th>
+												</tr>
+											</thead>
+						            	</table>
+									</div>
+				            	</div>
+				        	</div>
+					        
+					        <div class="tab-pane" id="tab2">
+					        	<div class="span12">
+					        		2222
+				            	</div>
+				        	</div>
+					       
+					    </div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>		
+</script>
+<script id="Card" type="text/x-kendo-template">	
+	<!-- <div id="ntf1" data-role="notification"></div> -->
+	<div class="container">
+		<div class="row loyalty">
+			<div class="span12">
+				<div class="example" style="overflow: hidden;position: relative;">
+					<div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 100%;margin-top: -15px;background: rgba(142, 159, 167, 0.8);z-index: 9999;margin-left: -15px;">
+						<p style="color: #fff;font-size: 25px;position: absolute;top: 45%;left: 45%;">Loading</p>
+					</div>
+					<h2>Create Loyalty Program</h2>
+					<a data-bind="click: goNext, invisible: lastStep" class="loyatyNext">Next</a>
+					<a data-bind="click: save, visible: lastStep" class="loyatyNext" style="background: red">Save</a>
+					<div class="row">
+						<div>
+							<div class="box-generic" style="margin-left: 0;">
+							    <div class="tabsbar tabsbar-1">
+							        <ul class="row-fluid row-merge">
+							        	<li class="span2  active" data-bind="click: tabeClick">
+							            	<a href="#tab0" data-toggle="tab"><span>Info</span></a>
+							            </li>
+							        </ul>
+							    </div>
+							    <div class="tab-content">
+							    	<div class="tab-pane active" id="tab0">
+							    		<div style="width: 50%; text-align: left; margin: 20px auto 0;">
+						            		<span style="float: left; padding: 10px 69px 10px 20px; background: #ddd; border-width: 1px 0 0 1px;   border-style: solid; border-color: #ccc; font-weight: 700">Name</span>
+						            		<input style="float: left; height: 41px; padding: 8px; border-width: 1px 1px 0 1px; border-style: solid; border-color: #ccc; color: #333; margin-left: -4px; width: 54.8%;" type="search" placeholder="Name..." data-bind="value: obj.name">
+						            		<span style="float: left; padding: 10px 54px 10px 20px; background: #ddd; border-width: 1px 0 0 1px;   border-style: solid; border-color: #ccc; font-weight: 700">Number</span>
+						            		<input style="float: left; height: 41px; padding: 8px; border-width: 1px 1px 0 1px; border-style: solid; border-color: #ccc; color: #333; margin-left: -4px; width: 54.8%;" type="search" placeholder="Name..." data-bind="value: obj.number">
+						            		<span style="float: left; padding: 10px 69px 10px 20px; background: #ddd; border-width: 1px 0 0 1px;   border-style: solid; border-color: #ccc; font-weight: 700">Serial</span>
+						            		<input style="float: left; height: 41px; padding: 8px; border-width: 1px 1px 0 1px; border-style: solid; border-color: #ccc; color: #333; margin-left: -4px; width: 54.8%;" type="search" placeholder="Name..." data-bind="value: obj.serial">
+						            		<div class="clear"></div>
+						            		<a class="loyatyNext" data-bind="click: save" style="background: #1c3b19; margin-top: 10px;">Save</a>
+						            	</div>
+							    	</div>
+							    </div>
+							</div>
+							<div id="ntf1" data-role="notification"></div>
+						</div>
+					</div>
+					<a  class="loyatyNext" data-bind="click: cancel" style="background: #1c3b19; margin-top: 10px;">Cancel</a>
+				</div>
+			</div>
+			<div class="span12" style="margin-top: 20px;">
+				<p data-bind="text: today"></span>
+			</div>
+		</div>
+	</div>
 </script>

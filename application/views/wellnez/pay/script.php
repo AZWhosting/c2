@@ -4393,6 +4393,7 @@
         saveItem    : function(){
             if(this.item1.length > 0){
                 if(this.itemDS.data().length > 0){
+                    $("#loadImport").css("display", "block");
                     this.splitDS.data([]);
                     this.splitDS.add({
                         transaction_id: this.get("txnID"),
@@ -4405,6 +4406,7 @@
                     });
                     this.splitDS.sync();
                     this.splitDS.bind("requestEnd", function(e){
+                        $("#loadImport").css("display", "none");
                         if(e.type != 'read' && e.response.results) {
                             banhji.printBill.dataSource = [];
                             banhji.printBill.dataSource = e.response.results;
@@ -4488,10 +4490,9 @@
                 });
             }
         },
-        printGrid: function() {
-            var self = this,
-                Win, pHeight, pWidth, ts;
-            Win = window.open('', '', 'width=1000, height=900');
+        printGrid       : function(){
+            var self = this, Win, pHeight, pWidth, ts;
+            Win = window.open('', '', 'width=800, height=900');
             pHeight = "210mm";
             pWidth = "150mm";
             var gridElement = $('#grid'),
@@ -4499,72 +4500,75 @@
                 win = Win,
                 doc = win.document.open();
             var htmlStart =
-                '<!DOCTYPE html>' +
-                '<html>' +
-                '<head>' +
-                '<meta charset="utf-8" />' +
-                '<title></title>' +
-                '<link rel="stylesheet" href="<?php echo base_url(); ?>resources/js/kendoui/styles/kendo.bootstrap.min.css">' +
-                '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
-                '<link href="<?php echo base_url(); ?>assets/water/water.css" rel="stylesheet" />' +
-                '<link href="<?php echo base_url(); ?>assets/water/winvoice-print.css" rel="stylesheet" />' +
-                '<link href="<?php echo base_url(); ?>resources/common/theme/css/style-default-menus-dark.css" rel="stylesheet" />' +
-                '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
-                '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
-                '<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Battambang&amp;subset=khmer" media="all">' +
-                '<style type="text/css" media="print">' +
-                '@page { size: portrait; margin:0.2cm;' +
-                'size: A5;' +
-                '} ' +
-                '@media print {' +
-                'html, body {' +
-                '}' +
-                '.main-color {' +
-                '-webkit-print-color-adjust:exact; ' +
-                '} ' +
-                '}' +
-                '.main-color {' +
-                '-webkit-print-color-adjust:exact; ' +
-                '} ' +
-                '.inv1 .light-blue-td { ' +
-                'background-color: #c6d9f1!important;' +
-                'text-align: left;' +
-                'padding-left: 5px;' +
-                '-webkit-print-color-adjust:exact; ' +
-                '}' +
-                '.logoP{ max-height 50px;max-width100px}' +
-                '.inv1 thead tr {' +
-                'background-color: rgb(242, 242, 242)!important;' +
-                '-webkit-print-color-adjust:exact; ' +
-                '}' +
-                '.pcg .mid-title div {}' +
-                '.pcg .mid-header {' +
-                'background-color: #dce6f2!important; ' +
-                '-webkit-print-color-adjust:exact; ' +
-                '}' +
-                '.winvoice-print table thead .darkbblue, .winvoice-print table tbody td.darkbblue { ' +
-                'background-color: #355176!important;' +
-                'color: #fff!important;' +
-                '-webkit-print-color-adjust:exact; ' +
-                '}' +
-                '.winvoice-print table td.greyy {' +
-                'background-color: #ccc!important;-webkit-print-color-adjust:exact;' +
-                '}' +
-                '.inv1 span.total-amount { ' +
-                'color:#fff!important;' +
-                '}</style>' +
-                '</head>' +
-                '<body style="background: #fff;"><div class="row-fluid" ><div id="example" class="k-content">';
+                    '<!DOCTYPE html>' +
+                    '<html>' +
+                    '<head>' +
+                    '<meta charset="utf-8" />' +
+                    '<title></title>' +
+                    '<link rel="stylesheet" href="<?php echo base_url(); ?>resources/js/kendoui/styles/kendo.bootstrap.min.css">'+
+                    '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/bootstrap.css">'+
+                    '<link href="<?php echo base_url(); ?>assets/css/water/water.css" rel="stylesheet" />'+
+                    '<link href="<?php echo base_url(); ?>assets/css/offline/offline.css" rel="stylesheet" />'+
+                    '<link href="<?php echo base_url(); ?>assets/css/water/winvoice-print.css" rel="stylesheet" />'+
+                    '<link href="<?php echo base_url(); ?>assets/kendo/styles/kendo.common.min.css" rel="stylesheet" />'+
+                    '<link href="<?php echo base_url(); ?>assets/spa/wellnez.css" rel="stylesheet" />'+
+                    '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">'+
+                    '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
+                    '<link href="https://fonts.googleapis.com/css?family=Preahvihear" rel="stylesheet">'+
+                    '<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Battambang&amp;subset=khmer" media="all">'+
+                    '<style type="text/css" media="print">' +
+                        '@page { size: portrait; margin:0.05cm;' +
+                            
+                        '} '+
+                        '@media print {' +
+                            'html, body {' +
+                            '}' +
+                            '.main-color {' +
+                                '-webkit-print-color-adjust:exact; ' +
+                            '} ' +
+                        '}' +
+                        '* {' +
+                            '-webkit-print-color-adjust:exact; ' +
+                        '} ' +
+                        '.inv1 .light-blue-td { ' +
+                            'background-color: #c6d9f1!important;' +
+                            'text-align: left;' +
+                            'padding-left: 5px;' +
+                            '-webkit-print-color-adjust:exact; ' +
+                        '}' +
+                        '.logoP{ max-height 50px;max-width100px}' +
+                        '.inv1 thead tr {'+
+                            'background-color: rgb(242, 242, 242)!important;'+
+                            '-webkit-print-color-adjust:exact; ' +
+                        '}'+
+                        '.pcg .mid-title div {}' +
+                        '.pcg .mid-header {' +
+                            'background-color: #dce6f2!important; ' +
+                            '-webkit-print-color-adjust:exact; ' +
+                        '}'+
+                        '.winvoice-print table thead .darkbblue, .winvoice-print table tbody td.darkbblue { ' +
+                            'background-color: #355176!important;' +
+                            'color: #fff!important;' +
+                            '-webkit-print-color-adjust:exact; ' +
+                        '}' +
+                        '.winvoice-print table td.greyy {' +
+                        'background-color: #ccc!important;-webkit-print-color-adjust:exact;' +
+                        '}' +
+                        '.inv1 span.total-amount { ' +
+                            'color:#fff!important;' +
+                        '}</style>' +
+                    '</head>' + 
+                    '<body><div class="row-fluid" ><div id="invoicecontent" class="k-content">';
             var htmlEnd =
-                '</div></div></body>' +
-                '</html>';
-            printableContent = $('#wInvoiceContent').html();
+                    '</div></div></body>' +
+                    '</html>';
+            printableContent = $('#invoiceContent').html();
             doc.write(htmlStart + printableContent + htmlEnd);
             doc.close();
-            setTimeout(function() {
-                win.print();
-                //win.close();
-            }, 2000);
+            setTimeout(function(){
+                win.print();    
+                win.close();
+            },1000);
         },
         hideFrameInvoice: function(e) {
             var printBtn = e.target;
@@ -4579,7 +4583,7 @@
             this.barcod("reset");
             var listview = $("#invoiceContent").data("kendoListView");
             listview.refresh();
-            window.history.back();
+            banhji.router.navigate("/");
         }
     });
     /* views and layout */

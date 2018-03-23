@@ -6428,6 +6428,89 @@
             }
         }
     });
+    //card
+    banhji.cardCenter = kendo.observable({
+        lang                : langVM,
+        transactionDS       : dataStore(apiUrl + 'transactions'),
+        noteDS              : dataStore(apiUrl + 'notes'),
+        attachmentDS        : dataStore(apiUrl + "attachments"),
+        txnDS               : dataStore(apiUrl + "transactions"),
+        currencyDS          : new kendo.data.DataSource({
+            data: banhji.source.currencyList,
+            filter: { field:"status", value: 1 }
+        }),
+        contactTypeDS       : new kendo.data.DataSource({
+            data: banhji.source.contactTypeList,
+            filter: { field:"parent_id", value: 1 }//Customer
+        }),
+        cardDS           : dataStore(apiUrl + 'spa/card'),
+        pageLoad            : function(){
+        },
+        remove: function (e) {
+            console.log("a");
+        },
+        selectedRow         : function(e){
+            var data = e.data;
+            console.log(data);
+            this.set("obj", data);
+        },
+    });
+    banhji.Card = kendo.observable({
+        lang        : langVM,
+        dataSource  : dataStore(apiUrl + "spa/card"),
+        isEdit      : false,
+        pageLoad    : function(id){
+            if(id){
+                this.loadObj(id);
+            }else{
+                this.addEmpty();
+            }
+        },
+        obj         : null,
+        addEmpty                : function(){
+            this.dataSource.data([]);
+            this.set("obj", null);
+            this.dataSource.insert(0, {
+                "name"               : "",
+                "number"             : "",
+                "serial"             : ""
+            });
+            var obj = this.dataSource.at(0);
+            this.set("obj", obj);
+        },
+        loadObj                 : function(id){
+            var self = this;
+            this.dataSource.query({
+                filter: {field: "id", value: id},
+                page: 1,
+                pageSize: 1
+            }).then(function(e){
+                var view = self.dataSource.view();
+                self.set("obj", view[0]);
+            });
+        },
+        save        : function(e){
+            var self = this;
+            $("#loadImport").css("display", "block");
+            this.dataSource.sync();
+            this.dataSource.bind("requestEnd", function(e){
+                if(e.response.type != 'read'){
+                    self.cancel();
+                    var noti = $("#ntf1").data("kendoNotification");
+                        noti.hide();
+                        noti.success(self.lang.lang.success_message);
+                    self.cancel();
+                    $("#loadImport").css("display", "none");
+                }
+            });
+        },
+        cancel      : function(e){
+            this.dataSource.data([]);
+            this.addEmpty();
+            banhji.router.navigate("/");
+            $("#loadImport").css("display", "none");
+        }
+    });
     /* views and layout */
     banhji.view = {
         layout: new kendo.Layout('#layout', {
@@ -6447,6 +6530,8 @@
         Index: new kendo.Layout("#Index", {
             model: banhji.Index
         }),
+        cardCenter: new kendo.Layout("#cardCenter", {model: banhji.cardCenter}),
+        Card: new kendo.Layout("#Card", {model: banhji.Card}),
         loyaltyCenter: new kendo.Layout("#loyaltyCenter", {model: banhji.loyaltyCenter}),
         Loyalty: new kendo.Layout("#Loyalty", {model: banhji.Loyalty}),
     };
@@ -6496,6 +6581,16 @@
     });
     /* Login page */
     banhji.router.route('/', function() {
+        banhji.view.layout.showIn("#content", banhji.view.cardCenter);
+        var vm = banhji.cardCenter;
+        vm.pageLoad();
+    });
+    banhji.router.route("/card(/:id)", function(id){
+        banhji.view.layout.showIn("#content", banhji.view.Card);
+        kendo.fx($("#slide-form")).slideIn("down").play();
+        banhji.Card.pageLoad(id);
+    });
+    banhji.router.route('/loyalty_center', function() {
         banhji.view.layout.showIn("#content", banhji.view.loyaltyCenter);
         var vm = banhji.loyaltyCenter;
         vm.pageLoad();

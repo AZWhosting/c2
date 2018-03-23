@@ -56,6 +56,7 @@ class Ops extends REST_Controller {
 			    // $this->dbforge->add_field("membership_date date DEFAULT NULL");
 			    // $this->dbforge->add_field("change_membership_date date DEFAULT NULL");
 			    // $this->dbforge->add_field("membership_status int(1) NOT NULL DEFAULT '0'");
+			    // $this->dbforge->add_field("expiry_date date DEFAULT NULL");
 
 			    // $this->dbforge->add_field("membership_application_status int(1) NOT NULL DEFAULT '0'");
 			    // $this->dbforge->add_field("graduateion_date date DEFAULT NULL");

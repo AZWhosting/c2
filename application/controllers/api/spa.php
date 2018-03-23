@@ -1141,6 +1141,18 @@ class Spa extends REST_Controller {
 		$data["count"] = 0;
 		$i = 1;
 		foreach ($models as $value) {
+			if(count($value->item_one) > 0){
+				$data["results"][] = $this->splitinvoiceitem($value->item_one, $value->transaction_id, $value->userid);
+			}
+			if(count($value->item_two) > 0){
+				$data["results"][] = $this->splitinvoiceitem($value->item_two, $value->transaction_id, $value->userid);
+			}
+			if(count($value->item_three) > 0){
+				$data["results"][] = $this->splitinvoiceitem($value->item_three, $value->transaction_id, $value->userid);
+			}
+			if(count($value->item_four) > 0){
+				$data["results"][] = $this->splitinvoiceitem($value->item_four, $value->transaction_id, $value->userid);
+			}
 			//Cashier
 			$cashier_name = "";
 			$u = new User(null, $this->server_host, $this->server_user, $this->server_pwd, 'banhji');
@@ -1162,6 +1174,17 @@ class Spa extends REST_Controller {
 					$roomshow .= $sroom->name." ";
 				}
 			}
+			//Employee
+			$employee = new Spa_work_employee(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$employee->where("work_id", $work->id)->get();
+			$employee_name = "";
+			foreach($employee as $em){
+				$emc = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$emc->where("id", $em->employee_id)->get();
+				$emc->work_id = 0;
+				$emc->save();
+				$employee_name .= $emc->abbr."-".$emc->number." ".$emc->name;
+			}
 			$data["results"][] = array(
 		   		"id" 			=> $txn->id,
 		   		"number" 		=> $txn->number,
@@ -1175,19 +1198,8 @@ class Spa extends REST_Controller {
 		   		"items" 		=> $value->item,
 		   		"cashier_name" 	=> $cashier_name,
 		   		"room_number" 	=> $roomshow,
+		   		"employee_name" => $employee_name,
 		   	);
-			if(count($value->item_one) > 0){
-				$data["results"][] = $this->splitinvoiceitem($value->item_one, $value->transaction_id, $value->userid);
-			}
-			if(count($value->item_two) > 0){
-				$data["results"][] = $this->splitinvoiceitem($value->item_two, $value->transaction_id, $value->userid);
-			}
-			if(count($value->item_three) > 0){
-				$data["results"][] = $this->splitinvoiceitem($value->item_three, $value->transaction_id, $value->userid);
-			}
-			if(count($value->item_four) > 0){
-				$data["results"][] = $this->splitinvoiceitem($value->item_four, $value->transaction_id, $value->userid);
-			}
 		}
 		$data["count"] = count($data["results"]);
 		$this->response($data, 201);
@@ -1213,7 +1225,7 @@ class Spa extends REST_Controller {
 		$branchuser->where("user_id", $value->user_id)->limit(1)->get();
 		$txn->branch_id = isset($branchuser->branch_id) ? $branchuser->branch_id : 1;
 		$txn->type = 'Invoice';
-		$txn->sub_total = $value->sub_total;
+		$txn->sub_total = $amount;
 		$txn->discount = $value->discount;
 		$txn->tax = $value->tax;
 		$txn->fine = $value->fine;
@@ -1309,6 +1321,17 @@ class Spa extends REST_Controller {
 			if($u->exists()){
 				$cashier_name = $u->first_name." ".$u->last_name;
 			}
+			//Employee
+			$employee = new Spa_work_employee(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$employee->where("work_id", $work->id)->get();
+			$employee_name = "";
+			foreach($employee as $em){
+				$emc = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$emc->where("id", $em->employee_id)->get();
+				$emc->work_id = 0;
+				$emc->save();
+				$employee_name .= $emc->abbr."-".$emc->number." ".$emc->name;
+			}
 			$data["results"] = array(
 		   		"id" 			=> $txn->id,
 		   		"number" 		=> $txn->number,
@@ -1322,6 +1345,7 @@ class Spa extends REST_Controller {
 		   		"items" 		=> $item,
 		   		"cashier_name" 	=> $cashier_name,
 		   		"room_number" 	=> $roomshow,
+		   		"employee_name" => $employee_name,
 		   	);
 		   	return $data["results"];
 		}
@@ -2424,6 +2448,105 @@ class Spa extends REST_Controller {
 		}
 
 		return $number;
+	}
+	//Card
+	function card_get(){
+		$data["results"] = [];
+		$data["count"] = 0;
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$obj = new Spa_card(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		//Filter
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter["filters"] as $value) {
+	    		$obj->where($value["field"], $value["value"]);
+			}
+		}
+		//Results
+		if($page && $limit){
+			$obj->get_paged_iterated($page, $limit);
+			$data["count"] = $obj->paged->total_rows;
+		}else{
+			$obj->get_iterated();
+			$data["count"] = $obj->result_count();
+		}
+		if($obj->exists()){
+			foreach ($obj as $value) {
+				$statusdetail = "";
+				if($value->status == 1){
+					$statusdetail = "Activated";
+				}else{
+					$statusdetail = "Not Activated";
+				}
+				$data["results"][] = array(
+					"id" 				=> $value->id,
+					"name" 				=> $value->name,
+					"number"			=> $value->number,
+					"serial"			=> $value->serial,
+					"status" 			=> $statusdetail,
+				);
+			}
+		}
+		//Response Data
+		$this->response($data, 200);
+	}
+	function card_post(){
+		$models = json_decode($this->post('models'));
+		$data["results"] = [];
+		$data["count"] = 0;
+		foreach ($models as $value) {
+			$obj = new Spa_card(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			isset($value->name) 		? $obj->name 			= $value->name : "";
+			isset($value->number) 		? $obj->number 			= $value->number : "";
+			isset($value->serial) 		? $obj->serial 			= $value->serial : "";
+	   		if($obj->save()){
+			   	$data["results"][] = array(
+			   		"id" 			=> $obj->id,
+			   		"name" 			=> $obj->name,
+					"number"		=> $obj->card,
+					"serial"		=> $obj->serial,
+			   	);
+		    }
+		}
+		$data["count"] = count($data["results"]);
+		$this->response($data, 201);	
+	}
+	function card_put() {
+		$models = json_decode($this->put('models'));
+		$data["results"] = array();
+		$data["count"] = 0;
+		foreach ($models as $value) {
+			$obj = new Spa_card(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$obj->get_by_id($value->id);
+			isset($value->name) 		? $obj->name 			= $value->name : "";
+			isset($value->number) 		? $obj->number 			= $value->number : "";
+			isset($value->serial) 		? $obj->serial 			= $value->serial : "";
+	   		if($obj->save()){
+			   	$data["results"][] = array(
+			   		"id" 			=> $obj->id,
+			   		"name" 			=> $obj->name,
+					"number"		=> $obj->card,
+					"serial"		=> $obj->serial,
+			   	);
+		    }
+		}
+		$data["count"] = count($data["results"]);
+		$this->response($data, 200);
+	}
+	function card_delete() {
+		$models = json_decode($this->delete('models'));
+
+		foreach ($models as $key => $value) {
+			$obj = new Spa_card(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$obj->get_by_id($value->id);
+
+			$data["results"][] = array(
+				"data"   => $value,
+				"status" => $obj->delete()
+			);
+		}
 	}
 }
 /* End of file choulr.php */
