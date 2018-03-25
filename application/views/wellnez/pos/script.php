@@ -6004,7 +6004,7 @@
             filter: [
                 {
                     field: "contact_type_id",
-                    value: 10
+                    value: 9
                 },
                 {   
                     field: "work_id",
@@ -6021,7 +6021,7 @@
             serverPaging: true,
             page: 1,
             pageSize: 100
-        }), 
+        }),
         itemGroupDS         : banhji.source.itemGroupDS,
         statusObj           : banhji.source.statusObj,
         paymentTermDS       : banhji.source.paymentTermDS,

@@ -1188,15 +1188,15 @@
 		                              		<input type="checkbox" data-bind="checked: obj.current_is_fulltime">&nbsp;
 		                              		Full-Time
 		                        		</td>
-		                        		<td style="width: 20%;">Role</td>
+		                        		<td style="width: 20%;">Branch</td>
 		                        		<td style="width: 20px;">:</td>
 		                        		<td>
 			                                <input id="type" 
 			                                    data-role="dropdownlist"
-			                                    data-bind="source: roleDS, 
-			                                    		value: obj.role,
-			                                    		events: {change: typeChange}"
+			                                    data-bind="source: branchDS, 
+			                                    		value: obj.branch_id"
 			                                    data-text-field="name"
+			                                    data-value-primitive="true"
 			                                    data-value-field="id"
 			                                    class="form-control col-md-7 col-xs-12"
 			                                    type="text"
@@ -1213,16 +1213,17 @@
 		                             			class="form-control"  
 		                             			id="" placeholder="">
 		                          		</td>
-		                      			<td>Type</td>
+		                      			<td>Role</td>
 		                      			<td style="width: 20px;">:</td>
 		                      			<td>
 		                                    <input id="type"
 		                                      data-role="dropdownlist"
-		                                      data-bind="source: typeAR, 
-		                                      			value: obj.type"
-		                                      data-text-field="username"
+		                                      data-bind="source: roleDS, 
+		                                      			value: obj.role,
+		                                      			events: {change: typeChange}"
+		                                      data-text-field="name"
 		                                      data-value-field="id"
-		                                      data-primitive-value="true"
+		                                      data-value-primitive="true"
 		                                      class="form-control col-md-7 col-xs-12"
 		                                      type="text"
 		                                      data-option-label="--Select--"
@@ -1244,16 +1245,17 @@
 		                                        type="text"
 		                                        style="width: 150px;">
 		                        		</td>
-		                        		<td>Status</td>
+		                        		<td>Type</td>
 		                        		<td style="width: 20px;">:</td>
 		                        		<td>
 		                                    <input id="type"
 		                                        data-role="dropdownlist"
-		                                        data-bind="source: statusDS, 
-		                                        		value: obj.status"
-		                                        data-text-field="value"
+		                                        data-bind="source: typeAR, 
+		                                        		value: obj.type"
+		                                        data-text-field="name"
 		                                        data-value-field="id"
 		                                        data-value-primitive="true"
+		                                        data-option-label="--Select--"
 		                                        class="form-control col-md-7 col-xs-12"
 		                                        type="text">
 		                        		</td>
@@ -1272,8 +1274,19 @@
 		                                        class="form-control col-md-7 col-xs-12"
 		                                        type="text">
 		                                </td>
-		                      			<td></td>
-		                      			<td></td>
+		                      			<td>Status</td>
+		                        		<td style="width: 20px;">:</td>
+		                        		<td>
+		                                    <input id="type"
+		                                        data-role="dropdownlist"
+		                                        data-bind="source: statusDS, 
+		                                        		value: obj.status"
+		                                        data-text-field="value"
+		                                        data-value-field="id"
+		                                        data-value-primitive="true"
+		                                        class="form-control col-md-7 col-xs-12"
+		                                        type="text">
+		                        		</td>
 		                    		</tr>
 		                		</table>
 	              			</div>
@@ -1305,8 +1318,7 @@
 	                        			<tr>
 	                          				<td>email</td>
 	                          				<td><input type="email" 
-			                          				class="k-textbox" d
-			                          				ata-bind="value: obj.email"></td>
+			                          				class="k-textbox" data-bind="value: obj.email"></td>
 	                          				<td></td>
 	                          				<td>phone</td>
 	                          				<td><input type="phone" 
@@ -1338,7 +1350,7 @@
 			                                      			value: obj.account"
 			                                      data-text-field="name"
 			                                      data-value-field="id"
-			                                      data-value-primitive="false"
+			                                      data-value-primitive="true"
 			                                      data-option-label="--Select One--"
 			                                      class="form-control col-md-7 col-xs-12"
 			                                      type="text"
@@ -1352,7 +1364,7 @@
 				                                      			value: obj.salary"
 				                                      data-text-field="name"
 				                                      data-value-field="id"
-				                                      data-value-primitive="false"
+				                                      data-value-primitive="true"
 				                                      data-option-label="--Select One--"
 				                                      class="form-control col-md-7 col-xs-12"
 				                                      type="text">

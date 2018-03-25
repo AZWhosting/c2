@@ -4066,10 +4066,55 @@
     banhji.Employees = kendo.observable({
         lang        : langVM,
         dataSource  : dataStore(apiUrl + "employees"),
-        roleDS      : [
-            {id: 1, name: "Therapist"},
-            {id: 2, name: "Trainer"},
-        ],
+        roleDS      : new kendo.data.DataSource({
+            transport: {
+                read  : {
+                    url: baseUrl + 'api/employees/roles',
+                    type: "GET",
+                    dataType: 'json',
+                    headers: { Institute: JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).institute.id : 0 }
+                },
+                create  : {
+                    url: baseUrl + 'api/employees/roles',
+                    type: "POST",
+                    dataType: 'json',
+                    headers: { Institute: JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).institute.id : 0 }
+                },
+                update  : {
+                    url: baseUrl + 'api/employees/roles',
+                    type: "PUT",
+                    dataType: 'json',
+                    headers: { Institute: JSON.parse(localStorage.getItem('userData/user')) != null ? JSON.parse(localStorage.getItem('userData/user')).institute.id : 0 }
+                },
+                parameterMap: function(options, operation) {
+                    if(operation === 'read') {
+                        return {
+                            limit: options.take,
+                            page: options.page,
+                            filter: options.filter
+                        };
+                    } else {
+                        return {models: kendo.stringify(options.models)};
+                    }
+                }
+            },
+            schema  : {
+                model: {
+                    id: 'id',
+                    fields: {
+                        id: {editable: false, nullable: true},
+                        name: {editable: true, nullable: false},
+                        abbr: {editable: true, nullable: false}
+                    }
+                },
+                data: 'results',
+                total: 'count'
+            },
+            batch: true,
+            serverFiltering: true,
+            serverPaging: true,
+            pageSize: 50
+        }),
         payrollDS   : dataStore(apiUrl + "payrolls"),
         advanceAccDS: new kendo.data.DataSource({
             transport: {
@@ -4166,11 +4211,12 @@
                 this.addEmpty();
             }
         },
+        branchDS            : dataStore(apiUrl + "branches"),
         obj         : null,
         payrollobj  : null,
         statusDS  : [
-            {id: 0, value: "inactive"},
-            {id: 1, value: "active"}
+            {id: 0, value: "Inactive"},
+            {id: 1, value: "Active"}
         ],
         genderDS  : [
             {id: "M", value: "Male"},
@@ -4183,6 +4229,7 @@
             this.dataSource.insert(0, {
                 "name"          :"",
                 "gender"        :"M",
+                "branch_id"     :"",
                 "number"        :"",
                 "is_fulltime"   :false,
                 "role"          : "",
