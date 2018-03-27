@@ -1408,40 +1408,33 @@
 					        <ul class="row-fluid row-merge">
 					            <li class="span2 active">
 					            	<a href="#tab1" data-toggle="tab"><span >Loyalty</span></a>
-					            </li>								            
-					            <li class="span2 ">
-					            	<a href="#tab2" data-toggle="tab"><span >Related</span></a>
-					            </li>					            					            					            
+					            </li>            
 					        </ul>
 					    </div>
-					    
 					    <div class="tab-content">
-
 					        <div class="tab-pane active" id="tab1">
 				            	<div class="span12">
 				            		<div>
 										<table class="table table-bordered table-striped table-white">
 											<thead>
 												<tr>
-													<th><span data-bind="text: lang.lang.date"></span></th>
-													<th><span data-bind="text: lang.lang.type"></span></th>
-													<th><span data-bind="text: lang.lang.reference_no"></span></th>
-													<th><span data-bind="text: lang.lang.amount"></span></th>
-													<th><span data-bind="text: lang.lang.status"></span></th>
-													<th><span data-bind="text: lang.lang.action"></span></th>
+													<th><span>No.</span></th>
+													<th><span>Name</span></th>
+													<th><span>Base</span></th>
+													<th><span>Rewards</span></th>
+													<th><span>Expiration</span></th>
+													<th><span>Status</span></th>
 												</tr>
 											</thead>
+											<tbody data-role="listview"
+						            				data-auto-bind="false"
+									                data-template="card-loyalty-list-tmpl"
+									                data-bind="source: loyaltyDS" >
+									        </tbody>
 						            	</table>
 									</div>
 				            	</div>
 				        	</div>
-					        
-					        <div class="tab-pane" id="tab2">
-					        	<div class="span12">
-					        		2222
-				            	</div>
-				        	</div>
-					       
 					    </div>
 					</div>
 				</div>
@@ -1497,4 +1490,13 @@
 			</div>
 		</div>
 	</div>
+</script>
+<script id="card-loyalty-list-tmpl" type="text/x-kendo-tmpl">
+	<tr data-bind="click: selectedRow">
+		<td>
+			<div class="media-body strong">
+				<span>#=name#</span><a style="float: right;" href="\#/loyalty/#=id#">Edit</a>
+			</div>
+		</td>
+	</tr>
 </script>
