@@ -1309,6 +1309,7 @@
 															</tr>
 														</table>
 													</div>
+													<span class="btn btn-primary btn-icon glyphicons edit pull-right" data-bind="click: activateCard, visible: cardNotActivate"><i></i><span>Activate</span></span>
 												</div>
 											</div>
 							            </div>

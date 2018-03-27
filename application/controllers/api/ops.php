@@ -47,37 +47,9 @@ class Ops extends REST_Controller {
 			    // $this->dbforge->add_field("created_at date DEFAULT NULL");
 			    // $this->dbforge->add_field("updated_at date DEFAULT NULL");
 			    // $this->dbforge->create_table('tmp_total_sales', TRUE);
-
-			    // $this->dbforge->add_field('id');
-			    // $this->dbforge->add_field("contact_id int(11) NOT NULL DEFAULT '0'");
-			    // $this->dbforge->add_field("membership_type_id int(11) NOT NULL DEFAULT '0'");
-
-			    // $this->dbforge->add_field("registration_date date DEFAULT NULL");
-			    // $this->dbforge->add_field("membership_date date DEFAULT NULL");
-			    // $this->dbforge->add_field("change_membership_date date DEFAULT NULL");
-			    // $this->dbforge->add_field("membership_status int(1) NOT NULL DEFAULT '0'");
-			    // $this->dbforge->add_field("expiry_date date DEFAULT NULL");
-
-			    // $this->dbforge->add_field("membership_application_status int(1) NOT NULL DEFAULT '0'");
-			    // $this->dbforge->add_field("graduateion_date date DEFAULT NULL");
-			    // $this->dbforge->add_field("fellow_date date DEFAULT NULL");
-
-			    // $this->dbforge->add_field("first_cdp_year date DEFAULT NULL");
-			    // $this->dbforge->add_field("cpd_record_date date DEFAULT NULL");
-			    // $this->dbforge->add_field("cpd_required_credit int(11) NOT NULL DEFAULT '0'");
-
-			    // $this->dbforge->add_field("created_at date DEFAULT NULL");
-			    // $this->dbforge->add_field("updated_at date DEFAULT NULL");
-			    // $this->dbforge->create_table('memberships', TRUE);
-
-			    // $this->dbforge->add_field('id');
-			    // $this->dbforge->add_field("membership_id int(11) NOT NULL DEFAULT '0'");
-			    // $this->dbforge->add_field("name VARCHAR(255) NOT NULL DEFAULT ''");
-			    // $this->dbforge->add_field("attribute_value LONGTEXT");
-			    // $this->dbforge->create_table('membership_properties', TRUE);			    
-
+			    
 				//Rename Table 'old_table_name' to 'new_table_name'
-			    // $this->dbforge->rename_table('memberships', 'membership_types');
+			    // $this->dbforge->rename_table('contacts_properties', 'contacts_custom_fields');
 
 				//DROP TABLE IF EXISTS table_name
 			    // $this->dbforge->drop_table('references');
@@ -121,31 +93,32 @@ class Ops extends REST_Controller {
 				// 	// 	"null" 		=> FALSE,
 				// 	// 	"default" 	=> 0
 				// 	// ),
-				// 	"is_system" => array(
-				// 		"type" 		=> "TINYINT",
-				// 		"constraint"=> 1,
+				// 	"type" => array(
+				// 		"type" 		=> "VARCHAR",
+				// 		"constraint"=> "255",
 				// 		"null" 		=> FALSE,
-				// 		"default" 	=> 0
+				// 		"default" 	=> ''
 				// 	)
 				// );
-				// $data['results'][] = $this->dbforge->add_column("membership_types", $fields);
+				// $data['results'][] = $this->dbforge->add_column("custom_fields", $fields);
 				
 			    // Modify fields
-		 	// 	$fields = array(
-				// 	// "conversion_ratio" => array(
-				// 	// 	"name" 		=> "conversion_ratio",//New Field Name 
-				// 	// 	"type" 		=> "DECIMAL",
-				// 	// 	"constraint"=> "30,15",
-				// 	// 	"null" 		=> FALSE,
-				// 	// 	"default" 	=> 1
-				// 	// ),
-				// 	"type" => array(
-				// 		"name" 		=> "description",//New Field Name 
-				// 		"type" 		=> "VARCHAR",
-				// 		"constraint"=> "500"
-				// 	)
-				// );
-				// $data['results'][] = $this->dbforge->modify_column('membership_types', $fields);
+		 		$fields = array(
+					// "conversion_ratio" => array(
+					// 	"name" 		=> "conversion_ratio",//New Field Name 
+					// 	"type" 		=> "DECIMAL",
+					// 	"constraint"=> "30,15",
+					// 	"null" 		=> FALSE,
+					// 	"default" 	=> 1
+					// ),
+					"property_value" => array(
+						"name" 		=> "field_value",//New Field Name 
+						"type" 		=> "LONGTEXT",
+						"null" 		=> FALSE,
+						"default" 	=> ""
+					)
+				);
+				$data['results'][] = $this->dbforge->modify_column('contacts_custom_fields', $fields);
 
 			 	//Remove column, 'table_name', 'column_to_drop'
 				// $this->dbforge->drop_column('item_assemblies', 'amount');

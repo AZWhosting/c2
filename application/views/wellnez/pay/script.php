@@ -4356,6 +4356,8 @@
             this.set("invobj", data);
             this.receipChangeDS.data([]);
             this.setDefaultReceiptCurrency(data.amount);
+            banhji.splitBill.data = [];
+            banhji.splitBill.data = data;
         },
     });
     banhji.splitBill = kendo.observable({
@@ -4367,6 +4369,7 @@
         item4       : [],
         txnID       : "",
         stopItemM   : false,
+        data        : [],
         numSplit    : [],
         pageLoad    : function(id){
             if(id){
@@ -4419,6 +4422,24 @@
             }else{
                 alert("Incorrect Input!");
             }
+        },
+        numPeople   : 2,
+        txnDS       : dataStore(apiUrl + "transactions"),
+        savePerson  : function(){
+            var num = this.get("numPeople");
+            var self = this;
+            var am = 0;
+            this.txnDS.query({
+                filter: {field: "id", value: this.get("txnID")},
+                pageSize: 1
+            }).then(function(e){
+                var v = self.txnDS.view()[0];
+                var am = v.amount / num;
+                self.device(am); 
+            });
+        },
+        device      : function(amount){
+
         }
     });
     banhji.printBill = kendo.observable({

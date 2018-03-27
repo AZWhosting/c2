@@ -6443,16 +6443,21 @@
             data: banhji.source.contactTypeList,
             filter: { field:"parent_id", value: 1 }//Customer
         }),
-        cardDS           : dataStore(apiUrl + 'spa/card'),
+        cardDS              : dataStore(apiUrl + 'spa/card'),
         pageLoad            : function(){
         },
-        remove: function (e) {
+        cardNotActivate     : false,
+        remove              : function (e) {
             console.log("a");
         },
         selectedRow         : function(e){
             var data = e.data;
-            console.log(data);
             this.set("obj", data);
+            if(data.status == "Not Activated"){
+                this.set("cardNotActivate", true);
+            }else{
+                this.set("cardNotActivate", false);
+            }
         },
     });
     banhji.Card = kendo.observable({

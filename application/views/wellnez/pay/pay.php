@@ -502,7 +502,8 @@
 			                	placeholder="Phone Number" 
 					           	data-bind="
 					           		value: numPeople
-					           	" /><span style="float: left; color: #333; margin-left:  10px;">(%)</span>
+					           	" /><span style="float: left; color: #333; margin-left:  10px;"> Person</span>
+					        <a style="float: left; padding: 5px 80px; margin-bottom: 20px;background: red; color: #fff; margin-top: 5px;" data-bind="click: savePerson">Save</a>
 		            	</div>
 		        	</div>
 			       
