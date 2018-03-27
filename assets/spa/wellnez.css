@@ -140,7 +140,7 @@ input[type="radio"], input[type="checkbox"]{
 .table.table-bordered.table-primary.table-striped.table-vertical-center tr td{}
 
 div.k-window{
-  z-index: 1 !important;
+  /*z-index: 1 !important;*/
 }
 .k-dirty{
   display: none;

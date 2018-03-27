@@ -6434,6 +6434,7 @@
         transactionDS       : dataStore(apiUrl + 'transactions'),
         noteDS              : dataStore(apiUrl + 'notes'),
         attachmentDS        : dataStore(apiUrl + "attachments"),
+        contactDS           : dataStore(apiUrl + "contacts"),
         txnDS               : dataStore(apiUrl + "transactions"),
         currencyDS          : new kendo.data.DataSource({
             data: banhji.source.currencyList,
@@ -6450,6 +6451,7 @@
         remove              : function (e) {
             console.log("a");
         },
+        obj                 : null,
         selectedRow         : function(e){
             var data = e.data;
             this.set("obj", data);
@@ -6459,6 +6461,40 @@
                 this.set("cardNotActivate", false);
             }
         },
+        activateShow        : false,
+        activateCard     : function(){
+            
+            this.set("activateShow", true);
+            $("#loadImport").css("display", "block");
+        },
+        cancelActivate      : function(){
+            this.set("activateShow", false);
+            $("#loadImport").css("display", "none");
+        },
+        activateDS          : dataStore(apiUrl + "spa/activate_card"),
+        activateNow         : function(){
+            var obj = this.get("obj");
+            if(obj.id && this.get("register_activate") && this.get("contact_activate")){
+                this.activateDS.data([]);
+                this.activateDS.add({
+                    contact_id      : this.get("contact_activate"),
+                    registered_date : this.get("register_date"),
+                    card_id         : obj.id,
+                });
+                this.activateDS.sync();
+                this.activateDS.bind("requestEnd", function(e){ 
+                    if(e.response.type != 'read'){
+                        var noti = $("#ntf1").data("kendoNotification");
+                            noti.hide();
+                            noti.success(self.lang.lang.success_message);
+                        self.cancelActivate();
+                    }
+                });
+            }else{
+                alert("Feild Required!");
+            }
+        },
+        register_activate   : new Date(),
     });
     banhji.Card = kendo.observable({
         lang        : langVM,

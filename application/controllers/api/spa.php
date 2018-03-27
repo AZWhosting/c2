@@ -2475,8 +2475,14 @@ class Spa extends REST_Controller {
 		if($obj->exists()){
 			foreach ($obj as $value) {
 				$statusdetail = "";
+				$contact = "";
 				if($value->status == 1){
 					$statusdetail = "Activated";
+					if($value->contact_id > 0){
+						$con = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						$con->where("id", $value->contact_id)->limit(1)->get();
+						$contact = $con->name;
+					}
 				}else{
 					$statusdetail = "Not Activated";
 				}
@@ -2486,6 +2492,9 @@ class Spa extends REST_Controller {
 					"number"			=> $value->number,
 					"serial"			=> $value->serial,
 					"status" 			=> $statusdetail,
+					"contact_id" 		=> $value->contact_id,
+					"contact_name" 		=> $contact,
+					"registered_date"	=> $value->registered_date,
 				);
 			}
 		}
@@ -2547,6 +2556,31 @@ class Spa extends REST_Controller {
 				"status" => $obj->delete()
 			);
 		}
+	}
+	function activate_card_post(){
+		$models = json_decode($this->post('models'));
+		$data["results"] = [];
+		$data["count"] = 0;
+		foreach ($models as $value) {
+			$obj = new Spa_card(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$obj->where("id", $value->card_id)->limit(1)->get();
+			isset($value->contact_id) 			? $obj->contact_id 			= $value->contact_id : 0;
+			isset($value->registered_date) 		? $obj->registered_date 	= $value->registered_date : 0;
+			$obj->status = 1;
+	   		if($obj->save()){
+			   	$data["results"][] = array(
+			   		"id" 				=> $obj->id,
+			   		"name" 				=> $obj->name,
+					"number"			=> $obj->number,
+					"serial"			=> $obj->serial,
+			   		"contact_id" 		=> $obj->contact_id,
+					"registered_date"	=> $obj->registered_date,
+					"serial"			=> $obj->serial,
+			   	);
+		    }
+		}
+		$data["count"] = count($data["results"]);
+		$this->response($data, 201);	
 	}
 }
 /* End of file choulr.php */

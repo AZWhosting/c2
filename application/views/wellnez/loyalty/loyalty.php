@@ -1,5 +1,4 @@
-<div id="wrapperApplication" class="wrapper"></div>
-<!--load before somthing not yet done -->
+<div id="wrapperApplication" class="wrapper"></div> <!--load before somthing not yet done -->
 <div id="holdpageloadhide" style="display:block;text-align: center;position: fixed;top: 0; left: 0;width: 100%; height: 100%;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
 	<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 45%;left: 45%"></i>
 </div>
@@ -1222,8 +1221,24 @@
 	</tr>
 </script>
 <script id="cardCenter" type="text/x-kendo-template">
+	<style type="text/css">
+		span.k-dropdown, span.k-datepicker {
+			height: 29px!important;
+			padding: 5px!important;
+		}
+		.k-picker-wrap .k-input {
+			width: 98%!important;
+			height: 23px!important;
+		}
+		span.k-datepicker {
+
+		}
+	</style>
 	<div class="container">
-		<div class="row customerCenter">
+		<div class="row customerCenter" style="overflow: hidden;padding: 0;position: relative;">
+			<div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 100%;background: rgba(142, 159, 167, 0.8);z-index: 9999;border-radius: 10px;">
+				<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 40%;left: 40%"></i>
+			</div>
 			<div class="span3">
 				<div class="listWrapper">
 					<a href="#/card" class="addLoyalty">Add Card</a>
@@ -1279,7 +1294,7 @@
 							            <div id="tab2-4" class="tab-pane box-generic active" style="float: left; margin-bottom: 10px;">
 							            	<div class="row-fluid">
 						            			<div class="span12" style="padding: 0;">
-								            		<div class="accounCetner-textedit">
+								            		<div class="accounCetner-textedit" style="min-height: 145px;">
 										            	<table width="100%" style="font-size: 12px; color: #333;">
 										            		<tr>
 																<td><span>Name</span></td>
@@ -1297,7 +1312,6 @@
 															<tr>
 																<td><span>Serial</span></td>
 																<td>
-																	<span class="strong" data-bind="text: obj.abbr"></span>
 																	<span class="strong" data-bind="text: obj.serial"></span>
 																</td>
 															</tr>
@@ -1307,9 +1321,44 @@
 																	<span data-bind="text: obj.status"></span>
 																</td>
 															</tr>
+															<tr>
+																<td><span>Belong to:</span></td>
+																<td>
+																	<span class="strong" data-bind="text: obj.contact_name"></span>
+																</td>
+															</tr>
 														</table>
 													</div>
 													<span class="btn btn-primary btn-icon glyphicons edit pull-right" data-bind="click: activateCard, visible: cardNotActivate"><i></i><span>Activate</span></span>
+													<div data-role="window"
+										                data-title="Activate Card"
+										                data-width="400"
+										                data-actions="{}"
+										                data-height="150"
+										                data-position="{top: '30%', left: '37%'}"
+										                data-bind="visible: activateShow">
+										                <span style="float: left; padding: 10px 54px 10px 20px; background: #ddd; border-width: 1px 0 0 1px;   border-style: solid; border-color: #ccc; font-weight: 700">Customer</span>
+						            					<input data-role="dropdownlist"
+											                data-auto-bind="false"
+											                data-value-primitive="true"
+											                data-text-field="name"
+											                data-value-field="id"
+											                data-bind="
+											                	value: contact_activate,
+											                    source: contactDS,
+											                "
+											                style="float: left; height: 41px; padding: 8px; border-width: 1px 1px 0 1px; border-style: solid; border-color: #ccc; color: #333; margin-left: -4px; width: 54.8%;" 
+											            />
+											           	<span style="float: left; padding: 10px 14px 10px 20px; background: #ddd; border-width: 1px 0 0 1px;   border-style: solid; border-color: #ccc; font-weight: 700">Registered Date</span>
+											           	<input data-role="datepicker"
+												    	   	class="edate"
+												    	   	data-format="dd-MM-yyyy"
+												           	data-bind="value: register_activate"
+												        	style="float: left; height: 41px; padding: 8px; border-width: 1px 1px 0 1px; border-style: solid; border-color: #ccc; color: #333; margin-left: -4px; width: 54.8%;margin-bottom: 15px;"    
+												        />
+												        <span style="float: left!important;" class="btn btn-primary btn-icon glyphicons edit pull-right" data-bind="click: activateNow"><i></i><span>Activate</span></span>
+												        <span class="btn btn-primary btn-icon glyphicons circle_remove pull-right" data-bind="click: cancelActivate" style="background: red;border: 1px solid red;"><i></i><span>Cancel</span></span>
+										            </div>
 												</div>
 											</div>
 							            </div>

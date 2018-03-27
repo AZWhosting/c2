@@ -16697,11 +16697,11 @@
                 end.setDate(end.getDate() + 1);
 
                 para.push({
-                    field: "issued_date >=",
+                    field: "created_at >=",
                     value: kendo.toString(start, "yyyy-MM-dd")
                 });
                 para.push({
-                    field: "issued_date <",
+                    field: "created_at <",
                     value: kendo.toString(end, "yyyy-MM-dd")
                 });
             } else if (start) {
@@ -16709,7 +16709,7 @@
                 displayDate = "On " + kendo.toString(start, "dd-MM-yyyy");
 
                 para.push({
-                    field: "issued_date",
+                    field: "created_at",
                     value: kendo.toString(start, "yyyy-MM-dd")
                 });
             } else if (end) {
@@ -16718,7 +16718,7 @@
                 end.setDate(end.getDate() + 1);
 
                 para.push({
-                    field: "issued_date <",
+                    field: "created_at <",
                     value: kendo.toString(end, "yyyy-MM-dd")
                 });
             } else {

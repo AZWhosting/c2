@@ -277,8 +277,9 @@ class UtibillReports extends REST_Controller {
 		//Results
 		$obj->include_related("contact", array("abbr", "number", "name"));
 		$obj->include_related("location", "name");
-		$obj->include_related("winvoice_line", array("quantity", "type", "amount", "transaction_id"));
-		$obj->where_related("winvoice_line", "type", array("usage", "tariff"));
+		$obj->include_related("winvoice_line", array("quantity", "type", "amount"));
+		$obj->include_related('winvoice_line/meter_record', "usage");
+		$obj->where_related("winvoice_line", "type", "tariff");
 		$obj->where("type", "Utility_Invoice");
 		$obj->where("is_recurring <>", 1);
 		$obj->where("deleted <>", 1);
@@ -299,14 +300,9 @@ class UtibillReports extends REST_Controller {
 			$amount = 0;
 			$price = 0;
 			foreach ($obj as $value) {	
-				if(isset($value->winvoice_line_transaction_id)){
-					if($value->winvoice_line_type=="usage"){
-					$usage = floatval($value->winvoice_line_quantity);
-					}else{
-						$usage = 0;						
-					}
-					$price += floatval($value->winvoice_line_amount);
-				}					
+				$usage = $value->winvoice_line_meter_record_usage;
+				$price = $value->winvoice_line_amount;
+				$amount = $usage*$price;				
 				
 				$amount = $usage * $price;
 				if(isset($objList[$value->contact_id])){
@@ -370,7 +366,8 @@ class UtibillReports extends REST_Controller {
 		$obj->include_related("contact", array("abbr", "number", "name"));
 		$obj->include_related("location", "name");
 		$obj->include_related("winvoice_line", array("quantity", "type", "amount"));
-		$obj->where_related("winvoice_line", "type", array("usage", "tariff"));
+		$obj->include_related('winvoice_line/meter_record', "usage");
+		$obj->where_related("winvoice_line", "type", "tariff");
 		$obj->where("type", "Utility_Invoice");
 		$obj->where("is_recurring <>", 1);
 		$obj->where("deleted <>", 1);
@@ -392,13 +389,9 @@ class UtibillReports extends REST_Controller {
 			$amount = 0;
 			$price = 0;
 			foreach ($obj as $value) {								
-				if($value->winvoice_line_type=="usage"){
-					$usage += floatval($value->winvoice_line_quantity);
-				}else{
-					$usage = 0;
-					$price += floatval($value->winvoice_line_amount);
-				}
-				$amount = $usage * $price;
+				$usage = $value->winvoice_line_meter_record_usage;
+				$price = $value->winvoice_line_amount;
+				$amount = $usage*$price;
 				
 				if(isset($objList[$value->contact_id])){
 					$objList[$value->contact_id]["line"][] = array(
@@ -1620,6 +1613,7 @@ class UtibillReports extends REST_Controller {
 		$obj->include_related("contact", array("abbr", "number", "name"));
 		$obj->include_related("location", "name");
 		$obj->include_related('location/branch', "name");
+		$obj->include_related("meter", "created_at");
 		$obj->where("type", "invoice");
 		$obj->where("meter_id <>", 0);
 		$obj->where("is_recurring <>", 1);
@@ -1645,7 +1639,7 @@ class UtibillReports extends REST_Controller {
 					$objList[$value->contact_id]["line"][] = array(
 						"id" 				=> $value->id,
 						"type" 				=> $value->type,
-						"date" 				=> $value->issued_date,
+						"date" 				=> $value->meter_created_at,
 						"location" 			=> $value->location_name,
 						"number" 			=> $value->number,
 						"branch" 			=> $value->location_branch_name,
@@ -1657,7 +1651,7 @@ class UtibillReports extends REST_Controller {
 					$objList[$value->contact_id]["line"][]	= array(
 						"id" 				=> $value->id,
 						"type" 				=> $value->type,
-						"date" 				=> $value->issued_date,
+						"date" 				=> $value->meter_created_at,
 						"location" 			=> $value->location_name,
 						"number" 			=> $value->number,
 						"branch" 			=> $value->location_branch_name,
