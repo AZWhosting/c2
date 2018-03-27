@@ -103,22 +103,22 @@ class Ops extends REST_Controller {
 				// $data['results'][] = $this->dbforge->add_column("custom_fields", $fields);
 				
 			    // Modify fields
-		 		$fields = array(
-					// "conversion_ratio" => array(
-					// 	"name" 		=> "conversion_ratio",//New Field Name 
-					// 	"type" 		=> "DECIMAL",
-					// 	"constraint"=> "30,15",
-					// 	"null" 		=> FALSE,
-					// 	"default" 	=> 1
-					// ),
-					"property_value" => array(
-						"name" 		=> "field_value",//New Field Name 
-						"type" 		=> "LONGTEXT",
-						"null" 		=> FALSE,
-						"default" 	=> ""
-					)
-				);
-				$data['results'][] = $this->dbforge->modify_column('contacts_custom_fields', $fields);
+		 		//$fields = array(
+				// 	// "conversion_ratio" => array(
+				// 	// 	"name" 		=> "conversion_ratio",//New Field Name 
+				// 	// 	"type" 		=> "DECIMAL",
+				// 	// 	"constraint"=> "30,15",
+				// 	// 	"null" 		=> FALSE,
+				// 	// 	"default" 	=> 1
+				// 	// ),
+				// 	"property_value" => array(
+				// 		"name" 		=> "field_value",//New Field Name 
+				// 		"type" 		=> "LONGTEXT",
+				// 		"null" 		=> FALSE,
+				// 		"default" 	=> ""
+				// 	)
+				// );
+				// $data['results'][] = $this->dbforge->modify_column('contacts_custom_fields', $fields);
 
 			 	//Remove column, 'table_name', 'column_to_drop'
 				// $this->dbforge->drop_column('item_assemblies', 'amount');
