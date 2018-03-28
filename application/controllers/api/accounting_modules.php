@@ -284,406 +284,259 @@ class Accounting_modules extends REST_Controller {
 
 		//INCOME (Begin FiscalDate To As Of)
 		$income = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$income->include_related("transaction", array("rate"));
+		$income->select_sum("(cr - dr) / transactions.rate", "total");
 		$income->where_in_related("account", "account_type_id", array(35,39));
 		$income->where_related("transaction", "issued_date >=", $this->startFiscalDate);
 		$income->where_related("transaction", "issued_date <", $asOftoday);
 		$income->where_related("transaction", "is_recurring <>", 1);
 		$income->where_related("transaction", "deleted <>", 1);
 		$income->where("deleted <>", 1);		
-		$income->get_iterated();
-		
-		//Sum dr and cr					
-		$incomeDr = 0;
-		$incomeCr = 0;
-		foreach ($income as $value) {			
-			if($value->dr!==0){
-				$incomeDr += floatval($value->dr) / floatval($value->transaction_rate);
-			}
-			if($value->cr!==0){
-				$incomeCr += floatval($value->cr) / floatval($value->transaction_rate);
-			}	
-		}
-		
-		$totalIncome = $incomeCr - $incomeDr;
+		$income->get();
+
+		$totalIncome = floatval($income->total);
 		//END INCOME
 
-
+		
 		//EXPENSE (Begin FiscalDate To As Of)
 		$expense = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$expense->include_related("transaction", array("rate"));
+		$expense->select_sum("(dr - cr) / transactions.rate", "total");
 		$expense->where_in_related("account", "account_type_id", array(36,37,38,40,41,42));
 		$expense->where_related("transaction", "issued_date >=", $this->startFiscalDate);
 		$expense->where_related("transaction", "issued_date <", $asOftoday);
 		$expense->where_related("transaction", "is_recurring <>", 1);
 		$expense->where_related("transaction", "deleted <>", 1);
 		$expense->where("deleted <>", 1);
-		$expense->get_iterated();
+		$expense->get();
 		
-		//Sum Dr and Cr					
-		$expenseDr = 0;
-		$expenseCr = 0;
-		foreach ($expense as $value) {			
-			if($value->dr!==0){
-				$expenseDr += floatval($value->dr) / floatval($value->transaction_rate);
-			}
-			if($value->cr!==0){
-				$expenseCr += floatval($value->cr) / floatval($value->transaction_rate);
-			}	
-		}
-		
-		$totalExpense = $expenseDr - $expenseCr;
+		$totalExpense = floatval($expense->total);
 		//END EXPENSE
 
 
 		//EXPENSE EBIT (Begin FiscalDate To As Of)
 		$expenseEBIT = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$expenseEBIT->include_related("transaction", array("rate"));
+		$expenseEBIT->select_sum("(dr - cr) / transactions.rate", "total");
 		$expenseEBIT->where_in_related("account", "account_type_id", array(36,37,38,40));
 		$expenseEBIT->where_related("transaction", "issued_date >=", $this->startFiscalDate);
 		$expenseEBIT->where_related("transaction", "issued_date <", $asOftoday);
 		$expenseEBIT->where_related("transaction", "is_recurring <>", 1);
 		$expenseEBIT->where_related("transaction", "deleted <>", 1);
 		$expenseEBIT->where("deleted <>", 1);
-		$expenseEBIT->get_iterated();
+		$expenseEBIT->get();
 		
-		//Sum Dr and Cr					
-		$expenseEBITDr = 0;
-		$expenseEBITCr = 0;
-		foreach ($expenseEBIT as $value) {			
-			if($value->dr!==0){
-				$expenseEBITDr += floatval($value->dr) / floatval($value->transaction_rate);
-			}
-			if($value->cr!==0){
-				$expenseEBITCr += floatval($value->cr) / floatval($value->transaction_rate);
-			}	
-		}
-		
-		$totalExpenseEBIT = $expenseEBITDr - $expenseEBITCr;
+		$totalExpenseEBIT = floatval($expenseEBIT->total);
 		//END EXPENSE EBIT
 
 
 		//ASSET (As Of)
 		$asset = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$asset->include_related("transaction", array("rate"));
+		$asset->select_sum("(dr - cr) / transactions.rate", "total");
 		$asset->where_in_related("account", "account_type_id", array(10,11,12,13,14,15,16,17,18,19,20,21,22));
 		$asset->where_related("transaction", "issued_date <", $asOftoday);
 		$asset->where_related("transaction", "is_recurring <>", 1);
 		$asset->where_related("transaction", "deleted <>", 1);
 		$asset->where("deleted <>", 1);
-		$asset->get_iterated();
+		$asset->get();
 		
-		//Sum Dr and Cr					
-		$assetDr = 0;
-		$assetCr = 0;
-		foreach ($asset as $value) {			
-			if($value->dr!==0){
-				$assetDr += floatval($value->dr) / floatval($value->transaction_rate);
-			}
-			if($value->cr!==0){
-				$assetCr += floatval($value->cr) / floatval($value->transaction_rate);
-			}	
-		}
-		
-		$totalAsset = $assetDr - $assetCr;
+		$totalAsset = floatval($asset->total);
 		//END ASSET
 
 
 		//QUICK CURRENT ASSET (As Of)
 		$quickCurrentAsset = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$quickCurrentAsset->include_related("transaction", array("rate"));
+		$quickCurrentAsset->select_sum("(dr - cr) / transactions.rate", "total");
 		$quickCurrentAsset->where_in_related("account", "account_type_id", array(10,11,12,14,15));
 		$quickCurrentAsset->where_related("transaction", "issued_date <", $asOftoday);
 		$quickCurrentAsset->where_related("transaction", "is_recurring <>", 1);
 		$quickCurrentAsset->where_related("transaction", "deleted <>", 1);
 		$quickCurrentAsset->where("deleted <>", 1);
-		$quickCurrentAsset->get_iterated();
+		$quickCurrentAsset->get();
 		
-		//Sum Dr and Cr					
-		$quickCurrentAssetDr = 0;
-		$quickCurrentAssetCr = 0;
-		foreach ($quickCurrentAsset as $value) {			
-			if($value->dr!==0){
-				$quickCurrentAssetDr += floatval($value->dr) / floatval($value->transaction_rate);
-			}
-			if($value->cr!==0){
-				$quickCurrentAssetCr += floatval($value->cr) / floatval($value->transaction_rate);
-			}	
-		}
-		
-		$totalQuickCurrentAsset = $quickCurrentAssetDr - $quickCurrentAssetCr;
+		$totalQuickCurrentAsset = floatval($quickCurrentAsset->total);
 		//END QUICK CURRENT ASSET
 
 
 		//CURRENT ASSET (As Of)
 		$currentAsset = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$currentAsset->include_related("transaction", array("rate"));
+		$currentAsset->select_sum("(dr - cr) / transactions.rate", "total");
 		$currentAsset->where_in_related("account", "account_type_id", array(10,11,12,13,14,15));
 		$currentAsset->where_related("transaction", "issued_date <", $asOftoday);
 		$currentAsset->where_related("transaction", "is_recurring <>", 1);
 		$currentAsset->where_related("transaction", "deleted <>", 1);
 		$currentAsset->where("deleted <>", 1);
-		$currentAsset->get_iterated();
+		$currentAsset->get();
 		
-		//Sum Dr and Cr					
-		$currentAssetDr = 0;
-		$currentAssetCr = 0;
-		foreach ($currentAsset as $value) {			
-			if($value->dr!==0){
-				$currentAssetDr += floatval($value->dr) / floatval($value->transaction_rate);
-			}
-			if($value->cr!==0){
-				$currentAssetCr += floatval($value->cr) / floatval($value->transaction_rate);
-			}	
-		}
-		
-		$totalCurrentAsset = $currentAssetDr - $currentAssetCr;
+		$totalCurrentAsset = floatval($currentAsset->total);
 		//END CURRENT ASSET
 
 
 		//CASH RATIO (As Of)
 		$cashRatio = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$cashRatio->include_related("transaction", array("rate"));
+		$cashRatio->select_sum("(dr - cr) / transactions.rate", "total");
 		$cashRatio->where_related("account", "account_type_id", 10);
 		$cashRatio->where_related("transaction", "issued_date <", $asOftoday);
 		$cashRatio->where_related("transaction", "is_recurring <>", 1);
 		$cashRatio->where_related("transaction", "deleted <>", 1);
 		$cashRatio->where("deleted <>", 1);		
-		$cashRatio->get_iterated();
-		
-		//Sum Dr and Cr					
-		$cashRatioDr = 0;
-		$cashRatioCr = 0;
-		foreach ($cashRatio as $value) {			
-			if($value->dr!==0){
-				$cashRatioDr += floatval($value->dr) / floatval($value->transaction_rate);
-			}
-			if($value->cr!==0){
-				$cashRatioCr += floatval($value->cr) / floatval($value->transaction_rate);
-			}	
-		}
-		
-		$totalCashRatio = $cashRatioDr - $cashRatioCr;
+		$cashRatio->get();
+
+		$totalCashRatio = floatval($cashRatio->total);
 		//END CASH RATIO
 
 
 		//LIABILITY (As Of)
 		$liability = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$liability->include_related("transaction", array("rate"));
+		$liability->select_sum("(cr - dr) / transactions.rate", "total");
 		$liability->where_in_related("account", "account_type_id", array(23,24,25,26,27,28,29,30,31,32));
 		$liability->where_related("transaction", "issued_date <", $asOftoday);
 		$liability->where_related("transaction", "is_recurring <>", 1);
 		$liability->where_related("transaction", "deleted <>", 1);
 		$liability->where("deleted <>", 1);		
-		$liability->get_iterated();
+		$liability->get();
 		
-		//Sum Dr and Cr					
-		$liabilityDr = 0;
-		$liabilityCr = 0;
-		foreach ($liability as $value) {			
-			if($value->dr!==0){
-				$liabilityDr += floatval($value->dr) / floatval($value->transaction_rate);
-			}
-			if($value->cr!==0){
-				$liabilityCr += floatval($value->cr) / floatval($value->transaction_rate);
-			}	
-		}
-		
-		$totalLiability = $liabilityCr - $liabilityDr;
+		$totalLiability = floatval($liability->total);
 		//END LIABILITY
 
 
 		//CURRENT LIABILITY (As Of)
 		$currentLiability = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$currentLiability->include_related("transaction", array("rate"));
+		$currentLiability->select_sum("(cr - dr) / transactions.rate", "total");
 		$currentLiability->where_in_related("account", "account_type_id", array(23,24,25,26,27));
 		$currentLiability->where_related("transaction", "issued_date <", $asOftoday);
 		$currentLiability->where_related("transaction", "is_recurring <>", 1);
 		$currentLiability->where_related("transaction", "deleted <>", 1);
 		$currentLiability->where("deleted <>", 1);
-		$currentLiability->get_iterated();
+		$currentLiability->get();
 		
-		//Sum Dr and Cr					
-		$currentLiabilityDr = 0;
-		$currentLiabilityCr = 0;
-		foreach ($currentLiability as $value) {			
-			if($value->dr!==0){
-				$currentLiabilityDr += floatval($value->dr) / floatval($value->transaction_rate);
-			}
-			if($value->cr!==0){
-				$currentLiabilityCr += floatval($value->cr) / floatval($value->transaction_rate);
-			}	
-		}
-		
-		$totalCurrentLiability = $currentLiabilityCr - $currentLiabilityDr;
+		$totalCurrentLiability = floatval($currentLiability->total);
 		//END CURRENT LIABILITY		
 
 
 		//COGS (Begin FiscalDate To As Of)
 		$cogs = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$cogs->include_related("transaction", array("rate"));
+		$cogs->select_sum("(dr - cr) / transactions.rate", "total");
 		$cogs->where_related("account", "account_type_id", 36);
 		$cogs->where_related("transaction", "issued_date >=", $this->startFiscalDate);
 		$cogs->where_related("transaction", "issued_date <", $asOftoday);
 		$cogs->where_related("transaction", "is_recurring <>", 1);
 		$cogs->where_related("transaction", "deleted <>", 1);
 		$cogs->where("deleted <>", 1);
-		$cogs->get_iterated();
+		$cogs->get();
 		
-		//Sum Dr and Cr					
-		$cogsDr = 0;
-		$cogsCr = 0;
-		foreach ($cogs as $value) {			
-			if($value->dr!==0){
-				$cogsDr += floatval($value->dr) / floatval($value->transaction_rate);
-			}
-			if($value->cr!==0){
-				$cogsCr += floatval($value->cr) / floatval($value->transaction_rate);
-			}	
-		}
-		
-		$totalCOGS = $cogsDr - $cogsCr;
+		$totalCOGS = floatval($cogs->total);
 		//END COGS
 
 
 		//INVENTORY (As Of)
 		$inventory = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$inventory->include_related("transaction", array("rate"));
+		$inventory->select_sum("(dr - cr) / transactions.rate", "total");
 		$inventory->where_related("account", "account_type_id", 13);
 		$inventory->where_related("transaction", "issued_date <", $asOftoday);
 		$inventory->where_related("transaction", "is_recurring <>", 1);
 		$inventory->where_related("transaction", "deleted <>", 1);
 		$inventory->where("deleted <>", 1);		
-		$inventory->get_iterated();
+		$inventory->get();
 		
-		//Sum Dr and Cr					
-		$inventoryDr = 0;
-		$inventoryCr = 0;
-		foreach ($inventory as $value) {			
-			if($value->dr!==0){
-				$inventoryDr += floatval($value->dr) / floatval($value->transaction_rate);
-			}
-			if($value->cr!==0){
-				$inventoryCr += floatval($value->cr) / floatval($value->transaction_rate);
-			}	
-		}
-		
-		$totalInventory = $inventoryDr - $inventoryCr;
+		$totalInventory = floatval($inventory->total);
 		//END INVENTORY
 
 
 		//AR (As Of)
 		$ar = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$ar->include_related("transaction", array("rate"));
+		$ar->select_sum("(dr - cr) / transactions.rate", "total");
 		$ar->where_related("account", "account_type_id", 12);
 		$ar->where_related("transaction", "issued_date <", $asOftoday);
 		$ar->where_related("transaction", "is_recurring <>", 1);
 		$ar->where_related("transaction", "deleted <>", 1);
 		$ar->where("deleted <>", 1);
-		$ar->get_iterated();
+		$ar->get();
 		
-		//Sum Dr and Cr					
-		$arDr = 0;
-		$arCr = 0;
-		foreach ($ar as $value) {			
-			if($value->dr!==0){
-				$arDr += floatval($value->dr) / floatval($value->transaction_rate);
-			}
-			if($value->cr!==0){
-				$arCr += floatval($value->cr) / floatval($value->transaction_rate);
-			}	
-		}
-		
-		$totalAR = $arDr - $arCr;
+		$totalAR = floatval($ar->total);
 		//END AR
 
 
 		//AP (As Of)
 		$ap = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$ap->include_related("transaction", array("rate"));
+		$ap->select_sum("(cr - dr) / transactions.rate", "total");
 		$ap->where_related("account", "account_type_id", 23);
 		$ap->where_related("transaction", "issued_date <", $asOftoday);
 		$ap->where_related("transaction", "is_recurring <>", 1);
 		$ap->where_related("transaction", "deleted <>", 1);
 		$ap->where("deleted <>", 1);
-		$ap->get_iterated();
+		$ap->get();
 		
-		//Sum Dr and Cr					
-		$apDr = 0;
-		$apCr = 0;
-		foreach ($ap as $value) {			
-			if($value->dr!==0){
-				$apDr += floatval($value->dr) / floatval($value->transaction_rate);
-			}
-			if($value->cr!==0){
-				$apCr += floatval($value->cr) / floatval($value->transaction_rate);
-			}	
-		}
-		
-		$totalAP = $apCr - $apDr;
+		$totalAP = floatval($ap->total);
 		//END AP
 
 
 		//SALE (Begin FiscalDate To As Of)
 		$sale = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
-		$sale->where_in("type", array("Commercial_Invoice","Vat_Invoice","Invoice","Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale","Sale_Return","Cash_Refund"));
+		$sale->where_in("type", array("Commercial_Invoice","Vat_Invoice","Invoice","Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale"));
+		$sale->select_sum("amount / rate", "total");
 		$sale->where("issued_date >=", $this->startFiscalDate);
 		$sale->where("issued_date <", $asOftoday);
 		$sale->where("is_recurring <>", 1);
 		$sale->where("deleted <>", 1);
-		$sale->get_iterated();
+		$sale->get();
+
+		$saleReturns = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+		$saleReturns->where_in("type", array("Sale_Return","Cash_Refund"));
+		$saleReturns->select_sum("amount / rate", "total");
+		$saleReturns->where("issued_date >=", $this->startFiscalDate);
+		$saleReturns->where("issued_date <", $asOftoday);
+		$saleReturns->where("is_recurring <>", 1);
+		$saleReturns->where("deleted <>", 1);
+		$saleReturns->get();
 		
 		//Sum Sale					
-		$totalSale = 0;
-		foreach ($sale as $value) {
-			if($value->type=="Sale_Return" || $value->type=="Cash_Refund"){
-				$totalSale -= floatval($value->amount) / floatval($value->rate);
-			}else{
-				$totalSale += floatval($value->amount) / floatval($value->rate);
-			}
-		}
+		$totalSale = floatval($sale->total) - floatval($saleReturns->total);
 		//END SALE
 
 
 		//CREDIT SALE (Begin FiscalDate To As Of)
 		$creditSale = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$creditSale->where_in("type", array("Commercial_Invoice","Vat_Invoice","Invoice","Sale_Return"));
+		$creditSale->where_in("type", array("Commercial_Invoice","Vat_Invoice","Invoice"));
+		$creditSale->select_sum("amount / rate", "total");
 		$creditSale->where("issued_date >=", $this->startFiscalDate);
 		$creditSale->where("issued_date <", $asOftoday);
 		$creditSale->where("is_recurring <>", 1);
 		$creditSale->where("deleted <>", 1);
-		$creditSale->get_iterated();
+		$creditSale->get();
+
+		$creditSaleReturns = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$creditSaleReturns->where("type", "Sale_Return");
+		$creditSaleReturns->select_sum("amount / rate", "total");
+		$creditSaleReturns->where("issued_date >=", $this->startFiscalDate);
+		$creditSaleReturns->where("issued_date <", $asOftoday);
+		$creditSaleReturns->where("is_recurring <>", 1);
+		$creditSaleReturns->where("deleted <>", 1);
+		$creditSaleReturns->get();
 		
 		//Sum Sale					
-		$totalCreditSale = 0;
-		foreach ($creditSale as $value) {
-			if($value->type=="Sale_Return"){
-				$totalCreditSale -= floatval($value->amount) / floatval($value->rate);
-			}else{
-				$totalCreditSale += floatval($value->amount) / floatval($value->rate);
-			}
-		}
+		$totalCreditSale = floatval($creditSale->total) - floatval($creditSaleReturns->total);
 		//END CREDIT SALE
 
 
 		//CREDIT PURCHASE (Begin FiscalDate To As Of)
 		$creditPurchase = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$creditPurchase->where_in("type", array("Credit_Purchase", "Purchase_Return"));
+		$creditPurchase->where("type", "Credit_Purchase");
+		$creditPurchase->select_sum("amount / rate", "total");
 		$creditPurchase->where("issued_date >=", $this->startFiscalDate);
 		$creditPurchase->where("issued_date <", $asOftoday);
 		$creditPurchase->where("is_recurring <>", 1);
 		$creditPurchase->where("deleted <>", 1);
 		$creditPurchase->get_iterated();
+
+		$creditPurchaseReturns = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$creditPurchaseReturns->where("type", "Purchase_Return");
+		$creditPurchaseReturns->select_sum("amount / rate", "total");
+		$creditPurchaseReturns->where("issued_date >=", $this->startFiscalDate);
+		$creditPurchaseReturns->where("issued_date <", $asOftoday);
+		$creditPurchaseReturns->where("is_recurring <>", 1);
+		$creditPurchaseReturns->where("deleted <>", 1);
+		$creditPurchaseReturns->get();
 		
 		//Sum Purchase					
-		$totalCreditPurchase = 0;
-		foreach ($creditPurchase as $value) {
-			if($value->type=="Purchase_Return"){
-				$totalCreditPurchase -= floatval($value->amount) / floatval($value->rate);
-			}else{
-				$totalCreditPurchase += floatval($value->amount) / floatval($value->rate);
-			}			
-		}
+		$totalCreditPurchase = floatval($creditPurchase->total) - floatval($creditPurchaseReturns->total);
 		//END CREDIT PURCHASE
 
 
