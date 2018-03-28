@@ -697,24 +697,24 @@ class Winvoices extends REST_Controller {
 					}
 				}
 				//Calucate minus month of 5months
-				$date = strtotime($row->month_of .' -5 months');
-				$d = date('Y-m-01', $date);
-				$monthGraph = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$monthGraph->where("month_of >=", $d);
-				$monthGraph->where("meter_id", $row->meter_id);
-				$monthGraph->where("deleted <>", 1);
-				$monthGraph->order_by('id', 'desc')->limit(5)->get();
+				// $date = strtotime($row->month_of .' -5 months');
+				// $d = date('Y-m-01', $date);
+				// $monthGraph = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				// $monthGraph->where("month_of >=", $d);
+				// $monthGraph->where("meter_id", $row->meter_id);
+				// $monthGraph->where("deleted <>", 1);
+				// $monthGraph->order_by('id', 'desc')->limit(5)->get();
 				// $minusM = array();
-				$minusM = array();
-				$monthN = "";
-				foreach($monthGraph as $monthOF) {
+				// $minusM = array();
+				// $monthN = "";
+				// foreach($monthGraph as $monthOF) {
 					
-					$monthN = date('F', strtotime($monthOF->month_of));
-					$minusM[] = array(
-						'month' => $monthN,
-						'usage' => $monthOF->amount
-					);
-				}
+				// 	$monthN = date('F', strtotime($monthOF->month_of));
+				// 	$minusM[] = array(
+				// 		'month' => $monthN,
+				// 		'usage' => $monthOF->amount
+				// 	);
+				// }
 				$monthGraph = "";
 				if(empty($meter)){
 					$meter = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
@@ -761,7 +761,7 @@ class Winvoices extends REST_Controller {
 					'locale' => $locale,
 					'consumption' => $usage,
 					'formcolor' => '',
-					'minusMonth' => $minusM,
+					// 'minusMonth' => $minusM,
 					'contact' => array(
 						'id' => $row->contact_id,
 						'name' => $contact->name,

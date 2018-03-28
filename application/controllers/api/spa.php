@@ -2582,6 +2582,57 @@ class Spa extends REST_Controller {
 		$data["count"] = count($data["results"]);
 		$this->response($data, 201);	
 	}
+	function card_loyalty_post(){
+		$models = json_decode($this->post('models'));
+		$data["results"] = [];
+		$data["count"] = 0;
+		foreach ($models as $value) {
+			$obj = new Spa_card_loyalty(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			isset($value->card_id) 			? $obj->card_id 			= $value->card_id : 0;
+			isset($value->loyalty_id) 		? $obj->loyalty_id 		= $value->loyalty_id : 0;
+			$obj->status = 1;
+	   		if($obj->save()){
+			   	$data["results"][] = array(
+			   		"id" 					=> $obj->id,
+			   		"card_id" 				=> $obj->card_id,
+					"loyalty_id"			=> $obj->loyalty_id,
+			   	);
+		    }
+		}
+		$data["count"] = count($data["results"]);
+		$this->response($data, 201);
+	}
+	function card_loyalty_get(){
+		$data["results"] = [];
+		$data["count"] = 0;
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$obj = new Spa_card_loyalty(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		//Filter
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter["filters"] as $value) {
+	    		$obj->where($value["field"], $value["value"]);
+			}
+		}
+		//Results
+		if($page && $limit){
+			$obj->get_paged_iterated($page, $limit);
+			$data["count"] = $obj->paged->total_rows;
+		}else{
+			$obj->get_iterated();
+			$data["count"] = $obj->result_count();
+		}
+		if($obj->exists()){
+			foreach ($obj as $value) {
+				$loyalty = new Spa_loyalty(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				// $loyalty->where("id", $value->)
+			}
+		}
+		//Response Data
+		$this->response($data, 200);
+	}
 }
 /* End of file choulr.php */
 /* Location: ./application/controllers/api/meters.php */

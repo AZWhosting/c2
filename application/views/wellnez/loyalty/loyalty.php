@@ -1353,7 +1353,7 @@
 											           	<input data-role="datepicker"
 												    	   	class="edate"
 												    	   	data-format="dd-MM-yyyy"
-												           	data-bind="value: register_activate"
+												           	data-bind="value: register_date"
 												        	style="float: left; height: 41px; padding: 8px; border-width: 1px 1px 0 1px; border-style: solid; border-color: #ccc; color: #333; margin-left: -4px; width: 54.8%;margin-bottom: 15px;"    
 												        />
 												        <span style="float: left!important;" class="btn btn-primary btn-icon glyphicons edit pull-right" data-bind="click: activateNow"><i></i><span>Activate</span></span>
@@ -1413,6 +1413,29 @@
 					    </div>
 					    <div class="tab-content">
 					        <div class="tab-pane active" id="tab1">
+					        	<span style="float: right!important;width: 130px;margin-right: 18px;" class="btn btn-primary btn-icon glyphicons edit pull-right" data-bind="click: addLoyalty"><i></i><span>Add Loyalty</span></span>
+					        	<div data-role="window"
+					                data-title="Add Loyalty"
+					                data-width="400"
+					                data-actions="{}"
+					                data-height="150"
+					                data-position="{top: '30%', left: '37%'}"
+					                data-bind="visible: loyaltyShow">
+					                <span style="float: left; padding: 10px 54px 10px 20px; background: #ddd; border-width: 1px 0 0 1px;   border-style: solid; border-color: #ccc; font-weight: 700">Loyalty</span>
+	            					<input data-role="dropdownlist"
+						                data-auto-bind="true"
+						                data-value-primitive="true"
+						                data-text-field="name"
+						                data-value-field="id"
+						                data-bind="
+						                	value: loyalty_selected,
+						                    source: loyaltyDS,
+						                "
+						                style="float: left; height: 41px; padding: 8px; border-width: 1px 1px 0 1px; border-style: solid; border-color: #ccc; color: #333; margin-left: -4px; width: 54.8%;" 
+						            />
+							        <span style="float: left!important;margin-top: 10px;" class="btn btn-primary btn-icon glyphicons edit pull-right" data-bind="click: addLoyaltyNow"><i></i><span>Add</span></span>
+							        <span class="btn btn-primary btn-icon glyphicons circle_remove pull-right" data-bind="click: cancelAddLoyalty" style="float:left!important;margin-top: 10px;background: red;border: 1px solid red;"><i></i><span>Cancel</span></span>
+					            </div>
 				            	<div class="span12">
 				            		<div>
 										<table class="table table-bordered table-striped table-white">
@@ -1429,7 +1452,7 @@
 											<tbody data-role="listview"
 						            				data-auto-bind="false"
 									                data-template="card-loyalty-list-tmpl"
-									                data-bind="source: loyaltyDS" >
+									                data-bind="source: cardLoyaltyDS" >
 									        </tbody>
 						            	</table>
 									</div>

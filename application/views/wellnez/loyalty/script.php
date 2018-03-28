@@ -6463,7 +6463,6 @@
         },
         activateShow        : false,
         activateCard     : function(){
-            
             this.set("activateShow", true);
             $("#loadImport").css("display", "block");
         },
@@ -6495,6 +6494,39 @@
             }
         },
         register_activate   : new Date(),
+        cardLoyaltyDS       : dataStore(apiUrl + "spa/card_loyalty"),
+        loyaltyDS           : dataStore(apiUrl + "spa/loyalty"),
+        loyaltyShow         : false,
+        addLoyalty          : function(){
+            this.set("loyaltyShow", true);
+            $("#loadImport").css("display", "block");
+        },
+        cancelAddLoyalty      : function(){
+            this.set("loyaltyShow", false);
+            $("#loadImport").css("display", "none");
+        },
+        addLoyaltyDS        : dataStore(apiUrl + "spa/card_loyalty"),
+        addLoyaltyNow       : function(){
+            var obj = this.get("obj");
+            if(obj.id && this.get("loyalty_selected")){
+                this.addLoyaltyDS.data([]);
+                this.addLoyaltyDS.add({
+                    loyalty_id      : this.get("loyalty_selected"),
+                    card_id         : obj.id,
+                });
+                this.addLoyaltyDS.sync();
+                this.addLoyaltyDS.bind("requestEnd", function(e){ 
+                    if(e.response.type != 'read'){
+                        var noti = $("#ntf1").data("kendoNotification");
+                            noti.hide();
+                            noti.success(self.lang.lang.success_message);
+                        self.cancelAddLoyalty();
+                    }
+                });
+            }else{
+                alert("Feild Required!");
+            }
+        },
     });
     banhji.Card = kendo.observable({
         lang        : langVM,
