@@ -95,7 +95,7 @@ class Membership_types extends REST_Controller {
 				$data["results"][] = array(
 					"id" 			=> $obj->id,
 					"name" 	 		=> $obj->name,					
-					"description" 	=> $obj->description
+					"description" 	=> $obj->description,
 					"is_system"		=> $obj->is_system
 				);
 			}
@@ -141,10 +141,20 @@ class Membership_types extends REST_Controller {
 			$obj = new Membership_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->where("id", $value->id)->get();
 			
-			$data["results"][] = array(
-				"data"   => $value,
-				"status" => $obj->delete()
-			);							
+			$lock = new Membership(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$lock->where("membership_type_id", $value->id)->limit(1)->get();
+
+			if($lock->exists()){
+				$data["results"][] = array(
+					"data"   => $value,
+					"status" => "This data is using, can not delete."
+				);
+			}else{
+				$data["results"][] = array(
+					"data"   => $value,
+					"status" => $obj->delete()
+				);
+			}
 		}
 
 		//Response data

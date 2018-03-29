@@ -52,10 +52,10 @@ class Contact extends DataMapper {
 			"class" => 'transaction',
 			"other_field" => "contact"
 		),
-		// 'transaction' => array(
-		// 	"class" => 'transaction',
-		// 	"other_field" => "employee"
-		// ),
+		'custom_field' => array(
+			"class" => 'custom_field',
+			"other_field" => "contact"
+		),
 		'journal_line' => array(
 			"class" => 'journal_line',
 			"other_field" => "contact"
