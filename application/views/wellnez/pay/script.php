@@ -4185,7 +4185,7 @@
             } else {
                 var self = this;
                 var currencyReceipt = 0;
-                var moneyReceipt = this.invobj.amount;
+                var moneyReceipt = this.get("amountReciept");
                 $.each(this.receipCurrencyDS.data(), function(i, v) {
                     var amountAfterRate = parseFloat(v.amount) / parseFloat(v.rate);
                     currencyReceipt += amountAfterRate;
@@ -4315,7 +4315,8 @@
                 type: "Cash_Receipt",
                 user_id: banhji.userData.id,
                 sub_total: obj.sub_total,
-                amount: obj.amount,
+                amount: this.get("amountReciept"),
+                discount: obj.discount,
                 issued_date: obj.issued_date,
                 account_id: this.get("account_id"),
                 receipt_note: this.receipCurrencyDS.data(),
@@ -4339,7 +4340,8 @@
                 }
             });
         },
-        addLoyalty  : function(id){
+        addLoyalty  : function(){
+            this.set("haveLoyalty", true);
         },
         splitBill   : function(){
             banhji.router.navigate("/split_bill/"+this.get("invobj").id);
@@ -4350,6 +4352,7 @@
         invobj      : null,
         invClick    : function(e){
             var data = e.data;
+            this.set("invobj", null);
             this.set("total", data.amount);
             this.set("amountReciept", data.amount);
             this.set("btnActive", true);
@@ -4359,6 +4362,60 @@
             banhji.splitBill.data = [];
             banhji.splitBill.data = data;
         },
+        haveLoyalty : false,
+        cancelLoyalty : function(){
+            this.set("haveLoyalty", false);
+            this.set("cardNum", "");
+            this.set("serailNum", "");
+            this.set("promoNum", "");
+        },
+        applyLoyalty : function(e){
+            var data = e.data;
+            var obj = this.get("invobj");
+            if(data.reward_type == 1){
+                var amount = obj.amount;
+                var per = (obj.sub_total * data.reward_amount) / 100;
+                obj.set("discount", per);
+                var subtotal = obj.sub_total - per;
+                if(obj.tax > 0){
+                    obj.set("tax", (subtotal * 10) / 100);
+                    this.set("amountReciept", subtotal + obj.tax);
+                }else{
+                    this.set("amountReciept", subtotal);
+                }
+                this.cancelLoyalty();
+                this.receipChangeDS.data([]);
+                this.setDefaultReceiptCurrency(this.get("amountReciept"));
+                this.set("total", this.get("amountReciept") + obj.discount);
+            }
+        },
+        cardDS       : dataStore(apiUrl + "spa/card"),
+        loyaltyDS    : dataStore(apiUrl + "spa/card_loyalty"),
+        haveCardLoyalty : false,
+        cardID       : "",
+        searchCardDS    : dataStore(apiUrl + "spa/card"),
+        searchLoyalty   : function(){
+            $("#loadING").css("display", "block");
+            var num = this.get("cardNum"), serial = this.get("serialNum"), self = this;
+            this.searchCardDS.query({
+                filter: [
+                    {field: "number", value: num},
+                    {field: "serial", value: serial}
+                ]
+            }).then(function(e){
+                $("#loadING").css("display", "none");
+                var v = self.searchCardDS.view();
+                if(v.length > 0){
+                    self.set("cardID", v[0].id);
+                    self.set("haveCardLoyalty", true);
+                    self.loyaltyDS.query({
+                        filter: {field: "card_id", value: v[0].id}
+                    })
+                }else{
+                    self.set("haveCardLoyalty", false);
+                }
+            });
+        }, 
     });
     banhji.splitBill = kendo.observable({
         roomDS      : dataStore(apiUrl + "spa/room"),
@@ -4435,7 +4492,7 @@
             }).then(function(e){
                 var v = self.txnDS.view()[0];
                 var am = v.amount / num;
-                self.device(am); 
+                self.device(am, v.id); 
             });
         },
         device      : function(amount){

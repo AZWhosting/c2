@@ -2120,7 +2120,6 @@ class Spa extends REST_Controller {
 	   			$journal->save();
 	   			if($obj->discount > 0){
 	   				//Total Sale
-					$totalsale->discount += floatval($obj->discount);
 	   				$journalD = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		   			$journalD->transaction_id = $obj->id;
 		   			$journalD->account_id 	= $obj->account_id;
@@ -2349,7 +2348,7 @@ class Spa extends REST_Controller {
 		$data["results"] = array();
 		$data["count"] = 0;
 		foreach ($models as $value) {
-			$obj = new Spa_cancel_reason(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$obj = new Spa_loyalty(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->get_by_id($value->id);
 			isset($value->name) 				? $obj->name 				= $value->name : "";
 			isset($value->base) 				? $obj->base 				= $value->base : 1;
@@ -2384,7 +2383,7 @@ class Spa extends REST_Controller {
 		$models = json_decode($this->delete('models'));
 
 		foreach ($models as $key => $value) {
-			$obj = new Spa_cancel_reason(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$obj = new Spa_loyalty(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->get_by_id($value->id);
 
 			$data["results"][] = array(
@@ -2627,7 +2626,26 @@ class Spa extends REST_Controller {
 		if($obj->exists()){
 			foreach ($obj as $value) {
 				$loyalty = new Spa_loyalty(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				// $loyalty->where("id", $value->)
+				$loyalty->where("status", 1);
+				$loyalty->where("id", $value->loyalty_id)->limit(1)->get();
+				$base = "Promotion";
+				if($loyalty->base != 1){
+					$base = "Point";
+				}
+				$rewardtype = "%";
+				$rewardamount = floatval($loyalty->reward_amount);
+				if($loyalty->reward_type != 1){
+					$rewardtype = "$";
+				}
+				$data["results"][] = array(
+			   		"id" 			=> $loyalty->id,
+			   		"name" 			=> $loyalty->name,
+					"base"			=> $base,
+					"reward_amount"	=> intval($loyalty->reward_amount),
+					"reward_type" 	=> intval($loyalty->reward_type),
+					"reward"	 	=> $loyalty->reward_amount.$rewardtype,
+					"expire" 		=> $loyalty->expire,
+			   	);
 			}
 		}
 		//Response Data

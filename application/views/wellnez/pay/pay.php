@@ -228,13 +228,16 @@
 				.table-striped tbody tr.k-state-selected td {
 					background: #ccc!important;
 				}
+				.table-white th span, .table-white td {
+					font-size: 12px;
+				}
 			</style>
 			<div class="span12">
 				<div class="hidden-print hidden-lg hidden-md pull-right">
 		    		<span class="glyphicons no-js remove_2" 
 						data-bind="click: cancel"><i></i></span>
 				</div>
-				<div class="row" style="overflow: hidden;background: #fff; float: left; width: 100%; padding: 15px; border-radius: 10px;">
+				<div class="row" style="overflow: hidden;background: #fff; float: left; width: 100%; padding: 15px; border-radius: 10px;position: relative;">
 					<div id="loadING" style="display:none;text-align: center;position: absolute;top: 0; left: 0;width: 100%; height: 100%;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
 						<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 45%;left: 45%">Loading</i>
 					</div>
@@ -246,7 +249,7 @@
 										<div class="listWrapper" style="min-height: 0; margin-bottom: 15px; padding: 0;">
 											<div class="innerAll" style="padding: 15px 15px 0;overflow: hidden; background: #424242;">
 												<div class="widget-search separator bottom" data-bind="visible: haveSearchInv">
-													<button class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></button>
+													<button class="btn btn-default pull-right" data-bind="click: search" style="padding: 3px 12px;"><i class="icon-search"></i></button>
 													<div class="overflow-hidden">
 														<input style="line-height: 11px; padding: 5px;" type="text" placeholder="Invoice Number..." data-bind="
 															value: searchText,
@@ -276,7 +279,85 @@
 						    </table>
 						</div>
 					</div>
-					<div class="span6" style="padding-right: 0;">	
+					<div class="span6" style="padding-right: 0;">
+						<div class="rowloyalty" data-bind="visible: haveLoyalty" style="width: 97.3%; height: 100%; background: #fff; position: absolute; z-index: 1;">
+							<div class="strong" style="margin-bottom: 15px; width: 100%; padding: 15px; float: left;" align="center"
+								data-bind="style: { backgroundColor: amtDueColor}">
+								<div>
+								    <div class="tabsbar tabsbar-1">
+								        <ul class="row-fluid row-merge">
+								            <li class="span2 active">
+								            	<a href="#tab1" data-toggle="tab"><span><span >Card</span></span></a>
+								            </li>         
+								        </ul>
+								    </div>
+								    <div class="tab-content">
+								        <div class="tab-pane active" id="tab1">
+							            	<div class="row">
+												<div class="span7">
+													<p style="float: left;color: #333;">Card</p>
+													<input type="text" name="" style="width: 100%; font-weight: 500; border: 1px solid #ccc; padding: 5px; height: 35px; color: #333;"
+														data-role="maskedtextbox"
+							                   			data-mask="000-000-000-000"
+							                   			data-bind="
+							                        		value: cardNum"
+													/>
+												</div>
+												<div class="span5" style="padding-left: 0;">
+													<p style="float: left;color: #333;">Serial Number</p>
+													<input type="number" style="width: 100%; font-weight: 500; border: 1px solid #ccc; padding: 5px; height: 35px; color: #333;"
+														data-role="maskedtextbox"
+							                   			data-mask="0000"
+														data-bind="value: serialNum"
+													/>
+												</div>
+												<div style="overflow: hidden;position: relative;clear: both;">
+													<a style="background: #0eac00; padding: 10px 15px; float: left; margin-right: 10px; color: #fff; margin-top: 10px; margin-left: 15px;" class="btnApply" data-bind="click: searchLoyalty" >
+											  			<span>Search</span>
+											  		</a>
+											  		<a style="background: #0eac00; padding: 10px 15px; float: left; color: #fff; margin-top: 10px;" class="btnCancel" data-bind="click: cancelLoyalty" >
+											  			<span>Cancel</span>
+											  		</a>
+											  	</div>
+										  		<div class="span12" style="overflow: hidden;position: relative;clear: both;margin-top: 15px;" data-bind="visible: haveCardLoyalty">
+													<table class="table table-bordered table-striped table-white">
+														<thead>
+															<tr>
+																<th style="background: #1c3b19;"><span style="color: #fff;">No.</span></th>
+																<th style="background: #1c3b19;"><span style="color: #fff;">Name</span></th>
+																<th style="background: #1c3b19;"><span style="color: #fff;">Base</span></th>
+																<th style="background: #1c3b19;"><span style="color: #fff;">Rewards</span></th>
+																<th style="background: #1c3b19;"><span style="color: #fff;">Action</span></th>
+															</tr>
+														</thead>
+														<tbody data-role="listview"
+									            				data-auto-bind="false"
+												                data-template="card-loyalty-list-tmpl"
+												                data-bind="source: loyaltyDS" >
+												        </tbody>
+									            	</table>
+												</div>
+											</div>
+							        	</div>
+
+								        <div class="tab-pane" id="tab2">
+								        	<div class="row">
+												<div class="span12">
+													<input type="text" name="" style="width: 100%; font-weight: 500; border: 1px solid #ccc; padding: 5px; height: 35px; color: #333;" data-bind="value: promoNum">
+												</div>
+												<a style="background: #0eac00; padding: 10px 15px; float: left; margin-right: 10px; color: #fff; margin-top: 10px; margin-left: 15px;" class="btnApply" data-bind="click: applyLoyaltyPromo" >
+										  			<span>Apply</span>
+										  		</a>
+										  		<a style="background: #0eac00; padding: 10px 15px; float: left; color: #fff; margin-top: 10px;" class="btnCancel" data-bind="click: cancelLoyalty" >
+										  			<span>Cancel</span>
+										  		</a>
+											</div>
+							        	</div>								        
+								    </div>
+								</div>								
+							</div>
+						</div>	
+
 						<div class="strong" style="margin-bottom: 15px; width: 100%; padding: 10px; float: left;" align="center"
 							data-bind="style: { backgroundColor: amtDueColor}">
 							<p style="float: left;color: #333;">Amount Recevied</p>
@@ -336,7 +417,7 @@
 											<td class="right strong"><span data-bind="text: amountReciept"></span></td>
 											<td class="right"><span data-bind="text: lang.lang.total_discount"></span>:</td>
 											<td class="right strong">
-												<span data-format="n2" data-bind="text: discount"></span>
+												<span data-format="n2" data-bind="text: invobj.discount"></span>
 		                   					</td>
 										</tr>
 										<tr>
@@ -382,7 +463,6 @@
 							    </div>
 							</div>
 						</div>
-
 						<div class="box-generic bg-action-button">
 							<div id="ntf1" data-role="notification"></div>
 							<div class="row">
@@ -395,6 +475,7 @@
 								</div>
 							</div>
 						</div>
+						
 					</div>
 				</div>
 			</div>
@@ -422,7 +503,7 @@
 			    <div class="tab-content">
 			        <div class="tab-pane active" id="tab1" style="overflow: hidden;position: relative;">
 			        	<div  data-bind="visible: stopItemM" style="border-radius: 10px;text-align: center;position: absolute;width: 100%; height: 100%;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
-							<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 40%;left: 40%">You can't user this module...</i>
+							<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 40%;left: 25%">You can't user this module...</i>
 						</div>
 		            	<div class="span12">
 		            		<div class="rows">
@@ -502,11 +583,10 @@
 			                	placeholder="Phone Number" 
 					           	data-bind="
 					           		value: numPeople
-					           	" /><span style="float: left; color: #333; margin-left:  10px;"> Person</span>
+					           	" /><span style="float: left; color: #333; margin-left:  10px;"> Persons</span>
 					        <a style="float: left; padding: 5px 80px; margin-bottom: 20px;background: red; color: #fff; margin-top: 5px;" data-bind="click: savePerson">Save</a>
 		            	</div>
 		        	</div>
-			       
 			    </div>
 			</div>
 		</div>
@@ -1023,6 +1103,25 @@
     	<a href="\#/customer_setting">+ Add New Payment Method</a>
     </strong>	
 </script>
+<script id="card-loyalty-list-tmpl" type="text/x-kendo-tmpl">
+	<tr data-bind="click: selectedRow">
+		<td align="center">
+			#= banhji.Index.loyaltyDS.indexOf(data)+1#
+		</td>
+		<td>
+			#=name#
+		</td>
+		<td align="center">
+			#= base#
+		</td>
+		<td align="right">
+			#= reward#
+		</td>
+		<td align="center">
+			<a data-bind="click: applyLoyalty">Apply</a>
+		</td>
+	</tr>
+</script>
 <!-- Invoice Form -->
 <script id="printBill" type="text/x-kendo-template">
 	<div class="container">
@@ -1177,7 +1276,7 @@
 							<td></td>
 							<td></td>
 						</tr>
-                        <tr>
+                        <!-- <tr>
                         	<td colspan="5" style="padding-right: 10px;text-align: right;">សរុប TOTAL</td>
 							<td style="border: 1px solid;text-align: right"><strong>#= kendo.toString(sub_total, locale=="km-KH"?"c0":"c", locale)#</strong></td>
                         </tr>
@@ -1187,6 +1286,10 @@
 						</tr>
 						<tr>
 							<td colspan="5" style="padding-right: 10px;text-align: right;">ប្រាក់ត្រូវបង់សរុប SUB TOTAL</td>
+							<td style="border: 1px solid;text-align: right"><strong>#= kendo.toString(amount, locale=="km-KH"?"c0":"c", locale)#</strong></td>
+						</tr> -->
+						<tr>
+							<td colspan="5" style="padding-right: 10px;text-align: right;">សរុប (បូកបញ្ចូលទាំងអាករ) GRAND TOTAL (VAT INCLUSIVE)</td>
 							<td style="border: 1px solid;text-align: right"><strong>#= kendo.toString(amount, locale=="km-KH"?"c0":"c", locale)#</strong></td>
 						</tr>
                     </tfoot>

@@ -246,13 +246,13 @@
 	.product {
 	    float: left;
 	    position: relative;
-	    width: 129px;
-	    height: 215px;
+	    width: 136px;
+	    height: 221px;
 	    padding: 0;
 	    cursor: pointer;
 	    background: #fff;
 	    margin-right: 2px;
-	    margin-bottom: 1px;
+	    margin-bottom: 2px;
 	}
 	.listWrapper{
 		padding-right: 0;
@@ -443,12 +443,6 @@
 	    background: #fff;
 	    color: #333;
 	}
-	.k-icon.k-i-seek-w,
-	.k-icon.k-i-arrow-w,
-	.k-icon.k-i-arrow-e,
-	.k-icon.k-i-seek-e{
-		margin-top: 5px;
-	}
 	#pager {
 	    margin-top: 15px;
 	    float: left;
@@ -523,7 +517,7 @@
 										<a href="#/room" class="addRooms">Add Room</a>
 										<div class="innerAll" style="height: 45px; padding-bottom: 0; padding: 15px 0 0 15px; float: left; width: 100%;">
 											<div class="widget-search separator bottom" style="padding: 0;">
-												<a class="btn btn-default pull-right" data-bind="click: search" style="padding: 7px 10px;"><i class="icon-search"></i></a>
+												<a class="btn btn-default pull-right" data-bind="click: search" style="padding: 4px 10px;"><i class="icon-search"></i></a>
 												<div class="overflow-hidden">
 													<input style="height: 30px; padding: 5px; border: 1px solid #ccc; color: #333; " type="search" placeholder="Number or Name..." data-bind="value: searchText, events:{change: search}">
 												</div>
@@ -565,7 +559,7 @@
 		<h3>#:name#</h3>
 		<img src="<?php echo base_url(); ?>assets/choulr/img/no_image.png" />
 		<p style="text-align: center;padding-bottom: 7px;margin-bottom: 0;">#:square_meter# sqm</p>
-		<a href="\#/room/#= id#" style="float: left;text-align: center;width: 100%;background: \#ccc;padding: 5px 0;">Edit</a>
+		<a href="\#/room/#= id#" style="float: left;text-align: center;width: 93%;background: \#ccc;padding: 5px">Edit</a>
 	</div>
 </script>
 <script id="sale-summary-template" type="text/x-kendo-template">
@@ -671,13 +665,13 @@
 										data-bind="value: obj.name"
 										placeholder="Name... " style="width: 100%; margin-bottom: 15px;border: 1px solid #ccc; height: 30px;"/>
 								</div>
-								<div class="span6">
+								<div class="span6" style="padding-left: 0;">
 									<p>Sqm</p>
 									<input type="text" class="k-textbox" 
 										data-bind="value: obj.square_meter"
 										placeholder="Sqm... " style="width: 100%; margin-bottom: 15px;border: 1px solid #ccc; height: 30px;"/>
 								</div>
-								<div class="span6">
+								<div class="span6" style="padding-left: 0;">
 									<p>Number of bad</p>
 									<input type="text" class="k-textbox" 
 										data-bind="value: obj.number_bed"

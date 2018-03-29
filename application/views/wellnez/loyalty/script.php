@@ -6293,6 +6293,7 @@
                 this.addEmpty();
                 this.set("isEdit", false);
             }
+            $("#loadImport").css("display", "none");
         },
         clearBranch : function(){
             this.get("obj").set("branches", []);
@@ -6381,20 +6382,20 @@
             $("#loadImport").css("display", "block");
             this.dataSource.sync();
             this.dataSource.bind("requestEnd", function(e){
-                if(e.response.type != 'read'){
+                if(e.type != 'read' && e.response.results) {
                     self.cancel();
+                    $("#loadImport").css("display", "none");
                     var noti = $("#ntf1").data("kendoNotification");
-                    noti.hide();
                     noti.success(self.lang.lang.success_message);
                     self.branchDS.query({});
-                    $("#loadImport").css("display", "none");
                 }
             });
         },
         cancel      : function(e){
             this.dataSource.data([]);
             this.addEmpty();
-            banhji.router.navigate("/");
+            banhji.loyaltyCenter.loyaltyDS.query({});
+            banhji.router.navigate("/loyalty_center");
             $("#loadImport").css("display", "none");
         },
         tabeClick   : function(e){
@@ -6460,6 +6461,9 @@
             }else{
                 this.set("cardNotActivate", false);
             }
+            this.cardLoyaltyDS.query({
+                filter : {field: "card_id", value: data.id}
+            });
         },
         activateShow        : false,
         activateCard     : function(){
@@ -6469,10 +6473,12 @@
         cancelActivate      : function(){
             this.set("activateShow", false);
             $("#loadImport").css("display", "none");
+            this.cardDS.query({});
         },
         activateDS          : dataStore(apiUrl + "spa/activate_card"),
         activateNow         : function(){
             var obj = this.get("obj");
+            var self = this;
             if(obj.id && this.get("register_activate") && this.get("contact_activate")){
                 this.activateDS.data([]);
                 this.activateDS.add({
@@ -6483,10 +6489,10 @@
                 this.activateDS.sync();
                 this.activateDS.bind("requestEnd", function(e){ 
                     if(e.response.type != 'read'){
+                        self.cancelActivate();
                         var noti = $("#ntf1").data("kendoNotification");
                             noti.hide();
                             noti.success(self.lang.lang.success_message);
-                        self.cancelActivate();
                     }
                 });
             }else{
@@ -6509,6 +6515,7 @@
         addLoyaltyNow       : function(){
             var obj = this.get("obj");
             if(obj.id && this.get("loyalty_selected")){
+                var self = this;
                 this.addLoyaltyDS.data([]);
                 this.addLoyaltyDS.add({
                     loyalty_id      : this.get("loyalty_selected"),
@@ -6517,10 +6524,10 @@
                 this.addLoyaltyDS.sync();
                 this.addLoyaltyDS.bind("requestEnd", function(e){ 
                     if(e.response.type != 'read'){
+                        self.cancelAddLoyalty();
                         var noti = $("#ntf1").data("kendoNotification");
                             noti.hide();
                             noti.success(self.lang.lang.success_message);
-                        self.cancelAddLoyalty();
                     }
                 });
             }else{
@@ -6538,6 +6545,7 @@
             }else{
                 this.addEmpty();
             }
+            $("#loadImport").css("display", "none");
         },
         obj         : null,
         addEmpty                : function(){
@@ -6567,15 +6575,28 @@
             $("#loadImport").css("display", "block");
             this.dataSource.sync();
             this.dataSource.bind("requestEnd", function(e){
-                if(e.response.type != 'read'){
-                    self.cancel();
-                    var noti = $("#ntf1").data("kendoNotification");
-                        noti.hide();
-                        noti.success(self.lang.lang.success_message);
+                if(e.type != 'read' && e.response.results) {
                     self.cancel();
                     $("#loadImport").css("display", "none");
+                    banhji.cardCenter.cardDS.query({});
+                    var noti = $("#ntf1").data("kendoNotification");
+                        noti.success(self.lang.lang.success_message);
                 }
             });
+        },
+        exsistNumDS  : dataStore(apiUrl + "spa/card"),
+        numberChange : function(){
+            var obj = this.get("obj");
+            var self = this;
+            this.exsistNumDS.query({
+                filter : { field: "number", value: obj.number}
+            }).then(function(e){
+                var v = self.exsistNumDS.view();
+                if(v.length > 0){
+                    alert("Card Number is already exsist!");
+                    obj.set("number", "");
+                }
+            })
         },
         cancel      : function(e){
             this.dataSource.data([]);

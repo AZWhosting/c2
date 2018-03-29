@@ -287,14 +287,11 @@
 
 								<ul class="topnav addNew" style="float: left; width: 8%; background: #0eac00">
 									<li role="presentation" class="dropdown ">
-								  		<a class="dropdown-toggle" href="<?php echo base_url(); ?>wellnez/pos" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+								  		<a href="<?php echo base_url(); ?>wellnez/pos" >
 								  			<span style="font-size: 13px;"> Add New</span>
 								  		</a>
 								  	</li>
 								</ul>
-
-
-
 								<span class="glyphicons no-js remove_2 pull-right"
 									data-bind="click: cancel"><i></i></span>
 							</div>
@@ -306,7 +303,7 @@
 										<th style="vertical-align: top;"><span data-bind="text: lang.lang.employee"></span></th>
 										<th style="vertical-align: top;"><span >Room</span></th>
 										<th style="vertical-align: top;"><span data-bind="text: lang.lang.amount"></span></th>
-										<th style="vertical-align: top;"><span data-bind="text: lang.lang.phone"></span></th>
+										<th style="vertical-align: top;"><span>PHONE</span></th>
 										<th style="vertical-align: top;"><span data-bind="text: lang.lang.action"></span></th>
 									</tr>
 								</thead>

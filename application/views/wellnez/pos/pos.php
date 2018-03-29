@@ -245,7 +245,7 @@
 	.product {
 	    float: left;
 	    position: relative;
-	    width: 99px;
+	    width: 103px;
 	    height: 180px;
 	    padding: 15px;
 	    cursor: pointer;
@@ -450,24 +450,6 @@
 	.span6.botton a{
 		color: #fff;
 	}
-	.k-link.k-link-date{
-		padding-top: 8px;
-	    float: left;
-	    margin-left: 5px !important;
-	}
-	.k-link.k-link-time{
-		padding-top: 8px;
-    	float: left;
-	}
-	.k-header .k-icon{
-		margin-top: 6px;
-	}
-	.k-icon.k-i-seek-w,
-	.k-icon.k-i-arrow-w,
-	.k-icon.k-i-arrow-e,
-	.k-icon.k-i-seek-e{
-		margin-top: 5px;
-	}
 </style>
 <!-- ***************************
 *	Water Section      	  *
@@ -490,7 +472,7 @@
 											<div class="span6" style="padding-right: 1px; width: 50%;">
 												<div class="innerAll" style="height: 45px; padding-bottom: 0; padding: 15px 0 0 15px; float: left; width: 100%;">
 													<div class="widget-search separator bottom" style="padding: 0;">
-														<a class="btn btn-default pull-right" data-bind="click: search" style="padding: 6px 10px;"><i class="icon-search"></i></a>
+														<a class="btn btn-default pull-right" data-bind="click: search" style="padding: 3px 10px;"><i class="icon-search"></i></a>
 														<div class="overflow-hidden">
 															<input style="height: 28px; padding: 5px; border: 1px solid #ccc; color: #333;" type="search" placeholder="Number or Name..." data-bind="value: searchText, events:{change: search}">
 														</div>
@@ -649,7 +631,7 @@
 									    </table>
 				                    </div>		                
 								</div>
-								<div class="span6">
+								<div class="span6" style="padding-left: 0;">
 									<div class="box-generic" style="background: #c4c2d2; padding: 0; border: none; margin-bottom: 0; padding-bottom: 15px;">
 										<div data-bind="visible: emSelect">
 											<input id="Emlopyee"
@@ -749,15 +731,7 @@
 						                 		title: 'SERVICES', 
 						                 		editable: 'false',
 						                 		editor: itemEditor, template: '#=item.name#', width: '170px' 
-						                 	},                         
-				                            {
-											    field: 'quantity',
-											    title: 'QTY',
-											    format: '{0:n}',
-											    editor: numberTextboxEditor,
-											    width: '120px',
-											    attributes: { style: 'text-align: right;' }
-											},
+						                 	},
 				                            { 
 				                            	field: 'item_price', 
 				                            	title: 'UOM', 
@@ -783,8 +757,7 @@
 				                            { 
 				                            	field: 'tax_item', 
 				                            	title:'TAX', 
-				                            	editor: taxForSaleEditor, 
-				                            	hidden: 'true',
+				                            	editor: taxForSaleEditor,
 				                            	template: '#=tax_item.name#', width: '90px' 
 				                            }
 				                         ]"
@@ -852,14 +825,15 @@
 											</div>
 										</a>
 									</div>
-									<div class="span4 " style="padding-left: 0;" data-bind="click: addWorkSuccess">
-										<p class="button-cancel" ><span>X</span> <br> Cancel</p>
+									<div class="span4 " style="padding-left: 0;">
+										<a href="<?php echo base_url(); ?>wellnez/services">
+											<p class="button-cancel" ><span>X</span> <br> Cancel</p>
+										</a>
 									</div>
 								</div>
 							</div>
 							<div id="ntf1" data-role="notification"></div>
 						</div>
-
 					</div>
 				</div>
 			</div>
