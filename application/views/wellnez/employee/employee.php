@@ -323,6 +323,13 @@
 	    float: left;
 	    box-shadow: 2px 0px 12px 0px rgba(68,68,68,1);
 	}
+
+	#edate, #sdate {
+	    display: inline-block;
+	    border: 1px solid #ccc;
+	    padding: 4px !important;
+	    margin: 0 5px;
+	}
 </style>
 <!-- ***************************
 *	Water Section      	  *
@@ -510,7 +517,7 @@
 				        
 				       	<input id="edate" name="edate"
 					           data-bind="value: edate"
-					           placeholder="To ..." />
+					           placeholder="To ..."  style="margin-left: 0;" />
 
 			            <button id="search" type="button" data-role="button" data-bind="click: searchTransaction"><i class="icon-search"></i></button>
 					</div>
@@ -1141,8 +1148,10 @@
 		    line-height: 1.5;
 		    border-top: 1px solid #eceeef;
 		}
-
-		.box-generic {
+		.box-generic .btn-save{
+			color: #fff;
+		}
+		/*.box-generic {
 		    background: #0B0B3B;
 		    clear: both;
 		    display: inline-block;
@@ -1155,6 +1164,10 @@
 		.box-generic .btn-save {
 		    background: #609450;
 		    color: #fff;
+		}*/
+		input.k-textbox {
+		    text-indent: 0 !important;
+		    border: 1px solid #ccc;
 		}
 	</style>
   	<!--Add User-->
@@ -1226,12 +1239,12 @@
 		                                        data-bind="value: obj.abbr"
 		                                        class="form-control col-md-7 col-xs-12"
 		                                        type="text"
-		                                        style="width: 50px;"> 
+		                                        style="width: 50px; margin-right: 10px;"> 
 		                                    <input id="type"
 		                                        data-bind="value: obj.number"
 		                                        class="form-control col-md-7 col-xs-12"
 		                                        type="text"
-		                                        style="width: 150px;">
+		                                        style="width: 254px;">
 		                        		</td>
 		                        		<td>Type</td>
 		                        		<td style="width: 20px;">:</td>
@@ -1279,6 +1292,7 @@
 		                		</table>
 	              			</div>
 	            		</article>
+
 	            		<section class="tabs-section" style="position: relative;width: 100%;overflow: hidden;">
 	                  		<div class="tabs-section-nav tabs-section-nav-inline">
 	                    		<ul class="nav" role="tablist">
@@ -1304,26 +1318,26 @@
 	                    		<div role="tabpanel" class="tab-pane fade in active" id="tabs-4-tab-1" aria-expanded="false">
 	                      			<table class="table">
 	                        			<tr>
-	                          				<td>email</td>
+	                          				<td>Email</td>
 	                          				<td><input type="email" 
-			                          				class="k-textbox" data-bind="value: obj.email"></td>
+			                          				class="k-textbox" data-bind="value: obj.email" style="width: 100%"></td>
 	                          				<td></td>
-	                          				<td>phone</td>
+	                          				<td>Phone</td>
 	                          				<td><input type="phone" 
 		                          					class="k-textbox" 
-		                          					data-bind="value: obj.phone"></td>
+		                          					data-bind="value: obj.phone" style="width: 100%"></td>
 	                        			</tr>
 	                        			<tr>
-	                          				<td>address</td>
+	                          				<td>Address</td>
 	                          				<td><input type="text" 
 	                          						class="k-textbox" 
-	                          						data-bind="value: obj.address"></td>
+	                          						data-bind="value: obj.address" style="width: 100%"></td>
 	                          				<td></td>
-	                          				<td>memo</td>
+	                          				<td>Memo</td>
 	                          				<td><input type="text" 
 	                          						class="k-textbox" 
 	                          						data-bind="value: obj.memo" 
-	                          						style="border-color: #c5c5c5"></td>
+	                          						style="border-color: #c5c5c5; width: 100%"></td>
 	                        			</tr>
 	                      			</table>
 	                    		</div><!--.tab-pane-->
@@ -1331,7 +1345,7 @@
 	                      			<table class="table">
 	                        			<tr>
 	                          				<td>
-	                            				Advance Account<br>
+	                            				<span style="margin-bottom: 10px; float: left;">Advance Account</span><br>
 	                            				<input id="type"
 			                                      data-role="dropdownlist"
 			                                      data-bind="source: advanceAccDS, 
@@ -1342,10 +1356,11 @@
 			                                      data-option-label="--Select One--"
 			                                      class="form-control col-md-7 col-xs-12"
 			                                      type="text"
+			                                      style="width: 100%"
 			                                    >
 	                          				</td>
 	                          				<td>
-	                            				Salary Account<br>
+	                            				<span style="margin-bottom: 10px; float: left;">Salary Account</span><br>
 				                                <input id="type"
 				                                      data-role="dropdownlist"
 				                                      data-bind="source: salaryAccDS, 
@@ -1355,10 +1370,10 @@
 				                                      data-value-primitive="true"
 				                                      data-option-label="--Select One--"
 				                                      class="form-control col-md-7 col-xs-12"
-				                                      type="text">
+				                                      type="text" style="width: 100%">
 	                          				</td>
 	                          				<td>
-	                            				Currency<br>
+	                            				<span style="margin-bottom: 10px; float: left;">Currency</span><br>
 			                                    <input id="type"
 			                                      data-role="dropdownlist"
 			                                      data-bind="source: currentDS, 
@@ -1368,7 +1383,7 @@
 			                                      data-value-primitive="true"
 			                                      data-option-label="--Select Currency"
 			                                      class="form-control col-md-7 col-xs-12"
-			                                      type="text">
+			                                      type="text" style="width: 100%">
 	                          				</td>
 	                        			</tr>
 	                      			</table>
@@ -1381,7 +1396,7 @@
 			                                    <input id="type"               
 			                                     data-bind="value: payrollobj.nationality"
 			                                     class="k-textbox"
-			                                     type="text">
+			                                     type="text" style="width: 100%">
 	                            			</td>
 	                          				<td></td>
 	                          				<td>Employment Date</td>
@@ -1390,7 +1405,7 @@
 			                                      data-role="datepicker" 
 			                                      data-bind="value: payrollobj.employeement_date"
 			                                      data-format="dd-MM-yyyy"
-			                                      data-parse-formats="yyyy-MM-dd">
+			                                      data-parse-formats="yyyy-MM-dd" style="width: 100%">
 	                          				</td>
 	                        			</tr>
 	                        			<tr>
@@ -1404,14 +1419,14 @@
 			                                     	data-value-field="id"
 			                                     	data-value-primitive="true"
 			                                     	class="k-textbox"
-			                                     	type="text">
+			                                     	type="text" style="width: 100%">
 	                            			</td>
 	                          				<td></td>
 	                          				<td>Children</td>
 	                          				<td>
 			                                    <input type="text" 
 			                                      data-role="numerictextbox" 
-			                                      data-bind="value: payrollobj.children">
+			                                      data-bind="value: payrollobj.children" style="width: 100%">
 	                          				</td>
 	                        			</tr>
 	                        			<tr>
@@ -1420,14 +1435,14 @@
 			                                    <input id="type"                        
 			                                     data-bind="value: payrollobj.city"
 			                                     class="k-textbox"
-			                                     type="text">
+			                                     type="text" style="width: 100%">
 	                            			</td>
 	                          				<td></td>
 	                          				<td>Country</td>
 	                          				<td>
 			                                    <input type="text" 
 			                                      data-bind="value: payrollobj.payroll_country"
-			                                      class="k-textbox">
+			                                      class="k-textbox" style="width: 100%">
 	                          				</td>
 	                        			</tr>
 	                        			<tr>
@@ -1436,14 +1451,14 @@
 			                                    <input id="type"                     
 			                                     data-bind="value: payrollobj.emergency_number"
 			                                     class="k-textbox"
-			                                     type="text">
+			                                     type="text" style="width: 100%">
 	                            			</td>
 	                          				<td></td>
 	                          				<td>Emmergency Name</td>
 	                          				<td>
 			                                    <input type="text" 
 			                                      data-bind="value: payrollobj.emergency_name"
-			                                      class="k-textbox"
+			                                      class="k-textbox" style="width: 100%"
 			                                      >
 	                          				</td>
 	                        			</tr>
@@ -1451,7 +1466,8 @@
 	                    		</div>
                   			</div><!--.tab-content-->
 	            		</section>
-	            		<div class="box-generic">
+
+	            		<!-- <div class="box-generic">
 	              			<button data-role="button" class="k-button btn-save" role="button" aria-disabled="false" tabindex="0" data-bind="click: save">
 	                  		<span class="glyphicon glyphicon-ok"><i></i></span>
 	                  			&nbsp; Save
@@ -1461,7 +1477,21 @@
 	                  			<span class="glyphicon glyphicon-remove"><i></i></span>
 	                  				&nbsp; Cancel
 	                		</button>
-	            		</div>
+	            		</div> -->
+
+	            		<!-- Form actions -->
+						<div class="box-generic bg-action-button" style="margin-top: 10px;">
+							<div class="row">
+								<div class="span4"></div>
+								<div class="span8" align="right">
+									<span class="btn-btn" data-bind="click: cancel"><span style="color: #fff !important;" data-bind="text: lang.lang.cancel"></span></span>
+									
+								  	<span class="btn-btn" data-bind="click: save"><span style="color: #fff !important;">Save</span></span>
+								</div>
+							</div>
+						</div>
+						<!-- // Form actions END -->
+
 	            	</section>
 	            	<div id="ntf1" data-role="notification"></div>
 				</div>
@@ -1478,4 +1508,4 @@
   	<tr>
     	<td>#=name# </td><td><button data-bind="click: onRemove">X</button></td>
   	</tr>
-                                                                                                                                                                                                                                           
+</script>

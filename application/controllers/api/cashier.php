@@ -459,78 +459,79 @@ class Cashier extends REST_Controller {
 		$data["count"] = 0;
 		$i = 1;
 		foreach ($models as $value) {
-			// $old = new Cashier_note_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			// $old->where("cashier_session_id", $value->cashier_session_id)->get_iterated();
-			// if($old->exists()){
-			// 	$old->delete_all();
-			// }
-			// if($value->unit > 0){
-			// 	$obj = new Cashier_note_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			// 	isset($value->cashier_id) 			? $obj->cashier_id = $value->cashier_id : "";
-			// 	isset($value->cashier_session_id) 	? $obj->cashier_session_id = $value->cashier_session_id : "";
-			// 	isset($value->currency) 			? $obj->currency = $value->currency : "km-KH";
-			// 	isset($value->note) 				? $obj->note 	= $value->note : 1;
-			// 	isset($value->unit) 				? $obj->unit 	= $value->unit : "";
-			// 	if($i == 1){
-			// 		$recon = new Cashier_session(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			// 		$recon->where("id", $value->cashier_session_id)->limit(1)->get();
-			// 		if($value->action == 2){
-			// 			//save draft
-			// 			$recon->status = 2;
-			// 			$recon->save();
-			// 		}elseif($value->action == 1){
-			// 			//save close
-			// 			$recon->status = 1;
-			// 			$recon->save();
-			// 			if($value->defamont > 0){
-			// 				$txn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			// 				$number = $this->_generate_number("Reconcile", date('Y-m-d'));
-			// 				isset($value->account_id) 				? $txn->account_id 					= $value->account_id : "";
-			// 				isset($value->cashier_id) 				? $txn->user_id 					= $value->cashier_id : "";
-			// 				isset($value->cashier_id) 				? $txn->employee_id 				= $value->cashier_id : "";
-			// 				$txn->number = $number;
-			// 			   	isset($value->type) 					? $txn->type 						= $value->type : "Reconcile";
-			// 			   	isset($value->journal_type) 			? $txn->journal_type 				= $value->journal_type : "";
-			// 			   	isset($value->defamont) 				? $txn->amount 						= floatval($value->defamont) : 0;
-			// 			   	isset($value->rate) 					? $txn->rate 						= $value->rate : 1;
-			// 			   	isset($value->locale) 					? $txn->locale 						= $value->locale : "";
-			// 			   	isset($value->issued_date) 				? $txn->issued_date 				= $value->issued_date : "";
-			// 			   	isset($value->status) 					? $txn->status 						= $value->status : 1;
-			// 			   	isset($value->is_journal) 				? $txn->is_journal 					= $value->is_journal : 1;
-			// 		   		if($txn->save()){
-			// 		   			//Journal DR
-			// 		   			$journal = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			// 		   			$journal->transaction_id = $txn->id;
-			// 		   			$journal->account_id = $txn->account_id;
-			// 		   			$journal->contact_id = $txn->employee_id;
-			// 		   			$journal->dr  		 = $txn->amount;
-			// 		   			$journal->description = "Reconcile";
-			// 		   			$journal->cr 		 = 0.00;
-			// 		   			$journal->rate 		 = $txn->rate;
-			// 		   			$journal->locale 	 = $txn->locale;
-			// 		   			$journal->save();
-			// 		   			//Journal CR
-			// 		   			$journal2 = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			// 		   			$journal2->transaction_id = $txn->id;
-			// 		   			$journal2->account_id = $txn->account_id;
-			// 		   			$journal2->contact_id = $obj->contact_id;
-			// 		   			$journal2->dr 		  = 0.00;
-			// 		   			$journal2->cr 		  = $txn->amount;
-			// 		   			$journal2->description = "Reconcile";
-			// 		   			$journal2->rate 	  = $txn->rate;
-			// 		   			$journal2->locale 	  = $txn->locale;
-			// 		   			$journal2->save();
-			// 		   		}
-			// 			}
-			// 		}
-			// 	}
-		 //   		if($obj->save()){
-			// 	   	$data["results"][] = array(
-			// 	   		"id" 			=> $obj->id,
-			// 	   	);
-			//     }
-			//     $i++;
-			// }
+			if($value->unit > 0){
+				$obj = new Cashier_note_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				isset($value->cashier_id) 			? $obj->cashier_id = $value->cashier_id : "";
+				isset($value->cashier_session_id) 	? $obj->cashier_session_id = $value->cashier_session_id : "";
+				isset($value->currency) 			? $obj->currency = $value->currency : "km-KH";
+				isset($value->note) 				? $obj->note 	= $value->note : 1;
+				isset($value->unit) 				? $obj->unit 	= $value->unit : "";
+				if($i == 1){
+					$old = new Cashier_note_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$old->where("cashier_session_id", $value->cashier_session_id)->get_iterated();
+					if($old->exists()){
+						$old->delete_all();
+					}
+					$recon = new Cashier_session(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$recon->where("id", $value->cashier_session_id)->limit(1)->get();
+					if($value->action == 2){
+						//save draft
+						$recon->status = 2;
+						$recon->save();
+					}elseif($value->action == 1){
+						//save close
+						$recon->end_date = date("Y-m-d H:i:s");
+						$recon->status = 1;
+						$recon->save();
+						if($value->defamont > 0){
+							$txn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+							$number = $this->_generate_number("Reconcile", date('Y-m-d'));
+							isset($value->account_id) 				? $txn->account_id 					= $value->account_id : "";
+							isset($value->cashier_id) 				? $txn->user_id 					= $value->cashier_id : "";
+							isset($value->cashier_id) 				? $txn->employee_id 				= $value->cashier_id : "";
+							$txn->number = $number;
+						   	isset($value->type) 					? $txn->type 						= $value->type : "Reconcile";
+						   	isset($value->journal_type) 			? $txn->journal_type 				= $value->journal_type : "";
+						   	isset($value->defamont) 				? $txn->amount 						= floatval($value->defamont) : 0;
+						   	isset($value->rate) 					? $txn->rate 						= $value->rate : 1;
+						   	isset($value->locale) 					? $txn->locale 						= $value->locale : "";
+						   	isset($value->issued_date) 				? $txn->issued_date 				= $value->issued_date : "";
+						   	isset($value->status) 					? $txn->status 						= $value->status : 1;
+						   	isset($value->is_journal) 				? $txn->is_journal 					= $value->is_journal : 1;
+					   		if($txn->save()){
+					   			//Journal DR
+					   			$journal = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					   			$journal->transaction_id = $txn->id;
+					   			$journal->account_id = $txn->account_id;
+					   			$journal->contact_id = $txn->employee_id;
+					   			$journal->dr  		 = $txn->amount;
+					   			$journal->description = "Reconcile";
+					   			$journal->cr 		 = 0.00;
+					   			$journal->rate 		 = $txn->rate;
+					   			$journal->locale 	 = $txn->locale;
+					   			$journal->save();
+					   			//Journal CR
+					   			$journal2 = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					   			$journal2->transaction_id = $txn->id;
+					   			$journal2->account_id = $txn->account_id;
+					   			$journal2->contact_id = $obj->contact_id;
+					   			$journal2->dr 		  = 0.00;
+					   			$journal2->cr 		  = $txn->amount;
+					   			$journal2->description = "Reconcile";
+					   			$journal2->rate 	  = $txn->rate;
+					   			$journal2->locale 	  = $txn->locale;
+					   			$journal2->save();
+					   		}
+						}
+					}
+				}
+		   		if($obj->save()){
+				   	$data["results"][] = array(
+				   		"id" 			=> $obj->id,
+				   	);
+			    }
+			    $i++;
+			}
 		}
 		$data["count"] = count($data["results"]);
 		$this->response($data, 201);

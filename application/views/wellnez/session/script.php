@@ -1939,8 +1939,8 @@
         // taxList: [],
         // taxItemDS: dataStore(apiUrl + "tax_items"),
         // //Accounting
-        // accountList: [],
-        // accountDS: dataStore(apiUrl + "accounts"),
+        accountList: [],
+        accountDS: dataStore(apiUrl + "accounts"),
         // accountTypeDS: new kendo.data.DataSource({
         //     transport: {
         //         read: {
@@ -2386,14 +2386,14 @@
         // duplicateSelectedItemMessage: "You already selected this item.",
         // meterDS: dataStore(apiUrl + "meters"),
         // meterlist: [],
-        // pageLoad: function() {
-        //     this.loadAccounts();
+        pageLoad: function() {
+            this.loadAccounts();
         //     // this.accountTypeDS.read();
         //     // this.loadTaxes();
         //     // this.loadJobs();
         //     this.loadSegmentItems();
         //     this.loadCurrencies();
-        //     this.loadRates();
+            this.loadRates();
         //     this.loadPrefixes();
         //     this.loadTxnTemplates();
 
@@ -2409,7 +2409,7 @@
         //     // this.loadSuppliers();
         //     // this.loadEmployees();
         //     // this.loadMeters();
-        // },
+        },
         // getFiscalDate: function() {
         //     var today = new Date(),
         //         fDate = new Date(today.getFullYear() + "-" + banhji.institute.fiscal_date);
@@ -2502,15 +2502,15 @@
         //         });
         //     });
         // },
-        // loadRates: function() {
-        //     this.currencyRateDS.query({
-        //         filter: [],
-        //         sort: {
-        //             field: "date",
-        //             dir: "desc"
-        //         }
-        //     });
-        // },
+        loadRates: function() {
+            this.currencyRateDS.query({
+                filter: [],
+                sort: {
+                    field: "date",
+                    dir: "desc"
+                }
+            });
+        },
         getRate: function(locale, date) {
             var rate = 0,
                 lastRate = 1;
@@ -2593,25 +2593,25 @@
         //         });
         //     });
         // },
-        // loadAccounts: function() {
-        //     var self = this,
-        //         raw = this.get("accountList");
+        loadAccounts: function() {
+            var self = this,
+                raw = this.get("accountList");
 
-        //     //Clear array
-        //     if (raw.length > 0) {
-        //         raw.splice(0, raw.length);
-        //     }
+            //Clear array
+            if (raw.length > 0) {
+                raw.splice(0, raw.length);
+            }
 
-        //     this.accountDS.query({
-        //         filter: []
-        //     }).then(function() {
-        //         var view = self.accountDS.view();
+            this.accountDS.query({
+                filter: []
+            }).then(function() {
+                var view = self.accountDS.view();
 
-        //         $.each(view, function(index, value) {
-        //             raw.push(value);
-        //         });
-        //     });
-        // },
+                $.each(view, function(index, value) {
+                    raw.push(value);
+                });
+            });
+        },
         // loadCategories: function() {
         //     var self = this,
         //         raw = this.get("categoryList");
@@ -3098,7 +3098,6 @@
             this.actualDS.data([]);
             this.currencyAR = [];
             if(id){
-                console.log("A");
                 this.set("noSession", false);
                 this.set("sessionID", id);
                 this.startAmountDS.query({
@@ -3106,6 +3105,8 @@
                 }).then(function(e){
                     var view = self.startAmountDS.view();
                     var tmpActual = [];
+                    var today = "<?php echo date('Y-m-d'); ?>";
+                    var totalAmount = 0;
                     if(view.length > 0){
                         self.set("cashierID", view[0].cashier_id);
                         //Start
@@ -3120,7 +3121,11 @@
                                     amount: v.amount,
                                     locale: v.locale
                                 });
+                                var rate = banhji.source.getRate(v.locale, new Date(today));
+                                totalAmount += v.amount / rate;
                             });
+
+                            self.set("actualAmount", totalAmount);
                         }
                         //Get not yet change
                         if(view[0].note_receive.length > 0){
@@ -3135,6 +3140,8 @@
                                         this.set("amount", o + v.amount);
                                     }
                                 });
+                                var amt = v.amount / v.rate;
+                                self.set("actualAmount", self.get("actualAmount") + amt);
                             });
                         }
                         //Change
@@ -3164,6 +3171,8 @@
                         }
                         //Set Base Currency
                         self.set("baseCurrency", view[0].rate.locale);
+                        self.set("acAmount", self.get("actualAmount"));
+                        self.set("actualAmount",  kendo.toString(self.get("actualAmount"), self.get("baseCurrency") == "km-KH" ? "c0" : "c", self.get("baseCurrency")));
                     }else{
                         banhji.router.navigate("/");
                     }
@@ -3275,12 +3284,16 @@
             this.save(2);
         },
         saveClose: function(){
-            if(this.get("accountSelect")){
+            if(this.get("haveDef") == false){
                 this.save(1);
             }else{
-                var notifact = $("#ntf1").data("kendoNotification");
-                    notifact.hide();
-                    notifact.error(this.lang.lang.error_input);
+                if(this.get("accountSelect")){
+                    this.save(1);
+                }else{
+                    var notifact = $("#ntf1").data("kendoNotification");
+                        notifact.hide();
+                        notifact.error(this.lang.lang.error_input);
+                }
             }
         },
         save: function(act) {
@@ -3310,7 +3323,7 @@
             this.receiveAR = [];
             this.noteDS.data([]);
             $("#loadING").css("display", "none");
-            banhji.router.navigate("/receipt");
+            banhji.router.navigate("/");
         },
         addRow              : function(){
             this.noteDS.add({
@@ -3448,7 +3461,7 @@
         // banhji.source.contactDS.read().then(function() {
             banhji.router.start();
             // banhji.source.loadData();
-            // banhji.source.pageLoad();
+            banhji.source.pageLoad();
         // });
 
         function loadStyle(href) {

@@ -267,6 +267,19 @@
 	    background: #fff;
 	    color: #333;
 	}
+	.session .example .glyphicons.ok_2 i:before {
+	    content: "\e207";
+	    color: #fff;
+	    margin-left: 11px;
+	    font-size: 20px;
+	    margin-top: 4px;
+	}
+	.session .example .glyphicons.remove_2 i:before {
+	    color: #fff !important;
+	    font-size: 20px;
+	    margin-top: 4px;
+	    margin-left: 8px;
+	}
 </style>
 <!-- ***************************
 *	Water Section      	  *
@@ -317,8 +330,24 @@
 				        		data-auto-bind="false"
 				        		data-bind="source: cashierItemDS"></tbody>
 					    </table>
-					    <span class="btn btn-icon btn-primary glyphicons ok_2" style="width: 135px;float: left; margin-bottom: 0px;" data-bind="click: addSession"><i></i><span data-bind="text: lang.lang.add">Save</span></span>
-					    <span data-bind="click: backSession" class="btn btn-icon btn-primary glyphicons remove_2" style="background: red;width: 135px;float: left; margin-bottom: 0px;"><i></i><span data-bind="text: lang.lang.cancel">Cancel</span></span>
+
+
+					    <!-- <span class="btn btn-icon btn-primary glyphicons ok_2" style="width: 135px;float: left; margin-bottom: 0px;" data-bind="click: addSession"><i></i><span data-bind="text: lang.lang.add">Save</span></span>
+					    <span data-bind="click: backSession" class="btn btn-icon btn-primary glyphicons remove_2" style="background: red;width: 135px;float: left; margin-bottom: 0px;"><i></i><span data-bind="text: lang.lang.cancel">Cancel</span></span> -->
+					
+					    <!-- Form actions -->
+						<div class="box-generic bg-action-button">
+							<div class="row">
+								<div class="span4"></div>
+								<div class="span8" align="right">
+									<span class="btn-btn glyphicons remove_2" data-bind="click: backSession" style="width: 100px !important;"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>									
+								  	<span data-bind="click: addSession" class="btn-btn glyphicons ok_2" id="saveClose" style="width: 87px !important; padding: 5px 15px;"><i></i> <span data-bind="text: lang.lang.add"></span></span>
+								</div>
+							</div>
+						</div>
+						<!-- // Form actions END -->
+
+
 					</div>
 				</div>
 			</div>
@@ -444,7 +473,7 @@
 					        		data-auto-bind="false"
 					        		data-bind="source: noteDS"></tbody>
 						    </table>
-						    <button class="btn btn-inverse" data-bind="click: addRow"><i class="icon-plus icon-white"></i></button>
+						    <button style="float: left;" class="btn btn-inverse" data-bind="click: addRow"><i class="icon-plus icon-white"></i> Add</button>
 						</div>
 		        		<div class="row" style="padding: 0px;margin: 0;margin-top: 20px;">
 		        			<div class="span4" style="padding-left: 0;">
@@ -700,7 +729,7 @@
 			<p> #: currency# </p>
 		</td>
 		<td>
-			<input style="text-align: right;" id="numeric" class="k-formatted-value k-input" type="number" value="17" min="0" data-bind="value: amount" step="1" />
+			<input style="text-align: right; border: 1px solid \#ccc;" id="numeric" class="k-formatted-value k-input" type="number" value="17" min="0" data-bind="value: amount" step="1" />
 		</td>
 	</tr>
 </script>

@@ -326,7 +326,7 @@
                     <li><a href="<?php echo base_url(); ?>wellnez/pos">Point of Sale</a></li>
                     <li><a href="<?php echo base_url(); ?>wellnez/session">Session Management</a></li>
                     <li><a href="<?php echo base_url(); ?>wellnez/books">Booking Management</a></li>
-                    <li><a href="<?php echo base_url(); ?>wellnez/services">Servicing Customer</a></li>
+                    <li><a href="<?php echo base_url(); ?>wellnez/services">Serving Customer</a></li>
                     <li><a href="<?php echo base_url(); ?>wellnez/pay">Receipt</a></li>
                     <li class="divider"></li>
                     <li><a href="<?php echo base_url(); ?>wellnez/customer">Customer</a></li>

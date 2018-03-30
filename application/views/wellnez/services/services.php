@@ -405,6 +405,22 @@
 		text-align: center;
 		color: #0eac00;
 	}
+	.bg-action-button .btn-btn {
+	    color: #FFF;
+	    border: 1px solid #d5d5d5;
+	    border-radius: 2px;
+	    padding: 5px 15px;
+	    cursor: pointer;
+	    float: right;
+	    margin-left: 8px;
+	}
+	.glyphicons.print i:before {
+	    content: "\e016";
+	    color: #fff !important;
+	}
+	.box-generic.bg-action-button .glyphicons.remove_2 i:before{
+		color: #fff !important;
+	}
 </style>
 <!-- ***************************
 *	Water Section      	  *
@@ -414,7 +430,7 @@
 		<div class="row services">
 			<div class="span12" style="position: relative;overflow: hidden;padding:0;">
 				<div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 100%;background: rgba(142, 159, 167, 0.8);z-index: 999999;border-radius: 10px;">
-					<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 40%;left: 40%">Loading</i>
+					<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 40%;left: 40%">Loading...</i>
 				</div>
 				<div class="row ">
 					<div class="span6 ">
@@ -602,29 +618,29 @@
 			<a style="padding:28px;top: 80px;" href="<?php echo base_url(); ?>wellnez/pos/\#/room/#:room_id#" class="glyphicons no-js circle_plus"><i ></i></a>
 		</div>
 		#}else if(status == 'Maintenance'){#
-			<a data-bind="click: availableRoom">Available</a>
+			<a style="background: \#1c3b19;  color: \#fff; padding: 5px 15px;" data-bind="click: availableRoom">Available</a>
 		#}#
 	</div>
 </script>
 
 <script id="print" type="text/x-kendo-template">
-    <div id="slide-form">
-        <div class="customer-background" style="overflow: hidden;margin-top: 15px;">
-            <div>                 
-                <div id="example" class="k-content">
+    <div class="container">
+		<div class="row customerCenter" style="background: #fff; padding-top: 15px; border-radius: 10px; ">
+			<div class="span12">
+				<div class="example">
                 	<div style="overflow: hidden;position: relative;height: 50px;">
-	                    <span id="savePrint" class="btn btn-icon btn-primary glyphicons print" data-bind="click: printGrid" style="width: 100px;margin-bottom:0;position: absolute;left:45%;"><i></i><span data-bind="text: lang.lang.print">Save PDF</span></span>
+	                    <span id="savePrint" class="btn btn-icon btn-primary glyphicons print" data-bind="click: printGrid" style="width: 85px !important; margin-bottom: 0; position: absolute; left: 45%; "><i></i><span data-bind="text: lang.lang.print" style="color: #fff;"></span></span>
 	                    <div class="hidden-print pull-right">
 	                        <span style="padding: 5px 0 11px 35px;" class="glyphicons no-js remove_2" 
 	                            data-bind="click: cancel"><i></i></span>    
 	                    </div>
 	                </div>
-                    <br>
-                    <div id="invoicecontent" style="width: 80%!important; margin: 0 auto;"></div>
-                    <div class="box-generic" align="right" style="background-color: #0B0B3B;">
+                    <div id="invoicecontent" style="width: 80%!important; margin: 0 auto; border: 1px solid #ccc;"></div>
+                    <div class="box-generic bg-action-button" align="right" style="background-color: #203864; margin-top: 15px; margin-bottom: 11px;">
                         <span id="notification"></span>
-                        <span id="savePrint" class="btn btn-icon btn-primary glyphicons print" data-bind="click: printGrid" style="width: 100px;margin-bottom:0!important;"><i></i><span data-bind="text: lang.lang.print">Save PDF</span></span>
-                        <span class="btn btn-icon btn-warning glyphicons remove_2" data-bind="click: cancel" style="width: 90px;"><i></i> <span data-bind="text: lang.lang.cancel">Cancel </span></span>
+                        <span class="btn btn-icon btn-btn glyphicons remove_2" data-bind="click: cancel" style="width: 90px !important; text-align: right;"><i></i> <span data-bind="text: lang.lang.cancel" style="color: #fff;"> </span></span>
+                        <span id="saveClose" class="btn-btn btn btn-icon glyphicons print" data-bind="click: printGrid" style="width: 85px !important; margin-bottom: 0!important; text-align: right;"><i></i><span data-bind="text: lang.lang.print" style="color: #fff;"></span></span>
+                        
                     </div>
                 </div>
             </div>
@@ -668,7 +684,7 @@
                 </div> -->
                 <div class="clear" style="float: left;">
                 	<p style="float: left; text-align: left;font-size: 14px;margin: 0;">អាស័យ​ដ្ឋាន Address: <span >#: banhji.institute.address#</span></p>
-                    <p style="float: left;width: 100%">ទូរស័ព្ទលេខ HP <span >#: banhji.institute.telephone# </span> Email: <span >#: banhji.institute.email#</span></p>
+                    <p style="float: left;width: 100%">ទូរស័ព្ទលេខ HP: <span >#: banhji.institute.telephone# </span> <br/> Email: <span >#: banhji.institute.email#</span></p>
                 </div>
             </div>
         </div>
@@ -677,11 +693,15 @@
         		<div class="span5" style="width: 41.66666667%; float: left;">
         			<h1 style="float: left; color: \#fff!important;margin-top: 5px;padding-left: 30px; text-align: left;text-transform: uppercase;font-family: 'Preahvihear', 'Roboto Slab'!important;font-size: 23px;">វិក្កយបត្រ Invoice</h1>
         		</div>
-        		<div class="span6" style="float: right; width: 44%;">
+        		<div class="span6" style="float: right; width: 51%;">
         			<table style="float: left; width: 100%;margin-top: 10px;">
         				<tr>
-        					<td style="border:0;text-align: left; width: 53%;text-transform: uppercase;color: \#fff!important;">លេខវិក្កយបត្រ INVOICE NO</td>
+        					<td style="border:0;text-align: left; width: 40%;text-transform: uppercase;color: \#fff!important;">លេខវិក្កយបត្រ (Invoice N0.) :</td>
         					<td style="border:0;text-align: left;font-weight: bold;color: \#fff!important;">#: number#</td>
+        				</tr>
+        				<tr>
+        					<td style="border:0;text-align: left; text-transform: uppercase;color: \#fff!important;">កាលបរិច្ឆេទ (Date) :</td>
+        					<td style="border:0;text-align: left;font-weight: bold;color: \#fff!important;">#= kendo.toString(new Date(issued_date), "F")#</td>
         				</tr>
         				<!-- <tr>
         					<td style="border:0;text-align: left;color: \#fff!important;">កាលបរិច្ឆេទ DATE</td>
@@ -692,25 +712,33 @@
         	</div>
         	<div class="span12 pcg2" style="margin-bottom: 15px;padding: 0;">
         		<div class="span6" style="padding-right: 10px; width: 48%; float: left;padding: 0;">
-        			<table style="float: left; width: 100%; border: 1px solid \#000;border-collapse: collapse; margin-bottom: 15px;">
-        				<tr>
-        					<td style="padding: 5px; border: 1px solid \#000; text-align: left; width: 35%; background: \#F1F1F1!important;">អ្នកគឹតលុយ (Cashier) </td>
+        			<table style="float: left; width: 100%; border: 1px solid \#000;border-collapse: collapse; margin-bottom: 0px;">
+        				<!-- <tr>
+        					<td style="padding: 5px; border: 1px solid \#000; text-align: left; width: 35%; background: \#F1F1F1!important;">អ្នកគិតលុយ (Cashier) </td>
         					<td style="padding: 5px; border: 1px solid \#000; text-align: left;">#: cashier_name#</td>
+        				</tr> -->
+        				<tr>
+        					<td style="padding: 5px; border: 1px solid \#000; text-align: left; width: 35%; background: \#F1F1F1!important;">ឈ្មោះអតិថិជន (Customer Name) </td>
+        					<td style="padding: 5px; border: 1px solid \#000; text-align: left;"></td>
         				</tr>
         				<tr>
-        					<td style="padding: 5px; border: 1px solid \#000; text-align: left; width: 35%; background: \#F1F1F1!important;">លេខបន្ទប់ (Room No)</td>
+        					<td style="padding: 5px; border: 1px solid \#000; text-align: left; width: 35%; background: \#F1F1F1!important;">លេខបន្ទប់ (Room No.) :</td>
         					<td style="padding: 5px; border: 1px solid \#000; text-align: left;">#: room_number#</td>
         				</tr>
         			</table>
         		</div>
-        		<div class="span6" style=" width: 48%; padding-left: 0; float: right;padding: 0;">
+        		<div class="span6" style=" width: 51%; padding-left: 0; float: right;padding: 0;">
         			<table style="float: left; width: 100%; border: 1px solid \#000; border-collapse: collapse;">
-        				<tr>
-        					<td style="padding: 5px; border: 1px solid \#000; text-align: left; width: 53%; background: \#F1F1F1!important;">កាលបរិច្ឆេក <br>(Date) </td>
+        				<!-- <tr>
+        					<td style="padding: 5px; border: 1px solid \#000; text-align: left; width: 35%; background: \#F1F1F1!important;">កាលបរិច្ឆេទ (Date) </td>
         					<td style="padding: 5px; border: 1px solid \#000; text-align: left;">#= kendo.toString(new Date(issued_date), "F")#</td>
+        				</tr> -->
+        				<tr>
+        					<td style="padding: 5px; border: 1px solid \#000; text-align: left; width: 35%; background: \#F1F1F1!important;">អ្នកគិតលុយ (Cashier) :</td>
+        					<td style="padding: 5px; border: 1px solid \#000; text-align: left;">#: cashier_name#</td>
         				</tr>
         				<tr>
-        					<td style="padding: 5px; border: 1px solid \#000; text-align: left; width: 35%; background: \#F1F1F1!important;">បគ្គលិក (staff) </td>
+        					<td style="padding: 5px; border: 1px solid \#000; text-align: left; width: 35%; background: \#F1F1F1!important;">បុគ្គលិក (Staff) :</td>
         					<td style="padding: 5px; border: 1px solid \#000; text-align: left;" >#= employee_name#</td>
         				</tr>
         			</table>

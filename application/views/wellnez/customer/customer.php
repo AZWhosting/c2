@@ -363,12 +363,6 @@
 	.addCusto .example .box-generic table tr td{
 		color: #333;
 	}
-	.bg-action-button .small-btn {
-	    padding: 13px 8px;
-	    float: right;
-	    border-left: 1px solid #fff;
-	    margin-left: 10px;
-	}
 </style>
 <!-- ***************************
 *	Water Section      	  *
@@ -593,14 +587,14 @@
 							   data-format="dd-MM-yyyy"
 					           data-bind="value: sdate,
 					           			  max: edate"
-					           placeholder="From ..." >
+					           placeholder="From ..." style="margin: 0 5px;">
 
 					    <input data-role="datepicker"
 					    	   class="edate"
 					    	   data-format="dd-MM-yyyy"
 					           data-bind="value: edate,
 					                      min: sdate"
-					           placeholder="To ..." >
+					           placeholder="To ..." style="margin-left: 0;">
 
 					  	<button type="button" data-role="button" data-bind="click: searchTransaction"><i class="icon-search"></i></button>
 					</div>
@@ -759,7 +753,7 @@
 							                />            
 										</div>
 									</div>
-									<div class="span6" style="padding-right: 0;">
+									<div class="span6" style="padding: 0;">
 										<div class="control-group">
 											<label for="txtAbbr"><span data-bind="text: lang.lang.number"></span> <span style="color:red">*</span></label>
 					              			<br>
@@ -774,7 +768,7 @@
 						                   			  disabled: obj.is_pattern,
 						                   			  events:{change:checkExistingNumber}"
 								                   placeholder="eg. 001" required data-required-msg="required"
-								                   style="width: 67%;" />
+								                   style="width: 72%;" />
 										</div>
 									</div>
 								</div>
@@ -810,7 +804,7 @@
 										
 									</div>
 
-									<div class="span6">	
+									<div class="span6" style="padding-left: 0;">	
 										
 										<div class="control-group">
 											<label for="registeredDate"><span data-bind="text: lang.lang.register_date"></span> <span style="color:red">*</span></label>

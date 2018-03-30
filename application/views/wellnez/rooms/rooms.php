@@ -471,7 +471,7 @@
 	    color: #333;
 	    box-shadow: 2px 0px 12px 0px rgba(68,68,68,1);
 	}
-	.box-generic {
+	/*.box-generic {
 	    background: #0B0B3B;
 	    clear: both;
 	    display: inline-block;
@@ -494,7 +494,7 @@
 	    border: none;
 	    padding: 3px 20px;
 	    float: left;
-	}
+	}*/
 </style>
 <!-- ***************************
 *	Water Section      	  *
@@ -687,7 +687,7 @@
 				            	}'
 				                data-connect-with="listbox2"
 				                data-auto-bind="true"
-				                data-bind="source: itemDS" style="width: 50%; min-height: 550px;">
+				                data-bind="source: itemDS" style="width: 50%; min-height: 400px;">
 				            </select>
 				           	
 				            <select id="listbox2" data-role="listbox"
@@ -696,7 +696,7 @@
 				                data-value-field="id"
 				                data-auto-bind="false"
 				                data-bind="source: obj.items"
-				                style="width: 49%; min-height: 550px;">
+				                style="width: 49%; min-height: 400px;">
 				            </select>
 				            <br>
 				            <div id="pager" class="k-pager-wrap"
@@ -711,7 +711,7 @@
 						<div id="ntf1" data-role="notification"></div>
 					</div>
 
-					<div class="box-generic">
+					<!-- <div class="box-generic">
 						<button data-role="button" class="k-button btn-main" role="button" aria-disabled="false" tabindex="0" data-bind="click: save">
                   			Maintenance
               			</button>
@@ -723,7 +723,22 @@
               			<button data-role="button" class="k-button btn-cancel" role="button " aria-disabled="false" tabindex="0" data-bind="click: cancel">
                   			Cancel
                 		</button>
-            		</div>
+            		</div> -->
+
+            		<!-- Form actions -->
+					<div class="box-generic bg-action-button" style="margin-top: 10px;">
+						<div class="row">
+							<div class="span4">
+								<span style="float: left; margin-left: 0;" class="btn-btn" data-bind="click: save"><span style="color: #fff !important;">Maintenance</span></span>
+							</div>
+							<div class="span8" align="right">
+								<span class="btn-btn" data-bind="click: cancel"><span style="color: #fff !important;" data-bind="text: lang.lang.cancel"></span></span>
+							  	<span class="btn-btn" data-bind="click: save"><span style="color: #fff !important;">Save</span></span>
+							</div>
+						</div>
+					</div>
+					<!-- // Form actions END -->
+
 				</div>
 			</div>
 		</div>

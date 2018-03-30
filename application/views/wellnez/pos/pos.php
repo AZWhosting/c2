@@ -802,7 +802,7 @@
 											<div class="img">
 												<img src="<?php echo base_url();?>assets/spa/icon/serving.png" >
 											</div>
-											<p class="textBig">Servicing </p>
+											<p class="textBig">Serving </p>
 										</div>
 									</div>
 								</div>
@@ -846,7 +846,7 @@
 
 <script id="item-list-view-template" type="text/x-kendo-template">
 	<div class="product" data-bind="click:addRow" style="text-align: center;">
-		<img src="#= image_url #" />
+		<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/no_image.jpg" />
 		<h3>#:name#</h3>
 		<p>#=kendo.toString(price, locale=="km-KH"?"c0":"c", locale)#</p>
 	</div>
