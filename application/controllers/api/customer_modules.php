@@ -48,113 +48,117 @@ class Customer_modules extends REST_Controller {
 		$sort 	 	= $this->get("sort");
 		$data["results"] = [];
 		$data["count"] = 0;
-				
-		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$obj->where_in("type", array("Sale_Order","Commercial_Invoice","Vat_Invoice","Invoice","Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale","Sale_Return","Cash_Refund"));		
-		$obj->where("issued_date >=", $this->startFiscalDate);
-		$obj->where("issued_date <", $this->endFiscalDate);
-		$obj->where("is_recurring <>", 1);
-		$obj->where("deleted <>", 1);
-		$obj->get_iterated();
 
 		$today = date("Y-m-d");
 
-		$sale = 0;
-		$saleCustomer = [];
-		$saleOrdered = 0;
+		//SALE
+		$sales = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$sales->where_in("type", array("Commercial_Invoice","Vat_Invoice","Invoice","Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale"));		
+		$sales->select_sum("amount / rate", "total");
+		$sales->where("issued_date >=", $this->startFiscalDate);
+		$sales->where("issued_date <", $this->endFiscalDate);
+		$sales->where("is_recurring <>", 1);
+		$sales->where("deleted <>", 1);
+		$sales->get();
 
-		$so = 0;
-		$soAmount = 0;
-		$soAvg = 0;
-		$soOpen = 0;
+		$saleReturns = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$saleReturns->where_in("type", array("Sale_Return","Cash_Refund"));		
+		$saleReturns->select_sum("amount / rate", "total");
+		$saleReturns->where("issued_date >=", $this->startFiscalDate);
+		$saleReturns->where("issued_date <", $this->endFiscalDate);
+		$saleReturns->where("is_recurring <>", 1);
+		$saleReturns->where("deleted <>", 1);
+		$saleReturns->get();
 
-		if($obj->exists()){
-			foreach ($obj as $value) {
-				$amount = floatval($value->amount) / floatval($value->rate);
+		$customerCounts = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$customerCounts->where_in("type", array("Commercial_Invoice","Vat_Invoice","Invoice","Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale"));		
+		$customerCounts->where("issued_date >=", $this->startFiscalDate);
+		$customerCounts->where("issued_date <", $this->endFiscalDate);
+		$customerCounts->where("is_recurring <>", 1);
+		$customerCounts->where("deleted <>", 1);
+		$customerCounts->group_by("contact_id");
 
-				if($value->type=="Sale_Return" || $value->type=="Cash_Refund"){
-					$sale -= $amount;
-				}else if($value->type=="Sale_Order"){
-					$so++;
-					$soAmount += $amount;
+		$saleCounts = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$saleCounts->where_in("type", array("Commercial_Invoice","Vat_Invoice","Invoice","Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale"));		
+		$saleCounts->where("issued_date >=", $this->startFiscalDate);
+		$saleCounts->where("issued_date <", $this->endFiscalDate);
+		$saleCounts->where("is_recurring <>", 1);
+		$saleCounts->where("deleted <>", 1);
 
-					//Open SO
-					if($value->status==0){
-						$soOpen++; 
-					}
-					//Used SO in sale
-					if($value->status==1){
-						$saleOrdered++; 
-					}
-				}else{
-					$sale += $amount;
+		$sale = floatval($sales->total) - floatval($saleReturns->total);
+		$saleCustomer = $customerCounts->count();
+		$saleOrdered = $saleCounts->count();//Count All Sales
 
-					//Group Sale Customer
-					if(isset($saleCustomer[$value->contact_id])){
-						$saleCustomer[$value->contact_id] = 0;
-					} else {
-						$saleCustomer[$value->contact_id] = 0;
-					}
-				}
-			}
+		//SALE ORDER
+		$saleOrders = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$saleOrders->where("type", "Sale_Order");
+		$saleOrders->where("issued_date >=", $this->startFiscalDate);
+		$saleOrders->where("issued_date <", $this->endFiscalDate);
+		$saleOrders->where("is_recurring <>", 1);
+		$saleOrders->where("deleted <>", 1);
 
-			//SO avg
-			if($so>0){
-				$soAvg = $soAmount / $so;
-			}
-		}
+		$saleOrderAmounts = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$saleOrderAmounts->select_sum("amount / rate", "total");
+		$saleOrderAmounts->where("type", "Sale_Order");
+		$saleOrderAmounts->where("issued_date >=", $this->startFiscalDate);
+		$saleOrderAmounts->where("issued_date <", $this->endFiscalDate);
+		$saleOrderAmounts->where("is_recurring <>", 1);
+		$saleOrderAmounts->where("deleted <>", 1);
+		$saleOrderAmounts->get();
+
+		$saleOrderOpens = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$saleOrderOpens->where("type", "Sale_Order");
+		$saleOrderOpens->where("status", 0);
+		$saleOrderOpens->where("issued_date >=", $this->startFiscalDate);
+		$saleOrderOpens->where("issued_date <", $this->endFiscalDate);
+		$saleOrderOpens->where("is_recurring <>", 1);
+		$saleOrderOpens->where("deleted <>", 1);
+
+		$so = $saleOrders->count();
+		$soAmount = floatval($saleOrderAmounts->total);
+		$soAvg = $soAmount / $so;
+		$soOpen = $saleOrderOpens->count();
 
 		//AR
 		$receivable = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$receivable->where_in("type", array("Commercial_Invoice","Vat_Invoice","Invoice","Sale_Return"));		
+		$receivable->where_in("type", array("Commercial_Invoice","Vat_Invoice","Invoice"));		
+		$receivable->select_sum("amount / rate", "total");
 		$receivable->where_in("status", array(0,2));
 		$receivable->where("is_recurring <>", 1);
 		$receivable->where("deleted <>", 1);
-		$receivable->get_iterated();
+		$receivable->get();
 
-		$ar = 0;
-		$arOpen = 0;
-		$arCustomer = [];
-		$arOverDue = 0;
+		$receivableReturns = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$receivableReturns->where("type", "Sale_Return");		
+		$receivableReturns->select_sum("amount / rate", "total");
+		$receivableReturns->where("is_recurring <>", 1);
+		$receivableReturns->where("deleted <>", 1);
+		$receivableReturns->get();
 
-		if($receivable->exists()){
-			foreach ($receivable as $value) {
-				$amount = floatval($value->amount) / floatval($value->rate);
+		$receivableCounts = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$receivableCounts->where_in("type", array("Commercial_Invoice","Vat_Invoice","Invoice"));
+		$receivableCounts->where_in("status", array(0,2));
+		$receivableCounts->where("is_recurring <>", 1);
+		$receivableCounts->where("deleted <>", 1);
 
-				if($value->type=="Sale_Return"){
-					$ar -= $amount;
-				}else{
-					$paidAmount = 0;
-					if($value->status==2){
-						$paid = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-						$paid->where("type", "Cash_Receipt");
-						$paid->where("reference_id", $value->id);
-						$paid->where("is_recurring <>", 1);
-						$paid->where("deleted <>", 1);
-						$paid->get_iterated();
-						
-						foreach ($paid as $p) {
-							$paidAmount += (floatval($p->amount) + floatval($p->discount)) / floatval($p->rate);
-						}
-					}
+		$receivableCustomerCounts = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$receivableCustomerCounts->where_in("type", array("Commercial_Invoice","Vat_Invoice","Invoice"));
+		$receivableCustomerCounts->where_in("status", array(0,2));
+		$receivableCustomerCounts->where("is_recurring <>", 1);
+		$receivableCustomerCounts->where("deleted <>", 1);
+		$receivableCustomerCounts->group_by("contact_id");
 
-					$ar += $amount - $paidAmount;
-					$arOpen++;
+		$receivableOverdueCounts = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$receivableOverdueCounts->where_in("type", array("Commercial_Invoice","Vat_Invoice","Invoice"));
+		$receivableOverdueCounts->where("due_date <", $today);
+		$receivableOverdueCounts->where_in("status", array(0,2));
+		$receivableOverdueCounts->where("is_recurring <>", 1);
+		$receivableOverdueCounts->where("deleted <>", 1);
 
-					//Overdue AR
-					if($value->due_date<$today){
-						$arOverDue++;
-					}
-
-					//Group AR Customer
-					if(isset($arCustomer[$value->contact_id])){
-						$arCustomer[$value->contact_id] = 0;
-					} else {
-						$arCustomer[$value->contact_id] = 0;
-					}
-				}
-			}
-		}
+		$ar = floatval($receivable->total) - floatval($receivableReturns->total);
+		$arOpen = $receivableCounts->count();
+		$arCustomer = $receivableCustomerCounts->count();
+		$arOverDue = $receivableOverdueCounts->count();
 
 		//cash position
 		$cash = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);	
@@ -189,21 +193,13 @@ class Customer_modules extends REST_Controller {
 		$product->where_related("transaction", "deleted <>", 1);
 		$product->where("item_id >", 0);
 		$product->where_related("item", "item_type_id", 1);
-		$product->get_iterated();
+		$product->group_by("item_id");
+		$product->get();
 
-		$itemList = [];
+		$sale_product = $product->count();
 
-		if($product->exists()){
-			foreach ($product as $value) {
-				//Group product
-				if(isset($itemList[$value->item_id])){
-					$itemList[$value->item_id] = 0;
-				} else {
-					$itemList[$value->item_id] = 0;
-				}
-			}
-		}
 
+		//TOP 5
 		$topCustomers = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);			
 		$topCustomers->select_sum("amount / rate", "total");
 		$topCustomers->include_related("contact", array("name"), FALSE);
@@ -244,15 +240,15 @@ class Customer_modules extends REST_Controller {
 		$data["results"][] = array(
 			'id' 				=> 0,
 			'sale' 				=> $sale,
-			'sale_customer' 	=> count($saleCustomer),
-			'sale_product' 		=> count($itemList),
+			'sale_customer' 	=> $saleCustomer,
+			'sale_product' 		=> $sale_product,
 			'sale_ordered' 		=> $saleOrdered,
 			'so' 				=> $so,
 			'so_avg' 			=> $soAvg,
 			'so_open'			=> $soOpen,
 			'ar' 				=> $ar,
 			'ar_open' 			=> $arOpen,
-			'ar_customer' 		=> count($arCustomer),
+			'ar_customer' 		=> $arCustomer,
 			'ar_overdue' 		=> $arOverDue,
 			'collection_day' 	=> 0,
 			'totalCashPosition' => $totalCashPosition,
