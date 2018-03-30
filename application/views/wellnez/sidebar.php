@@ -133,7 +133,7 @@
     }
     .cover-rightfixed {
         position: fixed;
-        top: 27%;
+        top: 20%;
         left: -95px;
         z-index: 999;
         text-align: left;
@@ -217,7 +217,7 @@
         text-decoration: underline;
     }
     .text-t  .enquiry-content {
-        bottom: -485px;
+        bottom: -529px;
         left: -313px;
         width: 313px;
     }
@@ -292,12 +292,12 @@
         text-decoration: underline;
     }
     .multiple-list  .enquiry-content {
-        bottom: -145px;
+        bottom: -157px;
         width: 313px;
         left: -219px
     }
     .cover-rightfixed.chat{
-        top: 41%;
+        top: 36%;
     }
     .glyphicons.remove_2 i:before {
         cursor: pointer;
@@ -341,7 +341,7 @@
             </div>
         </div>
     </div>
-    <div class="cover-rightfixed " style="top: 34%; z-index: 9999; left: -95px;">
+    <div class="cover-rightfixed " style="top: 28%; z-index: 9999; left: -95px;">
         <div class="rightfixed enquiries multiple-list  btn-rounded glyphicons glyphicons-plus no-js " style="float:left;  font-size: 15px;">
             Reports
             <div class="enquiry-content">

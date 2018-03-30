@@ -2090,7 +2090,7 @@ class Utibills extends REST_Controller {
 		   			// }
 					$line = new Winvoice_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		   			$line->transaction_id 	= $txn->id;
-		   			if($value->type = "usage"){
+		   			if($value->type == "usage"){
 		   				$line->item_id 			= $value->meter_id;
 		   			}else{
 		   				$line->item_id 			= isset($value->item_id) ? $value->item_id:"";

@@ -6,12 +6,12 @@ class Rooms extends CI_Controller {
 		parent::__construct();
 	}
 	
-	public function index() {
-		$this->load->view("wellnez/sidebar");
+	public function index() {		
 		$this->load->view("wellnez/header");
 		$this->load->view("wellnez/rooms/rooms");
 		$this->load->view("wellnez/rooms/script");
 		$this->load->view("wellnez/footer");
+		$this->load->view("wellnez/sidebar");
 	}
 }
 

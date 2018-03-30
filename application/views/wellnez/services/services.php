@@ -458,15 +458,7 @@
 		                            	title:'DESCRIPTION', 
 		                            	width: '250px',
 		                            	hidden: 'true', 
-		                            },                            
-		                            {
-									    field: 'quantity',
-									    title: 'QTY',
-									    format: '{0:n}',
-									    editor: numberTextboxEditor,
-									    width: '120px',
-									    attributes: { style: 'text-align: right;' }
-									},
+		                            }, 
 		                            { 
 		                            	field: 'measurement', 
 		                            	title: 'UOM', 
@@ -756,17 +748,23 @@
 							<td></td>
 							<td></td>
 							<td></td>
-						</tr>
+						</tr><!-- 
                         <tr>
-                        	<td colspan="5" style="padding-right: 10px;text-align: right;">សរុប TOTAL</td>
+                        	<td colspan="5" style="padding-right: 10px;text-align: right;">សរុប SUB TOTAL</td>
 							<td style="border: 1px solid;text-align: right"><strong>#= kendo.toString(sub_total, locale=="km-KH"?"c0":"c", locale)#</strong></td>
                         </tr>
                         <tr>
 							<td colspan="5" style="padding-right: 10px;text-align: right;">បញ្ចុះតម្លៃ DISCOUNT</td>
 							<td style="border: 1px solid;text-align: right"><strong>#= kendo.toString(discount, locale=="km-KH"?"c0":"c", locale)#</strong></td>
 						</tr>
+						#if(tax > 0){#
+                        <tr>
+                        	<td colspan="5" style="padding-right: 10px;text-align: right;">អាករលើតម្លៃបន្ថែម ១០% VAT (10%)</td>
+							<td style="border: 1px solid;text-align: right"><strong>#= kendo.toString(tax, locale=="km-KH"?"c0":"c", locale)#</strong></td>
+                        </tr>
+                        #}# -->
 						<tr>
-							<td colspan="5" style="padding-right: 10px;text-align: right;">ប្រាក់ត្រូវបង់សរុប SUB TOTAL</td>
+							<td colspan="5" style="padding-right: 10px;text-align: right;">សរុប (បូកបញ្ចូលទាំងអាករ) GRAND TOTAL (VAT INCLUSIVE)</td>
 							<td style="border: 1px solid;text-align: right"><strong>#= kendo.toString(amount, locale=="km-KH"?"c0":"c", locale)#</strong></td>
 						</tr>
                     </tfoot>

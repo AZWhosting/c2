@@ -6,12 +6,12 @@ class Employee extends CI_Controller {
 		parent::__construct();
 	}
 	
-	public function index() {
-		$this->load->view("wellnez/sidebar");
+	public function index() {		
 		$this->load->view("wellnez/header");
 		$this->load->view("wellnez/employee/employee");
 		$this->load->view("wellnez/employee/script");
 		$this->load->view("wellnez/footer");
+		$this->load->view("wellnez/sidebar");
 	}
 }
 

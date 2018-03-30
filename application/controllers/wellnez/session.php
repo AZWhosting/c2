@@ -6,12 +6,12 @@ class Session extends CI_Controller {
 		parent::__construct();
 	}
 	
-	public function index() {
-		$this->load->view("wellnez/sidebar");
+	public function index() {		
 		$this->load->view("wellnez/header");
 		$this->load->view("wellnez/session/session");
 		$this->load->view("wellnez/session/script");
 		$this->load->view("wellnez/footer");
+		$this->load->view("wellnez/sidebar");
 	}
 }
 

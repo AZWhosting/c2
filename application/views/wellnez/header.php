@@ -5,6 +5,7 @@
 <!--[if gt IE 8]> <html class="animations ie gt-ie8 fluid top-full menuh-top sticky-top"> <![endif]-->
 <!--[if !IE]><!--><html class="animations fluid top-full menuh-top sticky-top"><!-- <![endif]-->
 <head>
+
 <title>Wellnez | Online Spa Management System</title>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -15,7 +16,9 @@
 <meta name="description" content="" />
 <meta name="keywords" content="" />
 <meta name="author" content="" />
+<link rel="icon" type="image/png" href="<?php echo base_url();?>assets/spa/icon-wellnez.png">
 <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:300" rel="stylesheet">
+
 
 <!-- CSS Kendo By DAWINE -->
 <!-- <link rel="stylesheet" href="<?php echo base_url()?>assets/kendo/examples/content/shared/styles/examples-offline.css" /> -->
@@ -169,8 +172,7 @@ var themerPrimaryColor = primaryColor;
 </script>
 <!--start kendo localization in Khmer-->
 
-<!-- Le fav and touch icons -->
-<link rel="shortcut icon" href="<?php echo base_url();?>assets/spa/icon-wellnez.png">
+
 <style >
 	
 	#content{
@@ -274,4 +276,4 @@ var themerPrimaryColor = primaryColor;
 		        </div>
 		    </div>
 		</div>
-	</div>
+	</div>                                                                                           

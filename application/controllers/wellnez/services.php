@@ -6,12 +6,12 @@ class Services extends CI_Controller {
 		parent::__construct();
 	}
 	
-	public function index() {
-		$this->load->view("wellnez/sidebar");
+	public function index() {		
 		$this->load->view("wellnez/header");
 		$this->load->view("wellnez/services/services");
 		$this->load->view("wellnez/services/script");
 		$this->load->view("wellnez/footer");
+		$this->load->view("wellnez/sidebar");
 	}
 }
 

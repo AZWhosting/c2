@@ -252,9 +252,6 @@
 	    border-radius: 10px;
 	    padding: 15px;
 	}
-	.customerCenter .k-icon.k-i-arrow-60-down{
-		margin-top:  7px;
-	}
 	.customerCenter .listWrapper .results {
 	    float: left;
 	    height: 25px;
@@ -303,15 +300,6 @@
 	    background: #424242;
    		border-color: #424242;
 	    color: #fff;
-	}
-	.k-icon.k-i-seek-w,
-	.k-icon.k-i-arrow-w,
-	.k-icon.k-i-arrow-e,
-	.k-icon.k-i-seek-e{
-		margin-top: 5px;
-	}
-	.k-header .k-i-calendar{
-		margin-top: 6px;
 	}
 	.customerCenter .detailsWrapper button{
 		height: 30px;
@@ -371,9 +359,6 @@
 	}
 	.addCusto .example  h2{
 		margin-bottom: 15px;
-	}
-	.addCusto .example .k-icon.k-i-arrow-60-down{
-		margin-top: 5px;
 	}
 	.addCusto .example .box-generic table tr td{
 		color: #333;
@@ -438,6 +423,8 @@
 							    	<input type="text" name="" data-bind="value: obj.name" disabled="disabled" style="border: 1px solid #efefef; width: 69%; height: 30px; float: left; font-size: 16px; font-weight: 600;  background: #fff; padding-left: 5px;">
 							        <ul class="pull-right">
 							            <li class="glyphicons circle_info active"><span data-toggle="tab" data-target="#tab2-4"><i></i></span>
+							            </li>
+							            <li class="glyphicons vcard"><span data-toggle="tab" data-target="#tab2-3"><i></i></span>
 							            </li>							            
 							            <li class="glyphicons pen"><span data-toggle="tab" data-target="#tab3-4"><i></i></span>
 							            </li>
@@ -493,6 +480,11 @@
 												</div>
 											</div>
 							            </div>
+							            <div id="tab2-3" class="tab-pane box-generic">
+							            	<div class="row-fluid">
+							            		<h2>Coming Soon</h2>
+							            	</div>
+							            </div>
 							            <div id="tab3-4" class="tab-pane">
 										    <div>
 												<input type="text" class="k-textbox" 
@@ -542,8 +534,7 @@
 									             data-bind="source: attachmentDS"></div>
 
 										    <span class="btn btn-icon btn-success glyphicons ok_2" data-bind="click: uploadFile" style="color: #fff; padding: 5px 38px; text-align: left; width: 98px !important; display: inline-block; margin-top: 10px; background: #0eac00;"><i></i> <span data-bind="text: lang.lang.save"></span></span>
-										</div>
-								           
+										</div>								           
 
 							        </div>
 							    </div>

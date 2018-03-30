@@ -252,9 +252,6 @@
 	    border-radius: 10px;
 	    padding: 15px;
 	}
-	.customerCenter .k-icon.k-i-arrow-60-down{
-		margin-top:  7px;
-	}
 	.customerCenter .listWrapper .results {
 	    float: left;
 	    height: 25px;
@@ -303,15 +300,6 @@
 	    background: #424242;
    		border-color: #424242;
 	    color: #fff;
-	}
-	.k-icon.k-i-seek-w,
-	.k-icon.k-i-arrow-w,
-	.k-icon.k-i-arrow-e,
-	.k-icon.k-i-seek-e{
-		margin-top: 5px;
-	}
-	.k-header .k-i-calendar{
-		margin-top: 6px;
 	}
 	.customerCenter .detailsWrapper button{
 		height: 30px;
@@ -1490,3 +1478,4 @@
   	<tr>
     	<td>#=name# </td><td><button data-bind="click: onRemove">X</button></td>
   	</tr>
+                                                                                                                                                                                                                                           

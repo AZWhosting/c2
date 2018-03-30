@@ -263,12 +263,16 @@
 	.session .example table tr td{
 		font-size: 13px;
 	}
+	.session .example .btn-inverse:hover, .session .example .btn-inverse:focus {
+	    background: #fff;
+	    color: #333;
+	}
 </style>
 <!-- ***************************
 *	Water Section      	  *
 **************************** -->
 <script id="Index" type="text/x-kendo-template">
-		<div class="container">
+	<div class="container">
 		<div class="row session">
 			<div class="span12">
 				<div class="example">
@@ -327,10 +331,10 @@
 </script>
 <!-- Reconcile -->
 <script id="Reconcile" type="text/x-kendo-template">
-	<div id="slide-form">
-		<div class="customer-background" style=" margin-top: 15px;">
-			<div class="container-960">					
-				<div id="example" class="k-content">
+	<div class="container">
+		<div class="row session">
+			<div class="span12">
+				<div class="example">
 			    	<div class="hidden-print pull-right">
 			    		<span class="glyphicons no-js remove_2" 
 							data-bind="click: cancel"><i></i></span>	
@@ -459,7 +463,7 @@
 			        				</tbody>
 			        				<tfoot>
 			        					<tr>
-			        						<td colspan="2" style="text-align: center;background: #91268f;">
+			        						<td colspan="2" style="text-align: center;background: #0eac00;">
 			        							<span data-bind="text: actualAmount" style="color: #fff;font-weight: bold;font-size: 18px;"></span>
 			        						</td>
 			        					</tr>
@@ -482,7 +486,7 @@
 			        				</tbody>
 			        				<tfoot>
 			        					<tr>
-			        						<td colspan="2" style="text-align: center;background: #91268f;">
+			        						<td colspan="2" style="text-align: center;background: #0eac00;">
 			        							<span data-bind="text: countAmount" style="color: #fff;font-weight: bold;font-size: 18px;"></span>
 			        						</td>
 			        					</tr>
@@ -501,7 +505,7 @@
 			        				<tbody >
 			        					<tr data-bind="visible: haveDef">
 			        						<td colspan="2" style="text-align: center;" data-bind="style: { backgroundColor: defBG}">
-			        							<p style="color: #fff;margin: 0;">ចំនួនខុសសរុប ៖ <span style="font-weight: bold;font-size: 18px;" data-bind="text: deferentAmount"></span></p>
+			        							<p style="color: #333;margin: 0;">ចំនួនខុសសរុប ៖ <span style="font-weight: bold;font-size: 18px;" data-bind="text: deferentAmount"></span></p>
 			        						</td>
 			        					</tr>
 			        					<tr data-bind="invisible: haveDef">
@@ -535,10 +539,10 @@
 						<div id="ntf1" data-role="notification"></div>
 				        <div class="row">
 							<div class="col-sm-12" align="right">
-								<span class="btn-btn" style="float: left;" data-bind="click: saveDraft" ><i></i> 
+								<span class="btn-btn" style="float: left; margin-left: 0" data-bind="click: saveDraft" ><i></i> 
 									<span data-bind="text: lang.lang.save_draft">Record</span>
 								</span>
-								<span role='presentation' class='dropdown btn-btn' style="padding: 0 15px; float: left; height: 32px; line-height: 30px;">
+								<span role='presentation' class='dropdown btn-btn' style="padding: 0 0 15px 15px; float: left; height: 32px; line-height: 30px;">
 							  		<a style="color: #fff; padding: 0;" class='dropdown-toggle glyphicons' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'>
 							  			<span >Reconcile Option</span>
 							  			<span class="small-btn"><i class='caret '></i></span>
@@ -607,7 +611,8 @@
 				data-role="combobox" 
 				data-bind="source: currencyAR, value: currency, events: {change: onChange}" 
 				data-text-field="code" 
-				data-value-field="locale">
+				data-value-field="locale"
+				style="width: 100%;">
 		</td>
 		<td style="border-left: 0; border-bottom: 0;">
 			<input 
@@ -618,7 +623,7 @@
 				data-min="0" 
 				data-spinners="false" 
 				data-bind="value: note, events: {change: onChange}" 
-				style="padding-right: 10px;display: inline-block; text-align: right; height: 28px; border: none; width: 168px !important;">
+				style="padding:0 5px !important ;display: inline-block; text-align: right; height: 28px; border: none; width: 100%">
 		</td>
 		<td style="border-left: 0; border-bottom: 0;">
 			<input 
@@ -629,7 +634,7 @@
 				data-min="0" 
 				data-spinners="false" 
 				data-bind="value: unit, events: {change: onChange}" 
-				style="padding-right: 10px;text-align: right; display: inline-block; height: 28px; border: none; width: 168px !important;">
+				style="padding:0 5px !important ;text-align: right; display: inline-block; height: 28px; border: none; width: 100%">
 		</td>
 		<td style="border-left: 0; border-bottom: 0;">
 			<input 
@@ -639,7 +644,7 @@
 				data-spinners="false" 
 				data-bind="value:total" 
 				disabled="disabled" 
-				style="padding-right: 10px;text-align: right; display: inline-block; border: none; width: 168px !important;">
+				style="text-align: right; display: inline-block; border: none; width: 100%">
 		</td>
 	</tr>
 </script>

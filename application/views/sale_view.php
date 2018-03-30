@@ -280,14 +280,16 @@
 					</div>
 					<div class="span6" >
 						<div class="row">
-							<div class="span6 paddingLeftRigth">
-								<div class="bg-green height250">
-									<div class="img">
-										<img src="<?php echo base_url();?>assets/spa/icon/session.png" >
+							<a href="rrd/#/item_center">
+								<div class="span6 paddingLeftRigth">
+									<div class="bg-green height250">
+										<div class="img">
+											<img src="<?php echo base_url();?>assets/spa/icon/session.png" >
+										</div>
+										<p class="textSmall">Outlet</p>
 									</div>
-									<p class="textSmall">Outlet</p>
 								</div>
-							</div>
+							</a>
 							<a href="rrd/#/inventory_position_summary">
 								<div class="span6 nopadding-left">
 									<div class="bg-green height250 top-rigth">
@@ -305,22 +307,26 @@
 
 			<div class="span12">
 				<div class="row paddingTopBottom">
-					<div class="span6 nopadding-right">
-						<div class="bg-green height250">
-							<div class="img">
-								<img src="<?php echo base_url();?>assets/spa/icon/serving.png" >
+					<a href="admin#employeelist">
+						<div class="span6 nopadding-right">
+							<div class="bg-green height250">
+								<div class="img">
+									<img src="<?php echo base_url();?>assets/spa/icon/serving.png" >
+								</div>
+								<p class="textBig">Employee</p>
 							</div>
-							<p class="textBig">Employee</p>
 						</div>
-					</div>
-					<div class="span6 paddingLeft">
-						<div class="bg-green height250 bottom-rigth" >							
-							<div class="img">
-								<img src="<?php echo base_url();?>assets/spa/icon/report.png">
+					</a>
+					<a href="rrd/#/customer_report_center">
+						<div class="span6 paddingLeft">
+							<div class="bg-green height250 bottom-rigth" >
+								<div class="img">
+									<img src="<?php echo base_url();?>assets/spa/icon/report.png">
+								</div>
+								<p class="textBig">Sale Management Reports</p>
 							</div>
-							<p class="textBig">Sale Management Reports</p>
 						</div>
-					</div>
+					</a>
 				</div>
 			</div>
 

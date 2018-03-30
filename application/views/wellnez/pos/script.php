@@ -7650,6 +7650,7 @@
                                 });
                                 this.workDS.sync();
                                 this.workDS.bind("requestEnd", function(e){
+                                    window.location.href = "<?php echo base_url(); ?>wellnez/services";
                                     self.addWorkSuccess();
                                     $("#loadImport").css("display", "none");
                                 });
@@ -7782,6 +7783,7 @@
                                 this.bookDS.sync();
                                 this.bookDS.bind("requestEnd", function(e){
                                     self.addWorkSuccess();
+                                    window.location.href = "<?php echo base_url(); ?>wellnez/books";
                                     $("#loadImport").css("display", "none");
                                 });
                             }else{
