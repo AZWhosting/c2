@@ -477,11 +477,13 @@ class Cashier extends REST_Controller {
 					if($value->action == 2){
 						//save draft
 						$recon->status = 2;
+						$recon->active = 0;
 						$recon->save();
 					}elseif($value->action == 1){
 						//save close
 						$recon->end_date = date("Y-m-d H:i:s");
 						$recon->status = 1;
+						$recon->active = 0;
 						$recon->save();
 						if($value->defamont > 0){
 							$txn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
