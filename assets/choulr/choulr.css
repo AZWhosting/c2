@@ -1,0 +1,7 @@
+
+ h2{font-size: 24px;text-transform: uppercase;}
+.bg-action-button{background: #0eac00 !important;}
+.k-animation-container .k-list-container .k-list-scroller ul li:hover, .table .k-grid-content.k-auto-scrollable .k-virtual-scrollable-wrap table tr:hover 
+ {background: #45ce54 !important;}
+.k-draghandle.k-state-selected:hover, .k-ghost-splitbar-horizontal, .k-ghost-splitbar-vertical, .k-list>.k-state-highlight, .k-list>.k-state-selected, .k-marquee-color, .k-panel>.k-state-selected, .k-scheduler .k-scheduler-toolbar .k-state-selected, .k-scheduler .k-today.k-state-selected, .k-state-selected, .k-state-selected:link, .k-state-selected:visited
+{background: #45ce54 !important;}

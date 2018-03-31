@@ -2111,6 +2111,24 @@ class Choulr extends REST_Controller {
 						);
 					}
 				}
+				//Deposit
+				$deposititems = array();
+				$contractd = new Choulr_contract_deposit(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$contractd->where("contract_id", $value->id)->get();
+				if($contractd->exists()){
+					foreach($contractd as $cd){
+						$itemsd = new Plan_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						$itemsd->where("id", $cd->item_id)->limit(1)->get();
+						$cur = new Currency(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						$cur->where("id", $itemsd->currency_id)->limit(1)->get();
+						$deposititems[] = array(
+							"id" 	=> $itemsd->id,
+							"name" 	=> $itemsd->name,
+							"amount" => floatval($itemsd->amount),
+							"locale" => $cur->locale,
+						);
+					}
+				}
 				$data["results"][] = array(
 					"id" 					=> $value->id,
 			   		"name"					=> $value->name,
@@ -2121,14 +2139,13 @@ class Choulr extends REST_Controller {
 					"start_date" 			=> $value->start_date,
 					"end_date" 				=> $value->end_date,
 					"fine_id" 				=> $value->fine_id,
-					"deposit_id" 			=> $value->deposit_id,
-					"deposit_transaction_id" => $value->deposit_transaction_id,
+					"deposit_items" 		=> $deposititems,
 					"rent_ar"				=> $rent_ar,
 					"item_ar" 				=> $item_ar,
 					"water_meter_id"		=> $value->water_meter_id,
 					"electrictiy_meter_id"	=> $value->electrictiy_meter_id,
 					"memo"					=> $value->memo
-				);	
+				);
 			}
 		}
 
@@ -2142,69 +2159,11 @@ class Choulr extends REST_Controller {
 		$data["count"] = 0;
 
 		foreach ($models as $value) {
-			//Deposit
-			$depositid = 0;
-			if(isset($value->deposit_id)){
-				//Plan Item
-				$dep = new Plan_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$dep->where("id", $value->deposit_id)->limit(1)->get();
-				//Rate
-				$cr = new Currency_rate(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$cr->where("currency_id", $dep->currency_id)->limit(1)->order_by("id", "desc")->get();
-				//TXN
-				$txn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$txn->amount = $dep->amount;
-				$txn->contact_id = $value->customer_id;
-				$txn->transaction_template_id = 7;
-				$txn->account_id = $dep->account_id;
-				$number = $this->_generate_number('Customer_Deposit', $value->issued_date);
-				$txn->number = $number;
-				$txn->type = 'Customer_Deposit';
-				$txn->rate = $cr->rate;
-				$txn->locale = $cr->locale;
-				$txn->issued_date = $value->issued_date;
-				$txn->start_date = $value->issued_date;
-				$txn->interval = 1;
-				$txn->day = 1;
-				$txn->status = 0;
-				$txn->frequency = 'Daily';
-				$txn->month_option = 'Day';
-				$txn->is_journal = 1;
-				if($txn->save()){
-					$depositid = $txn->id;
-					//DR
-					$j1 = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-					$j1->transaction_id = $txn->id;
-					$j1->account_id = 1;
-					$j1->contact_id = $txn->contact_id;
-					$j1->description = "Choulr Deposit";
-					$j1->dr = $txn->amount;
-					$j1->rate = $cr->rate;
-					$j1->locale = $cr->locale;
-					$j1->save();
-					//CR
-					$j2 = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-					$j2->transaction_id = $txn->id;
-					$j2->account_id = $dep->account_id;
-					$j2->contact_id = $txn->contact_id;
-					$j2->description = "Choulr Deposit";
-					$j2->cr = $txn->amount;
-					$j2->rate = $cr->rate;
-					$j2->locale = $cr->locale;
-					$j2->save();
-					$data["results"][] = array(
-				   		"id" 				=> $txn->id,
-				   		"amount" 			=> floatval($txn->amount)
-				   	);
-				}
-			}
 			$obj = new Choulr_contract(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			isset($value->name) 				? $obj->name 					= $value->name : "";
 			isset($value->customer_id) 			? $obj->customer_id 			= $value->customer_id : "";
 			isset($value->property_id) 			? $obj->property_id 			= $value->property_id : "";
 			isset($value->lease_unit_id) 		? $obj->lease_unit_id 			= $value->lease_unit_id : 0;
-			isset($value->deposit_id) 			? $obj->deposit_id 				= $value->deposit_id : 0;
-			$obj->deposit_transaction_id = $depositid;
 			isset($value->water_meter_id) 		? $obj->water_meter_id 			= $value->water_meter_id : 0;
 			isset($value->electrictiy_meter_id) ? $obj->electrictiy_meter_id 	= $value->electrictiy_meter_id : 0;
 			isset($value->memo) 				? $obj->memo 					= $value->memo : "";
@@ -2253,6 +2212,68 @@ class Choulr extends REST_Controller {
 					$lu->contract_id = $obj->id;
 					$lu->save();
 				}
+				//Deposit
+				if(count($value->deposit_items) > 0){
+					foreach($value->deposit_items as $di){
+						//Plan Item
+						$dep = new Plan_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						$dep->where("id", $di->id)->limit(1)->get();
+						//Rate
+						$cr = new Currency_rate(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						$cr->where("currency_id", $dep->currency_id)->limit(1)->order_by("id", "desc")->get();
+						//TXN
+						$txn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						$txn->amount = $dep->amount;
+						$txn->contact_id = $value->customer_id;
+						$txn->transaction_template_id = 7;
+						$txn->account_id = $dep->account_id;
+						$number = $this->_generate_number('Customer_Deposit', $value->issued_date);
+						$txn->number = $number;
+						$txn->type = 'Customer_Deposit';
+						$txn->rate = $cr->rate;
+						$txn->locale = $cr->locale;
+						$txn->issued_date = $value->issued_date;
+						$txn->start_date = $value->issued_date;
+						$txn->interval = 1;
+						$txn->day = 1;
+						$txn->status = 0;
+						$txn->frequency = 'Daily';
+						$txn->month_option = 'Day';
+						$txn->is_journal = 1;
+						if($txn->save()){
+							//DR
+							$j1 = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+							$j1->transaction_id = $txn->id;
+							$j1->account_id = 1;
+							$j1->contact_id = $txn->contact_id;
+							$j1->description = "Choulr Deposit";
+							$j1->dr = $txn->amount;
+							$j1->rate = $cr->rate;
+							$j1->locale = $cr->locale;
+							$j1->save();
+							//CR
+							$j2 = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+							$j2->transaction_id = $txn->id;
+							$j2->account_id = $dep->account_id;
+							$j2->contact_id = $txn->contact_id;
+							$j2->description = "Choulr Deposit";
+							$j2->cr = $txn->amount;
+							$j2->rate = $cr->rate;
+							$j2->locale = $cr->locale;
+							$j2->save();
+							$data["results"][] = array(
+						   		"id" 				=> $txn->id,
+						   		"amount" 			=> floatval($txn->amount)
+						   	);
+						   	//Contract Deposit
+						   	$contractdeposit = new Choulr_contract_deposit(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						   	$contractdeposit->contract_id = $obj->id;
+						   	$contractdeposit->transaction_id = $txn->id;
+						   	$contractdeposit->item_id = $di->id;
+						   	$contractdeposit->save();
+						}
+					}
+				}
 		    }
 		}
 
@@ -2269,76 +2290,76 @@ class Choulr extends REST_Controller {
 			$obj = new Choulr_contract(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->get_by_id($value->id);
 			//Deposit
-			$depositid = $value->deposit_transaction_id;
-			if($obj->deposit_id != $value->deposit_id){
-				//Old
-				$otxn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$otxn->where("id", $value->deposit_transaction_id)->get();
-				$otxn->deleted = 0;
-				$otxn->save();
-				$jn = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$jn->where("transaction_id", $value->deposit_transaction_id);
-				$jn->update("deleted",1);
-				//Plan Item
-				$dep = new Plan_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$dep->where("id", $value->deposit_id)->limit(1)->get();
-				//Rate
-				$cr = new Currency_rate(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$cr->where("currency_id", $dep->currency_id)->limit(1)->order_by("id", "desc")->get();
-				//TXN
-				$txn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$txn->amount = $dep->amount;
-				$txn->contact_id = $value->customer_id;
-				$txn->transaction_template_id = 7;
-				$txn->account_id = $dep->account_id;
-				$number = $this->_generate_number('Customer_Deposit', $value->issued_date);
-				$txn->number = $number;
-				$txn->type = 'Customer_Deposit';
-				$txn->rate = $cr->rate;
-				$txn->locale = $cr->locale;
-				$txn->issued_date = $value->issued_date;
-				$txn->start_date = $value->issued_date;
-				$txn->interval = 1;
-				$txn->day = 1;
-				$txn->status = 0;
-				$txn->frequency = 'Daily';
-				$txn->month_option = 'Day';
-				$txn->is_journal = 1;
-				if($txn->save()){
-					$depositid = $txn->id;
-					//DR
-					$j1 = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-					$j1->transaction_id = $txn->id;
-					$j1->account_id = 1;
-					$j1->contact_id = $txn->contact_id;
-					$j1->description = "Choulr Deposit";
-					$j1->dr = $txn->amount;
-					$j1->rate = $cr->rate;
-					$j1->locale = $cr->locale;
-					$j1->save();
-					//CR
-					$j2 = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-					$j2->transaction_id = $txn->id;
-					$j2->account_id = $dep->account_id;
-					$j2->contact_id = $txn->contact_id;
-					$j2->description = "Choulr Deposit";
-					$j2->cr = $txn->amount;
-					$j2->rate = $cr->rate;
-					$j2->locale = $cr->locale;
-					$j2->save();
-					$data["results"][] = array(
-				   		"id" 				=> $txn->id,
-				   		"amount" 			=> floatval($txn->amount)
-				   	);
-				}
-			}
+			// $depositid = $value->deposit_transaction_id;
+			// if($obj->deposit_id != $value->deposit_id){
+			// 	//Old
+			// 	$otxn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			// 	$otxn->where("id", $value->deposit_transaction_id)->get();
+			// 	$otxn->deleted = 0;
+			// 	$otxn->save();
+			// 	$jn = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			// 	$jn->where("transaction_id", $value->deposit_transaction_id);
+			// 	$jn->update("deleted",1);
+			// 	//Plan Item
+			// 	$dep = new Plan_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			// 	$dep->where("id", $value->deposit_id)->limit(1)->get();
+			// 	//Rate
+			// 	$cr = new Currency_rate(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			// 	$cr->where("currency_id", $dep->currency_id)->limit(1)->order_by("id", "desc")->get();
+			// 	//TXN
+			// 	$txn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			// 	$txn->amount = $dep->amount;
+			// 	$txn->contact_id = $value->customer_id;
+			// 	$txn->transaction_template_id = 7;
+			// 	$txn->account_id = $dep->account_id;
+			// 	$number = $this->_generate_number('Customer_Deposit', $value->issued_date);
+			// 	$txn->number = $number;
+			// 	$txn->type = 'Customer_Deposit';
+			// 	$txn->rate = $cr->rate;
+			// 	$txn->locale = $cr->locale;
+			// 	$txn->issued_date = $value->issued_date;
+			// 	$txn->start_date = $value->issued_date;
+			// 	$txn->interval = 1;
+			// 	$txn->day = 1;
+			// 	$txn->status = 0;
+			// 	$txn->frequency = 'Daily';
+			// 	$txn->month_option = 'Day';
+			// 	$txn->is_journal = 1;
+			// 	if($txn->save()){
+			// 		$depositid = $txn->id;
+			// 		//DR
+			// 		$j1 = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			// 		$j1->transaction_id = $txn->id;
+			// 		$j1->account_id = 1;
+			// 		$j1->contact_id = $txn->contact_id;
+			// 		$j1->description = "Choulr Deposit";
+			// 		$j1->dr = $txn->amount;
+			// 		$j1->rate = $cr->rate;
+			// 		$j1->locale = $cr->locale;
+			// 		$j1->save();
+			// 		//CR
+			// 		$j2 = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			// 		$j2->transaction_id = $txn->id;
+			// 		$j2->account_id = $dep->account_id;
+			// 		$j2->contact_id = $txn->contact_id;
+			// 		$j2->description = "Choulr Deposit";
+			// 		$j2->cr = $txn->amount;
+			// 		$j2->rate = $cr->rate;
+			// 		$j2->locale = $cr->locale;
+			// 		$j2->save();
+			// 		$data["results"][] = array(
+			// 	   		"id" 				=> $txn->id,
+			// 	   		"amount" 			=> floatval($txn->amount)
+			// 	   	);
+			// 	}
+			// }
 			//
 			isset($value->name) 				? $obj->name 					= $value->name : "";
 			isset($value->customer_id) 			? $obj->customer_id 			= $value->customer_id : "";
 			isset($value->property_id) 			? $obj->property_id 			= $value->property_id : "";
 			isset($value->lease_unit_id) 		? $obj->lease_unit_id 			= $value->lease_unit_id : "";
-			isset($value->deposit_id) 			? $obj->deposit_id 				= $value->deposit_id : 0;
-			$obj->deposit_transaction_id = $depositid;
+			// isset($value->deposit_id) 			? $obj->deposit_id 				= $value->deposit_id : 0;
+			// $obj->deposit_transaction_id = $depositid;
 			isset($value->water_meter_id) 		? $obj->water_meter_id 			= $value->water_meter_id : "";
 			isset($value->electrictiy_meter_id) ? $obj->electrictiy_meter_id 	= $value->electrictiy_meter_id : "";
 			isset($value->memo) 				? $obj->memo 					= $value->memo : "";
@@ -2661,8 +2682,8 @@ class Choulr extends REST_Controller {
 			}
 		}
 
-		//Response Data
-		$this->response($data, 200);
+		$data["count"] = count($data["results"]);
+		$this->response($data, 201);
 	}
 	//POST
 	function makeinvoice_post() {
@@ -2696,12 +2717,13 @@ class Choulr extends REST_Controller {
 		   	$obj->due_date 			= date('Y-m-d', strtotime($value->due_date));
 		   	$obj->is_journal 		= 1;
 		   	$obj->check_no 			= isset($value->check_no) ? $value->check_no : "";
-		   	$obj->contract_id 		= isset($value->contract_id) ? $value->contract_id: "";
 		   	$obj->status 			= isset($value->status) ? $value->status: 1;
 		   	$obj->sub_total 		= isset($value->amount) ? $value->amount : "";
 		   	$obj->pole_id 			= isset($value->pole_id) ? $value->pole_id : 0;
 		   	$obj->box_id 			= isset($value->box_id) ? $value->box_id : 0;
 		   	$obj->payment_term_id 	= 5;
+		   	$obj->contract_id 		= isset($value->contract_id) ? $value->contract_id : 0;
+		   	$obj->property_id 		= isset($value->property_id) ? $value->property_id : 0;
 		   	$obj->user_id 			= isset($value->biller_id) ? $value->biller_id : 0;
 	   		if($obj->save()){
 	   			$journal = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
@@ -2813,7 +2835,7 @@ class Choulr extends REST_Controller {
 		}
 
 		$data["count"] = count($data["results"]);
-		$this->response($models, 201);
+		$this->response($data, 201);
 	}
 	//PUT
 	function invoice_put() {
@@ -2900,7 +2922,115 @@ class Choulr extends REST_Controller {
 		//Response data
 		$this->response($data, 200);
 	}
+	//Search INV
+	function search_inv_get(){
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
+		$data["count"] = 0;
+		$is_recurring = 0;
 
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
+			}
+		}
+
+		//Filter
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value["operator"])) {
+					$obj->{$value["operator"]}($value["field"], $value["value"]);
+				} else {
+					if($value["field"] == "property_id"){
+	    				$obj->where($value["field"], $value["value"]);
+	    			}
+				}
+			}
+		}
+		$obj->where("deleted <>", 1);
+		//Results
+		if($page && $limit){
+			$obj->get_paged_iterated($page, $limit);
+			$data["count"] = $obj->paged->total_rows;
+		}else{
+			$obj->get_iterated();
+			$data["count"] = $obj->result_count();
+		}
+
+		if($obj->exists()){
+			foreach ($obj as $value) {
+				$contactar = array();
+				$con = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$con->where("id", $value->contact_id)->limit(1)->get();
+				$contactar = array(
+		   			"id" 		=> $con->id,
+		   			"name" 		=> $con->name,
+		   			"number" 	=> $con->number,
+		   			"address" 	=> $con->address,
+		   			"phone" 	=> $con->phone,
+		   			"email" 	=> $con->email,
+		   			"vat_no" 	=> $con->vat_no,
+		   		);
+		   		$invoice_lines = [];
+		   		$lineitem = new Choulr_item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$lineitem->where("transaction_id", $value->id)->get();
+				if($lineitem->exists()){
+					foreach($lineitem as $line){
+						$invoice_lines[] = array(
+		   					"id" 				=> $line->id,
+		   					"transaction_id"	=> $line->transaction_id,
+				   			"item_id"			=> $line->item_id,
+				   			"name" 				=> $line->name,
+				   			"price" 			=> floatval($line->price),
+				   			"amount" 			=> floatval($line->amount),
+				   			"rate"				=> floatval($line->rate),
+				   			"locale" 			=> $line->locale,
+				   			"usage" 			=> intval($line->usage),
+				   			"type" 				=> $line->type
+		   				);
+					}
+				}
+				$contr = new Choulr_contract(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$contr->where("id", $value->contract_id)->limit(1)->get();
+			   	$data["results"][] = array(
+			   		"id" 				=> $value->id,
+					"location_id" 		=> $value->location_id,
+					"contact_id" 		=> $value->contact_id,
+					"contract" 			=> $contr->name,
+					"contactar" 		=> $contactar,
+					"account_id" 		=> $value->account_id,
+					"vat_id"			=> $value->vat_id,
+					"biller_id" 		=> $value->biller_id,
+				   	"number" 			=> $value->number,
+				   	"type" 				=> $value->type,
+				   	"amount" 			=> floatval($value->amount),
+				   	"vat" 				=> floatval($value->vat),
+				   	"rate" 				=> floatval($value->rate),
+				   	"locale" 			=> $value->locale,
+				   	"month_of"			=> $value->month_of,
+				   	"issued_date"		=> $value->issued_date,
+				   	"bill_date" 		=> $value->bill_date,
+				   	"due_date" 			=> $value->due_date,
+				   	"check_no" 			=> $value->check_no,
+				   	"status" 			=> $value->status,
+				   	"invoice_lines" 	=> $invoice_lines
+			   	);
+			}
+		}
+
+		//Response Data
+		$this->response($data, 200);
+	}
 	//Record
 	function record_get(){
 		$filter 	= $this->get("filter");

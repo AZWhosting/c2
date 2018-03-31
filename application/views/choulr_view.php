@@ -5,11 +5,7 @@
 </div>
 <!-- template section starts -->
 <script type="text/x-kendo-template" id="layout">
-    <!-- <div id="menu" class="menu" style="background: rgba(68, 174, 79, 1.2);"></div> -->
-
-
-    
-    <div id="content" class="container" style=" background: none;"></div>
+    <div id="content" style=" background: none;"></div>
 </script>
 <script type="text/x-kendo-template" id="blank-tmpl">
 </script>
@@ -31,8 +27,12 @@
             border-radius: 0;
         }
         .pk2 {padding-top: 7.4px;}
+        html {
+            height: 100%;
+            width: 100%;
+        }
     </style>
-    <div class="container" style="margin-top: 100px;">
+    <div class="container" style="margin-top: 30px;padding-top: 30px;">
         <div class="row">
             <div class="col-md-10">
                 <div class="col-md-12" style="padding: 0;padding-right: 5px;">
@@ -2870,7 +2870,10 @@
                                             />
                                         </div>
                                     </div>
-                                    <div class="tab-pane" id="Deposit">
+                                    <div class="tab-pane" id="Deposit" style="position: relative;overflow: hidden;">
+                                        <div data-bind="visible: isEdit" style="padding-top: 40px;display:none;text-align: center;position: absolute;width: 100%; height: 100%;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
+                                           <span style="color: #fff;margin-top: 40px;font-size: 20px;font-weight: bold;">You can not edit deposit</span>
+                                        </div>
                                         <div class="control-group">
                                             <label for="ddlContactType">
                                                 <span data-bind="text: lang.lang.deposit"></span>
@@ -2882,10 +2885,25 @@
                                                data-value-primitive="true"
                                                data-value-field="id"
                                                data-bind="value: obj.deposit_id,
-                                                          source: contractDepositDS"
+                                                          source: contractDepositDS,
+                                                          events: {change: depositChange}"
                                                data-option-label="(----select----)"
-                                               required data-required-msg="required" style="width: 100%;" />
+                                               required data-required-msg="required" style="width: 100%;margin-bottom: 20px;" />
                                         </div>
+                                        <table class="table-fixed table-customer table table-bordered table-primary table-striped table-vertical-center">
+                                            <thead>
+                                                <tr>
+                                                    <th style="vertical-align: top;" data-bind="text: lang.lang.no_"></th>
+                                                    <th style="vertical-align: top;" data-bind="text: lang.lang.name"></th>
+                                                    <th style="vertical-align: top;" data-bind="text: lang.lang.price"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody data-role="listview" 
+                                                data-template="deposit-list-tmpl" 
+                                                data-auto-bind="false"
+                                                data-bind="source: depositAR">
+                                            </tbody>
+                                        </table>
                                     </div>
                                     <div class="tab-pane" id="Fine">
                                         <div class="control-group">
@@ -4035,18 +4053,18 @@
                                 <thead>
                                     <tr>
                                         <th style="text-align:center"><input type="checkbox" data-bind="checked: chkAll, events: {change : checkAll}" /></th>                
-                                        <th><span data-bind="text: lang.lang.customer">Customer</span></th>              
-                                        <th><span data-bind="text: lang.lang.number">Number</span></th>
-                                        <th align="center"><span >Usage</span></th>
+                                        <th><span data-bind="text: lang.lang.customer">Contract</span></th>              
+                                        <th><span data-bind="text: lang.lang.number">Customer</span></th>
+                                        <th align="center"><span >Number</span></th>
                                         <th align="right"><span data-bind="text: lang.lang.amount">Amount</span></th>
                                     </tr>
                                 </thead>
                                 <tbody data-role="listview" 
                                         data-template="printbill-row-template" 
                                         data-auto-bind="false" 
-                                        data-bind="source: invoiceCollection.dataSource"></tbody>
+                                        data-bind="source: invoiceCollection"></tbody>
                                 <tfoot data-template="printbill-footer-template" 
-                                            data-bind="source: this"></tfoot>               
+                                            data-bind="source: this"></tfoot>            
                             </table>                        
                         </div>
 
@@ -4111,14 +4129,14 @@
     </div>
 </script>
 <!-- Invoice Form-->
-<script id="invoiceForm1" type="text/x-kendo-template">
+<script id="commercialInvoice" type="text/x-kendo-template">
     <div class="inv1">
         <div class="head" style="width: 90%">
             <div class="logo">
                 <img class="logoP" style="position: absolute;left: 0;top: 20px;width: auto;height: 90px;" src="#: banhji.institute.logo.url#" alt="#: banhji.institute.name#" title="#: banhji.institute.name#" />
             </div>
             <div class="cover-name-company" style="margin-left: 20px;width: 50%;float: left;">              
-                <h3 style="text-align:left;"># :banhji.institute.name#</h3>
+                <h3 style="text-align:left;">#: banhji.institute.name#</h3>
                 <div class="vattin">
                     <p>លេខ​អត្ត​សញ្ញាណ​កម្ម អតប (VATTIN)</p><span id="vat_number" >#: banhji.institute.vat_number#</span>
                 </div>
@@ -4145,7 +4163,7 @@
                         </div>
                     </div>
                     <div class="vattin">
-                    <p>លេខ​អត្ត​សញ្ញាណ​កម្ម អតប (VATTIN)</p><span id="vat_number">#: contactar.vat_no"></span><p style="font-size:8px;font-weight:normal;margin-left: 8px;">(ប្រសិន​បើ​មាន / If any)</p>
+                    <p>លេខ​អត្ត​សញ្ញាណ​កម្ម អតប (VATTIN)</p><span id="vat_number">#: contactar.vat_no#</span><p style="font-size:8px;font-weight:normal;margin-left: 8px;">(ប្រសិន​បើ​មាន / If any)</p>
                     </div>
                 </div>
                 <div class="cover-inv-number" style="width: 42%;">
@@ -5630,6 +5648,16 @@
         <td>#= kendo.toString(price, _currency.locale=="km-KH"?"c0":"c", _currency.locale)#</td>
     </tr>
 </script>
+<script id="deposit-list-tmpl" type="text/x-kendo-tmpl">
+    <tr data-uid="#: uid #">
+        <td>
+            <i class="icon-trash" data-bind="events: { click: rmDeposit }"></i>
+            #:banhji.Contract.depositAR.indexOf(data)+1#      
+        </td>
+        <td>#= name#</td>
+        <td>#= kendo.toString(amount, locale=="km-KH"?"c0":"c", locale)#</td>
+    </tr>
+</script>
 <!-- Customer -->
 <script id="attachment-list-tmpl" type="text/x-kendo-tmpl">
     <tr>
@@ -5842,10 +5870,10 @@
 <script id="printbill-row-template" type="text/x-kendo-tmpl">
     <tr>
         <td align="center"><input type="checkbox" data-bind="checked: printed, events: {change: isCheck}" /></td>
-        <td>#= contact.name#</td>
-        <td>#= meter.meter_number#</td>
-        <td align="center">#= consumption#</td>
-        <td align="right">#= kendo.toString(amount, "c0", locale)#</td>
+        <td>#= contract#</td>       
+        <td>#= contactar.name#</td>
+        <td class="right">#= number#</td>
+        <td class="right">#= kendo.toString(amount, locale=="km-KH"?"c0":"c", locale)#</td>
     </tr>
 </script>
 <script id="printbill-footer-template" type="text/x-kendo-template">

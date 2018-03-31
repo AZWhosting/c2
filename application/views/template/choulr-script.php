@@ -7638,11 +7638,11 @@
 
             return dfd;
         },
-        dataSource: dataStore(apiUrl + "choulr/contract"),
-        otherChargeAR: [],
-        contactDS: dataStore(apiUrl + "contacts"),
-        rentDS: dataStore(apiUrl + "choulr/tariff"),
-        eleMeterDS: new kendo.data.DataSource({
+        dataSource          : dataStore(apiUrl + "choulr/contract"),
+        otherChargeAR       : [],
+        contactDS           : dataStore(apiUrl + "contacts"),
+        rentDS              : dataStore(apiUrl + "choulr/tariff"),
+        eleMeterDS          : new kendo.data.DataSource({
             transport: {
                 read: {
                     url: apiUrl + "choulr/choulrmeter",
@@ -7689,7 +7689,7 @@
             page: 1,
             pageSize: 100
         }),
-        waterMeterDS: new kendo.data.DataSource({
+        waterMeterDS        : new kendo.data.DataSource({
             transport: {
                 read: {
                     url: apiUrl + "choulr/choulrmeter",
@@ -7736,8 +7736,8 @@
             page: 1,
             pageSize: 100
         }),
-        leaseunitDS: dataStore(apiUrl + "choulr/lease_unit_name"),
-        rentDS: new kendo.data.DataSource({
+        leaseunitDS         : dataStore(apiUrl + "choulr/lease_unit_name"),
+        rentDS              : new kendo.data.DataSource({
             transport: {
                 read: {
                     url: apiUrl + "choulr/tariff",
@@ -7784,7 +7784,7 @@
             page: 1,
             pageSize: 100
         }),
-        contractDepositDS: new kendo.data.DataSource({
+        contractDepositDS   : new kendo.data.DataSource({
             transport: {
                 read: {
                     url: apiUrl + "choulr/tariff",
@@ -7831,7 +7831,7 @@
             page: 1,
             pageSize: 100
         }),
-        fineDS: new kendo.data.DataSource({
+        fineDS              : new kendo.data.DataSource({
             transport: {
                 read: {
                     url: apiUrl + "choulr/tariff",
@@ -7878,9 +7878,9 @@
             page: 1,
             pageSize: 100
         }),
-        isEdit: false,
+        isEdit              : false,
         showConfirm         : false,
-        pageLoad: function(id) {
+        pageLoad            : function(id) {
             if (id) {
                 this.loadObj(id);
                 this.set("isEdit", true);
@@ -7898,15 +7898,15 @@
                 this.set("isEdit", false);
             }
         },
-        onLeaseUnitChange : function(e){
+        onLeaseUnitChange   : function(e){
             var inx = e.sender.selectedIndex;
             this.get("obj").set("property_id", this.leaseunitDS.data()[inx -1].property_id);
         },
         openConfirm         : function(){
             this.set("showConfirm", true);
         },
-        qItemDS : dataStore(apiUrl + "items"),
-        loadObj:  function(id) {
+        qItemDS             : dataStore(apiUrl + "items"),
+        loadObj             :  function(id) {
             var self = this;
             this.dataSource.query({
                 filter: {field: "id",value: id},
@@ -7954,10 +7954,21 @@
                         });
                     });
                 }
+                if(view[0].deposit_items.length > 0){
+                    self.depositAR.splice(0, self.depositAR.length);
+                    $.each(view[0].deposit_items, function(i,d){
+                        self.depositAR.push({
+                            id      : d.id,
+                            name    : d.name,
+                            amount  : d.amount,
+                            locale  : d.locale,
+                        });
+                    })
+                }
                 self.changes();
             });
         },
-        addEmpty: function() {
+        addEmpty            : function() {
             this.set("obj", "");
             this.dataSource.insert(0, {
                 name                    : "",
@@ -7973,11 +7984,39 @@
             });
             this.set("obj", this.dataSource.data()[0]);
         },
-        conditionAR : [
+        depositAR           : [],
+        depositChange       : function(e){
+            var idx = e.sender.selectedIndex -1;
+            var rent = this.contractDepositDS.data()[idx];
+            var id = this.get("obj").deposit_id;
+            var h = 0;
+            $.each(this.depositAR, function(i,v){
+                if(v.id == id){
+                    h = 1;
+                }
+            });
+            if(h != 1){
+                this.depositAR.push({
+                    id: rent.id,
+                    name: rent.name,
+                    amount: rent.amount,
+                    locale: rent._currency.locale,
+                });
+                h = 0;
+            }
+            this.get("obj").set("deposit_id", 0);
+        },
+        rmDeposit           : function(e){
+            var data = e.data;
+            if(this.depositAR.length>1){
+                this.depositAR.remove(data);
+            }
+        },
+        conditionAR         : [
             {id: "monthly", name: "Monthly"},
             {id: "onetime", name: "One Time Only"}
         ],
-        addOtherCharge : function(){
+        addOtherCharge      : function(){
             var amount = parseInt(this.get("ocQTY")) * parseFloat(this.get("ocPrice"));
             this.otherChargeAR.push({
                 name: this.get("ocName"),
@@ -7987,13 +8026,16 @@
                 condition: this.get("ocCondition"),
             });
         },
-        save            :function(){
+        save                :function(){
             $("#loadImport").css("display", "block");
             var self = this;
             var obj = this.get("obj");
             if(obj.customer_id && obj.issued_date && obj.lease_unit_id && obj.name){
                 if(this.rentAR.length > 0){
                     this.dataSource.data()[0].set("rent_items", this.rentAR);
+                    if(this.depositAR.length > 0){
+                        this.dataSource.data()[0].set("deposit_items", this.depositAR);
+                    }
                     if(this.lineDS.data().length > 0){
                         var lineAR = [];
                         $.each(this.lineDS.data(), function(i,v){
@@ -8012,9 +8054,11 @@
                     });
                 }else{
                     requireField();
+                    $("#loadImport").css("display", "none");
                 }
             }else{
                 requireField();
+                $("#loadImport").css("display", "none");
             }
         },
         delete              : function(){
@@ -8033,7 +8077,7 @@
                 }
             });
         },
-        rentAR             : [],
+        rentAR              : [],
         priceChange         : function(e){
             var idx = e.sender.selectedIndex -1;
             var rent = this.rentDS.data()[idx];
@@ -8055,7 +8099,13 @@
             }
             this.get("obj").set("rent_price_id", 0);
         },
-        cancel  : function(){
+        rmRent              : function(e){
+            var data = e.data;
+            if(this.rentAR.length>1){
+                this.rentAR.remove(data);
+            }
+        },
+        cancel              : function(){
             this.addEmpty();
             window.history.back();
         },
@@ -9394,12 +9444,12 @@
                 aSold += Total;
                 aSoldL = kendo.toString(aSold, banhji.institute.locale == "km-KH" ? "c0" : "c", banhji.institute.locale);
                 //set INV
-                self.calInvoice(Total, v.contact_id, invoiceItems, v.lease_unit.location_id, v.lease_unit.pole_id, v.lease_unit.box_id, v.id, locale);
+                self.calInvoice(Total, v.contact_id, invoiceItems, v.lease_unit.location_id, v.lease_unit.pole_id, v.lease_unit.box_id, v.id, locale, v.lease_unit.property_id, v.id);
             });
             this.set("amountSold", aSoldL);
             this.set("meterSold", mSold);
         },
-        calInvoice: function(Total, Contact, invoiceItems, Location, Pole, Box, ID, Locale) {
+        calInvoice: function(Total, Contact, invoiceItems, Location, Pole, Box, ID, Locale, PropertyID, ContractID) {
             var self = this;
             var date = new Date();
             var rate = banhji.source.getRate(Locale, date);
@@ -9423,6 +9473,8 @@
                 bill_date: BillingDate,
                 due_date: DueDate,
                 meter_id: ID,
+                property_id: PropertyID,
+                contract_id: ContractID,
                 invoice_lines: invoiceItems
             });
         },
@@ -9475,7 +9527,7 @@
         invoiceDS: dataStore(apiUrl + "winvoices/make"),
         attachmentDS: dataStore(apiUrl + "attachments"),
         printBTN: false,
-        invoiceCollection: banhji.invoice,
+        invoiceCollection: dataStore(apiUrl + "choulr/search_inv"),
         invoiceNoPrint: new kendo.data.DataSource({
             transport: {
                 read: {
@@ -9551,7 +9603,7 @@
             e.preventDefault();
             this.set("printArray", []);
             var bolValue = this.get("chkAll");
-            var data = this.invoiceCollection.dataSource.data();
+            var data = this.invoiceCollection.data();
             if (bolValue == true) {
                 if (data.length > 0) {
                     $.each(data, function(index, value) {
@@ -9722,94 +9774,34 @@
                     field: "month_of <=",
                     value: monthL
                 });
-                if (license_id) {
-                    if (bloc_id) {
-                        para.push({
-                            field: "type",
-                            value: "Utility_Invoice"
-                        });
-                        if (this.get("boxSelect")) {
-                            para.push({
-                                field: "box_id",
-                                value: this.get("boxSelect")
-                            });
-                        } else if (this.get("subLocationSelect")) {
-                            para.push({
-                                field: "pole_id",
-                                value: this.get("subLocationSelect")
-                            });
-                        } else {
-                            para.push({
-                                field: "location_id",
-                                value: this.get("blocSelect")
-                            });
+                if (this.get("propertySelect")) {
+                    para.push({
+                        field: "type",
+                        value: "Commercial_Invoice"
+                    });
+                    para.push({
+                        field: "property_id",
+                        value: this.get("propertySelect")
+                    });
+                    this.invoiceCollection.query({
+                        filter: para,
+                        order: {
+                            field: "id",
+                            dir: "asc"
                         }
-                        this.invoiceCollection.dataSource.query({
-                            filter: para,
-                            order: {
-                                field: "worder",
-                                operator: "where_related_meter",
-                                dir: "asc"
+                    }).then(function(e) {
+                        var numberNoPrint = 0;
+                        $.each(self.invoiceCollection.data(), function(i, v) {
+                            if (v.print_count == 0) {
+                                self.noPrintIDTransaction.push(v.id);
+                                numberNoPrint++;
                             }
-                        }).then(function(e) {
-
-                            var numberNoPrint = 0;
-                            self.exArray.push({
-                                cells: [{
-                                        value: "Invoice Number",
-                                        bold: true,
-                                        background: "#bbbbbb"
-                                    },
-                                    {
-                                        value: "Customer Code",
-                                        background: "#bbbbbb"
-                                    },
-                                    {
-                                        value: "Customer Name",
-                                        background: "#bbbbbb"
-                                    },
-                                    {
-                                        value: "Invoice Date",
-                                        background: "#bbbbbb"
-                                    },
-                                    {
-                                        value: "Amount",
-                                        background: "#bbbbbb"
-                                    }
-                                ]
-                            });
-                            $.each(self.invoiceCollection.dataSource.data(), function(i, v) {
-                                if (v.print_count == 0) {
-                                    self.noPrintIDTransaction.push(v.id);
-                                    numberNoPrint++;
-                                }
-                                self.exArray.push({
-                                    cells: [{
-                                            value: v.number
-                                        },
-                                        {
-                                            value: v.contact.number
-                                        },
-                                        {
-                                            value: v.contact.name
-                                        },
-                                        {
-                                            value: v.issue_date
-                                        },
-                                        {
-                                            value: (v.amount + v.amount_remain)
-                                        }
-                                    ]
-                                });
-                            });
-                            self.set("noPrint", numberNoPrint);
                         });
-                        this.set("selectInv", true);
-                    } else {
-                        alert("Please Select Location");
-                    }
+                        self.set("noPrint", numberNoPrint);
+                    });
+                    this.set("selectInv", true);
                 } else {
-                    alert("Please Select License");
+                    alert("Please Select Property");
                 }
             } else {
                 alert("Please Select Month Of");
@@ -9851,56 +9843,14 @@
         }),
         printBill: function() {
             if (this.get("TemplateSelect")) {
-                if (this.invoiceCollection.dataSource.total() > 0) {
+                if (this.invoiceCollection.total() > 0) {
                     if (this.printArray.length > 0) {
                         var self = this;
-                        banhji.InvoicePrint.dataSource = [];
-                        this.txnTemplateDS.query({
-                                filter: {
-                                    field: "id",
-                                    value: this.get("TemplateSelect")
-                                }
-                            })
-                            .then(function(e) {
-                                if (self.txnTemplateDS.data()[0].transaction_form_id == "45") {
-                                    banhji.InvoicePrint.formVisible = 'visibility: visible;';
-                                    banhji.InvoicePrint.formBorder = 'border: 1px solid #000!important;';
-                                    if (self.txnTemplateDS.data()[0].color) {
-                                        banhji.InvoicePrint.formColor = self.txnTemplateDS.data()[0].color;
-                                        $.each(self.printArray, function(index, value) {
-                                            self.printArray[index].formcolor = self.txnTemplateDS.data()[0].color;
-                                            banhji.InvoicePrint.dataSource.push(self.printArray[index]);
-                                        });
-                                    } else {
-                                        $.each(self.printArray, function(index, value) {
-                                            self.printArray[index].formcolor = "#355176";
-                                            banhji.InvoicePrint.dataSource.push(self.printArray[index]);
-                                        });
-                                    }
-                                } else {
-                                    if (self.txnTemplateDS.data()[0].transaction_form_id == "44") {
-                                        banhji.InvoicePrint.formVisible = 'visibility: hidden;';
-                                        banhji.InvoicePrint.formBorder = 'border: 1px solid #fff!important;';
-                                    } else {
-                                        banhji.InvoicePrint.formVisible = 'visibility: visible;';
-                                        banhji.InvoicePrint.formBorder = 'border: 1px solid #000!important;';
-                                    }
-                                    if (self.txnTemplateDS.data()[0].color) {
-                                        banhji.InvoicePrint.formColor = self.txnTemplateDS.data()[0].color;
-                                        $.each(self.printArray, function(index, value) {
-                                            self.printArray[index].formcolor = self.txnTemplateDS.data()[0].color;
-                                            banhji.InvoicePrint.dataSource.push(self.printArray[index]);
-                                        });
-                                    } else {
-                                        $.each(self.printArray, function(index, value) {
-                                            self.printArray[index].formcolor = "#355176";
-                                            banhji.InvoicePrint.dataSource.push(self.printArray[index]);
-                                        });
-                                    }
-                                }
-                                banhji.InvoicePrint.txnFormID = self.txnTemplateDS.data()[0].transaction_form_id;
-                                banhji.router.navigate('/invoice_print');
-                            });
+                        banhji.previewInvoice.dataSource = [];
+                        $.each(this.printArray, function(i,v){
+                            banhji.previewInvoice.dataSource.push(v);
+                        });
+                        banhji.router.navigate('/preview_invoice');
                     } else {
                         alert("Please check the box!");
                     }
@@ -9958,33 +9908,11 @@
         txnFormID: null,
         user_id: banhji.userManagement.getLogin() === null ? '' : banhji.userManagement.getLogin().id,
         pageLoad: function() {
-            if (this.dataSource.length <= 0) {
-                banhji.router.navigate('/print_bill');
-            }
+            // if (this.dataSource.length == 0) {
+            //     banhji.router.navigate('/print_bill');
+            // }
             var self = this,
                 TempForm = $("#commercialInvoice").html();
-            // switch(this.txnFormID){
-            //     case "45":
-            //         TempForm = $("#InvoiceFormTemplate2").html();
-            //         break;
-            //     case "49":
-            //         TempForm = $("#InvoiceFormElectric").html();
-            //         break;
-            //     case "32":
-            //         TempForm = $("#invoiceServiceNormal").html();
-            //         break;
-            //     case "1":
-            //         TempForm = $("#invoiceServiceCommercial").html();
-            //         break;
-            //     case "7":
-            //         TempForm = $("#depositForm").html();
-            //         break;
-            //     case "44":
-            //         TempForm = $("#formFrame").html();
-            //         break;
-            //     default:
-            //         TempForm = $("#InvoiceFormTemplate1").html();
-            // }
             $("#wInvoiceContent").kendoListView({
                 dataSource: this.dataSource,
                 template: kendo.template(TempForm)
