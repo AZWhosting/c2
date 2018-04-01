@@ -9897,8 +9897,8 @@
                         renderAs: "svg",
                         value: d.number,
                         type: "code128",
-                        width: 250,
-                        height: 25,
+                        width: 350,
+                        height: 40,
                         text: {
                             visible: false
                         }
@@ -9907,8 +9907,8 @@
                         renderAs: "svg",
                         value: d.number,
                         type: "code128",
-                        width: 250,
-                        height: 25,
+                        width: 450,
+                        height: 40,
                         text: {
                             visible: false
                         }

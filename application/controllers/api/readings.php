@@ -57,7 +57,7 @@ class Readings extends REST_Controller {
 		}			
 
 		//Get Result
-		$obj->order_by('created_at', 'desc');
+		// $obj->order_by('created_at', 'desc');
 		$obj->order_by('id', 'desc');
 		$obj->where('deleted', 0);
 		//Results

@@ -6713,9 +6713,8 @@
 			<table class="span12 table table-bordered footerTbl" style="padding:0;margin-bottom:15px;border-collapse: inherit;margin-top: 15px;border-radius: 3px;margin-left: 0px;#= banhji.InvoicePrint.formBorder#">
 				<tbody style="border:none!important">
 					<tr style="border:none!important">
-						<td width="150"></td>
-						<th width="300" style="border: none!important;">
-							<span style="margin-left: -15px;border:none!important" id="footwnumber#:id#"></span>
+						<th colspan="2" width="425" style="border: none!important;">
+							<span style="margin-left: 0px;border:none!important" id="footwnumber#:id#"></span>
 						</th>
 						<td width="270" class="greyy"  style="background: \\#ccc;border-bottom:1px solid \\#fff;#= banhji.InvoicePrint.formVisible#">ប្រាក់​ត្រូវ​បង់ TOTAL DUE</td>
 						<td width="180" align="right"><strong>#= kendo.toString(amount + amount_remain, locale=="km-KH"?"c0":"c", locale)#</strong></td>
