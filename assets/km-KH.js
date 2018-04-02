@@ -209,6 +209,7 @@ var	km_KH = {
 	"check_no": "លេខ​មូលប្បទានប័ត្រ​",
 	//Customer Modual,Invoice "",
 	"amount_due" :  "ប្រាក់​ជំពាក់",
+	"total_due"  : "ជំពាក់​សរុប",
 	"term" :  "លក្ខខណ្ឌ​ទូទាត់",
 	"due_date" :  "ថ្ងៃកំណត់",
 	//Customer Modual,Cash Receipt "",

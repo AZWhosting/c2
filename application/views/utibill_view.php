@@ -6648,8 +6648,8 @@
 				#for(var j=1; j< invoice_lines.length; j++) {#
 					#if(invoice_lines[j].amount != 0) {#
 						#if(invoice_lines[j].type == "tariff"){#
-						#var amountTariff = invoice_lines[j].amount #
-						#var amountTariffMoney = invoice_lines[j].amount * invoice_lines[0].consumption #
+							#var amountTariff = invoice_lines[j].amount;#
+							#var amountTariffMoney = invoice_lines[j].amount * invoice_lines[0].consumption;#
 							<tr>
 								<td colspan="3" align="left">#: invoice_lines[j].number#</td>
 								<td align="center">#: invoice_lines[0].consumption#</td>

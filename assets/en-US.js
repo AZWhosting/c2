@@ -215,6 +215,7 @@ var	en_US = {
 	"check_no" :  "Check Number",
 	//Customer Modual,Invoice,
 	"amount_due" : "AMOUNT DUE",
+	"total_due"  : "Total Due",
 	"term" : "Term",
 	"due_date" : "Due Date",
 	//Customer Modual,Cash Receipt,

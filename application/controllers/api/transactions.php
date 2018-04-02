@@ -1209,6 +1209,7 @@ class Transactions extends REST_Controller {
 						   	"number" 			=> "",
 						   	"status" 			=> "",
 						   	"amount" 			=> floatval($bf->total),
+						   	"total"				=> 0,
 						   	"balance" 			=> $balance,
 						   	"rate" 				=> 1,
 						   	"locale" 			=> $bf->locale
@@ -1240,6 +1241,7 @@ class Transactions extends REST_Controller {
 				   	"number" 			=> $value->number,
 				   	"status" 			=> intval($value->status),
 				   	"amount" 			=> $amount,
+				   	"total"				=> floatval($value->amount),
 				   	"balance" 			=> $balance,
 				   	"rate" 				=> $value->rate,
 				   	"locale" 			=> $value->locale

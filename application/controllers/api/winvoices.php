@@ -527,6 +527,8 @@ class Winvoices extends REST_Controller {
 		$table->where('deleted', 0);
 		$table->where('journal_type <>', 'journal' );
 		$table->where('type','Utility_Invoice');
+		// $table->limit(2); //For testing speed purpose ai Chouen ery :(
+
 		//Results
 		if($page && $limit){
 			$table->get_paged_iterated($page, $limit);
@@ -576,8 +578,12 @@ class Winvoices extends REST_Controller {
 					}
 				}
 
-				$items  = $row->winvoice_line->get();
-				$lines  = array();
+				// $items  = $row->winvoice_line->get();
+				$items = new Winvoice_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$items->where("transaction_id", $row->id);
+				$items->get();
+
+				$lines  = [];
 				
 				$usage = 0;
 				$remain = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
@@ -616,12 +622,14 @@ class Winvoices extends REST_Controller {
 						};
 					}
 				}
+
 				foreach($items as $item) {
 					if($item->type == 'usage') {
-						$record = $item->meter_record->limit(1)->get();
+						$record = $item->meter_record->include_related("meter", array("number"))->limit(1)->get();
+
 						$usage = $record->usage;
 						$lines[] = array(
-							// 'number' => $m->number,
+							'number' => $record->meter_number,
 							'previous' => floatval($record->previous),
 							'current'  => floatval($record->current),
 							'consumption' => floatval($record->usage),
@@ -631,7 +639,7 @@ class Winvoices extends REST_Controller {
 							'from_date' => $record->from_date,
 							'to_date' => $record->to_date
 						);
-					}elseif($item->type == 'exemption') {
+					}else if($item->type == 'exemption') {
 						$unit = $item->item->limit(1)->get();
 						$usage = $record->usage;
 						$lines[] = array(
@@ -644,7 +652,7 @@ class Winvoices extends REST_Controller {
 							'type' => $item->type,
 							'unit' => $unit->unit
 						);
-					}elseif($item->type == 'installment') {
+					}else if($item->type == 'installment') {
 						if($item->amount != 0){
 							$unit = $item->item->limit(1)->get();
 							$usage = $record->usage;
@@ -659,7 +667,7 @@ class Winvoices extends REST_Controller {
 								'unit' => $unit->unit
 							);
 						}
-					}elseif($item->type == 'meter' || $item->type == 'reactive') {
+					}else if($item->type == 'meter' || $item->type == 'reactive') {
 						$meterdate = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 						$meterdate->where("id", $item->meter_record_id)->order_by("id", "desc")->limit(1)->get();
 						$lines[] = array(
@@ -673,7 +681,7 @@ class Winvoices extends REST_Controller {
 							'from_date' => $meterdate->from_date,
 							'to_date' => $meterdate->to_date
 						);
-					}elseif($item->type == 'total_usage') {
+					}else if($item->type == 'total_usage') {
 						$lines[] = array(
 							'number' => $item->description,
 							'price' => floatval($item->price),

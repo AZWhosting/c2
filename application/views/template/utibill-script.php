@@ -9871,11 +9871,13 @@
             // } else {
             //     TempForm = $("#InvoiceFormTemplate1").html();
             // }
-            console.log(TempForm);
-            $("#wInvoiceContent").kendoListView({
+            // console.log(TempForm);
+
+            var listView = $("#wInvoiceContent").kendoListView({
                 dataSource: this.dataSource,
                 template: kendo.template(TempForm)
             });
+
             if(this.dataSource[0].invoice_type){
             }else{
                 for (var i = 0; i < this.dataSource.length; i++) {
@@ -9914,7 +9916,7 @@
                         }
                     });
                 }
-                var DataM = [],
+                /*var DataM = [],
                     MonthM = [];
                 $.each(d.minusMonth, function(i, v) {
                     DataM.push(v.usage);
@@ -9935,7 +9937,7 @@
                     categoryAxis: {
                         categories: MonthM
                     }
-                });
+                });*/
             }
         },
         printGrid: function() {
