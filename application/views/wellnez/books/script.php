@@ -3171,7 +3171,7 @@
                             allowed = true;
                         }else{
                             $.each(banhji.userData.roles, function(i,v){
-                                if(v.name == 'wnz_book'){
+                                if(v.name == 'wnz_booking'){
                                     allowed = true;
                                 }
                             });
