@@ -107,6 +107,7 @@ class Contacts extends REST_Controller {
 					"enumber" 					=> $value->enumber,
 					"wabbr" 					=> $value->wabbr,
 					"wnumber" 					=> $value->wnumber,
+					"membership_number" 		=> $value->membership_number,
 					"name" 						=> $value->name,
 					"name_other" 				=> $value->name_other,
 					"gender"					=> $value->gender,
@@ -213,6 +214,7 @@ class Contacts extends REST_Controller {
 			isset($value->enumber)					? $obj->enumber					= $value->enumber : "";
 			isset($value->wabbr)					? $obj->wabbr					= $value->wabbr : "";
 			isset($value->wnumber)					? $obj->wnumber					= $value->wnumber : "";
+			isset($value->membership_number)		? $obj->membership_number		= $value->membership_number : "";
 			isset($value->name)						? $obj->name					= $value->name : "";
 			isset($value->gender)					? $obj->gender					= $value->gender : "";
 			isset($value->dob)						? $obj->dob						= date("Y-m-d", strtotime($value->dob)) : "";
@@ -285,6 +287,7 @@ class Contacts extends REST_Controller {
 					"enumber" 					=> $obj->enumber,
 					"wabbr" 					=> $obj->wabbr,
 					"wnumber" 					=> $obj->wnumber,
+					"membership_number" 		=> $obj->membership_number,
 					"name" 						=> $obj->name,
 					"name_other" 				=> $obj->name_other,
 					"gender"					=> $obj->gender,
@@ -373,6 +376,7 @@ class Contacts extends REST_Controller {
 			isset($value->enumber)					? $obj->enumber					= $value->enumber : "";
 			isset($value->wabbr)					? $obj->wabbr					= $value->wabbr : "";
 			isset($value->wnumber)					? $obj->wnumber					= $value->wnumber : "";
+			isset($value->membership_number)		? $obj->membership_number		= $value->membership_number : "";
 			isset($value->name)						? $obj->name					= $value->name : "";
 			isset($value->gender)					? $obj->gender					= $value->gender : "";
 			isset($value->dob)						? $obj->dob						= date("Y-m-d", strtotime($value->dob)) : "";
@@ -445,6 +449,7 @@ class Contacts extends REST_Controller {
 					"enumber" 					=> $obj->enumber,
 					"wabbr" 					=> $obj->wabbr,
 					"wnumber" 					=> $obj->wnumber,
+					"membership_number" 		=> $obj->membership_number,
 					"name" 						=> $obj->name,
 					"name_other" 				=> $obj->name_other,
 					"gender"					=> $obj->gender,
@@ -576,6 +581,7 @@ class Contacts extends REST_Controller {
 					"contact_type_id" 			=> $value->contact_type_id,
 					// "abbr" 						=> $value->abbr,
 					"number" 					=> $value->number,
+					"membership_number" 		=> $value->membership_number,
 					"name" 						=> $value->name,
 					"name_other" 				=> $value->name_other,
 					"locale" 					=> $value->locale,

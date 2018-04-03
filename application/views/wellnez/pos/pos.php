@@ -739,26 +739,25 @@
 				                            	template: '#=item_price?item_price.measurement:banhji.emptyString#', 
 				                            	width: '80px' 
 				                            },
-				                            {
-											    field: 'price',
-											    title: 'PRICE',
-											    hidden: 'true',
-											    format: '{0:n}',
-											    editor: numberTextboxEditor,
-											    width: '120px',
-											    attributes: { style: 'text-align: right;' }
-											},
 				                            { 
 				                            	field: 'amount', 
 				                            	title:'AMOUNT', 
 				                            	format: '{0:n}', 
 				                            	editable: 'false', 
-				                            	attributes: { style: 'text-align: right;' }, width: '120px' },
+				                            	attributes: { style: 'text-align: right;' }, width: '120px' 
+				                            },
 				                            { 
 				                            	field: 'tax_item', 
-				                            	title:'TAX', 
+				                            	title:'TAX',
+				                            	hidden: 'true',
 				                            	editor: taxForSaleEditor,
 				                            	template: '#=tax_item.name#', width: '90px' 
+				                            },
+				                            { 
+				                            	field: 'therapist', 
+				                            	title:'Staff', 
+				                            	editor: therapistEditor,
+				                            	template: '#= therapistname#'
 				                            }
 				                         ]"
 				                         data-auto-bind="false"

@@ -42,6 +42,7 @@ var	en_US = {
 	"go_to_banhji_app" : "Go to BanhJi App",
 	"assigned_modules" : "Assignede Module",
 	"view_edit_profile" : "View/ Edit Profile",
+	"view_edit_membership" : "View/ Edit Membership",
 	"change_password" : "Change Password",
 	"company_info" : "Company Info",
 	"general_info" : "General Info",

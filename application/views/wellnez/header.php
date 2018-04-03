@@ -246,7 +246,7 @@ var themerPrimaryColor = primaryColor;
 				<div class="span12 menu">
 					<div class="row">
 						<div class="span2">
-							<a href="<?php echo base_url();?>wellnez/home" >
+							<a href="<?php echo base_url();?>wellnez/" >
 				                <img src="<?php echo base_url();?>assets/spa/wellnez-01.png" >
 				            </a>
 				        </div>
@@ -268,7 +268,7 @@ var themerPrimaryColor = primaryColor;
 				        		</div>
 				        		<div class="span6 logout">
 				        			<span>Hello [<span id="userCut"></span>] |
-				        			<a href="<?php echo base_url(); ?>rrd/login" >Logout</a></span>
+				        			<a href="<?php echo base_url(); ?>login" >Logout</a></span>
 				        		</div>
 				        	</div>
 				        </div>
@@ -276,4 +276,4 @@ var themerPrimaryColor = primaryColor;
 		        </div>
 		    </div>
 		</div>
-	</div>                                                                                           
+	</div>

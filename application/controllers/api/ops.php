@@ -93,17 +93,17 @@ class Ops extends REST_Controller {
 				// 	// 	"null" 		=> FALSE,
 				// 	// 	"default" 	=> 0
 				// 	// ),
-				// 	"type" => array(
+				// 	"membership_number" => array(
 				// 		"type" 		=> "VARCHAR",
 				// 		"constraint"=> "255",
 				// 		"null" 		=> FALSE,
 				// 		"default" 	=> ''
 				// 	)
 				// );
-				// $data['results'][] = $this->dbforge->add_column("custom_fields", $fields);
+				// $data['results'][] = $this->dbforge->add_column("contacts", $fields);
 				
 			    // Modify fields
-		 		//$fields = array(
+		 	// 	$fields = array(
 				// 	// "conversion_ratio" => array(
 				// 	// 	"name" 		=> "conversion_ratio",//New Field Name 
 				// 	// 	"type" 		=> "DECIMAL",
@@ -111,14 +111,20 @@ class Ops extends REST_Controller {
 				// 	// 	"null" 		=> FALSE,
 				// 	// 	"default" 	=> 1
 				// 	// ),
-				// 	"property_value" => array(
-				// 		"name" 		=> "field_value",//New Field Name 
-				// 		"type" 		=> "LONGTEXT",
+				// 	"membership_status" => array(
+				// 		"name" 		=> "status",//New Field Name 
+				// 		"type" 		=> "TINYINT",
 				// 		"null" 		=> FALSE,
-				// 		"default" 	=> ""
+				// 		"default" 	=> "0"
+				// 	),
+				// 	"membership_application_status" => array(
+				// 		"name" 		=> "application_status",//New Field Name 
+				// 		"type" 		=> "TINYINT",
+				// 		"null" 		=> FALSE,
+				// 		"default" 	=> "0"
 				// 	)
 				// );
-				// $data['results'][] = $this->dbforge->modify_column('contacts_custom_fields', $fields);
+				// $data['results'][] = $this->dbforge->modify_column('memberships', $fields);
 
 			 	//Remove column, 'table_name', 'column_to_drop'
 				// $this->dbforge->drop_column('item_assemblies', 'amount');

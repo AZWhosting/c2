@@ -40,6 +40,7 @@ var	km_KH = {
 	"go_to_banhji_app" :  "បន្ត​ទៅ​ប្រព័ន្ធ",
 	"assigned_modules" : "កំណត់​សិទ្ធិ",
 	"view_edit_profile" :  "មើល ឬ កែ​ប្រែ​ព័ត៌មាន​ផ្ទាល់ខ្លួន",
+	"view_edit_membership" :  "មើល ឬ កែ​ប្រែ​ព័ត៌មាន​សមាជិក",
 	"change_password" :  "ប្ដូរ​លេខ​សម្ងាត់",
 	"company_info" :  "ព័ត៌មាន​អំពី​ក្រុមហ៊ុន",
 	"general_info" :  "ព័ត៌មាន​ទូទៅ",
