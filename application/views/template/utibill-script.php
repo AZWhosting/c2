@@ -22288,6 +22288,360 @@
             });
         }
     });
+    banhji.dailyCashReceipt = kendo.observable({
+        lang: langVM,
+        dataSource: dataStore(apiUrl + "utibillReports/daily_cash"),
+        contactDS: new kendo.data.DataSource({
+            data: banhji.source.customerList,
+            sort: {
+                field: "number",
+                dir: "asc"
+            }
+        }),
+        licenseDS: dataStore(apiUrl + "branches"),
+        blocDS: dataStore(apiUrl + "locations"),
+        sortList: banhji.source.sortList,
+        sorter: "month",
+        sdate: "",
+        edate: "",
+        obj: {
+            contactIds: [],
+            licenseID: 0,
+            locationID: []
+        },
+        company: banhji.institute,
+        displayDate: "",
+        totalAmount: 0,
+        exArray: [],
+        pageLoad: function() {
+            this.search();
+            this.set("haveBloc", false);
+        },
+        sorterChanges: function() {
+            var today = new Date(),
+                sdate = "",
+                edate = "",
+                sorter = this.get("sorter");
+
+            switch (sorter) {
+                case "today":
+                    this.set("sdate", today);
+                    this.set("edate", "");
+
+                    break;
+                case "week":
+                    var first = today.getDate() - today.getDay(),
+                        last = first + 6;
+
+                    this.set("sdate", new Date(today.setDate(first)));
+                    this.set("edate", new Date(today.setDate(last)));
+
+                    break;
+                case "month":
+                    this.set("sdate", new Date(today.getFullYear(), today.getMonth(), 1));
+                    this.set("edate", new Date(today.getFullYear(), today.getMonth() + 1, 0));
+
+                    break;
+                case "year":
+                    this.set("sdate", new Date(today.getFullYear(), 0, 1));
+                    this.set("edate", new Date(today.getFullYear(), 11, 31));
+
+                    break;
+                default:
+                    this.set("sdate", "");
+                    this.set("edate", "");
+            }
+        },
+        licenseChange: function(e) {
+            var data = e.data;
+            var license = this.licenseDS.at(e.sender.selectedIndex - 1);
+            this.set("licenseSelect", license);
+            this.blocDS.filter({
+                field: "branch_id",
+                value: license.id
+            });
+            this.set("haveBloc", true);
+        },
+        search: function() {
+            var self = this,
+                para = [],
+                obj = this.get("obj"),
+                start = this.get("sdate"),
+                end = this.get("edate"),
+                displayDate = "";
+            license = this.get("licenseSelect"),
+                bloc = this.get("blocSelect");
+
+            if (license) {
+                para.push({
+                    field: "branch_id",
+                    value: license.id
+                });
+            }
+
+            if (bloc) {
+                para.push({
+                    field: "location_id",
+                    value: bloc.id
+                });
+            }
+
+            //Customer
+            if (obj.contactIds.length > 0) {
+                var contactIds = [];
+                $.each(obj.contactIds, function(index, value) {
+                    contactIds.push(value);
+                });
+                para.push({
+                    field: "contact_id",
+                    operator: "where_in",
+                    value: contactIds
+                });
+            }
+
+            //Dates
+            if (start && end) {
+                start = new Date(start);
+                end = new Date(end);
+                displayDate = "From " + kendo.toString(start, "dd-MM-yyyy") + " To " + kendo.toString(end, "dd-MM-yyyy");
+                end.setDate(end.getDate() + 1);
+
+                para.push({
+                    field: "issued_date >=",
+                    value: kendo.toString(start, "yyyy-MM-dd")
+                });
+                para.push({
+                    field: "issued_date <",
+                    value: kendo.toString(end, "yyyy-MM-dd")
+                });
+            } else if (start) {
+                start = new Date(start);
+                displayDate = "On " + kendo.toString(start, "dd-MM-yyyy");
+
+                para.push({
+                    field: "issued_date",
+                    value: kendo.toString(start, "yyyy-MM-dd")
+                });
+            } else if (end) {
+                end = new Date(end);
+                displayDate = "As Of " + kendo.toString(end, "dd-MM-yyyy");
+                end.setDate(end.getDate() + 1);
+
+                para.push({
+                    field: "issued_date <",
+                    value: kendo.toString(end, "yyyy-MM-dd")
+                });
+            } else {
+
+            }
+            this.set("displayDate", displayDate);
+
+            this.dataSource.query({
+                filter: para,
+            }).then(function() {
+                var view = self.dataSource.view();
+
+                var amount = 0;
+                $.each(view, function(index, value) {
+                    amount += value.amount;
+                });
+
+                self.set("totalAmount", kendo.toString(amount, banhji.locale == "km-KH" ? "c0" : "c", banhji.locale));
+            });
+            this.dataSource.bind("requestEnd", function(e) {
+                if (e.type == "read") {
+                    var response = e.response,
+                        balanceRec = 0,
+                        numberCustomer = 0;
+                    self.exArray = [];
+
+                    self.exArray.push({
+                        cells: [{
+                            value: self.company.name,
+                            textAlign: "center",
+                            colSpan: 3
+                        }]
+                    });
+                    self.exArray.push({
+                        cells: [{
+                            value: "Daily Cash Receipt",
+                            bold: true,
+                            fontSize: 20,
+                            textAlign: "center",
+                            colSpan: 3
+                        }]
+                    });
+                    if (self.displayDate) {
+                        self.exArray.push({
+                            cells: [{
+                                value: self.displayDate,
+                                textAlign: "center",
+                                colSpan: 3
+                            }]
+                        });
+                    }
+                    self.exArray.push({
+                        cells: [{
+                            value: "",
+                            colSpan: 3
+                        }]
+                    });
+                    self.exArray.push({
+                        cells: [{
+                                value: "Location",
+                                background: "#496cad",
+                                color: "#ffffff"
+                            },
+                            {
+                                value: "Number of Cusomter",
+                                background: "#496cad",
+                                color: "#ffffff"
+                            },
+                            {
+                                value: "Amount",
+                                background: "#496cad",
+                                color: "#ffffff"
+                            }
+                        ]
+                    });
+                    for (var i = 0; i < response.results.length; i++) {
+                        balanceRec += response.results[i].amount;
+                        numberCustomer += response.results[i].customer;
+                        self.exArray.push({
+                            cells: [{
+                                    value: response.results[i].name
+                                },
+                                {
+                                    value: response.results[i].customer
+                                },
+                                {
+                                    value: response.results[i].amount
+                                }
+                            ]
+                        });
+                        
+                        self.exArray.push({
+                            cells: [{
+                                value: "",
+                                colSpan: 3
+                            }]
+                        });
+                    }
+                    self.exArray.push({
+                        cells: [
+                            { value: "Total",bold: true, textAlign: "left" },
+                            { value: numberCustomer,bold: true},
+                            { value: balanceRec,bold: true},
+                        ]
+                    }); 
+                }
+            });
+        },
+        printGrid: function() {
+            var gridElement = $('#grid'),
+                printableContent = '',
+                win = window.open('', '', 'width=990, height=900'),
+                doc = win.document.open();
+            var htmlStart =
+                '<!DOCTYPE html>' +
+                '<html>' +
+                '<head>' +
+                '<meta charset="utf-8" />' +
+                '<title></title>' +
+                '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />' +
+                '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
+                '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/responsive.css">' +
+                '<link href="<?php echo base_url(); ?>assets/invoice/invoice.css" rel="stylesheet" />' +
+                '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
+                '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
+                '<style>' +
+                'html { font: 11pt sans-serif; }' +
+                '.k-grid { border-top-width: 0; }' +
+                '.k-grid, .k-grid-content { height: auto !important; }' +
+                '.k-grid-content { overflow: visible !important; }' +
+                'div.k-grid table { table-layout: auto; width: 100% !important; }' +
+                '.k-grid .k-grid-header th { border-top: 1px solid; }' +
+                '.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
+                '</style><style type="text/css" media="print"> @page { size: portrait; margin:1mm; }' +
+                '.inv1 .main-color {' +
+
+                '-webkit-print-color-adjust:exact; ' +
+                '} ' +
+                '.table.table-borderless.table-condensed  tr th { background-color: #1E4E78!important;' +
+                '-webkit-print-color-adjust:exact; color:#fff!important;}' +
+                '.table.table-borderless.table-condensed  tr th * { color: #fff!important; -webkit-print-color-adjust:exact;}' +
+                '.inv1 .light-blue-td { ' +
+                'background-color: #c6d9f1!important;' +
+                'text-align: left;' +
+                'padding-left: 5px;' +
+                '-webkit-print-color-adjust:exact; ' +
+                '}' +
+                '.saleSummaryCustomer .table.table-borderless.table-condensed tr td { ' +
+                'background-color: #F2F2F2!important; -webkit-print-color-adjust:exact;' +
+                '}' +
+                '.saleSummaryCustomer .table.table-borderless.table-condensed tr:nth-child(2n+1) td { ' +
+                ' background-color: #fff!important; -webkit-print-color-adjust:exact;' +
+                '}' +
+                '.journal_block1>.span2 *, .journal_block1>.span5 * {color: #fff!important;}' +
+                '.journal_block1>.span2:first-child { ' +
+                'background-color: #bbbbbb!important; -webkit-print-color-adjust:exact;' +
+                '}' +
+                '.journal_block1>.span5:last-child {' +
+                'background-color: #496cad!important; color: #fff!important; -webkit-print-color-adjust:exact; ' +
+                '}' +
+                '.journal_block1>.span5 {' +
+                'background-color: #5cc7dd!important; color: #fff!important; -webkit-print-color-adjust:exact;' +
+                '}' +
+                '.saleSummaryCustomer .table.table-borderless.table-condensed tfoot .bg-total td {' +
+                'background-color: #1C2633!important;' +
+                'color: #fff!important; ' +
+                '-webkit-print-color-adjust:exact;' +
+                '}' +
+                '</style>' +
+                '</head>' +
+                '<body><div class="saleSummaryCustomer" style="padding: 0 10px;">';
+            var htmlEnd =
+                '</div></body>' +
+                '</html>';
+
+            printableContent = $('#invFormContent').html();
+            doc.write(htmlStart + printableContent + htmlEnd);
+            doc.close();
+            setTimeout(function() {
+                win.print();
+                win.close();
+            }, 2000);
+        },
+        ExportExcel: function() {
+            var workbook = new kendo.ooxml.Workbook({
+                sheets: [{
+                    columns: [{
+                            autoWidth: true
+                        },
+                        {
+                            autoWidth: true
+                        },
+                        {
+                            autoWidth: true
+                        },
+                        {
+                            autoWidth: true
+                        },
+                        {
+                            autoWidth: true
+                        },
+                    ],
+                    title: "Daily Cash Receipt Summary",
+                    rows: this.exArray
+                }]
+            });
+            //save the file as Excel file with extension xlsx
+            kendo.saveAs({
+                dataURI: workbook.toDataURL(),
+                fileName: "dailyCash.xlsx"
+            });
+        }
+    });
 
     banhji.importContact = kendo.observable({
         lang: langVM,
@@ -26618,6 +26972,9 @@
         cashReceiptbyuser: new kendo.Layout("#cashReceiptbyuser", {
             model: banhji.cashReceiptbyuser
         }),
+        dailyCashReceipt: new kendo.Layout("#dailyCashReceipt", {
+            model: banhji.dailyCashReceipt
+        }),
         imports: new kendo.Layout("#importView", {
             model: banhji.importView
         }),
@@ -27729,6 +28086,23 @@
                     banhji.cashReceiptbyuser.set('total', kendo.toString(e.response.total, 'c2'));
                 }
             });
+            vm.pageLoad();
+        }
+    });
+    banhji.router.route("/daily_cash", function() {
+        if (!banhji.userManagement.getLogin()) {
+            banhji.router.navigate('/manage');
+        } else {
+            banhji.view.layout.showIn("#content", banhji.view.dailyCashReceipt);
+
+            var vm = banhji.dailyCashReceipt;
+            banhji.userManagement.addMultiTask("Daily Cash Receipt", "daily_cash", null);
+
+            if (banhji.pageLoaded["daily_cash"] == undefined) {
+                banhji.pageLoaded["daily_cash"] == true;
+
+                vm.sorterChanges();
+            }
             vm.pageLoad();
         }
     });

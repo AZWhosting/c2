@@ -3085,7 +3085,7 @@
         receiveAR: [],
         actualCountDS: dataStore(apiUrl + "cashier/blank"),
         actualDS: dataStore(apiUrl + "cashier/blank"),
-        baseCurrency: "km-KH",
+        baseCurrency: banhji.institute.locale,
         defBG: "#be1e2d",
         haveDef: true,
         sessionDS: dataStore(apiUrl + "cashier"),
@@ -3170,7 +3170,8 @@
                             });
                         }
                         //Set Base Currency
-                        self.set("baseCurrency", view[0].rate.locale);
+                        // console.log(self.get("baseCurrency"));
+                        // self.set("baseCurrency", view[0].rate.locale);
                         self.set("acAmount", self.get("actualAmount"));
                         self.set("actualAmount",  kendo.toString(self.get("actualAmount"), self.get("baseCurrency") == "km-KH" ? "c0" : "c", self.get("baseCurrency")));
                     }else{

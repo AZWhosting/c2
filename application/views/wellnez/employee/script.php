@@ -3713,7 +3713,7 @@
                 total: 'count'
             },
             filter: [
-                { field:"contact_type_id",operator: "where_in", value: [8,9,10] }
+                { field:"contact_type_id",operator: "where_in", value: [8,9,10,11,12] }
             ],
             sort: { field:"number", dir:"asc" },
             batch: true,
@@ -4064,9 +4064,9 @@
         pageSize: 50
     });
     banhji.Employees = kendo.observable({
-        lang        : langVM,
-        dataSource  : dataStore(apiUrl + "employees"),
-        roleDS      : new kendo.data.DataSource({
+        lang                    : langVM,
+        dataSource              : dataStore(apiUrl + "spa/employee"),
+        roleDS                  : new kendo.data.DataSource({
             transport: {
                 read  : {
                     url: baseUrl + 'api/employees/roles',
@@ -4115,8 +4115,8 @@
             serverPaging: true,
             pageSize: 50
         }),
-        payrollDS   : dataStore(apiUrl + "payrolls"),
-        advanceAccDS: new kendo.data.DataSource({
+        payrollDS               : dataStore(apiUrl + "payrolls"),
+        advanceAccDS            : new kendo.data.DataSource({
             transport: {
                 read  : {
                   url: baseUrl + "api/accounts",
@@ -4156,7 +4156,7 @@
             page:1,
             pageSize: 100
         }),
-        salaryAccDS: new kendo.data.DataSource({
+        salaryAccDS             : new kendo.data.DataSource({
             transport: {
                 read  : {
                   url: baseUrl + "api/accounts",
@@ -4200,29 +4200,29 @@
             data: banhji.source.currencyList,
             filter: { field:"status", value: 1 }
         }),
-        marriedAR   : [
+        marriedAR               : [
             {id: 0, name: 'Single'},
             {id: 1, name: 'Married'}
         ],
-        pageLoad    : function(id){
+        pageLoad                : function(id){
             if(id){
                 this.loadObj(id);
             }else{
                 this.addEmpty();
             }
         },
-        branchDS            : dataStore(apiUrl + "branches"),
-        obj         : null,
-        payrollobj  : null,
-        statusDS  : [
+        branchDS                : dataStore(apiUrl + "branches"),
+        obj                     : null,
+        payrollobj              : null,
+        statusDS                : [
             {id: 0, value: "Inactive"},
             {id: 1, value: "Active"}
         ],
-        genderDS  : [
+        genderDS                : [
             {id: "M", value: "Male"},
             {id: "F", value: "Female"}
         ],
-        userDS : banhji.userDS,
+        userDS                  : banhji.userDS,
         addEmpty                : function(){
             this.dataSource.data([]);
             this.set("obj", null);
@@ -4243,6 +4243,7 @@
                 "abbr"          :"",
                 "currency"      :"km-KH",
                 "userid"        :0,
+                "type"          : 1,
                 "account"       :{id: 9, name: 'Cash Advance'},
                 "salary"        :{id: 78, name: 'Salary'},
                 "registered_date":new Date()
@@ -4275,35 +4276,56 @@
             }).then(function(e){
                 var view = self.dataSource.view();
                 self.set("obj", view[0]);
+                self.payrollDS.query({
+                    filter: {field: "contact_id", value: view[0].id},
+                    pageSize: 1
+                }).then(function(e){
+                    var v = self.payrollDS.view();
+                    self.set("payrollobj", v[0]);
+                });
             });
         },
-        typeChange: function(e) {
-          var type = this.roleDS.data()[e.sender.selectedIndex - 1];
-          this.get('obj').set('abbr', type.abbr);
+        numberDS                  : dataStore(apiUrl + "contacts"),
+        typeChange              : function(e) {
+            var self = this;
+            var type = this.roleDS.data()[e.sender.selectedIndex - 1];
+            this.get('obj').set('abbr', type.abbr);
+            this.numberDS.query({
+                filter: {field: "contact_type_id", value: type.id},
+                sort: { field:"number", dir:"desc" },
+                pageSize: 1
+            }).then(function(e){
+                var v = self.numberDS.view();
+                if(v.length > 0){
+                    self.get('obj').set('number', kendo.parseFloat(v[0].number) + 1);
+                }else{
+                    self.get('obj').set('number', 00001);
+                }
+            });
         },
-        save        : function(e){
+        save                    : function(e){
             var self = this;
             this.dataSource.sync();
             this.dataSource.bind("requestEnd", function(e){
                 if(e.response.type != 'read'){
+                    self.cancel();
                     $.each(self.payrollDS.data(), function(i,v){
                         v.set("contact_id", e.response.results[0].id);
                     });
                     self.payrollDS.sync();
                     self.payrollDS.bind("requestEnd", function(e){
-                        self.cancel();
-                        var noti = $("#ntf1").data("kendoNotification");
-                        noti.hide();
-                        noti.success(self.lang.lang.success_message);
                     });
+                    var noti = $("#ntf1").data("kendoNotification");
+                    noti.hide();
+                    noti.success(self.lang.lang.success_message);
                 }
             });
         },
-        cancel      : function(e){
+        cancel                  : function(e){
             this.dataSource.data([]);
             banhji.router.navigate("/");
         },
-        typeAR      : [
+        typeAR                  : [
             {id: 1, name: "Enternal"},
             {id: 2, name: "Outsource"},
         ]
@@ -4351,7 +4373,7 @@
                 total: 'count'
             },
             filter: [
-                { field:"contact_type_id",operator: "where_in", value: [8,9,10] }
+                { field:"contact_type_id",operator: "where_in", value: [8,9,10,11,12] }
             ],
             sort: { field:"number", dir:"asc" },
             batch: true,
@@ -4743,9 +4765,8 @@
         //Links         
         goEdit              : function(){
             var obj = this.get("obj");
-
             if(obj!==null){
-                banhji.router.navigate('/customer/'+obj.id);
+                banhji.router.navigate('/employee/'+obj.id);
             }
         },
         goReference         : function(e){

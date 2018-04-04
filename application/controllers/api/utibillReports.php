@@ -1574,6 +1574,81 @@ class UtibillReports extends REST_Controller {
 		$this->response($data, 200);
 	}
 
+	//Cash Receipt Daily
+	function daily_cash_get() {
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 10000;	
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
+		$data["count"] = 0;
+
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
+			}
+		}
+		
+		//Filter		
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value['operator'])){
+	    			$obj->{$value['operator']}($value['field'], $value['value']);	    		
+	    		} else {
+	    			$obj->where($value['field'], $value['value']);
+	    		}
+			}
+		}
+
+		//Results
+		$obj->include_related("contact", array("abbr", "number", "name"));
+		$obj->include_related("location", "name");
+		$obj->where("type", "Cash_Receipt");
+		$obj->where("is_recurring <>", 1);
+		$obj->where("deleted <>", 1);
+		$obj->order_by("issued_date", "asc");
+		// $obj->get_iterated();
+		//Results
+		if($page && $limit){
+			$obj->get_paged_iterated($page, $limit);
+			$data["count"] = $obj->paged->total_rows;
+		}else{
+			$obj->get_iterated();
+			$data["count"] = $obj->result_count();
+		}
+
+		if($obj->exists()){
+			$objList = [];
+			foreach ($obj as $value) {					
+				$amount = floatval($value->amount) / floatval($value->rate);
+				if(isset($objList[$value->location_id])){
+					$objList[$value->location_id]["customer"] 		+= 1;
+					$objList[$value->location_id]["amount"] 		+= $amount;
+				}else{
+					$objList[$value->location_id]["id"] 			= $value->location_id;
+					$objList[$value->location_id]["name"] 			= $value->location_name;
+					$objList[$value->location_id]["customer"]		= 1;
+					$objList[$value->location_id]["amount"]			= $amount;
+				}
+			}
+
+			foreach ($objList as $value) {
+				$data["results"][] = $value;
+			}
+			// $data["count"] = count($data["results"]);
+		}
+
+		//Response Data
+		$this->response($data, 200);
+	}
+
 	//Connnection Service Revenue
 	function connect_service_revenue_get() {
 		$filter 	= $this->get("filter");

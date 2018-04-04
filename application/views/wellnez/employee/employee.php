@@ -1352,7 +1352,7 @@
 			                                      			value: obj.account"
 			                                      data-text-field="name"
 			                                      data-value-field="id"
-			                                      data-value-primitive="true"
+			                                      data-value-primitive="false"
 			                                      data-option-label="--Select One--"
 			                                      class="form-control col-md-7 col-xs-12"
 			                                      type="text"
@@ -1367,7 +1367,7 @@
 				                                      			value: obj.salary"
 				                                      data-text-field="name"
 				                                      data-value-field="id"
-				                                      data-value-primitive="true"
+				                                      data-value-primitive="false"
 				                                      data-option-label="--Select One--"
 				                                      class="form-control col-md-7 col-xs-12"
 				                                      type="text" style="width: 100%">
@@ -1376,11 +1376,11 @@
 	                            				<span style="margin-bottom: 10px; float: left;">Currency</span><br>
 			                                    <input id="type"
 			                                      data-role="dropdownlist"
-			                                      data-bind="source: currentDS, 
+			                                      data-bind="source: currencyDS, 
 			                                      			value: obj.currency"
 			                                      data-text-field="country"
 			                                      data-value-field="locale"
-			                                      data-value-primitive="true"
+			                                      data-value-primitive="false"
 			                                      data-option-label="--Select Currency"
 			                                      class="form-control col-md-7 col-xs-12"
 			                                      type="text" style="width: 100%">

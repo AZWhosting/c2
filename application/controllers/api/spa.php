@@ -2651,6 +2651,163 @@ class Spa extends REST_Controller {
 		//Response Data
 		$this->response($data, 200);
 	}
+	//Therapist
+	function employee_get(){
+		$data["results"] = [];
+		$data["count"] = 0;
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$obj = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		//Filter
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value["operator"])) {
+					$obj->{$value["operator"]}($value["field"], $value["value"]);
+				} else {
+	    			$obj->where($value["field"], $value["value"]);
+				}
+			}
+		}
+		//Results
+		if($page && $limit){
+			$obj->get_paged_iterated($page, $limit);
+			$data["count"] = $obj->paged->total_rows;
+		}else{
+			$obj->get_iterated();
+			$data["count"] = $obj->result_count();
+		}
+		if($obj->exists()){
+			foreach ($obj as $employees) {
+				$data["results"][] = array(
+					'id' 			=> $employees->id,
+					'name' 			=> $employees->name,
+					'branch_id'  	=> $employees->branch_id,
+					'abbr' 			=> $employees->abbr,
+					'status' 		=> $employees->status,
+					'role' 			=> $employees->role,
+					'number' 		=> $employees->number,
+					'ship_to' 		=> $employees->ship_to,
+					'bill_to' 		=> $employees->bill_to,
+					'memo' 			=> $employees->memo,
+					'is_fulltime' 	=> $employees->is_fulltime == 0 ? FALSE : TRUE,
+					'registered_date' => $employees->registered_date,
+					'address' 		=> $employees->address,
+					'phone' 		=> $employees->phone,
+					'email' 		=> $employees->email,
+					'userid' 		=> $employees->user_id,
+					'type' 			=> $employees->type,
+					'currency' 	 	=> $employees->locale,
+				);
+			}
+		}
+		//Response Data
+		$this->response($data, 200);
+	}
+	function employee_post(){
+		$models = json_decode($this->post('models'));
+		$data["results"] = [];
+		$data["count"] = 0;
+		foreach ($models as $value) {
+			$employees = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$employees->name 		= $value->name;
+			$employees->branch_id 	= $value->branch_id;
+			$employees->gender 		= $value->gender;
+			$employees->abbr 		= $value->abbr;
+			$employees->contact_type_id = $value->role;
+			$employees->number  	= $value->number;
+			$employees->email  		= $value->email;
+			$employees->ship_to  	= $value->ship_to;
+			$employees->bill_to  	= $value->bill_to;
+			$employees->registered_date = $value->registered_date;
+			$employees->phone  		= $value->phone;
+			$employees->memo  		= $value->memo;
+			$employees->is_fulltime = $value->is_fulltime == true ? 1:0;
+			$employees->account_id 	= $value->account->id;
+			$employees->salary_account_id = $value->salary->id;
+			$employees->address  	= $value->address;
+			$employees->status  	= $value->status;
+			$employees->type  		= $value->type;
+			$employees->user_id 	= $value->userid;
+			$employees->locale 		= $value->currency->locale;
+			if($employees->save()) {
+				$data["results"][] = array(
+					'id' 			=> $employees->id,
+					'name' 			=> $employees->name,
+					'branch_id'  	=> $employees->branch_id,
+					'abbr' 			=> $employees->abbr,
+					'status' 		=> $employees->status,
+					'role' 			=> $employees->role,
+					'number' 		=> $employees->number,
+					'ship_to' 		=> $employees->ship_to,
+					'bill_to' 		=> $employees->bill_to,
+					'memo' 			=> $employees->memo,
+					'is_fulltime' 	=> $employees->is_fulltime == 0 ? FALSE : TRUE,
+					'registered_date' => $employees->registered_date,
+					'address' 		=> $employees->address,
+					'phone' 		=> $employees->phone,
+					'email' 		=> $employees->email,
+					'userid' 		=> $employees->user_id,
+					'type' 			=> $employees->type,
+				);
+			}
+		}
+		$data["count"] = count($data["results"]);
+		$this->response($data, 201);
+	}
+	function employee_put(){
+		$models = json_decode($this->put('models'));
+		$data["results"] = [];
+		$data["count"] = 0;
+		foreach ($models as $value) {
+			$employees = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$employees->get_by_id($value->id);
+			$employees->name 		= $value->name;
+			$employees->branch_id 	= $value->branch_id;
+			$employees->gender 		= $value->gender;
+			$employees->abbr 		= $value->abbr;
+			$employees->contact_type_id = $value->role;
+			$employees->number  	= $value->number;
+			$employees->email  		= $value->email;
+			$employees->ship_to  	= $value->ship_to;
+			$employees->bill_to  	= $value->bill_to;
+			$employees->registered_date = $value->registered_date;
+			$employees->phone  		= $value->phone;
+			$employees->memo  		= $value->memo;
+			$employees->is_fulltime = $value->is_fulltime == true ? 1:0;
+			$employees->account_id 	= $value->account->id;
+			$employees->salary_account_id = $value->salary->id;
+			$employees->address  	= $value->address;
+			$employees->status  	= $value->status;
+			$employees->type  		= $value->type;
+			$employees->user_id 	= $value->userid;
+			$employees->locale 		= $value->currency->locale;
+			if($employees->save()) {
+				$data["results"][] = array(
+					'id' 			=> $employees->id,
+					'name' 			=> $employees->name,
+					'branch_id'  	=> $employees->branch_id,
+					'abbr' 			=> $employees->abbr,
+					'status' 		=> $employees->status,
+					'role' 			=> $employees->role,
+					'number' 		=> $employees->number,
+					'ship_to' 		=> $employees->ship_to,
+					'bill_to' 		=> $employees->bill_to,
+					'memo' 			=> $employees->memo,
+					'is_fulltime' 	=> $employees->is_fulltime == 0 ? FALSE : TRUE,
+					'registered_date' => $employees->registered_date,
+					'address' 		=> $employees->address,
+					'phone' 		=> $employees->phone,
+					'email' 		=> $employees->email,
+					'userid' 		=> $employees->user_id,
+					'type' 			=> $employees->type,
+				);
+			}
+		}
+		$data["count"] = count($data["results"]);
+		$this->response($data, 200);
+	}
 }
 /* End of file choulr.php */
 /* Location: ./application/controllers/api/meters.php */
