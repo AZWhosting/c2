@@ -267,7 +267,22 @@ class Contacts extends REST_Controller {
 			isset($value->deleted)					? $obj->deleted					= $value->deleted : "";
 			isset($value->is_system)				? $obj->is_system				= $value->is_system : "";
 
+			
 			if($obj->save()){
+				//Custom Fields
+				if(isset($value->custom_fields)){
+					$cfIds = [];
+					foreach ($value->custom_fields as $cf) {
+						array_push($cfIds, $cf->custom_fields->id);
+					}
+					
+		   			$customFields = new Custom_field(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$customFields->where_in("id", $cfIds);
+					$customFields->get();
+
+					$customFields->save($obj);
+				}
+
 				//Respsone
 				$data["results"][] = array(
 					"id" 						=> $obj->id,

@@ -179,7 +179,7 @@ class Cashier extends REST_Controller {
 				}
 			}
 		}
-		$obj->where("status", 0)->order_by("id", "desc")->limit(1)->get();
+		$obj->where("status <>", 1)->order_by("id", "desc")->limit(1)->get();
 		//Results
 		$data["count"] = $obj->result_count();
 		if($obj->exists()){
@@ -287,7 +287,7 @@ class Cashier extends REST_Controller {
 		 			"note_change" 		=> $noteitemchange,
 		 			"receive_group" 	=> $receivegroup,
 		 			"rate" 				=> $ratearr,
-		 			"status" 			=> $value->status,
+		 			"status" 			=> intval($value->status),
 		 		);
 		 	}
 		}

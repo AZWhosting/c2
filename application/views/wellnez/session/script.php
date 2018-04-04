@@ -3092,6 +3092,7 @@
         noSession: true,
         sessionID: "",
         cashierID: "",
+        acAmount: 0,
         pageLoad: function(id) {
             var self = this;
             this.actualCountDS.data([]);
@@ -3144,6 +3145,7 @@
                                 self.set("actualAmount", self.get("actualAmount") + amt);
                             });
                         }
+                        
                         //Change
                         if(view[0].note_change.length > 0){
                             $.each(view[0].note_change, function(i,v){
@@ -3170,12 +3172,9 @@
                             });
                         }
                         //Set Base Currency
-                        // console.log(self.get("baseCurrency"));
-                        // self.set("baseCurrency", view[0].rate.locale);
-                        // self.set("acAmount", self.get("actualAmount"));
                         self.set("actualAmount",  kendo.toString(self.get("actualAmount"), self.get("baseCurrency") == "km-KH" ? "c0" : "c", self.get("baseCurrency")));
                     }else{
-                        // banhji.router.navigate("/");
+                        banhji.router.navigate("/");
                     }
                 });
 
@@ -3200,10 +3199,6 @@
                     self.findNote(self.get("sessionID"));
                 });
                 this.tmpAR = [];
-                if(this.noteDS.data().length > 0){
-                    this.calBaseCurrency();
-                    this.resetActual();
-                }
             }else{
                 this.set("noSession", true);
                 this.sessionDS.query({
@@ -3216,13 +3211,12 @@
                 filter: {field: "cashier_session_id", value: id}
             }).then(function(e){
                 if(self.noteDS.data().length > 0){
-                    self.resetActual();
+                    // self.resetActual();
                 }
                 self.addRow();
             });
         },
         actualAmount: 0,
-        acAmount: 0,
         calBaseCurrency: function(){
             var self = this;
             var total = 0;
@@ -3233,6 +3227,7 @@
                 total += arate;
             });
             this.set("actualAmount", kendo.toString(total, this.get("baseCurrency") == "km-KH" ? "c0" : "c", this.get("baseCurrency")));
+
             this.set("acAmount", total);
         },
         accountDS           : new kendo.data.DataSource({
@@ -3268,9 +3263,9 @@
                 var arate = v.total / rate;
                 total += arate;
             });
-            console.log(this.get("acAmount"));
             this.set("countAmount", kendo.toString(total, this.get("baseCurrency") == "km-KH" ? "c0" : "c", this.get("baseCurrency")));
             this.set("cAmount", total);
+            console.log(this.get("acAmount"));
             var def = total - this.get("acAmount");
             this.set("deferentAmount", kendo.toString(def, this.get("baseCurrency") == "km-KH" ? "c0" : "c", this.get("baseCurrency")));
             if(def == 0){
