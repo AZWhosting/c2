@@ -2472,15 +2472,7 @@ class UtibillReports extends REST_Controller {
 		$obj->where_related("winvoice_line", "type", "maintenance");
 		$obj->where("deleted <>", 1);
 		$obj->order_by("issued_date", "asc");
-		// $obj->get_iterated();
-		//Results
-		if($page && $limit){
-			$obj->get_paged_iterated($page, $limit);
-			$data["count"] = $obj->paged->total_rows;
-		}else{
-			$obj->get_iterated();
-			$data["count"] = $obj->result_count();
-		}
+		$obj->get_iterated();
 		
 		if($obj->exists()){
 			$objList = [];

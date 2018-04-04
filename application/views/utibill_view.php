@@ -14705,9 +14705,6 @@
 										data-bind="source: dataSource">
 								</tbody>
 							</table>
-							<div id="pager" class="k-pager-wrap"						    	
-					             data-role="pager" data-bind="source: dataSource"
-					             data-page-size= "true"></div>
 						</div>
 					</div>
 				</div>

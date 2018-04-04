@@ -154,105 +154,57 @@ class Accounting_modules extends REST_Controller {
 		
 		//INCOME (Begin FiscalDate To As Of)
 		$income = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$income->include_related("transaction", array("rate"));
+		$income->select_sum("(cr - dr) / transactions.rate", "total");
 		$income->where_in_related("account", "account_type_id", array(35,39));
 		$income->where_related("transaction", "issued_date >=", $this->startFiscalDate);
 		$income->where_related("transaction", "issued_date <", $asOftoday);
 		$income->where_related("transaction", "is_recurring <>", 1);
 		$income->where_related("transaction", "deleted <>", 1);
 		$income->where("deleted <>", 1);
-		$income->get_iterated();
+		$income->get();
 		
-		//Sum Dr and Cr
-		$incomeDr = 0;
-		$incomeCr = 0;
-		foreach ($income as $value) {
-			if($value->dr!==0){
-				$incomeDr += floatval($value->dr) / floatval($value->transaction_rate);
-			}
-			if($value->cr!==0){
-				$incomeCr += floatval($value->cr) / floatval($value->transaction_rate);
-			}	
-		}
-		
-		$totalIncome = $incomeCr - $incomeDr;
+		$totalIncome = floatval($income->total);
 		//END INCOME
 
 
 		//EXPENSE (Begin FiscalDate To As Of)
 		$expense = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$expense->include_related("transaction", array("rate"));
+		$expense->select_sum("(dr - cr) / transactions.rate", "total");
 		$expense->where_in_related("account", "account_type_id", array(36,37,38,40,41,42));
 		$expense->where_related("transaction", "issued_date >=", $this->startFiscalDate);
 		$expense->where_related("transaction", "issued_date <", $asOftoday);
 		$expense->where_related("transaction", "is_recurring <>", 1);
 		$expense->where_related("transaction", "deleted <>", 1);
 		$expense->where("deleted <>", 1);
-		$expense->get_iterated();
+		$expense->get();
 		
-		//Sum Dr and Cr
-		$expenseDr = 0;
-		$expenseCr = 0;
-		foreach ($expense as $value) {
-			if($value->dr!==0){
-				$expenseDr += floatval($value->dr) / floatval($value->transaction_rate);
-			}
-			if($value->cr!==0){
-				$expenseCr += floatval($value->cr) / floatval($value->transaction_rate);
-			}	
-		}
-		
-		$totalExpense = $expenseDr - $expenseCr;
+		$totalExpense = floatval($expense->total);
 		//END EXPENSE
 
 		//ASSET (As Of)
 		$asset = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$asset->include_related("transaction", array("rate"));
+		$asset->select_sum("(dr - cr) / transactions.rate", "total");
 		$asset->where_in_related("account", "account_type_id", array(10,11,12,13,14,15,16,17,18,19,20,21,22));
 		$asset->where_related("transaction", "issued_date <", $asOftoday);
 		$asset->where_related("transaction", "is_recurring <>", 1);
 		$asset->where_related("transaction", "deleted <>", 1);
 		$asset->where("deleted <>", 1);
-		$asset->get_iterated();
+		$asset->get();
 		
-		//Sum Dr and Cr					
-		$assetDr = 0;
-		$assetCr = 0;
-		foreach ($asset as $value) {			
-			if($value->dr!==0){
-				$assetDr += floatval($value->dr) / floatval($value->transaction_rate);
-			}
-			if($value->cr!==0){
-				$assetCr += floatval($value->cr) / floatval($value->transaction_rate);
-			}	
-		}
-		
-		$totalAsset = $assetDr - $assetCr;
+		$totalAsset = floatval($asset->total);
 		//END ASSET
 
 		//LIABILITY (As Of)
 		$liability = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$liability->include_related("transaction", array("rate"));
+		$liability->select_sum("(cr - dr) / transactions.rate", "total");
 		$liability->where_in_related("account", "account_type_id", array(23,24,25,26,27,28,29,30,31,32));
 		$liability->where_related("transaction", "issued_date <", $asOftoday);
 		$liability->where_related("transaction", "is_recurring <>", 1);
 		$liability->where_related("transaction", "deleted <>", 1);
 		$liability->where("deleted <>", 1);
-		$liability->get_iterated();
+		$liability->get();
 		
-		//Sum Dr and Cr					
-		$liabilityDr = 0;
-		$liabilityCr = 0;
-		foreach ($liability as $value) {			
-			if($value->dr!==0){
-				$liabilityDr += floatval($value->dr) / floatval($value->transaction_rate);
-			}
-			if($value->cr!==0){
-				$liabilityCr += floatval($value->cr) / floatval($value->transaction_rate);
-			}	
-		}
-		
-		$totalLiability = $liabilityCr - $liabilityDr;
+		$totalLiability = floatval($liability->total);
 		//END LIABILITY
 
 		$data["results"][] = array(

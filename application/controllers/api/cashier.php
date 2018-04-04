@@ -287,6 +287,7 @@ class Cashier extends REST_Controller {
 		 			"note_change" 		=> $noteitemchange,
 		 			"receive_group" 	=> $receivegroup,
 		 			"rate" 				=> $ratearr,
+		 			"status" 			=> $value->status,
 		 		);
 		 	}
 		}

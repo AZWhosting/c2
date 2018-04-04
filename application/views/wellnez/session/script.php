@@ -3172,10 +3172,10 @@
                         //Set Base Currency
                         // console.log(self.get("baseCurrency"));
                         // self.set("baseCurrency", view[0].rate.locale);
-                        self.set("acAmount", self.get("actualAmount"));
+                        // self.set("acAmount", self.get("actualAmount"));
                         self.set("actualAmount",  kendo.toString(self.get("actualAmount"), self.get("baseCurrency") == "km-KH" ? "c0" : "c", self.get("baseCurrency")));
                     }else{
-                        banhji.router.navigate("/");
+                        // banhji.router.navigate("/");
                     }
                 });
 
@@ -3268,6 +3268,7 @@
                 var arate = v.total / rate;
                 total += arate;
             });
+            console.log(this.get("acAmount"));
             this.set("countAmount", kendo.toString(total, this.get("baseCurrency") == "km-KH" ? "c0" : "c", this.get("baseCurrency")));
             this.set("cAmount", total);
             var def = total - this.get("acAmount");
@@ -3311,10 +3312,12 @@
             this.noteDS.sync();
             this.noteDS.bind("requestEnd", function(e){
                 $("#loadING").css("display", "none");
-                var notifact = $("#ntf1").data("kendoNotification");
-                    notifact.hide();
-                    notifact.success(self.lang.lang.success_message);
-                self.cancel();
+                if(e.type != 'read' && e.response.results) {
+                    self.cancel();
+                    var notifact = $("#ntf1").data("kendoNotification");
+                        notifact.hide();
+                        notifact.success(self.lang.lang.success_message);
+                }
             });
         },
         cancel: function() {
