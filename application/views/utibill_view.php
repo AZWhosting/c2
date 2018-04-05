@@ -7098,72 +7098,69 @@
 					</tr>
 				# } #
 				#for(var j=1; j< invoice_lines.length; j++) {#
-					#if(invoice_lines[j].amount != 0) {#
-						#if(invoice_lines[j].type == "tariff"){#
-						#var amountTariff = invoice_lines[j].amount #
-						#var amountTariffMoney = invoice_lines[j].amount * invoice_lines[0].consumption #
-							<tr>
-								<td colspan="4" align="left">#: invoice_lines[j].number#</td>
-								<td align="center">#: invoice_lines[0].consumption * meter.meter_multiplier #</td>
-								<td align="right">#= kendo.toString(invoice_lines[j].amount, locale=="km-KH"?"c0":"c", locale)#</td>
-								<td align="right">#= kendo.toString(amountTariffMoney, locale=="km-KH"?"c0":"c", locale)#</td>
-							</tr>
-						#}else if(invoice_lines[j].type == "exemption"){#
-							<tr>
-								<td colspan="4" align="left">#: invoice_lines[j].number#</td>
-								#if(invoice_lines[j].unit == "money"){#
-									<td align="center"></td>
-									<td align="right"></td>
-									<td align="right">-#= kendo.toString(invoice_lines[j].amount, locale=="km-KH"?"c0":"c", locale)#</td>
-								#}else if(invoice_lines[j].unit == "%"){#
-								#var AMM = (amountTariffMoney * invoice_lines[j].amount) / 100#
-									<td align="center">#= invoice_lines[j].amount#%</td>
-									<td align="center"></td>
-									<td align="right">-#= kendo.toString(AMM, locale=="km-KH"?"c0":"c", locale)#</td>
-								#}else{#
-									<td align="center">#= invoice_lines[j].amount#</td>
-									<td align="center"></td>
-									<td align="right">-#= kendo.toString(invoice_lines[j].amount * amountTariff, locale=="km-KH"?"c0":"c", locale)#</td>
-								#}#
-							</tr>
-						#}else if(invoice_lines[j].type == "meter"){#
-							<tr>
-								<td>#: invoice_lines[j].number#</td>
-								<td align="center"><strong>#: invoice_lines[j].previous#</strong></td>
-								<td align="center"><strong>#: invoice_lines[j].current#</strong></td>
-								<td align="center"><strong>#: invoice_lines[j].rate#</strong></td>
-								<td align="center"><strong>#: invoice_lines[j].consumption#</strong></td>
-								<td></td>
-								<td></td>
-							</tr>
-						#}else if(invoice_lines[j].type == "total_usage"){#
-							<tr>
-								<td colspan="4" align="left">#: invoice_lines[j].number#</td>
-								<td align="center">#:invoice_lines[j].amount#</td>
-								<td align="center">#: kendo.toString(invoice_lines[j].price, locale=="km-KH"?"c0":"c", locale)#</td>
-								<td align="right">#= kendo.toString(invoice_lines[j].amount * invoice_lines[j].price, locale=="km-KH"?"c0":"c", locale)#</td>
-							</tr>
-						#}else{#
-							<tr>
-								<td colspan="4" align="left">#: invoice_lines[j].number#</td>
+					#if(invoice_lines[j].type == "tariff"){#
+					#var amountTariff = invoice_lines[j].amount #
+					#var amountTariffMoney = invoice_lines[j].amount * invoice_lines[0].consumption #
+						<tr>
+							<td colspan="4" align="left">#: invoice_lines[j].number#</td>
+							<td align="center">#: invoice_lines[0].consumption * meter.meter_multiplier #</td>
+							<td align="right">#= kendo.toString(invoice_lines[j].amount, locale=="km-KH"?"c0":"c", locale)#</td>
+							<td align="right">#= kendo.toString(amountTariffMoney, locale=="km-KH"?"c0":"c", locale)#</td>
+						</tr>
+					#}else if(invoice_lines[j].type == "exemption"){#
+						<tr>
+							<td colspan="4" align="left">#: invoice_lines[j].number#</td>
+							#if(invoice_lines[j].unit == "money"){#
 								<td align="center"></td>
 								<td align="right"></td>
-								<td align="right">#= kendo.toString(invoice_lines[j].amount, locale=="km-KH"?"c0":"c", locale)#</td>
-							</tr>
-						#}#
-					# }else{ #
-						# if(invoice_lines[j].type == "reactive"){#
-							<tr>
-								<td align="left">#: invoice_lines[j].number#</td>
-								<td align="center">#: invoice_lines[j].previous#</td>
-								<td align="right">#: invoice_lines[j].current#</td>
-								<td align="center"><strong>#: invoice_lines[j].rate#</strong></td>
-								<td align="center"><strong>#: invoice_lines[j].consumption#</strong></td>
-								<td align="right">0.0250</td>
-								<td align="right">#= kendo.toString(invoice_lines[j].amount, locale=="km-KH"?"c0":"c", locale)#</td>
-							</tr>
-						# } #
+								<td align="right">-#= kendo.toString(invoice_lines[j].amount, locale=="km-KH"?"c0":"c", locale)#</td>
+							#}else if(invoice_lines[j].unit == "%"){#
+							#var AMM = (amountTariffMoney * invoice_lines[j].amount) / 100#
+								<td align="center">#= invoice_lines[j].amount#%</td>
+								<td align="center"></td>
+								<td align="right">-#= kendo.toString(AMM, locale=="km-KH"?"c0":"c", locale)#</td>
+							#}else{#
+								<td align="center">#= invoice_lines[j].amount#</td>
+								<td align="center"></td>
+								<td align="right">-#= kendo.toString(invoice_lines[j].amount * amountTariff, locale=="km-KH"?"c0":"c", locale)#</td>
+							#}#
+						</tr>
+					#}else if(invoice_lines[j].type == "meter"){#
+						<tr>
+							<td>#: invoice_lines[j].number#</td>
+							<td align="center"><strong>#: invoice_lines[j].previous#</strong></td>
+							<td align="center"><strong>#: invoice_lines[j].current#</strong></td>
+							<td align="center"><strong>#: invoice_lines[j].rate#</strong></td>
+							<td align="center"><strong>#: invoice_lines[j].consumption#</strong></td>
+							<td></td>
+							<td></td>
+						</tr>
+					#}else if(invoice_lines[j].type == "total_usage"){#
+						<tr>
+							<td colspan="4" align="left">#: invoice_lines[j].number#</td>
+							<td align="center">#:invoice_lines[j].amount#</td>
+							<td align="center">#: kendo.toString(invoice_lines[j].price, locale=="km-KH"?"c0":"c", locale)#</td>
+							<td align="right">#= kendo.toString(invoice_lines[j].amount * invoice_lines[j].price, locale=="km-KH"?"c0":"c", locale)#</td>
+						</tr>
+					#}else{#
+						<tr>
+							<td colspan="4" align="left">#: invoice_lines[j].number#</td>
+							<td align="center"></td>
+							<td align="right"></td>
+							<td align="right">#= kendo.toString(invoice_lines[j].amount, locale=="km-KH"?"c0":"c", locale)#</td>
+						</tr>
 					#}#
+					# if(invoice_lines[j].type == "reactive"){#
+						<tr>
+							<td align="left">#: invoice_lines[j].number#</td>
+							<td align="center">#: invoice_lines[j].previous#</td>
+							<td align="right">#: invoice_lines[j].current#</td>
+							<td align="center"><strong>#: invoice_lines[j].rate#</strong></td>
+							<td align="center"><strong>#: invoice_lines[j].consumption#</strong></td>
+							<td align="right">0.0250</td>
+							<td align="right">#= kendo.toString(invoice_lines[j].amount, locale=="km-KH"?"c0":"c", locale)#</td>
+						</tr>
+					# } #
 				#}#
 				#var NU = 6;#
 				#var k = NU - invoice_lines.length;#

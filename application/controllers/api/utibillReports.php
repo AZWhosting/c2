@@ -1714,7 +1714,7 @@ class UtibillReports extends REST_Controller {
 					$objList[$value->contact_id]["line"][] = array(
 						"id" 				=> $value->id,
 						"type" 				=> $value->type,
-						"date" 				=> $value->meter_created_at,
+						"date" 				=> $value->issued_date,
 						"location" 			=> $value->location_name,
 						"number" 			=> $value->number,
 						"branch" 			=> $value->location_branch_name,
@@ -1726,7 +1726,7 @@ class UtibillReports extends REST_Controller {
 					$objList[$value->contact_id]["line"][]	= array(
 						"id" 				=> $value->id,
 						"type" 				=> $value->type,
-						"date" 				=> $value->meter_created_at,
+						"date" 				=> $value->issued_date,
 						"location" 			=> $value->location_name,
 						"number" 			=> $value->number,
 						"branch" 			=> $value->location_branch_name,
