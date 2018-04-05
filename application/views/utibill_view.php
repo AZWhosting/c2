@@ -13581,7 +13581,7 @@
 																source: licenseDS,
 																events: {change: licenseChange}" style="width: 100%">
 												</div>
-												<div class="col-xs-12 col-sm-3">													
+												<div class="col-xs-12 col-sm-3">
 													<span data-bind="text: lang.lang.location">Locations</span>
 														<input 
 															data-role="dropdownlist" 

@@ -1651,44 +1651,44 @@ class UtibillReports extends REST_Controller {
 
 	//Connnection Service Revenue
 	function connect_service_revenue_get() {
-		$filter 	= $this->get("filter");
-		$page 		= $this->get('page');
-		$limit 		= $this->get('limit');
-		$sort 	 	= $this->get("sort");
-		$data["results"] = [];
-		$data["count"] = 0;
+		$filter     = $this->get("filter");
+        $page       = $this->get('page') !== false ? $this->get('page') : 1;        
+        $limit      = $this->get('limit') !== false ? $this->get('limit') : 10000;  
+        $sort       = $this->get("sort");
+        $data["results"] = [];
+        $data["count"] = 0;
 		$total = 0;
 
 		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
-		//Sort
-		if(!empty($sort) && isset($sort)){
-			foreach ($sort as $value) {
-				if(isset($value['operator'])){
-					$obj->{$value['operator']}($value["field"], $value["dir"]);
-				}else{
-					$obj->order_by($value["field"], $value["dir"]);
-				}
-			}
-		}
-		
-		//Filter		
-		if(!empty($filter) && isset($filter)){
-	    	foreach ($filter["filters"] as $value) {
-	    		if(isset($value['operator'])){
-	    			$obj->{$value['operator']}($value['field'], $value['value']);	    		
-	    		} else {
-	    			$obj->where($value['field'], $value['value']);
-	    		}
-			}
-		}
+		 //Sort
+        if(!empty($sort) && isset($sort)){
+            foreach ($sort as $value) {
+                if(isset($value['operator'])){
+                    $obj->{$value['operator']}($value["field"], $value["dir"]);
+                }else{
+                    $obj->order_by($value["field"], $value["dir"]);
+                }
+            }
+        }
+        
+        //Filter        
+        if(!empty($filter) && isset($filter)){
+            foreach ($filter["filters"] as $value) {
+                if(isset($value['operator'])){
+                    $obj->{$value['operator']}($value['field'], $value['value']);               
+                } else {
+                    $obj->where($value['field'], $value['value']);
+                }
+            }
+        }
 
 		//Results
 
 		$obj->include_related("contact", array("abbr", "number", "name"));
 		$obj->include_related("location", "name");
 		$obj->include_related('location/branch', "name");
-		$obj->include_related("meter", "created_at");
+		// $obj->include_related("meter", "created_at");
 		$obj->where("type", "invoice");
 		$obj->where("meter_id <>", 0);
 		$obj->where("is_recurring <>", 1);
