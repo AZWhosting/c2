@@ -9211,7 +9211,7 @@
                     "locale": Locale,
                     "type": "total_usage"
                 });
-                Usage = 0;
+                // Usage = 0;
                 Total = Usage * aTariff;
                 //Plus Round Money KH
                 var AddH = 0;
