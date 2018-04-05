@@ -273,7 +273,7 @@ class Contacts extends REST_Controller {
 				if(isset($value->custom_fields)){
 					$cfIds = [];
 					foreach ($value->custom_fields as $cf) {
-						array_push($cfIds, $cf->custom_fields->id);
+						array_push($cfIds, $cf->custom_field_id);
 					}
 					
 		   			$customFields = new Custom_field(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
