@@ -173,19 +173,17 @@ class Readings extends REST_Controller {
 			$obj->where('id', $value->id);
 			$obj->get();
 			$obj->current 				= isset($value->current)			?$value->current: "";
-			$obj->from_date 			= isset($value->from_date)			?$value->from_date: "";
-			$obj->to_date 				= isset($value->to_date)			?$value->to_date: "";
-			$obj->meter_number 			= isset($value->meter_number)		?$value->meter_number: "";
+			// $obj->from_date 			= isset($value->from_date)			?$value->from_date: "";
+			// $obj->to_date 				= isset($value->to_date)			?$value->to_date: "";
+			// $obj->meter_number 			= isset($value->meter_number)		?$value->meter_number: "";
 			$obj->updated_at = date('Y-m-d H:i:s');
-			$obj->usage 				= $obj->current - $obj->previous;
+			$obj->usage 				= intval($obj->current) - intval($obj->previous);
 			if($obj->invoiced == 0) {
 				// $obj->previous 				= isset($value->previous)			?$value->previous: "";
-				
-				$obj->sync = 2;
 				if($obj->save()){
 					$data["results"][] = array(
 						"meter_id" 		=> $obj->meter_id,
-						"meter_number" 	=> $obj->meter_number,
+						"meter_number" 	=> $value->meter_number,
 						"month_of"		=> $obj->month_of,
 						"prev"			=> $obj->previous,
 						"current"		=> $obj->current,
@@ -197,7 +195,6 @@ class Readings extends REST_Controller {
 				}
 			} else {
 				$obj->invoiced = 0;
-				$obj->sync = 2;
 				$obj->save();
 
 				$line = $obj->winvoice_line->get();

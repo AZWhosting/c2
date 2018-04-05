@@ -739,14 +739,14 @@
 								<div class="span6">
 									<div class="widget-stats widget-stats-primary widget-stats-5" data-bind="click: loadQuote">
 										<span class="glyphicons shopping_cart"><i></i></span>
-										<span class="txt"><span data-bind="text: lang.lang.quote"></span><span data-bind="text: quote" style="font-size:medium;"></span></span>
+										<span class="txt"><span data-bind="text: lang.lang.sale_order"></span><span data-bind="text: quote" style="font-size:medium;"></span></span>
 										<div class="clearfix"></div>
 									</div>
 								</div>
 								<div class="span6">
 									<div class="widget-stats widget-stats-inverse widget-stats-5" data-bind="click: loadSO">
 										<span class="glyphicons cart_in"><i></i></span>
-										<span class="txt"><span data-bind="text: lang.lang.sale_order"></span><span data-bind="text: so" style="font-size:medium;"></span></span>
+										<span class="txt"><span data-bind="text: lang.lang.sale"></span><span data-bind="text: so" style="font-size:medium;"></span></span>
 										<div class="clearfix"></div>
 									</div>
 								</div>
@@ -15088,7 +15088,7 @@
 		// 	if(allowed) {
 				banhji.view.layout.showIn("#content", banhji.view.saleCenter);
 				banhji.view.layout.showIn('#menu', banhji.view.menu);
-				banhji.view.menu.showIn('#secondary-menu', banhji.view.saleMenu);
+				//banhji.view.menu.showIn('#secondary-menu', banhji.view.saleMenu);
 
 				var vm = banhji.saleCenter;
 				if(banhji.pageLoaded["sale_center"]==undefined){

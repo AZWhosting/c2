@@ -25427,7 +25427,8 @@
                         filter: {
                             field: 'meter_id',
                             value: objMeter.id
-                        }
+                        },
+                        sort: {field: 'id', dir: "desc"}
                     }).then(function(e) {
                         var last = that.readingVM.dataSource.data()[0];
                         that.readingVM.set('previousSR', last.current);

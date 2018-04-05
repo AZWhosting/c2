@@ -6148,12 +6148,16 @@
             this.save(2);
         },
         saveClose: function(){
-            if(this.get("accountSelect")){
-                this.save(1);
+            if(this.get("haveDef") == true){
+                if(this.get("accountSelect")){
+                    this.save(1);
+                }else{
+                    var notifact = $("#ntf1").data("kendoNotification");
+                        notifact.hide();
+                        notifact.error(this.lang.lang.error_input);
+                }
             }else{
-                var notifact = $("#ntf1").data("kendoNotification");
-                    notifact.hide();
-                    notifact.error(this.lang.lang.error_input);
+                this.save(1);
             }
         },
         save: function(act) {

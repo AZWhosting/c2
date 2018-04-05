@@ -406,7 +406,7 @@
 											            <tr>
 											                <th style="vertical-align: top;"><span data-bind="text: lang.lang.no_">No.</span></th>
 											                <th style="vertical-align: top;"><span data-bind="text: lang.lang.currency">Currency</span></th>
-											                <th style="vertical-align: top;"><span data-bind="text: lang.lang.cash_receipt">Cash Receipt</span></th>
+											                <th style="vertical-align: top;"><span>Cash Receipt</span></th>
 											            </tr> 
 											        </thead>
 											        <tbody data-role="listview" 
@@ -423,7 +423,7 @@
 												            <tr>
 												                <th class="center" style="width: 50px;"><span data-bind="text: lang.lang.no_">No.</span></th>
 												                <th><span data-bind="text: lang.lang.currency">Currency</span></th>
-												                <th><span data-bind="text: lang.lang.cash_receipt">Cash Receipt</span></th>
+												                <th><span>Change</span></th>
 												            </tr> 
 												        </thead>
 												        <tbody data-role="listview" 
