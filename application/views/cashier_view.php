@@ -1036,7 +1036,7 @@
 			        				</tbody>
 			        				<tfoot>
 			        					<tr>
-			        						<td colspan="2" style="text-align: center;background: #91268f;">
+			        						<td colspan="2" style="text-align: center;background: #203864;">
 			        							<span data-bind="text: actualAmount" style="color: #fff;font-weight: bold;font-size: 18px;"></span>
 			        						</td>
 			        					</tr>
@@ -1059,7 +1059,7 @@
 			        				</tbody>
 			        				<tfoot>
 			        					<tr>
-			        						<td colspan="2" style="text-align: center;background: #91268f;">
+			        						<td colspan="2" style="text-align: center;background: #203864;">
 			        							<span data-bind="text: countAmount" style="color: #fff;font-weight: bold;font-size: 18px;"></span>
 			        						</td>
 			        					</tr>

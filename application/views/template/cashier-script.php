@@ -5966,6 +5966,11 @@
         sessionID: "",
         cashierID: "",
         pageLoad: function(id) {
+            if(banhji.userData.role == 2){
+                this.sessionDS.query({
+                    filter: {field: "cashier_id", value: banhji.userData.id}
+                });
+            }
             var self = this;
             this.actualCountDS.data([]);
             this.actualDS.data([]);
@@ -5998,10 +6003,24 @@
                         //Get not yet change
                         if(view[0].note_receive.length > 0){
                             $.each(view[0].note_receive, function(i,v){
-                                self.receiveNoChangeAR.push({
-                                    currency: v.currency,
-                                    amount: v.amount
-                                });
+                                if(self.receiveNoChangeAR.length > 0){
+                                    $.each(self.receiveNoChangeAR, function(j,k){
+                                        if(v.currency == k.currency){
+                                            var o = this.amount;
+                                            self.receiveNoChangeAR[j].set("amount", o + v.amount);
+                                        }else{
+                                            self.receiveNoChangeAR.push({
+                                                currency: v.currency,
+                                                amount: v.amount
+                                            });
+                                        }
+                                    });
+                                }else{
+                                    self.receiveNoChangeAR.push({
+                                        currency: v.currency,
+                                        amount: v.amount
+                                    });
+                                }
                                 $.each(self.actualCountDS.data(), function(j,k){
                                     if(v.currency == k.currency){
                                         var o = this.amount;

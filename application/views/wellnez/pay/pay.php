@@ -934,9 +934,9 @@
 </script>
 <script id="invoice-list-template" type="text/x-kendo-tmpl">
 	<tr data-uid="#: uid #" style="cursor: pointer;" data-bind="click: invClick">
-		<td>#= number#</td>
-		<td>#= room#</td>
-		<td style="text-align: right;">#=kendo.toString(amount, locale=="km-KH"?"c0":"c2", locale)#</td>
+		<td style="padding: 5px !important;">#= number#</td>
+		<td style="padding: 5px !important;">#= room#</td>
+		<td style="text-align: right; padding: 5px !important;">#=kendo.toString(amount, locale=="km-KH"?"c0":"c2", locale)#</td>
     </tr>   
 </script>
 <script id="customerDeposit" type="text/x-kendo-template">
@@ -1029,23 +1029,23 @@
 </script>
 <script id="cash-currency-template" type="text/x-kendo-template">
 	<tr>
-		<td> #:banhji.Index.receipCurrencyDS.indexOf(data) +1#</td>
-		<td>
-			<input style="text-align: left;background: none;border:none;" id="numeric" class="k-formatted-value k-input" type="text" data-bind="value: currency, enabled: false"  />
+		<td style="padding: 5px !important;"> #:banhji.Index.receipCurrencyDS.indexOf(data) +1#</td>
+		<td style="padding: 5px !important;">
+			<input style="text-align: left; background: none; border:none; width: 100%;" id="numeric" class="k-formatted-value k-input" type="text" data-bind="value: currency, enabled: false"  />
 		</td>
-		<td>
+		<td style="padding: 5px !important;">
 			<input style="text-align: right;" id="numeric" class="k-formatted-value k-input" type="number" value="17" min="0" data-format="n0" data-bind="value: amount, events: {change: checkChange}" step="1" />
 		</td>
 	</tr>
 </script>
 <script id="change-currency-receipt-template" type="text/x-kendo-template">
 	<tr>
-		<td>
+		<td style="padding: 5px !important;">
 			#:banhji.Index.receipChangeDS.indexOf(data) +1#</td>
-		<td>
-			<input style="text-align: left;background: none;border: none;" id="numeric" class="k-formatted-value k-input" type="text" data-bind="value: currency, enabled: false"  />
+		<td style="padding: 5px !important;">
+			<input style="text-align: left; background: none; border: none; width: 100%;" id="numeric" class="k-formatted-value k-input" type="text" data-bind="value: currency, enabled: false"  />
 		</td>
-		<td>
+		<td style="padding: 5px !important;">
 			<input style="text-align: right;" id="numeric" class="k-formatted-value k-input" type="number" value="17" min="0" data-bind="value: amount, events: {change: checkChangeMoney}" step="1" />
 		</td>
 	</tr>
