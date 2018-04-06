@@ -28024,6 +28024,7 @@
                     banhji.cashReceiptDetail.set('count', e.response.count);
                     kendo.culture(banhji.locale);
                     banhji.cashReceiptDetail.set('total', kendo.toString(e.response.total, 'c2'));
+                    banhji.cashReceiptDetail.set('totalReceipt', kendo.toString(e.response.totalReceipt, 'c2'));
                     banhji.cashReceiptDetail.set('cashReceipt', kendo.toString(e.response.cashReceipt));
                 }
             });

@@ -1296,6 +1296,7 @@ class UtibillReports extends REST_Controller {
 		$data["count"] = 0;
 		$cashReceipt = 0;
 		$total = 0;
+		$totalReceipt = 0;
 
 		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
@@ -1343,8 +1344,9 @@ class UtibillReports extends REST_Controller {
 				//Reference
 				$ref = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				$ref->select("type, number, issued_date, amount, deposit, rate");
+				$ref->where("type", "Utility_Invoice");
 				$ref->get_by_id($value->reference_id);					
-				$refAmount = (floatval($ref->amount) - floatval($ref->deposit))/floatval($ref->rate) ;
+				$refAmount =  floatval($ref->amount) - floatval($ref->deposit) ;
 				$cashReceipt +=1;
 				$amount = (floatval($value->amount) - floatval($value->deposit)) / floatval($value->rate);
 
@@ -1377,13 +1379,15 @@ class UtibillReports extends REST_Controller {
 						"reference_amount" 		=> $refAmount
 					);			
 				}
-				$total += $amount;
+				$total += $refAmount;
+				$totalReceipt += $amount;
 			}
 
 			foreach ($objList as $value) {
 				$data["results"][] = $value;
 			}
 			$data['total'] = $total;
+			$data['totalReceipt'] = $totalReceipt;
 			$data['cashReceipt'] = $cashReceipt;
 			// $data["count"] = count($data["results"]);
 		}

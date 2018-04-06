@@ -16200,15 +16200,15 @@
 							</div>
 
 							<div class="row">
-								<div class="col-xs-12 col-sm-3">
+								<div class="col-xs-12 col-sm-6">
 									<div class="total-sale">									
-										<p data-bind="text: lang.lang.no_of_cashReceipt">Number of Cash Receipt</p>
-										<span data-format="n0" data-bind="text: cashReceipt"></span>
+										<p data-bind="text: lang.lang.no_of_cashReceipt">Total Cash Receipt</p>
+										<span data-format="n0" data-bind="text: totalReceipt"></span>
 									</div>
 								</div>
-								<div class="col-xs-12 col-sm-9">
+								<div class="col-xs-12 col-sm-6">
 									<div class="total-sale">
-										<p data-bind="text: lang.lang.total_amount">Total Amount</p>
+										<p data-bind="text: lang.lang.total_amount_water">Total Amount</p>
 										<span data-bind="text: total"></span>
 									</div>
 								</div>
@@ -16252,10 +16252,10 @@
 		#totalInvoice += line[i].reference_amount;#
 		<tr>
 			<td>#=kendo.toString(new Date(line[i].issued_date), "dd-MM-yyyy")#</td>
-			<td><a href="\#/#=line[i].type.toLowerCase()#/#=line[i].id#">#=line[i].number#</a></td>
+			<td>#=line[i].number#</td>
 			<td style="text-align: right;">#=kendo.toString(line[i].amount, "c2", banhji.locale)#</td>		
 			<td>#=kendo.toString(new Date(line[i].reference_issued_date), "dd-MM-yyyy")#</td>
-			<td><a href="\#/#=line[i].reference_type.toLowerCase()#/#=line[i].id#">#=line[i].reference_number#</a></td>
+			<td>#=line[i].reference_number#</td>
 			<td style="text-align: right;">#=kendo.toString(line[i].reference_amount, "c2", banhji.locale)#</td>				
 		</tr>
 	#}#

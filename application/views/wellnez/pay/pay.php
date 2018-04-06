@@ -485,109 +485,132 @@
 <script id="splitBill" type="text/x-kendo-template">
 	<div class="container">
 		<div class="row ">
-			<div class="box-generic" style="border-radius: 10px;padding: 0px;overflow: hidden;">
-				<div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 100%;background: rgba(142, 159, 167, 0.8);z-index: 999999;border-radius: 10px;">
-					<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 40%;left: 40%">Loading</i>
+			<div class="span12">
+				<div class="box-generic" style="border-radius: 10px;padding: 0px;overflow: hidden;">
+					<div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 100%;background: rgba(142, 159, 167, 0.8);z-index: 999999;border-radius: 10px;">
+						<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 40%;left: 40%">Loading</i>
+					</div>
+				    <div class="tabsbar tabsbar-1">
+				        <ul class="row-fluid row-merge">
+				            <li class="span2 glyphicons nameplate_alt active">
+				            	<a href="#tab1" data-toggle="tab"><i></i> <span>Item</span></a>
+				            </li>
+				            <li class="span2 glyphicons usd">
+				            	<a href="#tab2" data-toggle="tab"><i></i> <span>Percentage(%)</span></a>
+				            </li>
+				        </ul>
+				    </div>
+				    
+				    <div class="tab-content">
+				        <div class="tab-pane active" id="tab1" style="overflow: hidden;position: relative;">
+				        	<div  data-bind="visible: stopItemM" style="border-radius: 10px;text-align: center;position: absolute;width: 100%; height: 100%;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
+								<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 40%;left: 25%">You can't user this module...</i>
+							</div>
+			            	<div class="span12">
+			            		<div class="rows">
+				            		<select id="listbox1" 
+				            			data-role="listbox"
+						                data-text-field="item.name"
+						                data-value-field="id" 
+						                data-toolbar='{
+						                	tools: ["moveUp", "moveDown", "transferTo", "transferFrom", "transferAllTo", "transferAllFrom", "remove"]
+						            	}'
+						                data-connect-with="listbox2"
+						                data-auto-bind="true"
+						                data-draggable="true"
+						                data-bind="source: itemDS" style="width: 20%; min-height: 400px;float: left;">
+						            </select>
+						           	
+						            <select id="listbox2" 
+						            	data-role="listbox"
+						                data-connect-with="listbox3, listbox1"
+						                data-text-field="item.name"
+						                data-draggable="true"
+						                data-value-field="id"
+						                data-toolbar='{
+						                	tools: ["moveUp", "moveDown", "transferTo", "transferFrom", "transferAllTo", "transferAllFrom", "remove"]
+						            	}'
+						                data-auto-bind="true"
+						                data-bind="source: item1"
+						                style="width: 20%; min-height: 400px;float: left;">
+						            </select>
+
+						            <select id="listbox3" 
+						            	data-role="listbox"
+						                data-connect-with="listbox4, listbox2"
+						                data-text-field="item.name"
+						                data-draggable="true"
+						                data-value-field="id"
+						                data-toolbar='{
+						                	tools: ["moveUp", "moveDown", "transferTo", "transferFrom", "transferAllTo", "transferAllFrom", "remove"]
+						            	}'
+						                data-auto-bind="true"
+						                data-bind="source: item2"
+						                style="width: 20%; min-height: 400px;float: left;">
+						            </select>
+
+						            <select id="listbox4" 
+						            	data-role="listbox"
+						                data-connect-with="listbox5, listbox3"
+						                data-text-field="item.name"
+						                data-draggable="true"
+						                data-value-field="id"
+						                data-toolbar='{
+						                	tools: ["moveUp", "moveDown", "transferTo", "transferFrom", "transferAllTo", "transferAllFrom", "remove"]
+						            	}'
+						                data-auto-bind="false"
+						                data-bind="source: item3"
+						                style="width: 20%; min-height: 400px;float: left;">
+						            </select>
+
+						            <select id="listbox5" 
+						            	data-role="listbox"
+						                data-connect-with="listbox4"
+						                data-text-field="item.name"
+						                data-draggable="true"
+						                data-value-field="id"
+						                data-auto-bind="false"
+						                data-bind="source: item4"
+						                style="width: 20%; min-height: 400px;float: left;">
+						            </select>
+				           		</div>
+			            		<!-- <a style="float: left; padding: 5px 80px; margin-bottom: 20px;background: red; color: #fff; margin-top: 5px;" data-bind="click: saveItem">Save</a> -->
+			            		<div class="box-generic bg-action-button" style="margin-top: 15px;">
+									<div class="row">
+										<div class="col-sm-12" align="right">											
+											<span class="btn-btn" data-bind="click: cancel" ><span>Cancel</span></span>	
+											<span class="btn-btn" data-bind="click: saveItem"><span>Save</span></span>
+										</div>
+									</div>
+								</div>
+			            	</div>
+			        	</div>
+				        <div class="tab-pane" id="tab2">
+				        	<div class="span12">
+					        	<div class="rows">
+						        	<div class="span5" style="padding-left: 0;">
+						        		<input type="text" 
+						                	style="width: 80%;float: left; border: 1px solid #c5c5c5; padding: 3px; height: 30px;" 
+						                	placeholder="Phone Number" 
+								           	data-bind="
+								           		value: numPeople
+								           	" /><span style="float: left; color: #333; margin-left:  10px;"> Persons</span>
+								        <!-- <a style="float: left; padding: 5px 80px; margin-bottom: 20px;background: red; color: #fff; margin-top: 5px;" data-bind="click: savePerson">Save</a> -->
+
+					            	</div>
+					            	<div class="box-generic bg-action-button" style="margin-top: 15px; ">
+										<div class="row">
+											<div class="col-sm-12" align="right">												
+												<span class="btn-btn" data-bind="click: cancel" ><span >Cancel</span></span>
+												<span class="btn-btn" data-bind="click: savePerson"><span>Save</span></span>	
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+			        	</div>
+				    </div>
 				</div>
-			    <div class="tabsbar tabsbar-1">
-			        <ul class="row-fluid row-merge">
-			            <li class="span2 glyphicons nameplate_alt active">
-			            	<a href="#tab1" data-toggle="tab"><i></i> <span>Item</span></a>
-			            </li>
-			            <li class="span2 glyphicons usd">
-			            	<a href="#tab2" data-toggle="tab"><i></i> <span>Percentage(%)</span></a>
-			            </li>
-			        </ul>
-			    </div>
-			    
-			    <div class="tab-content">
-			        <div class="tab-pane active" id="tab1" style="overflow: hidden;position: relative;">
-			        	<div  data-bind="visible: stopItemM" style="border-radius: 10px;text-align: center;position: absolute;width: 100%; height: 100%;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
-							<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 40%;left: 25%">You can't user this module...</i>
-						</div>
-		            	<div class="span12">
-		            		<div class="rows">
-			            		<select id="listbox1" 
-			            			data-role="listbox"
-					                data-text-field="item.name"
-					                data-value-field="id" 
-					                data-toolbar='{
-					                	tools: ["moveUp", "moveDown", "transferTo", "transferFrom", "transferAllTo", "transferAllFrom", "remove"]
-					            	}'
-					                data-connect-with="listbox2"
-					                data-auto-bind="true"
-					                data-draggable="true"
-					                data-bind="source: itemDS" style="width: 20%; min-height: 550px;float: left;">
-					            </select>
-					           	
-					            <select id="listbox2" 
-					            	data-role="listbox"
-					                data-connect-with="listbox3, listbox1"
-					                data-text-field="item.name"
-					                data-draggable="true"
-					                data-value-field="id"
-					                data-toolbar='{
-					                	tools: ["moveUp", "moveDown", "transferTo", "transferFrom", "transferAllTo", "transferAllFrom", "remove"]
-					            	}'
-					                data-auto-bind="true"
-					                data-bind="source: item1"
-					                style="width: 20%; min-height: 550px;float: left;">
-					            </select>
-
-					            <select id="listbox3" 
-					            	data-role="listbox"
-					                data-connect-with="listbox4, listbox2"
-					                data-text-field="item.name"
-					                data-draggable="true"
-					                data-value-field="id"
-					                data-toolbar='{
-					                	tools: ["moveUp", "moveDown", "transferTo", "transferFrom", "transferAllTo", "transferAllFrom", "remove"]
-					            	}'
-					                data-auto-bind="true"
-					                data-bind="source: item2"
-					                style="width: 20%; min-height: 550px;float: left;">
-					            </select>
-
-					            <select id="listbox4" 
-					            	data-role="listbox"
-					                data-connect-with="listbox5, listbox3"
-					                data-text-field="item.name"
-					                data-draggable="true"
-					                data-value-field="id"
-					                data-toolbar='{
-					                	tools: ["moveUp", "moveDown", "transferTo", "transferFrom", "transferAllTo", "transferAllFrom", "remove"]
-					            	}'
-					                data-auto-bind="false"
-					                data-bind="source: item3"
-					                style="width: 20%; min-height: 550px;float: left;">
-					            </select>
-
-					            <select id="listbox5" 
-					            	data-role="listbox"
-					                data-connect-with="listbox4"
-					                data-text-field="item.name"
-					                data-draggable="true"
-					                data-value-field="id"
-					                data-auto-bind="false"
-					                data-bind="source: item4"
-					                style="width: 20%; min-height: 550px;float: left;">
-					            </select>
-			           		</div>
-		            		<a style="float: left; padding: 5px 80px; margin-bottom: 20px;background: red; color: #fff; margin-top: 5px;" data-bind="click: saveItem">Save</a>
-		            	</div>
-		        	</div>
-			        <div class="tab-pane" id="tab2">
-			        	<div class="span5">
-			        		<input type="text" 
-			                	style="width: 80%;float: left; border: 1px solid #c5c5c5; padding: 3px; height: 30px;" 
-			                	placeholder="Phone Number" 
-					           	data-bind="
-					           		value: numPeople
-					           	" /><span style="float: left; color: #333; margin-left:  10px;"> Persons</span>
-					        <a style="float: left; padding: 5px 80px; margin-bottom: 20px;background: red; color: #fff; margin-top: 5px;" data-bind="click: savePerson">Save</a>
-		            	</div>
-		        	</div>
-			    </div>
 			</div>
 		</div>
 	</div>
@@ -1031,10 +1054,10 @@
 	<tr>
 		<td style="padding: 5px !important;"> #:banhji.Index.receipCurrencyDS.indexOf(data) +1#</td>
 		<td style="padding: 5px !important;">
-			<input style="text-align: left; background: none; border:none; width: 100%;" id="numeric" class="k-formatted-value k-input" type="text" data-bind="value: currency, enabled: false"  />
+			<input style="text-align: left; background: none; border:none; padding: 0;" id="numeric" class="k-formatted-value k-input" type="text" data-bind="value: currency, enabled: false"  />
 		</td>
 		<td style="padding: 5px !important;">
-			<input style="text-align: right;" id="numeric" class="k-formatted-value k-input" type="number" value="17" min="0" data-format="n0" data-bind="value: amount, events: {change: checkChange}" step="1" />
+			<input style="text-align: right; width: 98%;" id="numeric" class="k-formatted-value k-input" type="number" value="17" min="0" data-format="n0" data-bind="value: amount, events: {change: checkChange}" step="1" />
 		</td>
 	</tr>
 </script>
@@ -1043,10 +1066,10 @@
 		<td style="padding: 5px !important;">
 			#:banhji.Index.receipChangeDS.indexOf(data) +1#</td>
 		<td style="padding: 5px !important;">
-			<input style="text-align: left; background: none; border: none; width: 100%;" id="numeric" class="k-formatted-value k-input" type="text" data-bind="value: currency, enabled: false"  />
+			<input style="text-align: left; background: none; border: none; padding: 0;" id="numeric" class="k-formatted-value k-input" type="text" data-bind="value: currency, enabled: false"  />
 		</td>
 		<td style="padding: 5px !important;">
-			<input style="text-align: right;" id="numeric" class="k-formatted-value k-input" type="number" value="17" min="0" data-bind="value: amount, events: {change: checkChangeMoney}" step="1" />
+			<input style="text-align: right; width: 98%;" id="numeric" class="k-formatted-value k-input" type="number" value="17" min="0" data-bind="value: amount, events: {change: checkChangeMoney}" step="1" />
 		</td>
 	</tr>
 </script>

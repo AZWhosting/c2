@@ -302,6 +302,7 @@ var	km_KH = {
 	"to_be_disconnect_list" : "បញ្ជីត្រូវផ្ដាច់កុងទ័រ",
 	"No_of_invoice": "ចំនួន​វិក្កយបត្រ",
 	"no_of_cashReceipt": "ចំនួនសាច់ប្រាក់ដែលទទួល",
+	"total_amount_water": "ចំនួនសាច់ប្រាក់ដែលទទួលបានពីការលក់ទឹក",
 	"fine_collection_report": "របាយការណ៍ប្រាក់ពិន័យ",
 	"discount_report": "របាយការណ៍បញ្ជុះតម្លៃ",
 	"maintenance_report": "របាយការណ៍ថ្លៃថែទាំ",

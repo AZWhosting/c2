@@ -304,6 +304,7 @@ var	en_US = {
 	"to_be_disconnect_list" : "To Be Disconnect Customer List",
 	"no_of_invoice": "No.Of Invoice",
 	"no_of_cashReceipt": "Number of Cash Receipt",
+	"total_amount_water": "Total Amount Cash Receipt",
 	"fine_collection_report": "Fine Collection",
 	"discount_report": "Discount Report",
 	"maintenance_report": "Maintenance Report",

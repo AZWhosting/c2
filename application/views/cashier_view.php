@@ -962,7 +962,7 @@
 			        					</tr>
 			        				</thead>
 			        				<tbody 
-			        					data-role="listview" 
+			        					data-role="listview"
 			        					data-bind="source: receiveNoChangeAR" 
 			        					data-template="reconcile-receivenochange-list">
 			        				</tbody>

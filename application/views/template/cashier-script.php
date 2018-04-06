@@ -5956,8 +5956,8 @@
         receiveNoChangeAR: [],
         changeAR: [],
         receiveAR: [],
-        actualCountDS: dataStore(apiUrl + "cashier/blank"),
-        actualDS: dataStore(apiUrl + "cashier/blank"),
+        actualCountDS: [],
+        actualDS: [],
         baseCurrency: "km-KH",
         defBG: "#be1e2d",
         haveDef: true,
@@ -5972,9 +5972,10 @@
                 });
             }
             var self = this;
-            this.actualCountDS.data([]);
-            this.actualDS.data([]);
-            this.currencyAR = [];
+            this.actualCountDS.splice(0, this.actualCountDS.length);
+            this.actualDS.splice(0, this.actualDS.length);
+            this.receiveNoChangeAR.splice(0, this.receiveNoChangeAR.length);
+            this.currencyAR.splice(0, this.currencyAR.length);
             if(id){
                 console.log("A");
                 this.set("noSession", false);
@@ -5993,7 +5994,7 @@
                                     currency: v.currency,
                                     amount: v.amount
                                 });
-                                self.actualCountDS.add({
+                                self.actualCountDS.push({
                                     currency: v.currency,
                                     amount: v.amount,
                                     locale: v.locale
@@ -6003,25 +6004,11 @@
                         //Get not yet change
                         if(view[0].note_receive.length > 0){
                             $.each(view[0].note_receive, function(i,v){
-                                if(self.receiveNoChangeAR.length > 0){
-                                    $.each(self.receiveNoChangeAR, function(j,k){
-                                        if(v.currency == k.currency){
-                                            var o = this.amount;
-                                            self.receiveNoChangeAR[j].set("amount", o + v.amount);
-                                        }else{
-                                            self.receiveNoChangeAR.push({
-                                                currency: v.currency,
-                                                amount: v.amount
-                                            });
-                                        }
-                                    });
-                                }else{
-                                    self.receiveNoChangeAR.push({
-                                        currency: v.currency,
-                                        amount: v.amount
-                                    });
-                                }
-                                $.each(self.actualCountDS.data(), function(j,k){
+                                self.receiveNoChangeAR.push({
+                                    currency: v.currency,
+                                    amount: v.amount
+                                });
+                                $.each(self.actualCountDS, function(j,k){
                                     if(v.currency == k.currency){
                                         var o = this.amount;
                                         this.set("amount", o + v.amount);
@@ -6036,7 +6023,7 @@
                                     currency: v.currency,
                                     amount: v.amount
                                 });
-                                $.each(self.actualCountDS.data(), function(j,k){
+                                $.each(self.actualCountDS, function(j,k){
                                     if(v.currency == k.currency){
                                         var o = this.amount;
                                         this.set("amount", o - v.amount);
@@ -6073,7 +6060,7 @@
                             locale: v.locale,
                             rate: v.rate
                         });
-                        self.actualDS.add({
+                        self.actualDS.push({
                             code: v.code,
                             locale: v.locale,
                             amount: 0
@@ -6109,7 +6096,7 @@
             var self = this;
             var total = 0;
             var today = "<?php echo date('Y-m-d'); ?>";
-            $.each(this.actualCountDS.data(), function(i,v){
+            $.each(this.actualCountDS, function(i,v){
                 var rate = banhji.source.getRate(v.locale, new Date(today));
                 var arate = v.amount / rate;
                 total += arate;
@@ -6136,11 +6123,11 @@
             var cur = [];
             var total = 0;
             var today = "<?php echo date('Y-m-d'); ?>";
-            $.each(this.actualDS.data(), function(i,v){
+            $.each(this.actualDS, function(i,v){
                 this.set("amount", 0);
             });
             $.each(this.noteDS.data(), function(i,v ){
-                $.each(self.actualDS.data(), function(j,k){
+                $.each(self.actualDS, function(j,k){
                     if(v.currency == k.locale){
                         var o = this.amount;
                         this.set("amount", o + v.total);
