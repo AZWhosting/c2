@@ -49,7 +49,7 @@ class Ops extends REST_Controller {
 			    // $this->dbforge->create_table('tmp_total_sales', TRUE);
 			    
 				//Rename Table 'old_table_name' to 'new_table_name'
-			    // $this->dbforge->rename_table('contacts_properties', 'contacts_custom_fields');
+			    // $this->dbforge->rename_table('contacts_custom_fields', 'field_values');
 
 				//DROP TABLE IF EXISTS table_name
 			    // $this->dbforge->drop_table('references');
@@ -92,15 +92,9 @@ class Ops extends REST_Controller {
 				// 	// 	"constraint"=> "30,15",
 				// 	// 	"null" 		=> FALSE,
 				// 	// 	"default" 	=> 0
-				// 	// ),
-				// 	"membership_number" => array(
-				// 		"type" 		=> "VARCHAR",
-				// 		"constraint"=> "255",
-				// 		"null" 		=> FALSE,
-				// 		"default" 	=> ''
-				// 	)
+				// 	// )
 				// );
-				// $data['results'][] = $this->dbforge->add_column("contacts", $fields);
+				// $data['results'][] = $this->dbforge->add_column("field_values", $fields);
 				
 			    // Modify fields
 		 	// 	$fields = array(
@@ -111,20 +105,14 @@ class Ops extends REST_Controller {
 				// 	// 	"null" 		=> FALSE,
 				// 	// 	"default" 	=> 1
 				// 	// ),
-				// 	"membership_status" => array(
-				// 		"name" 		=> "status",//New Field Name 
-				// 		"type" 		=> "TINYINT",
-				// 		"null" 		=> FALSE,
-				// 		"default" 	=> "0"
-				// 	),
-				// 	"membership_application_status" => array(
-				// 		"name" 		=> "application_status",//New Field Name 
-				// 		"type" 		=> "TINYINT",
+				// 	"contact_id" => array(
+				// 		"name" 		=> "reference_id",//New Field Name 
+				// 		"type" 		=> "INT",
 				// 		"null" 		=> FALSE,
 				// 		"default" 	=> "0"
 				// 	)
 				// );
-				// $data['results'][] = $this->dbforge->modify_column('memberships', $fields);
+				// $data['results'][] = $this->dbforge->modify_column('field_values', $fields);
 
 			 	//Remove column, 'table_name', 'column_to_drop'
 				// $this->dbforge->drop_column('item_assemblies', 'amount');
