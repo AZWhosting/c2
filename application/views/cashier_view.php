@@ -11,6 +11,11 @@
 </script>
 <!-- Reciept -->
 <script id="Receipt" type="text/x-kendo-template">
+	<style type="text/css">
+		body {
+			overflow-x: hidden;
+		}
+	</style>
 	<div class="container">
 		<div class="row-fluid">
 			<div class="background">
@@ -904,6 +909,11 @@
 </script>
 <!-- Reconcile -->
 <script id="Reconcile" type="text/x-kendo-template">
+	<style type="text/css">
+		body {
+			overflow-x: hidden;
+		}
+	</style>
 	<div id="slide-form">
 		<div class="customer-background" style=" margin-top: 15px;">
 			<div class="container-960">					
@@ -922,11 +932,12 @@
 							<table class="table table-bordered table-primary table-striped table-vertical-center" style="margin-top: 15px;">
 						        <thead>
 						            <tr>
-						            	<th style="vertical-align: top;" data-bind="text: lang.lang.no_"></th>
-						            	<th style="vertical-align: top;" data-bind="text: lang.lang.employee"></th>
-						            	<th style="vertical-align: top;" data-bind="text: lang.lang.start"></th>
-						            	<th style="vertical-align: top;" data-bind="text: lang.lang.end"></th>
-						            	<th style="vertical-align: top;" data-bind="text: lang.lang.action"></th>
+						            	<th style="vertical-align: top;width: 5%" data-bind="text: lang.lang.no_"></th>
+						            	<th style="vertical-align: top;width: 20%" data-bind="text: lang.lang.employee"></th>
+						            	<th style="vertical-align: top;width: 25%" data-bind="text: lang.lang.start"></th>
+						            	<th style="vertical-align: top;width: 25%" data-bind="text: lang.lang.end"></th>
+						            	<th style="vertical-align: top;width: 15%" data-bind="text: lang.lang.status"></th>
+						            	<th style="vertical-align: top;width: 10%" data-bind="text: lang.lang.action"></th>
 						            </tr>
 						        </thead>
 						        <tbody data-role="listview" 
@@ -1124,12 +1135,12 @@
 						  				<li id="saveNew" >
 						  					<span data-bind="click: saveClose">Reconcile Close</span>
 						  				</li>
-						  				<li id="savePrint">
+						  				<!-- <li id="savePrint">
 						  					<span >Reconcile Print</span>
 						  				</li>
 						  				<li id="savePrint">
 						  					<span >Reconcile and Transfer</span>
-						  				</li>
+						  				</li> -->
 						  			</ul>
 							  	</span>
 								<span class="btn-btn" style="float: right;" data-bind="click: cancel" ><i></i> 
@@ -1145,29 +1156,37 @@
 </script>
 <script id="session-list-template" type="text/x-kendo-template">
     <tr>
-		<td style="border-left: 0; border-bottom: 0;">
+		<td style="border-left: 0; border-bottom: 0;text-align: center;">
 			#:banhji.Reconcile.sessionDS.indexOf(data)+1#
 		</td>
 		<td style="border-left: 0; border-bottom: 0;">
-			<a href="\\#/reconcile/#= id#">#: employee#</a>
+			#: employee#
 		</td>
 		<td style="border-left: 0; border-bottom: 0;">
-			#: kendo.toString(new Date(start_date), "dd-MMMM-yyyy", "km-KH")#
+			#: kendo.toString(new Date(start_date), "F")#
 		</td>
 		<td style="border-left: 0; border-bottom: 0;">
 			#if(end_date != "0000-00-00 00:00:00"){#
-				#: kendo.toString(new Date(end_date), "dd-MMMM-yyyy", "km-KH")#
+				#: kendo.toString(new Date(end_date), "F")#
+			#}#
+		</td>
+		<td style="border-left: 0; border-bottom: 0;">
+			#if(status == 2){#
+				Save Draft
+			#}else if(status == 1){#
+				Reconciled
+			#}else{#
+				Not yet reconcile
 			#}#
 		</td>
 		<td style="border-left: 0; border-bottom: 0; text-align: center;">
 			#if(status == 1){#
 				<span style="cursor: pointer; margin-top: 3px;" title="Finish" class="btn-action glyphicons ok_2 btn-success"><i></i></span> Done
 			#}else if(status == 2){#
-				<a style="cursor: pointer;" class="btn-action glyphicons btn-success" href="\\#/reconcile/#= id # ">Save Draft</a>
+				<a style="cursor: pointer;width: 60px;line-height: 25px;background: green;" class="btn-action glyphicons btn-success" href="\\#/reconcile/#= id # ">Edit</a>
 			#}else{#
 				<a style="cursor: pointer;" href="\\#/reconcile/#= id # ">Reconcile</a>
 			#}#
-			<!-- <a style="cursor: pointer;" class="btn-action glyphicons pencil btn-success" href="\\#/reconcile/#= id # "><i></i></a> -->
 		</td>
 	</tr>
 </script>

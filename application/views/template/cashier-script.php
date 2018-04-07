@@ -5106,7 +5106,7 @@
             this.addEmpty();
             this.cashierSessionDS.query({
                 filter: [
-                    { field: "status",  value: 0 },
+                    { field: "status", operator: "where_in",  value: [0,2] },
                     { field: "cashier_id",  value: banhji.userData.id }
                 ],
                 limit: 1,
@@ -5801,7 +5801,7 @@
             }).then(function(e) {
                 var view = self.receiveDS.view();
                 self.set("numCustomer", view[0].total_contact);
-                self.set("paymentReceiptToday", view[0].total_amount);
+                self.set("paymentReceiptToday", kendo.toString(view[0].total_amount, banhji.institute.locale == "km-KH" ? "c0" : "c", banhji.institute.locale));
             });
         },
         setDefaultReceiptCurrency: function(firstReceipt) {
@@ -5966,7 +5966,7 @@
         sessionID: "",
         cashierID: "",
         pageLoad: function(id) {
-            if(banhji.userData.role == 2){
+            if(banhji.userData.role == '2'){
                 this.sessionDS.query({
                     filter: {field: "cashier_id", value: banhji.userData.id}
                 });
@@ -5977,7 +5977,6 @@
             this.receiveNoChangeAR.splice(0, this.receiveNoChangeAR.length);
             this.currencyAR.splice(0, this.currencyAR.length);
             if(id){
-                console.log("A");
                 this.set("noSession", false);
                 this.set("sessionID", id);
                 this.startAmountDS.query({
@@ -6008,12 +6007,20 @@
                                     currency: v.currency,
                                     amount: v.amount
                                 });
-                                $.each(self.actualCountDS, function(j,k){
-                                    if(v.currency == k.currency){
-                                        var o = this.amount;
-                                        this.set("amount", o + v.amount);
-                                    }
-                                });
+                                if(self.actualCountDS.length > 0){
+                                    $.each(self.actualCountDS, function(j,k){
+                                        if(v.currency == k.currency){
+                                            var o = this.amount;
+                                            this.set("amount", o + v.amount);
+                                        }
+                                    });
+                                }else{
+                                    self.actualCountDS.push({
+                                        currency: v.currency,
+                                        amount: v.amount,
+                                        locale: banhji.institute.locale
+                                    });
+                                }
                             });
                         }
                         //Change
@@ -6043,41 +6050,39 @@
                         }
                         //Set Base Currency
                         self.set("baseCurrency", view[0].rate.locale);
+                        self.calBaseCurrency();
+                        self.getCurrency();
                     }else{
                         banhji.router.navigate("/");
                     }
                 });
-
-                this.currencyDS.query({
-                    sort: {
-                        field: "created_at",
-                        dir: "asc"
-                    }
-                }).then(function(e) {
-                    $.each(self.currencyDS.data(), function(i, v) {
-                        self.currencyAR.push({
-                            code: v.code,
-                            locale: v.locale,
-                            rate: v.rate
-                        });
-                        self.actualDS.push({
-                            code: v.code,
-                            locale: v.locale,
-                            amount: 0
-                        });
-                    });
-                    self.findNote(self.get("sessionID"));
-                });
                 this.tmpAR = [];
-                if(this.noteDS.data().length > 0){
-                    this.calBaseCurrency();
-                    this.resetActual();
-                }
             }else{
                 this.set("noSession", true);
-                this.sessionDS.query({
-                });
             }
+        },
+        getCurrency: function(){
+            var self = this;
+            this.currencyDS.query({
+                sort: {
+                    field: "created_at",
+                    dir: "asc"
+                }
+            }).then(function(e) {
+                $.each(self.currencyDS.data(), function(i, v) {
+                    self.currencyAR.push({
+                        code: v.code,
+                        locale: v.locale,
+                        rate: v.rate
+                    });
+                    self.actualDS.push({
+                        code: v.code,
+                        locale: v.locale,
+                        amount: 0
+                    });
+                });
+                self.findNote(self.get("sessionID"));
+            });
         },
         findNote: function(id){
             var self = this;
@@ -6086,8 +6091,9 @@
             }).then(function(e){
                 if(self.noteDS.data().length > 0){
                     self.resetActual();
+                }else{
+                    self.addRow();
                 }
-                self.addRow();
             });
         },
         actualAmount: 0,
@@ -6180,10 +6186,12 @@
             this.noteDS.sync();
             this.noteDS.bind("requestEnd", function(e){
                 $("#loadING").css("display", "none");
-                var notifact = $("#ntf1").data("kendoNotification");
-                    notifact.hide();
-                    notifact.success(self.lang.lang.success_message);
-                self.cancel();
+                if(e.type!="read"){
+                    var notifact = $("#ntf1").data("kendoNotification");
+                        notifact.hide();
+                        notifact.success(self.lang.lang.success_message);
+                    self.cancel();
+                }
             });
         },
         cancel: function() {

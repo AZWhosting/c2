@@ -177,29 +177,9 @@
   </script>
   <script type="text/javascript">
 
-    function createCookie(name,value,days) {
-        if (days) {
-            var date = new Date();
-            date.setTime(date.getTime()+(days*24*60*60*1000000000000000));
-            var expires = "; expires="+date.toGMTString();
-        }
-        else var expires = "";
-        document.cookie = name+"="+value+expires+"; path=/";
-    }
-    function readCookie(name) {
-        var nameEQ = name + "=";
-        var ca = document.cookie.split(';');
-        for(var i=0;i < ca.length;i++) {
-            var c = ca[i];
-            while (c.charAt(0)==' ') c = c.substring(1,c.length);
-            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
-        }
-        return null;
-    }
-    function eraseCookie(name) {
-        createCookie(name,"");
-    }
     jQuery(function(){
+        var x = banhji.userData.username;
+            $("#userCut").text(x); 
         var quickfitText=function(reset) {
             var quickFitClass="text-large";             //Base class of elements to adapt
             var quickFitGroupClass="quickfitGroup";     //Elements in a group will all have the same size
@@ -254,62 +234,6 @@
         };
         quickfitText(); //Run once...
         jQuery(window).on("resize orientationchange",function() { quickfitText(true); });
-    });
-    $(document).ready(function(e) {
-        $("#feedBackSend").click(function(){
-            var MSG = $("#feedbackMsg").val();
-            var CurrentURL = $(location).attr('href');
-            var UserName = banhji.userData.username;
-            var d = new Date();
-            var strDate = d.getFullYear() + "/" + (d.getMonth()+1) + "/" + d.getDate();
-            $.ajax({  
-                type: 'POST',
-                url: '<?php echo base_url(); ?>api/feedbacks', 
-                data: { msg: MSG, cURL: CurrentURL, uName: UserName, datesend: strDate },
-                success: function(response) {
-                    alert(response.message);
-                    $("#feedbackMsg").val("");
-                    $(".cloze").click();
-                }
-            });
-        });
-        $("#referralSend").click(function(){
-            var name1 = $("#refferalName1").val();
-            var email1 = $("#refferalEmail1").val();
-            var name2 = $("#refferalName2").val();
-            var email2 = $("#refferalEmail2").val();
-            var name3 = $("#refferalName3").val();
-            var email3 = $("#refferalEmail3").val();
-            var name4 = $("#refferalName4").val();
-            var email4 = $("#refferalEmail4").val();
-            var name5 = $("#refferalName5").val();
-            var email5 = $("#refferalEmail5").val();
-            var UserName = banhji.userData.username;
-            var d = new Date();
-            var strDate = d.getFullYear() + "/" + (d.getMonth()+1) + "/" + d.getDate();
-            $.ajax({  
-                type: 'POST',
-                url: '<?php echo base_url(); ?>api/referrals',
-                data: { uName: UserName, datesend: strDate, rName1: name1, rName2: name2, rName3: name3, rName4: name4, rName5: name5, rMail1: email1, rMail2: email2, rMail3: email3, rMail4: email4, rMail5: email5 },
-                success: function(response) {
-                    alert(response.message);
-                    //$("#feedbackMsg").val("");
-                    $(".cloze").click();
-                }
-            });
-        });
-
-        //eraseCookie("isshow");
-        var isshow = readCookie("isshow");
-        
-        if (isshow != 1) {
-            createCookie("isshow", 1);
-            $(".aWelcome").click();  
-        }
-
-        $(".cover-welcome-four-blog a").click(function(){
-            $(".close").click();
-        });
     });
    </script>
 </body>
