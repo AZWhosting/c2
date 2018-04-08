@@ -131,6 +131,7 @@ class Transactions extends REST_Controller {
 				$reference = [];
 				if($value->reference_id>0){
 					$references = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$references->include_related("job", array("name"));
 					$references->select("account_id, number, type, amount, deposit, rate, issued_date");
 					$references->get_by_id($value->reference_id);
 
@@ -166,7 +167,8 @@ class Transactions extends REST_Controller {
 						"rate" 			=> $references->rate,
 						"issued_date" 	=> $references->issued_date,
 						"account_id" 	=> $references->account_id,
-						"amount_paid" 	=> $ref_amount_paid
+						"amount_paid" 	=> $ref_amount_paid,
+						"job" 			=> $references->job_name,
 					);
 				}
 
