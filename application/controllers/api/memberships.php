@@ -55,6 +55,8 @@ class Memberships extends REST_Controller {
 			}
 		}
 
+		$obj->include_related("membership_type", "name");
+
 		//Results
 		if($page && $limit){
 			$obj->get_paged_iterated($page, $limit);
@@ -81,7 +83,10 @@ class Memberships extends REST_Controller {
 					"fellow_date"					=> $value->fellow_date,
 					"first_cdp_year"				=> $value->first_cdp_year,
 					"cpd_record_date"				=> $value->cpd_record_date,
-					"cpd_required_credit"			=> $value->cpd_required_credit
+					"cpd_required_credit"			=> $value->cpd_required_credit,
+
+					"membership_type"				=> $value->membership_type_name,
+					"contacts" 						=> $value->contact->get_raw()->result()[0]
 				);
 			}
 		}
@@ -110,7 +115,12 @@ class Memberships extends REST_Controller {
 			isset($value->first_cdp_year) 				? $obj->first_cdp_year 					= $value->first_cdp_year : "";
 			isset($value->cpd_record_date) 				? $obj->cpd_record_date 				= $value->cpd_record_date : "";
 			isset($value->cpd_required_credit) 			? $obj->cpd_required_credit 			= $value->cpd_required_credit : "";
-						
+			
+			//Contact			
+			if(isset($value->contacts)){
+				$obj->contact_id = $value->contacts->id;
+			}
+
 			if($obj->save()){
 				$data["results"][] = array(
 					"id" 							=> $obj->id,
@@ -158,6 +168,11 @@ class Memberships extends REST_Controller {
 			isset($value->first_cdp_year) 				? $obj->first_cdp_year 					= $value->first_cdp_year : "";
 			isset($value->cpd_record_date) 				? $obj->cpd_record_date 				= $value->cpd_record_date : "";
 			isset($value->cpd_required_credit) 			? $obj->cpd_required_credit 			= $value->cpd_required_credit : "";
+
+			//Contact			
+			if(isset($value->contacts)){
+				$obj->contact_id = $value->contacts->id;
+			}
 
 			if($obj->save()){				
 				$data["results"][] = array(

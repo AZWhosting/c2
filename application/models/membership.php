@@ -8,6 +8,10 @@ class Membership extends DataMapper {
 		'membership_type' => array(
 			'class' => 'membership_type',
 			'other_field' => 'membership'
+		),
+		'contact' => array(
+			'class' => 'contact',
+			'other_field' => 'membership'
 		)
 	);
 

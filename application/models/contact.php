@@ -107,6 +107,10 @@ class Contact extends DataMapper {
 		'contact_assignee' => array(
 			'class' => 'contact_assignee',
 			'other_field' => 'contact'
+		),
+		'membership' => array(
+			'class' => 'membership',
+			'other_field' => 'contact'
 		)
 	);
 

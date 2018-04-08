@@ -105,14 +105,12 @@ class Ops extends REST_Controller {
 				// 	// 	"null" 		=> FALSE,
 				// 	// 	"default" 	=> 1
 				// 	// ),
-				// 	"contact_id" => array(
-				// 		"name" 		=> "reference_id",//New Field Name 
-				// 		"type" 		=> "INT",
-				// 		"null" 		=> FALSE,
-				// 		"default" 	=> "0"
+				// 	"graduateion_date" => array(
+				// 		"name" 		=> "graduation_date",//New Field Name 
+				// 		"type" 		=> "DATE"
 				// 	)
 				// );
-				// $data['results'][] = $this->dbforge->modify_column('field_values', $fields);
+				// $data['results'][] = $this->dbforge->modify_column('memberships', $fields);
 
 			 	//Remove column, 'table_name', 'column_to_drop'
 				// $this->dbforge->drop_column('item_assemblies', 'amount');

@@ -4,12 +4,12 @@ class Field_value extends DataMapper {
 	protected $created_field = "created_at";
 	protected $updated_field = "updated_at";
 
-	// public $has_many = array(
-	// 	'contact' => array(
-	// 		'class' => 'contact',
-	// 		'other_field' => 'field_value'
-	// 	)
-	// );
+	public $has_one = array(
+		'custom_field' => array(
+			'class' => 'custom_field',
+			'other_field' => 'field_value'
+		)
+	);
 
 	public function __construct($id = null, $server_name = null, $db_username = null, $server_password = null, $db = null) {	
 		$this->db_params = array(

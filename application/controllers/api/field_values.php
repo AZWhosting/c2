@@ -72,7 +72,9 @@ class Field_values extends REST_Controller {
 					"reference_id" 		=> $value->reference_id,
 					"custom_field_id" 	=> $value->custom_field_id,
 					"field_value" 		=> $value->field_value,
-					"type" 	 			=> $value->type
+					"type" 	 			=> $value->type,
+
+					"custom_fields" 	=> $value->custom_field->get_raw()->result()[0]
 				);
 			}
 		}

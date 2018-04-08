@@ -5,8 +5,8 @@ class Custom_field extends DataMapper {
 	protected $updated_field = "updated_at";
 
 	public $has_many = array(
-		'contact' => array(
-			'class' => 'contact',
+		'field_value' => array(
+			'class' => 'field_value',
 			'other_field' => 'custom_field'
 		)
 	);
