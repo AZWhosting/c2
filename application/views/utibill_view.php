@@ -16521,6 +16521,17 @@
 												           data-bind="value: edate,
 												                      min: sdate"
 												           placeholder="To ..."  style="width: 100%">
+												</div>
+												<div class="col-xs-12 col-sm-3">
+													<select data-role="multiselect"
+														   data-value-primitive="true"
+														   data-item-template="user-list-tmpl"
+														   data-value-field="id"
+														   data-text-field="name"
+														   data-bind="value: obj.contactIds, 
+														   			source: contactDS"
+														   data-placeholder="Select Employee.."
+														   style="width: 100%" /></select>
 												</div>								        	
 												<div class="col-xs-12 col-sm-1">
 												  	<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
@@ -16590,7 +16601,7 @@
 							<div class="row">
 								<div class="col-xs-12 col-sm-3">
 									<div class="total-sale">
-										<p data-bind="text: lang.lang.number_of_employee">Number of Customers</p>
+										<p data-bind="text: lang.lang.number_of_customer">Number of Customers</p>
 										<span data-bind="text: dataSource.total"></span>
 									</div>
 								</div>
@@ -16608,6 +16619,7 @@
 										<th style="vertical-align: top;"><span data-bind="text: lang.lang.name">Name</span></th>
 										<th style="text-align: left; vertical-align: top;"><span data-bind="text: lang.lang.date">Date</span></th>									
 										<th style="text-align: left; vertical-align: top;"><span data-bind="text: lang.lang.reference">Reference</span></th>
+										<th style="text-align: left; vertical-align: top;"><span data-bind="text: lang.lang.location">Location</span></th>
 										<th style="vertical-align: top; text-align: right"><span data-bind="text: lang.lang.amount">Amount</span></th>
 									</tr>
 								</thead>
@@ -16617,9 +16629,6 @@
 										data-bind="source: dataSource">
 								</tbody>
 							</table>
-							<div id="pager" class="k-pager-wrap"						    	
-					             data-role="pager" data-bind="source: dataSource"
-					             data-page-size= "true"></div>
 						</div>
 					</span>
 				</div>
@@ -16633,6 +16642,8 @@
 		<td></td>
 		<td></td>
 		<td></td>
+		<td></td>
+
 	</tr>	
 	# var amount = 0;#
 	#for(var i= 0; i <line.length; i++) {#
@@ -16640,7 +16651,8 @@
 		<tr>
 			<td style="padding-left: 20px !important;">#=line[i].name#</td>
 			<td style="text-align: left;">#=kendo.toString(new Date(line[i].date), "dd-MM-yyyy")#</td>
-			<td style="text-align: left;">#=line[i].number#</td>		
+			<td style="text-align: left;">#=line[i].number#</td>
+			<td style="text-align: left;">#=line[i].location#</td>			
 			<td style="text-align: right;">#=kendo.toString(line[i].amount, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#</td>
 		</tr>
 	#}#
@@ -16648,12 +16660,13 @@
     	<td style="font-weight: bold; color: black;">Total</td>
     	<td></td>
     	<td></td>
+    	<td></td>
     	<td class="right" style="font-weight: bold; border-top: 1px solid black !important; color: black;">
     		#=kendo.toString(amount, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#
     	</td>
     </tr>
     <tr>
-    	<td colspan="4">&nbsp;</td>
+    	<td colspan="5">&nbsp;</td>
     </tr>
 </script>
 <script id="dailyCashReceipt" type="text/x-kendo-template">
@@ -17168,6 +17181,10 @@
 <script id="contact-list-tmpl" type="text/x-kendo-tmpl">
 	<span>#=abbr##=number#</span>	
 	<span>#=name#</span>	
+</script>
+<script id="user-list-tmpl" type="text/x-kendo-tmpl">		
+	<span>#=last_name#</span>	
+	<span>#=first_name#</span>	
 </script>
 
 <script id="cashReAuto" type="text/x-kendo-template">

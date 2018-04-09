@@ -3173,37 +3173,40 @@
                         }
                         //Set Base Currency
                         self.set("actualAmount",  kendo.toString(self.get("actualAmount"), self.get("baseCurrency") == "km-KH" ? "c0" : "c", self.get("baseCurrency")));
+                        self.setCurrency();
                     }else{
                         banhji.router.navigate("/");
                     }
                 });
 
-                this.currencyDS.query({
-                    sort: {
-                        field: "created_at",
-                        dir: "asc"
-                    }
-                }).then(function(e) {
-                    $.each(self.currencyDS.data(), function(i, v) {
-                        self.currencyAR.push({
-                            code: v.code,
-                            locale: v.locale,
-                            rate: v.rate
-                        });
-                        self.actualDS.add({
-                            code: v.code,
-                            locale: v.locale,
-                            amount: 0
-                        });
-                    });
-                    self.findNote(self.get("sessionID"));
-                });
+                
                 this.tmpAR = [];
             }else{
                 this.set("noSession", true);
-                this.sessionDS.query({
-                });
             }
+        },
+        setCurrency : function(){
+            var self = this;
+            this.currencyDS.query({
+                sort: {
+                    field: "created_at",
+                    dir: "asc"
+                }
+            }).then(function(e) {
+                $.each(self.currencyDS.data(), function(i, v) {
+                    self.currencyAR.push({
+                        code: v.code,
+                        locale: v.locale,
+                        rate: v.rate
+                    });
+                    self.actualDS.add({
+                        code: v.code,
+                        locale: v.locale,
+                        amount: 0
+                    });
+                });
+                self.findNote(self.get("sessionID"));
+            });
         },
         findNote: function(id){
             var self = this;
@@ -3211,9 +3214,10 @@
                 filter: {field: "cashier_session_id", value: id}
             }).then(function(e){
                 if(self.noteDS.data().length > 0){
-                    // self.resetActual();
+                    self.resetActual();
+                }else{
+                    self.addRow();
                 }
-                self.addRow();
             });
         },
         actualAmount: 0,

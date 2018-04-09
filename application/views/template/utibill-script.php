@@ -2478,6 +2478,47 @@
         customerDS: dataStore(apiUrl + "contacts"),
         supplierDS: dataStore(apiUrl + "contacts"),
         employeeDS: dataStore(apiUrl + "contacts"),
+        //user
+        employeeUserDS                  : new kendo.data.DataSource({
+            transport: {
+                read    : {
+                    url: apiUrl + "users",
+                    type: "GET",
+                    headers: banhji.header,
+                    dataType: 'json'
+                },
+                parameterMap: function(options, operation) {
+                    if(operation === 'read') {
+                        return {
+                            page: options.page,
+                            limit: options.pageSize,
+                            filter: options.filter,
+                            sort: options.sort
+                        };
+                    } else {
+                        return {models: kendo.stringify(options.models)};
+                    }
+                }
+            },
+            schema  : {
+                model: {
+                    id: 'id'
+                },
+                data: 'results',
+                total: 'count'
+            },
+            filter:[
+                { field:"user_id", operator:"where_related_institute_user", value:banhji.institute.user_id},
+            ],
+            sort:[
+                { field:"institute_id", dir:"asc" },
+            ],
+            serverFiltering: true,
+            serverSorting: true,
+            serverPaging: true,
+            page:1,
+            pageSize: 100
+        }),
         //Contact Type
         contactTypeList: [],
         contactTypeDS: dataStore(apiUrl + "contacts/type"),
@@ -9071,7 +9112,7 @@
                 var MeterID = v.meter.id;
                 
                 aSold += Total;
-                aSoldL = kendo.toString(aSold, banhji.institute.currency.locale == "km-KH" ? "c0" : "c", v.contact.locale);
+                aSoldL = kendo.toString(aSold, banhji.locale == "km-KH" ? "c0" : "c", banhji.locale);
                 //set INV
                 if(v.meter.group == 0){
                     self.calInvoice(Total, v.contact, invoiceItems, MeterLocation, MeterPole, MeterBox, MeterID, locale);
@@ -9460,7 +9501,7 @@
             $.each(this.printArray, function(i, v) {
                 tMeter += kendo.parseInt(v.consumption);
                 AmountT += kendo.parseFloat(v.amount);
-                AmountTA = kendo.toString(AmountT, banhji.institute.currency.locale == "km-KH" ? "c0" : "c", v.locale);
+                AmountTA = kendo.toString(AmountT, banhji.locale == "km-KH" ? "c0" : "c", banhji.locale);
             });
             this.set("amountTotal", AmountTA);
             this.set("totalMeter", tMeter);
@@ -15679,7 +15720,7 @@
                 filter: para
             }).then(function(e) {
                 var view = self.dataSource.view();
-                console.log(view);
+                // console.log(view);
                 var amount = 0;
                 $.each(view, function(index, value) {
                     amount += value.amount;
@@ -21918,13 +21959,7 @@
     banhji.cashReceiptbyuser = kendo.observable({
         lang: langVM,
         dataSource: dataStore(apiUrl + "utibillReports/cash_receipt_user"),
-        contactDS: new kendo.data.DataSource({
-            data: banhji.source.customerList,
-            sort: {
-                field: "number",
-                dir: "asc"
-            }
-        }),
+        contactDS           : banhji.source.employeeUserDS,
         licenseDS: dataStore(apiUrl + "branches"),
         blocDS: dataStore(apiUrl + "locations"),
         sortList: banhji.source.sortList,
@@ -24942,7 +24977,7 @@
                 total: 'count'
             },
             change: function(e) {
-                console.log(this.data());
+                // console.log(this.data());
                 // var vm = banhji.wDashboard;
                 banhji.wDashBoard.set('overDue', kendo.toString(this.data()[0].totalOverDue, "n0", banhji.locale));
                 banhji.wDashBoard.set('totalAmount', kendo.toString(this.data()[0].totalAmount, banhji.locale == "km-KH" ? "c0" : "c", banhji.locale));               
@@ -25459,7 +25494,7 @@
             this.goMonthlyTab();
             var data = e.data,
                 self = this;
-            console.log(data);
+            // console.log(data);
             this.set('meter_visible', true);
             this.set('propertyID', data.id);
             this.meterDS.query({

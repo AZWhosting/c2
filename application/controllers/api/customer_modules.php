@@ -116,7 +116,11 @@ class Customer_modules extends REST_Controller {
 
 		$so = $saleOrders->count();
 		$soAmount = floatval($saleOrderAmounts->total);
-		$soAvg = $soAmount / $so;
+		if($so>0){
+			$soAvg = $soAmount / $so;
+		}else{
+			$soAvg = $soAmount;
+		}
 		$soOpen = $saleOrderOpens->count();
 
 		//AR
@@ -162,7 +166,7 @@ class Customer_modules extends REST_Controller {
 
 		//cash position
 		$cash = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);	
-		$cash->include_related("transaction", array("rate"));
+		$cash->select_sum("(dr - cr) / transactions.rate", "total");
 		$cash->where_related("account","account_type_id", 10);
 		$cash->include_related("account/account_type", array("nature"));
 		$cash->where_related("transaction", "is_recurring <>", 1);		
@@ -170,19 +174,7 @@ class Customer_modules extends REST_Controller {
 		$cash->where("deleted <>", 1);
 		$cash->get_iterated();
 
-		$totalCashPosition = 0;	
-		if($cash->exists()){
-			foreach ($cash as $value) {
-				$amount = 0;
-				if($value->account_account_type_nature=="Dr"){
-					$amount = (floatval($value->dr) - floatval($value->cr)) / floatval($value->transaction_rate);				
-				}else{
-					$amount = (floatval($value->cr) - floatval($value->dr)) / floatval($value->transaction_rate);					
-				}
-				
-				$totalCashPosition += $amount;
-			}
-		}
+		$totalCashPosition = floatval($cash->total);
 		
 		//Sale Product
 		$product = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);			
@@ -239,17 +231,21 @@ class Customer_modules extends REST_Controller {
 		//Results
 		$data["results"][] = array(
 			'id' 				=> 0,
+
 			'sale' 				=> $sale,
 			'sale_customer' 	=> $saleCustomer,
 			'sale_product' 		=> $sale_product,
 			'sale_ordered' 		=> $saleOrdered,
+
 			'so' 				=> $so,
 			'so_avg' 			=> $soAvg,
 			'so_open'			=> $soOpen,
+
 			'ar' 				=> $ar,
 			'ar_open' 			=> $arOpen,
 			'ar_customer' 		=> $arCustomer,
 			'ar_overdue' 		=> $arOverDue,
+
 			'collection_day' 	=> 0,
 			'totalCashPosition' => $totalCashPosition,
 

@@ -1496,6 +1496,7 @@ class UtibillReports extends REST_Controller {
 		$data["results"] = [];
 		$data["count"] = 0;
 		$total = 0;
+		$totalUser = 0;
 
 		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
@@ -1525,7 +1526,6 @@ class UtibillReports extends REST_Controller {
 
 		$obj->include_related("contact", array("abbr", "number", "name"));
 		$obj->include_related("location", "name");
-		$obj->include_related("user", "name");
 		$obj->where("type", "Cash_Receipt");
 		$obj->where("is_recurring <>", 1);
 		$obj->where("deleted <>", 1);
@@ -1540,6 +1540,8 @@ class UtibillReports extends REST_Controller {
 				$refAmount = floatval($ref->amount) - floatval($ref->deposit);
 
 				$amount = (floatval($value->amount) - floatval($value->deposit)) / floatval($value->rate);
+				$user = new User();
+				$user->where("id", $value->user_id)->get();
 
 				if(isset($objList[$value->user_id])){
 					$objList[$value->user_id]["line"][] = array(
@@ -1549,11 +1551,11 @@ class UtibillReports extends REST_Controller {
 						"date" 					=> $value->issued_date,
 						"location" 				=> $value->location_name,
 						"rate" 					=> $value->rate,
-						"amount" 				=> $amount
+						"amount" 				=> $amount,
 					);
 				}else{
 					$objList[$value->user_id]["id"] 		= $value->user_id;
-					$objList[$value->user_id]["payment"] 	= $value->user_name;
+					$objList[$value->user_id]["payment"] 	= $user->last_name." ".$user->first_name;
 					$objList[$value->user_id]["line"][] 	= array(
 						"id" 					=> $value->id,
 						"type" 					=> $value->type,
@@ -1562,16 +1564,18 @@ class UtibillReports extends REST_Controller {
 						"date" 					=> $value->issued_date,
 						"location" 				=> $value->location_name,
 						"rate" 					=> $value->rate,
-						"amount" 				=> $amount
+						"amount" 				=> $amount,
 					);
 				}
 				$total += $amount;
+				$totalUser += 1;
 			}
 
 			foreach ($objList as $value) {
 				$data["results"][] = $value;
 			}
 			$data['total'] = $total;
+			$data['totalUser'] = $totalUser;
 			$data["count"] = count($data["results"]);
 		}
 
