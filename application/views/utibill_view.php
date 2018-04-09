@@ -16231,9 +16231,6 @@
 											 data-template="cashReceiptDetail-template"
 								></tbody>
 							</table>
-							<div id="pager" class="k-pager-wrap"						    	
-					             data-role="pager" data-bind="source: dataSource"
-					             data-page-size= "true"></div>
 						</div>
 					</div>
 				</div>
@@ -16399,7 +16396,7 @@
 								<div class="col-xs-12 col-sm-3">
 									<div class="total-sale">
 										<p data-bind="text: lang.lang.number_of_customer">Number of Customers</p>
-										<span data-bind="text: dataSource.total"></span>
+										<span data-bind="text: totalCustomer"></span>
 									</div>
 								</div>
 								<div class="col-xs-12 col-sm-9">
@@ -16601,11 +16598,17 @@
 							<div class="row">
 								<div class="col-xs-12 col-sm-3">
 									<div class="total-sale">
-										<p data-bind="text: lang.lang.number_of_customer">Number of Customers</p>
+										<p data-bind="text: lang.lang.number_of_employee">Number of Employees</p>
 										<span data-bind="text: dataSource.total"></span>
 									</div>
 								</div>
-								<div class="col-xs-12 col-sm-9">
+								<div class="col-xs-12 col-sm-3">
+									<div class="total-sale">
+										<p data-bind="text: lang.lang.number_of_customer">Number of Customer</p>
+										<span data-bind="text: totalUser"></span>
+									</div>
+								</div>
+								<div class="col-xs-12 col-sm-6">
 									<div class="total-sale">
 										<p data-bind="text: lang.lang.total">Total</p>
 										<span data-bind="text: total"></sapn>

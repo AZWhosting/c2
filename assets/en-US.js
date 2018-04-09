@@ -276,6 +276,7 @@ var	en_US = {
 	"salesOrder_summary_summarize" : "Lists individual sale order transactions by date for each product/ service with a period of time.",
 	"sale_by_job_engagement" : "Sale by Job/Engagement",
 	"number_of_customer" : "Number Of Customer",
+	"number_of_employee" : "Number Of Employee",
 	"segment" : "SEGMENT",
 	"sale_order_list" : "Sale Order List",
 	"product_items" : "Product Items",

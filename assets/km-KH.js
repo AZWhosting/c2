@@ -274,6 +274,7 @@ var	km_KH = {
 	"salesOrder_summary_summarize" : "តារាង​បញ្ជាលក់រាល់​ប្រតិបត្តិការ​របស់​ផលិតផល​ឬ​សេវាកម្ម​និមួយៗ​ក្នុង​កំឡុង​ពេល​មួយ",
 	"sale_by_job_engagement" :  "លក់​តាម​គម្រោង",
 	"number_of_customer" : "ចំនួន​អតិថិជន",
+	"number_of_employee" : "ចំនួន​បុគ្គលិក",
 	"segment" :  "ផ្នែក",
 	"sale_order_list" :  "របាយការណ័នៃការបញ្ជាលក់",
 	"product_items" :  "រាយ​នាម​ផលិតផល",

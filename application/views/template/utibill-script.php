@@ -2507,12 +2507,6 @@
                 data: 'results',
                 total: 'count'
             },
-            filter:[
-                { field:"user_id", operator:"where_related_institute_user", value:banhji.institute.user_id},
-            ],
-            sort:[
-                { field:"institute_id", dir:"asc" },
-            ],
             serverFiltering: true,
             serverSorting: true,
             serverPaging: true,
@@ -22054,7 +22048,7 @@
                     contactIds.push(value);
                 });
                 para.push({
-                    field: "contact_id",
+                    field: "id",
                     operator: "where_in",
                     value: contactIds
                 });
@@ -22304,16 +22298,19 @@
                         },
                         {
                             autoWidth: true
+                        },
+                        {
+                            autoWidth: true
                         }
                     ],
-                    title: "Cash Receipt by Sources",
+                    title: "Cash Receipt by User",
                     rows: this.exArray
                 }]
             });
             //save the file as Excel file with extension xlsx
             kendo.saveAs({
                 dataURI: workbook.toDataURL(),
-                fileName: "CashReceiptSources.xlsx"
+                fileName: "CashReceiptUser.xlsx"
             });
         }
     });
@@ -28091,6 +28088,7 @@
                     banhji.cashReceiptSourceDetail.set('count', e.response.count);
                     kendo.culture(banhji.locale);
                     banhji.cashReceiptSourceDetail.set('total', kendo.toString(e.response.total, 'c2'));
+                    banhji.cashReceiptSourceDetail.set('totalCustomer', kendo.toString(e.response.totalCustomer, 'c2'));
                 }
             });
             vm.pageLoad();
@@ -28115,6 +28113,7 @@
                     banhji.cashReceiptbyuser.set('count', e.response.count);
                     kendo.culture(banhji.locale);
                     banhji.cashReceiptbyuser.set('total', kendo.toString(e.response.total, 'c2'));
+                    banhji.cashReceiptbyuser.set('totalUser', kendo.toString(e.response.totalUser, 'n0'));
                 }
             });
             vm.pageLoad();

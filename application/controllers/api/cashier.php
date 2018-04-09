@@ -179,7 +179,8 @@ class Cashier extends REST_Controller {
 				}
 			}
 		}
-		$obj->where("status <>", 1)->order_by("id", "desc")->limit(1)->get();
+		// $obj->where("status <>", 1)->order_by("id", "desc")->limit(1)->get();
+		$obj->order_by("id", "desc")->limit(1)->get();
 		//Results
 		$data["count"] = $obj->result_count();
 		if($obj->exists()){
@@ -288,6 +289,40 @@ class Cashier extends REST_Controller {
 		 			"receive_group" 	=> $receivegroup,
 		 			"rate" 				=> $ratearr,
 		 			"status" 			=> intval($value->status),
+		 		);
+		 	}
+		}
+		//Response Data		
+		$this->response($data, 200);
+	}
+	//Print
+	function print_get(){
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
+		$data["count"] = 0;
+		$obj = new Cashier_session(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		//Filter
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value["operator"])) {
+					$obj->{$value["operator"]}($value["field"], $value["value"]);
+				} else {
+	    			$obj->where($value["field"], $value["value"]);
+				}
+			}
+		}
+		// $obj->where("status <>", 1)->order_by("id", "desc")->limit(1)->get();
+		$obj->order_by("id", "desc")->limit(1)->get();
+		//Results
+		$data["count"] = $obj->result_count();
+		if($obj->exists()){
+			foreach ($obj as $value) {
+				//Start 
+		 		$data["results"][] = array(
+		 			"id" 				=> $value->id,
 		 		);
 		 	}
 		}

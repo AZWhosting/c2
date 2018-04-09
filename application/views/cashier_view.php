@@ -915,8 +915,8 @@
 		}
 	</style>
 	<div id="slide-form">
-		<div class="customer-background" style=" margin-top: 15px;">
-			<div class="container-960">					
+		<div class="customer-background" style=" margin-top: 15px; overflow: hidden;width: 100%;">
+			<div class="row-fluid" style="overflow: hidden;padding: 0 20px;">					
 				<div id="example" class="k-content">
 			    	<div class="hidden-print pull-right">
 			    		<span class="glyphicons no-js remove_2" 
@@ -928,7 +928,7 @@
 			        	<div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 100%;margin-top: -15px;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
 							<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
 						</div>
-			        	<div class="row" style="padding: 0;margin: 0;position: absolute;left:0;top:0;width: 100%;height: 100%;background: #fff;z-index: 999;" data-bind="visible: noSession">
+			        	<div class="row" style="padding: 0;margin: 0;position: relative;left:0;top:0;width: 100%;height: 100%;background: #fff;z-index: 999;" data-bind="visible: noSession">
 							<table class="table table-bordered table-primary table-striped table-vertical-center" style="margin-top: 15px;">
 						        <thead>
 						            <tr>
@@ -936,101 +936,102 @@
 						            	<th style="vertical-align: top;width: 20%" data-bind="text: lang.lang.employee"></th>
 						            	<th style="vertical-align: top;width: 25%" data-bind="text: lang.lang.start"></th>
 						            	<th style="vertical-align: top;width: 25%" data-bind="text: lang.lang.end"></th>
-						            	<th style="vertical-align: top;width: 15%" data-bind="text: lang.lang.status"></th>
-						            	<th style="vertical-align: top;width: 10%" data-bind="text: lang.lang.action"></th>
+						            	<!-- <th style="vertical-align: top;width: 15%" data-bind="text: lang.lang.status"></th> -->
+						            	<th style="vertical-align: top;width: 25%" data-bind="text: lang.lang.action"></th>
 						            </tr>
 						        </thead>
 						        <tbody data-role="listview" 
 					        		data-template="session-list-template" 
-					        		data-auto-bind="false"
+					        		data-auto-bind="true"
 					        		data-bind="source: sessionDS"></tbody>
 						    </table>
 						</div>
-			        	<div class="row" style="padding: 0px;margin: 0;">
-		        			<div class="span3" style="padding-left: 0;">
-			        			<table class="table table-bordered table-primary table-striped table-vertical-center" >
-			        				<thead>
-			        					<tr>
-			        						<th colspan="2" style="background: #fefefe;color: #000;border: 1px solid #ccc;" >
-			        							ប្រាក់ដើមគ្រា
-			        						</th>
-			        					</tr>
-			        				</thead>
-			        				<tbody 
-			        					data-role="listview" 
-			        					data-bind="source: startAR" 
-			        					data-template="reconcile-start-list">
-			        				</tbody>
-			        			</table>
+						<div style="overflow: hidden;" data-bind="invisible: noSession">
+				        	<div class="row" style="padding: 0px;margin: 0;">
+			        			<div class="span3" style="padding-left: 0;">
+				        			<table class="table table-bordered table-primary table-striped table-vertical-center" >
+				        				<thead>
+				        					<tr>
+				        						<th colspan="2" style="background: #fefefe;color: #000;border: 1px solid #ccc;" >
+				        							ប្រាក់ដើមគ្រា
+				        						</th>
+				        					</tr>
+				        				</thead>
+				        				<tbody 
+				        					data-role="listview" 
+				        					data-bind="source: startAR" 
+				        					data-template="reconcile-start-list">
+				        				</tbody>
+				        			</table>
+				        		</div>
+				        		<div class="span3" style="">
+				        			<table class="table table-bordered table-primary table-striped table-vertical-center" >
+				        				<thead>
+				        					<tr>
+				        						<th colspan="2" style="background: #fefefe;color: #000;border: 1px solid #ccc;" >
+				        							ប្រាក់ទទួលមិនទាន់អាប់
+				        						</th>
+				        					</tr>
+				        				</thead>
+				        				<tbody 
+				        					data-role="listview"
+				        					data-bind="source: receiveNoChangeAR" 
+				        					data-template="reconcile-receivenochange-list">
+				        				</tbody>
+				        			</table>
+				        		</div>
+				        		<div class="span3" style="">
+				        			<table class="table table-bordered table-primary table-striped table-vertical-center" >
+				        				<thead>
+				        					<tr>
+				        						<th colspan="2" style="background: #fefefe;color: #000;border: 1px solid #ccc;" >
+				        							ប្រាក់អាប់
+				        						</th>
+				        					</tr>
+				        				</thead>
+				        				<tbody 
+				        					data-role="listview" 
+				        					data-bind="source: changeAR" 
+				        					data-template="reconcile-change-list">
+				        				</tbody>
+				        			</table>
+				        		</div>
+				        		<div class="span3" style="padding-left: 0;">
+				        			<table class="table table-bordered table-primary table-striped table-vertical-center" >
+				        				<thead>
+				        					<tr>
+				        						<th colspan="2" style="background: #fefefe;color: #000;border: 1px solid #ccc;" >
+				        							សមតុលសាច់ប្រាក់ក្នុងរបាយការណ៍
+				        						</th>
+				        					</tr>
+				        				</thead>
+				        				<tbody 
+				        					data-role="listview"
+				        					data-bind="source: receiveAR" 
+				        					data-template="reconcile-recieve-list">
+				        				</tbody>
+				        			</table>
+				        		</div>
 			        		</div>
-			        		<div class="span3" style="">
-			        			<table class="table table-bordered table-primary table-striped table-vertical-center" >
-			        				<thead>
-			        					<tr>
-			        						<th colspan="2" style="background: #fefefe;color: #000;border: 1px solid #ccc;" >
-			        							ប្រាក់ទទួលមិនទាន់អាប់
-			        						</th>
-			        					</tr>
-			        				</thead>
-			        				<tbody 
-			        					data-role="listview"
-			        					data-bind="source: receiveNoChangeAR" 
-			        					data-template="reconcile-receivenochange-list">
-			        				</tbody>
-			        			</table>
-			        		</div>
-			        		<div class="span3" style="">
-			        			<table class="table table-bordered table-primary table-striped table-vertical-center" >
-			        				<thead>
-			        					<tr>
-			        						<th colspan="2" style="background: #fefefe;color: #000;border: 1px solid #ccc;" >
-			        							ប្រាក់អាប់
-			        						</th>
-			        					</tr>
-			        				</thead>
-			        				<tbody 
-			        					data-role="listview" 
-			        					data-bind="source: changeAR" 
-			        					data-template="reconcile-change-list">
-			        				</tbody>
-			        			</table>
-			        		</div>
-			        		<div class="span3" style="padding-left: 0;">
-			        			<table class="table table-bordered table-primary table-striped table-vertical-center" >
-			        				<thead>
-			        					<tr>
-			        						<th colspan="2" style="background: #fefefe;color: #000;border: 1px solid #ccc;" >
-			        							សមតុលសាច់ប្រាក់ក្នុងរបាយការណ៍
-			        						</th>
-			        					</tr>
-			        				</thead>
-			        				<tbody 
-			        					data-role="listview"
-			        					data-bind="source: receiveAR" 
-			        					data-template="reconcile-recieve-list">
-			        				</tbody>
-			        			</table>
-			        		</div>
-		        		</div>
-						<div class="row" style="padding: 0;margin: 0;">
-							<table class="table table-bordered table-primary table-striped table-vertical-center" style="margin-top: 15px;">
-						        <thead>
-						            <tr>
-						            	<th style="vertical-align: top;" data-bind="text: lang.lang.no_"></th>
-						            	<th style="vertical-align: top;" data-bind="text: lang.lang.currency"></th>
-						            	<th style="vertical-align: top;" data-bind="text: lang.lang.note"></th>
-						            	<th style="vertical-align: top;" data-bind="text: lang.lang.unit"></th>
-						            	<th style="vertical-align: top;" data-bind="text: lang.lang.amount"></th>
-						            </tr>
-						        </thead>
-						        <tbody data-role="listview" 
-					        		data-template="reconcile-list-template" 
-					        		data-auto-bind="false"
-					        		data-bind="source: noteDS"></tbody>
-						    </table>
-						    <button class="btn btn-inverse" data-bind="click: addRow"><i class="icon-plus icon-white"></i></button>
-						</div>
-		        		<div class="row" style="padding: 0px;margin: 0;margin-top: 20px;">
+							<div class="row" style="padding: 0;margin: 0;">
+								<table class="table table-bordered table-primary table-striped table-vertical-center" style="margin-top: 15px;">
+							        <thead>
+							            <tr>
+							            	<th style="vertical-align: top;" data-bind="text: lang.lang.no_"></th>
+							            	<th style="vertical-align: top;" data-bind="text: lang.lang.currency"></th>
+							            	<th style="vertical-align: top;" data-bind="text: lang.lang.note"></th>
+							            	<th style="vertical-align: top;" data-bind="text: lang.lang.unit"></th>
+							            	<th style="vertical-align: top;" data-bind="text: lang.lang.amount"></th>
+							            </tr>
+							        </thead>
+							        <tbody data-role="listview" 
+						        		data-template="reconcile-list-template" 
+						        		data-auto-bind="false"
+						        		data-bind="source: noteDS"></tbody>
+							    </table>
+							    <button class="btn btn-inverse" data-bind="invisible: readyRecon, click: addRow"><i class="icon-plus icon-white"></i></button>
+							</div>
+			        		<div class="row" style="padding: 0px;margin: 0;margin-top: 20px;">
 		        			<div class="span4" style="padding-left: 0;">
 			        			<table class="table table-bordered table-primary table-striped table-vertical-center" >
 			        				<thead>
@@ -1104,18 +1105,22 @@
 			        					<tr>
 			        						<td colspan="2"  >
 			        							<input data-role="dropdownlist"
-								                   data-value-primitive="true"
-								                   data-text-field="name"
-								                   data-value-field="id"
-								                   style="width: 100%;" 
-								                   data-auto-bind="false"
-								                   data-bind="value: accountSelect,
-								                              source: accountDS"
-								                   data-option-label="Select Accounting..." />
+								                   	data-value-primitive="true"
+								                   	data-text-field="name"
+								                   	data-value-field="id"
+								                   	style="width: 100%;" 
+								                   	data-auto-bind="false"
+								                   	data-bind="
+								                   		disabled: readyRecon,
+								                   		value: accountSelect,
+								                        source: accountDS"
+								                   	data-option-label="Select Accounting..." 
+								                />
 			        						</td>
 			        					</tr>
 			        				</tfoot>
 			        			</table>
+			        		</div>
 			        		</div>
 			        	</div>
 			        </div>
@@ -1123,10 +1128,10 @@
 						<div id="ntf1" data-role="notification"></div>
 				        <div class="row">
 							<div class="col-sm-12" align="right">
-								<span class="btn-btn" style="float: left;" data-bind="click: saveDraft" ><i></i> 
+								<span data-bind="invisible: readyRecon" class="btn-btn" style="float: left;" data-bind="click: saveDraft" ><i></i> 
 									<span data-bind="text: lang.lang.save_draft">Record</span>
 								</span>
-								<span role='presentation' class='dropdown btn-btn' style="padding: 0 15px; float: left; height: 32px; line-height: 30px;">
+								<span data-bind="invisible: readyRecon" role='presentation' class='dropdown btn-btn' style="padding: 0 15px; float: left; height: 32px; line-height: 30px;">
 							  		<a style="color: #fff; padding: 0;" class='dropdown-toggle glyphicons' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'>
 							  			<span >Reconcile Option</span>
 							  			<span class="small-btn"><i class='caret '></i></span>
@@ -1170,7 +1175,7 @@
 				#: kendo.toString(new Date(end_date), "F")#
 			#}#
 		</td>
-		<td style="border-left: 0; border-bottom: 0;">
+		<!-- <td style="border-left: 0; border-bottom: 0;">
 			#if(status == 2){#
 				Save Draft
 			#}else if(status == 1){#
@@ -1178,14 +1183,14 @@
 			#}else{#
 				Not yet reconcile
 			#}#
-		</td>
+		</td> -->
 		<td style="border-left: 0; border-bottom: 0; text-align: center;">
 			#if(status == 1){#
-				<span style="cursor: pointer; margin-top: 3px;" title="Finish" class="btn-action glyphicons ok_2 btn-success"><i></i></span> Done
+				<a style="cursor: pointer;width: 60px;line-height: 25px;background: green;" class="btn-action glyphicons btn-success" href="\\#/reconcile/#= id # ">View</a> | <a style="cursor: pointer;width: 60px;line-height: 25px;background: black;" class="btn-action glyphicons btn-success" href="\\#/print/#= id # ">Print</a>
 			#}else if(status == 2){#
 				<a style="cursor: pointer;width: 60px;line-height: 25px;background: green;" class="btn-action glyphicons btn-success" href="\\#/reconcile/#= id # ">Edit</a>
 			#}else{#
-				<a style="cursor: pointer;" href="\\#/reconcile/#= id # ">Reconcile</a>
+				<a style="cursor: pointer;width: 60px;color: white; padding: 5px 38px;line-height: 25px;background: blue;" href="\\#/reconcile/#= id # ">Reconcile</a>
 			#}#
 		</td>
 	</tr>
@@ -1194,14 +1199,14 @@
     <tr>
 		<td style="border-left: 0; border-bottom: 0;">
 			#if(banhji.Reconcile.noteDS.indexOf(data) > 0){#
-				<i style="cursor: pointer;" class="icon-trash" data-bind="events: {click: removeRow}" ></i>
+				<i style="cursor: pointer;" class="icon-trash" data-bind="invisible: readyRecon, events: {click: removeRow}" ></i>
 			#}#
 			#:banhji.Reconcile.noteDS.indexOf(data)+1#
 		</td>
 		<td style="border-left: 0; border-bottom: 0;">
 			<input type="text" 
 				data-role="combobox" 
-				data-bind="source: currencyAR, value: currency, events: {change: onChange}" 
+				data-bind="disabled: readyRecon, source: currencyAR, value: currency, events: {change: onChange}" 
 				data-text-field="code" 
 				data-value-field="locale">
 		</td>
@@ -1281,8 +1286,373 @@
 		<td style="text-align: right;"><p data-bind="text: amount"></p></td>
 	</tr>
 </script>
+<!--Print-->
+<script id="Print" type="text/x-kendo-template">
+    <div class="container">
+		<div class="row customerCenter" style="background: #fff; padding-top: 15px; border-radius: 10px; ">
+			<div class="span12">
+				<div class="example">
+                	<div style="overflow: hidden;position: relative;height: 50px;">
+	                    <span id="savePrint" class="btn btn-icon btn-primary glyphicons print" data-bind="click: printGrid" style="width: 85px !important; margin-bottom: 0; position: absolute; left: 45%; "><i></i><span data-bind="text: lang.lang.print" style="color: #fff;"></span></span>
+	                    <div class="hidden-print pull-right">
+	                        <span style="padding: 5px 0 11px 35px;" class="glyphicons no-js remove_2" 
+	                            data-bind="click: cancel"><i></i></span>    
+	                    </div>
+	                </div>
+                    <div id="invoicecontent" style="width: 80%!important; margin: 0 auto; border: 1px solid #ccc;"></div>
+                    <div class="box-generic bg-action-button" align="right" style="background-color: #203864; margin-top: 15px; margin-bottom: 11px;">
+                        <span id="notification"></span>
+                        <span class="btn btn-icon btn-btn glyphicons remove_2" data-bind="click: cancel" style="width: 90px !important; text-align: right;"><i></i> <span data-bind="text: lang.lang.cancel" style="color: #fff;"> </span></span>
+                        <span id="saveClose" class="btn-btn btn btn-icon glyphicons print" data-bind="click: printGrid" style="width: 85px !important; margin-bottom: 0!important; text-align: right;"><i></i><span data-bind="text: lang.lang.print" style="color: #fff;"></span></span>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>  
+</script>
+<script id="invoiceform" type="text/x-kendo-tmpl">
+	<style>
+		body {
+		    color: \#333;
+		    font-family: "Open Sans", 'Battambang';
+		    font-size: 12px;
+		    background: \#fff;
+		}
+		*{
+		  margin: 0 auto;
+		  padding: 0;
+		}
+		.clear{
+			clear: both;
+		}
+		.cashReconciliation{
+				width: 45%;
+				margin: 50px auto 0;
+				height: 250px;		
+			}
+			.cashReconciliation .cashReconciliation-header h2{
+				text-align: center;
+    			font-size: 30px;
+    			padding: 10px 45px;
+    			border: 1px solid \#333;	
+    			float: right;
+    			margin-bottom: 15px;
+    			clear: both;
+			}
+			.cashReconciliation .cashReconciliation-header p{
+    			font-size: 15px;
+    			margin-bottom: 10px;
+    			float: left;
+    			width: 100%
+			}
+			.cashReconciliation .cashReconciliation-content .firstTable{
+				width: 100%;
+				float: left;
+				padding-bottom: 8px;
+				font-size: 14px;
+				border-collapse: collapse;
+			}
+			.cashReconciliation .cashReconciliation-content .firstTable thead tr th{
+				text-transform: uppercase;
+				color: \#fff;
+				background: \#333;
+				text-align: center;
+				padding: 5px;
+				font-weight: 700;
+				border: \#333 1px solid;
+			}
+			.cashReconciliation .cashReconciliation-content .firstTable thead tr td{
+				background: \#deeaf6;
+				color: \#333;
+				text-align: center;
+				padding: 5px;
+				border: \#333 solid 1px;
+				font-weight: 700;
+			}
+			.cashReconciliation .cashReconciliation-content .firstTable tbody tr td{
+				padding: 5px;
+				
+			}
+			.cashReconciliation .cashReconciliation-content .secondTable{
+				width: 100%;
+				float: left;
+				padding-bottom: 8px;				
+				margin-bottom: 10px;
+				font-size: 14px;
+				border-collapse: collapse;
+			}
+			.cashReconciliation .cashReconciliation-content .secondTable tr td{
+				padding: 5px;
+			}
+			.cashReconciliation .cashReconciliation-content .thirdTable{
+				width: 100%;
+				float: left;
+				margin-top: 8px;				
+				margin-bottom: 5px;
+				font-size: 14px;
+				border-collapse: collapse;
+			}
+			.cashReconciliation .cashReconciliation-content .thirdTable tr td{
+				padding: 3px;
+			}
+	</style>
+	<div class="inv1" style="width: 100%; background-color: \#fff!important; position: relative; overflow: hidden;padding-top: 40px;page-break-after: always;">
+    	<div class="cashReconciliation">
+			<div class="cashReconciliation-header">
+				<h2>Cash Reconciliation</h2>
+				<p>
+					As of: 
+					<span style=" margin-left: 30%;">
+						<input type="checkbox" name="" value="">  Cash Count Sheet 
+						<input type="checkbox" name="" value="">  <span style="background: \#9cc2e5">Surprise Check</span>
+					</span>
+				</p>
+			</div>
+			<div class="clear"></div>
+			<div class="cashReconciliation-content">
+				<table class="firstTable">
+					<thead>
+						<tr>
+							<th style="background: \#000;" rowspan="2"></th>
+							<th colspan="2">khmer reil</th>
+							<th colspan="2">us dollar</th>
+						</tr>
+						<tr>
+							<td>Note</td>
+							<td>Amount</td>
+							<td>Note</td>
+							<td>Amount</td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td style="width: 12%; border: \#333 1px solid; background: \#deeaf6; font-weight: 700;">1</td>
+							<td style="width: 22%; border: \#333 1px solid; background: \#9cc2e5;"></td>
+							<td style="width: 22%; border: \#333 1px solid; text-align: right;">55</td>
+							<td style="width: 22%; border: \#333 1px solid; "></td>
+							<td style="width: 22%; border: \#333 1px solid; text-align: right;">55</td>
+						</tr>
+						<tr>
+							<td style="border-left: \#333 1px solid; background: \#deeaf6; font-weight: 700;">2</td>
+							<td style="border: \#333 1px solid; background: \#9cc2e5;" rowspan="4"></td>
+							<td style="border: \#333 1px solid; text-align: right;">55</td>
+							<td style="border: \#333 1px solid;"></td>
+							<td style="border: \#333 1px solid; text-align: right;">55</td>
+						</tr>
+						<tr>
+							<td style="border-left: \#333 1px solid; background: \#deeaf6; font-weight: 700;">5</td>
+							<td style="border: \#333 1px solid; text-align: right;">55</td>
+							<td style="border: \#333 1px solid;"></td>
+							<td style="border: \#333 1px solid; text-align: right;">55</td>
+						</tr>
+						<tr>
+							<td style="border-left: \#333 1px solid; background: \#deeaf6; font-weight: 700;">10</td>
+							<td style="border: \#333 1px solid; text-align: right;">55</td>
+							<td style="border: \#333 1px solid;"></td>
+							<td style="border: \#333 1px solid; text-align: right;">55</td>
+						</tr>
+						<tr>
+							<td style="border-left: \#333 1px solid; background: \#deeaf6; font-weight: 700;">20</td>
+							<td style="border: \#333 1px solid; text-align: right;">55</td>
+							<td style="border: \#333 1px solid;"></td>
+							<td style="border: \#333 1px solid; text-align: right;">55</td>
+						</tr>
+						<tr>
+							<td style="border-left: \#333 1px solid; border-top: 1px \#333 solid; background: \#deeaf6; font-weight: 700;">50</td>
+							<td style="border: \#333 1px solid; background: #9cc2e5;"></td>
+							<td style="border: \#333 1px solid; text-align: right;">55</td>
+							<td style="border: \#333 1px solid;"></td>
+							<td style="border: \#333 1px solid; text-align: right;">55</td>
+						</tr>
+						<tr>
+							<td style="border-left: \#333 1px solid; background: #deeaf6; font-weight: 700;">100</td>
+							<td style="border: \#333 1px solid;"></td>
+							<td style="border: \#333 1px solid; text-align: right;">55</td>
+							<td style="border: \#333 1px solid;"></td>
+							<td style="border: \#333 1px solid; text-align: right;">55</td>
+						</tr>
+						<tr>
+							<td style="border-left: \#333 1px solid; border-top: 1px \#333 solid; background: \#deeaf6; font-weight: 700;">500</td>
+							<td style="border: \#333 1px solid;"></td>
+							<td style="border: \#333 1px solid; text-align: right;">55</td>
+							<td style="border: \#333 1px solid; background: \#9cc2e5;" rowspan="2"></td>
+							<td style="border: \#333 1px solid; text-align: right;">55</td>
+						</tr>
+						<tr>
+							<td style="border-left: \#333 1px solid; background: \#deeaf6; font-weight: 700;">1,000</td>
+							<td style="border: \#333 1px solid;"></td>
+							<td style="border: \#333 1px solid; text-align: right;">55</td>
+							<td style="border: \#333 1px solid; text-align: right;">55</td>
+						</tr>
+						<tr>
+							<td style="border-left: \#333 1px solid; border-top: 1px \#333 solid; background: \#deeaf6; font-weight: 700;">2,000</td>
+							<td style="border: \#333 1px solid;"></td>
+							<td style="border: \#333 1px solid; text-align: right;">55</td>
+							<td style="border: \#333 1px solid; background: #9cc2e5;" rowspan="3"></td>
+							<td style="border: \#333 1px solid; text-align: right;">55</td>
+						</tr>
+						<tr>
+							<td style="border-left: \#333 1px solid; background: \#deeaf6; font-weight: 700;">5,000</td>
+							<td style="border: \#333 1px solid;"></td>
+							<td style="border: \#333 1px solid; text-align: right;">55</td>
+							<td style="border: \#333 1px solid; text-align: right;">55</td>
+						</tr>
+						<tr>
+							<td style="border-left: \#333 1px solid; background: \#deeaf6; font-weight: 700;">10,000</td>
+							<td style="border: \#333 1px solid; "></td>
+							<td style="border: \#333 1px solid; text-align: right;">55</td>
+							<td style="border: \#333 1px solid; text-align: right;">55</td>
+						</tr>
+						<tr>
+							<td style="border: \#333 1px solid; background: \#deeaf6; font-weight: 700;">20,000</td>
+							<td style="border: \#333 1px solid;"></td>
+							<td style="border: \#333 1px solid; text-align: right;">55</td>
+							<td style="border: \#333 1px solid; background: \#9cc2e5;"></td>
+							<td style="border: \#333 1px solid; text-align: right;">55</td>
+						</tr>
+						<tr>
+							<td style="border-left: \#333 1px solid; border-top: 1px \#333 solid; background: \#deeaf6; font-weight: 700;">50,000</td>
+							<td style="border: \#333 1px solid;"></td>
+							<td style="border: \#333 1px solid; text-align: right;">55</td>
+							<td style="border: \#333 1px solid; background: \#9cc2e5;" rowspan="2"></td>
+							<td style="border: \#333 1px solid; text-align: right;">55</td>
+						</tr>
+						<tr>
+							<td style="border-left: \#333 1px solid; background: \#deeaf6; font-weight: 700;">100,000</td>
+							<td style="border: \#333 1px solid;"></td>
+							<td style="border: \#333 1px solid; text-align: right;">55</td>
+							<td style="border: \#333 1px solid; text-align: right;">55</td>
+						</tr>
+						<tr>
+							<td style="text-align: right; font-weight: 700; border: \#333 1px solid; background: \#deeaf6;" colspan="2">TOTAL</td>
+							<td style="background: \#9cc2e5; border: \#333 1px solid; text-align: right;">55</td>
+							<td style="border: \#333 1px solid;"></td>
+							<td style="background: \#9cc2e5; border: \#333 1px solid; text-align: right;">55</td>
+						</tr>
+						<tr>
+							<td style="text-align: right;" colspan="3">Exchange rate on the day of:</td>
+						</tr>
+					</tbody>
+				</table>
+				
+				<div style="width: 98%; float: left; border: \#333 solid 1px; padding: 10px;">
+					<table class="secondTable">
+						<tr>
+							<td style="width: 16%;">Count By:</td>
+							<td style="width: 20%; border-bottom: 1px solid \#333;">dfdsg</td>
+							<td style="width: 6%;">Position:</td>
+							<td style="width: 20%; border-bottom: 1px solid \#333;">dfdsg</td>
+							<td style="width: 6%;">Date:</td>
+							<td style="width: 20%; border-bottom: 1px solid \#333;">dfdsg</td>
+						</tr>
+						<tr>
+							<td>Witnessed By:</td>
+							<td style="border-bottom: 1px solid \#333;">dfdsg</td>
+							<td>Position:</td>
+							<td style="border-bottom: 1px solid \#333;">dfdsg</td>
+							<td>Date:</td>
+							<td style="border-bottom: 1px solid \#333;">dfdsg</td>
+						</tr>
+					</table>
+				</div>
 
+				<table class="thirdTable">
+					<tr>
+						<td style="border-bottom: 1px solid \#333; font-weight: 700; padding-left: 10px">Opening Cash on Hand Balance </td>
+					</tr>
+					<tr>
+						<td style="border-bottom: 1px solid \#333; padding-left: 10px">
+							<b>Add:</b> Total Cash inflow up to counting date
+						</td>
+					</tr>
+					<tr>
+						<td style="border-bottom: 1px solid \#333; padding-left: 46px;">
+							Total Cash inflow up to counting date
+						</td>
+					</tr>
+					<tr>
+						<td style="border-bottom: 1px solid \#333; padding-left: 66px; background: \#deeaf6">
+							<i>Not recorded Voucher No:</i>
+						</td>
+					</tr>
+					<tr>
+						<td style="border-bottom: 1px solid \#333; padding-left: 10px">
+							<b>Less:</b> Total outflow up to counting date 
+						</td>
+					</tr>
+					<tr>
+						<td style="border-bottom: 1px solid \#333; padding-left: 46px;">
+							Total outflow up to counting date 
+						</td>
+					</tr>
+					<tr>
+						<td style="border-bottom: 1px solid \#333; padding-left: 66px; background: \#deeaf6">
+							<i>Not recorded Voucher No:</i>
+						</td>
+					</tr>
+					<tr>
+						<td style="border-bottom: 1px solid \#333; padding-left: 46px;">
+							Temporarily Floating Cash up to counting date
+						</td>
+					</tr>
+					<tr>
+						<td style="border-bottom: 1px solid \#333; padding-left: 10px">
+							<b>Ending Cash Balance</b>
+						</td>
+					</tr>
+					<tr>
+						<td style="border-bottom: 1px solid \#333; padding-left: 10px">
+							Total Actual Cash Count
+						</td>
+					</tr>
+					<tr>
+						<td style="border-bottom: 1px solid \#333; padding-left: 10px">
+							Differences
+						</td>
+					</tr>
+					<tr>
+						<td style="padding-left: 10px">
+							<b>Explanation of differences (please provide references if any)</b>
+						</td>
+					</tr>
+				</table>
 
+				<div style="width: 100%; float: left; border: \#333 solid 1px; height: 50px">
+				</div>
+
+				<div style="width: 98%; float: left; border: \#333 solid 1px; padding: 10px; margin-top: 10px;">
+					<table class="secondTable">
+						<tr>
+							<td style="width: 18%;">Reconciled By:</td>
+							<td style="width: 20%; border-bottom: 1px solid \#333;">dfdsg</td>
+							<td style="width: 6%;">Position:</td>
+							<td style="width: 20%; border-bottom: 1px solid \#333;">dfdsg</td>
+							<td style="width: 6%;">Date:</td>
+							<td style="width: 20%; border-bottom: 1px solid \#333;">dfdsg</td>
+						</tr>
+						<tr>
+							<td>Checked By:</td>
+							<td style="border-bottom: 1px solid \#333;">dfdsg</td>
+							<td>Position:</td>
+							<td style="border-bottom: 1px solid \#333;">dfdsg</td>
+							<td>Date:</td>
+							<td style="border-bottom: 1px solid \#333;">dfdsg</td>
+						</tr>
+						<tr>
+							<td>Approved By:</td>
+							<td style="border-bottom: 1px solid \#333;">dfdsg</td>
+							<td>Position:</td>
+							<td style="border-bottom: 1px solid \#333;">dfdsg</td>
+							<td>Date:</td>
+							<td style="border-bottom: 1px solid \#333;">dfdsg</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+    </div>
+</script>
 <!-- ***************************
 *	Template Blog         	  *
 **************************** -->

@@ -1329,14 +1329,8 @@ class UtibillReports extends REST_Controller {
 		$obj->where("is_recurring <>", 1);
 		$obj->where("deleted <>", 1);
 		$obj->order_by("issued_date", "asc");
-		// $obj->get_iterated();
-		if($page && $limit){
-			$obj->get_paged_iterated($page, $limit);
-			$data["count"] = $obj->paged->total_rows;
-		}else{
-			$obj->get_iterated();
-			$data["count"] = $obj->result_count();
-		}
+		$obj->get_iterated();
+
 		
 		if($obj->exists()){
 			$objList = [];
@@ -1405,6 +1399,7 @@ class UtibillReports extends REST_Controller {
 		$data["results"] = [];
 		$data["count"] = 0;
 		$total = 0;
+		$totalCustomer = 0;
 
 		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
@@ -1474,12 +1469,14 @@ class UtibillReports extends REST_Controller {
 					);
 				}
 				$total += $amount;
+				$totalCustomer +=1;
 			}
 
 			foreach ($objList as $value) {
 				$data["results"][] = $value;
 			}
 			$data['total'] = $total;
+			$data['totalCustomer'] = $totalCustomer;
 			$data["count"] = count($data["results"]);
 		}
 
