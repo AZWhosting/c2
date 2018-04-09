@@ -1525,6 +1525,7 @@ class UtibillReports extends REST_Controller {
 
 		$obj->include_related("contact", array("abbr", "number", "name"));
 		$obj->include_related("location", "name");
+		$obj->include_related("user", "name");
 		$obj->where("type", "Cash_Receipt");
 		$obj->where("is_recurring <>", 1);
 		$obj->where("deleted <>", 1);
@@ -1536,12 +1537,12 @@ class UtibillReports extends REST_Controller {
 			foreach ($obj as $value) {
 				//Reference
 				$ref = $value->reference->select("type, number, issued_date, amount, deposit, rate")->get();				
-				$refAmount = (floatval($ref->amount) - floatval($ref->deposit)) / floatval($ref->rate);
+				$refAmount = floatval($ref->amount) - floatval($ref->deposit);
 
 				$amount = (floatval($value->amount) - floatval($value->deposit)) / floatval($value->rate);
 
-				if(isset($objList[$value->employee_id])){
-					$objList[$value->employee_id]["line"][] = array(
+				if(isset($objList[$value->user_id])){
+					$objList[$value->user_id]["line"][] = array(
 						"id" 					=> $value->id,
 						"name" 					=> $value->contact_abbr.$value->contact_number." ".$value->contact_name,
 						"number" 				=> $value->number,
@@ -1551,9 +1552,9 @@ class UtibillReports extends REST_Controller {
 						"amount" 				=> $amount
 					);
 				}else{
-					$objList[$value->employee_id]["id"] 		= $value->employee_id;
-					$objList[$value->employee_id]["payment"] 	= $value->employee_id;
-					$objList[$value->employee_id]["line"][] 	= array(
+					$objList[$value->user_id]["id"] 		= $value->user_id;
+					$objList[$value->user_id]["payment"] 	= $value->user_name;
+					$objList[$value->user_id]["line"][] 	= array(
 						"id" 					=> $value->id,
 						"type" 					=> $value->type,
 						"name" 					=> $value->contact_abbr.$value->contact_number." ".$value->contact_name,

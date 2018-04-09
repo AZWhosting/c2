@@ -11377,6 +11377,7 @@
                         items: []
                     });
                     $("#loadING").css("display", "none");
+                    self.setReceive();
                 }
             });
         },
@@ -12036,8 +12037,13 @@
                 }
             }).then(function(e) {
                 var view = self.receiveDS.view();
-                self.set("numCustomer", view[0].total_contact);
-                self.set("paymentReceiptToday", kendo.toString(view[0].total_amount,banhji.locale == "km-KH" ? "c0" : "c", banhji.locale));
+                if(view.length > 0){
+                    self.set("numCustomer", view[0].total_contact);
+                    self.set("paymentReceiptToday", kendo.toString(view[0].total_amount,banhji.locale == "km-KH" ? "c0" : "c", banhji.locale));
+                }else{
+                    self.set("numCustomer", 0);
+                    self.set("paymentReceiptToday", 0);
+                }
             });
         },
         setDefaultReceiptCurrency: function(firstReceipt) {
