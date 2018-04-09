@@ -5973,6 +5973,7 @@
                 });
             }
             var self = this;
+            var that = this;
             this.actualCountDS.splice(0, this.actualCountDS.length);
             this.actualDS.splice(0, this.actualDS.length);
             this.receiveNoChangeAR.splice(0, this.receiveNoChangeAR.length);
@@ -5981,7 +5982,8 @@
                 this.set("noSession", false);
                 this.set("sessionID", id);
                 this.startAmountDS.query({
-                    filter: {field: "id", value: id}
+                    filter: {field: "id", value: id},
+                    pageSize: 1
                 }).then(function(e){
                     var view = self.startAmountDS.view();
                     var tmpActual = [];
@@ -6004,10 +6006,22 @@
                         //Get not yet change
                         if(view[0].note_receive.length > 0){
                             $.each(view[0].note_receive, function(i,v){
-                                self.receiveNoChangeAR.push({
-                                    currency: v.currency,
-                                    amount: v.amount
-                                });
+                                // if(self.receiveNoChangeAR.length > 0){
+                                //     $.each(self.receiveNoChangeAR, function(x,y){
+                                //         console.log(y.amount + "B" );
+                                //         if(v.currency == y.currency){
+                                //             console.log(y.amount + "c" );
+                                //             var o = that.receiveNoChangeAR[x].amount;
+                                //             that.receiveNoChangeAR[x].set("amount", o + v.amount);
+                                //         }
+                                //     });
+                                // }else{
+                                    self.receiveNoChangeAR.push({
+                                        currency: v.currency,
+                                        amount: v.amount
+                                    });
+                                //     console.log(v.amount + "A");
+                                // }
                                 if(self.actualCountDS.length > 0){
                                     $.each(self.actualCountDS, function(j,k){
                                         if(v.currency == k.currency){
@@ -6201,13 +6215,14 @@
             });
         },
         cancel: function() {
-            this.startAR = [];
-            this.receiveNoChangeAR = [];
-            this.changeAR = [];
-            this.receiveAR = [];
+            this.startAR.splice(0, this.startAR.length);
+            this.receiveNoChangeAR.splice(0, this.receiveNoChangeAR.length);
+            this.changeAR.splice(0, this.changeAR.length);
+            this.receiveAR.splice(0, this.receiveAR.length);
             this.noteDS.data([]);
             $("#loadING").css("display", "none");
             banhji.router.navigate("/receipt");
+            this.sessionDS.query({});
         },
         addRow              : function(){
             this.noteDS.add({
@@ -8409,11 +8424,6 @@
                 }).then(function(e){
                     var v = self.dataSource.view();
                     if(v.length > 0){
-                        var TempForm = $("#invoiceform").html();
-                        $("#invoicecontent").kendoListView({
-                            dataSource: v[0],
-                            template: kendo.template(TempForm)
-                        });
                     }else{
                         banhji.router.navigate('/reconcile');
                     }
@@ -8504,9 +8514,8 @@
             },1000);
         },
         cancel              : function(){
-            this.dataSource.splice(0, this.dataSource.length);
-            banhji.router.navigate('/');
-            banhji.Index.workDS.query({});
+            this.dataSource.data([]);
+            banhji.router.navigate('/reconcile');
         }
     });
     //End Customer

@@ -249,6 +249,7 @@ class UtibillReports extends REST_Controller {
 		$sort 	 	= $this->get("sort");
 		$data["results"] = [];
 		$data["count"] = 0;
+		$totalUsage = 0;
 
 		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
@@ -302,7 +303,8 @@ class UtibillReports extends REST_Controller {
 			foreach ($obj as $value) {	
 				$usage = $value->winvoice_line_meter_record_usage;
 				$price = $value->winvoice_line_amount;
-				$amount = $usage*$price;				
+				$amount = $usage*$price;	
+				$totalUsage += $usage;			
 				
 				$amount = $usage * $price;
 				if(isset($objList[$value->contact_id])){
@@ -322,6 +324,7 @@ class UtibillReports extends REST_Controller {
 			foreach ($objList as $value) {
 				$data["results"][] = $value;
 			}
+			$data['totalUsage'] = $totalUsage;
 			// $data["count"] = count($data["results"]);
 		}
 
@@ -336,6 +339,7 @@ class UtibillReports extends REST_Controller {
 		$data["results"] = [];
 		$data["count"] = 0;
 		$total = 0;
+		$totalUser = 0;
 
 		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
@@ -372,16 +376,7 @@ class UtibillReports extends REST_Controller {
 		$obj->where("is_recurring <>", 1);
 		$obj->where("deleted <>", 1);
 		$obj->order_by("issued_date", "asc");
-		// $obj->get_iterated();
-		
-		//Results
-		if($page && $limit){
-			$obj->get_paged_iterated($page, $limit);
-			$data["count"] = $obj->paged->total_rows;
-		}else{
-			$obj->get_iterated();
-			$data["count"] = $obj->result_count();
-		}
+		$obj->get_iterated();
 
 		if($obj->exists()){
 			$objList = [];
@@ -392,7 +387,6 @@ class UtibillReports extends REST_Controller {
 				$usage = $value->winvoice_line_meter_record_usage;
 				$price = $value->winvoice_line_amount;
 				$amount = $usage*$price;
-				
 				if(isset($objList[$value->contact_id])){
 					$objList[$value->contact_id]["line"][] = array(
 						"id" 				=> $value->id,
@@ -417,12 +411,14 @@ class UtibillReports extends REST_Controller {
 					);
 				}
 				$total +=  $amount;
+				$totalUser += 1;
 			}
 
 			foreach ($objList as $value) {
 				$data["results"][] = $value;
 			}
 			$data['total'] = $total;
+			$data['totalUser'] = $totalUser;
 			// $data["count"] = count($data["results"]);
 		}
 
@@ -1655,6 +1651,84 @@ class UtibillReports extends REST_Controller {
 		$this->response($data, 200);
 	}
 
+	//Cash Receipt Daily
+	function daily_cash_employee_get() {
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 10000;	
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
+		$data["count"] = 0;
+
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
+			}
+		}
+		
+		//Filter		
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value['operator'])){
+	    			$obj->{$value['operator']}($value['field'], $value['value']);	    		
+	    		} else {
+	    			$obj->where($value['field'], $value['value']);
+	    		}
+			}
+		}
+
+		//Results
+		$obj->include_related("contact", array("abbr", "number", "name"));
+		$obj->include_related("location", "name");
+		$obj->where("type", "Cash_Receipt");
+		$obj->where("is_recurring <>", 1);
+		$obj->where("deleted <>", 1);
+		$obj->order_by("issued_date", "asc");
+		// $obj->get_iterated();
+		//Results
+		if($page && $limit){
+			$obj->get_paged_iterated($page, $limit);
+			$data["count"] = $obj->paged->total_rows;
+		}else{
+			$obj->get_iterated();
+			$data["count"] = $obj->result_count();
+		}
+
+		if($obj->exists()){
+			$objList = [];
+			
+			foreach ($obj as $value) {	
+				$user = new User();
+				$user->where("id", $value->user_id)->get();				
+				$amount = floatval($value->amount) / floatval($value->rate);
+				if(isset($objList[$value->user_id])){
+					$objList[$value->user_id]["customer"] 		+= 1;
+					$objList[$value->user_id]["amount"] 		+= $amount;
+				}else{
+					$objList[$value->user_id]["id"] 			= $value->user_id;
+					$objList[$value->user_id]["name"] 			= $user->last_name." ".$user->first_name;
+					$objList[$value->user_id]["customer"]		= 1;
+					$objList[$value->user_id]["amount"]			= $amount;
+				}
+			}
+
+			foreach ($objList as $value) {
+				$data["results"][] = $value;
+			}
+			// $data["count"] = count($data["results"]);
+		}
+
+		//Response Data
+		$this->response($data, 200);
+	}
+
 	//Connnection Service Revenue
 	function connect_service_revenue_get() {
 		$filter     = $this->get("filter");
@@ -1841,7 +1915,6 @@ class UtibillReports extends REST_Controller {
 		//Response Data
 		$this->response($data, 200);
 	}
-
 
 	//Disconnection List
 	function disconnection_list_get() {

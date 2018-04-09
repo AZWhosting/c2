@@ -1234,6 +1234,7 @@ var	en_US = {
 	"summmary_report_description": "Summarizes total sales for the company by each month so you can see which ones generate the most revenue for you.",
 	"fine_collection_description": "list individual fine by date for each customer with a period of time.",
 	"cash_receipt_description": "Lists of cash receipt for the select period of time, group by method of payment.",
+	"cash_receipt_user_summary_description": "Lists of cash receipt for the select period of time, group by employee.",
 	"cash_receipt_description_summary": "Lists of cash receipt by sources for the select period of time, group by location.",
 	"inactive_customer": "Inactive List",
 	"cash_receipt_description_by_employee": "Lists of cash receipt for the select period of time, group by method of employee.",
@@ -1306,6 +1307,7 @@ var	en_US = {
 	"summary_and_detail_cash": "Summary and detail cash receipt reports grouped by sources/ methods of receipts",
 	"cash_receipt_detail": "Cash Receipt Detail",
 	"cash_receipt_summary": "Cash Receipt Summary",
+	"cash_receipt_summary_user": "Cash Receipt Summary by Employee",
 	"cash_receipt_by_sources_detail": "Cash Receipt by Sources Detail",
 	"meter_report_map": "Report Loccation",
 

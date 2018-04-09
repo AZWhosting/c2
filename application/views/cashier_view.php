@@ -1289,8 +1289,17 @@
 <!--Print-->
 <script id="Print" type="text/x-kendo-template">
     <div class="container">
-		<div class="row customerCenter" style="background: #fff; padding-top: 15px; border-radius: 10px; ">
+		<div class="row customerCenter" style=" padding-top: 15px; border-radius: 10px; ">
 			<div class="span12">
+				<style type="text/css">
+					body {
+						overflow-x: hidden!important;
+						background: #F4F5F8!important;
+					}
+					#invoicecontent{
+						padding-bottom: 40px;
+					}
+				</style>
 				<div class="example">
                 	<div style="overflow: hidden;position: relative;height: 50px;">
 	                    <span id="savePrint" class="btn btn-icon btn-primary glyphicons print" data-bind="click: printGrid" style="width: 85px !important; margin-bottom: 0; position: absolute; left: 45%; "><i></i><span data-bind="text: lang.lang.print" style="color: #fff;"></span></span>
@@ -1299,7 +1308,12 @@
 	                            data-bind="click: cancel"><i></i></span>    
 	                    </div>
 	                </div>
-                    <div id="invoicecontent" style="width: 80%!important; margin: 0 auto; border: 1px solid #ccc;"></div>
+                    <div id="invoicecontent"
+                    	data-role="listview"
+                 		data-template="invoiceform"
+                 		data-bind="source: dataSource"
+                     	style="width: 100%!important; margin: 0 auto; border: 1px solid #ccc;"> 		
+                    </div>
                     <div class="box-generic bg-action-button" align="right" style="background-color: #203864; margin-top: 15px; margin-bottom: 11px;">
                         <span id="notification"></span>
                         <span class="btn btn-icon btn-btn glyphicons remove_2" data-bind="click: cancel" style="width: 90px !important; text-align: right;"><i></i> <span data-bind="text: lang.lang.cancel" style="color: #fff;"> </span></span>
@@ -1311,7 +1325,7 @@
         </div>
     </div>  
 </script>
-<script id="invoiceform" type="text/x-kendo-tmpl">
+<script id="invoiceform" type="text/x-kendo-template">
 	<style>
 		body {
 		    color: \#333;
@@ -1327,7 +1341,7 @@
 			clear: both;
 		}
 		.cashReconciliation{
-				width: 45%;
+				width: 85%;
 				margin: 50px auto 0;
 				height: 250px;		
 			}
@@ -1460,13 +1474,13 @@
 						</tr>
 						<tr>
 							<td style="border-left: \#333 1px solid; border-top: 1px \#333 solid; background: \#deeaf6; font-weight: 700;">50</td>
-							<td style="border: \#333 1px solid; background: #9cc2e5;"></td>
+							<td style="border: \#333 1px solid; background: \#9cc2e5;"></td>
 							<td style="border: \#333 1px solid; text-align: right;">55</td>
 							<td style="border: \#333 1px solid;"></td>
 							<td style="border: \#333 1px solid; text-align: right;">55</td>
 						</tr>
 						<tr>
-							<td style="border-left: \#333 1px solid; background: #deeaf6; font-weight: 700;">100</td>
+							<td style="border-left: \#333 1px solid; background: \#deeaf6; font-weight: 700;">100</td>
 							<td style="border: \#333 1px solid;"></td>
 							<td style="border: \#333 1px solid; text-align: right;">55</td>
 							<td style="border: \#333 1px solid;"></td>
@@ -1489,7 +1503,7 @@
 							<td style="border-left: \#333 1px solid; border-top: 1px \#333 solid; background: \#deeaf6; font-weight: 700;">2,000</td>
 							<td style="border: \#333 1px solid;"></td>
 							<td style="border: \#333 1px solid; text-align: right;">55</td>
-							<td style="border: \#333 1px solid; background: #9cc2e5;" rowspan="3"></td>
+							<td style="border: \#333 1px solid; background: \#9cc2e5;" rowspan="3"></td>
 							<td style="border: \#333 1px solid; text-align: right;">55</td>
 						</tr>
 						<tr>

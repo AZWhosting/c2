@@ -11562,9 +11562,6 @@
 													<td >
 														<h3><a href="#/daily_cash" data-bind="text: lang.lang.cash_receipt_summary">Cash Receipt Summary </a></h3>								
 													</td>
-													<td>
-
-													</td>
 												</tr>
 												<tr>
 													<td >
@@ -11583,7 +11580,7 @@
 														<h3><a href="#/cash_receipt_user" data-bind="text: lang.lang.cash_receipt_by_employee">Cash Receipt By Employee</a></h3>
 													</td>					
 													<td>
-														<h3><a href="#/cash_receipt_source_detail" data-bind="text: lang.lang.cash_receipt_by_sources_detail">Cash Receipt By Sources Detail</a></h3>	
+														<h3><a href="#/cash_receipt_user_summary" data-bind="text: lang.lang.cash_receipt_summary_user">Cash Receipt Summary by Employee</a></h3>	
 													</td>
 												</tr>
 												<tr>
@@ -11592,11 +11589,27 @@
 														Lists of cash receipt for the select period of time, group by method of employee.
 														</p>
 													</td>
+													<td style="vertical-align: top;" data-bind="text: lang.lang.cash_receipt_user_summary_description">
+														<p>
+															Lists of cash receipt for the select period of time, group by employee
+														</p>
+													</td>
+												</tr>
+												<tr>
+													<td style="width: 50%">
+														<h3><a href="#/cash_receipt_source_detail" data-bind="text: lang.lang.cash_receipt_by_sources_detail">Cash Receipt By Sources Detail</a></h3>
+													</td>					
+													<td>
+															
+													</td>
+												</tr>
+												<tr>
 													<td style="vertical-align: top;" data-bind="text: lang.lang.cash_receipt_sources_description">
 														<p>
 															Lists of cash receipt by sources for the select period of time, group by method of payment.
 														</p>
 													</td>
+													<td></td>
 												</tr>
 											</table>
 										</div>
@@ -13453,7 +13466,13 @@
 										<span data-bind="text: dataSource.total"></span>
 									</div>
 								</div>
-								<div class="col-xs-12 col-sm-9">
+								<div class="col-xs-12 col-sm-3">
+									<div class="total-sale">
+										<p data-bind="text: lang.lang.total_usage">Total Usage</p>
+										<span data-bind="text: totalUsage"></span>
+									</div>
+								</div>
+								<div class="col-xs-12 col-sm-6">
 									<div class="total-sale">
 										<p data-bind="text: lang.lang.total_sale">Total Sale</p>
 										<span data-bind="text: totalAmount"></sapn>
@@ -13822,7 +13841,7 @@
 								<div class="col-xs-12 col-sm-3">
 									<div class="total-sale">
 										<p data-bind="text: lang.lang.number_of_customer">Number of Customers</p>
-										<span data-bind="text: dataSource.total"></span>
+										<span data-bind="text: totalUser"></span>
 									</div>
 
 								</div>
@@ -13851,9 +13870,6 @@
 										data-bind="source: dataSource">
 								</tbody>
 							</table>
-							<div id="pager" class="k-pager-wrap"						    	
-					             data-role="pager" data-bind="source: dataSource"
-					             data-page-size= "true"></div>
 						</div>
 					</div>
 				</div>
@@ -16672,6 +16688,185 @@
     	<td colspan="5">&nbsp;</td>
     </tr>
 </script>
+<script id="cashReceiptbyuserSummary" type="text/x-kendo-template">
+	<div class="container">
+		<div class="row-fluid">
+			<div id="waterreport" class="background">
+				<div class="row-fluid">
+					<div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 100%;margin-top: -15px;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
+						<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
+					</div>
+					<div id="example" class="k-content">
+						<div class="hidden-print pull-right" style="margin-bottom: 15px;">
+				    		<span class="pull-right glyphicons no-js remove_2"
+						onclick="javascript:window.history.back()"><i></i></span>
+						</div>
+						<div class="clear"></div>
+
+					    <!-- Tabs -->
+						<div class="relativeWrap" data-toggle="source-code">
+							<div class="widget widget-tabs widget-tabs-gray report-tab">							
+								<!-- Tabs Heading -->
+								<div class="widget-head">
+									<ul>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date">Date</span></a></li>	
+										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.filter">Filter</span></a></li>
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab" ><i></i><span data-bind="text: lang.lang.print_export">Print/Export</span></a></li>
+									</ul>
+								</div>
+								<!-- // Tabs Heading END -->								
+								<div class="widget-body">
+									<div class="tab-content">
+								        <!-- //Date -->
+								        <div class="tab-pane active" id="tab-1">									        	
+											<div class="row">
+												<div class="col-xs-12 col-sm-2">
+													<input data-role="dropdownlist"
+														   class="sorter"                  
+												           data-value-primitive="true"
+												           data-text-field="text"
+												           data-value-field="value"
+												           data-bind="value: sorter,
+												                      source: sortList,                              
+												                      events: { change: sorterChanges }" style="width: 100%" />
+												</div>
+												<div class="col-xs-12 col-sm-2">  
+													<input data-role="datepicker"
+														   class="sdate"
+														   data-format="dd-MM-yyyy"
+												           data-bind="value: sdate,
+												           			  max: edate"
+												           placeholder="From ..." style="width: 100%" >
+												</div>
+												<div class="col-xs-12 col-sm-2">
+												    <input data-role="datepicker"
+												    	   class="edate"
+												    	   data-format="dd-MM-yyyy"
+												           data-bind="value: edate,
+												                      min: sdate"
+												           placeholder="To ..." style="width: 100%" >
+												</div>
+												<div class="col-xs-12 col-sm-1">
+												  	<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+												</div>
+											</div>
+							        	</div>
+
+								    	<!-- Filter -->
+								        <div class="tab-pane" id="tab-2">
+											<div class="row">
+												<div class="col-xs-12 col-sm-3">
+													<span data-bind="text: lang.lang.license">Licenses</span>
+													<input 
+														data-role="dropdownlist" 
+														data-option-label="License ..." 
+														data-auto-bind="false" 
+														data-value-primitive="true" 
+														data-text-field="name" 
+														data-value-field="id" 
+														data-bind="
+															value: licenseSelect,
+																source: licenseDS,
+																events: {change: licenseChange}" style="width: 100%">
+												</div>
+												<div class="col-xs-12 col-sm-3">
+													<span data-bind="text: lang.lang.location">Locations</span>
+														<input 
+															data-role="dropdownlist" 
+															data-option-label="Location ..." 
+															data-auto-bind="false" 
+															data-value-primitive="false" 
+															data-text-field="name" 
+															data-value-field="id" 
+															data-bind="
+																value: blocSelect,
+																enabled: haveBloc,
+																source: blocDS" style="width: 100%">
+												</div>
+												<div class="col-xs-12 col-sm-3">
+													<span data-bind="text: lang.lang.customers"></span>
+													<select data-role="multiselect"
+														   data-value-primitive="true"
+														   data-header-template="customer-header-tmpl"
+														   data-item-template="contact-list-tmpl"
+														   data-value-field="id"
+														   data-text-field="name"
+														   data-bind="value: obj.contactIds, 
+														   			source: contactDS"
+														   data-placeholder="Select Customer.."
+														   style="width: 100%" /></select>
+												</div>
+												<div class="col-xs-12 col-sm-1">											
+										  			<button style="margin-top: 20px;" type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+												</div>														
+											</div>		
+							        	</div>
+							        	 <!-- PRINT/EXPORT  -->
+								        <div class="tab-pane report" id="tab-3">								        	
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" ><i></i> Print</span>
+											<span id="excel" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" >
+												<i class="fa fa-file-excel-o"></i>
+												Export to Excel
+											</span>
+							        	</div>	
+								    </div>
+								</div>
+							</div>
+						</div>
+						<!-- // Tabs END -->
+
+						<div id="invFormContent">
+							<div class="block-title">
+								<h3 data-bind="text: company.name"></h3>
+								<h2 data-bind="text: lang.lang.cash_receipt_summary_user">Cash Receipt Summary by Employee</h2>
+								<p data-bind="text: displayDate"></p>
+							</div>
+							<div class="row">
+								<div class="col-xs-12 col-sm-3">
+									<div class="total-sale">
+										<p data-bind="text: lang.lang.number_of_customer">Number of Customer</p>
+										<span data-bind="text: dataSource.total"></span>
+									</div>
+								</div>
+								<div class="col-xs-12 col-sm-9">
+									<div class="total-sale">
+										<p data-bind="text: lang.lang.cash_receipt">Cash Receipt</p>
+										<span data-bind="text: totalAmount"></sapn>
+									</div>
+								</div>
+							</div>
+							<table style="margin-bottom: 0;" class="table table-bordered table-condensed table-striped table-primary table-vertical-center">
+								<thead>
+									<tr>
+										<th style="vertical-align: top;"><span data-bind="text: lang.lang.employee">Employee</span></th>
+										<th style="text-align: right; vertical-align: top;"><span data-bind="text: lang.lang.number_of_customer">Number of Customer</span></th>
+										<th style="text-align: right; vertical-align: top;"><span data-bind="text: lang.lang.amount">Amount</span></th>
+									</tr>
+								</thead>
+			            		<tbody  data-role="listview"
+			            				data-auto-bind="false"
+						                data-template="cashReceiptbyuserSummary-template"
+						                data-bind="source: dataSource" >
+						        </tbody>
+			            	</table>
+	<!-- 		            	<div id="pager" class="k-pager-wrap"						    	
+					             data-role="pager" data-bind="source: dataSource"
+					             data-page-size= "true"></div> -->
+						</div>
+			            </div>
+			        </span>
+				</div>
+			</div>
+		</div>
+	</div>	
+</script>
+<script id="cashReceiptbyuserSummary-template" type="text/x-kendo-template">
+	<tr>
+		<td>#=name#</td>
+		<td style="text-align: right;">#=customer#</td>
+		<td style="text-align: right;">#=kendo.toString(amount, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#</td>
+	</tr>
+</script>
 <script id="dailyCashReceipt" type="text/x-kendo-template">
 	<div class="container">
 		<div class="row-fluid">
@@ -16848,7 +17043,7 @@
 	<tr>
 		<td>#=name#</td>
 		<td style="text-align: right;">#=customer#</td>
-		<td style="text-align: right;">#=amount#</td>
+		<td style="text-align: right;">#=kendo.toString(amount, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#</td>
 	</tr>
 </script>
 <script id="importView" type="text/x-kendo-template">
