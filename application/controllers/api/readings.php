@@ -210,20 +210,20 @@ class Readings extends REST_Controller {
 				$winvoiceLine->deleted = 1;
 				$winvoiceLine->save();
 
-				$obj->meter_id 				= $value->meter_id;
-				$obj->month_of 				= isset($value->month_of)			? date('Y-m-d', strtotime($value->month_of)): date('Y-m-d');
-				$obj->previous 				= isset($value->previous)			? $value->previous: "";
+				// $obj->meter_id 				= $value->meter_id;
+				// $obj->month_of 				= isset($value->month_of)			? date('Y-m-d', strtotime($value->month_of)): date('Y-m-d');
+				// $obj->previous 				= isset($value->previous)			? $value->previous: "";
 				$obj->current 				= isset($value->current)			? $value->current: "";
-				$obj->from_date 			= isset($value->previous_reading_date) ? date('Y-m-d', strtotime($value->previous_reading_date)) : "";
-				$obj->to_date 				= isset($value->month_of)			? date('Y-m-d', strtotime($value->month_of)):date('Y-m-d');
+				// $obj->from_date 			= isset($value->previous_reading_date) ? date('Y-m-d', strtotime($value->previous_reading_date)) : "";
+				// $obj->to_date 				= isset($value->month_of)			? date('Y-m-d', strtotime($value->month_of)):date('Y-m-d');
 				$obj->invoiced 				= 0;
-				$obj->usage = $obj->current - $obj->previous;
+				$obj->usage = intval($obj->current) - intval($obj->previous);
 				if($obj->save()){		
 					$data["results"][] = array(
 						"id"			=> $obj->id,
 						"meter_id" 		=> $obj->meter_id,
 						"month_of"		=> $obj->month_of,
-						"meter_number" 	=> $obj->meter_number,
+						"meter_number" 	=> $value->meter_number,
 						"prev"			=> $obj->previous,
 						"current"		=> $obj->current,
 						"usage" 		=> $obj->usage,

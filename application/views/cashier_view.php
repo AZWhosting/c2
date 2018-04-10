@@ -1341,75 +1341,79 @@
 			clear: both;
 		}
 		.cashReconciliation{
-				width: 85%;
-				margin: 50px auto 0;
-				height: 250px;		
-			}
-			.cashReconciliation .cashReconciliation-header h2{
-				text-align: center;
-    			font-size: 30px;
-    			padding: 10px 45px;
-    			border: 1px solid \#333;	
-    			float: right;
-    			margin-bottom: 15px;
-    			clear: both;
-			}
-			.cashReconciliation .cashReconciliation-header p{
-    			font-size: 15px;
-    			margin-bottom: 10px;
-    			float: left;
-    			width: 100%
-			}
-			.cashReconciliation .cashReconciliation-content .firstTable{
-				width: 100%;
-				float: left;
-				padding-bottom: 8px;
-				font-size: 14px;
-				border-collapse: collapse;
-			}
-			.cashReconciliation .cashReconciliation-content .firstTable thead tr th{
-				text-transform: uppercase;
-				color: \#fff;
-				background: \#333;
-				text-align: center;
-				padding: 5px;
-				font-weight: 700;
-				border: \#333 1px solid;
-			}
-			.cashReconciliation .cashReconciliation-content .firstTable thead tr td{
-				background: \#deeaf6;
-				color: \#333;
-				text-align: center;
-				padding: 5px;
-				border: \#333 solid 1px;
-				font-weight: 700;
-			}
-			.cashReconciliation .cashReconciliation-content .firstTable tbody tr td{
-				padding: 5px;
-				
-			}
-			.cashReconciliation .cashReconciliation-content .secondTable{
-				width: 100%;
-				float: left;
-				padding-bottom: 8px;				
-				margin-bottom: 10px;
-				font-size: 14px;
-				border-collapse: collapse;
-			}
-			.cashReconciliation .cashReconciliation-content .secondTable tr td{
-				padding: 5px;
-			}
-			.cashReconciliation .cashReconciliation-content .thirdTable{
-				width: 100%;
-				float: left;
-				margin-top: 8px;				
-				margin-bottom: 5px;
-				font-size: 14px;
-				border-collapse: collapse;
-			}
-			.cashReconciliation .cashReconciliation-content .thirdTable tr td{
-				padding: 3px;
-			}
+			width: 85%;
+			margin: 50px auto 0;
+			height: 250px;		
+		}
+		.cashReconciliation .cashReconciliation-header h2{
+			text-align: center;
+			font-size: 30px;
+			padding: 10px 45px;
+			border: 1px solid \#333;	
+			float: right;
+			margin-bottom: 15px;
+			clear: both;
+		}
+		.cashReconciliation .cashReconciliation-header p{
+			font-size: 15px;
+			margin-bottom: 10px;
+			float: left;
+			width: 100%
+		}
+		.cashReconciliation .cashReconciliation-content .firstTable{
+			width: 100%;
+			float: left;
+			padding-bottom: 8px;
+			font-size: 14px;
+			border-collapse: collapse;
+		}
+		.cashReconciliation .cashReconciliation-content .firstTable thead tr th{
+			text-transform: uppercase;
+			color: \#fff;
+			background: \#333;
+			text-align: center;
+			padding: 5px;
+			font-weight: 700;
+			border: \#333 1px solid;
+		}
+		.cashReconciliation .cashReconciliation-content .firstTable thead tr td{
+			background: \#deeaf6;
+			color: \#333;
+			text-align: center;
+			padding: 5px;
+			border: \#333 solid 1px;
+			font-weight: 700;
+		}
+		.cashReconciliation .cashReconciliation-content .firstTable tbody tr td{
+			padding: 5px;
+			
+		}
+		.cashReconciliation .cashReconciliation-content .secondTable{
+			width: 100%;
+			float: left;
+			padding-bottom: 8px;
+			margin-bottom: 10px;
+			font-size: 14px;
+			border-collapse: collapse;
+		}
+		.cashReconciliation .cashReconciliation-content .secondTable tr td{
+			padding: 5px;
+			border: none;
+			text-align: left;
+		}
+		.cashReconciliation .cashReconciliation-content .thirdTable{
+			width: 100%;
+			float: left;
+			margin-top: 8px;
+			margin-bottom: 5px;
+			font-size: 14px;
+			border-collapse: collapse;
+		}
+		.cashReconciliation .cashReconciliation-content .thirdTable tr td{
+			padding: 3px;
+			text-align: left;
+			border: none;
+		}
 	</style>
 	<div class="inv1" style="width: 100%; background-color: \#fff!important; position: relative; overflow: hidden;padding-top: 40px;page-break-after: always;">
     	<div class="cashReconciliation">
@@ -1545,7 +1549,7 @@
 							<td style="background: \#9cc2e5; border: \#333 1px solid; text-align: right;">55</td>
 						</tr>
 						<tr>
-							<td style="text-align: right;" colspan="3">Exchange rate on the day of:</td>
+							<td style="text-align: right; border: none;" colspan="3">Exchange rate on the day of:</td>
 						</tr>
 					</tbody>
 				</table>
@@ -1553,7 +1557,7 @@
 				<div style="width: 98%; float: left; border: \#333 solid 1px; padding: 10px;">
 					<table class="secondTable">
 						<tr>
-							<td style="width: 16%;">Count By:</td>
+							<td style="width: 15%;">Count By:</td>
 							<td style="width: 20%; border-bottom: 1px solid \#333;">dfdsg</td>
 							<td style="width: 6%;">Position:</td>
 							<td style="width: 20%; border-bottom: 1px solid \#333;">dfdsg</td>
@@ -1638,7 +1642,7 @@
 				<div style="width: 98%; float: left; border: \#333 solid 1px; padding: 10px; margin-top: 10px;">
 					<table class="secondTable">
 						<tr>
-							<td style="width: 18%;">Reconciled By:</td>
+							<td style="width: 15%;">Reconciled By:</td>
 							<td style="width: 20%; border-bottom: 1px solid \#333;">dfdsg</td>
 							<td style="width: 6%;">Position:</td>
 							<td style="width: 20%; border-bottom: 1px solid \#333;">dfdsg</td>
@@ -3067,4 +3071,4 @@
 			</div>
 		</div>
 	</div>
-</script>
+</script> 

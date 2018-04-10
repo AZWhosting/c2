@@ -5596,6 +5596,7 @@
             }
         },
         pageLoad: function() {
+            this.set("havePassword", false);
             this.txnTemplateDS.filter({
                 field: "moduls",
                 value: "water_mg"
@@ -5646,6 +5647,17 @@
         tabletDS        : dataStore(apiUrl + "utibills/tablet"),
         readerDS        : dataStore(apiUrl + "utibills/reader"),
         readingDeviceDS : dataStore(apiUrl + "utibills/device"),
+        havePassword    : false,
+        addPassword     : function(){
+            if(this.get("settingPassword") == 'utibill168'){
+                this.set("havePassword", true);
+                this.set("settingPassword", "");
+            }else{
+                alert("Wrong Password");
+                this.set("settingPassword", "");
+                this.set("havePassword", false);
+            }
+        },
     });
     banhji.addLicense = kendo.observable({
         lang: langVM,
@@ -19112,13 +19124,7 @@
     banhji.accountReceivableList = kendo.observable({
         lang: langVM,
         dataSource: dataStore(apiUrl + "utibillReports/Reciveble_invoice"),
-        contactDS: new kendo.data.DataSource({
-            data: banhji.source.customerList,
-            sort: {
-                field: "number",
-                dir: "asc"
-            }
-        }),
+        contactDS: banhji.source.contactDS,
         licenseDS: dataStore(apiUrl + "branches"),
         blocDS: dataStore(apiUrl + "locations"),
         obj: {
@@ -21961,9 +21967,7 @@
         blocDS: dataStore(apiUrl + "locations"),
         sortList: banhji.source.sortList,
         obj: {
-            contactIds: [],
-            licenseID: 0,
-            locationID: []
+            contactIds: []
         },
         company: banhji.institute,
         displayDate: "",
@@ -22051,7 +22055,7 @@
                     contactIds.push(value);
                 });
                 para.push({
-                    field: "id",
+                    field: "user_id",
                     operator: "where_in",
                     value: contactIds
                 });

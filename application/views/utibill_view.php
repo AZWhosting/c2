@@ -451,7 +451,16 @@
 					<div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 100%;margin-top: -15px;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
 						<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
 					</div>
-					<div id="example" class="k-content">
+					<div id="example" data-bind="invisible: havePassword" class="k-content">
+						<input 
+							data-bind="value: settingPassword" 
+							type="password" 
+							placeholder="Abbr" 
+							style="height: 32px; padding: 5px; margin-right: 10px;" class="span3 k-textbox k-invalid" 
+						/>
+						<a class="btn-icon btn-primary glyphicons circle_plus cutype-icon" style="width: 80px; padding: 5px 7px 5px 35px !important; text-align: left;" data-bind="click: addPassword"><i></i><span data-bind="text: lang.lang.save">Add</span></a>
+					</div>
+					<div id="example" data-bind="visible: havePassword" class="k-content">
 						<h2 data-bind="text: lang.lang.settings">Setting</h2>
 						<div class="hidden-print pull-right">
 				    		<span class="glyphicons no-js remove_2" 
@@ -6585,10 +6594,11 @@
 			<div class="span6">
 				<span id="secondwnumber#= id#" style="margin-left: -14px; float: left;"></span><br />
 				<div class="span12">
-					<p>អតិថិជន​ #=contact.number#</p>
-					<p>#:contact.name#</p>
-					<p>#: contact.address #</p>
-					<p style="font-size: 10px;"><i>ថ្ងៃ​ចាប់​ផ្តើម​ទទួល​ប្រាក់ #=kendo.toString(new Date(bill_date), "dd-MMMM-yyyy", "km-KH")#</i></p>
+					<p style="font-size: 16px;margin-top: 15px;">អតិថិជន​ #=contact.number#</p>
+					<p style="font-size: 16px;">#:contact.name#</p>
+					<p style="font-size: 16px;">#: contact.address #</p>
+					<p style="font-size: 16px;">#: contact.phone #</p>
+					<p style="font-size: 14px;"><i>ថ្ងៃ​ចាប់​ផ្តើម​ទទួល​ប្រាក់ #=kendo.toString(new Date(bill_date), "dd-MMMM-yyyy", "km-KH")#</i></p>
 				</div>
 			</div>
 			<div class="span5">
@@ -6603,7 +6613,7 @@
 					</tr>
 					<tr>
 						<td style><p>តំបន់</p></td>
-						<td><p>#:meter.location[0].abbr# - #:meter.location[0].name# #:meter.box#</p></td>
+						<td><p>#:meter.location[0].name# #:meter.pole# #:meter.box#</p></td>
 					</tr>
 					<tr>
 						<td style><p>គិត​ចាប់​ពី​ថ្ងៃ​ទី</p></td>
@@ -6696,7 +6706,7 @@
 				</tr>
 				<tr>
 					<td colspan="2" class="greyy"  style="background: \\#ccc;#= banhji.InvoicePrint.formVisible#">ថ្ងៃផុតកំណត់ DUE DATE</td>
-					<td align="left">#=kendo.toString(new Date(due_date), "dd-MMMM-yyyy", "km-KH")#</td>
+					<td align="center" style="background: \#000!important; color: \#fff!important;font-weight: bold;">#=kendo.toString(new Date(due_date), "dd-MMMM-yyyy", "km-KH")#</td>
 				</tr>
 				<tr>
 					<td colspan="2" class="greyy" style="background: \\#ccc;#= banhji.InvoicePrint.formVisible#">ថ្ងៃបង់ប្រាក់ PAY DATE</td>
@@ -7019,10 +7029,11 @@
 			<div class="span6">
 				<span id="secondwnumber#= id#" style="margin-left: -14px; float: left;"></span><br />
 				<div class="span12">
-					<p>អតិថិជន​ #=contact.number#</p>
-					<p>#:contact.name#</p>
-					<p>#: contact.address != 'null' ? contact.address: ''#</p>
-					<p style="font-size: 10px;"><i>ថ្ងៃ​ចាប់​ផ្តើម​ទទួល​ប្រាក់ #=kendo.toString(new Date(bill_date), "dd-MMMM-yyyy", "km-KH")#</i></p>
+					<p style="font-size: 16px;margin-top: 15px;">អតិថិជន​ #=contact.number#</p>
+					<p style="font-size: 16px;">#:contact.name#</p>
+					<p style="font-size: 16px;">#: contact.address #</p>
+					<p style="font-size: 16px;">#: contact.phone #</p>
+					<p style="font-size: 14px;"><i>ថ្ងៃ​ចាប់​ផ្តើម​ទទួល​ប្រាក់ #=kendo.toString(new Date(bill_date), "dd-MMMM-yyyy", "km-KH")#</i></p>
 				</div>
 			</div>
 			<div class="span5">

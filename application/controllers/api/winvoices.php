@@ -558,10 +558,16 @@ class Winvoices extends REST_Controller {
 								$l = $plan->currency->get();
 								$locale = $l->locale;
 								$boxname = "";
+								$polename = "";
 								if($meter->box_id != 0){
 									$box = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 									$box->where("id", $meter->box_id)->limit(1)->get();
 									$boxname = $box->name;
+								}
+								if($meter->pole_id != 0){
+									$pol = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+									$pol->where("id", $meter->pole_id)->limit(1)->get();
+									$polename = $pol->name;
 								}
 								$meter = array(
 									'meter_number'   => $meter->number,
@@ -570,6 +576,7 @@ class Winvoices extends REST_Controller {
 									'meter_id'   => $meter->id,
 									'location' => $location->result(),
 									'box' => $boxname,
+									'pole' => $polename,
 									'plan_locale' => $locale,
 									'branch_id' => $meter->branch_id
 								);
