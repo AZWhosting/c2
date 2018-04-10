@@ -205,7 +205,7 @@
 							</a>
 						</div>
 						<div class="col-xs-3 col-sm-3 col-md-3" style="text-align: center;">
-							<a href="#/receipt">
+							<a href="<?php echo base_url(); ?>cashier" target="_blank">
 								<img width="100%" title="Receive Water Bill Payment" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/water_logo/receipt.png"  />
 								<span data-bind="text: lang.lang.wreceipt"  style=" text-transform: uppercase; color: #000; font-weight: 600; margin-top: 8px; display: inline-block;">Receipt</span>
 							</a>
@@ -455,7 +455,7 @@
 						<input 
 							data-bind="value: settingPassword" 
 							type="password" 
-							placeholder="Abbr" 
+							placeholder="******" 
 							style="height: 32px; padding: 5px; margin-right: 10px;" class="span3 k-textbox k-invalid" 
 						/>
 						<a class="btn-icon btn-primary glyphicons circle_plus cutype-icon" style="width: 80px; padding: 5px 7px 5px 35px !important; text-align: left;" data-bind="click: addPassword"><i></i><span data-bind="text: lang.lang.save">Add</span></a>
@@ -17365,7 +17365,7 @@
   				<li><a href='#/reading'><span >1. Meter Reading</span></a></li> 
   				<li><a href='#/run_bill'><span >2. Run Bill</span></a></li> 
   				<li><a href='#/print_bill'><span >3. Print Bill</span></a></li>
-  				<li><a href='#/receipt'><span >4. Cash Receipt</span></a></li>
+  				<li><a href='<?php echo base_url(); ?>cashier' target="_blank"><span >4. Cash Receipt</span></a></li>
   				<li><a href='#/cash_auto'><span >Cash Receipt Auto</span></a></li>
   				<li><span class="li-line"></span></li>
   				<!-- <li><a href='#/imports'><span >Import</span></a></li>

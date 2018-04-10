@@ -1059,12 +1059,22 @@
 							        <div class="tab-pane " id="tab1">
 						            	<h3>Earn by Amount Spent</h3>
 						            	<p>Customers earn stars based on the total amount they spend.</p>
-						            	<div style="width: 50%; text-align: left; margin: 20px auto 0;">
-						            		<span style="padding: 10px 69px 10px 20px; background: #ddd; line-height: 34px; border-width: 1px 0 0 1px;   border-style: solid; border-color: #ccc; font-weight: 700">Amount per point</span>
-						            		<input style="height: 40px; padding: 8px; border-width: 1px 1px 0 1px; border-style: solid; border-color: #ccc; color: #333; margin-left: -4px; width: 55%;" type="search" placeholder="..." data-bind="value: obj.amount_per_point">
+						            	<div style="width: 75%; text-align: left; margin: 20px auto 0;">
+						            		<span style="padding: 7px 50px 7px 20px; background: #ddd; line-height: 34px; border-width: 1px 0 0 1px; border-style: solid; border-color: #ccc; font-weight: 700; float: left;">Amount per point</span>
+						            		<div style="height: 49px; padding: 8px; border-width: 1px 1px 0 1px ; border-style: solid; border-color: #ccc; color: #333; width: 63%; float: left;" >
+						            			<input  
+						            				placeholder="Number..." 
+						            				style="float: left; width: 76%; border: none;" 
+						            				data-bind="value: obj.amount_per_point">
+						            			<div 
+						            				data-role="listview"
+									                data-template="amount_template"
+									                data-bind="source: amountTypeAR">
+										        </div>
+						            		</div>
 						            		<div class="clear"></div>
-						            		<span style="padding: 10px 76px 10px 20px; background: #ddd; line-height: 34px; border-width: 1px 0 1px 1px;   border-style: solid; border-color: #ccc; font-weight: 700">Point per reward</span>
-						            		<input style="height: 41px; padding: 8px; border-width: 1px 1px 1px 1px; border-style: solid; border-color: #ccc; color: #333; margin-left: -4px; width: 55%;" type="search" data-bind="value: obj.point_per_reward">						            		
+						            		<span style="padding: 2px 61px 2px 20px; background: #ddd; line-height: 34px; border-width: 1px 0 1px 1px; border-style: solid; border-color: #ccc; font-weight: 700; float: left;">Point per reward</span>
+						            		<input style="height: 41px; padding: 8px; border-width: 1px 1px 1px 1px; border-style: solid; border-color: #ccc; color: #333; margin-left: -4px; width: 63%;" type="search" data-bind="value: obj.point_per_reward">						            		
 						            	</div>
 						        	</div>
 							        <div class="tab-pane " id="tab2">
@@ -1136,6 +1146,9 @@
 </script>
 <script id="reward_template" type="text/x-kendo-tmpl">
 	<a data-bind="click: typeRewardSelect" class="#if(id == 2){# rewardtypeamt #}else{# rewardtypeper #}#" style="padding: 5px 10px; border: 1px solid \#333; float: left; text-align: center;list-style: none;cursor: pointer;#if(id == 1){#background: \#333; color: \#fff;#}#">#: name#</a>
+</script>
+<script id="amount_template" type="text/x-kendo-tmpl">
+	<a data-bind="click: typeAmountSelect" class="#if(id == 2){# amounttypeamt #}else{# amounttypeper #}#" style="padding: 5px 10px; border: 1px solid \#333; float: left; text-align: center;list-style: none;cursor: pointer;#if(id == 1){#background: \#333; color: \#fff;#}#">#: name#</a>
 </script>
 <script id="contact-person-row-tmpl" type="text/x-kendo-tmpl">
 	<tr>		
@@ -1478,9 +1491,9 @@
 						            		<span style="float: left; padding: 10px 69px 10px 20px; background: #ddd; border-width: 1px 0 0 1px;   border-style: solid; border-color: #ccc; font-weight: 700">Name</span>
 						            		<input style="float: left; height: 41px; padding: 8px; border-width: 1px 1px 0 1px; border-style: solid; border-color: #ccc; color: #333; margin-left: -4px; width: 54.8%;" type="search" placeholder="Name..." data-bind="value: obj.name">
 						            		<span style="float: left; padding: 10px 54px 10px 20px; background: #ddd; border-width: 1px 0 0 1px;   border-style: solid; border-color: #ccc; font-weight: 700">Number</span>
-						            		<input style="float: left; height: 41px; padding: 8px; border-width: 1px 1px 0 1px; border-style: solid; border-color: #ccc; color: #333; margin-left: -4px; width: 54.8%;" type="search" placeholder="Name..." data-bind="value: obj.number">
+						            		<input style="float: left; height: 41px; padding: 8px; border-width: 1px 1px 0 1px; border-style: solid; border-color: #ccc; color: #333; margin-left: -4px; width: 54.8%;" type="search" placeholder="Number..." data-bind="value: obj.number">
 						            		<span style="float: left; padding: 10px 69px 10px 20px; background: #ddd; border-width: 1px 0 0 1px;   border-style: solid; border-color: #ccc; font-weight: 700">Serial</span>
-						            		<input style="float: left; height: 41px; padding: 8px; border-width: 1px 1px 0 1px; border-style: solid; border-color: #ccc; color: #333; margin-left: -4px; width: 54.8%;" type="search" placeholder="Name..." data-bind="value: obj.serial">
+						            		<input style="float: left; height: 41px; padding: 8px; border-width: 1px 1px 0 1px; border-style: solid; border-color: #ccc; color: #333; margin-left: -4px; width: 54.8%;" type="search" placeholder="Serial..." data-bind="value: obj.serial">
 						            		<div class="clear"></div>
 						            		<a class="loyatyNext" data-bind="click: save" style="background: #1c3b19; margin-top: 10px;">Save</a>
 						            	</div>
@@ -1508,4 +1521,3 @@
 		</td>
 	</tr>
 </script>
-                                                                                                                                                                                                                                                                                                                     

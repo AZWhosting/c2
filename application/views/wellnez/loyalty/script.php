@@ -6284,6 +6284,10 @@
             {id: 1, name: '%'},
             {id: 2, name: 'Amount'}
         ],
+        amountTypeAR : [
+            {id: 1, name: '%'},
+            {id: 2, name: 'Amount'}
+        ],
         isEdit      : false,
         pageLoad    : function(id){
             if(id){
@@ -6308,6 +6312,7 @@
                 "base"                  : 1,
                 "base_type"             : 1,
                 "amount_per_point"      : 1,
+                "amount_type"           : 1,
                 "point_per_reward"      : 1,
                 "reward_amount"         : 1,
                 "reward_type"           : 1,
@@ -6342,6 +6347,22 @@
                     self.set("isPointBase", true);
                 }
             });
+        },
+        typeAmountSelect        : function (e) {
+            var data = e.data.id;
+            if(data == 1){
+                this.get("obj").set("amount_type", 1);
+                $(".amounttypeper").css("color", "#fff");
+                $(".amounttypeper").css("background", "#333");
+                $(".amounttypeamt").css("color", "#333");
+                $(".amounttypeamt").css("background", "#fff");
+            }else{
+                this.get("obj").set("reward_type", 2);
+                $(".amounttypeamt").css("color", "#fff");
+                $(".amounttypeamt").css("background", "#333");
+                $(".amounttypeper").css("color", "#333");
+                $(".amounttypeper").css("background", "#fff");
+            }
         },
         typeRewardSelect        : function (e) {
             var data = e.data.id;

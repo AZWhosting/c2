@@ -174,5 +174,19 @@ $robots = array(
 					'lycos'				=> 'Lycos'
 				);
 
+function different_views () {
+	$this->load->library('user_agent');
+
+	if (!$this->agent->is_mobile()) {
+		$this->load->view('desktop_view');
+	}
+	elseif ($this->agent->is_mobile('ipad')) {
+		$this->load->view('ipad_view');
+	}
+	else {
+		$this->load->view('mobile_view');
+	}
+}
+
 /* End of file user_agents.php */
 /* Location: ./application/config/user_agents.php */

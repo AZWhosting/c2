@@ -245,23 +245,47 @@ class Cashier extends REST_Controller {
 				$notess->where("cashier_session_id", $value->id)->get_iterated();
 				$noteitemget = [];
 				$noteitemchange = [];
+				$ncurrency = array();
+				$mcurrency = array();
 				if($notess->exists()){
 					foreach($notess as $note){
 						if($note->amount > 0){
 							if($note->type == 0){
-								$noteitemget[] = array(
-									"id" 		=> $note->id,
-									"amount" 	=> floatval($note->amount),
-									"rate" 		=> floatval($note->rate),
-									"currency" 	=> $note->currency,
-								);
+								if(in_array($note->currency, $ncurrency)) {
+									$i = 0;
+									foreach($noteitemget as $rga){
+										if($rga["currency"] == $note->currency){
+											$noteitemget[$i]["amount"] += floatval($note->amount);
+										}
+										$i++;
+									}
+								}else{
+									array_push($ncurrency, $note->currency);
+									$noteitemget[] = array(
+										"id" 		=> $note->id,
+										"amount" 	=> floatval($note->amount),
+										"rate" 		=> floatval($note->rate),
+										"currency" 	=> $note->currency,
+									);
+								}
 							}else{
-								$noteitemchange[] = array(
-									"id" 		=> $note->id,
-									"amount" 	=> floatval($note->amount),
-									"rate" 		=> floatval($note->rate),
-									"currency" 	=> $note->currency,
-								);
+								if(in_array($note->currency, $mcurrency)) {
+									$j = 0;
+									foreach($noteitemchange as $rgb){
+										if($rgb["currency"] == $note->currency){
+											$noteitemchange[$j]["amount"] += floatval($note->amount);
+										}
+										$j++;
+									}
+								}else{
+									array_push($mcurrency, $note->currency);
+									$noteitemchange[] = array(
+										"id" 		=> $note->id,
+										"amount" 	=> floatval($note->amount),
+										"rate" 		=> floatval($note->rate),
+										"currency" 	=> $note->currency,
+									);
+								}
 							}
 						}
 					}

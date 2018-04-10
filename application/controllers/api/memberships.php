@@ -75,14 +75,12 @@ class Memberships extends REST_Controller {
 					"membership_type_id" 			=> $value->membership_type_id,
 					"registration_date"				=> $value->registration_date,
 					"membership_date"				=> $value->membership_date,
-					"change_membership_date"		=> $value->change_membership_date,
 					"status"						=> $value->status,
 					"expiry_date"					=> $value->expiry_date,
 					"application_status"			=> $value->application_status,
 					"graduateion_date"				=> $value->graduateion_date,
 					"fellow_date"					=> $value->fellow_date,
 					"first_cdp_year"				=> $value->first_cdp_year,
-					"cpd_record_date"				=> $value->cpd_record_date,
 					"cpd_required_credit"			=> $value->cpd_required_credit,
 
 					"membership_type"				=> $value->membership_type_name,
@@ -106,14 +104,12 @@ class Memberships extends REST_Controller {
 			isset($value->membership_type_id) 			? $obj->membership_type_id 				= $value->membership_type_id : "";
 			isset($value->registration_date) 			? $obj->registration_date 				= $value->registration_date : "";
 			isset($value->membership_date) 				? $obj->membership_date 				= $value->membership_date : "";
-			isset($value->change_membership_date) 		? $obj->change_membership_date 			= $value->change_membership_date : "";
 			isset($value->status) 						? $obj->status 							= $value->status : "";
 			isset($value->expiry_date) 					? $obj->expiry_date 					= $value->expiry_date : "";
 			isset($value->application_status) 			? $obj->application_status 				= $value->application_status : "";
 			isset($value->graduateion_date) 			? $obj->graduateion_date 				= $value->graduateion_date : "";
 			isset($value->fellow_date) 					? $obj->fellow_date 					= $value->fellow_date : "";
 			isset($value->first_cdp_year) 				? $obj->first_cdp_year 					= $value->first_cdp_year : "";
-			isset($value->cpd_record_date) 				? $obj->cpd_record_date 				= $value->cpd_record_date : "";
 			isset($value->cpd_required_credit) 			? $obj->cpd_required_credit 			= $value->cpd_required_credit : "";
 			
 			//Contact			
@@ -128,14 +124,12 @@ class Memberships extends REST_Controller {
 					"membership_type_id" 			=> $obj->membership_type_id,
 					"registration_date"				=> $obj->registration_date,
 					"membership_date"				=> $obj->membership_date,
-					"change_membership_date"		=> $obj->change_membership_date,
 					"status"						=> $obj->status,
 					"expiry_date"					=> $obj->expiry_date,
 					"application_status"			=> $obj->application_status,
 					"graduateion_date"				=> $obj->graduateion_date,
 					"fellow_date"					=> $obj->fellow_date,
 					"first_cdp_year"				=> $obj->first_cdp_year,
-					"cpd_record_date"				=> $obj->cpd_record_date,
 					"cpd_required_credit"			=> $obj->cpd_required_credit
 				);
 			}
@@ -159,14 +153,12 @@ class Memberships extends REST_Controller {
 			isset($value->membership_type_id) 			? $obj->membership_type_id 				= $value->membership_type_id : "";
 			isset($value->registration_date) 			? $obj->registration_date 				= $value->registration_date : "";
 			isset($value->membership_date) 				? $obj->membership_date 				= $value->membership_date : "";
-			isset($value->change_membership_date) 		? $obj->change_membership_date 			= $value->change_membership_date : "";
 			isset($value->status) 						? $obj->status 							= $value->status : "";
 			isset($value->expiry_date) 					? $obj->expiry_date 					= $value->expiry_date : "";
 			isset($value->application_status) 			? $obj->application_status 				= $value->application_status : "";
 			isset($value->graduateion_date) 			? $obj->graduateion_date 				= $value->graduateion_date : "";
 			isset($value->fellow_date) 					? $obj->fellow_date 					= $value->fellow_date : "";
 			isset($value->first_cdp_year) 				? $obj->first_cdp_year 					= $value->first_cdp_year : "";
-			isset($value->cpd_record_date) 				? $obj->cpd_record_date 				= $value->cpd_record_date : "";
 			isset($value->cpd_required_credit) 			? $obj->cpd_required_credit 			= $value->cpd_required_credit : "";
 
 			//Contact			
@@ -181,14 +173,12 @@ class Memberships extends REST_Controller {
 					"membership_type_id" 			=> $obj->membership_type_id,
 					"registration_date"				=> $obj->registration_date,
 					"membership_date"				=> $obj->membership_date,
-					"change_membership_date"		=> $obj->change_membership_date,
 					"status"						=> $obj->status,
 					"expiry_date"					=> $obj->expiry_date,
 					"application_status"			=> $obj->application_status,
 					"graduateion_date"				=> $obj->graduateion_date,
 					"fellow_date"					=> $obj->fellow_date,
 					"first_cdp_year"				=> $obj->first_cdp_year,
-					"cpd_record_date"				=> $obj->cpd_record_date,
 					"cpd_required_credit"			=> $obj->cpd_required_credit
 				);		
 			}

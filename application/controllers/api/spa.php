@@ -2300,6 +2300,7 @@ class Spa extends REST_Controller {
 					"base"				=> intval($value->base),
 					"base_type"			=> intval($value->base_type),
 					"amount_per_point"	=> floatval($value->amount_per_point),
+					"amount_type"		=> intval($value->amount_type),
 					"point_per_reward"	=> intval($value->point_per_reward),
 					"reward_amount"		=> floatval($value->reward_amount),
 					"reward_type"		=> intval($value->reward_type),
@@ -2323,6 +2324,7 @@ class Spa extends REST_Controller {
 			isset($value->base) 				? $obj->base 				= $value->base : 1;
 			isset($value->base_type) 			? $obj->base_type 			= $value->base_type : 1;
 			isset($value->amount_per_point) 	? $obj->amount_per_point 	= $value->amount_per_point : 1;
+			isset($value->amount_type) 			? $obj->amount_type 		= $value->amount_type : 1;
 			isset($value->point_per_reward) 	? $obj->point_per_reward 	= $value->point_per_reward : 1;
 			isset($value->reward_amount) 		? $obj->reward_amount 		= $value->reward_amount : 1;
 			isset($value->reward_type) 			? $obj->reward_type 		= $value->reward_type : 1;
@@ -2354,6 +2356,7 @@ class Spa extends REST_Controller {
 			isset($value->base) 				? $obj->base 				= $value->base : 1;
 			isset($value->base_type) 			? $obj->base_type 			= $value->base_type : 1;
 			isset($value->amount_per_point) 	? $obj->amount_per_point 	= $value->amount_per_point : 1;
+			isset($value->amount_type) 			? $obj->amount_type 		= $value->amount_type : 1;
 			isset($value->point_per_reward) 	? $obj->point_per_reward 	= $value->point_per_reward : 1;
 			isset($value->reward_amount) 		? $obj->reward_amount 		= $value->reward_amount : 1;
 			isset($value->reward_type) 			? $obj->reward_type 		= $value->reward_type : 1;

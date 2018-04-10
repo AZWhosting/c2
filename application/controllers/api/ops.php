@@ -113,7 +113,7 @@ class Ops extends REST_Controller {
 				// $data['results'][] = $this->dbforge->modify_column('memberships', $fields);
 
 			 	//Remove column, 'table_name', 'column_to_drop'
-				// $this->dbforge->drop_column('item_assemblies', 'amount');
+				// $this->dbforge->drop_column('memberships', 'cpd_record_date');
 
 				//Custom
 				// $dsn = 'mysql://'.$this->db->username.':'.$this->db->password.'@'.$this->db->hostname.'/'.$db;
