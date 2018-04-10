@@ -8654,18 +8654,12 @@
     });
     banhji.cashReceiptbyuserSummary = kendo.observable({
         lang: langVM,
-        dataSource: dataStore(apiUrl + "utibillReports/daily_cash_employee"),
-        contactDS: new kendo.data.DataSource({
-            data: banhji.source.customerList,
-            sort: {
-                field: "number",
-                dir: "asc"
-            }
-        }),
+        contactDS           : banhji.source.employeeUserDS,
+        dataSource: dataStore(apiUrl + "utibillReports/daily_cash_employee_cashier"),
         licenseDS: dataStore(apiUrl + "branches"),
         blocDS: dataStore(apiUrl + "locations"),
         sortList: banhji.source.sortList,
-        sorter: "month",
+        sorter: "today",
         sdate: "",
         edate: "",
         obj: {
@@ -8678,7 +8672,7 @@
         totalAmount: 0,
         exArray: [],
         pageLoad: function() {
-            this.search();
+            // this.search();
             this.set("haveBloc", false);
         },
         sorterChanges: function() {
@@ -8690,7 +8684,7 @@
             switch (sorter) {
                 case "today":
                     this.set("sdate", today);
-                    this.set("edate", "");
+                    this.set("edate", today);
 
                     break;
                 case "week":
@@ -8757,7 +8751,7 @@
                     contactIds.push(value);
                 });
                 para.push({
-                    field: "contact_id",
+                    field: "user_id",
                     operator: "where_in",
                     value: contactIds
                 });
@@ -8823,7 +8817,7 @@
                         cells: [{
                             value: self.company.name,
                             textAlign: "center",
-                            colSpan: 3
+                            colSpan: 4
                         }]
                     });
                     self.exArray.push({
@@ -8832,7 +8826,7 @@
                             bold: true,
                             fontSize: 20,
                             textAlign: "center",
-                            colSpan: 3
+                            colSpan: 4
                         }]
                     });
                     if (self.displayDate) {
@@ -8840,14 +8834,14 @@
                             cells: [{
                                 value: self.displayDate,
                                 textAlign: "center",
-                                colSpan: 3
+                                colSpan: 4
                             }]
                         });
                     }
                     self.exArray.push({
                         cells: [{
                             value: "",
-                            colSpan: 3
+                            colSpan: 4
                         }]
                     });
                     self.exArray.push({
@@ -8857,7 +8851,12 @@
                                 color: "#ffffff"
                             },
                             {
-                                value: "Number of Cusomter",
+                                value: "Location",
+                                background: "#496cad",
+                                color: "#ffffff"
+                            },
+                            {
+                                value: "Number of Customer",
                                 background: "#496cad",
                                 color: "#ffffff"
                             },
@@ -8869,11 +8868,21 @@
                         ]
                     });
                     for (var i = 0; i < response.results.length; i++) {
-                        balanceRec += response.results[i].amount;
-                        numberCustomer += response.results[i].customer;
-                        self.exArray.push({
+                         balanceRec += response.results[i].amount;
+                         numberCustomer += response.results[i].customer;
+                         self.exArray.push({
                             cells: [{
                                     value: response.results[i].name
+                                },
+                            ]
+                        });
+                        self.exArray.push({
+                            cells: [
+                                {
+                                    value: ""
+                                },
+                                {
+                                    value: response.results[i].location
                                 },
                                 {
                                     value: response.results[i].customer
@@ -8882,20 +8891,15 @@
                                     value: response.results[i].amount
                                 }
                             ]
-                        });
-                        
-                        self.exArray.push({
-                            cells: [{
-                                value: "",
-                                colSpan: 3
-                            }]
-                        });
+                        });                       
                     }
                     self.exArray.push({
                         cells: [
                             { value: "Total",bold: true, textAlign: "left" },
+                            { value: ""},
                             { value: numberCustomer,bold: true},
                             { value: balanceRec,bold: true},
+                            
                         ]
                     }); 
                 }
@@ -8980,6 +8984,9 @@
             var workbook = new kendo.ooxml.Workbook({
                 sheets: [{
                     columns: [{
+                            autoWidth: true
+                        },
+                        {
                             autoWidth: true
                         },
                         {

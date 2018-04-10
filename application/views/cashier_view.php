@@ -2829,7 +2829,6 @@
 								<div class="widget-head">
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date">Date</span></a></li>	
-										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.filter">Filter</span></a></li>
 										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab" ><i></i><span data-bind="text: lang.lang.print_export">Print/Export</span></a></li>
 									</ul>
 								</div>
@@ -2865,61 +2864,23 @@
 												                      min: sdate"
 												           placeholder="To ..." style="width: 100%" >
 												</div>
+												<div class="col-xs-12 col-sm-3">
+													<select data-role="multiselect"
+														   data-value-primitive="true"
+														   data-item-template="user-list-tmpl"
+														   data-value-field="id"
+														   data-text-field="name"
+														   data-bind="value: obj.contactIds, 
+														   			source: contactDS"
+														   data-placeholder="Select Employee.."
+														   style="width: 100%" /></select>
+												</div>		
 												<div class="col-xs-12 col-sm-1">
 												  	<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 												</div>
 											</div>
 							        	</div>
 
-								    	<!-- Filter -->
-								        <div class="tab-pane" id="tab-2">
-											<div class="row">
-												<div class="col-xs-12 col-sm-3">
-													<span data-bind="text: lang.lang.license">Licenses</span>
-													<input 
-														data-role="dropdownlist" 
-														data-option-label="License ..." 
-														data-auto-bind="false" 
-														data-value-primitive="true" 
-														data-text-field="name" 
-														data-value-field="id" 
-														data-bind="
-															value: licenseSelect,
-																source: licenseDS,
-																events: {change: licenseChange}" style="width: 100%">
-												</div>
-												<div class="col-xs-12 col-sm-3">
-													<span data-bind="text: lang.lang.location">Locations</span>
-														<input 
-															data-role="dropdownlist" 
-															data-option-label="Location ..." 
-															data-auto-bind="false" 
-															data-value-primitive="false" 
-															data-text-field="name" 
-															data-value-field="id" 
-															data-bind="
-																value: blocSelect,
-																enabled: haveBloc,
-																source: blocDS" style="width: 100%">
-												</div>
-												<div class="col-xs-12 col-sm-3">
-													<span data-bind="text: lang.lang.customers"></span>
-													<select data-role="multiselect"
-														   data-value-primitive="true"
-														   data-header-template="customer-header-tmpl"
-														   data-item-template="contact-list-tmpl"
-														   data-value-field="id"
-														   data-text-field="name"
-														   data-bind="value: obj.contactIds, 
-														   			source: contactDS"
-														   data-placeholder="Select Customer.."
-														   style="width: 100%" /></select>
-												</div>
-												<div class="col-xs-12 col-sm-1">											
-										  			<button style="margin-top: 20px;" type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-												</div>														
-											</div>		
-							        	</div>
 							        	 <!-- PRINT/EXPORT  -->
 								        <div class="tab-pane report" id="tab-3">								        	
 								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" ><i></i> Print</span>
@@ -2950,7 +2911,7 @@
 								<div class="col-xs-12 col-sm-9">
 									<div class="total-sale">
 										<p data-bind="text: lang.lang.cash_receipt">Cash Receipt</p>
-										<span data-bind="text: totalAmount"></sapn>
+										<span data-bind="text: total"></sapn>
 									</div>
 								</div>
 							</div>
@@ -2958,6 +2919,7 @@
 								<thead>
 									<tr>
 										<th style="vertical-align: top;"><span data-bind="text: lang.lang.employee">Employee</span></th>
+										<th style="text-align: right; vertical-align: top;"><span data-bind="text: lang.lang.location">Location</span></th>
 										<th style="text-align: right; vertical-align: top;"><span data-bind="text: lang.lang.number_of_customer">Number of Customer</span></th>
 										<th style="text-align: right; vertical-align: top;"><span data-bind="text: lang.lang.amount">Amount</span></th>
 									</tr>
@@ -2981,7 +2943,14 @@
 </script>
 <script id="cashReceiptbyuserSummary-template" type="text/x-kendo-template">
 	<tr>
-		<td>#=name#</td>
+		<td style="font-weight: bold">#=name#</td>
+		<td></td>
+		<td></td>
+		<td></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td style="text-align: right;">#=location#</td>
 		<td style="text-align: right;">#=customer#</td>
 		<td style="text-align: right;">#=kendo.toString(amount, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#</td>
 	</tr>
