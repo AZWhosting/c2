@@ -470,12 +470,6 @@
 				                 		template: '#=item.name#', width: '170px' 
 				                 	},
 		                            { 
-		                            	field: 'description', 
-		                            	title:'DESCRIPTION', 
-		                            	width: '250px',
-		                            	hidden: 'true', 
-		                            }, 
-		                            { 
 		                            	field: 'measurement', 
 		                            	title: 'UOM', 
 		                            	editor: measurementEditor, 

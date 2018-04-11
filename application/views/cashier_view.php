@@ -2869,7 +2869,7 @@
 														   data-value-primitive="true"
 														   data-item-template="user-list-tmpl"
 														   data-value-field="id"
-														   data-text-field="name"
+														   data-text-field="last_name"
 														   data-bind="value: obj.contactIds, 
 														   			source: contactDS"
 														   data-placeholder="Select Employee.."

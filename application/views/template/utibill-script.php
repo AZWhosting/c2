@@ -21182,7 +21182,7 @@
         licenseDS: dataStore(apiUrl + "branches"),
         blocDS: dataStore(apiUrl + "locations"),
         sortList: banhji.source.sortList,
-        sorter: "month",
+        sorter: "today",
         sdate: "",
         edate: "",
         as_of: new Date(),
@@ -21209,7 +21209,7 @@
             switch (sorter) {
                 case "today":
                     this.set("sdate", today);
-                    this.set("edate", "");
+                    this.set("edate", today);
 
                     break;
                 case "week":
@@ -21310,7 +21310,6 @@
             this.dataSource.query({
                 filter: para,
                 page: 1,
-                pageSize: 50,
             }).then(function() {
                 var view = self.dataSource.view();
 
@@ -22719,7 +22718,7 @@
         licenseDS: dataStore(apiUrl + "branches"),
         blocDS: dataStore(apiUrl + "locations"),
         sortList: banhji.source.sortList,
-        sorter: "month",
+        sorter: "today",
         sdate: "",
         edate: "",
         obj: {
@@ -22744,7 +22743,7 @@
             switch (sorter) {
                 case "today":
                     this.set("sdate", today);
-                    this.set("edate", "");
+                    this.set("edate", today);
 
                     break;
                 case "week":

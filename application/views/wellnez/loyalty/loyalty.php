@@ -1350,8 +1350,7 @@
 											           	<span style="float: left; padding: 10px 14px 10px 20px; background: #ddd; border-width: 1px 0 0 1px;   border-style: solid; border-color: #ccc; font-weight: 700">Registered Date</span>
 											           	<input data-role="datepicker"
 												    	   	class="edate"
-												    	   	data-format="dd-MM-yyyy"
-												           	data-bind="value: register_date"
+												           	data-bind="value: registered_date"
 												        	style="float: left; height: 41px; padding: 8px; border-width: 1px 1px 0 1px; border-style: solid; border-color: #ccc; color: #333; margin-left: -4px; width: 54.8%;margin-bottom: 15px;"    
 												        />
 												        <span style="float: left!important;" class="btn btn-primary btn-icon glyphicons edit pull-right" data-bind="click: activateNow"><i></i><span>Activate</span></span>
@@ -1468,6 +1467,13 @@
 	<div class="container">
 		<div class="row loyalty">
 			<div class="span12">
+				<style type="text/css">
+					.k-maskedtextbox {
+						margin-left: 0!important;
+						padding: 0!important;
+						border: none!important;
+					}
+				</style>
 				<div class="example" style="overflow: hidden;position: relative;">
 					<div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 100%;margin-top: -15px;background: rgba(142, 159, 167, 0.8);z-index: 9999;margin-left: -15px;">
 						<p style="color: #fff;font-size: 25px;position: absolute;top: 45%;left: 45%;">Loading</p>
@@ -1491,7 +1497,13 @@
 						            		<span style="float: left; padding: 10px 69px 10px 20px; background: #ddd; border-width: 1px 0 0 1px;   border-style: solid; border-color: #ccc; font-weight: 700">Name</span>
 						            		<input style="float: left; height: 41px; padding: 8px; border-width: 1px 1px 0 1px; border-style: solid; border-color: #ccc; color: #333; margin-left: -4px; width: 54.8%;" type="search" placeholder="Name..." data-bind="value: obj.name">
 						            		<span style="float: left; padding: 10px 54px 10px 20px; background: #ddd; border-width: 1px 0 0 1px;   border-style: solid; border-color: #ccc; font-weight: 700">Number</span>
-						            		<input style="float: left; height: 41px; padding: 8px; border-width: 1px 1px 0 1px; border-style: solid; border-color: #ccc; color: #333; margin-left: -4px; width: 54.8%;" type="search" placeholder="Number..." data-bind="value: obj.number">
+						            		<input style="float: left; height: 41px; padding: 8px; border-width: 1px 1px 0 1px; border-style: solid; border-color: #ccc; color: #333; margin-left: -4px; width: 54.8%;" 
+						            			type="search" 
+						            			placeholder="Number..." 
+						            			data-role="maskedtextbox"
+                   								data-mask="LL9-000-000-000"
+						            			data-bind="value: obj.number"
+						            		/>
 						            		<span style="float: left; padding: 10px 69px 10px 20px; background: #ddd; border-width: 1px 0 0 1px;   border-style: solid; border-color: #ccc; font-weight: 700">Serial</span>
 						            		<input style="float: left; height: 41px; padding: 8px; border-width: 1px 1px 0 1px; border-style: solid; border-color: #ccc; color: #333; margin-left: -4px; width: 54.8%;" type="search" placeholder="Serial..." data-bind="value: obj.serial">
 						            		<div class="clear"></div>
@@ -1513,11 +1525,24 @@
 	</div>
 </script>
 <script id="card-loyalty-list-tmpl" type="text/x-kendo-tmpl">
-	<tr data-bind="click: selectedRow">
+	<tr>
 		<td>
-			<div class="media-body strong">
-				<span>#=name#</span><a style="float: right;" href="\#/loyalty/#=id#">Edit</a>
-			</div>
+			#= banhji.cardCenter.cardLoyaltyDS.indexOf(data)+1#
+		</td>
+		<td>
+			#=name#
+		</td>
+		<td>
+			#= base#
+		</td>
+		<td>
+			#= reward#
+		</td>
+		<td>
+			#= expire#
+		</td>
+		<td>
+			#= status#
 		</td>
 	</tr>
 </script>

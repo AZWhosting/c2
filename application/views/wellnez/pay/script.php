@@ -4415,7 +4415,26 @@
                     self.set("haveCardLoyalty", false);
                 }
             });
-        }, 
+        },
+        pointAmount  : 0,
+        earnPoint    : function(e){
+            var data = e.data;
+            var obj = this.get("invobj");
+            var amount = 0;
+            if(data.base == 'Point'){
+                if(data.amount_type == 1){
+                    //%
+                    var percentage = data.amount_per_point / 100;
+                    amount = obj.amount * percentage;
+                    this.set("pointAmount", amount);
+                }else{
+                    //$
+                    amount = obj.amount / data.amount_per_point;
+                    this.set("pointAmount", amount);
+                }
+                console.log(amount);
+            }
+        }
     });
     banhji.splitBill = kendo.observable({
         roomDS      : dataStore(apiUrl + "spa/room"),

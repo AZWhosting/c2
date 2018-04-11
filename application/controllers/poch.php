@@ -12,7 +12,7 @@ class Poch extends MY_Controller {
 	
 
 	public function index() {
-		$this->load->view('poch_view');
+		$this->load->view('desktop_view');
 	}
 }
 

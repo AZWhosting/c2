@@ -90,7 +90,7 @@
                     total: 'count'
                 },
                 filter:[
-                    { field: "contact_type_id", value: 9 },
+                    { field: "contact_type_id", operator: "where_in", value: [11,12] },
                     { field: "work_id", value: 0 },
                 ],
                 sort: { field:"id", dir:"asc" },
@@ -4054,7 +4054,8 @@
             filter: [
                 {
                     field: "contact_type_id",
-                    value: 9
+                    operator: "where_in",
+                    value: [11,12]
                 },
                 {   
                     field: "work_id",

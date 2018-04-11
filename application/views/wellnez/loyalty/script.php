@@ -6500,11 +6500,11 @@
         activateNow         : function(){
             var obj = this.get("obj");
             var self = this;
-            if(obj.id && this.get("register_activate") && this.get("contact_activate")){
+            if(obj.id && this.get("registered_date") && this.get("contact_activate")){
                 this.activateDS.data([]);
                 this.activateDS.add({
                     contact_id      : this.get("contact_activate"),
-                    registered_date : this.get("register_date"),
+                    registered_date : this.get("registered_date"),
                     card_id         : obj.id,
                 });
                 this.activateDS.sync();
@@ -6520,7 +6520,7 @@
                 alert("Feild Required!");
             }
         },
-        register_activate   : new Date(),
+        registered_date   : new Date(),
         cardLoyaltyDS       : dataStore(apiUrl + "spa/card_loyalty"),
         loyaltyDS           : dataStore(apiUrl + "spa/loyalty"),
         loyaltyShow         : false,

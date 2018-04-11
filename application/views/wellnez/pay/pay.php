@@ -284,13 +284,6 @@
 							<div class="strong" style="margin-bottom: 15px; width: 100%; padding: 15px; float: left;" align="center"
 								data-bind="style: { backgroundColor: amtDueColor}">
 								<div>
-								    <div class="tabsbar tabsbar-1">
-								        <ul class="row-fluid row-merge">
-								            <li class="span2 active">
-								            	<a href="#tab1" data-toggle="tab"><span><span >Card</span></span></a>
-								            </li>         
-								        </ul>
-								    </div>
 								    <div class="tab-content">
 								        <div class="tab-pane active" id="tab1">
 							            	<div class="row">
@@ -298,7 +291,7 @@
 													<p style="float: left;color: #333;">Card</p>
 													<input type="text" name="" style="width: 100%; font-weight: 500; border: 1px solid #ccc; padding: 5px; height: 35px; color: #333;"
 														data-role="maskedtextbox"
-							                   			data-mask="000-000-000-000"
+							                   			data-mask="LL0-000-000-000"
 							                   			data-bind="
 							                        		value: cardNum"
 													/>
@@ -1141,7 +1134,15 @@
 			#= reward#
 		</td>
 		<td align="center">
-			<a data-bind="click: applyLoyalty">Apply</a>
+			#if(status == 'Active'){#
+				#if(base == 'Point'){#
+					<a data-bind="click: earnPoint" style="color: red;">Earn</a> | <a data-bind="click: applyLoyalty">Apply</a>
+				#}else{#
+					<a data-bind="click: applyLoyalty">Apply</a>
+				#}#
+			#}else{#
+				#: status#
+			#}#
 		</td>
 	</tr>
 </script>

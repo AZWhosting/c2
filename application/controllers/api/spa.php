@@ -2594,6 +2594,17 @@ class Spa extends REST_Controller {
 			isset($value->loyalty_id) 		? $obj->loyalty_id 		= $value->loyalty_id : 0;
 			$obj->status = 1;
 	   		if($obj->save()){
+	   			$loyalty = new Spa_loyalty(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	   			$loyalty->where("id", $obj->loyalty_id)->limit(1)->get();
+	   			//Add Reward
+	   			if($loyalty->base == 2){
+	   				$reward = new Spa_card_reward(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	   				$reward->loyalty_id = $obj->loyalty_id;
+	   				$reward->card_id = $obj->id;
+	   				$reward->amount = 0;
+	   				$reward->type = 2;
+	   				$reward->save();
+	   			}
 			   	$data["results"][] = array(
 			   		"id" 					=> $obj->id,
 			   		"card_id" 				=> $obj->card_id,
@@ -2635,19 +2646,38 @@ class Spa extends REST_Controller {
 				if($loyalty->base != 1){
 					$base = "Point";
 				}
+				$status = "Active";
+				if($loyalty->status == 0){
+					$status = "Inactive";
+				}
 				$rewardtype = "%";
 				$rewardamount = floatval($loyalty->reward_amount);
 				if($loyalty->reward_type != 1){
 					$rewardtype = "$";
 				}
+				$reward_amount = 0;
+				$reward = new Spa_card_reward(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$reward->where("loyalty_id", $loyalty->id)->limit(1)->get();
+				if($reward->exists()){
+					$reward_amount = $reward->amount;
+				}
+				$dcompare = date('Y-m-d');
+				if($dcompare > $loyalty->expire){
+					$status = "Expire";
+				}
 				$data["results"][] = array(
 			   		"id" 			=> $loyalty->id,
 			   		"name" 			=> $loyalty->name,
 					"base"			=> $base,
+					"base_type" 	=> $loyalty->base_type,
 					"reward_amount"	=> intval($loyalty->reward_amount),
 					"reward_type" 	=> intval($loyalty->reward_type),
-					"reward"	 	=> $loyalty->reward_amount.$rewardtype,
+					"reward"	 	=> $reward_amount.$rewardtype,
 					"expire" 		=> $loyalty->expire,
+					"status" 		=> $status,
+					"amount_per_point" => floatval($loyalty->amount_per_point),
+					"amount_type" 	=> intval($loyalty->amount_type),
+					"point_per_reward" 	=> floatval($loyalty->point_per_reward),
 			   	);
 			}
 		}

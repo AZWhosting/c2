@@ -9691,6 +9691,14 @@
 
                 vm.sorterChanges();
             }
+             banhji.cashReceiptbyuserSummary.dataSource.bind('requestEnd', function(e) {
+                if (e.response) {
+                    banhji.cashReceiptbyuserSummary.set('count', e.response.count);
+                    kendo.culture(banhji.locale);
+                    banhji.cashReceiptbyuserSummary.set('total', kendo.toString(e.response.total, 'c2'));
+                }
+            });
+            vm.pageLoad();
             vm.pageLoad();
         }
     });

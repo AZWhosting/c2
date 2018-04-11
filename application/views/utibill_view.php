@@ -16227,16 +16227,16 @@
 							</div>
 
 							<div class="row">
-								<div class="col-xs-12 col-sm-6">
+								<div class="col-xs-12 col-sm-4">
+									<div class="total-sale">									
+										<p data-bind="text: lang.lang.number_of_customer">Nubmer of Customer</p>
+										<span data-format="n0" data-bind="text: cashReceipt"></span>
+									</div>
+								</div>
+								<div class="col-xs-12 col-sm-8">
 									<div class="total-sale">									
 										<p data-bind="text: lang.lang.no_of_cashReceipt">Total Cash Receipt</p>
 										<span data-format="n0" data-bind="text: totalReceipt"></span>
-									</div>
-								</div>
-								<div class="col-xs-12 col-sm-6">
-									<div class="total-sale">
-										<p data-bind="text: lang.lang.total_amount_water">Total Amount</p>
-										<span data-bind="text: total"></span>
 									</div>
 								</div>
 							</div>
