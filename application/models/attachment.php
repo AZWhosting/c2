@@ -28,11 +28,11 @@ class Attachment extends DataMapper {
 		'branch' => array(
 			'class' => 'branch',
 			'other' => 'attachment'
-		),
-		'meter' => array(
-			'class' => 'meter',
-			'other' => 'attachment'
 		)
+		// 'meter' => array(
+		// 	'class' => 'meter',
+		// 	'other' => 'attachment'
+		// )
 	);
 
 	public function __construct($id = null, $server_name = null, $db_username = null, $server_password = null, $db = null) {	

@@ -21,10 +21,10 @@ class Meter extends DataMapper {
             'class' => "location",
             'other_field' => 'meter'
         ),
-        'attachment' => array(
-            'class' => "attachment",
-            'other_field' => 'meter'
-        ),
+        // 'attachment' => array(
+        //     'class' => "attachment",
+        //     'other_field' => 'meter'
+        // ),
         'reactive' => array(
             'class' => "meter",
             'other_field' => 'meter'
