@@ -2382,7 +2382,7 @@ class Spa extends REST_Controller {
 		$data["count"] = count($data["results"]);
 		$this->response($data, 200);
 	}
-	function loyalty_delete() {
+	function loyalty_delete(){
 		$models = json_decode($this->delete('models'));
 
 		foreach ($models as $key => $value) {
@@ -2394,6 +2394,31 @@ class Spa extends REST_Controller {
 				"status" => $obj->delete()
 			);
 		}
+	}
+	function addpoint_post(){
+		$models = json_decode($this->post('models'));
+		$data["results"] = [];
+		$data["count"] = 0;
+		foreach ($models as $value) {
+			$obj = new Spa_reward(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+			isset($value->amount) 				? $obj->amount 				= $value->amount : "";
+			isset($value->loyalty_id) 			? $obj->loyalty_id 			= $value->loyalty_id : 1;
+			isset($value->transaction_id) 		? $obj->transaction_id 		= $value->transaction_id : 1;
+			isset($value->transaction_amount) 	? $obj->transaction_amount 	= $value->transaction_amount : 1;
+			isset($value->type) 				? $obj->type 				= $value->type : 1;
+	   		if($obj->save()){
+	   			$addpoint = new Spa_card_reward(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	   			$addpoint->where("loyalty_id", $value->loyalty_id)->limit(1)->get();
+   				$addpoint = floatval($addpoint->amount) + floatval($value->amount);
+   				$addpoint->save();
+			   	$data["results"][] = array(
+			   		"id" 			=> $obj->id
+			   	);
+		    }
+		}
+		$data["count"] = count($data["results"]);
+		$this->response($data, 201);
 	}
 	//Generate invoice number
 	public function _generate_number($type, $date){

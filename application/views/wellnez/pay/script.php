@@ -4427,14 +4427,32 @@
                     var percentage = data.amount_per_point / 100;
                     amount = obj.amount * percentage;
                     this.set("pointAmount", amount);
+                    this.savePoint(amount, data);
                 }else{
                     //$
                     amount = obj.amount / data.amount_per_point;
                     this.set("pointAmount", amount);
+                    this.savePoint(amount, data);
                 }
-                console.log(amount);
             }
-        }
+        },
+        pointDS     : dataStore(apiUrl + "spa/addpoint"),
+        savePoint   : function(amount, loyalty){
+            $("#loadING").css("display", "block");
+            var self = this;
+            this.pointDS.data([]);
+            this.pointDS.add({
+                amount              : amount,
+                loyalty_id          : loyalty.id,
+                transaction_id      : this.get("invobj").id,
+                transaction_amount  : this.get("invobj").amount,
+                type                : 2, //Earn Point
+            });
+            this.pointDS.sync();
+            this.pointDS.bind("requestEnd", function(e){
+                $("#loadING").css("display", "none");
+            });
+        },
     });
     banhji.splitBill = kendo.observable({
         roomDS      : dataStore(apiUrl + "spa/room"),
