@@ -267,7 +267,7 @@
 		    <div class="col-md-6" >
 		    	<div class="cash-bg" style="margin-bottom: 10px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
 		    		<div class="col-xs-6 col-sm-6 col-md-6">
-		    			<a href="#/connect_list">
+		    			<a href="#/to_be_connection_list">
 							<div class="cash-invoice" style="background: #203864; color: #fff; width: 98%">
 								<div class="span9" style="padding-left: 0; text-align: left;">
 									<span data-bind="text: lang.lang.meter_to_be_connected" style="font-size: 15px; "></span>

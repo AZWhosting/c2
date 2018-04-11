@@ -1136,7 +1136,7 @@
 		<td align="center">
 			#if(status == 'Active'){#
 				#if(base == 'Point'){#
-					<a data-bind="click: earnPoint" style="color: red;">Earn</a> | <a data-bind="click: applyLoyalty">Apply</a>
+					<a data-bind="click: earnPoint" style="color: red;">Earn</a> | #if(reward_amount > 0){# <a data-bind="click: applyPoint">Apply</a> #}#
 				#}else{#
 					<a data-bind="click: applyLoyalty">Apply</a>
 				#}#
