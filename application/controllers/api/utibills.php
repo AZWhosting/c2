@@ -3763,10 +3763,25 @@ class Utibills extends REST_Controller {
 			$obj->activated 			= isset($value->activated)			? $value->activated:0;
 			$obj->reactive_status 		= isset($value->reactive_status)	? $value->reactive_status:0;
 			$obj->group 				= isset($value->group)				? $value->group:0;
-			$obj->worder 				= isset($value->worder)				? $value->worder:0;
-			$obj->sync 					= 1;
+			$obj->worder 				= isset($value->worder)				? intval($value->worder):0;
 			$obj->round 				= 0;
 			if($obj->save()){
+				//Return ballance from old meter
+				if($value->change_meter_id > 0){
+					$balancetxn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$balancetxn->where("meter_id", $value->change_meter_id);
+					$idarray = array(0,2);
+					$balancetxn->where_in("status", $idarray)->get();
+					if($balancetxn->exists()){
+						$balancetxn->update_all('meter_id', $obj->id);
+					}
+					$oldmet = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$oldmet->where("id", $value->change_meter_id)->limit(1)->get();
+					if($oldmet->exists()){
+						$oldmet->status = 0;
+						$oldmet->save();
+					}
+				}
 				//Add Transaction
 				if($value->txn_amount > 0){
 					$txn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
@@ -3927,6 +3942,7 @@ class Utibills extends REST_Controller {
 							"tax" 				=> floatval($txn->tax),
 							"number" 			=> $txn->number,
 							"issued_date" 		=> $txn->issued_date,
+							"bill_date" 		=> $txn->bill_date,
 							"locale" 			=> $txn->locale,
 							"item_lines" 		=> $value->item_lines,
 							"invoice_type" 		=> $txn->type,
@@ -3987,10 +4003,25 @@ class Utibills extends REST_Controller {
 			$obj->activated 			= isset($value->activated)			? $value->activated:0;
 			$obj->reactive_status 		= isset($value->reactive_status)	? $value->reactive_status:0;
 			$obj->group 				= isset($value->group)				? $value->group:0;
-			$obj->worder 				= isset($value->worder)				? $value->worder:0;
-			$obj->sync 					= 1;
+			$obj->worder 				= isset($value->worder)				? intval($value->worder):0;
 			$obj->round 				= 0;
 			if($obj->save()){
+				//Return ballance from old meter
+				if($value->change_meter_id > 0){
+					$balancetxn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$balancetxn->where("meter_id", $value->change_meter_id);
+					$idarray = array(0,2);
+					$balancetxn->where_in("status", $idarray)->get();
+					if($balancetxn->exists()){
+						$balancetxn->update_all('meter_id', $obj->id);
+					}
+					$oldmet = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$oldmet->where("id", $value->change_meter_id)->limit(1)->get();
+					if($oldmet->exists()){
+						$oldmet->status = 0;
+						$oldmet->save();
+					}
+				}
 				//Add Transaction
 				//Contact
 				$contxn = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);

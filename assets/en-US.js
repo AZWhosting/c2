@@ -1561,4 +1561,5 @@ var	en_US = {
 	"ending_balance": "Ending Balance",
 	"number_of_bloc": "Number of Bloc",
 	"maintenance": "Maintenance",
+	"change_meter": "Change Meter",
 }

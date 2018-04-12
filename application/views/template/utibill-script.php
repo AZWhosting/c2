@@ -6821,6 +6821,7 @@
             pageSize: 100
         }),
         attachmentDS: dataStore(apiUrl + "attachments"),
+        meterDS: dataStore(apiUrl + "utibills/meter"),
         itemDS: null,
         obj: null,
         objReactive: null,
@@ -6860,6 +6861,7 @@
                 if (this.propertyID > 0) {
                     this.addEmpty(this.propertyID);
                     this.addEmptyRe(this.propertyID);
+                    this.meterDS.filter({field: "property_id", value: this.propertyID});
                 } else {
                     banhji.router.navigate("/center");
                 }
@@ -7166,7 +7168,8 @@
                 number_digit: 4,
                 worder: 0,
                 image_url: "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/no_image.jpg",
-                user_id: banhji.userData.id
+                user_id: banhji.userData.id,
+                change_meter_id: 0,
             });
             var obj = this.dataSource.at(0);
             this.set("obj", obj);
@@ -7839,7 +7842,7 @@
                             var data = e.response.results[0];
                             banhji.InvoicePrint.dataSource = [];
                             if(data.invoice_type == "Invoice"){
-                                banhji.InvoicePrint.txnFormID = 32;
+                                banhji.InvoicePrint.txnFormID = "32";
                             }else{
                                 banhji.InvoicePrint.txnFormID = 1;
                             }

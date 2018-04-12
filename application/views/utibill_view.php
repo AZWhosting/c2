@@ -4003,9 +4003,24 @@
 				            					placeholder="Register Date" 
 				            					style="width: 100%;" />
 										</div>
+										<div class="control-group">
+											<label for="registeredDate"><span data-bind="text: lang.lang.change_meter"></span></label>
+								            <select data-role="dropdownlist"
+							                   data-value-primitive="true"
+							                   data-text-field="meter_number"
+							                   data-value-field="id"
+							                   data-bind="
+							                   	source: meterDS,
+							                   	value: obj.change_meter_id"
+							                   style="width: 100%; " ></select>
+										</div>
+									</div>
+									<div class="col-xs-12 col-sm-6">
 										<div class="control-group" data-bind="visible: electricMeter">	
 											<input type="checkbox" data-bind="checked: chkRe, events: {change : checkRe}">
 											<label for="registeredDate"><span data-bind="text: lang.lang.reactive_meter"></span></label>
+										</div>
+										<div class="control-group" data-bind="visible: electricMeter">
 										</div>
 									</div>
 								</div>						

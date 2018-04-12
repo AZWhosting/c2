@@ -1533,4 +1533,5 @@ var	km_KH = {
 	"ending_balance": "បំណុលចុងគ្រា",
 	"number_of_bloc": "ចំនួនទីតាំង",
 	"maintenance": "ថែទាំ"
+	"change_meter": "ប្តូរកុងទ៍រ",
 }
