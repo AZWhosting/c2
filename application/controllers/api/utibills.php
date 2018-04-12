@@ -3723,7 +3723,8 @@ class Utibills extends REST_Controller {
 					"txn_discount" 			=> floatval($txndiscount),
 					"locale" 				=> $contacts->locale,
 					"deposit_name" 			=> $depname,
-					"deposit_amount" 		=> floatval($depamount)
+					"deposit_amount" 		=> floatval($depamount),
+					"change_meter_id" 		=> intval($value->change_meter_id),
 				);
 			}
 		}
@@ -3764,6 +3765,7 @@ class Utibills extends REST_Controller {
 			$obj->reactive_status 		= isset($value->reactive_status)	? $value->reactive_status:0;
 			$obj->group 				= isset($value->group)				? $value->group:0;
 			$obj->worder 				= isset($value->worder)				? intval($value->worder):0;
+			$obj->change_meter_id 		= isset($value->change_meter_id)	? intval($value->change_meter_id):0;
 			$obj->round 				= 0;
 			if($obj->save()){
 				//Return ballance from old meter
@@ -4004,6 +4006,7 @@ class Utibills extends REST_Controller {
 			$obj->reactive_status 		= isset($value->reactive_status)	? $value->reactive_status:0;
 			$obj->group 				= isset($value->group)				? $value->group:0;
 			$obj->worder 				= isset($value->worder)				? intval($value->worder):0;
+			$obj->change_meter_id 		= isset($value->change_meter_id)	? intval($value->change_meter_id):0;
 			$obj->round 				= 0;
 			if($obj->save()){
 				//Return ballance from old meter

@@ -1,3 +1,5 @@
+    
+    Footer
     <script>
         // Google Font
         WebFontConfig = {
