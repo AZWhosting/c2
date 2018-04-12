@@ -56,6 +56,7 @@ class Memberships extends REST_Controller {
 		}
 
 		$obj->include_related("membership_type", "name");
+		$obj->where("deleted <>", 1);
 
 		//Results
 		if($page && $limit){
@@ -82,6 +83,7 @@ class Memberships extends REST_Controller {
 					"fellow_date"					=> $value->fellow_date,
 					"first_cdp_year"				=> $value->first_cdp_year,
 					"cpd_required_credit"			=> $value->cpd_required_credit,
+					"deleted"						=> $value->deleted,
 
 					"membership_type"				=> $value->membership_type_name,
 					"contacts" 						=> $value->contact->get_raw()->result()[0]
@@ -130,7 +132,8 @@ class Memberships extends REST_Controller {
 					"graduateion_date"				=> $obj->graduateion_date,
 					"fellow_date"					=> $obj->fellow_date,
 					"first_cdp_year"				=> $obj->first_cdp_year,
-					"cpd_required_credit"			=> $obj->cpd_required_credit
+					"cpd_required_credit"			=> $obj->cpd_required_credit,
+					"deleted"						=> $obj->deleted
 				);
 			}
 		}
@@ -149,17 +152,18 @@ class Memberships extends REST_Controller {
 			$obj = new Membership(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->get_by_id($value->id);
 			
-			isset($value->contact_id) 					? $obj->contact_id 						= $value->contact_id : "";
-			isset($value->membership_type_id) 			? $obj->membership_type_id 				= $value->membership_type_id : "";
-			isset($value->registration_date) 			? $obj->registration_date 				= $value->registration_date : "";
-			isset($value->membership_date) 				? $obj->membership_date 				= $value->membership_date : "";
-			isset($value->status) 						? $obj->status 							= $value->status : "";
-			isset($value->expiry_date) 					? $obj->expiry_date 					= $value->expiry_date : "";
-			isset($value->application_status) 			? $obj->application_status 				= $value->application_status : "";
-			isset($value->graduateion_date) 			? $obj->graduateion_date 				= $value->graduateion_date : "";
-			isset($value->fellow_date) 					? $obj->fellow_date 					= $value->fellow_date : "";
-			isset($value->first_cdp_year) 				? $obj->first_cdp_year 					= $value->first_cdp_year : "";
-			isset($value->cpd_required_credit) 			? $obj->cpd_required_credit 			= $value->cpd_required_credit : "";
+			isset($value->contact_id) 			? $obj->contact_id 				= $value->contact_id : "";
+			isset($value->membership_type_id) 	? $obj->membership_type_id 		= $value->membership_type_id : "";
+			isset($value->registration_date) 	? $obj->registration_date 		= $value->registration_date : "";
+			isset($value->membership_date) 		? $obj->membership_date 		= $value->membership_date : "";
+			isset($value->status) 				? $obj->status 					= $value->status : "";
+			isset($value->expiry_date) 			? $obj->expiry_date 			= $value->expiry_date : "";
+			isset($value->application_status) 	? $obj->application_status 		= $value->application_status : "";
+			isset($value->graduateion_date) 	? $obj->graduateion_date 		= $value->graduateion_date : "";
+			isset($value->fellow_date) 			? $obj->fellow_date 			= $value->fellow_date : "";
+			isset($value->first_cdp_year) 		? $obj->first_cdp_year 			= $value->first_cdp_year : "";
+			isset($value->cpd_required_credit) 	? $obj->cpd_required_credit 	= $value->cpd_required_credit : "";
+			isset($value->deleted) 				? $obj->deleted 				= $value->deleted : "";
 
 			//Contact			
 			if(isset($value->contacts)){
@@ -179,7 +183,8 @@ class Memberships extends REST_Controller {
 					"graduateion_date"				=> $obj->graduateion_date,
 					"fellow_date"					=> $obj->fellow_date,
 					"first_cdp_year"				=> $obj->first_cdp_year,
-					"cpd_required_credit"			=> $obj->cpd_required_credit
+					"cpd_required_credit"			=> $obj->cpd_required_credit,
+					"deleted"						=> $obj->deleted,
 				);		
 			}
 		}

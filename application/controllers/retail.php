@@ -7,7 +7,8 @@ class Retail extends CI_Controller {
 	}
 	
 	public function index() {	
-		$this->load->view("retail/header");
+		$this->load->view("retail/header");		
+		$this->load->view("retail/sidebar");
 		$this->load->view("retail/home/home");
 		$this->load->view("retail/home/script");
 		$this->load->view("retail/footer");
@@ -96,9 +97,9 @@ class Retail extends CI_Controller {
 	// 	$this->load->view("wellnez/sidebar");
 	// }
 
-	// public function sidebar() {
-	// 	$this->load->view("wellnez/sidebar");
-	// }
+	public function sidebar() {
+		$this->load->view("retail/sidebar");
+	}
 
 }
 

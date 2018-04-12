@@ -86,15 +86,21 @@ class Ops extends REST_Controller {
 			 // 	$this->db->insert_batch('payment_methods', $raw);
 				
 				// Add new fields
-				// $fields = array(
-				// 	// "tags" => array(
-				// 	// 	"type" 		=> "DECIMAL",
-				// 	// 	"constraint"=> "30,15",
-				// 	// 	"null" 		=> FALSE,
-				// 	// 	"default" 	=> 0
-				// 	// )
-				// );
-				// $data['results'][] = $this->dbforge->add_column("field_values", $fields);
+				$fields = array(
+					// "tags" => array(
+					// 	"type" 		=> "DECIMAL",
+					// 	"constraint"=> "30,15",
+					// 	"null" 		=> FALSE,
+					// 	"default" 	=> 0
+					// ),
+					"deleted" => array(
+						"type" 		=> "TINYINT",
+						"constraint"=> 1,
+						"null" 		=> FALSE,
+						"default" 	=> 0
+					)
+				);
+				$data['results'][] = $this->dbforge->add_column("memberships", $fields);
 				
 			    // Modify fields
 		 	// 	$fields = array(

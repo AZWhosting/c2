@@ -8,7 +8,6 @@ class Utibill extends CI_Controller {
 	
 	public function index() {	
 		$this->load->view("template/utibill-header");
-		// $this->_render("utibill_view");
 		$this->load->view("utibill_view");
 		$this->load->view("template/utibill-script");
 		$this->load->view("template/utibill-footer");
