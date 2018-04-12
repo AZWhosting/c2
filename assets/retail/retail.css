@@ -1,0 +1,56 @@
+.navbar-custom-menu .nav.navbar-nav li.dropdown.messages-menu a.dropdown-toggle .fa.fa-plus-circle:before,
+.navbar-custom-menu .nav.navbar-nav li.dropdown.notifications-menu a.dropdown-toggle .fa.fa-question-circle:before,
+.navbar-custom-menu .nav.navbar-nav li.dropdown.notifications-menu a.dropdown-toggle .fa.fa-list:before{
+	font-size: 25px;
+}
+.skin-blue .main-header .logo{
+	background-color: #367fa9;
+}
+.skin-blue .main-header .navbar {
+    background-color: #1F4774;
+}
+.skin-blue .wrapper, .skin-blue .main-sidebar, .skin-blue .left-side {
+    background-color: #1C2633;
+}
+.skin-blue .sidebar-form input[type="text"], .skin-blue .sidebar-form .btn{
+	background: #fff;
+}
+.nav-tabs-custom>.nav-tabs>li.active {
+    border-bottom-color: #3c8dbc;
+    border-top-color: none;
+}
+.nav-tabs-custom>.nav-tabs>li {
+    border-bottom: 3px solid transparent;
+    margin-bottom: 0;
+    margin-right: 5px;
+    border-top: none;
+}
+
+
+
+.saleOverview{
+	background: #0077c5;
+	width: 100%;
+	float: left;
+	color: #fff;
+}
+.saleOverview h2{
+	font-size: 20px;
+	text-align: center;
+}
+.saleOverview p{
+	font-size: 18px;
+	text-align: center;
+}
+@media (min-width: 768px){
+	.navbar-nav>li>a {
+	    padding-top: 12px;
+	    padding-bottom: 12px;
+	}
+}
+@media (max-width: 991px){
+	.navbar-custom-menu .navbar-nav>li>a {
+	     padding-top: 12px;
+	    padding-bottom: 12px;
+	}
+}
