@@ -3558,7 +3558,9 @@ class Utibills extends REST_Controller {
 				$currency= $value->currency->get();
 				$contacts = $value->contact->get();
 				$property = $value->property->get();
-				$image_url = $value->attachment->get();
+				$att = new Attachment(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$att->where("id", $value->attachment_id)->limit(1);
+				$image_url = $att->get();
 				$reactive = $value->reactive->get_raw();
 				$itemline = [];
 				$itemassline = [];
