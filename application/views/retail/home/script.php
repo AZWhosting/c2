@@ -2990,13 +2990,52 @@
     });
     //-----------------------------------------
     banhji.Index = kendo.observable({
-        lang: langVM,
-        institute: banhji.institute,
-        actualCash: 0,
-        actualDS: dataStore(apiUrl + "utibills/cashier_actual"),
-        sessionDS: dataStore(apiUrl + "utibills/session"),
-        pageLoad: function() {
+        lang            : langVM,
+        Institute       : banhji.institute,
+        actualCash      : 0,
+        dataSource      : dataStore(apiUrl + "customer_modules/dashboard"),
+        actualDS        : dataStore(apiUrl + "utibills/cashier_actual"),
+        sessionDS       : dataStore(apiUrl + "utibills/session"),
+        graphDS         : dataStore(apiUrl + "customer_modules/monthly_sale"),
+        obj             : {},
+        setObj          : function(){
+            this.set("obj", {
+                //Sale
+                sale            : 0,
+                sale_customer   : 0,
+                sale_product    : 0,
+                sale_ordered    : 0,
+                //AR
+                ar              : 0,
+                ar_open         : 0,
+                ar_customer     : 0,
+                ar_overdue      : 0,
+                collection_day  : 0
+            });
         },
+        pageLoad: function() {
+            var self = this, obj = this.get("obj");
+            this.graphDS.read();
+
+            this.dataSource.query({
+                filter: []
+            }).then(function(){
+                var view = self.dataSource.view();
+
+                obj.set("sale", kendo.toString(view[0].sale, banhji.locale=="km-KH"?"c0":"c2", banhji.locale));
+                obj.set("sale_customer", kendo.toString(view[0].sale_customer, "n0"));
+                obj.set("sale_product", kendo.toString(view[0].sale_product, "n0"));
+                obj.set("sale_ordered", kendo.toString(view[0].sale_ordered, "n0"));
+
+                obj.set("ar", kendo.toString(view[0].ar, banhji.locale=="km-KH"?"c0":"c2", banhji.locale));
+                obj.set("ar_open", kendo.toString(view[0].ar_open, "n0"));
+                obj.set("ar_customer", kendo.toString(view[0].ar_customer, "n0"));
+                obj.set("ar_overdue", kendo.toString(view[0].ar_overdue, "n0"));
+
+                obj.set("collection_day", kendo.toString(view[0].collection_day, "n0"));
+            });
+        },
+        
         save: function() {
         },
         cancel: function() {
@@ -3121,4 +3160,4 @@
         var Href1 = '<?php echo base_url(); ?>assets/water/winvoice-res.css';
         var Href2 = '<?php echo base_url(); ?>assets/water/winvoice-print.css';
     });
-</script>
+</script>    
