@@ -3,22 +3,29 @@
 
 <title>Retail</title>
 <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 <!-- <link rel="icon" type="image/png" href="<?php echo base_url();?>assets/spa/icon-wellnez.png"> -->
-<link href="https://fonts.googleapis.com/css?family=Roboto+Slab:300" rel="stylesheet">
 
-<!-- Theme CSS AdminLTE-->
-<link rel="stylesheet" href="<?php echo base_url()?>assets/retail/bootstrap.min.css" >
-<link rel="stylesheet" href="<?php echo base_url()?>assets/retail/font-awesome.min.css" >
-<link rel="stylesheet" href="<?php echo base_url()?>assets/retail/ionicons.min.css">
-<link rel="stylesheet" href="<?php echo base_url()?>assets/retail/AdminLTE.min.css" >
-<link rel="stylesheet" href="<?php echo base_url()?>assets/retail/skin-blue.min.css">
+<!-- Theme CSS Elegant-->
+<link rel="stylesheet" href="<?php echo base_url()?>assets/retail/style.min.css" >
+<link rel="stylesheet" href="<?php echo base_url()?>assets/retail/morris.css" >
+<link rel="stylesheet" href="<?php echo base_url()?>assets/retail/jquery.toast.css" >
+<link rel="stylesheet" href="<?php echo base_url()?>assets/retail/c3.min.css">
 <link rel="stylesheet" href="<?php echo base_url()?>assets/retail/retail.css">
 
-<!-- <link re="stylesheet" href="https://fontawesome.com/v4.7.0/assets/font-awesome/css/font-awesome.css"> -->
-
-
+<script src="<?php echo base_url()?>assets/retail/jquery-3.2.1.min.js"></script>
+<script src="<?php echo base_url()?>assets/retail/popper.min.js"></script>
+<script src="<?php echo base_url()?>assets/retail/perfect-scrollbar.jquery.min.js"></script>
+<script src="<?php echo base_url()?>assets/retail/waves.js"></script>
+<script src="<?php echo base_url()?>assets/retail/sidebarmenu.js"></script>
+<script src="<?php echo base_url()?>assets/retail/custom.min.js"></script>
+<script src="<?php echo base_url()?>assets/retail/raphael-min.js"></script>
+<script src="<?php echo base_url()?>assets/retail/morris.min.js"></script>
+<script src="<?php echo base_url()?>assets/retail/jquery.sparkline.min.js"></script>
+<script src="<?php echo base_url()?>assets/retail/d3.min.js"></script>
+<script src="<?php echo base_url()?>assets/retail/c3.min.js"></script>
+<script src="<?php echo base_url()?>assets/retail/jquery.toast.js"></script>
     
 <!-- End -->
 
@@ -37,7 +44,7 @@
 
 <!-- Kedo JS by DAWINE -->
 <!-- <script src="<?php echo base_url()?>assets/kendo/js/jszip.min.js"></script> -->
-<script src="<?php echo base_url()?>assets/kendo/js/jquery.min.js"></script>
+<!-- <script src="<?php echo base_url()?>assets/kendo/js/jquery.min.js"></script> -->
 <script src="<?php echo base_url()?>assets/kendo/js/kendo.all.min.js"></script>
 <script src="<?php echo base_url()?>assets/kendo/examples/content/shared/js/console.js"></script>
 
@@ -69,125 +76,164 @@
 
 </head>
 
-<body class="hold-transition skin-blue sidebar-mini">
-	<div class="wrapper">
-	    <!-- Main Header -->
-	    <header class="main-header">
-	        <!-- Logo -->
-	        <a href="" class="logo">
-	            <!-- mini logo for sidebar mini 50x50 pixels -->
-	            <span class="logo-mini"><b>M</b>acro</span>
-	            <!-- logo for regular state and mobile devices -->
-	            <span class="logo-lg"><b>BanhJi</b>Macro</span>
-	        </a>
+<body class="skin-default-dark fixed-layout" >
+	<div class="preloader">
+        <div class="loader">
+            <div class="loader__figure"></div>
+        </div>
+    </div>
 
-	        <!-- Header Navbar -->
-	        <nav class="navbar navbar-static-top" role="navigation">
-	            <!-- Sidebar toggle button-->
-	            <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
-	        		<span class="sr-only">Toggle navigation</span>
-	      		</a>
-	      		<span style="padding: 11px 15px 11px 0;  float: left; color: #fff; font-size: 20px; font-weight: 700;">Sales</span>
-	            	
-	            <!-- search form (Optional) -->
-		      	<form action="#" method="get" class="sidebar-form hidden-xs" style="width: 50%; float: left; margin-left: 23%;">
-			        <div class="input-group">
-			          	<input style="height: 28px;" type="text" name="q" class="form-control" placeholder="Search..." style="background: #fff">
-			          	<span class="input-group-btn">
-			              	<button type="submit" name="search" id="search-btn" class="btn btn-flat" style="padding: 2px 12px; height: 28px;"><i class="fa fa-search"></i>
-			              	</button>
-			            </span>
-			        </div>
-			     </form>
-			    <!-- /.search form -->
+    <div id="main-wrapper">
+        <header class="topbar">
+            <nav class="navbar top-navbar navbar-expand-md navbar-dark">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="<?php echo base_url();?>retail/home">
+                        <!-- Logo icon --><b>
+                            <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
+                            <!-- Dark Logo icon -->
+                            <img src="<?php echo base_url()?>assets/retail/logo-icon.png" alt="homepage" class="dark-logo" />
+                            <!-- Light Logo icon -->
+                            <img src="<?php echo base_url()?>assets/retail/logo-light-icon.png" alt="homepage" class="light-logo" />
+                        </b>
+                        <!--End Logo icon -->
+                        <!-- Logo text --><span>
+                         <!-- dark Logo text -->
+                         <img src="<?php echo base_url()?>assets/retail/logo-text.png" alt="homepage" class="dark-logo" />
+                         <!-- Light Logo text -->    
+                         <img src="<?php echo base_url()?>assets/retail/logo-light-text.png" class="light-logo" alt="homepage" /></span> </a>
+                </div>
 
-	            <!-- Navbar Right Menu -->
-	            <div class="navbar-custom-menu">
-	                <ul class="nav navbar-nav">
-	                    <!-- Messages: style can be found in dropdown.less-->
-	                    <li class="dropdown messages-menu">
-	                        <!-- Menu toggle button -->
-	                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-				              	<i class="fa fa-plus-circle"></i>
-				            </a>
-	                        <ul class="dropdown-menu">
-	                            <li class="header">You have 4 messages</li>
-	                            <li>
-	                                <!-- inner menu: contains the messages -->
-	                                <ul class="menu">
-	                                    <li>
-	                                        <!-- start message -->
-	                                        <a href="#">
-	                                            <div class="pull-left">
-	                                                <!-- User Image -->
-	                                                <img src="<?php echo base_url()?>assets/retail/user2-160x160.jpg" class="img-circle" alt="User Image">
-	                                            </div>
-	                                            <!-- Message title and timestamp -->
-	                                            <h4>
-	                                                Support Team
-	                                                <small><i class="fa fa-clock-o"></i> 5 mins</small>
-	                                            </h4>
-	                                            <!-- The message -->
-	                                            <p>Why not buy a new awesome theme?</p>
-	                                        </a>
-	                                    </li>
-	                                    <!-- end message -->
-	                                </ul>
-	                                <!-- /.menu -->
-	                            </li>
-	                            <li class="footer"><a href="#">See All Messages</a></li>
-	                        </ul>
-	                    </li>
-	                    <!-- /.messages-menu -->
+                <div class="navbar-collapse">
 
-	                    <!-- Notifications Menu -->
-	                    <li class="dropdown notifications-menu">
-	                        <!-- Menu toggle button -->
-	                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-				              	<i class="fa fa-question-circle"></i>
-				            </a>
-	                        <ul class="dropdown-menu">
-	                            <li class="header">You have 10 notifications</li>
-	                            <li>
-	                                <!-- Inner Menu: contains the notifications -->
-	                                <ul class="menu">
-	                                    <li>
-	                                        <!-- start notification -->
-	                                        <a href="#">
-						                      	<i class="fa fa-users text-aqua"></i> 5 new members joined today
-						                    </a>
-	                                    </li>
-	                                    <!-- end notification -->
-	                                </ul>
-	                            </li>
-	                            <li class="footer"><a href="#">View all</a></li>
-	                        </ul>
-	                    </li>
-
-	                    <!-- Notifications Menu -->
-	                    <li class="dropdown notifications-menu">
-	                        <!-- Menu toggle button -->
-	                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-				              	<i class="fa fa-list"></i>
-				            </a>
-	                        <ul class="dropdown-menu">
-	                            <li class="header">You have 10 notifications</li>
-	                            <li>
-	                                <!-- Inner Menu: contains the notifications -->
-	                                <ul class="menu">
-	                                    <li>
-	                                        <!-- start notification -->
-	                                        <a href="#">
-						                      	<i class="fa fa-users text-aqua"></i> 5 new members joined today
-						                    </a>
-	                                    </li>
-	                                    <!-- end notification -->
-	                                </ul>
-	                            </li>
-	                            <li class="footer"><a href="#">View all</a></li>
-	                        </ul>
-	                    </li>
-	                </ul>
-	            </div>
-	        </nav>
-	    </header>                    
+                    <ul class="navbar-nav mr-auto">
+                        <!-- This is  -->
+                        <li class="nav-item hidden-sm-up"> <a class="nav-link nav-toggler waves-effect waves-light" href="javascript:void(0)"><i class="ti-menu"></i></a></li>
+                        
+                       
+                        <li class="nav-item search-box"> <a class="nav-link waves-effect waves-dark" href="javascript:void(0)"><i class="ti-search"></i></a>
+                            <form class="app-search">
+                                <input type="text" class="form-control" placeholder="Search &amp; enter"> <a class="srh-btn"><i class="ti-close"></i></a>
+                            </form>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav my-lg-0">
+                       
+                        <li class="nav-item dropdown mega-dropdown"> <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="ti-layout-width-default"></i></a>
+                            <div class="dropdown-menu animated bounceInDown">
+                                <ul class="mega-dropdown-menu row">
+                                    <li class="col-lg-3 col-xlg-2 m-b-30">
+                                        <h4 class="m-b-20">CAROUSEL</h4>
+                                        <!-- CAROUSEL -->
+                                        <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                                            <div class="carousel-inner" role="listbox">
+                                                <div class="carousel-item active">
+                                                    <div class="container"> <img class="d-block img-fluid" src="<?php echo base_url()?>assets/retail/big/img1.jpg" alt="First slide"></div>
+                                                </div>
+                                                <div class="carousel-item">
+                                                    <div class="container"><img class="d-block img-fluid" src="<?php echo base_url()?>assets/retail/big/img2.jpg" alt="Second slide"></div>
+                                                </div>
+                                                <div class="carousel-item">
+                                                    <div class="container"><img class="d-block img-fluid" src="<?php echo base_url()?>assets/retail/big/img3.jpg" alt="Third slide"></div>
+                                                </div>
+                                            </div>
+                                            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev"> <span class="carousel-control-prev-icon" aria-hidden="true"></span> <span class="sr-only">Previous</span> </a>
+                                            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next"> <span class="carousel-control-next-icon" aria-hidden="true"></span> <span class="sr-only">Next</span> </a>
+                                        </div>
+                                        <!-- End CAROUSEL -->
+                                    </li>
+                                    <li class="col-lg-3 m-b-30">
+                                        <h4 class="m-b-20">ACCORDION</h4>
+                                        <!-- Accordian -->
+                                        <div id="accordion" class="nav-accordion" role="tablist" aria-multiselectable="true">
+                                            <div class="card">
+                                                <div class="card-header" role="tab" id="headingOne">
+                                                    <h5 class="mb-0">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                  Collapsible Group Item #1
+                                                </a>
+                                              </h5> </div>
+                                                <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
+                                                    <div class="card-body"> Anim pariatur cliche reprehenderit, enim eiusmod high. </div>
+                                                </div>
+                                            </div>
+                                            <div class="card">
+                                                <div class="card-header" role="tab" id="headingTwo">
+                                                    <h5 class="mb-0">
+                                                <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                                  Collapsible Group Item #2
+                                                </a>
+                                              </h5> </div>
+                                                <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                                    <div class="card-body"> Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. </div>
+                                                </div>
+                                            </div>
+                                            <div class="card">
+                                                <div class="card-header" role="tab" id="headingThree">
+                                                    <h5 class="mb-0">
+                                                <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                                  Collapsible Group Item #3
+                                                </a>
+                                              </h5> </div>
+                                                <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree">
+                                                    <div class="card-body"> Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="col-lg-3  m-b-30">
+                                        <h4 class="m-b-20">CONTACT US</h4>
+                                        <!-- Contact -->
+                                        <form>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" id="exampleInputname1" placeholder="Enter Name"> </div>
+                                            <div class="form-group">
+                                                <input type="email" class="form-control" placeholder="Enter email"> </div>
+                                            <div class="form-group">
+                                                <textarea class="form-control" id="exampleTextarea" rows="3" placeholder="Message"></textarea>
+                                            </div>
+                                            <button type="submit" class="btn btn-info">Submit</button>
+                                        </form>
+                                    </li>
+                                    <li class="col-lg-3 col-xlg-4 m-b-30">
+                                        <h4 class="m-b-20">List style</h4>
+                                        <!-- List style -->
+                                        <ul class="list-style-none">
+                                            <li><a href="javascript:void(0)"><i class="fa fa-check text-success"></i> You can give link</a></li>
+                                            <li><a href="javascript:void(0)"><i class="fa fa-check text-success"></i> Give link</a></li>
+                                            <li><a href="javascript:void(0)"><i class="fa fa-check text-success"></i> Another Give link</a></li>
+                                            <li><a href="javascript:void(0)"><i class="fa fa-check text-success"></i> Forth link</a></li>
+                                            <li><a href="javascript:void(0)"><i class="fa fa-check text-success"></i> Another fifth link</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="<?php echo base_url()?>assets/retail/1.jpg" alt="user" class="img-circle" width="30"></a>
+                            <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
+                                <span class="with-arrow"><span class="bg-primary"></span></span>
+                                <div class="d-flex no-block align-items-center p-15 bg-primary text-white m-b-10">
+                                    <div class=""><img src="<?php echo base_url()?>assets/retail/1.jpg" alt="user" class="img-circle" width="60"></div>
+                                    <div class="m-l-10">
+                                        <h4 class="m-b-0">Steave Jobs</h4>
+                                        <p class=" m-b-0">varun@gmail.com</p>
+                                    </div>
+                                </div>
+                                <a class="dropdown-item" href="javascript:void(0)"><i class="ti-user m-r-5 m-l-5"></i> My Profile</a>
+                                <a class="dropdown-item" href="javascript:void(0)"><i class="ti-wallet m-r-5 m-l-5"></i> My Balance</a>
+                                <a class="dropdown-item" href="javascript:void(0)"><i class="ti-email m-r-5 m-l-5"></i> Inbox</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="javascript:void(0)"><i class="ti-settings m-r-5 m-l-5"></i> Account Setting</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="javascript:void(0)"><i class="fa fa-power-off m-r-5 m-l-5"></i> Logout</a>
+                                <div class="dropdown-divider"></div>
+                                <div class="p-l-30 p-10"><a href="javascript:void(0)" class="btn btn-sm btn-success btn-rounded">View Profile</a></div>
+                            </div>
+                        </li>
+                       
+                       
+                    </ul>
+                </div>
+            </nav>
+        </header>                                                                                                                                                                                                                                                                                                                                                        

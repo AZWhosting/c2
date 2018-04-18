@@ -9,8 +9,8 @@ class Choeun extends CI_Controller {
 	public function index() {	
 		// $fineDate = new DateTime(date('Y-m-d'));
 		// echo $a = $fineDate->getTimestamp().'<br>';
-		$fdate = new DateTime(date(''));
-		echo $b = $fdate->getTimestamp().'<br>';
+		// $fdate = new DateTime(date(''));
+		// echo $b = $fdate->getTimestamp().'<br>';
 		// echo $c = $b - $a."<br>";
 		// echo $b + $c."<br>";
 
@@ -30,6 +30,10 @@ class Choeun extends CI_Controller {
 	 //    echo $d->format('Y-m-d');
 		// $date = strtotime('2012-05-01 -1 months');
 		// echo $date;
+		$now = date("Y-m-d H:i:s");
+		echo $now;
+		$new_time = date("Y-m-d H:i:s", strtotime('+5 hours',strtotime($now)));
+		echo $new_time;
 	}
 }
 

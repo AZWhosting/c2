@@ -2628,7 +2628,7 @@ class Sales extends REST_Controller {
 						"customer"		=> $value->transaction_contact_name,
 						"number" 		=> $value->transaction_number,
 						"issued_date" 	=> $value->transaction_issued_date,
-						"quantity" 		=> $value->quantity,
+						"quantity" 		=> floatval($value->quantity),
 						"measurement"	=> $value->measurement_name,
 						"price" 		=> $value->price,
 						"amount" 		=> $amount

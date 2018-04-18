@@ -6,7 +6,7 @@ class Retail extends CI_Controller {
 		parent::__construct();
 	}
 	
-	public function index() {	
+	public function home() {	
 		$this->load->view("retail/header");		
 		$this->load->view("retail/sidebar");
 		$this->load->view("retail/home/home");
@@ -14,12 +14,13 @@ class Retail extends CI_Controller {
 		$this->load->view("retail/footer");
 	}
 
-	// public function home() {	
-	// 	$this->load->view("wellnez/header");
-	// 	$this->load->view("wellnez/home/home");
-	// 	$this->load->view("wellnez/home/script");
-	// 	$this->load->view("wellnez/footer");
-	// }
+	public function sales() {	
+		$this->load->view("retail/header");
+		$this->load->view("retail/sidebar");
+		$this->load->view("retail/sales/sales");
+		$this->load->view("retail/sales/script");
+		$this->load->view("retail/footer");
+	}
 
 	// public function books() {
 	// 	$this->load->view("wellnez/header");
