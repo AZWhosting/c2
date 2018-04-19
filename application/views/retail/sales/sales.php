@@ -41,141 +41,145 @@
                     </div>
                 </div>
             </div> -->
+            <div class="row page-titles">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+			                <!-- Nav tabs -->
+			                <ul class="nav nav-tabs customtab" role="tablist">
+			                    <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#reports" role="tab"><span class="hidden-sm-up"><i class="ti-layout-grid2-thumb"></i></span> <span class="hidden-xs-down">Reports</span></a> </li>
+			                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#sales_transaction" role="tab"><span class="hidden-sm-up"><i class="ti-layout-accordion-list"></i></span> <span class="hidden-xs-down">Sales Transaction</span></a> </li>
+			                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#customers" role="tab"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down">Customers</span></a> </li>
+			                </ul>
+			                <!-- Tab panes -->
+			                <div class="tab-content">
+			                    <div class="tab-pane active" id="reports" role="tabpanel">
+			                        <div class="p-10">
+			                        	<div class="row">
+					    					<div class="col-md-4">
+												<div class="home-chart">
+													<div data-role="chart"
+										                 data-legend="{ position: 'top' }"
+										                 data-series-defaults="{ type: 'column' }"
+										                 data-tooltip='{
+										                    visible: true,
+										                    format: "{0}%",
+										                    template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
+										                 }'
+										                 data-series="[
+										                                 { field: 'sale', name: langVM.lang.monthly_sale, categoryField:'month', color: '#203864', overlay:{ gradient: 'none'} },
+										                                 { field: 'order', name: langVM.lang.monthly_order, categoryField:'month', color: '#9CB9D9', overlay:{ gradient: 'none'} }
+										                             ]"
+										                 data-auto-bind="false"
+										                 data-bind="source: graphDS"
+										                 style="height: 250px;" ></div>
+										            </div>
+					    					</div>
+					    					<div class="col-md-4">
+					    						<div class="saleOverview">
+					    							<h2 data-bind="text: lang.lang.sale_overview"></h2>
+					    							<p data-bind="text: obj.sale"></p>
+					    							<div class="col-md-12">
+					    								<div class="col-md-4">
+					    									<span data-bind="text: obj.sale_customer"></span>
+					    									<span data-bind="text: lang.lang.customer"></span>
+					    								</div>
+					    								<div class="col-md-4">
+					    									<span data-bind="text: obj.sale_product"></span>
+					    									<span data-bind="text: lang.lang.product"></span>
+					    								</div>
+					    								<div class="col-md-4">
+					    									<span data-bind="text: obj.sale_ordered"></span>
+					    									<span data-bind="text: lang.lang.order"></span>
+					    								</div>
+					    							</div>
+					    						</div>
+					    					</div>
+					    					<div class="col-md-4">
+					    						<div class="saleOverview">
+					    							<h2 data-bind="text: lang.lang.receivable_management"></h2>
+					    							<p data-bind="text: obj.ar"></p>
+					    							<div class="col-md-12">
+					    								<div class="col-md-3">
+					    									<span data-bind="text: obj.ar_open"></span>
+					    									<span data-bind="text: lang.lang.open1"></span>
+					    								</div>
+					    								<div class="col-md-3">
+					    									<span data-bind="text: obj.ar_customer"></span>
+					    									<span data-bind="text: lang.lang.customer"></span>
+					    								</div>
+					    								<div class="col-md-3">
+					    									<span data-bind="text: obj.ar_overdue"></span>
+					    									<span data-bind="text: lang.lang.overdue"></span>
+					    								</div>
+					    								<div class="col-md-3">
+					    									<span data-bind="text: obj.collection_day"></span>
+					    									<span data-bind="text: lang.lang.collection_day"></span>
+					    								</div>
+					    							</div>
+					    						</div>
+					    					</div>
+					    				</div>
 
-            <div class="card page-titles">
-                <div class="card-body p-b-0">
-                <!-- Nav tabs -->
-                <ul class="nav nav-tabs customtab" role="tablist">
-                    <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#reports" role="tab"><span class="hidden-sm-up"><i class="ti-home"></i></span> <span class="hidden-xs-down">Reports</span></a> </li>
-                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#sales_transaction" role="tab"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down">Sales Transaction</span></a> </li>
-                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#customers" role="tab"><span class="hidden-sm-up"><i class="ti-email"></i></span> <span class="hidden-xs-down">Customers</span></a> </li>
-                </ul>
-                <!-- Tab panes -->
-                <div class="tab-content">
-                    <div class="tab-pane active" id="reports" role="tabpanel">
-                        <div class="p-10">
-                        	<div class="row">
-		    					<div class="col-md-4">
-									<div class="home-chart">
-										<div data-role="chart"
-							                 data-legend="{ position: 'top' }"
-							                 data-series-defaults="{ type: 'column' }"
-							                 data-tooltip='{
-							                    visible: true,
-							                    format: "{0}%",
-							                    template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
-							                 }'
-							                 data-series="[
-							                                 { field: 'sale', name: langVM.lang.monthly_sale, categoryField:'month', color: '#203864', overlay:{ gradient: 'none'} },
-							                                 { field: 'order', name: langVM.lang.monthly_order, categoryField:'month', color: '#9CB9D9', overlay:{ gradient: 'none'} }
-							                             ]"
-							                 data-auto-bind="false"
-							                 data-bind="source: graphDS"
-							                 style="height: 250px;" ></div>
-							            </div>
-		    					</div>
-		    					<div class="col-md-4">
-		    						<div class="saleOverview">
-		    							<h2 data-bind="text: lang.lang.sale_overview"></h2>
-		    							<p data-bind="text: obj.sale"></p>
-		    							<div class="col-md-12">
-		    								<div class="col-md-4">
-		    									<span data-bind="text: obj.sale_customer"></span>
-		    									<span data-bind="text: lang.lang.customer"></span>
-		    								</div>
-		    								<div class="col-md-4">
-		    									<span data-bind="text: obj.sale_product"></span>
-		    									<span data-bind="text: lang.lang.product"></span>
-		    								</div>
-		    								<div class="col-md-4">
-		    									<span data-bind="text: obj.sale_ordered"></span>
-		    									<span data-bind="text: lang.lang.order"></span>
-		    								</div>
-		    							</div>
-		    						</div>
-		    					</div>
-		    					<div class="col-md-4">
-		    						<div class="saleOverview">
-		    							<h2 data-bind="text: lang.lang.receivable_management"></h2>
-		    							<p data-bind="text: obj.ar"></p>
-		    							<div class="col-md-12">
-		    								<div class="col-md-3">
-		    									<span data-bind="text: obj.ar_open"></span>
-		    									<span data-bind="text: lang.lang.open1"></span>
-		    								</div>
-		    								<div class="col-md-3">
-		    									<span data-bind="text: obj.ar_customer"></span>
-		    									<span data-bind="text: lang.lang.customer"></span>
-		    								</div>
-		    								<div class="col-md-3">
-		    									<span data-bind="text: obj.ar_overdue"></span>
-		    									<span data-bind="text: lang.lang.overdue"></span>
-		    								</div>
-		    								<div class="col-md-3">
-		    									<span data-bind="text: obj.collection_day"></span>
-		    									<span data-bind="text: lang.lang.collection_day"></span>
-		    								</div>
-		    							</div>
-		    						</div>
-		    					</div>
-		    				</div>
-
-		    				<div class="row">
-		    					<div class="report">
-		    						<div class="col-sm-4">
-		    							<h3><a href="#/sale_summary_by_customer" data-bind="text: lang.lang.sale_summary_by_customer" ></a></h3>
-		    							<p data-bind="text: lang.lang.summarizes_total_sales"></p>
-		    						</div>
-		    						<div class="col-sm-4">
-		    							<h3><a href="#/sale_summary_by_product" data-bind="text: lang.lang.sale_summary_by_product_services" ></a></h3>
-		    							<p data-bind="text: lang.lang.summarizes_total_sales_for_each_product"></p>
-		    						</div>
-		    						<div class="col-sm-4">
-		    							<h3><a href="#/sale_detail_by_customer" data-bind="text: lang.lang.sale_detail_by_customer" ></a></h3>
-		    							<p data-bind="text: lang.lang.lists_individual_sale"></p>
-		    						</div>
-		    					</div>
-		    					<div class="report">
-		    						<div class="col-sm-4">
-		    							<h3><a href="#/sale_detail_by_product" data-bind="text: lang.lang.sale_detail_by_product_services" ></a></h3>
-		    							<p data-bind="text: lang.lang.lists_individual_sale_transactions"></p>
-		    						</div>
-		    						<div class="col-sm-4">
-		    							<h3><a href="#/customer_balance_summary" data-bind="text: lang.lang.customer_balance_summary" ></a></h3>
-		    							<p data-bind="text: lang.lang.summarizes_total_sales"></p>
-		    						</div>
-		    						<div class="col-sm-4">
-		    							<h3><a href="#/customer_balance_detail" data-bind="text: lang.lang.customer_balance_detail" ></a></h3>
-		    							<p data-bind="text: lang.lang.lists_individual_unpaid_invoices_for_each_customer"></p>
-		    						</div>
-		    					</div>
-		    					<div class="report">
-		    						<div class="col-sm-4">
-										<h3><a href="#/receivable_aging_summary" data-bind="text: lang.lang.receivable_aging_summary"></a></h3>
-										<p data-bind="text: lang.lang.lists_all_unpaid_invoices1"></p>	
-									</div>
-									<div class="col-sm-4">
-										<h3><a href="#/receivable_aging_detail" data-bind="text: lang.lang.receivable_aging_detail"></a></h3>
-										<p data-bind="text: lang.lang.lists_individual_unpaid_invoices_grouped_by_customer"></p>
-									</div>
-									<div class="col-sm-4">
-										<h3><a href="#/collect_invoice" data-bind="text: lang.lang.list_of_invoices_to_be_collected"></a></h3>
-										<p data-bind="text: lang.lang.lists_all_unpaid_invoices_grouped_by_due_today_and_overdue"></p>
-									</div>
-								</div>
-								<div class="report">
-									<div class="col-sm-4">
-										<h3><a href="#/collection_report" data-bind="text: lang.lang.collection_report"></a></h3>
-										<p data-bind="text: lang.lang.lists_of_collected_invoices_for_the_select_period_of_time_group_by_method_of_payment"></p>
-									</div>
-								</div>
-		    				</div>
-                        </div>
-                    </div>
-                    <div class="tab-pane  p-20" id="sales_transaction" role="tabpanel">2</div>
-                    <div class="tab-pane p-20" id="customers" role="tabpanel">3</div>
-                </div>
-            </div>
+					    				<div class="row">
+					    					<div class="report">
+					    						<div class="col-sm-4">
+					    							<h3><a href="#/sale_summary_by_customer" data-bind="text: lang.lang.sale_summary_by_customer" ></a></h3>
+					    							<p data-bind="text: lang.lang.summarizes_total_sales"></p>
+					    						</div>
+					    						<div class="col-sm-4">
+					    							<h3><a href="#/sale_summary_by_product" data-bind="text: lang.lang.sale_summary_by_product_services" ></a></h3>
+					    							<p data-bind="text: lang.lang.summarizes_total_sales_for_each_product"></p>
+					    						</div>
+					    						<div class="col-sm-4">
+					    							<h3><a href="#/sale_detail_by_customer" data-bind="text: lang.lang.sale_detail_by_customer" ></a></h3>
+					    							<p data-bind="text: lang.lang.lists_individual_sale"></p>
+					    						</div>
+					    					</div>
+					    					<div class="report">
+					    						<div class="col-sm-4">
+					    							<h3><a href="#/sale_detail_by_product" data-bind="text: lang.lang.sale_detail_by_product_services" ></a></h3>
+					    							<p data-bind="text: lang.lang.lists_individual_sale_transactions"></p>
+					    						</div>
+					    						<div class="col-sm-4">
+					    							<h3><a href="#/customer_balance_summary" data-bind="text: lang.lang.customer_balance_summary" ></a></h3>
+					    							<p data-bind="text: lang.lang.summarizes_total_sales"></p>
+					    						</div>
+					    						<div class="col-sm-4">
+					    							<h3><a href="#/customer_balance_detail" data-bind="text: lang.lang.customer_balance_detail" ></a></h3>
+					    							<p data-bind="text: lang.lang.lists_individual_unpaid_invoices_for_each_customer"></p>
+					    						</div>
+					    					</div>
+					    					<div class="report">
+					    						<div class="col-sm-4">
+													<h3><a href="#/receivable_aging_summary" data-bind="text: lang.lang.receivable_aging_summary"></a></h3>
+													<p data-bind="text: lang.lang.lists_all_unpaid_invoices1"></p>	
+												</div>
+												<div class="col-sm-4">
+													<h3><a href="#/receivable_aging_detail" data-bind="text: lang.lang.receivable_aging_detail"></a></h3>
+													<p data-bind="text: lang.lang.lists_individual_unpaid_invoices_grouped_by_customer"></p>
+												</div>
+												<div class="col-sm-4">
+													<h3><a href="#/collect_invoice" data-bind="text: lang.lang.list_of_invoices_to_be_collected"></a></h3>
+													<p data-bind="text: lang.lang.lists_all_unpaid_invoices_grouped_by_due_today_and_overdue"></p>
+												</div>
+											</div>
+											<div class="report">
+												<div class="col-sm-4">
+													<h3><a href="#/collection_report" data-bind="text: lang.lang.collection_report"></a></h3>
+													<p data-bind="text: lang.lang.lists_of_collected_invoices_for_the_select_period_of_time_group_by_method_of_payment"></p>
+												</div>
+											</div>
+					    				</div>
+			                        </div>
+			                    </div>
+			                    <div class="tab-pane  p-20" id="sales_transaction" role="tabpanel">2</div>
+			                    <div class="tab-pane p-20" id="customers" role="tabpanel">3</div>
+			                </div>
+			            </div>
+			        </div>
+	            </div>
+	        </div>
         </div>
     </div>
     <!-- <div class="content-wrapper" style="min-height: 799px;">
@@ -657,4 +661,4 @@
     <tr>
     	<td colspan="5">&nbsp;</td>
     </tr>
-</script>                                                                                                                                                                                                                                                                                                                                                                                                              
+</script>                                                                                                                                                                                                                                                                                                                                                                                                                

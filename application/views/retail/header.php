@@ -13,6 +13,7 @@
 <link rel="stylesheet" href="<?php echo base_url()?>assets/retail/jquery.toast.css" >
 <link rel="stylesheet" href="<?php echo base_url()?>assets/retail/c3.min.css">
 <link rel="stylesheet" href="<?php echo base_url()?>assets/retail/retail.css">
+<link rel="stylesheet" href="<?php echo base_url()?>assets/retail/dashboard4.css">
 
 <script src="<?php echo base_url()?>assets/retail/jquery-3.2.1.min.js"></script>
 <script src="<?php echo base_url()?>assets/retail/popper.min.js"></script>
@@ -26,6 +27,9 @@
 <script src="<?php echo base_url()?>assets/retail/d3.min.js"></script>
 <script src="<?php echo base_url()?>assets/retail/c3.min.js"></script>
 <script src="<?php echo base_url()?>assets/retail/jquery.toast.js"></script>
+
+
+<script src="<?php echo base_url()?>assets/retail/dashboard4.js"></script>
     
 <!-- End -->
 
@@ -117,13 +121,30 @@
                         </li>
                     </ul>
                     <ul class="navbar-nav my-lg-0">
-                       
-                        <li class="nav-item dropdown mega-dropdown"> <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="ti-layout-width-default"></i></a>
+                       	<li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="ti-plus"></i></a>
+                            <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
+                                <span class="with-arrow"><span class="bg-primary"></span></span>
+                                
+                                <a class="dropdown-item" href="javascript:void(0)"><i class="ti-user m-r-5 m-l-5"></i> My Profile</a>
+                                <a class="dropdown-item" href="javascript:void(0)"><i class="ti-wallet m-r-5 m-l-5"></i> My Balance</a>
+                                <a class="dropdown-item" href="javascript:void(0)"><i class="ti-email m-r-5 m-l-5"></i> Inbox</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="javascript:void(0)"><i class="ti-settings m-r-5 m-l-5"></i> Account Setting</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="javascript:void(0)"><i class="fa fa-power-off m-r-5 m-l-5"></i> Logout</a>
+                            </div>
+                        </li>
+
+                        <!-- <li class="nav-item dropdown mega-dropdown">
+                        	<a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        		<i class="ti-help"></i>
+                        	</a>
                             <div class="dropdown-menu animated bounceInDown">
                                 <ul class="mega-dropdown-menu row">
                                     <li class="col-lg-3 col-xlg-2 m-b-30">
                                         <h4 class="m-b-20">CAROUSEL</h4>
-                                        <!-- CAROUSEL -->
+                                        
                                         <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
                                             <div class="carousel-inner" role="listbox">
                                                 <div class="carousel-item active">
@@ -139,11 +160,11 @@
                                             <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev"> <span class="carousel-control-prev-icon" aria-hidden="true"></span> <span class="sr-only">Previous</span> </a>
                                             <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next"> <span class="carousel-control-next-icon" aria-hidden="true"></span> <span class="sr-only">Next</span> </a>
                                         </div>
-                                        <!-- End CAROUSEL -->
+                                        
                                     </li>
                                     <li class="col-lg-3 m-b-30">
                                         <h4 class="m-b-20">ACCORDION</h4>
-                                        <!-- Accordian -->
+                                        
                                         <div id="accordion" class="nav-accordion" role="tablist" aria-multiselectable="true">
                                             <div class="card">
                                                 <div class="card-header" role="tab" id="headingOne">
@@ -182,7 +203,7 @@
                                     </li>
                                     <li class="col-lg-3  m-b-30">
                                         <h4 class="m-b-20">CONTACT US</h4>
-                                        <!-- Contact -->
+                                        
                                         <form>
                                             <div class="form-group">
                                                 <input type="text" class="form-control" id="exampleInputname1" placeholder="Enter Name"> </div>
@@ -196,7 +217,7 @@
                                     </li>
                                     <li class="col-lg-3 col-xlg-4 m-b-30">
                                         <h4 class="m-b-20">List style</h4>
-                                        <!-- List style -->
+                                        
                                         <ul class="list-style-none">
                                             <li><a href="javascript:void(0)"><i class="fa fa-check text-success"></i> You can give link</a></li>
                                             <li><a href="javascript:void(0)"><i class="fa fa-check text-success"></i> Give link</a></li>
@@ -207,19 +228,50 @@
                                     </li>
                                 </ul>
                             </div>
+                        </li> -->
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="ti-help"></i></a>
+                            <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
+                                <span class="with-arrow"><span class="bg-primary"></span></span>
+                                <!-- <div class="top-help">
+					  				<h3>Help</h3>
+					  				<div class="row-fluid">
+						        		<div class="col-md-12">
+						        			<form class="app-search">
+				                                <input type="text" class="form-control" placeholder="Search &amp; enter"> <a class="srh-btn"><i class="ti-search"></i></a>
+				                            </form>
+										</div>
+									</div>
+					  			</div> -->
+                                <div class="middle-help">
+					  				<div class="more-help" style="border-bottom: 1px solid #ddd; margin-bottom: 10px; width: 100%; float: left; padding-bottom: 10px;">
+				  						<div class="help-img" >
+				  							<img src="http://fpoimg.com/51x51?text=Picture%201">
+				  						</div>
+				  						<div class="help-desc" >
+				  							<p>Need more help?</p>
+				  							<a href="" target="_blank">Accountant Help hub</a>
+				  						</div>
+				  					</div>
+				  					<div class="what-help" >
+				  						<div class="help-img" >
+				  							<img src="http://fpoimg.com/51x51?text=Picture%202">
+				  						</div>
+				  						<div class="help-desc">
+				  							<p>Check out what's new</p>
+				  							<a href="" target="_blank">Learn about new product</a>
+				  						</div>
+				  					</div>
+					  			</div>
+                            </div>
                         </li>
                         
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="<?php echo base_url()?>assets/retail/1.jpg" alt="user" class="img-circle" width="30"></a>
+                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="ti-menu-alt"></i></a>
                             <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
                                 <span class="with-arrow"><span class="bg-primary"></span></span>
-                                <div class="d-flex no-block align-items-center p-15 bg-primary text-white m-b-10">
-                                    <div class=""><img src="<?php echo base_url()?>assets/retail/1.jpg" alt="user" class="img-circle" width="60"></div>
-                                    <div class="m-l-10">
-                                        <h4 class="m-b-0">Steave Jobs</h4>
-                                        <p class=" m-b-0">varun@gmail.com</p>
-                                    </div>
-                                </div>
+                                
                                 <a class="dropdown-item" href="javascript:void(0)"><i class="ti-user m-r-5 m-l-5"></i> My Profile</a>
                                 <a class="dropdown-item" href="javascript:void(0)"><i class="ti-wallet m-r-5 m-l-5"></i> My Balance</a>
                                 <a class="dropdown-item" href="javascript:void(0)"><i class="ti-email m-r-5 m-l-5"></i> Inbox</a>
@@ -227,13 +279,29 @@
                                 <a class="dropdown-item" href="javascript:void(0)"><i class="ti-settings m-r-5 m-l-5"></i> Account Setting</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="javascript:void(0)"><i class="fa fa-power-off m-r-5 m-l-5"></i> Logout</a>
-                                <div class="dropdown-divider"></div>
-                                <div class="p-l-30 p-10"><a href="javascript:void(0)" class="btn btn-sm btn-success btn-rounded">View Profile</a></div>
                             </div>
                         </li>
-                       
-                       
+
+                        <li class="nav-item right-side-toggle"> <a class="nav-link  waves-effect waves-light" href="javascript:void(0)"><img src="<?php echo base_url()?>assets/retail/1.jpg" alt="user" class="img-circle" width="30"></a></li>
                     </ul>
                 </div>
             </nav>
-        </header>                                                                                                                                                                                                                                                                                                                                                        
+        </header>
+
+        <div class="right-sidebar">
+            <div class="slimscrollright">
+                <div class="d-flex no-block align-items-center p-15 bg-primary text-white m-b-10">                	
+                    <i class="ti-close right-side-toggle"></i>
+                    <div class=""><img src="<?php echo base_url()?>assets/retail/1.jpg" alt="user" class="img-circle" width="60"></div>
+                    <div class="m-l-10">
+                        <h4 class="m-b-0">Steave Jobs</h4>
+                        <p class=" m-b-0">varun@gmail.com</p>
+                    </div>                   
+                </div>
+                <a class="dropdown-item" href="javascript:void(0)"><i class="ti-user m-r-5 m-l-5"></i> My Profile</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="javascript:void(0)"><i class="ti-settings m-r-5 m-l-5"></i> Account Setting</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="javascript:void(0)"><i class="fa fa-power-off m-r-5 m-l-5"></i> Logout</a>
+            </div>
+        </div>

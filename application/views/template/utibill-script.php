@@ -14355,27 +14355,169 @@
     });
     banhji.disconnectList = kendo.observable({
         lang: langVM,
-        institute: banhji.institute,
         dataSource: dataStore(apiUrl + "utibillReports/disconnection_list"),
+        contactDS: new kendo.data.DataSource({
+            data: banhji.source.customerList,
+            sort: {
+                field: "number",
+                dir: "asc"
+            }
+        }),
         licenseDS: dataStore(apiUrl + "branches"),
         blocDS: dataStore(apiUrl + "locations"),
-        subLocationDS: dataStore(apiUrl + "locations"),
-        boxDS: dataStore(apiUrl + "locations"),
-        licenseSelect: null,
+        sortList: banhji.source.sortList,
+        sorter: "month",
+        sdate: "",
+        edate: "",
+        obj: {
+            contactIds: [],
+            licenseID: 0,
+            locationID: []
+        },
         company: banhji.institute,
-        blocSelect: null,
-        loSelectName: "",
-        monthOf: "",
-        monthOfUpload: null,
+        displayDate: "",
+        totalAmount: 0,
+        exArray: [],
         pageLoad: function() {
-            this.licenseDS.read();
-            this.set("monthOfUpload", "<?php echo date('Y-m-d');?>");
             this.search();
+            this.set("haveBloc", false);
+        },
+        sorterChanges: function() {
+            var today = new Date(),
+                sdate = "",
+                edate = "",
+                sorter = this.get("sorter");
+
+            switch (sorter) {
+                case "today":
+                    this.set("sdate", today);
+                    this.set("edate", "");
+
+                    break;
+                case "week":
+                    var first = today.getDate() - today.getDay(),
+                        last = first + 6;
+
+                    this.set("sdate", new Date(today.setDate(first)));
+                    this.set("edate", new Date(today.setDate(last)));
+
+                    break;
+                case "month":
+                    this.set("sdate", new Date(today.getFullYear(), today.getMonth(), 1));
+                    this.set("edate", new Date(today.getFullYear(), today.getMonth() + 1, 0));
+
+                    break;
+                case "year":
+                    this.set("sdate", new Date(today.getFullYear(), 0, 1));
+                    this.set("edate", new Date(today.getFullYear(), 11, 31));
+
+                    break;
+                default:
+                    this.set("sdate", "");
+                    this.set("edate", "");
+            }
+        },
+        licenseChange: function(e) {
+            var data = e.data;
+            var license = this.licenseDS.at(e.sender.selectedIndex - 1);
+            this.set("licenseSelect", license);
+            this.blocDS.filter({
+                field: "branch_id",
+                value: license.id
+            });
+            this.set("haveBloc", true);
+        },
+        search: function() {
+            var self = this,
+                para = [],
+                obj = this.get("obj"),
+                start = this.get("sdate"),
+                end = this.get("edate"),
+                displayDate = "";
+            license = this.get("licenseSelect"),
+                bloc = this.get("blocSelect");
+
+            if (license) {
+                para.push({
+                    field: "branch_id",
+                    value: license.id
+                });
+            }
+
+            if (bloc) {
+                para.push({
+                    field: "location_id",
+                    value: bloc.id
+                });
+            }
+
+            //Customer
+            if (obj.contactIds.length > 0) {
+                var contactIds = [];
+                $.each(obj.contactIds, function(index, value) {
+                    contactIds.push(value);
+                });
+                para.push({
+                    field: "contact_id",
+                    operator: "where_in",
+                    value: contactIds
+                });
+            }
+
+            //Dates
+            if (start && end) {
+                start = new Date(start);
+                end = new Date(end);
+                displayDate = "From " + kendo.toString(start, "dd-MM-yyyy") + " To " + kendo.toString(end, "dd-MM-yyyy");
+                end.setDate(end.getDate() + 1);
+
+                para.push({
+                    field: "from_date >=",
+                    value: kendo.toString(start, "yyyy-MM-dd")
+                });
+                para.push({
+                    field: "from_date <",
+                    value: kendo.toString(end, "yyyy-MM-dd")
+                });
+            } else if (start) {
+                start = new Date(start);
+                displayDate = "On " + kendo.toString(start, "dd-MM-yyyy");
+
+                para.push({
+                    field: "from_date",
+                    value: kendo.toString(start, "yyyy-MM-dd")
+                });
+            } else if (end) {
+                end = new Date(end);
+                displayDate = "As Of " + kendo.toString(end, "dd-MM-yyyy");
+                end.setDate(end.getDate() + 1);
+
+                para.push({
+                    field: "from_date <",
+                    value: kendo.toString(end, "yyyy-MM-dd")
+                });
+            } else {
+
+            }
+            this.set("displayDate", displayDate);
+
+            this.dataSource.query({
+                filter: para,
+            }).then(function() {
+                var view = self.dataSource.view();
+
+                var amount = 0;
+                $.each(view, function(index, value) {
+                    amount += value.amount;
+                });
+
+                self.set("totalAmount", kendo.toString(amount, banhji.locale == "km-KH" ? "c0" : "c", banhji.locale));
+            });
         },
         printGrid: function() {
             var gridElement = $('#grid'),
                 printableContent = '',
-                win = window.open('', '', 'width=900, height=700'),
+                win = window.open('', '', 'width=990, height=900'),
                 doc = win.document.open();
             var htmlStart =
                 '<!DOCTYPE html>' +
@@ -14385,20 +14527,56 @@
                 '<title></title>' +
                 '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />' +
                 '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
+                '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/responsive.css">' +
+                '<link href="<?php echo base_url(); ?>assets/invoice/invoice.css" rel="stylesheet" />' +
                 '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
-                '<link href="<?php echo base_url(); ?>assets/responsive.css" rel="stylesheet" >' +
                 '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
                 '<style>' +
-                '*{  } html { font: 11pt sans-serif; }' +
+                'html { font: 11pt sans-serif; }' +
                 '.k-grid { border-top-width: 0; }' +
                 '.k-grid, .k-grid-content { height: auto !important; }' +
                 '.k-grid-content { overflow: visible !important; }' +
                 'div.k-grid table { table-layout: auto; width: 100% !important; }' +
                 '.k-grid .k-grid-header th { border-top: 1px solid; }' +
                 '.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
-                '</style><style type="text/css" media="print"> @page { size: landscape; margin:0mm; } .saleSummaryCustomer .total-customer, .saleSummaryCustomer .total-sale { background-color: #DDEBF7!important; -webkit-print-color-adjust:exact; }.saleSummaryCustomer .table.table-borderless.table-condensed  tr th { background-color: #1E4E78!important;-webkit-print-color-adjust:exact;}.saleSummaryCustomer .table.table-borderless.table-condensed  tr th span{ color: #fff!important; }.saleSummaryCustomer .table.table-borderless.table-condensed tr:nth-child(2n+1) td {  background-color: #fff!important; -webkit-print-color-adjust:exact;} .saleSummaryCustomer .table.table-borderless.table-condensed tr td { background-color: #F2F2F2!important;-webkit-print-color-adjust:exact; } </style>' +
+                '</style><style type="text/css" media="print"> @page { size: portrait; margin:1mm; }' +
+                '.inv1 .main-color {' +
+
+                '-webkit-print-color-adjust:exact; ' +
+                '} ' +
+                '.table.table-borderless.table-condensed  tr th { background-color: #1E4E78!important;' +
+                '-webkit-print-color-adjust:exact; color:#fff!important;}' +
+                '.table.table-borderless.table-condensed  tr th * { color: #fff!important; -webkit-print-color-adjust:exact;}' +
+                '.inv1 .light-blue-td { ' +
+                'background-color: #c6d9f1!important;' +
+                'text-align: left;' +
+                'padding-left: 5px;' +
+                '-webkit-print-color-adjust:exact; ' +
+                '}' +
+                '.saleSummaryCustomer .table.table-borderless.table-condensed tr td { ' +
+                'background-color: #F2F2F2!important; -webkit-print-color-adjust:exact;' +
+                '}' +
+                '.saleSummaryCustomer .table.table-borderless.table-condensed tr:nth-child(2n+1) td { ' +
+                ' background-color: #fff!important; -webkit-print-color-adjust:exact;' +
+                '}' +
+                '.journal_block1>.span2 *, .journal_block1>.span5 * {color: #fff!important;}' +
+                '.journal_block1>.span2:first-child { ' +
+                'background-color: #bbbbbb!important; -webkit-print-color-adjust:exact;' +
+                '}' +
+                '.journal_block1>.span5:last-child {' +
+                'background-color: #496cad!important; color: #fff!important; -webkit-print-color-adjust:exact; ' +
+                '}' +
+                '.journal_block1>.span5 {' +
+                'background-color: #5cc7dd!important; color: #fff!important; -webkit-print-color-adjust:exact;' +
+                '}' +
+                '.saleSummaryCustomer .table.table-borderless.table-condensed tfoot .bg-total td {' +
+                'background-color: #1C2633!important;' +
+                'color: #fff!important; ' +
+                '-webkit-print-color-adjust:exact;' +
+                '}' +
+                '</style>' +
                 '</head>' +
-                '<body><div id="example" class="k-content saleSummaryCustomer" style="padding: 30px;">';
+                '<body><div class="saleSummaryCustomer" style="padding: 0 10px;">';
             var htmlEnd =
                 '</div></body>' +
                 '</html>';
@@ -14410,166 +14588,6 @@
                 win.print();
                 win.close();
             }, 2000);
-        },
-        licenseChange: function(e) {
-            var self = this;
-            this.blocDS.data([]);
-            this.set("locationSelect", "");
-            this.set("haveLicense", false)
-            this.subLocationDS.data([]);
-            this.boxDS.data([]);
-            this.set("boxSelect", "");
-            this.set("haveLocation", false);
-            this.set("haveSubLocation", false);
-            this.blocDS.filter([{
-                    field: "branch_id",
-                    value: this.get("licenseSelect")
-                },
-                {
-                    field: "main_bloc",
-                    value: 0
-                },
-                {
-                    field: "main_pole",
-                    value: 0
-                }
-            ]);
-            this.set("haveLicense", true);
-            this.set("liSelectName", e.sender.span[0].innerText);
-        },        
-        onLocationChange: function(e) {
-            var self = this;
-            this.subLocationDS.data([]);
-            this.boxDS.data([]);
-            this.set("boxSelect", "");
-            this.set("haveSubLocation", false);
-            if (this.get("blocSelect")) {
-                this.subLocationDS.query({
-                        filter: [{
-                                field: "branch_id",
-                                value: this.get("licenseSelect")
-                            },
-                            {
-                                field: "main_bloc",
-                                value: this.get("blocSelect")
-                            },
-                            {
-                                field: "main_pole",
-                                value: 0
-                            }
-                        ],
-                        page: 1
-                    })
-                    .then(function(e) {
-                        if (self.subLocationDS.data().length > 0) {
-                            self.set("haveLocation", true);
-                        } else {
-                            self.set("haveLocation", false);
-                            self.set("subLocationSelect", "");
-                            self.subLocationDS.data([]);
-                        }
-                    });
-            }
-            this.set("loSelectName", e.sender.span[0].innerText);
-        },
-        onSubLocationChange: function(e) {
-            var self = this;
-            if (this.get("subLocationSelect")) {
-                this.boxDS.query({
-                        filter: [{
-                                field: "branch_id",
-                                value: this.get("licenseSelect")
-                            },
-                            {
-                                field: "main_bloc",
-                                value: this.get("blocSelect")
-                            },
-                            {
-                                field: "main_pole",
-                                value: this.get("subLocationSelect")
-                            }
-                        ]
-                    })
-                    .then(function(e) {
-                        if (self.boxDS.data().length > 0) {
-                            self.set("haveSubLocation", true);
-                        } else {
-                            self.set("haveSubLocation", false);
-                            self.set("boxSelect", "");
-                            self.boxDS.data([]);
-                        }
-                    });
-            }
-        },
-        search: function() {
-            var monthOfSearch = this.get("monthOfUpload"),
-                license_id = this.get("licenseSelect"),
-                bloc_id = this.get("blocSelect");
-                pole_id = this.get("subLocationSelect");
-                box_id = this.get("boxSelect");
-
-            var para = [];
-            var monthPara = [];
-            var monthOf = new Date(monthOfSearch);
-                monthOf.setDate(1);
-                monthOf = kendo.toString(monthOf, "yyyy-MM-dd");
-
-                var monthL = new Date(monthOfSearch);
-                var lastDayOfMonth = new Date(monthL.getFullYear(), monthL.getMonth() + 1, 0);
-                lastDayOfMonth = lastDayOfMonth.getDate();
-
-                monthL.setDate(lastDayOfMonth);
-                monthL = kendo.toString(monthL, "yyyy-MM-dd");
-
-                para.push({
-                    field: "month_of >=",
-                    value: monthOf
-                }, {
-                    field: "month_of <=",
-                    value: monthL
-                });
-                this.set("monthOf", monthOf);
-                //this.dataSource.filter(para);
-                        if(license_id){
-                            para.push({
-                                field: "branch_id",
-                                operator: "where_related_meter",
-                                value: license_id
-                            });
-                        }
-
-                        if (box_id) {
-                            para.push({
-                                field: "box_id",
-                                operator: "where_related_meter",
-                                value: box_id
-                            });
-                        } 
-
-                        if (pole_id) {
-                            para.push({
-                                field: "pole_id",
-                                operator: "where_related_meter",
-                                value: pole_id
-                            });
-                        } 
-
-                        if (bloc_id){
-                            para.push({
-                                field: "location_id",
-                                operator: "where_related_meter",
-                                value: bloc_id
-                            });
-                        }
-                        this.dataSource.query({
-                            filter: para,
-                            page: 1,
-                            pageSize: 100
-                        });                     
-        },
-        cancel: function() {
-            this.contact.cancelChanges();
-            window.history.back();
         },
         ExportExcel: function() {
             var workbook = new kendo.ooxml.Workbook({
@@ -14585,16 +14603,19 @@
                         },
                         {
                             autoWidth: true
-                        }
+                        },
+                        {
+                            autoWidth: true
+                        },
                     ],
-                    title: "Customer List",
+                    title: "Sale Summary",
                     rows: this.exArray
                 }]
             });
             //save the file as Excel file with extension xlsx
             kendo.saveAs({
                 dataURI: workbook.toDataURL(),
-                fileName: "customerList.xlsx"
+                fileName: "saleSummary.xlsx"
             });
         }
     });
