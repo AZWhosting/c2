@@ -711,12 +711,12 @@
 								<div id="posProductList" class="box-generic-noborder" style="min-height: 140px!important; height: 230px; padding-bottom: 0;">
 									<!-- Item List -->
 								    <div data-role="grid" class="costom-grid"
-								    	 data-column-menu="true"
-								    	 data-reorderable="true"
-								    	 data-scrollable="false"
-								    	 data-resizable="true"
-								    	 data-editable="true"
-						                 data-columns="[
+								    	data-column-menu="true"
+					    	 			data-reorderable="true"
+						    	 		data-scrollable="false"
+						    	 		data-resizable="true"
+						    	 		data-editable="true"
+						                data-columns="[
 										    { 
 										    	title:'NO',
 										    	width: '50px',
@@ -765,7 +765,6 @@
 				                            { 
 				                            	field: 'therapist', 
 				                            	title:'Staff', 
-				                            	hidden: 'true',
 				                            	editor: therapistEditor,
 				                            	template: '#= therapistname#'
 				                            }

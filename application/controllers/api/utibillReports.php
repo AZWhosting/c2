@@ -2034,7 +2034,7 @@ class UtibillReports extends REST_Controller {
 		$data["count"] = 0;
 	
 
-		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$obj = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 		//Sort
 		if(!empty($sort) && isset($sort)){
@@ -2060,12 +2060,9 @@ class UtibillReports extends REST_Controller {
 
 		//Results
 		$obj->include_related('contact', array("abbr", "number", "address", "phone", "name", "status"));
-		$obj->include_related('property', array("abbr", "name"));
-		$obj->include_related('location', "name");
-		$obj->include_related('branch', "name" );
-		$obj->include_related('meter', array("number", "status"));
-		$obj->where_related("meter", "status", 0);
-		$obj->get_paged_iterated($page, $limit);
+		$obj->include_related('transaction', "amount");
+		$obj->where("status", 0);
+		$obj->get_iterated();
 		
 		if($obj->exists()){
 			$objList = [];
@@ -2074,25 +2071,17 @@ class UtibillReports extends REST_Controller {
 				if(isset($objList[$value->contact_id])){
 					$objList[$value->contact_id]["line"][] = array(
 						"id"		=> $value->id,
-						"number"	=> $value->contact_number,
 						"meter"		=> $value->meter_number,
-						"location"  => $value->location_name,
-						"branch"	=> $value->branch_name,
-						"property"	=> $value->property_name,
-						"amount"	=> floatval($value->amount),	
+						"amount"	=> floatval($value->transaction_amount),
+
 					);
 				}else{
 					$objList[$value->contact_id]["id"] 			= $value->contact_id;					
-					$objList[$value->contact_id]["number"] 		= $value->contact_abbr.$value->contact_number;
-					$objList[$value->contact_id]["name"] 		= $value->contact_name;
+					$objList[$value->contact_id]["name"] 		= $value->contact_abbr.$value->contact_number." ".$value->contact_name;
 					$objList[$value->contact_id]["line"][]		= array(
 						"id"		=> $value->id,
-						"number"	=> $value->contact_number,
 						"meter"		=> $value->meter_number,
-						"location"  => $value->location_name,
-						"branch"	=> $value->branch_name,
-						"property"	=> $value->property_name,
-						"amount"	=> floatval($value->amount),
+						"amount"	=> floatval($value->transaction_amount),
 					);
 				}
 			}
@@ -2100,8 +2089,6 @@ class UtibillReports extends REST_Controller {
 			foreach ($objList as $value) {
 				$data["results"][] = $value;
 			}
-			$data["count"] = $obj->paged->total_rows;
-			$data["currentPage"] = $obj->paged->current_page;
 		}
 
 		//Response Data

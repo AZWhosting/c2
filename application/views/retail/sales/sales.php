@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="<?php echo base_url()?>assets/retail/tab-page.css">
 <div id="wrapperApplication" class="wrapper"></div>
 <script type="text/x-kendo-template" id="layout">
 	<!-- <div id="menu" class="menu"></div> -->
@@ -171,9 +172,100 @@
 												</div>
 											</div>
 					    				</div>
+
+					    				<!-- <div class="vtabs customvtab">
+		                                    <ul class="nav nav-tabs tabs-vertical" role="tablist">
+		                                        <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#home3" role="tab"><span class="hidden-sm-up"><i class="ti-home"></i></span> <span class="hidden-xs-down">Home</span> </a> </li>
+		                                        <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#profile3" role="tab"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down">Profile</span></a> </li>
+		                                        <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#messages3" role="tab"><span class="hidden-sm-up"><i class="ti-email"></i></span> <span class="hidden-xs-down">Messages</span></a> </li>
+		                                    </ul>
+		                                    
+		                                    <div class="tab-content">
+		                                        <div class="tab-pane active" id="home3" role="tabpanel">
+		                                            <div class="p-20">
+		                                                <h3>Best Clean Tab ever</h3>
+		                                                <h4>you can use it with the small code</h4>
+		                                                <p>Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a.</p>
+		                                            </div>
+		                                        </div>
+		                                        <div class="tab-pane  p-20" id="profile3" role="tabpanel">2</div>
+		                                        <div class="tab-pane p-20" id="messages3" role="tabpanel">3</div>
+		                                    </div>
+		                                </div> -->
+
 			                        </div>
 			                    </div>
-			                    <div class="tab-pane  p-20" id="sales_transaction" role="tabpanel">2</div>
+			                    <div class="tab-pane  p-20" id="sales_transaction" role="tabpanel">
+			                    	<div class="p-10">
+			                        	<div class="row">
+					    					<div class="col-md-3">
+					    						<div class="listWrapper" >
+													<div class="innerAll">
+														<form autocomplete="off" class="form-inline">
+
+															<div class="widget-search separator bottom">
+																<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></button>
+																<div class="overflow-hidden">
+																	<input type="search" placeholder="Number or Name..." data-bind="value: searchText">
+																</div>
+															</div>
+															<div class="select2-container" style="width: 100%;  margin-bottom: 10px;">
+																<input data-role="dropdownlist"
+													                   data-option-label="Select Type..."
+													                   data-value-primitive="true"
+													                   data-text-field="name"
+													                   data-value-field="id"
+													                   data-bind="value: contact_type_id,
+													                              source: contactTypeDS"
+													                   style="width: 100%;" />
+															</div>
+														</form>
+													</div>
+
+													<span class="results"><span data-bind="text: contactDS.total"></span> <span data-bind="text: lang.lang.found_search"></span></span>
+
+													<div class="table table-condensed" style="height: 580px;"
+														 data-role="grid"
+														 data-bind="source: contactDS"
+														 data-row-template="customerCenter-customer-list-tmpl"
+														 data-columns="[{title: ''}]"
+														 data-selectable=true
+														 data-height="600"
+														 data-scrollable="{virtual: true}"></div>
+												</div>
+					    					</div>
+					    					<div class="col-md-9">
+					    						<div class="row">
+					    							<div class="col-md-5">
+					    								<div class="row">
+					    									<div class="col-md-6">
+					    										<div class="widget-stats widget-stats-primary widget-stats-5" data-bind="click: loadBalance" style="cursor: pointer; background: #0077c5">
+																	<span class="glyphicons coins"><i></i></span>
+																	<span class="txt" style="padding-right: 18px;"><span data-bind="text: lang.lang.balance">Balance</span><span data-bind="text: balance" style="font-size:medium;">0</span></span>
+																	<div class="clearfix"></div>
+																</div>
+					    									</div>
+					    									<div class="col-md-6">
+					    										<div class="widget-stats widget-stats-info widget-stats-5" data-bind="click: loadBalance" style="cursor: pointer; background: #21abf6;">
+																	<span class="glyphicons circle_exclamation_mark"><i></i></span>
+																	<span class="txt"><span data-bind="text: outInvoice">0</span> <span data-bind="text: lang.lang.open_invoice">Open Invoice</span></span>
+																	<div class="clearfix"></div>
+																</div>
+					    									</div>
+					    								</div>
+					    							</div>
+					    							<div class="col-md-7">
+					    								<div class="widget-stats widget-stats-inverse widget-stats-5" data-bind="click: loadDeposit" style="cursor: pointer; ">
+															<span class="glyphicons briefcase"><i></i></span>
+															<span class="txt"><span data-bind="text: lang.lang.deposit">DEPOSIT</span><span data-bind="text: deposit" style="font-size:medium;">0</span></span>
+															<div class="clearfix"></div>
+														</div>
+					    							</div>
+					    						</div>
+					    					</div>
+					    				</div>
+					    			</div>
+			                    </div>
 			                    <div class="tab-pane p-20" id="customers" role="tabpanel">3</div>
 			                </div>
 			            </div>

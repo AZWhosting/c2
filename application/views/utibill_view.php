@@ -12032,164 +12032,6 @@
 
 					    <!-- Tabs -->
 						<div class="relativeWrap" data-toggle="source-code">
-							<div class="widget widget-tabs widget-tabs-gray report-tab">
-								<!-- Tabs Heading -->
-								<div class="widget-head">
-									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>	
-										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.filter">Filter</span></a></li>									
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab" data-bind="click: printGrid"><i></i>Print/Export</a></li
-									</ul>
-								</div>
-								<!-- // Tabs Heading END -->								
-								<div class="widget-body">
-									<div class="tab-content">
-								        <!-- //Date -->
-								        <div class="tab-pane active" id="tab-1">									        	
-											<div class="row">
-												<div class="col-xs-12 col-sm-2">
-													<input data-role="dropdownlist"
-														   class="sorter"                  
-												           data-value-primitive="true"
-												           data-text-field="text"
-												           data-value-field="value"
-												           data-bind="value: sorter,
-												                      source: sortList,                              
-												                      events: { change: sorterChanges }" style="width: 100%" />
-												</div>
-												<div class="col-xs-12 col-sm-2">  
-													<input data-role="datepicker"
-														   class="sdate"
-														   data-format="dd-MM-yyyy"
-												           data-bind="value: sdate,
-												           			  max: edate"
-												           placeholder="From ..." style="width: 100%" >
-												</div>
-												<div class="col-xs-12 col-sm-2">
-												    <input data-role="datepicker"
-												    	   class="edate"
-												    	   data-format="dd-MM-yyyy"
-												           data-bind="value: edate,
-												                      min: sdate"
-												           placeholder="To ..." style="width: 100%" >
-												</div>
-												<div class="col-xs-12 col-sm-1">
-												  	<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-												</div>
-											</div>
-							        	</div>
-
-								    	<!-- Filter -->
-								        <div class="tab-pane" id="tab-2">
-											<div class="row">
-												<div class="col-xs-12 col-sm-3">
-													<span data-bind="text: lang.lang.license">Licenses</span>
-													<input 
-														data-role="dropdownlist" 
-														data-option-label="License ..." 
-														data-auto-bind="false" 
-														data-value-primitive="true" 
-														data-text-field="name" 
-														data-value-field="id" 
-														data-bind="
-															value: licenseSelect,
-																source: licenseDS,
-																events: {change: licenseChange}" style="width: 100%">
-												</div>
-												<div class="col-xs-12 col-sm-3">
-													<span data-bind="text: lang.lang.location">Locations</span>
-														<input 
-															data-role="dropdownlist" 
-															data-option-label="Location ..." 
-															data-auto-bind="false" 
-															data-value-primitive="false" 
-															data-text-field="name" 
-															data-value-field="id" 
-															data-bind="
-																value: blocSelect,
-																enabled: haveBloc,
-																source: blocDS" style="width: 100%">
-												</div>
-												<div class="col-xs-12 col-sm-3">
-													<span data-bind="text: lang.lang.customers"></span>
-													<select data-role="multiselect"
-														   data-value-primitive="true"
-														   data-header-template="customer-header-tmpl"
-														   data-item-template="contact-list-tmpl"
-														   data-value-field="id"
-														   data-text-field="name"
-														   data-bind="value: obj.contactIds, 
-														   			source: contactDS"
-														   data-placeholder="Select Customer.."
-														   style="width: 100%" /></select>
-												</div>
-												<div class="col-xs-12 col-sm-1">											
-										  			<button style="margin-top: 20px;" type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-												</div>														
-											</div>		
-							        	</div>
-								    </div>
-								</div>
-							</div>
-						</div>
-
-						<!-- // Tabs END -->
-						<div id="invFormContent">
-							<div class="block-title">
-								<h3 data-bind="text: institute.name"></h3>
-								<h2 data-bind="text: lang.lang.disconnect_customer_list">Disconnect Customer List</h2>
-								<p data-bind="text: monthOf"></p>
-							</div>
-							<div class="row">
-								<div class="col-xs-12 col-sm-6">
-									<div class="total-sale">
-										<p data-bind="text: lang.lang.number_of_customer">Number of Customer</p>
-										<span data-bind="text: dataSource.total" ></span>
-									</div>
-								</div>
-							</div>
-							<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center">
-								<thead>
-									<tr>
-										<th style="vertical-align: top;"><span data-bind="">code</span></th>
-										<th style="vertical-align: top;"><span data-bind="text: lang.lang.customer"></span></th>
-										<th style="text-align: center"><span data-bind="text:lang.lang.meter_number"></span></th>
-										<th style="text-align: center"><span data-bind="">Previous</span></th>
-										<th style="text-align: center"><span data-bind="">Current</span></th>
-										<th style="text-align: center"><span data-bind="">Status</span></th>
-										<th style="text-align: right"><span data-bind="text:lang.lang.address"></span></th>
-										<th style="text-align: right"><span data-bind="text:lang.lang.license"></span></th>
-									</tr>
-								</thead>
-								<tbody data-role="listview"
-											 data-bind="source: dataSource"											
-											 data-template="disconnectList-temp"
-								></tbody>
-							</table>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</script>
-<script id="disconnectList" type="text/x-kendo-template">
-	<div class="container">
-		<div class="row-fluid">
-			<div id="waterreport" class="background">
-				<div class="row-fluid">
-					<div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 100%;margin-top: -15px;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
-						<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
-					</div>
-					<div id="example" class="k-content">
-						<div class="hidden-print pull-right" style="margin-bottom: 15px;">
-				    		<span class="pull-right glyphicons no-js remove_2"
-						onclick="javascript:window.history.back()"><i></i></span>
-						</div>
-						<div class="clear"></div>
-
-					    <!-- Tabs -->
-						<div class="relativeWrap" data-toggle="source-code">
 							<div class="widget widget-tabs widget-tabs-gray report-tab">							
 								<!-- Tabs Heading -->
 								<div class="widget-head">
@@ -12304,7 +12146,7 @@
 							<div class="block-title">
 								<h3 data-bind="text: institute.name"></h3>
 								<h2 data-bind="text: lang.lang.disconnect_customer_list">Disconnect Customer List</h2>
-								<p data-bind="text: monthOf"></p>
+								<p data-bind="text: displayDate"></p>
 							</div>
 							<div class="row">
 								<div class="col-xs-12 col-sm-6">
@@ -12317,14 +12159,10 @@
 							<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center">
 								<thead>
 									<tr>
-										<th style="vertical-align: top;"><span data-bind="">code</span></th>
 										<th style="vertical-align: top;"><span data-bind="text: lang.lang.customer"></span></th>
 										<th style="text-align: center"><span data-bind="text:lang.lang.meter_number"></span></th>
-										<th style="text-align: center"><span data-bind="">Previous</span></th>
-										<th style="text-align: center"><span data-bind="">Current</span></th>
-										<th style="text-align: center"><span data-bind="">Status</span></th>
 										<th style="text-align: right"><span data-bind="text:lang.lang.address"></span></th>
-										<th style="text-align: right"><span data-bind="text:lang.lang.license"></span></th>
+										<th style="text-align: right"><span data-bind="text:lang.lang.amount"></span></th>
 									</tr>
 								</thead>
 								<tbody data-role="listview"
@@ -12342,19 +12180,14 @@
 </script>
 <script id="disconnectList-temp" type="text/x-kendo-template" >
 	<tr>
-		<td  style="font-weight: bold; color: black;">#: number #</td>
 		<td  style="font-weight: bold; color: black;">#: name #</td>
 	</tr>
 	#for(var i= 0; i <line.length; i++) {#
 		<tr>
 			<td></td>
-			<td></td>
 			<td style="text-align: center">#=line[i].meter#</td>
-			<td style="text-align: right">#=line[i].previous#</td>
-			<td style="text-align: right">#=line[i].current#</td>
-			<td style="text-align: right">#=line[i].status#</td>
 			<td style="text-align: right">#=line[i].location#</td>
-			<td style="text-align: right">#=line[i].branch#</td>
+			<td style="text-align: right;">#=kendo.toString(line[i].amount, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#</td>
 		</tr>
 
 	#}#

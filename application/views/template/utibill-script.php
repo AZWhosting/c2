@@ -14376,7 +14376,7 @@
         },
         company: banhji.institute,
         displayDate: "",
-        totalAmount: 0,
+        total: 0,
         exArray: [],
         pageLoad: function() {
             this.search();
@@ -14472,11 +14472,11 @@
                 end.setDate(end.getDate() + 1);
 
                 para.push({
-                    field: "from_date >=",
+                    field: "issued_date >=",
                     value: kendo.toString(start, "yyyy-MM-dd")
                 });
                 para.push({
-                    field: "from_date <",
+                    field: "issued_date <",
                     value: kendo.toString(end, "yyyy-MM-dd")
                 });
             } else if (start) {
@@ -14484,7 +14484,7 @@
                 displayDate = "On " + kendo.toString(start, "dd-MM-yyyy");
 
                 para.push({
-                    field: "from_date",
+                    field: "issued_date",
                     value: kendo.toString(start, "yyyy-MM-dd")
                 });
             } else if (end) {
@@ -14493,7 +14493,7 @@
                 end.setDate(end.getDate() + 1);
 
                 para.push({
-                    field: "from_date <",
+                    field: "issued_date <",
                     value: kendo.toString(end, "yyyy-MM-dd")
                 });
             } else {
@@ -14503,6 +14503,8 @@
 
             this.dataSource.query({
                 filter: para,
+                page: 1,
+                pageSize: 50
             }).then(function() {
                 var view = self.dataSource.view();
 
@@ -14512,6 +14514,158 @@
                 });
 
                 self.set("totalAmount", kendo.toString(amount, banhji.locale == "km-KH" ? "c0" : "c", banhji.locale));
+            });
+            this.dataSource.bind("requestEnd", function(e) {
+                if (e.type == "read") {
+                    var response = e.response,
+                        balanceCal = 0,
+                        balanceRec = 0;
+                    self.exArray = [];
+
+                    self.exArray.push({
+                        cells: [{
+                            value: self.company.name,
+                            textAlign: "center",
+                            colSpan: 6
+                        }]
+                    });
+                    self.exArray.push({
+                        cells: [{
+                            value: "Sale Detail Report",
+                            bold: true,
+                            fontSize: 20,
+                            textAlign: "center",
+                            colSpan: 6
+                        }]
+                    });
+                    if (self.displayDate) {
+                        self.exArray.push({
+                            cells: [{
+                                value: self.displayDate,
+                                textAlign: "center",
+                                colSpan: 6
+                            }]
+                        });
+                    }
+                    self.exArray.push({
+                        cells: [{
+                            value: "",
+                            colSpan: 6
+                        }]
+                    });
+                    self.exArray.push({
+                        cells: [{
+                                value: "Type",
+                                background: "#496cad",
+                                color: "#ffffff"
+                            },
+                            {
+                                value: "Date",
+                                background: "#496cad",
+                                color: "#ffffff"
+                            },
+                            {
+                                value: "Location",
+                                background: "#496cad",
+                                color: "#ffffff"
+                            },
+                            {
+                                value: "Reference",
+                                background: "#496cad",
+                                color: "#ffffff"
+                            },
+                            {
+                                value: "Usage",
+                                background: "#496cad",
+                                color: "#ffffff"
+                            },
+                            {
+                                value: "Amount",
+                                background: "#496cad",
+                                color: "#ffffff"
+                            }
+                        ]
+                    });
+                    for (var i = 0; i < response.results.length; i++) {
+                        self.exArray.push({
+                            cells: [{
+                                    value: response.results[i].name,
+                                    bold: true,
+                                },
+                                {
+                                    value: ""
+                                },
+                                {
+                                    value: ""
+                                },
+                                {
+                                    value: ""
+                                },
+                                {
+                                    value: ""
+                                },
+                                {
+                                    value: ""
+                                }
+                            ]
+                        });
+                        for (var j = 0; j < response.results[i].line.length; j++) {
+                            balanceCal += response.results[i].line[j].amount;
+                            self.exArray.push({
+                                cells: [{
+                                        value: response.results[i].line[j].type
+                                    },
+                                    {
+                                        value: response.results[i].line[j].date
+                                    },
+                                    {
+                                        value: response.results[i].line[j].location
+                                    },
+                                    {
+                                        value: response.results[i].line[j].number
+                                    },
+                                    {
+                                        value: response.results[i].line[j].usage
+                                    },
+                                    {
+                                        value: kendo.parseFloat(response.results[i].line[j].amount)
+                                    },
+                                ]
+                            });
+                        }
+                        self.exArray.push({
+                            cells: [{
+                                value: "",
+                                colSpan: 6
+                            }]
+                        });
+                    }
+                    self.exArray.push({
+                        cells: [{
+                                value: "TOTAL",
+                                bold: true,
+                                fontSize: 16
+                            },
+                            {
+                                value: ""
+                            },
+                            {
+                                value: ""
+                            },
+                            {
+                                value: ""
+                            },
+                            {
+                                value: ""
+                            },
+                            {
+                                value: kendo.parseFloat(response.balanceCal),
+                                bold: true,
+                                fontSize: 16
+                            },
+                        ]
+                    });
+                }
             });
         },
         printGrid: function() {
@@ -14607,15 +14761,18 @@
                         {
                             autoWidth: true
                         },
+                        {
+                            autoWidth: true
+                        }
                     ],
-                    title: "Sale Summary",
+                    title: "Sale Detail",
                     rows: this.exArray
                 }]
             });
             //save the file as Excel file with extension xlsx
             kendo.saveAs({
                 dataURI: workbook.toDataURL(),
-                fileName: "saleSummary.xlsx"
+                fileName: "saleDetail.xlsx"
             });
         }
     });
