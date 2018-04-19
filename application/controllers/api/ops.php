@@ -86,21 +86,21 @@ class Ops extends REST_Controller {
 			 // 	$this->db->insert_batch('payment_methods', $raw);
 				
 				// Add new fields
-				$fields = array(
-					// "tags" => array(
-					// 	"type" 		=> "DECIMAL",
-					// 	"constraint"=> "30,15",
-					// 	"null" 		=> FALSE,
-					// 	"default" 	=> 0
-					// ),
-					"deleted" => array(
-						"type" 		=> "TINYINT",
-						"constraint"=> 1,
-						"null" 		=> FALSE,
-						"default" 	=> 0
-					)
-				);
-				$data['results'][] = $this->dbforge->add_column("memberships", $fields);
+				// $fields = array(
+				// 	// "tags" => array(
+				// 	// 	"type" 		=> "DECIMAL",
+				// 	// 	"constraint"=> "30,15",
+				// 	// 	"null" 		=> FALSE,
+				// 	// 	"default" 	=> 0
+				// 	// ),
+				// 	"deleted" => array(
+				// 		"type" 		=> "TINYINT",
+				// 		"constraint"=> 1,
+				// 		"null" 		=> FALSE,
+				// 		"default" 	=> 0
+				// 	)
+				// );
+				// $data['results'][] = $this->dbforge->add_column("memberships", $fields);
 				
 			    // Modify fields
 		 	// 	$fields = array(
@@ -111,12 +111,15 @@ class Ops extends REST_Controller {
 				// 	// 	"null" 		=> FALSE,
 				// 	// 	"default" 	=> 1
 				// 	// ),
-				// 	"graduateion_date" => array(
-				// 		"name" 		=> "graduation_date",//New Field Name 
-				// 		"type" 		=> "DATE"
+				// 	"type" => array(
+				// 		"name" 		=> "type",//New Field Name 
+				// 		"type" 		=> "VARCHAR",
+				// 		"constraint"=> "50",
+				// 		"null" 		=> FALSE,
+				// 		"default" 	=> ""
 				// 	)
 				// );
-				// $data['results'][] = $this->dbforge->modify_column('memberships', $fields);
+				// $data['results'][] = $this->dbforge->modify_column('attachments', $fields);
 
 			 	//Remove column, 'table_name', 'column_to_drop'
 				// $this->dbforge->drop_column('memberships', 'cpd_record_date');

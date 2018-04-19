@@ -5726,6 +5726,8 @@
                                     contact_id : this.customerAR[0].id,
                                     phone: this.get("customerPhone"),
                                     user_id : banhji.userData.id,
+                                    male : this.get("Male"),
+                                    female : this.get("Female"),
                                 });
                                 this.workDS.sync();
                                 this.workDS.bind("requestEnd", function(e){
@@ -5888,6 +5890,8 @@
                                     account_id : 7,
                                     contact_id : this.customerAR[0].id,
                                     user_id : banhji.userData.id,
+                                    male : this.get("Male"),
+                                    female : this.get("Female"),
                                 });
                                 var f = 0;
                                 this.bookDS.sync();

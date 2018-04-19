@@ -3016,6 +3016,8 @@
                 contact_id : data.customer[0].id,
                 phone: data.phone,
                 user_id : banhji.userData.id,
+                male : data.male,
+                female : data.female,
             });
             this.workDS.sync();
             this.workDS.bind("requestEnd", function(e){

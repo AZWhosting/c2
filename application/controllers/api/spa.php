@@ -274,6 +274,8 @@ class Spa extends REST_Controller {
 				$work->transaction_id = $txn->id;
 				$work->start_date = date('Y-m-d H:i:s', strtotime($value->start_date));
 				$work->phone = isset($value->phone) ? $value->phone: "";
+				$work->male = intval($value->male);
+				$work->female = intval($value->female);
 				$work->save();
 				//Item
 				$allcost = 0;
@@ -304,8 +306,8 @@ class Spa extends REST_Controller {
 					if($emcount > 0){
 						foreach($item->therapist as $the){
 							$emtxn = new Spa_employee_transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-					   		$emtxn->transaction_id = $obj->id;
-					   		$emtxn->employee_id = $e->employee_id;
+					   		$emtxn->transaction_id = $txn->id;
+					   		$emtxn->employee_id = $the->id;
 					   		if($emcount > 1){
 					   			$emtxn->status = 2;
 					   		}else{
@@ -617,6 +619,8 @@ class Spa extends REST_Controller {
 		 			"customer_name" => $customer_name,
 		 			"phone" 		=> $value->phone,
 		 			"employee_name" => $employee_name,
+		 			"male" 			=> $value->male,
+		 			"female" 		=> $value->female,
 		 			"employee" 		=> $emnar,
 		 		);
 		 	}
@@ -666,6 +670,8 @@ class Spa extends REST_Controller {
 				$work->start_date = date('Y-m-d H:i:s', strtotime($value->start_date));
 				$work->phone = isset($value->phone) ? $value->phone: "";
 				$work->status = 1;
+				$work->male = intval($value->male);
+				$work->female = intval($value->female);
 				$work->save();
 				//Item
 				$itemrate = $value->rate;

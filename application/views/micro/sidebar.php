@@ -34,7 +34,7 @@
                         <span class="hide-menu">Items</span>
                     </a>
                 </li>
-                
+                <li class="dropdown-divider"></li>
                 <li>
                     <a class="waves-effect waves-dark" href="<?php echo base_url(); ?>micro/setting" aria-expanded="false">
                         <i class="ti-settings"></i>

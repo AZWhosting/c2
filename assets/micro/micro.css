@@ -16,6 +16,10 @@
 i.mdi.mdi-toggle-switch {
     font-size: 20px;
 }
+.sidebar-nav .dropdown-divider{
+	border-color: #8991a9;
+    margin: 0 20px 0 15px;
+}
 .footer{
 	text-align: center;
 }
@@ -55,6 +59,22 @@ i.mdi.mdi-toggle-switch {
     cursor: pointer;
 }
 /*End*/
+.home.page-titles{
+	margin-bottom: 0;
+}
+.home .saleOverview{
+	background: #2b2f3a;
+	margin-bottom: 0;
+}
+.home .col-lg-6:first-child .card{
+	margin-bottom: 0;
+}
+.home .card-body{
+	padding: 0;
+}
+.home .card-body .home-chart{
+	padding: 20px;
+}
 
 
 
@@ -70,6 +90,7 @@ i.mdi.mdi-toggle-switch {
 .saleOverview h2{
 	font-size: 20px;
 	text-align: center;
+	text-transform: uppercase;
 }
 .saleOverview p{
 	font-size: 18px;

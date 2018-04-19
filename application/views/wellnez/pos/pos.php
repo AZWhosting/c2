@@ -573,7 +573,24 @@
 										           	data-bind="
 										           		value: customerPhone
 										           	" />
-										        
+										        <div class="span6" style="padding:0;">
+										        	<p style="float: left;padding: 5px 10px;background: #1c3b19;margin-top: 5px;">M</p>
+										        	<input type="text" 
+								                	style="width: 73%;float: left;margin-top: 5px; border: 1px solid #c5c5c5; padding: 3px; height: 30px;" 
+								                	placeholder="Male" 
+										           	data-bind="
+										           		value: Male
+										           	" />
+										        </div>
+										        <div class="span6" style="padding:0;">
+										        	<p style="margin-left: 5px;float: left;padding: 5px 10px;background: #1c3b19;margin-top: 5px;">F</p>
+										        	<input type="text" 
+								                	style="width: 73%;float: left;margin-top: 5px; border: 1px solid #c5c5c5; padding: 3px; height: 30px;" 
+								                	placeholder="Female" 
+										           	data-bind="
+										           		value: Female
+										           	" />
+										        </div>
 										    </div>
 
 										        <div class="span6" style="padding-left: 0; font-size: 12px;">
