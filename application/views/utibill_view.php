@@ -12155,12 +12155,18 @@
 										<span data-bind="text: dataSource.total" ></span>
 									</div>
 								</div>
+								<div class="col-xs-12 col-sm-6">
+									<div class="total-sale">
+										<p data-bind="text: lang.lang.total_amount">Amount</p>
+										<span data-bind="text: total" ></span>
+									</div>
+								</div>
 							</div>
 							<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center">
 								<thead>
 									<tr>
 										<th style="vertical-align: top;"><span data-bind="text: lang.lang.customer"></span></th>
-										<th style="text-align: center"><span data-bind="text:lang.lang.meter_number"></span></th>
+										<th style="text-align: right"><span data-bind="text:lang.lang.meter_number"></span></th>
 										<th style="text-align: right"><span data-bind="text:lang.lang.address"></span></th>
 										<th style="text-align: right"><span data-bind="text:lang.lang.amount"></span></th>
 									</tr>

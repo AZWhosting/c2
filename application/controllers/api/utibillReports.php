@@ -2032,6 +2032,7 @@ class UtibillReports extends REST_Controller {
 		$sort 	 	= $this->get("sort");		
 		$data["results"] = [];
 		$data["count"] = 0;
+		$total = 0;
 	
 
 		$obj = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
@@ -2061,6 +2062,7 @@ class UtibillReports extends REST_Controller {
 		//Results
 		$obj->include_related('contact', array("abbr", "number", "address", "phone", "name", "status"));
 		$obj->include_related('transaction', "amount");
+		$obj->include_related('location', "name");
 		$obj->where("status", 0);
 		$obj->get_iterated();
 		
@@ -2070,9 +2072,10 @@ class UtibillReports extends REST_Controller {
 				
 				if(isset($objList[$value->contact_id])){
 					$objList[$value->contact_id]["line"][] = array(
-						"id"		=> $value->id,
-						"meter"		=> $value->meter_number,
-						"amount"	=> floatval($value->transaction_amount),
+						"id"			=> $value->id,
+						"meter"			=> $value->number,
+						"location"		=> $value->location_name,
+						"amount"		=> floatval($value->transaction_amount),
 
 					);
 				}else{
@@ -2080,15 +2083,19 @@ class UtibillReports extends REST_Controller {
 					$objList[$value->contact_id]["name"] 		= $value->contact_abbr.$value->contact_number." ".$value->contact_name;
 					$objList[$value->contact_id]["line"][]		= array(
 						"id"		=> $value->id,
-						"meter"		=> $value->meter_number,
+						"meter"		=> $value->number,
+						"location"		=> $value->location_name,
 						"amount"	=> floatval($value->transaction_amount),
 					);
 				}
+				$total += floatval($value->transaction_amount);
 			}
 
 			foreach ($objList as $value) {
 				$data["results"][] = $value;
 			}
+			$data["count"] = count($data["results"]);
+			$data["total"] = $total;
 		}
 
 		//Response Data

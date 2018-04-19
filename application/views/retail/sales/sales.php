@@ -202,12 +202,11 @@
 					    						<div class="listWrapper" >
 													<div class="innerAll">
 														<form autocomplete="off" class="form-inline">
-
-															<div class="widget-search separator bottom">
-																<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></button>
+															<div class="widget-search">																
 																<div class="overflow-hidden">
 																	<input type="search" placeholder="Number or Name..." data-bind="value: searchText">
 																</div>
+																<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="ti-search"></i></button>
 															</div>
 															<div class="select2-container" style="width: 100%;  margin-bottom: 10px;">
 																<input data-role="dropdownlist"
@@ -753,4 +752,4 @@
     <tr>
     	<td colspan="5">&nbsp;</td>
     </tr>
-</script>                                                                                                                                                                                                                                                                                                                                                                                                                
+</script>                                                                                                                                                                                                                                                                                                                                                                                                                                 

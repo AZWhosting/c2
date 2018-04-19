@@ -4674,10 +4674,11 @@
                     itemIds.push(value.item_id);
                 }
                 var name = "";
-                var h = 0;
+                
                 if(value.therapist.length > 0){
                     $.each(value.therapist, function(j,k){
                         name = name + k.name + ",";
+                        var h = 0;
                         $.each(self.employeeAR, function(l,m){
                             if(k.id == m.id){
                                 h = 1;
@@ -5728,7 +5729,7 @@
                                 });
                                 this.workDS.sync();
                                 this.workDS.bind("requestEnd", function(e){
-                                    window.location.href = "<?php echo base_url(); ?>wellnez/services";
+                                    // window.location.href = "<?php echo base_url(); ?>wellnez/services";
                                     self.addWorkSuccess();
                                     $("#loadImport").css("display", "none");
                                 });

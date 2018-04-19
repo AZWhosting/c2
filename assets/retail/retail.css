@@ -122,6 +122,25 @@ i.mdi.mdi-toggle-switch {
     height: 106px;
     background: #424242;
 }
+.widget-search .overflow-hidden>input {
+    border: none;
+    padding: 7px;
+    border-right: none !important;
+}
+.widget-search{
+	width: 100%;
+	float: left;
+}
+.widget-search .overflow-hidden{
+	float: left;
+}
+.widget-search .btn.btn-default.pull-right{
+	border-radius: 0;
+}
+.btn-default {
+    background: #e7e7e7;
+    border-color: #e7e7e7;
+}
 
 
 /*VTab*/

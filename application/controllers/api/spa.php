@@ -300,6 +300,8 @@ class Spa extends REST_Controller {
 					$i->locale = $txn->locale;
 					$i->movement = 0;
 					$i->save();
+					$therapistcount = count($item->therapist);
+					echo $therapistcount;
 				}
 				//Service charge
 				if($iecprice > 0){

@@ -14472,11 +14472,11 @@
                 end.setDate(end.getDate() + 1);
 
                 para.push({
-                    field: "issued_date >=",
+                    field: "updated_at >=",
                     value: kendo.toString(start, "yyyy-MM-dd")
                 });
                 para.push({
-                    field: "issued_date <",
+                    field: "updated_at <",
                     value: kendo.toString(end, "yyyy-MM-dd")
                 });
             } else if (start) {
@@ -14484,7 +14484,7 @@
                 displayDate = "On " + kendo.toString(start, "dd-MM-yyyy");
 
                 para.push({
-                    field: "issued_date",
+                    field: "updated_at",
                     value: kendo.toString(start, "yyyy-MM-dd")
                 });
             } else if (end) {
@@ -14493,7 +14493,7 @@
                 end.setDate(end.getDate() + 1);
 
                 para.push({
-                    field: "issued_date <",
+                    field: "updated_at <",
                     value: kendo.toString(end, "yyyy-MM-dd")
                 });
             } else {
@@ -14526,16 +14526,16 @@
                         cells: [{
                             value: self.company.name,
                             textAlign: "center",
-                            colSpan: 6
+                            colSpan: 4
                         }]
                     });
                     self.exArray.push({
                         cells: [{
-                            value: "Sale Detail Report",
+                            value: "Disconnect Customer List",
                             bold: true,
                             fontSize: 20,
                             textAlign: "center",
-                            colSpan: 6
+                            colSpan: 4
                         }]
                     });
                     if (self.displayDate) {
@@ -14543,39 +14543,29 @@
                             cells: [{
                                 value: self.displayDate,
                                 textAlign: "center",
-                                colSpan: 6
+                                colSpan: 4
                             }]
                         });
                     }
                     self.exArray.push({
                         cells: [{
                             value: "",
-                            colSpan: 6
+                            colSpan: 4
                         }]
                     });
                     self.exArray.push({
                         cells: [{
-                                value: "Type",
+                                value: "Customer",
                                 background: "#496cad",
                                 color: "#ffffff"
                             },
                             {
-                                value: "Date",
+                                value: "Meter Number",
                                 background: "#496cad",
                                 color: "#ffffff"
                             },
                             {
-                                value: "Location",
-                                background: "#496cad",
-                                color: "#ffffff"
-                            },
-                            {
-                                value: "Reference",
-                                background: "#496cad",
-                                color: "#ffffff"
-                            },
-                            {
-                                value: "Usage",
+                                value: "Address",
                                 background: "#496cad",
                                 color: "#ffffff"
                             },
@@ -14583,7 +14573,7 @@
                                 value: "Amount",
                                 background: "#496cad",
                                 color: "#ffffff"
-                            }
+                            },
                         ]
                     });
                     for (var i = 0; i < response.results.length; i++) {
@@ -14601,31 +14591,19 @@
                                 {
                                     value: ""
                                 },
-                                {
-                                    value: ""
-                                },
-                                {
-                                    value: ""
-                                }
                             ]
                         });
                         for (var j = 0; j < response.results[i].line.length; j++) {
                             balanceCal += response.results[i].line[j].amount;
                             self.exArray.push({
                                 cells: [{
-                                        value: response.results[i].line[j].type
+                                        value: ""
                                     },
                                     {
-                                        value: response.results[i].line[j].date
+                                        value: response.results[i].line[j].meter
                                     },
                                     {
                                         value: response.results[i].line[j].location
-                                    },
-                                    {
-                                        value: response.results[i].line[j].number
-                                    },
-                                    {
-                                        value: response.results[i].line[j].usage
                                     },
                                     {
                                         value: kendo.parseFloat(response.results[i].line[j].amount)
@@ -14633,18 +14611,12 @@
                                 ]
                             });
                         }
-                        self.exArray.push({
-                            cells: [{
-                                value: "",
-                                colSpan: 6
-                            }]
-                        });
                     }
                     self.exArray.push({
                         cells: [{
                                 value: "TOTAL",
                                 bold: true,
-                                fontSize: 16
+                                fontSize: 12
                             },
                             {
                                 value: ""
@@ -14653,15 +14625,9 @@
                                 value: ""
                             },
                             {
-                                value: ""
-                            },
-                            {
-                                value: ""
-                            },
-                            {
-                                value: kendo.parseFloat(response.balanceCal),
+                                value: kendo.parseFloat(balanceCal),
                                 bold: true,
-                                fontSize: 16
+                                fontSize: 12
                             },
                         ]
                     });
@@ -14758,21 +14724,15 @@
                         {
                             autoWidth: true
                         },
-                        {
-                            autoWidth: true
-                        },
-                        {
-                            autoWidth: true
-                        }
                     ],
-                    title: "Sale Detail",
+                    title: "Disconnect Customer List",
                     rows: this.exArray
                 }]
             });
             //save the file as Excel file with extension xlsx
             kendo.saveAs({
                 dataURI: workbook.toDataURL(),
-                fileName: "saleDetail.xlsx"
+                fileName: "disconnectList.xlsx"
             });
         }
     });
@@ -28209,6 +28169,13 @@
                 banhji.pageLoaded["disconnect_list"] = true;
 
             }
+            banhji.disconnectList.dataSource.bind('requestEnd', function(e) {
+                if (e.response) {
+                    banhji.disconnectList.set('count', e.response.count);
+                    kendo.culture(banhji.locale);
+                    banhji.disconnectList.set('total', kendo.toString(e.response.total, 'c2'));
+                }
+            });
             vm.pageLoad();
         }
     });
