@@ -300,8 +300,21 @@ class Spa extends REST_Controller {
 					$i->locale = $txn->locale;
 					$i->movement = 0;
 					$i->save();
-					$therapistcount = count($item->therapist);
-					echo $therapistcount;
+					$emcount = count($item->therapist);
+					if($emcount > 0){
+						foreach($item->therapist as $the){
+							$emtxn = new Spa_employee_transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					   		$emtxn->transaction_id = $obj->id;
+					   		$emtxn->employee_id = $e->employee_id;
+					   		if($emcount > 1){
+					   			$emtxn->status = 2;
+					   		}else{
+					   			$emtxn->status = 1;
+					   		}
+					   		$emtxn->amount = floatval($txn->amount) / intval($emcount);
+					   		$emtxn->save();
+						}
+					}
 				}
 				//Service charge
 				if($iecprice > 0){
@@ -2149,21 +2162,27 @@ class Spa extends REST_Controller {
 	   			$txn->status = 1;
 	   			$txn->save();
 	   			//Employee
-	   			$ew = new Spa_work_employee(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-	   			$ew->where("work_id", $work->id)->get();
-	   			$emcount = count($ew);
-	   			foreach($ew as $e){
-			   		$emtxn = new Spa_employee_transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			   		$emtxn->transaction_id = $obj->id;
-			   		$emtxn->employee_id = $e->employee_id;
-			   		if($emcount > 1){
-			   			$emtxn->status = 2;
-			   		}else{
-			   			$emtxn->status = 1;
-			   		}
-			   		$emtxn->amount = floatval($txn->amount) / intval($emcount);
-			   		$emtxn->save();
-	   			}
+	   			$checkemtxn = new Spa_employee_transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	   			$checkemtxn->where("transaction_id", $txn->id)->get();
+	   			if($checkemtxn->exists()){
+	   				$checkemtxn->update_all('transaction_id', $obj->id);
+	   			}else{
+		   			$ew = new Spa_work_employee(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		   			$ew->where("work_id", $work->id)->get();
+		   			$emcount = count($ew);
+		   			foreach($ew as $e){
+				   		$emtxn = new Spa_employee_transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				   		$emtxn->transaction_id = $obj->id;
+				   		$emtxn->employee_id = $e->employee_id;
+				   		if($emcount > 1){
+				   			$emtxn->status = 2;
+				   		}else{
+				   			$emtxn->status = 1;
+				   		}
+				   		$emtxn->amount = floatval($txn->amount) / intval($emcount);
+				   		$emtxn->save();
+		   			}
+		   		}
 	   			//Session
 	   			$session = new Cashier_session(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 	   			$session->where("cashier_id", $value->user_id);
@@ -2790,7 +2809,7 @@ class Spa extends REST_Controller {
 			$employees->status  	= $value->status;
 			$employees->type  		= $value->type;
 			$employees->user_id 	= $value->userid;
-			$employees->locale 		= $value->currency->locale;
+			$employees->locale 		= $value->currency;
 			if($employees->save()) {
 				$data["results"][] = array(
 					'id' 			=> $employees->id,
@@ -2842,7 +2861,7 @@ class Spa extends REST_Controller {
 			$employees->status  	= $value->status;
 			$employees->type  		= $value->type;
 			$employees->user_id 	= $value->userid;
-			$employees->locale 		= $value->currency->locale;
+			$employees->locale 		= $value->currency;
 			if($employees->save()) {
 				$data["results"][] = array(
 					'id' 			=> $employees->id,

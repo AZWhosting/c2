@@ -1380,7 +1380,7 @@
 			                                      			value: obj.currency"
 			                                      data-text-field="country"
 			                                      data-value-field="locale"
-			                                      data-value-primitive="false"
+			                                      data-value-primitive="true"
 			                                      data-option-label="--Select Currency"
 			                                      class="form-control col-md-7 col-xs-12"
 			                                      type="text" style="width: 100%">

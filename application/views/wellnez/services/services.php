@@ -612,6 +612,7 @@
 			<a style="padding:28px;top: 80px;" href="<?php echo base_url(); ?>wellnez/pos/\#/room/#:room_id#" class="glyphicons no-js circle_plus"><i ></i></a>
 		</div>
 		#}else if(status == 'Maintenance'){#
+			<p style="text-align: left;"><b>Time:</b> <span style="text-align: center;font-size: 12px;">#: kendo.toString(new Date(maintenance_date), "F")#</span></p>
 			<a style="background: \#1c3b19;  color: \#fff; padding: 5px 15px;" data-bind="click: availableRoom">Available</a>
 		#}#
 	</div>
