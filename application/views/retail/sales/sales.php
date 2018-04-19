@@ -49,6 +49,7 @@
 			                <!-- Nav tabs -->
 			                <ul class="nav nav-tabs customtab" role="tablist">
 			                    <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#reports" role="tab"><span class="hidden-sm-up"><i class="ti-layout-grid2-thumb"></i></span> <span class="hidden-xs-down">Reports</span></a> </li>
+			                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#check_out" role="tab"><span class="hidden-sm-up"><i class="ti-layout-accordion-list"></i></span> <span class="hidden-xs-down">Check Out</span></a> </li>
 			                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#sales_transaction" role="tab"><span class="hidden-sm-up"><i class="ti-layout-accordion-list"></i></span> <span class="hidden-xs-down">Sales Transaction</span></a> </li>
 			                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#customers" role="tab"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down">Customers</span></a> </li>
 			                </ul>
@@ -195,6 +196,7 @@
 
 			                        </div>
 			                    </div>
+			                    <div class="tab-pane p-20" id="check_out" role="tabpanel">3</div>
 			                    <div class="tab-pane  p-20" id="sales_transaction" role="tabpanel">
 			                    	<div class="p-10">
 			                        	<div class="row">
