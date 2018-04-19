@@ -2074,15 +2074,12 @@ class UtibillReports extends REST_Controller {
 				if(isset($objList[$value->contact_id])){
 					$objList[$value->contact_id]["line"][] = array(
 						"id"		=> $value->id,
-						"number"	=> $value->meter_contact_number,
-						"meter"		=> $value->meter_number,
-						"location"  => $value->meter_location_name,
-						"branch"	=> $value->meter_branch_name,
-						"status"	=> $value->meter_status,
-						"previous"	=> $value->previous,						
-						"current"	=> $value->current,
-						"month_of" 	=> $value->month_of,
-						"property"	=> $value->meter_property_name,
+						"number"	=> $value->contact_number,
+						"meter"		=> $value->number,
+						"location"  => $value->location_name,
+						"branch"	=> $value->branch_name,
+						"status"	=> $value->status,
+						"property"	=> $value->property_name,
 					);
 				}else{
 					$objList[$value->contact_id]["id"] 			= $value->contact_id;					
@@ -2090,15 +2087,12 @@ class UtibillReports extends REST_Controller {
 					$objList[$value->contact_id]["name"] 		= $value->contact_name;
 					$objList[$value->contact_id]["line"][]		= array(
 						"id"		=> $value->id,
-						"number"	=> $value->meter_contact_number,
-						"meter"		=> $value->meter_number,
-						"location"  => $value->meter_location_name,
-						"branch"	=> $value->meter_branch_name,
-						"status"	=> $value->meter_status,
-						"previous"	=> $value->previous,
-						"current"	=> $value->current,
-						"month_of" 	=> $value->month_of,
-						"property"	=> $value->meter_property_name,
+						"number"	=> $value->contact_number,
+						"meter"		=> $value->number,
+						"location"  => $value->location_name,
+						"branch"	=> $value->branch_name,
+						"status"	=> $value->status,
+						"property"	=> $value->property_name,
 					);
 				}
 			}
