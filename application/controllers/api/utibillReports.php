@@ -2034,7 +2034,7 @@ class UtibillReports extends REST_Controller {
 		$data["count"] = 0;
 	
 
-		$obj = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 		//Sort
 		if(!empty($sort) && isset($sort)){
@@ -2059,11 +2059,11 @@ class UtibillReports extends REST_Controller {
 		}
 
 		//Results
-		$obj->include_related('meter/contact', array("abbr", "number", "address", "phone", "name", "status", "id"));
-		$obj->include_related('meter/property', array("abbr", "name"));
-		$obj->include_related('meter/location', "name");
-		$obj->include_related('meter/branch', "name" );
-		$obj->include_related('meter', array("number", "status", "location_id", "pole_id", "box_id"));
+		$obj->include_related('contact', array("abbr", "number", "address", "phone", "name", "status"));
+		$obj->include_related('property', array("abbr", "name"));
+		$obj->include_related('location', "name");
+		$obj->include_related('branch', "name" );
+		$obj->include_related('meter', array("number", "status"));
 		$obj->where_related("meter", "status", 0);
 		$obj->get_paged_iterated($page, $limit);
 		
@@ -2071,8 +2071,8 @@ class UtibillReports extends REST_Controller {
 			$objList = [];
 			foreach ($obj as $value) {								
 				
-				if(isset($objList[$value->meter_contact_id])){
-					$objList[$value->meter_contact_id]["line"][] = array(
+				if(isset($objList[$value->contact_id])){
+					$objList[$value->contact_id]["line"][] = array(
 						"id"		=> $value->id,
 						"number"	=> $value->meter_contact_number,
 						"meter"		=> $value->meter_number,
@@ -2085,10 +2085,10 @@ class UtibillReports extends REST_Controller {
 						"property"	=> $value->meter_property_name,
 					);
 				}else{
-					$objList[$value->meter_contact_id]["id"] 		= $value->meter_contact_id;					
-					$objList[$value->meter_contact_id]["number"] 	= $value->meter_contact_abbr.$value->meter_contact_number;
-					$objList[$value->meter_contact_id]["name"] 		= $value->meter_contact_name;
-					$objList[$value->meter_contact_id]["line"][]	= array(
+					$objList[$value->contact_id]["id"] 			= $value->contact_id;					
+					$objList[$value->contact_id]["number"] 		= $value->contact_abbr.$value->contact_number;
+					$objList[$value->contact_id]["name"] 		= $value->contact_name;
+					$objList[$value->contact_id]["line"][]		= array(
 						"id"		=> $value->id,
 						"number"	=> $value->meter_contact_number,
 						"meter"		=> $value->meter_number,
