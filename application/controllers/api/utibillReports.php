@@ -2075,11 +2075,11 @@ class UtibillReports extends REST_Controller {
 					$objList[$value->contact_id]["line"][] = array(
 						"id"		=> $value->id,
 						"number"	=> $value->contact_number,
-						"meter"		=> $value->number,
+						"meter"		=> $value->meter_number,
 						"location"  => $value->location_name,
 						"branch"	=> $value->branch_name,
-						"status"	=> $value->status,
 						"property"	=> $value->property_name,
+						"amount"	=> floatval($value->amount),	
 					);
 				}else{
 					$objList[$value->contact_id]["id"] 			= $value->contact_id;					
@@ -2088,11 +2088,11 @@ class UtibillReports extends REST_Controller {
 					$objList[$value->contact_id]["line"][]		= array(
 						"id"		=> $value->id,
 						"number"	=> $value->contact_number,
-						"meter"		=> $value->number,
+						"meter"		=> $value->meter_number,
 						"location"  => $value->location_name,
 						"branch"	=> $value->branch_name,
-						"status"	=> $value->status,
 						"property"	=> $value->property_name,
+						"amount"	=> floatval($value->amount),
 					);
 				}
 			}
