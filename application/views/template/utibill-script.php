@@ -19454,7 +19454,7 @@
                             overDue = Math.floor((dueDates - toDay) / (1000 * 60 * 60 * 24)) + "days to pay";
                         }
                         var status;
-                        if (response.results[i].status = 1){
+                        if (response.results[i].status1 = 1){
                             status = "Active";
                         }else{
                             status = "Inactive";

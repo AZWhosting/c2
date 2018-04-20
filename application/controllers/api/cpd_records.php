@@ -76,7 +76,8 @@ class Cpd_records extends REST_Controller {
 					"period"			=> $value->period,
 					"record_date"		=> $value->record_date,
 
-					"contacts" 			=> $value->contact->get_raw()->result()
+					"contacts" 			=> $value->contact->get_raw()->result(),
+					"memeberships" 		=> $value->memebership->get_raw()->result()
 				);
 			}
 		}
@@ -105,10 +106,17 @@ class Cpd_records extends REST_Controller {
 				$obj->contact_id = $value->contacts->id;
 			}
 
+			//Membership			
+			if(isset($value->memeberships)){
+				$obj->membership_id = $value->memeberships->id;
+			}
+
 			if($obj->save()){
 				$data["results"][] = array(
 					"id" 				=> $obj->id,
 					"contact_id" 	 	=> $obj->contact_id,
+					"membership_id" 	=> $obj->membership_id,
+					"subject" 			=> $obj->subject,
 					"credit" 			=> $obj->credit,
 					"period"			=> $obj->period,
 					"record_date"		=> $obj->record_date

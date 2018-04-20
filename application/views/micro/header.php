@@ -13,6 +13,7 @@
 <link rel="stylesheet" href="<?php echo base_url()?>assets/micro/jquery.toast.css" >
 <link rel="stylesheet" href="<?php echo base_url()?>assets/micro/c3.min.css">
 <link rel="stylesheet" href="<?php echo base_url()?>assets/micro/micro.css">
+<link rel="stylesheet" href="<?php echo base_url()?>assets/micro/icon-page.css">
 
 <script src="<?php echo base_url()?>assets/micro/jquery-3.2.1.min.js"></script>
 <script src="<?php echo base_url()?>assets/micro/popper.min.js"></script>
@@ -304,6 +305,11 @@
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="javascript:void(0)"><i class="ti-settings m-r-5 m-l-5"></i> Account Setting</a>
                 <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="javascript:void(0)" data-bind="click: lang.changeToKh"><i class="flag-icon flag-icon-kh "></i> <span>ភាសាខ្មែរ</span></a>
+                <a class="dropdown-item" href="javascript:void(0)" data-bind="click: lang.changeToEn"><i class="flag-icon flag-icon-us "></i> <span>English</span></a>
+                <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="javascript:void(0)"><i class="fa fa-power-off m-r-5 m-l-5"></i> Logout</a>
+                
+                
             </div>
-        </div>                                                                                                                                                                                                                                                                                                                                         
+        </div>
