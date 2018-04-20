@@ -5731,7 +5731,7 @@
                                 });
                                 this.workDS.sync();
                                 this.workDS.bind("requestEnd", function(e){
-                                    // window.location.href = "<?php echo base_url(); ?>wellnez/services";
+                                    window.location.href = "<?php echo base_url(); ?>wellnez/services";
                                     self.addWorkSuccess();
                                     $("#loadImport").css("display", "none");
                                 });
@@ -5968,6 +5968,8 @@
             this.set("dateSelected", new Date(data.date));
             this.set("customerPhone", data.phone);
         },
+        Male    : 0,
+        Female  : 0,
         today   : new Date(),
         //Reference
         loadReference       : function(){

@@ -113,6 +113,7 @@ class Attachments extends REST_Controller {
 					"id" 				=> $value->id,
 					"user_id" 			=> $value->user_id,
 					"transaction_id" 	=> $value->transaction_id,
+					"reference_id" 		=> $value->reference_id,
 					"account_id" 		=> $value->account_id,
 					"contact_id" 		=> $value->contact_id,
 					"item_id" 			=> $value->item_id,
@@ -150,6 +151,7 @@ class Attachments extends REST_Controller {
 
 			isset($value->user_id) 			? $obj->user_id 		= $value->user_id : "";
 			isset($value->transaction_id) 	? $obj->transaction_id 	= $value->transaction_id : "";
+			isset($value->reference_id) 	? $obj->reference_id 	= $value->reference_id : "";
 			isset($value->account_id) 		? $obj->account_id 		= $value->account_id : "";
 			isset($value->contact_id) 		? $obj->contact_id 		= $value->contact_id : "";
 			isset($value->item_id) 			? $obj->item_id 		= $value->item_id : "";
@@ -168,6 +170,7 @@ class Attachments extends REST_Controller {
 					"id" 				=> $obj->id,
 					"user_id" 			=> $obj->user_id,
 					"transaction_id" 	=> $obj->transaction_id,
+					"reference_id" 		=> $obj->reference_id,
 					"account_id" 		=> $obj->account_id,
 					"contact_id" 		=> $obj->contact_id,
 					"item_id" 			=> $obj->item_id,
@@ -200,6 +203,7 @@ class Attachments extends REST_Controller {
 
 			isset($value->user_id) 			? $obj->user_id 		= $value->user_id : "";
 			isset($value->transaction_id) 	? $obj->transaction_id 	= $value->transaction_id : "";
+			isset($value->reference_id) 	? $obj->reference_id 	= $value->reference_id : "";
 			isset($value->account_id) 		? $obj->account_id 		= $value->account_id : "";
 			isset($value->contact_id) 		? $obj->contact_id 		= $value->contact_id : "";
 			isset($value->item_id) 			? $obj->item_id 		= $value->item_id : "";
@@ -217,6 +221,7 @@ class Attachments extends REST_Controller {
 					"id" 				=> $obj->id,
 					"user_id" 			=> $obj->user_id,
 					"transaction_id" 	=> $obj->transaction_id,
+					"reference_id" 		=> $obj->reference_id,
 					"account_id" 		=> $obj->account_id,
 					"contact_id" 		=> $obj->contact_id,
 					"item_id" 			=> $obj->item_id,

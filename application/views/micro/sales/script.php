@@ -3016,7 +3016,7 @@
         pageLoad: function() {
             var self = this, obj = this.get("obj");
             this.graphDS.read();
-
+            
             this.dataSource.query({
                 filter: []
             }).then(function(){
@@ -3033,15 +3033,15 @@
                 obj.set("ar_overdue", kendo.toString(view[0].ar_overdue, "n0"));
 
                 obj.set("collection_day", kendo.toString(view[0].collection_day, "n0"));
+
+                self.set("obj", view[0]);
             });
         },
-        
         save: function() {
         },
         cancel: function() {
             window.history.back();
         },
-        today   : new Date()
     });
     /* views and layout */
     banhji.view = {
@@ -3115,6 +3115,8 @@
     });
     
     $(function() {
+        banhji.router.start();
+
         banhji.accessMod.query({
             filter: {
                 field: 'username',

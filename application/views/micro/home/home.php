@@ -159,19 +159,24 @@
                 <!-- Column -->
             </div>
             
-            <div class="row">
+            <div class="row home-footer">
                 <!-- Column -->
                 <div class="col-lg-3">
                     <div class="card card-body">
-                        <h5 class="card-title">Tax Deduction</h5>
-                        <div class="row">
-                            <div class="col-6 m-t-30">
-                                <h1 class="text-info">$347</h1>
-                                <p class="text-muted">APRIL 2017</p>
-                                <b>(150 Sales)</b> </div>
-                            <div class="col-6">
-                                <div id="sparkline1dash" class="text-right"></div>
-                            </div>
+                        <div class="top5" >
+                            <table class="table color-table dark-table">
+                                <thead>
+                                    <tr>
+                                        <th colspan="2" class="center">
+                                            <span data-bind="text: lang.lang.top_5_customers"></span>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody data-role="listview"
+                                     data-auto-bind="false"
+                                     data-template="top-contact-template"
+                                     data-bind="source: objInventory.top_customer"></tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -179,48 +184,57 @@
                 <!-- Column -->
                 <div class="col-lg-3">
                     <div class="card card-body">
-                        <h5 class="card-title">Shipment</h5>
-                        <div class="row">
-                            <div class="col-6 m-t-30">
-                                <h1 class="text-success">$647</h1>
-                                <p class="text-muted">APRIL 2017</p>
-                                <b>(150 Sales)</b> </div>
-                            <div class="col-6">
-                                <div id="sparkline2dash" class="text-right m-t-30"></div>
-                            </div>
-                        </div>
+                        <table class="table color-table dark-table">
+                            <thead>
+                                <tr>
+                                    <th colspan="2" class="center">
+                                        <span data-bind="text: lang.lang.top_5_suppliers"></span>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody data-role="listview"
+                                 data-auto-bind="false"
+                                 data-template="top-contact-template"
+                                 data-bind="source: objInventory.top_supplier"></tbody>
+                        </table>
                     </div>
                 </div>
                 <!-- Column -->
                 <!-- Column -->
                 <div class="col-lg-3">
                     <div class="card card-body">
-                        <h5 class="card-title">Revenue generate</h5>
-                        <div class="row">
-                            <div class="col-6 m-t-30">
-                                <h1 class="text-danger">$647</h1>
-                                <p class="text-muted">APRIL 2017</p>
-                                <b>(150 Sales)</b> </div>
-                            <div class="col-6">
-                                <div id="sparkline3dash" class="text-right"></div>
-                            </div>
-                        </div>
+                        <table class="table color-table dark-table">
+                            <thead>
+                                <tr>
+                                    <th colspan="2" class="center">
+                                        <span data-bind="text: lang.lang.top_5_best_selling_products"></span>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody data-role="listview"
+                                 data-auto-bind="false"
+                                 data-template="top-product-template"
+                                 data-bind="source: objInventory.top_product"></tbody>
+                        </table>
                     </div>
                 </div>
                 <!-- Column -->
                 <!-- Column -->
                 <div class="col-lg-3">
                     <div class="card card-body">
-                        <h5 class="card-title">Order received </h5>
-                        <div class="row">
-                            <div class="col-6 m-t-30">
-                                <h1 class="text-inverse">$647</h1>
-                                <p class="text-muted">APRIL 2017</p>
-                                <b>(150 Sales)</b> </div>
-                            <div class="col-6">
-                                <div id="sparkline4dash" class="text-right"></div>
-                            </div>
-                        </div>
+                        <table class="table color-table dark-table">
+                            <thead>
+                                <tr>
+                                    <th class="center" colspan="2">
+                                        <span data-bind="text: lang.lang.top_5_Receipt"></span>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody data-role="listview"
+                                 data-auto-bind="false"
+                                 data-template="top-contact-template"
+                                 data-bind="source: obj.top_cash_receipt"></tbody>
+                        </table>
                     </div>
                 </div>
                 <!-- Column -->
@@ -372,340 +386,38 @@
         </section>
     </div> -->
 </script>
-<script id="saleSummaryByCustomer" type="text/x-kendo-template">
-	<div id="slide-form">
-		<div class="customer-background ">
-			<div class="container-960">
-				<div id="example" class="k-content saleSummaryCustomer">
-			    	<span class="pull-right glyphicons no-js remove_2"
-						onclick="javascript:window.history.back()"><i></i></span>
-					<br>
-					<br>
 
-					<div class="row-fluid">
-					    <!-- Tabs -->
-						<div class="relativeWrap" data-toggle="source-code">
-							<div class="widget widget-tabs widget-tabs-gray report-tab">
 
-								<!-- Tabs Heading -->
-								<div class="widget-head">
-									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>
-										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.filter"></span></a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
-									</ul>
-								</div>
-								<!-- // Tabs Heading END -->
-								<div class="widget-body">
-									<div class="tab-content">
 
-								        <!-- Date -->
-								        <div class="tab-pane active" id="tab-1">
-
-											<input data-role="dropdownlist"
-												   class="sorter"
-										           data-value-primitive="true"
-										           data-text-field="text"
-										           data-value-field="value"
-										           data-bind="value: sorter,
-										                      source: sortList,
-										                      events: { change: sorterChanges }" />
-
-											<input data-role="datepicker"
-												   class="sdate"
-												   data-format="dd-MM-yyyy"
-										           data-bind="value: sdate,
-										           			  max: edate"
-										           placeholder="From ..." >
-
-										    <input data-role="datepicker"
-										    	   class="edate"
-										    	   data-format="dd-MM-yyyy"
-										           data-bind="value: edate,
-										                      min: sdate"
-										           placeholder="To ..." >
-
-										  	<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-
-							        	</div>
-
-								    	<!-- Filter -->
-								        <div class="tab-pane" id="tab-2">
-											<table class="table table-condensed">
-												<tr>
-									            	<td style="padding: 8px 0 0 0 !important; ">
-														<span data-bind="text: lang.lang.customers"></span>
-														<select data-role="multiselect"
-															   data-value-primitive="true"
-															   data-header-template="contact-header-tmpl"
-															   data-item-template="contact-list-tmpl"
-															   data-value-field="id"
-															   data-text-field="name"
-															   data-bind="value: obj.contactIds,
-															   			source: contactDS"
-															   data-placeholder="Select Customer.."
-															   style="width: 100%" /></select>
-													</td>
-													<td style="padding-top: 31px !important; float: left;">
-										  				<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-													</td>
-												</tr>
-											</table>
-							        	</div>
-							        								        	<!-- PRINT/EXPORT  -->
-								        <div class="tab-pane" id="tab-3">
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
-								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		Print as PDF
-								        	</span> -->
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" style="width: 80px;">
-								        		<i class="fa fa-file-excel-o"></i>
-								        		Export to Excel
-								        	</span>
-							        	</div>
-								    </div>
-								</div>
-							</div>
-						</div>
-						<!-- // Tabs END -->
-					</div>
-
-					<div id="invFormContent">
-						<div class="block-title">
-							<h3 data-bind="html: company.name"></h3>
-							<h2 data-bind="text: lang.lang.sale_summary_by_customer"></h2>
-							<p data-bind="text: displayDate"></p>
-						</div>
-						<div class="row-fluid">
-							<div class="span3">
-								<div class="total-customer">
-									<p data-bind="text: lang.lang.number_of_customer"></p>
-									<span data-bind="text: dataSource.total"></span>
-								</div>
-							</div>
-							<div class="span9">
-								<div class="total-sale">
-									<p data-bind="text: lang.lang.total_sale"></p>
-									<span data-bind="text: totalAmount"></sapn>
-								</div>
-							</div>
-						</div>
-						<table class="table table-borderless table-condensed ">
-							<thead>
-								<tr>
-									<th data-bind="text:lang.lang.customer"></th>
-									<th style="text-align: center;" data-bind="text: lang.lang.number_of_invoice"></th>
-									<th style="text-align: center;" data-bind="text: lang.lang.number_of_cash_sale"></th>
-									<th style="text-align: right;" data-bind="text: lang.lang.total_sale"></th>
-								</tr>
-							</thead>
-		            		<tbody  data-role="listview"
-		            				data-auto-bind="false"
-					                data-template="saleSummaryByCustomer-template"
-					                data-bind="source: dataSource" >
-					        </tbody>
-		            	</table>
-		            	<div id="pager" class="k-pager-wrap"
-			            		 data-role="pager"
-						    	 data-auto-bind="false"
-					             data-bind="source: dataSource"></div>
-		            </div>
-				</div>
-			</div>
-		</div>
-	</div>
-</script>
-<script id="saleSummaryByCustomer-template" type="text/x-kendo-template">
-	<tr>
-		<td>#=name#</td>
-		<td style="text-align: center;">#=invoice_count#</td>
-		<td style="text-align: center;">#=cash_sale_count#</td>
-		<td style="text-align: right;">#=kendo.toString(amount, "c2", banhji.locale)#</td>
-	</tr>
-</script>
-<script id="saleDetailByCustomer" type="text/x-kendo-template">
-	<div id="slide-form">
-		<div class="customer-background">
-			<div class="container-960">
-				<div id="example" class="k-content saleSummaryCustomer">
-			    	<span class="pull-right glyphicons no-js remove_2"
-						onclick="javascript:window.history.back()"><i></i></span>
-					<br>
-					<br>
-
-					<div class="row-fluid">
-					    <!-- Tabs -->
-						<div class="relativeWrap" data-toggle="source-code">
-							<div class="widget widget-tabs widget-tabs-gray report-tab">
-
-								<!-- Tabs Heading -->
-								<div class="widget-head">
-									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>
-										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.filter"></span></a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
-									</ul>
-								</div>
-								<!-- // Tabs Heading END -->
-								<div class="widget-body">
-									<div class="tab-content">
-
-								        <!-- Date -->
-								        <div class="tab-pane active" id="tab-1">
-
-											<input data-role="dropdownlist"
-												   class="sorter"
-										           data-value-primitive="true"
-										           data-text-field="text"
-										           data-value-field="value"
-										           data-bind="value: sorter,
-										                      source: sortList,
-										                      events: { change: sorterChanges }" />
-
-											<input data-role="datepicker"
-												   class="sdate"
-												   data-format="dd-MM-yyyy"
-										           data-bind="value: sdate,
-										           			  max: edate"
-										           placeholder="From ..." >
-
-										    <input data-role="datepicker"
-										    	   class="edate"
-										    	   data-format="dd-MM-yyyy"
-										           data-bind="value: edate,
-										                      min: sdate"
-										           placeholder="To ..." >
-
-										  	<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-
-							        	</div>
-
-								    	<!-- Filter -->
-								        <div class="tab-pane" id="tab-2">
-											<table class="table table-condensed">
-												<tr>
-									            	<td style="padding: 8px 0 0 0 !important; ">
-														<span data-bind="text: lang.lang.customers"></span>
-														<select data-role="multiselect"
-															   data-value-primitive="true"
-															   data-header-template="contact-header-tmpl"
-															   data-item-template="contact-list-tmpl"
-															   data-value-field="id"
-															   data-text-field="name"
-															   data-bind="value: obj.contactIds,
-															   			source: contactDS"
-															   data-placeholder="Select Customer.."
-															   style="width: 100%" /></select>
-													</td>
-													<td style="padding-top: 31px !important; float: left;">
-										  				<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-													</td>
-												</tr>
-											</table>
-							        	</div>
-								        <div class="tab-pane" id="tab-3">
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
-								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		Print as PDF
-								        	</span> -->
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" style="width: 80px;">
-								        		<i class="fa fa-file-excel-o"></i>
-								        		Export to Excel
-								        	</span>
-							        	</div>
-								    </div>
-								</div>
-							</div>
-						</div>
-						<!-- // Tabs END -->
-					</div>
-
-					<div id="invFormContent">
-						<div class="block-title">
-							<h3 data-bind="html: company.name"></h3>
-							<h2 data-bind="text: lang.lang.sale_detail_by_customer"></h2>
-							<p data-bind="text: displayDate"></p>
-						</div>
-
-						<div class="row-fluid">
-							<div class="span3">
-								<div class="total-customer">
-									<p data-bind="text: lang.lang.number_of_customer"></p>
-									<span data-bind="text: dataSource.total"></span>
-								</div>
-
-							</div>
-							<div class="span9">
-								<div class="total-sale">
-									<p data-bind="text: lang.lang.amount"></p>
-									<span data-bind="text: totalAmount"></sapn>
-								</div>
-							</div>
-						</div>
-
-						<table class="table table-borderless table-condensed ">
-							<thead>
-								<tr>
-									<th data-bind="text: lang.lang.type"><span></span></th>
-									<th data-bind="text: lang.lang.date"><span></span></th>
-									<th data-bind="text: lang.lang.reference"><span></span></th>
-									<th data-bind="text: lang.lang.memo"><span></span></th>
-									<th data-bind="text: lang.lang.amount"><span></span></th>
-								</tr>
-							</thead>
-							<tbody data-role="listview"
-									data-template="saleDetailByCustomer-template"
-									data-auto-bind="false"
-									data-bind="source: dataSource">
-							</tbody>
-						</table>
-						<div id="pager" class="k-pager-wrap"
-			            		 data-role="pager"
-						    	 data-auto-bind="false"
-					             data-bind="source: dataSource"></div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<br>
-	<br>
-</script>
-<script id="saleDetailByCustomer-template" type="text/x-kendo-template">
-	<tr style="font-weight: bold">
-		<td>#=name#</td>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
-	</tr>
-	# var amount = 0;#
-	#for(var i= 0; i <line.length; i++) {#
-		# amount += line[i].amount;#
-		<tr>
-			<td style="padding-left: 20px !important;">
-				<a href="\#/#=line[i].type.toLowerCase()#/#=line[i].id#"><i></i> #=line[i].type#</a>
-			</td>
-			<td>#=kendo.toString(new Date(line[i].issued_date), "dd-MM-yyyy")#</td>
-			<td style="text-align: left;">
-				<a href="\#/#=line[i].type.toLowerCase()#/#=line[i].id#">#=line[i].number#</a>
-			</td>
-			<td style="text-align: right;">#=line[i].memo#</td>
-			<td style="text-align: right;">#=kendo.toString(line[i].amount, "c2", banhji.locale)#</td>
-		</tr>
-	#}#
-	<tr>
-    	<td style="font-weight: bold; color: black;"> <span data-bind="text: lang.lang.total"></span> #=name#</td>
-    	<td></td>
-    	<td></td>
-    	<td></td>
-    	<td class="right" style="font-weight: bold; border-top: 1px solid black !important; color: black;">
-    		#=kendo.toString(amount, "c2", banhji.locale)#
-    	</td>
-    </tr>
+<!-- Template -->
+<script id="top-product-template" type="text/x-kendo-tmpl">
     <tr>
-    	<td colspan="5">&nbsp;</td>
+        <td>
+            <span>
+                #if(name.length>15){#
+                    #=name.substring(0, 15)#...
+                #}else{#
+                    #=name#
+                #}#
+            </span>
+            <span class="pull-right">#:kendo.toString(kendo.parseInt(total), "n0")#</span>
+        </td>
     </tr>
-</script>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+</script>
+<script id="top-contact-template" type="text/x-kendo-tmpl">
+    <tr data-uid="#: uid #">
+        <td>
+            <span>
+                #if(name){#
+                    #if(name.length>15){#
+                        #=name.substring(0, 15)#...
+                    #}else{#
+                        #=name#
+                    #}#
+                #}#
+            </span>
+            <span class="pull-right">#=kendo.toString(kendo.parseFloat(total), banhji.locale=="km-KH"?"c0":"c2", banhji.locale)#</span>
+        </td>
+    </tr>
+</script>
+<!-- End -->

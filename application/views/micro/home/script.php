@@ -2995,6 +2995,7 @@
         Institute       : banhji.institute,
         actualCash      : 0,
         dataSource      : dataStore(apiUrl + "customer_modules/dashboard"),
+        inventoryDS     : dataStore(apiUrl + "inventory_modules/dashboard"),
         actualDS        : dataStore(apiUrl + "utibills/cashier_actual"),
         sessionDS       : dataStore(apiUrl + "utibills/session"),
         graphDS         : dataStore(apiUrl + "customer_modules/monthly_sale"),
@@ -3034,6 +3035,17 @@
                 obj.set("ar_overdue", kendo.toString(view[0].ar_overdue, "n0"));
 
                 obj.set("collection_day", kendo.toString(view[0].collection_day, "n0"));
+
+                self.set("obj", view[0]);
+            });
+
+            //Inventory
+            this.inventoryDS.query({
+                filter: []
+            }).then(function(){
+                var view = self.inventoryDS.view();
+
+                self.set("objInventory", view[0]);
             });
         },
         
@@ -3161,4 +3173,4 @@
         var Href1 = '<?php echo base_url(); ?>assets/water/winvoice-res.css';
         var Href2 = '<?php echo base_url(); ?>assets/water/winvoice-print.css';
     });
-</script>                                                                                                                                                                                                                                        
+</script>

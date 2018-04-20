@@ -58,7 +58,7 @@
 			                    <div class="tab-pane active" id="reports" role="tabpanel">
 			                        <div class="p-10">
 			                        	<div class="row">
-					    					<div class="col-md-4">
+					    					<!-- <div class="col-md-4">
 												<div class="home-chart">
 													<div data-role="chart"
 										                 data-legend="{ position: 'top' }"
@@ -76,7 +76,7 @@
 										                 data-bind="source: graphDS"
 										                 style="height: 250px;" ></div>
 										            </div>
-					    					</div>
+					    					</div> -->
 					    					<div class="col-md-4">
 					    						<div class="saleOverview">
 					    							<h2 data-bind="text: lang.lang.sale_overview"></h2>
@@ -97,7 +97,7 @@
 					    							</div>
 					    						</div>
 					    					</div>
-					    					<div class="col-md-4">
+					    					<!-- <div class="col-md-4">
 					    						<div class="saleOverview">
 					    							<h2 data-bind="text: lang.lang.receivable_management"></h2>
 					    							<p data-bind="text: obj.ar"></p>
@@ -120,10 +120,10 @@
 					    								</div>
 					    							</div>
 					    						</div>
-					    					</div>
+					    					</div> -->
 					    				</div>
 
-					    				<div class="row">
+					    				<!-- <div class="row">
 					    					<div class="report">
 					    						<div class="col-sm-4">
 					    							<h3><a href="#/sale_summary_by_customer" data-bind="text: lang.lang.sale_summary_by_customer" ></a></h3>
@@ -172,29 +172,52 @@
 													<p data-bind="text: lang.lang.lists_of_collected_invoices_for_the_select_period_of_time_group_by_method_of_payment"></p>
 												</div>
 											</div>
-					    				</div>
-
-					    				<!-- <div class="vtabs customvtab">
-		                                    <ul class="nav nav-tabs tabs-vertical" role="tablist">
-		                                        <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#home3" role="tab"><span class="hidden-sm-up"><i class="ti-home"></i></span> <span class="hidden-xs-down">Home</span> </a> </li>
-		                                        <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#profile3" role="tab"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down">Profile</span></a> </li>
-		                                        <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#messages3" role="tab"><span class="hidden-sm-up"><i class="ti-email"></i></span> <span class="hidden-xs-down">Messages</span></a> </li>
-		                                    </ul>
-		                                    
-		                                    <div class="tab-content">
-		                                        <div class="tab-pane active" id="home3" role="tabpanel">
-		                                            <div class="p-20">
-		                                                <h3>Best Clean Tab ever</h3>
-		                                                <h4>you can use it with the small code</h4>
-		                                                <p>Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a.</p>
-		                                            </div>
-		                                        </div>
-		                                        <div class="tab-pane  p-20" id="profile3" role="tabpanel">2</div>
-		                                        <div class="tab-pane p-20" id="messages3" role="tabpanel">3</div>
-		                                    </div>
-		                                </div> -->
-
+					    				</div> -->
 			                        </div>
+
+			                        <!-- <div class="p-10">
+			                        	<div class="row home-footer">
+			                        		
+							                <div class="col-lg-3">
+							                    <div class="card card-body">
+							                    	<div class="saleOverview">
+						    							<h2 data-bind="text: lang.lang.sale_overview"></h2>
+						    							<p data-bind="text: obj.sale"></p>
+						    							<div class="col-md-12">
+						    								<div class="col-md-4">
+						    									<span data-bind="text: obj.sale_customer"></span>
+						    									<span data-bind="text: lang.lang.customer"></span>
+						    								</div>
+						    								<div class="col-md-4">
+						    									<span data-bind="text: obj.sale_product"></span>
+						    									<span data-bind="text: lang.lang.product"></span>
+						    								</div>
+						    								<div class="col-md-4">
+						    									<span data-bind="text: obj.sale_ordered"></span>
+						    									<span data-bind="text: lang.lang.order"></span>
+						    								</div>
+						    							</div>
+						    						</div>
+							                        <div class="top5" >
+							                            <table class="table color-table dark-table">
+							                                <thead>
+							                                    <tr>
+							                                        <th colspan="2" class="center">
+							                                            <span data-bind="text: lang.lang.top_5_customers"></span>
+							                                        </th>
+							                                    </tr>
+							                                </thead>
+							                                <tbody data-role="listview"
+							                                     data-auto-bind="false"
+							                                     data-template="top-contact-template"
+							                                     data-bind="source: objInventory.top_customer"></tbody>
+							                            </table>
+							                        </div>
+							                    </div>
+							                </div>
+							                
+			                        	</div>
+			                        </div> -->
 			                    </div>
 			                    <div class="tab-pane p-20" id="check_out" role="tabpanel">3</div>
 			                    <div class="tab-pane  p-20" id="sales_transaction" role="tabpanel">
@@ -772,4 +795,23 @@
     <tr>
     	<td colspan="5">&nbsp;</td>
     </tr>
-</script>                                                                                                                                                                                                                                                                                                                                                                                                                                  
+</script>
+
+<!-- Template -->
+<!-- <script id="top-contact-template" type="text/x-kendo-tmpl">
+    <tr data-uid="#: uid #">
+        <td>
+            <span>
+                #if(name){#
+                    #if(name.length>15){#
+                        #=name.substring(0, 15)#...
+                    #}else{#
+                        #=name#
+                    #}#
+                #}#
+            </span>
+            <span class="pull-right">#=kendo.toString(kendo.parseFloat(total), banhji.locale=="km-KH"?"c0":"c2", banhji.locale)#</span>
+        </td>
+    </tr>
+</script> -->
+<!-- End -->

@@ -95,16 +95,20 @@
                         <!-- Logo icon --><b>
                             <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
                             <!-- Dark Logo icon -->
-                            <img src="<?php echo base_url()?>assets/micro/logo-icon.png" alt="homepage" class="dark-logo" />
+                            <!-- <img src="<?php echo base_url()?>assets/micro/logo-icon.png" alt="homepage" class="dark-logo" /> -->
+                            <img src="<?php echo base_url()?>assets/micro/logo-banhjiNew.png" style="height: 36px;" alt="homepage" class="dark-logo" />
                             <!-- Light Logo icon -->
-                            <img src="<?php echo base_url()?>assets/micro/logo-light-icon.png" alt="homepage" class="light-logo" />
+                            <!-- <img src="<?php echo base_url()?>assets/micro/logo-light-icon.png" alt="homepage" class="light-logo" /> -->
+                            <!-- <img src="<?php echo base_url()?>assets/micro/logo-micro.png" alt="homepage" > -->
                         </b>
                         <!--End Logo icon -->
                         <!-- Logo text --><span>
                          <!-- dark Logo text -->
-                         <img src="<?php echo base_url()?>assets/micro/logo-text.png" alt="homepage" class="dark-logo" />
-                         <!-- Light Logo text -->    
-                         <img src="<?php echo base_url()?>assets/micro/logo-light-text.png" class="light-logo" alt="homepage" /></span> </a>
+                         <!-- <img src="<?php echo base_url()?>assets/micro/logo-text.png" alt="homepage" class="dark-logo" /> -->
+                         <img src="<?php echo base_url()?>assets/micro/logo-micro.png" style="height: 36px;" alt="homepage" class="dark-logo" />
+                         <!-- Light Logo text -->
+                        <!-- 
+                         --></a>
                 </div>
 
                 <div class="navbar-collapse">
@@ -306,4 +310,4 @@
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="javascript:void(0)"><i class="fa fa-power-off m-r-5 m-l-5"></i> Logout</a>
             </div>
-        </div>
+        </div>                                                                                                                                                                       
