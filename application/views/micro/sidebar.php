@@ -12,51 +12,51 @@
                 <li>
                     <a class="waves-effect waves-dark" href="<?php echo base_url();?>micro/home" aria-expanded="false">
                         <i class="ti-panel"></i>
-                        <span class="hide-menu">Home</span>
+                        <span class="hide-menu" data-bind="text: lang.lang.home">Home</span>
 
                     </a>                   
                 </li>
                 <li>
                     <a class="waves-effect waves-dark" href="<?php echo base_url(); ?>micro/sales" aria-expanded="false">
                         <i class="ti-receipt"></i>
-                        <span class="hide-menu">Sales</span>
+                        <span class="hide-menu" data-bind="text: lang.lang.sale">Sales</span>
                     </a>
                 </li>
                 <li>
                     <a class="waves-effect waves-dark" href="<?php echo base_url(); ?>micro/purchase" aria-expanded="false">
                         <i class="ti-view-list"></i>
-                        <span class="hide-menu">Purchases</span>
+                        <span class="hide-menu" data-bind="text: lang.lang.purchase">Purchases</span>
                     </a>
                 </li>
                 <li>
                     <a class="waves-effect waves-dark" href="<?php echo base_url(); ?>micro/items" aria-expanded="false">
                         <i class="ti-layout-grid2"></i>
-                        <span class="hide-menu">Items</span>
+                        <span class="hide-menu" data-bind="text: lang.lang.items">Items</span>
                     </a>
                 </li>
                 <li class="dropdown-divider"></li>
                 <li>
                     <a class="waves-effect waves-dark" href="<?php echo base_url(); ?>micro/setting" aria-expanded="false">
                         <i class="ti-settings"></i>
-                        <span class="hide-menu">Setting</span>
+                        <span class="hide-menu" data-bind="text: lang.lang.setting">Setting</span>
                     </a>
                 </li>
                 <li>
                     <a target="_blank" class="waves-effect waves-dark" href="<?php echo base_url(); ?>rrd" aria-expanded="false">
                         <i class="ti-files"></i>
-                        <span class="hide-menu">BanhJi</span>
+                        <span class="hide-menu" data-bind="text: lang.lang.banhji">BanhJi</span>
                     </a>
                 </li>
                 <li>
                     <a target="_blank" class="waves-effect waves-dark" href="<?php echo base_url(); ?>micro/faq" aria-expanded="false">
                         <i class="ti-comments-smiley"></i>
-                        <span class="hide-menu">FAQ</span>
+                        <span class="hide-menu" data-bind="text: lang.lang.faq">FAQ</span>
                     </a>
                 </li>
                 <li>
                     <a target="_blank" class="waves-effect waves-dark" href="<?php echo base_url(); ?>micro/support" aria-expanded="false">
                         <i class="ti-headphone-alt"></i>
-                        <span class="hide-menu">Support</span>
+                        <span class="hide-menu" data-bind="text: lang.lang.support">Support</span>
                     </a>
                 </li>
             </ul>

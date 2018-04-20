@@ -93,9 +93,9 @@ class Ops extends REST_Controller {
 				// 	// 	"null" 		=> FALSE,
 				// 	// 	"default" 	=> 0
 				// 	// ),
-				// 	"membership_id" => array(
-				// 		"type" 		=> "INT",
-				// 		"constraint"=> 11,
+				// 	"deleted" => array(
+				// 		"type" 		=> "TINYINT",
+				// 		"constraint"=> 1,
 				// 		"null" 		=> FALSE,
 				// 		"default" 	=> 0
 				// 	)

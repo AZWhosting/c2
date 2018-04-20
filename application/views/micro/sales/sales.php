@@ -1053,7 +1053,30 @@
 				                    <div class="tab-pane active" id="date" role="tabpanel">
 				                        <div class="p-20">
 				                        	<div class="row ">
-						    					1
+						    					<input data-role="dropdownlist"
+													   class="sorter"
+											           data-value-primitive="true"
+											           data-text-field="text"
+											           data-value-field="value"
+											           data-bind="value: sorter,
+											                      source: sortList,
+											                      events: { change: sorterChanges }" />
+
+												<input data-role="datepicker"
+													   class="sdate"
+													   data-format="dd-MM-yyyy"
+											           data-bind="value: sdate,
+											           			  max: edate"
+											           placeholder="From ..." >
+
+											    <input data-role="datepicker"
+											    	   class="edate"
+											    	   data-format="dd-MM-yyyy"
+											           data-bind="value: edate,
+											                      min: sdate"
+											           placeholder="To ..." >
+
+											  	<button type="button" data-role="button" data-bind="click: search"><i class="ti-search"></i></button>
 						    				</div>
 				                        </div>
 				                    </div>
@@ -1084,10 +1107,43 @@
 
 				            <!-- Block -->
 				            <div class="reportBlock">
+				            	<div class="row">
+				            		<div class="col-md-3">
+				            			<div class="total-sale">
+											<p data-bind="text: lang.lang.number_of_customer"></p>
+											<span data-bind="text: dataSource.total"></span>
+										</div>
+				            		</div>
+				            		<div class="col-md-9">
+				            			<div class="total-sale">
+											<p data-bind="text: lang.lang.total_sale"></p>
+											<span data-bind="text: totalAmount"></span>
+										</div>
+				            		</div>
+				            	</div>
 				            </div>
 
 				            <!-- Table -->
-				            <div class="reportTable">
+				            <div class="reportTable home-footer table-responsive">
+				            	<table class="table color-table dark-table">
+	                                <thead>
+	                                    <tr>
+											<th data-bind="text:lang.lang.customer"></th>
+											<th data-bind="text: lang.lang.number_of_invoice"></th>
+											<th data-bind="text: lang.lang.number_of_cash_sale"></th>
+											<th data-bind="text: lang.lang.total_sale"></th>
+										</tr>
+	                                </thead>
+	                                <tbody  data-role="listview"
+				            				data-auto-bind="false"
+							                data-template="saleSummaryByCustomer-template"
+							                data-bind="source: dataSource" >
+							        </tbody>
+				            	</table>
+				            	<div id="pager" class="k-pager-wrap"
+					            		 data-role="pager"
+								    	 data-auto-bind="false"
+							             data-bind="source: dataSource"></div>
 				            </div>
 			            </div>
                 		<!-- <div id="example" class="k-content saleSummaryCustomer">
@@ -1818,4 +1874,4 @@
     	<a href="\#/customer">+ Add New Customer</a></li>
     </strong>
 </script>
-<!-- End -->                                             
+<!-- End -->

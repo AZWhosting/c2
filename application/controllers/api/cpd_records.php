@@ -65,7 +65,21 @@ class Cpd_records extends REST_Controller {
 		}
 
 		if($obj->exists()){
-			foreach ($obj as $value) {				
+			foreach ($obj as $value) {
+				//Membership
+				$membership = $value->membership;
+				$membership->include_related("membership_type", "name");
+				$membership->get();
+				$memberships = array(
+					"id" 					=> $value->membership_id,
+					"contact_id" 	 		=> $membership->contact_id,
+					"membership_type_id" 	=> $membership->membership_type_id,
+					"membership_date"		=> $membership->membership_date,
+					"status"				=> $membership->status,
+					"expiry_date"			=> $membership->expiry_date,
+					"membership_type" 		=> $membership->membership_type_name
+				);
+
 				//Results				
 				$data["results"][] = array(
 					"id" 				=> $value->id,
@@ -76,8 +90,8 @@ class Cpd_records extends REST_Controller {
 					"period"			=> $value->period,
 					"record_date"		=> $value->record_date,
 
-					"contacts" 			=> $value->contact->get_raw()->result(),
-					"memeberships" 		=> $value->memebership->get_raw()->result()
+					"contacts" 			=> $value->contact->get_raw()->result()[0],
+					"memberships" 		=> $memberships
 				);
 			}
 		}
@@ -107,8 +121,8 @@ class Cpd_records extends REST_Controller {
 			}
 
 			//Membership			
-			if(isset($value->memeberships)){
-				$obj->membership_id = $value->memeberships->id;
+			if(isset($value->memberships)){
+				$obj->membership_id = $value->memberships->id;
 			}
 
 			if($obj->save()){

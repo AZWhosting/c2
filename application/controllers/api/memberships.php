@@ -48,7 +48,11 @@ class Memberships extends REST_Controller {
 		if(!empty($filter['filters']) && isset($filter['filters'])){
 	    	foreach ($filter['filters'] as $value) {
 	    		if(isset($value['operator'])) {
-					$obj->{$value['operator']}($value['field'], $value['value']);
+	    			if($value['operator']=="eq"){
+						$obj->where($value['field'], $value['value']);
+					}else{
+						$obj->{$value['operator']}($value['field'], $value['value']);
+					}
 				} else {
 	    			$obj->where($value["field"], $value["value"]);
 				}
