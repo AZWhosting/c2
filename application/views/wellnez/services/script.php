@@ -5601,6 +5601,38 @@
                 dataSource: this.dataSource,
                 template: kendo.template(TempForm)
             });
+            this.barcod("do");
+        },
+        barcod: function(re) {
+            var view = this.dataSource;
+            for (var i = 0; i < view.length; i++) {
+                var d = view[i];
+                if (re == "reset") {
+                    $("#secondwnumber" + d.id).css("height", "0px").data("kendoBarcode").resize();
+                    $("#footwnumber" + d.id).css("height", "0px").data("kendoBarcode").resize();
+                } else {
+                    $("#secondwnumber" + d.id).kendoBarcode({
+                        renderAs: "svg",
+                        value: d.number,
+                        type: "code128",
+                        width: 350,
+                        height: 40,
+                        text: {
+                            visible: false
+                        }
+                    });
+                    $("#footwnumber" + d.id).kendoBarcode({
+                        renderAs: "svg",
+                        value: d.number,
+                        type: "code128",
+                        width: 450,
+                        height: 40,
+                        text: {
+                            visible: false
+                        }
+                    });
+                }
+            }
         },
         printGrid       : function(){
             var self = this, Win, pHeight, pWidth, ts;

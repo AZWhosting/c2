@@ -597,6 +597,7 @@ class Spa extends REST_Controller {
 							"rate" 			=> floatval($i->rate),
 							"locale" 		=> $i->locale,
 							"status" 		=> $obj->status,
+							"therapist" 	=> [],
 						);
 					}
 				}
@@ -1140,6 +1141,7 @@ class Spa extends REST_Controller {
 			$data["results"][] = array(
 		   		"id" 			=> $txn->id,
 		   		"number" 		=> $txn->number,
+		   		"contact" 		=> $conar,
 		   		"amount" 		=> floatval($txn->amount),
 		   		"sub_total" 	=> floatval($txn->sub_total),
 		   		"discount" 		=> floatval($txn->discount),

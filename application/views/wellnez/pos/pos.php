@@ -781,7 +781,7 @@
 				                            },
 				                            { 
 				                            	field: 'therapist', 
-				                            	title:'Staff', 
+				                            	title:'STAFF', 
 				                            	editor: therapistEditor,
 				                            	template: '#= therapistname#'
 				                            }

@@ -15079,12 +15079,16 @@
 							<table style="margin-bottom: 0;" class="table table-bordered table-condensed table-striped table-primary table-vertical-center">
 								<thead>
 									<tr>
-										<th style="vertical-align: top;"><span data-bind="text: lang.lang.type">Type</span></th>
 										<th style="vertical-align: top;"><span data-bind="text: lang.lang.date">Date</span></th>
 										<th style="vertical-align: top;"><span data-bind="text: lang.lang.name">Name</span></th>
 										<th style="vertical-align: top;"><span data-bind="text: lang.lang.reference">Reference</span></th>
+										<th style="vertical-align: top;"><span data-bind="text: lang.lang.meter_number">Meter Number</span></th>
+										<th style="vertical-align: top;"><span data-bind="text: lang.lang.pole">Pole</span></th>
+										<th style="vertical-align: top;"><span data-bind="text: lang.lang.box">Box</span></th>
 										<th style="vertical-align: top;"><span data-bind="text: lang.lang.location">Location</span></th>
-										<th style="vertical-align: top; text-align: center;"><span data-bind="text: lang.lang.status">Status</span></th>	
+										
+										<th style="vertical-align: top; text-align: center;"><span data-bind="text: lang.lang.status">Status</span></th>
+										<th style="vertical-align: top; text-align: center;"><span data-bind="text: lang.lang.over_due">Over Due</span></th>	
 										<th style="vertical-align: top; text-align: right;" ><span data-bind="text: lang.lang.amount">Amount</span></th>
 									</tr>
 								</thead>
@@ -15108,15 +15112,21 @@
 </script>
 <script id="accountReceivableList-template" type="text/x-kendo-template">
 	<tr>
-		<td>
-			<a href="\#/#=type.toLowerCase()#/#=id#">#=type#</a>
-		</td>
 		<td>#=kendo.toString(new Date(issued_date),"dd-MM-yyyy")#</td>
 		<td>#=name#</td>
 		<td>
 			<a href="\#/#=type.toLowerCase()#/#=id#">#=number#</a>
 		</td>
+		<td>#=meter#</td>
+		<td>#=pole#</td>
+		<td>#=box#</td>
 		<td>#=location#</td>
+		<td>#if(status = 1){#
+				Active
+			#}else{#
+				Inactive
+			#}#
+		</td>
 		<td style="text-align: center;">
 			# var date = new Date(), dueDates = new Date(due_date).getTime(), toDay = new Date(date).getTime(); #
 			#if(dueDates < toDay) {#

@@ -12,6 +12,10 @@ class Membership extends DataMapper {
 		'contact' => array(
 			'class' => 'contact',
 			'other_field' => 'membership'
+		),
+		'cpd_record' => array(
+			'class' => 'cpd_record',
+			'other_field' => 'membership'
 		)
 	);
 

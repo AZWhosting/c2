@@ -714,7 +714,7 @@
         				</tr> -->
         				<tr>
         					<td style="padding: 5px; border: 1px solid \#000; text-align: left; width: 35%; background: \#F1F1F1!important;">ឈ្មោះអតិថិជន (Customer Name) </td>
-        					<td style="padding: 5px; border: 1px solid \#000; text-align: left;"></td>
+        					<td style="padding: 5px; border: 1px solid \#000; text-align: left;">#: contact.name#</td>
         				</tr>
         				<tr>
         					<td style="padding: 5px; border: 1px solid \#000; text-align: left; width: 35%; background: \#F1F1F1!important;">លេខបន្ទប់ (Room No.) :</td>
@@ -792,6 +792,11 @@
 						</tr>
                     </tfoot>
                 </table>
+            </div>
+            <div class="clear">
+            	<div class="span6">
+            		<span id="secondwnumber#= id#" style="margin-left: -14px; float: left;"></span>
+            	</div>
             </div>
         </div>
     </div>

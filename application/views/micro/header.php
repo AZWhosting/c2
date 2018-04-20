@@ -13,7 +13,6 @@
 <link rel="stylesheet" href="<?php echo base_url()?>assets/micro/jquery.toast.css" >
 <link rel="stylesheet" href="<?php echo base_url()?>assets/micro/c3.min.css">
 <link rel="stylesheet" href="<?php echo base_url()?>assets/micro/micro.css">
-<link rel="stylesheet" href="<?php echo base_url()?>assets/micro/dashboard4.css">
 
 <script src="<?php echo base_url()?>assets/micro/jquery-3.2.1.min.js"></script>
 <script src="<?php echo base_url()?>assets/micro/popper.min.js"></script>
@@ -27,9 +26,6 @@
 <script src="<?php echo base_url()?>assets/micro/d3.min.js"></script>
 <script src="<?php echo base_url()?>assets/micro/c3.min.js"></script>
 <script src="<?php echo base_url()?>assets/micro/jquery.toast.js"></script>
-
-
-<script src="<?php echo base_url()?>assets/micro/dashboard4.js"></script>
     
 <!-- End -->
 
@@ -310,4 +306,4 @@
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="javascript:void(0)"><i class="fa fa-power-off m-r-5 m-l-5"></i> Logout</a>
             </div>
-        </div>                                                                                                                                                                       
+        </div>                                                                                                                                                                                                                                                                                                                                         

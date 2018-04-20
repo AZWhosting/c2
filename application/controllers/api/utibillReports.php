@@ -916,9 +916,11 @@ class UtibillReports extends REST_Controller {
 
 		//Results
 		$obj->include_related("contact", array("abbr", "number", "name"));
-		$obj->include_related("location", "name");
+		$obj->include_related("location", array("name"));
+		$obj->include_related("meter", array("number", "status"));
 		$obj->where("type", "Utility_Invoice");
 		$obj->where_in("status", array(0,2));
+		$obj->where("amount >", 0);
 		$obj->where("is_recurring <>", 1);
 		$obj->where("deleted <>", 1);
 		$obj->get_iterated();
@@ -926,6 +928,13 @@ class UtibillReports extends REST_Controller {
 		if($obj->exists()){
 			foreach ($obj as $value) {
 				$amount = floatval($value->amount) / floatval($value->rate);
+				$ref = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$ref->where("id", $value->box_id);
+				$ref->get();
+
+				$pole = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$pole->where("id", $value->pole_id);
+				$pole->get();
 
 				if($value->status=="2"){
 					$paid = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
@@ -938,7 +947,8 @@ class UtibillReports extends REST_Controller {
 					$paid->get();
 					$amount -= floatval($paid->amount) + floatval($paid->discount);
 				}
-				
+				$pole = isset($pole->name)?$pole->name:"";
+				$box = isset($ref->name)?$ref->name:"";
 				$data["results"][] = array(
 					"id" 				=> $value->id,
 					"name" 				=> $value->contact_abbr.$value->contact_number." ".$value->contact_name,
@@ -948,7 +958,11 @@ class UtibillReports extends REST_Controller {
 					"due_date" 			=> $value->due_date,
 					"location" 			=> $value->location_name,
 					"status"			=> $value->status,
+					"status1"			=> $value->meter_status,
+					"box"				=> $box,	
+					"pole"				=> $pole,	
 					"rate" 				=> $value->rate,
+					"meter"				=> $value->meter_number,
 					"amount" 			=> $amount
 				);
 			}

@@ -1,4 +1,3 @@
-
 <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/js/libs/localforage.min.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jszip/2.4.0/jszip.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.js"></script>
@@ -2996,8 +2995,7 @@
         actualCash      : 0,
         dataSource      : dataStore(apiUrl + "customer_modules/dashboard"),
         inventoryDS     : dataStore(apiUrl + "inventory_modules/dashboard"),
-        actualDS        : dataStore(apiUrl + "utibills/cashier_actual"),
-        sessionDS       : dataStore(apiUrl + "utibills/session"),
+        vendorDS        : dataStore(apiUrl + "vendor_modules/dashboard"),
         graphDS         : dataStore(apiUrl + "customer_modules/monthly_sale"),
         obj             : {},
         setObj          : function(){
@@ -3047,6 +3045,18 @@
 
                 self.set("objInventory", view[0]);
             });
+
+            // VendorDS
+            this.vendorDS.query({
+                filter: [],
+                page: 1,
+                pageSize: 100
+            }).then(function(){
+                var view = self.vendorDS.view();
+
+                self.set("objVendor", view[0]);
+            });
+
         },
         
         save: function() {

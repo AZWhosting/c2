@@ -48,7 +48,7 @@
                                                  ]"
                                      data-auto-bind="false"
                                      data-bind="source: graphDS"
-                                     style="height: 274px;" ></div>
+                                     style="height: 280px;" ></div>
                                 </div>
                             
                         </div>
@@ -61,8 +61,8 @@
                             <div class="card" >
                                 <div class="card-body">
                                     <div class="saleOverview" >
-                                        <h2 data-bind="text: lang.lang.sale_overview"></h2>
-                                        <p data-bind="text: obj.sale"></p>
+                                        <h2 data-bind="text: lang.lang.sale"></h2>
+                                        <p data-format="n" data-bind="text: obj.sale"></p>
                                         <div class="col-md-12">
                                             <div class="col-md-4">
                                                 <span data-bind="text: obj.sale_customer"></span>
@@ -87,19 +87,19 @@
                                 <div class="card-body">
                                     <div class="saleOverview">
                                         <h2 data-bind="text: lang.lang.receivable"></h2>
-                                        <p data-bind="text: obj.sale"></p>
+                                        <p data-format="n" data-bind="text: obj.ar"></p>
                                         <div class="col-md-12">
                                             <div class="col-md-4">
-                                                <span data-bind="text: obj.sale_customer"></span>
-                                                <span data-bind="text: lang.lang.customer"></span>
+                                                <span data-bind="text: obj.ar_open"></span>
+                                                <span data-bind="text: lang.lang.open"></span>
                                             </div>
                                             <div class="col-md-4">
-                                                <span data-bind="text: obj.sale_product"></span>
-                                                <span data-bind="text: lang.lang.product"></span>
+                                                <span data-bind="text: obj.ar_customer"></span>
+                                                <span data-bind="text: lang.lang.customers"></span>
                                             </div>
                                             <div class="col-md-4">
-                                                <span data-bind="text: obj.sale_ordered"></span>
-                                                <span data-bind="text: lang.lang.order"></span>
+                                                <span data-bind="text: obj.ar_overdue"></span>
+                                                <span data-bind="text: lang.lang.overdue"></span>
                                             </div>
                                         </div>
                                     </div>
@@ -110,19 +110,19 @@
                             <div class="card">
                                <div class="card-body" >
                                     <div class="saleOverview" >
-                                        <h2 data-bind="text: lang.lang.payables"></h2>
-                                        <p data-bind="text: obj.sale"></p>
+                                        <h2 data-bind="text: lang.lang.purchase"></h2>
+                                        <p data-format="n" data-bind="text: objVendor.purchase"></p>
                                         <div class="col-md-12">
                                             <div class="col-md-4">
-                                                <span data-bind="text: obj.sale_customer"></span>
-                                                <span data-bind="text: lang.lang.customer"></span>
+                                                <span data-bind="text: objVendor.purchase_supplier"></span>
+                                                <span data-bind="text: lang.lang.supplier"></span>
                                             </div>
                                             <div class="col-md-4">
-                                                <span data-bind="text: obj.sale_product"></span>
+                                                <span data-bind="text: objVendor.purchase_product"></span>
                                                 <span data-bind="text: lang.lang.product"></span>
                                             </div>
                                             <div class="col-md-4">
-                                                <span data-bind="text: obj.sale_ordered"></span>
+                                                <span data-bind="text: objVendor.purchase_ordered"></span>
                                                 <span data-bind="text: lang.lang.order"></span>
                                             </div>
                                         </div>
@@ -134,20 +134,20 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div class="saleOverview" >
-                                        <h2 data-bind="text: lang.lang.sale_overview"></h2>
-                                        <p data-bind="text: obj.sale"></p>
+                                        <h2 data-bind="text: lang.lang.payables"></h2>
+                                        <p data-format="n" data-bind="text: objVendor.ap"></p>
                                         <div class="col-md-12">
                                             <div class="col-md-4">
-                                                <span data-bind="text: obj.sale_customer"></span>
-                                                <span data-bind="text: lang.lang.customer"></span>
+                                                <span data-bind="text: objVendor.ap_open"></span>
+                                                <span data-bind="text: lang.lang.open"></span>
                                             </div>
                                             <div class="col-md-4">
-                                                <span data-bind="text: obj.sale_product"></span>
-                                                <span data-bind="text: lang.lang.product"></span>
+                                                <span data-bind="text: objVendor.ap_supplier"></span>
+                                                <span data-bind="text: lang.lang.supplier"></span>
                                             </div>
                                             <div class="col-md-4">
-                                                <span data-bind="text: obj.sale_ordered"></span>
-                                                <span data-bind="text: lang.lang.order"></span>
+                                                <span  data-bind="text: objVendor.ap_overdue"></span>
+                                                <span data-bind="text: lang.lang.overdue"></span>
                                             </div>
                                         </div>
                                     </div>
@@ -184,38 +184,42 @@
                 <!-- Column -->
                 <div class="col-lg-3">
                     <div class="card card-body">
-                        <table class="table color-table dark-table">
-                            <thead>
-                                <tr>
-                                    <th colspan="2" class="center">
-                                        <span data-bind="text: lang.lang.top_5_suppliers"></span>
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody data-role="listview"
-                                 data-auto-bind="false"
-                                 data-template="top-contact-template"
-                                 data-bind="source: objInventory.top_supplier"></tbody>
-                        </table>
+                        <div class="top5" >
+                            <table class="table color-table dark-table">
+                                <thead>
+                                    <tr>
+                                        <th colspan="2" class="center">
+                                            <span data-bind="text: lang.lang.top_5_suppliers"></span>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody data-role="listview"
+                                     data-auto-bind="false"
+                                     data-template="top-contact-template"
+                                     data-bind="source: objInventory.top_supplier"></tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
                 <!-- Column -->
                 <!-- Column -->
                 <div class="col-lg-3">
                     <div class="card card-body">
-                        <table class="table color-table dark-table">
-                            <thead>
-                                <tr>
-                                    <th colspan="2" class="center">
-                                        <span data-bind="text: lang.lang.top_5_best_selling_products"></span>
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody data-role="listview"
-                                 data-auto-bind="false"
-                                 data-template="top-product-template"
-                                 data-bind="source: objInventory.top_product"></tbody>
-                        </table>
+                        <div class="top5" >
+                            <table class="table color-table dark-table">
+                                <thead>
+                                    <tr>
+                                        <th colspan="2" class="center">
+                                            <span data-bind="text: lang.lang.top_5_best_selling_products"></span>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody data-role="listview"
+                                     data-auto-bind="false"
+                                     data-template="top-product-template"
+                                     data-bind="source: objInventory.top_product"></tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
                 <!-- Column -->
@@ -395,7 +399,7 @@
         <td>
             <span>
                 #if(name.length>15){#
-                    #=name.substring(0, 15)#...
+                    #=name.substring(0, 10)#...
                 #}else{#
                     #=name#
                 #}#
@@ -410,7 +414,7 @@
             <span>
                 #if(name){#
                     #if(name.length>15){#
-                        #=name.substring(0, 15)#...
+                        #=name.substring(0, 10)#...
                     #}else{#
                         #=name#
                     #}#
@@ -420,4 +424,4 @@
         </td>
     </tr>
 </script>
-<!-- End -->
+<!-- End -->    

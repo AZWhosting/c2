@@ -9041,14 +9041,14 @@
                 if (v.reactive != 0) {
                     AmountUsage = v.items[0].line.usage;
                     AmountReactive = v.reactive.usage;
-                    var PAmount = (AmountReactive / AmountUsage) - 0484;
+                    var PAmount = (AmountReactive / AmountUsage) - 0.484;
                     if (PAmount > 0) {
                         ReactivePrice = (PAmount * AmountUsage) * 0.025;
                     }
                     invoiceItems.push({
                         "item_id": v.reactive.id,
                         "invoice_id": 0,
-                        "meter_record_id": record_id,
+                        "meter_record_id": v.reactive.id,
                         "description": v.reactive.meter_number,
                         "quantity": AmountReactive,
                         "price": 0,
@@ -19390,11 +19390,7 @@
                         }]
                     });
                     self.exArray.push({
-                        cells: [{
-                                value: "Type",
-                                background: "#496cad",
-                                color: "#ffffff"
-                            },
+                        cells: [
                             {
                                 value: "Date",
                                 background: "#496cad",
@@ -19411,12 +19407,32 @@
                                 color: "#ffffff"
                             },
                             {
-                                value: "Location",
+                                value: "Meter Number",
+                                background: "#496cad",
+                                color: "#ffffff"
+                            },
+                            {
+                                value: "Pole",
+                                background: "#496cad",
+                                color: "#ffffff"
+                            },
+                            {
+                                value: "Box",
+                                background: "#496cad",
+                                color: "#ffffff"
+                            },
+                            {
+                                value: "Block",
                                 background: "#496cad",
                                 color: "#ffffff"
                             },
                             {
                                 value: "Status",
+                                background: "#496cad",
+                                color: "#ffffff"
+                            },
+                            {
+                                value: "Over Due",
                                 background: "#496cad",
                                 color: "#ffffff"
                             },
@@ -19437,10 +19453,14 @@
                         } else {
                             overDue = Math.floor((dueDates - toDay) / (1000 * 60 * 60 * 24)) + "days to pay";
                         }
+                        var status;
+                        if (response.results[i].status = 1){
+                            status = "Active";
+                        }else{
+                            status = "Inactive";
+                        }
                         self.exArray.push({
-                            cells: [{
-                                    value: response.results[i].type
-                                },
+                            cells: [
                                 {
                                     value: response.results[i].issued_date
                                 },
@@ -19451,7 +19471,19 @@
                                     value: response.results[i].number
                                 },
                                 {
+                                    value: response.results[i].meter
+                                },
+                                {
+                                    value: response.results[i].pole
+                                },
+                                {
+                                    value: response.results[i].box
+                                },
+                                {
                                     value: response.results[i].location
+                                },
+                                {
+                                    value: status
                                 },
                                 {
                                     value: overDue

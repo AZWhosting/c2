@@ -216,6 +216,7 @@ class Contacts extends REST_Controller {
 			isset($value->wnumber)					? $obj->wnumber					= $value->wnumber : "";
 			isset($value->membership_number)		? $obj->membership_number		= $value->membership_number : "";
 			isset($value->name)						? $obj->name					= $value->name : "";
+			isset($value->name_other)				? $obj->name_other				= $value->name_other : "";
 			isset($value->gender)					? $obj->gender					= $value->gender : "";
 			isset($value->dob)						? $obj->dob						= date("Y-m-d", strtotime($value->dob)) : "";
 			isset($value->pob)						? $obj->pob						= $value->pob : "";
@@ -378,6 +379,7 @@ class Contacts extends REST_Controller {
 			isset($value->wnumber)					? $obj->wnumber					= $value->wnumber : "";
 			isset($value->membership_number)		? $obj->membership_number		= $value->membership_number : "";
 			isset($value->name)						? $obj->name					= $value->name : "";
+			isset($value->name_other)				? $obj->name_other				= $value->name_other : "";
 			isset($value->gender)					? $obj->gender					= $value->gender : "";
 			isset($value->dob)						? $obj->dob						= date("Y-m-d", strtotime($value->dob)) : "";
 			isset($value->pob)						? $obj->pob						= $value->pob : "";

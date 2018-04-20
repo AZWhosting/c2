@@ -70,9 +70,13 @@ class Cpd_records extends REST_Controller {
 				$data["results"][] = array(
 					"id" 				=> $value->id,
 					"contact_id" 	 	=> $value->contact_id,
+					"membership_id" 	=> $value->membership_id,
+					"subject" 			=> $value->subject,
 					"credit" 			=> floatval($value->credit),
 					"period"			=> $value->period,
-					"record_date"		=> $value->record_date
+					"record_date"		=> $value->record_date,
+
+					"contacts" 			=> $value->contact->get_raw()->result()
 				);
 			}
 		}
@@ -88,17 +92,13 @@ class Cpd_records extends REST_Controller {
 		foreach ($models as $value) {
 			$obj = new Cpd_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);			
 			
-			isset($value->contact_id) 			? $obj->contact_id 			= $value->contact_id : "";
-			isset($value->credit) 				? $obj->credit 				= $value->credit : "";
-			isset($value->period) 				? $obj->period 				= $value->period : "";
-			isset($value->record_date) 			? $obj->record_date 		= $value->record_date : "";
-			isset($value->status) 				? $obj->status 				= $value->status : "";
-			isset($value->expiry_date) 			? $obj->expiry_date 		= $value->expiry_date : "";
-			isset($value->application_status) 	? $obj->application_status 	= $value->application_status : "";
-			isset($value->graduateion_date) 	? $obj->graduateion_date 	= $value->graduateion_date : "";
-			isset($value->fellow_date) 			? $obj->fellow_date 		= $value->fellow_date : "";
-			isset($value->first_cdp_year) 		? $obj->first_cdp_year 		= $value->first_cdp_year : "";
-			isset($value->cpd_required_credit) 	? $obj->cpd_required_credit = $value->cpd_required_credit : "";
+			isset($value->contact_id) 		? $obj->contact_id 		= $value->contact_id : "";
+			isset($value->membership_id) 	? $obj->membership_id 	= $value->membership_id : "";
+			isset($value->subject) 			? $obj->subject 		= $value->subject : "";
+			isset($value->credit) 			? $obj->credit 			= $value->credit : "";
+			isset($value->period) 			? $obj->period 			= $value->period : "";
+			isset($value->record_date) 		? $obj->record_date 	= $value->record_date : "";
+			
 			
 			//Contact			
 			if(isset($value->contacts)){
@@ -130,17 +130,12 @@ class Cpd_records extends REST_Controller {
 			$obj = new Cpd_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->get_by_id($value->id);
 			
-			isset($value->contact_id) 			? $obj->contact_id 			= $value->contact_id : "";
-			isset($value->credit) 				? $obj->credit 				= $value->credit : "";
-			isset($value->period) 				? $obj->period 				= $value->period : "";
-			isset($value->record_date) 			? $obj->record_date 		= $value->record_date : "";
-			isset($value->status) 				? $obj->status 				= $value->status : "";
-			isset($value->expiry_date) 			? $obj->expiry_date 		= $value->expiry_date : "";
-			isset($value->application_status) 	? $obj->application_status 	= $value->application_status : "";
-			isset($value->graduateion_date) 	? $obj->graduateion_date 	= $value->graduateion_date : "";
-			isset($value->fellow_date) 			? $obj->fellow_date 		= $value->fellow_date : "";
-			isset($value->first_cdp_year) 		? $obj->first_cdp_year 		= $value->first_cdp_year : "";
-			isset($value->cpd_required_credit) 	? $obj->cpd_required_credit = $value->cpd_required_credit : "";
+			isset($value->contact_id) 		? $obj->contact_id 		= $value->contact_id : "";
+			isset($value->membership_id) 	? $obj->membership_id 	= $value->membership_id : "";
+			isset($value->subject) 			? $obj->subject 		= $value->subject : "";
+			isset($value->credit) 			? $obj->credit 			= $value->credit : "";
+			isset($value->period) 			? $obj->period 			= $value->period : "";
+			isset($value->record_date) 		? $obj->record_date 	= $value->record_date : "";
 
 			//Contact			
 			if(isset($value->contacts)){
@@ -151,6 +146,8 @@ class Cpd_records extends REST_Controller {
 				$data["results"][] = array(
 					"id" 				=> $obj->id,
 					"contact_id" 	 	=> $obj->contact_id,
+					"membership_id" 	=> $obj->membership_id,
+					"subject" 			=> $obj->subject,
 					"credit" 			=> $obj->credit,
 					"period"			=> $obj->period,
 					"record_date"		=> $obj->record_date
