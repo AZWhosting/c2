@@ -1046,14 +1046,14 @@
 				                <ul class="nav nav-tabs" role="tablist">
 				                    <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#date" role="tab"><i class=" ti-calendar"></i><span class="marginLeft hidden-xs-down" data-bind="text: lang.lang.date">Date</span></a> </li>
 				                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#filter" role="tab"><i class="ti-filter"></i><span class="marginLeft hidden-xs-down" data-bind="text: lang.lang.filter">filter</span></a> </li>
-				                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#print_export" role="tab"><i class="mdi mdi-printer"></i><span class="marginLeft hidden-xs-down" data-bind="text: lang.lang.print_export">Print/Export</span></a> </li>
+				                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#print_export" role="tab"><i class="ti-printer"></i><span class="marginLeft hidden-xs-down" data-bind="text: lang.lang.print_export">Print/Export</span></a> </li>
 				                </ul>
 				                <!-- Tab panes -->
 				                <div class="tab-content tabcontent-border">
 				                    <div class="tab-pane active" id="date" role="tabpanel">
 				                        <div class="p-20">
 				                        	<div class="row ">
-						    					<input data-role="dropdownlist"
+						    					<input data-role="dropdownlist" style="margin-right: 8px;" 
 													   class="sorter"
 											           data-value-primitive="true"
 											           data-text-field="text"
@@ -1062,14 +1062,14 @@
 											                      source: sortList,
 											                      events: { change: sorterChanges }" />
 
-												<input data-role="datepicker"
+												<input data-role="datepicker" style="margin-right: 8px;" 
 													   class="sdate"
 													   data-format="dd-MM-yyyy"
 											           data-bind="value: sdate,
 											           			  max: edate"
 											           placeholder="From ..." >
 
-											    <input data-role="datepicker"
+											    <input data-role="datepicker" style="margin-right: 8px;"
 											    	   class="edate"
 											    	   data-format="dd-MM-yyyy"
 											           data-bind="value: edate,
@@ -1080,204 +1080,89 @@
 						    				</div>
 				                        </div>
 				                    </div>
-				                    <div class="tab-pane p-20" id="filter" role="tabpanel">
+				                    <div class="tab-pane" id="filter" role="tabpanel">
 				                    	<div class="p-20">
-				                        	<div class="row">
-						    					2
+				                        	<div class="row">						    					
+												<p data-bind="text: lang.lang.customers" style=""></p>
+												<select data-role="multiselect"
+													   data-value-primitive="true"
+													   data-header-template="contact-header-tmpl"
+													   data-item-template="contact-list-tmpl"
+													   data-value-field="id"
+													   data-text-field="name"
+													   data-bind="value: obj.contactIds,
+													   			source: contactDS"
+													   data-placeholder="Select Customer.."
+													   style="width: 50%; float: left; margin-right: 8px; " /></select>
+													
+											  	<button type="button" data-role="button" data-bind="click: search"><i class="ti-search"></i></button>
+														
 						    				</div>
 						    			</div>
 				                    </div>
-				                    <div class="tab-pane  p-20" id="print_export" role="tabpanel">
+				                    <div class="tab-pane" id="print_export" role="tabpanel">
 				                    	<div class="p-20">
 				                        	<div class="row">
-						    					3
+						    					<button id="savePrint" class="col-md-1 btnPrint" type="button" data-role="button" data-bind="click: printGrid"><i class="ti-printer"></i><span class="marginLeft">Print</span></button>
+						    					<button class="col-md-2" type="button" data-role="button" data-bind="click: ExportExcel"><i class="ti-export"></i><span class="marginLeft">Export to Excel</span></button>
 						    				</div>
 						    			</div>
 				                    </div>
 				                    
 				                </div>
 				            </div>
+				            <div id="invFormContent">
+					            <!-- Title -->
+					            <div class="reportTitle" style="text-align: center; width: 97%; margin: 15px auto;">
+					            	<h3 style="font-size: 15px; color: #203864;" data-bind="html: company.name"></h3>
+									<h2 style="font-size: 20px; font-weight: 600; margin-top: 0px; color: #203864" data-bind="text: lang.lang.sale_summary_by_customer"></h2>
+									<p style="font-size: 15px; margin-bottom: 0;" data-bind="text: displayDate"></p>
+					            </div>
 
-				            <!-- Title -->
-				            <div class="reportTitle">
-				            	<h3 data-bind="html: company.name"></h3>
-								<h2 data-bind="text: lang.lang.sale_summary_by_customer"></h2>
-								<p data-bind="text: displayDate"></p>
-				            </div>
+					            <!-- Block -->
+					            <div class="reportBlock" style="width: 97%; margin: 0 auto;">
+					            	<div class="row">
+					            		<div class="col-md-3">
+					            			<div class="total-sale" style="width: 100%; padding: 10px; background: #DDEBF7; text-align: center; margin-bottom: 15px; display: inline-block;">
+												<p style="font-size: 14px;" data-bind="text: lang.lang.number_of_customer"></p>
+												<span style="font-size: 20px; font-weight: 700;" data-bind="text: dataSource.total"></span>
+											</div>
+					            		</div>
+					            		<div class="col-md-9">
+					            			<div class="total-sale" style="width: 100%; padding: 10px; background: #DDEBF7; text-align: center; margin-bottom: 15px; display: inline-block;">
+												<p style="font-size: 14px;" data-bind="text: lang.lang.total_sale"></p>
+												<span style="font-size: 20px; font-weight: 700;" data-bind="text: totalAmount"></span>
+											</div>
+					            		</div>
+					            	</div>
+					            </div>
 
-				            <!-- Block -->
-				            <div class="reportBlock">
-				            	<div class="row">
-				            		<div class="col-md-3">
-				            			<div class="total-sale">
-											<p data-bind="text: lang.lang.number_of_customer"></p>
-											<span data-bind="text: dataSource.total"></span>
-										</div>
-				            		</div>
-				            		<div class="col-md-9">
-				            			<div class="total-sale">
-											<p data-bind="text: lang.lang.total_sale"></p>
-											<span data-bind="text: totalAmount"></span>
-										</div>
-				            		</div>
-				            	</div>
-				            </div>
+					            <!-- Table -->
+					            <div class="reportTable home-footer table-responsive"  style="width: 97%; margin: 0 auto;">
+					            	<table class="table color-table dark-table">
+		                                <thead>
+		                                    <tr>
+												<th style="background: #343a40; color: #fff; text-align: center; text-transform: uppercase; vertical-align: top; font-weight: 400; padding: 10px;" data-bind="text:lang.lang.customer"></th>
+												<th style="background: #343a40; color: #fff; text-align: center; text-transform: uppercase; vertical-align: top; font-weight: 400; padding: 10px;" data-bind="text: lang.lang.number_of_invoice"></th>
+												<th style="background: #343a40; color: #fff; text-align: center; text-transform: uppercase; vertical-align: top; font-weight: 400; padding: 10px;" data-bind="text: lang.lang.number_of_cash_sale"></th>
+												<th style="background: #343a40; color: #fff; text-align: center; text-transform: uppercase; vertical-align: top; font-weight: 400; padding: 10px;" data-bind="text: lang.lang.total_sale"></th>
+											</tr>
+		                                </thead>
+		                                <tbody  data-role="listview"
+					            				data-auto-bind="false"
+								                data-template="saleSummaryByCustomer-template"
+								                data-bind="source: dataSource" >
+								        </tbody>
+					            	</table>
+					            </div>
+					        </div>
 
-				            <!-- Table -->
-				            <div class="reportTable home-footer table-responsive">
-				            	<table class="table color-table dark-table">
-	                                <thead>
-	                                    <tr>
-											<th data-bind="text:lang.lang.customer"></th>
-											<th data-bind="text: lang.lang.number_of_invoice"></th>
-											<th data-bind="text: lang.lang.number_of_cash_sale"></th>
-											<th data-bind="text: lang.lang.total_sale"></th>
-										</tr>
-	                                </thead>
-	                                <tbody  data-role="listview"
-				            				data-auto-bind="false"
-							                data-template="saleSummaryByCustomer-template"
-							                data-bind="source: dataSource" >
-							        </tbody>
-				            	</table>
-				            	<div id="pager" class="k-pager-wrap"
-					            		 data-role="pager"
-								    	 data-auto-bind="false"
-							             data-bind="source: dataSource"></div>
-				            </div>
+					        <!-- Pagination -->
+			            	<div id="pager" class="k-pager-wrap" style="width: 97%; margin: 0 auto;"
+				            		 data-role="pager"
+							    	 data-auto-bind="false"
+						             data-bind="source: dataSource"></div>
 			            </div>
-                		<!-- <div id="example" class="k-content saleSummaryCustomer">
-					    	<span class="pull-right glyphicons no-js remove_2"
-								onclick="javascript:window.history.back()"><i></i></span>
-							<br>
-							<br>
-
-							<div class="row-fluid">
-							    
-								<div class="relativeWrap" data-toggle="source-code">
-									<div class="widget widget-tabs widget-tabs-gray report-tab">
-
-										
-										<div class="widget-head">
-											<ul>
-												<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>
-												<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.filter"></span></a></li>
-												<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
-											</ul>
-										</div>
-										
-										<div class="widget-body">
-											<div class="tab-content">
-
-										        
-										        <div class="tab-pane active" id="tab-1">
-
-													<input data-role="dropdownlist"
-														   class="sorter"
-												           data-value-primitive="true"
-												           data-text-field="text"
-												           data-value-field="value"
-												           data-bind="value: sorter,
-												                      source: sortList,
-												                      events: { change: sorterChanges }" />
-
-													<input data-role="datepicker"
-														   class="sdate"
-														   data-format="dd-MM-yyyy"
-												           data-bind="value: sdate,
-												           			  max: edate"
-												           placeholder="From ..." >
-
-												    <input data-role="datepicker"
-												    	   class="edate"
-												    	   data-format="dd-MM-yyyy"
-												           data-bind="value: edate,
-												                      min: sdate"
-												           placeholder="To ..." >
-
-												  	<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-
-									        	</div>
-
-										    	
-										        <div class="tab-pane" id="tab-2">
-													<table class="table table-condensed">
-														<tr>
-											            	<td style="padding: 8px 0 0 0 !important; ">
-																<span data-bind="text: lang.lang.customers"></span>
-																<select data-role="multiselect"
-																	   data-value-primitive="true"
-																	   data-header-template="contact-header-tmpl"
-																	   data-item-template="contact-list-tmpl"
-																	   data-value-field="id"
-																	   data-text-field="name"
-																	   data-bind="value: obj.contactIds,
-																	   			source: contactDS"
-																	   data-placeholder="Select Customer.."
-																	   style="width: 100%" /></select>
-															</td>
-															<td style="padding-top: 31px !important; float: left;">
-												  				<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-															</td>
-														</tr>
-													</table>
-									        	</div>
-									        								        	
-										        <div class="tab-pane" id="tab-3">
-										        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
-										        	
-										        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" style="width: 80px;">
-										        		<i class="fa fa-file-excel-o"></i>
-										        		Export to Excel
-										        	</span>
-									        	</div>
-										    </div>
-										</div>
-									</div>
-								</div>
-							</div>
-
-							<div id="invFormContent">
-								<div class="block-title">
-									<h3 data-bind="html: company.name"></h3>
-									<h2 data-bind="text: lang.lang.sale_summary_by_customer"></h2>
-									<p data-bind="text: displayDate"></p>
-								</div>
-								<div class="row-fluid">
-									<div class="span3">
-										<div class="total-customer">
-											<p data-bind="text: lang.lang.number_of_customer"></p>
-											<span data-bind="text: dataSource.total"></span>
-										</div>
-									</div>
-									<div class="span9">
-										<div class="total-sale">
-											<p data-bind="text: lang.lang.total_sale"></p>
-											<span data-bind="text: totalAmount"></sapn>
-										</div>
-									</div>
-								</div>
-								<table class="table table-borderless table-condensed ">
-									<thead>
-										<tr>
-											<th data-bind="text:lang.lang.customer"></th>
-											<th style="text-align: center;" data-bind="text: lang.lang.number_of_invoice"></th>
-											<th style="text-align: center;" data-bind="text: lang.lang.number_of_cash_sale"></th>
-											<th style="text-align: right;" data-bind="text: lang.lang.total_sale"></th>
-										</tr>
-									</thead>
-				            		<tbody  data-role="listview"
-				            				data-auto-bind="false"
-							                data-template="saleSummaryByCustomer-template"
-							                data-bind="source: dataSource" >
-							        </tbody>
-				            	</table>
-				            	<div id="pager" class="k-pager-wrap"
-					            		 data-role="pager"
-								    	 data-auto-bind="false"
-							             data-bind="source: dataSource"></div>
-				            </div>
-						</div> -->	
                 	</div>
 					
 				</span>
@@ -1874,4 +1759,4 @@
     	<a href="\#/customer">+ Add New Customer</a></li>
     </strong>
 </script>
-<!-- End -->
+<!-- End -->                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         

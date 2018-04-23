@@ -43,6 +43,22 @@
 <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/cred.js"></script>
 <!--Core Cognito -->
 
+
+<!-- CSS Kendo By DAWINE -->
+<!-- <link rel="stylesheet" href="<?php echo base_url()?>assets/kendo/examples/content/shared/styles/examples-offline.css" /> -->
+<link rel="stylesheet" href="<?php echo base_url()?>assets/kendo/styles/kendo.common.min.css" />
+<!-- <link rel="stylesheet" href="<?php echo base_url()?>assets/kendo/styles/kendo.rtl.min.css" /> -->
+<link rel="stylesheet" href="<?php echo base_url()?>assets/kendo/styles/kendo.default.min.css" />
+<link rel="stylesheet" href="<?php echo base_url()?>assets/kendo/styles/kendo.default.mobile.min.css" />
+
+
+<!-- Kendo UI -->
+<!-- <link rel="stylesheet" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/js/kendoui/styles/kendo.common.min.css"> -->
+<!-- <link rel="stylesheet" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/js/kendoui/styles/kendo.bootstrap.min.css"> -->
+<link rel="stylesheet" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/js/kendoui/styles/kendo.dataviz.material.min.css">
+<link rel="stylesheet" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/js/kendoui/styles/kendo.dataviz.bootstrap.min.css">
+
+
 <!-- Kedo JS by DAWINE -->
 <!-- <script src="<?php echo base_url()?>assets/kendo/js/jszip.min.js"></script> -->
 <!-- <script src="<?php echo base_url()?>assets/kendo/js/jquery.min.js"></script> -->

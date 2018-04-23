@@ -16470,6 +16470,70 @@
             });
             this.set("haveBloc", true);
         },
+        onLocationChange: function(e) {
+            var self = this;
+            this.subLocationDS.data([]);
+            this.boxDS.data([]);
+            this.set("boxSelect", "");
+            this.set("haveSubLocation", false);
+            if (this.get("blocSelect")) {
+                this.subLocationDS.query({
+                        filter: [{
+                                field: "branch_id",
+                                value: this.get("licenseSelect")
+                            },
+                            {
+                                field: "main_bloc",
+                                value: this.get("blocSelect")
+                            },
+                            {
+                                field: "main_pole",
+                                value: 0
+                            }
+                        ],
+                        page: 1
+                    })
+                    .then(function(e) {
+                        if (self.subLocationDS.data().length > 0) {
+                            self.set("haveLocation", true);
+                        } else {
+                            self.set("haveLocation", false);
+                            self.set("subLocationSelect", "");
+                            self.subLocationDS.data([]);
+                        }
+                    });
+            }
+            this.set("loSelectName", e.sender.span[0].innerText);
+        },
+        onSubLocationChange: function(e) {
+            var self = this;
+            if (this.get("subLocationSelect")) {
+                this.boxDS.query({
+                        filter: [{
+                                field: "branch_id",
+                                value: this.get("licenseSelect")
+                            },
+                            {
+                                field: "main_bloc",
+                                value: this.get("blocSelect")
+                            },
+                            {
+                                field: "main_pole",
+                                value: this.get("subLocationSelect")
+                            }
+                        ]
+                    })
+                    .then(function(e) {
+                        if (self.boxDS.data().length > 0) {
+                            self.set("haveSubLocation", true);
+                        } else {
+                            self.set("haveSubLocation", false);
+                            self.set("boxSelect", "");
+                            self.boxDS.data([]);
+                        }
+                    });
+            }
+        },
         search: function() {
             var self = this,
                 para = [],
@@ -16491,19 +16555,6 @@
                 para.push({
                     field: "location_id",
                     value: bloc.id
-                });
-            }
-
-            //Customer
-            if (obj.contactIds.length > 0) {
-                var contactIds = [];
-                $.each(obj.contactIds, function(index, value) {
-                    contactIds.push(value);
-                });
-                para.push({
-                    field: "contact_id",
-                    operator: "where_in",
-                    value: contactIds
                 });
             }
 
@@ -19447,7 +19498,7 @@
                             overDue = Math.floor((dueDates - toDay) / (1000 * 60 * 60 * 24)) + "days to pay";
                         }
                         var status;
-                        if (response.results[i].status1 == 1){
+                        if (response.results[i].statusMeter == 1){
                             status = "Active";
                         }else{
                             status = "Inactive";
