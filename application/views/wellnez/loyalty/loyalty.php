@@ -1248,7 +1248,7 @@
 									<input type="search" placeholder="Number" data-bind="value: searchText">
 								</div>
 							</div>
-						</form>					
+						</form>
 					</div>
 					<div class="results">
 						<span data-bind="text: contactDS.total"></span>
@@ -1330,31 +1330,55 @@
 													<span class="btn btn-primary btn-icon glyphicons edit pull-right" data-bind="click: activateCard, visible: cardNotActivate"><i></i><span>Activate</span></span>
 													<div data-role="window"
 										                data-title="Activate Card"
-										                data-width="400"
+										                data-width="450"
 										                data-actions="{}"
-										                data-height="150"
+										                data-height="385"
 										                data-position="{top: '30%', left: '37%'}"
 										                data-bind="visible: activateShow">
-										                <span style="float: left; padding: 10px 54px 10px 20px; background: #ddd; border-width: 1px 0 0 1px;   border-style: solid; border-color: #ccc; font-weight: 700">Customer</span>
-						            					<input data-role="dropdownlist"
-											                data-auto-bind="false"
-											                data-value-primitive="true"
-											                data-text-field="name"
-											                data-value-field="id"
-											                data-bind="
-											                	value: contact_activate,
-											                    source: contactDS,
-											                "
-											                style="float: left; height: 41px; padding: 8px; border-width: 1px 1px 0 1px; border-style: solid; border-color: #ccc; color: #333; margin-left: -4px; width: 54.8%;" 
-											            />
-											           	<span style="float: left; padding: 10px 14px 10px 20px; background: #ddd; border-width: 1px 0 0 1px;   border-style: solid; border-color: #ccc; font-weight: 700">Registered Date</span>
-											           	<input data-role="datepicker"
-												    	   	class="edate"
-												           	data-bind="value: registered_date"
-												        	style="float: left; height: 41px; padding: 8px; border-width: 1px 1px 0 1px; border-style: solid; border-color: #ccc; color: #333; margin-left: -4px; width: 54.8%;margin-bottom: 15px;"    
-												        />
-												        <span style="float: left!important;" class="btn btn-primary btn-icon glyphicons edit pull-right" data-bind="click: activateNow"><i></i><span>Activate</span></span>
-												        <span class="btn btn-primary btn-icon glyphicons circle_remove pull-right" data-bind="click: cancelActivate" style="background: red;border: 1px solid red;"><i></i><span>Cancel</span></span>
+						            					<div class="row" style="width: 105%; float: left;">
+															<div class="col-md-11" style="margin-left: 6px;">
+																<div class="row">
+																	<div class="col-md-5">
+																		<label>Card Number</label>
+																		<input type="text" style="width: 100%; border: 1px solid #c5c5c5; padding: 3px; height: 30px;" placeholder="" data-bind="">
+																	</div>
+																	<div class="col-md-5">
+																		<label>Serial</label>
+																		<input type="text" style="width: 100%; border: 1px solid #c5c5c5; padding: 3px; height: 30px;" placeholder="" data-bind="">
+																	</div>
+																</div>
+																<div class="row">
+																	<div class="col-md-11">
+																		<label>Name</label>
+																			<input type="text" style="width: 98%; border: 1px solid #c5c5c5; padding: 3px; height: 30px;" placeholder="" data-bind="">
+																	</div>
+																</div>
+																<div class="row">
+																	<div class="col-md-5">
+																		<label>Gender</label>
+																		<input type="text" style="width: 100%; border: 1px solid #c5c5c5; padding: 3px; height: 30px;" placeholder="" data-bind="">
+																	</div>
+																	<div class="col-md-5">
+																		<label>DOB</label>
+																		<input type="text" style="width: 100%; border: 1px solid #c5c5c5; padding: 3px; height: 30px;" placeholder="" data-bind="">
+																	</div>
+																</div>
+																<div class="row">
+																	<div class="col-md-11">
+																		<label>Nationality</label>
+																			<input type="text" style="width: 98%; border: 1px solid #c5c5c5; padding: 3px; height: 30px;" placeholder="" data-bind="">
+																	</div>
+																	<div class="col-md-11">
+																		<label>Add Loyalty</label>
+																		<input type="text" style="width: 98%; border: 1px solid #c5c5c5; padding: 3px; height: 30px;" placeholder="" data-bind="">
+																	</div>
+																</div>
+															</div>
+
+															 <span style="float: left!important; margin-left: 21px; margin-top: 15px; color: #fff;" class="btn btn-primary btn-icon glyphicons edit pull-right" data-bind="click: activateNow"><i></i><span>Activate</span></span>
+												        	<span class="btn btn-primary btn-icon glyphicons circle_remove pull-right" data-bind="click: cancelActivate" style="background: red; border: 1px solid red; float: left !important; margin-top: 15px; margin-left: 12px; color: #fff;"><i></i><span>Cancel</span></span>
+														</div>
+												       
 										            </div>
 												</div>
 											</div>
@@ -1454,13 +1478,14 @@
 						            	</table>
 									</div>
 				            	</div>
+				            	
 				        	</div>
 					    </div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>		
+	</div>	
 </script>
 <script id="Card" type="text/x-kendo-template">	
 	<!-- <div id="ntf1" data-role="notification"></div> -->
@@ -1545,4 +1570,4 @@
 			#= status#
 		</td>
 	</tr>
-</script>
+</script> 
