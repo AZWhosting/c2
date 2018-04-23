@@ -1138,6 +1138,51 @@ class Transactions extends REST_Controller {
 		$this->response($data, 200);
 	}
 
+	//GET TRANSACTION BY MEMBERSHIP
+	function by_membership_get() {
+		$filter 	= $this->get("filter");
+		$data["results"] = [];
+		$data["count"] = 1;
+
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$memberships = new Membership(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		//Filter
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value["operator"])) {
+	    			if($value["operator"]=="memberships") {
+						$memberships->where($value["field"], $value["value"]);
+					} else {
+		    			$obj->{$value["operator"]}($value["field"], $value["value"]);
+					}					
+				} else {
+	    			$obj->where($value["field"], $value["value"]);
+				}
+			}
+		}
+		
+		$memberships->where("status", 1);
+		$memberships->where("deleted <>", 1);
+		$memberships->get_iterated();		
+
+		$ids = [];
+		if($memberships->exists()){
+			foreach ($memberships as $value) {
+				array_push($ids, $value->id);
+			}
+
+			$obj->where_in("reference_id", $ids);
+			$obj->where("is_recurring", 1);
+			$obj->where("deleted <>", 1);
+
+			$data["results"][] = $obj->get_raw()->result();
+		}		
+
+		//Response Data
+		$this->response($data, 200);
+	}
+
 	//GET STATEMENT
 	function statement_get() {
 		$filter 	= $this->get("filter");

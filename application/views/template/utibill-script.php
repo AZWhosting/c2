@@ -19448,9 +19448,9 @@
                         }
                         var status;
                         if (response.results[i].status1 == 1){
-                            status == "Active";
+                            status = "Active";
                         }else{
-                            status == "Inactive";
+                            status = "Inactive";
                         }
                         self.exArray.push({
                             cells: [
