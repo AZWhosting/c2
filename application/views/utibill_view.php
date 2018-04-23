@@ -15121,7 +15121,7 @@
 		<td>#=pole#</td>
 		<td>#=box#</td>
 		<td>#=location#</td>
-		<td>#if(status1 = 1){#
+		<td>#if(statusMeter == 1){#
 				Active
 			#}else{#
 				Inactive

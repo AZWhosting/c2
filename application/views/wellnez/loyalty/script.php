@@ -6467,7 +6467,18 @@
             filter: { field:"parent_id", value: 1 }//Customer
         }),
         cardDS              : dataStore(apiUrl + 'spa/card'),
+        haveRight           : false,
         pageLoad            : function(){
+            if(banhji.userData.role == "1"){
+                this.set("haveRight", true);
+            }else{
+                this.set("haveRight", false);
+                $.each(banhji.userData.roles, function(i,v){
+                    if(v.name == 'wnz_loyalty'){
+                        this.set("haveRight", true);
+                    }
+                });
+            }
         },
         cardNotActivate     : false,
         remove              : function (e) {
@@ -6740,11 +6751,11 @@
                     }
                 }
             }
-            if (!allowed) {
-                alert("You don't have permission to access this page!");
-                window.location.replace(baseUrl + "wellnez/home");
-                // banhji.view.layout.showIn("#content", banhji.view.wDashBoard);
-            }
+            // if (!allowed) {
+            //     alert("You don't have permission to access this page!");
+            //     window.location.replace(baseUrl + "wellnez/home");
+            //     // banhji.view.layout.showIn("#content", banhji.view.wDashBoard);
+            // }
             $("#holdpageloadhide").css("display", "none");
         });
         banhji.source.contactDS.read().then(function() {

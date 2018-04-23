@@ -1213,7 +1213,7 @@
 	<tr data-bind="click: selectedRow">
 		<td>
 			<div class="media-body strong">
-				<span>#= name#</span><a style="float: right;" href="\#/card/#=id#">Edit</a>
+				<span>#= number#</span><a data-bind="visible: haveRight" style="float: right;" href="\#/card/#=id#">Edit</a>
 			</div>
 		</td>
 	</tr>
@@ -1239,7 +1239,7 @@
 			</div>
 			<div class="span3">
 				<div class="listWrapper">
-					<a href="#/card" class="addLoyalty">Add Card</a>
+					<a href="#/card" data-bind="visible: haveRight" class="addLoyalty">Add Card</a>
 					<div class="innerAll" style="width: 100%; float: left; background: #1c3b19;">
 						<form autocomplete="off" class="form-inline" style="margin-bottom: 0;">
 							<div class="widget-search separator bottom">
@@ -1258,7 +1258,7 @@
 						 data-role="grid"
 						 data-bind="source: cardDS"
 						 data-row-template="card-list-tmpl"
-						 data-columns="[{title: 'Card'}]"
+						 data-columns="[{title: 'Cards'}]"
 						 data-selectable=true
 						 data-height="600"
 						 data-scrollable="{virtual: true}">
@@ -1272,7 +1272,7 @@
 						text-align: center; background: #0eac00">
 							Card Center
 						</div>
-						<a class="span6" style="padding: 10px;
+						<a class="span6" data-bind="visible: haveRight" style="padding: 10px;
 						text-align: center; background: #1c3b19; color: #fff;" href="#/loyalty_center">
 							Loyalty Center
 						</a>
@@ -1410,7 +1410,7 @@
 					    </div>
 					    <div class="tab-content">
 					        <div class="tab-pane active" id="tab1">
-					        	<span style="float: right!important;width: 130px;margin-right: 18px;" class="btn btn-primary btn-icon glyphicons edit pull-right" data-bind="click: addLoyalty"><i></i><span>Add Loyalty</span></span>
+					        	<span data-bind="visible: haveRight" style="float: right!important;width: 130px;margin-right: 18px;" class="btn btn-primary btn-icon glyphicons edit pull-right" data-bind="click: addLoyalty"><i></i><span>Add Loyalty</span></span>
 					        	<div data-role="window"
 					                data-title="Add Loyalty"
 					                data-width="400"

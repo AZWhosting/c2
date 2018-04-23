@@ -19301,13 +19301,6 @@
             license = this.get("licenseSelect"),
                 bloc = this.get("blocSelect");
 
-            if (license) {
-                para.push({
-                    field: "branch_id",
-                    value: license.id
-                });
-            }
-
             if (bloc) {
                 para.push({
                     field: "location_id",
@@ -19454,10 +19447,10 @@
                             overDue = Math.floor((dueDates - toDay) / (1000 * 60 * 60 * 24)) + "days to pay";
                         }
                         var status;
-                        if (response.results[i].status1 = 1){
-                            status = "Active";
+                        if (response.results[i].status1 == 1){
+                            status == "Active";
                         }else{
-                            status = "Inactive";
+                            status == "Inactive";
                         }
                         self.exArray.push({
                             cells: [

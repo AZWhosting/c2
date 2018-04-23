@@ -958,7 +958,7 @@ class UtibillReports extends REST_Controller {
 					"due_date" 			=> $value->due_date,
 					"location" 			=> $value->location_name,
 					"status"			=> $value->status,
-					"status1"			=> $value->meter_status,
+					"statusMeter"		=> $value->meter_status,
 					"box"				=> $box,	
 					"pole"				=> $pole,	
 					"rate" 				=> $value->rate,

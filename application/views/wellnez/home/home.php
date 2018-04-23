@@ -346,7 +346,7 @@
 												<div class="img" style="padding-left: 31%; padding-top: 10%;">
 													<img src="<?php echo base_url();?>assets/spa/icon/loyalty.png" >
 												</div>
-												<p>Loyalty</p>
+												<p>Cards</p>
 											</div>
 										</a>
 									</div>

@@ -12,7 +12,7 @@
         localeCode: null,
         changeToEn: function() {
             localforage.setItem("lang", "EN").then(function(value) {
-                alert("a");
+                //alert("a");
                 location.reload(false);
             });
         },
