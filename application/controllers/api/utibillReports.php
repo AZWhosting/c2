@@ -306,7 +306,6 @@ class UtibillReports extends REST_Controller {
 				$amount = $usage*$price;	
 				$totalUsage += $usage;			
 				
-				$amount = $usage * $price;
 				if(isset($objList[$value->contact_id])){
 					$objList[$value->contact_id]["invoice"] 		+= 1;
 					$objList[$value->contact_id]["amount"] 			+= $amount;

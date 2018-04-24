@@ -304,6 +304,20 @@ class Readings extends REST_Controller {
 					'location_name' => $location->name,
 					'location_abbr' => $location->abbr
 				);
+				$branch = new Branch(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$branch->where("id", $value->branch_id)->limit(1)->get();
+				$subl = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$subl->where("id", $value->pole_id)->limit(1)->get();
+				$subn = "";
+				if($subl->exists()){
+					$subn = $subl->name;
+				}
+				$box = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$box->where("id", $value->box_id)->limit(1)->get();
+				$boxn = "";
+				if($box->exists()){
+					$boxn = $box->name;
+				}
 				if($record->exists()) {
 					$data["results"][] = array(
 						"_contact" 		=> $contact->name,
@@ -315,7 +329,11 @@ class Readings extends REST_Controller {
 						"to_date"		=> $record->to_date,
 						"month_of" 		=> $record->month_of,
 						"order" 		=> $value->worder,
-						"status" 		=> "new"
+						"status" 		=> "new",
+						"license" 		=> $branch->name,
+						"location" 		=> $location->name,
+						"sub_location" 	=> $subn,
+						"box" 			=> $boxn,
 					);
 				}else{
 					$data["results"][] = array(
@@ -328,7 +346,11 @@ class Readings extends REST_Controller {
 						"to_date"		=> $value->to_date,
 						"month_of" 		=> $value->month_of,
 						"order" 		=> $value->worder,
-						"status" 		=> "new"
+						"status" 		=> "new",
+						"license" 		=> $branch->name,
+						"location" 		=> $location->name,
+						"sub_location" 	=> $subn,
+						"box" 			=> $boxn,
 					);
 				}
 			}

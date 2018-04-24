@@ -4850,6 +4850,7 @@
 															data-bind="
 																value: boxSelect,
 																enabled: haveSubLocation,
+																events: {change: boxChange},
 							                  					source: boxDS">
 							                  		</div>
 												</div>
@@ -4875,8 +4876,9 @@
 														<tr>
 															<th style="vertical-align: top;"><span data-bind="text: lang.lang.name">name</span></th>
 															<th style="vertical-align: top;"><span data-bind="text: lang.lang.meter_number">Meter Number</span></th>
-															<th style="vertical-align: top;"><span data-bind="text: lang.lang.from_date">From Date</span></th>
-															<th style="vertical-align: top;"><span data-bind="text: lang.lang.to_date">To Date</span></th>
+															<th style="vertical-align: top;"><span data-bind="text: lang.lang.location">From Date</span></th>
+															<th style="vertical-align: top;"><span data-bind="text: lang.lang.sub_location">To Date</span></th>
+															<th style="vertical-align: top;"><span data-bind="text: lang.lang.box">To Date</span></th>
 															<th style="vertical-align: top;"><span data-bind="text: lang.lang.month_of">Month Of</span></th>
 															<th style="vertical-align: top;"><span data-bind="text: lang.lang.previous">Previouse</span></th>
 															<th style="vertical-align: top;"><span data-bind="text: lang.lang.current">Current</span></th>
@@ -5082,10 +5084,13 @@
     		#= meter_number#
    		</td>
    		<td align="center">
-    		#= kendo.toString(new Date(from_date), "dd-MMM-yyyy")#
+    		#= location#
    		</td>
    		<td align="center">
-    		#= kendo.toString(new Date(to_date), "dd-MMM-yyyy")#
+    		#= sub_location#
+   		</td>
+   		<td align="center">
+    		#= box#
    		</td>
    		<td align="center">
     		#= kendo.toString(new Date(month_of), "MMM-yyyy")#
@@ -15069,7 +15074,7 @@
 							<div class="row">
 								<div class="col-xs-12 col-sm-3">
 									<div class="total-sale">									
-										<p data-bind="text: lang.lang.number_of_customer">Number of Customer</p>
+										<p data-bind="text: lang.lang.number_of_invoice">Number of Invoice</p>
 										<span data-format="n0" data-bind="text: dataSource.total"></span>
 									</div>
 								</div>

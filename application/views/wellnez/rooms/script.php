@@ -3850,11 +3850,6 @@
                     this.addEmpty();
                 }
             }
-            if(JSON.parse(localStorage.getItem('userData/cashier_id')) > 0){
-            }else{
-                alert("You didn't have session yet.");
-                window.location.href = "<?php echo base_url(); ?>wellnez/session";
-            }
         },
         millisToMinutesAndSeconds: function(millis) {
             var minutes = Math.floor(millis / 60000);

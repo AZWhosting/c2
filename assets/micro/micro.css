@@ -68,6 +68,12 @@ i.mdi.mdi-toggle-switch {
 .marginLeft{
 	margin-left: 8px;
 }
+.marginRight{
+	margin-right: 8px;
+}
+.marginBottom{
+	margin-bottom: 8px;
+}
 a {
     color: #1F4774;
 }
@@ -124,6 +130,9 @@ a {
 }
 .k-autocomplete .k-input, .k-multiselect-wrap, .k-textbox>input{
 	border-radius: 2px !important;
+}
+#pager{
+	box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;
 }
 /*End*/
 
@@ -255,41 +264,6 @@ a {
 .report h3 a:hover {
     color: #203864;
 }
-/*
-.reportTitle{
-    text-align: center;
-    margin-bottom: 20px;
-    clear: both;
-    overflow: hidden;
-    margin-top: 15px;
-}
-.reportTitle h3 {
-    font-size: 15px;
-}
-.reportTitle h2 {
-    font-size: 20px;
-    font-weight: 600;
-    margin-top: 0px;
-}
-.reportTitle p {
-    font-size: 15px;
-    margin-bottom: 0;
-}
-.total-sale {
-    width: 100%;
-    padding: 10px;
-    background: #DDEBF7;
-    text-align: center;
-    margin-bottom: 15px;
-    display: inline-block;
-}
-.total-sale p{
-	font-size: 14px;
-}
-.total-sale span{
-	font-size: 20px;
-	font-weight: 700;
-}*/
 /*END*/
 
 /*Tab 2*/
@@ -325,10 +299,14 @@ a {
     background: #e7e7e7;
     border-color: #e7e7e7;
 }
+.btnSearch{
+	height: 30px;
+	float: left;
+}
 #date input{
 	margin-right: 8px;
 }
-
+#date p,
 #filter p{
 	float: left;
 	width: 100%;
@@ -338,4 +316,9 @@ a {
 #print_export .btnPrint{
 	float: left;
 	margin-right: 8px;
+	margin-bottom: 8px;
+}
+#print_export .btnExport{
+	float: left;
+	margin-bottom: 8px;
 }

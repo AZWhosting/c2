@@ -3863,30 +3863,34 @@
             var self = this;
             if (this.get("subLocationSelect")) {
                 this.boxDS.query({
-                        filter: [{
-                                field: "branch_id",
-                                value: this.get("licenseSelect")
-                            },
-                            {
-                                field: "main_bloc",
-                                value: this.get("blocSelect")
-                            },
-                            {
-                                field: "main_pole",
-                                value: this.get("subLocationSelect")
-                            }
-                        ]
-                    })
-                    .then(function(e) {
-                        if (self.boxDS.data().length > 0) {
-                            self.set("haveSubLocation", true);
-                        } else {
-                            self.set("haveSubLocation", false);
-                            self.set("boxSelect", "");
-                            self.boxDS.data([]);
+                    filter: [{
+                            field: "branch_id",
+                            value: this.get("licenseSelect")
+                        },
+                        {
+                            field: "main_bloc",
+                            value: this.get("blocSelect")
+                        },
+                        {
+                            field: "main_pole",
+                            value: this.get("subLocationSelect")
                         }
-                    });
+                    ]
+                })
+                .then(function(e) {
+                    if (self.boxDS.data().length > 0) {
+                        self.set("haveSubLocation", true);
+                    } else {
+                        self.set("haveSubLocation", false);
+                        self.set("boxSelect", "");
+                        self.boxDS.data([]);
+                    }
+                });
+                this.set("sloSelectName", e.sender.span[0].innerText);
             }
+        },
+        boxChange  : function(e){
+            this.set("boxSelectName", e.sender.span[0].innerText);
         },
         licenseChangeU: function(e) {
             var self = this;
@@ -4025,6 +4029,26 @@
                                         color: "#ffffff"
                                     },
                                     {
+                                        value: "license",
+                                        background: "#496cad",
+                                        color: "#ffffff"
+                                    },
+                                    {
+                                        value: "location",
+                                        background: "#496cad",
+                                        color: "#ffffff"
+                                    },
+                                    {
+                                        value: "sub_location",
+                                        background: "#496cad",
+                                        color: "#ffffff"
+                                    },
+                                    {
+                                        value: "box",
+                                        background: "#496cad",
+                                        color: "#ffffff"
+                                    },
+                                    {
                                         value: "from_date",
                                         background: "#496cad",
                                         color: "#ffffff"
@@ -4066,6 +4090,18 @@
                                         },
                                         {
                                             value: self.uploadDS.data()[i].meter_number
+                                        },
+                                        {
+                                            value: self.uploadDS.data()[i].license
+                                        },
+                                        {
+                                            value: self.uploadDS.data()[i].location
+                                        },
+                                        {
+                                            value: self.uploadDS.data()[i].sub_location
+                                        },
+                                        {
+                                            value: self.uploadDS.data()[i].box
                                         },
                                         {
                                             value: FromDate

@@ -96,6 +96,13 @@ class Wellnez extends CI_Controller {
 		$this->load->view("wellnez/sidebar");
 	}
 
+	public function rooms() {	
+		$this->load->view("wellnez/header");
+		$this->load->view("wellnez/rooms/rooms");
+		$this->load->view("wellnez/rooms/script");
+		$this->load->view("wellnez/footer");
+	}
+
 	public function sidebar() {
 		$this->load->view("wellnez/sidebar");
 	}

@@ -6479,12 +6479,31 @@
                     }
                 });
             }
+            this.activateDS.data([]);
+            this.set("acobj", null);
+            this.activateDS.insert(0, {
+                "gender"             : "M",
+                "activated_by"       : banhji.userData.id,
+                "serial"             : "",
+                "number"             : "",
+                "name"               : "",
+                "dob"                : "",
+                "nationality"       : "",
+                "registered_date"   : new Date(),
+            });
+            var obj = this.activateDS.at(0);
+            this.set("acobj", obj);
         },
         cardNotActivate     : false,
         remove              : function (e) {
             console.log("a");
         },
         obj                 : null,
+        acobj               : null,
+        genderAR            : [
+            {id: "M", name: "Male"},
+            {id: "F", name: "Female"}
+        ],
         selectedRow         : function(e){
             var data = e.data;
             this.set("obj", data);
@@ -6496,6 +6515,7 @@
             this.cardLoyaltyDS.query({
                 filter : {field: "card_id", value: data.id}
             });
+            this.get("acobj").set("number", data.number); 
         },
         activateShow        : false,
         activateCard     : function(){

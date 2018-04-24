@@ -1172,11 +1172,103 @@ class Transactions extends REST_Controller {
 				array_push($ids, $value->id);
 			}
 
+			$obj->include_related("contact", array("abbr","number","name","payment_term_id","payment_method_id","credit_limit","locale","bill_to","ship_to","deposit_account_id","trade_discount_id","settlement_discount_id","account_id","ra_id"));
 			$obj->where_in("reference_id", $ids);
 			$obj->where("is_recurring", 1);
 			$obj->where("deleted <>", 1);
 
-			$data["results"][] = $obj->get_raw()->result();
+			if($obj->exists()){
+				foreach ($obj as $value) {
+					//Contact
+					$contacts = array(
+						"id" 						=> $value->contact_id,
+						"abbr"						=> $value->contact_abbr ? $value->contact_abbr : "",
+						"number"					=> $value->contact_number ? $value->contact_number : "",
+						"name"						=> $value->contact_name ? $value->contact_name : "",
+						"payment_term_id"			=> $value->contact_payment_term_id ? $value->contact_payment_term_id : 0,
+						"payment_method_id"			=> $value->contact_payment_method_id ? $value->contact_payment_method_id : 0,
+						"credit_limit"				=> $value->contact_credit_limit ? $value->contact_credit_limit : 0,
+						"locale"					=> $value->contact_locale ? $value->contact_locale : "",
+						"bill_to"					=> $value->contact_bill_to ? $value->contact_bill_to : "",
+						"ship_to"					=> $value->contact_ship_to ? $value->contact_ship_to : "",
+						"deposit_account_id"		=> $value->contact_deposit_account_id ? $value->contact_deposit_account_id : 0,
+						"trade_discount_id"			=> $value->contact_trade_discount_id ? $value->contact_trade_discount_id : 0,
+						"settlement_discount_id"	=> $value->contact_settlement_discount_id ? $value->contact_settlement_discount_id : 0,
+						"account_id"				=> $value->contact_account_id ? $value->contact_account_id : 0,
+						"ra_id"						=> $value->contact_ra_id ? $value->contact_ra_id : 0
+					);
+
+					$data["results"][] = array(
+						"id" 						=> $value->id,
+						"company_id" 				=> $value->company_id,
+						"location_id" 				=> $value->location_id,
+						"contact_id" 				=> intval($value->contact_id),
+						"payment_term_id" 			=> $value->payment_term_id,
+						"payment_method_id" 		=> intval($value->payment_method_id),
+						"transaction_template_id" 	=> $value->transaction_template_id,
+						"reference_id" 				=> intval($value->reference_id),
+						"recurring_id" 				=> $value->recurring_id,
+						"return_id" 				=> $value->return_id,
+						"job_id" 					=> $value->job_id,
+						"account_id" 				=> intval($value->account_id),
+						"discount_account_id" 		=> intval($value->discount_account_id),
+						"item_id" 					=> $value->item_id,
+						"tax_item_id" 				=> $value->tax_item_id,
+						"wht_account_id"			=> $value->wht_account_id,
+						"user_id" 					=> $value->user_id,
+						"employee_id" 				=> $value->employee_id,
+					   	"number" 					=> $value->number,
+					   	"type" 						=> $value->type,
+					   	"journal_type" 				=> $value->journal_type,
+					   	"sub_total"					=> floatval($value->sub_total),
+					   	"discount" 					=> floatval($value->discount),
+					   	"tax" 						=> floatval($value->tax),
+					   	"amount" 					=> floatval($value->amount),
+					   	"fine" 						=> floatval($value->fine),
+					   	"deposit"					=> floatval($value->deposit),
+					   	"remaining" 				=> floatval($value->remaining),
+					   	"received" 					=> floatval($value->received),
+					   	"change" 					=> floatval($value->change),
+					   	"credit_allowed"			=> floatval($value->credit_allowed),
+					   	"additional_cost" 			=> floatval($value->additional_cost),
+					   	"additional_apply" 			=> $value->additional_apply,
+					   	"rate" 						=> floatval($value->rate),
+					   	"locale" 					=> $value->locale,
+					   	"month_of"					=> $value->month_of,
+					   	"issued_date"				=> $value->issued_date,
+					   	"bill_date"					=> $value->bill_date,
+					   	"payment_date" 				=> $value->payment_date,
+					   	"due_date" 					=> $value->due_date,
+					   	"deposit_date" 				=> $value->deposit_date,
+					   	"check_no" 					=> $value->check_no,
+					   	"reference_no" 				=> $value->reference_no,
+					   	"driver_name" 				=> $value->driver_name,
+					   	"bill_to" 					=> $value->bill_to,
+					   	"ship_to" 					=> $value->ship_to,
+					   	"memo" 						=> $value->memo,
+					   	"memo2" 					=> $value->memo2,
+					   	"note" 						=> $value->note,
+					   	"recurring_name" 			=> $value->recurring_name,
+					   	"start_date"				=> $value->start_date,
+					   	"frequency"					=> $value->frequency,
+						"month_option"				=> $value->month_option,
+						"interval" 					=> $value->interval,
+						"day" 						=> $value->day,
+						"week" 						=> $value->week,
+						"month" 					=> $value->month,
+					   	"reuse" 					=> intval($value->reuse),
+					   	"status" 					=> intval($value->status),
+					   	"progress" 					=> $value->progress,
+					   	"is_recurring" 				=> intval($value->is_recurring),
+					   	"is_journal" 				=> $value->is_journal,
+					   	"print_count" 				=> $value->print_count,
+					   	"printed_by" 				=> $value->printed_by,
+					   	"deleted" 					=> $value->deleted,
+
+					   	"contacts" 					=> $contacts
+					);
+				}
+			}
 		}		
 
 		//Response Data
