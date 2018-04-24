@@ -11874,9 +11874,9 @@
 										<th style="vertical-align: top;"><span data-bind="">code</span></th>
 										<th style="vertical-align: top;"><span data-bind="text: lang.lang.customer"></span></th>
 										<th style="text-align: center"><span data-bind="text:lang.lang.meter_number"></span></th>
-										<th style="text-align: center"><span data-bind="">Previous</span></th>
-										<th style="text-align: center"><span data-bind="">Current</span></th>
-										<th style="text-align: center"><span data-bind="">Status</span></th>
+										<th style="text-align: center"><span data-bind="text:lang.lang.previous">Previous</span></th>
+										<th style="text-align: center"><span data-bind="text:lang.lang.current">Current</span></th>
+										<th style="text-align: center"><span data-bind="text:lang.lang.status">Status</span></th>
 										<th style="text-align: right"><span data-bind="text:lang.lang.address"></span></th>
 										<th style="text-align: right"><span data-bind="text:lang.lang.license"></span></th>
 									</tr>
@@ -11909,7 +11909,12 @@
 			<td style="text-align: center">#=line[i].meter#</td>
 			<td style="text-align: right">#=line[i].previous#</td>
 			<td style="text-align: right">#=line[i].current#</td>
-			<td style="text-align: right">#=line[i].status#</td>
+			<td>#if(status == 1){#
+					#: langVM.lang.active#
+				#}else{#
+					#: langVM.lang.inactive#
+				#}#
+			</td>
 			<td style="text-align: right">#=line[i].location#</td>
 			<td style="text-align: right">#=line[i].branch#</td>
 		</tr>
@@ -12768,9 +12773,9 @@
 										<th style="vertical-align: top;"><span data-bind="">code</span></th>
 										<th style="vertical-align: top;"><span data-bind="text: lang.lang.customer"></span></th>
 										<th style="text-align: center"><span data-bind="text:lang.lang.meter_number"></span></th>
-										<th style="text-align: center"><span data-bind="">Previous</span></th>
-										<th style="text-align: center"><span data-bind="">Current</span></th>
-										<th style="text-align: center"><span data-bind="">Status</span></th>
+										<th style="text-align: center"><span data-bind="text:lang.lang.previous">Previous</span></th>
+										<th style="text-align: center"><span data-bind="text:lang.lang.current">Current</span></th>
+										<th style="text-align: center"><span data-bind="text:lang.lang.status">Status</span></th>
 										<th style="text-align: right"><span data-bind="text:lang.lang.address"></span></th>
 										<th style="text-align: right"><span data-bind="text:lang.lang.license"></span></th>
 									</tr>
@@ -12803,7 +12808,12 @@
 			<td style="text-align: center">#=line[i].meter#</td>
 			<td style="text-align: right">#=line[i].previous#</td>
 			<td style="text-align: right">#=line[i].current#</td>
-			<td style="text-align: right">#=line[i].status#</td>
+			<td>#if(status == 1){#
+					#: langVM.lang.active#
+				#}else{#
+					#: langVM.lang.inactive#
+				#}#
+			</td>
 			<td style="text-align: right">#=line[i].location#</td>
 			<td style="text-align: right">#=line[i].branch#</td>
 		</tr>
@@ -12980,9 +12990,9 @@
 			<td style="text-align: center;">
 				# var date = new Date(), dueDates = new Date(line[i].due_date).getTime(), toDay = new Date(date).getTime(); #
 				#if(dueDates < toDay) {#
-					Over Due #:Math.floor((toDay - dueDates)/(1000*60*60*24))# days
+					#: langVM.lang.over_due# #:Math.floor((toDay - dueDates)/(1000*60*60*24))# #: langVM.lang.days#
 				#} else {#
-					#:Math.floor((dueDates - toDay)/(1000*60*60*24))# days to pay
+					#:Math.floor((dueDates - toDay)/(1000*60*60*24))# #: langVM.lang.day_to_pay#
 				#}#
 			</td>	
 			<td style="text-align: right;">#=kendo.toString(line[i].amount, "c2", banhji.locale)#</td>
@@ -15132,17 +15142,17 @@
 		<td>#=box#</td>
 		<td>#=location#</td>
 		<td>#if(statusMeter == 1){#
-				Active
+				#: langVM.lang.active#
 			#}else{#
-				Inactive
+				#: langVM.lang.inactive#
 			#}#
 		</td>
 		<td style="text-align: center;">
 			# var date = new Date(), dueDates = new Date(due_date).getTime(), toDay = new Date(date).getTime(); #
 			#if(dueDates < toDay) {#
-				Over Due #:Math.floor((toDay - dueDates)/(1000*60*60*24))# days
+				#: langVM.lang.over_due# #:Math.floor((toDay - dueDates)/(1000*60*60*24))# #: langVM.lang.days#
 			#} else {#
-				#:Math.floor((dueDates - toDay)/(1000*60*60*24))# days to pay
+				#:Math.floor((dueDates - toDay)/(1000*60*60*24))# #: langVM.lang.day_to_pay#
 			#}#
 		</td>
 		<td style="text-align: right;">#=kendo.toString(amount, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#</td>
@@ -15717,9 +15727,9 @@
         		#if(line[i].status==="0" || line[i].status==="2") {#
 					# var date = new Date(), dueDates = new Date(line[i].due_date).getTime(), toDay = new Date(date).getTime(); #
 					#if(dueDates < toDay) {#
-						Over Due #:Math.floor((toDay - dueDates)/(1000*60*60*24))# days
+						#: langVM.lang.over_due# #:Math.floor((toDay - dueDates)/(1000*60*60*24))# #: langVM.lang.days#
 					#} else {#
-						#:Math.floor((dueDates - toDay)/(1000*60*60*24))# days to pay
+						#:Math.floor((dueDates - toDay)/(1000*60*60*24))# #: langVM.lang.day_to_pay#
 					#}#
 				#}else{#
 					Paid
@@ -15959,9 +15969,9 @@
 			<td style="text-align: center;">
 				# var date = new Date(), dueDates = new Date(line[i].due_date).getTime(), toDay = new Date(date).getTime(); #
 				#if(dueDates < toDay) {#
-					Over Due #:Math.floor((toDay - dueDates)/(1000*60*60*24))# days
+					#: langVM.lang.over_due# #:Math.floor((toDay - dueDates)/(1000*60*60*24))# #: langVM.lang.days#
 				#} else {#
-					#:Math.floor((dueDates - toDay)/(1000*60*60*24))# days to pay
+					#:Math.floor((dueDates - toDay)/(1000*60*60*24))# #: langVM.lang.day_to_pay#
 				#}#
 			</td>	
 			<td style="text-align: right;">#=kendo.toString(line[i].amount, "c2", banhji.locale)#</td>

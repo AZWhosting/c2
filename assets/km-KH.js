@@ -337,6 +337,7 @@ var	km_KH = {
 	"po" : "​បញ្ជាទិញ",
 	"open" : "ត្រូវ​ទូទាត់",
 	"over_due" : "ហួស​កំណត់",
+	"day_to_pay": "ថ្ងៃត្រូវបង់",
 	"date" : "កាល​បរិច្ឆេទ",
 	"type" : "ប្រភេទ",
 	"reference_no" : "លេខ​​យោង",
@@ -1501,8 +1502,8 @@ var	km_KH = {
 	"start_session": "Start Session",
 	"add_session": "Add Session",
 	"end_session": "End Session",
-
-
+	"number_of_receipt": "ចំនួន​​វិក្កយបត្រ",
+	
 	"inventory_value": "តម្លៃសន្និធិ",
 	"recurring_list": "បញ្ជីរក្សាទុកប្រតិបត្តិការញឹកញាប់",
 	"rice_report_center_description": "This module consolidates different modules report into one place.",

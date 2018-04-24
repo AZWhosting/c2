@@ -339,6 +339,7 @@ var	en_US = {
 	"po" : "PO",
 	"open" : "Open",
 	"over_due" : "Over Due",
+	"day_to_pay": "Day to Pay",
 	"type" : "Type",
 	"reference_no" : "Reference No",
 	"amount" : "AMOUNT",
@@ -1525,7 +1526,7 @@ var	en_US = {
 	"add_session": "Add Session",
 	"end_session": "End Session",
 
-
+	"number_of_receipt": "Number Of Receipt",
 
 	"inventory_value": "Inventory Value",
 	"recurring_list": "Recurring List",

@@ -99,13 +99,13 @@ class UtibillReports extends REST_Controller {
 						$totalDeposit += $txn->amount;
 					}else if ($txn->type=="Utility_Invoice"){
 						if($txn->status == 1){
-							$totalSale += $txn->amount;
+							$totalSale += $txn->amount / $txn->rate;
 						}else{
-							$totalBalance += $txn->amount;
+							$totalBalance += $txn->amount / $txn->rate;
 						}
 
 					}else{
-						$total += $txn->amount;
+						$total += $txn->amount / $txn->rate;
 					}
 				}
 
@@ -122,9 +122,9 @@ class UtibillReports extends REST_Controller {
 		 			"bloc_name" 		=> $blockname,
 		 			"activeCount"		=> $activeCount,
 		 			"inactiveCount"		=> $inactiveCount,
-		 			"totalSale"			=> $totalSale,
-		 			"totalDeposit"		=> $totalDeposit,
-		 			"totalBalance"		=> $totalBalance,
+		 			"totalSale"			=> floatval($totalSale),
+		 			"totalDeposit"		=> floatval($totalDeposit),
+		 			"totalBalance"		=> floatval($totalBalance),
 		 			"totalUsage"		=> $totalUsage
 			 	);
 			}
@@ -209,7 +209,7 @@ class UtibillReports extends REST_Controller {
 				$trxSale->where('type', 'Utility_Invoice');
 				$trxSale->where('location_id', $loc->id)->get_iterated();
 				foreach ($trxSale as $key) {
-					$totalAmount += $key->amount;
+					$totalAmount += $key->amount / $key->rate;
 				}
 				
 

@@ -332,16 +332,19 @@ class Waterdash extends REST_Controller {
 
 		$amount = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$amount->where("type", "Utility_Invoice");
-		$amount->select_sum('amount');
 		$amount->where("deleted <>", 1);
-		$amount->get();	
-
+		$amount->get_iterated();
+		
+		foreach ($amount as $amount) {
+			$amount = $amount->amount / $amount->rate;
+			$totalSale +=  $amount ;
+		}
 		$data[] = array(
 			'totalOverDue' 	=> $overDue,
 			'totalInvoice' => $totalINV,
 			'totalAmount' => floatval($totalAmount),
 			'totalCustomer' => count($customer),
-			'totalSale' => floatval($amount->amount),
+			'totalSale' => floatval($totalSale),
 			'totalUsage' => $usage
 		);
 

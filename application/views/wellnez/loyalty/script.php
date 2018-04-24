@@ -6517,6 +6517,29 @@
             });
             this.get("acobj").set("number", data.number); 
         },
+        haveCard            : false,
+        cardSeachDS         : dataStore(apiUrl + "spa/card"),
+        searchCard           : function(){
+            var self = this;
+            this.set("haveCard", false);
+            this.cardSeachDS.query({
+                filter: [
+                    {field: "number", value: this.acobj.number},
+                    {field: "serial", value: this.acobj.serial}
+                ],
+                pageSize: 1,
+            }).then(function(e){
+                var v = self.cardSeachDS.view();
+                if(v.length > 0){
+                    self.set("haveCard", true);
+                }else{
+                    alert("No Data!");
+                    self.get("acobj").set("serial", "");
+                    self.set("haveCard", false);
+                    self.cancelActivate();
+                }
+            });
+        },
         activateShow        : false,
         activateCard     : function(){
             this.set("activateShow", true);

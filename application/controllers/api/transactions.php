@@ -1176,6 +1176,7 @@ class Transactions extends REST_Controller {
 			$obj->where_in("reference_id", $ids);
 			$obj->where("is_recurring", 1);
 			$obj->where("deleted <>", 1);
+			$obj->get_iterated();
 
 			if($obj->exists()){
 				foreach ($obj as $value) {
@@ -1265,7 +1266,8 @@ class Transactions extends REST_Controller {
 					   	"printed_by" 				=> $value->printed_by,
 					   	"deleted" 					=> $value->deleted,
 
-					   	"contacts" 					=> $contacts
+					   	"contacts" 					=> $contacts,
+					   	"lines" 					=> $value->item_line->get_raw()->result()
 					);
 				}
 			}

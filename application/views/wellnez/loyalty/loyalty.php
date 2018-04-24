@@ -1347,56 +1347,60 @@
 																		<input type="text" style="width: 100%; border: 1px solid #c5c5c5; padding: 3px; height: 30px;" placeholder="" data-bind="value: acobj.serial">
 																	</div>
 																</div>
-																<div class="row">
-																	<div class="col-md-11">
-																		<label>Name</label>
-																			<input type="text" style="width: 98%; border: 1px solid #c5c5c5; padding: 3px; height: 30px;" placeholder="" data-bind="value: acobj.name">
-																	</div>
+																<div data-bind="invisible: haveCard">
+																	<span style="float: left!important; margin-left: 21px; margin-top: 15px; color: #fff;" class="btn btn-primary btn-icon glyphicons edit pull-right" data-bind="click: searchCard"><i></i><span>Search</span></span>
+												        			<span class="btn btn-primary btn-icon glyphicons circle_remove pull-right" data-bind="click: cancelActivate" style="background: red; border: 1px solid red; float: left !important; margin-top: 15px; margin-left: 12px; color: #fff;"><i></i><span>Cancel</span></span>
 																</div>
-																<div class="row">
-																	<div class="col-md-5">
-																		<label>Gender</label>
-																		<input 
-																			type="text" 
-																			data-role="dropdownlist"
-									                                        data-bind="source: genderAR, 
-									                                       			 value: acobj.gender"
-									                                        data-text-field="name"
-									                                        data-value-field="id"
-									                                        data-value-primitive="true"
-																			style="width: 100%; border: 1px solid #c5c5c5; padding: 3px; height: 30px;" placeholder="">
+																<div data-bind="visible: haveCard">
+																	<div class="row">
+																		<div class="col-md-11">
+																			<label>Name</label>
+																				<input type="text" style="width: 98%; border: 1px solid #c5c5c5; padding: 3px; height: 30px;" placeholder="" data-bind="value: acobj.name">
+																		</div>
 																	</div>
-																	<div class="col-md-5">
-																		<label>DOB</label>
-																		<input type="text" 
-																			data-role="datepicker" 
-										                                    data-bind="value: acobj.dob"
-										                                    data-format="dd-MM-yyyy"
-										                                    data-parse-formats="yyyy-MM-dd"
-																			style="width: 100%; border: 1px solid #c5c5c5; padding: 3px; height: 30px;" placeholder="">
+																	<div class="row">
+																		<div class="col-md-5">
+																			<label>Gender</label>
+																			<input 
+																				type="text" 
+																				data-role="dropdownlist"
+										                                        data-bind="source: genderAR, 
+										                                       			 value: acobj.gender"
+										                                        data-text-field="name "
+										                                        data-value-field="id"
+										                                        data-value-primitive="true"
+																				style="width: 100%; border: 1px solid #c5c5c5; padding: 3px; height: 30px;" placeholder="">
+																		</div>
+																		<div class="col-md-5">
+																			<label>DOB</label>
+																			<input type="text" 
+																				data-role="datepicker" 
+											                                    data-bind="value: acobj.dob"
+											                                    data-format="dd-MM-yyyy"
+											                                    data-parse-formats="yyyy-MM-dd"
+																				style="width: 100%; border: 1px solid #c5c5c5; padding: 3px; height: 30px;" placeholder="">
+																		</div>
 																	</div>
-																</div>
-																<div class="row">
-																	<div class="col-md-11">
-																		<label>Nationality</label>
-																			<input type="text" style="width: 98%; border: 1px solid #c5c5c5; padding: 3px; height: 30px;" placeholder="" data-bind="value: acobj.nationality">
+																	<div class="row">
+																		<div class="col-md-11">
+																			<label>Nationality</label>
+																				<input type="text" style="width: 98%; border: 1px solid #c5c5c5; padding: 3px; height: 30px;" placeholder="" data-bind="value: acobj.nationality">
+																		</div>
+																		<div class="col-md-11">
+																			<label>Registered</label>
+																			<input type="text" 
+																				data-role="datepicker" 
+				                                      							data-bind="value: acobj.registered_date"
+				                                      							data-format="dd-MM-yyyy"
+				                                      							data-parse-formats="yyyy-MM-dd"
+																				style="width: 98%; border: 1px solid #c5c5c5; padding: 3px; height: 30px;" placeholder="" data-bind="">
+																		</div>
 																	</div>
-																	<div class="col-md-11">
-																		<label>Registered</label>
-																		<input type="text" 
-																			data-role="datepicker" 
-			                                      							data-bind="value: acobj.registered_date"
-			                                      							data-format="dd-MM-yyyy"
-			                                      							data-parse-formats="yyyy-MM-dd"
-																			style="width: 98%; border: 1px solid #c5c5c5; padding: 3px; height: 30px;" placeholder="" data-bind="">
-																	</div>
+																	<span style="float: left!important; margin-left: 21px; margin-top: 15px; color: #fff;" class="btn btn-primary btn-icon glyphicons edit pull-right" data-bind="click: activateNow"><i></i><span>Activate</span></span>
+												        			<span class="btn btn-primary btn-icon glyphicons circle_remove pull-right" data-bind="click: cancelActivate" style="background: red; border: 1px solid red; float: left !important; margin-top: 15px; margin-left: 12px; color: #fff;"><i></i><span>Cancel</span></span>
 																</div>
 															</div>
-
-															 <span style="float: left!important; margin-left: 21px; margin-top: 15px; color: #fff;" class="btn btn-primary btn-icon glyphicons edit pull-right" data-bind="click: activateNow"><i></i><span>Activate</span></span>
-												        	<span class="btn btn-primary btn-icon glyphicons circle_remove pull-right" data-bind="click: cancelActivate" style="background: red; border: 1px solid red; float: left !important; margin-top: 15px; margin-left: 12px; color: #fff;"><i></i><span>Cancel</span></span>
 														</div>
-												       
 										            </div>
 												</div>
 											</div>
