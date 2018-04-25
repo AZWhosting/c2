@@ -547,6 +547,21 @@ class Item_lines extends REST_Controller {
 				$obj->item_id = $value->item->id;
 			}
 
+			//Contact
+		   	if(isset($value->contact)){
+				$obj->contact_id = $value->contact->id;
+			}
+
+			//Job
+		   	if(isset($value->job)){
+				$obj->job_id = $value->job->id;
+			}
+
+			//Tax Item
+		   	if(isset($value->tax_item)){
+				$obj->tax_item_id = $value->tax_item->id;
+			}
+
 		   	//Conversion ratio
 			$conversion_ratio = 1;
 			if(isset($value->conversion_ratio)){

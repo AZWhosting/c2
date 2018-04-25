@@ -4529,11 +4529,17 @@
             }).then(function(e){
                 var v = self.txnDS.view()[0];
                 var am = v.amount / num;
-                self.device(am, v.id); 
+                self.device(am); 
+                banhji.printBill.dataSource = [];
+                
             });
         },
         device      : function(amount){
 
+        },
+        cancel      : function(){
+            banhji.router.navigate("/");
+            this.set("numPeople", 2);
         }
     });
     banhji.printBill = kendo.observable({

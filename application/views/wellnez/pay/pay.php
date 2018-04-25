@@ -497,7 +497,7 @@
 				    <div class="tab-content">
 				        <div class="tab-pane active" id="tab1" style="overflow: hidden;position: relative;">
 				        	<div  data-bind="visible: stopItemM" style="border-radius: 10px;text-align: center;position: absolute;width: 100%; height: 100%;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
-								<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 40%;left: 25%">You can't user this module...</i>
+								<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 40%;left: 25%">You can't use this module...</i>
 							</div>
 			            	<div class="span12">
 			            		<div class="rows">
