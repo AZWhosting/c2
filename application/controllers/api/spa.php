@@ -1373,6 +1373,112 @@ class Spa extends REST_Controller {
 		   	return $data["results"];
 		}
 	}
+	function printbill_get(){
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
+		$data["count"] = 0;
+		$is_pattern = 0;
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
+			}
+		}
+		//Filter
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value["operator"])) {
+					$obj->{$value["operator"]}($value["field"], $value["value"]);
+				} else {
+	    			$obj->where($value["field"], $value["value"]);
+				}
+			}
+		}
+		$obj->where("deleted", 0);
+		//Results
+		if($page && $limit){
+			$obj->get_paged_iterated($page, $limit);
+			$data["count"] = $obj->paged->total_rows;
+		}else{
+			$obj->get_iterated();
+			$data["count"] = $obj->result_count();
+		}
+		if($obj->exists()){
+			foreach ($obj as $value) {
+				//contact
+				$con = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$con->where("id", $obj->contact_id)->limit(1)->get();
+				$conar = array(
+					"id" 	=> $con->id,
+					"name" 	=> $con->name,
+					"address" 	=> $con->address,
+					"phone" 	=> $con->phone,
+					"number" 	=> $con->number,
+					"abbr" 		=> $con->abbr,
+				);
+				//Cashier
+				$cashier_name = "";
+				$u = new User(null, $this->server_host, $this->server_user, $this->server_pwd, 'banhji');
+				$u->where("id", $obj->user_id)->limit(1)->get();
+				if($u->exists()){
+					$cashier_name = $u->first_name." ".$u->last_name;
+				}
+				//Work
+				$work = new Spa_work(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$work->where("transaction_id", $obj->id)->limit(1)->get();
+				//Room
+				$room = new Spa_work_room(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$room->where("work_id", $work->id)->get();
+				$roomshow = "";
+				foreach($room as $r){
+					$rr = new Spa_room(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$rr->where("id", $r->room_id)->get();
+					$rr->status = 0;
+					$rr->work_id = 0;
+					$rr->maintenance_date = date('Y-m-d H:i:s', strtotime($value->issued_date));
+					$rr->save();
+					$roomshow .= $rr->name." ";
+				}
+				//Employee
+				$employee = new Spa_work_employee(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$employee->where("work_id", $work->id)->get();
+				$employee_name = "";
+				foreach($employee as $em){
+					$emc = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$emc->where("id", $em->employee_id)->get();
+					$emc->work_id = 0;
+					$emc->save();
+					$employee_name .= $emc->abbr."-".$emc->number." ".$emc->name;
+				}
+				$data["results"][] = array(
+			   		"id" 			=> $obj->id,
+			   		"number" 		=> $obj->number,
+			   		"contact" 		=> $conar,
+			   		"amount" 		=> floatval($obj->amount),
+			   		"sub_total" 	=> floatval($obj->sub_total),
+			   		"discount" 		=> floatval($obj->discount),
+			   		"tax" 			=> floatval($obj->tax),
+			   		"rate" 			=> floatval($obj->rate),
+			   		"locale" 		=> $obj->locale,
+			   		"issued_date" 	=> $obj->issued_date,
+			   		"items" 		=> $value->items,
+			   		"cashier_name" 	=> $cashier_name,
+			   		"room_number" 	=> $roomshow,
+			   		"employee_name" => $employee_name,
+			   	);
+		 	}
+		}
+		//Response Data		
+		$this->response($data, 200);
+	}
 	//Service Charge
 	function service_charge_get(){
 		$filter 	= $this->get("filter");

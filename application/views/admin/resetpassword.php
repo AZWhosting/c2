@@ -257,6 +257,7 @@
           name: 'userData'
         });
         // Initialize aws userpool
+        
         var userPool = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserPool(poolData);
         var baseUrl = "<?php echo base_url(); ?>"
         var apiUrl = baseUrl + "api/";
