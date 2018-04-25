@@ -11909,7 +11909,7 @@
 			<td style="text-align: center">#=line[i].meter#</td>
 			<td style="text-align: right">#=line[i].previous#</td>
 			<td style="text-align: right">#=line[i].current#</td>
-			<td>#if(status == 1){#
+			<td>#if(status = 1){#
 					#: langVM.lang.active#
 				#}else{#
 					#: langVM.lang.inactive#

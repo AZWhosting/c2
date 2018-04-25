@@ -281,6 +281,7 @@ class UtibillReports extends REST_Controller {
 		$obj->include_related("winvoice_line", array("quantity", "type", "amount"));
 		$obj->include_related('winvoice_line/meter_record', "usage");
 		$obj->where_related("winvoice_line", "type", "tariff");
+		// $obj->where_related("meter", "deleted <>", 1);
 		$obj->where("type", "Utility_Invoice");
 		$obj->where("is_recurring <>", 1);
 		$obj->where("deleted <>", 1);

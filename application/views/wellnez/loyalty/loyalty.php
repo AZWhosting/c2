@@ -1245,13 +1245,13 @@
 							<div class="widget-search separator bottom">
 								<button style="height: 34px;" type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></button>
 								<div class="overflow-hidden">
-									<input type="search" placeholder="Number" data-bind="value: searchText">
+									<input type="search" style="color: #000;" placeholder="Number" data-bind="value: searchText">
 								</div>
 							</div>
 						</form>
 					</div>
 					<div class="results">
-						<span data-bind="text: contactDS.total"></span>
+						<span data-bind="text: cardDS.total"></span>
 						<span data-bind="text: lang.lang.found_search"></span>
 					</div>
 					<div class="table table-condensed " style="height: 580px;"
@@ -1308,12 +1308,6 @@
 																</td>
 															</tr>
 															<tr>
-																<td><span>Serial</span></td>
-																<td>
-																	<span class="strong" data-bind="text: obj.serial"></span>
-																</td>
-															</tr>
-															<tr>
 																<td><span data-bind="text: lang.lang.status"></span></td>
 																<td>
 																	<span data-bind="text: obj.status"></span>
@@ -1332,7 +1326,7 @@
 										                data-title="Activate Card"
 										                data-width="450"
 										                data-actions="{}"
-										                data-height="385"
+										                data-height="440"
 										                data-position="{top: '30%', left: '37%'}"
 										                data-bind="visible: activateShow">
 						            					<div class="row" style="width: 105%; float: left;">
@@ -1382,6 +1376,10 @@
 																		</div>
 																	</div>
 																	<div class="row">
+																		<div class="col-md-11">
+																			<label>Phone</label>
+																				<input type="text" style="width: 98%; border: 1px solid #c5c5c5; padding: 3px; height: 30px;" placeholder="" data-bind="value: acobj.phone">
+																		</div>
 																		<div class="col-md-11">
 																			<label>Nationality</label>
 																				<input type="text" style="width: 98%; border: 1px solid #c5c5c5; padding: 3px; height: 30px;" placeholder="" data-bind="value: acobj.nationality">

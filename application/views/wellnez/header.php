@@ -238,7 +238,6 @@ var themerPrimaryColor = primaryColor;
 	
 </style>
 </head>
-
 <body class="document-body ">
 	<div class="wrapper">
 		<div class="container ">

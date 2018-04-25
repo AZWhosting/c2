@@ -1,3 +1,4 @@
+<?php date_default_timezone_set("Asia/Phnom_Penh"); ?>
 <script>
     function itemComboBoxEditor(container, options) {
         $('<input name="' + options.field + '"/>')
@@ -6482,12 +6483,15 @@
             this.activateDS.data([]);
             this.set("acobj", null);
             this.activateDS.insert(0, {
+                "card_id"           : 0,
                 "gender"             : "M",
                 "activated_by"       : banhji.userData.id,
                 "serial"             : "",
                 "number"             : "",
                 "name"               : "",
                 "dob"                : "",
+                "locale"            : banhji.locale,
+                "phone"             : "",
                 "nationality"       : "",
                 "registered_date"   : new Date(),
             });
@@ -6532,6 +6536,7 @@
                 var v = self.cardSeachDS.view();
                 if(v.length > 0){
                     self.set("haveCard", true);
+                    self.acobj.set("card_id", v[0].id);
                 }else{
                     alert("No Data!");
                     self.get("acobj").set("serial", "");
@@ -6552,22 +6557,14 @@
         },
         activateDS          : dataStore(apiUrl + "spa/activate_card"),
         activateNow         : function(){
-            var obj = this.get("obj");
+            var obj = this.get("acobj");
             var self = this;
-            if(obj.id && this.get("registered_date") && this.get("contact_activate")){
-                this.activateDS.data([]);
-                this.activateDS.add({
-                    contact_id      : this.get("contact_activate"),
-                    registered_date : this.get("registered_date"),
-                    card_id         : obj.id,
-                });
+            if(obj.number && obj.serial && obj.name){
                 this.activateDS.sync();
                 this.activateDS.bind("requestEnd", function(e){ 
                     if(e.response.type != 'read'){
                         self.cancelActivate();
-                        var noti = $("#ntf1").data("kendoNotification");
-                            noti.hide();
-                            noti.success(self.lang.lang.success_message);
+                        alert("Successful!");
                     }
                 });
             }else{
@@ -6608,6 +6605,20 @@
             }else{
                 alert("Feild Required!");
             }
+        },
+        search              : function(){
+            var self = this,
+            para = [],
+            searchText = this.get("searchText");
+
+            if(searchText){
+                para.push({ field: "number", operator: "contains", value: searchText });
+            }
+
+            this.cardDS.filter(para);
+
+            //Clear search filters
+            this.set("searchText", "");
         },
     });
     banhji.Card = kendo.observable({

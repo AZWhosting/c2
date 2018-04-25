@@ -2515,9 +2515,31 @@ class Spa extends REST_Controller {
 		$sort 	 	= $this->get("sort");
 		$obj = new Spa_card(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		//Filter
-		if(!empty($filter) && isset($filter)){
-	    	foreach ($filter["filters"] as $value) {
-	    		$obj->where($value["field"], $value["value"]);
+		if(!empty($filter['filters']) && isset($filter['filters'])){
+	    	foreach ($filter['filters'] as $value) {
+	    		if(isset($value['operator'])) {
+					if($value['operator']=="startswith"){
+	    				$obj->like($value['field'], $value['value'], 'after');
+	    			}else if($value['operator']=="contains"){
+	    				$obj->like($value['field'], $value['value'], 'both');
+	    			}else if($value['operator']=="by_user_id"){
+	    				$employeeUsers = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	    				$employeeUsers->where("user_id", $value['value']);
+	    				$employeeUsers->get();
+
+	    				if($employeeUsers->exists()){
+	    					$obj->where_related_contact_assignee($value['field'], $employeeUsers->id);
+	    				}
+	    			}else{
+						$obj->{$value['operator']}($value['field'], $value['value']);
+	    			}
+				} else {
+					if($value["field"]=="is_pattern"){
+	    				$is_pattern = $value["value"];
+	    			}else{
+	    				$obj->where($value["field"], $value["value"]);
+	    			}
+				}
 			}
 		}
 		//Results
@@ -2618,22 +2640,42 @@ class Spa extends REST_Controller {
 		$data["results"] = [];
 		$data["count"] = 0;
 		foreach ($models as $value) {
-			$obj = new Spa_card(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$obj->where("id", $value->card_id)->limit(1)->get();
-			isset($value->contact_id) 			? $obj->contact_id 			= $value->contact_id : 0;
-			isset($value->registered_date) 		? $obj->registered_date 	= $value->registered_date : 0;
-			$obj->status = 1;
-	   		if($obj->save()){
-			   	$data["results"][] = array(
-			   		"id" 				=> $obj->id,
-			   		"name" 				=> $obj->name,
-					"number"			=> $obj->number,
-					"serial"			=> $obj->serial,
-			   		"contact_id" 		=> $obj->contact_id,
-					"registered_date"	=> $obj->registered_date,
-					"serial"			=> $obj->serial,
-			   	);
-		    }
+			$contact = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$contact->name = isset($value->name) ? $value->name : "";
+			$contact->country_id = 36;
+			$contact->memo = isset($value->nationality) ? $value->nationality : "";
+			$contact->contact_type_id = 4;
+			$contact->abbr = "CP";
+			$contact->gender = isset($value->gender) ? $value->gender : "M";
+			$contact->dob = isset($value->dob) ? $value->dob : "";
+			$contact->locale = isset($value->locale) ? $value->locale : "km-KH";
+			$contact->dob = isset($value->dob) ? $value->dob : "";
+			$contact->phone = isset($value->phone) ? $value->phone : "";
+			$contact->payment_term_id = 4;
+			$contact->payment_method_id = 1;
+			$contact->deposit_account_id = 55;
+			$contact->trade_discount_id = 72;
+			$contact->settlement_discount_id = 99;
+			$contact->account_id = 10;
+			$contact->ra_id = 71;
+			$contact->or_account_id = 110;
+			$contact->tax_item_id = 10;
+			$contact->registered_date = isset($value->registered_date) ? $value->registered_date : "";
+			$contact->status = 1;
+			$contact->type = 1;
+			if($contact->save()){
+				$card = new Spa_card(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$card->where("id", $value->card_id)->limit(1)->get();
+				$card->contact_id = $contact->id;
+				$card->status = 1;
+				$card->registered_date = isset($value->registered_date) ? $value->registered_date : "";
+				$card->activated_by = isset($value->activated_by) ? $value->activated_by : "";
+		   		if($card->save()){
+				   	$data["results"][] = array(
+				   		"id" 				=> $contact->id,
+				   	);
+			    }
+			}			
 		}
 		$data["count"] = count($data["results"]);
 		$this->response($data, 201);	
