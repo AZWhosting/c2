@@ -2224,6 +2224,7 @@ class Utibills extends REST_Controller {
 				$remain->where("deleted", 0);
 				$remain->where("status <>", 1)->get_iterated();
 				$amountOwed = 0;
+				$fineAmount = 0;
 				foreach($remain as $rem) {
 					$fine = new Winvoice_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 					$fine->where("transaction_id", $rem->id);
