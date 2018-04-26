@@ -1266,6 +1266,7 @@ class Transactions extends REST_Controller {
 					   	"printed_by" 				=> $value->printed_by,
 					   	"deleted" 					=> $value->deleted,
 
+					   	"is_check" 					=> true,
 					   	"contacts" 					=> $contacts,
 					   	"lines" 					=> $value->item_line->get_raw()->result()
 					);

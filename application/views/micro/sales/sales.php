@@ -265,42 +265,121 @@
 											<div class="detailsWrapper">
 												<div class="row">
 													<div class="col-md-6">
-														<input class="customerName" type="text" name="" data-bind="value: obj.name" disabled="disabled" style="background: #fff;">
+														<input class="customerName" type="text" name="" data-bind="value: obj.name" disabled="disabled" style="background: #fff;" />
 														<ul class="nav nav-tabs" role="tablist">
-						                                    <li class="nav-item"> <a class="nav-link active show" data-toggle="tab" href="#home8" role="tab" aria-selected="true"><span><i class="ti-text"></i></span></a> </li>
-						                                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#profile8" role="tab" aria-selected="false"><span><i class="ti-user"></i></span></a> </li>
-						                                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#messages8" role="tab" aria-selected="false"><span><i class="ti-pencil-alt"></i></span></a> </li>
-						                                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#messages7" role="tab" aria-selected="false"><span><i class=" ti-clip"></i></span></a> </li>
+						                                    <li class="nav-item"> <a class="nav-link active show" data-toggle="tab" href="#cutomerTransaction" role="tab" aria-selected="true"><span><i class="ti-text"></i></span></a> </li>
+						                                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#customerInformation" role="tab" aria-selected="false"><span><i class="ti-user"></i></span></a> </li>
+						                                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#customerMemo" role="tab" aria-selected="false"><span><i class="ti-pencil-alt"></i></span></a> </li>
+						                                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#customerAttachment" role="tab" aria-selected="false"><span><i class=" ti-clip"></i></span></a> </li>
 						                                </ul>
 						                                <div class="tab-content tabcontent-border">
-						                                    <div class="tab-pane active show" id="home8" role="tabpanel">
+						                                	<!--Tab Cutomer Transaction -->
+						                                    <div class="tab-pane active show" id="cutomerTransaction" role="tabpanel">
 						                                        <div class="p-10">
-						                                            <h3>Best Clean Tab ever</h3>
-						                                            <h4>you can use it with the small code</h4>
-						                                            <p>Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a.</p>
+						                                            <div class="row">
+						                                            	<div class="col-sm-6">
+						                                            		<a hre="" class="btn waves-effect waves-light btn-block btn-info" data-bind="click: goQuote"><span data-bind="text: lang.lang.quote"></span></a>
+						                                            	</div>
+						                                            	<div class="col-sm-6">
+						                                            		<a hre="" class="btn waves-effect waves-light btn-block btn-info" data-bind="click: goDeposit"><span data-bind="text: lang.lang.c_deposit"></span></a>
+						                                            	</div>
+						                                            </div>
+						                                            <div class="row">
+						                                            	<div class="col-sm-6">
+						                                            		<a hre="" class="btn waves-effect waves-light btn-block btn-info" data-bind="click: goCashSale"><span data-bind="text: lang.lang.cash_sale"></span></a>
+						                                            	</div>
+						                                            	<div class="col-sm-6">
+						                                            		<a hre="" class="btn waves-effect waves-light btn-block btn-info" data-bind="click: goSaleReturn"><span data-bind="text: lang.lang.sale_return1"></span></a>
+						                                            	</div>
+						                                            </div>
+						                                            <div class="row">
+						                                            	<div class="col-sm-6">
+						                                            		<a hre="" class="btn waves-effect waves-light btn-block btn-info" data-bind="click: goInvoice"><span data-bind="text: lang.lang.invoice"></span></a>
+						                                            	</div>
+						                                            	<div class="col-sm-6">
+						                                            		<a hre="" class="btn waves-effect waves-light btn-block btn-info" data-bind="click: goCashReceipt"><span data-bind="text: lang.lang.cash_receipt"></span></a>
+						                                            	</div>
+						                                            </div>
+						                                            <div class="row">
+						                                            	<div class="col-sm-6">
+						                                            		<a hre="" class="btn waves-effect waves-light btn-block btn-info" data-bind="click: goCashRefound"><span data-bind="text: lang.lang.cash_refund"></span></a>
+						                                            	</div>
+						                                            </div>
 						                                        </div>
 						                                    </div>
-						                                    <div class="tab-pane" id="profile8" role="tabpanel">
+						                                    <!-- End -->
+
+						                                   	<!--Tab Customer Information -->
+						                                    <div class="tab-pane" id="customerInformation" role="tabpanel">
 						                                    	<div class="p-10">
-						                                            <h3>Best Clean Tab ever</h3>
-						                                            <h4>you can use it with the small code</h4>
-						                                            <p>Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a.</p>
+						                                    		<div class="row">
+						                                            	<div class="col-sm-4">
+						                                            		<img class="main-image" data-bind="attr: { src: obj.image_url, alt: obj.name, title: obj.name }">
+						                                            	</div>
+						                                            	<div class="col-sm-8">
+						                                            		<div class="accounCetner-textedit">
+																            	<table width="100%">
+																					<tr>
+																						<td width="40%"><span data-bind="text: lang.lang.customer_type"></span></td>
+																						<td width="60%">
+																							<span class="strong" data-bind="text: obj.contact_type"></span>
+																						</td>
+																					</tr>
+																					<tr>
+																						<td><span data-bind="text: lang.lang.number"></span></td>
+																						<td>
+																							<span class="strong" data-bind="text: obj.abbr"></span>
+																							<span class="strong" data-bind="text: obj.number"></span>
+																						</td>
+																					</tr>
+																					<tr>
+																						<td><span data-bind="text: lang.lang.name"></span></td>
+																						<td>
+																							<span data-bind="text: obj.name"></span>
+																						</td>
+																					</tr>
+																					<tr>
+																						<td><span data-bind="text: lang.lang.phone"></span></td>
+																						<td>
+																							<span data-bind="text: obj.phone"></span>
+																						</td>
+																					</tr>
+																					<tr>
+																						<td><span data-bind="text: lang.lang.currency"></span></td>
+																						<td>
+																							<span data-bind="text: currencyCode"></span>
+																						</td>
+																					</tr>
+																				</table>
+
+																				<span class="btn waves-effect waves-light btn-block btn-info pull-right" data-bind="click: goEdit"><i class="ti-pencil-alt"></i><span data-bind="text: lang.lang.view_edit_profile"></span></span>
+																			</div>
+						                                            	</div>
+						                                            </div>
 						                                        </div>
 						                                    </div>
-						                                    <div class="tab-pane" id="messages8" role="tabpanel">
+						                                    <!-- End -->
+
+						                                    <!--Tab Customer Memo -->
+						                                    <div class="tab-pane" id="customerMemo" role="tabpanel">
 						                                    	 <div class="p-10">
 						                                            <h3>Best Clean Tab ever</h3>
 						                                            <h4>you can use it with the small code</h4>
 						                                            <p>Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a.</p>
 						                                        </div>
 						                                    </div>
-						                                    <div class="tab-pane" id="messages7" role="tabpanel">
+						                                    <!-- End -->
+
+
+						                                    <!--Tab Customer Attachment -->
+						                                    <div class="tab-pane" id="customerAttachment" role="tabpanel">
 						                                    	 <div class="p-10">
 						                                            <h3>Best Clean Tab ever</h3>
 						                                            <h4>you can use it with the small code</h4>
 						                                            <p>Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a.</p>
 						                                        </div>
 						                                    </div>
+						                                    <!-- End -->
 						                                </div>
 														<!-- <div class="widget widget-4 widget-tabs-icons-only margin-bottom-none">
 														    <div class="widget-head">

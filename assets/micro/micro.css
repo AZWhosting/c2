@@ -392,6 +392,7 @@ a {
     border-top: 1px solid #ddd;
     float: left;
     background: #fff;
+    width: 100%;
 }
 .detailsWrapper input.customerName{
 	border: none; 
@@ -399,12 +400,51 @@ a {
 	font-size: 20px; 
 	font-weight: 600; 
 	margin-bottom: 10px; 
-	background: #fff;
+	background-color: #fff;
 	padding: 5px;
 	border-radius: 0;
 }
 .table.table-condensed.k-grid.k-widget.k-display-block{
 	height: 590px;
+}
+#cutomerTransaction .row .col-sm-6{
+	margin-bottom: 8px;
+}
+#cutomerTransaction .row .col-sm-6 a span{
+	color: #fff;
+	text-transform: uppercase;
+}
+#cutomerTransaction .row:last-child .col-sm-6:last-child{
+	margin-bottom: 0;
+}
+
+/*Customer Infor*/
+.main-image{
+	border: 1px solid #ddd;
+    height: auto !important;
+    width: 100%;
+    margin-bottom: 8px;
+}
+.accounCetner-textedit{
+	border: 1px solid #ccc;
+    float: left;
+}
+.accounCetner-textedit table {
+	margin-bottom: 8px;
+}
+.accounCetner-textedit table tr:nth-child(2) td, .accounCetner-textedit table tr:nth-child(4) td, .accounCetner-textedit table tr:nth-child(6) td {
+    background: #E4EFF9;
+}
+.accounCetner-textedit table tr td {
+    padding: 5px 15px;
+}
+.accounCetner-textedit table tr td span{
+	width: 100%;
+	margin: 0;
+}
+.accounCetner-textedit span{
+	margin: 8px;
+    width: 93%;
 }
 @media (max-width: 767px){
 	.table.table-condensed.k-grid.k-widget.k-display-block{
