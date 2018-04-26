@@ -11959,7 +11959,7 @@
                                         });
                                     }
                                 } else {
-                                    if (self.txnTemplateDS.data()[0].transaction_form_id == "44") {
+                                    if (self.txnTemplateDS.data()[0].transaction_form_id == "44" || self.txnTemplateDS.data()[0].transaction_form_id == "66") {
                                         banhji.InvoicePrint.formVisible = 'visibility: hidden;';
                                         banhji.InvoicePrint.formBorder = 'border: 1px solid #fff!important;';
                                     } else {
@@ -12073,6 +12073,9 @@
                     break;
                 case "44":
                     TempForm = $("#formFrame").html();
+                    break;
+                case "66":
+                    TempForm = $("#defaultFormFrame").html();
                     break;
                 default:
                     TempForm = $("#InvoiceFormTemplate1").html();

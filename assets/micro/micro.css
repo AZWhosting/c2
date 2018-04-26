@@ -185,7 +185,7 @@ a {
 .home-footer .table{
 	box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;
 	margin-bottom: 15px;
-	height: 228px;
+	height: 263px;
 }
 .home-footer .table th {
 	padding: 10px;
@@ -291,6 +291,7 @@ a {
 }
 .widget-search .overflow-hidden{
 	float: left;
+	width: 82%;
 }
 .widget-search .btn.btn-default.pull-right{
 	border-radius: 0;
@@ -321,4 +322,58 @@ a {
 #print_export .btnExport{
 	float: left;
 	margin-bottom: 8px;
+}
+
+/*Tab Customer*/
+#customers .listWrapper{
+	padding: 10px;
+    background: #edf1f5;
+    float: left;
+    box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;
+}
+#customers .listWrapper .innerAll{
+	height: 96px;
+	float: left;
+}
+#customers .listWrapper .innerAll .widget-search{
+	margin-bottom: 10px;
+}
+#customers .listWrapper .innerAll .select2-container{
+	width: 100%;
+}
+#customers .listWrapper .innerAll .select2-container input{
+	width: 100%;
+	margin-bottom: 0;
+}
+#customers .listWrapper .innerAll .widget-search .btn.btn-default.pull-right{
+	padding: 6px 9px;
+	width: 18%;
+}
+#customers .listWrapper .results{
+	background-color: #0077c5;
+    border: none;
+    padding: 12px 8px;
+    height: 0;
+    width: 100%;
+    line-height: 0;
+    float: left;
+    color: #fff;
+    text-align: center;
+    font-size: 12px;    
+}
+#customers .listWrapper .table{
+	width: 100%;
+	float: left;
+	margin-bottom: 5px;
+}
+#customers .listWrapper .k-selectable tr td{
+	border: 1px solid #ccc;
+	border-bottom: none;
+}
+#customers .detailsWrapper{
+    width: 100%;
+    background: #edf1f5;
+    float: left;
+    box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;
+    padding: 10px;
 }

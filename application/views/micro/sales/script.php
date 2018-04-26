@@ -2990,15 +2990,78 @@
     });
     //-----------------------------------------
     banhji.Index = kendo.observable({
-        lang            : langVM,
-        Institute       : banhji.institute,
-        actualCash      : 0,
-        dataSource      : dataStore(apiUrl + "customer_modules/dashboard"),
-        inventoryDS     : dataStore(apiUrl + "inventory_modules/dashboard"),
-        vendorDS        : dataStore(apiUrl + "vendor_modules/dashboard"),
-        graphDS         : dataStore(apiUrl + "customer_modules/monthly_sale"),
-        obj             : {},
-        setObj          : function(){
+        lang                : langVM,
+        Institute           : banhji.institute,
+        actualCash          : 0,
+        dataSource          : dataStore(apiUrl + "customer_modules/dashboard"),
+        inventoryDS         : dataStore(apiUrl + "inventory_modules/dashboard"),
+        vendorDS            : dataStore(apiUrl + "vendor_modules/dashboard"),
+        graphDS             : dataStore(apiUrl + "customer_modules/monthly_sale"),
+        transactionDS       : dataStore(apiUrl + 'transactions'),
+        noteDS              : dataStore(apiUrl + 'notes'),
+        attachmentDS        : dataStore(apiUrl + "attachments"),
+        txnDS               : dataStore(apiUrl + "transactions"),
+        currencyDS          : new kendo.data.DataSource({
+            data: banhji.source.currencyList,
+            filter: { field:"status", value: 1 }
+        }),
+        contactTypeDS       : new kendo.data.DataSource({
+            data: banhji.source.contactTypeList,
+            filter: { field:"parent_id", value: 1 }//Customer
+        }),
+        contactDS           : new kendo.data.DataSource({
+            transport: {
+                read    : {
+                    url: apiUrl + "contacts",
+                    type: "GET",
+                    headers: banhji.header,
+                    dataType: 'json'
+                },
+                parameterMap: function(options, operation) {
+                    if(operation === 'read') {
+                        return {
+                            page: options.page,
+                            limit: options.pageSize,
+                            filter: options.filter,
+                            sort: options.sort
+                        };
+                    } else {
+                        return {models: kendo.stringify(options.models)};
+                    }
+                }
+            },
+            schema  : {
+                model: {
+                    id: 'id'
+                },
+                data: 'results',
+                total: 'count'
+            },
+            filter:{ field:"parent_id", operator:"where_related_contact_type", value:1 },
+            sort:{ field:"number", dir:"asc" },
+            batch: true,
+            serverFiltering: true,
+            serverSorting: true,
+            serverPaging: true,
+            page:1,
+            pageSize: 100
+        }),
+        sortList            : banhji.source.sortList,
+        sorter              : "all",
+        sdate               : "",
+        edate               : "",
+        obj                 : {},
+        note                : "",
+        searchText          : "",
+        contact_type_id     : null,
+        currency_id         : 0,
+        balance             : 0,
+        deposit             : 0,
+        outInvoice          : 0,
+        overInvoice         : 0,
+        currencyCode        : "",
+        user_id             : banhji.source.user_id,
+        setObj              : function(){
             this.set("obj", {
                 //Sale
                 sale            : 0,
@@ -3013,7 +3076,7 @@
                 collection_day  : 0
             });
         },
-        pageLoad: function() {
+        pageLoad            : function() {
             var self = this, obj = this.get("obj");
             this.graphDS.read();
 
@@ -3056,15 +3119,521 @@
 
                 self.set("objVendor", view[0]);
             });
-
+        },        
+        save                : function() {
         },
-        
-        save: function() {
-        },
-        cancel: function() {
+        cancel              : function() {
             window.history.back();
         },
-        today   : new Date()
+        sorterChanges       : function(){
+            var today = new Date(),
+            sdate = "",
+            edate = "",
+            sorter = this.get("sorter");
+
+            switch(sorter){
+                case "today":
+                    this.set("sdate", today);
+                    this.set("edate", "");
+                    break;
+                case "week":
+                    var first = today.getDate() - today.getDay(),
+                    last = first + 6;
+
+                    this.set("sdate", new Date(today.setDate(first)));
+                    this.set("edate", new Date(today.setDate(last)));
+                    break;
+                case "month":
+                    this.set("sdate", new Date(today.getFullYear(), today.getMonth(), 1));
+                    this.set("edate", new Date(today.getFullYear(), today.getMonth() + 1, 0));
+
+                    break;
+                case "year":
+                    this.set("sdate", new Date(today.getFullYear(), 0, 1));
+                    this.set("edate", new Date(today.getFullYear(), 11, 31));
+
+                    break;
+                default:
+                    this.set("sdate", "");
+                    this.set("edate", "");
+            }
+        },
+        setCurrencyCode     : function(){
+            var code = "", obj = this.get("obj");
+
+            $.each(banhji.source.currencyDS.data(), function(index, value){
+                if(value.locale == obj.locale){
+                    code = value.code;
+
+                    return false;
+                }
+            });
+
+            this.set("currencyCode", code);
+        },
+        //Obj
+        loadObj             : function(id){
+            var self = this;
+
+            this.contactDS.query({
+                filter: { field:"id", value:id},
+                page:1,
+                pageSize:100
+            }).then(function(){
+                var view = self.contactDS.view();
+
+                if(view.length>0){
+                    self.set("obj", view[0]);
+                    self.loadData();
+                }
+            });
+        },
+        loadData            : function(){
+            var obj = this.get("obj");
+
+            if(obj!==null){
+                this.searchTransaction();
+                this.loadSummary();
+                this.setCurrencyCode();
+
+                this.attachmentDS.query({
+                    filter:{ field:"contact_id", value: obj.id },
+                    page: 1,
+                    pageSize:10
+                });
+                this.noteDS.query({
+                    filter: { field:"contact_id", value: obj.id },
+                    sort: { field:"noted_date", dir:"desc" },
+                    page: 1,
+                    pageSize: 10
+                });
+            }
+        },
+        //Upload
+        onSelect            : function(e){
+            // Array with information about the uploaded files
+            var self = this,
+            files = e.files,
+            obj = this.get("obj");
+
+            if(obj!==null){
+                // Check the extension of each file and abort the upload if it is not .jpg
+                $.each(files, function(index, value){
+                    if (value.extension.toLowerCase() === ".jpg"
+                        || value.extension.toLowerCase() === ".jpeg"
+                        || value.extension.toLowerCase() === ".tiff"
+                        || value.extension.toLowerCase() === ".png"
+                        || value.extension.toLowerCase() === ".gif"
+                        || value.extension.toLowerCase() === ".pdf"){
+
+                        var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ value.name;
+
+                        self.attachmentDS.add({
+                            user_id         : self.get("user_id"),
+                            contact_id      : obj.id,
+                            type            : "Contact",
+                            name            : value.name,
+                            description     : "",
+                            key             : key,
+                            url             : banhji.s3 + key,
+                            size            : value.size,
+                            created_at      : new Date(),
+
+                            file            : value.rawFile
+                        });
+                    }else{
+                        alert("This type of file is not allowed to attach.");
+                    }
+                });
+            }
+        },
+        removeFile          : function(e){
+            var data = e.data;
+
+            if (confirm(banhji.source.confirmMessage)) {
+                this.attachmentDS.remove(data);
+                this.attachmentDS.sync();
+            }
+        },
+        uploadFile          : function(){
+            $.each(this.attachmentDS.data(), function(index, value){
+                if(!value.id){
+                    var params = {
+                        Body: value.file,
+                        Key: value.key
+                    };
+                    bucket.upload(params, function (err, data) {
+                        // console.log(err, data);
+                        // var url = data.Location;
+                    });
+                }
+            });
+
+            this.attachmentDS.sync();
+            var saved = false;
+            this.attachmentDS.bind("requestEnd", function(e){
+                //Delete File
+                if(e.type=="destroy"){
+                    if(saved==false && e.response){
+                        saved = true;
+
+                        var response = e.response.results;
+                        $.each(response, function(index, value){
+                            var params = {
+                                //Bucket: 'STRING_VALUE', /* required */
+                                Delete: { /* required */
+                                    Objects: [ /* required */
+                                        {
+                                            Key: value.data.key /* required */
+                                        }
+                                      /* more items */
+                                    ]
+                                }
+                            };
+                            bucket.deleteObjects(params, function(err, data) {
+                                //console.log(err, data);
+                            });
+                        });
+                    }
+                }
+            });
+        },
+        //Summary
+        loadContact         : function(id){
+            var self = this;
+
+            this.contactDS.query({
+                filter:[
+                    { field:"id", value:id }
+                ],
+                page: 1,
+                pageSize: 50
+            }).then(function(e) {
+                var view = self.contactDS.data();
+
+                if(view.length>0){
+                    self.set("obj", view[0]);
+                    self.loadData();
+                }
+            });
+        },
+        loadSummary         : function(){
+            var self = this, obj = this.get("obj");
+
+            if(obj!==null){
+                this.txnDS.query({
+                    filter: [
+                        { field:"contact_id", value: obj.id },
+                        { field:"type", operator:"where_in", value: ["Customer_Deposit", "Commercial_Invoice", "Vat_Invoice", "Invoice"] },
+                        { field:"status", operator:"where_in", value: [0,2] }
+                    ],
+                    sort: { field: "issued_date", dir: "desc" },
+                    page: 1,
+                    pageSize: 1000
+                }).then(function(){
+                    var view = self.txnDS.view(),
+                    deposit = 0, open = 0, over = 0, balance = 0, today = new Date();
+
+                    $.each(view, function(index, value){
+                        if(value.type=="Customer_Deposit"){
+                            deposit += kendo.parseFloat(value.amount);
+                        }else{
+                            balance += kendo.parseFloat(value.amount) - (kendo.parseFloat(value.deposit) + value.amount_paid);
+                            open++;
+
+                            if(new Date(value.due_date)<today){
+                                over++;
+                            }
+                        }
+                    });
+
+                    self.set("deposit", kendo.toString(deposit, obj.locale=="km-KH"?"c0":"c", obj.locale));
+                    self.set("outInvoice", kendo.toString(open, "n0"));
+                    self.set("overInvoice", kendo.toString(over, "n0"));
+                    self.set("balance", kendo.toString(balance, obj.locale=="km-KH"?"c0":"c", obj.locale));
+                });
+            }
+        },
+        loadBalance         : function(){
+            var obj = this.get("obj");
+
+            if(obj!==null){
+                this.transactionDS.query({
+                    filter: [
+                        { field:"contact_id", value: obj.id },
+                        { field:"type", operator:"where_in", value:["Commercial_Invoice", "Vat_Invoice", "Invoice"] },
+                        { field:"status", operator:"where_in", value: [0,2] }
+                    ],
+                    sort: [
+                        { field: "issued_date", dir: "desc" },
+                        { field: "id", dir: "desc" }
+                    ],
+                    page: 1,
+                    pageSize: 10
+                });
+            }
+        },
+        loadDeposit         : function(){
+            var obj = this.get("obj");
+
+            if(obj!==null){
+                this.transactionDS.query({
+                    filter: [
+                        { field:"contact_id", value: obj.id },
+                        { field:"type", value:"Customer_Deposit" }
+                    ],
+                    sort: [
+                        { field: "issued_date", dir: "desc" },
+                        { field: "id", dir: "desc" }
+                    ],
+                    page: 1,
+                    pageSize: 10
+                });
+            }
+        },
+        loadOverInvoice     : function(){
+            var obj = this.get("obj");
+
+            if(obj!==null){
+                this.transactionDS.query({
+                    filter: [
+                        { field:"contact_id", value: obj.id },
+                        { field:"type", operator:"where_in", value: ["Commercial_Invoice", "Vat_Invoice", "Invoice"] },
+                        { field:"status", operator:"where_in", value: [0,2] },
+                        { field:"due_date <", value: kendo.toString(new Date(), "yyyy-MM-dd") }
+                    ],
+                    sort: [
+                        { field: "issued_date", dir: "desc" },
+                        { field: "id", dir: "desc" }
+                    ],
+                    page: 1,
+                    pageSize: 10
+                });
+            }
+        },
+        selectedRow         : function(e){
+            var data = e.data;
+
+            this.set("obj", data);
+            this.loadData();
+        },
+        //Search
+        enterSearch         : function(e){
+            e.preventDefault();
+
+            this.search();
+        },
+        search              : function(){
+            var self = this,
+            para = [],
+            searchText = this.get("searchText"),
+            contact_type_id = this.get("contact_type_id");
+
+            if(searchText){
+                //Phone
+                if(this.phonenumber(searchText)){
+                    para.push({ field: "phone", operator: "contains", value: searchText });
+                }else{
+                    var textParts = searchText.replace(/([a-z]+)/i, "$1 ").split(/[^0-9a-z]+/ig);
+                    if(textParts.length===2){
+                        if(textParts[0]!=="" && textParts[1]!==""){
+                            para.push({ field: "abbr", value: textParts[0] });
+                            para.push({ field: "number", value: textParts[1] });
+                        }else{
+                            para.push({ field: "name", operator: "contains", value: searchText });
+                        }
+                    }else{
+                        para.push({ field: "name", operator: "contains", value: searchText });
+                    }
+                }
+            }
+
+            if(contact_type_id){
+                para.push({ field: "contact_type_id", value: contact_type_id });
+            }else{
+                para.push({ field: "parent_id", operator:"where_related_contact_type", value: 1 });
+            }
+
+            this.contactDS.filter(para);
+
+            //Clear search filters
+            self.set("searchText", "");
+            self.set("contact_type_id", 0);
+        },
+        phonenumber         : function (inputtxt){
+            var phoneno = /^[+]*[(]{0,1}[0-9]{1,3}[)]{0,1}[-\s\./0-9]*$/g;
+            if(inputtxt.match(phoneno)){
+                return true;
+            }else{
+                return false;
+            }
+        },
+        searchTransaction   : function(){
+            var self = this,
+                start = this.get("sdate"),
+                end = this.get("edate"),
+                para = [], obj = this.get("obj");
+
+            if(obj!==null){
+                para.push({ field:"contact_id", value: obj.id });
+
+                //Dates
+                if(start && end){
+                    start = new Date(start);
+                    end = new Date(end);
+                    end.setDate(end.getDate()+1);
+
+                    para.push({ field:"issued_date >=", value: kendo.toString(start, "yyyy-MM-dd") });
+                    para.push({ field:"issued_date <=", value: kendo.toString(end, "yyyy-MM-dd") });
+                }else if(start){
+                    start = new Date(start);
+                    para.push({ field:"issued_date", value: kendo.toString(start, "yyyy-MM-dd") });
+                }else if(end){
+                    end = new Date(end);
+                    end.setDate(end.getDate()+1);
+                    para.push({ field:"issued_date <=", value: kendo.toString(end, "yyyy-MM-dd") });
+                }else{}
+
+                this.transactionDS.query({
+                    filter: para,
+                    sort: { field: "issued_date", dir: "desc" },
+                    page: 1,
+                    pageSize: 10
+                });
+            }
+        },
+        //Links
+        goEdit              : function(){
+            var obj = this.get("obj");
+
+            if(obj!==null){
+                banhji.router.navigate('/customer/'+obj.id);
+            }
+        },
+        goReference         : function(e){
+            var self = this, data = e.data;
+
+            this.txnDS.query({
+                filter:{ field:"id", value:data.reference_id}
+            }).then(function(){
+                var view = self.txnDS.view();
+
+                banhji.router.navigate('/' + view[0].type.toLowerCase() +'/'+ data.reference_id);
+            });
+        },
+        goQuote             : function(){
+            var obj = this.get("obj");
+
+            if(obj!==null){
+                banhji.router.navigate('/quote');
+                banhji.quote.setContact(obj);
+            }
+        },
+        goDeposit           : function(){
+            var obj = this.get("obj");
+
+            if(obj!==null){
+                banhji.router.navigate('/customer_deposit');
+                banhji.customerDeposit.setContact(obj);
+            }
+        },
+        goSaleOrder         : function(){
+            var obj = this.get("obj");
+
+            if(obj!==null){
+                banhji.router.navigate('/sale_order');
+                banhji.saleOrder.setContact(obj);
+            }
+        },
+        goCashSale          : function(){
+            var obj = this.get("obj");
+
+            if(obj!==null){
+                banhji.router.navigate('/cash_sale');
+                banhji.cashSale.setContact(obj);
+            }
+        },
+        goInvoice           : function(){
+            var obj = this.get("obj");
+
+            if(obj!==null){
+                banhji.router.navigate('/invoice');
+                banhji.invoice.setContact(obj);
+            }
+        },
+        goGDN               : function(){
+            var obj = this.get("obj");
+
+            if(obj!==null){
+                banhji.router.navigate('/gdn');
+                banhji.gdn.setContact(obj);
+            }
+        },
+        goSaleReturn        : function(){
+            var obj = this.get("obj");
+
+            if(obj!==null){
+                banhji.router.navigate('/sale_return');
+                banhji.saleReturn.setContact(obj);
+            }
+        },
+        goStatement         : function(){
+            var obj = this.get("obj");
+
+            if(obj!==null){
+                banhji.router.navigate('/statement');
+                banhji.statement.setContact(obj);
+            }
+        },
+        goCashRefound       : function(){
+            var obj = this.get("obj");
+
+            if(obj!==null){
+                banhji.router.navigate('/cash_refund');
+                banhji.cashRefund.setContact(obj);
+            }
+        },
+        goCashReceipt       : function(){
+            var obj = this.get("obj");
+
+            if(obj!==null){
+                banhji.router.navigate('/cash_receipt');
+                banhji.cashReceipt.loadContact(obj.id);
+            }
+        },
+        payInvoice          : function(e){
+            var data = e.data;
+
+            if(obj!==null){
+                banhji.router.navigate('/cash_receipt');
+                banhji.cashReceipt.loadInvoice(data.id);
+            }
+        },
+        //Note
+        saveNoteEnter       : function(e){
+            e.preventDefault();
+            this.saveNote();
+        },
+        saveNote            : function(){
+            var obj = this.get("obj");
+
+            if(obj!==null && this.get("note")!==""){
+                this.noteDS.insert(0, {
+                    contact_id  : obj.id,
+                    note        : this.get("note"),
+                    noted_date  : new Date(),
+                    created_by  : this.get("user_id"),
+
+                    creator     : ""
+                });
+
+                this.noteDS.sync();
+                this.set("note", "");
+            }else{
+                alert("Please select a customer and Memo is required");
+            }
+        },
+        today               : new Date()
     });
     banhji.saleSummaryByCustomer =  kendo.observable({
         lang                : langVM,
@@ -5681,4 +6250,4 @@
         var Href1 = '<?php echo base_url(); ?>assets/water/winvoice-res.css';
         var Href2 = '<?php echo base_url(); ?>assets/water/winvoice-print.css';
     });
-</script>
+</script> 
