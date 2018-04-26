@@ -10617,6 +10617,21 @@
                                         value: "customer",
                                         background: "#496cad",
                                         color: "#ffffff"
+                                    },
+                                    {
+                                        value: "location",
+                                        background: "#496cad",
+                                        color: "#ffffff"
+                                    },
+                                    {
+                                        value: "sub_location",
+                                        background: "#496cad",
+                                        color: "#ffffff"
+                                    },
+                                    {
+                                        value: "box",
+                                        background: "#496cad",
+                                        color: "#ffffff"
                                     }
                                 ]
                             });
@@ -10633,6 +10648,15 @@
                                         },
                                         {
                                             value: self.dataSource.data()[i].contact_name
+                                        },
+                                        {
+                                            value: self.dataSource.data()[i].location
+                                        },
+                                        {
+                                            value: self.dataSource.data()[i].sub_location
+                                        },
+                                        {
+                                            value: self.dataSource.data()[i].box
                                         }
                                     ]
                                 });
@@ -12332,6 +12356,9 @@
                     '}' +
                     '.winvoice-print table td.greyy {' +
                     'background-color: #ccc!important;-webkit-print-color-adjust:exact;' +
+                    '}' +
+                    'label {' +
+                    'font-size: 12px!important;' +
                     '}' +
                     '.inv1 span.total-amount { ' +
                     'color:#fff!important;' +

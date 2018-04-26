@@ -70,6 +70,21 @@ class Meters extends REST_Controller {
 				$att->where("id", $value->attachment_id)->limit(1);
 				$image_url = $att->get();
 				$reactive = $value->reactive->get_raw();
+				//Location
+				$location = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$location->where("id", $value->location_id)->limit(1)->get();
+				$slo = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$slo->where("id", $value->pole_id)->limit(1)->get();
+				$slocationn = "";
+				if($slo->exists()){
+					$slocationn = $slo->name;
+				}
+				$box = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$box->where("id", $value->box_id)->limit(1)->get();
+				$boxn = "";
+				if($box->exists()){
+					$boxn = $box->name;
+				}
 				//Results				
 				$data["results"][] = array(
 					"id" 					=> $value->id,
@@ -96,8 +111,11 @@ class Meters extends REST_Controller {
 					"map" 					=> $value->latitute,
 					"starting_no" 			=> $value->startup_reading,
 					"location_id" 			=> intval($value->location_id),
+					"location" 				=> $location->name,
 					"pole_id" 				=> intval($value->pole_id),
+					"sub_location" 			=> $slocationn,
 					"box_id" 				=> intval($value->box_id),
+					"box" 					=> $boxn,
 					"ampere_id" 			=> intval($value->ampere_id),
 					"phase_id" 				=> intval($value->phase_id),
 					"voltage_id" 			=> intval($value->voltage_id),

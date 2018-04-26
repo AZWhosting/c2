@@ -271,7 +271,7 @@
 												<div class="detailsWrapper">
 													<div class="row">
 														<div class="col-md-6">
-															<div class="widget widget-4 widget-tabs-icons-only margin-bottom-none">
+															<!-- <div class="widget widget-4 widget-tabs-icons-only margin-bottom-none">
 															    <div class="widget-head">
 															    	<input type="text" name="" data-bind="value: obj.name" disabled="disabled" style="border: none; width: 60%; font-size: 20px; font-weight: 600; margin-top: -11px; margin-left: 11px; background: #fff;">
 															       
@@ -286,15 +286,11 @@
 															            </li>
 															        </ul>
 															        <div class="clearfix"></div>
-															        
-
 															    </div>
 															   
 
 															    <div class="widget-body">
 															        <div class="tab-content">
-
-															            
 															            <div id="tab1-4" class="tab-pane active box-generic">
 															            	<table class="table table-borderless table-condensed cart_total cash-table">
 																            	<tr>
@@ -449,7 +445,7 @@
 
 															        </div>
 															    </div>
-															</div>
+															</div> -->
 														</div>
 														<!-- <div class="col-md-6">
 															<div class="row">
@@ -2971,4 +2967,4 @@
 		#=category#
 	</div>
 </script>
-<!-- End -->                                                                                                                 
+<!-- End -->                                                                                                                                                                  
