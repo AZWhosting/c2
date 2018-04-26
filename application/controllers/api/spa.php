@@ -1415,7 +1415,7 @@ class Spa extends REST_Controller {
 			foreach ($obj as $value) {
 				//contact
 				$con = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$con->where("id", $obj->contact_id)->limit(1)->get();
+				$con->where("id", $value->contact_id)->limit(1)->get();
 				$conar = array(
 					"id" 	=> $con->id,
 					"name" 	=> $con->name,
@@ -1427,13 +1427,13 @@ class Spa extends REST_Controller {
 				//Cashier
 				$cashier_name = "";
 				$u = new User(null, $this->server_host, $this->server_user, $this->server_pwd, 'banhji');
-				$u->where("id", $obj->user_id)->limit(1)->get();
+				$u->where("id", $value->user_id)->limit(1)->get();
 				if($u->exists()){
 					$cashier_name = $u->first_name." ".$u->last_name;
 				}
 				//Work
 				$work = new Spa_work(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$work->where("transaction_id", $obj->id)->limit(1)->get();
+				$work->where("transaction_id", $value->id)->limit(1)->get();
 				//Room
 				$room = new Spa_work_room(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				$room->where("work_id", $work->id)->get();
@@ -1458,18 +1458,40 @@ class Spa extends REST_Controller {
 					$emc->save();
 					$employee_name .= $emc->abbr."-".$emc->number." ".$emc->name;
 				}
+				//Item
+				$items = [];
+				$item = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$item->where("transaction_id", $value->id)->get();
+				if($item->exists()){
+					foreach($item as $it){
+						$me = new Measurement(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						$me->where("id", $it->measurement_id)->limit(1)->get();
+						$items[] = array(
+							"item" 			=> array(
+								"name" 			=> $it->description,
+							),
+							"measurement" 	=> array(
+								"measurement" => $me->name
+							),
+							"price" 		=> floatval($it->price),
+							"locale" 		=> $it->locale,
+							"quantity" 		=> intval($it->quantity),
+							"amount" 		=> floatval($it->amount),
+						); 
+					}
+				}
 				$data["results"][] = array(
-			   		"id" 			=> $obj->id,
-			   		"number" 		=> $obj->number,
+			   		"id" 			=> $value->id,
+			   		"number" 		=> $value->number,
 			   		"contact" 		=> $conar,
-			   		"amount" 		=> floatval($obj->amount),
-			   		"sub_total" 	=> floatval($obj->sub_total),
-			   		"discount" 		=> floatval($obj->discount),
-			   		"tax" 			=> floatval($obj->tax),
-			   		"rate" 			=> floatval($obj->rate),
-			   		"locale" 		=> $obj->locale,
-			   		"issued_date" 	=> $obj->issued_date,
-			   		"items" 		=> $value->items,
+			   		"amount" 		=> floatval($value->amount),
+			   		"sub_total" 	=> floatval($value->sub_total),
+			   		"discount" 		=> floatval($value->discount),
+			   		"tax" 			=> floatval($value->tax),
+			   		"rate" 			=> floatval($value->rate),
+			   		"locale" 		=> $value->locale,
+			   		"issued_date" 	=> $value->issued_date,
+			   		"items" 		=> $items,
 			   		"cashier_name" 	=> $cashier_name,
 			   		"room_number" 	=> $roomshow,
 			   		"employee_name" => $employee_name,

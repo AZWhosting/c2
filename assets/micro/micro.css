@@ -205,6 +205,9 @@ a {
 .home-footer .table tbody td {
     background-color: #fff ;
 }
+.sale .nav.nav-tabs.customtab{
+	margin-bottom: 15px;
+}
 
 /*Tab 1 Sale Overview*/
 .saleOverview{
@@ -284,6 +287,8 @@ a {
     border: none;
     padding: 7px;
     border-right: none !important;
+    width: 100%;
+    border-radius: 0;
 }
 .widget-search{
 	width: 100%;
@@ -370,6 +375,7 @@ a {
 #customers .listWrapper .k-selectable tr td{
 	border: 1px solid #ccc;
 	border-bottom: none;
+	cursor: pointer;
 }
 #customers .detailsWrapper{
     width: 100%;
@@ -377,4 +383,34 @@ a {
     float: left;
     box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;
     padding: 10px;
+}
+.detailsWrapper  .nav-tabs {
+    border-bottom: none;
+}
+.detailsWrapper .tabcontent-border {
+    border: 1px solid #ddd;
+    border-top: 1px solid #ddd;
+    float: left;
+    background: #fff;
+}
+.detailsWrapper input.customerName{
+	border: none; 
+	width: 100%; 
+	font-size: 20px; 
+	font-weight: 600; 
+	margin-bottom: 10px; 
+	background: #fff;
+	padding: 5px;
+	border-radius: 0;
+}
+.table.table-condensed.k-grid.k-widget.k-display-block{
+	height: 590px;
+}
+@media (max-width: 767px){
+	.table.table-condensed.k-grid.k-widget.k-display-block{
+		height: 256px;
+		-webkit-overflow-scrolling: touch; /* Lets it scroll lazy */
+		-webkit-overflow-scrolling: auto; /* Stops scrolling immediately */
+		overflow-y: scroll;
+	}
 }

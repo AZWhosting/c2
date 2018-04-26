@@ -461,7 +461,7 @@
 							<div class="row">
 								<div class="col-sm-12" align="right">
 									<span class="btn-btn" data-bind="visible: btnActive, click: payBill" ><span data-bind="text: lang.lang.pay"></span></span>
-									<span class="btn-btn" data-bind="visible: btnActive, click: addLoyalty" ><span>Loayalty</span></span>
+									<span class="btn-btn" data-bind="visible: btnActive, click: addLoyalty" ><span>Apply Card</span></span>
 									<span class="btn-btn" data-bind="visible: btnActive, click: splitBill" ><span>Split Bill</span></span>
 									<span class="btn-btn" data-bind="visible: btnActive, click: printBill" ><span>Print Bill</span></span>
 									<span class="btn-btn" data-bind="click: cancel" ><span data-bind="text: lang.lang.cancel"></span></span>	
@@ -1211,15 +1211,9 @@
             </div>
             <div class="cover-name-company" style="margin-left: 20px;width: 72%;float: left;">
             	<h3 style="float: left;font-size: 20px; font-family: 'Preahvihear', 'Roboto Slab' !important;" >#: banhji.institute.name#</h3>
-                <!-- <div class="vattin" style="float: left; width: 100%">
-                	<p style="float: left; width: 100%">
-                		<span style="float: left; margin-left:0;font-size: 14px; line-height: 20px;">លេខ​អត្ត​សញ្ញាណ​កម្ម អតប (VAT TIN) </span>
-                		<span style="float: left; margin-left:0;font-size:14px;line-height: 20px;" >K009-103005765</span>
-                	</p>
-                </div> -->
                 <div class="clear" style="float: left;">
                 	<p style="float: left; text-align: left;font-size: 14px;margin: 0;">អាស័យ​ដ្ឋាន Address: <span >#: banhji.institute.address#</span></p>
-                    <p style="float: left;width: 100%">ទូរស័ព្ទលេខ HP <span >#: banhji.institute.telephone# </span> Email: <span >#: banhji.institute.email#</span></p>
+                    <p style="float: left;width: 100%">ទូរស័ព្ទលេខ HP: <span >#: banhji.institute.telephone# </span> <br/> Email: <span >#: banhji.institute.email#</span></p>
                 </div>
             </div>
         </div>
@@ -1228,40 +1222,40 @@
         		<div class="span5" style="width: 41.66666667%; float: left;">
         			<h1 style="float: left; color: \#fff!important;margin-top: 5px;padding-left: 30px; text-align: left;text-transform: uppercase;font-family: 'Preahvihear', 'Roboto Slab'!important;font-size: 23px;">វិក្កយបត្រ Invoice</h1>
         		</div>
-        		<div class="span6" style="float: right; width: 44%;">
+        		<div class="span6" style="float: right; width: 51%;">
         			<table style="float: left; width: 100%;margin-top: 10px;">
         				<tr>
-        					<td style="border:0;text-align: left; width: 53%;text-transform: uppercase;color: \#fff!important;">លេខវិក្កយបត្រ INVOICE NO</td>
+        					<td style="border:0;text-align: left; width: 40%;text-transform: uppercase;color: \#fff!important;">លេខវិក្កយបត្រ (Invoice N0.) :</td>
         					<td style="border:0;text-align: left;font-weight: bold;color: \#fff!important;">#: number#</td>
         				</tr>
-        				<!-- <tr>
-        					<td style="border:0;text-align: left;color: \#fff!important;">កាលបរិច្ឆេទ DATE</td>
-        					<td style="border:0;text-align: left;color: \#fff!important;" >#= kendo.toString(new Date(issued_date), "F")#</td>
-        				</tr> -->
+        				<tr>
+        					<td style="border:0;text-align: left; text-transform: uppercase;color: \#fff!important;">កាលបរិច្ឆេទ (Date) :</td>
+        					<td style="border:0;text-align: left;font-weight: bold;color: \#fff!important;">#= kendo.toString(new Date(issued_date), "F")#</td>
+        				</tr>
         			</table>
         		</div>        		
         	</div>
         	<div class="span12 pcg2" style="margin-bottom: 15px;padding: 0;">
         		<div class="span6" style="padding-right: 10px; width: 48%; float: left;padding: 0;">
-        			<table style="float: left; width: 100%; border: 1px solid \#000;border-collapse: collapse; margin-bottom: 15px;">
+        			<table style="float: left; width: 100%; border: 1px solid \#000;border-collapse: collapse; margin-bottom: 0px;">
         				<tr>
-        					<td style="padding: 5px; border: 1px solid \#000; text-align: left; width: 35%; background: \#F1F1F1!important;">អ្នកគឹតលុយ (Cashier) </td>
-        					<td style="padding: 5px; border: 1px solid \#000; text-align: left;">#: cashier_name#</td>
+        					<td style="padding: 5px; border: 1px solid \#000; text-align: left; width: 35%; background: \#F1F1F1!important;">ឈ្មោះអតិថិជន (Customer Name) </td>
+        					<td style="padding: 5px; border: 1px solid \#000; text-align: left;">#: contact.name#</td>
         				</tr>
         				<tr>
-        					<td style="padding: 5px; border: 1px solid \#000; text-align: left; width: 35%; background: \#F1F1F1!important;">លេខបន្ទប់ (Room No)</td>
+        					<td style="padding: 5px; border: 1px solid \#000; text-align: left; width: 35%; background: \#F1F1F1!important;">លេខបន្ទប់ (Room No.) :</td>
         					<td style="padding: 5px; border: 1px solid \#000; text-align: left;">#: room_number#</td>
         				</tr>
         			</table>
         		</div>
-        		<div class="span6" style=" width: 48%; padding-left: 0; float: right;padding: 0;">
+        		<div class="span6" style=" width: 51%; padding-left: 0; float: right;padding: 0;">
         			<table style="float: left; width: 100%; border: 1px solid \#000; border-collapse: collapse;">
         				<tr>
-        					<td style="padding: 5px; border: 1px solid \#000; text-align: left; width: 53%; background: \#F1F1F1!important;">កាលបរិច្ឆេក <br>(Date) </td>
-        					<td style="padding: 5px; border: 1px solid \#000; text-align: left;">#= kendo.toString(new Date(issued_date), "F")#</td>
+        					<td style="padding: 5px; border: 1px solid \#000; text-align: left; width: 35%; background: \#F1F1F1!important;">អ្នកគិតលុយ (Cashier) :</td>
+        					<td style="padding: 5px; border: 1px solid \#000; text-align: left;">#: cashier_name#</td>
         				</tr>
         				<tr>
-        					<td style="padding: 5px; border: 1px solid \#000; text-align: left; width: 35%; background: \#F1F1F1!important;">បគ្គលិក (staff) </td>
+        					<td style="padding: 5px; border: 1px solid \#000; text-align: left; width: 35%; background: \#F1F1F1!important;">បុគ្គលិក (Staff) :</td>
         					<td style="padding: 5px; border: 1px solid \#000; text-align: left;" >#= employee_name#</td>
         				</tr>
         			</table>
@@ -1300,24 +1294,17 @@
 							<td></td>
 							<td></td>
 						</tr>
-                        <!-- <tr>
-                        	<td colspan="5" style="padding-right: 10px;text-align: right;">សរុប TOTAL</td>
-							<td style="border: 1px solid;text-align: right"><strong>#= kendo.toString(sub_total, locale=="km-KH"?"c0":"c", locale)#</strong></td>
-                        </tr>
-                        <tr>
-							<td colspan="5" style="padding-right: 10px;text-align: right;">បញ្ចុះតម្លៃ DISCOUNT</td>
-							<td style="border: 1px solid;text-align: right"><strong>#= kendo.toString(discount, locale=="km-KH"?"c0":"c", locale)#</strong></td>
-						</tr>
-						<tr>
-							<td colspan="5" style="padding-right: 10px;text-align: right;">ប្រាក់ត្រូវបង់សរុប SUB TOTAL</td>
-							<td style="border: 1px solid;text-align: right"><strong>#= kendo.toString(amount, locale=="km-KH"?"c0":"c", locale)#</strong></td>
-						</tr> -->
 						<tr>
 							<td colspan="5" style="padding-right: 10px;text-align: right;">សរុប (បូកបញ្ចូលទាំងអាករ) GRAND TOTAL (VAT INCLUSIVE)</td>
 							<td style="border: 1px solid;text-align: right"><strong>#= kendo.toString(amount, locale=="km-KH"?"c0":"c", locale)#</strong></td>
 						</tr>
                     </tfoot>
                 </table>
+            </div>
+            <div class="clear">
+            	<div class="span6">
+            		<span id="secondwnumber#= id#" style="margin-left: -14px; float: left;"></span>
+            	</div>
             </div>
         </div>
     </div>

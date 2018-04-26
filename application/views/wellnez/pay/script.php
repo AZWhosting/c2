@@ -4346,7 +4346,18 @@
         splitBill   : function(){
             banhji.router.navigate("/split_bill/"+this.get("invobj").id);
         },
-        printBill   : function(id){
+        printBillDS : dataStore(apiUrl + "spa/printbill"),
+        printBill   : function(){
+            var self = this;
+            this.printBillDS.query({
+                filter: {field: "id", value: this.invobj.id},
+                pageSize: 1
+            }).then(function(e){
+                var v = self.printBillDS.view()[0];
+                banhji.printBill.dataSource = [];
+                banhji.printBill.dataSource.push(v);
+                banhji.router.navigate("/print_bill");
+            });
         },
         discount    : 0,
         invobj      : null,
@@ -4570,8 +4581,8 @@
                         renderAs: "svg",
                         value: d.number,
                         type: "code128",
-                        width: 250,
-                        height: 25,
+                        width: 350,
+                        height: 40,
                         text: {
                             visible: false
                         }
@@ -4580,35 +4591,13 @@
                         renderAs: "svg",
                         value: d.number,
                         type: "code128",
-                        width: 250,
-                        height: 25,
+                        width: 450,
+                        height: 40,
                         text: {
                             visible: false
                         }
                     });
                 }
-                var DataM = [],
-                    MonthM = [];
-                $.each(d.minusMonth, function(i, v) {
-                    DataM.push(v.usage);
-                    MonthM.push(v.month);
-                });
-                $("#monthchart" + d.id).kendoChart({
-                    title: {
-                        text: ""
-                    },
-                    series: [{
-                        name: "",
-                        data: DataM,
-                        color: '#236DA4',
-                        overlay: {
-                            gradient: 'none'
-                        }
-                    }],
-                    categoryAxis: {
-                        categories: MonthM
-                    }
-                });
             }
         },
         printGrid       : function(){

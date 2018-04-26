@@ -528,6 +528,8 @@ class Cashreports extends REST_Controller {
 				//Reference
 				$references = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				$references->where("reference_id", $value->id);
+				$references->where("is_recurring <>", 1);
+				$references->where("deleted <>", 1);
 				$references->get();
 
 				$referenceList = [];
