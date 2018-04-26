@@ -255,9 +255,9 @@
 														</form>
 													</div>
 
-													<span class="results"><span data-bind="text: contactDS.total"></span> <span data-bind="text: lang.lang.found_search"></span></span>
+													<span class="results hidden-xs-down"><span data-bind="text: contactDS.total"></span> <span data-bind="text: lang.lang.found_search"></span></span>
 
-													<div class="table table-condensed" style="height: 580px;"
+													<div class="table table-condensed hidden-xs-down" style="height: 580px;"
 														 data-role="grid"
 														 data-bind="source: contactDS"
 														 data-row-template="customerCenter-customer-list-tmpl"

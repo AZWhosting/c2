@@ -254,7 +254,6 @@ class Waterdash extends REST_Controller {
 		$overDue = 0;
 		$today = date('Y-m-d');
 		$amount = 0;
-		$kk = 0;
 		//Sort
 		if(!empty($sort) && isset($sort)){					
 			foreach ($sort as $value) {
@@ -298,13 +297,11 @@ class Waterdash extends REST_Controller {
 		$overDueInvs->where_in("status", [0,2]);
 		$overDueInvs->where("deleted <>", 1);
 		$overDueInvs->get_iterated();
-		
 		foreach ($overDueInvs as $value) {
-			$kk = $value->amount / $value->rate;
 			if($value->due_date < $today) {
 				$overDue +=1;
 			}
-			$totalAmount +=  $kk ;
+			$totalAmount += $value->amount;
 		}
 
 		// $dis = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
@@ -332,19 +329,16 @@ class Waterdash extends REST_Controller {
 
 		$amount = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$amount->where("type", "Utility_Invoice");
+		$amount->select_sum('amount');
 		$amount->where("deleted <>", 1);
-		$amount->get_iterated();
-		
-		foreach ($amount as $amount) {
-			$amount = $amount->amount / $amount->rate;
-			$totalSale +=  $amount ;
-		}
+		$amount->get();	
+
 		$data[] = array(
 			'totalOverDue' 	=> $overDue,
 			'totalInvoice' => $totalINV,
-			'totalAmount' => floatval($totalAmount),
+			'totalAmount' => $totalAmount,
 			'totalCustomer' => count($customer),
-			'totalSale' => floatval($totalSale),
+			'totalSale' => floatval($amount->amount),
 			'totalUsage' => $usage
 		);
 
@@ -417,7 +411,7 @@ class Waterdash extends REST_Controller {
 				$trxSale = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				$trxSale->select_sum('amount');
 				$trxSale->where('type', 'Utility_Invoice');
-				$sale += $trxSale->amount/$trxSale->amount;
+				$sale += $trxSale->amount;
 
 				$tmpBal = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				$tmpBal->select('id, amount, deposit, rate');
@@ -460,7 +454,7 @@ class Waterdash extends REST_Controller {
 				'inActiveCustomer' => $inActiveCount,
 				'deposit' => $deposit,
 				'usage' => $usage,
-				'sale' => floatval($sale),
+				'sale' => $sale,
 				'balance' => $balance
 			);
 		}
@@ -539,7 +533,7 @@ class Waterdash extends REST_Controller {
 				$trxSale = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				$trxSale->where('type', 'Utility_Invoice');
 				$trxSale->where('location_id', $loc->id)->get_iterated();
-				$totalAmount += $trxSale->amount / $trxSale->rate;
+				$totalAmount += $trxSale->amount;
 
 				$avgIncome = $activeCount == 0 ? 0 : ($totalAmount  / $activeCount);
 
@@ -561,7 +555,7 @@ class Waterdash extends REST_Controller {
 				'avgIncome' => $avgIncome,
 				'totalUsage' => $totalUsage,
 				'avgUsage' => $avg,
-				'totalAmount' => floatval($totalAmount),
+				'totalAmount' => $totalAmount,
 			);
 		}
 		$this->response($data, 200);

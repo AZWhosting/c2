@@ -330,6 +330,7 @@ a {
     background: #edf1f5;
     float: left;
     box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;
+    min-height: auto;
 }
 #customers .listWrapper .innerAll{
 	height: 96px;

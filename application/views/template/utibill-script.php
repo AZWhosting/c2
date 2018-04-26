@@ -4074,18 +4074,19 @@
                         if (self.uploadDS.data().length > 0) {
                             self.set("haveData", true);
                             self.rows.push({
-                                cells: [{
+                                cells: [
+                                    {
                                         value: "_contact",
                                         background: "#496cad",
                                         color: "#ffffff"
                                     },
                                     {
-                                        value: "meter_number",
+                                        value: "contact_number",
                                         background: "#496cad",
                                         color: "#ffffff"
                                     },
                                     {
-                                        value: "license",
+                                        value: "meter_number",
                                         background: "#496cad",
                                         color: "#ffffff"
                                     },
@@ -4141,14 +4142,15 @@
                                 ToDate = kendo.toString(new Date(self.uploadDS.data()[i].to_date), "dd-MMM-yyyy");
                                 MonthOf = kendo.toString(new Date(self.uploadDS.data()[i].month_of), "MMM-yyyy");
                                 self.rows.push({
-                                    cells: [{
+                                    cells: [
+                                        {
                                             value: self.uploadDS.data()[i]._contact
                                         },
                                         {
-                                            value: self.uploadDS.data()[i].meter_number
+                                            value: self.uploadDS.data()[i].contact_number
                                         },
                                         {
-                                            value: self.uploadDS.data()[i].license
+                                            value: self.uploadDS.data()[i].meter_number
                                         },
                                         {
                                             value: self.uploadDS.data()[i].location

@@ -318,9 +318,11 @@ class Readings extends REST_Controller {
 				if($box->exists()){
 					$boxn = $box->name;
 				}
+				$contactnum = $location->name."-".$contact->number;
 				if($record->exists()) {
 					$data["results"][] = array(
 						"_contact" 		=> $contact->name,
+						"contact_number" => $contactnum,
 						"meter_id" 		=> $value->id,
 						"meter_number" 	=> $value->number,
 						"previous"		=> floatval($record->current),
@@ -338,6 +340,7 @@ class Readings extends REST_Controller {
 				}else{
 					$data["results"][] = array(
 						"_contact" 		=> $contact->name,
+						"contact_number" => $contactnum,
 						"meter_id" 		=> $value->id,
 						"meter_number" 	=> $value->number,
 						"previous"		=> 0,
