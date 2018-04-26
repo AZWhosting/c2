@@ -12214,6 +12214,9 @@
                     '-webkit-print-color-adjust:exact; ' +
                     '} ' +
                     '}' +
+                    'label {' +
+                    'font-size: 12px!important;' +
+                    '}' +
                     '.main-color {' +
                     'background-color: ' + colorM + '!important; ' + ts +
                     '-webkit-print-color-adjust:exact; ' +

@@ -3880,6 +3880,24 @@
 <!-- End Property -->
 <!-- Purchase -->
 <script id="purchase" type="text/x-kendo-template">
+	<style type="text/css">
+		.costom-grid {
+		    clear: both;
+		    margin-bottom: 15px;
+		    border-radius: 0px;
+		    border-width: 1px 0px 2px 0px;
+		    border-style: solid;
+		    border-color: rgb(221, 221, 221);
+		    overflow-x: auto;
+		    overflow-y: auto;
+		}
+		.costom-grid table tr th {
+		    font-weight: 700 !important;
+		    font-size: 13px !important;
+		    background: #203864 !important;
+		    color: #fff;
+		}
+	</style>
 	<div id="slide-form">
 		<div class="customer-background">
 			<div class="container-960">
@@ -3893,13 +3911,13 @@
 				    <br>
 
 					<!-- Upper Part -->
-					<div class="row-fluid">
+					<div class="row">
 						<div class="span4">
 							<div class="box-generic well" style="height: 190px;">
 								<table class="table table-borderless table-condensed cart_total">
 									<tr>
-										<td style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></td>
-										<td>
+										<td style="width: 50px; border-top: none;"><span data-bind="text: lang.lang.no_"></span></td>
+										<td style="border-top: none;">
 											<input id="txtNumber" name="txtNumber" class="k-textbox"
 													data-bind="value: obj.number,
 																disabled: obj.is_recurring,
@@ -3912,8 +3930,8 @@
 										</td>
 									</tr>
 									<tr>
-										<td><span data-bind="text: lang.lang.date"></span></td>
-										<td class="right">
+										<td style="border-top: none;"><span data-bind="text: lang.lang.date"></span></td>
+										<td style="border-top: none;" class="right">
 											<input id="issuedDate" name="issuedDate"
 													data-role="datepicker"
 													data-format="dd-MM-yyyy"
@@ -3925,8 +3943,8 @@
 										</td>
 									</tr>
 									<tr>
-										<td><span data-bind="text: lang.lang.supplier"></span></td>
-										<td>
+										<td style="border-top: none;"><span data-bind="text: lang.lang.supplier"></span></td>
+										<td style="border-top: none;">
 											<input id="cbbContact" name="cbbContact"
 												   data-role="dropdownlist"
 												   data-header-template="vendor-header-tmpl"
@@ -3945,7 +3963,7 @@
 									</tr>
 								</table>
 
-								<div class="strong" style="background: #eee;  border: 1px solid #ddd; width: 100%; padding: 10px;" align="center"
+								<div class="strong" style="background: #eee;  border: 1px solid #ddd; width: 100%; padding: 10px; float: left;" align="center"
 									data-bind="style: { backgroundColor: amtDueColor}">
 									<div align="left"><span data-bind="text: lang.lang.amount_purchased"></span></div>
 									<h2 data-bind="text: amount_due" align="right"></h2>
@@ -3955,31 +3973,31 @@
 
 						<div class="span8">
 
-							<div class="box-generic-noborder" style="min-height: 234px !important">
+							<div class="box-generic-noborder" style="min-height: 234px !important; border: #ccc 1px solid;  padding-bottom: 15px;   height: auto;	    margin-bottom: 15px;">
 
 							    <!-- Tabs Heading -->
 							    <div class="tabsbar tabsbar-2">
 							        <ul class="row-fluid row-merge">
-							        	<li class="span1 glyphicons cogwheels active"><a href="#tab1-7" data-toggle="tab"><i></i></a>
+							        	<li style="padding: 0;" class="span1 glyphicons cogwheels active"><a href="#tab1-7" data-toggle="tab"><i></i></a>
 							            </li>
-							            <li class="span1 glyphicons circle_info"><a href="#tab2-7" data-toggle="tab"><i></i></a>
+							            <li style="padding: 0;" class="span1 glyphicons circle_info"><a href="#tab2-7" data-toggle="tab"><i></i></a>
 							            </li>
-							            <li class="span1 glyphicons link"><a href="#tab3-7" data-toggle="tab"><i></i></a>
+							            <li style="padding: 0;" class="span1 glyphicons link"><a href="#tab3-7" data-toggle="tab"><i></i></a>
 							            </li>
-							            <li class="span1 glyphicons sort"><a href="#tab4-7" data-toggle="tab"><i></i></a>
+							            <li style="padding: 0;" class="span1 glyphicons sort"><a href="#tab4-7" data-toggle="tab"><i></i></a>
 							            </li>
-							            <li class="span1 glyphicons adress_book"><a href="#tab5-7" data-toggle="tab"><i></i></a>
+							            <li style="padding: 0;" class="span1 glyphicons adress_book"><a href="#tab5-7" data-toggle="tab"><i></i></a>
 							            </li>
-							            <li class="span1 glyphicons paperclip"><a href="#tab6-7" data-toggle="tab"><i></i></a>
+							            <li style="padding: 0;" class="span1 glyphicons paperclip"><a href="#tab6-7" data-toggle="tab"><i></i></a>
 							            </li>
-							            <li class="span1 glyphicons history"><a href="#tab7-7" data-toggle="tab"><i></i></a>
+							            <li style="padding: 0;" class="span1 glyphicons history"><a href="#tab7-7" data-toggle="tab"><i></i></a>
 							            </li>
 							            <!-- <li class="span1 glyphicons show_liness"><a href="#tab5-6" data-toggle="tab"><i></i></a></li> -->
 							        </ul>
 							    </div>
 							    <!-- // Tabs Heading END -->
 
-							    <div class="tab-content">
+							    <div class="tab-content" >
 
 							    	<!-- Options Tab content -->
 							        <div class="tab-pane active" id="tab1-7">
@@ -4579,20 +4597,20 @@
 					<!-- Middle Part -->
 					<div class="row-fluid">
 
-						<div class="box-generic-noborder">
+						<div class="box-generic-noborder" style="border: #ccc 1px solid;  padding-bottom: 15px;   height: auto;	    margin-bottom: 15px;">
 
 						    <!-- Tabs Heading -->
 						    <div class="tabsbar tabsbar-2">
 						        <ul class="row-fluid row-merge">
-						        	<li class="span3 glyphicons shopping_cart active" style="width: 135px;"><a href="#tab1-2" data-toggle="tab"><i></i> ITEM</a>
+						        	<li class="span3 glyphicons shopping_cart active" style="width: 135px; padding: 0;"><a href="#tab1-2" data-toggle="tab"><i></i> ITEM</a>
 						            </li>
-						            <li class="span3 glyphicons database_plus" style="width: 135px !important;"><a href="#tab2-2" data-toggle="tab"><i></i> Additional Cost</a>
+						            <li class="span3 glyphicons database_plus" style="width: 135px !important; padding: 0;"><a href="#tab2-2" data-toggle="tab"><i></i> Additional Cost</a>
 						            </li>
 						        </ul>
 						    </div>
 						    <!-- // Tabs Heading END -->
 
-						    <div class="tab-content">
+						    <div class="tab-content" style="padding: 0 15px;">
 
 						    	<!-- Item Line & Account Line -->
 						        <div class="tab-pane active" id="tab1-2">
@@ -4674,9 +4692,9 @@
 											<button class="btn btn-inverse" data-bind="click: openBarcodeWindow" style="background: green !important; margin-left: 0 !important;"><i class="icon-barcode icon-white" style="margin-right: 10px;"></i> Barcode</button>
 
 											<!-- Add New Item -->
-											<ul class="topnav addNew">
-												<li role="presentation" class="dropdown ">
-											  		<a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+											<ul class="topnav addNew" style="display: inline-block; background: #203864; padding: 3px 15px 6px 15px; margin: 0; line-height: 23px;">
+												<li role="presentation" class="dropdown " style="list-style: none;">
+											  		<a style="color: #fff;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
 											  			<span data-bind="text: lang.lang.add_new_item"></span>
 								    					<span class="caret"></span>
 											  		</a>
@@ -4805,7 +4823,7 @@
 					</div>
 
  		            <!-- Bottom part -->
-		            <div class="row-fluid">
+		            <div class="row">
 
 						<!-- Column -->
 						<div class="span4">
@@ -4829,31 +4847,31 @@
 						<!-- Column END -->
 
 						<!-- Column -->
-						<div class="span4">
-							<table class="table table-condensed table-striped table-white">
+						<div class="span4" style="padding-right: 15px;">
+							<table class="table table-condensed table-striped table-white" style="border: none;">
 								<tbody>
 									<tr>
-										<td class="right" style="width: 60%"><span data-bind="text: lang.lang.subtotal" style="font-size: 15px; font-weight: 700;"></span></td>
-										<td class="right"><span data-format="n" data-bind="text: obj.sub_total" style="font-size: 15px; font-weight: 700;"></span></td>
+										<td  style="border-top: none;" class="right"><span data-bind="text: lang.lang.subtotal" style="width: 60% font-size: 15px; font-weight: 700; border-top: none;"></span></td>
+										<td  style="border-top: none;" class="right"><span data-format="n" data-bind="text: obj.sub_total" style="font-size: 15px; font-weight: 700; border-top: none;"></span></td>
 									</tr>
 									<tr>
-										<td class="right"><span data-bind="text: lang.lang.total_discount"></span></td>
-										<td class="right"><span data-format="n" data-bind="text: obj.discount"></span></td>
+										<td style="border-top: none;" class="right"><span data-bind="text: lang.lang.total_discount"></span></td>
+										<td style="border-top: none;" class="right"><span data-format="n" data-bind="text: obj.discount"></span></td>
 									</tr>
 									<tr>
-										<td class="right"><span data-bind="text: lang.lang.total_tax"></span></td>
-										<td class="right"><span data-format="n" data-bind="text: obj.tax"></span></td>
+										<td style="border-top: none;" class="right"><span data-bind="text: lang.lang.total_tax"></span></td>
+										<td style="border-top: none;" class="right"><span data-format="n" data-bind="text: obj.tax"></span></td>
 									</tr>
 									<tr>
-										<td class="right"><h4 data-bind="text: lang.lang.total" style="font-weight: 700;"></h4></td>
-										<td class="right"><h4 data-bind="text: total" style="font-weight: 700;"></h4></td>
+										<td  style="border-top: none;" class="right"><h4 data-bind="text: lang.lang.total" style="font-weight: 700; border-top: none;"></h4></td>
+										<td  style="border-top: none;" class="right"><h4 data-bind="text: total" style="font-weight: 700; border-top: none;"></h4></td>
 									</tr>
 									<tr>
-										<td class="right">
+										<td style="border-top: none;" class="right">
 											<span data-bind="text: lang.lang.deposit"></span>
 											<span data-format="n" data-bind="text: total_deposit"></span>
 										</td>
-										<td class="right">
+										<td style="border-top: none;" class="right">
 											<input data-role="numerictextbox"
 								                   data-format="n"
 								                   data-spinners="false"
@@ -4864,10 +4882,10 @@
 										</td>
 									</tr>
 									<tr>
-										<td class="right">
+										<td style="border-top: none;" class="right">
 											<span data-bind="text: lang.lang.remaining" style="font-size: 15px; font-weight: 700;"></span>
 										</td>
-										<td class="right">
+										<td style="border-top: none;" class="right">
 											<span data-format="n" data-bind="text: obj.remaining" style="font-size: 15px; font-weight: 700;"></span>
 										</td>
 									</tr>
@@ -4918,7 +4936,7 @@
 								<span role='presentation' class='dropdown btn-btn' style="padding: 0 0 0 15px; float: right; height: 32px; line-height: 30px;">
 							  		<a style="color: #fff; padding: 0;" class='dropdown-toggle glyphicons' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'>
 							  			<span data-bind="text: lang.lang.save_option"></span>
-							  			<span class="small-btn"><i class='caret '></i></span>
+							  			<span class="small-btn" style="padding: 0 8px; float: right; border-left: 1px solid #fff; margin-left: 10px;"><i class='caret '></i></span>
 							  		</a>
 							  		<ul class='dropdown-menu'>
 						  				<li id="saveNew" data-bind="invisible: isEdit"><span data-bind="text: lang.lang.save_new"></span></li>
@@ -7671,15 +7689,7 @@
 		</div>
 	</div>
 </script>
-<script id="InvoiceFormTemplate1" type="text/x-kendo-tmpl">	
-	<style type="text/css">
-		label {
-			font-size: 12px!important;
-			* {
-				-webkit-print-color-adjust:exact;
-			}
-		}
-	</style>
+<script id="InvoiceFormTemplate1" type="text/x-kendo-tmpl">
   	<div class="container winvoice-print" style="page-break-after: always;width: 800px;min-height: 1120px;position: relative;">
 		<div class="span12 headerinv " style="border-bottom: 2px solid \#000;padding: 15px 0;padding-bottom: 30px;#= banhji.InvoicePrint.formVisible#">
             <img class="logoP" style="position: absolute;left: 0;top: 20px;width: auto;height: 90px;" src="#: banhji.InvoicePrint.license.image_url#" alt="#: banhji.InvoicePrint.license.name#" title="#: banhji.InvoicePrint.license.name#" />
