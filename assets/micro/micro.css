@@ -8,6 +8,7 @@ body{
 h1, h2, h3, h4, h5, h6 {
     color: #203864;
 }
+
 .nav-item.dropdown a i.ti-plus,
 .nav-item.dropdown a i.fa.fa-comments-o,
 .nav-item.dropdown a i.ti-menu-alt{
@@ -21,6 +22,10 @@ h1, h2, h3, h4, h5, h6 {
 .sidebar-nav>ul>li>a i,
 i.mdi.mdi-toggle-switch {
     font-size: 20px;
+    color: #fff;
+}
+.mdi-toggle-switch-off:before{
+	color: #fff;
 }
 .sidebar-nav .dropdown-divider{
 	border-color: #8991a9;
@@ -31,6 +36,7 @@ i.mdi.mdi-toggle-switch {
 	position: fixed;
     bottom: 0;
     left: 0;
+    z-index: 1;
 }
 .dropdown-menu.dropdown-menu-right.user-dd.animated.flipInY.show .with-arrow .bg-primary,
 .d-flex.no-block.align-items-center.p-15.bg-primary.text-white.m-b-10{
@@ -341,6 +347,13 @@ a {
 	height: 96px;
 	float: left;
 }
+.btnAddCustomer{
+	margin-bottom: 8px;
+	color: #fff !important;
+}
+.btnAddCustomer span{
+	color: #fff;
+}
 #customers .listWrapper .innerAll .widget-search{
 	margin-bottom: 10px;
 }
@@ -371,6 +384,12 @@ a {
 	width: 100%;
 	float: left;
 	margin-bottom: 5px;
+}
+
+.k-grid-content.k-auto-scrollable{
+	overflow: auto !important;
+    overflow-x: auto !important;
+    overflow-y: scroll !important;
 }
 #customers .listWrapper .k-selectable tr td{
 	border: 1px solid #ccc;
@@ -442,15 +461,83 @@ a {
 	width: 100%;
 	margin: 0;
 }
-.accounCetner-textedit span{
+.accounCetner-textedit a{
 	margin: 8px;
     width: 93%;
+}
+.accounCetner-textedit a.btnViewEditCustomer{
+	color: #fff;
+}
+
+/*Customer Memo*/
+#customerMemo input{
+	width: 100%;
+	height: 35px;
+}
+#customerMemo .btnAddMemo span{
+	color: #fff;
+}
+#customerMemo .blockShowMemo{
+	height: 150px;
+    width: 100%;
+    float: left;
+    border: 1px solid #c5c5c5 !important;
+    margin-top: 8px;
+    margin-bottom: 0;
+}
+#customerMemo .blockShowMemo td{
+	line-height: 23px;
+}
+#customerMemo .blockShowMemo  tr:hover {
+    background-color: rgb(32, 56, 100) ;
+    border-color: rgb(32, 56, 100) ;
+    color: #fff;
+}
+#customerMemo .blockShowMemo blockquote {
+    border: none; 
+    padding: 0;
+    margin-bottom: 0;
+}
+#customerMemo .blockShowMemo blockquote p{
+	margin-bottom: 0;
+}
+/*Customer Attachment*/
+#customerAttachment .k-widget.k-upload.k-header.k-upload-sync.k-upload-empty{
+	border: 1px solid #c5c5c5 !important;
+	margin-bottom: 8px;
+}
+#customerAttachment .table.color-table.dark-table tr th{
+	color: #fff !important;
+    text-align: center;
+    text-transform: uppercase;
+    vertical-align: top;
+    font-weight: 400;
+    padding: 10px;
+}
+#customerAttachment .table.color-table.dark-table tr td{
+	padding: 8px;
+    vertical-align: top;
+    border-top: none;
+}
+#customerAttachment a.btnAddAttachment{
+	color: #fff;
+	margin-top: 8px;
+}
+
+.detailsWrapper .blockBalance{
+	padding-right: 30px;
+	text-align: left;
+	cursor: pointer; 
+	background: #0077c5;
+	color: #fff;
 }
 @media (max-width: 767px){
 	.table.table-condensed.k-grid.k-widget.k-display-block{
 		height: 256px;
-		-webkit-overflow-scrolling: touch; /* Lets it scroll lazy */
-		-webkit-overflow-scrolling: auto; /* Stops scrolling immediately */
+		-webkit-overflow-scrolling: touch;
+		-webkit-overflow-scrolling: auto; 
 		overflow-y: scroll;
+  		scroll-behavior: smooth;
+		
 	}
 }

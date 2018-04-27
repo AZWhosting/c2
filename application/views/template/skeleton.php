@@ -19,10 +19,10 @@
 
 <!-- CSS Kendo By DAWINE -->
 <!-- <link rel="stylesheet" href="<?php echo base_url()?>assets/kendo/examples/content/shared/styles/examples-offline.css" /> -->
-<link rel="stylesheet" href="<?php echo base_url()?>assets/kendo/styles/kendo.common.min.css" />
+<link rel="stylesheet" href="<?php echo base_url()?>assets/kendo0418/styles/kendo.common.min.css" />
 <!-- <link rel="stylesheet" href="<?php echo base_url()?>assets/kendo/styles/kendo.rtl.min.css" /> -->
-<link rel="stylesheet" href="<?php echo base_url()?>assets/kendo/styles/kendo.default.min.css" />
-<link rel="stylesheet" href="<?php echo base_url()?>assets/kendo/styles/kendo.default.mobile.min.css" />
+<link rel="stylesheet" href="<?php echo base_url()?>assets/kendo0418/styles/kendo.default.min.css" />
+<link rel="stylesheet" href="<?php echo base_url()?>assets/kendo0418/styles/kendo.default.mobile.min.css" />
 
 
 <!-- Kendo UI -->
@@ -137,16 +137,21 @@ var themerPrimaryColor = primaryColor;
 
 <!-- Kedo JS by DAWINE -->
 <!-- <script src="<?php echo base_url()?>assets/kendo/js/jszip.min.js"></script> -->
-<script src="<?php echo base_url()?>assets/kendo/js/jquery.min.js"></script>
-<script src="<?php echo base_url()?>assets/kendo/js/kendo.all.min.js"></script>
+<script src="<?php echo base_url()?>assets/kendo0418/js/jquery.min.js"></script>
+<script src="<?php echo base_url()?>assets/kendo0418/js/kendo.all.min.js"></script>
 <script src="<?php echo base_url()?>assets/kendo/examples/content/shared/js/console.js"></script>
 
 <!-- <script src="<?php echo base_url()?>assets/libraries/kendoui/js/kendo.all.min.js"></script> -->
-<script src="<?php echo base_url()?>assets/libraries/kendoui/js/cultures/kendo.culture.km-KH.min.js"></script>
+<!-- <script src="<?php echo base_url()?>assets/libraries/kendoui/js/cultures/kendo.culture.km-KH.min.js"></script>
 <script src="<?php echo base_url()?>assets/libraries/kendoui/js/cultures/kendo.culture.th-TH.min.js"></script>
 <script src="<?php echo base_url()?>assets/libraries/kendoui/js/cultures/kendo.culture.vi-VN.min.js"></script>
 <script src="<?php echo base_url()?>assets/libraries/kendoui/js/cultures/kendo.culture.de-DE.min.js"></script>
-<script src="<?php echo base_url()?>assets/libraries/kendoui/js/cultures/kendo.culture.lo-LA.min.js"></script>
+<script src="<?php echo base_url()?>assets/libraries/kendoui/js/cultures/kendo.culture.lo-LA.min.js"></script> -->
+<script src="<?php echo base_url()?>assets/kendo0418/js/cultures/kendo.culture.km-KH.min.js"></script>
+<script src="<?php echo base_url()?>assets/kendo0418/js/cultures/kendo.culture.th-TH.min.js"></script>
+<script src="<?php echo base_url()?>assets/kendo0418/js/cultures/kendo.culture.vi-VN.min.js"></script>
+<script src="<?php echo base_url()?>assets/kendo0418/js/cultures/kendo.culture.de-DE.min.js"></script>
+<script src="<?php echo base_url()?>assets/kendo0418/js/cultures/kendo.culture.lo-LA.min.js"></script>
 <!-- LESS.js Library -->
 <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/common/theme/scripts/plugins/system/less.min.js"></script>
 

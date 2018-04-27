@@ -114,18 +114,18 @@
 				    						<!-- Top 4 -->
 				    						<div class="top5 home-footer">
 					                            <table class="table color-table dark-table">
-					                                <thead>
-					                                    <tr>
-					                                        <th colspan="2" class="center">
-					                                            <span data-bind="text: lang.lang.top_5_suppliers"></span>
-					                                        </th>
-					                                    </tr>
-					                                </thead>
-					                                <tbody data-role="listview"
-					                                     data-auto-bind="false"
-					                                     data-template="top-contact-template"
-					                                     data-bind="source: objInventory.top_supplier"></tbody>
-					                            </table>
+							                        <thead>
+							                            <tr>
+							                                <th class="center" colspan="2">
+							                                    <span data-bind="text: lang.lang.top_5_Receipt"></span>
+							                                </th>
+							                            </tr>
+							                        </thead>
+							                        <tbody data-role="listview"
+							                             data-auto-bind="false"
+							                             data-template="top-contact-template"
+							                             data-bind="source: obj.top_cash_receipt"></tbody>
+							                    </table>
 					                        </div>
 
 					                        <!-- Report -->
@@ -226,10 +226,11 @@
 			                    <!-- End Tab Sale Transaction -->
 
 			                    <!-- Tab Customer -->
-			                    <div class="tab-pane" id="customers" role="tabpanel">			                    	
+			                    <div class="tab-pane" id="customers" role="tabpanel">
 		                        	<div class="row">
 		                        		<div class="col-md-3">
 		                        			<div class="listWrapper">
+		                        				<a hre="" class="btn waves-effect waves-light btn-block btn-info btnAddCustomer"><i class="icon-user-follow marginRight"></i><span data-bind="">Add New Customer</span></a>
 		                        				<div class="innerAll">
 													<form autocomplete="off" class="form-inline">
 														<div class="widget-search">
@@ -352,7 +353,7 @@
 																					</tr>
 																				</table>
 
-																				<span class="btn waves-effect waves-light btn-block btn-info pull-right" data-bind="click: goEdit"><i class="ti-pencil-alt"></i><span data-bind="text: lang.lang.view_edit_profile"></span></span>
+																				<a class="btn waves-effect waves-light btn-block btn-info btnViewEditCustomer" data-bind="click: goEdit"><i class="ti-pencil-alt marginRight"></i><span data-bind="text: lang.lang.view_edit_profile"></span></a>
 																			</div>
 						                                            	</div>
 						                                            </div>
@@ -363,9 +364,27 @@
 						                                    <!--Tab Customer Memo -->
 						                                    <div class="tab-pane" id="customerMemo" role="tabpanel">
 						                                    	 <div class="p-10">
-						                                            <h3>Best Clean Tab ever</h3>
-						                                            <h4>you can use it with the small code</h4>
-						                                            <p>Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a.</p>
+						                                            <div class="row">
+						                                            	<div class="col-md-9">
+						                                            		<input type="text" class="k-textbox"
+																				data-bind="value: note"
+																				placeholder="Add memo ..."/>
+						                                            	</div>
+						                                            	<div class="col-md-3">
+						                                            		<a hre="" class="btn waves-effect waves-light btn-block btn-info btnAddMemo" data-bind="click: saveNote"><span data-bind="text: lang.lang.add"></span></a>
+						                                            	</div>
+						                                            	<div class="col-md-12">
+							                                            	<div class="table table-condensed blockShowMemo"
+																				 data-role="grid"
+																				 data-auto-bind="false"
+																				 data-bind="source: noteDS"
+																				 data-row-template="customerCenter-note-tmpl"
+																				 data-columns="[{title: ''}]"
+																				 data-height="150"
+																				 data-scrollable="{virtual: true}" >
+																			</div>
+																		</div>
+						                                            </div>
 						                                        </div>
 						                                    </div>
 						                                    <!-- End -->
@@ -373,201 +392,57 @@
 
 						                                    <!--Tab Customer Attachment -->
 						                                    <div class="tab-pane" id="customerAttachment" role="tabpanel">
-						                                    	 <div class="p-10">
-						                                            <h3>Best Clean Tab ever</h3>
-						                                            <h4>you can use it with the small code</h4>
-						                                            <p>Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a.</p>
-						                                        </div>
+						                                    	<div class="p-10">
+						                                    		<div class="row">
+						                                            	<div class="col-md-12 ">
+								                                    		<p><span data-bind="text: lang.lang.file_type"></span> [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>
+																            <input id="files" name="files"
+															                   type="file"
+															                   data-role="upload"
+															                   data-show-file-list="false"
+															                   data-bind="events: {
+													                   				select: onSelect
+															                   }">
+															                <div class="table-responsive">
+																                <table class="table color-table dark-table">
+																			        <thead>
+																			            <tr>
+																			                <th data-bind="text: lang.lang.file_name"></th>
+																			                <th data-bind="text: lang.lang.description"></th>
+																			                <th data-bind="text: lang.lang.date"></th>
+																			                <th data-bind="text: lang.lang.action"></th>
+																			            </tr>
+																			        </thead>
+																			        <tbody data-role="listview"
+																			        		data-template="attachment-list-tmpl"
+																			        		data-auto-bind="false"
+																			        		data-bind="source: attachmentDS"></tbody>
+																			    </table>
+																			</div>
+																		    <div id="pager" class="k-pager-wrap"
+																		    	 data-role="pager"
+																		    	 data-auto-bind="false"
+																	             data-bind="source: attachmentDS"></div>
+
+																		    <a hre="" class="btn waves-effect waves-light btn-block btn-info btnAddAttachment" data-bind="click: uploadFile" ><i class="ti-check marginRight"></i><span data-bind="text: lang.lang.save"></span></a>
+															            </div>
+															        </div>
+						                                    	</div>  
 						                                    </div>
 						                                    <!-- End -->
 						                                </div>
-														<!-- <div class="widget widget-4 widget-tabs-icons-only margin-bottom-none">
-														    <div class="widget-head">
-														    	<input type="text" name="" data-bind="value: obj.name" disabled="disabled" style="border: none; width: 60%; font-size: 20px; font-weight: 600; margin-top: -11px; margin-left: 11px; background: #fff;">
-														       
-														        <ul class="pull-right">
-														            <li class="glyphicons text_bigger active"><span data-toggle="tab" data-target="#tab1-4"><i></i></span>
-														            </li>
-														            <li class="glyphicons circle_info"><span data-toggle="tab" data-target="#tab2-4"><i></i></span>
-														            </li>
-														            <li class="glyphicons pen"><span data-toggle="tab" data-target="#tab3-4"><i></i></span>
-														            </li>
-														            <li class="glyphicons paperclip"><span data-toggle="tab" data-target="#tab4-4"><i></i></span>
-														            </li>
-														        </ul>
-														        <div class="clearfix"></div>
-														    </div>
-														   
-
-														    <div class="widget-body">
-														        <div class="tab-content">
-														            <div id="tab1-4" class="tab-pane active box-generic">
-														            	<table class="table table-borderless table-condensed cart_total cash-table">
-															            	<tr>
-															            		<td width="50%">
-															            			<span class="btn btn-block btn-inverse" data-bind="click: goQuote"><span><span data-bind="text: lang.lang.quote"></span></span>
-															            		</td>
-															            		<td width="50%">
-															            			<span class="btn btn-block btn-primary" data-bind="click: goDeposit"><span><span data-bind="text: lang.lang.c_deposit"></span></span>
-															            		</td>
-															            	</tr>
-															            	<tr>
-															            		<td>
-															            			<span class="btn btn-block btn-inverse" data-bind="click: goSaleOrder"><span><span data-bind="text: lang.lang.sale_order"></span></span>
-															            		</td>
-															            		<td>
-															            			<span class="btn btn-block btn-primary" data-bind="click: goCashSale"><span><span data-bind="text: lang.lang.cash_sale"></span></span>
-															            		</td>
-															            	</tr>
-															            	<tr>
-															            		<td>
-															            			<span class="btn btn-block btn-primary" data-bind="click: goSaleReturn"><span data-bind="text: lang.lang.sale_return1"></span></span>
-															            		</td>
-															            		<td>
-															            			<span class="btn btn-block btn-primary" data-bind="click: goInvoice"><span data-bind="text: lang.lang.invoice"></span></span>
-															            		</td>
-															            	</tr>
-															            	<tr>
-															            		<td>
-															            			<span class="btn btn-block btn-inverse" data-bind="click: goGDN"><span data-bind="text:lang.lang.c_gdn"></span></span>
-															            		</td>
-															            		<td class="center">
-															            			<span class="btn btn-block btn-primary" data-bind="click: goCashReceipt"><span data-bind="text: lang.lang.cash_receipt"></span></span>
-
-															            		</td>
-															            	</tr>
-															            	<tr>
-															            		<td>
-															            			<span class="btn btn-block btn-inverse" data-bind="click: goStatement"><span data-bind="text: lang.lang.statement"></span></span>
-															            		</td>
-															            		<td>
-															            			<span class="btn btn-block btn-primary" data-bind="click: goCashRefound"><span data-bind="text: lang.lang.cash_refund"></span></span>
-															            		</td>
-															            	</tr>
-														            	</table>
-														            </div>
-														            
-														            <div id="tab2-4" class="tab-pane box-generic" style="float: left; margin-bottom: 0;">
-														            	<div class="row-fluid">
-														            		<div class="span6" style="padding: 0 15px 0 0;">
-													            				<img class="main-image" data-bind="attr: { src: obj.image_url, alt: obj.name, title: obj.name }" style="border: 1px solid #ddd; height: auto !important;">
-													            			</div>
-													            			<div class="span6">
-															            		<div class="accounCetner-textedit">
-																	            	<table width="100%">
-																						<tr>
-																							<td width="40%"><span data-bind="text: lang.lang.customer_type"></span></td>
-																							<td width="60%">
-																								<span class="strong" data-bind="text: obj.contact_type"></span>
-																							</td>
-																						</tr>
-																						<tr>
-																							<td><span data-bind="text: lang.lang.number"></span></td>
-																							<td>
-																								<span class="strong" data-bind="text: obj.abbr"></span>
-																								<span class="strong" data-bind="text: obj.number"></span>
-																							</td>
-																						</tr>
-																						<tr>
-																							<td><span data-bind="text: lang.lang.name"></span></td>
-																							<td>
-																								<span data-bind="text: obj.name"></span>
-																							</td>
-																						</tr>
-																						
-																						<tr>
-																							<td><span data-bind="text: lang.lang.phone"></span></td>
-																							<td>
-																								<span data-bind="text: obj.phone"></span>
-																							</td>
-																						</tr>
-																						<tr>
-																							<td><span data-bind="text: lang.lang.currency"></span></td>
-																							<td>
-																								<span data-bind="text: currencyCode"></span>
-																							</td>
-																						</tr>
-																					</table>
-
-																					<span class="btn btn-primary btn-icon glyphicons edit pull-right" data-bind="click: goEdit"><i></i><span data-bind="text: lang.lang.view_edit_profile"></span></span>
-																				</div>
-																			</div>
-																		</div>
-														            </div>
-														            
-														            <div id="tab3-4" class="tab-pane">
-
-																	    <div>
-																			<input type="text" class="k-textbox"
-																					data-bind="value: note"
-																					placeholder="Add memo ..."
-																					style="width: 366px;" />
-																			<span class="btn btn-primary" data-bind="click: saveNote"><span data-bind="text: lang.lang.add"></span></span>
-																		</div>
-
-																		<br>
-
-																		<div class="table table-condensed" style="height: 100;"
-																			 data-role="grid"
-																			 data-auto-bind="false"
-																			 data-bind="source: noteDS"
-																			 data-row-template="customerCenter-note-tmpl"
-																			 data-columns="[{title: ''}]"
-																			 data-height="100"
-																			 data-scrollable="{virtual: true}"></div>
-
-														            </div>
-														            
-															        <div id="tab4-4" class="tab-pane" >
-															            <p><span data-bind="text: lang.lang.file_type"></span> [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>
-															            <input id="files" name="files"
-														                   type="file"
-														                   data-role="upload"
-														                   data-show-file-list="false"
-														                   data-bind="events: {
-												                   				select: onSelect
-														                   }">
-
-															            <table class="table table-bordered">
-																	        <thead>
-																	            <tr>
-																	                <th><span data-bind="text: lang.lang.file_name"></span></th>
-																	                <th><span data-bind="text: lang.lang.description"></span></th>
-																	                <th><span data-bind="text: lang.lang.date"></span></th>
-																	                <th style="width: 13%;"></th>
-																	            </tr>
-																	        </thead>
-																	        <tbody data-role="listview"
-																	        		data-template="attachment-list-tmpl"
-																	        		data-auto-bind="false"
-																	        		data-bind="source: attachmentDS"></tbody>
-																	    </table>
-
-																	    <div id="pager" class="k-pager-wrap"
-																	    	 data-role="pager"
-																	    	 data-auto-bind="false"
-																             data-bind="source: attachmentDS"></div>
-
-																	    <span class="btn btn-icon btn-success glyphicons ok_2" data-bind="click: uploadFile" style="color: #fff; padding: 5px 38px; text-align: left; width: 98px !important; display: inline-block; margin-top: 10px;"><i></i> <span data-bind="text: lang.lang.save"></span></span>
-
-															        </div>
-															        
-
-														        </div>
-														    </div>
-														</div> -->
 													</div>
-													<!-- <div class="col-md-6">
+													<div class="col-md-6">
 														<div class="row">
 															<div class="col-md-6">
-																<div class="widget-stats widget-stats-primary widget-stats-5" data-bind="click: loadBalance" style="cursor: pointer; background: #0077c5">
+																<div class="blockBalance" data-bind="click: loadBalance" >
 																	<span class="glyphicons coins"><i></i></span>
 																	<span class="txt" style="padding-right: 18px;"><span data-bind="text: lang.lang.balance"></span><span data-bind="text: balance" style="font-size:medium;"></span></span>
 																	<div class="clearfix"></div>
 																</div>
 															</div>
 															<div class="col-md-6">
-																<div class="widget-stats widget-stats-inverse widget-stats-5" data-bind="click: loadDeposit" style="cursor: pointer; ">
+																<div class="blockDeposit" data-bind="click: loadDeposit" style="cursor: pointer; ">
 																	<span class="glyphicons briefcase"><i></i></span>
 																	<span class="txt"><span data-bind="text: lang.lang.deposit"></span><span data-bind="text: deposit" style="font-size:medium;"></span></span>
 																	<div class="clearfix"></div>
@@ -575,7 +450,7 @@
 															</div>
 														</div>
 
-														<div class="row">
+														<!-- <div class="row">
 															<div class="col-md-6">
 																<div class="widget-stats widget-stats-info widget-stats-5" data-bind="click: loadBalance" style="cursor: pointer; background: #21abf6;">
 																	<span class="glyphicons circle_exclamation_mark"><i></i></span>
@@ -590,8 +465,8 @@
 																	<div class="clearfix"></div>
 																</div>
 															</div>
-														</div>
-													</div> -->
+														</div> -->
+													</div>
 												</div>
 
 												<!-- <div class="row">
@@ -1301,11 +1176,11 @@
 					style="width: 100%; margin-bottom: 0;" />
 		</td>
 		<td>#=kendo.toString(created_at, "dd-MM-yyyy")#</td>
-		<td>
+		<td style="text-align: center;">
 			#if(id){#
 				<a href="#=url#" target="_blank" class="btn-action glyphicons download btn-default"><i></i></a>
 			#}#
-			<span class="btn-action glyphicons remove_2 btn-danger" data-bind="click: removeFile"><i></i></span>
+			<span class="btn-action glyphicons btn-danger" data-bind="click: removeFile"><i class="ti-close"></i></span>
 		</td>
 	</tr>
 </script>
@@ -3076,4 +2951,4 @@
 		#=category#
 	</div>
 </script>
-<!-- End -->                                                                                                                                                                                                                                                        
+<!-- End -->                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 

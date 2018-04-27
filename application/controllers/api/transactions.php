@@ -1199,6 +1199,76 @@ class Transactions extends REST_Controller {
 						"ra_id"						=> $value->contact_ra_id ? $value->contact_ra_id : 0
 					);
 
+					//Lines
+					$lines = [];
+					$line = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$line->include_related("item", array("item_type_id","abbr","number","name","cost","price","locale","income_account_id","expense_account_id","inventory_account_id","nature"));
+					$line->include_related("tax_item", array("tax_type_id","account_id","name","rate"));
+					$line->where("transaction_id", $value->id);
+					$line->where("deleted <>", 1);
+					$line->get_iterated();
+
+					foreach ($line as $l) {
+						//Item
+						$item = array(
+							"id" 					=> $l->item_id,
+							"item_type_id" 			=> $l->item_item_type_id,
+							"abbr"					=> $l->item_abbr, 
+							"number" 				=> $l->item_number, 
+							"name" 					=> $l->item_name,
+							"cost"					=> $l->item_cost,
+							"price"					=> $l->item_price,
+							"locale"				=> $l->item_locale,
+							"income_account_id"		=> $l->item_income_account_id, 
+							"expense_account_id" 	=> $l->item_expense_account_id, 
+							"inventory_account_id" 	=> $l->item_inventory_account_id
+						);
+
+						//Tax Item
+						$tax_item = array(
+							"id" 			=> $l->tax_item_id,
+							"tax_type_id" 	=> $l->tax_item_tax_type_id ? $l->tax_item_tax_type_id : "",
+							"account_id" 	=> $l->tax_item_account_id ? $l->tax_item_account_id : "",
+							"name" 			=> $l->tax_item_name ? $l->tax_item_name : "",
+							"rate" 			=> $l->tax_item_rate ? $l->tax_item_rate : ""
+						);
+
+						$lines[] = array(
+							"id" 				=> $l->id,
+					   		"transaction_id"	=> $l->transaction_id,
+					   		"reference_id"		=> $l->reference_id,
+					   		"measurement_id" 	=> $l->measurement_id,
+							"tax_item_id" 		=> $l->tax_item_id,
+							"wht_account_id"	=> $l->wht_account_id,
+							"item_id" 			=> $l->item_id,
+							"assembly_id" 		=> $l->assembly_id,
+						   	"description" 		=> $value->description,
+						   	"on_hand" 			=> floatval($l->on_hand),
+							"quantity" 			=> floatval($l->quantity),
+						   	"conversion_ratio" 	=> floatval($l->conversion_ratio),
+						   	"cost"				=> floatval($l->cost),
+						   	"price"				=> floatval($l->price),
+						   	"amount" 			=> floatval($l->amount),
+						   	"discount" 			=> floatval($l->discount),
+						   	"fine" 				=> floatval($l->fine),
+						   	"tax" 				=> floatval($l->tax),
+						   	"additional_cost" 	=> floatval($l->additional_cost),
+						   	"additional_applied"=> $l->additional_applied==1?true : false,
+						   	"inventory_quantity"=> floatval($l->inventory_quantity),
+						   	"inventory_value" 	=> floatval($l->inventory_value),
+						   	"rate"				=> floatval($l->rate),
+						   	"locale" 			=> $l->locale,
+						   	"movement" 			=> $l->movement,
+						   	"required_date"		=> $l->required_date,
+						   	"reference_no" 		=> $l->reference_no,
+						   	"deleted"			=> $l->deleted,				   	
+						   	
+						   	"item" 				=> $item,
+						   	"tax_item" 			=> $tax_item,
+						   	"contact" 			=> $contacts
+						);
+					}
+
 					$data["results"][] = array(
 						"id" 						=> $value->id,
 						"company_id" 				=> $value->company_id,
@@ -1268,7 +1338,7 @@ class Transactions extends REST_Controller {
 
 					   	"is_check" 					=> true,
 					   	"contacts" 					=> $contacts,
-					   	"lines" 					=> $value->item_line->get_raw()->result()
+					   	"lines" 					=> $lines
 					);
 				}
 			}

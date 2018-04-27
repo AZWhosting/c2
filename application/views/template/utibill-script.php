@@ -11863,6 +11863,8 @@
                         }
                         this.invoiceCollection.dataSource.query({
                             filter: para,
+                            page: 1,
+                            pageSize: 1,
                             order: {
                                 field: "worder",
                                 operator: "where_related_meter",
@@ -12082,47 +12084,33 @@
             var self = this,
                 TempForm = "";
             switch(this.txnFormID){
-                case "45":
-                    TempForm = $("#InvoiceFormTemplate2").html();
-                    break;
-                case "49":
-                    TempForm = $("#InvoiceFormElectric").html();
-                    break;
-                case "32":
-                    TempForm = $("#invoiceServiceNormal").html();
-                    break;
                 case "1":
                     TempForm = $("#invoiceServiceCommercial").html();
                     break;
                 case "7":
                     TempForm = $("#depositForm").html();
                     break;
+                case "32":
+                    TempForm = $("#invoiceServiceNormal").html();
+                    break;
                 case "44":
                     TempForm = $("#formFrame").html();
+                    break;
+                case "45":
+                    TempForm = $("#InvoiceFormTemplate2").html();
+                    break;
+                case "49":
+                    TempForm = $("#InvoiceFormElectric").html();
                     break;
                 case "66":
                     TempForm = $("#defaultFormFrame").html();
                     break;
+                case "67":
+                    TempForm = $("#invisibleFormLaylungdy").html();
+                    break;
                 default:
                     TempForm = $("#InvoiceFormTemplate1").html();
             }
-            // if (this.txnFormID == "45") {
-            //     TempForm = $("#InvoiceFormTemplate2").html();
-            // } else if (this.txnFormID == "49") {
-            //     TempForm = $("#InvoiceFormElectric").html();
-            // } else if (this.txnFormID == "32"){
-            //     TempForm = $("#invoiceServiceNormal").html();
-            // } else if (this.txnFormID == "1"){
-            //     TempForm = $("#invoiceServiceCommercial").html();
-            // } else if (this.txnFormID == "7"){
-            //     TempForm = $("#depositForm").html();
-            // } else if (this.txnFormID == "44"){
-            //     TempForm = $("#formFrame").html();
-            // } else {
-            //     TempForm = $("#InvoiceFormTemplate1").html();
-            // }
-            // console.log(TempForm);
-
             var listView = $("#wInvoiceContent").kendoListView({
                 dataSource: this.dataSource,
                 template: kendo.template(TempForm)

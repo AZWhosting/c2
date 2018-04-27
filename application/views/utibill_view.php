@@ -9297,6 +9297,200 @@
 		</div>
 	</div>
 </script>
+<script id="invisibleFormLaylungdy" type="text/x-kendo-tmpl">
+  	<div class="container winvoice-print" style="page-break-after: always;width: 800px;min-height: 1105px;position: relative;">
+  		<div style="height: 130px; width: 100%; visibility: hidden;"></div>
+  		<div style="float:left;margin-left: 160px;">
+  			#: number#<br>
+  			#=contact.number# #:contact.name#<br>
+  			#=contact.address# - <br>
+  			#= meter.meter_number#<br>
+  			#= invoice_lines[0].current#<br>
+  			#= invoice_lines[0].previous#<br>
+  		</div>
+  		<div style="width: 160px; float: right;text-align: left;">
+  			<span id="secondwnumber#= id#" style="margin-left: -14px; float: left;"></span><br />
+  			#= contact.phone# - <br>
+  			#= meter.location[0].abbr#-#= meter.meter_order#<br>
+  			#= invoice_lines[0].from_date# ដល់ #= invoice_lines[0].to_date#<br>
+  			-<br>
+  			#=kendo.toString(new Date(issue_date), "dd-MMMM-yyyy", "km-KH")#
+  		</div>
+		<!-- <div class="span12 headerinv " style="border-bottom: 2px solid \#000;padding: 15px 0;padding-bottom: 30px;visibility: hidden;padding-bottom: 2px!important">
+            <img class="logoP" style="position: absolute;left: 0;top: 20px;width: auto;height: 90px;" src="#: banhji.InvoicePrint.license.image_url#" alt="#: banhji.InvoicePrint.license.name#" title="#: banhji.InvoicePrint.license.name#" />
+			<div class="span12" align="center">
+				<h4 style="line-height: 40px;">#: banhji.InvoicePrint.license.name#</h4>					
+				<h5 style="line-height: 30px;">#: banhji.InvoicePrint.license.address# 
+				<br>
+				#:typeof banhji.InvoicePrint.license.mobile != 'undefined' ? banhji.InvoicePrint.license.mobile: ''#</h5>					
+			</div>
+		</div>
+		<div class="span12 cover-customer">
+			<div class="span6">
+				<span id="secondwnumber#= id#" style="margin-left: -14px; float: left;"></span><br />
+				<div class="span12">
+					<p style="font-size: 12px;margin-top: 15px;">អតិថិជន​ #=contact.number#</p>
+					<p style="font-size: 12px;">#:contact.name#</p>
+					<p style="font-size: 12px;">អស័យដ្ឋាន ៖ #: contact.address #</p> 
+					<p style="font-size: 12px;">លេខទូរស័ព្ទ ៖ #: contact.phone #</p> 
+					<p style="font-size: 12px;clear: both;"><i>ថ្ងៃ​ចាប់​ផ្តើម​ទទួល​ប្រាក់ #=kendo.toString(new Date(bill_date), "dd-MMMM-yyyy", "km-KH")#</i></p>
+				</div>
+			</div>
+			<div class="span5">
+				<table style="margin-top: 10px;">
+					<tr>
+						<td width="140" style="visibility: hidden;"><p>លេខ​វិក្កយ​បត្រ</p></td>
+						<td><p style="line-height: 25px;">#:number#-#=banhji.institute.id#</p></td>
+					</tr>
+					<tr>
+						<td style="visibility: hidden;"><p>ថ្ងៃ​ចេញ វិក្កយ​បត្រ</p></td>
+						<td><p style="line-height: 25px;">#=kendo.toString(new Date(issue_date), "dd-MMMM-yyyy", "km-KH")#</p></td>
+					</tr>
+					<tr>
+						<td style="visibility: hidden;"><p>តំបន់</p></td>
+						<td><p style="line-height: 25px;">#:meter.location[0].name# #:meter.pole# #:meter.box#</p></td>
+					</tr>
+					<tr>
+						<td style="visibility: hidden;"><p>គិត​ចាប់​ពី​ថ្ងៃ​ទី</p></td>
+						<td><p style="line-height: 25px;">#=kendo.toString(new Date(invoice_lines[0].from_date), "dd-MMMM-yyyy", "km-KH")#</p></td>
+					</tr>
+					<tr>
+						<td style="visibility: hidden;"><p>ដល់​ថ្ងៃ​ទី</p></td>
+						<td><p style="line-height: 25px;">#=kendo.toString(new Date(invoice_lines[0].to_date), "dd-MMMM-yyyy", "km-KH")#</p></td>
+					</tr>
+				</table>		
+			</div>
+		</div>
+		<table class="span12 table table-bordered footerTbl" style="padding:0;margin-top: 10px; border-radius: 3px;border-collapse: inherit;margin-left: 0px;border: 1px solid \#fff!important;">
+			<thead style="visibility: hidden;">
+				<tr>
+					<th class="darkbblue main-color" style="width: 20%;background-color: #: formcolor #!important;border:none!important; vertical-align: top;">លេខ​កុងទ័រ<br>METER</th>
+					<th class="darkbblue main-color" style="width: 15%;background-color: #: formcolor #!important;border:none!important; vertical-align: top;">អំណានចាស់<br>PREVIOUS</th>
+					<th class="darkbblue main-color" style="width: 15%;background-color: #: formcolor #!important;border:none!important; vertical-align: top;">អំណានថ្មី<br>CURRENT</th>
+					<th class="darkbblue main-color" style="width: 15%;background-color: #: formcolor #!important;border:none!important; vertical-align: top;">បរិមាណ<br>CONSUMPTION</th>
+					<th class="darkbblue main-color" style="background-color: #: formcolor #!important;border:none!important; vertical-align: top;">តំលៃឯកត្តា<br>RATE</th>
+					<th class="darkbblue main-color" style="background-color: #: formcolor #!important;border:none!important; vertical-align: top;">តំលៃសរុប<br>AMOUNT</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td style="vertical-align: middle;border: 1px solid \#fff!important;"></td>
+					<td colspan="4" style="text-align: right; visibility: hidden;border: 1px solid \#fff!important;">
+						ជំពាក់​សរុប​នៅ​ថ្ងៃ​ធ្វើ​វិក្កយបត្រ Balance as at billing date .
+					</td>
+					<td align="right" style="border: 1px solid \#fff!important;">
+						#: kendo.toString(amount_remain, locale=="km-KH"?"c0":"c", locale)#
+					</td>
+				</tr>
+				<tr>
+					<td style="border: 1px solid \#fff!important;">#: meter.location[0].abbr# - #: meter.meter_number#</td>
+					<td style="border: 1px solid \#fff!important;" align="center"><strong>#: invoice_lines[0].previous#</strong></td>
+					<td style="border: 1px solid \#fff!important;" align="center"><strong>#: invoice_lines[0].current#</strong></td>
+					<td style="border: 1px solid \#fff!important;" align="center"><strong>#: invoice_lines[0].consumption#</strong></td>
+					<td style="border: 1px solid \#fff!important;"></td>
+					<td style="border: 1px solid \#fff!important;"></td>
+				</tr>
+				#for(var j=1; j< invoice_lines.length; j++) {#
+					#if(invoice_lines[j].amount != 0) {#
+						#if(invoice_lines[j].type == "tariff"){#
+							#var amountTariff = invoice_lines[j].amount;#
+							#var amountTariffMoney = invoice_lines[j].amount * invoice_lines[0].consumption;#
+							<tr>
+								<td style="border: 1px solid \#fff!important;visibility: hidden;" colspan="3" align="left">#: invoice_lines[j].number#</td>
+								<td style="border: 1px solid \#fff!important;" align="center">#: invoice_lines[0].consumption#</td>
+								<td style="border: 1px solid \#fff!important;" align="right">#= kendo.toString(invoice_lines[j].amount, locale=="km-KH"?"c0":"c", locale)#</td>
+								<td style="border: 1px solid \#fff!important;" align="right">#= kendo.toString(amountTariffMoney, locale=="km-KH"?"c0":"c", locale)#</td>
+							</tr>
+						#}else if(invoice_lines[j].type == "exemption"){#
+							<tr>
+								<td style="border: 1px solid \#fff!important;" colspan="3" align="left">#: invoice_lines[j].number#</td>
+								#if(invoice_lines[j].unit == "money"){#
+									<td style="border: 1px solid \#fff!important;" align="center"></td>
+									<td style="border: 1px solid \#fff!important;" align="right"></td>
+									<td style="border: 1px solid \#fff!important;" align="right">-#= kendo.toString(invoice_lines[j].amount, locale=="km-KH"?"c0":"c", locale)#</td>
+								#}else if(invoice_lines[j].unit == "%"){#
+								#var AMM = (amountTariffMoney * invoice_lines[j].amount) / 100#
+									<td style="border: 1px solid \#fff!important;" align="center">#= invoice_lines[j].amount#%</td>
+									<td style="border: 1px solid \#fff!important;" align="center"></td>
+									<td style="border: 1px solid \#fff!important;" align="right">-#= kendo.toString(AMM, locale=="km-KH"?"c0":"c", locale)#</td>
+								#}else{#
+									<td style="border: 1px solid \#fff!important;" align="center">#= invoice_lines[j].amount#</td>
+									<td style="border: 1px solid \#fff!important;" align="center"></td>
+									<td style="border: 1px solid \#fff!important;" align="right">-#= kendo.toString(invoice_lines[j].amount * amountTariff, locale=="km-KH"?"c0":"c", locale)#</td>
+								#}#
+							</tr>
+						#}else if(invoice_lines[j].type == "fine"){#
+						#}else{#
+							<tr>
+								<td style="visibility: hidden;border: 1px solid \#fff!important;" colspan="3" align="left">#: invoice_lines[j].number#</td>
+								<td style="border: 1px solid \#fff!important;" align="center"></td>
+								<td style="border: 1px solid \#fff!important;" align="right"></td>
+								<td style="border: 1px solid \#fff!important;" align="right">#= kendo.toString(invoice_lines[j].amount, locale=="km-KH"?"c0":"c", locale)#</td>
+							</tr>
+						#}#
+					# } #
+				#}#
+				<tr>
+					<td colspan="5" style="border: 1px solid \#fff!important;visibility: hidden; padding-right: 10px;background: \\#355176;color: \\#fff;text-align: right;background-color: #: formcolor #!important;" class="darkbblue main-color">បំណុល​សរុប TOTAL BALANCE</td>
+					<td style="text-align: right; border: 1px solid \#fff!important;">#= kendo.toString(amount, locale=="km-KH"?"c0":"c", locale)#</td>
+				</tr>
+				<tr>
+					<td rowspan="4" colspan="3" style="border: 1px solid \#fff!important;visibility: hidden;">#= banhji.InvoicePrint.license.term_of_condition#</td>
+					<td colspan="2" class="greyy" style="border: 1px solid \#fff!important;background: \\#ccc;visibility: hidden;">ប្រាក់​ត្រូវ​បង់ TOTAL DUE</td>
+					<td style="text-align: right;border: 1px solid \#fff!important;"><strong>#= kendo.toString(amount + amount_remain, locale=="km-KH"?"c0":"c", locale)#</strong></td>
+				</tr>
+				<tr>
+					<td colspan="2" class="greyy"  style="border: 1px solid \#fff!important;background: \\#ccc;visibility: hidden;">ថ្ងៃផុតកំណត់ DUE DATE</td>
+					<td align="center" style="font-weight: bold;border: 1px solid \#fff!important;">#=kendo.toString(new Date(due_date), "dd-MMMM-yyyy", "km-KH")#</td>
+				</tr>
+				<tr>
+					<td colspan="2" class="greyy" style="border: 1px solid \#fff!important;visibility: hidden; background: \\#ccc;">ថ្ងៃបង់ប្រាក់ PAY DATE</td>
+					<td align="left" style="border: 1px solid \#fff!important;"></td>
+				</tr>
+				<tr>
+					<td colspan="2" class="greyy" style="border: 1px solid \#fff!important;visibility: hidden; background: \\#ccc;">ប្រាក់បានបង់ PAY AMOUNT</td>
+					<td style="border: 1px solid \#fff!important;"></td>
+				</tr>
+			</tbody>
+		</table>
+		<div style="position: absolute;bottom:0px; width: 768px;left: 15px;overflow: hidden;height: 245px;">
+			<div class="line" style="border-top: 1px dotted \#fff!important"></div>
+			<table class="span12 table table-bordered footerTbl" style="padding:0;margin-bottom:15px;border-collapse: inherit;margin-top: 15px;border-radius: 3px;margin-left: 0px;border: 1px solid \#fff!important;">
+				<tbody style="border:none!important">
+					<tr style="border:none!important">
+						<td colspan="2" width="425" style="border: 1px solid \#fff!important;">
+							<span style="margin-left: 0px;border:none!important" id="footwnumber#:id#"></span>
+						</td>
+						<td width="270" class="greyy"  style="background: \\#ccc;border-bottom:1px solid \\#fff;visibility: hidden;border: 1px solid \#fff!important;">ប្រាក់​ត្រូវ​បង់ TOTAL DUE</td>
+						<td width="180" align="right" style="border: 1px solid \#fff!important;"><strong>#= kendo.toString(amount + amount_remain, locale=="km-KH"?"c0":"c", locale)#</strong></td>
+					</tr>
+					<tr>
+						<td style="visibility: hidden;border: 1px solid \#fff!important;"><p>វិក្កយបត្រ</p></td>
+						<td style="border: 1px solid \#fff!important;">#: kendo.toString(new Date(issue_date), "dd-MMMM-yyyy", "km-KH")# - #: number#</td>
+						<td class="greyy" style="background: \\#ccc;border-bottom:1px solid \\#fff;visibility: hidden;border: 1px solid \#fff!important;">ថ្ងៃបង់ប្រាក់ PAY DATE</td>
+						<td align="left" style="border: 1px solid \#fff!important;"></td>
+					</tr>
+					<tr>
+						<td style="visibility: hidden;border: 1px solid \#fff!important;"><p>អតិថិជន</p></td>
+						<td style="border: 1px solid \#fff!important;">#=contact.number# #=contact.name#<br>#: contact.phone# #:contact.address#</td>
+						<td class="greyy" style="visibility: hidden; background: \\#ccc;border-bottom:1px solid \\#fff;border: 1px solid \#fff!important;">ប្រាក់បានបង់ PAY AMOUNT</td>
+						<td style="border: 1px solid \#fff!important;"></td>
+					</tr>
+					<tr>
+						<td style="border: 1px solid \#fff!important;visibility: hidden;">លេខ​ទី​តាំង</td>
+						<td style="border: 1px solid \#fff!important;">#:meter.location[0].abbr# - #:meter.location[0].name#</td>
+						<td rowspan="2" class="greyy" style="visibility: hidden; background: \\#ccc;border: 1px solid \#fff!important;">អ្នកទទួលប្រាក់ RECEIVER</td>
+						<td style="border: 1px solid \#fff!important;" rowspan="2"></td>
+					</tr>
+					<tr>
+						<td style="visibility: hidden;border: 1px solid \#fff!important;">លេខ​កុង​ទ័រ</td>
+						<td style="border: 1px solid \#fff!important;">#: meter.meter_number#</td>
+					</tr>
+				</tbody>
+			</table>
+		</div> -->
+	</div>
+</script>
 <!--Cash Reciept-->
 <script id="Receipt" type="text/x-kendo-template">
 	<div class="container">
