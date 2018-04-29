@@ -11863,8 +11863,6 @@
                         }
                         this.invoiceCollection.dataSource.query({
                             filter: para,
-                            page: 1,
-                            pageSize: 1,
                             order: {
                                 field: "worder",
                                 operator: "where_related_meter",
