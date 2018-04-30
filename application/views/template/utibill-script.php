@@ -12230,7 +12230,7 @@
                     '} ' +
                     '}' +
                     'label {' +
-                    'font-size: 12px!important;' +
+                    'font-size: 10px!important;' +
                     '}' +
                     '.main-color {' +
                     'background-color: ' + colorM + '!important; ' + ts +
@@ -12346,7 +12346,7 @@
                     'background-color: #ccc!important;-webkit-print-color-adjust:exact;' +
                     '}' +
                     'label {' +
-                    'font-size: 12px!important;' +
+                    'font-size: 10px!important;' +
                     '}' +
                     '.inv1 span.total-amount { ' +
                     'color:#fff!important;' +
