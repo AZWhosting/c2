@@ -139,7 +139,24 @@ class Readings extends REST_Controller {
 				$obj->to_date 	= isset($value->to_date)	? date('Y-m-d', strtotime($value->to_date)):date('Y-m-d');
 				$obj->invoiced 		= isset($value->invoiced)	? $value->invoiced : 0;
 				$obj->created_at = date('Y-m-d H:i:s');
-				if($obj->save()){								
+				if($obj->save()){		
+					$month_of = "";
+					$m = isset($value->month_of) ? $value->month_of : "";
+					$d = new DateTime($m);
+				    $d->modify('first day of this month');
+				    $month_of = $d->format('Y-m-d');
+		   			//Temp total
+		   			$totalsale = new Tmp_total_sale(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		   			$totalsale->where("location_id", $meter->location_id);
+		   			$totalsale->where("month_of", $month_of)->limit(1)->get();
+		   			if($totalsale->exists()){
+		   				$totalsale->usage += floatval($obj->usage);
+		   			}else{
+		   				$totalsale->location_id = $meter->location_id;
+		   				$totalsale->month_of = $month_of;
+		   				$totalsale->usage = floatval($obj->usage);
+		   			}				
+		   			$totalsale->save();		
 					//Respsone
 					$data["results"][] = array(
 						"id"			=> $obj->id,
@@ -172,12 +189,30 @@ class Readings extends REST_Controller {
 
 			$obj->where('id', $value->id);
 			$obj->get();
+			$oldusage = $obj->usage;
+
 			$obj->current 				= isset($value->current)			?$value->current: "";
 			// $obj->from_date 			= isset($value->from_date)			?$value->from_date: "";
 			// $obj->to_date 				= isset($value->to_date)			?$value->to_date: "";
 			// $obj->meter_number 			= isset($value->meter_number)		?$value->meter_number: "";
 			$obj->updated_at = date('Y-m-d H:i:s');
 			$obj->usage 				= intval($obj->current) - intval($obj->previous);
+			$meter = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$meter->where("id", $obj->meter_id)->limit(1)->get();
+			//Temp total
+			$month_of = "";
+			$m = isset($value->month_of) ? $value->month_of : "";
+			$d = new DateTime($m);
+		    $d->modify('first day of this month');
+		    $month_of = $d->format('Y-m-d');
+   			$totalsale = new Tmp_total_sale(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+   			$totalsale->where("location_id", $meter->location_id);
+   			$totalsale->where("month_of", $month_of)->limit(1)->get();
+   			if($totalsale->exists()){
+   				$totalsale->usage -= floatval($oldusage);
+   				$totalsale->usage += floatval($obj->usage);
+   			}			
+   			
 			if($obj->invoiced == 0) {
 				// $obj->previous 				= isset($value->previous)			?$value->previous: "";
 				if($obj->save()){
@@ -207,6 +242,23 @@ class Readings extends REST_Controller {
 				$transaction->save();
 
 				$winvoiceLine->where('transaction_id', $line->transaction_id)->get();
+				if($winvoiceLine->exists()){
+					foreach($winvoiceLine as $wl){
+						if($wl->type == 'maintenance') {
+	   						$totalsale->maintenance -= floatval($wl->amount);
+			   			}elseif($wl->type == 'exemption'){
+			   				$totalsale->exemption -= floatval($wl->amount);
+			   			}elseif($wl->type == 'installment') {
+			   				//Update Installment Schedule Invoice = 1
+							$updateInstallSchedule = new Installment_schedule(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+							$updateInstallSchedule->where('id', $wl->item_id)->limit(1)->get();
+							$updateInstallSchedule->invoiced = 0;
+							$updateInstallSchedule->save();
+							//Total Sale
+							$totalsale->installment -= floatval($updateInstallSchedule->amount);
+			   			}
+					}
+				}
 				$winvoiceLine->deleted = 1;
 				$winvoiceLine->save();
 
@@ -232,7 +284,10 @@ class Readings extends REST_Controller {
 					);						
 				}
 				// }
+				$totalsale->amount -= floatval($transaction->amount);
+
 			}
+			$totalsale->save();	
 		}
 		$data["count"] = count($data["results"]);
 
