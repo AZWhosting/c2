@@ -811,6 +811,7 @@ class Transactions extends REST_Controller {
 		$this->response($data, 200);
 	}
 
+	//GET NUMBER
 	function number_get() {
 		$filter 	= $this->get("filter");
 		$data["results"] = [];
@@ -828,6 +829,33 @@ class Transactions extends REST_Controller {
 
 		$this->db->select("(SELECT SUBSTRING(number, -5)) AS number", FALSE);
 		$this->db->order_by("number", "desc");
+		$this->db->limit(1); 
+		$query = $this->db->get('transactions');
+
+		$data["results"] = $query->result();
+				
+		
+		$this->response($data, 200);
+	}
+
+	//GET BATCH NUMBER
+	function batch_number_get() {
+		$filter 	= $this->get("filter");
+		$data["results"] = [];
+		$data["count"] = 0;
+
+		$connection = 'use ' . $this->_database;
+		$this->db->query($connection);
+
+		//Filter
+		if(!empty($filter["filters"]) && isset($filter["filters"])){
+	    	foreach ($filter["filters"] as $value) {
+	    		$this->db->where($value["field"], $value["value"]); 
+			}
+		}
+
+		$this->db->select("(SELECT SUBSTRING(batch_number, -5)) AS batch_number", FALSE);
+		$this->db->order_by("batch_number", "desc");
 		$this->db->limit(1); 
 		$query = $this->db->get('transactions');
 

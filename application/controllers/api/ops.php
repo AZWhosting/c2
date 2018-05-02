@@ -93,14 +93,14 @@ class Ops extends REST_Controller {
 				// 	// 	"null" 		=> FALSE,
 				// 	// 	"default" 	=> 0
 				// 	// ),
-				// 	"deleted" => array(
-				// 		"type" 		=> "TINYINT",
-				// 		"constraint"=> 1,
-				// 		"null" 		=> FALSE,
-				// 		"default" 	=> 0
-				// 	)
+				// 	// "batch_number" => array(
+				// 	// 	"type" 		=> "VARCHAR",
+				// 	// 	"constraint"=> 255,
+				// 	// 	"null" 		=> FALSE,
+				// 	// 	"default" 	=> ""
+				// 	// )
 				// );
-				// $data['results'][] = $this->dbforge->add_column("cpd_records", $fields);
+				// $data['results'][] = $this->dbforge->add_column("transactions", $fields);
 				
 			    // Modify fields
 		 	// 	$fields = array(

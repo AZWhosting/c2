@@ -265,7 +265,7 @@
 										<div class="col-md-9">
 											<div class="detailsWrapper">
 												<div class="row">
-													<div class="col-md-6">
+													<div class="col-md-6 marginBottom">
 														<input class="customerName" type="text" name="" data-bind="value: obj.name" disabled="disabled" style="background: #fff;" />
 														<ul class="nav nav-tabs" role="tablist">
 						                                    <li class="nav-item"> <a class="nav-link active show" data-toggle="tab" href="#cutomerTransaction" role="tab" aria-selected="true"><span><i class="ti-text"></i></span></a> </li>
@@ -436,16 +436,40 @@
 														<div class="row">
 															<div class="col-md-6">
 																<div class="blockBalance" data-bind="click: loadBalance" >
-																	<span class="glyphicons coins"><i></i></span>
-																	<span class="txt" style="padding-right: 18px;"><span data-bind="text: lang.lang.balance"></span><span data-bind="text: balance" style="font-size:medium;"></span></span>
-																	<div class="clearfix"></div>
+																	<div class="coverIcon"><i class="ti-server"></i></div>
+																	<div class="txt">
+																		<span  data-bind="text: lang.lang.balance"></span>
+																		<span data-bind="text: balance"></span>
+																	</div>
 																</div>
 															</div>
 															<div class="col-md-6">
-																<div class="blockDeposit" data-bind="click: loadDeposit" style="cursor: pointer; ">
-																	<span class="glyphicons briefcase"><i></i></span>
-																	<span class="txt"><span data-bind="text: lang.lang.deposit"></span><span data-bind="text: deposit" style="font-size:medium;"></span></span>
-																	<div class="clearfix"></div>
+																<div class="blockDeposit" data-bind="click: loadDeposit">
+																	<div class="coverIcon"><i class=" ti-briefcase"></i></div>
+																	<div class="txt">
+																		<span data-bind="text: lang.lang.deposit"></span>
+																		<span data-bind="text: deposit" ></span>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="row">
+															<div class="col-md-6">
+																<div class="blockOpenInvoice" data-bind="click: loadBalance" >
+																	<div class="coverIcon"><i class="icon-info"></i></div>																	
+																	<div class="txt">
+																		<span  data-bind="text: outInvoice"></span>
+																		<span  data-bind="text: lang.lang.open_invoice"></span>
+																	</div>																	
+																</div>
+															</div>
+															<div class="col-md-6">
+																<div class="blockOverDue" data-bind="click: loadOverInvoice" >
+																	<div class="coverIcon"><i class="ti-alarm-clock"></i></div>																	
+																	<div class="txt" >
+																		<span data-bind="text: overInvoice"></span>
+																		<span data-bind="text: lang.lang.over_due"></span>
+																	</div>																																		
 																</div>
 															</div>
 														</div>
@@ -467,6 +491,34 @@
 															</div>
 														</div> -->
 													</div>
+												</div>
+
+												<div class="row">
+													<input data-role="dropdownlist"
+														   class="sorter"
+												           data-value-primitive="true"
+												           data-text-field="text"
+												           data-value-field="value"
+												           data-bind="value: sorter,
+												                      source: sortList,
+												                      events: { change: sorterChanges }" />
+
+													<input data-role="datepicker"
+														   class="sdate"
+														   data-format="dd-MM-yyyy"
+												           data-bind="value: sdate,
+												           			  max: edate"
+												           placeholder="From ..." >
+
+												    <input data-role="datepicker"
+												    	   class="edate"
+												    	   data-format="dd-MM-yyyy"
+												           data-bind="value: edate,
+												                      min: sdate"
+												           placeholder="To ..." >
+
+												  	<button type="button" data-role="button" data-bind="click: searchTransaction"><i class="icon-search"></i></button>
+													
 												</div>
 
 												<!-- <div class="row">

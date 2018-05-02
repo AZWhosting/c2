@@ -524,12 +524,96 @@ a {
 	margin-top: 8px;
 }
 
-.detailsWrapper .blockBalance{
-	padding-right: 30px;
-	text-align: left;
-	cursor: pointer; 
-	background: #0077c5;
+.detailsWrapper .blockBalance,
+.detailsWrapper .blockDeposit,
+.detailsWrapper .blockOpenInvoice,
+.detailsWrapper .blockOverDue{
+	padding: 10px;
+    text-align: left;
+    cursor: pointer;
+    color: #fff;
+    height: 140px;
+    margin-bottom: 15px;
+    overflow: hidden;
+    position: relative;
+}
+.blockBalance{
+    background: #0077c5;
+}
+.blockDeposit{
+	background: #424242;
+}
+.blockOpenInvoice{
+	background: #21abf6;
+}
+.blockOverDue{
+	background: #bbbbbb;
+}
+.detailsWrapper .blockBalance i,
+.detailsWrapper .blockDeposit i,
+.detailsWrapper .blockOpenInvoice i,
+.detailsWrapper .blockOverDue i{
+	padding-top: 30px;
+    float: left;
+    position: relative;
+	font-size: 40px;
+	width: 50px;
+    -webkit-transition: all 300ms ease;
+    -moz-transition: all 300ms ease;
+    -o-transition: all 300ms ease;
+    -ms-transition: all 300ms ease;
+    transition: all 300ms ease;
+}
+.detailsWrapper .blockBalance:hover i,
+.detailsWrapper .blockDeposit:hover i,
+.detailsWrapper .blockOpenInvoice:hover i,
+.detailsWrapper .blockOverDue:hover i{
+	-webkit-transform: rotate(-20deg);
+    -moz-transform: rotate(-20deg);
+    -o-transform: rotate(-20deg);
+    -ms-transform: rotate(-20deg);
+    transform: rotate(-20deg);
+    font-size: 100px;
+    opacity: 0.2;
+    left: -20px;
+}
+.detailsWrapper .blockBalance .txt,
+.detailsWrapper .blockDeposit .txt,
+.detailsWrapper .blockOpenInvoice .txt,
+.detailsWrapper .blockOverDue .txt{
 	color: #fff;
+	padding: 20px 0 0 5px;
+    float: left;
+    -webkit-transition: all 300ms ease;
+    -moz-transition: all 300ms ease;
+    -o-transition: all 300ms ease;
+    -ms-transition: all 300ms ease;
+    transition: all 300ms ease;
+    display: inline-grid;
+}
+.detailsWrapper .blockBalance:hover .txt,
+.detailsWrapper .blockDeposit:hover .txt,
+.detailsWrapper .blockOpenInvoice:hover .txt,
+.detailsWrapper .blockOverDue:hover .txt{
+	-webkit-transform: scale(0.8);
+    -moz-transform: scale(0.8);
+    -o-transform: scale(0.8);
+    -ms-transform: scale(0.8);
+    transform: scale(0.8);
+    -webkit-transition: all 300ms ease;
+    -moz-transition: all 300ms ease;
+    -o-transition: all 300ms ease;
+    -ms-transition: all 300ms ease;
+    transition: all 300ms ease;
+}
+.detailsWrapper .blockBalance .txt span,
+.detailsWrapper .blockDeposit .txt span,
+.detailsWrapper .blockOpenInvoice .txt span,
+.detailsWrapper .blockOverDue .txt span{
+	float: left;
+    text-align: left;
+    width: 100%;
+    line-height: 30px;
 }
 @media (max-width: 767px){
 	.table.table-condensed.k-grid.k-widget.k-display-block{
