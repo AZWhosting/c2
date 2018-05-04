@@ -9122,6 +9122,9 @@
 </script>
 <script id="defaultFormFrame" type="text/x-kendo-tmpl">
   	<div class="container winvoice-print" style="page-break-after: always;width: 800px;min-height: 1105px;position: relative;">
+  		#if(banhji.institute.id == 860){#
+  			<div style="color: \#000;font-size: 12px;text-align: center;position: absolute;top: 105px;left: 0;width: 100%;">TIN: 330000349</div>
+  		#}#
 		<div class="span12 headerinv " style="border-bottom: 2px solid \#000;padding: 15px 0;padding-bottom: 30px;visibility: hidden;padding-bottom: 2px!important">
             <img class="logoP" style="position: absolute;left: 0;top: 20px;width: auto;height: 90px;" src="#: banhji.InvoicePrint.license.image_url#" alt="#: banhji.InvoicePrint.license.name#" title="#: banhji.InvoicePrint.license.name#" />
 			<div class="span12" align="center">
