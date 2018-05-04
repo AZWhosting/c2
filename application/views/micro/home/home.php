@@ -28,7 +28,7 @@
 <script id="Index" type="text/x-kendo-template">
 	<div class="page-wrapper ">
         <div class="container-fluid">
-            <div class="row page-titles home">
+            <div class="row marginTop15 home">
                 <div class="col-lg-6">
                     <div class="card">
                         <div class="card-body">
