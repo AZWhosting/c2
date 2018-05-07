@@ -345,6 +345,7 @@ class UtibillReports extends REST_Controller {
 		$data["count"] = 0;
 		$total = 0;
 		$totalUser = 0;
+		$totalUsage = 0;
 
 		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
@@ -391,7 +392,11 @@ class UtibillReports extends REST_Controller {
 			foreach ($obj as $value) {								
 				$usage = $value->winvoice_line_meter_record_usage;
 				$price = $value->winvoice_line_amount;
-				$amount = $usage*$price;
+				if ($usage < 1){
+					$amount = 1*$price; 
+				}else{
+					$amount = $usage*$price;
+				}
 				if(isset($objList[$value->contact_id])){
 					$objList[$value->contact_id]["line"][] = array(
 						"id" 				=> $value->id,
@@ -417,6 +422,7 @@ class UtibillReports extends REST_Controller {
 				}
 				$total +=  $amount;
 				$totalUser += 1;
+				$totalUsage += $usage;
 			}
 
 			foreach ($objList as $value) {
@@ -424,6 +430,7 @@ class UtibillReports extends REST_Controller {
 			}
 			$data['total'] = $total;
 			$data['totalUser'] = $totalUser;
+			$data['totalUsage'] = $totalUsage;
 			// $data["count"] = count($data["results"]);
 		}
 

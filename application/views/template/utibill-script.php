@@ -30752,6 +30752,7 @@
                     kendo.culture(banhji.locale);
                     banhji.saleDetail.set('total', kendo.toString(e.response.total, 'c2'));
                     banhji.saleDetail.set('totalUser', kendo.toString(e.response.totalUser, 'n0'));
+                    banhji.saleDetail.set('totalUsage', kendo.toString(e.response.totalUsage, 'n0'));
                 }
             });
             vm.pageLoad();

@@ -15323,7 +15323,13 @@
 									</div>
 
 								</div>
-								<div class="col-xs-12 col-sm-9">
+								<div class="col-xs-12 col-sm-3">
+									<div class="total-sale">
+										<p data-bind="text: lang.lang.total_usage">Total Usage</p>
+										<span data-bind="text: totalUsage"></span>
+									</div>
+								</div>
+								<div class="col-xs-12 col-sm-6">
 									<div class="total-sale">
 										<p data-bind="text: lang.lang.amount">Amount</p>
 										<span data-bind="text: total"></sapn>
