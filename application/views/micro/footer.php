@@ -30,5 +30,6 @@
       gtag('config', 'UA-109087721-1');
     </script>
     <script src="<?php echo base_url()?>assets/micro/bootstrap.min.js"></script>
+    
 </body>
 </html>

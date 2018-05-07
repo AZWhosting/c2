@@ -161,6 +161,11 @@ a {
 	float: left;
 	margin-top: 0 !important;
 }
+.btnAddAccount{
+	width: 110px;
+	float: left;
+	margin-top: 0 !important;
+}
 .btnBackgroundBlack{
 	background: #343a40 !important;
 }
@@ -810,6 +815,7 @@ a.fa.fa-qrcode:before{
 .well textarea{
 	width: 100%;
 }
+
 /*End*/
 
 @media (max-width: 767px){
@@ -824,14 +830,26 @@ a.fa.fa-qrcode:before{
 	.box-generic-noborder{
 		margin-bottom: 15px;
 	}
-	.backgroundButtonFooter #saveClose,
-	.backgroundButtonFooter #saveCancel {
-		margin: 8px 0;
+	.backgroundButtonFooter #saveDraft1{
+		margin-top: 8px;
+	    margin-left: 0;
+	    float: left;
+	}
+	.backgroundButtonFooter #saveClose {
+		margin-left: 0;
+	    margin-top: 8px;
+	    float: left;
+	    margin-right: 8px;
 	}
 	.backgroundButtonFooter #saveCancel{
-		margin-left: 8px;
+		margin-left: 0;
+	    margin-top: 8px;
+	    float: left;
+	    margin-right: 8px;
 	}
 	.backgroundButtonFooter .dropdown-toggle{
 		margin-top: 8px;
+	    float: left;
+	    margin-left: 0;
 	}
 }

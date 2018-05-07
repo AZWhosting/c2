@@ -3136,6 +3136,9 @@
         var blank = new kendo.View('#blank-tmpl');
         banhji.view.layout.showIn('#content', banhji.view.Index);
         banhji.Index.pageLoad();
+
+        var vm = banhji.Index;
+        banhji.userManagement.addMultiTask("Home","home",vm);
     });
     
     $(function() {
