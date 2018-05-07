@@ -16565,6 +16565,7 @@
 									<tr>
 										<th style="vertical-align: top;"><span data-bind="text: lang.lang.date">Date</span></th>
 										<th style="vertical-align: top;"><span data-bind="text: lang.lang.name">Name</span></th>
+										<th style="vertical-align: top;"><span data-bind="text: lang.lang.phone">Phone</span></th>
 										<th style="vertical-align: top;"><span data-bind="text: lang.lang.reference">Reference</span></th>
 										<th style="vertical-align: top;"><span data-bind="text: lang.lang.meter_number">Meter Number</span></th>
 										<th style="vertical-align: top;"><span data-bind="text: lang.lang.pole">Pole</span></th>
@@ -16598,6 +16599,7 @@
 	<tr>
 		<td>#=kendo.toString(new Date(issued_date),"dd-MM-yyyy")#</td>
 		<td>#=name#</td>
+		<td>#=phone#</td>
 		<td>
 			<a href="\#/#=type.toLowerCase()#/#=id#">#=number#</a>
 		</td>

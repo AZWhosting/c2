@@ -304,7 +304,12 @@ class UtibillReports extends REST_Controller {
 			foreach ($obj as $value) {	
 				$usage = $value->winvoice_line_meter_record_usage;
 				$price = $value->winvoice_line_amount;
-				$amount = $usage*$price;	
+				if ($usage < 1){
+					$amount = 1*$price; 
+				}else{
+					$amount = $usage*$price;
+				}
+					
 				$totalUsage += $usage;			
 				
 				if(isset($objList[$value->contact_id])){
@@ -915,7 +920,7 @@ class UtibillReports extends REST_Controller {
 		}
 
 		//Results
-		$obj->include_related("contact", array("abbr", "number", "name"));
+		$obj->include_related("contact", array("abbr", "number", "name", "phone"));
 		$obj->include_related("location", array("name"));
 		$obj->include_related("meter", array("number", "status"));
 		$obj->where("type", "Utility_Invoice");
@@ -952,6 +957,7 @@ class UtibillReports extends REST_Controller {
 				$data["results"][] = array(
 					"id" 				=> $value->id,
 					"name" 				=> $value->contact_abbr.$value->contact_number." ".$value->contact_name,
+					"phone" 			=> $value->contact_phone,
 					"type" 				=> $value->type,
 					"number" 			=> $value->number,
 					"issued_date" 		=> $value->issued_date,

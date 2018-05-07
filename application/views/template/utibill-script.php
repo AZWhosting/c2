@@ -21595,7 +21595,7 @@
                         cells: [{
                             value: self.company.name,
                             textAlign: "center",
-                            colSpan: 7
+                            colSpan: 8
                         }]
                     });
                     self.exArray.push({
@@ -21604,7 +21604,7 @@
                             bold: true,
                             fontSize: 20,
                             textAlign: "center",
-                            colSpan: 7
+                            colSpan: 8
                         }]
                     });
                     if (self.displayDate) {
@@ -21612,14 +21612,14 @@
                             cells: [{
                                 value: self.displayDate,
                                 textAlign: "center",
-                                colSpan: 7
+                                colSpan: 8
                             }]
                         });
                     }
                     self.exArray.push({
                         cells: [{
                             value: "",
-                            colSpan: 7
+                            colSpan: 8
                         }]
                     });
                     self.exArray.push({
@@ -21631,6 +21631,11 @@
                             },
                             {
                                 value: "Name",
+                                background: "#496cad",
+                                color: "#ffffff"
+                            },
+                            {
+                                value: "Phone",
                                 background: "#496cad",
                                 color: "#ffffff"
                             },
@@ -21700,6 +21705,9 @@
                                 {
                                     value: response.results[i].name
                                 },
+                                 {
+                                    value: response.results[i].phone
+                                },
                                 {
                                     value: response.results[i].number
                                 },
@@ -21729,7 +21737,7 @@
                         self.exArray.push({
                             cells: [{
                                 value: "",
-                                colSpan: 7
+                                colSpan: 8
                             }]
                         });
                     }
@@ -21738,6 +21746,9 @@
                                 value: "TOTAL",
                                 bold: true,
                                 fontSize: 16
+                            },
+                            {
+                                value: ""
                             },
                             {
                                 value: ""
