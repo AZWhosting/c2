@@ -106,11 +106,23 @@
             <nav class="navbar top-navbar navbar-expand-md navbar-dark">
                 <div class="navbar-header">
                     <a class="navbar-brand" href="<?php echo base_url();?>micro/home">
-                        <b>
-                            <img src="<?php echo base_url()?>assets/micro/logo-banhjiNew.png" style="height: 36px;" alt="homepage" class="dark-logo" />                            
+                        <!-- Logo icon --><b>
+                            <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
+                            <!-- Dark Logo icon -->
+                            <!-- <img src="<?php echo base_url()?>assets/micro/logo-icon.png" alt="homepage" class="dark-logo" /> -->
+                            <img src="<?php echo base_url()?>assets/micro/logo-banhjiNew.png" style="height: 36px;" alt="homepage" class="dark-logo" />
+                            <!-- Light Logo icon -->
+                            <!-- <img src="<?php echo base_url()?>assets/micro/logo-light-icon.png" alt="homepage" class="light-logo" /> -->
+                            <!-- <img src="<?php echo base_url()?>assets/micro/logo-micro.png" alt="homepage" > -->
                         </b>
-                        <img src="<?php echo base_url()?>assets/micro/logo-micro.png" style="height: 36px;" alt="homepage" class="dark-logo" />
-                    </a>
+                        <!--End Logo icon -->
+                        <!-- Logo text --><span>
+                         <!-- dark Logo text -->
+                         <!-- <img src="<?php echo base_url()?>assets/micro/logo-text.png" alt="homepage" class="dark-logo" /> -->
+                         <img src="<?php echo base_url()?>assets/micro/logo-micro.png" style="height: 36px;" alt="homepage" class="dark-logo" />
+                         <!-- Light Logo text -->
+                        <!-- 
+                         --></a>
                 </div>
 
                 <div class="navbar-collapse">

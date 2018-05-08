@@ -524,7 +524,8 @@ class UtibillReports extends REST_Controller {
 			    	$lastmonth = floatval($ob->ending_ballance);
 			    }
 				//Result
-				$subtotal = $tmp->amount + $tmp->maintenance + $tmp->installment + $tmp->exemption;
+				$subtotal = $tmp->amount + $tmp->maintenance + $tmp->installment + $tmp->exemption + $lastmonth;
+				$total = $subtotal - $tmp->amount_recieved;
 				$data["results"][] = array(
 		 			"id" 				=> $value->id,
 		 			"bloc_name" 		=> $blockname,
@@ -541,7 +542,8 @@ class UtibillReports extends REST_Controller {
 		 			"subtotal_amount" 	=> floatval($subtotal),
 		 			"amount_receive" 	=> floatval($tmp->amount_recieved),
 		 			"discount" 			=> floatval($tmp->discount),
-		 			"ending_balance" 	=> floatval($tmp->ending_ballance)
+		 			"ending_balance" 	=> floatval($tmp->ending_ballance),
+		 			"total" 			=> floatval($total)
 		 		);
 			}
 			$data["count"] = count($data["results"]);

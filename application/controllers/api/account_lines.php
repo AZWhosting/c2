@@ -203,7 +203,7 @@ class Account_lines extends REST_Controller {
 	//PUT
 	function index_put() {
 		$models = json_decode($this->put('models'));
-		$data["results"] = array();
+		$data["results"] = [];
 		$data["count"] = 0;
 
 		foreach ($models as $value) {			

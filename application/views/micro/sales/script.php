@@ -3689,7 +3689,7 @@
 
             if(obj!==null){
                 banhji.router.navigate('/cash_sale');
-                banhji.cashSale.setContact(obj);
+                //banhji.cashSale.setContact(obj);
             }
         },
         goInvoice           : function(){
@@ -10808,7 +10808,7 @@
                 if(banhji.pageLoaded["cash_sale"]==undefined){
                     banhji.pageLoaded["cash_sale"] = true;
 
-                    vm.lineDS.bind("change", vm.lineDSChanges);
+                    //vm.lineDS.bind("change", vm.lineDSChanges);
 
                     var validator = $("#example").kendoValidator({
                         rules: {
@@ -10889,7 +10889,7 @@
                     });
                 }
 
-                vm.pageLoad(id);
+                //vm.pageLoad(id);
 
         //  } else {
         //      window.location.replace(baseUrl + "admin");

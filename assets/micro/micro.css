@@ -10,7 +10,10 @@ body{
 h1, h2, h3, h4, h5, h6 {
     color: #203864;
 }
-
+#main-wrapper {
+    width: 100%;
+     overflow: visible; 
+}
 .nav-item.dropdown a i.ti-plus,
 .nav-item.dropdown a i.fa.fa-comments-o,
 .nav-item.dropdown a i.ti-menu-alt{
@@ -162,7 +165,7 @@ a {
 	margin-top: 0 !important;
 }
 .btnAddAccount{
-	width: 110px;
+	width: 135px;
 	float: left;
 	margin-top: 0 !important;
 }
@@ -215,8 +218,15 @@ a {
 .marginTop15{
 	margin-top: 15px;
 }
-
-
+#cbbAccounts-list{
+	width: 250px !important;
+}
+.dropdown-item{
+	cursor: pointer;
+}
+.dropdown-item:focus, .dropdown-item:hover {
+    background-color: rgb(213, 219, 219);
+}
 /*End*/
 
 /*Customize Kendo*/
@@ -594,6 +604,7 @@ a {
 	width: 100%;
 	height: 35px;
 }
+#customerMemo .btnAddMemo i,
 #customerMemo .btnAddMemo span{
 	color: #fff;
 }
@@ -642,6 +653,7 @@ a {
 #customerAttachment a.btnAddAttachment{
 	color: #fff;
 	margin-top: 8px;
+	float: right;
 }
 
 .detailsWrapper .blockBalance,
@@ -735,7 +747,7 @@ a {
     width: 100%;
     line-height: 30px;
 }
-.detailsWrapper .col-md-12 .marginRight{
+.detailsWrapper .col-md-12 .marginRight.marginBottom{
 	float: left;
 }
 .detailsWrapper .btnSearch{
@@ -815,6 +827,22 @@ a.fa.fa-qrcode:before{
 .well textarea{
 	width: 100%;
 }
+.k-widget.k-window .backgroundButtonFooter{
+	padding: 15px;
+    position: relative;
+    background: #343a40;
+    height: auto !important;
+    display: inline-block;
+    clear: both;
+    width: 93%;
+    box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;
+    margin: 15px 0 0;
+    text-align: right;
+}
+.marginBottom ul li a span i:before,
+.box-generic-noborder ul li a span i:before{
+	font-size: 17px;
+}
 
 /*End*/
 
@@ -852,4 +880,9 @@ a.fa.fa-qrcode:before{
 	    float: left;
 	    margin-left: 0;
 	}
-}
+
+	/*Customer Deposit*/
+	.table-responsive.customerDeposit {
+		margin-top: 15px;
+	}
+}   

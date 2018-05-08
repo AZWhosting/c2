@@ -189,7 +189,7 @@ class Readings extends REST_Controller {
 
 			$obj->where('id', $value->id);
 			$obj->get();
-			$oldusage = $obj->usage;
+			$oldusage = intval($obj->usage);
 
 			$obj->current 				= isset($value->current)			?$value->current: "";
 			// $obj->from_date 			= isset($value->from_date)			?$value->from_date: "";

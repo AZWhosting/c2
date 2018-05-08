@@ -619,15 +619,7 @@ class Accounting_modules extends REST_Controller {
 		$obj->where_related("transaction", "deleted <>", 1);
 		$obj->where("deleted <>", 1);
 		$obj->order_by("dr", "desc");
-		
-		//Results
-		if($page && $limit){
-			$obj->get_paged_iterated($page, $limit);
-			// $data["count"] = $obj->paged->total_rows;
-		}else{
-			$obj->get_iterated();
-			// $data["count"] = $obj->result_count();
-		}
+		$obj->get_iterated();
 		
 		if($obj->exists()){
 			$objList = [];
@@ -640,6 +632,7 @@ class Accounting_modules extends REST_Controller {
 				if(isset($objList[$value->transaction_id])){
 					$objList[$value->transaction_id]["line"][] = array(
 						"id" 			=> $value->id,
+						"account_id" 	=> $value->account_id,
 						"description" 	=> $value->description,
 						"reference_no" 	=> $value->reference_no,
 						"segments" 		=> [],
@@ -650,14 +643,15 @@ class Accounting_modules extends REST_Controller {
 						"contact" 		=> isset($value->contact_name) ? $value->contact_name : ""
 					);
 				}else{
-					$objList[$value->transaction_id]["id"] = $value->transaction_id;
-					$objList[$value->transaction_id]["type"] = $value->transaction_type;
-					$objList[$value->transaction_id]["number"] = $value->transaction_number;
+					$objList[$value->transaction_id]["id"] 			= $value->transaction_id;
+					$objList[$value->transaction_id]["type"] 		= $value->transaction_type;
+					$objList[$value->transaction_id]["number"] 		= $value->transaction_number;
 					$objList[$value->transaction_id]["issued_date"] = $value->transaction_issued_date;
-					$objList[$value->transaction_id]["memo"] = $value->transaction_memo;
-					$objList[$value->transaction_id]["rate"] = $value->transaction_rate;
-					$objList[$value->transaction_id]["line"][] = array(
+					$objList[$value->transaction_id]["memo"] 		= $value->transaction_memo;
+					$objList[$value->transaction_id]["rate"] 		= $value->transaction_rate;
+					$objList[$value->transaction_id]["line"][] 		= array(
 						"id" 			=> $value->id,
+						"account_id" 	=> $value->account_id,
 						"description" 	=> $value->description,
 						"reference_no" 	=> $value->reference_no,
 						"segments" 		=> [],

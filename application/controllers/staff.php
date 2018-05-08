@@ -7,10 +7,17 @@ class Staff extends CI_Controller {
 	}
 	
 	public function index() {	
-		$this->load->view("template/staff-header");
-		$this->load->view("staff_view");
-		$this->load->view("template/staff-script");
-		$this->load->view("template/staff-footer");
+		$this->load->view("staff/header");
+		$this->load->view("staff/home/home");
+		$this->load->view("staff/home/script");
+		$this->load->view("staff/footer");
+	}
+
+	public function home() {	
+		$this->load->view("staff/header");
+		$this->load->view("staff/home/home");
+		$this->load->view("staff/home/script");
+		$this->load->view("staff/footer");
 	}
 }
 

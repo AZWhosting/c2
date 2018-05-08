@@ -173,12 +173,14 @@ class Journal_lines extends REST_Controller {
 			$related = [];
 
 			//Segments
-			if(isset($value->segments)){
+			if(isset($value->segments)){				
 				$ids = [];
 				foreach ($value->segments as $val) {
-					array_push($ids, $val->id);
+					if(isset($val->id)){
+						array_push($ids, $val->id);
+					}
 				}
-
+				
 				if(count($ids)>0){
 					$segmentitems = new Segmentitem(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 					$segmentitems->where_in("id", $ids)->get();

@@ -15574,8 +15574,7 @@
 									    	field: 'amount_maintenance',
 									    	title: langVM.lang.maintenance,
 									    	editable: 'false', 
-									    	format: '{0:n}',
-									    	hidden: true,
+									    	format: '{0:n}',									    	
 			                            	attributes: { style: 'text-align: right;' } 
 									    },
 									    { 
@@ -15611,8 +15610,7 @@
 			                            { 
 									    	field: 'balance_last_month',
 									    	title: langVM.lang.balance_last_month,
-									    	editable: 'false', 
-									    	hidden: true,
+									    	editable: 'false', 									    
 							    			format: '{0:n}',
 			                            	attributes: { style: 'text-align: right;' }
 									    },
