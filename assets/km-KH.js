@@ -283,6 +283,7 @@ var	km_KH = {
 	"receivable_management_reports" : "របាយការណ៍​គ្រប់​គ្រង​បំណុល",
 	"the_following_reports_provide_summary" :  "របាយការណ៍​ខាង​ក្រោម​ផ្ដល់ការ​សង្ខេប",
 	"customer_balance_summary" :  "របាយការណ៍​សង្ខេប​សមតុល្យ​អតិថិជន",
+	"total_balance_report" : "របាយការណ៍​សរុបសមតុល្យ​អតិថិជន",
 	"show_each_customers_total_outstanding_balances" :  "Show each customer’s total outstanding balances.",
 	"customer_balance_detail" :  "របាយការណ័សមតុល្យ​លម្អិតរបស់​អតិថិជន",
 	"lists_individual_unpaid_invoices_for_each_customer" :  "តារាងជំពាក់របស់អតិថិជននិមួយៗ",

@@ -458,7 +458,7 @@ class Utibills extends REST_Controller {
 		   	$obj->sync = 1;
 	   		if($obj->save()){
 	   			$month_of = "";
-				$m = isset($obj->month_of) ? $obj->month_of : "";
+				$m = isset($obj->issued_date) ? $obj->issued_date : "";
 				$d = new DateTime($m);
 			    $d->modify('first day of this month');
 			    $month_of = $d->format('Y-m-d');

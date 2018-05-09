@@ -284,6 +284,7 @@ var	en_US = {
 	"receivable_management_reports" : "RECEIVABLE MANAGEMENT REPORTS",
 	"the_following_reports_provide_summary" : "The following reports provide summary",
 	"customer_balance_summary" : "Customer Balance Summary",
+	"total_balance_report" : "Total Balance Report",
 	"show_each_customers_total_outstanding_balances" : "Show each customer’s total outstanding balances.",
 	"customer_balance_detail" : "Customer Balance Detail",
 	"lists_individual_unpaid_invoices_for_each_customer" : "Lists individual unpaid invoices for each customer",

@@ -438,7 +438,7 @@
                                             </table>
                                             <br>
 
-                                            <span class="btn btn-icon btn-primary glyphicons ok_2" style="margin-top: 3px;width: 160px!important;"><i></i><span data-bind="click: calculate" >Start</span></span>
+                                            <span data-bind="click: calculate" class="btn btn-icon btn-primary glyphicons ok_2" style="margin-top: 3px;width: 160px!important;"><i></i><span  >Start</span></span>
                                         </div>
                                         <!-- // Tab content END -->
                                     </div>

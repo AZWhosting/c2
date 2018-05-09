@@ -23089,6 +23089,420 @@
             });
         }
     });
+    banhji.totalBalance = kendo.observable({
+        lang: langVM,
+        dataSource: dataStore(apiUrl + "utibillReports/totalBalance"),
+        licenseDS: dataStore(apiUrl + "branches"),
+        blocDS: dataStore(apiUrl + "locations"),
+        subLocationDS: dataStore(apiUrl + "locations"),
+        boxDS: dataStore(apiUrl + "locations"),
+        licenseSelect: null,
+        company: banhji.institute,
+        blocSelect: null,
+        loSelectName: "",
+        monthOf: "",
+        monthOfUpload: null,
+         exArray: [],
+        pageLoad: function() {
+            this.licenseDS.read();
+            this.set("monthOfUpload", "<?php echo date('Y-m-d');?>");
+            this.search();
+        },
+        printGrid: function() {
+            var gridElement = $('#grid'),
+                printableContent = '',
+                win = window.open('', '', 'width=990, height=900'),
+                doc = win.document.open();
+            var htmlStart =
+                '<!DOCTYPE html>' +
+                '<html>' +
+                '<head>' +
+                '<meta charset="utf-8" />' +
+                '<title></title>' +
+                '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />' +
+                '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
+                '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/responsive.css">' +
+                '<link href="<?php echo base_url(); ?>assets/invoice/invoice.css" rel="stylesheet" />' +
+                '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
+                '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
+                '<style>' +
+                'html { font: 11pt sans-serif; }' +
+                '.k-grid { border-top-width: 0; }' +
+                '.k-grid, .k-grid-content { height: auto !important; }' +
+                '.k-grid-content { overflow: visible !important; }' +
+                'div.k-grid table { table-layout: auto; width: 100% !important; }' +
+                '.k-grid .k-grid-header th { border-top: 1px solid; }' +
+                '.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
+                '</style><style type="text/css" media="print"> @page { size: portrait; margin:1mm; }' +
+                '.inv1 .main-color {' +
+
+                '-webkit-print-color-adjust:exact; ' +
+                '} ' +
+                '.table.table-borderless.table-condensed  tr th { background-color: #1E4E78!important;' +
+                '-webkit-print-color-adjust:exact; color:#fff!important;}' +
+                '.table.table-borderless.table-condensed  tr th * { color: #fff!important; -webkit-print-color-adjust:exact;}' +
+                '.inv1 .light-blue-td { ' +
+                'background-color: #c6d9f1!important;' +
+                'text-align: left;' +
+                'padding-left: 5px;' +
+                '-webkit-print-color-adjust:exact; ' +
+                '}' +
+                '.saleSummaryCustomer .table.table-borderless.table-condensed tr td { ' +
+                'background-color: #F2F2F2!important; -webkit-print-color-adjust:exact;' +
+                '}' +
+                '.saleSummaryCustomer .table.table-borderless.table-condensed tr:nth-child(2n+1) td { ' +
+                ' background-color: #fff!important; -webkit-print-color-adjust:exact;' +
+                '}' +
+                '.journal_block1>.span2 *, .journal_block1>.span5 * {color: #fff!important;}' +
+                '.journal_block1>.span2:first-child { ' +
+                'background-color: #bbbbbb!important; -webkit-print-color-adjust:exact;' +
+                '}' +
+                '.journal_block1>.span5:last-child {' +
+                'background-color: #496cad!important; color: #fff!important; -webkit-print-color-adjust:exact; ' +
+                '}' +
+                '.journal_block1>.span5 {' +
+                'background-color: #5cc7dd!important; color: #fff!important; -webkit-print-color-adjust:exact;' +
+                '}' +
+                '.saleSummaryCustomer .table.table-borderless.table-condensed tfoot .bg-total td {' +
+                'background-color: #1C2633!important;' +
+                'color: #fff!important; ' +
+                '-webkit-print-color-adjust:exact;' +
+                '}' +
+                '</style>' +
+                '</head>' +
+                '<body><div class="saleSummaryCustomer" style="padding: 0 10px;">';
+            var htmlEnd =
+                '</div></body>' +
+                '</html>';
+
+            printableContent = $('#invFormContent').html();
+            doc.write(htmlStart + printableContent + htmlEnd);
+            doc.close();
+            setTimeout(function() {
+                win.print();
+                win.close();
+            }, 2000);
+        },
+        licenseChange: function(e) {
+            var self = this;
+            this.blocDS.data([]);
+            this.set("locationSelect", "");
+            this.set("haveLicense", false)
+            this.subLocationDS.data([]);
+            this.boxDS.data([]);
+            this.set("boxSelect", "");
+            this.set("haveLocation", false);
+            this.set("haveSubLocation", false);
+            this.blocDS.filter([{
+                    field: "branch_id",
+                    value: this.get("licenseSelect")
+                },
+                {
+                    field: "main_bloc",
+                    value: 0
+                },
+                {
+                    field: "main_pole",
+                    value: 0
+                }
+            ]);
+            this.set("haveLicense", true);
+            this.set("liSelectName", e.sender.span[0].innerText);
+        }, 
+        onLocationChange: function(e) {
+            var self = this;
+            this.subLocationDS.data([]);
+            this.boxDS.data([]);
+            this.set("boxSelect", "");
+            this.set("haveSubLocation", false);
+            if (this.get("blocSelect")) {
+                this.subLocationDS.query({
+                        filter: [{
+                                field: "branch_id",
+                                value: this.get("licenseSelect")
+                            },
+                            {
+                                field: "main_bloc",
+                                value: this.get("blocSelect")
+                            },
+                            {
+                                field: "main_pole",
+                                value: 0
+                            }
+                        ],
+                        page: 1
+                    })
+                    .then(function(e) {
+                        if (self.subLocationDS.data().length > 0) {
+                            self.set("haveLocation", true);
+                        } else {
+                            self.set("haveLocation", false);
+                            self.set("subLocationSelect", "");
+                            self.subLocationDS.data([]);
+                        }
+                    });
+            }
+            this.set("loSelectName", e.sender.span[0].innerText);
+        },
+        onSubLocationChange: function(e) {
+            var self = this;
+            if (this.get("subLocationSelect")) {
+                this.boxDS.query({
+                        filter: [{
+                                field: "branch_id",
+                                value: this.get("licenseSelect")
+                            },
+                            {
+                                field: "main_bloc",
+                                value: this.get("blocSelect")
+                            },
+                            {
+                                field: "main_pole",
+                                value: this.get("subLocationSelect")
+                            }
+                        ]
+                    })
+                    .then(function(e) {
+                        if (self.boxDS.data().length > 0) {
+                            self.set("haveSubLocation", true);
+                        } else {
+                            self.set("haveSubLocation", false);
+                            self.set("boxSelect", "");
+                            self.boxDS.data([]);
+                        }
+                    });
+            }
+        },
+        search: function() {
+            var monthOfSearch = this.get("monthOfUpload"),
+                license_id = this.get("licenseSelect"),
+                bloc_id = this.get("blocSelect");
+                pole_id = this.get("subLocationSelect");
+                box_id = this.get("boxSelect");
+            var self = this;
+
+            var para = [];
+            var monthPara = [];
+            var monthOf = new Date(monthOfSearch);
+                monthOf.setDate(1);
+                monthOf = kendo.toString(monthOf, "yyyy-MM-dd");
+
+                var monthL = new Date(monthOfSearch);
+                var lastDayOfMonth = new Date(monthL.getFullYear(), monthL.getMonth() + 1, 0);
+                lastDayOfMonth = lastDayOfMonth.getDate();
+
+                monthL.setDate(lastDayOfMonth);
+                monthL = kendo.toString(monthL, "yyyy-MM-dd");
+
+                para.push({
+                    field: "month_of >=",
+                    value: monthOf
+                }, {
+                    field: "month_of <=",
+                    value: monthL
+                });
+                this.set("monthOf", monthOf);
+                //this.dataSource.filter(para);
+                    if(license_id){
+                        para.push({
+                            field: "branch_id",
+                            operator: "where_related_meter",
+                            value: license_id
+                        });
+                    }
+
+                    if (box_id) {
+                        para.push({
+                            field: "box_id",
+                            operator: "where_related_meter",
+                            value: box_id
+                        });
+                    } 
+
+                    if (pole_id) {
+                        para.push({
+                            field: "pole_id",
+                            operator: "where_related_meter",
+                            value: pole_id
+                        });
+                    } 
+
+                    if (bloc_id){
+                        para.push({
+                            field: "location_id",
+                            operator: "where_related_meter",
+                            value: bloc_id
+                        });
+                    }
+                    this.dataSource.query({
+                        filter: para,
+                        page: 1,
+                        pageSize: 100
+                    }).then(function(e) {
+                    // if (e.type == "read") {
+                        var response = self.dataSource.view();
+
+                        self.exArray = [];
+
+                        self.exArray.push({
+                            cells: [{
+                                value: "Customer List",
+                                bold: true,
+                                fontSize: 20,
+                                textAlign: "center",
+                                colSpan: 7
+                            }]
+                        });
+                        if (self.displayDate) {
+                            self.exArray.push({
+                                cells: [{
+                                    value: self.displayDate,
+                                    textAlign: "center",
+                                    colSpan: 7
+                                }]
+                            });
+                        }
+                        self.exArray.push({
+                            cells: [{
+                                value: "",
+                                colSpan: 7
+                            }]
+                        });
+                        self.exArray.push({
+                            cells: [{
+                                    value: "Code",
+                                    background: "#496cad",
+                                    color: "#ffffff"
+                                },
+                                {
+                                    value: "Customer",
+                                    background: "#496cad",
+                                    color: "#ffffff"
+                                },
+                                {
+                                    value: "Meter Number",
+                                    background: "#496cad",
+                                    color: "#ffffff"
+                                },
+                                {
+                                    value: "Previous",
+                                    background: "#496cad",
+                                    color: "#ffffff"
+                                },
+                                {
+                                    value: "Current",
+                                    background: "#496cad",
+                                    color: "#ffffff"
+                                },
+                                {
+                                    value: "Address",
+                                    background: "#496cad",
+                                    color: "#ffffff"
+                                },
+                                {
+                                    value: "License",
+                                    background: "#496cad",
+                                    color: "#ffffff"
+                                }
+                            ]
+                        });
+                        for (var i = 0; i < response.length; i++) {
+                            self.exArray.push({
+                                cells: [{
+                                        value: response[i].number,
+                                        bold: true,
+                                    },
+                                    {
+                                        value: response[i].name,
+                                        bold: true,
+                                    },
+                                    {
+                                        value: ""
+                                    },
+                                    {
+                                        value: ""
+                                    },
+                                    {
+                                        value: ""
+                                    },
+                                    {
+                                        value: ""
+                                    },
+                                    {
+                                        value: ""
+                                    }
+                                ]
+                            });
+                            for (var j = 0; j < response[i].line.length; j++) {
+                                self.exArray.push({
+                                    cells: [{
+                                            value: ""
+                                        },
+                                        {
+                                            value: ""
+                                        },
+                                        {
+                                            value: response[i].line[j].meter
+                                        },
+                                        {
+                                            value: response[i].line[j].previous
+                                        },
+                                        {
+                                            value: response[i].line[j].current
+                                        },
+                                        {
+                                            value: response[i].line[j].location
+                                        },
+                                        {
+                                            value: response[i].line[j].branch
+                                        },
+                                    ]
+                                });
+                            }
+                        }
+                    // }
+                });                  
+        },
+        cancel: function() {
+            this.contact.cancelChanges();
+            window.history.back();
+        },
+        ExportExcel: function() {
+            var workbook = new kendo.ooxml.Workbook({
+                sheets: [{
+                    columns: [{
+                            autoWidth: true
+                        },
+                        {
+                            autoWidth: true
+                        },
+                        {
+                            autoWidth: true
+                        },
+                        {
+                            autoWidth: true
+                        },
+                        {
+                            autoWidth: true
+                        },
+                        {
+                            autoWidth: true
+                        },
+                        {
+                            autoWidth: true
+                        },
+                    ],
+                    title: "Customer List",
+                    rows: this.exArray
+                }]
+            });
+            //save the file as Excel file with extension xlsx
+            kendo.saveAs({
+                dataURI: workbook.toDataURL(),
+                fileName: "customerList.xlsx"
+            });
+        }
+    });
     banhji.agingDetail = kendo.observable({
         lang: langVM,
         dataSource: dataStore(apiUrl + "utibillReports/aging_detail"),
@@ -29774,6 +30188,9 @@
         accountReceivableList: new kendo.Layout("#accountReceivableList", {
             model: banhji.accountReceivableList
         }),
+        totalBalance: new kendo.Layout("#totalBalance", {
+            model: banhji.totalBalance
+        }),
         agingSummary: new kendo.Layout("#agingSummary", {
             model: banhji.agingSummary
         }),
@@ -30868,6 +31285,23 @@
 
             if (banhji.pageLoaded["account_receivable_list"] == undefined) {
                 banhji.pageLoaded["account_receivable_list"] = true;
+            }
+            vm.pageLoad();
+        }
+    });
+    banhji.router.route("/total_balance", function() {
+        if (!banhji.userManagement.getLogin()) {
+            banhji.router.navigate('/manage');
+        } else {
+            banhji.view.layout.showIn("#content", banhji.view.totalBalance);
+            banhji.view.layout.showIn('#menu', banhji.view.menu);
+            banhji.view.menu.showIn('#secondary-menu', banhji.view.waterMenu);
+
+            var vm = banhji.totalBalance;
+            banhji.userManagement.addMultiTask("Customer List", "total_balance", null);
+            if (banhji.pageLoaded["total_balance"] == undefined) {
+                banhji.pageLoaded["total_balance"] = true;
+
             }
             vm.pageLoad();
         }

@@ -3684,84 +3684,139 @@
             }
             reader.readAsBinaryString(files[0].rawFile);
         },
-        absent      : 0,
-        late        : 0,
-        checkinOnly : 0,
-        calculate1 : function(Time, Check) {
-            var time1 = new Date(Time);
-            var Lat = 0;
-            var LatHour = 0;
-
-            var DateAmount = time1.getDate();
-            var Time = time1.getHours();
-            if(Check == 'C/In'){
-
-                if(Time < 13){
-                    LatHour = Time - 13;
-                }
-            }else{
-                if(Time > 6){
-                    LatHour = 6 - Time;
-                }
-            }
-        },
+        attendanDS: [],
         calculate: function() {
             var self = this;
+            var StandByLate = 0;
+            var StandByDays = 0;
+            var StandByNoCheckOut = 0;
+            var StandByNoCheckIn =0;
+            var NoCheckOut = 0;
+            var NoCheckIn = 0;
+            var Late = 0;
+            var Absent = 0;
             $.each(this.dataSource, function(i,v){
                 var time = new Date(v.Date);
-                var hour = time.getHours();
+                var hour = time.getHours() * 60;
+                var second = time.getMinutes();
+                hour += second; 
                 var day = time.getDate();
-                if(v.Status != 'Repeat' && v.Status != 'Invalid'){
-                    if(v.Check == 'C/In' && v.Desciption != 'OverTime Out'){
-                        //Check no Check out
-                        var haveCheck = 0;
+                console.log(hour);
+                if(v.Check == 'C/In'){
+                    //Stand by
+                    if(hour < 1140){
+                        StandByDays += 1;
+                        //stand by from 1pm to 5pm
+                        var slate = hour - 780;
+                        if(slate > 0){
+                            StandByLate += 1;
+                        }
+                        //check in no check out
+                        var haveCheckout = 0;
                         $.each(self.dataSource, function(j,k){
                             var time1 = new Date(k.Date);
                             var day1 = time1.getDate();
-                            if(day == day1){
-                                if(k.Check == 'C/Out' || k.Check == 'OverTime Out'){
-                                    haveCheck = 1;
+                            if(day1 == day){
+                                if(k.Check != 'C/In'){
+                                    haveCheckout = 1;
                                 }
                             }
                         });
-                        if(haveCheck == 0){
-                            console.log('A');
-                            self.set('absent', self.absent += 1);
-                            self.set('checkinOnly', self.checkinOnly += 1);
+                        if(haveCheckout == 0){
+                            StandByNoCheckOut += 1;
+                        }
+                    //For Work
+                    }else{
+                        //Check IN late for meka
+                        if(v.Position == 1){
+                            if(hour >= 1200){
+                                Absent += 1;
+                            }else{
+                                Late += 1;
+                            }
                         }else{
-                            //Check Meka late
-                            if(v.Position == 1){
-                                if(hour > 19){
-                                    var lateh = hour - 19;
-                                    if(lateh > 1){
-                                        self.absent += 1;
-                                    }else if(lateh > 0){
-                                        self.late += 1;
-                                    }
-                                } 
-                            }else if(v.Position == 2){
-                                if(hour > 20){
-                                    var lateh = hour - 20;
-                                    if(lateh > 1){
-                                        self.absent += 1;
-                                    }else if(lateh > 0){
-                                        self.late += 1;
-                                    }
+                            //Check in late for girl
+                            if(hour > 1200){
+                                if(hour >= 1260){
+                                    Absent += 1;
+                                }else{
+                                    Late += 1;
                                 }
                             }
                         }
-                    }else if(v.Check == 'C/Out'){
-
+                        //check in no check out
+                        var haveCheckout = 0;
+                        $.each(self.dataSource, function(j,k){
+                            var time1 = new Date(k.Date);
+                            var day1 = time1.getDate();
+                            var day2 = day + 1;
+                            if(day1 == day2){
+                                if(k.Check != 'C/In'){
+                                    haveCheckout = 1;
+                                }
+                            }
+                        });
+                        if(haveCheckout == 0){
+                            NoCheckOut += 1;
+                        }
+                    }
+                }else{
+                    //Stand by (count from 10am to 7pm)
+                    if(hour > 600 && hour < 1140){
+                        //stand by from 1pm to 5pm
+                        var slate = hour - 1020;
+                        if(slate < 0){
+                            Absent += 1;
+                        }
+                        //check out no check in
+                        var haveCheckin = 0;
+                        $.each(self.dataSource, function(j,k){
+                            var time1 = new Date(k.Date);
+                            var day1 = time1.getDate();
+                            if(day1 == day){
+                                if(k.Check == 'C/In'){
+                                    haveCheckin = 1;
+                                }
+                            }
+                        });
+                        if(haveCheckin == 0){
+                            StandByNoCheckIn += 1;
+                        }
+                    //Work
+                    }else{
+                        //Check out no check in
+                        var haveCheckin = 0;
+                        $.each(self.dataSource, function(j,k){
+                            var time1 = new Date(k.Date);
+                            var day1 = time1.getDate();
+                            var day2 = day - 1;
+                            var hour1 = time1.getHours();
+                            if(day1 == day2){
+                                if(k.Check == 'C/In' && hour1 > 18){
+                                    haveCheckin = 1;
+                                }
+                            }
+                        });
+                        if(haveCheckin == 0){
+                            NoCheckIn += 1;
+                        }
+                    }
+                    //Work
+                    if(hour > 1140 && hour < 1439){
+                        Absent += 1;
                     }
                 }
-                // if(v.Check == 'C/In' && ){\
-                //     //For Meka
-                //     if(v.Position == 1){
-                //         if(hour > 7){
-
-                //         }
-                //     }
-                // }
+            });
+            this.attendanDS.splice(0, this.attendanDS.length);
+            this.attendanDS.push({
+                standbydays : StandByDays,
+                standbylate : StandByLate,
+                standbynocheckout: StandByNoCheckOut,
+                standbynocheckin: StandByNoCheckIn,
+                nocheckout  : NoCheckOut,
+                nocheckin   : NoCheckIn,
+                absent      : Absent,
+                late        : Late,
             });
         },
         cancel: function() {

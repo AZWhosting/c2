@@ -989,6 +989,126 @@ class UtibillReports extends REST_Controller {
 		$this->response($data, 200);
 	}
 
+	//balance List
+	function totalBalance_get() {
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 10000;								
+		$sort 	 	= $this->get("sort");		
+		$data["results"] = [];
+		$data["count"] = 0;
+	
+
+		$obj = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
+			}
+		}
+		
+		//Filter		
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value['operator'])){
+	    			$obj->{$value['operator']}($value['field'], $value['value']);	    		
+	    		} else {
+	    			$obj->where($value['field'], $value['value']);
+	    		}
+			}
+		}
+
+		//Results
+		$obj->include_related('meter/contact', array("abbr", "number", "address", "phone", "name", "status", "id"));
+		$obj->include_related('meter/property', array("abbr", "name"));
+		$obj->include_related('meter/location', "name");
+		$obj->include_related('meter/branch', "name" );
+		$obj->include_related('meter', array("number", "status", "location_id", "pole_id", "box_id", "contact_id"));
+		$obj->get_paged_iterated($page, $limit);
+		
+		if($obj->exists()){
+			$objList = [];
+			$balance1 = 0;
+			$amount1 = 0;
+			$total = 0;
+			foreach ($obj as $value) {	
+				$balance = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$balance->where("type", "Utility_Invoice");
+				$balance->where_in("status", array(0,2));	
+				$balance->where("is_recurring <>", 1);
+				$balance->where("deleted <>", 1);
+				$balance->where("contact_id", $value->meter_contact_id);	
+				$balance->get();
+				$balance1 = $balance->amount;
+
+				$amount = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$amount->where("type", "Utility_Invoice");
+				$amount->where_in("status", 1);	
+				$amount->where("is_recurring <>", 1);
+				$amount->where("deleted <>", 1);
+				$amount->where("contact_id", $value->meter_contact_id);	
+				$amount->get();
+				$amount1 = $amount->amount;	
+
+				$total = $amount1 + $balance1; 		
+				
+				if(isset($objList[$value->meter_contact_id])){
+					$objList[$value->meter_contact_id]["line"][] = array(
+						"id"		=> $value->id,
+						"number"	=> $value->meter_contact_number,
+						"usage"		=> $value->usage,
+						"meter"		=> $value->meter_number,
+						"location"  => $value->meter_location_name,
+						"branch"	=> $value->meter_branch_name,
+						"status"	=> $value->meter_status,
+						"previous"	=> $value->previous,						
+						"current"	=> $value->current,
+						"month_of" 	=> $value->month_of,
+						"property"	=> $value->meter_property_name,
+						"balance"	=> floatval($balance1),
+						"amount"	=> floatval($amount1),
+						"total"		=> $total,
+
+					);
+				}else{
+					$objList[$value->meter_contact_id]["id"] 		= $value->meter_contact_id;					
+					$objList[$value->meter_contact_id]["number"] 	= $value->meter_contact_abbr.$value->meter_contact_number;
+					$objList[$value->meter_contact_id]["name"] 		= $value->meter_contact_name;
+					$objList[$value->meter_contact_id]["line"][]	= array(
+						"id"		=> $value->id,
+						"number"	=> $value->meter_contact_number,
+						"meter"		=> $value->meter_number,
+						"usage"		=> $value->usage,
+						"location"  => $value->meter_location_name,
+						"branch"	=> $value->meter_branch_name,
+						"status"	=> $value->meter_status,
+						"previous"	=> $value->previous,
+						"current"	=> $value->current,
+						"month_of" 	=> $value->month_of,
+						"property"	=> $value->meter_property_name,
+						"balance"	=> floatval($balance1),
+						"amount"	=> floatval($amount1),
+						"total"		=> $total,
+					);
+				}
+			}
+
+			foreach ($objList as $value) {
+				$data["results"][] = $value;
+			}
+			$data["count"] = $obj->paged->total_rows;
+			$data["currentPage"] = $obj->paged->current_page;
+		}
+
+		//Response Data
+		$this->response($data, 200);
+	}
+
 	//Deposit
 	function deposit_get() {
 		$filter 	= $this->get("filter");
