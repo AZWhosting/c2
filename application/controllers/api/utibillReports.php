@@ -1039,21 +1039,52 @@ class UtibillReports extends REST_Controller {
 			$balance = 0;
 			$total = 0;
 			foreach ($obj as $value) {								
-				$usage = $value->winvoice_line_meter_record_usage;
+
 				$wi = new Winvoice_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				$wi->where('type', 'usage');
 				$wi->where('transaction_id', $value->id)->limit(1)->get();
 				$mr = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$mr->where('id', $wi->meter_record_id)->get();
+				$mr->where('id', $wi->meter_record_id)->limit(1)->get();
 
-				if ($value->status == 1 ){
-					$amount = $value->amount;
-				}else{
-					$balance = $value->amount;
+				//Balance
+				$remain = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$remain->where("meter_id", $value->meter_id);
+				$remain->where("type", "Utility_Invoice");
+				$remain->where("deleted", 0);
+				$remain->where("status <>", 1)->get_iterated();
+				$amountOwed = 0;
+				$fineAmount = 0;
+				foreach($remain as $rem) {
+					$fine = new Winvoice_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$fine->where("transaction_id", $rem->id);
+					$fine->where("type", "fine")->order_by("id", "desc")->limit(1)->get();
+					if($fine->exists()){
+						$dueDate = new DateTime($rem->due_date);
+						$ddate = $dueDate->getTimestamp();
+						$fineDate = new DateTime(date('Y-m-d'));
+						$fdate = $fineDate->getTimestamp();
+						if($fdate > $ddate){
+							$fineDate = $fineDate->diff($dueDate)->days;
+							$fineDateAmount = intval($fine->quantity);
+							if($fineDate >= $fineDateAmount){
+								$fineAmount = floatval($fine->amount);
+							}
+						}
+					}
+					$remf = floatval($rem->amount) + $fineAmount;
+					$amountOwed += $remf;
+					if($rem->status == 2) {
+						$qu = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						$qu->where("type", "Cash_Receipt");
+						$qu->where("reference_id", $rem->id)->get();
+						foreach($qu as $q){
+							$amountOwed -= floatval($q->amount);
+						};
+					}
 				}
-
-				$total = $amount + $balance;
-					$objList[] = array(
+				$amount = $value->amount;
+				$total = $amount + $amountOwed;
+					$data["results"][] = array(
 						"id" 				=> $value->id,
 						"number"			=> $value->abbr."".$value->contact_number,
 						"name"				=> $value->contact_name,
@@ -1065,7 +1096,7 @@ class UtibillReports extends REST_Controller {
 						"current" 			=> $mr->current,
 						"usage" 			=> floatval($wi->quantity),
 						"amount"			=> floatval($amount),
-						"balance"			=> floatval($balance),
+						"balance"			=> floatval($amountOwed),
 						"total"				=> $total,
 					);
 				// if(isset($objList[$value->meter_id])){
@@ -1082,9 +1113,6 @@ class UtibillReports extends REST_Controller {
 				// }
 			}
 
-			foreach ($objList as $value) {
-				$data["results"][] = $value;
-			}
 		}
 
 		//Response Data

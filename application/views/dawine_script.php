@@ -27775,17 +27775,6 @@
         		this.txnTemplateDS.sync();
         	}
         },
-        addMembershipPattern: function(){
-            this.membershipDS.add({
-                "contact_id"                : 0,
-                "membership_type_id"        : 1,
-                "membership_date"           : new Date(),
-                "status"                    : 1,
-                "expiry_date"               : ""
-            });
-
-            this.
-        },
         goInvoiceCustom 	: function(){
 		    banhji.router.navigate('/invoice_custom');
         },

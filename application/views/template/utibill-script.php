@@ -23338,6 +23338,7 @@
                     this.dataSource.query({
                         filter: para,
                         page: 1,
+                       
                     }).then(function(e) {
                     // if (e.type == "read") {
                         var response = self.dataSource.view();

@@ -90,14 +90,27 @@ class Membership_types extends REST_Controller {
 			
 			isset($value->name) 		? $obj->name 			= $value->name : "";
 			isset($value->description) 	? $obj->description 	= $value->description : "";
+			isset($value->membership_id)? $obj->membership_id 	= $value->membership_id : "";
 			isset($value->is_system) 	? $obj->is_system 		= $value->is_system : "";
 						
 			if($obj->save()){
+				//Add default pattern membership
+				$memberships = new Membership(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$memberships->membership_type_id 	= $obj->id : "";
+				$memberships->status 				= $value->status : "";
+				$memberships->is_pattern 			= $value->is_pattern : 1;
+				$memberships->save();
+
+				$mtypes = new Membership_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$mtypes->get_by_id($obj->id);
+				$mtypes->membership_id = $memberships->id;
+				$mtypes->save();
+
 				$data["results"][] = array(
 					"id" 			=> $obj->id,
 					"name" 	 		=> $obj->name,					
 					"description" 	=> $obj->description,
-					"membership_id"	=> $obj->membership_id,
+					"membership_id"	=> $memberships->id,
 					"is_system"		=> $obj->is_system
 				);
 			}
@@ -119,6 +132,7 @@ class Membership_types extends REST_Controller {
 			
 			isset($value->name) 		? $obj->name 			= $value->name : "";
 			isset($value->description) 	? $obj->description 	= $value->description : "";
+			isset($value->membership_id)? $obj->membership_id 	= $value->membership_id : "";
 			isset($value->is_system) 	? $obj->is_system 		= $value->is_system : "";
 
 			if($obj->save()){				
