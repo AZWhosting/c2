@@ -16846,75 +16846,33 @@
 								        <!-- //Date -->
 								        <div class="tab-pane active" id="tab-1">
 									        	<div class="col-sm-12 row" style="padding:20px 0;padding-top: 0;">
-											<div class="col-xs-12 col-sm-2" >
-												<div class="control-group">	
-													<label ><span data-bind="text: lang.lang.license">License</span></label>
-													<input 
-														data-role="dropdownlist" 
-														style="width: 100%;" 
-														data-option-label="License ..." 
-														data-auto-bind="false" 
-														data-value-primitive="true" 
-														data-text-field="name" 
-														data-value-field="id" 
-														data-bind="
-															value: licenseSelect,
-						                  					source: licenseDS,
-						                  					events: {change: licenseChange}">
-						                  		</div>
+											<div class="col-xs-12 col-sm-3">
+												<span data-bind="text: lang.lang.license">Licenses</span>
+												<input 
+													data-role="dropdownlist" 
+													data-option-label="License ..." 
+													data-auto-bind="false" 
+													data-value-primitive="true" 
+													data-text-field="name" 
+													data-value-field="id" 
+													data-bind="
+														value: licenseSelect,
+															source: licenseDS,
+															events: {change: licenseChange}" style="width: 100%">
 											</div>
-											<div class="col-xs-12 col-sm-2" >
-												<div class="control-group">								
-													<label ><span data-bind="text: lang.lang.location">Location</span></label>
+											<div class="col-xs-12 col-sm-3">
+												<span data-bind="text: lang.lang.location">Locations</span>
 													<input 
 														data-role="dropdownlist" 
-														style="width: 100%;" 
 														data-option-label="Location ..." 
 														data-auto-bind="false" 
-														data-value-primitive="true" 
+														data-value-primitive="false" 
 														data-text-field="name" 
 														data-value-field="id" 
 														data-bind="
 															value: blocSelect,
-															enabled: haveLicense,
-															events: {change: onLocationChange},
-						                  					source: blocDS">
-						                  		</div>
-											</div>
-											<div class="col-xs-12 col-sm-3">
-												<div class="control-group">								
-													<label ><span data-bind="text: lang.lang.sub_location">Location</span></label>
-													<input 
-														data-role="dropdownlist" 
-														style="width: 100%;" 
-														data-option-label="Sub Location ..." 
-														data-auto-bind="false" 
-														data-value-primitive="true" 
-														data-text-field="name" 
-														data-value-field="id" 
-														data-bind="
-															value: subLocationSelect,
-															enabled: haveLocation,
-															events: {change: onSubLocationChange},
-						                  					source: subLocationDS">
-						                  		</div>
-											</div>
-											<div class="col-xs-12 col-sm-2" >
-												<div class="control-group">								
-													<label ><span data-bind="text: lang.lang.box">Box</span></label>
-													<input 
-														data-role="dropdownlist" 
-														style="width: 100%;" 
-														data-option-label="Box ..." 
-														data-auto-bind="false" 
-														data-value-primitive="true" 
-														data-text-field="name" 
-														data-value-field="id" 
-														data-bind="
-															value: boxSelect,
-															enabled: haveSubLocation,
-						                  					source: boxDS">
-						                  		</div>
+															enabled: haveBloc,
+															source: blocDS" style="width: 100%">
 											</div>
 											<div class="col-xs-12 col-sm-2">
 												<div class="control-group">	

@@ -23276,10 +23276,8 @@
         },
         search: function() {
             var monthOfSearch = this.get("monthOfUpload"),
-                license_id = this.get("licenseSelect"),
-                bloc_id = this.get("blocSelect");
-                pole_id = this.get("subLocationSelect");
-                box_id = this.get("boxSelect");
+                license = this.get("licenseSelect"),
+                bloc = this.get("blocSelect");
             var self = this;
 
             var para = [];
@@ -23303,42 +23301,19 @@
                     value: monthL
                 });
                 this.set("monthOf", monthOf);
-                //this.dataSource.filter(para);
-                    if(license_id){
-                        para.push({
-                            field: "branch_id",
-                            operator: "where_related_meter",
-                            value: license_id
-                        });
-                    }
+                this.dataSource.filter(para);
+                   
 
-                    if (box_id) {
-                        para.push({
-                            field: "box_id",
-                            operator: "where_related_meter",
-                            value: box_id
-                        });
-                    } 
-
-                    if (pole_id) {
-                        para.push({
-                            field: "pole_id",
-                            operator: "where_related_meter",
-                            value: pole_id
-                        });
-                    } 
-
-                    if (bloc_id){
+                    if (bloc) {
                         para.push({
                             field: "location_id",
-                            operator: "where_related_meter",
-                            value: bloc_id
+                            value: bloc.id
                         });
                     }
                     this.dataSource.query({
                         filter: para,
                         page: 1,
-                       
+                        // pageSize: 50,
                     }).then(function(e) {
                     // if (e.type == "read") {
                         var response = self.dataSource.view();

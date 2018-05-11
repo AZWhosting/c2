@@ -1222,7 +1222,7 @@ input.k-textbox{
     margin: -20px auto 0!important;
 }
 html.no-touch.sticky-top:not(.animations-gpu) #content {
-    padding-top: 30px !important;
+    padding-top: 60px !important;
         overflow: inherit;
 }
 .dropdown-menu{

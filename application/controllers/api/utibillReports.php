@@ -1025,7 +1025,7 @@ class UtibillReports extends REST_Controller {
 		//Results
 
 		$obj->include_related("contact", array("abbr", "number", "name"));
-		$obj->include_related("meter", "number");
+		// $obj->include_related("meter", "number");
 		// $obj->include_related('meter/record', array("usage", "previous", "current"));
 		$obj->where("type", "Utility_Invoice");
 		// $obj->where("is_recurring <>", 1);
@@ -1091,7 +1091,7 @@ class UtibillReports extends REST_Controller {
 						"type" 				=> $value->type,
 						"date" 				=> $value->issued_date,
 						"location" 			=> $value->location_name,
-						"meter_number" 		=> $value->meter_number,
+						"meter_number" 		=> $value->number,
 						"previous" 			=> $mr->previous,
 						"current" 			=> $mr->current,
 						"usage" 			=> floatval($wi->quantity),

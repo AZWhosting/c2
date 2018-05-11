@@ -96,9 +96,9 @@ class Membership_types extends REST_Controller {
 			if($obj->save()){
 				//Add default pattern membership
 				$memberships = new Membership(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$memberships->membership_type_id 	= $obj->id : "";
-				$memberships->status 				= $value->status : "";
-				$memberships->is_pattern 			= $value->is_pattern : 1;
+				$memberships->membership_type_id 	= $obj->id;
+				$memberships->status 				= 1;
+				$memberships->is_pattern 			= 1;
 				$memberships->save();
 
 				$mtypes = new Membership_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
@@ -159,7 +159,10 @@ class Membership_types extends REST_Controller {
 			$obj->where("id", $value->id)->get();
 			
 			$lock = new Membership(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$lock->where("membership_type_id", $value->id)->limit(1)->get();
+			$lock->where("is_pattern <>", 1);
+			$lock->where("membership_type_id", $value->id);
+			$lock->limit(1);
+			$lock->get();
 
 			if($lock->exists()){
 				$data["results"][] = array(
@@ -167,9 +170,14 @@ class Membership_types extends REST_Controller {
 					"status" => "This data is using, can not delete."
 				);
 			}else{
+				//Delete membership pattern
+				$memberships = new Membership(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$memberships->where("id", $value->membership_id)->get();
+
 				$data["results"][] = array(
 					"data"   => $value,
-					"status" => $obj->delete()
+					"status" => $obj->delete(),
+					"memberships" => $memberships->delete()
 				);
 			}
 		}
