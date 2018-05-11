@@ -79,7 +79,12 @@ class Memberships extends REST_Controller {
 
 		if($obj->exists()){
 			foreach ($obj as $value) {				
-				//Results				
+				//Results
+				$contacts = [];
+				if($value->contact_id>0){
+					$contacts = $value->contact->get_raw()->result()[0];
+				}
+
 				$data["results"][] = array(
 					"id" 							=> $value->id,
 					"contact_id" 	 				=> $value->contact_id,
@@ -97,7 +102,7 @@ class Memberships extends REST_Controller {
 					"deleted"						=> $value->deleted,
 
 					"membership_type"				=> $value->membership_type_name,
-					"contacts" 						=> $value->contact->get_raw()->result()[0]
+					"contacts" 						=> $contacts
 				);
 			}
 		}
@@ -179,7 +184,9 @@ class Memberships extends REST_Controller {
 
 			//Contact			
 			if(isset($value->contacts)){
-				$obj->contact_id = $value->contacts->id;
+				if(count($value->contacts)>0){
+					$obj->contact_id = $value->contacts->id;
+				}
 			}
 
 			if($obj->save()){				

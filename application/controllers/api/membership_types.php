@@ -71,7 +71,7 @@ class Membership_types extends REST_Controller {
 					"id" 			=> $value->id,
 					"name" 	 		=> $value->name,
 					"description" 	=> $value->description,
-					"membership_id"	=> $value->membership_id,
+					"membership_id"	=> intval($value->membership_id),
 					"is_system"		=> $value->is_system
 				);
 			}
@@ -105,6 +105,27 @@ class Membership_types extends REST_Controller {
 				$mtypes->get_by_id($obj->id);
 				$mtypes->membership_id = $memberships->id;
 				$mtypes->save();
+
+				//Add recurring
+				$recurrings = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$recurrings->transaction_template_id = 3;
+                $recurrings->payment_term_id     = 0;
+                $recurrings->payment_method_id   = 0;
+                $recurrings->reference_id     	 = $memberships->id;
+                $recurrings->type                = "Invoice";//Required
+                $recurrings->number              = "";
+                $recurrings->rate                = 1;//Required
+                $recurrings->status              = 0;
+                $recurrings->recurring_name      = "Subcription Recurring";
+                // $recurrings->start_date          = new Date();
+                $recurrings->frequency           = "Daily";
+                $recurrings->month_option        = "Day";
+                $recurrings->interval            = 1;
+                $recurrings->day                 = 1;
+                $recurrings->week                = 0;
+                $recurrings->month               = 0;
+                $recurrings->is_recurring        = 1;
+                $recurrings->save();
 
 				$data["results"][] = array(
 					"id" 			=> $obj->id,
@@ -174,10 +195,18 @@ class Membership_types extends REST_Controller {
 				$memberships = new Membership(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				$memberships->where("id", $value->membership_id)->get();
 
+				//Delete recurring
+				$recurrings = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$recurrings->where("reference_id", $value->membership_id);
+				$recurrings->where("is_recurring", 1);
+				$recurrings->get();
+				$recurrings->deleted = 1;
+
 				$data["results"][] = array(
-					"data"   => $value,
-					"status" => $obj->delete(),
-					"memberships" => $memberships->delete()
+					"data"   		=> $value,
+					"status" 		=> $obj->delete(),
+					"memberships" 	=> $memberships->delete(),
+					"recurrings" 	=> $recurrings->save()
 				);
 			}
 		}

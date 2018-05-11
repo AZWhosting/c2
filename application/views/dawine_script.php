@@ -26071,10 +26071,6 @@
 				self.fieldValueDS.sync();
 				self.uploadFile();
 
-
-
-
-
 				return data;
 			}, function(reason) { //Error
 				$("#ntf1").data("kendoNotification").error(reason);
@@ -27777,6 +27773,13 @@
         },
         goInvoiceCustom 	: function(){
 		    banhji.router.navigate('/invoice_custom');
+        },
+        addNewMembershipType: function(){
+            this.membershipTypeDS.insert(0, {
+                "name"          : "",
+                "description"   : "",
+                "membership_id" : 0
+            });
         },
         goMembershipPattern : function(e){
             var data = e.data;

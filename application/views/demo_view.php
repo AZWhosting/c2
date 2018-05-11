@@ -14774,7 +14774,9 @@
 								                   data-text-field="name"
 								                   data-value-field="id"
 								                   data-bind="value: obj.membership_type_id,
-								                              source: membershipTypeDS"
+								                   			  disabled: obj.is_pattern,
+								                              source: membershipTypeDS,
+								                              events:{ change:membershipTypeChanges }"
 								                   data-option-label="(--- Select ---)"
 								                   required data-required-msg="required" style="width: 100%;" />
 									</div>
@@ -14804,7 +14806,8 @@
 										<label for="dpkMembershipDate">Membership Date <span style="color:red">*</span></label>
 							            <input id="dpkMembershipDate" name="dpkMembershipDate"
 								            		data-role="datepicker"
-					            					data-bind="value: obj.membership_date"
+					            					data-bind="value: obj.membership_date,
+					            								disabled: obj.is_pattern"
 					            					data-format="dd-MM-yyyy"
 					            					data-parse-formats="yyyy-MM-dd"
 					            					placeholder="dd-MM-yyyy" 
@@ -14820,7 +14823,8 @@
 										<label for="registeredDate">Expiry Date</label>
 							            <input id="dpkExpiryDate" name="dpkExpiryDate"
 							            		data-role="datepicker"
-				            					data-bind="value: obj.expiry_date"
+				            					data-bind="value: obj.expiry_date,
+				            								disabled: obj.is_pattern"
 				            					data-format="dd-MM-yyyy"
 				            					data-parse-formats="yyyy-MM-dd"
 				            					placeholder="dd-MM-yyyy" style="width: 100%;" />
@@ -15793,9 +15797,9 @@
 		                 data-editable="true"
 		                 data-toolbar="['create', 'save', 'cancel']"
 		                 data-columns="[
-		                                { 'field': 'name', title:'Field Name','width': 270 },
-		                                { 'field': 'description', title:'Description' },
-		                                { command: 'destroy', title: '&nbsp;', width: '100px' }
+                            { 'field': 'name', title:'Field Name','width': 270 },
+                            { 'field': 'description', title:'Description' },
+                            { command: 'destroy', title: '&nbsp;', width: '100px' }
 		                 ]"
 		                 data-bind="source: customFieldDS"
 		                 style="height: 200px"></div>
@@ -15804,13 +15808,15 @@
 
 	            <!-- Tab Membership type content -->
 	            <div class="tab-pane active" id="tab7-7">
+	            	<button class="btn btn-inverse" data-bind="click: addNewMembershipType"><i class="icon-plus icon-white"></i> Add New Membership</button>
+
 	            	<div data-role="grid"
 		                 data-editable="true"
-		                 data-toolbar="['create', 'save', 'cancel']"
+		                 data-toolbar="['save', 'cancel']"
 		                 data-columns="[
-                            { field: 'name', title:'Field Name','width': 270 },
+                            { field: 'name', title:'Name','width': 270 },
                             { field: 'description', title:'Description' },
-                            { title: '&nbsp;', template: '<button data-bind=click:goMembershipPattern>Pattern</button>', width: '100px' },
+                            { field: 'membership_id', title: '&nbsp;', template: kendo.template($('#membershipSetting-membershipType-template').html()), width: '100px' },
                             { command: 'destroy', title: '&nbsp;', width: '100px' }
 		                 ]"
 		                 data-bind="source: membershipTypeDS"
@@ -15822,6 +15828,11 @@
 	    </div>
 
 	</div>
+</script>
+<script id="membershipSetting-membershipType-template" type="text/x-kendo-tmpl">
+	#if(membership_id>0){#
+		<button data-bind="click:goMembershipPattern">Pattern</button>
+	#}#
 </script>
 
 
