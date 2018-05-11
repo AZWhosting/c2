@@ -72,18 +72,25 @@ class Ops extends REST_Controller {
 			 	//    $this->db->update_batch('measurements', $raw, 'id');
 
 			    //Insert batch data
-		 	// 	$raw = array(
-				// 	// array(
-			 // 	//    		'type' 			=> 'Receipt_Note',
-			 // 	//    		'abbr' 			=> 'RTN',
-			 // 	//    		'name' 			=> 'Receipt Note'
-			 // 	//    	),
-			 // 	   	array(
-			 // 	   		'name' 			=> 'AMK',
-			 // 	   		'is_system' 	=> 1
-			 // 	   	)
-				// );
-			 // 	$this->db->insert_batch('payment_methods', $raw);
+			 	// 	$raw = array(
+					// 	// array(
+					//  	//    'type' 	=> 'Receipt_Note',
+					//  	//    'abbr' 	=> 'RTN',
+					//  	//    'name' 	=> 'Receipt Note'
+					//  	//),
+				 // 	   	array(
+				 // 	   		'transaction_form_id' 	=> 71,
+				 // 	   		'user_id' 				=> 12,
+				 // 	   		'type' 					=> 'Cash_Advance',
+				 // 	   		'name' 					=> 'Default Cash Advance',
+				 // 	   		'color' 				=> '',
+				 // 	   		'moduls'				=> 'account_mg',
+				 // 	   		'title' 				=> 'Cash Advance',
+				 // 	   		'note' 					=> '',
+				 // 	   		'status' 				=> 1
+				 // 	   	)
+					// );
+				 // 	$this->db->insert_batch('transaction_templates', $raw);
 				
 				// Add new fields
 				// $fields = array(
@@ -98,9 +105,15 @@ class Ops extends REST_Controller {
 				// 	// 	"constraint"=> 255,
 				// 	// 	"null" 		=> FALSE,
 				// 	// 	"default" 	=> ""
-				// 	// )
+				// 	// ),
+				// 	"membership_id" => array(
+				// 		"type" 		=> "INT",
+				// 		"constraint"=> 11,
+				// 		"null" 		=> FALSE,
+				// 		"default" 	=> 0
+				// 	)
 				// );
-				// $data['results'][] = $this->dbforge->add_column("transactions", $fields);
+				// $data['results'][] = $this->dbforge->add_column("membership_types", $fields);
 				
 			    // Modify fields
 		 	// 	$fields = array(

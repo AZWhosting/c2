@@ -2242,7 +2242,8 @@ class Utibills extends REST_Controller {
 							}
 						}
 					}
-					$amountOwed += $rem->amount + $fineAmount;
+					$remf = floatval($rem->amount) + $fineAmount;
+					$amountOwed += $remf;
 					if($rem->status == 2) {
 						$qu = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 						$qu->where("type", "Cash_Receipt");

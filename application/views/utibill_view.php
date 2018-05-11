@@ -2223,7 +2223,7 @@
 				    	<div class="row-fluid">
 				    		<div class="col-xs-12 col-sm-12 well">
 								<div class="row">
-									<div class=col-xs-12 col-sm-3">
+									<div class="col-xs-12 col-sm-3">
 										<!-- Group -->
 										<div class="control-group">
 											<label ><span data-bind="text: lang.lang.license_no">License No.</span> <span style="color:red">*</span></label>
@@ -3923,7 +3923,7 @@
 																disabled: obj.is_recurring,
 																events:{change:checkExistingNumber}"
 													required data-required-msg="required"
-													placeholder="eg. ABC00001" style="width: 83%; float: left; margin-right: 5px;"" />
+													placeholder="eg. ABC00001" style="width: 83%; float: left; margin-right: 5px;" />
 											<div style="padding-left: 0; width: 25px; float: left;">
 												<a class="glyphicons no-js qrcode" data-bind="click: generateNumber" title="Generate Number" style="float: left; margin: 2px 0 0 0 ;"><i></i></a>
 											</div>
@@ -7928,7 +7928,7 @@
 	    	</div>
 	    	<div class="span4" style="margin-top: 15px;float:right;">
 	    		
-	    		<span id="secondwnumber#= id#"" style="width: 180px; height: auto; float: right;"></span><br>
+	    		<span id="secondwnumber#= id" style="width: 180px; height: auto; float: right;"></span><br>
 	    		<p style="text-align: right;clear: both;margin-top: 10px; float: right;font-size: 20px; ">ប្រាក់ត្រូវបង់សរុប</p><br>
 
 	    		<p style="padding: 8px;margin-bottom: 10px; background: \\#fff; border: 5px solid \\#000; width: 254px; float: right;font-size: 15px; color: \\#000;font-weight: 600; text-align: center; ">#= kendo.toString(amount, locale=="km-KH"?"c0":"c", locale)#</p><br>
@@ -10911,7 +10911,7 @@
 </script>
 <script id="invoiceForm3" type="text/x-kendo-template">
     <div class="row-fluid">
-    	<div class="col-md-8 col-md-offset-2" inv1" style="margin-top: 15px; padding-right: 15px; padding-left: 8px; ">
+    	<div class="col-md-8 col-md-offset-2 inv1" style="margin-top: 15px; padding-right: 15px; padding-left: 8px; ">
     		<div class="head" style="width: 100%; margin-bottom: 10px; float: left;">
 	        	<!-- <div class="logo" style="width: 30%;">
 	            	<img data-bind="attr: { src: objLicense.image_url, alt: company.name, title: company.name }" />
@@ -11071,7 +11071,7 @@
 	    						</span>
 	    					</td>
 	    					<td colspan="1" style="font-weight: 700; text-align: right; border: 1px solid #ccc;">
-	    						<span style="color: #333; font-size: 15px;"">
+	    						<span style="color: #333; font-size: 15px;">
 	    							100,000
 	    						</span>
 	    					</td>
@@ -16984,7 +16984,7 @@
 								</thead>
 								<tbody data-role="listview"
 											 data-bind="source: dataSource"
-											
+											 data-auto-bind="false"
 											 data-template="totalBalance-temp"
 								></tbody>
 							</table>
@@ -16997,23 +16997,17 @@
 </script>
 <script id="totalBalance-temp" type="text/x-kendo-template" >
 	<tr>
-		<td  style="font-weight: bold; color: black;">#: number #</td>
-		<td  style="font-weight: bold; color: black;">#: name #</td>
+		<td  style="font-weight: bold; color: black;">#=number #</td>
+		<td  style="font-weight: bold; color: black;">#=name #</td>
+		<td style="text-align: center">#=meter_number#</td>
+		<td style="text-align: right">#=previous#</td>
+		<td style="text-align: right">#=current#</td>
+		<td style="text-align: right">#=usage#</td>
+		<td style="text-align: right;">#=kendo.toString(balance, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#</td>
+		<td style="text-align: right;">#=kendo.toString(amount, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#</td>
+		<td style="text-align: right;">#=kendo.toString(total, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#</td>
 	</tr>
-	#for(var i= 0; i <line.length; i++) {#
-		<tr>
-			<td></td>
-			<td></td>
-			<td style="text-align: center">#=line[i].meter#</td>
-			<td style="text-align: right">#=line[i].previous#</td>
-			<td style="text-align: right">#=line[i].current#</td>
-			<td style="text-align: right">#=line[i].usage#</td>
-			<td style="text-align: right;">#=kendo.toString(line[i].balance, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#</td>
-			<td style="text-align: right;">#=kendo.toString(line[i].amount, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#</td>
-			<td style="text-align: right;">#=kendo.toString(line[i].total, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#</td>
-		</tr>
 
-	#}#
 </script>
 <script id="customerDepositReport" type="text/x-kendo-template">
 	<div class="container">

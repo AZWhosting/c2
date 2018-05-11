@@ -992,14 +992,13 @@ class UtibillReports extends REST_Controller {
 	//balance List
 	function totalBalance_get() {
 		$filter 	= $this->get("filter");
-		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 10000;								
-		$sort 	 	= $this->get("sort");		
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
 		$data["results"] = [];
 		$data["count"] = 0;
-	
 
-		$obj = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 		//Sort
 		if(!empty($sort) && isset($sort)){
@@ -1024,85 +1023,68 @@ class UtibillReports extends REST_Controller {
 		}
 
 		//Results
-		$obj->include_related('meter/contact', array("abbr", "number", "address", "phone", "name", "status", "id"));
-		$obj->include_related('meter/property', array("abbr", "name"));
-		$obj->include_related('meter/location', "name");
-		$obj->include_related('meter/branch', "name" );
-		$obj->include_related('meter', array("number", "status", "location_id", "pole_id", "box_id", "contact_id"));
-		$obj->get_paged_iterated($page, $limit);
-		
+
+		$obj->include_related("contact", array("abbr", "number", "name"));
+		$obj->include_related("meter", "number");
+		// $obj->include_related('meter/record', array("usage", "previous", "current"));
+		$obj->where("type", "Utility_Invoice");
+		// $obj->where("is_recurring <>", 1);
+		$obj->where("deleted <>", 1);
+		$obj->get_iterated();
+
 		if($obj->exists()){
 			$objList = [];
-			$balance1 = 0;
-			$amount1 = 0;
+			$usage = 0;
+			$amount = 0;
+			$balance = 0;
 			$total = 0;
-			foreach ($obj as $value) {	
-				$balance = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$balance->where("type", "Utility_Invoice");
-				$balance->where_in("status", array(0,2));	
-				$balance->where("is_recurring <>", 1);
-				$balance->where("deleted <>", 1);
-				$balance->where("contact_id", $value->meter_contact_id);	
-				$balance->get();
-				$balance1 = $balance->amount;
+			foreach ($obj as $value) {								
+				$usage = $value->winvoice_line_meter_record_usage;
+				$wi = new Winvoice_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$wi->where('type', 'usage');
+				$wi->where('transaction_id', $value->id)->limit(1)->get();
+				$mr = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$mr->where('id', $wi->meter_record_id)->get();
 
-				$amount = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$amount->where("type", "Utility_Invoice");
-				$amount->where_in("status", 1);	
-				$amount->where("is_recurring <>", 1);
-				$amount->where("deleted <>", 1);
-				$amount->where("contact_id", $value->meter_contact_id);	
-				$amount->get();
-				$amount1 = $amount->amount;	
-
-				$total = $amount1 + $balance1; 		
-				
-				if(isset($objList[$value->meter_contact_id])){
-					$objList[$value->meter_contact_id]["line"][] = array(
-						"id"		=> $value->id,
-						"number"	=> $value->meter_contact_number,
-						"usage"		=> $value->usage,
-						"meter"		=> $value->meter_number,
-						"location"  => $value->meter_location_name,
-						"branch"	=> $value->meter_branch_name,
-						"status"	=> $value->meter_status,
-						"previous"	=> $value->previous,						
-						"current"	=> $value->current,
-						"month_of" 	=> $value->month_of,
-						"property"	=> $value->meter_property_name,
-						"balance"	=> floatval($balance1),
-						"amount"	=> floatval($amount1),
-						"total"		=> $total,
-
-					);
+				if ($value->status == 1 ){
+					$amount = $value->amount;
 				}else{
-					$objList[$value->meter_contact_id]["id"] 		= $value->meter_contact_id;					
-					$objList[$value->meter_contact_id]["number"] 	= $value->meter_contact_abbr.$value->meter_contact_number;
-					$objList[$value->meter_contact_id]["name"] 		= $value->meter_contact_name;
-					$objList[$value->meter_contact_id]["line"][]	= array(
-						"id"		=> $value->id,
-						"number"	=> $value->meter_contact_number,
-						"meter"		=> $value->meter_number,
-						"usage"		=> $value->usage,
-						"location"  => $value->meter_location_name,
-						"branch"	=> $value->meter_branch_name,
-						"status"	=> $value->meter_status,
-						"previous"	=> $value->previous,
-						"current"	=> $value->current,
-						"month_of" 	=> $value->month_of,
-						"property"	=> $value->meter_property_name,
-						"balance"	=> floatval($balance1),
-						"amount"	=> floatval($amount1),
-						"total"		=> $total,
-					);
+					$balance = $value->amount;
 				}
+
+				$total = $amount + $balance;
+					$objList[] = array(
+						"id" 				=> $value->id,
+						"number"			=> $value->abbr."".$value->contact_number,
+						"name"				=> $value->contact_name,
+						"type" 				=> $value->type,
+						"date" 				=> $value->issued_date,
+						"location" 			=> $value->location_name,
+						"meter_number" 		=> $value->meter_number,
+						"previous" 			=> $mr->previous,
+						"current" 			=> $mr->current,
+						"usage" 			=> floatval($wi->quantity),
+						"amount"			=> floatval($amount),
+						"balance"			=> floatval($balance),
+						"total"				=> $total,
+					);
+				// if(isset($objList[$value->meter_id])){
+				// 	$objList[$value->meter_id]["invoice"] 			+= 1;
+				// 	$objList[$value->meter_id]["amount"] 			+= $amount;
+				// 	$objList[$value->meter_id]["usage"]				+= $usage;
+				// }else{
+				// 	$objList[$value->meter_id]["id"] 				= $value->contact_id;
+				// 	$objList[$value->meter_id]["name"] 				= $value->contact_abbr.$value->contact_number." ".$value->contact_name;
+				// 	$objList[$value->meter_id]["invoice"]			= 1;
+				// 	$objList[$value->meter_id]["location"]			= $value->location_name;
+				// 	$objList[$value->meter_id]["amount"]			= $amount;
+				// 	$objList[$value->meter_id]["usage"]				= $usage;
+				// }
 			}
 
 			foreach ($objList as $value) {
 				$data["results"][] = $value;
 			}
-			$data["count"] = $obj->paged->total_rows;
-			$data["currentPage"] = $obj->paged->current_page;
 		}
 
 		//Response Data

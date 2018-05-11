@@ -14,95 +14,99 @@ class Rrd extends MY_Controller {
 		/*
 		 *set up title and keywords (if not the default in custom.php config file will be set) 
 		 */
-		$this->_render("demo_view");	
+		// $this->_render("demo_view");	
+		$this->load->view("template/demo-header");
+		$this->load->view("demo_view");
+		$this->load->view("demo_script");
+		$this->load->view("template/demo-footer");
 	}
-	public function segment() {	
+	// public function segment() {	
 		
-		/*
-		 *set up title and keywords (if not the default in custom.php config file will be set) 
-		 */
-		$this->_render("demo_view_segment");	
-	}
+	// 	/*
+	// 	 *set up title and keywords (if not the default in custom.php config file will be set) 
+	// 	 */
+	// 	$this->_render("demo_view_segment");	
+	// }
 
-	public function voucher() {	
+	// public function voucher() {	
 		
-		/*
-		 *set up title and keywords (if not the default in custom.php config file will be set) 
-		 */
-		$this->_render("voucher_view");	
-	}
-	public function pich() {	
+	// 	/*
+	// 	 *set up title and keywords (if not the default in custom.php config file will be set) 
+	// 	 */
+	// 	$this->_render("voucher_view");	
+	// }
+	// public function pich() {	
 		
-		/*
-		 *set up title and keywords (if not the default in custom.php config file will be set) 
-		 */
-		$this->_render("pich_view");	
-	}
-	public function sela() {
+	// 	/*
+	// 	 *set up title and keywords (if not the default in custom.php config file will be set) 
+	// 	 */
+	// 	$this->_render("pich_view");	
+	// }
+	// public function sela() {
 		
-		/*
-		 *set up title and keywords (if not the default in custom.php config file will be set) 
-		 */
-		$this->_render("sela_view");
-	}
+	// 	/*
+	// 	 *set up title and keywords (if not the default in custom.php config file will be set) 
+	// 	 */
+	// 	$this->_render("sela_view");
+	// }
 
-	public function offline() {
+	// public function offline() {
 		
-		/*
-		 *set up title and keywords (if not the default in custom.php config file will be set) 
-		 */
-		$this->_render("offline_view");
-	}
+	// 	/*
+	// 	 *set up title and keywords (if not the default in custom.php config file will be set) 
+	// 	 */
+	// 	$this->_render("offline_view");
+	// }
 
-	public function app() {	
+	// public function app() {	
 		
-		/*
-		 *set up title and keywords (if not the default in custom.php config file will be set) 
-		 */
-		$this->_render("app_center");	
-	}
+		
+	// 	 *set up title and keywords (if not the default in custom.php config file will be set) 
+		 
+	// 	$this->_render("app_center");	
+	// }
 
-	public function fsr() {	
+	// public function fsr() {	
 		
-		/*
-		 *set up title and keywords (if not the default in custom.php config file will be set) 
-		 */
-		$this->_render("fsr_view");	
-	}
+	// 	/*
+	// 	 *set up title and keywords (if not the default in custom.php config file will be set) 
+	// 	 */
+	// 	$this->_render("fsr_view");	
+	// }
 
-	public function test() {	
+	// public function test() {	
 		
-		/*
-		 *set up title and keywords (if not the default in custom.php config file will be set) 
-		 */
-		$this->_render("gridtest");	
-	}
-	public function choeunw() {	
+	// 	/*
+	// 	 *set up title and keywords (if not the default in custom.php config file will be set) 
+	// 	 */
+	// 	$this->_render("gridtest");	
+	// }
+	// public function choeunw() {	
 		
-		/*
-		 *set up title and keywords (if not the default in custom.php config file will be set) 
-		 */
-		$this->_render("choeunw_view");	
-	}
-	public function water() {	
+	// 	/*
+	// 	 *set up title and keywords (if not the default in custom.php config file will be set) 
+	// 	 */
+	// 	$this->_render("choeunw_view");	
+	// }
+	// public function water() {	
 		
-		/*
-		 *set up title and keywords (if not the default in custom.php config file will be set) 
-		 */
-		$this->_render("water_view");	
-	}
+	// 	/*
+	// 	 *set up title and keywords (if not the default in custom.php config file will be set) 
+	// 	 */
+	// 	$this->_render("water_view");	
+	// }
 
-	public function utibill() {	
+	// public function utibill() {	
 		
-		/*
-		 *set up title and keywords (if not the default in custom.php config file will be set) 
-		 */
-		$this->_render("utibill_view");	
-	}
+	// 	/*
+	// 	 *set up title and keywords (if not the default in custom.php config file will be set) 
+	// 	 */
+	// 	$this->_render("utibill_view");	
+	// }
 
-	public function virtual() {
-		$this->_render('virtual_view');
-	}
+	// public function virtual() {
+	// 	$this->_render('virtual_view');
+	// }
 }
 
 /* End of file app.php */

@@ -30,6 +30,7 @@ class Memberships extends REST_Controller {
 		$sort 	 	= $this->get("sort");
 		$data["results"] = [];
 		$data["count"] = 0;
+		$is_pattern = 0;
 
 		$obj = new Membership(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
 
@@ -54,12 +55,17 @@ class Memberships extends REST_Controller {
 						$obj->{$value['operator']}($value['field'], $value['value']);
 					}
 				} else {
-	    			$obj->where($value["field"], $value["value"]);
+					if($value["field"]=="is_pattern"){
+	    				$is_pattern = $value["value"];
+	    			}else{
+	    				$obj->where($value["field"], $value["value"]);
+	    			}
 				}
 			}
 		}
 
 		$obj->include_related("membership_type", "name");
+		$obj->where("is_pattern", $is_pattern);
 		$obj->where("deleted <>", 1);
 
 		//Results
@@ -87,6 +93,7 @@ class Memberships extends REST_Controller {
 					"fellow_date"					=> $value->fellow_date,
 					"first_cdp_year"				=> $value->first_cdp_year,
 					"cpd_required_credit"			=> $value->cpd_required_credit,
+					"is_pattern" 					=> intval($value->is_pattern),
 					"deleted"						=> $value->deleted,
 
 					"membership_type"				=> $value->membership_type_name,
@@ -137,6 +144,7 @@ class Memberships extends REST_Controller {
 					"fellow_date"					=> $obj->fellow_date,
 					"first_cdp_year"				=> $obj->first_cdp_year,
 					"cpd_required_credit"			=> $obj->cpd_required_credit,
+					"is_pattern" 					=> intval($obj->is_pattern),
 					"deleted"						=> $obj->deleted
 				);
 			}
@@ -188,6 +196,7 @@ class Memberships extends REST_Controller {
 					"fellow_date"					=> $obj->fellow_date,
 					"first_cdp_year"				=> $obj->first_cdp_year,
 					"cpd_required_credit"			=> $obj->cpd_required_credit,
+					"is_pattern" 					=> intval($obj->is_pattern),
 					"deleted"						=> $obj->deleted,
 				);		
 			}

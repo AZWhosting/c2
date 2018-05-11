@@ -71,6 +71,7 @@ class Membership_types extends REST_Controller {
 					"id" 			=> $value->id,
 					"name" 	 		=> $value->name,
 					"description" 	=> $value->description,
+					"membership_id"	=> $value->membership_id,
 					"is_system"		=> $value->is_system
 				);
 			}
@@ -96,6 +97,7 @@ class Membership_types extends REST_Controller {
 					"id" 			=> $obj->id,
 					"name" 	 		=> $obj->name,					
 					"description" 	=> $obj->description,
+					"membership_id"	=> $obj->membership_id,
 					"is_system"		=> $obj->is_system
 				);
 			}
@@ -124,6 +126,7 @@ class Membership_types extends REST_Controller {
 					"id" 			=> $obj->id,
 					"name" 	 		=> $obj->name,
 					"description" 	=> $obj->description,
+					"membership_id"	=> $obj->membership_id,
 					"is_system"		=> $obj->is_system
 				);		
 			}

@@ -13,7 +13,10 @@ class Dawine extends MY_Controller {
 		/*
 		 *set up title and keywords (if not the default in custom.php config file will be set) 
 		 */
-		$this->_render("dawine_view");	
+		$this->load->view("template/demo-header");
+		$this->load->view("dawine_view");
+		$this->load->view("dawine_script");
+		$this->load->view("template/demo-footer");
 	}
 
 	public function custom_table() {

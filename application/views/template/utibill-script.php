@@ -399,6 +399,7 @@
             }
         });
     } 
+    
 
     function segmentEditor(container, options) {
         $('<input name="' + options.field + '" />')
@@ -6615,7 +6616,7 @@
     //Add Purchase
     banhji.purchase =  kendo.observable({
         lang                        : langVM,
-        dataSource                  : dataStore(apiUrl + "transactions"),
+        dataSource                  : dataStore(apiUrl + "transactions/electricity"),
         lineDS                      : dataStore(apiUrl + "item_lines"),
         txnDS                       : dataStore(apiUrl + "transactions"),
         numberDS                    : dataStore(apiUrl + "transactions/number"),
@@ -23337,7 +23338,6 @@
                     this.dataSource.query({
                         filter: para,
                         page: 1,
-                        pageSize: 100
                     }).then(function(e) {
                     // if (e.type == "read") {
                         var response = self.dataSource.view();
