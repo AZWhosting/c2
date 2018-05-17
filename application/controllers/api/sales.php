@@ -663,7 +663,7 @@ class Sales extends REST_Controller {
 		if($obj->exists()){
 			$objList = [];
 			foreach ($obj as $value) {								
-				$amount = (floatval($value->amount) - floatval($value->deposit)) / floatval($value->rate);
+				$amount = floatval($value->amount) / floatval($value->rate);
 				$invoice = 0;
 				$cashSale = 0;
 				if($value->type=="Commercial_Invoice" || $value->type=="Vat_Invoice" || $value->type=="Invoice"){
@@ -737,7 +737,7 @@ class Sales extends REST_Controller {
 		if($obj->exists()){
 			$objList = [];
 			foreach ($obj as $value) {								
-				$amount = (floatval($value->amount) - floatval($value->deposit)) / floatval($value->rate);
+				$amount = floatval($value->amount) / floatval($value->rate);
 				
 				if(isset($objList[$value->contact_id])){
 					$objList[$value->contact_id]["line"][] = array(

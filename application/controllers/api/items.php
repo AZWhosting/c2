@@ -22,6 +22,11 @@ class Items extends REST_Controller {
 		}
 	}
 
+	//TO FILTER UNWANTED DATA, PLEASE USE THESE CODE BELLOW:
+	// $obj->where("nature <>", "main_variant");
+	// $obj->where("is_pattern <>", 1);
+	// $obj->where("deleted <>", 1);
+
 	function test_get() {		
 		$filter 	= $this->get("filter");
 		$data["results"] = [];

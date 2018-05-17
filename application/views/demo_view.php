@@ -9547,7 +9547,7 @@
 			<td style="text-align: left;">
 				<a href="\#/#=line[i].type.toLowerCase()#/#=line[i].id#">#=line[i].number#</a>
 			</td>
-			<td style="text-align: right;">#=line[i].memo#</td>
+			<td style="text-align: left;">#=line[i].memo#</td>
 			<td style="text-align: right;">#=kendo.toString(line[i].amount, "c2", banhji.locale)#</td>
 		</tr>
 	#}#
@@ -54100,6 +54100,105 @@
         </div>
     </div>
 </script>
+<script id="defaultSaleReturn" type="text/x-kendo-template">
+	<div class="inv1">
+        <div class="content">
+        	<div class="advoucher-header">
+				<div class="head" style="width: 100%;">
+		        	<div class="logo" style="width: 15%;">
+		            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
+		            </div>
+		            <div class="cover-name-company" style="width: 70%!important;float: left;margin-left: 15px;">
+		            	<h2 ></h2>
+		            	<h3 style="float: none; text-align: center;font-size: 25px;line-height: 37px!important;" data-bind="text: company.name"></h3>
+		                <div class="clear" style="float: none;">
+		                	<p style="font-size: 14px!important;float: none; text-align: center;">អាស័យ​ដ្ឋាន Address: <span data-bind="text: company.address"></span></p>
+		                    <p style="font-size: 14px!important;float: none;width: 100%;text-align: center;">ទូរស័ព្ទលេខ HP <span data-bind="text: company.telephone"></span> | Email: <span data-bind="text: company.email"></span></p>
+		                </div>
+		            </div>
+		        </div>
+				<div class="title" style="margin-top: -50px;">
+					<h2 class="kh">ប័ណ្ណបង្វិលទំនិញ / ចំណាយ</h2>
+					<h2 class="en">Sale Return</h2>
+				</div>
+			</div>
+            <div class="clear mid-header" style="margin-top: 20px;padding: 10px;background: #dce6f2;padding-bottom: 10px;">
+            	<div class="cover-customer">
+                	<h5>ព័ត៌មានអតិថិជន​ CUSTOMER INFO:</h5>
+                    <div class="clear">
+                        <div class="left dotted-ruler" style="width: 62%;">
+                        	<p style="font-size: 12px; line-height: 20px;">ឈ្មោះ Name : <span data-bind="text: contactDS.data()[0].name"></span><br>
+		        			អាស័យ​ដ្ឋាន Address : <span data-bind="text: contactDS.data()[0].address"></span><br>
+		        			លេខទូរស័ព្ទ Tel : <span data-bind="text: contactDS.data()[0].phone"></span>
+		        			</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="cover-inv-number">
+                	<div class="clear">
+                    	<div class="left">
+                    		<p>លេខ No. :</p>
+                        </div>
+                        <div class="left dotted-ruler" style="width: 42%;">
+                        	<p style="font-weight:bold" data-bind="text: obj.number"></p>
+                        </div>
+                    </div>
+                    <div class="clear">
+                    	<div class="left">
+                    		<p>កាល​បរិច្ឆេទ Date:</p>
+                        </div>
+                        <div class="left dotted-ruler" style="width: 57%;">
+                        	<p style="font-weight:bold" data-bind="text: obj.issued_date"></p>
+                        </div>
+                    </div>
+                    <div class="clear">
+                    	<div class="left">
+                    		<p>សំគាល់:</p>
+                        </div>
+                        <div class="left dotted-ruler" style="width: 57%;">
+                        	<p style="font-weight:bold" data-bind="text: obj.issued_date"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        	<div class="clear">
+            	<table cellpadding="0" cellspacing="0" border="1" class="span12">
+                	<thead>
+                        <tr class="main-color" style="height: 45px;" data-bind="style: {backgroundColor: obj.color}">
+                            <th style="text-align: center;">ល.រ<br />N<sup>0</sup></th>
+                            <th style="text-align: center;">បរិយាយ​មុខ​ទំនិញ<br />Description</th>
+                            <th style="text-align: center;">បរិមាណ<br />Quantity</th>
+                            <th style="text-align: center;">ថ្លៃឯកតា​<br />Unit Price</th>
+                            <th style="text-align: center;">ថ្លៃ​ទំនិញ<br />Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody style="margin-top: 2px" id="formListView" data-role="listview"
+										 data-auto-bind="false"
+						                 data-template="invoiceForm-lineDS-template"
+						                 data-bind="source: lineDS">
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                        	<td colspan="2" style="text-align:right;padding:5px;font-weight: bold;">សរុប Total</td>
+                            <td class="rside" data-bind="text: obj.amount"></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        <div class="foot">
+        	<div class="cover-signature">
+            	<div class="singature" style="float:left">
+                	<p>ហត្ថលេខា និងឈ្មោះ​អ្នក​ទិញ<br />Customer's Signature & Name</p>
+                </div>
+                <div class="singature" style="float:right">
+                	<p>ហត្ថលេខា និងឈ្មោះ​អ្នកលក់<br />Seller's Signature & Name</p>
+                </div>
+            </div>
+            <h6 style="padding-left: 35px;">សម្គាល់៖ <span>ច្បាប់​ដើម​សម្រាប់​អ្នក​ទិញ ច្បាប់​ចម្លង​សម្រាប់​អ្នក​លក់</span><br /><span style="font-size: 10px"><strong>Note:</strong> Original invoice for customer, copied invoice for seller</span></h6>
+        </div>
+    </div>
+</script>
 <script id="purchaseSampleService" type="text/x-kendo-template">
 	<div class="inv1">
     	<div class="head" style="width: 90%">
@@ -58066,7 +58165,7 @@
 							<span style="font-size: 20px; color: #333" data-bind="text: lang.lang.cash_position">Cash Position</span>
 						</div>
 						<div class="span6" style=" text-align: center; font-size: 20px; font-weight: 600; padding: 0;">
-							<span style="float: right; color: #333" data-bind="text: obj.cash_position"></span>
+							<span style="float: right; color: #333" data-format="n" data-bind="text: obj.cash_position"></span>
 						</div>
 						<!-- <div class="span3" style="text-align: center; margin-top: 7px; padding-right: 0; color: #fff; font-size: 35px;">
 							<span data-bind="text: totalUser"></span>

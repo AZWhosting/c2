@@ -22,6 +22,10 @@ class Transactions extends REST_Controller {
 		}
 	}
 
+	//TO FILTER UNWANTED DATA, PLEASE USE THESE CODE BELLOW:
+	// $obj->where("is_recurring <>", 1);
+	// $obj->where("deleted <>", 1);
+
 	function test_get() {
 		$data["results"] = [];
 		$data["count"] = 0;
@@ -168,7 +172,23 @@ class Transactions extends REST_Controller {
 						"issued_date" 	=> $references->issued_date,
 						"account_id" 	=> $references->account_id,
 						"amount_paid" 	=> $ref_amount_paid,
-						"job" 			=> $references->job_name,
+						"job" 			=> $references->job_name
+					);
+				}
+
+				//Offset Invoice
+				$offsetInvoice = [];				
+				$offsetInvoices = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$offsetInvoices->where("return_id", $value->id);
+				$offsetInvoices->get();
+				if($offsetInvoices->exists()){
+					$offsetInvoice = array(
+						"id" 			=> $offsetInvoices->id,
+						"number" 		=> $offsetInvoices->number,
+						"type" 			=> $offsetInvoices->type,
+						"amount" 		=> $offsetInvoices->amount,
+						"rate" 			=> $offsetInvoices->rate,
+						"issued_date" 	=> $offsetInvoices->issued_date
 					);
 				}
 
@@ -315,7 +335,8 @@ class Transactions extends REST_Controller {
 				   	"job" 						=> $value->job_name,
 				   	"driver" 					=> $driver,
 				   	"reference" 				=> $reference,
-				   	"references" 				=> $value->transaction->get_raw()->result()
+				   	"references" 				=> $value->transaction->get_raw()->result(),
+				   	"offset_invoice" 			=> $offsetInvoice
 				);
 			}
 		}

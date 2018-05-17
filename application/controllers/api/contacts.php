@@ -22,6 +22,10 @@ class Contacts extends REST_Controller {
 		}
 	}
 
+	//TO FILTER UNWANTED DATA, PLEASE USE THESE CODE BELLOW:
+	// $obj->where("is_pattern <>", 1);
+	// $obj->where("deleted <>", 1);
+
 	//GET 
 	function index_get() {
 		$filter 	= $this->get("filter");

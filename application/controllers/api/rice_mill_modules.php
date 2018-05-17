@@ -54,12 +54,47 @@ class Rice_mill_modules extends REST_Controller {
 
 		//Receivables
 		$receivables = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);			
-		$receivables->select_sum("amount / rate", "total");
-		$receivables->where_in("type", array("Commercial_Invoice","Vat_Invoice","Invoice","Sale_Return"));
-		$receivables->where_in("status", array(0,2));
+		$receivables->select_sum("(amount - deposit) / rate", "total");
+		$receivables->where_in("type", array("Commercial_Invoice","Vat_Invoice","Invoice"));
+		$receivables->where("status", 0);
 		$receivables->where("is_recurring <>", 1);
 		$receivables->where("deleted <>", 1);
 		$receivables->get();
+
+		$receivablePartiallys = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);			
+		$receivablePartiallys->where_in("type", array("Commercial_Invoice","Vat_Invoice","Invoice"));
+		$receivablePartiallys->where("status", 2);
+		$receivablePartiallys->where("is_recurring <>", 1);
+		$receivablePartiallys->where("deleted <>", 1);
+		$receivablePartiallys->get();
+		$ids = [];
+		$totalReceivablePartially = 0;
+		foreach ($receivablePartiallys as $value) {
+			$totalReceivablePartially += floatval($value->amount) - floatval($value->deposit);
+			array_push($ids, $value->id);
+		}
+		$receivableCashReceipt = 0;
+		if(count($ids)>0){
+			$receivableCashReceipts = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);			
+			$receivableCashReceipts->select_sum("amount / rate", "total");
+			$receivableCashReceipts->where("type", "Cash_Receipt");
+			$receivableCashReceipts->where_in("reference_id", $ids);
+			$receivableCashReceipts->where("is_recurring <>", 1);
+			$receivableCashReceipts->where("deleted <>", 1);
+			$receivableCashReceipts->get();
+
+			$receivableCashReceipt = floatval($receivableCashReceipts->total);
+		}
+
+		$receivableOffsets = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);			
+		$receivableOffsets->select_sum("amount / rate", "total");
+		$receivableOffsets->where_in("type", array("Cash_Refund","Sale_Return"));
+		$receivableOffsets->where("is_recurring <>", 1);
+		$receivableOffsets->where("deleted <>", 1);
+		$receivableOffsets->get();
+
+		$receivable = (floatval($receivables->total) + $totalReceivablePartially) - (floatval($receivableOffsets->total) + $receivableCashReceipt);
+
 
 		$purchaseList = array("Cash_Purchase","Credit_Purchase", "Sale_Return","Cash_Refund");
 		$saleList = array("Commercial_Invoice","Vat_Invoice","Invoice","Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale","Purchase_Return","Payment_Refund");
@@ -166,7 +201,7 @@ class Rice_mill_modules extends REST_Controller {
 		//Results
 		$data["results"][] = array(
 			'id' 				=> 0,
-			'receivable' 		=> floatval($receivables->total),
+			'receivable' 		=> $receivable,
 			'inventory_value' 	=> $totalInventory,
 			'cash_position'		=> $cash_position,
 

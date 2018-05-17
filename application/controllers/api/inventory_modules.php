@@ -39,6 +39,11 @@ class Inventory_modules extends REST_Controller {
 			$this->endFiscalDate = date("Y-m-d", strtotime($this->endFiscalDate . "+1 days"));
 		}
 	}
+
+	//TO FILTER UNWANTED DATA, PLEASE USE THESE CODE BELLOW:
+	// $obj->where("nature <>", "main_variant");
+	// $obj->where("is_pattern <>", 1);
+	// $obj->where("deleted <>", 1);
 	
 	//GET DASHBOARD
 	function dashboard_get() {		

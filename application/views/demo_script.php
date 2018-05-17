@@ -24058,6 +24058,7 @@
 				case 69: Active = banhji.view.commercialInvoiceKSLM; break;		
 				case 70: Active = banhji.view.vatInvoiceKSLM; break;
 				case 71: Active = banhji.view.defaultCashAdvance; break;
+                case 73: Active = banhji.view.defaultSaleReturn; break;
 			}
 			banhji.view.invoiceCustom.showIn('#invFormContent', Active);
 		},
@@ -24451,6 +24452,7 @@
 				case 69: Active = banhji.view.commercialInvoiceKSLM; break;
 				case 70: Active = banhji.view.vatInvoiceKSLM; break;
 				case 71: Active = banhji.view.defaultCashAdvance; break;
+                case 73: Active = banhji.view.defaultSaleReturn; break;
 			}
 			banhji.view.invoiceForm.showIn('#invFormContent', Active);
 		},
@@ -67774,7 +67776,8 @@
 		invoiceForm40: new kendo.Layout("#invoiceForm40", {model: banhji.invoiceForm}),
 		invoiceForm41: new kendo.Layout("#invoiceForm41", {model: banhji.invoiceForm}),
 		invoiceForm42: new kendo.Layout("#invoiceForm42", {model: banhji.invoiceForm}),
-		defaultCashAdvance: new kendo.Layout("#defaultCashAdvance", {model: banhji.invoiceForm}),
+		defaultSaleReturn: new kendo.Layout("#defaultSaleReturn", {model: banhji.invoiceForm}),
+        defaultCashAdvance: new kendo.Layout("#defaultCashAdvance", {model: banhji.invoiceForm}),
 		//Max Concrete
 		invoiceMAXConcrete: new kendo.Layout("#invoiceMAXConcrete", {model: banhji.invoiceForm}),
 		invoiceVATMAXConcrete: new kendo.Layout("#invoiceVATMAXConcrete", {model: banhji.invoiceForm}),
