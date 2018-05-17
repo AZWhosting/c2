@@ -507,15 +507,13 @@ class Inventory_modules extends REST_Controller {
 		//End TOTAL INVENTORY
 		
 		//Results
-		// if($page && $limit){
-		// 	$obj->get_paged_iterated($page, $limit);
-		// 	$data["count"] = $obj->paged->total_rows;
-		// }else{
-		// 	$obj->get_iterated();
-		// 	$data["count"] = $obj->result_count();
-		// }
-		$obj->limit(10);
-		$obj->get_iterated();
+		if($page && $limit){
+			$obj->get_paged_iterated($page, $limit);
+			$data["count"] = $obj->paged->total_rows;
+		}else{
+			$obj->get_iterated();
+			$data["count"] = $obj->result_count();
+		}
 
 		if($obj->exists()){
 			foreach ($obj as $value) {
