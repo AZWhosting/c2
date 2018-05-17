@@ -12108,7 +12108,11 @@
                     TempForm = $("#invisibleFormLaylungdy").html();
                     break;
                 default:
-                    TempForm = $("#InvoiceFormTemplate1").html();
+                    if(banhji.institute.id == 920){
+                        TempForm = $("#invoiceFormPhnomPrek").html();
+                    }else{
+                        TempForm = $("#InvoiceFormTemplate1").html();
+                    }
             }
             var listView = $("#wInvoiceContent").kendoListView({
                 dataSource: this.dataSource,
