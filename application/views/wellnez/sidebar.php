@@ -292,7 +292,7 @@
         text-decoration: underline;
     }
     .multiple-list  .enquiry-content {
-        bottom: -157px;
+        bottom: -67px;
         width: 313px;
         left: -219px
     }
@@ -347,7 +347,7 @@
             <div class="enquiry-content">
                 <ul >
                     <li>
-                        <a href="#/reports">
+                        <a href="<?php echo base_url(); ?>wellnez/reports">
                             Reports Dashbaord                         
                         </a>
                     </li>
