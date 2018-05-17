@@ -489,7 +489,7 @@
 				            	<a href="#tab1" data-toggle="tab"><i></i> <span>Item</span></a>
 				            </li>
 				            <li class="span2 glyphicons usd">
-				            	<a href="#tab2" data-toggle="tab"><i></i> <span>Percentage(%)</span></a>
+				            	<a href="#tab2" data-toggle="tab"><i></i> <span>Person</span></a>
 				            </li>
 				        </ul>
 				    </div>
@@ -1298,14 +1298,20 @@
 							<td colspan="5" style="padding-right: 10px;text-align: right;">សរុប (បូកបញ្ចូលទាំងអាករ) GRAND TOTAL (VAT INCLUSIVE)</td>
 							<td style="border: 1px solid;text-align: right"><strong>#= kendo.toString(amount, locale=="km-KH"?"c0":"c", locale)#</strong></td>
 						</tr>
+						#if(banhji.printBill.amountperson > 0){#
+							<tr>
+								<td colspan="5" style="padding-right: 10px;text-align: right;">ទឹកប្រាក់ត្រូវបង់</td>
+								<td style="border: 1px solid;text-align: right"><strong>#= kendo.toString(banhji.printBill.amountperson, locale=="km-KH"?"c0":"c", locale)#</strong></td>
+							</tr>
+						#}#
                     </tfoot>
                 </table>
             </div>
             <div class="clear">
             	<div class="span6">
-            		<span id="secondwnumber#= id#" style="margin-left: -14px; float: left;"></span>
+            		<span class="secondwnumber#= id#" style="margin-left: -14px; float: left;"></span>
             	</div>
             </div>
         </div>
     </div>
-</script>                                                                   
+</script>

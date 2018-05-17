@@ -4529,24 +4529,31 @@
             }
         },
         numPeople   : 2,
-        txnDS       : dataStore(apiUrl + "transactions"),
+        txnDS       : dataStore(apiUrl + "spa/printbill"),
         savePerson  : function(){
             var num = this.get("numPeople");
             var self = this;
             var am = 0;
-            this.txnDS.query({
-                filter: {field: "id", value: this.get("txnID")},
-                pageSize: 1
-            }).then(function(e){
-                var v = self.txnDS.view()[0];
-                var am = v.amount / num;
-                self.device(am); 
-                banhji.printBill.dataSource = [];
-                
-            });
+            if(num > 1){
+                this.txnDS.query({
+                    filter: {field: "id", value: this.get("txnID")},
+                    pageSize: 1
+                }).then(function(e){
+                    var v = self.txnDS.view()[0];
+                    var am = v.amount / num;
+                    self.device(am, v);
+                });
+            }else{
+                alert('Wrong Input Data');
+            }
         },
-        device      : function(amount){
-
+        device      : function(amount, data){
+            banhji.printBill.dataSource = [];
+            banhji.printBill.amountperson = amount;
+            for(var i = 1; i <= this.get("numPeople"); i++){
+                banhji.printBill.dataSource.push(data);
+            }
+            banhji.router.navigate("/print_bill"); 
         },
         cancel      : function(){
             banhji.router.navigate("/");
@@ -4556,6 +4563,7 @@
     banhji.printBill = kendo.observable({
         lang: langVM,
         dataSource: [],
+        amountperson: 0,
         company: banhji.institute,
         pageLoad: function() {
             if (this.dataSource.length <= 0) {
@@ -4587,6 +4595,16 @@
                             visible: false
                         }
                     });
+                    $(".secondwnumber" + d.id).kendoBarcode({
+                        renderAs: "svg",
+                        value: d.number,
+                        type: "code128",
+                        width: 350,
+                        height: 40,
+                        text: {
+                            visible: false
+                        }
+                    });
                     $("#footwnumber" + d.id).kendoBarcode({
                         renderAs: "svg",
                         value: d.number,
@@ -4602,7 +4620,7 @@
         },
         printGrid       : function(){
             var self = this, Win, pHeight, pWidth, ts;
-            Win = window.open('', '', 'width=800, height=900');
+            Win = window.open('', '', 'width=1048, height=900');
             pHeight = "210mm";
             pWidth = "150mm";
             var gridElement = $('#grid'),
@@ -4677,7 +4695,7 @@
             doc.close();
             setTimeout(function(){
                 win.print();    
-                win.close();
+                // win.close();
             },1000);
         },
         hideFrameInvoice: function(e) {

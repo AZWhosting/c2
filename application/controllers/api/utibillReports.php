@@ -1112,6 +1112,7 @@ class UtibillReports extends REST_Controller {
 				// 	$objList[$value->meter_id]["usage"]				= $usage;
 				// }
 			}
+			$data["count"] = count($data["results"]);
 
 		}
 
@@ -1379,6 +1380,7 @@ class UtibillReports extends REST_Controller {
 		$obj->where("type", "Utility_Invoice");
 		$obj->where_in("status", array(0,2));
 		$obj->where("is_recurring <>", 1);
+		$obj->where("amount <>", 0);
 		$obj->where("deleted <>", 1);
 		$obj->order_by("issued_date", "asc");
 		$obj->get_iterated();
@@ -1400,6 +1402,10 @@ class UtibillReports extends REST_Controller {
 					$amount -= floatval($paid->amount) + floatval($paid->discount);
 				}
 
+				$wi = new Winvoice_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$wi->where('type', 'usage');
+				$wi->where('transaction_id', $value->id)->limit(1)->get();
+
 				if(isset($objList[$value->contact_id])){
 					$objList[$value->contact_id]["line"][] = array(
 						"id" 				=> $value->id,
@@ -1411,7 +1417,8 @@ class UtibillReports extends REST_Controller {
 						"status"			=> $value->status,
 						"location" 			=> $value->location_name,
 						"rate" 				=> $value->rate,
-						"amount" 			=> $amount
+						"amount" 			=> $amount,
+						"usage"				=> floatval($wi->quantity),
 					);
 				}else{
 					$objList[$value->contact_id]["id"] 				= $value->contact_id;
@@ -1426,7 +1433,8 @@ class UtibillReports extends REST_Controller {
 						"status"			=> $value->status,
 						"location" 			=> $value->location_name,
 						"rate" 				=> $value->rate,
-						"amount" 			=> $amount
+						"amount" 			=> $amount,
+						"usage"				=> floatval($wi->quantity),
 					);			
 				}
 			}

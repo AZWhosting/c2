@@ -23322,11 +23322,11 @@
 
                         self.exArray.push({
                             cells: [{
-                                value: "Customer List",
+                                value: "Total Balance",
                                 bold: true,
                                 fontSize: 20,
                                 textAlign: "center",
-                                colSpan: 7
+                                colSpan: 9
                             }]
                         });
                         if (self.displayDate) {
@@ -23334,14 +23334,14 @@
                                 cells: [{
                                     value: self.displayDate,
                                     textAlign: "center",
-                                    colSpan: 7
+                                    colSpan: 9
                                 }]
                             });
                         }
                         self.exArray.push({
                             cells: [{
                                 value: "",
-                                colSpan: 7
+                                colSpan: 9
                             }]
                         });
                         self.exArray.push({
@@ -23371,72 +23371,67 @@
                                     color: "#ffffff"
                                 },
                                 {
-                                    value: "Address",
+                                    value: "Usage",
                                     background: "#496cad",
                                     color: "#ffffff"
                                 },
                                 {
-                                    value: "License",
+                                    value: "Balance",
+                                    background: "#496cad",
+                                    color: "#ffffff"
+                                },
+                                {
+                                    value: "Amount",
+                                    background: "#496cad",
+                                    color: "#ffffff"
+                                },
+                                {
+                                    value: "Total",
                                     background: "#496cad",
                                     color: "#ffffff"
                                 }
                             ]
                         });
-                        for (var i = 0; i < response.length; i++) {
-                            self.exArray.push({
-                                cells: [{
-                                        value: response[i].number,
-                                        bold: true,
-                                    },
-                                    {
-                                        value: response[i].name,
-                                        bold: true,
-                                    },
-                                    {
-                                        value: ""
-                                    },
-                                    {
-                                        value: ""
-                                    },
-                                    {
-                                        value: ""
-                                    },
-                                    {
-                                        value: ""
-                                    },
-                                    {
-                                        value: ""
-                                    }
-                                ]
-                            });
-                            for (var j = 0; j < response[i].line.length; j++) {
-                                self.exArray.push({
-                                    cells: [{
-                                            value: ""
-                                        },
-                                        {
-                                            value: ""
-                                        },
-                                        {
-                                            value: response[i].line[j].meter
-                                        },
-                                        {
-                                            value: response[i].line[j].previous
-                                        },
-                                        {
-                                            value: response[i].line[j].current
-                                        },
-                                        {
-                                            value: response[i].line[j].location
-                                        },
-                                        {
-                                            value: response[i].line[j].branch
-                                        },
-                                    ]
-                                });
-                            }
-                        }
-                    // }
+                         for (var i = 0; i < response.results.length; i++) {
+                        balanceRec += response.results[i].amount;
+                        self.exArray.push({
+                            cells: [{
+                                    value: response.results[i].number
+                                },
+                                {
+                                    value: response.results[i].name
+                                },
+                                {
+                                    value: response.results[i].meter_number
+                                },
+                                {
+                                    value: response.results[i].previous
+                                },
+                                {
+                                    value: response.results[i].current
+                                },
+                                {
+                                    value: response.results[i].usage
+                                },
+                                {
+                                    value: kendo.parseFloat(response.results[i].balance)
+                                },
+                                {
+                                    value: kendo.parseFloat(response.results[i].amount)
+                                },
+                                {
+                                    value: kendo.parseFloat(response.results[i].total)
+                                },
+                            ]
+                        });
+                        self.exArray.push({
+                            cells: [{
+                                value: "",
+                                colSpan: 9
+                            }]
+                        });
+                    }
+                    }
                 });                  
         },
         cancel: function() {
@@ -23467,15 +23462,21 @@
                         {
                             autoWidth: true
                         },
+                        {
+                            autoWidth: true
+                        },
+                        {
+                            autoWidth: true
+                        },
                     ],
-                    title: "Customer List",
+                    title: "Total Balance",
                     rows: this.exArray
                 }]
             });
             //save the file as Excel file with extension xlsx
             kendo.saveAs({
                 dataURI: workbook.toDataURL(),
-                fileName: "customerList.xlsx"
+                fileName: "totalBalance.xlsx"
             });
         }
     });
@@ -23634,7 +23635,7 @@
                                 color: "#ffffff"
                             },
                             {
-                                value: "Invoice data",
+                                value: "Invoice Date",
                                 background: "#496cad",
                                 color: "#ffffff"
                             },
@@ -23654,7 +23655,7 @@
                                 color: "#ffffff"
                             },
                             {
-                                value: "Status",
+                                value: "Usage",
                                 background: "#496cad",
                                 color: "#ffffff"
                             },
@@ -23667,7 +23668,7 @@
                                 value: "Balance",
                                 background: "#496cad",
                                 color: "#ffffff"
-                            }
+                            },
                         ]
                     });
                     for (var i = 0; i < response.results.length; i++) {
@@ -23696,7 +23697,7 @@
                                 },
                                 {
                                     value: ""
-                                }
+                                },
                             ]
                         });
                         for (var j = 0; j < response.results[i].line.length; j++) {
@@ -23717,50 +23718,19 @@
                                     {
                                         value: response.results[i].line[j].location
                                     },
+                                     {
+                                        value: kendo.parseFloat(response.results[i].line[j].usage)
+                                    },
                                     {
                                         value: kendo.parseFloat(response.results[i].line[j].amount)
+                                    },
+                                    {
+                                        value: balanceCal
                                     },
                                 ]
                             });
                         }
-                        self.exArray.push({
-                            cells: [{
-                                value: "",
-                                colSpan: 8
-                            }]
-                        });
                     }
-                    self.exArray.push({
-                        cells: [{
-                                value: "TOTAL",
-                                bold: true,
-                                fontSize: 16
-                            },
-                            {
-                                value: ""
-                            },
-                            {
-                                value: ""
-                            },
-                            {
-                                value: ""
-                            },
-                            {
-                                value: ""
-                            },
-                            {
-                                value: ""
-                            },
-                            {
-                                value: ""
-                            },
-                            {
-                                value: kendo.parseFloat(response.balanceCal),
-                                bold: true,
-                                fontSize: 16
-                            },
-                        ]
-                    });
                 }
             });
         },

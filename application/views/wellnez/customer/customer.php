@@ -729,7 +729,7 @@
 				<div class="example k-content" >
 			    	<span class="glyphicons no-js remove_2 pull-right"
 						data-bind="click: cancel"><i></i></span>
-			        <h2 span data-bind="text: lang.lang.customers"></h2>
+			        <h2 data-bind="text: lang.lang.customers"></h2>
 
 			        <div class="row">
 			    		<div class="span6">	

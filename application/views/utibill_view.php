@@ -16922,7 +16922,7 @@
 								<div class="col-xs-12 col-sm-6">
 									<div class="total-sale">
 										<p data-bind="text: lang.lang.number_of_customer">Number of Customer</p>
-										<span data-bind="text: dataSource.total" ></span>
+										<span data-bind="text: dataSource.count" ></span>
 									</div>
 								</div>
 							</div>
@@ -17326,6 +17326,7 @@
 										<th><span data-bind="text: lang.lang.reference">Reference</span></th>
 										<th><span data-bind="text: lang.lang.location">Location</span></th>
 										<th style="text-align: center;"><span data-bind="text: lang.lang.status">Status</span></th>
+										<th><span data-bind="text: lang.lang.usage">Usage</span></th>
 										<th style="text-align: right;"><span data-bind="text: lang.lang.amount">Amount</span></th>
 										<th style="text-align: right;"><span data-bind="text: lang.lang.balance">Balance</span></th>
 									</tr>
@@ -17380,6 +17381,9 @@
         	#}#
 		</td>
 		<td style="text-align: right;">
+			#=kendo.toString(line[i].usage, banhji.locale=="km-KH"?"n0":"c")#
+		</td>
+		<td style="text-align: right;">
 			#=kendo.toString(line[i].amount, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#
 		</td>
 		<td style="text-align: right;">
@@ -17388,7 +17392,7 @@
 	</tr>
     #}#
     <tr>
-    	<td colspan="7" style="font-weight: bold; color: black;">Total</td>
+    	<td colspan="8" style="font-weight: bold; color: black;">Total</td>
     	<td class="right" style="font-weight: bold; border-top: 1px solid black !important; color: black;">
     		#=kendo.toString(totalBalance, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#
     	</td>

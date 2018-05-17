@@ -1208,9 +1208,21 @@ class Spa extends REST_Controller {
 				$emc->save();
 				$employee_name .= $emc->abbr."-".$emc->number." ".$emc->name;
 			}
+			//contact
+			$con = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$con->where("id", $txn->contact_id)->limit(1)->get();
+			$conar = array(
+				"id" 	=> $con->id,
+				"name" 	=> $con->name,
+				"address" 	=> $con->address,
+				"phone" 	=> $con->phone,
+				"number" 	=> $con->number,
+				"abbr" 		=> $con->abbr,
+			);
 			$data["results"][] = array(
 		   		"id" 			=> $txn->id,
 		   		"number" 		=> $txn->number,
+		   		"contact" 		=> $conar,
 		   		"amount" 		=> floatval($txn->amount),
 		   		"sub_total" 	=> floatval($txn->sub_total),
 		   		"discount" 		=> floatval($txn->discount),

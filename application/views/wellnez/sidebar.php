@@ -345,29 +345,19 @@
         <div class="rightfixed enquiries multiple-list  btn-rounded glyphicons glyphicons-plus no-js " style="float:left;  font-size: 15px;">
             Reports
             <div class="enquiry-content">
-                <ul data-template="multiTaskList-row-template" data-bind="source: multiTaskList">
+                <ul >
                     <li>
-                        <a href="#/calendar">
-                            Create Calendar
-                            <!-- <span title="Remove" class="multiTaskList glyphicons remove_2 pull-right" data-bind="click: removeLink">
-                                <i></i>
-                            </span> -->
-                        </a>
+                        <a href="#/sale_summary_by_customer" data-bind="text: lang.lang.sale_summary_by_customer"  style="text-transform: capitalize;"></a>
                     </li>
                     <li>
                         <a href="#/receipt">
                             Create Receipt
-                            <!-- <span title="Remove" class="multiTaskList glyphicons remove_2 pull-right" data-bind="click: removeLink">
-                                <i class="icon-remove"></i>
-                            </span> -->
                         </a>
                     </li>
                     <li>
                         <a href="#/invoice">
                             Create Invoice
-                           <!--  <span title="Remove" class="multiTaskList glyphicons remove_2 pull-right" data-bind="click: removeLink">
-                                <i class="icon-remove"></i>
-                            </span> -->
+                         
                         </a>
                     </li>
                 </ul>
@@ -389,4 +379,4 @@
         </a>
     </div>
     <!-- End -->
-</div>
+</div>                                                    

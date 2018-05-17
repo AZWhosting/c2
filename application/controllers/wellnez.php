@@ -69,6 +69,10 @@ class Wellnez extends CI_Controller {
 	}
 
 	public function reports() {
+		$this->load->view("wellnez/header");
+		$this->load->view("wellnez/reports/reports");
+		$this->load->view("wellnez/reports/script");
+		$this->load->view("wellnez/footer");
 		$this->load->view("wellnez/sidebar");
 	}
 
