@@ -25443,6 +25443,7 @@
     banhji.membership = kendo.observable({
         lang                    : langVM,
         dataSource              : dataStore(apiUrl + "memberships"),
+        transactionDS           : dataStore(apiUrl + "transactions"),
         lineDS                  : dataStore(apiUrl + "item_lines"),
         recurringDS             : dataStore(apiUrl + "transactions"),
         recurringLineDS         : dataStore(apiUrl + "item_lines"),
@@ -26053,6 +26054,13 @@
                 banhji.membershipCenter.membershipDS.sync();
             }
 
+            //Edit mode
+            if(self.get("isEdit")){                
+                self.recurringDS.sync();
+                self.lineDS.sync();
+                self.assemblyLineDS.sync();
+            }
+
             //Save Obj
             this.objSync()
             .then(function(data){ //Success
@@ -26069,10 +26077,7 @@
 
                     //Recurring
                     objRecurring.set("reference_id", data[0].id);
-                }else{
-                    // self.saveRecurring();
-                    self.lineDS.sync();
-                    self.assemblyLineDS.sync();
+                    self.saveRecurring();
                 }
 
                 self.fieldValueDS.sync();
@@ -26082,35 +26087,16 @@
             }, function(reason) { //Error
                 $("#ntf1").data("kendoNotification").error(reason);
             }).then(function(data){
-                //Save Recurring
-                self.recurringSync()
-                .then(function(data){ //Success
-                    if(self.get("isEdit")==false){
-                        //Item line
-                        $.each(self.lineDS.data(), function(index, value){
-                            value.set("transaction_id", data[0].id);
-                        });
+                $("#ntf1").data("kendoNotification").success(banhji.source.successMessage);
 
-                        //Assembly Item line
-                        $.each(self.assemblyLineDS.data(), function(index, value){
-                            value.set("transaction_id", data[0].id);
-                        });
-                    }
-
-                    self.lineDS.sync();
-                    self.assemblyLineDS.sync();
-                }).then(function(result){
-                    $("#ntf1").data("kendoNotification").success(banhji.source.successMessage);
-
-                    if(self.get("saveClose")){
-                        //Save Close
-                        self.set("saveClose", false);
-                        self.cancel();
-                    }else{
-                        //Save New
-                        self.addEmpty();
-                    }
-                });
+                if(self.get("saveClose")){
+                    //Save Close
+                    self.set("saveClose", false);
+                    self.cancel();
+                }else{
+                    //Save New
+                    self.addEmpty();
+                }
             });
         },
         clear                   : function(){
@@ -26149,10 +26135,10 @@
         },
         //Recurring
         addRecurring            : function(){
-            this.recurringDS.data([]);
+            this.transactionDS.data([]);
             this.lineDS.data([]);
 
-            this.recurringDS.insert(0, {
+            this.transactionDS.insert(0, {
                 contact_id          : banhji.membershipCenter.get("obj").id,//Customer
                 account_id          : banhji.membershipCenter.get("obj").account_id,
                 transaction_template_id : 3,
@@ -26199,7 +26185,7 @@
                 is_recurring        : 1
             });
 
-            var obj = this.recurringDS.at(0);
+            var obj = this.transactionDS.at(0);
             this.set("objRecurring", obj);
 
             //Default rows
@@ -26346,13 +26332,13 @@
         recurringSync           : function(){
             var dfd = $.Deferred();
 
-            this.recurringDS.sync();
-            this.recurringDS.bind("requestEnd", function(e){
+            this.transactionDS.sync();
+            this.transactionDS.bind("requestEnd", function(e){
                 if(e.response){
                     dfd.resolve(e.response.results);
                 }
             });
-            this.recurringDS.bind("error", function(e){
+            this.transactionDS.bind("error", function(e){
                 dfd.reject(e.errorThrown);
             });
 
