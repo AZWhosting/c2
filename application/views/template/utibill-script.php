@@ -23431,7 +23431,7 @@
                             }]
                         });
                     }
-                    }
+                    
                 });                  
         },
         cancel: function() {
@@ -23591,148 +23591,148 @@
 
                 self.set("totalBalance", kendo.toString(balance, banhji.locale == "km-KH" ? "c0" : "c", banhji.locale));
             });
-            this.dataSource.bind("requestEnd", function(e) {
-                if (e.type == "read") {
-                    var response = e.response,
-                        balanceCal = 0;
-                    self.exArray = [];
+            // this.dataSource.bind("requestEnd", function(e) {
+            //     if (e.type == "read") {
+            //         var response = e.response,
+            //             balanceCal = 0;
+            //         self.exArray = [];
 
-                    self.exArray.push({
-                        cells: [{
-                            value: self.company.name,
-                            textAlign: "center",
-                            colSpan: 8
-                        }]
-                    });
-                    self.exArray.push({
-                        cells: [{
-                            value: "Customer Aging Detail List",
-                            bold: true,
-                            fontSize: 20,
-                            textAlign: "center",
-                            colSpan: 8
-                        }]
-                    });
-                    if (self.displayDate) {
-                        self.exArray.push({
-                            cells: [{
-                                value: self.displayDate,
-                                textAlign: "center",
-                                colSpan: 8
-                            }]
-                        });
-                    }
-                    self.exArray.push({
-                        cells: [{
-                            value: "",
-                            colSpan: 8
-                        }]
-                    });
-                    self.exArray.push({
-                        cells: [{
-                                value: "Type",
-                                background: "#496cad",
-                                color: "#ffffff"
-                            },
-                            {
-                                value: "Invoice Date",
-                                background: "#496cad",
-                                color: "#ffffff"
-                            },
-                            {
-                                value: "Due Date",
-                                background: "#496cad",
-                                color: "#ffffff"
-                            },
-                            {
-                                value: "Reference",
-                                background: "#496cad",
-                                color: "#ffffff"
-                            },
-                            {
-                                value: "Location",
-                                background: "#496cad",
-                                color: "#ffffff"
-                            },
-                            {
-                                value: "Usage",
-                                background: "#496cad",
-                                color: "#ffffff"
-                            },
-                            {
-                                value: "Amount",
-                                background: "#496cad",
-                                color: "#ffffff"
-                            },
-                            {
-                                value: "Balance",
-                                background: "#496cad",
-                                color: "#ffffff"
-                            },
-                        ]
-                    });
-                    for (var i = 0; i < response.results.length; i++) {
-                        self.exArray.push({
-                            cells: [{
-                                    value: response.results[i].name,
-                                    bold: true,
-                                },
-                                {
-                                    value: ""
-                                },
-                                {
-                                    value: ""
-                                },
-                                {
-                                    value: ""
-                                },
-                                {
-                                    value: ""
-                                },
-                                {
-                                    value: ""
-                                },
-                                {
-                                    value: ""
-                                },
-                                {
-                                    value: ""
-                                },
-                            ]
-                        });
-                        for (var j = 0; j < response.results[i].line.length; j++) {
-                            balanceCal += response.results[i].line[j].amount;
-                            self.exArray.push({
-                                cells: [{
-                                        value: response.results[i].line[j].type
-                                    },
-                                    {
-                                        value: response.results[i].line[j].issued_date
-                                    },
-                                    {
-                                        value: response.results[i].line[j].due_date
-                                    },
-                                    {
-                                        value: response.results[i].line[j].number
-                                    },
-                                    {
-                                        value: response.results[i].line[j].location
-                                    },
-                                     {
-                                        value: kendo.parseFloat(response.results[i].line[j].usage)
-                                    },
-                                    {
-                                        value: kendo.parseFloat(response.results[i].line[j].amount)
-                                    },
-                                    {
-                                        value: balanceCal
-                                    },
-                                ]
-                            });
-                        }
-                    }
-                }
-            });
+            //         self.exArray.push({
+            //             cells: [{
+            //                 value: self.company.name,
+            //                 textAlign: "center",
+            //                 colSpan: 8
+            //             }]
+            //         });
+            //         self.exArray.push({
+            //             cells: [{
+            //                 value: "Customer Aging Detail List",
+            //                 bold: true,
+            //                 fontSize: 20,
+            //                 textAlign: "center",
+            //                 colSpan: 8
+            //             }]
+            //         });
+            //         if (self.displayDate) {
+            //             self.exArray.push({
+            //                 cells: [{
+            //                     value: self.displayDate,
+            //                     textAlign: "center",
+            //                     colSpan: 8
+            //                 }]
+            //             });
+            //         }
+            //         self.exArray.push({
+            //             cells: [{
+            //                 value: "",
+            //                 colSpan: 8
+            //             }]
+            //         });
+            //         self.exArray.push({
+            //             cells: [{
+            //                     value: "Type",
+            //                     background: "#496cad",
+            //                     color: "#ffffff"
+            //                 },
+            //                 {
+            //                     value: "Invoice Date",
+            //                     background: "#496cad",
+            //                     color: "#ffffff"
+            //                 },
+            //                 {
+            //                     value: "Due Date",
+            //                     background: "#496cad",
+            //                     color: "#ffffff"
+            //                 },
+            //                 {
+            //                     value: "Reference",
+            //                     background: "#496cad",
+            //                     color: "#ffffff"
+            //                 },
+            //                 {
+            //                     value: "Location",
+            //                     background: "#496cad",
+            //                     color: "#ffffff"
+            //                 },
+            //                 {
+            //                     value: "Usage",
+            //                     background: "#496cad",
+            //                     color: "#ffffff"
+            //                 },
+            //                 {
+            //                     value: "Amount",
+            //                     background: "#496cad",
+            //                     color: "#ffffff"
+            //                 },
+            //                 {
+            //                     value: "Balance",
+            //                     background: "#496cad",
+            //                     color: "#ffffff"
+            //                 },
+            //             ]
+            //         });
+            //         for (var i = 0; i < response.results.length; i++) {
+            //             self.exArray.push({
+            //                 cells: [{
+            //                         value: response.results[i].name,
+            //                         bold: true,
+            //                     },
+            //                     {
+            //                         value: ""
+            //                     },
+            //                     {
+            //                         value: ""
+            //                     },
+            //                     {
+            //                         value: ""
+            //                     },
+            //                     {
+            //                         value: ""
+            //                     },
+            //                     {
+            //                         value: ""
+            //                     },
+            //                     {
+            //                         value: ""
+            //                     },
+            //                     {
+            //                         value: ""
+            //                     },
+            //                 ]
+            //             });
+            //             for (var j = 0; j < response.results[i].line.length; j++) {
+            //                 balanceCal += response.results[i].line[j].amount;
+            //                 self.exArray.push({
+            //                     cells: [{
+            //                             value: response.results[i].line[j].type
+            //                         },
+            //                         {
+            //                             value: response.results[i].line[j].issued_date
+            //                         },
+            //                         {
+            //                             value: response.results[i].line[j].due_date
+            //                         },
+            //                         {
+            //                             value: response.results[i].line[j].number
+            //                         },
+            //                         {
+            //                             value: response.results[i].line[j].location
+            //                         },
+            //                          {
+            //                             value: kendo.parseFloat(response.results[i].line[j].usage)
+            //                         },
+            //                         {
+            //                             value: kendo.parseFloat(response.results[i].line[j].amount)
+            //                         },
+            //                         {
+            //                             value: balanceCal
+            //                         },
+            //                     ]
+            //                 });
+            //             }
+            //         }
+            //     }
+            // });
         },
         printGrid: function() {
             var gridElement = $('#grid'),

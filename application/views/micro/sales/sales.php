@@ -1299,11 +1299,6 @@
 </script>
 <!-- End -->
 
-<!-- Cash Sales -->
-<script id="cashSale" type="text/x-kendo-template">
-	
-</script>
-<!-- End -->
 
 <!-- Invoice -->
 <script id="invoice" type="text/x-kendo-template">
@@ -1402,13 +1397,26 @@
 		                                            	<div class="col-md-12 ">
 		                                            		<div class="row">
 			                                            		<div class="col-md-6">
-			                                            			<p class="marginBottom" data-bind="text: lang.lang.validity_date"></p>
-			                                            			<input id="txtDueDate" name="txtDueDate" class="marginBottom"
-																					data-role="datepicker"
-																					data-format="dd-MM-yyyy"
-																					data-parse-formats="yyyy-MM-dd"
-																					data-bind="value: obj.due_date"
-																					required data-required-msg="required"
+			                                            			<p class="marginBottom" data-bind="text: lang.lang.term"></p>
+			                                            			<input class="marginBottom" data-role="dropdownlist"
+												              				data-value-primitive="true"
+																			data-text-field="name"
+												              				data-value-field="id"
+												              				data-header-template='customer-term-header-tmpl'
+												              				data-bind="value: obj.payment_term_id,
+												              							source: paymentTermDS,
+												              							events:{ change: setTerm }"
+												              				data-option-label="Select Term..."
+																					/>
+																	<p class="marginBottom" data-bind="text: lang.lang.payment_method"></p>
+			                                            			<input class="marginBottom" data-role="dropdownlist"
+												              				data-value-primitive="true"
+												              				data-header-template="customer-payment-method-header-tmpl"
+																			data-text-field="name"
+												              				data-value-field="id"
+												              				data-bind="value: obj.payment_method_id,
+												              							source: paymentMethodDS"
+												              				data-option-label="Select method..."
 																					/>
 
 				                                            		<p class="marginBottom width100" data-bind="text: lang.lang.billing_address"></p>
@@ -1416,16 +1424,27 @@
 				                                            	</div>
 
 				                                            	<div class="col-md-6">
-				                                            		<p class="marginBottom" data-bind="text: lang.lang.term"></p>
-				                                            		<input data-role="dropdownlist" class="marginBottom"
-														              				data-value-primitive="true"
-																					data-text-field="name"
-														              				data-value-field="id"
-														              				data-header-template='customer-term-header-tmpl'
-														              				data-bind="value: obj.payment_term_id,
-														              							source: paymentTermDS,
-														              							events:{ change: setTerm }"
-														              				data-option-label="Select Term..."
+				                                            		<p class="marginBottom" data-bind="text: lang.lang.due_date"></p>
+				                                            		<input class="marginBottom" id="txtDueDate" name="txtDueDate"
+																			data-role="datepicker"
+																			data-format="dd-MM-yyyy"
+																			data-parse-formats="yyyy-MM-dd"
+																			data-bind="value: obj.due_date"
+																			required data-required-msg="required"
+														              				 />
+
+														            <p class="marginBottom" data-bind="text: lang.lang.trade_discount"></p>
+				                                            		<input class="marginBottom" id="ddlDiscountAccount" name="ddlDiscountAccount"
+												            				data-role="dropdownlist"
+												            				data-header-template="account-header-tmpl"
+												            				data-template="account-list-tmpl"
+												              				data-value-primitive="true"
+																			data-text-field="name"
+												              				data-value-field="id"
+												              				data-bind="value: obj.discount_account_id,
+												              							source: discountAccountDS"
+												              				data-option-label="Select Account..."
+												              				required data-required-msg="required"
 														              				 />
 														              				 
 																	<p class="marginBottom width100" data-bind="text: lang.lang.delivery_address"></p>
@@ -1592,22 +1611,43 @@
 									<table class="table color-table dark-table">
 										<tbody>
 											<tr>
-												<td class="textAlignRight" style="width: 60%;"><span data-bind="text: lang.lang.subtotal" style="font-size: 15px; font-weight: 700;"></span></td>
-												<td class="textAlignRight" width="40%"><span data-format="n" data-bind="text: obj.sub_total" style="font-size: 15px; font-weight: 700;"></span></td>
+												<td class="textAlignRight" style="width: 60%"><span data-bind="text: lang.lang.subtotal" style="font-size: 15px; font-weight: 700;"></span></td>
+												<td class="textAlignRight"><span data-format="n" data-bind="text: obj.sub_total" style="font-size: 15px; font-weight: 700;"></span></td>
 											</tr>
 											<tr>
 												<td class="textAlignRight"><span data-bind="text: lang.lang.total_discount"></span></td>
-												<td class="textAlignRight ">
-													<span data-format="n" data-bind="text: obj.discount"></span>
-			                   					</td>
+												<td class="textAlignRight"><span data-format="n" data-bind="text: obj.discount"></span></td>
 											</tr>
 											<tr>
 												<td class="textAlignRight"><span data-bind="text: lang.lang.total_tax"></span></td>
-												<td class="textAlignRight "><span data-format="n" data-bind="text: obj.tax"></span></td>
+												<td class="textAlignRight"><span data-format="n" data-bind="text: obj.tax"></span></td>
 											</tr>
 											<tr>
-												<td class="textAlignRight"><h4 span data-bind="text: lang.lang.total" style="font-weight: 700;"></h4></td>
+												<td class="textAlignRight"><h4 data-bind="text: lang.lang.total" style="font-weight: 700;"></h4></td>
 												<td class="textAlignRight"><h4 data-bind="text: total" style="font-weight: 700;"></h4></td>
+											</tr>
+											<tr>
+												<td class="textAlignRight">
+													<span data-bind="text: lang.lang.deposit"></span>
+													<span data-format="n" data-bind="text: total_deposit"></span>
+												</td>
+												<td class="textAlignRight">
+													<input data-role="numerictextbox"
+										                   data-format="n"
+										                   data-spinners="false"
+										                   data-min="0"
+										                   data-bind="value: obj.deposit,
+										                              events: { change: changes }"
+										                   style="width: 90%; text-align: right;">
+												</td>
+											</tr>
+											<tr>
+												<td class="textAlignRight">
+													<span data-bind="text: lang.lang.remaining" style="font-size: 15px; font-weight: 700;"></span>
+												</td>
+												<td class="textAlignRight">
+													<span data-format="n" data-bind="text: obj.remaining" style="font-size: 15px; font-weight: 700;"></span>
+												</td>
 											</tr>
 										</tbody>
 									</table>
@@ -1773,366 +1813,145 @@
 </script>
 <!-- End -->
 
+
 <!-- Cash Receipt -->
 <script id="cashReceipt" type="text/x-kendo-template">
-	<div id="slide-form">
-		<div class="customer-background">
-			<div class="container-960">
-				<div id="example" class="k-content">
+	<div class="page-wrapper ">
+        <div class="container-fluid">
+        	<div class="row marginTop15">
+                <div class="col-md-12">
+                	<div class="card">
+                		<div class="btn-close" onclick="javascript:window.history.back()"><i class="ti-close"></i></div>
+                		<div class="card-body">
 
-			    	<span class="glyphicons no-js remove_2 pull-right"
-		    				onclick="javascript:window.history.back()"
-							data-bind="click: cancel"><i></i></span>
+					        <h2 data-bind="text: lang.lang.cash_receipt"></h2>
 
-			        <h2 data-bind="text: lang.lang.cash_receipt"></h2>
+						    <br>
 
-				    <br>
-
-					<!-- Upper Part -->
-					<div class="row-fluid">
-						<div class="span4">
-							<div class="widget widget-heading-simple widget-body-primary widget-employees">
-								<div class="widget-body padding-none">
-									<div class="row-fluid row-merge">
-										<div class="listWrapper">
-											<div class="innerAll" style="padding: 15px 15px 19px; background: #203864">
-												<form autocomplete="off" class="form-inline">
-													<div class="widget-search separator bottom">
-														<button type="button" class="btn btn-default pull-right" data-bind="click: search, disabled: isEdit"><i class="icon-search"></i></button>
-														<div class="overflow-hidden">
-															<input type="search" placeholder="Invoice Number..." data-bind="value: searchText, disabled: isEdit">
-														</div>
-													</div>
-													<div class="select2-container" style="width: 100%;">
-														<input id="cbbContact" name="cbbContact"
-														   data-role="dropdownlist"
-														   data-header-template="contact-header-tmpl"
-										                   data-template="contact-list-tmpl"
-										                   data-value-primitive="false"
-										                   data-filter="startswith"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="value: contact_id,
-										                   			  disabled: isEdit,
-										                              source: contactDS,
-										                              events: {change: contactChanges}"
-										                   data-option-label="Select Customer..."
-										                   style="width: 100%; height: 29px;" />
-
-													</div>
-												</form>
+							<!-- Upper Part -->
+							<div class="row-fluid">
+								<div class="col-md-4">
+									
+										
+									<div class="" style="padding: 15px 15px 19px; background: #203864; color: #333 ;">
+										<form autocomplete="off" class="form-inline">
+											<div class="widget-search separator bottom">
+												<button type="button" class="btn btn-default pull-right" data-bind="click: search, disabled: isEdit"><i class="icon-search"></i></button>
+												<div class="overflow-hidden">
+													<input type="search" placeholder="Invoice Number..." data-bind="value: searchText, disabled: isEdit">
+												</div>
 											</div>
-										</div>
+											<div class="select2-container" style="width: 100%;">
+												<input id="cbbContact" name="cbbContact"
+												   data-role="dropdownlist"
+												   data-header-template="contact-header-tmpl"
+								                   data-template="contact-list-tmpl"
+								                   data-value-primitive="false"
+								                   data-filter="startswith"
+								                   data-text-field="name"
+								                   data-value-field="id"
+								                   data-bind="value: contact_id,
+								                   			  disabled: isEdit,
+								                              source: contactDS,
+								                              events: {change: contactChanges}"
+								                   data-option-label="Select Customer..."
+								                   style="width: 100%; height: 29px;" />
+
+											</div>
+										</form>
+									</div>
+
+									<div class="strong" style="background: #eee;  border: 1px solid #ddd; width: 100%; padding: 10px;" align="center"
+										data-bind="style: { backgroundColor: amtDueColor}">
+										<div align="left"><span data-bind="text: lang.lang.amount_received"></span></div>
+										<h2 data-bind="text: total_received" align="right"></h2>
 									</div>
 								</div>
-							</div>
 
-							<div class="strong" style="background: #eee;  border: 1px solid #ddd; width: 100%; padding: 10px;" align="center"
-								data-bind="style: { backgroundColor: amtDueColor}">
-								<div align="left"><span data-bind="text: lang.lang.amount_received"></span></div>
-								<h2 data-bind="text: total_received" align="right"></h2>
-							</div>
-						</div>
+								<div class="col-md-8">
+									<div class="box-generic-noborder">
+										<ul class="nav nav-tabs" role="tablist">
+		                                    <li class="nav-item"> <a class="nav-link active show" data-toggle="tab" href="#functionSetting" role="tab" aria-selected="true"><span><i class="ti-settings"></i></span></a> </li>
+		                                </ul>
+		                                <div class="tab-content tabcontent-border">
+		                                	<!--Tab Setting -->
+		                                    <div class="tab-pane active show" id="functionSetting" role="tabpanel">
+		                                        <div class="p-10">
+		                                            <div class="row">
+		                                            	<div class="col-md-12 ">
+		                                            		<div class="row">
+			                                            		<div class="col-md-6">
+			                                            			<p class="marginBottom" data-bind="text: lang.lang.date"></p>
+			                                            			<input class="marginBottom" id="issuedDate" name="issuedDate"
+																			data-role="datepicker"
+																			data-format="dd-MM-yyyy"
+																			data-parse-formats="yyyy-MM-dd HH:mm:ss"
+																			data-bind="value: obj.issued_date,
+																						events:{ change : issuedDateChanges }"
+																			required data-required-msg="required"
+																					/>
 
-						<div class="span8">
+																	<p class="marginBottom" data-bind="text: lang.lang.cash_account"></p>
+			                                            			<input class="marginBottom" id="ddlCashAccount" name="ddlCashAccount"
+																			data-role="dropdownlist"
+																			data-header-template="account-header-tmpl"
+																			data-template="account-list-tmpl"
+												              				data-value-primitive="true"
+																			data-text-field="name"
+												              				data-value-field="id"
+												              				data-bind="value: obj.account_id,
+												              							source: accountDS"
+												              				data-option-label="Select Account..."
+												              				required data-required-msg="required"
+																					/>
 
-							<div class="box-generic-noborder" >
+				                                            		
+				                                            	</div>
 
-							    <!-- Tabs Heading -->
-							    <div class="tabsbar tabsbar-2">
-							        <ul class="row-fluid row-merge">
-							        	<li class="span1 glyphicons cogwheels active"><a href="#tab1-1" data-toggle="tab"><i></i> </a>
-							            </li>
-							            <!-- <li class="span1 glyphicons show_liness"><a href="#tab1-2" data-toggle="tab"><i></i></a></li> -->
-							        </ul>
-							    </div>
-							    <!-- // Tabs Heading END -->
+				                                            	<div class="col-md-6">
+				                                            		<p class="marginBottom" data-bind="text: lang.lang.payment_term"></p>
+				                                            		<input class="marginBottom" id="ddlPaymentMethod" name="ddlPaymentMethod"
+																			data-role="dropdownlist"
+																			data-header-template="customer-payment-method-header-tmpl"
+												              				data-value-primitive="true"
+																			data-text-field="name"
+												              				data-value-field="id"
+												              				data-bind="value: obj.payment_method_id,
+												              							source: paymentMethodDS"
+												              				data-option-label="Select Method..."
+												              				required data-required-msg="required"
+														              				 />
 
-							    <div class="tab-content">
-
-							    	<!-- Options Tab content -->
-							        <div class="tab-pane active" id="tab1-1">
-							            <table style="margin-bottom: 0;" class="table table-borderless table-condensed cart_total">
-							            	<tr>
-												<td><span data-bind="text: lang.lang.date"></span></td>
-												<td class="right">
-													<input id="issuedDate" name="issuedDate"
-															data-role="datepicker"
-															data-format="dd-MM-yyyy"
-															data-parse-formats="yyyy-MM-dd HH:mm:ss"
-															data-bind="value: obj.issued_date,
-																		events:{ change : issuedDateChanges }"
-															required data-required-msg="required"
-															style="width:100%;" />
-												</td>
-											</tr>
-											<tr>
-								            	<td>
-								            		<span data-bind="text: lang.lang.payment_term"></span>
-								            	</td>
-												<td>
-													<input id="ddlPaymentMethod" name="ddlPaymentMethod"
-															data-role="dropdownlist"
-															data-header-template="customer-payment-method-header-tmpl"
-								              				data-value-primitive="true"
-															data-text-field="name"
-								              				data-value-field="id"
-								              				data-bind="value: obj.payment_method_id,
-								              							source: paymentMethodDS"
-								              				data-option-label="Select Method..."
-								              				required data-required-msg="required"
-								              				style="width: 100%" />
-												</td>
-											</tr>
-											<tr>
-								            	<td><span data-bind="text: lang.lang.cash_account"></span></td>
-							            		<td>
-													<input id="ddlCashAccount" name="ddlCashAccount"
-														data-role="dropdownlist"
-														data-header-template="account-header-tmpl"
-														data-template="account-list-tmpl"
-							              				data-value-primitive="true"
-														data-text-field="name"
-							              				data-value-field="id"
-							              				data-bind="value: obj.account_id,
-							              							source: accountDS"
-							              				data-option-label="Select Account..."
-							              				required data-required-msg="required"
-							              				style="width: 100%" />
-												</td>
-								            </tr>
-								            <tr>
-												<td><span data-bind="text: lang.lang.segment"></span></td>
-												<td>
-													<select data-role="multiselect"
-														   data-value-primitive="true"
-														   data-header-template="segment-header-tmpl"
-														   data-item-template="segment-list-tmpl"
-														   data-value-field="id"
-														   data-text-field="code"
-														   data-bind="value: obj.segments,
-														   			source: segmentItemDS,
-														   			events:{ change: segmentChanges }"
-														   data-placeholder="Add Segment.."
-														   style="width: 100%" /></select>
-												</td>
-											</tr>
-							            </table>
-							        </div>
-							        <!-- // Options Tab content END -->
-
-							        <div class="tab-pane saleSummaryCustomer" id="tab1-2">
-										<table class="table table-borderless table-condensed custo-table">
-									        <thead>
-									            <tr>
-									                <th>NUMBER</th>
-									                <th>ACCOUNT</th>
-									                <th class="right">DEBITS (Dr)</th>
-									                <th class="right">CREDITS (Cr)</th>
-									            </tr>
-									        </thead>
-									        <tbody>
-									        	<tr>
-									        		<td>1</td>
-									        		<td>2</td>
-									        		<td class="right">3</td>
-									        		<td class="right">4</td>
-									        	</tr>
-									        	<tr>
-									        		<td>1</td>
-									        		<td>2</td>
-									        		<td class="right">3</td>
-									        		<td class="right">4</td>
-									        	</tr>
-									        </tbody>
-									    </table>
-									</div>
+														            <!-- <p class="marginBottom" data-bind="text: lang.lang.segment"></p>
+				                                            		<input class="marginBottom" data-role="multiselect"
+																		   data-value-primitive="true"
+																		   data-header-template="segment-header-tmpl"
+																		   data-item-template="segment-list-tmpl"
+																		   data-value-field="id"
+																		   data-text-field="code"
+																		   data-bind="value: obj.segments,
+																		   			source: segmentItemDS,
+																		   			events:{ change: segmentChanges }"
+																		   data-placeholder="Add Segment.."
+														              				 /> -->
+														              				 
+																	
+				                                            	</div>
+		                                            		</div>
+		                                            		
+		                                            	</div>
+		                                        	</div>
+		                                        </div>
+		                                    </div>
+		                                    <!-- End -->
+		                                </div>
+									</div>								
 
 							    </div>
 							</div>
 
-					    </div>
-					</div>
-
-					<!-- Item List -->
-					<div data-role="grid" class="costom-grid"
-				    	 data-column-menu="true"
-				    	 data-reorderable="true"
-				    	 data-scrollable="true"
-				    	 data-resizable="true"
-				    	 data-editable="true"
-		                 data-columns="[
-						    {
-						    	title:'NO',
-						    	width: '50px',
-						    	attributes: { style: 'text-align: center;' },
-						        template: function (dataItem) {
-						        	var rowIndex = banhji.cashReceipt.dataSource.indexOf(dataItem)+1;
-						        	return '<i class=icon-trash data-bind=click:removeRow></i>' + ' ' + rowIndex;
-						      	}
-						    },
-						    {
-						    	field: 'reference',
-						    	title: 'DATE',
-						    	editable: function(){
-		                 			return false;
-		                 		},
-						    	template: function(dataItem){
-						    		if(dataItem.reference.length>0){
-						    			return kendo.toString(new Date(dataItem.reference[0].issued_date), banhji.dateFormat);
-						    		}
-						    	},
-						    	width: '120px'
-						    },
-		                 	{ field: 'contact.name', title: 'NAME' },
-		                 	{
-		                 		field: 'reference_no',
-		                 		title: 'REFERENCE NO.',
-		                 		width: '120px'
-		                 	},
-		                 	{ field: 'number', title: 'RECEIPT NO.', hidden: true, width: '120px' },
-		                 	{ field: 'check_no', title: 'CHECK NO.', hidden: true, width: '120px' },
-		                 	{
-		                 		field: 'sub_total',
-		                 		title:'AMOUNT',
-		                 		format: '{0:n}',
-		                 		editable: function(){
-		                 			return false;
-		                 		},
-		                 		attributes: { style: 'text-align: right;' },
-		                 		width: '120px'
-		                 	},
-							{
-							    field: 'discount',
-							    title: 'DISCOUNT VALUE',
-							    hidden: true,
-							    format: '{0:n}',
-							    editor: numberTextboxEditor,
-							    width: '120px',
-							    attributes: { style: 'text-align: right;' }
-							},
-							{
-							    field: 'discount_percentage',
-							    title: 'DISCOUNT %',
-							    hidden: true,
-							    format: '{0:p}',
-							    editor: discountEditor,
-							    width: '120px',
-							    attributes: { style: 'text-align: right;' }
-							},
-                            {
-							    field: 'amount',
-							    title: 'RECEIVE',
-							    format: '{0:n}',
-							    editor: numberTextboxEditor,
-							    width: '120px',
-							    attributes: { style: 'text-align: right;' }
-							}
-                         ]"
-                         data-auto-bind="false"
-		                 data-bind="source: dataSource" ></div>
-
-		            <!-- Bottom part -->
-		            <div class="row-fluid">
-
-						<!-- Column -->
-						<div class="span4">
-							<div class="well" style="overflow: hidden; margin-top: 15px;">
-								<textarea cols="0" rows="2" class="k-textbox" style="width:100% !important;" data-bind="value: obj.memo" placeholder="memo for external ..."></textarea>
-								<textarea cols="0" rows="2" class="k-textbox" style="width:100% !important;" data-bind="value: obj.memo2" placeholder="memo for internal ..."></textarea>
-							</div>
-						</div>
-						<!-- Column END -->
-
-						<div class="span4"></div>
-
-						<!-- Column -->
-						<div class="span4">
-							<table class="table table-condensed table-striped table-white">
-								<tbody>
-									<tr>
-										<td class="right strong" style="width: 60%;"><span data-bind="text: lang.lang.subtotal" style="font-size: 15px; font-weight: 700;"></span></td>
-										<td class="right strong" ><span data-format="n" data-bind="text: obj.sub_total" style="font-size: 15px; font-weight: 700;"></span></td>
-									</tr>
-									<tr>
-										<td class="right"><span data-bind="text: lang.lang.total_discount"></span></td>
-										<td class="right"><span data-format="n" data-bind="text: obj.discount"></span></td>
-									</tr>
-									<tr>
-										<td class="right"><span data-bind="text: lang.lang.total_tax"></span></td>
-										<td class="right"><span data-format="n" data-bind="text: obj.tax"></span></td>
-									</tr>
-									<tr>
-										<td class="right"><h4 span data-bind="text: lang.lang.total" style="font-weight: 700;"></h4></td>
-										<td class="right"><h4 data-bind="text: total" style="font-weight: 700;"></h4></td>
-									</tr>
-									<tr>
-										<td class="right">
-											<span data-bind="text: lang.lang.deposit"></span>
-											<span data-format="n" data-bind="text: total_deposit"></span>
-										</td>
-										<td class="right">
-											<input 	data-role="numerictextbox"
-								                   	data-format="n"
-								                   	data-spinners="false"
-								                   	data-min="0"
-								                   	data-bind="value: obj.deposit, events: { change: changes }"
-								                   	style="width: 90%; text-align: right;">
-										</td>
-									</tr>
-									<tr>
-										<td class="right strong">
-											<span data-bind="text: lang.lang.remaining" style="font-size: 15px; font-weight: 700;"></span>
-										</td>
-										<td class="right strong">
-											<span data-format="n" data-bind="text: obj.remaining" style="font-size: 15px; font-weight: 700;"></span>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-						<!-- // Column END -->
-
-					</div>
-
-					<!-- Form actions -->
-					<div class="box-generic bg-action-button">
-						<div id="ntf1" data-role="notification"></div>
-
-						<div class="row">
-							<div class="span4" style="padding-left: 15px;">
-								<input data-role="dropdownlist"
-					                   data-value-primitive="true"
-					                   data-text-field="name"
-					                   data-value-field="id"
-					                   data-bind="value: obj.transaction_template_id,
-					                              source: txnTemplateDS"
-					                   data-option-label="Select Template..." />
-
-							</div>
-							<div class="span8" align="right">
-								<span class="btn-btn" onclick="javascript:window.history.back()" data-bind="click: cancel"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
-								<span class="btn-btn" data-bind="click: openConfirm, visible: deleteVisible"><span data-bind="text: lang.lang.delete"></span></span>
-								<span role='presentation' class='dropdown btn-btn' style="padding: 0 0 0 15px; float: right; height: 32px; line-height: 30px;">
-							  		<a style="color: #fff; padding: 0;" class='dropdown-toggle glyphicons' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'>
-							  			<span data-bind="text: lang.lang.save_option"></span>
-							  			<span class="small-btn"><i class='caret '></i></span>
-							  		</a>
-							  		<ul class='dropdown-menu'>
-						  				<li id="saveNew" data-bind="invisible: isEdit"><span data-bind="text: lang.lang.save_new"></span></li>
-						  				<li id="savePrint"><span data-bind="text: lang.lang.save_print"></span></li>
-						  			</ul>
-							  	</span>
-							  	<span class="btn-btn" id="saveClose"><span data-bind="text: lang.lang.save_close"></span></span>
-							  	<span class="btn-btn" id="saveDraft"><span data-bind="text: lang.lang.save_draft"></span></span>
-								<!-- <span class="btn-btn" data-bind="invisible: isEdit"><span data-bind="text: lang.lang.save_new"></span></span>
-								<span class="btn-btn"><span data-bind="text: lang.lang.save_close"></span></span>
-								<span class="btn-btn"><span data-bind="text: lang.lang.save_print"></span></span> -->
-							</div>
 						</div>
 					</div>
-					<!-- // Form actions END -->
-
 				</div>
 			</div>
 		</div>
@@ -2191,94 +2010,6 @@
 </script>
 <!-- End -->
 
-<!-- Template -->
-<script id="contact-header-tmpl" type="text/x-kendo-tmpl">
-    <strong>
-    	<a href="\#/customer">+ Add New Customer</a></li>
-    </strong>
-</script>
-<script id="contact-list-tmpl" type="text/x-kendo-tmpl">
-	<span>#=abbr##=number#</span>
-	<span>#=name#</span>
-</script>
-<script id="customer-term-header-tmpl" type="text/x-kendo-tmpl">
-    <strong>
-    	<a href="\#/customer_setting">+ Add New Term</a>
-    </strong>
-</script>
-<script id="segment-header-tmpl" type="text/x-kendo-tmpl">
-    <strong>
-    	<a href="\#/segment">+ Add New Segment</a>
-    </strong>
-</script>
-<script id="segment-list-tmpl" type="text/x-kendo-tmpl">
-	<span>#=code#</span> <span>#=name#</span>
-</script>
-<script id="job-header-tmpl" type="text/x-kendo-tmpl">
-    <strong>
-    	<a href="\#/job">+ Add New Job</a>
-    </strong>
-</script>
-<script id="job-list-tmpl" type="text/x-kendo-tmpl">
-	<span>
-		#=number# #=name#
-	</span>
-</script>
-<script id="employee-header-tmpl" type="text/x-kendo-tmpl">
-    <strong>
-    	<a href="<?php echo base_url(); ?>admin\#employeelist">+ Add New Employee</a>
-    </strong>
-</script>
-<script id="item-group-header-tmpl" type="text/x-kendo-tmpl">
-    <strong>
-    	<a href="\#/item_setting">+ Add New Group</a>
-    </strong>
-</script>
-<script id="item-category-header-tmpl" type="text/x-kendo-tmpl">
-    <strong>
-    	<a href="\#/item_setting">+ Add New Category</a>
-    </strong>
-</script>
-<script id="account-header-tmpl" type="text/x-kendo-tmpl">
-    <strong>
-    	<a href="\#/account">+ Add New Account</a>
-    </strong>
-</script>
-<script id="account-list-tmpl" type="text/x-kendo-tmpl">
-	<span>
-		#=number#
-	</span>
-	-
-	<span>#=name#</span>
-</script>
-<script id="reference-list-tmpl" type="text/x-kendo-tmpl">
-	<span>
-		#=number# :
-		#if(type=="GDN" || type=="GRN"){#
-			#=kendo.toString(amount, "n")#
-		#}else{#
-			#=kendo.toString(amount - amount_paid, "c", locale)#
-		#}#
-	</span>
-	<span class="pull-right">
-		#if(type=="GDN" || type=="GRN" || type=="Quote" || type=="Sale_Order"){#
-			#if(status==1){#
-				Used
-			#}else{#
-				Open
-			#}#
-		#}else{#
-			#if(status==1){#
-				Paid
-			#}else if(status==2){#
-				Partially Paid
-			#}else{#
-				Open
-			#}#
-		#}#
-	</span>
-</script>
-<!-- End -->
 
 <!--Tab Customer -->
 <script id="customerCenter-transaction-tmpl" type="text/x-kendo-tmpl">
@@ -4648,6 +4379,92 @@
 <!-- End -->
 
 <!-- Template Report-->
+<script id="contact-header-tmpl" type="text/x-kendo-tmpl">
+    <strong>
+    	<a href="\#/customer">+ Add New Customer</a></li>
+    </strong>
+</script>
+<script id="contact-list-tmpl" type="text/x-kendo-tmpl">
+	<span>#=abbr##=number#</span>
+	<span>#=name#</span>
+</script>
+<script id="customer-term-header-tmpl" type="text/x-kendo-tmpl">
+    <strong>
+    	<a href="\#/customer_setting">+ Add New Term</a>
+    </strong>
+</script>
+<script id="segment-header-tmpl" type="text/x-kendo-tmpl">
+    <strong>
+    	<a href="\#/segment">+ Add New Segment</a>
+    </strong>
+</script>
+<script id="segment-list-tmpl" type="text/x-kendo-tmpl">
+	<span>#=code#</span> <span>#=name#</span>
+</script>
+<script id="job-header-tmpl" type="text/x-kendo-tmpl">
+    <strong>
+    	<a href="\#/job">+ Add New Job</a>
+    </strong>
+</script>
+<script id="job-list-tmpl" type="text/x-kendo-tmpl">
+	<span>
+		#=number# #=name#
+	</span>
+</script>
+<script id="employee-header-tmpl" type="text/x-kendo-tmpl">
+    <strong>
+    	<a href="<?php echo base_url(); ?>admin\#employeelist">+ Add New Employee</a>
+    </strong>
+</script>
+<script id="item-group-header-tmpl" type="text/x-kendo-tmpl">
+    <strong>
+    	<a href="\#/item_setting">+ Add New Group</a>
+    </strong>
+</script>
+<script id="item-category-header-tmpl" type="text/x-kendo-tmpl">
+    <strong>
+    	<a href="\#/item_setting">+ Add New Category</a>
+    </strong>
+</script>
+<script id="account-header-tmpl" type="text/x-kendo-tmpl">
+    <strong>
+    	<a href="\#/account">+ Add New Account</a>
+    </strong>
+</script>
+<script id="account-list-tmpl" type="text/x-kendo-tmpl">
+	<span>
+		#=number#
+	</span>
+	-
+	<span>#=name#</span>
+</script>
+<script id="reference-list-tmpl" type="text/x-kendo-tmpl">
+	<span>
+		#=number# :
+		#if(type=="GDN" || type=="GRN"){#
+			#=kendo.toString(amount, "n")#
+		#}else{#
+			#=kendo.toString(amount - amount_paid, "c", locale)#
+		#}#
+	</span>
+	<span class="pull-right">
+		#if(type=="GDN" || type=="GRN" || type=="Quote" || type=="Sale_Order"){#
+			#if(status==1){#
+				Used
+			#}else{#
+				Open
+			#}#
+		#}else{#
+			#if(status==1){#
+				Paid
+			#}else if(status==2){#
+				Partially Paid
+			#}else{#
+				Open
+			#}#
+		#}#
+	</span>
+</script>
 <script id="top-product-template" type="text/x-kendo-tmpl">
     <tr>
         <td>
@@ -4698,4 +4515,9 @@
 		#=category#
 	</div>
 </script>
-<!-- End -->   
+<script id="customer-payment-method-header-tmpl" type="text/x-kendo-tmpl">
+	<strong>
+    	<a href="\#/customer_setting">+ Add New Payment Method</a>
+    </strong>
+</script>
+<!-- End -->

@@ -248,6 +248,9 @@
 	.addCusto .example  h2{
 		margin-bottom: 15px;
 	}
+	.widget-head.head-custom {
+	    background: #0eac00!important;
+	}
 </style>
 <!-- ***************************
 *	Report Section      	  *

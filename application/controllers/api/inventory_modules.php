@@ -507,13 +507,15 @@ class Inventory_modules extends REST_Controller {
 		//End TOTAL INVENTORY
 		
 		//Results
-		if($page && $limit){
-			$obj->get_paged_iterated($page, $limit);
-			$data["count"] = $obj->paged->total_rows;
-		}else{
-			$obj->get_iterated();
-			$data["count"] = $obj->result_count();
-		}
+		// if($page && $limit){
+		// 	$obj->get_paged_iterated($page, $limit);
+		// 	$data["count"] = $obj->paged->total_rows;
+		// }else{
+		// 	$obj->get_iterated();
+		// 	$data["count"] = $obj->result_count();
+		// }
+		$obj->limit(10);
+		$obj->get_iterated();
 
 		if($obj->exists()){
 			foreach ($obj as $value) {
@@ -558,7 +560,7 @@ class Inventory_modules extends REST_Controller {
 				$inventoryCosts->where("deleted <>", 1);
 				$inventoryCosts->get();
 
-				//Inventory Total Cost
+				// Inventory Total Cost
 				$inventoryTotalCost = floatval($purchases->total) - floatval($costOfSales->total) + floatval($inventoryCosts->total);
 
 				$cost = 0;
@@ -600,15 +602,17 @@ class Inventory_modules extends REST_Controller {
 				$so->where_related("transaction", "is_recurring <>", 1);
 				$so->where_related("transaction", "deleted <>", 1);
 				$so->where("item_id", $value->id);
-				$so->where("deleted <>", 1);		
+				$so->where("deleted <>", 1);
 				$so->get();
 
-				if($cost<>0){
+				$qty = floatval($unitOnHand->total);
+
+				if($cost<>0 || $qty<>0){
 					$data["results"][] = array(
 						"id" 			=> $value->id,
 						"name" 			=> $value->abbr . $value->number ." ". $value->name,
 						"measurement"	=> $value->measurement_name,
-						"quantity" 		=> floatval($unitOnHand->total),
+						"quantity" 		=> $qty,
 						"on_po" 		=> floatval($po->totalQuantity),
 						"on_so" 		=> floatval($so->totalQuantity),
 						"cost" 			=> $cost,
