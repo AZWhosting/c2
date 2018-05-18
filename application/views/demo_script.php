@@ -164,27 +164,7 @@
 	// Initializing AWS Cognito service
 	var userPool = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserPool(poolData);
 	// Get User Information from AWS Cognito service
-	banhji.Cognito = kendo.observable({
-		userId: function() {
-			var that = this;
-			that.sub = '';
-			var cognitoUser = userPool.getCurrentUser();
-			if(cognitoUser != null) {
-				cognitoUser.getSession((err, session) => {
-					if(err) {
-						console.log(err)
-					}
-					cognitoUser.getAttributes((err, att) => {
-						if(err) {
-							console.log(err)
-						} else {
-							that.sub = att[0].Value
-						}
-					})
-				})
-			}
-		}
-	})
+
 	// Initializing AWS S3 Service
 	var bucket = new AWS.S3({params: {Bucket: 'banhji'}});
 	banhji.accessMod = new kendo.data.DataSource({
@@ -24281,6 +24261,8 @@
 		    this.set("numberToString", word.toUpperCase());
 		},
 		amountTotal 		: "",
+    offsetnumber  : "",
+    offsetamount : 0,
 		pageLoad 			: function(id, is_recurring){
 			var self = this;
 			this.dataSource.query({
@@ -24291,7 +24273,6 @@
 				var view = self.dataSource.view();
 				view[0].set("sub_total", kendo.toString(view[0].sub_total, "c", view[0].locale));
 				view[0].set("tax", kendo.toString(view[0].tax, "c", view[0].locale));
-
 				view[0].set("discount", kendo.toString(view[0].discount, "c", view[0].locale));
 				self.set("amountTotal", view[0].amount);
 				view[0].set("cash_receipt", kendo.toString(view[0].amount - view[0].deposit, "c", view[0].locale));
@@ -24309,7 +24290,14 @@
 						name: 'Cash'
 			    	});
 				}
-
+        if(view[0].offset_invoice.length > 0){
+          var offamount = 0;
+          $.each(view[0].offset_invoice, function(i,v){
+            self.set("offsetnumber", self.get("offsetnumber") + " " + v.number);
+            offamount += kendo.parseFloat(v.amount);
+          });
+          self.set("offsetamount", kendo.toString(offamount, "c", view[0].locale));
+        }
 				self.set("obj", view[0]);
 				var amountDue = kendo.parseFloat(view[0].amount) - kendo.parseFloat(view[0].deposit);
 				self.get("obj").set("amount_due", kendo.toString(amountDue, "c", view[0].locale))

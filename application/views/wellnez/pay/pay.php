@@ -361,13 +361,13 @@
 							            	<div class="row">
 												<div class="span7">
 													<p style="float: left;color: #333;">Password</p>
-													<input type="password" name="" style="width: 100%; font-weight: 500; border: 1px solid #ccc; padding: 5px; height: 35px; color: #333;"
+													<input type="password" autocomplete="new-password" name="" style="width: 100%; font-weight: 500; border: 1px solid #ccc; padding: 5px; height: 35px; color: #333;"
 							                   			data-bind="value: delPassword"
 													/>
 												</div>
 												<div class="span5" style="padding-left: 0;">
 													<p style="float: left;color: #333;">Invoice Number</p>
-													<input type="number" style="width: 100%; font-weight: 500; border: 1px solid #ccc; padding: 5px; height: 35px; color: #333;"
+													<input type="text" style="width: 100%; font-weight: 500; border: 1px solid #ccc; padding: 5px; height: 35px; color: #333;"
 														data-bind="value: delInvNumber, enabled: False"
 													/>
 												</div>

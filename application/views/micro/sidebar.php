@@ -23,7 +23,7 @@
                     </a>
                 </li>
                 <li>
-                    <a class="waves-effect waves-dark" href="<?php echo base_url(); ?>micro/purchase" aria-expanded="false">
+                    <a class="waves-effect waves-dark" href="<?php echo base_url(); ?>micro/purchases" aria-expanded="false">
                         <i class="ti-view-list"></i>
                         <span class="hide-menu" data-bind="text: lang.lang.purchase">Purchases</span>
                     </a>

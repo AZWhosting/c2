@@ -17482,7 +17482,7 @@
 																disabled: obj.is_recurring,
 																events:{change:checkExistingNumber}"
 													required data-required-msg="required"
-													placeholder="eg. ABC00001" style="width: 83%; float: left; margin-right: 5px;"" />
+													placeholder="eg. ABC00001" style="width: 83%; float: left; margin-right: 5px;" />
 											<div style="padding-left: 0; width: 25px; float: left;">
 												<a class="glyphicons no-js qrcode" data-bind="click: generateNumber" title="Generate Number" style="float: left; margin: 2px 0 0 0 ;"><i></i></a>
 											</div>
@@ -54117,7 +54117,7 @@
 		                </div>
 		            </div>
 		        </div>
-				<div class="title" style="margin-top: -50px;">
+				<div class="title" style="">
 					<h2 class="kh">ប័ណ្ណបង្វិលទំនិញ / ចំណាយ</h2>
 					<h2 class="en">Sale Return</h2>
 				</div>
@@ -54151,14 +54151,14 @@
                         	<p style="font-weight:bold" data-bind="text: obj.issued_date"></p>
                         </div>
                     </div>
-                    <div class="clear">
+                    <!-- <div class="clear">
                     	<div class="left">
                     		<p>សំគាល់:</p>
                         </div>
                         <div class="left dotted-ruler" style="width: 57%;">
-                        	<p style="font-weight:bold" data-bind="text: obj.issued_date"></p>
+                        	<p style="font-weight:bold" data-bind="text: offsetnumber"></p>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         	<div class="clear">
@@ -54173,14 +54173,20 @@
                         </tr>
                     </thead>
                     <tbody style="margin-top: 2px" id="formListView" data-role="listview"
-										 data-auto-bind="false"
-						                 data-template="invoiceForm-lineDS-template"
-						                 data-bind="source: lineDS">
+						data-auto-bind="false"
+						data-template="invoiceForm-lineDS-template"
+						data-bind="source: lineDS">
                     </tbody>
                     <tfoot>
                         <tr>
-                        	<td colspan="2" style="text-align:right;padding:5px;font-weight: bold;">សរុប Total</td>
+                        	<td></td>
+                        	<td colspan="3" style="text-align:right;padding:5px;font-weight: bold;">សរុប Total</td>
                             <td class="rside" data-bind="text: obj.amount"></td>
+                        </tr>
+                        <tr>
+                        	<td></td>
+                        	<td colspan="3" style="text-align:right;padding:5px;font-weight: bold;">លេខវិក្កយបត្រដែរទូទាត់ <span data-bind="text: offsetnumber"></span></td>
+                            <td class="rside" data-bind="text: offsetamount"></td>
                         </tr>
                     </tfoot>
                 </table>
@@ -64750,4 +64756,4 @@
 	s0.parentNode.insertBefore(s1,s0);
 	})();
 </script> -->
-<!--End of Tawk.to Script-->
+<!--End of Tawk.to Script--> 

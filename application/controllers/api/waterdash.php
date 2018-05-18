@@ -170,11 +170,13 @@ class Waterdash extends REST_Controller {
 		$totalACust = 0;
 		$totalVCust = 0;
 		$totalDisconnect = 0;
+		$void = 0;
 		$inActive = 0;
 		$meter->get_iterated();
 		foreach($meter as $con){
 			//Inactive Cstomer
 			if($con->status == 0){
+				$inActive += 1;
 			 	if($con->activated == 1){
 					$totalICust += 1;
 				}
@@ -185,7 +187,7 @@ class Waterdash extends REST_Controller {
 					$totalConnect += 1;
 				}
 			}elseif($con->status == 2){
-				$inActive += 1;
+				$void += 1;
 			}
 		}
 
@@ -228,7 +230,8 @@ class Waterdash extends REST_Controller {
 			'totalMeter' => $totalMeter,
 			'iMeter' => $totalICust,
 			'aMeter' => $totalACust,
-			'void' => $inActive,
+			'void' => $void,
+			'inactive' => $inActive,
 			'totalConnect' =>$totalConnect,
 			'totalDisconnect' =>$totalDisconnect,
 		);

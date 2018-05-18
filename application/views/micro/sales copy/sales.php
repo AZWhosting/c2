@@ -37,91 +37,91 @@
 			                <div class="tab-content">
 			                	<!-- Tab Report -->
 			                    <div class="tab-pane active" id="reports" role="tabpanel">
-		                       		<div class="row ">
-										<div class="col-md-4">
-											<div class="saleOverview">
-												<h2 data-bind="text: lang.lang.sale"></h2>
-												<p data-format="n" data-bind="text: obj.sale"></p>
-												<div class="col-md-12">
-													<div class="col-md-4">
-														<span data-bind="text: obj.sale_customer"></span>
-														<span data-bind="text: lang.lang.customer"></span>
-													</div>
-													<div class="col-md-4">
-														<span data-bind="text: obj.sale_product"></span>
-														<span data-bind="text: lang.lang.product"></span>
-													</div>
-													<div class="col-md-4">
-														<span data-bind="text: obj.sale_ordered"></span>
-														<span data-bind="text: lang.lang.order"></span>
-													</div>
-												</div>
-											</div>
+		                        	<div class="row ">
+				    					<div class="col-md-4">
+				    						<div class="saleOverview">
+				    							<h2 data-bind="text: lang.lang.sale"></h2>
+				    							<p data-format="n" data-bind="text: obj.sale"></p>
+				    							<div class="col-md-12">
+				    								<div class="col-md-4">
+				    									<span data-bind="text: obj.sale_customer"></span>
+				    									<span data-bind="text: lang.lang.customer"></span>
+				    								</div>
+				    								<div class="col-md-4">
+				    									<span data-bind="text: obj.sale_product"></span>
+				    									<span data-bind="text: lang.lang.product"></span>
+				    								</div>
+				    								<div class="col-md-4">
+				    									<span data-bind="text: obj.sale_ordered"></span>
+				    									<span data-bind="text: lang.lang.order"></span>
+				    								</div>
+				    							</div>
+				    						</div>
 
-											<!-- Report -->
-								            <div class="report ">
-												<div class="col-md-12">
-													<h3><a href="#/sale_summary_by_customer" data-bind="text: lang.lang.sale_summary_by_customer" ></a></h3>
-													<p data-bind="text: lang.lang.summarizes_total_sales"></p>
-												</div>
-												<div class="col-md-12">
-													<h3><a href="#/sale_summary_by_product" data-bind="text: lang.lang.sale_summary_by_product_services" ></a></h3>
-													<p data-bind="text: lang.lang.summarizes_total_sales_for_each_product"></p>
-												</div>
-												<div class="col-md-12">
-													<h3><a href="#/sale_detail_by_customer" data-bind="text: lang.lang.sale_detail_by_customer" ></a></h3>
-													<p data-bind="text: lang.lang.lists_individual_sale"></p>
-												</div>
-												<div class="col-md-12">
-													<h3><a href="#/sale_detail_by_product" data-bind="text: lang.lang.sale_detail_by_product_services" ></a></h3>
-													<p data-bind="text: lang.lang.lists_individual_sale_transactions"></p>
-												</div>						    					
-											</div>
+				    						<!-- Report -->
+					                        <div class="report ">
+					    						<div class="col-md-12">
+					    							<h3><a href="#/sale_summary_by_customer" data-bind="text: lang.lang.sale_summary_by_customer" ></a></h3>
+					    							<p data-bind="text: lang.lang.summarizes_total_sales"></p>
+					    						</div>
+					    						<div class="col-md-12">
+					    							<h3><a href="#/sale_summary_by_product" data-bind="text: lang.lang.sale_summary_by_product_services" ></a></h3>
+					    							<p data-bind="text: lang.lang.summarizes_total_sales_for_each_product"></p>
+					    						</div>
+					    						<div class="col-md-12">
+					    							<h3><a href="#/sale_detail_by_customer" data-bind="text: lang.lang.sale_detail_by_customer" ></a></h3>
+					    							<p data-bind="text: lang.lang.lists_individual_sale"></p>
+					    						</div>
+					    						<div class="col-md-12">
+					    							<h3><a href="#/sale_detail_by_product" data-bind="text: lang.lang.sale_detail_by_product_services" ></a></h3>
+					    							<p data-bind="text: lang.lang.lists_individual_sale_transactions"></p>
+					    						</div>						    					
+					    					</div>
 
-											<!-- Top 4 -->
-											<div class="top5 home-footer">
-								                <table class="table color-table dark-table">
-								                    <thead>
-								                        <tr>
-								                            <th colspan="2" class="center">
-								                                <span data-bind="text: lang.lang.top_5_customers"></span>
-								                            </th>
-								                        </tr>
-								                    </thead>
-								                    <tbody data-role="listview"
-								                         data-auto-bind="false"
-								                         data-template="top-contact-template"
-								                         data-bind="source: objInventory.top_customer"></tbody>
-								                </table>
-								            </div>					                        
-										</div>
-										<div class="col-md-4">
-											<div class="saleOverview">
-												<h2 data-bind="text: lang.lang.sale_order"></h2>
-												<p data-format="n" data-bind="text: obj.so"></p>
-												<div class="col-md-12">
-													<div class="col-md-6">
-														<span data-format="n0" data-bind="text: obj.so_avg"></span>
-														<span data-bind="text: lang.lang.average"></span>
-													</div>
-													<div class="col-md-6">
-														<span data-bind="text: obj.so_open"></span>
-														<span data-bind="text: lang.lang.order_open"></span>
-													</div>
-												</div>
-											</div>
+				    						<!-- Top 4 -->
+				    						<div class="top5 home-footer">
+					                            <table class="table color-table dark-table">
+					                                <thead>
+					                                    <tr>
+					                                        <th colspan="2" class="center">
+					                                            <span data-bind="text: lang.lang.top_5_customers"></span>
+					                                        </th>
+					                                    </tr>
+					                                </thead>
+					                                <tbody data-role="listview"
+					                                     data-auto-bind="false"
+					                                     data-template="top-contact-template"
+					                                     data-bind="source: objInventory.top_customer"></tbody>
+					                            </table>
+					                        </div>					                        
+				    					</div>
+				    					<div class="col-md-4">
+				    						<div class="saleOverview">
+				    							<h2 data-bind="text: lang.lang.sale_order"></h2>
+				    							<p data-format="n" data-bind="text: obj.so"></p>
+				    							<div class="col-md-12">
+				    								<div class="col-md-6">
+				    									<span data-format="n0" data-bind="text: obj.so_avg"></span>
+				    									<span data-bind="text: lang.lang.average"></span>
+				    								</div>
+				    								<div class="col-md-6">
+				    									<span data-bind="text: obj.so_open"></span>
+				    									<span data-bind="text: lang.lang.order_open"></span>
+				    								</div>
+				    							</div>
+				    						</div>
 
-											<!-- Report -->
-											<div class="report" style="min-height: 385px; ">
-								                <div class="col-md-12">
-													<h3><a href="#/customer_balance_summary" data-bind="text: lang.lang.customer_balance_summary" ></a></h3>
-													<p data-bind="text: lang.lang.summarizes_total_sales"></p>
-												</div>
-												<div class="col-md-12">
-													<h3><a href="#/customer_balance_detail" data-bind="text: lang.lang.customer_balance_detail" ></a></h3>
-													<p data-bind="text: lang.lang.lists_individual_unpaid_invoices_for_each_customer"></p>
-												</div>
-												<div class="col-md-12">
+				    						<!-- Report -->
+					    					<div class="report" style="min-height: 385px; ">
+						                        <div class="col-md-12">
+					    							<h3><a href="#/customer_balance_summary" data-bind="text: lang.lang.customer_balance_summary" ></a></h3>
+					    							<p data-bind="text: lang.lang.summarizes_total_sales"></p>
+					    						</div>
+					    						<div class="col-md-12">
+					    							<h3><a href="#/customer_balance_detail" data-bind="text: lang.lang.customer_balance_detail" ></a></h3>
+					    							<p data-bind="text: lang.lang.lists_individual_unpaid_invoices_for_each_customer"></p>
+					    						</div>
+					    						<div class="col-md-12">
 													<h3><a href="#/receivable_aging_summary" data-bind="text: lang.lang.receivable_aging_summary"></a></h3>
 													<p data-bind="text: lang.lang.lists_all_unpaid_invoices1"></p>	
 												</div>
@@ -131,46 +131,46 @@
 												</div>
 											</div>
 
-											<!-- Top 4 -->
-											<div class="top5 home-footer">
-								                <table class="table color-table dark-table">
-								                    <thead>
-								                        <tr>
-								                            <th class="center" colspan="2">
-								                                <span data-bind="text: lang.lang.top_5_Receipt"></span>
-								                            </th>
-								                        </tr>
-								                    </thead>
-								                    <tbody data-role="listview"
-								                         data-auto-bind="false"
-								                         data-template="top-contact-template"
-								                         data-bind="source: obj.top_cash_receipt"></tbody>
-								                </table>
-								            </div>					                        
-										</div>
-										<div class="col-md-4">
-											<div class="saleOverview">
-												<h2 data-bind="text: lang.lang.receivable"></h2>
-												<p data-format="n" data-bind="text: obj.ar"></p>
-												<div class="col-md-12">
-													<div class="col-md-4">
-														<span data-format="n0" data-bind="text: obj.ar_open"></span>
-														<span data-bind="text: lang.lang.open"></span>
-													</div>
-													<div class="col-md-4">
-														<span data-bind="text: obj.ar_customer"></span>
-														<span data-bind="text: lang.lang.customers"></span>
-													</div>
-													<div class="col-md-4">
-														<span data-bind="text: obj.ar_overdue"></span>
-														<span data-bind="text: lang.lang.overdue"></span>
-													</div>
-												</div>
-											</div>
+				    						<!-- Top 4 -->
+				    						<div class="top5 home-footer">
+					                            <table class="table color-table dark-table">
+							                        <thead>
+							                            <tr>
+							                                <th class="center" colspan="2">
+							                                    <span data-bind="text: lang.lang.top_5_Receipt"></span>
+							                                </th>
+							                            </tr>
+							                        </thead>
+							                        <tbody data-role="listview"
+							                             data-auto-bind="false"
+							                             data-template="top-contact-template"
+							                             data-bind="source: obj.top_cash_receipt"></tbody>
+							                    </table>
+					                        </div>					                        
+				    					</div>
+				    					<div class="col-md-4">
+				    						<div class="saleOverview">
+				    							<h2 data-bind="text: lang.lang.receivable"></h2>
+				    							<p data-format="n" data-bind="text: obj.ar"></p>
+				    							<div class="col-md-12">
+				    								<div class="col-md-4">
+				    									<span data-format="n0" data-bind="text: obj.ar_open"></span>
+				    									<span data-bind="text: lang.lang.open"></span>
+				    								</div>
+				    								<div class="col-md-4">
+				    									<span data-bind="text: obj.ar_customer"></span>
+				    									<span data-bind="text: lang.lang.customers"></span>
+				    								</div>
+				    								<div class="col-md-4">
+				    									<span data-bind="text: obj.ar_overdue"></span>
+				    									<span data-bind="text: lang.lang.overdue"></span>
+				    								</div>
+				    							</div>
+				    						</div>
 
-											<!-- Report -->
-											<div class="report" style="min-height: 385px; ">
-												<div class="col-md-12">
+				    						<!-- Report -->
+					    					<div class="report" style="min-height: 385px; ">
+					    						<div class="col-md-12">
 													<h3><a href="#/collect_invoice" data-bind="text: lang.lang.list_of_invoices_to_be_collected"></a></h3>
 													<p data-bind="text: lang.lang.lists_all_unpaid_invoices_grouped_by_due_today_and_overdue"></p>
 												</div>
@@ -180,26 +180,26 @@
 												</div>
 											</div>
 
-											<!-- Top 4 -->
-											<div class="top5 home-footer">
-								                <table class="table color-table dark-table">
-								                    <thead>
-								                        <tr>
-								                            <th colspan="2" class="center">
-								                                <span data-bind="text: lang.lang.top_5_best_selling_products"></span>
-								                            </th>
-								                        </tr>
-								                    </thead>
-								                    <tbody data-role="listview"
-								                         data-auto-bind="false"
-								                         data-template="top-product-template"
-								                         data-bind="source: objInventory.top_product"></tbody>
-								                </table>
-								            </div>					                        
-										</div>
-									</div>		                       
+				    						<!-- Top 4 -->
+				    						<div class="top5 home-footer">
+					                            <table class="table color-table dark-table">
+					                                <thead>
+					                                    <tr>
+					                                        <th colspan="2" class="center">
+					                                            <span data-bind="text: lang.lang.top_5_best_selling_products"></span>
+					                                        </th>
+					                                    </tr>
+					                                </thead>
+					                                <tbody data-role="listview"
+					                                     data-auto-bind="false"
+					                                     data-template="top-product-template"
+					                                     data-bind="source: objInventory.top_product"></tbody>
+					                            </table>
+					                        </div>					                        
+				    					</div>
+				    				</div>			                       
 			                    </div>
-			                    
+			                    <div id="saleReport"></div>
 			                    <!-- End Tab Report -->
 
 			                    <!-- Tab Check Out -->

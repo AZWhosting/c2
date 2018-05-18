@@ -346,7 +346,7 @@
 										<tbody>
 											<tr align="center">
 												<td>
-													<span style="font-size: 25px;" data-bind="text: totalMeter"></span>
+													<span style="font-size: 25px;" data-bind="text: totalInactive"></span>
 													<br>
 													<span data-bind="text: lang.lang.meter_void">Void</span>
 												</td>

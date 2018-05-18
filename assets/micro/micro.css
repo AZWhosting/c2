@@ -228,7 +228,11 @@ a {
     background-color: rgb(213, 219, 219);
 }
 .fontIcon17 ul li a span i:before{
-	font-size: 17px;
+	font-size: 15px;
+}
+.fontIcon17 .table td, .fontIcon17 .table th {
+    border-top: none;
+    padding: 5px;
 }
 /*End*/
 
@@ -631,6 +635,7 @@ a {
     border: none; 
     padding: 0;
     margin-bottom: 0;
+    line-height: 15px;
 }
 #customerMemo .blockShowMemo blockquote p{
 	margin-bottom: 0;

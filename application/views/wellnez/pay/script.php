@@ -4365,6 +4365,8 @@
         invClick    : function(e){
             var data = e.data;
             this.set("invobj", null);
+            console.log(data);
+            this.set("delInvNumber", data.number);
             this.set("total", data.amount);
             this.set("amountReciept", data.amount);
             this.set("btnActive", true);
@@ -4373,7 +4375,6 @@
             this.setDefaultReceiptCurrency(data.amount);
             banhji.splitBill.data = [];
             banhji.splitBill.data = data;
-            this.set("delInvNumber", data.number);
         },
         haveLoyalty : false,
         cancelLoyalty : function(){
@@ -4470,8 +4471,21 @@
         cancelInvoice: function(){
             this.set("haveDelete",true);
         },
+        delSearchDS : dataStore(apiUrl + "spa/delpwd"),
         delApply : function(){
             var pwd = this.get("delPassword");
+            var self = this;
+            this.delSearchDS.query({
+                filter: {field: "password", value: pwd},
+                pageSize: 1,
+            }).then(function(e){
+                var v = self.delSearchDS.view();
+                if(v.length > 0){
+                    if(confirm(''))
+                }else{
+                    alert('Wrong Password');
+                }
+            });
         },
         delCancel : function(){
             this.set("haveDelete",false);

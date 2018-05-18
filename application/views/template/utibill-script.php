@@ -28101,6 +28101,7 @@
                 banhji.wDashBoard.set('voidCust', kendo.toString(this.data()[0].void, "n0", banhji.locale));
                 banhji.wDashBoard.set('totalConnect', kendo.toString(this.data()[0].totalConnect, "n0", banhji.locale));
                 banhji.wDashBoard.set('totalDisconnect', kendo.toString(this.data()[0].totalDisconnect, "n0", banhji.locale));
+                banhji.wDashBoard.set('totalInactive', kendo.toString(this.data()[0].inactive, "n0", banhji.locale));
             },
             batch: true,
             serverFiltering: true,

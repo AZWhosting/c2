@@ -5,7 +5,7 @@
 <title>Login | Free Online Accounting</title>
   <!-- Boostrap-->
   <link rel="shortcut icon" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/banhji-logo.png">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"> 
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet">
   <style>
       html, body {
@@ -34,7 +34,7 @@
       }
       .login-image{
           text-align: center;
-          margin-top: -15px; 
+          margin-top: -15px;
       }
       .login-image p{
         color: #8DB3DA;
@@ -45,19 +45,19 @@
           background: #BDD7EE;
           margin-right: 5%;
           padding: 30px 50px;
-          color: #000000;            
+          color: #000000;
       }
       .login-form input{
         font-size: 20px;
         font-family: 'Roboto Slab', serif !important;
       }
-     
+
       .login-form .login-email{
         width: 100%;
         margin-top: 10px;
         padding: 8px;
       }
-      
+
       .btn-login{
         width: 100%;
         background: #222A35;
@@ -221,7 +221,7 @@
           Support
           <div class="enquiry-content">
             <p style="font-size: 14px;">Call us by<br><span style="font-weight: bold;font-size: 16px">+855 10 413 777</span><br>Mon-Fri<br>09:00 - 18:00</p>
-            <div class="fb-messengermessageus" 
+            <div class="fb-messengermessageus"
               messenger_app_id="1301847836514973"
               page_id="862386433857166"
               color="blue"
@@ -243,18 +243,18 @@
 
                         <input type="text" data-bind="value: email" placeholder="Your email" class="login-email"><br>
 
-                        <input type="password" data-bind="value: password" placeholder="Password " class="login-email"><br>                    
+                        <input type="password" data-bind="value: password" placeholder="Password " class="login-email"><br>
 
                         <input id="loginBtn" type="button" data-bind="click: btnSignIn" class="btn-login" value="Login"><br><br>
                         <div id="loginInformation" style="text-align: center;margin-bottom: 15px;color: #a22314"></div>
-                    </form> 
+                    </form>
                     <p>By clicking Login, you agree to our <a href="https://www.banhji.com/terms" target="_blank">Term of Service.</a></p>
                     <a href="<?php echo base_url(); ?>forgetpassword">Forget Password</a> | <a href="<?php echo base_url(); ?>signup"> Sign Up</a>
                 </div>
               </div>
           </div>
       </div>
-      </div> 
+      </div>
   </div>
   <div class="footer-wrapper" style="position: fixed; width: 100%; bottom:0; left: 0;">
         <div class="footer" style="width: 100%; background: #111F3F; padding: 10px 0; color: #839ABA;">
@@ -271,10 +271,10 @@
                         <div class="col-sm-6 footer-list">
                             <ul>
                                 <li>
-                                    <a href="https://banhji.com/privacy" target="_blank">Privacy Policy</a> 
+                                    <a href="https://banhji.com/privacy" target="_blank">Privacy Policy</a>
                                 </li>
                                 <li>
-                                    <a href="https://www.banhji.com/terms" target="_blank">Terms of Service</a> 
+                                    <a href="https://www.banhji.com/terms" target="_blank">Terms of Service</a>
                                 </li>
                             </ul>
                             <div class="supporter">
@@ -282,18 +282,18 @@
                                     <script async type="text/javascript" src="https://seal.godaddy.com/getSeal?sealID=lNpq2OuFwU0nDcZ5f7uSQ9D1rwgIIgTNOoYBNRt4BqE4CMLt8GMhEDKt66EL"></script>
                                 </span>
                                 <span id="cdSiteSeal1" style="float: right; width: 28%; text-align: right;">
-                                    <script type="text/javascript" src="//tracedseals.starfieldtech.com/siteseal/get?scriptId=cdSiteSeal1&amp;cdSealType=Seal1&amp;sealId=55e4ye7y7mb733e8444d2ecffd8819eq59my7mb7355e4ye7baf4c5b6a4491396"></script></span>                        
+                                    <script type="text/javascript" src="//tracedseals.starfieldtech.com/siteseal/get?scriptId=cdSiteSeal1&amp;cdSealType=Seal1&amp;sealId=55e4ye7y7mb733e8444d2ecffd8819eq59my7mb7355e4ye7baf4c5b6a4491396"></script></span>
                                 </span>
                             </div>
-                        </div>           
-                    </div>                           
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
   </div>
 
-    
-     
+
+
     <!-- cognito -->
     <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/jsbn.js"></script>
     <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/jsbn2.js"></script>
@@ -524,14 +524,14 @@
           email: null,
           password: null,
           signIn: function(e) {
-            // var decimal=  /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/;  
-            // if(this.get('password').match(decimal) != null)  {   
+            // var decimal=  /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/;
+            // if(this.get('password').match(decimal) != null)  {
             // layout.showIn("#main-container", watingView);
             // if(e.keyCode == 13) {
             //   console.log(this.get('password'));
               // banhji.aws.btnSignIn();
             // }
-            console.log(this.get('password')); 
+            console.log(this.get('password'));
           },
           btnSignIn: function() {
             if(this.get('email') || this.get('password')){
@@ -560,39 +560,56 @@
                           if (err) {
                             alert(err);
                               return;
-                          }                        
+                          }
                       });
                   }
-                  
+
                   banhji.companyDS.filter({field: 'username', value: userPool.getCurrentUser() == null ? '': userPool.getCurrentUser().username});
                       banhji.companyDS.bind('requestEnd', function(e) {
                         var res = e.response;
-                        if(res.error) {
-                            // console.log()
-                        } else {
-                          var data = res.results[0];
-                          banhji.profileDS.filter({
-                            field: 'username', value: userPool.getCurrentUser().username
-                          });
-                          banhji.profileDS.bind('requestEnd', function(e){
-                            var id = e.response.results[0].id;
-                            if(e.response.results[0].id) {
-                              var user = {
-                                id: id,
-                                username: userPool.getCurrentUser().username,
-                                role: e.response.results[0].role,
-                                roles: e.response.results[0].roles,
-                                institute: data
-                              };
-                              localforage.setItem('user', user);
-                              $("#loginBtn").val("Redirecting...");
-                              window.location.replace(baseUrl + "rrd/");
-                            } else {
-                              console.log('bad');
-                            }
-                          });                          
-                        }
-                    });                    
+                        var data = res.results[0];
+                        banhji.profileDS.filter({
+                          field: 'username', value: userPool.getCurrentUser().username
+                        });
+                        banhji.profileDS.bind('requestEnd', function(e){
+                          var id = e.response.results[0].id;
+                          var cognitoUser = userPool.getCurrentUser();
+                          cognitoUser.getSession((err, session) => {
+                            cognitoUser.getUserAttributes((err, attributes) => {
+                              if(e.response.results[0].id) {
+                                var user = {
+                                  id: id,
+                                  sub: attributes[0].Value,
+                                  username: userPool.getCurrentUser().username,
+                                  role: e.response.results[0].role,
+                                  roles: e.response.results[0].roles,
+                                  institute: data
+                                };
+                                localforage.setItem('user', user);
+                                $("#loginBtn").val("Redirecting...");
+                                window.location.replace(baseUrl + "rrd/");
+                              } else {
+                                console.log('bad');
+                              }
+                            })
+                          })
+                          // if(e.response.results[0].id) {
+                          //   var user = {
+                          //     id: id,
+                          //     sub:
+                          //     username: userPool.getCurrentUser().username,
+                          //     role: e.response.results[0].role,
+                          //     roles: e.response.results[0].roles,
+                          //     institute: data
+                          //   };
+                          //   localforage.setItem('user', user);
+                          //   $("#loginBtn").val("Redirecting...");
+                          //   window.location.replace(baseUrl + "rrd/");
+                          // } else {
+                          //   console.log('bad');
+                          // }
+                        });
+                    });
                 },
                 onFailure: function(err) {
                   // layout.showIn("#main-container", loginView);
@@ -610,7 +627,7 @@
                 window.location.replace(baseUrl + "rrd/");
               } else {
                 window.location.replace(baseUrl + "app/");
-              } 
+              }
           },
           forgotPassword: function(e) {
             e.preventDefault();
@@ -641,15 +658,15 @@
               return cognitoUser;
           }
         });
-        
+
       $(function(){
-        
+
         auth.getSession();
 
         kendo.bind($('.login'), banhji.aws);
-        
+
       });
-      
+
     </script>
 </body>
 </html>

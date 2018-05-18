@@ -3709,9 +3709,96 @@
         attendanDS      : [],
         calculate       : function() {
             var self = this;
-            this.StandByCinLate();
+            this.checkInNoCheckOut();
+            // this.StandByCinLate();
             //Standby with check out late
-            this.StandByDay();
+            // this.StandByDay();
+        },
+        checkDayAR          : [],
+        checkInNoCheckOut   : function(e){
+            var self = this;
+            var line = [];
+            this.checkDayAR.splice(0, this.checkDayAR.length);
+            $.each(this.dataSource, function(i,v){
+                // var TimeIn = 19 * 60;
+                // switch (v.Position) {
+                //     case 1:
+                //         // Meka Neary
+                //         TimeIn = 19 * 60;
+                //         break;
+                //     case 2:
+                //         // Room Owner
+                //         TimeIn = 18 * 60;
+                //         break;
+                //     case 3:
+                //         // Order
+                //         TimeIn = 18 * 60;
+                //         break;
+                //     case 4:
+                //         // Security
+                //         TimeIn = 18 * 60;
+                //         break;
+                //     case 5:
+                //         // Cleaner
+                //         TimeIn = 18 * 60;
+                //         break;
+                //     case 6:
+                //         // Cook
+                //         TimeIn = 17 * 60;
+                //         break;
+                //     case 7:
+                //         // Neary
+                //         TimeIn = 19.5 * 60;
+                //         break;
+                //     default:
+                //         // statements_def
+                //         break;
+                // }
+                var time = new Date(v.Date);
+                var hour = time.getHours() * 60;
+                var second = time.getMinutes();
+                var day = time.getDate();
+                hour += second;
+                if(v.Check == 'C/In'){
+                    //Check only between 5pm to 9pm
+                    if(hour >= 1020 && hour <= 1260){
+                        //no check out
+                        var ch = 0;
+                        $.each(self.dataSource, function(j,k){
+                            var time1 = new Date(k.Date);
+                            var day1 = time1.getDate() - 1;
+                            if(k.Check != 'C/In' && day == day1){
+                            }else{
+                                if(ch == 0){
+                                    var no = self.attendanDS[0].nocheckout + 1;
+                                    console.log(no);
+                                    self.attendanDS[0].set('nocheckout', no);
+                                    self.checkDayAR.push({
+                                        day: day
+                                    });
+                                    ch = 1;
+                                }
+                            }
+                        });
+                    }else{
+                        //no check out
+                        $.each(self.dataSource, function(j,k){
+                            var time2 = new Date(k.Date);
+                            var day2 = time2.getDate();
+                            if(k.Check != 'C/In' && day == day2){
+                                var ds = self.attendanDS[0].standbydays + 1;
+                                self.attendanDS[0].set('standbydays', ds);
+                            }else{
+                                var no = self.attendanDS[0].nocheckout + 1;
+                                self.attendanDS[0].set('nocheckout', no);
+                                self.checkDayAR.push({
+                                    day: day
+                                });
+                            }
+                        });
+                    }
+                }
+            });
         },
         StandByCinLate     : function(e){
             var self = this;
@@ -3916,7 +4003,7 @@
                 }
             }
             if (!allowed) {
-                window.location.replace(baseUrl + "admin");
+                // window.location.replace(baseUrl + "admin");
                 // banhji.view.layout.showIn("#content", banhji.view.wDashBoard);
             }
             $("#holdpageloadhide").css("display", "none");

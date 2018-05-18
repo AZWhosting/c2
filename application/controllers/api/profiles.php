@@ -329,7 +329,7 @@ class Profiles extends REST_Controller {
 			}
 		}
 		$user->get_paged($offset, $limit);
-
+		$data = array();
 
 		foreach($user as $u) {
 			$u->institute->get();

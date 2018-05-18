@@ -2999,6 +2999,7 @@
         vendorDS        : dataStore(apiUrl + "vendor_modules/dashboard"),
         graphDS         : dataStore(apiUrl + "customer_modules/monthly_sale"),
         obj             : {},
+        today           : new Date(),
         setObj          : function(){
             this.set("obj", {
                 //Sale
@@ -3057,15 +3058,7 @@
 
                 self.set("objVendor", view[0]);
             });
-
-        },
-        
-        save: function() {
-        },
-        cancel: function() {
-            window.history.back();
-        },
-        today   : new Date()
+        }
     });
     /* views and layout */
     banhji.view = {
