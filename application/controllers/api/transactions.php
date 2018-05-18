@@ -177,10 +177,32 @@ class Transactions extends REST_Controller {
 				}
 
 				//Offset Invoice
+				$offsetInvoice = [];
 				$offsetInvoices = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$offsetInvoices->select("id, number, type, amount, rate, issued_date");
+				$offsetInvoices->select("id, number, type, amount, deposit, rate, issued_date");
 				$offsetInvoices->where("return_id", $value->id);
-				$offsetInvoice = $offsetInvoices->get_raw()->result();
+				$offsetInvoices->get();
+
+				if($offsetInvoices->exists()){
+					foreach ($offsetInvoices as $val) {
+						$referenceOffsets = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						$referenceOffsets->select("number, type, amount, deposit, rate, issued_date");
+						$referenceOffsets->where("id", $val->reference_id);
+						$referenceOffset = $referenceOffsets->get_raw()->result();
+
+						$offsetInvoice[] = array(
+							"id" 			=> $val->id,
+							"reference_id" 	=> $val->reference_id,
+							"number" 		=> $val->number,
+							"type" 			=> $val->type,
+							"amount" 		=> $val->amount,
+							"deposit" 		=> $val->deposit,
+							"rate" 			=> $val->rate,
+							"issued_date" 	=> $val->issued_date,
+							"references" 	=> $referenceOffset
+						);
+					}
+				}
 
 				//Meter By Choeun
 				$meter = "";
