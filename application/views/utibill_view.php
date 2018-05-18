@@ -348,12 +348,12 @@
 												<td>
 													<span style="font-size: 25px;" data-bind="text: totalMeter"></span>
 													<br>
-													<span data-bind="text: lang.lang.meter">Meter</span>
+													<span data-bind="text: lang.lang.meter_void">Void</span>
 												</td>
 												<td>
 													<span style="font-size: 25px;" data-bind="text: voidCust"></span>
 													<br>
-													<span data-bind="text: lang.lang.void">Void</span>
+													<span data-bind="text: lang.lang.void">Inactive</span>
 												</td>
 											</tr>
 										</tbody>

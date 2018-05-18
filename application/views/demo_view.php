@@ -50882,8 +50882,8 @@
         	<div class="span12 clear mid-header" style="background:none;">
         		<div class="span3" style="margin-right: 15px;">
         			<b>Customer Information</b><br><br>
-        			<p><span data-bind="text: obj.contact[0].name"></span><br>
-        			<b>Address: </b> <span data-bind="text: obj.contact[0].address"></span>
+        			<p><span data-bind="text: obj.contact.name"></span><br>
+        			<b>Address: </b> <span data-bind="text: obj.contact.address"></span>
         			</p>
         		</div>
         		<div class="span6" style="float:right;">
@@ -52195,8 +52195,8 @@
         	<div class="span12 clear mid-header" style="background:none;">
         		<div class="span3" style="margin-right: 15px;">
         			<b>Customer Information</b><br><br>
-        			<p><span data-bind="text: obj.contact[0].name"></span><br>
-        			<b>Address: </b> <span data-bind="text: obj.contact[0].address"></span>
+        			<p><span data-bind="text: obj.contact.name"></span><br>
+        			<b>Address: </b> <span data-bind="text: obj.contact.address"></span>
         			</p>
         		</div>
         		<div class="span6" style="float:right;">
@@ -52568,8 +52568,8 @@
                     <div class="clear">
                         <div class="left dotted-ruler" style="width: 62%;">
                         	<p style="font-weight:bold">
-                        		<span data-bind="text: obj.contact[0].name"></span><br>
-                        		<span data-bind="text: obj.contact[0].address"></span>
+                        		<span data-bind="text: obj.contact.name"></span><br>
+                        		<span data-bind="text: obj.contact.address"></span>
                         	</p>
                         </div>
                     </div>
@@ -52578,7 +52578,7 @@
                     		<p>ទូរស័ព្ទ​លេខ HP:</p>
                         </div-->
                         <div class="left dotted-ruler" style="width: 78%;">
-                        	<p style="font-weight:bold" data-bind="text: obj.contact[0].phone"></p>
+                        	<p style="font-weight:bold" data-bind="text: obj.contact.phone"></p>
                         </div>
                     </div>
                 </div>
@@ -53108,8 +53108,8 @@
         	<div class="span12 clear mid-header">
         		<div class="span7" style="margin-right: 15px;">
         			<b style="font-size: 14px;line-height: 24px;">ព័ត៌មានអតិថិជន CUSTOMER INFO</b><br><br>
-        			<p><span data-bind="text: obj.contact[0].name"></span><br>
-        			<span data-bind="text: obj.contact[0].address"></span>
+        			<p>ឈ្មោះ Name: <span data-bind="text: obj.contact.name"></span></p><br>
+        			<p>អាស័យដ្ឋាន Address: <span data-bind="text: obj.contact.address"></span>
         			</p>
         		</div>
         		<div class="span4" style="float:right;">
@@ -53122,10 +53122,10 @@
         	<table class="span12" rules="rows">
         		<thead>
         			<tr class="main-color ten">
-        				<th width="90" style="text-align: center;">លេខកូដ<br>CODE</th>
+        				<th width="120" style="text-align: center;">លេខកូដ<br>CODE</th>
         				<th class="lside" style="text-align: center;">ពិពណ៌នា<br>ITEM DESCRIPTION</th>
-        				<th style="text-align: center;">ឯកតា<br>UM</th>
-        				<th style="text-align: center;">ចំនួន<br>QTY</th>
+        				<th width="90" style="text-align: center;">ឯកតា<br>UM</th>
+        				<th width="90" style="text-align: center;">ចំនួន<br>QTY</th>
         				<!-- <th class="rside">កំណត់សំគាល់<br>REMARK</th> -->
         			</tr>
         		</thead>
@@ -53197,8 +53197,8 @@
         		</div>
         		<div class="span7">
         			<b style="font-size: 14px;line-height: 24px;">ព័ត៌មានអតិថិជន CUSTOMER INFO</b><br><br>
-        			<p><span data-bind="text: obj.contact[0].name"></span><br>
-        			<span data-bind="text: obj.contact[0].address"></span>
+        			<p><span data-bind="text: obj.contact.name"></span><br>
+        			<span data-bind="text: obj.contact.address"></span>
         			</p>
         		</div>
         	</div>
@@ -53279,8 +53279,8 @@
         		</div>
         		<div class="span7">
         			<b style="font-size: 14px;line-height: 24px;">ព័ត៌មានអតិថិជន CUSTOMER INFO</b><br><br>
-        			<p><span data-bind="text: obj.contact[0].name"></span><br>
-        			<span data-bind="text: obj.contact[0].address"></span>
+        			<p><span data-bind="text: obj.contact.name"></span><br>
+        			<span data-bind="text: obj.contact.address"></span>
         			</p>
         		</div>
         	</div>
@@ -53461,8 +53461,8 @@
         	<div class="span12 clear mid-header">
         		<div class="span7" style="margin-right: 15px;">
         			<b style="font-size: 14px;line-height: 24px;">ព័ត៌មានអ្នកផ្គត់ផ្គង់ SUPPLIER INFO</b><br><br>
-        			<p><span data-bind="text: obj.contact[0].name"></span><br>
-        			<span data-bind="text: obj.contact[0].address"></span>
+        			<p><span data-bind="text: obj.contact.name"></span><br>
+        			<span data-bind="text: obj.contact.address"></span>
         			</p>
         		</div>
         		<div class="span4" style="float:right;">
@@ -53561,8 +53561,8 @@
         		</div>
         		<div class="span7">
         			<b style="font-size: 14px;line-height: 24px;">ព័ត៌មានអ្នកផ្គត់ផ្គង់ SUPPLIER INFO</b><br><br>
-        			<p><span data-bind="text: obj.contact[0].name"></span><br>
-        			<span data-bind="text: obj.contact[0].address"></span>
+        			<p><span data-bind="text: obj.contact.name"></span><br>
+        			<span data-bind="text: obj.contact.address"></span>
         			</p>
         		</div>
         	</div>
@@ -53654,8 +53654,8 @@
         		</div>
         		<div class="span7">
         			<b style="font-size: 14px;line-height: 24px;">ព័ត៌មានអ្នកផ្គត់ផ្គង់ SUPPLIER INFO</b><br><br>
-        			<p><span data-bind="text: obj.contact[0].name"></span><br>
-        			<span data-bind="text: obj.contact[0].address"></span>
+        			<p><span data-bind="text: obj.contact.name"></span><br>
+        			<span data-bind="text: obj.contact.address"></span>
         			</p>
         		</div>
         	</div>
@@ -53833,8 +53833,8 @@
         	<div class="span12 clear mid-header">
         		<div class="span7" style="margin-right: 15px;">
         			<b style="font-size: 14px;line-height: 24px;">ព័ត៌មានអ្នកផ្គត់ផ្គង SUPPLIER INFO</b><br><br>
-        			<p><span data-bind="text: obj.contact[0].name"></span><br>
-        			<span data-bind="text: obj.contact[0].address"></span>
+        			<p><span data-bind="text: obj.contact.name"></span><br>
+        			<span data-bind="text: obj.contact.address"></span>
         			</p>
         		</div>
         		<div class="span4" style="float:right;">
@@ -53908,8 +53908,8 @@
         		</div>
         		<div class="span7">
         			<b style="font-size: 14px;line-height: 24px;">ព័ត៌មានអ្នកផ្គត់ផ្គង SUPPLIER INFO</b><br><br>
-        			<p><span data-bind="text: obj.contact[0].name"></span><br>
-        			<span data-bind="text: obj.contact[0].address"></span>
+        			<p><span data-bind="text: obj.contact.name"></span><br>
+        			<span data-bind="text: obj.contact.address"></span>
         			</p>
         		</div>
         	</div>
@@ -53977,8 +53977,8 @@
         		</div>
         		<div class="span7">
         			<b style="font-size: 14px;line-height: 24px;">ព័ត៌មានអ្នកផ្គត់ផ្គង SUPPLIER INFO</b><br><br>
-        			<p><span data-bind="text: obj.contact[0].name"></span><br>
-        			<span data-bind="text: obj.contact[0].address"></span>
+        			<p><span data-bind="text: obj.contact.name"></span><br>
+        			<span data-bind="text: obj.contact.address"></span>
         			</p>
         		</div>
         	</div>
@@ -57939,7 +57939,7 @@
 </script>
 <script id="invoiceForm-lineDS-template31" type="text/x-kendo-template">
 	<tr>
-		<td style="text-align: left; padding-left: 5px;">&nbsp;</td>
+		<td style="text-align: left; padding-left: 5px;">&nbsp; #: item.number ? item.number : ""#</td>
 		<td style="text-align: left; padding-left: 5px;">#= description ? description : "" #</td>
 		<td>#= item_prices.measurement ? item_prices.measurement : "" #</td>
 		<td>#= quantity#</td>

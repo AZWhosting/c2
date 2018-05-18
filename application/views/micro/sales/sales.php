@@ -258,8 +258,17 @@
 													 data-bind="source: contactDS"
 													 data-row-template="customerCenter-customer-list-tmpl"
 													 data-columns="[{title: ''}]"
-													 data-selectable=true
+													 data-selectable="true"
 													 data-scrollable="{virtual: true}"></div>
+
+												<!-- <div class="table table-condensed" style="height: 580px;"
+													 data-role="grid"
+													 data-bind="source: contactDS"
+													 data-row-template="customerCenter-customer-list-tmpl"
+													 data-columns="[{title: ''}]"
+													 data-selectable="true"
+													 data-height="600"
+													 data-scrollable="{virtual: true}"></div> -->
 		                        			</div>
 										</div>
 										<div class="col-md-9">
@@ -563,26 +572,19 @@
 						    <!-- Top Part -->
 					    	<div class="row">
 					    		<div class="col-md-6">
-					    			<div class="well">
+					    			<div class="well" style="padding-bottom: 5px;">
 										<div class="row">
 											<div class="col-md-6">
 												<!-- Group -->
 												<div class="control-group">
-													<label for="ddlContactType"><span data-bind="text: lang.lang.customer_type"></span> <span style="color:red">*</span></label>
-													<input id="ddlContactType" name="ddlContactType" class="marginBottom"
-															   data-role="dropdownlist"
-															   data-header-template="customer-type-header-tmpl"
-											                   data-value-primitive="true"
-											                   data-text-field="name"
-											                   data-value-field="id"
-											                   data-bind="value: obj.contact_type_id,
-											                   			  disabled: obj.is_pattern,
-											                              source: contactTypeDS,
-											                              events:{change: typeChanges}"
-											                   data-option-label="(--- Select ---)"
-											                   required data-required-msg="required" style="width: 100%;" />
+													<label for="fullname"><span data-bind="text: lang.lang.full_name"></span> <span style="color:red">*</span></label>
+										            <input id="fullname" name="fullname" class="k-textbox marginBottom"
+										            		data-bind="value: obj.name,
+										            					disabled: obj.is_pattern,
+										            					attr: { placeholder: phFullname }"
+										              		required data-required-msg="required"
+										              		style="width: 100%;" />
 												</div>
-												<!-- // Group END -->
 											</div>
 
 											<div class="col-md-6">
@@ -603,33 +605,6 @@
 										                   			  events:{change:checkExistingNumber}"
 										                   placeholder="eg. 001" required data-required-msg="required"
 										                   style="width: 74%" />
-												</div>
-												<!-- // Group END -->
-											</div>
-										</div>
-
-										<div class="row">
-											<div class="col-md-6">
-												<!-- Group -->
-												<div class="control-group">
-													<label for="fullname"><span data-bind="text: lang.lang.full_name"></span> <span style="color:red">*</span></label>
-										            <input id="fullname" name="fullname" class="k-textbox marginBottom"
-										            		data-bind="value: obj.name,
-										            					disabled: obj.is_pattern,
-										            					attr: { placeholder: phFullname }"
-										              		required data-required-msg="required"
-										              		style="width: 100%;" />
-												</div>
-												<!-- // Group END -->
-											</div>
-											<div class="col-md-6">
-												<!-- Group -->
-												<div class="control-group">
-													<label for="fullnameOther">Name In Other Language</label>
-										            <input id="fullnameOther" name="fullnameOther" class="k-textbox marginBottom"
-										            		data-bind="value: obj.name_other,
-										            					disabled: obj.is_pattern"
-										              		placeholder="Name in other language" style="width: 100%;" />
 												</div>
 												<!-- // Group END -->
 											</div>
@@ -668,10 +643,10 @@
 										</div>
 									</div>
 								</div>
-								<div class="col-md-6">
+								<div class="col-md-6" style="margin-bottom: 15px;">
 									<div class="row">
 										<!-- Map -->
-										<div id="map" class="col-md-12" style="height: 168px;"></div>
+										<div id="map" class="col-md-12" style="height: 95px;"></div>
 									</div>
 
 									<div class="separator line bottom"></div>
@@ -704,7 +679,94 @@
 								</div>
 							</div>
 
-							
+							<div class="row">
+								<div class="col-md-12 fontIcon17" style="margin-bottom: 15px;">
+									<ul class="nav nav-tabs" role="tablist">
+	                                    <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#customerInfo" role="tab"><span class="hidden-xs-up marginRight"><i class="ti-id-badge"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.info"></span></a> </li>
+	                                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#customerAccount" role="tab"><span class="hidden-xs-up marginRight"><i class="fa fa-dollar"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.account"></span></a> </li>
+	                                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#customerContact" role="tab"><span class="hidden-xs-up marginRight"><i class="icon-people"></i></span> <span class="hidden-xs-down">Contact</span></a> </li>
+	                                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#customerInvoiceNote" role="tab"><span class="hidden-xs-up marginRight"><i class="ti-write"></i></span> <span class="hidden-xs-down">Invoice Note</span></a> </li>
+	                                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#customerImage" role="tab"><span class="hidden-xs-up marginRight"><i class="fa fa-picture-o"></i></span> <span class="hidden-xs-down">Image</span></a> </li>
+	                                </ul>
+	                                <div class="tab-content tabcontent-border">
+	                                    <div class="tab-pane active" id="customerInfo" role="tabpanel">
+	                                        <div class="p-10">
+	                                        	<table class="table table-borderless table-condensed cart_total">
+										            <tr>
+										                <td><span data-bind="text: lang.lang.vat_no"></span></td>
+										              	<td>
+								            				<input class="k-textbox" data-bind="value: obj.vat_no"
+																placeholder="e.g. 01234567897" style="width: 100%;" />
+										              	</td>
+										            	<td><span data-bind="text: lang.lang.phone"></span></td>
+										              	<td><input class="k-textbox" data-bind="value: obj.phone" placeholder="e.g. 012 333 444" style="width: 100%;" /></td>
+										            </tr>
+										            <tr>
+										            	<td><span data-bind="text: lang.lang.country"></span></td>
+										              	<td>
+										              		<input data-role="dropdownlist"
+										              			   data-option-label="(--- Select ---)"
+												                   data-value-primitive="true"
+												                   data-text-field="name"
+												                   data-value-field="id"
+												                   data-bind="value: obj.country_id,
+												                              source: countryDS" style="width: 100%;" />
+										              	</td>
+										            	<td><span data-bind="text: lang.lang.email"></span></td>
+										              	<td><input class="k-textbox" data-bind="value: obj.email" placeholder="e.g. me@email.com" style="width: 100%;" />
+										            </tr>
+										            <tr>
+										            	<td><span data-bind="text: lang.lang.city"></span></td>
+										              	<td><input class="k-textbox" data-bind="value: obj.city" placeholder="city name ..." style="width: 100%;" /></td>
+										            	<td><span data-bind="text: lang.lang.post_code"></span></td>
+										              	<td><input class="k-textbox" data-bind="value: obj.post_code" placeholder="e.g. 12345" style="width: 100%;" /></td>
+										            </tr>
+										            <tr style="vertical-align: top;">
+										            	<td><span data-bind="text: lang.lang.address"></span></td>
+										              	<td><textarea class="k-textbox" data-bind="value: obj.address" placeholder="where you live ..." style="width: 100%;" /></textarea></td>
+										            	<td><span data-bind="text: lang.lang.memo"></span></td>
+										              	<td><textarea rows="2" class="k-textbox" data-bind="value: obj.memo" placeholder="memo ..." style="width: 100%;" ></textarea></td>
+										            </tr>
+										            <tr  style="vertical-align: top;">
+										            	<td>
+										            		<span for="txtBillTo" data-bind="click: copyBillTo"><span data-bind="text: lang.lang.bill_to"></span> </span>
+										            	</td>
+										            	<td>
+										            		<textarea rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.bill_to" placeholder="billed to ..."></textarea>
+										            	</td>
+										            	<td><span data-bind="text: lang.lang.delivered_to"></span></td>
+										            	<td>
+										            		<textarea rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.ship_to" placeholder="delivered to ..."></textarea>
+										            	</td>
+										            </tr>
+										        </table>
+	                                        </div>
+	                                    </div>
+	                                    <div class="tab-pane" id="customerAccount" role="tabpanel">
+	                                    	<div class="p-10">
+	                                    		2
+	                                    	</div>
+	                                    </div>
+	                                    <div class="tab-pane" id="customerContact" role="tabpanel">
+	                                    	<div class="p-10">
+	                                    		3
+	                                    	</div>
+	                                    </div>
+	                                    <div class="tab-pane" id="customerInvoiceNote" role="tabpanel">
+	                                    	<div class="p-10">
+	                                    		4
+	                                    	</div>
+	                                    </div>
+	                                    <div class="tab-pane" id="customerImage" role="tabpanel">
+	                                    	<div class="p-10">
+	                                    		5
+	                                    	</div>
+	                                    </div>
+	                                </div>
+	                            </div>
+							</div>
+								
+
 							<!-- Form actions -->
 							<div class="backgroundButtonFooter">
 								<div id="ntf1" data-role="notification"></div>

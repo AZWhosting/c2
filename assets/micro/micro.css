@@ -227,6 +227,9 @@ a {
 .dropdown-item:focus, .dropdown-item:hover {
     background-color: rgb(213, 219, 219);
 }
+.fontIcon17 ul li a span i:before{
+	font-size: 17px;
+}
 /*End*/
 
 /*Customize Kendo*/

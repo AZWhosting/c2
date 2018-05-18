@@ -280,6 +280,7 @@
 						</div>
 					</div>
 					<div class="span6" style="padding-right: 0;">
+						<!--Show Card-->
 						<div class="rowloyalty" data-bind="visible: haveLoyalty" style="width: 97.3%; height: 100%; background: #fff; position: absolute; z-index: 1;">
 							<div class="strong" style="margin-bottom: 15px; width: 100%; padding: 15px; float: left;" align="center"
 								data-bind="style: { backgroundColor: amtDueColor}">
@@ -350,11 +351,76 @@
 								</div>								
 							</div>
 						</div>	
+						<!--Show Delete-->
+						<div class="rowloyalty" data-bind="visible: haveDelete" style="width: 97.3%; height: 100%; background: #fff; position: absolute; z-index: 1;">
+							<div class="strong" style="margin-bottom: 15px; width: 100%; padding: 15px; float: left;" align="center"
+								data-bind="style: { backgroundColor: amtDueColor}">
+								<div>
+								    <div class="tab-content">
+								        <div class="tab-pane active" id="tab1">
+							            	<div class="row">
+												<div class="span7">
+													<p style="float: left;color: #333;">Password</p>
+													<input type="password" name="" style="width: 100%; font-weight: 500; border: 1px solid #ccc; padding: 5px; height: 35px; color: #333;"
+							                   			data-bind="value: delPassword"
+													/>
+												</div>
+												<div class="span5" style="padding-left: 0;">
+													<p style="float: left;color: #333;">Invoice Number</p>
+													<input type="number" style="width: 100%; font-weight: 500; border: 1px solid #ccc; padding: 5px; height: 35px; color: #333;"
+														data-bind="value: delInvNumber, enabled: False"
+													/>
+												</div>
+												<div style="overflow: hidden;position: relative;clear: both;">
+													<a style="background: #0eac00; padding: 10px 15px; float: left; margin-right: 10px; color: #fff; margin-top: 10px; margin-left: 15px;" class="btnApply" data-bind="click: delApply" >
+											  			<span>Submit</span>
+											  		</a>
+											  		<a style="background: #0eac00; padding: 10px 15px; float: left; color: #fff; margin-top: 10px;" class="btnCancel" data-bind="click: delCancel" >
+											  			<span>Cancel</span>
+											  		</a>
+											  	</div>
+										  		<div class="span12" style="overflow: hidden;position: relative;clear: both;margin-top: 15px;" data-bind="visible: haveCardLoyalty">
+													<table class="table table-bordered table-striped table-white">
+														<thead>
+															<tr>
+																<th style="background: #1c3b19;"><span style="color: #fff;">No.</span></th>
+																<th style="background: #1c3b19;"><span style="color: #fff;">Name</span></th>
+																<th style="background: #1c3b19;"><span style="color: #fff;">Base</span></th>
+																<th style="background: #1c3b19;"><span style="color: #fff;">Rewards</span></th>
+																<th style="background: #1c3b19;"><span style="color: #fff;">Action</span></th>
+															</tr>
+														</thead>
+														<tbody data-role="listview"
+									            				data-auto-bind="false"
+												                data-template="card-loyalty-list-tmpl"
+												                data-bind="source: loyaltyDS" >
+												        </tbody>
+									            	</table>
+												</div>
+											</div>
+							        	</div>
 
+								        <div class="tab-pane" id="tab2">
+								        	<div class="row">
+												<div class="span12">
+													<input type="text" name="" style="width: 100%; font-weight: 500; border: 1px solid #ccc; padding: 5px; height: 35px; color: #333;" data-bind="value: promoNum">
+												</div>
+												<a style="background: #0eac00; padding: 10px 15px; float: left; margin-right: 10px; color: #fff; margin-top: 10px; margin-left: 15px;" class="btnApply" data-bind="click: applyLoyaltyPromo" >
+										  			<span>Apply</span>
+										  		</a>
+										  		<a style="background: #0eac00; padding: 10px 15px; float: left; color: #fff; margin-top: 10px;" class="btnCancel" data-bind="click: cancelLoyalty" >
+										  			<span>Cancel</span>
+										  		</a>
+											</div>
+							        	</div>								        
+								    </div>
+								</div>								
+							</div>
+						</div>	
 						<div class="strong" style="margin-bottom: 15px; width: 100%; padding: 10px; float: left;" align="center"
 							data-bind="style: { backgroundColor: amtDueColor}">
 							<p style="float: left;color: #333;">Amount Recevied</p>
-							<input type="text" name="" style="width: 100%; font-weight: 500; border: 1px solid #ccc; padding: 5px; height: 35px; color: #333;" data-bind="value: amountReciept">
+							<input type="text" name="" style="width: 100%; font-weight: 500; border: 1px solid #ccc; padding: 5px; height: 35px; color: #333;" data-bind="value: amountReciept, enabled: False">
 						</div>
 
 						<div class="box-generic-noborder" style="margin-bottom: 15px; padding-bottom: 0; float: left;width: 100%">
@@ -456,7 +522,7 @@
 							    </div>
 							</div>
 						</div>
-						<div class="box-generic bg-action-button">
+						<div class="box-generic bg-action-button" data-bind="visible: btnActive">
 							<div id="ntf1" data-role="notification"></div>
 							<div class="row">
 								<div class="col-sm-12" align="right">
@@ -464,11 +530,10 @@
 									<span class="btn-btn" data-bind="visible: btnActive, click: addLoyalty" ><span>Apply Card</span></span>
 									<span class="btn-btn" data-bind="visible: btnActive, click: splitBill" ><span>Split Bill</span></span>
 									<span class="btn-btn" data-bind="visible: btnActive, click: printBill" ><span>Print Bill</span></span>
-									<span class="btn-btn" data-bind="click: cancel" ><span data-bind="text: lang.lang.cancel"></span></span>	
+									<span class="btn-btn" data-bind="click: cancelInvoice" ><span data-bind="text: lang.lang.delete"></span></span>	
 								</div>
 							</div>
 						</div>
-						
 					</div>
 				</div>
 			</div>

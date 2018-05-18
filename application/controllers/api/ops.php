@@ -8,7 +8,7 @@ class Ops extends REST_Controller {
 		$this->load->dbutil();
 		$this->load->dbforge();
 		$dbs = $this->dbutil->list_databases();
-		$companyList = array("db_1505276837","api","banhji","banhji0055","choeun_reeco","banhji_center","banhji_mac","information_schema","innodb","mysql","performance_schema","tmp");
+		$companyList = array("db_banhji","db_1505276837","api","banhji","banhji0055","choeun_reeco","banhji_center","banhji_mac","information_schema","innodb","mysql","performance_schema","tmp");
 		$data["results"] = [];
 		$data["count"] = 0;
 		$startQ = false;
@@ -71,6 +71,20 @@ class Ops extends REST_Controller {
 				// );
 			 	//    $this->db->update_batch('measurements', $raw, 'id');
 
+			 	//Insert data
+		 	// 	$raw = array(
+		 	//    		'transaction_form_id' 	=> 73,
+		 	//    		'user_id' 				=> 12,
+		 	//    		'type' 					=> 'Sale_Return',
+		 	//    		'name' 					=> 'Default Sale Return',
+		 	//    		'color' 				=> '',
+		 	//    		'moduls'				=> 'customer_mg',
+		 	//    		'title' 				=> 'Sale Return',
+		 	//    		'note' 					=> '',
+		 	//    		'status' 				=> 1
+				// );
+			 // 	$data['results'][] = $this->db->insert('transaction_templates', $raw);
+
 			    //Insert batch data
 			 	// 	$raw = array(
 					// 	// array(
@@ -92,6 +106,10 @@ class Ops extends REST_Controller {
 					// );
 				 // 	$this->db->insert_batch('transaction_templates', $raw);
 				
+
+				//DELETE DATA
+				// $data['results'][] = $this->db->delete('transaction_templates', array('type' => "Sale_Return")); 
+
 				// Add new fields
 				// $fields = array(
 				// 	// "tags" => array(

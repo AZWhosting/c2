@@ -1,4 +1,3 @@
-
 <div id="wrapperApplication" class="wrapper"></div>
 <!--load before somthing not yet done -->
 <!-- <div id="holdpageloadhide" style="display:block;text-align: center;position: fixed;top: 0; left: 0;width: 100%; height: 100%;background: rgba(142, 159, 167, 0.8);z-index: 9999;">

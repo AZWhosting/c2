@@ -2997,6 +2997,7 @@
         balanceDS: dataStore(apiUrl + "transactions"),
         journalLineDS: dataStore(apiUrl + "journal_lines"),
         haveSession: false,
+        False: false,
         currencyDS: dataStore(apiUrl + "utibills/currency"),
         txnTemplateDS: new kendo.data.DataSource({
             data: banhji.source.txnTemplateList,
@@ -4372,6 +4373,7 @@
             this.setDefaultReceiptCurrency(data.amount);
             banhji.splitBill.data = [];
             banhji.splitBill.data = data;
+            this.set("delInvNumber", data.number);
         },
         haveLoyalty : false,
         cancelLoyalty : function(){
@@ -4464,6 +4466,17 @@
                 $("#loadING").css("display", "none");
             });
         },
+        haveDelete : false,
+        cancelInvoice: function(){
+            this.set("haveDelete",true);
+        },
+        delApply : function(){
+            var pwd = this.get("delPassword");
+        },
+        delCancel : function(){
+            this.set("haveDelete",false);
+            this.set("delPassword","");
+        }
     });
     banhji.splitBill = kendo.observable({
         roomDS      : dataStore(apiUrl + "spa/room"),

@@ -11,6 +11,7 @@ class Micro extends CI_Controller {
 		$this->load->view("micro/sidebar");
 		$this->load->view("micro/home/home");
 		$this->load->view("micro/home/script");
+		// $this->load->view("micro/home/script");
 		$this->load->view("micro/footer");
 	}
 

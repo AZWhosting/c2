@@ -163,6 +163,28 @@
 	banhji.pageLoaded = {};
 	// Initializing AWS Cognito service
 	var userPool = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserPool(poolData);
+	// Get User Information from AWS Cognito service
+	banhji.Cognito = kendo.observable({
+		userId: function() {
+			var that = this;
+			that.sub = '';
+			var cognitoUser = userPool.getCurrentUser();
+			if(cognitoUser != null) {
+				cognitoUser.getSession((err, session) => {
+					if(err) {
+						console.log(err)
+					}
+					cognitoUser.getAttributes((err, att) => {
+						if(err) {
+							console.log(err)
+						} else {
+							that.sub = att[0].Value
+						}
+					})
+				})
+			}
+		}
+	})
 	// Initializing AWS S3 Service
 	var bucket = new AWS.S3({params: {Bucket: 'banhji'}});
 	banhji.accessMod = new kendo.data.DataSource({
@@ -3618,7 +3640,7 @@
 
 			var obj = this.dataSource.at(0);
 			this.set("obj", obj);
-			this.typeChanges();			
+			this.typeChanges();
 		},
 	    objSync 				: function(){
 	    	var dfd = $.Deferred();
@@ -7394,7 +7416,7 @@
 		    		]
 		    	}).then(function(){
 		    		var view = self.amountSumDS.view();
-		    		
+
 		    		self.set("total_deposit", view[0].amount + obj.deposit);
 		    	});
 	    	}
@@ -15880,7 +15902,7 @@
         	sdate = "",
         	edate = "",
         	sorter = this.get("sorter");
-        	
+
 			switch(sorter){
 				case "today":
 					this.set("sdate", today);
@@ -15893,7 +15915,7 @@
 
 					this.set("sdate", new Date(today.setDate(first)));
 					this.set("edate", new Date(today.setDate(last)));
-					
+
 				  	break;
 				case "month":
 					this.set("sdate", new Date(today.getFullYear(), today.getMonth(), 1));
@@ -15962,7 +15984,7 @@
 	            	var view = self.dataSource.view();
 
 	            	var amount = 0, total = 0;
-	            	$.each(view, function(index, value){ 
+	            	$.each(view, function(index, value){
 	            		amount += value.amount;
 	            		total += value.total;
 	            	});
@@ -15970,7 +15992,7 @@
 	            	self.set("totalAmount", kendo.toString(amount, "c2", banhji.locale));
 	            	self.set("totalDue", kendo.toString(total, "c2", banhji.locale));
 	            });
-	            this.dataSource.bind("requestEnd", function(e){				
+	            this.dataSource.bind("requestEnd", function(e){
 				if(e.type=="read"){
 					var response = e.response;
 					var amount = 0, total = 0;
@@ -16027,7 +16049,7 @@
 	            			{ value: "", colSpan: 7}
 	            		]
 	            	});
-	            	self.exArray.push({ 
+	            	self.exArray.push({
 	            		cells: [
 							{ value: "Date", background: "#496cad", color: "#ffffff" },
 							{ value: "Type", background: "#496cad", color: "#ffffff" },
@@ -16077,11 +16099,11 @@
 	            			{ value: total,bold: true,  colSpan: 1 },
 	            			{ value: amount,bold: true,  colSpan: 1 },
 	            		]
-	            	});		
+	            	});
 				}
-			}); 
+			});
 
-	        
+
 		},
 		setContact 		: function(contact){
 		    this.set("obj", contact);
@@ -16172,10 +16194,10 @@
 
 					self.set("total", kendo.toString(responses.amount, "c", responses.locale));
 					var response = e.response, totalAD = responses.amount;
-					
+
 					self.set("haveEX", true);
 				}
-			}); 
+			});
 		},
 		ExportExcel 		: function(){
 	        var workbook = new kendo.ooxml.Workbook({
@@ -16370,7 +16392,7 @@
                     '}</style>' +
                     '</head>' +
                     '<body style="background: #fff;"><div class="row-fluid" style="overflow: hidden; padding: 40px; width: 1000px"><div id="example" class="k-content">';
-                var htmlEnd =               	 		
+                var htmlEnd =
                     '</div></div></body>' +
                     '</html>';
                 printableContent = $('#invFormContent').html();
@@ -16383,7 +16405,7 @@
                 }, 2000);
             }
         },
-	});	
+	});
 	banhji.statementDetail =  kendo.observable({
 		lang 				: langVM,
 		dataSource 			: dataStore(apiUrl + "sales/statement"),
@@ -21137,7 +21159,7 @@
 			this.search();
 		},
 		search				: function(){
-			var self = this, para = [], 
+			var self = this, para = [],
 				obj = this.get("obj"),
 				as_of = this.get("as_of"),
         		displayDate = "";
@@ -21150,13 +21172,13 @@
             	});
 	            para.push({ field:"contact_id", operator:"where_in", value:contactIds });
 	        }
-    	
+
         	if(as_of){
 				as_of = new Date(as_of);
 				var displayDate = "As Of " + kendo.toString(as_of, "dd-MM-yyyy");
 				this.set("displayDate", displayDate);
 				as_of.setDate(as_of.getDate()+1);
-				
+
 				para.push({ field:"issued_date <", value:kendo.toString(as_of, "yyyy-MM-dd") });
 			}
 
@@ -21180,7 +21202,7 @@
             	self.set("total_txn", kendo.toString(txnCount, "n0"));
             	self.set("total_balance", kendo.toString(balance, "c2", banhji.locale));
             });
-            this.dataSource.bind("requestEnd", function(e){				
+            this.dataSource.bind("requestEnd", function(e){
 				if(e.type=="read"){
 					var response = e.response, balanceCal = 0, balance= 0;
 					self.exArray = [];
@@ -21207,7 +21229,7 @@
 	            			{ value: "", colSpan: 4 }
 	            		]
 	            	});
-	            	self.exArray.push({ 
+	            	self.exArray.push({
 	            		cells: [
 							{ value: "Type", background: "#496cad", color: "#ffffff" },
 							{ value: "Invoice Date", background: "#496cad", color: "#ffffff" },
@@ -21223,7 +21245,7 @@
 					            { value: "" },
 					            { value: "" },
 					        ]
-					        
+
 					    });
 					    for(var j = 0; j < response.results[i].line.length; j++){
 				          	self.exArray.push({
@@ -21271,7 +21293,7 @@
 		            '.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
 		            '</style><style type="text/css" media="print"> @page { size: portrait; margin:1mm; }'+
 		            	'.inv1 .main-color {' +
-		            		
+
 		            		'-webkit-print-color-adjust:exact; ' +
 		            	'} ' +
 		            	'.table.table-borderless.table-condensed  tr th { background-color: #1E4E78!important;' +
@@ -21301,7 +21323,7 @@
 						'}' +
 		            	'.saleSummaryCustomer .table.table-borderless.table-condensed tfoot .bg-total td {' +
 		            		'background-color: #1C2633!important;' +
-		            		'color: #fff!important; ' + 
+		            		'color: #fff!important; ' +
 		            		'-webkit-print-color-adjust:exact;' +
 		            	'}' +
 		            	'</style>' +
@@ -21310,7 +21332,7 @@
 		    var htmlEnd =
 		            '</div></body>' +
 		            '</html>';
-		    
+
 		    printableContent = $('#invFormContent').html();
 		    doc.write(htmlStart + printableContent + htmlEnd);
 		    doc.close();
@@ -24053,9 +24075,9 @@
 				case 62: Active = banhji.view.recieptNoteRicemill; break;
 				case 63: Active = banhji.view.depositHeritageWalk; break;
 				case 64: Active = banhji.view.receiptHeritageWalk; break;
-				case 65: Active = banhji.view.advanceVoucherPCG; break;	
+				case 65: Active = banhji.view.advanceVoucherPCG; break;
 				case 68: Active = banhji.view.normalInvoiceKSLM; break;
-				case 69: Active = banhji.view.commercialInvoiceKSLM; break;		
+				case 69: Active = banhji.view.commercialInvoiceKSLM; break;
 				case 70: Active = banhji.view.vatInvoiceKSLM; break;
 				case 71: Active = banhji.view.defaultCashAdvance; break;
                 case 73: Active = banhji.view.defaultSaleReturn; break;
@@ -25600,12 +25622,12 @@
         addCustomField          : function(){
             var obj = this.get("obj");
 
-            this.fieldValueDS.add({ 
-                reference_id    : obj.id, 
-                custom_field_id : 0, 
+            this.fieldValueDS.add({
+                reference_id    : obj.id,
+                custom_field_id : 0,
                 field_value     : "",
-                type            : "memberships", 
-                custom_fields   : { id: 0, name:"" } 
+                type            : "memberships",
+                custom_fields   : { id: 0, name:"" }
             });
         },
         //Contact
@@ -25963,7 +25985,7 @@
             var self = this, para = [];
 
             para.push({ field:"id", value: id });
-            
+
             if(banhji.membershipSetting.get("isMembershipPattern")){
                 banhji.membershipSetting.set("isMembershipPattern", false);
                 para.push({ field:"is_pattern", value: 1 });
@@ -26044,7 +26066,7 @@
             if(obj.membership_date!==""){
                 obj.set("membership_date", kendo.toString(new Date(obj.membership_date), "yyyy-MM-dd"));
             }
-            if(obj.expiry_date!==""){   
+            if(obj.expiry_date!==""){
                 obj.set("expiry_date", kendo.toString(new Date(obj.expiry_date), "yyyy-MM-dd"));
             }
 
@@ -26057,7 +26079,7 @@
             }
 
             //Edit mode
-            if(self.get("isEdit")){                
+            if(self.get("isEdit")){
                 self.recurringDS.sync();
                 self.lineDS.sync();
                 self.assemblyLineDS.sync();
@@ -26103,7 +26125,7 @@
         },
         clear                   : function(){
             this.dataSource.cancelChanges();
-            this.lineDS.cancelChanges();            
+            this.lineDS.cancelChanges();
             this.fieldValueDS.cancelChanges();
 
             this.dataSource.data([]);
@@ -26129,7 +26151,7 @@
         delete                  : function(){
             var obj = this.get("obj");
             this.set("showConfirm",false);
-            
+
             obj.set("deleted", 1);
             this.dataSource.sync();
 
@@ -26269,11 +26291,11 @@
 
                     $.each(view1, function(index, value){
                         self.fieldValueDS.add({
-                            reference_id    : view[0].id, 
-                            custom_field_id : value.custom_field_id, 
+                            reference_id    : view[0].id,
+                            custom_field_id : value.custom_field_id,
                             field_value     : value.field_value,
-                            type            : "memberships", 
-                            custom_fields   : value.custom_fields 
+                            type            : "memberships",
+                            custom_fields   : value.custom_fields
                         });
                     });
 
@@ -26413,11 +26435,11 @@
                 contacts = banhji.membershipCenter.get("obj");
             }
 
-            this.dataSource.add({ 
+            this.dataSource.add({
                 contact_id      : 0,
                 membership_id   : 0,
-                subjecgt        : "", 
-                credit          : 0, 
+                subjecgt        : "",
+                credit          : 0,
                 period          : new Date(),
                 record_date     : new Date(),
 
@@ -26453,7 +26475,7 @@
             //Save Obj
             this.objSync()
             .then(function(data){ //Success
-                
+
                 return data;
             }, function(reason) { //Error
                 $("#ntf1").data("kendoNotification").error(reason);
@@ -26491,7 +26513,7 @@
         delete                  : function(){
             var obj = this.get("obj");
             this.set("showConfirm",false);
-            
+
             obj.set("deleted", 1);
             this.dataSource.sync();
 
@@ -26984,7 +27006,7 @@
                 $.each(self.membershipTxnDS.data(), function(index, value){
                     number++;
                     str = banhji.source.getPrefixAbbr(obj.type) + kendo.toString(issueDate, "yy") + kendo.toString(issueDate, "MM") + kendo.toString(number, "00000");
-                    
+
                     value.set("number", str);
                 });
             });
@@ -27110,7 +27132,7 @@
         tmpData             : "",
         save                : function(){
             // $("#loadImport").css("display", "block");
-            var self = this, obj = this.get("obj"), 
+            var self = this, obj = this.get("obj"),
                 segments = [], lines = [], ids = [], counter = 0;
 
             obj.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
@@ -32930,7 +32952,7 @@
 				dropdownlist.trigger("change");
 			}else{
 				this.set("isCash", false);
-				
+
 				this.accountDS.filter({ field: "account_type_id", value: 23 });
 				obj.set("account_id", 0);
 				obj.set("account_id", obj.contact.account_id);
@@ -38249,7 +38271,7 @@
 			this.search();
 		},
 		search				: function(){
-			var self = this, para = [], 
+			var self = this, para = [],
 				obj = this.get("obj"),
 				as_of = this.get("as_of"),
         		displayDate = "";
@@ -38262,13 +38284,13 @@
             	});
 	            para.push({ field:"contact_id", operator:"where_in", value:contactIds });
 	        }
-    	
+
         	if(as_of){
 				as_of = new Date(as_of);
 				var displayDate = "As Of " + kendo.toString(as_of, "dd-MM-yyyy");
 				this.set("displayDate", displayDate);
 				as_of.setDate(as_of.getDate()+1);
-				
+
 				para.push({ field:"issued_date <", value:kendo.toString(as_of, "yyyy-MM-dd") });
 			}
 
@@ -38320,7 +38342,7 @@
 		            '.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
 		            '</style><style type="text/css" media="print"> @page { size: portrait; margin:1mm; }'+
 		            	'.inv1 .main-color {' +
-		            		
+
 		            		'-webkit-print-color-adjust:exact; ' +
 		            	'} ' +
 		            	'.table.table-borderless.table-condensed  tr th { background-color: #1E4E78!important;' +
@@ -38350,7 +38372,7 @@
 						'}' +
 		            	'.saleSummaryCustomer .table.table-borderless.table-condensed tfoot .bg-total td {' +
 		            		'background-color: #1C2633!important;' +
-		            		'color: #fff!important; ' + 
+		            		'color: #fff!important; ' +
 		            		'-webkit-print-color-adjust:exact;' +
 		            	'}' +
 		            	'</style>' +
@@ -38359,7 +38381,7 @@
 		    var htmlEnd =
 		            '</div></body>' +
 		            '</html>';
-		    
+
 		    printableContent = $('#invFormContent').html();
 		    doc.write(htmlStart + printableContent + htmlEnd);
 		    doc.close();
@@ -52788,7 +52810,7 @@
 
 			this.generateNumber();
 			this.setRate();
-			
+
 			//Default rows
 			for (var i = 0; i < banhji.source.defaultLines; i++) {
 				this.addRow();
@@ -67908,7 +67930,7 @@
 
 		//Cash Management Dashbaord
 		cashManagementDashboard: new kendo.Layout("#cashManagementDashboard", {model: banhji.cashManagementDashboard}),
-		
+
 		//Rice Mill
 		riceMill: new kendo.Layout("#riceMill", {model: banhji.riceMill}),
 		riceReportCenter: new kendo.Layout("#riceReportCenter", {model: banhji.riceReportCenter}),
@@ -70385,7 +70407,7 @@
 
 				if(banhji.pageLoaded["cpd_record"]==undefined){
 					banhji.pageLoaded["cpd_record"] = true;
-					
+
 			        var validator = $("#example").kendoValidator().data("kendoValidator");
 
 			        $("#saveNew").click(function(e){
