@@ -17,7 +17,7 @@
     </li>	
 </script>
 <!-- ***************************
-*	Sale Section      	  *
+*	Section      	  *
 **************************** -->
 <script id="Index" type="text/x-kendo-template">
 	<div class="page-wrapper ">
@@ -25,531 +25,13 @@
         	<div class="row marginTop15 sale">
                 <div class="col-md-12">
                     <div class="card">
-                        <div class="card-body">
-			                <!-- Nav tabs -->
-			                <ul class="nav nav-tabs customtab" role="tablist">
-			                    <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#reports" role="tab"><span class="hidden-sm-up"><i class="ti-layout-grid2-thumb"></i></span> <span class="hidden-xs-down">Reports</span></a> </li>
-			                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#check_out" role="tab"><span class="hidden-sm-up"><i class="ti-layout-accordion-list"></i></span> <span class="hidden-xs-down">Check Out</span></a> </li>
-			                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#sales_transaction" role="tab"><span class="hidden-sm-up"><i class="ti-layout-accordion-list"></i></span> <span class="hidden-xs-down">Sale Transactions</span></a> </li>
-			                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#customers" role="tab"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down">Customers</span></a> </li>
-			                </ul>
-			                <!-- Tab panes -->
-			                <div class="tab-content">
-			                	<!-- Tab Report -->
-			                    <div class="tab-pane active" id="reports" role="tabpanel">
-		                       		<div class="row ">
-										<div class="col-md-4">
-											<div class="saleOverview">
-												<h2 data-bind="text: lang.lang.sale"></h2>
-												<p data-format="n" data-bind="text: obj.sale"></p>
-												<div class="col-md-12">
-													<div class="col-md-4">
-														<span data-bind="text: obj.sale_customer"></span>
-														<span data-bind="text: lang.lang.customer"></span>
-													</div>
-													<div class="col-md-4">
-														<span data-bind="text: obj.sale_product"></span>
-														<span data-bind="text: lang.lang.product"></span>
-													</div>
-													<div class="col-md-4">
-														<span data-bind="text: obj.sale_ordered"></span>
-														<span data-bind="text: lang.lang.order"></span>
-													</div>
-												</div>
-											</div>
-
-											<!-- Report -->
-								            <div class="report ">
-												<div class="col-md-12">
-													<h3><a href="#/sale_summary_by_customer" data-bind="text: lang.lang.sale_summary_by_customer" ></a></h3>
-													<p data-bind="text: lang.lang.summarizes_total_sales"></p>
-												</div>
-												<div class="col-md-12">
-													<h3><a href="#/sale_summary_by_product" data-bind="text: lang.lang.sale_summary_by_product_services" ></a></h3>
-													<p data-bind="text: lang.lang.summarizes_total_sales_for_each_product"></p>
-												</div>
-												<div class="col-md-12">
-													<h3><a href="#/sale_detail_by_customer" data-bind="text: lang.lang.sale_detail_by_customer" ></a></h3>
-													<p data-bind="text: lang.lang.lists_individual_sale"></p>
-												</div>
-												<div class="col-md-12">
-													<h3><a href="#/sale_detail_by_product" data-bind="text: lang.lang.sale_detail_by_product_services" ></a></h3>
-													<p data-bind="text: lang.lang.lists_individual_sale_transactions"></p>
-												</div>						    					
-											</div>
-
-											<!-- Top 4 -->
-											<div class="top5 home-footer">
-								                <table class="table color-table dark-table">
-								                    <thead>
-								                        <tr>
-								                            <th colspan="2" class="center">
-								                                <span data-bind="text: lang.lang.top_5_customers"></span>
-								                            </th>
-								                        </tr>
-								                    </thead>
-								                    <tbody data-role="listview"
-								                         data-auto-bind="false"
-								                         data-template="top-contact-template"
-								                         data-bind="source: objInventory.top_customer"></tbody>
-								                </table>
-								            </div>					                        
-										</div>
-										<div class="col-md-4">
-											<div class="saleOverview">
-												<h2 data-bind="text: lang.lang.sale_order"></h2>
-												<p data-format="n" data-bind="text: obj.so"></p>
-												<div class="col-md-12">
-													<div class="col-md-6">
-														<span data-format="n0" data-bind="text: obj.so_avg"></span>
-														<span data-bind="text: lang.lang.average"></span>
-													</div>
-													<div class="col-md-6">
-														<span data-bind="text: obj.so_open"></span>
-														<span data-bind="text: lang.lang.order_open"></span>
-													</div>
-												</div>
-											</div>
-
-											<!-- Report -->
-											<div class="report" style="min-height: 385px; ">
-								                <div class="col-md-12">
-													<h3><a href="#/customer_balance_summary" data-bind="text: lang.lang.customer_balance_summary" ></a></h3>
-													<p data-bind="text: lang.lang.summarizes_total_sales"></p>
-												</div>
-												<div class="col-md-12">
-													<h3><a href="#/customer_balance_detail" data-bind="text: lang.lang.customer_balance_detail" ></a></h3>
-													<p data-bind="text: lang.lang.lists_individual_unpaid_invoices_for_each_customer"></p>
-												</div>
-												<div class="col-md-12">
-													<h3><a href="#/receivable_aging_summary" data-bind="text: lang.lang.receivable_aging_summary"></a></h3>
-													<p data-bind="text: lang.lang.lists_all_unpaid_invoices1"></p>	
-												</div>
-												<div class="col-md-12">
-													<h3><a href="#/receivable_aging_detail" data-bind="text: lang.lang.receivable_aging_detail"></a></h3>
-													<p data-bind="text: lang.lang.lists_individual_unpaid_invoices_grouped_by_customer"></p>
-												</div>
-											</div>
-
-											<!-- Top 4 -->
-											<div class="top5 home-footer">
-								                <table class="table color-table dark-table">
-								                    <thead>
-								                        <tr>
-								                            <th class="center" colspan="2">
-								                                <span data-bind="text: lang.lang.top_5_Receipt"></span>
-								                            </th>
-								                        </tr>
-								                    </thead>
-								                    <tbody data-role="listview"
-								                         data-auto-bind="false"
-								                         data-template="top-contact-template"
-								                         data-bind="source: obj.top_cash_receipt"></tbody>
-								                </table>
-								            </div>					                        
-										</div>
-										<div class="col-md-4">
-											<div class="saleOverview">
-												<h2 data-bind="text: lang.lang.receivable"></h2>
-												<p data-format="n" data-bind="text: obj.ar"></p>
-												<div class="col-md-12">
-													<div class="col-md-4">
-														<span data-format="n0" data-bind="text: obj.ar_open"></span>
-														<span data-bind="text: lang.lang.open"></span>
-													</div>
-													<div class="col-md-4">
-														<span data-bind="text: obj.ar_customer"></span>
-														<span data-bind="text: lang.lang.customers"></span>
-													</div>
-													<div class="col-md-4">
-														<span data-bind="text: obj.ar_overdue"></span>
-														<span data-bind="text: lang.lang.overdue"></span>
-													</div>
-												</div>
-											</div>
-
-											<!-- Report -->
-											<div class="report" style="min-height: 385px; ">
-												<div class="col-md-12">
-													<h3><a href="#/collect_invoice" data-bind="text: lang.lang.list_of_invoices_to_be_collected"></a></h3>
-													<p data-bind="text: lang.lang.lists_all_unpaid_invoices_grouped_by_due_today_and_overdue"></p>
-												</div>
-												<div class="col-md-12">
-													<h3><a href="#/collection_report" data-bind="text: lang.lang.collection_report"></a></h3>
-													<p data-bind="text: lang.lang.lists_of_collected_invoices_for_the_select_period_of_time_group_by_method_of_payment"></p>
-												</div>
-											</div>
-
-											<!-- Top 4 -->
-											<div class="top5 home-footer">
-								                <table class="table color-table dark-table">
-								                    <thead>
-								                        <tr>
-								                            <th colspan="2" class="center">
-								                                <span data-bind="text: lang.lang.top_5_best_selling_products"></span>
-								                            </th>
-								                        </tr>
-								                    </thead>
-								                    <tbody data-role="listview"
-								                         data-auto-bind="false"
-								                         data-template="top-product-template"
-								                         data-bind="source: objInventory.top_product"></tbody>
-								                </table>
-								            </div>					                        
-										</div>
-									</div>		                       
-			                    </div>
-			                    
-			                    <!-- End Tab Report -->
-
-			                    <!-- Tab Check Out -->
-			                    <div class="tab-pane" id="check_out" role="tabpanel">3</div>
-			                    <!-- End Tab Check Out -->
-
-			                    <!-- Tab Sales Transaction -->
-			                    <div class="tab-pane" id="sales_transaction" role="tabpanel">
-		                        	<div class="row">
-				    					<div class="col-md-7 align-self-center text-right">
-						                    <div class="btn-group">
-						                        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						                        	Add New
-						                        </button>
-						                        <div class="dropdown-menu">
-						                            <a class="dropdown-item" href="javascript:void(0)"><span data-bind="text: lang.lang.create_quotation"></span></a>
-						                            <a class="dropdown-item" href="javascript:void(0)"><span data-bind="text: lang.lang.create_invoice"></span></a>
-						                            <a class="dropdown-item" href="javascript:void(0)"><span data-bind="text: lang.lang.create_cash_sale"></span></a>
-						                            <a class="dropdown-item" href="javascript:void(0)"><span data-bind="text: lang.lang.create_cash_receipt"></span></a>
-						                        </div>
-						                    </div>
-						                </div>
-				    				</div>					    			
-			                    </div>
-			                    <!-- End Tab Sale Transaction -->
-
-			                    <!-- Tab Customer -->
-			                    <div class="tab-pane" id="customers" role="tabpanel">
-		                        	<div class="row">
-		                        		<div class="col-md-3">
-		                        			<div class="listWrapper">
-		                        				<a href="#/customer" class="btn waves-effect waves-light btn-block btn-info btnAddCustomer"><i class="icon-user-follow marginRight"></i><span data-bind="">Add New Customer</span></a>
-		                        				<div class="innerAll">
-													<form autocomplete="off" class="form-inline">
-														<div class="widget-search">
-															<div class="overflow-hidden">
-																<input type="search" placeholder="Number or Name..." data-bind="value: searchText">
-															</div>
-															<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="ti-search"></i></button>
-														</div>
-														<div class="select2-container">
-															<input data-role="dropdownlist" style="width: 100%;" 
-												                   data-option-label="Select Type..."
-												                   data-value-primitive="true"
-												                   data-text-field="name"
-												                   data-value-field="id"
-												                   data-bind="value: contact_type_id,
-												                              source: contactTypeDS"/>
-														</div>
-													</form>
-												</div>
-
-												<span class="results"><span data-bind="text: contactDS.total"></span> <span data-bind="text: lang.lang.found_search"></span></span>
-
-												<div class="table table-condensed"
-													 data-role="grid"
-													 data-bind="source: contactDS"
-													 data-row-template="customerCenter-customer-list-tmpl"
-													 data-columns="[{title: ''}]"
-													 data-selectable="true"
-													 data-scrollable="{virtual: true}"></div>
-
-												<!-- <div class="table table-condensed" style="height: 580px;"
-													 data-role="grid"
-													 data-bind="source: contactDS"
-													 data-row-template="customerCenter-customer-list-tmpl"
-													 data-columns="[{title: ''}]"
-													 data-selectable="true"
-													 data-height="600"
-													 data-scrollable="{virtual: true}"></div> -->
-		                        			</div>
-										</div>
-										<div class="col-md-9">
-											<div class="detailsWrapper">
-												<div class="row">
-													<div class="col-md-6 marginBottom">
-														<input class="customerName" type="text" name="" data-bind="value: obj.name" disabled="disabled" style="background: #fff;" />
-														<ul class="nav nav-tabs" role="tablist">
-						                                    <li class="nav-item"> <a class="nav-link active show" data-toggle="tab" href="#cutomerTransaction" role="tab" aria-selected="true"><span><i class="ti-text"></i></span></a> </li>
-						                                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#customerInformation" role="tab" aria-selected="false"><span><i class="icon-info"></i></span></a> </li>
-						                                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#customerMemo" role="tab" aria-selected="false"><span><i class="ti-pencil-alt"></i></span></a> </li>
-						                                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#customerAttachment" role="tab" aria-selected="false"><span><i class="icon-paper-clip"></i></span></a> </li>
-						                                </ul>
-						                                <div class="tab-content tabcontent-border">
-						                                	<!--Tab Cutomer Transaction -->
-						                                    <div class="tab-pane active show" id="cutomerTransaction" role="tabpanel">
-						                                        <div class="p-10">
-						                                            <div class="row">
-						                                            	<div class="col-sm-6">
-						                                            		<a class="btn waves-effect waves-light btn-block btn-info" data-bind="click: goQuote"><span data-bind="text: lang.lang.quote"></span></a>
-						                                            	</div>
-						                                            	<div class="col-sm-6">
-						                                            		<a class="btn waves-effect waves-light btn-block btn-info" data-bind="click: goDeposit"><span data-bind="text: lang.lang.c_deposit"></span></a>
-						                                            	</div>
-						                                            </div>
-						                                            <div class="row">
-						                                            	<div class="col-sm-6">
-						                                            		<a class="btn waves-effect waves-light btn-block btn-info" data-bind="click: goCashSale"><span data-bind="text: lang.lang.cash_sale"></span></a>
-						                                            	</div>
-						                                            	<div class="col-sm-6">
-						                                            		<a href="<?php echo base_url()?>rrd#/sale_return" class="btn waves-effect waves-light btn-block btn-info" ><span data-bind="text: lang.lang.sale_return1"></span></a>
-						                                            	</div>
-						                                            </div>
-						                                            <div class="row">
-						                                            	<div class="col-sm-6">
-						                                            		<a class="btn waves-effect waves-light btn-block btn-info" data-bind="click: goInvoice"><span data-bind="text: lang.lang.invoice"></span></a>
-						                                            	</div>
-						                                            	<div class="col-sm-6">
-						                                            		<a class="btn waves-effect waves-light btn-block btn-info" data-bind="click: goCashReceipt"><span data-bind="text: lang.lang.cash_receipt"></span></a>
-						                                            	</div>
-						                                            </div>
-						                                            <div class="row">
-						                                            	<div class="col-sm-6">
-						                                            		<a href="<?php echo base_url()?>rrd#/cash_refund" class="btn waves-effect waves-light btn-block btn-info" ><span data-bind="text: lang.lang.cash_refund"></span></a>
-						                                            	</div>
-						                                            </div>
-						                                        </div>
-						                                    </div>
-						                                    <!-- End -->
-
-						                                   	<!--Tab Customer Information -->
-						                                    <div class="tab-pane" id="customerInformation" role="tabpanel">
-						                                    	<div class="p-10">
-						                                    		<div class="row">
-						                                            	<div class="col-sm-4">
-						                                            		<img class="main-image" data-bind="attr: { src: obj.image_url, alt: obj.name, title: obj.name }">
-						                                            	</div>
-						                                            	<div class="col-sm-8">
-						                                            		<div class="accounCetner-textedit">
-																            	<table width="100%">
-																					<tr>
-																						<td width="40%"><span data-bind="text: lang.lang.customer_type"></span></td>
-																						<td width="60%">
-																							<span data-bind="text: objCustomerCenter.contact_type"></span>
-																						</td>
-																					</tr>
-																					<tr>
-																						<td><span data-bind="text: lang.lang.number"></span></td>
-																						<td>
-																							<span data-bind="text: objCustomerCenter.abbr"></span>
-																							<span data-bind="text: objCustomerCenter.number"></span>
-																						</td>
-																					</tr>
-																					<tr>
-																						<td><span data-bind="text: lang.lang.name"></span></td>
-																						<td>
-																							<span data-bind="text: objCustomerCenter.name"></span>
-																						</td>
-																					</tr>
-																					<tr>
-																						<td><span data-bind="text: lang.lang.phone"></span></td>
-																						<td>
-																							<span data-bind="text: objCustomerCenter.phone"></span>
-																						</td>
-																					</tr>
-																					<tr>
-																						<td><span data-bind="text: lang.lang.currency"></span></td>
-																						<td>
-																							<span data-bind="text: currencyCode"></span>
-																						</td>
-																					</tr>
-																				</table>
-
-																				<a class="btn waves-effect waves-light btn-block btn-info btnViewEditCustomer" data-bind="click: goEdit"><i class="ti-pencil-alt marginRight"></i><span data-bind="text: lang.lang.view_edit_profile"></span></a>
-																			</div>
-						                                            	</div>
-						                                            </div>
-						                                        </div>
-						                                    </div>
-						                                    <!-- End -->
-
-						                                    <!--Tab Customer Memo -->
-						                                    <div class="tab-pane" id="customerMemo" role="tabpanel">
-						                                    	 <div class="p-10">
-						                                            <div class="row">
-						                                            	<div class="col-md-9">
-						                                            		<input type="text" class="k-textbox marginBottom"
-																				data-bind="value: note"
-																				placeholder="Add memo ..."/>
-						                                            	</div>
-						                                            	<div class="col-md-3">
-						                                            		<a class="btn waves-effect waves-light btn-block btn-info btnAddMemo" data-bind="click: saveNote"><i class="mdi mdi-message-plus marginRight"></i><span data-bind="text: lang.lang.add"></span></a>
-						                                            	</div>
-						                                            	<div class="col-md-12">
-							                                            	<div class="table table-condensed blockShowMemo"
-																				 data-role="grid"
-																				 data-auto-bind="false"
-																				 data-bind="source: noteDS"
-																				 data-row-template="customerCenter-note-tmpl"
-																				 data-columns="[{title: ''}]"
-																				 data-height="150"
-																				 data-scrollable="{virtual: true}" >
-																			</div>
-																		</div>
-						                                            </div>
-						                                        </div>
-						                                    </div>
-						                                    <!-- End -->
-
-
-						                                    <!--Tab Customer Attachment -->
-						                                    <div class="tab-pane" id="customerAttachment" role="tabpanel">
-						                                    	<div class="p-10">
-						                                    		<div class="row">
-						                                            	<div class="col-md-12 ">
-								                                    		<p><span data-bind="text: lang.lang.file_type"></span> [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>
-																            <input id="files" name="files"
-															                   type="file"
-															                   data-role="upload"
-															                   data-show-file-list="false"
-															                   data-bind="events: {
-													                   				select: onSelect
-															                   }">
-															                <div class="table-responsive">
-																                <table class="table color-table dark-table">
-																			        <thead>
-																			            <tr>
-																			                <th data-bind="text: lang.lang.file_name"></th>
-																			                <th data-bind="text: lang.lang.description"></th>
-																			                <th data-bind="text: lang.lang.date"></th>
-																			                <th data-bind="text: lang.lang.action"></th>
-																			            </tr>
-																			        </thead>
-																			        <tbody data-role="listview"
-																			        		data-template="attachment-list-tmpl"
-																			        		data-auto-bind="false"
-																			        		data-bind="source: attachmentDS"></tbody>
-																			    </table>
-																			</div>
-																		    <div id="pager" class="k-pager-wrap"
-																		    	 data-role="pager"
-																		    	 data-auto-bind="false"
-																	             data-bind="source: attachmentDS"></div>
-
-																		    <a hre="" class="btn waves-effect waves-light btn-block btn-info btnAddAttachment col-md-3" data-bind="click: uploadFile" ><i class="ti-check marginRight"></i><span data-bind="text: lang.lang.save"></span></a>
-															            </div>
-															        </div>
-						                                    	</div>  
-						                                    </div>
-						                                    <!-- End -->
-						                                </div>
-													</div>
-													<div class="col-md-6">
-														<div class="row">
-															<div class="col-md-6">
-																<div class="blockBalance" data-bind="click: loadBalance" >
-																	<div class="coverIcon"><i class="ti-server"></i></div>
-																	<div class="txt">
-																		<span  data-bind="text: lang.lang.balance"></span>
-																		<span data-bind="text: balance"></span>
-																	</div>
-																</div>
-															</div>
-															<div class="col-md-6">
-																<div class="blockDeposit" data-bind="click: loadDeposit">
-																	<div class="coverIcon"><i class=" ti-briefcase"></i></div>
-																	<div class="txt">
-																		<span data-bind="text: lang.lang.deposit"></span>
-																		<span data-bind="text: deposit" ></span>
-																	</div>
-																</div>
-															</div>
-														</div>
-														<div class="row">
-															<div class="col-md-6">
-																<div class="blockOpenInvoice" data-bind="click: loadBalance" >
-																	<div class="coverIcon"><i class="icon-info"></i></div>
-																	<div class="txt">
-																		<span  data-bind="text: outInvoice"></span>
-																		<span  data-bind="text: lang.lang.open_invoice"></span>
-																	</div>
-																</div>
-															</div>
-															<div class="col-md-6">
-																<div class="blockOverDue" data-bind="click: loadOverInvoice" >
-																	<div class="coverIcon"><i class="ti-alarm-clock"></i></div>
-																	<div class="txt" >
-																		<span data-bind="text: overInvoice"></span>
-																		<span data-bind="text: lang.lang.over_due"></span>
-																	</div>
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-
-												<!-- Block Search -->
-												<div class="row">
-													<div class="col-md-12">
-														<input data-role="dropdownlist"
-															   class="sorter marginRight marginBottom"
-													           data-value-primitive="true"
-													           data-text-field="text"
-													           data-value-field="value"
-													           data-bind="value: sorter,
-													                      source: sortList,
-													                      events: { change: sorterChanges }" />
-
-														<input data-role="datepicker"
-															   class="sdate marginRight marginBottom"
-															   data-format="dd-MM-yyyy"
-													           data-bind="value: sdate,
-													           			  max: edate"
-													           placeholder="From ..." >
-
-													    <input data-role="datepicker"
-													    	   class="edate marginRight marginBottom"
-													    	   data-format="dd-MM-yyyy"
-													           data-bind="value: edate,
-													                      min: sdate"
-													           placeholder="To ..." >
-
-													  	<button class="btnSearch" type="button" class="marginBottom" data-role="button" data-bind="click: searchTransaction"><i class="ti-search"></i></button>
-													</div>
-												</div>
-												<!-- End -->
-
-												<!-- Block Table -->
-												<div class="row">
-													<div class="col-md-12 table-responsive">
-														<table class="table color-table dark-table">
-													        <thead>
-													            <tr>
-													                <th data-bind="text: lang.lang.date"></th>
-																	<th data-bind="text: lang.lang.type"></th>
-																	<th data-bind="text: lang.lang.reference_no"></th>
-																	<th data-bind="text: lang.lang.amount"></th>
-																	<th data-bind="text: lang.lang.status"></th>
-																	<th data-bind="text: lang.lang.action"></th>
-													            </tr>
-													        </thead>
-													        <tbody data-role="listview"
-										            				data-auto-bind="false"
-													                data-template="customerCenter-transaction-tmpl"
-													                data-bind="source: transactionDS" >
-													        </tbody>
-													    </table>
-													    <div id="pager" class="k-pager-wrap"
-										            		 data-role="pager"
-													    	 data-auto-bind="false"
-												             data-bind="source: transactionDS"></div>
-													</div>
-												</div>
-												<!-- End -->
-											</div>
-										</div>
-				    				</div>
-			                    </div>
-			                    <!-- End Tab Customer -->
-			                </div>
+                        <div class="card-body" >
+                        	<div id="indexMenu"></div>
+			                <div class="tab-content">	
+				                <div class="tab-pane active" role="tabpanel">
+				                	<div id="indexContent"></div>
+				                </div>
+				            </div>
 			            </div>
 			        </div>
 	            </div>
@@ -557,7 +39,519 @@
         </div>
     </div>
 </script>
-<!-- End Sale Section-->
+
+
+<!-- Menu -->
+<script id="tapMenu" type="text/x-kendo-template">
+	<ul class="nav nav-tabs customtab" role="tablist" >
+		<li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#/" data-bind="click: goReports"><span class="hidden-sm-up"><i class="ti-layout-grid2-thumb"></i></span> <span class="hidden-xs-down">Reports</span></a> </li>
+	    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#/check_out" data-bind="click: goCheckOut"><span class="hidden-sm-up"><i class="ti-layout-accordion-list"></i></span> <span class="hidden-xs-down">Check Out</span></a> </li>
+	    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#/transactions" data-bind="click: goTransactions"><span class="hidden-sm-up"><i class="ti-layout-accordion-list"></i></span> <span class="hidden-xs-down">Sale Transactions</span></a> </li>
+	    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#/customers" data-bind="click: goMenuCustomers"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" >Customers</span></a> </li>
+    </ul>
+</script>
+<!-- End -->
+
+<!-- Menu -->
+<script id="reports" type="text/x-kendo-template">
+	<div class="row " id="reports">
+		<div class="col-md-4">
+			<div class="saleOverview">
+				<h2 data-bind="text: lang.lang.sale"></h2>
+				<p data-format="n" data-bind="text: obj.sale"></p>
+				<div class="col-md-12">
+					<div class="col-md-4">
+						<span data-bind="text: obj.sale_customer"></span>
+						<span data-bind="text: lang.lang.customer"></span>
+					</div>
+					<div class="col-md-4">
+						<span data-bind="text: obj.sale_product"></span>
+						<span data-bind="text: lang.lang.product"></span>
+					</div>
+					<div class="col-md-4">
+						<span data-bind="text: obj.sale_ordered"></span>
+						<span data-bind="text: lang.lang.order"></span>
+					</div>
+				</div>
+			</div>
+
+			<!-- Report -->
+            <div class="report ">
+				<div class="col-md-12">
+					<h3><a href="#/sale_summary_by_customer" data-bind="text: lang.lang.sale_summary_by_customer" ></a></h3>
+					<p data-bind="text: lang.lang.summarizes_total_sales"></p>
+				</div>
+				<div class="col-md-12">
+					<h3><a href="#/sale_summary_by_product" data-bind="text: lang.lang.sale_summary_by_product_services" ></a></h3>
+					<p data-bind="text: lang.lang.summarizes_total_sales_for_each_product"></p>
+				</div>
+				<div class="col-md-12">
+					<h3><a href="#/sale_detail_by_customer" data-bind="text: lang.lang.sale_detail_by_customer" ></a></h3>
+					<p data-bind="text: lang.lang.lists_individual_sale"></p>
+				</div>
+				<div class="col-md-12">
+					<h3><a href="#/sale_detail_by_product" data-bind="text: lang.lang.sale_detail_by_product_services" ></a></h3>
+					<p data-bind="text: lang.lang.lists_individual_sale_transactions"></p>
+				</div>						    					
+			</div>
+
+			<!-- Top 4 -->
+			<div class="top5 home-footer">
+                <table class="table color-table dark-table">
+                    <thead>
+                        <tr>
+                            <th colspan="2" class="center">
+                                <span data-bind="text: lang.lang.top_5_customers"></span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody data-role="listview"
+                         data-auto-bind="false"
+                         data-template="top-contact-template"
+                         data-bind="source: obj.top_customer"></tbody>
+                </table>
+            </div>					                        
+		</div>
+		<div class="col-md-4">
+			<div class="saleOverview">
+				<h2 data-bind="text: lang.lang.sale_order"></h2>
+				<p data-format="n0" data-bind="text: obj.so"></p>
+				<div class="col-md-12">
+					<div class="col-md-6">
+						<span data-format="n0" data-bind="text: obj.so_avg"></span>
+						<span data-bind="text: lang.lang.average"></span>
+					</div>
+					<div class="col-md-6">
+						<span data-bind="text: obj.so_open"></span>
+						<span data-bind="text: lang.lang.order_open"></span>
+					</div>
+				</div>
+			</div>
+
+			<!-- Report -->
+			<div class="report" style="min-height: 385px; ">
+                <div class="col-md-12">
+					<h3><a href="#/customer_balance_summary" data-bind="text: lang.lang.customer_balance_summary" ></a></h3>
+					<p data-bind="text: lang.lang.summarizes_total_sales"></p>
+				</div>
+				<div class="col-md-12">
+					<h3><a href="#/customer_balance_detail" data-bind="text: lang.lang.customer_balance_detail" ></a></h3>
+					<p data-bind="text: lang.lang.lists_individual_unpaid_invoices_for_each_customer"></p>
+				</div>
+				<div class="col-md-12">
+					<h3><a href="#/receivable_aging_summary" data-bind="text: lang.lang.receivable_aging_summary"></a></h3>
+					<p data-bind="text: lang.lang.lists_all_unpaid_invoices1"></p>	
+				</div>
+				<div class="col-md-12">
+					<h3><a href="#/receivable_aging_detail" data-bind="text: lang.lang.receivable_aging_detail"></a></h3>
+					<p data-bind="text: lang.lang.lists_individual_unpaid_invoices_grouped_by_customer"></p>
+				</div>
+			</div>
+
+			<!-- Top 4 -->
+			<div class="top5 home-footer">
+                <table class="table color-table dark-table">
+                    <thead>
+                        <tr>
+                            <th class="center" colspan="2">
+                                <span data-bind="text: lang.lang.top_5_ar_balance"></span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody data-role="listview"
+                         data-auto-bind="false"
+                         data-template="top-contact-template"
+                         data-bind="source: obj.top_ar"></tbody>
+                </table>
+            </div>					                        
+		</div>
+		<div class="col-md-4">
+			<div class="saleOverview">
+				<h2 data-bind="text: lang.lang.receivable"></h2>
+				<p data-format="n" data-bind="text: obj.ar"></p>
+				<div class="col-md-12">
+					<div class="col-md-4">
+						<span data-format="n0" data-bind="text: obj.ar_open"></span>
+						<span data-bind="text: lang.lang.open"></span>
+					</div>
+					<div class="col-md-4">
+						<span data-bind="text: obj.ar_customer"></span>
+						<span data-bind="text: lang.lang.customers"></span>
+					</div>
+					<div class="col-md-4">
+						<span data-bind="text: obj.ar_overdue"></span>
+						<span data-bind="text: lang.lang.overdue"></span>
+					</div>
+				</div>
+			</div>
+
+			<!-- Report -->
+			<div class="report" style="min-height: 385px; ">
+				<div class="col-md-12">
+					<h3><a href="#/collect_invoice" data-bind="text: lang.lang.list_of_invoices_to_be_collected"></a></h3>
+					<p data-bind="text: lang.lang.lists_all_unpaid_invoices_grouped_by_due_today_and_overdue"></p>
+				</div>
+				<div class="col-md-12">
+					<h3><a href="#/collection_report" data-bind="text: lang.lang.collection_report"></a></h3>
+					<p data-bind="text: lang.lang.lists_of_collected_invoices_for_the_select_period_of_time_group_by_method_of_payment"></p>
+				</div>
+			</div>
+
+			<!-- Top 4 -->
+			<div class="top5 home-footer">
+                <table class="table color-table dark-table">
+                    <thead>
+                        <tr>
+                            <th colspan="2" class="center">
+                                <span data-bind="text: lang.lang.top_5_Receipt"></span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody data-role="listview"
+                         data-auto-bind="false"
+                         data-template="top-product-template"
+                         data-bind="source: obj.top_cash_receipt"></tbody>
+                </table>
+            </div>					                        
+		</div>
+	</div>	
+</script>
+<script id="checkOut" type="text/x-kendo-template">	
+	checkOut
+</script>
+<script id="transactions" type="text/x-kendo-template">	
+	<div class="row">
+		<div class="col-md-7">
+            <div class="btn-group">
+                <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                	Add New
+                </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#/quote"><span data-bind="">Create Quotation</span></a>
+                    <a class="dropdown-item" href="#/invoice"><span data-bind="">Create Invoice</span></a>
+                    <a class="dropdown-item" href="#cash_sale"><span data-bind="">Create Cash Sale</span></a>
+                    <a class="dropdown-item" href="#/cash_receipt"><span data-bind="">Create Cash Receipt</span></a>
+                </div>
+            </div>
+        </div>
+	</div>
+</script>
+<script id="customers" type="text/x-kendo-template">
+	<div class="row" id="customers">
+		<div class="col-md-3">
+			<div class="listWrapper">
+				<a href="#/customer" class="btn waves-effect waves-light btn-block btn-info btnAddCustomer"><i class="icon-user-follow marginRight"></i><span data-bind="">Add New Customer</span></a>
+				<div class="innerAll">
+					<form autocomplete="off" class="form-inline">
+						<div class="widget-search">
+							<div class="overflow-hidden">
+								<input type="search" placeholder="Number or Name..." data-bind="value: searchText">
+							</div>
+							<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="ti-search"></i></button>
+						</div>
+						<div class="select2-container">
+							<input data-role="dropdownlist" style="width: 100%;" 
+				                   data-option-label="Select Type..."
+				                   data-value-primitive="true"
+				                   data-text-field="name"
+				                   data-value-field="id"
+				                   data-bind="value: contact_type_id,
+				                              source: contactTypeDS"/>
+						</div>
+					</form>
+				</div>
+
+				<span class="results"><span data-bind="text: contactDS.total"></span> <span data-bind="text: lang.lang.found_search"></span></span>
+
+				<div class="table table-condensed"
+					 data-role="grid"
+					 data-bind="source: contactDS"
+					 data-row-template="customerCenter-customer-list-tmpl"
+					 data-columns="[{title: ''}]"
+					 data-selectable="true"
+					 data-scrollable="{virtual: true}"></div>
+			</div>
+		</div>
+		<div class="col-md-9">
+			<div class="detailsWrapper">
+				<div class="row">
+					<div class="col-md-6 marginBottom">
+						<input class="customerName" type="text" name="" data-bind="value: obj.name" disabled="disabled" style="background: #fff;" />
+						<ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item"> <a class="nav-link active show" data-toggle="tab" href="#cutomerTransaction" role="tab" aria-selected="true"><span><i class="ti-text"></i></span></a> </li>
+                            <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#customerInformation" role="tab" aria-selected="false"><span><i class="icon-info"></i></span></a> </li>
+                            <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#customerMemo" role="tab" aria-selected="false"><span><i class="ti-pencil-alt"></i></span></a> </li>
+                            <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#customerAttachment" role="tab" aria-selected="false"><span><i class="icon-paper-clip"></i></span></a> </li>
+                        </ul>
+                        <div class="tab-content tabcontent-border">
+                        	<!--Tab Cutomer Transaction -->
+                            <div class="tab-pane active show" id="cutomerTransaction" role="tabpanel">
+                                <div class="p-10">
+                                    <div class="row">
+                                    	<div class="col-sm-6">
+                                    		<a class="btn waves-effect waves-light btn-block btn-info" data-bind="click: goQuote"><span data-bind="text: lang.lang.quote"></span></a>
+                                    	</div>
+                                    	<div class="col-sm-6">
+                                    		<a class="btn waves-effect waves-light btn-block btn-info" data-bind="click: goDeposit"><span data-bind="text: lang.lang.c_deposit"></span></a>
+                                    	</div>
+                                    </div>
+                                    <div class="row">
+                                    	<div class="col-sm-6">
+                                    		<a class="btn waves-effect waves-light btn-block btn-info" data-bind="click: goCashSale"><span data-bind="text: lang.lang.cash_sale"></span></a>
+                                    	</div>
+                                    	<div class="col-sm-6">
+                                    		<a href="<?php echo base_url()?>rrd#/sale_return" class="btn waves-effect waves-light btn-block btn-info" ><span data-bind="text: lang.lang.sale_return1"></span></a>
+                                    	</div>
+                                    </div>
+                                    <div class="row">
+                                    	<div class="col-sm-6">
+                                    		<a class="btn waves-effect waves-light btn-block btn-info" data-bind="click: goInvoice"><span data-bind="text: lang.lang.invoice"></span></a>
+                                    	</div>
+                                    	<div class="col-sm-6">
+                                    		<a class="btn waves-effect waves-light btn-block btn-info" data-bind="click: goCashReceipt"><span data-bind="text: lang.lang.cash_receipt"></span></a>
+                                    	</div>
+                                    </div>
+                                    <div class="row">
+                                    	<div class="col-sm-6">
+                                    		<a href="<?php echo base_url()?>rrd#/cash_refund" class="btn waves-effect waves-light btn-block btn-info" ><span data-bind="text: lang.lang.cash_refund"></span></a>
+                                    	</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End -->
+
+                           	<!--Tab Customer Information -->
+                            <div class="tab-pane" id="customerInformation" role="tabpanel">
+                            	<div class="p-10">
+                            		<div class="row">
+                                    	<div class="col-sm-4">
+                                    		<img class="main-image" data-bind="attr: { src: obj.image_url, alt: obj.name, title: obj.name }">
+                                    	</div>
+                                    	<div class="col-sm-8">
+                                    		<div class="accounCetner-textedit">
+								            	<table width="100%">
+													<tr>
+														<td width="40%"><span data-bind="text: lang.lang.customer_type"></span></td>
+														<td width="60%">
+															<span data-bind="text: objCustomerCenter.contact_type"></span>
+														</td>
+													</tr>
+													<tr>
+														<td><span data-bind="text: lang.lang.number"></span></td>
+														<td>
+															<span data-bind="text: objCustomerCenter.abbr"></span>
+															<span data-bind="text: objCustomerCenter.number"></span>
+														</td>
+													</tr>
+													<tr>
+														<td><span data-bind="text: lang.lang.name"></span></td>
+														<td>
+															<span data-bind="text: objCustomerCenter.name"></span>
+														</td>
+													</tr>
+													<tr>
+														<td><span data-bind="text: lang.lang.phone"></span></td>
+														<td>
+															<span data-bind="text: objCustomerCenter.phone"></span>
+														</td>
+													</tr>
+													<tr>
+														<td><span data-bind="text: lang.lang.currency"></span></td>
+														<td>
+															<span data-bind="text: currencyCode"></span>
+														</td>
+													</tr>
+												</table>
+
+												<a class="btn waves-effect waves-light btn-block btn-info btnViewEditCustomer" data-bind="click: goEdit"><i class="ti-pencil-alt marginRight"></i><span data-bind="text: lang.lang.view_edit_profile"></span></a>
+											</div>
+                                    	</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End -->
+
+                            <!--Tab Customer Memo -->
+                            <div class="tab-pane" id="customerMemo" role="tabpanel">
+                            	 <div class="p-10">
+                                    <div class="row">
+                                    	<div class="col-md-9">
+                                    		<input type="text" class="k-textbox marginBottom"
+												data-bind="value: note"
+												placeholder="Add memo ..."/>
+                                    	</div>
+                                    	<div class="col-md-3">
+                                    		<a class="btn waves-effect waves-light btn-block btn-info btnAddMemo" data-bind="click: saveNote"><i class="mdi mdi-message-plus marginRight"></i><span data-bind="text: lang.lang.add"></span></a>
+                                    	</div>
+                                    	<div class="col-md-12">
+                                        	<div class="table table-condensed blockShowMemo"
+												 data-role="grid"
+												 data-auto-bind="false"
+												 data-bind="source: noteDS"
+												 data-row-template="customerCenter-note-tmpl"
+												 data-columns="[{title: ''}]"
+												 data-height="150"
+												 data-scrollable="{virtual: true}" >
+											</div>
+										</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End -->
+
+
+                            <!--Tab Customer Attachment -->
+                            <div class="tab-pane" id="customerAttachment" role="tabpanel">
+                            	<div class="p-10">
+                            		<div class="row">
+                                    	<div class="col-md-12 ">
+                                    		<p><span data-bind="text: lang.lang.file_type"></span> [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>
+								            <input id="files" name="files"
+							                   type="file"
+							                   data-role="upload"
+							                   data-show-file-list="false"
+							                   data-bind="events: {
+					                   				select: onSelect
+							                   }">
+							                <div class="table-responsive">
+								                <table class="table color-table dark-table">
+											        <thead>
+											            <tr>
+											                <th data-bind="text: lang.lang.file_name"></th>
+											                <th data-bind="text: lang.lang.description"></th>
+											                <th data-bind="text: lang.lang.date"></th>
+											                <th data-bind="text: lang.lang.action"></th>
+											            </tr>
+											        </thead>
+											        <tbody data-role="listview"
+											        		data-template="attachment-list-tmpl"
+											        		data-auto-bind="false"
+											        		data-bind="source: attachmentDS"></tbody>
+											    </table>
+											</div>
+										    <div id="pager" class="k-pager-wrap"
+										    	 data-role="pager"
+										    	 data-auto-bind="false"
+									             data-bind="source: attachmentDS"></div>
+
+										    <a hre="" class="btn waves-effect waves-light btn-block btn-info btnAddAttachment col-md-3" data-bind="click: uploadFile" ><i class="ti-check marginRight"></i><span data-bind="text: lang.lang.save"></span></a>
+							            </div>
+							        </div>
+                            	</div>  
+                            </div>
+                            <!-- End -->
+                        </div>
+					</div>
+					<div class="col-md-6">
+						<div class="row">
+							<div class="col-md-6">
+								<div class="blockBalance" data-bind="click: loadBalance" >
+									<div class="coverIcon"><i class="ti-server"></i></div>
+									<div class="txt">
+										<span  data-bind="text: lang.lang.balance"></span>
+										<span data-bind="text: balance"></span>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="blockDeposit" data-bind="click: loadDeposit">
+									<div class="coverIcon"><i class=" ti-briefcase"></i></div>
+									<div class="txt">
+										<span data-bind="text: lang.lang.deposit"></span>
+										<span data-bind="text: deposit" ></span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6">
+								<div class="blockOpenInvoice" data-bind="click: loadBalance" >
+									<div class="coverIcon"><i class="icon-info"></i></div>
+									<div class="txt">
+										<span  data-bind="text: outInvoice"></span>
+										<span  data-bind="text: lang.lang.open_invoice"></span>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="blockOverDue" data-bind="click: loadOverInvoice" >
+									<div class="coverIcon"><i class="ti-alarm-clock"></i></div>
+									<div class="txt" >
+										<span data-bind="text: overInvoice"></span>
+										<span data-bind="text: lang.lang.over_due"></span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Block Search -->
+				<div class="row">
+					<div class="col-md-12">
+						<input data-role="dropdownlist"
+							   class="sorter marginRight marginBottom"
+					           data-value-primitive="true"
+					           data-text-field="text"
+					           data-value-field="value"
+					           data-bind="value: sorter,
+					                      source: sortList,
+					                      events: { change: sorterChanges }" />
+
+						<input data-role="datepicker"
+							   class="sdate marginRight marginBottom"
+							   data-format="dd-MM-yyyy"
+					           data-bind="value: sdate,
+					           			  max: edate"
+					           placeholder="From ..." >
+
+					    <input data-role="datepicker"
+					    	   class="edate marginRight marginBottom"
+					    	   data-format="dd-MM-yyyy"
+					           data-bind="value: edate,
+					                      min: sdate"
+					           placeholder="To ..." >
+
+					  	<button class="btnSearch" type="button" class="marginBottom" data-role="button" data-bind="click: searchTransaction"><i class="ti-search"></i></button>
+					</div>
+				</div>
+				<!-- End -->
+
+				<!-- Block Table -->
+				<div class="row">
+					<div class="col-md-12 table-responsive">
+						<table class="table color-table dark-table">
+					        <thead>
+					            <tr>
+					                <th data-bind="text: lang.lang.date"></th>
+									<th data-bind="text: lang.lang.type"></th>
+									<th data-bind="text: lang.lang.reference_no"></th>
+									<th data-bind="text: lang.lang.amount"></th>
+									<th data-bind="text: lang.lang.status"></th>
+									<th data-bind="text: lang.lang.action"></th>
+					            </tr>
+					        </thead>
+					        <tbody data-role="listview"
+		            				data-auto-bind="false"
+					                data-template="customerCenter-transaction-tmpl"
+					                data-bind="source: transactionDS" >
+					        </tbody>
+					    </table>
+					    <div id="pager" class="k-pager-wrap"
+		            		 data-role="pager"
+					    	 data-auto-bind="false"
+				             data-bind="source: transactionDS"></div>
+					</div>
+				</div>
+				<!-- End -->
+			</div>
+		</div>
+	</div>
+</script>
+
+
+
+
 
 <script id="saleReport" type="text/x-kendo-template">
 	<div class="row ">
@@ -2582,8 +2576,7 @@
 													              				 />
 
 													            <p class="marginBottom" data-bind="text: lang.lang.check_no"></p>
-			                                            		<input class="marginBottom" class="k-textbox" placeholder="type check number ..." data-bind="value: obj.check_no"
-													              				 />
+			                                            		<input class="marginBottom" class="k-textbox" placeholder="type check number ..." data-bind="value: obj.check_no" style="width: 100%;" />
 													              				 
 																<p class="marginBottom width100" data-bind="text: lang.lang.delivery_address"></p>
 																<textarea cols="0" rows="2" class="k-textbox marginBottom " data-bind="value: obj.ship_to" placeholder="Shipping to ..."></textarea>
@@ -5834,4 +5827,4 @@
 		#=code# - #=country#
 	</span>
 </script>
-<!-- End -->
+<!-- End -->      

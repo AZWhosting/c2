@@ -38,7 +38,6 @@ class Micro extends CI_Controller {
 		$this->load->view("micro/footer");
 	}
 
-
 	public function sidebar() {
 		$this->load->view("micro/sidebar");
 	}

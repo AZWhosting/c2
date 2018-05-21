@@ -15540,6 +15540,7 @@
 									<tr>									
 										<th style="vertical-align: top;"><span data-bind="text: lang.lang.type">Type</span></th>
 										<th style="vertical-align: top;"><span data-bind="text: lang.lang.date">Date</span></th>
+										<th style="vertical-align: top;"><span data-bind="text: lang.lang.invoice_date">Invoice Date</span></th>
 										<th style="vertical-align: top;"><span data-bind="text: lang.lang.location">Location</span></th>
 										<th style="vertical-align: top;"><span data-bind="text: lang.lang.reference">Reference</span></th>
 										<th style="vertical-align: top; text-align: right;"><span data-bind="text: lang.lang.usage">Usage</span></th>
@@ -15571,6 +15572,7 @@
 		# amount += line[i].amount;#
 		<tr>
 			<td style="padding-left: 20px !important;">#=line[i].type#</td>
+			<td>#=kendo.toString(new Date(line[i].month), "dd-MM-yyyy")#</td>
 			<td>#=kendo.toString(new Date(line[i].date), "dd-MM-yyyy")#</td>
 			<td>#=line[i].location#</td>
 			<td>#=line[i].number#</td>		

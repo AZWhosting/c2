@@ -14487,7 +14487,7 @@
 		}),
 		txnTemplateDS 		: new kendo.data.DataSource({
 		  	data: banhji.source.txnTemplateList,
-		  	filter:{ field: "type", value: "Sale_Return" }
+		  	filter:{ field: "type", value: "Cash_Refund" }
 		}),
 		accountDS  			: new kendo.data.DataSource({
 		  	data: banhji.source.accountList,
@@ -24261,8 +24261,8 @@
 		    this.set("numberToString", word.toUpperCase());
 		},
 		amountTotal 		: "",
-    offsetnumber  : "",
-    offsetamount : 0,
+        offsetnumber        : "",
+        offsetamount        : 0,
 		pageLoad 			: function(id, is_recurring){
 			var self = this;
 			this.dataSource.query({
@@ -24290,14 +24290,14 @@
 						name: 'Cash'
 			    	});
 				}
-        if(view[0].offset_invoice.length > 0){
-          var offamount = 0;
-          $.each(view[0].offset_invoice, function(i,v){
-            self.set("offsetnumber", self.get("offsetnumber") + " " + v.number);
-            offamount += kendo.parseFloat(v.amount);
-          });
-          self.set("offsetamount", kendo.toString(offamount, "c", view[0].locale));
-        }
+                if(view[0].offset_invoice.length > 0){
+                  var offamount = 0;
+                  $.each(view[0].offset_invoice, function(i,v){
+                    self.set("offsetnumber", self.get("offsetnumber") + " " + v.number);
+                    offamount += kendo.parseFloat(v.amount);
+                  });
+                  self.set("offsetamount", kendo.toString(offamount, "c", view[0].locale));
+                }
 				self.set("obj", view[0]);
 				var amountDue = kendo.parseFloat(view[0].amount) - kendo.parseFloat(view[0].deposit);
 				self.get("obj").set("amount_due", kendo.toString(amountDue, "c", view[0].locale))
@@ -24468,7 +24468,9 @@
 		},
 		segmentItemDS 		: dataStore(apiUrl + "segments/item"),
 		jobDS  				: dataStore(apiUrl + "jobs"),
-		loadObjTemplate 		: function(id, transaction_id){
+        haveAccount         : false,
+        amountOfAccLine     : 0,
+		loadObjTemplate 	: function(id, transaction_id){
 			var self = this, obj = this.get('obj');
 			this.txnTemplateDS.query({
 				filter: { field:"id", value: id },
@@ -24491,34 +24493,36 @@
 					var TotalRow = 10 - CountItemsRow;
 					if(banhji.institute.id != 1021){
 						if(TotalRow > 0){
-							for (var i = 1; i < TotalRow; i++) {
-								self.lineDS.add({
-									id			: i,
-									transaction_id 		: i,
-									tax_item_id 		: 0,
-									item_id 			: 0,
-									assembly_id 		: 0,
-									measurement_id 		: 0,
-									description 		: "",
-									quantity 	 		: "",
-									conversion_ratio 	: 1,
-									cost 				: 0,
-									price 				: 0,
-									amount 				: "",
-									discount 			: 0,
-									discount_percentage : 0,
-									tax 				: 0,
-									rate				: 1,
-									locale				: "",
-									movement 			: -1,
-									reference_no  		: "",
-									item 				: { id:"", name:"" },
-									measurement 		: { measurement_id:"", measurement:"" },
-									tax_item 			: { id:"", name:"" },
-									variant 			: [],
-									item_prices 			: { measurement_id:"", measurement:"" },
-						    	});
-						    }
+                            if(view[0].transaction_form_id != '73'){
+    							for (var i = 1; i < TotalRow; i++) {
+    								self.lineDS.add({
+    									id			: i,
+    									transaction_id 		: i,
+    									tax_item_id 		: 0,
+    									item_id 			: 0,
+    									assembly_id 		: 0,
+    									measurement_id 		: 0,
+    									description 		: "",
+    									quantity 	 		: "",
+    									conversion_ratio 	: 1,
+    									cost 				: 0,
+    									price 				: 0,
+    									amount 				: "",
+    									discount 			: 0,
+    									discount_percentage : 0,
+    									tax 				: 0,
+    									rate				: 1,
+    									locale				: "",
+    									movement 			: -1,
+    									reference_no  		: "",
+    									item 				: { id:"", name:"" },
+    									measurement 		: { measurement_id:"", measurement:"" },
+    									tax_item 			: { id:"", name:"" },
+    									variant 			: [],
+    									item_prices 			: { measurement_id:"", measurement:"" },
+    						    	});
+    						    }
+                            }
 						}
 					}
 					$("#loading-inv").remove();
@@ -24532,8 +24536,17 @@
 								self.set("proaccountLineDS", v);
 								return false;
 							}
-						})
-					}
+						});
+                        self.set("haveAccount", true);
+                        self.set("amountOfAccLine", 0);
+                        var amountOfAcc = 0;
+                        $.each(self.accountLineDS.data(), function(i,v){
+                            amountOfAcc += v.amount;
+                        });
+                        self.set("amountOfAccLine", kendo.toString(amountOfAcc, self.accountLineDS.data()[0].locale == 'km-KH'?'c':'c2', self.accountLineDS.data()[0].locale));
+					}else{
+                        self.set("haveAccount", false);
+                    }
 				});
 				if(self.get("obj").account_id){
 					$.each(banhji.source.accountList, function(i,v){

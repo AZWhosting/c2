@@ -54151,14 +54151,6 @@
                         	<p style="font-weight:bold" data-bind="text: obj.issued_date"></p>
                         </div>
                     </div>
-                    <!-- <div class="clear">
-                    	<div class="left">
-                    		<p>សំគាល់:</p>
-                        </div>
-                        <div class="left dotted-ruler" style="width: 57%;">
-                        	<p style="font-weight:bold" data-bind="text: offsetnumber"></p>
-                        </div>
-                    </div> -->
                 </div>
             </div>
         	<div class="clear">
@@ -54172,7 +54164,9 @@
                             <th style="text-align: center;">ថ្លៃ​ទំនិញ<br />Amount</th>
                         </tr>
                     </thead>
-                    <tbody style="margin-top: 2px" id="formListView" data-role="listview"
+                    <tbody style="margin-top: 2px" 
+                    	id="formListView" 
+                    	data-role="listview"
 						data-auto-bind="false"
 						data-template="invoiceForm-lineDS-template"
 						data-bind="source: lineDS">
@@ -54183,10 +54177,29 @@
                         	<td colspan="3" style="text-align:right;padding:5px;font-weight: bold;">សរុប Total</td>
                             <td class="rside" data-bind="text: obj.amount"></td>
                         </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div class="clear" data-bind="visible: haveAccount" style="margin-top: 20px;">
+            	<table cellpadding="0" cellspacing="0" border="1" class="span12">
+                	<thead>
+                        <tr class="main-color" style="height: 45px;" data-bind="style: {backgroundColor: obj.color}">
+                            <th style="text-align: center;">ល.រ<br />N<sup>0</sup></th>
+                            <th style="text-align: center;">គណនេយ្យ<br />Account</th>
+                            <th style="text-align: center;">តម្លៃ<br />Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody style="margin-top: 2px" 
+                    	id="formListView" 
+                    	data-role="listview"
+						data-auto-bind="false"
+						data-template="account-lineDS-template"
+						data-bind="source: accountLineDS">
+                    </tbody>
+                    <tfoot>
                         <tr>
-                        	<td></td>
-                        	<td colspan="3" style="text-align:right;padding:5px;font-weight: bold;">លេខវិក្កយបត្រដែរទូទាត់ <span data-bind="text: offsetnumber"></span></td>
-                            <td class="rside" data-bind="text: offsetamount"></td>
+                        	<td colspan="2" style="text-align:right;padding:5px;font-weight: bold;">សរុប Total</td>
+                            <td class="rside" data-bind="text: amountOfAccLine"></td>
                         </tr>
                     </tfoot>
                 </table>
@@ -54204,6 +54217,13 @@
             <h6 style="padding-left: 35px;">សម្គាល់៖ <span>ច្បាប់​ដើម​សម្រាប់​អ្នក​ទិញ ច្បាប់​ចម្លង​សម្រាប់​អ្នក​លក់</span><br /><span style="font-size: 10px"><strong>Note:</strong> Original invoice for customer, copied invoice for seller</span></h6>
         </div>
     </div>
+</script>
+<script id="account-lineDS-template" type="text/x-kendo-template">
+	<tr>
+		<td><i>#:banhji.invoiceForm.accountLineDS.indexOf(data)+1#</i>&nbsp;</td>
+		<td class="lside">#= description ? description : "" #</td>
+		<td class="rside">#= kendo.toString(amount, "c", locale) #</td>
+	</tr>
 </script>
 <script id="purchaseSampleService" type="text/x-kendo-template">
 	<div class="inv1">
@@ -64756,4 +64776,4 @@
 	s0.parentNode.insertBefore(s1,s0);
 	})();
 </script> -->
-<!--End of Tawk.to Script--> 
+<!--End of Tawk.to Script-->                                                                                                                                                                                                                                                                                                                                                                                                      

@@ -18760,11 +18760,11 @@
                 end.setDate(end.getDate() + 1);
 
                 para.push({
-                    field: "issued_date >=",
+                    field: "month_of >=",
                     value: kendo.toString(start, "yyyy-MM-dd")
                 });
                 para.push({
-                    field: "issued_date <",
+                    field: "month_of <",
                     value: kendo.toString(end, "yyyy-MM-dd")
                 });
             } else if (start) {
@@ -18772,7 +18772,7 @@
                 displayDate = "On " + kendo.toString(start, "dd-MM-yyyy");
 
                 para.push({
-                    field: "issued_date",
+                    field: "month_of",
                     value: kendo.toString(start, "yyyy-MM-dd")
                 });
             } else if (end) {
@@ -18781,7 +18781,7 @@
                 end.setDate(end.getDate() + 1);
 
                 para.push({
-                    field: "issued_date <",
+                    field: "month_of <",
                     value: kendo.toString(end, "yyyy-MM-dd")
                 });
             } else {
@@ -19523,11 +19523,11 @@
                 end.setDate(end.getDate() + 1);
 
                 para.push({
-                    field: "issued_date >=",
+                    field: "month_of >=",
                     value: kendo.toString(start, "yyyy-MM-dd")
                 });
                 para.push({
-                    field: "issued_date <",
+                    field: "month_of <",
                     value: kendo.toString(end, "yyyy-MM-dd")
                 });
             } else if (start) {
@@ -19535,7 +19535,7 @@
                 displayDate = "On " + kendo.toString(start, "dd-MM-yyyy");
 
                 para.push({
-                    field: "issued_date",
+                    field: "month_of",
                     value: kendo.toString(start, "yyyy-MM-dd")
                 });
             } else if (end) {
@@ -19544,7 +19544,7 @@
                 end.setDate(end.getDate() + 1);
 
                 para.push({
-                    field: "issued_date <",
+                    field: "month_of <",
                     value: kendo.toString(end, "yyyy-MM-dd")
                 });
             } else {
@@ -23316,125 +23316,135 @@
                     }
                     this.dataSource.query({
                         filter: para,
-                        page: 1,
-                        // pageSize: 50,
-                    }).then(function(e) {
-                    // if (e.type == "read") {
-                        var response = self.dataSource.view();
+                    }).then(function() {
+                        var view = self.dataSource.view();
 
-                        self.exArray = [];
-
-                        self.exArray.push({
-                            cells: [{
-                                value: "Total Balance",
-                                bold: true,
-                                fontSize: 20,
-                                textAlign: "center",
-                                colSpan: 9
-                            }]
+                        var amount = 0;
+                        $.each(view, function(index, value) {
+                            amount += value.amount;
                         });
-                        if (self.displayDate) {
+
+                        self.set("totalAmount", kendo.toString(amount, banhji.locale == "km-KH" ? "c0" : "c", banhji.locale));
+                    });
+                    this.dataSource.bind("requestEnd", function(e) {
+                        if (e.type == "read") {
+                            var response = e.response,
+                                balanceRec = 0;
+                            self.exArray = [];
+
                             self.exArray.push({
                                 cells: [{
-                                    value: self.displayDate,
+                                    value: self.company.name,
                                     textAlign: "center",
                                     colSpan: 9
                                 }]
                             });
-                        }
-                        self.exArray.push({
-                            cells: [{
-                                value: "",
-                                colSpan: 9
-                            }]
-                        });
-                        self.exArray.push({
-                            cells: [{
-                                    value: "Code",
-                                    background: "#496cad",
-                                    color: "#ffffff"
-                                },
-                                {
-                                    value: "Customer",
-                                    background: "#496cad",
-                                    color: "#ffffff"
-                                },
-                                {
-                                    value: "Meter Number",
-                                    background: "#496cad",
-                                    color: "#ffffff"
-                                },
-                                {
-                                    value: "Previous",
-                                    background: "#496cad",
-                                    color: "#ffffff"
-                                },
-                                {
-                                    value: "Current",
-                                    background: "#496cad",
-                                    color: "#ffffff"
-                                },
-                                {
-                                    value: "Usage",
-                                    background: "#496cad",
-                                    color: "#ffffff"
-                                },
-                                {
-                                    value: "Balance",
-                                    background: "#496cad",
-                                    color: "#ffffff"
-                                },
-                                {
-                                    value: "Amount",
-                                    background: "#496cad",
-                                    color: "#ffffff"
-                                },
-                                {
-                                    value: "Total",
-                                    background: "#496cad",
-                                    color: "#ffffff"
+                            self.exArray.push({
+                                cells: [{
+                                    value: "Total Balance",
+                                    bold: true,
+                                    fontSize: 20,
+                                    textAlign: "center",
+                                    colSpan: 9
+                                }]
+                            });
+                            if (self.displayDate) {
+                                self.exArray.push({
+                                    cells: [{
+                                        value: self.displayDate,
+                                        textAlign: "center",
+                                        colSpan: 9
+                                    }]
+                                });
+                            }
+                            self.exArray.push({
+                                cells: [{
+                                    value: "",
+                                    colSpan: 9
+                                }]
+                            });
+                            self.exArray.push({
+                                    cells: [{
+                                            value: "Code",
+                                            background: "#496cad",
+                                            color: "#ffffff"
+                                        },
+                                        {
+                                            value: "Customer",
+                                            background: "#496cad",
+                                            color: "#ffffff"
+                                        },
+                                        {
+                                            value: "Meter Number",
+                                            background: "#496cad",
+                                            color: "#ffffff"
+                                        },
+                                        {
+                                            value: "Previous",
+                                            background: "#496cad",
+                                            color: "#ffffff"
+                                        },
+                                        {
+                                            value: "Current",
+                                            background: "#496cad",
+                                            color: "#ffffff"
+                                        },
+                                        {
+                                            value: "Usage",
+                                            background: "#496cad",
+                                            color: "#ffffff"
+                                        },
+                                        {
+                                            value: "Balance",
+                                            background: "#496cad",
+                                            color: "#ffffff"
+                                        },
+                                        {
+                                            value: "Amount",
+                                            background: "#496cad",
+                                            color: "#ffffff"
+                                        },
+                                        {
+                                            value: "Total",
+                                            background: "#496cad",
+                                            color: "#ffffff"
+                                        }
+                                    ]
+                                });
+                             for (var i = 0; i < response.length; i++) {
+                                    self.exArray.push({
+                                        cells: [{
+                                                value: response[i].number,
+                                            },
+                                            {
+                                                value: response[i].name,
+                                            },
+                                            {
+                                                value: response[i].meter_number
+                                            },
+                                            {
+                                                value: response[i].previous
+                                            },
+                                            {
+                                                value: response[i].current
+                                            },
+                                            {
+                                                value: response[i].usage
+                                            },
+                                            {
+                                                  value: kendo.parseFloat(response.results[i].balance)
+                                            },
+                                            {
+                                                value: kendo.parseFloat(response.results[i].amount)
+                                            },
+                                            {
+                                                value: kendo.parseFloat(response.results[i].total)
+                                            },
+                                        ]
+                                    });
                                 }
-                            ]
-                        });
-                         for (var i = 0; i < response.results.length; i++) {
-                        balanceRec += response.results[i].amount;
-                        self.exArray.push({
-                            cells: [{
-                                    value: response.results[i].number
-                                },
-                                {
-                                    value: response.results[i].name
-                                },
-                                {
-                                    value: response.results[i].meter_number
-                                },
-                                {
-                                    value: response.results[i].previous
-                                },
-                                {
-                                    value: response.results[i].current
-                                },
-                                {
-                                    value: response.results[i].usage
-                                },
-                                {
-                                    value: kendo.parseFloat(response.results[i].balance)
-                                },
-                                {
-                                    value: kendo.parseFloat(response.results[i].amount)
-                                },
-                                {
-                                    value: kendo.parseFloat(response.results[i].total)
-                                },
-                            ]
-                        });
-                        self.exArray.push({
-                            cells: [{
-                                value: "",
-                                colSpan: 9
-                            }]
-                        });
-                    }
+                        }
+                    
                     
                 });                  
         },

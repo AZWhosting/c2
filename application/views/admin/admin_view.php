@@ -155,7 +155,7 @@
                   </div>
                   <div id="userFormConfirm" style="visibility: hidden">
                     <div class="row">
-                      <divclass="col-md-12 col-sm-12 col-xs-12"></div>
+                      <div class="col-md-12 col-sm-12 col-xs-12"></div>
                         <div class="x_panel" style="width: 94%">
                             <div class="x_title">
                                 <h2>Edit User</h2>

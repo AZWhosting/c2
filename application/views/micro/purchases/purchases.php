@@ -1,7 +1,6 @@
 <link rel="stylesheet" href="<?php echo base_url()?>assets/micro/tab-page.css">
 <div id="wrapperApplication" class="wrapper"></div>
 <script type="text/x-kendo-template" id="layout">
-	<!-- <div id="menu" class="menu"></div> -->
 	<div id="content"></div>
 </script>
 <script type="text/x-kendo-template" id="blank-tmpl">
@@ -25,521 +24,13 @@
         	<div class="row marginTop15 sale">
                 <div class="col-md-12">
                     <div class="card">
-                        <div class="card-body">
-			                <!-- Nav tabs -->
-			                <ul class="nav nav-tabs customtab" role="tablist">
-			                    <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#reports" role="tab"><span class="hidden-sm-up"><i class="ti-layout-grid2-thumb"></i></span> <span class="hidden-xs-down">Reports</span></a> </li>
-			                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#check_out" role="tab"><span class="hidden-sm-up"><i class="ti-layout-accordion-list"></i></span> <span class="hidden-xs-down">Check Out</span></a> </li>
-			                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#purchases_transaction" role="tab"><span class="hidden-sm-up"><i class="ti-layout-accordion-list"></i></span> <span class="hidden-xs-down">Purchases Transactions</span></a> </li>
-			                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#customers" role="tab"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down">Purchases</span></a> </li>
-			                </ul>
-			                <!-- Tab panes -->
-			                <div class="tab-content">
-			                	<!-- Tab Report -->
-			                    <div class="tab-pane active" id="reports" role="tabpanel">
-		                        	<div class="row ">
-				    					<div class="col-md-4">
-				    						<div class="saleOverview">
-				    							<h2 data-bind="text: lang.lang.purchase"></h2>
-				    							<p data-format="n" data-bind="text: objTop.purchase"></p>
-				    							<div class="col-md-12">
-				    								<div class="col-md-4">
-				    									<span data-bind="text: objTop.purchase_supplier"></span>
-				    									<span data-bind="text: lang.lang.supplier"></span>
-				    								</div>
-				    								<div class="col-md-4">
-				    									<span data-bind="text: objTop.purchase_product"></span>
-				    									<span data-bind="text: lang.lang.product"></span>
-				    								</div>
-				    								<div class="col-md-4">
-				    									<span data-bind="text: objTop.purchase_ordered"></span>
-				    									<span data-bind="text: lang.lang.order"></span>
-				    								</div>
-				    							</div>
-				    						</div>
-
-				    						<!-- Report -->
-					                        <div class="report ">
-					    						<div class="col-md-12">
-					    							<h3><a href="#/expenses_purchase_summary_supplier" data-bind="text: lang.lang.expenses_purchase_summary_by_supplier" ></a></h3>
-					    							<p data-bind="text: lang.lang.summarizes_total_expenses_purchase_for_each"></p>
-					    						</div>
-					    						<div class="col-md-12">
-					    							<h3><a href="#/expenses_purchase_detail_supplier" data-bind="text: lang.lang.expeneses_purchase_detail_by_suppplier" ></a></h3>
-					    							<p data-bind="text: lang.lang.lists_individual_expenses_purchase_transactions_by"></p>
-					    						</div>
-					    						<div class="col-md-12">
-					    							<h3><a href="#/purchase_summary_product_services" data-bind="text: lang.lang.purchase_summary_by_product_services" ></a></h3>
-					    							<p data-bind="text: lang.lang.summarizes_total_expenses_purchase_for_each"></p>
-					    						</div>
-					    						<div class="col-md-12">
-					    							<h3><a href="#/purchase_detail_product_services" data-bind="text: lang.lang.purchase_detail_by_product_services" ></a></h3>
-					    							<p data-bind="text: lang.lang.lists_individual_sale_transactions_by_date_for_each_product"></p>
-					    						</div>						    					
-					    					</div>
-
-				    						<!-- Top 4 -->
-				    						<div class="top5 home-footer">
-					                            <table class="table color-table dark-table">
-					                                <thead>
-					                                    <tr>
-					                                        <th colspan="2" class="center">
-					                                            <span data-bind="text: lang.lang.top_5_suppliers"></span>
-					                                        </th>
-					                                    </tr>
-					                                </thead>
-					                                <tbody data-role="listview"
-					                                     data-auto-bind="false"
-					                                     data-template="top-contact-template"
-					                                     data-bind="source: objTop.top_supplier"></tbody>
-					                            </table>
-					                        </div>
-				    					</div>
-				    					<div class="col-md-4">
-				    						<div class="saleOverview">
-				    							<h2 data-bind="text: lang.lang.purchase_order"></h2>
-				    							<p data-format="n0" data-bind="text: objTop.po"></p>
-				    							<div class="col-md-12">
-				    								<div class="col-md-6">
-				    									<span data-format="n0" data-bind="text: objTop.po_avg"></span>
-				    									<span data-bind="text: lang.lang.average"></span>
-				    								</div>
-				    								<div class="col-md-6">
-				    									<span data-bind="text: objTop.po_open"></span>
-				    									<span data-bind="text: lang.lang.order_open"></span>
-				    								</div>
-				    							</div>
-				    						</div>
-
-				    						<!-- Report -->
-					    					<div class="report">
-						                        <div class="col-md-12">
-					    							<h3><a href="#/suppliers_balance_summary" data-bind="text: lang.lang.suppliers_balance_summary" ></a></h3>
-					    							<p data-bind="text: lang.lang.show_each_supplier_total_outstanding_balances"></p>
-					    						</div>
-					    						<div class="col-md-12">
-					    							<h3><a href="#/suppliers_balance_detail" data-bind="text: lang.lang.suppliers_balance_detail" ></a></h3>
-					    							<p data-bind="text: lang.lang.lists_individual_unpaid_bill_for_each_supplier"></p>
-					    						</div>
-					    						<div class="col-md-12">
-													<h3><a href="#/payables_aging_summary" data-bind="text: lang.lang.payables_aging_summary"></a></h3>
-													<p data-bind="text: lang.lang.lists_all_unpaid_bills_for_the_current_period_30_60_90_and_more"></p>	
-												</div>
-												<div class="col-md-12">
-													<h3><a href="#/payables_aging_detail" data-bind="text: lang.lang.payables_aging_detail"></a></h3>
-													<p data-bind="text: lang.lang.lists_individual_unpaid_bills_grouped_by_suppliers_this_includes"></p>
-												</div>
-											</div>
-
-				    						<!-- Top 4 -->
-				    						<div class="top5 home-footer">
-					                            <table class="table color-table dark-table">
-							                        <thead>
-							                            <tr>
-							                                <th class="center" colspan="2">
-							                                    <span data-bind="text: lang.lang.top_5_ap_balance"></span>
-							                                </th>
-							                            </tr>
-							                        </thead>
-							                        <tbody data-role="listview"
-							                             data-auto-bind="false"
-							                             data-template="top-contact-template"
-							                             data-bind="source: objTop.top_ap"></tbody>
-							                    </table>
-					                        </div>
-				    					</div>
-				    					<div class="col-md-4">
-				    						<div class="saleOverview">
-				    							<h2 data-bind="text: lang.lang.payables"></h2>
-				    							<p data-format="n" data-bind="text: objTop.ap"></p>
-				    							<div class="col-md-12">
-				    								<div class="col-md-4">
-				    									<span data-format="n0" data-bind="text: objTop.ap_open"></span>
-				    									<span data-bind="text: lang.lang.open"></span>
-				    								</div>
-				    								<div class="col-md-4">
-				    									<span data-bind="text: objTop.ap_supplier"></span>
-				    									<span data-bind="text: lang.lang.supplier"></span>
-				    								</div>
-				    								<div class="col-md-4">
-				    									<span data-bind="text: objTop.ap_overdue"></span>
-				    									<span data-bind="text: lang.lang.overdue"></span>
-				    								</div>
-				    							</div>
-				    						</div>
-
-				    						<!-- Report -->
-					    					<div class="report" >
-					    						<div class="col-md-12">
-													<h3><a href="#/list_bills_paid" data-bind="text: lang.lang.list_of_invoices_to_be_collected"></a></h3>
-												</div>
-												<div class="col-md-12">
-													<h3><a href="#/bill_payment_list" data-bind="text: lang.lang.bill_payment_list"></a></h3>
-													<p data-bind="text: lang.lang.lists_of_paid_bills_for_the_select_period_of_time_group_by_method_of_payments"></p>
-												</div>
-											</div>
-
-				    						<!-- Top 4 -->
-				    						<div class="top5 home-footer">
-					                            <table class="table color-table dark-table">
-					                                <thead>
-					                                    <tr>
-					                                        <th colspan="2" class="center">
-					                                            <span data-bind="text: lang.lang.top_5_payment"></span>
-					                                        </th>
-					                                    </tr>
-					                                </thead>
-					                                <tbody data-role="listview"
-					                                     data-auto-bind="false"
-					                                     data-template="top-product-template"
-					                                     data-bind="source: objTop.top_cash_payment"></tbody>
-					                            </table>
-					                        </div>
-				    					</div>
-				    				</div>
-			                    </div>
-			                    <!-- End Tab Report -->
-
-			                    <!-- Tab Check Out -->
-			                    <div class="tab-pane" id="check_out" role="tabpanel">3</div>
-			                    <!-- End Tab Check Out -->
-
-			                    <!-- Tab Sales Transaction -->
-			                    <div class="tab-pane" id="purchases_transaction" role="tabpanel">
-		                        	<div class="row">
-				    					<div class="col-md-7 align-self-center text-right">
-						                    <div class="btn-group">
-						                        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						                        	Add New
-						                        </button>
-						                        <div class="dropdown-menu">
-						                            <a class="dropdown-item" href="javascript:void(0)"><span data-bind="text: lang.lang.create_quotation"></span></a>
-						                            <a class="dropdown-item" href="javascript:void(0)"><span data-bind="text: lang.lang.create_invoice"></span></a>
-						                            <a class="dropdown-item" href="javascript:void(0)"><span data-bind="text: lang.lang.create_cash_sale"></span></a>
-						                            <a class="dropdown-item" href="javascript:void(0)"><span data-bind="text: lang.lang.create_cash_receipt"></span></a>
-						                        </div>
-						                    </div>
-						                </div>
-				    				</div>
-			                    </div>
-			                    <!-- End Tab Sale Transaction -->
-
-			                    <!-- Tab Customer -->
-			                    <div class="tab-pane" id="customers" role="tabpanel">
-		                        	<div class="row">
-		                        		<div class="col-md-3">
-		                        			<div class="listWrapper">
-		                        				<a href="#/customer" class="btn waves-effect waves-light btn-block btn-info btnAddCustomer"><i class="icon-user-follow marginRight"></i><span data-bind="">Add New Purchase</span></a>
-		                        				<div class="innerAll">
-													<form autocomplete="off" class="form-inline">
-														<div class="widget-search">
-															<div class="overflow-hidden">
-																<input type="search" placeholder="Number or Name..." data-bind="value: searchText">
-															</div>
-															<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="ti-search"></i></button>
-														</div>
-														<div class="select2-container">
-															<input data-role="dropdownlist" style="width: 100%;" 
-												                   data-option-label="Select Type..."
-												                   data-value-primitive="true"
-												                   data-text-field="name"
-												                   data-value-field="id"
-												                   data-bind="value: contact_type_id,
-												                              source: contactTypeDS"/>
-														</div>
-													</form>
-												</div>
-
-												<span class="results"><span data-bind="text: contactDS.total"></span> <span data-bind="text: lang.lang.found_search"></span></span>
-
-												<div class="table table-condensed"
-													 data-role="grid"
-													 data-bind="source: contactDS"
-													 data-row-template="vendorCenter-vendor-list-tmpl"
-													 data-columns="[{title: ''}]"
-													 data-selectable=true
-													 data-height="600"
-													 data-scrollable="{virtual: true}"></div>
-		                        			</div>
-										</div>
-										<div class="col-md-9">
-											<div class="detailsWrapper">
-												<div class="row">
-													<div class="col-md-6 marginBottom">
-														<input class="customerName" type="text" name="" data-bind="value: obj.name" disabled="disabled" style="background: #fff;" />
-														<ul class="nav nav-tabs" role="tablist">
-						                                    <li class="nav-item"> <a class="nav-link active show" data-toggle="tab" href="#cutomerTransaction" role="tab" aria-selected="true"><span><i class="ti-text"></i></span></a> </li>
-						                                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#customerInformation" role="tab" aria-selected="false"><span><i class="icon-info"></i></span></a> </li>
-						                                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#customerMemo" role="tab" aria-selected="false"><span><i class="ti-pencil-alt"></i></span></a> </li>
-						                                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#customerAttachment" role="tab" aria-selected="false"><span><i class="icon-paper-clip"></i></span></a> </li>
-						                                </ul>
-						                                <div class="tab-content tabcontent-border">
-						                                	<!--Tab Cutomer Transaction -->
-						                                    <div class="tab-pane active show" id="cutomerTransaction" role="tabpanel">
-						                                        <div class="p-10">
-						                                            <div class="row">
-						                                            	<div class="col-sm-6">
-						                                            		<a class="btn waves-effect waves-light btn-block btn-info" data-bind="click: goPO"><span data-bind="text: lang.lang.purchase_order"></span></a>
-						                                            	</div>
-						                                            	<div class="col-sm-6">
-						                                            		<a class="btn waves-effect waves-light btn-block btn-info" data-bind="click: goPurchase"><span data-bind="text: lang.lang.purchase"></span></a>
-						                                            	</div>
-						                                            </div>
-						                                            <div class="row">
-						                                            	<div class="col-sm-6">
-						                                            		<a class="btn waves-effect waves-light btn-block btn-info" data-bind="click: goGRN"><span data-bind="text: lang.lang.goods_received_note"></span></a>
-						                                            	</div>
-						                                            	<div class="col-sm-6">
-						                                            		<a class="btn waves-effect waves-light btn-block btn-info" data-bind="click: goPurchaseReturn"><span data-bind="text: lang.lang.purchase_return"></span></a>
-						                                            	</div>
-						                                            </div>
-						                                            <div class="row">
-						                                            	<div class="col-sm-6">
-						                                            		<a class="btn waves-effect waves-light btn-block btn-info" data-bind="click: goDeposit"><span data-bind="text: lang.lang.deposit"></span></a>
-						                                            	</div>
-						                                            	<div class="col-sm-6">
-						                                            		<a class="btn waves-effect waves-light btn-block btn-info" data-bind="click: goCashPayment"><span data-bind="text: lang.lang.cash_payment"></span></a>
-						                                            	</div>
-						                                            </div>
-						                                            <div class="row">
-						                                            	<div class="col-sm-6">
-						                                            		<a class="btn waves-effect waves-light btn-block btn-info" data-bind="click: goPaymentRefund"><span data-bind="text: lang.lang.payment_refund"></span></a>
-						                                            	</div>
-						                                            </div>
-						                                        </div>
-						                                    </div>
-						                                    <!-- End -->
-
-						                                   	<!--Tab Customer Information -->
-						                                    <div class="tab-pane" id="customerInformation" role="tabpanel">
-						                                    	<div class="p-10">
-						                                    		<div class="row">
-						                                            	<div class="col-sm-4">
-						                                            		<img class="main-image" data-bind="attr: { src: obj.image_url, alt: obj.name, title: obj.name }">
-						                                            	</div>
-						                                            	<div class="col-sm-8">
-						                                            		<div class="accounCetner-textedit">
-																            	<table width="100%">
-																					<tr>
-																						<td width="40%"><span data-bind="text: lang.lang.supplier_type"></span></td>
-																						<td width="60%">
-																							<span data-bind="text: obj.contact_type"></span>
-																						</td>
-																					</tr>
-																					<tr>
-																						<td><span data-bind="text: lang.lang.number"></span></td>
-																						<td>
-																							<span data-bind="text: obj.abbr"></span>
-																							<span data-bind="text: obj.number"></span>
-																						</td>
-																					</tr>
-																					<tr>
-																						<td><span data-bind="text: lang.lang.name"></span></td>
-																						<td>
-																							<span data-bind="text: obj.name"></span>
-																						</td>
-																					</tr>
-																					<tr>
-																						<td><span data-bind="text: lang.lang.phone"></span></td>
-																						<td>
-																							<span data-bind="text: obj.phone"></span>
-																						</td>
-																					</tr>
-																					<tr>
-																						<td><span data-bind="text: lang.lang.currency"></span></td>
-																						<td>
-																							<span data-bind="text: currencyCode"></span>
-																						</td>
-																					</tr>
-																				</table>
-
-																				<a class="btn waves-effect waves-light btn-block btn-info btnViewEditCustomer" data-bind="click: goEdit"><i class="ti-pencil-alt marginRight"></i><span data-bind="text: lang.lang.view_edit_profile"></span></a>
-																			</div>
-						                                            	</div>
-						                                            </div>
-						                                        </div>
-						                                    </div>
-						                                    <!-- End -->
-
-						                                    <!--Tab Customer Memo -->
-						                                    <div class="tab-pane" id="customerMemo" role="tabpanel">
-						                                    	 <div class="p-10">
-						                                            <div class="row">
-						                                            	<div class="col-md-9">
-						                                            		<input type="text" class="k-textbox marginBottom"
-																				data-bind="value: note"
-																				placeholder="Add memo ..."/>
-						                                            	</div>
-						                                            	<div class="col-md-3">
-						                                            		<a class="btn waves-effect waves-light btn-block btn-info btnAddMemo" data-bind="click: saveNote"><i class="mdi mdi-message-plus marginRight"></i><span data-bind="text: lang.lang.add"></span></a>
-						                                            	</div>
-						                                            	<div class="col-md-12">
-							                                            	<div class="table table-condensed blockShowMemo"
-																				 data-role="grid"
-																				 data-auto-bind="false"
-																				 data-bind="source: noteDS"
-																				 data-row-template="vendorCenter-note-tmpl"
-																				 data-columns="[{title: ''}]"
-																				 data-height="150"
-																				 data-scrollable="{virtual: true}" >
-																			</div>
-																		</div>
-						                                            </div>
-						                                        </div>
-						                                    </div>
-						                                    <!-- End -->
-
-
-						                                    <!--Tab Customer Attachment -->
-						                                    <div class="tab-pane" id="customerAttachment" role="tabpanel">
-						                                    	<div class="p-10">
-						                                    		<div class="row">
-						                                            	<div class="col-md-12 ">
-								                                    		<p><span data-bind="text: lang.lang.file_type"></span> [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>
-																            <input id="files" name="files"
-															                   type="file"
-															                   data-role="upload"
-															                   data-show-file-list="false"
-															                   data-bind="events: {
-													                   				select: onSelect
-															                   }">
-															                <div class="table-responsive">
-																                <table class="table color-table dark-table">
-																			        <thead>
-																			            <tr>
-																			                <th data-bind="text: lang.lang.file_name"></th>
-																			                <th data-bind="text: lang.lang.description"></th>
-																			                <th data-bind="text: lang.lang.date"></th>
-																			                <th data-bind="text: lang.lang.action"></th>
-																			            </tr>
-																			        </thead>
-																			        <tbody data-role="listview"
-																			        		data-template="attachment-list-tmpl"
-																			        		data-auto-bind="false"
-																			        		data-bind="source: attachmentDS"></tbody>
-																			    </table>
-																			</div>
-																		    <div id="pager" class="k-pager-wrap"
-																		    	 data-role="pager"
-																		    	 data-auto-bind="false"
-																	             data-bind="source: attachmentDS"></div>
-
-																		    <a hre="" class="btn waves-effect waves-light btn-block btn-info btnAddAttachment col-md-3" data-bind="click: uploadFile" ><i class="ti-check marginRight"></i><span data-bind="text: lang.lang.save"></span></a>
-															            </div>
-															        </div>
-						                                    	</div>  
-						                                    </div>
-						                                    <!-- End -->
-						                                </div>
-													</div>
-													<div class="col-md-6">
-														<div class="row">
-															<div class="col-md-6">
-																<div class="blockBalance" data-bind="click: loadBalance" >
-																	<div class="coverIcon"><i class="ti-server"></i></div>
-																	<div class="txt">
-																		<span  data-bind="text: lang.lang.balance"></span>
-																		<span data-bind="text: balance"></span>
-																	</div>
-																</div>
-															</div>
-															<div class="col-md-6">
-																<div class="blockDeposit" data-bind="click: loadPO">
-																	<div class="coverIcon"><i class=" ti-briefcase"></i></div>
-																	<div class="txt">
-																		<span data-bind="text: lang.lang.po"></span>
-																		<span data-bind="text: po" ></span>
-																	</div>
-																</div>
-															</div>
-														</div>
-														<div class="row">
-															<div class="col-md-6">
-																<div class="blockOpenInvoice" data-bind="click: loadBalance" >
-																	<div class="coverIcon"><i class="icon-info"></i></div>
-																	<div class="txt">
-																		<span  data-bind="text: outInvoice"></span>
-																		<span  data-bind="text: lang.lang.open_invoice"></span>
-																	</div>
-																</div>
-															</div>
-															<div class="col-md-6">
-																<div class="blockOverDue" data-bind="click: loadOverInvoice" >
-																	<div class="coverIcon"><i class="ti-alarm-clock"></i></div>
-																	<div class="txt" >
-																		<span data-bind="text: overInvoice"></span>
-																		<span data-bind="text: lang.lang.over_due"></span>
-																	</div>
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-
-												<!-- Block Search -->
-												<div class="row">
-													<div class="col-md-12">
-														<input data-role="dropdownlist"
-															   class="sorter marginRight marginBottom"
-													           data-value-primitive="true"
-													           data-text-field="text"
-													           data-value-field="value"
-													           data-bind="value: sorter,
-													                      source: sortList,
-													                      events: { change: sorterChanges }" />
-
-														<input data-role="datepicker"
-															   class="sdate marginRight marginBottom"
-															   data-format="dd-MM-yyyy"
-													           data-bind="value: sdate,
-													           			  max: edate"
-													           placeholder="From ..." >
-
-													    <input data-role="datepicker"
-													    	   class="edate marginRight marginBottom"
-													    	   data-format="dd-MM-yyyy"
-													           data-bind="value: edate,
-													                      min: sdate"
-													           placeholder="To ..." >
-
-													  	<button class="btnSearch" type="button" class="marginBottom" data-role="button" data-bind="click: searchTransaction"><i class="ti-search"></i></button>
-													</div>
-												</div>
-												<!-- End -->
-
-												<!-- Block Table -->
-												<div class="row">
-													<div class="col-md-12 table-responsive">
-														<table class="table color-table dark-table">
-													        <thead>
-													            <tr>
-													                <th data-bind="text: lang.lang.date"></th>
-																	<th data-bind="text: lang.lang.type"></th>
-																	<th data-bind="text: lang.lang.reference_no"></th>
-																	<th data-bind="text: lang.lang.amount"></th>
-																	<th data-bind="text: lang.lang.status"></th>
-																	<th data-bind="text: lang.lang.action"></th>
-													            </tr>
-													        </thead>
-													        <tbody data-role="listview"
-										            				data-auto-bind="false"
-													                data-template="vendorCenter-transaction-tmpl"
-													                data-bind="source: transactionDS" >
-													        </tbody>
-													    </table>
-													    <div id="pager" class="k-pager-wrap"
-										            		 data-role="pager"
-													    	 data-auto-bind="false"
-												             data-bind="source: transactionDS"></div>
-													</div>
-												</div>
-												<!-- End -->
-											</div>
-										</div>
-				    				</div>
-			                    </div>
-			                    <!-- End Tab Customer -->
-			                </div>
+                        <div class="card-body" >
+                        	<div id="indexMenu"></div>
+			                <div class="tab-content">	
+				                <div class="tab-pane active" role="tabpanel">
+				                	<div id="indexContent"></div>
+				                </div>
+				            </div>
 			            </div>
 			        </div>
 	            </div>
@@ -549,169 +40,502 @@
 </script>
 <!-- End Section-->
 
+<!-- Purchase Menu -->
+<script id="tapMenu" type="text/x-kendo-template">
+	<ul class="nav nav-tabs customtab" role="tablist" >
+		<li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#/" data-bind="click: goReports"><span class="hidden-sm-up"><i class="ti-layout-grid2-thumb"></i></span> <span class="hidden-xs-down">Reports</span></a> </li>
+	    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#/check_out" data-bind="click: goCheckOut"><span class="hidden-sm-up"><i class="ti-layout-accordion-list"></i></span> <span class="hidden-xs-down">Check Out</span></a> </li>
+	    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#/transactions" data-bind="click: goTransactions"><span class="hidden-sm-up"><i class="ti-layout-accordion-list"></i></span> <span class="hidden-xs-down">Purchases Transactions</span></a> </li>
+	    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#/purchases" data-bind="click: goMenuPurchases"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down">Purchases</span></a> </li>
+    </ul>
+</script>
+<!-- End -->
 
-
-
-
-
-<!-- Report -->
-<script id="saleSummaryByCustomer" type="text/x-kendo-template">
-	<div class="page-wrapper ">
-        <div class="container-fluid">
-        	<div class="row page-titles">
-                <div class="col-md-12">
-                	<div class="card">
-                		<div class="btn-close" onclick="javascript:window.history.back()"><i class="ti-close"></i></div>
-                		<div class="card-body">
-                			<div class="reportHeader">
-				                <!-- Nav tabs -->
-				                <ul class="nav nav-tabs" role="tablist">
-				                    <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#date" role="tab"><i class=" ti-calendar"></i><span class="marginLeft hidden-xs-down" data-bind="text: lang.lang.date">Date</span></a> </li>
-				                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#filter" role="tab"><i class="ti-filter"></i><span class="marginLeft hidden-xs-down" data-bind="text: lang.lang.filter">filter</span></a> </li>
-				                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#print_export" role="tab"><i class="ti-printer"></i><span class="marginLeft hidden-xs-down" data-bind="text: lang.lang.print_export">Print/Export</span></a> </li>
-				                </ul>
-				                <!-- Tab panes -->
-				                <div class="tab-content tabcontent-border">
-				                    <div class="tab-pane active" id="date" role="tabpanel">
-				                        <div class="p-20">
-				                        	<div class="row ">
-						    					<input data-role="dropdownlist"  
-													   class="sorter marginRight marginBottom"
-											           data-value-primitive="true"
-											           data-text-field="text"
-											           data-value-field="value"
-											           data-bind="value: sorter,
-											                      source: sortList,
-											                      events: { change: sorterChanges }" />
-
-												<input data-role="datepicker"
-													   class="sdate marginRight marginBottom"
-													   data-format="dd-MM-yyyy"
-											           data-bind="value: sdate,
-											           			  max: edate"
-											           placeholder="From ..." >
-
-											    <input data-role="datepicker" 
-											    	   class="edate marginRight marginBottom"
-											    	   data-format="dd-MM-yyyy"
-											           data-bind="value: edate,
-											                      min: sdate"
-											           placeholder="To ..." >
-
-											  	<button class="btnSearch" type="button" data-role="button" data-bind="click: search"><i class="ti-search"></i></button>
-						    				</div>
-				                        </div>
-				                    </div>
-				                    <div class="tab-pane" id="filter" role="tabpanel">
-				                    	<div class="p-20">
-				                        	<div class="row">						    					
-												<p data-bind="text: lang.lang.customers" style=""></p>
-												<select data-role="multiselect"
-													   data-value-primitive="true"
-													   data-item-template="contact-list-tmpl"
-													   data-value-field="id"
-													   data-text-field="name"
-													   data-bind="value: obj.contactIds,
-													   			source: contactDS"
-													   data-placeholder="Select Customer.."
-													   style="width: 50%; float: left; margin-right: 8px; " /></select>
-													
-											  	<button type="button" data-role="button" data-bind="click: search"><i class="ti-search"></i></button>
-														
-						    				</div>
-						    			</div>
-				                    </div>
-				                    <div class="tab-pane" id="print_export" role="tabpanel">
-				                    	<div class="p-20">
-				                        	<div class="row">
-						    					<button class="col-md-1 btnPrint " type="button" data-role="button" data-bind="click: printGrid"><i class="ti-printer"></i><span class="marginLeft">Print</span></button>
-						    					<button class="col-md-2 btnExport" type="button" data-role="button" data-bind="click: ExportExcel"><i class="ti-export"></i><span class="marginLeft">Export to Excel</span></button>
-						    				</div>
-						    			</div>
-				                    </div>
-				                    
-				                </div>
-				            </div>
-				            <div id="invFormContent" style="page-break-after: always;">
-				            	<!-- Style For Print -->
-				            	<style type="text/css">
-				            		* {
-										-webkit-print-color-adjust: true;
-									}
-									.home-footer .table tbody td {
-									    background-color: #fff !important;
-									    -webkit-print-color-adjust: exact;
-									}
-									.home-footer .table tbody tr:nth-child(odd) td {
-									    background-color: #f4f5f8 !important;
-									    -webkit-print-color-adjust: exact;
-									}
-				            	</style>
-
-					            <!-- Title -->
-					            <div class="reportTitle" style="text-align: center; width: 97%; margin: 15px auto;">
-					            	<h3 style="font-size: 15px; color: #203864 !important; margin-bottom: 10px;" data-bind="html: company.name"></h3>
-									<h2 style="font-size: 20px; font-weight: 600; margin-top: 0px; color: #203864 !important;" data-bind="text: lang.lang.sale_summary_by_customer"></h2>
-									<p style="font-size: 15px; margin-bottom: 0;" data-bind="text: displayDate"></p>
-					            </div>
-
-					            <!-- Block -->
-					            <div class="reportBlock" style="width: 97%; margin: 0 auto;">
-					            	<div class="row">
-					            		<div class="col-md-3">
-					            			<div class="total-sale" style="width: 100%; padding: 10px; background-color: #DDEBF7 !important; -webkit-print-color-adjust: exact; text-align: center; margin-bottom: 15px; display: inline-block; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
-												<p style="font-size: 14px;" data-bind="text: lang.lang.number_of_customer"></p>
-												<span style="font-size: 20px; font-weight: 700;" data-bind="text: dataSource.total"></span>
-											</div>
-					            		</div>
-					            		<div class="col-md-9" >
-					            			<div class="total-sale" style="width: 100%; padding: 10px; background-color: #DDEBF7 !important; -webkit-print-color-adjust: exact; text-align: center; margin-bottom: 15px; display: inline-block; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
-												<p style="font-size: 14px;" data-bind="text: lang.lang.total_sale"></p>
-												<span style="font-size: 20px; font-weight: 700;" data-bind="text: totalAmount"></span>
-											</div>
-					            		</div>
-					            	</div>
-					            </div>
-
-					            <!-- Table -->
-					            <div class="reportTable home-footer table-responsive" style="width: 97%; margin: 0 auto;">
-					            	<table class="table color-table dark-table" style="width: 100%; height: auto; ">
-		                                <thead>
-		                                    <tr>
-												<th style="background-color: #343a40 !important; -webkit-print-color-adjust: exact; color: #fff !important; text-align: center; text-transform: uppercase; vertical-align: top; font-weight: 400; padding: 10px;" data-bind="text: lang.lang.customer"></th>
-												<th style="background-color: #343a40 !important; -webkit-print-color-adjust: exact; color: #fff !important; text-align: center; text-transform: uppercase; vertical-align: top; font-weight: 400; padding: 10px;" data-bind="text: lang.lang.number_of_invoice"></th>
-												<th style="background-color: #343a40 !important; -webkit-print-color-adjust: exact; color: #fff !important; text-align: center; text-transform: uppercase; vertical-align: top; font-weight: 400; padding: 10px;" data-bind="text: lang.lang.number_of_cash_sale"></th>
-												<th style="background-color: #343a40 !important; -webkit-print-color-adjust: exact; color: #fff !important; text-align: center; text-transform: uppercase; vertical-align: top; font-weight: 400; padding: 10px;" data-bind="text: lang.lang.total_sale"></th>
-											</tr>
-		                                </thead>
-		                                <tbody  data-role="listview"
-					            				data-auto-bind="false"
-								                data-template="saleSummaryByCustomer-template"
-								                data-bind="source: dataSource" >
-								        </tbody>
-					            	</table>
-					            </div>
-					        </div>
-
-					        <!-- Pagination -->
-			            	<div 	id="pager" 
-			            			class="k-pager-wrap" 
-				            		data-role="pager"
-							    	data-auto-bind="false"
-						            data-bind="source: dataSource"
-						            style="width: 97%; margin: 0 auto;" >
-						    </div>
-			            </div>
-                	</div>
+<!-- Menu -->
+<script id="reports" type="text/x-kendo-template">
+	<div class="row " id="reports">
+		<div class="col-md-4">
+			<div class="saleOverview">
+				<h2 data-bind="text: lang.lang.purchase"></h2>
+				<p data-format="n" data-bind="text: obj.purchase"></p>
+				<div class="col-md-12">
+					<div class="col-md-4">
+						<span data-bind="text: obj.purchase_supplier"></span>
+						<span data-bind="text: lang.lang.supplier"></span>
+					</div>
+					<div class="col-md-4">
+						<span data-bind="text: obj.purchase_product"></span>
+						<span data-bind="text: lang.lang.product"></span>
+					</div>
+					<div class="col-md-4">
+						<span data-bind="text: obj.purchase_ordered"></span>
+						<span data-bind="text: lang.lang.order"></span>
+					</div>
 				</div>
+			</div>
+
+			<!-- Report -->
+            <div class="report ">
+				<div class="col-md-12">
+					<h3><a href="#/expenses_purchase_summary_supplier" data-bind="text: lang.lang.expenses_purchase_summary_by_supplier" ></a></h3>
+					<p data-bind="text: lang.lang.summarizes_total_expenses_purchase_for_each"></p>
+				</div>
+				<div class="col-md-12">
+					<h3><a href="#/expenses_purchase_detail_supplier" data-bind="text: lang.lang.expeneses_purchase_detail_by_suppplier" ></a></h3>
+					<p data-bind="text: lang.lang.lists_individual_expenses_purchase_transactions_by"></p>
+				</div>
+				<div class="col-md-12">
+					<h3><a href="#/purchase_summary_product_services" data-bind="text: lang.lang.purchase_summary_by_product_services" ></a></h3>
+					<p data-bind="text: lang.lang.summarizes_total_expenses_purchase_for_each"></p>
+				</div>
+				<div class="col-md-12">
+					<h3><a href="#/purchase_detail_product_services" data-bind="text: lang.lang.purchase_detail_by_product_services" ></a></h3>
+					<p data-bind="text: lang.lang.lists_individual_sale_transactions_by_date_for_each_product"></p>
+				</div>						    					
+			</div>
+
+			<!-- Top 4 -->
+			<div class="top5 home-footer">
+                <table class="table color-table dark-table">
+                    <thead>
+                        <tr>
+                            <th colspan="2" class="center">
+                                <span data-bind="text: lang.lang.top_5_suppliers"></span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody data-role="listview"
+                         data-auto-bind="false"
+                         data-template="top-contact-template"
+                         data-bind="source: obj.top_supplier"></tbody>
+                </table>
+            </div>
+		</div>
+		<div class="col-md-4">
+			<div class="saleOverview">
+				<h2 data-bind="text: lang.lang.purchase_order"></h2>
+				<p data-format="n0" data-bind="text: obj.po"></p>
+				<div class="col-md-12">
+					<div class="col-md-6">
+						<span data-format="n0" data-bind="text: obj.po_avg"></span>
+						<span data-bind="text: lang.lang.average"></span>
+					</div>
+					<div class="col-md-6">
+						<span data-bind="text: obj.po_open"></span>
+						<span data-bind="text: lang.lang.order_open"></span>
+					</div>
+				</div>
+			</div>
+
+			<!-- Report -->
+			<div class="report">
+                <div class="col-md-12">
+					<h3><a href="#/suppliers_balance_summary" data-bind="text: lang.lang.suppliers_balance_summary" ></a></h3>
+					<p data-bind="text: lang.lang.show_each_supplier_total_outstanding_balances"></p>
+				</div>
+				<div class="col-md-12">
+					<h3><a href="#/suppliers_balance_detail" data-bind="text: lang.lang.suppliers_balance_detail" ></a></h3>
+					<p data-bind="text: lang.lang.lists_individual_unpaid_bill_for_each_supplier"></p>
+				</div>
+				<div class="col-md-12">
+					<h3><a href="#/payables_aging_summary" data-bind="text: lang.lang.payables_aging_summary"></a></h3>
+					<p data-bind="text: lang.lang.lists_all_unpaid_bills_for_the_current_period_30_60_90_and_more"></p>	
+				</div>
+				<div class="col-md-12">
+					<h3><a href="#/payables_aging_detail" data-bind="text: lang.lang.payables_aging_detail"></a></h3>
+					<p data-bind="text: lang.lang.lists_individual_unpaid_bills_grouped_by_suppliers_this_includes"></p>
+				</div>
+			</div>
+
+			<!-- Top 4 -->
+			<div class="top5 home-footer">
+                <table class="table color-table dark-table">
+                    <thead>
+                        <tr>
+                            <th class="center" colspan="2">
+                                <span data-bind="text: lang.lang.top_5_ap_balance"></span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody data-role="listview"
+                         data-auto-bind="false"
+                         data-template="top-contact-template"
+                         data-bind="source: obj.top_ap"></tbody>
+                </table>
+            </div>
+		</div>
+		<div class="col-md-4">
+			<div class="saleOverview">
+				<h2 data-bind="text: lang.lang.payables"></h2>
+				<p data-format="n" data-bind="text: obj.ap"></p>
+				<div class="col-md-12">
+					<div class="col-md-4">
+						<span data-format="n0" data-bind="text: obj.ap_open"></span>
+						<span data-bind="text: lang.lang.open"></span>
+					</div>
+					<div class="col-md-4">
+						<span data-bind="text: obj.ap_supplier"></span>
+						<span data-bind="text: lang.lang.supplier"></span>
+					</div>
+					<div class="col-md-4">
+						<span data-bind="text: obj.ap_overdue"></span>
+						<span data-bind="text: lang.lang.overdue"></span>
+					</div>
+				</div>
+			</div>
+
+			<!-- Report -->
+			<div class="report" >
+				<div class="col-md-12">
+					<h3><a href="#/list_bills_paid" data-bind="text: lang.lang.list_of_invoices_to_be_collected"></a></h3>
+				</div>
+				<div class="col-md-12">
+					<h3><a href="#/bill_payment_list" data-bind="text: lang.lang.bill_payment_list"></a></h3>
+					<p data-bind="text: lang.lang.lists_of_paid_bills_for_the_select_period_of_time_group_by_method_of_payments"></p>
+				</div>
+			</div>
+
+			<!-- Top 4 -->
+			<div class="top5 home-footer">
+                <table class="table color-table dark-table">
+                    <thead>
+                        <tr>
+                            <th colspan="2" class="center">
+                                <span data-bind="text: lang.lang.top_5_payment"></span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody data-role="listview"
+                         data-auto-bind="false"
+                         data-template="top-product-template"
+                         data-bind="source: obj.top_cash_payment"></tbody>
+                </table>
+            </div>
+		</div>
+	</div>
+</script>
+<script id="checkOut" type="text/x-kendo-template">
+	checkOut
+</script>
+<script id="transactions" type="text/x-kendo-template">	
+	Transactions
+</script>
+<script id="purchases" type="text/x-kendo-template">
+	<div class="row" id="customers">
+		<div class="col-md-3">
+			<div class="listWrapper">
+				<a href="#/customer" class="btn waves-effect waves-light btn-block btn-info btnAddCustomer"><i class="icon-user-follow marginRight"></i><span data-bind="">Add New Purchase</span></a>
+				<div class="innerAll">
+					<form autocomplete="off" class="form-inline">
+						<div class="widget-search">
+							<div class="overflow-hidden">
+								<input type="search" placeholder="Number or Name..." data-bind="value: searchText">
+							</div>
+							<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="ti-search"></i></button>
+						</div>
+						<div class="select2-container">
+							<input data-role="dropdownlist" style="width: 100%;" 
+				                   data-option-label="Select Type..."
+				                   data-value-primitive="true"
+				                   data-text-field="name"
+				                   data-value-field="id"
+				                   data-bind="value: contact_type_id,
+				                              source: contactTypeDS"/>
+						</div>
+					</form>
+				</div>
+
+				<span class="results"><span data-bind="text: contactDS.total"></span> <span data-bind="text: lang.lang.found_search"></span></span>
+
+				<div class="table table-condensed"
+					 data-role="grid"
+					 data-bind="source: contactDS"
+					 data-row-template="vendorCenter-vendor-list-tmpl"
+					 data-columns="[{title: ''}]"
+					 data-selectable=true
+					 data-height="600"
+					 data-scrollable="{virtual: true}"></div>
+			</div>
+		</div>
+		<div class="col-md-9">
+			<div class="detailsWrapper">
+				<div class="row">
+					<div class="col-md-6 marginBottom">
+						<input class="customerName" type="text" name="" data-bind="value: obj.name" disabled="disabled" style="background: #fff;" />
+						<ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item"> <a class="nav-link active show" data-toggle="tab" href="#cutomerTransaction" role="tab" aria-selected="true"><span><i class="ti-text"></i></span></a> </li>
+                            <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#customerInformation" role="tab" aria-selected="false"><span><i class="icon-info"></i></span></a> </li>
+                            <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#customerMemo" role="tab" aria-selected="false"><span><i class="ti-pencil-alt"></i></span></a> </li>
+                            <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#customerAttachment" role="tab" aria-selected="false"><span><i class="icon-paper-clip"></i></span></a> </li>
+                        </ul>
+                        <div class="tab-content tabcontent-border">
+                        	<!--Tab Cutomer Transaction -->
+                            <div class="tab-pane active show" id="cutomerTransaction" role="tabpanel">
+                                <div class="p-10">
+                                    <div class="row">
+                                    	<div class="col-sm-6">
+                                    		<a class="btn waves-effect waves-light btn-block btn-info" data-bind="click: goPO"><span data-bind="text: lang.lang.purchase_order"></span></a>
+                                    	</div>
+                                    	<div class="col-sm-6">
+                                    		<a class="btn waves-effect waves-light btn-block btn-info" data-bind="click: goPurchase"><span data-bind="text: lang.lang.purchase"></span></a>
+                                    	</div>
+                                    </div>
+                                    <div class="row">
+                                    	<div class="col-sm-6">
+                                    		<a class="btn waves-effect waves-light btn-block btn-info" data-bind="click: goGRN"><span data-bind="text: lang.lang.goods_received_note"></span></a>
+                                    	</div>
+                                    	<div class="col-sm-6">
+                                    		<a class="btn waves-effect waves-light btn-block btn-info" data-bind="click: goPurchaseReturn"><span data-bind="text: lang.lang.purchase_return"></span></a>
+                                    	</div>
+                                    </div>
+                                    <div class="row">
+                                    	<div class="col-sm-6">
+                                    		<a class="btn waves-effect waves-light btn-block btn-info" data-bind="click: goDeposit"><span data-bind="text: lang.lang.deposit"></span></a>
+                                    	</div>
+                                    	<div class="col-sm-6">
+                                    		<a class="btn waves-effect waves-light btn-block btn-info" data-bind="click: goCashPayment"><span data-bind="text: lang.lang.cash_payment"></span></a>
+                                    	</div>
+                                    </div>
+                                    <div class="row">
+                                    	<div class="col-sm-6">
+                                    		<a class="btn waves-effect waves-light btn-block btn-info" data-bind="click: goPaymentRefund"><span data-bind="text: lang.lang.payment_refund"></span></a>
+                                    	</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End -->
+
+                           	<!--Tab Customer Information -->
+                            <div class="tab-pane" id="customerInformation" role="tabpanel">
+                            	<div class="p-10">
+                            		<div class="row">
+                                    	<div class="col-sm-4">
+                                    		<img class="main-image" data-bind="attr: { src: obj.image_url, alt: obj.name, title: obj.name }">
+                                    	</div>
+                                    	<div class="col-sm-8">
+                                    		<div class="accounCetner-textedit">
+								            	<table width="100%">
+													<tr>
+														<td width="40%"><span data-bind="text: lang.lang.supplier_type"></span></td>
+														<td width="60%">
+															<span data-bind="text: obj.contact_type"></span>
+														</td>
+													</tr>
+													<tr>
+														<td><span data-bind="text: lang.lang.number"></span></td>
+														<td>
+															<span data-bind="text: obj.abbr"></span>
+															<span data-bind="text: obj.number"></span>
+														</td>
+													</tr>
+													<tr>
+														<td><span data-bind="text: lang.lang.name"></span></td>
+														<td>
+															<span data-bind="text: obj.name"></span>
+														</td>
+													</tr>
+													<tr>
+														<td><span data-bind="text: lang.lang.phone"></span></td>
+														<td>
+															<span data-bind="text: obj.phone"></span>
+														</td>
+													</tr>
+													<tr>
+														<td><span data-bind="text: lang.lang.currency"></span></td>
+														<td>
+															<span data-bind="text: currencyCode"></span>
+														</td>
+													</tr>
+												</table>
+
+												<a class="btn waves-effect waves-light btn-block btn-info btnViewEditCustomer" data-bind="click: goEdit"><i class="ti-pencil-alt marginRight"></i><span data-bind="text: lang.lang.view_edit_profile"></span></a>
+											</div>
+                                    	</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End -->
+
+                            <!--Tab Customer Memo -->
+                            <div class="tab-pane" id="customerMemo" role="tabpanel">
+                            	 <div class="p-10">
+                                    <div class="row">
+                                    	<div class="col-md-9">
+                                    		<input type="text" class="k-textbox marginBottom"
+												data-bind="value: note"
+												placeholder="Add memo ..."/>
+                                    	</div>
+                                    	<div class="col-md-3">
+                                    		<a class="btn waves-effect waves-light btn-block btn-info btnAddMemo" data-bind="click: saveNote"><i class="mdi mdi-message-plus marginRight"></i><span data-bind="text: lang.lang.add"></span></a>
+                                    	</div>
+                                    	<div class="col-md-12">
+                                        	<div class="table table-condensed blockShowMemo"
+												 data-role="grid"
+												 data-auto-bind="false"
+												 data-bind="source: noteDS"
+												 data-row-template="vendorCenter-note-tmpl"
+												 data-columns="[{title: ''}]"
+												 data-height="150"
+												 data-scrollable="{virtual: true}" >
+											</div>
+										</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End -->
+
+
+                            <!--Tab Customer Attachment -->
+                            <div class="tab-pane" id="customerAttachment" role="tabpanel">
+                            	<div class="p-10">
+                            		<div class="row">
+                                    	<div class="col-md-12 ">
+                                    		<p><span data-bind="text: lang.lang.file_type"></span> [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>
+								            <input id="files" name="files"
+							                   type="file"
+							                   data-role="upload"
+							                   data-show-file-list="false"
+							                   data-bind="events: {
+					                   				select: onSelect
+							                   }">
+							                <div class="table-responsive">
+								                <table class="table color-table dark-table">
+											        <thead>
+											            <tr>
+											                <th data-bind="text: lang.lang.file_name"></th>
+											                <th data-bind="text: lang.lang.description"></th>
+											                <th data-bind="text: lang.lang.date"></th>
+											                <th data-bind="text: lang.lang.action"></th>
+											            </tr>
+											        </thead>
+											        <tbody data-role="listview"
+											        		data-template="attachment-list-tmpl"
+											        		data-auto-bind="false"
+											        		data-bind="source: attachmentDS"></tbody>
+											    </table>
+											</div>
+										    <div id="pager" class="k-pager-wrap"
+										    	 data-role="pager"
+										    	 data-auto-bind="false"
+									             data-bind="source: attachmentDS"></div>
+
+										    <a hre="" class="btn waves-effect waves-light btn-block btn-info btnAddAttachment col-md-3" data-bind="click: uploadFile" ><i class="ti-check marginRight"></i><span data-bind="text: lang.lang.save"></span></a>
+							            </div>
+							        </div>
+                            	</div>  
+                            </div>
+                            <!-- End -->
+                        </div>
+					</div>
+					<div class="col-md-6">
+						<div class="row">
+							<div class="col-md-6">
+								<div class="blockBalance" data-bind="click: loadBalance" >
+									<div class="coverIcon"><i class="ti-server"></i></div>
+									<div class="txt">
+										<span  data-bind="text: lang.lang.balance"></span>
+										<span data-bind="text: balance"></span>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="blockDeposit" data-bind="click: loadPO">
+									<div class="coverIcon"><i class=" ti-briefcase"></i></div>
+									<div class="txt">
+										<span data-bind="text: lang.lang.po"></span>
+										<span data-bind="text: po" ></span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6">
+								<div class="blockOpenInvoice" data-bind="click: loadBalance" >
+									<div class="coverIcon"><i class="icon-info"></i></div>
+									<div class="txt">
+										<span  data-bind="text: outInvoice"></span>
+										<span  data-bind="text: lang.lang.open_invoice"></span>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="blockOverDue" data-bind="click: loadOverInvoice" >
+									<div class="coverIcon"><i class="ti-alarm-clock"></i></div>
+									<div class="txt" >
+										<span data-bind="text: overInvoice"></span>
+										<span data-bind="text: lang.lang.over_due"></span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Block Search -->
+				<div class="row">
+					<div class="col-md-12">
+						<input data-role="dropdownlist"
+							   class="sorter marginRight marginBottom"
+					           data-value-primitive="true"
+					           data-text-field="text"
+					           data-value-field="value"
+					           data-bind="value: sorter,
+					                      source: sortList,
+					                      events: { change: sorterChanges }" />
+
+						<input data-role="datepicker"
+							   class="sdate marginRight marginBottom"
+							   data-format="dd-MM-yyyy"
+					           data-bind="value: sdate,
+					           			  max: edate"
+					           placeholder="From ..." >
+
+					    <input data-role="datepicker"
+					    	   class="edate marginRight marginBottom"
+					    	   data-format="dd-MM-yyyy"
+					           data-bind="value: edate,
+					                      min: sdate"
+					           placeholder="To ..." >
+
+					  	<button class="btnSearch" type="button" class="marginBottom" data-role="button" data-bind="click: searchTransaction"><i class="ti-search"></i></button>
+					</div>
+				</div>
+				<!-- End -->
+
+				<!-- Block Table -->
+				<div class="row">
+					<div class="col-md-12 table-responsive">
+						<table class="table color-table dark-table">
+					        <thead>
+					            <tr>
+					                <th data-bind="text: lang.lang.date"></th>
+									<th data-bind="text: lang.lang.type"></th>
+									<th data-bind="text: lang.lang.reference_no"></th>
+									<th data-bind="text: lang.lang.amount"></th>
+									<th data-bind="text: lang.lang.status"></th>
+									<th data-bind="text: lang.lang.action"></th>
+					            </tr>
+					        </thead>
+					        <tbody data-role="listview"
+		            				data-auto-bind="false"
+					                data-template="vendorCenter-transaction-tmpl"
+					                data-bind="source: transactionDS" >
+					        </tbody>
+					    </table>
+					    <div id="pager" class="k-pager-wrap"
+		            		 data-role="pager"
+					    	 data-auto-bind="false"
+				             data-bind="source: transactionDS"></div>
+					</div>
+				</div>
+				<!-- End -->
 			</div>
 		</div>
 	</div>
 </script>
 <!-- End -->
 
-
-<!-- Quote -->
+<!-- Purchase Order -->
 <script id="purchaseOrder" type="text/x-kendo-template">
 	<div class="page-wrapper ">
         <div class="container-fluid">
@@ -1131,7 +955,8 @@
 </script>
 <!-- End -->
 
-<!-- Customer Deposit -->
+
+<!-- Vendor Deposit -->
 <script id="vendorDeposit" type="text/x-kendo-template">
 	<div class="page-wrapper ">
         <div class="container-fluid">
@@ -1193,8 +1018,9 @@
 											</tr>
 										</table>
 
-										<div class="strong" data-bind="style: { backgroundColor: amtDueColor}">
-											<div align="left" data-bind="text: lang.lang.amount_quoted"></div>
+										<div class="strong" style="background: #eee;  border: 1px solid #ddd; width: 100%; padding: 10px;" align="center"
+											data-bind="style: {backgroundColor: amtDueColor}">
+											<div align="left"><span data-bind="text: lang.lang.amount_deposited"></span></div>
 											<h2 data-bind="text: total" align="right"></h2>
 										</div>
 
@@ -1310,7 +1136,7 @@
 								            </tr>
 								        </thead>
 								        <tbody data-role="listview"
-								        		data-template="customerDeposit-template"
+								        		data-template="vendorDeposit-template"
 								        		data-auto-bind="false"
 								        		data-bind="source: lineDS"></tbody>
 								    </table>
@@ -1442,9 +1268,880 @@
 </script>
 <!-- End -->
 
+<!-- Report -->
+<script id="expensesSummarySupplier" type="text/x-kendo-template">
+	<div class="page-wrapper ">
+        <div class="container-fluid">
+        	<div class="row page-titles">
+                <div class="col-md-12">
+                	<div class="card">
+                		<div class="btn-close" onclick="javascript:window.history.back()"><i class="ti-close"></i></div>
+                		<div class="card-body">
+                			<div class="reportHeader">
+				                <!-- Nav tabs -->
+				                <ul class="nav nav-tabs" role="tablist">
+				                    <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#date" role="tab"><i class=" ti-calendar"></i><span class="marginLeft hidden-xs-down" data-bind="text: lang.lang.date">Date</span></a> </li>
+				                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#filter" role="tab"><i class="ti-filter"></i><span class="marginLeft hidden-xs-down" data-bind="text: lang.lang.filter">filter</span></a> </li>
+				                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#print_export" role="tab"><i class="ti-printer"></i><span class="marginLeft hidden-xs-down" data-bind="text: lang.lang.print_export">Print/Export</span></a> </li>
+				                </ul>
+				                <!-- Tab panes -->
+				                <div class="tab-content tabcontent-border">
+				                    <div class="tab-pane active" id="date" role="tabpanel">
+				                        <div class="p-20">
+				                        	<div class="row ">
+						    					<input data-role="dropdownlist"  
+													   class="sorter marginRight marginBottom"
+											           data-value-primitive="true"
+											           data-text-field="text"
+											           data-value-field="value"
+											           data-bind="value: sorter,
+											                      source: sortList,
+											                      events: { change: sorterChanges }" />
+
+												<input data-role="datepicker"
+													   class="sdate marginRight marginBottom"
+													   data-format="dd-MM-yyyy"
+											           data-bind="value: sdate,
+											           			  max: edate"
+											           placeholder="From ..." >
+
+											    <input data-role="datepicker" 
+											    	   class="edate marginRight marginBottom"
+											    	   data-format="dd-MM-yyyy"
+											           data-bind="value: edate,
+											                      min: sdate"
+											           placeholder="To ..." >
+
+											  	<button class="btnSearch" type="button" data-role="button" data-bind="click: search"><i class="ti-search"></i></button>
+						    				</div>
+				                        </div>
+				                    </div>
+				                    <div class="tab-pane" id="filter" role="tabpanel">
+				                    	<div class="p-20">
+				                        	<div class="row">						    					
+												<p data-bind="text: lang.lang.customers" style=""></p>
+												<select data-role="multiselect"
+													   data-value-primitive="true"
+													   data-header-template="supplier-header-tmpl"
+													   data-item-template="contact-list-tmpl"
+													   data-value-field="id"
+													   data-text-field="name"
+													   data-bind="value: obj.contactIds,
+													   			source: contactDS"
+													   data-placeholder="Select Supplier.."
+													   style="width: 50%; float: left; margin-right: 8px; " /></select>
+													
+											  	<button type="button" data-role="button" data-bind="click: search"><i class="ti-search"></i></button>
+														
+						    				</div>
+						    			</div>
+				                    </div>
+				                    <div class="tab-pane" id="print_export" role="tabpanel">
+				                    	<div class="p-20">
+				                        	<div class="row">
+						    					<button class="col-md-1 btnPrint " type="button" data-role="button" data-bind="click: printGrid"><i class="ti-printer"></i><span class="marginLeft">Print</span></button>
+						    					<button class="col-md-2 btnExport" type="button" data-role="button" data-bind="click: ExportExcel"><i class="ti-export"></i><span class="marginLeft">Export to Excel</span></button>
+						    				</div>
+						    			</div>
+				                    </div>
+				                    
+				                </div>
+				            </div>
+				            <div id="invFormContent" style="page-break-after: always;">
+				            	<!-- Style For Print -->
+				            	<style type="text/css">
+				            		* {
+										-webkit-print-color-adjust: true;
+									}
+									.home-footer .table tbody td {
+									    background-color: #fff !important;
+									    -webkit-print-color-adjust: exact;
+									}
+									.home-footer .table tbody tr:nth-child(odd) td {
+									    background-color: #f4f5f8 !important;
+									    -webkit-print-color-adjust: exact;
+									}
+				            	</style>
+
+					            <!-- Title -->
+					            <div class="reportTitle" style="text-align: center; width: 97%; margin: 15px auto;">
+					            	<h3 style="font-size: 15px; color: #203864 !important; margin-bottom: 10px;" data-bind="html: company.name"></h3>
+									<h2 style="font-size: 20px; font-weight: 600; margin-top: 0px; color: #203864 !important;" data-bind="text: lang.lang.expenses_purchase_summary_by_supplier"></h2>
+									<p style="font-size: 15px; margin-bottom: 0;" data-bind="text: displayDate"></p>
+					            </div>
+
+					            <!-- Block -->
+					            <div class="reportBlock" style="width: 97%; margin: 0 auto;">
+					            	<div class="row">
+					            		<div class="col-md-3">
+					            			<div class="total-sale" style="width: 100%; padding: 10px; background-color: #DDEBF7 !important; -webkit-print-color-adjust: exact; text-align: center; margin-bottom: 15px; display: inline-block; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
+												<p style="font-size: 14px;" data-bind="text: lang.lang.total_suppliers"></p>
+												<span style="font-size: 20px; font-weight: 700;" data-bind="text: dataSource.total"></span>
+											</div>
+					            		</div>
+					            		<div class="col-md-9" >
+					            			<div class="total-sale" style="width: 100%; padding: 10px; background-color: #DDEBF7 !important; -webkit-print-color-adjust: exact; text-align: center; margin-bottom: 15px; display: inline-block; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
+												<p style="font-size: 14px;" data-bind="text: lang.lang.total_expenses_purchase"></p>
+												<span style="font-size: 20px; font-weight: 700;" data-bind="text: totalAmount"></span>
+											</div>
+					            		</div>
+					            	</div>
+					            </div>
+
+					            <!-- Table -->
+					            <div class="reportTable home-footer table-responsive" style="width: 97%; margin: 0 auto;">
+					            	<table class="table color-table dark-table" style="width: 100%; height: auto; ">
+		                                <thead>
+		                                    <tr>
+												<th style="background-color: #343a40 !important; -webkit-print-color-adjust: exact; color: #fff !important; text-align: center; text-transform: uppercase; vertical-align: top; font-weight: 400; padding: 10px;" data-bind="text: lang.lang.supplier"></th>
+												<th style="background-color: #343a40 !important; -webkit-print-color-adjust: exact; color: #fff !important; text-align: center; text-transform: uppercase; vertical-align: top; font-weight: 400; padding: 10px;" data-bind="text: lang.lang.credit_purchase"></th>
+												<th style="background-color: #343a40 !important; -webkit-print-color-adjust: exact; color: #fff !important; text-align: center; text-transform: uppercase; vertical-align: top; font-weight: 400; padding: 10px;" data-bind="text: lang.lang.cash_purchase"></th>
+												<th style="background-color: #343a40 !important; -webkit-print-color-adjust: exact; color: #fff !important; text-align: center; text-transform: uppercase; vertical-align: top; font-weight: 400; padding: 10px;" data-bind="text: lang.lang.total_expense_purchase"></th>
+											</tr>
+		                                </thead>
+		                                <tbody  data-role="listview"
+					            				data-auto-bind="false"
+								                data-template="expensesSummarySupplier-temp"
+								                data-bind="source: dataSource" >
+								        </tbody>
+					            	</table>
+					            </div>
+					        </div>
+
+					        <!-- Pagination -->
+			            	<div 	id="pager" 
+			            			class="k-pager-wrap" 
+				            		data-role="pager"
+							    	data-auto-bind="false"
+						            data-bind="source: dataSource"
+						            style="width: 97%; margin: 0 auto;" >
+						    </div>
+			            </div>
+                	</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="expensesSummarySupplier-temp" type="text/x-kendo-template" >
+	<tr>
+		<td>#=name#</td>
+		<td style="text-align: center;">#=credit_purchase#</td>
+		<td style="text-align: center;">#=cash_purchase#</td>
+		<td style="text-align: right;">#=kendo.toString(amount, "c2", banhji.locale)#</td>
+	</tr>
+</script>
+<script id="expensesDetailSupplier" type="text/x-kendo-template">
+	<div class="page-wrapper ">
+        <div class="container-fluid">
+        	<div class="row page-titles">
+                <div class="col-md-12">
+                	<div class="card">
+                		<div class="btn-close" onclick="javascript:window.history.back()"><i class="ti-close"></i></div>
+                		<div class="card-body">
+                			<div class="reportHeader">
+				                <!-- Nav tabs -->
+				                <ul class="nav nav-tabs" role="tablist">
+				                    <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#date" role="tab"><i class=" ti-calendar"></i><span class="marginLeft hidden-xs-down" data-bind="text: lang.lang.date">Date</span></a> </li>
+				                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#filter" role="tab"><i class="ti-filter"></i><span class="marginLeft hidden-xs-down" data-bind="text: lang.lang.filter">filter</span></a> </li>
+				                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#print_export" role="tab"><i class="ti-printer"></i><span class="marginLeft hidden-xs-down" data-bind="text: lang.lang.print_export">Print/Export</span></a> </li>
+				                </ul>
+				                <!-- Tab panes -->
+				                <div class="tab-content tabcontent-border">
+				                    <div class="tab-pane active" id="date" role="tabpanel">
+				                        <div class="p-20">
+				                        	<div class="row ">
+						    					<input data-role="dropdownlist"  
+													   class="sorter marginRight marginBottom"
+											           data-value-primitive="true"
+											           data-text-field="text"
+											           data-value-field="value"
+											           data-bind="value: sorter,
+											                      source: sortList,
+											                      events: { change: sorterChanges }" />
+
+												<input data-role="datepicker"
+													   class="sdate marginRight marginBottom"
+													   data-format="dd-MM-yyyy"
+											           data-bind="value: sdate,
+											           			  max: edate"
+											           placeholder="From ..." >
+
+											    <input data-role="datepicker" 
+											    	   class="edate marginRight marginBottom"
+											    	   data-format="dd-MM-yyyy"
+											           data-bind="value: edate,
+											                      min: sdate"
+											           placeholder="To ..." >
+
+											  	<button class="btnSearch" type="button" data-role="button" data-bind="click: search"><i class="ti-search"></i></button>
+						    				</div>
+				                        </div>
+				                    </div>
+				                    <div class="tab-pane" id="filter" role="tabpanel">
+				                    	<div class="p-20">
+				                        	<div class="row">						    					
+												<p data-bind="text: lang.lang.customers" style=""></p>
+												<select data-role="multiselect"
+													   data-value-primitive="true"
+													   data-header-template="supplier-header-tmpl"
+													   data-item-template="contact-list-tmpl"
+													   data-value-field="id"
+													   data-text-field="name"
+													   data-bind="value: obj.contactIds,
+													   			source: contactDS"
+													   data-placeholder="Select Supplier.."
+													   style="width: 50%; float: left; margin-right: 8px; " /></select>
+													
+											  	<button type="button" data-role="button" data-bind="click: search"><i class="ti-search"></i></button>
+														
+						    				</div>
+						    			</div>
+				                    </div>
+				                    <div class="tab-pane" id="print_export" role="tabpanel">
+				                    	<div class="p-20">
+				                        	<div class="row">
+						    					<button class="col-md-1 btnPrint " type="button" data-role="button" data-bind="click: printGrid"><i class="ti-printer"></i><span class="marginLeft">Print</span></button>
+						    					<button class="col-md-2 btnExport" type="button" data-role="button" data-bind="click: ExportExcel"><i class="ti-export"></i><span class="marginLeft">Export to Excel</span></button>
+						    				</div>
+						    			</div>
+				                    </div>
+				                    
+				                </div>
+				            </div>
+				            <div id="invFormContent" style="page-break-after: always;">
+				            	<!-- Style For Print -->
+				            	<style type="text/css">
+				            		* {
+										-webkit-print-color-adjust: true;
+									}
+									.home-footer .table tbody td {
+									    background-color: #fff !important;
+									    -webkit-print-color-adjust: exact;
+									}
+									.home-footer .table tbody tr:nth-child(odd) td {
+									    background-color: #f4f5f8 !important;
+									    -webkit-print-color-adjust: exact;
+									}
+				            	</style>
+
+					            <!-- Title -->
+					            <div class="reportTitle" style="text-align: center; width: 97%; margin: 15px auto;">
+					            	<h3 style="font-size: 15px; color: #203864 !important; margin-bottom: 10px;" data-bind="html: company.name"></h3>
+									<h2 style="font-size: 20px; font-weight: 600; margin-top: 0px; color: #203864 !important;" data-bind="text: lang.lang.expeneses_purchase_detail_by_suppplier"></h2>
+									<p style="font-size: 15px; margin-bottom: 0;" data-bind="text: displayDate"></p>
+					            </div>
+
+					            <!-- Block -->
+					            <div class="reportBlock" style="width: 97%; margin: 0 auto;">
+					            	<div class="row">
+					            		<div class="col-md-3">
+					            			<div class="total-sale" style="width: 100%; padding: 10px; background-color: #DDEBF7 !important; -webkit-print-color-adjust: exact; text-align: center; margin-bottom: 15px; display: inline-block; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
+												<p style="font-size: 14px;" data-bind="text: lang.lang.total_supplier"></p>
+												<span style="font-size: 20px; font-weight: 700;" data-bind="text: dataSource.total"></span>
+											</div>
+					            		</div>
+					            		<div class="col-md-9" >
+					            			<div class="total-sale" style="width: 100%; padding: 10px; background-color: #DDEBF7 !important; -webkit-print-color-adjust: exact; text-align: center; margin-bottom: 15px; display: inline-block; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
+												<p style="font-size: 14px;" data-bind="text: lang.lang.total_expense_purchase"></p>
+												<span style="font-size: 20px; font-weight: 700;" data-bind="text: totalAmount"></span>
+											</div>
+					            		</div>
+					            	</div>
+					            </div>
+
+					            <!-- Table -->
+					            <div class="reportTable home-footer table-responsive" style="width: 97%; margin: 0 auto;">
+					            	<table class="table color-table dark-table" style="width: 100%; height: auto; ">
+		                                <thead>
+		                                    <tr>
+												<th style="background-color: #343a40 !important; -webkit-print-color-adjust: exact; color: #fff !important; text-align: center; text-transform: uppercase; vertical-align: top; font-weight: 400; padding: 10px;" data-bind="text: lang.lang.type"></th>
+												<th style="background-color: #343a40 !important; -webkit-print-color-adjust: exact; color: #fff !important; text-align: center; text-transform: uppercase; vertical-align: top; font-weight: 400; padding: 10px;" data-bind="text: lang.lang.date"></th>
+												<th style="background-color: #343a40 !important; -webkit-print-color-adjust: exact; color: #fff !important; text-align: center; text-transform: uppercase; vertical-align: top; font-weight: 400; padding: 10px;" data-bind="text: lang.lang.reference"></th>
+												<th style="background-color: #343a40 !important; -webkit-print-color-adjust: exact; color: #fff !important; text-align: center; text-transform: uppercase; vertical-align: top; font-weight: 400; padding: 10px;" data-bind="text: lang.lang.amount"></th>
+											</tr>
+		                                </thead>
+		                                <tbody  data-role="listview"
+					            				data-auto-bind="false"
+								                data-template="expensesDetailSupplier-temp"
+								                data-bind="source: dataSource" >
+								        </tbody>
+					            	</table>
+					            </div>
+					        </div>
+
+					        <!-- Pagination -->
+			            	<div 	id="pager" 
+			            			class="k-pager-wrap" 
+				            		data-role="pager"
+							    	data-auto-bind="false"
+						            data-bind="source: dataSource"
+						            style="width: 97%; margin: 0 auto;" >
+						    </div>
+			            </div>
+                	</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="expensesDetailSupplier-temp" type="text/x-kendo-template">
+	<tr style="font-weight: bold">
+		<td>#=name#</td>
+		<td></td>
+		<td></td>
+		<td></td>
+	</tr>
+	# var amount = 0;#
+	#for(var i= 0; i <line.length; i++) {#
+		# amount += line[i].amount;#
+		<tr>
+			<td style="padding-left: 20px !important;">
+				<a href="\#/#=line[i].type.toLowerCase()#/#=line[i].id#"><i></i> #=line[i].type#</a>
+			</td>
+			<td>#=kendo.toString(new Date(line[i].issued_date), "dd-MM-yyyy")#</td>
+			<td style="text-align: left;">
+				<a href="\#/#=line[i].type.toLowerCase()#/#=line[i].id#">#=line[i].number#</a>
+			</td>
+			<td style="text-align: right;">#=kendo.toString(line[i].amount, "c2", banhji.locale)#</td>
+		</tr>
+	#}#
+	<tr>
+    	<td style="font-weight: bold; color: black;" data-bind="text: lang.lang.total"></td>
+    	<td></td>
+    	<td></td>
+    	<td style="font-weight: bold; border-top: 1px solid black !important; color: black; text-align: right">
+    		#=kendo.toString(amount, "c2", banhji.locale)#
+    	</td>
+    </tr>
+    <tr>
+    	<td colspan="4">&nbsp;</td>
+    </tr>
+</script>
+<script id="purchaseSummaryProductServices" type="text/x-kendo-template">
+	<div class="page-wrapper ">
+        <div class="container-fluid">
+        	<div class="row page-titles">
+                <div class="col-md-12">
+                	<div class="card">
+                		<div class="btn-close" onclick="javascript:window.history.back()"><i class="ti-close"></i></div>
+                		<div class="card-body">
+                			<div class="reportHeader">
+				                <!-- Nav tabs -->
+				                <ul class="nav nav-tabs" role="tablist">
+				                    <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#date" role="tab"><i class=" ti-calendar"></i><span class="marginLeft hidden-xs-down" data-bind="text: lang.lang.date">Date</span></a> </li>
+				                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#filter" role="tab"><i class="ti-filter"></i><span class="marginLeft hidden-xs-down" data-bind="text: lang.lang.filter">filter</span></a> </li>
+				                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#print_export" role="tab"><i class="ti-printer"></i><span class="marginLeft hidden-xs-down" data-bind="text: lang.lang.print_export">Print/Export</span></a> </li>
+				                </ul>
+				                <!-- Tab panes -->
+				                <div class="tab-content tabcontent-border">
+				                    <div class="tab-pane active" id="date" role="tabpanel">
+				                        <div class="p-20">
+				                        	<div class="row ">
+						    					<input data-role="dropdownlist"  
+													   class="sorter marginRight marginBottom"
+											           data-value-primitive="true"
+											           data-text-field="text"
+											           data-value-field="value"
+											           data-bind="value: sorter,
+											                      source: sortList,
+											                      events: { change: sorterChanges }" />
+
+												<input data-role="datepicker"
+													   class="sdate marginRight marginBottom"
+													   data-format="dd-MM-yyyy"
+											           data-bind="value: sdate,
+											           			  max: edate"
+											           placeholder="From ..." >
+
+											    <input data-role="datepicker" 
+											    	   class="edate marginRight marginBottom"
+											    	   data-format="dd-MM-yyyy"
+											           data-bind="value: edate,
+											                      min: sdate"
+											           placeholder="To ..." >
+
+											  	<button class="btnSearch" type="button" data-role="button" data-bind="click: search"><i class="ti-search"></i></button>
+						    				</div>
+				                        </div>
+				                    </div>
+				                    <div class="tab-pane" id="filter" role="tabpanel">
+				                    	<div class="p-20">
+				                        	<div class="row">						    					
+												<p data-bind="text: lang.lang.customers" style=""></p>
+												<select data-role="multiselect"
+													   data-value-primitive="true"
+													   data-header-template="item-header-tmpl"
+													   data-item-template="item-list-tmpl"
+													   data-value-field="id"
+													   data-text-field="name"
+													   data-bind="value: obj.itemIds,
+													   			source: itemDS"
+													   data-placeholder="Select Item..."
+														   style="width: 50%; float: left; margin-right: 8px;" /></select>
+													
+											  	<button type="button" data-role="button" data-bind="click: search"><i class="ti-search"></i></button>
+														
+						    				</div>
+						    			</div>
+				                    </div>
+				                    <div class="tab-pane" id="print_export" role="tabpanel">
+				                    	<div class="p-20">
+				                        	<div class="row">
+						    					<button class="col-md-1 btnPrint " type="button" data-role="button" data-bind="click: printGrid"><i class="ti-printer"></i><span class="marginLeft">Print</span></button>
+						    					<button class="col-md-2 btnExport" type="button" data-role="button" data-bind="click: ExportExcel"><i class="ti-export"></i><span class="marginLeft">Export to Excel</span></button>
+						    				</div>
+						    			</div>
+				                    </div>
+				                    
+				                </div>
+				            </div>
+				            <div id="invFormContent" style="page-break-after: always;">
+				            	<!-- Style For Print -->
+				            	<style type="text/css">
+				            		* {
+										-webkit-print-color-adjust: true;
+									}
+									.home-footer .table tbody td {
+									    background-color: #fff !important;
+									    -webkit-print-color-adjust: exact;
+									}
+									.home-footer .table tbody tr:nth-child(odd) td {
+									    background-color: #f4f5f8 !important;
+									    -webkit-print-color-adjust: exact;
+									}
+				            	</style>
+
+					            <!-- Title -->
+					            <div class="reportTitle" style="text-align: center; width: 97%; margin: 15px auto;">
+					            	<h3 style="font-size: 15px; color: #203864 !important; margin-bottom: 10px;" data-bind="html: company.name"></h3>
+									<h2 style="font-size: 20px; font-weight: 600; margin-top: 0px; color: #203864 !important;" data-bind="text: lang.lang.purchase_summary_by_product_services"></h2>
+									<p style="font-size: 15px; margin-bottom: 0;" data-bind="text: displayDate"></p>
+					            </div>
+
+					            <!-- Block -->
+					            <div class="reportBlock" style="width: 97%; margin: 0 auto;">
+					            	<div class="row">
+					            		<div class="col-md-5">
+					            			<div class="total-sale" style="width: 100%; padding: 10px; background-color: #DDEBF7 !important; -webkit-print-color-adjust: exact; text-align: center; margin-bottom: 15px; display: inline-block; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1 !important; -webkit-print-color-adjust: exact;">
+												<div class="row">
+													<div class="col-md-6">
+														<p style="font-size: 14px;" data-bind="text: lang.lang.total_product_services"></p>
+														<span style="font-size: 20px; font-weight: 700;" data-bind="text: dataSource.total"></span>
+													</div>
+													<div class="col-md-6">
+														<p style="font-size: 14px;" data-bind="text: lang.lang.avg_purchase"></p>
+														<span style="font-size: 20px; font-weight: 700;" data-bind="text: avg_sale"></span>
+													</div>
+												</div>
+											</div>
+					            		</div>
+					            		<div class="col-md-7" >
+					            			<div class="total-sale" style="width: 100%; padding: 10px; background-color: #DDEBF7 !important; -webkit-print-color-adjust: exact; text-align: center; margin-bottom: 15px; display: inline-block; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1 !important; -webkit-print-color-adjust: exact;">
+												<p style="font-size: 14px;" data-bind="text: lang.lang.total_purchase"></p>
+												<span style="font-size: 20px; font-weight: 700;" data-bind="text: total_sale"></span>
+											</div>
+					            		</div>
+					            	</div>
+					            </div>
+
+					            <!-- Table -->
+					            <div class="reportTable home-footer table-responsive" style="width: 97%; margin: 0 auto;">
+					            	<table class="table color-table dark-table" style="width: 100%; height: auto; ">
+		                                <thead>
+		                                    <tr>												
+												<th style="background-color: #343a40 !important; -webkit-print-color-adjust: exact; color: #fff !important; text-align: center; text-transform: uppercase; vertical-align: top; font-weight: 400; padding: 10px;" data-bind="text: lang.lang.item"></th>
+												<th style="background-color: #343a40 !important; -webkit-print-color-adjust: exact; color: #fff !important; text-align: center; text-transform: uppercase; vertical-align: top; font-weight: 400; padding: 10px;" data-bind="text: lang.lang.qty"></th>
+												<th style="background-color: #343a40 !important; -webkit-print-color-adjust: exact; color: #fff !important; text-align: center; text-transform: uppercase; vertical-align: top; font-weight: 400; padding: 10px;" data-bind="text: lang.lang.amount"></th>
+											</tr>
+		                                </thead>
+		                                <tbody  data-role="listview"
+					            				data-auto-bind="false"
+								                data-template="purchaseSummaryProductServices-temp"
+								                data-bind="source: dataSource" >
+								        </tbody>
+					            	</table>
+					            </div>
+					        </div>
+
+					        <!-- Pagination -->
+			            	<div 	id="pager" 
+			            			class="k-pager-wrap" 
+				            		data-role="pager"
+							    	data-auto-bind="false"
+						            data-bind="source: dataSource"
+						            style="width: 97%; margin: 0 auto;" >
+						    </div>
+			            </div>
+                	</div>					
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="purchaseSummaryProductServices-temp" type="text/x-kendo-template">
+	<tr>
+		<td>#=name#</td>
+		<td style="text-align: right;">#=kendo.toString(quantity, "n")# #=measurement#</td>
+		<td style="text-align: right;">#=kendo.toString(amount, "c2", banhji.locale)#</td>
+	</tr>
+</script>
+<script id="purchaseDetailProductServices" type="text/x-kendo-template">
+	<div class="page-wrapper ">
+        <div class="container-fluid">
+        	<div class="row page-titles">
+                <div class="col-md-12">
+                	<div class="card">
+                		<div class="btn-close" onclick="javascript:window.history.back()"><i class="ti-close"></i></div>
+                		<div class="card-body">
+                			<div class="reportHeader">
+				                <!-- Nav tabs -->
+				                <ul class="nav nav-tabs" role="tablist">
+				                    <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#date" role="tab"><i class=" ti-calendar"></i><span class="marginLeft hidden-xs-down" data-bind="text: lang.lang.date">Date</span></a> </li>
+				                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#filter" role="tab"><i class="ti-filter"></i><span class="marginLeft hidden-xs-down" data-bind="text: lang.lang.filter">filter</span></a> </li>
+				                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#print_export" role="tab"><i class="ti-printer"></i><span class="marginLeft hidden-xs-down" data-bind="text: lang.lang.print_export">Print/Export</span></a> </li>
+				                </ul>
+				                <!-- Tab panes -->
+				                <div class="tab-content tabcontent-border">
+				                    <div class="tab-pane active" id="date" role="tabpanel">
+				                        <div class="p-20">
+				                        	<div class="row ">
+						    					<input data-role="dropdownlist"  
+													   class="sorter marginRight marginBottom"
+											           data-value-primitive="true"
+											           data-text-field="text"
+											           data-value-field="value"
+											           data-bind="value: sorter,
+											                      source: sortList,
+											                      events: { change: sorterChanges }" />
+
+												<input data-role="datepicker"
+													   class="sdate marginRight marginBottom"
+													   data-format="dd-MM-yyyy"
+											           data-bind="value: sdate,
+											           			  max: edate"
+											           placeholder="From ..." >
+
+											    <input data-role="datepicker" 
+											    	   class="edate marginRight marginBottom"
+											    	   data-format="dd-MM-yyyy"
+											           data-bind="value: edate,
+											                      min: sdate"
+											           placeholder="To ..." >
+
+											  	<button class="btnSearch" type="button" data-role="button" data-bind="click: search"><i class="ti-search"></i></button>
+						    				</div>
+				                        </div>
+				                    </div>
+				                    <div class="tab-pane" id="filter" role="tabpanel">
+				                    	<div class="p-20">
+				                        	<div class="row">						    					
+												<p data-bind="text: lang.lang.customers" style=""></p>
+												<select data-role="multiselect"
+													   data-value-primitive="true"
+													   data-header-template="item-header-tmpl"
+													   data-item-template="item-list-tmpl"
+													   data-value-field="id"
+													   data-text-field="name"
+													   data-bind="value: obj.itemIds,
+													   			source: itemDS"
+													   data-placeholder="Select Item..."
+														   style="width: 50%; float: left; margin-right: 8px;" /></select>
+													
+											  	<button type="button" data-role="button" data-bind="click: search"><i class="ti-search"></i></button>
+														
+						    				</div>
+						    			</div>
+				                    </div>
+				                    <div class="tab-pane" id="print_export" role="tabpanel">
+				                    	<div class="p-20">
+				                        	<div class="row">
+						    					<button class="col-md-1 btnPrint " type="button" data-role="button" data-bind="click: printGrid"><i class="ti-printer"></i><span class="marginLeft">Print</span></button>
+						    					<button class="col-md-2 btnExport" type="button" data-role="button" data-bind="click: ExportExcel"><i class="ti-export"></i><span class="marginLeft">Export to Excel</span></button>
+						    				</div>
+						    			</div>
+				                    </div>
+				                    
+				                </div>
+				            </div>
+				            <div id="invFormContent" style="page-break-after: always;">
+				            	<!-- Style For Print -->
+				            	<style type="text/css">
+				            		* {
+										-webkit-print-color-adjust: true;
+									}
+									.home-footer .table tbody td {
+									    background-color: #fff !important;
+									    -webkit-print-color-adjust: exact;
+									}
+									.home-footer .table tbody tr:nth-child(odd) td {
+									    background-color: #f4f5f8 !important;
+									    -webkit-print-color-adjust: exact;
+									}
+				            	</style>
+
+					            <!-- Title -->
+					            <div class="reportTitle" style="text-align: center; width: 97%; margin: 15px auto;">
+					            	<h3 style="font-size: 15px; color: #203864 !important; margin-bottom: 10px;" data-bind="html: company.name"></h3>
+									<h2 style="font-size: 20px; font-weight: 600; margin-top: 0px; color: #203864 !important;" data-bind="text: lang.lang.purchase_detail_by_product_services"></h2>
+									<p style="font-size: 15px; margin-bottom: 0;" data-bind="text: displayDate"></p>
+					            </div>
+
+					            <!-- Block -->
+					            <div class="reportBlock" style="width: 97%; margin: 0 auto;">
+					            	<div class="row">
+					            		<div class="col-md-5">
+					            			<div class="total-sale" style="width: 100%; padding: 10px; background-color: #DDEBF7 !important; -webkit-print-color-adjust: exact; text-align: center; margin-bottom: 15px; display: inline-block; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1 !important; -webkit-print-color-adjust: exact;">
+												<div class="row">
+													<div class="col-md-6">
+														<p style="font-size: 14px;" data-bind="text: lang.lang.total_product_services"></p>
+														<span style="font-size: 20px; font-weight: 700;" data-bind="text: dataSource.total"></span>
+													</div>
+													<div class="col-md-6">
+														<p style="font-size: 14px;" data-bind="text: lang.lang.avg_purchase"></p>
+														<span style="font-size: 20px; font-weight: 700;" data-bind="text: product_sale"></span>
+													</div>
+												</div>
+											</div>
+					            		</div>
+					            		<div class="col-md-7" >
+					            			<div class="total-sale" style="width: 100%; padding: 10px; background-color: #DDEBF7 !important; -webkit-print-color-adjust: exact; text-align: center; margin-bottom: 15px; display: inline-block; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1 !important; -webkit-print-color-adjust: exact;">
+												<p style="font-size: 14px;" data-bind="text: lang.lang.total_purchase"></p>
+												<span style="font-size: 20px; font-weight: 700;" data-bind="text: total_sale"></span>
+											</div>
+					            		</div>
+					            	</div>
+					            </div>
+
+					            <!-- Table -->
+					            <div class="reportTable home-footer table-responsive" style="width: 97%; margin: 0 auto;">
+					            	<table class="table color-table dark-table" style="width: 100%; height: auto; ">
+		                                <thead>
+		                                    <tr>
+												<th style="background-color: #343a40 !important; -webkit-print-color-adjust: exact; color: #fff !important; text-align: center; text-transform: uppercase; vertical-align: top; font-weight: 400; padding: 10px;" data-bind="text: lang.lang.type"></th>
+												<th style="background-color: #343a40 !important; -webkit-print-color-adjust: exact; color: #fff !important; text-align: center; text-transform: uppercase; vertical-align: top; font-weight: 400; padding: 10px;" data-bind="text: lang.lang.supplier"></th>
+												<th style="background-color: #343a40 !important; -webkit-print-color-adjust: exact; color: #fff !important; text-align: center; text-transform: uppercase; vertical-align: top; font-weight: 400; padding: 10px;" data-bind="text: lang.lang.purchase_date"></th>
+												<th style="background-color: #343a40 !important; -webkit-print-color-adjust: exact; color: #fff !important; text-align: center; text-transform: uppercase; vertical-align: top; font-weight: 400; padding: 10px;" data-bind="text: lang.lang.reference"></th>
+												<th style="background-color: #343a40 !important; -webkit-print-color-adjust: exact; color: #fff !important; text-align: center; text-transform: uppercase; vertical-align: top; font-weight: 400; padding: 10px;" data-bind="text: lang.lang.qty"></th>
+												<th style="background-color: #343a40 !important; -webkit-print-color-adjust: exact; color: #fff !important; text-align: center; text-transform: uppercase; vertical-align: top; font-weight: 400; padding: 10px;" data-bind="text: lang.lang.amount"></th>
+											</tr>
+		                                </thead>
+		                                <tbody  data-role="listview"
+					            				data-auto-bind="false"
+								                data-template="purchaseDetailProductServices-temp"
+								                data-bind="source: dataSource" >
+								        </tbody>
+					            	</table>
+					            </div>
+					        </div>
+
+					        <!-- Pagination -->
+			            	<div 	id="pager" 
+			            			class="k-pager-wrap" 
+				            		data-role="pager"
+							    	data-auto-bind="false"
+						            data-bind="source: dataSource"
+						            style="width: 97%; margin: 0 auto;" >
+						    </div>
+			            </div>
+                	</div>					
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="purchaseDetailProductServices-temp" type="text/x-kendo-template">
+	<tr style="font-weight: bold">
+		<td colspan="6">#=name#</td>
+	</tr>
+	#var totalAmount = 0;#
+	#for(var i= 0; i <line.length; i++) {#
+		#totalAmount += line[i].amount;#
+		<tr>
+			<td style="padding-left: 20px !important; color: black;">
+				<a href="\#/#=line[i].type.toLowerCase()#/#=line[i].id#">#=line[i].type#</a>
+			<td style="text-align: right;">#=line[i].supplier#</td>
+			<td style="text-align: center;">#=kendo.toString(new Date(line[i].issued_date),"dd-MM-yyyy")#</td>
+			<td style="text-align: right;">
+				<a href="\#/#=line[i].type.toLowerCase()#/#=line[i].id#">#=line[i].number#</a>
+			</td>
+			<td style="text-align: right;">#=kendo.toString(line[i].quantity, "n")# #=line[i].measurement#</td>
+			<td style="text-align: right;">#=kendo.toString(line[i].amount, "c2", banhji.locale)#</td>
+		</tr>
+
+	#}#
+	<tr>
+    	<td colspan="5" style="font-weight: bold; color: black;"><span data-bind="text: lang.lang.total"></span> #: name #</td>
+    	<td style="font-weight: bold; border-top: 1px solid black !important; color: black; text-align: right">
+    		#=kendo.toString(totalAmount, "c2", banhji.locale)#
+    	</td>
+    </tr>
+    <tr>
+    	<td colspan="6">&nbsp;</td>
+    </tr>
+</script>
+<script id="suppliersBalanceSummary" type="text/x-kendo-template">
+	<div class="page-wrapper ">
+        <div class="container-fluid">
+        	<div class="row page-titles">
+                <div class="col-md-12">
+                	<div class="card">
+                		<div class="btn-close" onclick="javascript:window.history.back()"><i class="ti-close"></i></div>
+                		<div class="card-body">
+                			<div class="reportHeader">
+				                <!-- Nav tabs -->
+				                <ul class="nav nav-tabs" role="tablist">
+				                    <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#date" role="tab"><i class=" ti-calendar"></i><span class="marginLeft hidden-xs-down" data-bind="text: lang.lang.date">Date</span></a> </li>
+				                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#print_export" role="tab"><i class="ti-printer"></i><span class="marginLeft hidden-xs-down" data-bind="text: lang.lang.print_export">Print/Export</span></a> </li>
+				                </ul>
+				                <!-- Tab panes -->
+				                <div class="tab-content tabcontent-border">
+				                    <div class="tab-pane active" id="date" role="tabpanel">
+				                        <div class="p-20">
+				                        	<div class="row ">
+						    					<p data-bind="text: lang.lang.as_of"></p>
+												<input data-role="datepicker" class="marginRight"
+													data-format="dd-MM-yyyy"
+													data-parse-formats="yyyy-MM-dd"
+													data-bind="value: as_of" />
+													
+											  	<button type="button" data-role="button" data-bind="click: search"><i class="ti-search"></i></button>
+						    				</div>
+				                        </div>
+				                    </div>
+				                    <div class="tab-pane" id="print_export" role="tabpanel">
+				                    	<div class="p-20">
+				                        	<div class="row">
+						    					<button class="col-md-1 btnPrint " type="button" data-role="button" data-bind="click: printGrid"><i class="ti-printer"></i><span class="marginLeft">Print</span></button>
+						    					<button class="col-md-2 btnExport" type="button" data-role="button" data-bind="click: ExportExcel"><i class="ti-export"></i><span class="marginLeft">Export to Excel</span></button>
+						    				</div>
+						    			</div>
+				                    </div>
+				                    
+				                </div>
+				            </div>
+				            <div id="invFormContent" style="page-break-after: always;">
+				            	<!-- Style For Print -->
+				            	<style type="text/css">
+				            		* {
+										-webkit-print-color-adjust: true;
+									}
+									.home-footer .table tbody td {
+									    background-color: #fff !important;
+									    -webkit-print-color-adjust: exact;
+									}
+									.home-footer .table tbody tr:nth-child(odd) td {
+									    background-color: #f4f5f8 !important;
+									    -webkit-print-color-adjust: exact;
+									}
+				            	</style>
+
+					            <!-- Title -->
+					            <div class="reportTitle" style="text-align: center; width: 97%; margin: 15px auto;">
+					            	<h3 style="font-size: 15px; color: #203864 !important; margin-bottom: 10px;" data-bind="html: company.name"></h3>
+									<h2 style="font-size: 20px; font-weight: 600; margin-top: 0px; color: #203864 !important;" data-bind="text: lang.lang.suppliers_balance_summary"></h2>
+									<p style="font-size: 15px; margin-bottom: 0;" data-bind="text: displayDate"></p>
+					            </div>
+
+					            <!-- Block -->
+					            <div class="reportBlock" style="width: 97%; margin: 0 auto;">
+					            	<div class="row">
+					            		<div class="col-md-5">
+					            			<div class="total-sale" style="width: 100%; padding: 10px; background-color: #DDEBF7 !important; -webkit-print-color-adjust: exact; text-align: center; margin-bottom: 15px; display: inline-block; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1 !important; -webkit-print-color-adjust: exact;">
+												<div class="row">
+													<div class="col-md-6">
+														<p style="font-size: 14px;" data-bind="text: lang.lang.open_bill"></p>
+														<span style="font-size: 20px; font-weight: 700;" data-bind="text: total_txn"></span>
+													</div>
+													<div class="col-md-6">
+														<p style="font-size: 14px;" data-bind="text: lang.lang.number_of_supplier"></p>
+														<span style="font-size: 20px; font-weight: 700;" data-bind="text: dataSource.total"></span>
+													</div>
+												</div>
+											</div>
+					            		</div>
+					            		<div class="col-md-7" >
+					            			<div class="total-sale" style="width: 100%; padding: 10px; background-color: #DDEBF7 !important; -webkit-print-color-adjust: exact; text-align: center; margin-bottom: 15px; display: inline-block; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1 !important; -webkit-print-color-adjust: exact;">
+												<p style="font-size: 14px;" data-bind="text: lang.lang.total_supplier_balance"></p>
+												<span style="font-size: 20px; font-weight: 700;" data-bind="text: total_balance"></span>
+											</div>
+					            		</div>
+					            	</div>
+					            </div>
+
+					            <!-- Table -->
+					            <div class="reportTable home-footer table-responsive" style="width: 97%; margin: 0 auto;">
+					            	<table class="table color-table dark-table" style="width: 100%; height: auto; ">
+		                                <thead>
+		                                    <tr>
+												<th style="background-color: #343a40 !important; -webkit-print-color-adjust: exact; color: #fff !important; text-align: center; text-transform: uppercase; vertical-align: top; font-weight: 400; padding: 10px;" data-bind="text: lang.lang.supplier_name"></th>
+												<th style="background-color: #343a40 !important; -webkit-print-color-adjust: exact; color: #fff !important; text-align: center; text-transform: uppercase; vertical-align: top; font-weight: 400; padding: 10px;" data-bind="text: lang.lang.no_bill"></th>
+												<th style="background-color: #343a40 !important; -webkit-print-color-adjust: exact; color: #fff !important; text-align: center; text-transform: uppercase; vertical-align: top; font-weight: 400; padding: 10px;" data-bind="text: lang.lang.balance"></th>
+											</tr>
+		                                </thead>
+		                                <tbody  data-role="listview"
+					            				data-auto-bind="false"
+								                data-template="suppliersBalanceSummary-temp"
+								                data-bind="source: dataSource" >
+								        </tbody>
+					            	</table>
+					            </div>
+					        </div>
+
+					        <!-- Pagination -->
+			            	<div 	id="pager" 
+			            			class="k-pager-wrap" 
+				            		data-role="pager"
+							    	data-auto-bind="false"
+						            data-bind="source: dataSource"
+						            style="width: 97%; margin: 0 auto;" >
+						    </div>
+			            </div>
+                	</div>					
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="suppliersBalanceSummary-temp" type="text/x-kendo-template">
+	<tr>
+		<td>#=name#</td>
+		<td style="text-align: center;">#=txn_count#</td>
+		<td align="right">#=kendo.toString(amount, "c2", banhji.locale)#</td>
+	</tr>
+</script>
 
 
-<!-- Template Report-->
+
+<!-- Template -->
+<script id="supplier-header-tmpl" type="text/x-kendo-tmpl">
+    <strong>
+    	<a href="\#/vendor">+ Add New Supplier</a></li>
+    </strong>
+</script>
+<script id="item-header-tmpl" type="text/x-kendo-tmpl">
+    <strong>
+    	<a href="\#/item">+ Add New Item</a> &nbsp;&nbsp;
+    	<a href="\#/item_service">+ Add New Service</a>
+    </strong>
+</script>
+<script id="item-list-tmpl" type="text/x-kendo-tmpl">
+	<div class="pull-left">
+		#=abbr##=number# #=name#
+		&nbsp;&nbsp;
+		#if(variant.length>0){#
+			[
+			#for(var i=0; i < variant.length; i++){#
+				#=variant[i].name#,
+			#}#
+			]
+		#}#
+	</div>
+	<div class="pull-right">
+		#=category#
+	</div>
+</script>
+
 <script id="contact-header-tmpl" type="text/x-kendo-tmpl">
     <strong>
     	<a href="\#/customer">+ Add New Customer</a></li>
@@ -1676,52 +2373,7 @@
 			#if(type=="Vendor_Deposit" && amount<0){#
 				<a data-bind="click: goReference">#=number#</a>
 			#}else{#
-				<a href="\#/#=type.toLowerCase()#/#=id#">#=number#</a>
-			#}#
-        </td>
-    	<td class="right">
-    		#if(type=="GRN"){#
-    			#=kendo.toString(amount, "n0")#
-    		#}else if(type=="Cash_Purchase" || type=="Credit_Purchase"){#
-    			#=kendo.toString(amount-deposit, locale=="km-KH"?"c0":"c", locale)#
-    		#}else{#
-    			#=kendo.toString(amount, locale=="km-KH"?"c0":"c", locale)#
-    		#}#
-    	</td>
-    	<!-- Status -->
-    	<td align="center">
-    		#if(status=="4") {#
-    			#=progress#
-    		#}#
-
-        	#if(type=="Credit_Purchase"){#
-        		#if(status=="0" || status=="2") {#
-        			# var date = new Date(), dueDate = new Date(due_date).getTime(), toDay = new Date(date).getTime(); #
-					#if(dueDate < toDay) {#
-						Over Due #:Math.floor((toDay - dueDate)/(1000*60*60*24))# days
-					#} else {#
-						#:Math.floor((dueDate - toDay)/(1000*60*60*24))# days to pay
-					#}#
-				#} else if(status=="1") {#
-					Paid
-				#} else if(status=="3") {#
-					Returned
-				#}#
-        	#}else if(type=="Purchase_Order"){#
-        		#if(status=="0"){#
-        			Open
-        		#}else if(status=="1"){#
-        			Done
-        		#}#
-        	#}else if(type=="GRN"){#<script id="vendorCenter-transaction-tmpl" type="text/x-kendo-tmpl">
-    <tr>
-    	<td>#=kendo.toString(new Date(issued_date), "dd-MM-yyyy")#</td>
-    	<td>#=type#</td>
-        <td>
-			#if(type=="Vendor_Deposit" && amount<0){#
-				<a data-bind="click: goReference">#=number#</a>
-			#}else{#
-				<a href="\#/#=type.toLowerCase()#/#=id#">#=number#</a>
+				<a >#=number#</a>
 			#}#
         </td>
     	<td class="right">
@@ -1775,10 +2427,10 @@
         	#}#
 
         	#if(status=="4") {#
-				<a href="\#/#=type.toLowerCase()#/#=id#"><i></i> Use</a>
+				<a ><i></i> Use</a>
     		#}#
 		</td>
     </tr>
 </script>
 
-<!-- End -->
+<!-- End -->                     

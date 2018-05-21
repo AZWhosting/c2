@@ -137,7 +137,7 @@
                             </form>
                         </li>
                     </ul>
-                    <ul class="navbar-nav my-lg-0">
+                    <ul class="navbar-nav my-lg-0" id="companyDash">
                        	<li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="ti-plus"></i></a>
                             <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
@@ -195,43 +195,44 @@
                             </div>
                         </li>
 
-                        <li class="nav-item right-side-toggle"> <a class="nav-link  waves-effect waves-light" href="javascript:void(0)"><img src="<?php echo base_url()?>assets/micro/1.jpg" alt="user" class="img-circle" width="30"></a></li>
+                        <li class="nav-item right-side-toggle" >
+                            <a class="nav-link  waves-effect waves-light" href="javascript:void(0)">
+                                <img src="<?php echo base_url()?>assets/micro/1.jpg" alt="user" class="img-circle" width="30">
+                            </a>                            
+                        </li>
+                        <div class="right-sidebar">
+                            <div class="slimscrollright">
+                                <div class="d-flex no-block align-items-center p-15 bg-primary text-white m-b-10">                  
+                                    <i class="ti-close right-side-toggle"></i>
+                                    <div class=""><img src="<?php echo base_url()?>assets/micro/1.jpg" alt="user" class="img-circle" width="60"></div>
+                                    <div class="m-l-10">
+                                        <h4 class="m-b-0">Steave Jobs</h4>
+                                        <p class=" m-b-0">varun@gmail.com</p>
+                                    </div>
+                                </div>
+                                <a class="dropdown-item" href="javascript:void(0)"><i class="ti-user m-r-5 m-l-5"></i> My Profile</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="javascript:void(0)"><i class="ti-settings m-r-5 m-l-5"></i> Account Setting</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item menuLang" href="javascript:void(0)" onclick="langVM.changeToKh()"><i class="flag-icon flag-icon-kh  m-r-5 m-l-5"></i> ភាសាខ្មែរ</a>
+                                <a class=" dropdown-item menuLang" href="javascript:void(0)" onclick="langVM.changeToEn()"><i class="flag-icon flag-icon-us  m-r-5 m-l-5"></i> English</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="javascript:void(0)"><i class="fa fa-power-off m-r-5 m-l-5"></i> Logout</a>
+                                
+                            </div>
+                        </div>
                     </ul>
                 </div>
             </nav>
         </header>
+    <script id="multiTaskList-row-template" type="text/x-kendo-template">
+        <li>
+            <a href="\#/#=url#">
+                #=name#
+                <span title="Remove" class="multiTaskList glyphicons remove_2 pull-right" data-bind="click: removeLink">
+                    <i></i>
+                </span>
+            </a>
 
-        <div class="right-sidebar">
-            <div class="slimscrollright">
-                <div class="d-flex no-block align-items-center p-15 bg-primary text-white m-b-10">                	
-                    <i class="ti-close right-side-toggle"></i>
-                    <div class=""><img src="<?php echo base_url()?>assets/micro/1.jpg" alt="user" class="img-circle" width="60"></div>
-                    <div class="m-l-10">
-                        <h4 class="m-b-0">Steave Jobs</h4>
-                        <p class=" m-b-0">varun@gmail.com</p>
-                    </div>                   
-                </div>
-                <a class="dropdown-item" href="javascript:void(0)"><i class="ti-user m-r-5 m-l-5"></i> My Profile</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="javascript:void(0)"><i class="ti-settings m-r-5 m-l-5"></i> Account Setting</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item menuLang" href="javascript:void(0)" onclick="langVM.changeToKh()"><i class="flag-icon flag-icon-kh  m-r-5 m-l-5"></i> ភាសាខ្មែរ</a>
-                <a class=" dropdown-item menuLang" href="javascript:void(0)" onclick="langVM.changeToEn()"><i class="flag-icon flag-icon-us  m-r-5 m-l-5"></i> English</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="javascript:void(0)"><i class="fa fa-power-off m-r-5 m-l-5"></i> Logout</a>
-                
-                
-            </div>
-        </div>
-
-<script id="multiTaskList-row-template" type="text/x-kendo-template">
-    <li>
-        <a href="\#/#=url#">
-            #=name#
-            <span title="Remove" class="multiTaskList glyphicons remove_2 pull-right" data-bind="click: removeLink">
-                <i></i>
-            </span>
-        </a>
-
-    </li>
-</script>
+        </li>
+    </script>                

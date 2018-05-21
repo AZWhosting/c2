@@ -401,6 +401,7 @@ class UtibillReports extends REST_Controller {
 					$objList[$value->contact_id]["line"][] = array(
 						"id" 				=> $value->id,
 						"type" 				=> $value->type,
+						"month" 			=> $value->month_of,
 						"date" 				=> $value->issued_date,
 						"location" 			=> $value->location_name,
 						"number" 			=> $value->number,
@@ -413,6 +414,7 @@ class UtibillReports extends REST_Controller {
 					$objList[$value->contact_id]["line"][]	= array(
 						"id" 				=> $value->id,
 						"type" 				=> $value->type,
+						"month" 			=> $value->month_of,
 						"date" 				=> $value->issued_date,
 						"location" 			=> $value->location_name,
 						"number" 			=> $value->number,
@@ -1030,6 +1032,7 @@ class UtibillReports extends REST_Controller {
 		$obj->where("type", "Utility_Invoice");
 		// $obj->where("is_recurring <>", 1);
 		$obj->where("deleted <>", 1);
+		$obj->where("amount <>", 0);
 		$obj->get_iterated();
 
 		if($obj->exists()){

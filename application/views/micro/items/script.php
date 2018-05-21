@@ -3830,29 +3830,51 @@
     });
     //-----------------------------------------
     banhji.Index = kendo.observable({
+        lang     : langVM
+    });
+    banhji.tapMenu =  kendo.observable({
+        goReports          : function(){
+            banhji.router.navigate('/');
+        },
+        goCheckOut         : function(){
+            banhji.router.navigate('/check_out');
+        },
+        goTransactions      : function(){
+            banhji.router.navigate('/transactions');
+        },
+        goMenuItems        : function(){
+            banhji.router.navigate('/items');
+        },
+    });
+    banhji.reports = kendo.observable({
         lang                : langVM,
-        Institute           : banhji.institute,
-        actualCash          : 0,
-        dataSource          : dataStore(apiUrl + "customer_modules/dashboard"),
-        inventoryDS         : dataStore(apiUrl + "inventory_modules/dashboard"),
-        vendorDS            : dataStore(apiUrl + "vendor_modules/dashboard"),
-        graphDS             : dataStore(apiUrl + "customer_modules/monthly_sale"),
-        transactionDS       : dataStore(apiUrl + 'transactions'),
-        noteDS              : dataStore(apiUrl + 'notes'),
-        attachmentDS        : dataStore(apiUrl + "attachments"),
-        txnDS               : dataStore(apiUrl + "transactions"),
-        currencyDS          : new kendo.data.DataSource({
-            data: banhji.source.currencyList,
-            filter: { field:"status", value: 1 }
-        }),
-        contactTypeDS       : new kendo.data.DataSource({
-            data: banhji.source.contactTypeList,
-            filter: { field:"parent_id", value: 1 }//Customer
-        }),
-        contactDS           : new kendo.data.DataSource({
+        dataSource          : dataStore(apiUrl + "inventory_modules/dashboard"),
+        graphDS             : dataStore(apiUrl + "inventory_modules/monthly_item_purchase_sale"),
+        obj                 : {},
+        pageLoad            : function(){
+            this.loadData();
+        },
+        loadData            : function(){
+            var self = this;
+
+            this.graphDS.read();
+
+            this.dataSource.query({
+                filter: []
+            }).then(function(){
+                var view = self.dataSource.view();
+
+                self.set("obj", view[0]);
+            });
+        }
+    });
+
+    banhji.items = kendo.observable({
+        lang                : langVM,
+        itemDS              : new kendo.data.DataSource({
             transport: {
                 read    : {
-                    url: apiUrl + "contacts",
+                    url: apiUrl + "items",
                     type: "GET",
                     headers: banhji.header,
                     dataType: 'json'
@@ -3877,8 +3899,14 @@
                 data: 'results',
                 total: 'count'
             },
-            filter:{ field:"parent_id", operator:"where_related_contact_type", value:1 },
-            sort:{ field:"number", dir:"asc" },
+            filter:[
+                { field:"item_type_id <>", value: 3 },
+                { field:"item_type_id <>", value: 5 }
+            ],
+            sort:[
+                { field:"item_type_id", dir:"asc" },
+                { field:"id", dir:"asc" }
+            ],
             batch: true,
             serverFiltering: true,
             serverSorting: true,
@@ -3886,85 +3914,33 @@
             page:1,
             pageSize: 100
         }),
+        dataSource          : dataStore(apiUrl + "inventory_modules/center"),
+        transactionDS       : dataStore(apiUrl + "items/movement"),
+        attachmentDS        : dataStore(apiUrl + "attachments"),
+        categoryDS          : new kendo.data.DataSource({
+            data: banhji.source.categoryList,
+            filter:[
+                { field:"item_type_id", operator:"neq", value: 3 },
+                { field:"item_type_id", operator:"neq", value: 5 }
+            ]
+        }),
         sortList            : banhji.source.sortList,
         sorter              : "all",
         sdate               : "",
         edate               : "",
-        obj                 : {},
-        objCustomerCenter   : {},
-        note                : "",
+        obj                 : null,
+        raw                 : null,
         searchText          : "",
-        contact_type_id     : null,
-        currency_id         : 0,
-        balance             : 0,
-        deposit             : 0,
-        outInvoice          : 0,
-        overInvoice         : 0,
-        currencyCode        : "",
-        user_id             : banhji.source.user_id,
-        setObj              : function(){
-            this.set("obj", {
-                //Sale
-                sale            : 0,
-                sale_customer   : 0,
-                sale_product    : 0,
-                sale_ordered    : 0,
-                //AR
-                ar              : 0,
-                ar_open         : 0,
-                ar_customer     : 0,
-                ar_overdue      : 0,
-                collection_day  : 0
-            });
-        },
-        pageLoad            : function() {
-            var self = this, obj = this.get("obj");
-            this.graphDS.read();
+        pageLoad            : function(id){
+            if(id){
+                this.loadObj(id);
+            }
 
-            this.dataSource.query({
-                filter: []
-            }).then(function(){
-                var view = self.dataSource.view();
-
-                obj.set("sale", kendo.toString(view[0].sale, banhji.locale=="km-KH"?"c0":"c2", banhji.locale));
-                obj.set("sale_customer", kendo.toString(view[0].sale_customer, "n0"));
-                obj.set("sale_product", kendo.toString(view[0].sale_product, "n0"));
-                obj.set("sale_ordered", kendo.toString(view[0].sale_ordered, "n0"));
-
-                obj.set("ar", kendo.toString(view[0].ar, banhji.locale=="km-KH"?"c0":"c2", banhji.locale));
-                obj.set("ar_open", kendo.toString(view[0].ar_open, "n0"));
-                obj.set("ar_customer", kendo.toString(view[0].ar_customer, "n0"));
-                obj.set("ar_overdue", kendo.toString(view[0].ar_overdue, "n0"));
-
-                obj.set("collection_day", kendo.toString(view[0].collection_day, "n0"));
-
-                self.set("obj", view[0]);
-            });
-
-            //Inventory
-            this.inventoryDS.query({
-                filter: []
-            }).then(function(){
-                var view = self.inventoryDS.view();
-
-                self.set("objInventory", view[0]);
-            });
-
-            // VendorDS
-            this.vendorDS.query({
-                filter: [],
-                page: 1,
-                pageSize: 100
-            }).then(function(){
-                var view = self.vendorDS.view();
-
-                self.set("objVendor", view[0]);
-            });
-        },
-        save                : function() {
-        },
-        cancel              : function() {
-            window.history.back();
+            //Refresh
+            if(this.itemDS.total()>0){
+                this.itemDS.fetch();
+                this.transactionDS.fetch();
+            }
         },
         sorterChanges       : function(){
             var today = new Date(),
@@ -3976,6 +3952,7 @@
                 case "today":
                     this.set("sdate", today);
                     this.set("edate", "");
+
                     break;
                 case "week":
                     var first = today.getDate() - today.getDay(),
@@ -3983,6 +3960,7 @@
 
                     this.set("sdate", new Date(today.setDate(first)));
                     this.set("edate", new Date(today.setDate(last)));
+
                     break;
                 case "month":
                     this.set("sdate", new Date(today.getFullYear(), today.getMonth(), 1));
@@ -3999,57 +3977,6 @@
                     this.set("edate", "");
             }
         },
-        setCurrencyCode     : function(){
-            var code = "", obj = this.get("obj");
-
-            $.each(banhji.source.currencyDS.data(), function(index, value){
-                if(value.locale == obj.locale){
-                    code = value.code;
-
-                    return false;
-                }
-            });
-
-            this.set("currencyCode", code);
-        },
-        //Obj
-        loadObj             : function(id){
-            var self = this;
-
-            this.contactDS.query({
-                filter: { field:"id", value:id},
-                page:1,
-                pageSize:100
-            }).then(function(){
-                var view = self.contactDS.view();
-
-                if(view.length>0){
-                    self.set("obj", view[0]);
-                    self.loadData();
-                }
-            });
-        },
-        loadData            : function(){
-            var obj = this.get("objCustomerCenter");
-
-            if(obj!==null){
-                this.searchTransaction();
-                this.loadSummary();
-                this.setCurrencyCode();
-
-                this.attachmentDS.query({
-                    filter:{ field:"contact_id", value: obj.id },
-                    page: 1,
-                    pageSize:10
-                });
-                this.noteDS.query({
-                    filter: { field:"contact_id", value: obj.id },
-                    sort: { field:"noted_date", dir:"desc" },
-                    page: 1,
-                    pageSize: 10
-                });
-            }
-        },
         //Upload
         onSelect            : function(e){
             // Array with information about the uploaded files
@@ -4057,46 +3984,56 @@
             files = e.files,
             obj = this.get("obj");
 
-            if(obj!==null){
-                // Check the extension of each file and abort the upload if it is not .jpg
-                $.each(files, function(index, value){
-                    if (value.extension.toLowerCase() === ".jpg"
-                        || value.extension.toLowerCase() === ".jpeg"
-                        || value.extension.toLowerCase() === ".tiff"
-                        || value.extension.toLowerCase() === ".png"
-                        || value.extension.toLowerCase() === ".gif"
-                        || value.extension.toLowerCase() === ".pdf"){
+            // Check the extension of each file and abort the upload if it is not .jpg
+            $.each(files, function(index, value){
+                if (value.extension.toLowerCase() === ".jpg"
+                    || value.extension.toLowerCase() === ".jpeg"
+                    || value.extension.toLowerCase() === ".tiff"
+                    || value.extension.toLowerCase() === ".png"
+                    || value.extension.toLowerCase() === ".gif"
+                    || value.extension.toLowerCase() === ".pdf"){
 
-                        var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ value.name;
+                    var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ value.name;
 
-                        self.attachmentDS.add({
-                            user_id         : self.get("user_id"),
-                            contact_id      : obj.id,
-                            type            : "Contact",
-                            name            : value.name,
-                            description     : "",
-                            key             : key,
-                            url             : banhji.s3 + key,
-                            size            : value.size,
-                            created_at      : new Date(),
+                    self.attachmentDS.add({
+                        user_id         : self.get("user_id"),
+                        transaction_id  : obj.id,
+                        type            : "Item",
+                        name            : value.name,
+                        description     : "",
+                        key             : key,
+                        url             : banhji.s3 + key,
+                        size            : value.size,
+                        created_at      : new Date(),
 
-                            file            : value.rawFile
-                        });
-                    }else{
-                        alert("This type of file is not allowed to attach.");
-                    }
-                });
-            }
+                        file            : value.rawFile
+                    });
+                }else{
+                    alert("This type of file is not allowed to attach.");
+                }
+            });
+        },
+        onRemove            : function(e){
+            // Array with information about the uploaded files
+            var self = this, files = e.files;
+            $.each(this.attachmentDS.data(), function(index, value){
+                if(value.name==files[0].name){
+                    self.attachmentDS.remove(value);
+
+                    return false;
+                }
+            });
         },
         removeFile          : function(e){
             var data = e.data;
 
-            if (confirm(banhji.source.confirmMessage)) {
+            if (confirm("Are you sure, you want to delete it?")) {
                 this.attachmentDS.remove(data);
-                this.attachmentDS.sync();
             }
         },
         uploadFile          : function(){
+            var self = this;
+
             $.each(this.attachmentDS.data(), function(index, value){
                 if(!value.id){
                     var params = {
@@ -4113,14 +4050,13 @@
             this.attachmentDS.sync();
             var saved = false;
             this.attachmentDS.bind("requestEnd", function(e){
-                //Delete File
                 if(e.type=="destroy"){
-                    if(saved==false && e.response){
+                    if(saved==false){
                         saved = true;
 
                         var response = e.response.results;
                         $.each(response, function(index, value){
-                            var params = {
+                            var paramz = {
                                 //Bucket: 'STRING_VALUE', /* required */
                                 Delete: { /* required */
                                     Objects: [ /* required */
@@ -4131,26 +4067,27 @@
                                     ]
                                 }
                             };
-                            bucket.deleteObjects(params, function(err, data) {
+                            bucket.deleteObjects(paramz, function(err, data) {
                                 //console.log(err, data);
                             });
                         });
                     }
                 }
             });
+
+            //Clear upload files
+            $(".k-upload-files").remove();
         },
-        //Summary
-        loadContact         : function(id){
+        //Obj
+        loadObj             : function(id){
             var self = this;
 
-            this.contactDS.query({
-                filter:[
-                    { field:"id", value:id }
-                ],
-                page: 1,
-                pageSize: 50
-            }).then(function(e) {
-                var view = self.contactDS.data();
+            this.itemDS.query({
+                filter: { field:"id", value:id},
+                page:1,
+                pageSize:100
+            }).then(function(){
+                var view = self.itemDS.view();
 
                 if(view.length>0){
                     self.set("obj", view[0]);
@@ -4158,165 +4095,117 @@
                 }
             });
         },
-        loadSummary         : function(){
+        loadData            : function(){
             var self = this, obj = this.get("obj");
 
             if(obj!==null){
-                this.txnDS.query({
-                    filter: [
-                        { field:"contact_id", value: obj.id },
-                        { field:"type", operator:"where_in", value: ["Customer_Deposit", "Commercial_Invoice", "Vat_Invoice", "Invoice"] },
-                        { field:"status", operator:"where_in", value: [0,2] }
-                    ],
-                    sort: { field: "issued_date", dir: "desc" },
-                    page: 1,
-                    pageSize: 1000
+                this.searchTransaction();
+
+                this.dataSource.query({
+                    filter: { field:"id", value: obj.id }
                 }).then(function(){
-                    var view = self.txnDS.view(),
-                    deposit = 0, open = 0, over = 0, balance = 0, today = new Date();
+                    var view = self.dataSource.view();
 
-                    $.each(view, function(index, value){
-                        if(value.type=="Customer_Deposit"){
-                            deposit += kendo.parseFloat(value.amount);
-                        }else{
-                            balance += kendo.parseFloat(value.amount) - (kendo.parseFloat(value.deposit) + value.amount_paid);
-                            open++;
-
-                            if(new Date(value.due_date)<today){
-                                over++;
-                            }
-                        }
-                    });
-
-                    self.set("deposit", kendo.toString(deposit, obj.locale=="km-KH"?"c0":"c", obj.locale));
-                    self.set("outInvoice", kendo.toString(open, "n0"));
-                    self.set("overInvoice", kendo.toString(over, "n0"));
-                    self.set("balance", kendo.toString(balance, obj.locale=="km-KH"?"c0":"c", obj.locale));
+                    self.set("raw", view[0]);
                 });
-            }
-        },
-        loadBalance         : function(){
-            var obj = this.get("obj");
 
-            if(obj!==null){
-                this.transactionDS.query({
-                    filter: [
-                        { field:"contact_id", value: obj.id },
-                        { field:"type", operator:"where_in", value:["Commercial_Invoice", "Vat_Invoice", "Invoice"] },
-                        { field:"status", operator:"where_in", value: [0,2] }
-                    ],
-                    sort: [
-                        { field: "issued_date", dir: "desc" },
-                        { field: "id", dir: "desc" }
-                    ],
+                this.attachmentDS.query({
+                    filter:{ field:"item_id", value: obj.id },
                     page: 1,
-                    pageSize: 10
-                });
-            }
-        },
-        loadDeposit         : function(){
-            var obj = this.get("obj");
-
-            if(obj!==null){
-                this.transactionDS.query({
-                    filter: [
-                        { field:"contact_id", value: obj.id },
-                        { field:"type", value:"Customer_Deposit" }
-                    ],
-                    sort: [
-                        { field: "issued_date", dir: "desc" },
-                        { field: "id", dir: "desc" }
-                    ],
-                    page: 1,
-                    pageSize: 10
-                });
-            }
-        },
-        loadOverInvoice     : function(){
-            var obj = this.get("obj");
-
-            if(obj!==null){
-                this.transactionDS.query({
-                    filter: [
-                        { field:"contact_id", value: obj.id },
-                        { field:"type", operator:"where_in", value: ["Commercial_Invoice", "Vat_Invoice", "Invoice"] },
-                        { field:"status", operator:"where_in", value: [0,2] },
-                        { field:"due_date <", value: kendo.toString(new Date(), "yyyy-MM-dd") }
-                    ],
-                    sort: [
-                        { field: "issued_date", dir: "desc" },
-                        { field: "id", dir: "desc" }
-                    ],
-                    page: 1,
-                    pageSize: 10
+                    pageSize:10
                 });
             }
         },
         selectedRow         : function(e){
-            var data = e.data;
+            var self = this, data = e.data;
 
-            this.set("objCustomerCenter", data);
+            this.set("obj", data);
             this.loadData();
         },
-        //Search
-        enterSearch         : function(e){
-            e.preventDefault();
+        sorterChanges       : function(){
+            var value = this.get("sorter");
 
-            this.search();
+            switch(value){
+            case "today":
+                var today = new Date();
+
+                this.set("sdate", today);
+                this.set("edate", today);
+
+                break;
+            case "week":
+                var thisWeek = new Date;
+                var first = thisWeek.getDate() - thisWeek.getDay();
+                var last = first + 6;
+
+                var firstDayOfWeek = new Date(thisWeek.setDate(first));
+                var lastDayOfWeek = new Date(thisWeek.setDate(last));
+
+                this.set("sdate", firstDayOfWeek);
+                this.set("edate", lastDayOfWeek);
+
+                break;
+            case "month":
+                var thisMonth = new Date;
+                var firstDayOfMonth = new Date(thisMonth.getFullYear(), thisMonth.getMonth(), 1);
+                var lastDayOfMonth = new Date(thisMonth.getFullYear(), thisMonth.getMonth() + 1, 0);
+
+                this.set("sdate", firstDayOfMonth);
+                this.set("edate", lastDayOfMonth);
+
+                break;
+            case "year":
+                var thisYear = new Date();
+                var firstDayOfYear = new Date(thisYear.getFullYear(), 0, 1);
+                var lastDayOfYear = new Date(thisYear.getFullYear(), 11, 31);
+
+                this.set("sdate", firstDayOfYear);
+                this.set("edate", lastDayOfYear);
+
+                break;
+            default:
+                this.set("sdate", "");
+                this.set("edate", "");
+            }
         },
         search              : function(){
             var self = this,
             para = [],
             searchText = this.get("searchText"),
-            contact_type_id = this.get("contact_type_id");
+            category_id = this.get("category_id");
 
             if(searchText){
-                //Phone
-                if(this.phonenumber(searchText)){
-                    para.push({ field: "phone", operator: "contains", value: searchText });
-                }else{
-                    var textParts = searchText.replace(/([a-z]+)/i, "$1 ").split(/[^0-9a-z]+/ig);
-                    if(textParts.length===2){
-                        if(textParts[0]!=="" && textParts[1]!==""){
-                            para.push({ field: "abbr", value: textParts[0] });
-                            para.push({ field: "number", value: textParts[1] });
-                        }else{
-                            para.push({ field: "name", operator: "contains", value: searchText });
-                        }
-                    }else{
-                        para.push({ field: "name", operator: "contains", value: searchText });
-                    }
-                }
+                var textParts = searchText.replace(/([a-z]+)/i, "$1 ").split(/[^0-9a-z]+/ig);
+
+                para.push(
+                    // { field: "abbr", operator: "or_like", value: textParts[0] },
+                    // { field: "number", value: textParts[1] },
+                    { field: "number", operator: "startswith", value: searchText },
+                    { field: "name", operator: "or_like", value: searchText }
+                );
             }
 
-            if(contact_type_id){
-                para.push({ field: "contact_type_id", value: contact_type_id });
-            }else{
-                para.push({ field: "parent_id", operator:"where_related_contact_type", value: 1 });
+            if(category_id){
+                para.push({ field:"category_id", value:category_id });
             }
 
-            this.contactDS.filter(para);
+            // para.push({ field:"item_type_id", value:1 });
+            // para.push({ field:"is_catalog", value: 0 });
+            // para.push({ field:"is_assembly", value: 0 });
 
-            //Clear search filters
-            self.set("searchText", "");
-            self.set("contact_type_id", 0);
-        },
-        phonenumber         : function (inputtxt){
-            var phoneno = /^[+]*[(]{0,1}[0-9]{1,3}[)]{0,1}[-\s\./0-9]*$/g;
-            if(inputtxt.match(phoneno)){
-                return true;
-            }else{
-                return false;
-            }
+            this.itemDS.filter(para);
+
+            this.set("searchText", "");
+            this.set("category_id", 0);
         },
         searchTransaction   : function(){
-            var self = this,
+            var self = this, para = [],
+                obj = this.get("obj"),
                 start = this.get("sdate"),
-                end = this.get("edate"),
-                para = [], obj = this.get("obj");
+                end = this.get("edate");
 
             if(obj!==null){
-                para.push({ field:"contact_id", value: obj.id });
+                para.push({ field:"item_id", value: obj.id });
 
                 //Dates
                 if(start && end){
@@ -4324,157 +4213,71 @@
                     end = new Date(end);
                     end.setDate(end.getDate()+1);
 
-                    para.push({ field:"issued_date >=", value: kendo.toString(start, "yyyy-MM-dd") });
-                    para.push({ field:"issued_date <=", value: kendo.toString(end, "yyyy-MM-dd") });
+                    para.push({ field:"issued_date >=", operator: "where_related_transaction", value: kendo.toString(start, "yyyy-MM-dd") });
+                    para.push({ field:"issued_date <=", operator: "where_related_transaction", value: kendo.toString(end, "yyyy-MM-dd") });
                 }else if(start){
                     start = new Date(start);
-                    para.push({ field:"issued_date", value: kendo.toString(start, "yyyy-MM-dd") });
+                    para.push({ field:"issued_date", operator: "where_related_transaction", value: kendo.toString(start, "yyyy-MM-dd") });
                 }else if(end){
                     end = new Date(end);
                     end.setDate(end.getDate()+1);
-                    para.push({ field:"issued_date <=", value: kendo.toString(end, "yyyy-MM-dd") });
+                    para.push({ field:"issued_date <=", operator: "where_related_transaction", value: kendo.toString(end, "yyyy-MM-dd") });
                 }else{}
 
                 this.transactionDS.query({
                     filter: para,
-                    sort: { field: "issued_date", dir: "desc" },
                     page: 1,
                     pageSize: 10
                 });
             }
         },
-        //Links
-        goEdit              : function(){
+        edit                : function(){
             var obj = this.get("obj");
 
             if(obj!==null){
-                banhji.router.navigate('/customer/'+obj.id);
+                if(obj.item_type_id=="1"){
+                    if(obj.is_catalog=="1"){
+                        banhji.router.navigate('/item_catalog/'+obj.id);
+                    }else if(obj.is_assembly=="1"){
+                        banhji.router.navigate('/item_assembly/'+obj.id);
+                    }else{
+                        banhji.router.navigate('/item/'+obj.id);
+                    }
+                }else if(obj.item_type_id=="2"){
+                    banhji.router.navigate('/non_inventory_part/'+obj.id);
+                }else if(obj.item_type_id=="3"){
+                    banhji.router.navigate('/fixed_assets/'+obj.id);
+                }else if(obj.item_type_id=="4"){
+                    banhji.router.navigate('/item_service/'+obj.id);
+                }else if(obj.item_type_id=="5"){
+                    banhji.router.navigate('/txn_item/'+obj.id);
+                }else{
+
+                }
             }
         },
-        goReference         : function(e){
-            var self = this, data = e.data;
-
-            this.txnDS.query({
-                filter:{ field:"id", value:data.reference_id}
-            }).then(function(){
-                var view = self.txnDS.view();
-
-                banhji.router.navigate('/' + view[0].type.toLowerCase() +'/'+ data.reference_id);
-            });
-        },
-        goQuote             : function(){
-            var obj = this.get("objCustomerCenter");
-            
-            if(obj.id){
-                 banhji.router.navigate('/quote');
-                banhji.quote.setContact(obj);
-            }
-        },
-        goDeposit           : function(){
-            var obj = this.get("objCustomerCenter");
-
-             if(obj.id){
-                banhji.router.navigate('/customer_deposit');
-                banhji.customerDeposit.setContact(obj);
-            }
-        },
-        goSaleOrder         : function(){
-            var obj = this.get("objCustomerCenter");
-
-             if(obj.id){
-                banhji.router.navigate('/sale_order');
-                banhji.saleOrder.setContact(obj);
-            }
-        },
-        goCashSale          : function(){
-            var obj = this.get("objCustomerCenter");
-
-             if(obj.id){
-                banhji.router.navigate('/cash_sale');
-                banhji.cashSale.setContact(obj);
-            }
-        },
-        goInvoice           : function(){
-            var obj = this.get("objCustomerCenter");
-
-             if(obj.id){
-                banhji.router.navigate('/invoice');
-                banhji.invoice.setContact(obj);
-            }
-        },
-        goGDN               : function(){
-            var obj = this.get("objCustomerCenter");
-
-            if(obj.id){
-                banhji.router.navigate('/gdn');
-                banhji.gdn.setContact(obj);
-            }
-        },
-        goSaleReturn        : function(){
-            var obj = this.get("objCustomerCenter");
-
-            if(obj.id){
-                banhji.router.navigate('/sale_return');
-                banhji.saleReturn.setContact(obj);
-            }
-        },
-        goStatement         : function(){
-            var obj = this.get("objCustomerCenter");
-
-            if(obj.id){
-                banhji.router.navigate('/statement');
-                banhji.statement.setContact(obj);
-            }
-        },
-        goCashRefound       : function(){
-            var obj = this.get("objCustomerCenter");
-
-            if(obj.id){
-                banhji.router.navigate('/cash_refund');
-                banhji.cashRefund.setContact(obj);
-            }
-        },
-        goCashReceipt       : function(){
-            var obj = this.get("objCustomerCenter");
-
-            if(obj.id){
-                banhji.router.navigate('/cash_receipt');
-                banhji.cashReceipt.loadContact(obj.id);
-            }
-        },
-        payInvoice          : function(e){
-            var data = e.data;
-
-            if(obj.id){
-                banhji.router.navigate('/cash_receipt');
-                banhji.cashReceipt.loadInvoice(data.id);
-            }
-        },
-        //Note
-        saveNoteEnter       : function(e){
-            e.preventDefault();
-            this.saveNote();
-        },
-        saveNote            : function(){
+        pricing             : function(){
             var obj = this.get("obj");
 
-            if(obj!==null && this.get("note")!==""){
-                this.noteDS.insert(0, {
-                    contact_id  : obj.id,
-                    note        : this.get("note"),
-                    noted_date  : new Date(),
-                    created_by  : this.get("user_id"),
-
-                    creator     : ""
-                });
-
-                this.noteDS.sync();
-                this.set("note", "");
-            }else{
-                alert("Please select a customer and Memo is required");
+            if(obj!==null){
+                if(obj.is_catalog=="1"){
+                    banhji.router.navigate('/item_catalog/'+obj.id);
+                }else if(obj.is_assembly=="1"){
+                    banhji.router.navigate('/item_assembly/'+obj.id);
+                }else{
+                    banhji.router.navigate('/item_prices/'+obj.id);
+                }
             }
         },
-        today               : new Date()
+        variant             : function(){
+            var obj = this.get("obj");
+
+            if(obj!==null){
+                if(obj.variant.length>0){
+                    banhji.router.navigate('/item_variant/'+obj.sub_of_id);
+                }
+            }
+        }
     });
 
     //Add Customer
@@ -13316,6 +13119,14 @@
 
         // Add Customer
         customer: new kendo.Layout("#customer", {model: banhji.customer}),
+
+
+        // Menu
+        tapMenu: new kendo.View("#tapMenu", {model: banhji.tapMenu}),
+        reports: new kendo.View("#reports", {model: banhji.reports}),
+        checkOut: new kendo.View("#checkOut", {model: banhji.checkOut}),
+        transactions: new kendo.View("#transactions", {model: banhji.transactions}),
+        items: new kendo.View("#items", {model: banhji.items}),
     };
     /* views and layout */
     banhji.router = new kendo.Router({
@@ -13364,11 +13175,51 @@
     /* Login page */
     banhji.router.route('/', function() {
         var blank = new kendo.View('#blank-tmpl');
-        banhji.view.layout.showIn('#content', banhji.view.Index);
-        banhji.Index.pageLoad();
 
-        var vm = banhji.Index;
-        banhji.userManagement.addMultiTask("Sales","sales",vm);
+        banhji.view.layout.showIn('#content', banhji.view.Index);
+        banhji.view.Index.showIn('#indexMenu', banhji.view.tapMenu);
+        banhji.view.Index.showIn('#indexContent', banhji.view.reports);
+
+        banhji.reports.pageLoad();        
+    });
+    banhji.router.route('/check_out', function() {
+        
+        banhji.view.layout.showIn('#content', banhji.view.Index);
+        banhji.view.Index.showIn('#indexMenu', banhji.view.tapMenu);
+        banhji.view.Index.showIn('#indexContent', banhji.view.checkOut);
+
+        //load MVVM
+        //banhji.checkOut.pageLoad();
+    });
+    banhji.router.route('/transactions', function() {
+        
+        banhji.view.layout.showIn('#content', banhji.view.Index);
+        banhji.view.Index.showIn('#indexMenu', banhji.view.tapMenu);
+        banhji.view.Index.showIn('#indexContent', banhji.view.transactions);
+
+        //load MVVM
+        //banhji.transactions.pageLoad();
+    });
+    banhji.router.route('/items', function() {
+        
+        banhji.view.layout.showIn('#content', banhji.view.Index);
+        banhji.view.Index.showIn('#indexMenu', banhji.view.tapMenu);
+        banhji.view.Index.showIn('#indexContent', banhji.view.items);
+
+        // if(banhji.pageLoaded["customers"]==undefined){
+        //     banhji.pageLoaded["customers"] = true;
+            
+        //     banhji.source.supplierDS.filter({
+        //         field: "parent_id",
+        //         operator: "where_related_contact_type",
+        //         value: 2
+        //     });
+        // }
+
+        
+
+        //load MVVM
+        banhji.items.pageLoad();
     });
 
     // Add Cutomer
@@ -14103,4 +13954,4 @@
         var Href1 = '<?php echo base_url(); ?>assets/water/winvoice-res.css';
         var Href2 = '<?php echo base_url(); ?>assets/water/winvoice-print.css';
     });
-</script>
+</script>        

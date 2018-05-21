@@ -3830,13 +3830,44 @@
     });
     //-----------------------------------------
     banhji.Index = kendo.observable({
+        lang     : langVM
+    });
+    banhji.tapMenu =  kendo.observable({
+        goReports          : function(){
+            banhji.router.navigate('/');
+        },
+        goCheckOut         : function(){
+            banhji.router.navigate('/check_out');
+        },
+        goTransactions      : function(){
+            banhji.router.navigate('/transactions');
+        },
+        goMenuCustomers        : function(){
+            banhji.router.navigate('/customers');
+        },
+    });
+    banhji.reports = kendo.observable({
         lang                : langVM,
-        Institute           : banhji.institute,
-        actualCash          : 0,
         dataSource          : dataStore(apiUrl + "customer_modules/dashboard"),
-        inventoryDS         : dataStore(apiUrl + "inventory_modules/dashboard"),
-        vendorDS            : dataStore(apiUrl + "vendor_modules/dashboard"),
         graphDS             : dataStore(apiUrl + "customer_modules/monthly_sale"),
+        obj                 : {},
+        pageLoad            : function(){
+            var self = this;
+
+            this.graphDS.read();
+
+            this.dataSource.query({
+                filter: []
+            }).then(function(){
+                var view = self.dataSource.view();
+
+                self.set("obj", view[0]);
+            });
+        }
+    });
+
+    banhji.customers = kendo.observable({
+        lang                : langVM,
         transactionDS       : dataStore(apiUrl + 'transactions'),
         noteDS              : dataStore(apiUrl + 'notes'),
         attachmentDS        : dataStore(apiUrl + "attachments"),
@@ -3890,8 +3921,7 @@
         sorter              : "all",
         sdate               : "",
         edate               : "",
-        obj                 : {},
-        objCustomerCenter   : {},
+        obj                 : null,
         note                : "",
         searchText          : "",
         contact_type_id     : null,
@@ -3902,69 +3932,17 @@
         overInvoice         : 0,
         currencyCode        : "",
         user_id             : banhji.source.user_id,
-        setObj              : function(){
-            this.set("obj", {
-                //Sale
-                sale            : 0,
-                sale_customer   : 0,
-                sale_product    : 0,
-                sale_ordered    : 0,
-                //AR
-                ar              : 0,
-                ar_open         : 0,
-                ar_customer     : 0,
-                ar_overdue      : 0,
-                collection_day  : 0
-            });
-        },
-        pageLoad            : function() {
-            var self = this, obj = this.get("obj");
-            this.graphDS.read();
+        pageLoad            : function(id){
+            if(id){
+                this.loadObj(id);
+            }
 
-            this.dataSource.query({
-                filter: []
-            }).then(function(){
-                var view = self.dataSource.view();
-
-                obj.set("sale", kendo.toString(view[0].sale, banhji.locale=="km-KH"?"c0":"c2", banhji.locale));
-                obj.set("sale_customer", kendo.toString(view[0].sale_customer, "n0"));
-                obj.set("sale_product", kendo.toString(view[0].sale_product, "n0"));
-                obj.set("sale_ordered", kendo.toString(view[0].sale_ordered, "n0"));
-
-                obj.set("ar", kendo.toString(view[0].ar, banhji.locale=="km-KH"?"c0":"c2", banhji.locale));
-                obj.set("ar_open", kendo.toString(view[0].ar_open, "n0"));
-                obj.set("ar_customer", kendo.toString(view[0].ar_customer, "n0"));
-                obj.set("ar_overdue", kendo.toString(view[0].ar_overdue, "n0"));
-
-                obj.set("collection_day", kendo.toString(view[0].collection_day, "n0"));
-
-                self.set("obj", view[0]);
-            });
-
-            //Inventory
-            this.inventoryDS.query({
-                filter: []
-            }).then(function(){
-                var view = self.inventoryDS.view();
-
-                self.set("objInventory", view[0]);
-            });
-
-            // VendorDS
-            this.vendorDS.query({
-                filter: [],
-                page: 1,
-                pageSize: 100
-            }).then(function(){
-                var view = self.vendorDS.view();
-
-                self.set("objVendor", view[0]);
-            });
-        },
-        save                : function() {
-        },
-        cancel              : function() {
-            window.history.back();
+            //Refresh
+            if(this.contactDS.total()>0){
+                this.contactDS.fetch();
+                this.searchTransaction();
+                this.loadSummary();
+            }
         },
         sorterChanges       : function(){
             var today = new Date(),
@@ -4030,7 +4008,7 @@
             });
         },
         loadData            : function(){
-            var obj = this.get("objCustomerCenter");
+            var obj = this.get("obj");
 
             if(obj!==null){
                 this.searchTransaction();
@@ -4182,7 +4160,7 @@
                             balance += kendo.parseFloat(value.amount) - (kendo.parseFloat(value.deposit) + value.amount_paid);
                             open++;
 
-                            if(new Date(value.due_date)<today){
+                            if(new Date(value.due_date) < today){
                                 over++;
                             }
                         }
@@ -4255,7 +4233,7 @@
         selectedRow         : function(e){
             var data = e.data;
 
-            this.set("objCustomerCenter", data);
+            this.set("obj", data);
             this.loadData();
         },
         //Search
@@ -4363,81 +4341,81 @@
             });
         },
         goQuote             : function(){
-            var obj = this.get("objCustomerCenter");
-            
-            if(obj.id){
-                 banhji.router.navigate('/quote');
+            var obj = this.get("obj");
+
+            if(obj!==null){
+                banhji.router.navigate('/quote');
                 banhji.quote.setContact(obj);
             }
         },
         goDeposit           : function(){
-            var obj = this.get("objCustomerCenter");
+            var obj = this.get("obj");
 
-             if(obj.id){
+            if(obj!==null){
                 banhji.router.navigate('/customer_deposit');
                 banhji.customerDeposit.setContact(obj);
             }
         },
         goSaleOrder         : function(){
-            var obj = this.get("objCustomerCenter");
+            var obj = this.get("obj");
 
-             if(obj.id){
+            if(obj!==null){
                 banhji.router.navigate('/sale_order');
                 banhji.saleOrder.setContact(obj);
             }
         },
         goCashSale          : function(){
-            var obj = this.get("objCustomerCenter");
+            var obj = this.get("obj");
 
-             if(obj.id){
+            if(obj!==null){
                 banhji.router.navigate('/cash_sale');
                 banhji.cashSale.setContact(obj);
             }
         },
         goInvoice           : function(){
-            var obj = this.get("objCustomerCenter");
+            var obj = this.get("obj");
 
-             if(obj.id){
+            if(obj!==null){
                 banhji.router.navigate('/invoice');
                 banhji.invoice.setContact(obj);
             }
         },
         goGDN               : function(){
-            var obj = this.get("objCustomerCenter");
+            var obj = this.get("obj");
 
-            if(obj.id){
+            if(obj!==null){
                 banhji.router.navigate('/gdn');
                 banhji.gdn.setContact(obj);
             }
         },
         goSaleReturn        : function(){
-            var obj = this.get("objCustomerCenter");
+            var obj = this.get("obj");
 
-            if(obj.id){
+            if(obj!==null){
                 banhji.router.navigate('/sale_return');
                 banhji.saleReturn.setContact(obj);
             }
         },
         goStatement         : function(){
-            var obj = this.get("objCustomerCenter");
+            var obj = this.get("obj");
 
-            if(obj.id){
+            if(obj!==null){
                 banhji.router.navigate('/statement');
                 banhji.statement.setContact(obj);
             }
         },
         goCashRefound       : function(){
-            var obj = this.get("objCustomerCenter");
+            var obj = this.get("obj");
 
-            if(obj.id){
+            if(obj!==null){
                 banhji.router.navigate('/cash_refund');
                 banhji.cashRefund.setContact(obj);
             }
         },
         goCashReceipt       : function(){
-            var obj = this.get("objCustomerCenter");
+            var obj = this.get("obj");
 
-            if(obj.id){
+            if(obj!==null){
                 banhji.router.navigate('/cash_receipt');
                 banhji.cashReceipt.loadContact(obj.id);
             }
@@ -4445,7 +4423,7 @@
         payInvoice          : function(e){
             var data = e.data;
 
-            if(obj.id){
+            if(obj!==null){
                 banhji.router.navigate('/cash_receipt');
                 banhji.cashReceipt.loadInvoice(data.id);
             }
@@ -4473,8 +4451,7 @@
             }else{
                 alert("Please select a customer and Memo is required");
             }
-        },
-        today               : new Date()
+        }
     });
 
     //Add Customer
@@ -13316,6 +13293,14 @@
 
         // Add Customer
         customer: new kendo.Layout("#customer", {model: banhji.customer}),
+
+
+        // Menu
+        tapMenu: new kendo.View("#tapMenu", {model: banhji.tapMenu}),
+        reports: new kendo.View("#reports", {model: banhji.reports}),
+        checkOut: new kendo.View("#checkOut", {model: banhji.checkOut}),
+        transactions: new kendo.View("#transactions", {model: banhji.transactions}),
+        customers: new kendo.View("#customers", {model: banhji.customers}),
     };
     /* views and layout */
     banhji.router = new kendo.Router({
@@ -13364,11 +13349,51 @@
     /* Login page */
     banhji.router.route('/', function() {
         var blank = new kendo.View('#blank-tmpl');
-        banhji.view.layout.showIn('#content', banhji.view.Index);
-        banhji.Index.pageLoad();
 
-        var vm = banhji.Index;
-        banhji.userManagement.addMultiTask("Sales","sales",vm);
+        banhji.view.layout.showIn('#content', banhji.view.Index);
+        banhji.view.Index.showIn('#indexMenu', banhji.view.tapMenu);
+        banhji.view.Index.showIn('#indexContent', banhji.view.reports);
+
+        banhji.reports.pageLoad();        
+    });
+    banhji.router.route('/check_out', function() {
+        
+        banhji.view.layout.showIn('#content', banhji.view.Index);
+        banhji.view.Index.showIn('#indexMenu', banhji.view.tapMenu);
+        banhji.view.Index.showIn('#indexContent', banhji.view.checkOut);
+
+        //load MVVM
+        //banhji.checkOut.pageLoad();
+    });
+    banhji.router.route('/transactions', function() {
+        
+        banhji.view.layout.showIn('#content', banhji.view.Index);
+        banhji.view.Index.showIn('#indexMenu', banhji.view.tapMenu);
+        banhji.view.Index.showIn('#indexContent', banhji.view.transactions);
+
+        //load MVVM
+        //banhji.transactions.pageLoad();
+    });
+    banhji.router.route('/customers', function() {
+        
+        banhji.view.layout.showIn('#content', banhji.view.Index);
+        banhji.view.Index.showIn('#indexMenu', banhji.view.tapMenu);
+        banhji.view.Index.showIn('#indexContent', banhji.view.customers);
+
+        // if(banhji.pageLoaded["customers"]==undefined){
+        //     banhji.pageLoaded["customers"] = true;
+            
+        //     banhji.source.supplierDS.filter({
+        //         field: "parent_id",
+        //         operator: "where_related_contact_type",
+        //         value: 2
+        //     });
+        // }
+
+        
+
+        //load MVVM
+        banhji.customers.pageLoad();
     });
 
     // Add Cutomer
