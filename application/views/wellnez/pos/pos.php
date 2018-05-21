@@ -494,7 +494,7 @@
 						                            data-option-label="Category ..."
 						                            required="" 
 						                            data-required-msg="required" 
-						                            style="width: 100%; border-radius: 0; 
+						                            style="width: 100%; border-radius: 0; "
 						                            aria-invalid="true" 
 						                            class="k-invalid" />
 											</div>

@@ -217,7 +217,9 @@
 	</div>	
 </script>
 <script id="checkOut" type="text/x-kendo-template">	
-	checkOut
+	<div class="row">
+
+	</div>
 </script>
 <script id="transactions" type="text/x-kendo-template">	
 	<div class="row">
@@ -227,11 +229,153 @@
                 	Add New
                 </button>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#/quote"><span data-bind="">Create Quotation</span></a>
-                    <a class="dropdown-item" href="#/invoice"><span data-bind="">Create Invoice</span></a>
-                    <a class="dropdown-item" href="#cash_sale"><span data-bind="">Create Cash Sale</span></a>
-                    <a class="dropdown-item" href="#/cash_receipt"><span data-bind="">Create Cash Receipt</span></a>
+                    <a class="dropdown-item" href="#/quote"><span data-bind="text: lang.lang.create_quotation"></span></a>
+                    <a class="dropdown-item" href="#/invoice"><span data-bind="text: lang.lang.create_invoice"></span></a>
+                    <a class="dropdown-item" href="#/cash_sale"><span data-bind="text: lang.lang.create_cash_sale"></span></a>
+                    <a class="dropdown-item" href="#/cash_receipt"><span data-bind="text: lang.lang.create_cash_receipt"></span></a>
                 </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+        	<div class="card-body">
+    			<div class="reportHeader">
+	                <!-- Nav tabs -->
+	                <ul class="nav nav-tabs" role="tablist">
+	                    <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#date" role="tab"><i class=" ti-calendar"></i><span class="marginLeft hidden-xs-down" data-bind="text: lang.lang.date">Date</span></a> </li>
+	                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#filter" role="tab"><i class="ti-filter"></i><span class="marginLeft hidden-xs-down" data-bind="text: lang.lang.filter">filter</span></a> </li>
+	                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#print_export" role="tab"><i class="ti-printer"></i><span class="marginLeft hidden-xs-down" data-bind="text: lang.lang.print_export">Print/Export</span></a> </li>
+	                </ul>
+	                <!-- Tab panes -->
+	                <div class="tab-content tabcontent-border">
+	                    <div class="tab-pane active" id="date" role="tabpanel">
+	                        <div class="p-20">
+	                        	<div class="row ">
+			    					<input data-role="dropdownlist"  
+										   class="sorter marginRight marginBottom"
+								           data-value-primitive="true"
+								           data-text-field="text"
+								           data-value-field="value"
+								           data-bind="value: sorter,
+								                      source: sortList,
+								                      events: { change: sorterChanges }" />
+
+									<input data-role="datepicker"
+										   class="sdate marginRight marginBottom"
+										   data-format="dd-MM-yyyy"
+								           data-bind="value: sdate,
+								           			  max: edate"
+								           placeholder="From ..." >
+
+								    <input data-role="datepicker" 
+								    	   class="edate marginRight marginBottom"
+								    	   data-format="dd-MM-yyyy"
+								           data-bind="value: edate,
+								                      min: sdate"
+								           placeholder="To ..." >
+
+								  	<button class="btnSearch" type="button" data-role="button" data-bind="click: search"><i class="ti-search"></i></button>
+			    				</div>
+	                        </div>
+	                    </div>
+	                    <div class="tab-pane" id="filter" role="tabpanel">
+	                    	<div class="p-20">
+	                        	<div class="row">						    					
+									<p data-bind="text: lang.lang.customers" style=""></p>
+									<select data-role="multiselect"
+										   data-value-primitive="true"
+										   data-item-template="contact-list-tmpl"
+										   data-value-field="id"
+										   data-text-field="name"
+										   data-bind="value: obj.contactIds,
+										   			source: contactDS"
+										   data-placeholder="Select Customer.."
+										   style="width: 50%; float: left; margin-right: 8px; " /></select>
+										
+								  	<button type="button" data-role="button" data-bind="click: search"><i class="ti-search"></i></button>
+											
+			    				</div>
+			    			</div>
+	                    </div>
+	                    <div class="tab-pane" id="print_export" role="tabpanel">
+	                    	<div class="p-20">
+	                        	<div class="row">
+			    					<button class="col-md-1 btnPrint " type="button" data-role="button" data-bind="click: printGrid"><i class="ti-printer"></i><span class="marginLeft">Print</span></button>
+			    					<button class="col-md-2 btnExport" type="button" data-role="button" data-bind="click: ExportExcel"><i class="ti-export"></i><span class="marginLeft">Export to Excel</span></button>
+			    				</div>
+			    			</div>
+	                    </div>
+	                    
+	                </div>
+	            </div>
+	            <div id="invFormContent" style="page-break-after: always;">
+	            	<!-- Style For Print -->
+	            	<style type="text/css">
+	            		* {
+							-webkit-print-color-adjust: true;
+						}
+						.home-footer .table tbody td {
+						    background-color: #fff !important;
+						    -webkit-print-color-adjust: exact;
+						}
+						.home-footer .table tbody tr:nth-child(odd) td {
+						    background-color: #f4f5f8 !important;
+						    -webkit-print-color-adjust: exact;
+						}
+	            	</style>
+
+		            <!-- Title -->
+		            <div class="reportTitle" style="text-align: center; width: 97%; margin: 15px auto;">
+		            	<h3 style="font-size: 15px; color: #203864 !important; margin-bottom: 10px;" data-bind="html: company.name"></h3>
+						<h2 style="font-size: 20px; font-weight: 600; margin-top: 0px; color: #203864 !important;" data-bind="text: lang.lang.sale_summary_by_customer"></h2>
+						<p style="font-size: 15px; margin-bottom: 0;" data-bind="text: displayDate"></p>
+		            </div>
+
+		            <!-- Block -->
+		            <div class="reportBlock" style="width: 97%; margin: 0 auto;">
+		            	<div class="row">
+		            		<div class="col-md-3">
+		            			<div class="total-sale" style="width: 100%; padding: 10px; background-color: #DDEBF7 !important; -webkit-print-color-adjust: exact; text-align: center; margin-bottom: 15px; display: inline-block; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
+									<p style="font-size: 14px;" data-bind="text: lang.lang.number_of_customer"></p>
+									<span style="font-size: 20px; font-weight: 700;" data-bind="text: dataSource.total"></span>
+								</div>
+		            		</div>
+		            		<div class="col-md-9" >
+		            			<div class="total-sale" style="width: 100%; padding: 10px; background-color: #DDEBF7 !important; -webkit-print-color-adjust: exact; text-align: center; margin-bottom: 15px; display: inline-block; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
+									<p style="font-size: 14px;" data-bind="text: lang.lang.total_sale"></p>
+									<span style="font-size: 20px; font-weight: 700;" data-bind="text: totalAmount"></span>
+								</div>
+		            		</div>
+		            	</div>
+		            </div>
+
+		            <!-- Table -->
+		            <div class="reportTable home-footer table-responsive" style="width: 97%; margin: 0 auto;">
+		            	<table class="table color-table dark-table" style="width: 100%; height: auto; ">
+                            <thead>
+                                <tr>
+									<th style="background-color: #343a40 !important; -webkit-print-color-adjust: exact; color: #fff !important; text-align: center; text-transform: uppercase; vertical-align: top; font-weight: 400; padding: 10px;" data-bind="text: lang.lang.customer"></th>
+									<th style="background-color: #343a40 !important; -webkit-print-color-adjust: exact; color: #fff !important; text-align: center; text-transform: uppercase; vertical-align: top; font-weight: 400; padding: 10px;" data-bind="text: lang.lang.number_of_invoice"></th>
+									<th style="background-color: #343a40 !important; -webkit-print-color-adjust: exact; color: #fff !important; text-align: center; text-transform: uppercase; vertical-align: top; font-weight: 400; padding: 10px;" data-bind="text: lang.lang.number_of_cash_sale"></th>
+									<th style="background-color: #343a40 !important; -webkit-print-color-adjust: exact; color: #fff !important; text-align: center; text-transform: uppercase; vertical-align: top; font-weight: 400; padding: 10px;" data-bind="text: lang.lang.total_sale"></th>
+								</tr>
+                            </thead>
+                            <tbody  data-role="listview"
+		            				data-auto-bind="false"
+					                data-template="saleSummaryByCustomer-template"
+					                data-bind="source: dataSource" >
+					        </tbody>
+		            	</table>
+		            </div>
+		        </div>
+
+		        <!-- Pagination -->
+            	<div 	id="pager" 
+            			class="k-pager-wrap" 
+	            		data-role="pager"
+				    	data-auto-bind="false"
+			            data-bind="source: dataSource"
+			            style="width: 97%; margin: 0 auto;" >
+			    </div>
             </div>
         </div>
 	</div>
@@ -548,9 +692,6 @@
 		</div>
 	</div>
 </script>
-
-
-
 
 
 <script id="saleReport" type="text/x-kendo-template">
@@ -5827,4 +5968,4 @@
 		#=code# - #=country#
 	</span>
 </script>
-<!-- End -->      
+<!-- End -->            

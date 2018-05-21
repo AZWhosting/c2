@@ -3865,6 +3865,18 @@
             });
         }
     });
+    banhji.checkOut = kendo.observable({
+        lang                : langVM,
+        pageLoad            : function(){
+        }
+    });
+    banhji.transactions = kendo.observable({
+        lang                : langVM,
+        pageLoad            : function(){
+        }
+    });
+
+
 
     banhji.customers = kendo.observable({
         lang                : langVM,
@@ -13363,7 +13375,7 @@
         banhji.view.Index.showIn('#indexContent', banhji.view.checkOut);
 
         //load MVVM
-        //banhji.checkOut.pageLoad();
+        banhji.checkOut.pageLoad();
     });
     banhji.router.route('/transactions', function() {
         
@@ -13372,7 +13384,7 @@
         banhji.view.Index.showIn('#indexContent', banhji.view.transactions);
 
         //load MVVM
-        //banhji.transactions.pageLoad();
+        banhji.transactions.pageLoad();
     });
     banhji.router.route('/customers', function() {
         
@@ -14082,50 +14094,10 @@
             vm.pageLoad();
         }
     });
-    $(function() {
-        banhji.accessMod.query({
-            filter: {
-                field: 'username',
-                value: JSON.parse(localStorage.getItem('userData/user')).username
-            }
-        }).then(function(e) {
-            // var allowed = false;
-            // if (banhji.accessMod.data().length > 0) {
-            //     for (var i = 0; i < banhji.accessMod.data().length; i++) {
-            //         if ("wellnez" == banhji.accessMod.data()[i].name.toLowerCase()) {
-            //             allowed = true;
-            //             break;
-            //         }
-            //     }
-            // }
-            // if (!allowed) {
-            //     alert("You don't have permission to access this page!");
-            //     window.location.replace(baseUrl + "admin");
-            //     // banhji.view.layout.showIn("#content", banhji.view.wDashBoard);
-            // }
-            // $("#holdpageloadhide").css("display", "none");
-        });
-        banhji.source.contactDS.read().then(function() {
-            banhji.router.start();
-            // banhji.source.loadData();
-            banhji.source.pageLoad();
-        });
 
-        function loadStyle(href) {
-            // avoid duplicates
-            for (var i = 0; i < document.styleSheets.length; i++) {
-                if (document.styleSheets[i].href == href) {
-                    return;
-                }
-            }
-            var head = document.getElementsByTagName('head')[0];
-            var link = document.createElement('link');
-            link.rel = 'stylesheet';
-            link.type = 'text/css';
-            link.href = href;
-            head.appendChild(link);
-        }
-        var Href1 = '<?php echo base_url(); ?>assets/water/winvoice-res.css';
-        var Href2 = '<?php echo base_url(); ?>assets/water/winvoice-print.css';
+    //Router Start 
+    $(function() {
+        banhji.router.start();
+        banhji.source.pageLoad();
     });
 </script>
