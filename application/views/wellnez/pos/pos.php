@@ -757,6 +757,14 @@
 				                            	width: '80px' 
 				                            },
 				                            {
+											    field: 'quantity',
+											    title: 'QTY',
+											    format: '{0:n}',
+											    editor: numberTextboxEditor,
+											    width: '120px',
+											    attributes: { style: 'text-align: right;' }
+											},
+				                            {
 											    field: 'price',
 											    title: 'PRICE',
 											    hidden: true,
