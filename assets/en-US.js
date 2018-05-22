@@ -1,5 +1,6 @@
 var	en_US = {
 	"home" : "Home",
+	"logout" : "Logout",
 	//Main Dustboard
 	"search_contact" : "Search Contact",
 	"contact" : "Contact",

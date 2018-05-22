@@ -36,7 +36,7 @@
                 </li>
                  <li>
                     <a class="waves-effect waves-dark" href="<?php echo base_url(); ?>micro/cashs" aria-expanded="false">
-                        <i class="ti-layout-grid2"></i>
+                        <i class="fa fa-dollar"></i>
                         <span class="hide-menu" data-bind="text: lang.lang.cash">Cashs</span>
                     </a>
                 </li>
@@ -47,7 +47,7 @@
                         <span class="hide-menu" data-bind="text: lang.lang.setting">Setting</span>
                     </a>
                 </li>
-                <li>
+                <!-- <li>
                     <a target="_blank" class="waves-effect waves-dark" href="" aria-expanded="false">
                         <i class="ti-comments-smiley"></i>
                         <span class="hide-menu" data-bind="text: lang.lang.faq">FAQ</span>
@@ -58,7 +58,7 @@
                         <i class="ti-headphone-alt"></i>
                         <span class="hide-menu" data-bind="text: lang.lang.support">Support</span>
                     </a>
-                </li>
+                </li> -->
             </ul>
         </nav>
         <!-- End Sidebar navigation -->

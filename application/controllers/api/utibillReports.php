@@ -253,16 +253,16 @@ class UtibillReports extends REST_Controller {
 
 		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
-		// //Sort
-		// if(!empty($sort) && isset($sort)){
-		// 	foreach ($sort as $value) {
-		// 		if(isset($value['operator'])){
-		// 			$obj->{$value['operator']}($value["field"], $value["dir"]);
-		// 		}else{
-		// 			$obj->order_by($value["field"], $value["dir"]);
-		// 		}
-		// 	}
-		// }
+		//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
+			}
+		}
 		
 		//Filter		
 		if(!empty($filter) && isset($filter)){
@@ -286,7 +286,15 @@ class UtibillReports extends REST_Controller {
 		$obj->where("is_recurring <>", 1);
 		$obj->where("deleted <>", 1);
 		$obj->order_by("issued_date", "asc");
-		$obj->get_iterated();
+		// $obj->get_iterated();
+		//Results
+		if($page && $limit){
+			$obj->get_paged_iterated($page, $limit);
+			$data["count"] = $obj->paged->total_rows;
+		}else{
+			$obj->get_iterated();
+			$data["count"] = $obj->result_count();
+		}
 
 		if($obj->exists()){
 			$objList = [];
@@ -341,7 +349,7 @@ class UtibillReports extends REST_Controller {
 
 		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
-		// Sort
+		//Sort
 		if(!empty($sort) && isset($sort)){
 			foreach ($sort as $value) {
 				if(isset($value['operator'])){

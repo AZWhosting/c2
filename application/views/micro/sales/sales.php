@@ -44,10 +44,10 @@
 <!-- Menu -->
 <script id="tapMenu" type="text/x-kendo-template">
 	<ul class="nav nav-tabs customtab" role="tablist" >
-		<li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#/" data-bind="click: goReports"><span class="hidden-sm-up"><i class="ti-layout-grid2-thumb"></i></span> <span class="hidden-xs-down">Reports</span></a> </li>
+		<li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#/" data-bind="click: goReports"><span class="hidden-sm-up"><i class="ti-layout-grid2-thumb"></i></span> <span class="hidden-xs-down" data-bind="">Reports</span></a> </li>
 	    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#/check_out" data-bind="click: goCheckOut"><span class="hidden-sm-up"><i class="ti-layout-accordion-list"></i></span> <span class="hidden-xs-down">Check Out</span></a> </li>
 	    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#/transactions" data-bind="click: goTransactions"><span class="hidden-sm-up"><i class="ti-layout-accordion-list"></i></span> <span class="hidden-xs-down">Sale Transactions</span></a> </li>
-	    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#/customers" data-bind="click: goMenuCustomers"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" >Customers</span></a> </li>
+	    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#/customers" data-bind="click: goMenuCustomers"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="">Customers</span></a> </li>
     </ul>
 </script>
 <!-- End -->
@@ -6215,4 +6215,4 @@
 		#=code# - #=country#
 	</span>
 </script>
-<!-- End -->
+<!-- End -->                                               
