@@ -18758,6 +18758,7 @@
                 end = new Date(end);
                 displayDate = "From " + kendo.toString(start, "dd-MM-yyyy") + " To " + kendo.toString(end, "dd-MM-yyyy");
                 end.setDate(end.getDate() + 1);
+                start.setDate(end.getDate() - 1);
 
                 para.push({
                     field: "month_of >=",
@@ -19521,9 +19522,10 @@
                 end = new Date(end);
                 displayDate = "From " + kendo.toString(start, "dd-MM-yyyy") + " To " + kendo.toString(end, "dd-MM-yyyy");
                 end.setDate(end.getDate() + 1);
+                start.setDate(end.getDate() - 1);
 
                 para.push({
-                    field: "month_of >=",
+                    field: "month_of >",
                     value: kendo.toString(start, "yyyy-MM-dd")
                 });
                 para.push({

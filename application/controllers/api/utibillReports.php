@@ -253,16 +253,16 @@ class UtibillReports extends REST_Controller {
 
 		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
-		//Sort
-		if(!empty($sort) && isset($sort)){
-			foreach ($sort as $value) {
-				if(isset($value['operator'])){
-					$obj->{$value['operator']}($value["field"], $value["dir"]);
-				}else{
-					$obj->order_by($value["field"], $value["dir"]);
-				}
-			}
-		}
+		// //Sort
+		// if(!empty($sort) && isset($sort)){
+		// 	foreach ($sort as $value) {
+		// 		if(isset($value['operator'])){
+		// 			$obj->{$value['operator']}($value["field"], $value["dir"]);
+		// 		}else{
+		// 			$obj->order_by($value["field"], $value["dir"]);
+		// 		}
+		// 	}
+		// }
 		
 		//Filter		
 		if(!empty($filter) && isset($filter)){
@@ -350,15 +350,15 @@ class UtibillReports extends REST_Controller {
 		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 		//Sort
-		if(!empty($sort) && isset($sort)){
-			foreach ($sort as $value) {
-				if(isset($value['operator'])){
-					$obj->{$value['operator']}($value["field"], $value["dir"]);
-				}else{
-					$obj->order_by($value["field"], $value["dir"]);
-				}
-			}
-		}
+		// if(!empty($sort) && isset($sort)){
+		// 	foreach ($sort as $value) {
+		// 		if(isset($value['operator'])){
+		// 			$obj->{$value['operator']}($value["field"], $value["dir"]);
+		// 		}else{
+		// 			$obj->order_by($value["field"], $value["dir"]);
+		// 		}
+		// 	}
+		// }
 		
 		//Filter		
 		if(!empty($filter) && isset($filter)){

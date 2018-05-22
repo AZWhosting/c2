@@ -91,9 +91,9 @@
 </script>
 <!--start kendo localization in Khmer-->
 
+
+
 </head>
-
-
 <body class="skin-default-dark fixed-layout" >
 	<div class="preloader">
         <div class="loader">
@@ -102,184 +102,207 @@
     </div>
 
     <div id="main-wrapper">
-        <header class="topbar">
-            <nav class="navbar top-navbar navbar-expand-md navbar-dark">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="<?php echo base_url();?>micro/home">
-                        <!-- Logo icon --><b>
-                            <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
-                            <!-- Dark Logo icon -->
-                            <!-- <img src="<?php echo base_url()?>assets/micro/logo-icon.png" alt="homepage" class="dark-logo" /> -->
-                            <img src="<?php echo base_url()?>assets/micro/logo-banhjiNew.png" style="height: 36px;" alt="homepage" class="dark-logo" />
-                            <!-- Light Logo icon -->
-                            <!-- <img src="<?php echo base_url()?>assets/micro/logo-light-icon.png" alt="homepage" class="light-logo" /> -->
-                            <!-- <img src="<?php echo base_url()?>assets/micro/logo-micro.png" alt="homepage" > -->
-                        </b>
-                        <!--End Logo icon -->
-                        <!-- Logo text --><span>
-                         <!-- dark Logo text -->
-                         <!-- <img src="<?php echo base_url()?>assets/micro/logo-text.png" alt="homepage" class="dark-logo" /> -->
-                         <img src="<?php echo base_url()?>assets/micro/logo-micro.png" style="height: 36px;" alt="homepage" class="dark-logo" />
-                         <!-- Light Logo text -->
-                        <!-- 
-                         --></a>
-                </div>
+        <div id="examplee">
+            <header class="topbar">
+                <nav class="navbar top-navbar navbar-expand-md navbar-dark">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="<?php echo base_url();?>micro/home">
+                            <!-- Logo icon --><b>
+                                <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
+                                <!-- Dark Logo icon -->
+                                <!-- <img src="<?php echo base_url()?>assets/micro/logo-icon.png" alt="homepage" class="dark-logo" /> -->
+                                <img src="<?php echo base_url()?>assets/micro/logo-banhjiNew.png" style="height: 36px;" alt="homepage" class="dark-logo" />
+                                <!-- Light Logo icon -->
+                                <!-- <img src="<?php echo base_url()?>assets/micro/logo-light-icon.png" alt="homepage" class="light-logo" /> -->
+                                <!-- <img src="<?php echo base_url()?>assets/micro/logo-micro.png" alt="homepage" > -->
+                            </b>
+                            <!--End Logo icon -->
+                            <!-- Logo text --><span>
+                             <!-- dark Logo text -->
+                             <!-- <img src="<?php echo base_url()?>assets/micro/logo-text.png" alt="homepage" class="dark-logo" /> -->
+                             <img src="<?php echo base_url()?>assets/micro/logo-micro.png" style="height: 36px;" alt="homepage" class="dark-logo" />
+                             <!-- Light Logo text -->
+                            <!-- 
+                             --></a>
+                    </div>
 
-                <div class="navbar-collapse">
+                    <div class="navbar-collapse">
 
-                    <ul class="navbar-nav mr-auto">
-                        <!-- This is  -->
-                        <li class="nav-item hidden-sm-up"> <a class="nav-link nav-toggler waves-effect waves-light" href="javascript:void(0)"><i class="ti-menu"></i></a></li>                        
-                       
-                        <li class="nav-item search-box"> <a class="nav-link waves-effect waves-dark" href="javascript:void(0)"><i class="ti-search"></i></a>
-                            <form class="app-search">
-                                <input type="text" class="form-control" placeholder="Search &amp; enter"> <a class="srh-btn"><i class="ti-close"></i></a>
-                            </form>
-                        </li>
-                    </ul>
-                    <ul class="navbar-nav my-lg-0" id="companyDash">
-                       	<li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="ti-plus"></i></a>
-                            <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY menuTransaction">
-                                <span class="with-arrow"><span class="bg-primary"></span></span>
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div>
-                                            <p><i class="ti-receipt m-r-5 m-l-5"></i>Sale Transaction</p>
-                                            <ul>
-                                                <li><a href="sales#/customer"><span data-bind="">Customer</span></a></li>
-                                                <li><a href="sales#/quote"><span data-bind="">Quotation</span></a></li>
-                                                <li><a href="sales#/deposit"><span data-bind="">Deposit</span></a></li>
-                                                <li><a href="sales#/cash_sale"><span data-bind="">Cash Sale</span></a></li>
-                                                <li><a href="<?php echo base_url()?>rrd#/sale_return"><span data-bind="">Sale Return</span></a></li>
-                                                <li><a href="sales#/invoice"><span data-bind="">Invoice</span></a></li>
-                                                <li><a href="sales#/cash_receipt"><span data-bind="">Cash Receipt</span></a></li>
-                                                <li><a href="<?php echo base_url()?>rrd#/cash_refund"><span data-bind="">Cash Refund</span></a></li>
-                                            </ul>
+                        <ul class="navbar-nav mr-auto">
+                            <!-- This is  -->
+                            <li class="nav-item hidden-sm-up"> <a class="nav-link nav-toggler waves-effect waves-light" href="javascript:void(0)"><i class="ti-menu"></i></a></li>                        
+                           
+                            <li class="nav-item search-box"> <a class="nav-link waves-effect waves-dark" href="javascript:void(0)"><i class="ti-search"></i></a>
+                                <form class="app-search">
+                                    <input type="text" class="form-control" placeholder="Search &amp; enter"> <a class="srh-btn"><i class="ti-close"></i></a>
+                                </form>
+                            </li>
+                        </ul>
+                        <ul class="navbar-nav my-lg-0" id="companyDash">
+                           	<li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="ti-plus"></i></a>
+                                <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY menuTransaction">
+                                    <span class="with-arrow"><span class="bg-primary"></span></span>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div>
+                                                <p><i class="ti-receipt m-r-5 m-l-5"></i>Sale Transaction</p>
+                                                <ul>
+                                                    <li><a href="sales#/customer"><span data-bind="">Customer</span></a></li>
+                                                    <li><a href="sales#/quote"><span data-bind="">Quotation</span></a></li>
+                                                    <li><a href="sales#/deposit"><span data-bind="">Deposit</span></a></li>
+                                                    <li><a href="sales#/cash_sale"><span data-bind="">Cash Sale</span></a></li>
+                                                    <li><a href="<?php echo base_url()?>rrd#/sale_return"><span data-bind="">Sale Return</span></a></li>
+                                                    <li><a href="sales#/invoice"><span data-bind="">Invoice</span></a></li>
+                                                    <li><a href="sales#/cash_receipt"><span data-bind="">Cash Receipt</span></a></li>
+                                                    <li><a href="<?php echo base_url()?>rrd#/cash_refund"><span data-bind="">Cash Refund</span></a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 lineBorder">
+                                            <div >
+                                                <p><i class="ti-view-list m-r-5 m-l-5"></i>Purchases Transaction</p>
+                                                <ul>
+                                                    <li><a href="purchases#/vendor"><span data-bind="">Supplier</span></a></li>
+                                                    <li><a href="purchases#/purchase_order"><span data-bind="">Purchase Order</span></a></li>
+                                                    <li><a href="purchases#/purchase"><span data-bind="">Purchase</span></a></li>
+                                                    <li><a href="purchases#/payment_refund"><span data-bind="">Payment Refund</span></a></li>
+                                                    <li><a href="purchases#/purchase_return"><span data-bind="">Purchase Return</span></a></li>
+                                                    <li><a href="purchases#/vendor_deposit"><span data-bind="">Supplier Deposit</span></a></li>
+                                                    <li><a href="purchases#/cash_payment"><span data-bind="">Cash Payment</span></a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <!-- <div class="col-md-3">
+                                            <div >
+                                                <p><i class="ti-layout-grid2 m-r-5 m-l-5"></i>Items Transaction</p>
+                                                <ul>
+                                                    <li><a href="sales#/customer"><span data-bind="">Customer</span></a></li>
+                                                    <li><a href="sales#/quote"><span data-bind="">Quotation</span></a></li>
+                                                    <li><a href="sales#/deposit"><span data-bind="">Deposit</span></a></li>
+                                                    <li><a href="sales#/cash_sale"><span data-bind="">Cash Sale</span></a></li>
+                                                    <li><a href="<?php echo base_url()?>rrd#/sale_return"><span data-bind="">Sale Return</span></a></li>
+                                                    <li><a href="sales#/invoice"><span data-bind="">Invoice</span></a></li>
+                                                    <li><a href="sales#/cash_receipt"><span data-bind="">Cash Receipt</span></a></li>
+                                                    <li><a href="<?php echo base_url()?>rrd#/cash_refund"><span data-bind="">Cash Refund</span></a></li>
+                                                </ul>
+                                            </div>
+                                        </div> -->
+                                        <div class="col-md-4">
+                                            <div >
+                                                <p><i class="fa fa-dollar m-r-5 m-l-5"></i>Cashs Transaction</p>
+                                                <ul>
+                                                    <li><a href="cashs#/cash_transaction"><span data-bind="">Cash​ Transaction</span></a></li>
+                                                    <li><a href="cashs#/cash_advance"><span data-bind="">Cash Advance</span></a></li>
+                                                    <li><a href="cashs#/Expense"><span data-bind="">Expense</span></a></li>
+                                                </ul>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-4 lineBorder">
-                                        <div >
-                                            <p><i class="ti-view-list m-r-5 m-l-5"></i>Purchases Transaction</p>
-                                            <ul>
-                                                <li><a href="purchases#/vendor"><span data-bind="">Supplier</span></a></li>
-                                                <li><a href="purchases#/purchase_order"><span data-bind="">Purchase Order</span></a></li>
-                                                <li><a href="purchases#/purchase"><span data-bind="">Purchase</span></a></li>
-                                                <li><a href="purchases#/payment_refund"><span data-bind="">Payment Refund</span></a></li>
-                                                <li><a href="purchases#/purchase_return"><span data-bind="">Purchase Return</span></a></li>
-                                                <li><a href="purchases#/vendor_deposit"><span data-bind="">Supplier Deposit</span></a></li>
-                                                <li><a href="purchases#/cash_payment"><span data-bind="">Cash Payment</span></a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <!-- <div class="col-md-3">
-                                        <div >
-                                            <p><i class="ti-layout-grid2 m-r-5 m-l-5"></i>Items Transaction</p>
-                                            <ul>
-                                                <li><a href="sales#/customer"><span data-bind="">Customer</span></a></li>
-                                                <li><a href="sales#/quote"><span data-bind="">Quotation</span></a></li>
-                                                <li><a href="sales#/deposit"><span data-bind="">Deposit</span></a></li>
-                                                <li><a href="sales#/cash_sale"><span data-bind="">Cash Sale</span></a></li>
-                                                <li><a href="<?php echo base_url()?>rrd#/sale_return"><span data-bind="">Sale Return</span></a></li>
-                                                <li><a href="sales#/invoice"><span data-bind="">Invoice</span></a></li>
-                                                <li><a href="sales#/cash_receipt"><span data-bind="">Cash Receipt</span></a></li>
-                                                <li><a href="<?php echo base_url()?>rrd#/cash_refund"><span data-bind="">Cash Refund</span></a></li>
-                                            </ul>
-                                        </div>
-                                    </div> -->
-                                    <div class="col-md-4">
-                                        <div >
-                                            <p><i class="fa fa-dollar m-r-5 m-l-5"></i>Cashs Transaction</p>
-                                            <ul>
-                                                <li><a href="cashs#/cash_transaction"><span data-bind="">Cash​ Transaction</span></a></li>
-                                                <li><a href="cashs#/cash_advance"><span data-bind="">Cash Advance</span></a></li>
-                                                <li><a href="cashs#/Expense"><span data-bind="">Expense</span></a></li>
-                                            </ul>
-                                        </div>
+                                    
+                                </div>
+                            </li>
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <img src="http://192.168.1.10/c2/assets/micro/logo-banhjiNew.png" alt="user" class="img-circle" width="30">
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY ul-multiTaskList" data-template="multiTaskList-row-template" data-bind="source: multiTaskList">
+                                    <span class="with-arrow"><span class="bg-primary"></span></span>
+                                    
+                                    <a class="dropdown-item" href="<?php echo base_url();?>rrd">Back to BanhJi</a>
+                                </div>
+                            </li>
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-comments-o"></i></a>
+                                <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
+                                    <span class="with-arrow"><span class="bg-primary"></span></span>
+                                    <div style="text-align: center; padding: 10px 10px 0;">
+                                        <p style="font-size: 14px;">Call us by<br><span style="font-weight: bold;font-size: 16px">+855 10 413 777</span><br>Mon-Fri<br>09:00 - 18:00</p>
+                                        <div class="fb-messengermessageus"
+                                          messenger_app_id="1301847836514973"
+                                          page_id="862386433857166"
+                                          color="blue"
+                                          width="180"
+                                          size="standard" ></div>
                                     </div>
                                 </div>
-                                
-                            </div>
-                        </li>
+                            </li>
 
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="ti-menu-alt"></i></a>
-                            <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY ul-multiTaskList" data-template="multiTaskList-row-template" data-bind="source: multiTaskList">
-                                <span class="with-arrow"><span class="bg-primary"></span></span>
-                                
-                                <!-- <a class="dropdown-item" href="javascript:void(0)"><i class="ti-user m-r-5 m-l-5"></i> My Profile</a>
-                                <a class="dropdown-item" href="javascript:void(0)"><i class="ti-wallet m-r-5 m-l-5"></i> My Balance</a>
-                                <a class="dropdown-item" href="javascript:void(0)"><i class="ti-email m-r-5 m-l-5"></i> Inbox</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="javascript:void(0)"><i class="ti-settings m-r-5 m-l-5"></i> Account Setting</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="javascript:void(0)"><i class="fa fa-power-off m-r-5 m-l-5"></i> Logout</a> -->
-                            </div>
-                        </li>
-
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-comments-o"></i></a>
-                            <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
-                                <span class="with-arrow"><span class="bg-primary"></span></span>
-                                <div class="middle-help">
-					  				<div class="more-help" style="border-bottom: 1px solid #ddd; margin-bottom: 10px; width: 100%; float: left; padding-bottom: 10px;">
-				  						<div class="help-img" >
-				  							<img src="http://fpoimg.com/51x51?text=Picture%201">
-				  						</div>
-				  						<div class="help-desc" >
-				  							<p>Need more help?</p>
-				  							<a href="" target="_blank">Accountant Help hub</a>
-				  						</div>
-				  					</div>
-				  					<div class="what-help" >
-				  						<div class="help-img" >
-				  							<img src="http://fpoimg.com/51x51?text=Picture%202">
-				  						</div>
-				  						<div class="help-desc">
-				  							<p>Check out what's new</p>
-				  							<a href="" target="_blank">Learn about new product</a>
-				  						</div>
-				  					</div>
-					  			</div>
-                            </div>
-                        </li>
-
-                        <li class="nav-item right-side-toggle" >
-                            <a class="nav-link  waves-effect waves-light" href="javascript:void(0)">
-                                <img src="<?php echo base_url()?>assets/micro/1.jpg" alt="user" class="img-circle" width="30">
-                            </a>                            
-                        </li>
-                        <div class="right-sidebar">
-                            <div class="slimscrollright">
-                                <div class="d-flex no-block align-items-center p-15 bg-primary text-white m-b-10">                  
-                                    <i class="ti-close right-side-toggle"></i>
-                                    <div class=""><img src="<?php echo base_url()?>assets/micro/1.jpg" alt="user" class="img-circle" width="60"></div>
-                                    <div class="m-l-10">
-                                        <h4 class="m-b-0">Steave Jobs</h4>
-                                        <p class=" m-b-0">varun@gmail.com</p>
-                                    </div>
+                            <!-- <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-comments-o"></i></a>
+                                <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
+                                    <span class="with-arrow"><span class="bg-primary"></span></span>
+                                    <div class="middle-help">
+    					  				<div class="more-help" style="border-bottom: 1px solid #ddd; margin-bottom: 10px; width: 100%; float: left; padding-bottom: 10px;">
+    				  						<div class="help-img" >
+    				  							<img src="http://fpoimg.com/51x51?text=Picture%201">
+    				  						</div>
+    				  						<div class="help-desc" >
+    				  							<p>Need more help?</p>
+    				  							<a href="" target="_blank">Accountant Help hub</a>
+    				  						</div>
+    				  					</div>
+    				  					<div class="what-help" >
+    				  						<div class="help-img" >
+    				  							<img src="http://fpoimg.com/51x51?text=Picture%202">
+    				  						</div>
+    				  						<div class="help-desc">
+    				  							<p>Check out what's new</p>
+    				  							<a href="" target="_blank">Learn about new product</a>
+    				  						</div>
+    				  					</div>
+    					  			</div>
                                 </div>
-                                <a class="dropdown-item" href="<?php echo base_url()?>admin#"><i class="ti-settings m-r-5 m-l-5"></i>Account Setting</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item menuLang" href="javascript:void(0)" onclick="langVM.changeToKh()"><i class="flag-icon flag-icon-kh  m-r-5 m-l-5"></i> ភាសាខ្មែរ</a>
-                                <a class=" dropdown-item menuLang" href="javascript:void(0)" onclick="langVM.changeToEn()"><i class="flag-icon flag-icon-us  m-r-5 m-l-5"></i> English</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="javascript:void(0)"><i class="fa fa-power-off m-r-5 m-l-5"></i> Logout</a>
-                                
-                            </div>
-                        </div>
-                    </ul>
-                </div>
-            </nav>
-        </header>
-    <script id="multiTaskList-row-template" type="text/x-kendo-template">
-        <li>
-            <a href="\#/#=url#">
-                #=name#
-                <span title="Remove" class="multiTaskList glyphicons remove_2 pull-right" data-bind="click: removeLink">
-                    <i></i>
-                </span>
-            </a>
+                            </li> -->
 
-        </li>
-    </script>
+                            <li class="nav-item right-side-toggle" >
+                                <a class="nav-link  waves-effect waves-light" href="javascript:void(0)">
+                                    <img data-bind="attr: {src: userDS.data()[0].profile_photo.url}" alt="user" class="img-circle" width="30">
+                                </a>                            
+                            </li>
+                            <div class="right-sidebar">
+                                <div class="slimscrollright">
+                                    <div class="d-flex no-block align-items-center p-15 bg-primary text-white m-b-10">                  
+                                        <i class="ti-close right-side-toggle"></i>
+                                        <div class=""><img data-bind="attr: {src: userDS.data()[0].profile_photo.url}" alt="user" class="img-circle" width="60"></div>
+                                        <div class="m-l-10">
+                                            <h4 class="m-b-0"><span data-bind="text: userDS.data()[0].last_name"></span>&nbsp;
+                                    <span data-bind="text: userDS.data()[0].first_name"></span></h4>
+                                            <p class=" m-b-0"><span data-bind="text: userDS.data()[0].username"></span></p>
+                                        </div>
+                                    </div>
+                                    <a class="dropdown-item" href="<?php echo base_url()?>admin#"><i class="ti-settings m-r-5 m-l-5"></i>Account Setting</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item menuLang" href="javascript:void(0)" onclick="langVM.changeToKh()"><i class="flag-icon flag-icon-kh  m-r-5 m-l-5"></i> ភាសាខ្មែរ</a>
+                                    <a class=" dropdown-item menuLang" href="javascript:void(0)" onclick="langVM.changeToEn()"><i class="flag-icon flag-icon-us  m-r-5 m-l-5"></i> English</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#/manage" data-bind="click: logout"><i class="fa fa-power-off m-r-5 m-l-5"></i> Logout</a>
+                                    
+                                </div>
+                            </div>
+                        </ul>
+                    </div>
+                </nav>
+            </header>
+    
+        <!-- Facebook -->
+        <script>
+          window.fbAsyncInit = function() {
+            FB.init({
+              appId      : '387834344756149',
+              xfbml      : true,
+              version    : 'v2.7'
+            });
+            FB.AppEvents.logPageView();
+          };
+
+          (function(d, s, id){
+             var js, fjs = d.getElementsByTagName(s)[0];
+             if (d.getElementById(id)) {return;}
+             js = d.createElement(s); js.id = id;
+             js.src = "//connect.facebook.net/en_US/sdk.js";
+             fjs.parentNode.insertBefore(js, fjs);
+           }(document, 'script', 'facebook-jssdk'));
+        </script>

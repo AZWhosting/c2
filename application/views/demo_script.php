@@ -55823,7 +55823,6 @@
 			}
 		},
         goToGeneralLegder   : function(e){
-            console.log("yoo");
             var data = e.data, ids = this.get("crossAccounts");
 
             ids.push(data.id);

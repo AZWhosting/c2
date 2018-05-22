@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/libraries/kendoui/styles/kendo.common.min.css">
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/libraries/kendoui/styles/kendo.material.min.css">
     <!-- Boostrap-->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"> 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Kantumruy" rel="stylesheet">
 
@@ -37,7 +37,7 @@
             width: 100%;
         }
         .singup-image{
-            text-align: center; 
+            text-align: center;
         }
         .singup-image p{
             color: #8DB3DA;
@@ -56,7 +56,7 @@
         .signup-form input{
           font-size: 15px;
             color: #FFF;
-                 
+
         }
         .signup-form label{
             font-size:  18px;
@@ -92,7 +92,7 @@
             margin-top: 10px;
         }
         .btn-signup{
-            background: #002161; 
+            background: #002161;
             color: #fff;
             border: none;
             height: 55px;
@@ -124,8 +124,8 @@
             width: 100%;
         }
          .signup-list ul li .description{
-            color: #fff;  
-            float: left; 
+            color: #fff;
+            float: left;
             width: 75%;
         }
         .signup-img{
@@ -182,10 +182,10 @@
         .footer-list ul li a:hover{
           color: #839ABA;
         }
-        @media only screen 
-        and (min-device-width : 768px) 
-        and (max-device-width : 1024px) 
-        and (orientation : portrait) { 
+        @media only screen
+        and (min-device-width : 768px)
+        and (max-device-width : 1024px)
+        and (orientation : portrait) {
         }
     </style>
     <style>
@@ -330,8 +330,8 @@
             Support
             <div class="enquiry-content">
                 <p style="font-size: 14px;">Call us by<br><span style="font-weight: bold;font-size: 16px">+855 10 413 777</span><br>Mon-Fri<br>09:00 - 18:00</p>
-                <div class="fb-messengermessageus" 
-                    messenger_app_id="1301847836514973" 
+                <div class="fb-messengermessageus"
+                    messenger_app_id="1301847836514973"
                     page_id="862386433857166"
                     color="blue"
                     width="180"
@@ -409,16 +409,16 @@
                                 <input required="required" type="text" data-bind="value: name, events: {change: comChange }" placeholder="Company Name " class="signup-email">
                                 <p class="msg">Company Name Required!</p>
                             </div>
-                            <select class="signup-country" 
-                                    data-role="dropdownlist" 
+                            <select class="signup-country"
+                                    data-role="dropdownlist"
                                     data-bind="source: currencies, value: currency"
                                     data-text-field="country"
                                     data-value-field="id"
                                     data-option-label="Select the main Currency" style="text-align: left;">
                             </select><br>
 
-                            <select class="signup-country" 
-                                    data-role="dropdownlist" 
+                            <select class="signup-country"
+                                    data-role="dropdownlist"
                                     data-bind="source: countries, value: country"
                                     data-text-field="name"
                                     data-value-field="id"
@@ -426,7 +426,7 @@
                             </select><br>
 
                             <select class="signup-country"
-                                    data-role="dropdownlist" 
+                                    data-role="dropdownlist"
                                     data-bind="source: types, value: type"
                                     data-text-field="name"
                                     data-value-field="id"
@@ -434,7 +434,7 @@
                             </select><br>
 
                              <select class="signup-country"
-                                    data-role="dropdownlist" 
+                                    data-role="dropdownlist"
                                     data-bind="source: industries, value: industry"
                                     data-text-field="name"
                                     data-value-field="id"
@@ -449,15 +449,15 @@
                         </form>
                     </div>
                     <!-- <span class="row" style="font-size: 13px; color: #333; text-align: center; margin: 20px; float: left;">
-                            By clicking on “signup”, you agree to the 
-                            <a href="https://www.banhji.com/terms" target="_blank" style="color: #333;">Terms of Service</a>  
-                            and 
+                            By clicking on “signup”, you agree to the
+                            <a href="https://www.banhji.com/terms" target="_blank" style="color: #333;">Terms of Service</a>
+                            and
                             <a href="https://banhji.com/privacy" target="_blank" style="color: #333;">Privacy Policy</a>.
                         </span> -->
                     <div class="" style="font-size: 12px; text-align: center">
                         *Problem with "Signup", Please contact us by +855 10 413 777 from Mon-Fri at 9am to 6pm or
-                            <div class="fb-messengermessageus" 
-                                messenger_app_id="1301847836514973" 
+                            <div class="fb-messengermessageus"
+                                messenger_app_id="1301847836514973"
                                 page_id="862386433857166"
                                 color="blue"
                                 width="180"
@@ -475,8 +475,8 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-6" style="padding-right: 0;">
-                            <select class="signup-country" 
-                                    data-role="dropdownlist" 
+                            <select class="signup-country"
+                                    data-role="dropdownlist"
                                     data-bind="source: currencies, value: currency"
                                     data-text-field="country"
                                     data-value-field="id"
@@ -484,8 +484,8 @@
                             </select>
                         </div>
                         <div class="col-sm-6">
-                            <select class="signup-country" 
-                                    data-role="dropdownlist" 
+                            <select class="signup-country"
+                                    data-role="dropdownlist"
                                     data-bind="source: countries, value: country"
                                     data-text-field="name"
                                     data-value-field="id"
@@ -496,7 +496,7 @@
                     <div class="row">
                         <div class="col-sm-6" style="padding-right: 0;">
                             <select class="signup-country"
-                                data-role="dropdownlist" 
+                                data-role="dropdownlist"
                                 data-bind="source: types, value: type"
                                 data-text-field="name"
                                 data-value-field="id"
@@ -504,21 +504,21 @@
                             </select>
                         </div>
                         <!-- <div class="col-sm-6"">
-                            <input type="date" 
+                            <input type="date"
                                 class="k-input"
                                 data-role="datepicker"
                                 label="Fiscal Date">
-                            
+
                         </div> -->
                         <!-- <div class="col-sm-6">
                             <select class="signup-country"
-                                data-role="dropdownlist" 
+                                data-role="dropdownlist"
                                 data-bind="source: industries, value: industry"
                                 data-text-field="name"
                                 data-value-field="id"
                                 data-option-label="Select Industry Type"
                                 data-place-holder="select one" style="text-align: left; border: 1px solid #d0cfd5;">
-                            </select>   
+                            </select>
                         </div> -->
                     </div>
                     <div>
@@ -526,11 +526,11 @@
                             <p style="font-size: 12px; margin-bottom: 0; float: left; margin-top: 13px" data-bind="text: lang.lang.please_select_the_industry"></p>
                         </div>
                         <div class="col-sm-6" style="padding-right: 0;">
-                            
+
                         </div>
                     </div>
                     <div class="row-fluid" style="color: #333; margin-top: 8px;">
-                        
+
                         <div class="col-sm-12" style="padding: 0;">
                             <div class="signup-img" style="height: 110px; margin-bottom: 8px;">
                                 <a class="" id="91" data-bind="click: industryClick">
@@ -543,7 +543,7 @@
                                     <img src="<?php echo base_url();?>assets/industry_logos/9.png">
                                     <p style="font-size: 10px; color: #333;" data-bind="text: lang.lang.manufacturing"></p>
                                 </a>
-                            </div>                            
+                            </div>
                             <div class="signup-img" style="height: 110px; margin-bottom: 8px;">
                                 <a class="" id="93" data-bind="click: industryClick">
                                     <img src="<?php echo base_url();?>assets/industry_logos/11.png">
@@ -563,7 +563,7 @@
                                 </a>
                             </div>
 
-                            <div class="signup-img" style="height: 110px;"> 
+                            <div class="signup-img" style="height: 110px;">
                                 <a class="" id="89" data-bind="click: industryClick">
                                     <img src="<?php echo base_url();?>assets/industry_logos/13.png">
                                     <p style="font-size: 10px; color: #333;" data-bind="text: lang.lang.ngos"></p>
@@ -586,7 +586,7 @@
                                     <img src="<?php echo base_url();?>assets/industry_logos/5.png">
                                     <p style="font-size: 10px; color: #333;" data-bind="text: lang.lang.information_communication"></p>
                                 </a>
-                            </div>                           
+                            </div>
                             <div class="signup-img" style="height: 110px;">
                                 <a class="" id="90" data-bind="click: industryClick">
                                     <img src="<?php echo base_url();?>assets/industry_logos/6.png">
@@ -599,7 +599,7 @@
                                     <img src="<?php echo base_url();?>assets/industry_logos/8.png">
                                     <p style="font-size: 10px; color: #333;" data-bind="text: lang.lang.real_estate_activities">
                                 </a>
-                            </div>                            
+                            </div>
                             <div class="signup-img">
                                 <a class="" id="99" data-bind="click: industryClick">
                                     <img src="<?php echo base_url();?>assets/industry_logos/12.png">
@@ -623,7 +623,7 @@
                                     <img src="<?php echo base_url();?>assets/industry_logos/1.png">
                                     <p style="font-size: 10px; color: #333;" data-bind="text: lang.lang.construction"></p>
                                 </a>
-                            </div>                           
+                            </div>
 
                         </div>
                     </div>
@@ -678,14 +678,14 @@
                     </div> -->
                     <div class="row-fluid">
                         <input style="font-size: 20px !important; " id="signupBtn" type="button" data-bind="enabled: signupEnable, click: create" class="btn-signup" value="Signup for Free" />
-                        <!-- <span data-bind="text: lang.lang.signup_for_free"></span>   -->                     
+                        <!-- <span data-bind="text: lang.lang.signup_for_free"></span>   -->
                     </div>
                     <span class="row" style="font-size: 12px; color: #333; text-align: center; margin: 10px 10px 0; float: left;">
-                        By clicking on “signup”, you agree to the 
-                        <a href="https://www.banhji.com/terms" target="_blank" style="color: #01b0f1;">Terms of Service</a>  
-                        and 
+                        By clicking on “signup”, you agree to the
+                        <a href="https://www.banhji.com/terms" target="_blank" style="color: #01b0f1;">Terms of Service</a>
+                        and
                         <a href="https://banhji.com/privacy" target="_blank" style="color: #01b0f1;">Privacy Policy</a>.
-                    </span> 
+                    </span>
                 </div>
             </div>
         </div>
@@ -705,10 +705,10 @@
                         <div class="col-sm-6 footer-list">
                             <ul>
                                 <li>
-                                    <a href="https://banhji.com/privacy" target="_blank">Privacy Policy</a> 
+                                    <a href="https://banhji.com/privacy" target="_blank">Privacy Policy</a>
                                 </li>
                                 <li>
-                                    <a href="https://www.banhji.com/terms" target="_blank">Terms of Service</a> 
+                                    <a href="https://www.banhji.com/terms" target="_blank">Terms of Service</a>
                                 </li>
                             </ul>
                             <div class="supporter">
@@ -716,11 +716,11 @@
                                     <script async type="text/javascript" src="https://seal.godaddy.com/getSeal?sealID=lNpq2OuFwU0nDcZ5f7uSQ9D1rwgIIgTNOoYBNRt4BqE4CMLt8GMhEDKt66EL"></script>
                                 </span>
                                 <span id="cdSiteSeal1" style="float: right; width: 28%; text-align: right;">
-                                    <script type="text/javascript" src="//tracedseals.starfieldtech.com/siteseal/get?scriptId=cdSiteSeal1&amp;cdSealType=Seal1&amp;sealId=55e4ye7y7mb733e8444d2ecffd8819eq59my7mb7355e4ye7baf4c5b6a4491396"></script></span>                        
-                                </span>                               
+                                    <script type="text/javascript" src="//tracedseals.starfieldtech.com/siteseal/get?scriptId=cdSiteSeal1&amp;cdSealType=Seal1&amp;sealId=55e4ye7y7mb733e8444d2ecffd8819eq59my7mb7355e4ye7baf4c5b6a4491396"></script></span>
+                                </span>
                             </div>
-                        </div>           
-                    </div>                           
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -778,11 +778,11 @@
             driver: localforage.LOCALSTORAGE,
             name: 'userData'
         });
-        
+
 
         var langVM = kendo.observable({
-            lang        : null,     
-            localeCode  : null,     
+            lang        : null,
+            localeCode  : null,
             changeToEn  : function() {
                 localforage.setItem("lang", "EN").then(function(value){
                     location.reload(false);
@@ -1198,7 +1198,7 @@
                         this.set("err", null);
                         var str = this.get('telephone');
                         var phoneNumber = str.substring(3,0);
-                        var HeadPhone = ["012","011","017","061","076","077","078","085","087","089","092","095","099","010","015","016","069","070","081","096","098","031","060","066","067","068","071","088","090","097","013","018", "021", "020", "023", "031", "036", "038", "034"];
+                        var HeadPhone = ["012","011","017","061","076","077","078","085","087","089","092","095","099","010","015","016","069","070","081","093","096","098","031","060","066","067","068","071","088","090","097","013","018", "021", "020", "023", "031", "036", "038", "034"];
                         if($.inArray(phoneNumber, HeadPhone) != -1) {
                             $(".cover").eq(1).children(".imgLoad, .imgCross").css("display", "none");
                             $(".cover").eq(1).children(".imgTick").css("display", "block");
@@ -1217,7 +1217,7 @@
                     }
                 }
             },
-            checkLetter   : function(inputtxt) {  
+            checkLetter   : function(inputtxt) {
                     var letters = /^[a-zA-Z]+$/,Num = /^[0-9]+$/, Result;
                     if (letters.test(inputtxt)) {
                         Result = false;
@@ -1332,7 +1332,7 @@
                     var attributeEmail = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute(dataEmail);
 
                     attributeList.push(attributeEmail);
-                    
+
                     userPool.signUp(this.get('email'), this.get('password'), attributeList, null, function(err, result){
                         if (err) {
                         } else {
@@ -1353,7 +1353,7 @@
                                     // create company
                                     let dd = new Date();
                                     dd.setMonth(11);
-                                    dd.setDate(31);                                    
+                                    dd.setDate(31);
                                     banhji.companyDS.insert(0, {
                                         name:  banhji.index.get('name'),
                                         currency: banhji.index.get('currency'),
@@ -1381,19 +1381,19 @@
                                     });
                                 }
                             });
-                          }                    
+                          }
                     });
-                }else{  
+                }else{
                     alert(this.err);
                 }
             }
-        });  
+        });
         $(function(){
             kendo.bind($('.sign-up'), banhji.index);
 
-            var language = JSON.parse(localStorage.getItem('userData/lang'));   
+            var language = JSON.parse(localStorage.getItem('userData/lang'));
             switch(language) {
-                case "KH": 
+                case "KH":
                     langVM.set('lang', km_KH);
                     localforage.setItem("lang", language);
                     langVM.set('localeCode', language);
@@ -1403,7 +1403,7 @@
                     localforage.setItem("lang", language);
                     langVM.set('localeCode', language);
                     break;
-                default: 
+                default:
                     langVM.set('lang', en_US);
                     localforage.setItem("lang", language);
                     langVM.set('localeCode', language);

@@ -234,6 +234,14 @@ a {
     border-top: none;
     padding: 5px;
 }
+.right-sidebar {
+    right: -270px;
+    width: 270px;
+}
+.shw-rside {
+    right: 0;
+    width: 270px;
+}
 /*End*/
 
 /*Customize Kendo*/

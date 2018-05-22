@@ -879,7 +879,7 @@
 
 <script id="item-list-view-template" type="text/x-kendo-template">
 	<div class="product" data-bind="click:addRow" style="text-align: center;">
-		<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/no_image.jpg" />
+		<img src="#= image_url#" />
 		<h3>#:name#</h3>
 		<p>#=kendo.toString(price, locale=="km-KH"?"c0":"c", locale)#</p>
 	</div>
@@ -956,4 +956,4 @@
 		   	</div>		   	
    		</td>
 	</tr>
-</script>                
+</script>
