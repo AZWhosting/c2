@@ -140,65 +140,16 @@
                     <ul class="navbar-nav my-lg-0" id="companyDash">
                        	<li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="ti-plus"></i></a>
-                            <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY menuTransaction">
+                            <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
                                 <span class="with-arrow"><span class="bg-primary"></span></span>
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div>
-                                            <p><i class="ti-receipt m-r-5 m-l-5"></i>Sale Transaction</p>
-                                            <ul>
-                                                <li><a href="sales#/customer"><span data-bind="">Customer</span></a></li>
-                                                <li><a href="sales#/quote"><span data-bind="">Quotation</span></a></li>
-                                                <li><a href="sales#/deposit"><span data-bind="">Deposit</span></a></li>
-                                                <li><a href="sales#/cash_sale"><span data-bind="">Cash Sale</span></a></li>
-                                                <li><a href="<?php echo base_url()?>rrd#/sale_return"><span data-bind="">Sale Return</span></a></li>
-                                                <li><a href="sales#/invoice"><span data-bind="">Invoice</span></a></li>
-                                                <li><a href="sales#/cash_receipt"><span data-bind="">Cash Receipt</span></a></li>
-                                                <li><a href="<?php echo base_url()?>rrd#/cash_refund"><span data-bind="">Cash Refund</span></a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 lineBorder">
-                                        <div >
-                                            <p><i class="ti-view-list m-r-5 m-l-5"></i>Purchases Transaction</p>
-                                            <ul>
-                                                <li><a href="purchases#/vendor"><span data-bind="">Supplier</span></a></li>
-                                                <li><a href="purchases#/purchase_order"><span data-bind="">Purchase Order</span></a></li>
-                                                <li><a href="purchases#/purchase"><span data-bind="">Purchase</span></a></li>
-                                                <li><a href="purchases#/payment_refund"><span data-bind="">Payment Refund</span></a></li>
-                                                <li><a href="purchases#/purchase_return"><span data-bind="">Purchase Return</span></a></li>
-                                                <li><a href="purchases#/vendor_deposit"><span data-bind="">Supplier Deposit</span></a></li>
-                                                <li><a href="purchases#/cash_payment"><span data-bind="">Cash Payment</span></a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <!-- <div class="col-md-3">
-                                        <div >
-                                            <p><i class="ti-layout-grid2 m-r-5 m-l-5"></i>Items Transaction</p>
-                                            <ul>
-                                                <li><a href="sales#/customer"><span data-bind="">Customer</span></a></li>
-                                                <li><a href="sales#/quote"><span data-bind="">Quotation</span></a></li>
-                                                <li><a href="sales#/deposit"><span data-bind="">Deposit</span></a></li>
-                                                <li><a href="sales#/cash_sale"><span data-bind="">Cash Sale</span></a></li>
-                                                <li><a href="<?php echo base_url()?>rrd#/sale_return"><span data-bind="">Sale Return</span></a></li>
-                                                <li><a href="sales#/invoice"><span data-bind="">Invoice</span></a></li>
-                                                <li><a href="sales#/cash_receipt"><span data-bind="">Cash Receipt</span></a></li>
-                                                <li><a href="<?php echo base_url()?>rrd#/cash_refund"><span data-bind="">Cash Refund</span></a></li>
-                                            </ul>
-                                        </div>
-                                    </div> -->
-                                    <div class="col-md-4">
-                                        <div >
-                                            <p><i class="fa fa-dollar m-r-5 m-l-5"></i>Cashs Transaction</p>
-                                            <ul>
-                                                <li><a href="cashs#/cash_transaction"><span data-bind="">Cash​ Transaction</span></a></li>
-                                                <li><a href="cashs#/cash_advance"><span data-bind="">Cash Advance</span></a></li>
-                                                <li><a href="cashs#/Expense"><span data-bind="">Expense</span></a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
                                 
+                                <a class="dropdown-item" href="javascript:void(0)"><i class="ti-user m-r-5 m-l-5"></i> My Profile</a>
+                                <a class="dropdown-item" href="javascript:void(0)"><i class="ti-wallet m-r-5 m-l-5"></i> My Balance</a>
+                                <a class="dropdown-item" href="javascript:void(0)"><i class="ti-email m-r-5 m-l-5"></i> Inbox</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="javascript:void(0)"><i class="ti-settings m-r-5 m-l-5"></i> Account Setting</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="javascript:void(0)"><i class="fa fa-power-off m-r-5 m-l-5"></i> Logout</a>
                             </div>
                         </li>
 
@@ -259,7 +210,9 @@
                                         <p class=" m-b-0">varun@gmail.com</p>
                                     </div>
                                 </div>
-                                <a class="dropdown-item" href="<?php echo base_url()?>admin#"><i class="ti-settings m-r-5 m-l-5"></i>Account Setting</a>
+                                <a class="dropdown-item" href="javascript:void(0)"><i class="ti-user m-r-5 m-l-5"></i> My Profile</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="javascript:void(0)"><i class="ti-settings m-r-5 m-l-5"></i> Account Setting</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item menuLang" href="javascript:void(0)" onclick="langVM.changeToKh()"><i class="flag-icon flag-icon-kh  m-r-5 m-l-5"></i> ភាសាខ្មែរ</a>
                                 <a class=" dropdown-item menuLang" href="javascript:void(0)" onclick="langVM.changeToEn()"><i class="flag-icon flag-icon-us  m-r-5 m-l-5"></i> English</a>
@@ -282,4 +235,4 @@
             </a>
 
         </li>
-    </script>
+    </script>                

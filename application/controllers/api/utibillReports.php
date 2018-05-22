@@ -1532,6 +1532,7 @@ class UtibillReports extends REST_Controller {
 						"amount" 				=> $amount,
 						"reference_id" 			=> $value->reference_id,
 						"reference_type" 		=> $ref->type,
+						"location" 				=> $value->location_name,
 						"reference_number" 		=> $ref->number,
 						"reference_issued_date" => $ref->issued_date,
 						"reference_amount" 		=> $refAmount
@@ -1546,6 +1547,7 @@ class UtibillReports extends REST_Controller {
 						"issued_date" 			=> $value->issued_date,
 						"amount" 				=> $amount,
 						"reference_id" 			=> $value->reference_id,
+						"location" 				=> $value->location_name,
 						"reference_type" 		=> $ref->type,
 						"reference_number" 		=> $ref->number,
 						"reference_issued_date" => $ref->issued_date,

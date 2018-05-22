@@ -3842,8 +3842,8 @@
         goTransactions      : function(){
             banhji.router.navigate('/transactions');
         },
-        goPurchaseCenter        : function(){
-            banhji.router.navigate('/purchase_center');
+        goMenuPurchases        : function(){
+            banhji.router.navigate('/purchases');
         },
     });
     banhji.reports = kendo.observable({
@@ -4063,7 +4063,7 @@
         }
     });
     // Function
-    banhji.purchaseCenter = kendo.observable({
+    banhji.purchases = kendo.observable({
         lang                : langVM,
         transactionDS       : dataStore(apiUrl + 'transactions'),
         contactDS           : banhji.source.supplierDS,
@@ -9154,8 +9154,8 @@
                 obj.set("account_id", 0);
 
                 var dropdownlist = $("#ddlAccount").data("kendoDropDownList");
-                //dropdownlist.select(1);
-                //dropdownlist.trigger("change");
+                dropdownlist.select(1);
+                dropdownlist.trigger("change");
             }else{
                 this.set("isCash", false);
 
@@ -14064,6 +14064,7 @@
         // Function
         vendor: new kendo.Layout("#vendor", {model: banhji.vendor}),
         purchaseOrder: new kendo.Layout("#purchaseOrder", {model: banhji.purchaseOrder}),
+        grn: new kendo.Layout("#grn", {model: banhji.grn}),
         purchase: new kendo.Layout("#purchase", {model: banhji.purchase}),
         purchaseReturn: new kendo.Layout("#purchaseReturn", {model: banhji.purchaseReturn}),
         paymentRefund: new kendo.Layout("#paymentRefund", {model: banhji.paymentRefund}),
@@ -14087,7 +14088,7 @@
         reports: new kendo.View("#reports", {model: banhji.reports}),
         checkOut: new kendo.View("#checkOut", {model: banhji.checkOut}),
         transactions: new kendo.View("#transactions", {model: banhji.transactions}),
-        purchaseCenter: new kendo.View("#purchaseCenter", {model: banhji.purchaseCenter}),
+        purchases: new kendo.View("#purchases", {model: banhji.purchases}),
 
     };
     /* views and layout */
@@ -14170,14 +14171,14 @@
         //load MVVM
         vm.pageLoad();
     });
-    banhji.router.route('/purchase_center', function() {
+    banhji.router.route('/purchases', function() {
         
         banhji.view.layout.showIn('#content', banhji.view.Index);
         banhji.view.Index.showIn('#indexMenu', banhji.view.tapMenu);
-        banhji.view.Index.showIn('#indexContent', banhji.view.purchaseCenter);
+        banhji.view.Index.showIn('#indexContent', banhji.view.purchases);
 
-        if(banhji.pageLoaded["purchase_center"]==undefined){
-            banhji.pageLoaded["purchase_center"] = true;
+        if(banhji.pageLoaded["purchases"]==undefined){
+            banhji.pageLoaded["purchases"] = true;
             
             banhji.source.supplierDS.filter({
                 field: "parent_id",
@@ -14186,8 +14187,10 @@
             });
         }
 
+        
+
         //load MVVM
-        banhji.purchaseCenter.pageLoad();
+        banhji.purchases.pageLoad();
     });
 
 
@@ -14365,6 +14368,103 @@
         //      window.location.replace(baseUrl + "admin");
         //  }
         // });
+    });
+    banhji.router.route("/grn(/:id)", function(id){
+        if(!banhji.userManagement.getLogin()){
+            banhji.router.navigate('/manage');
+        }else{
+            banhji.view.layout.showIn("#content", banhji.view.grn);
+            kendo.fx($("#slide-form")).slideIn("down").play();
+
+            var vm = banhji.grn;
+            banhji.userManagement.addMultiTask("Goods Receive Note","grn",vm);
+
+            if(banhji.pageLoaded["grn"]==undefined){
+                banhji.pageLoaded["grn"] = true;
+
+                vm.lineDS.bind("change", vm.lineDSChanges);
+
+                var validator = $("#example").kendoValidator({
+                    rules: {
+                        customRule1: function(input) {
+                            if (input.is("[name=txtRecurringName]") && vm.recurring_validate) {
+                                vm.set("recurring_validate", false);
+                                return $.trim(input.val()) !== "";
+                            }
+                            return true;
+                        },
+                        customRule2: function(input){
+                            if (input.is("[name=txtNumber]")) {
+                                return vm.get("notDuplicateNumber");
+                            }
+                            return true;
+                        }
+                    },
+                    messages: {
+                        customRule1: banhji.source.requiredMessage,
+                        customRule2: banhji.source.duplicateNumber
+                    }
+                }).data("kendoValidator");
+
+                $("#saveDraft1").click(function(e){
+                    e.preventDefault();
+
+                    if(validator.validate() && vm.validating()){
+                        vm.set("saveDraft", true);
+                        vm.save();
+                    }else{
+                        $("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+                    }
+                });
+
+                $("#saveNew").click(function(e){
+                    e.preventDefault();
+
+                    if(validator.validate() && vm.validating()){
+                        vm.save();
+                    }else{
+                        $("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+                    }
+                });
+
+                $("#saveClose").click(function(e){
+                    e.preventDefault();
+
+                    if(validator.validate() && vm.validating()){
+                        vm.set("saveClose", true);
+                        vm.save();
+                    }else{
+                        $("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+                    }
+                });
+
+                $("#savePrint").click(function(e){
+                    e.preventDefault();
+
+                    if(validator.validate() && vm.validating()){
+                        vm.set("savePrint", true);
+                        vm.save();
+                    }else{
+                        $("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+                    }
+                });
+
+                $("#saveRecurring").click(function(e){
+                    e.preventDefault();
+
+                    vm.set("recurring_validate", true);
+
+                    if(validator.validate() && vm.validating()){
+                        vm.set("saveRecurring", true);
+                        vm.save();
+                    }else{
+                        $("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+                    }
+                });
+            }
+
+            vm.pageLoad(id);
+        }
     });
     banhji.router.route("/vendor_deposit(/:id)", function(id){
         // banhji.accessMod.query({
@@ -15122,4 +15222,4 @@
         banhji.router.start();
         banhji.source.pageLoad();
     });    
-</script>                                                                                                                                                                                                                                                                                                                         
+</script>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        

@@ -46462,11 +46462,11 @@
 	});
 	banhji.inventoryPositionSummary = kendo.observable({
 		lang 				: langVM,
-		dataSource 			: dataStore(apiUrl + "inventory_modules/position_summary"),
-		itemDS 				: new kendo.data.DataSource({
+		// dataSource 			: dataStore(apiUrl + "inventory_modules/position_summary"),
+		dataSource 				: new kendo.data.DataSource({
 			transport: {
 				read 	: {
-					url: apiUrl + "items",
+					url: apiUrl + "inventory_modules/position_summary",
 					type: "GET",
 					headers: banhji.header,
 					dataType: 'json'
@@ -46491,21 +46491,58 @@
 				data: 'results',
 				total: 'count'
 			},
-			filter: [
-				{ field: "is_catalog", value: 0 },
-				{ field: "is_assembly", value: 0 },
-		      	{ field: "item_type_id", operator:"where_in", value: [1,4] }//Inventory For Sale & Service
-		    ],
 			sort: [
-				{ field:"item_type_id", dir:"asc" },
-				{ field:"number", dir:"asc" }
+                { field:"quantity", dir:"desc" },
+				{ field:"amount", dir:"desc" }
 			],
 			serverFiltering: true,
-			serverSorting: true,
 			serverPaging: true,
 			page: 1,
 			pageSize: 10
 		}),
+        itemDS              : new kendo.data.DataSource({
+            transport: {
+                read    : {
+                    url: apiUrl + "items",
+                    type: "GET",
+                    headers: banhji.header,
+                    dataType: 'json'
+                },
+                parameterMap: function(options, operation) {
+                    if(operation === 'read') {
+                        return {
+                            page: options.page,
+                            limit: options.pageSize,
+                            filter: options.filter,
+                            sort: options.sort
+                        };
+                    } else {
+                        return {models: kendo.stringify(options.models)};
+                    }
+                }
+            },
+            schema  : {
+                model: {
+                    id: 'id'
+                },
+                data: 'results',
+                total: 'count'
+            },
+            filter: [
+                { field: "is_catalog", value: 0 },
+                { field: "is_assembly", value: 0 },
+                { field: "item_type_id", operator:"where_in", value: [1,4] }//Inventory For Sale & Service
+            ],
+            sort: [
+                { field:"item_type_id", dir:"asc" },
+                { field:"number", dir:"asc" }
+            ],
+            serverFiltering: true,
+            serverSorting: true,
+            serverPaging: true,
+            page: 1,
+            pageSize: 10
+        }),
 		categoryDS 			: new kendo.data.DataSource({
 			data: banhji.source.categoryList,
 			filter: [
@@ -54107,8 +54144,30 @@
 
         	//Account
             if(obj.account_id>0){
-	            para.push({ field:"account_id", value:obj.account_id });
+	            para.push({ field:"account_id", operator:"where_in", value:obj.account_id });
 	        }
+
+            //Trial Balance cross accounts
+            if(banhji.trialBalance.get("crossAccounts").length>0){
+                var ids = [];
+                $.each(banhji.trialBalance.get("crossAccounts"), function(index, value){
+                    ids.push(value);
+                });
+                para.push({ field:"account_id", operator:"where_in", value:ids });
+
+                banhji.trialBalance.set("crossAccounts", []);
+            }
+
+            //Balance Sheet cross accounts
+            if(banhji.statementFinancialPosition.get("crossAccounts").length>0){
+                var ids = [];
+                $.each(banhji.statementFinancialPosition.get("crossAccounts"), function(index, value){
+                    ids.push(value);
+                });
+                para.push({ field:"account_id", operator:"where_in", value:ids });
+
+                banhji.statementFinancialPosition.set("crossAccounts", []);
+            }
 
 	        //Segment
             if(obj.segments.length>0){
@@ -55218,6 +55277,7 @@
 		company 			: banhji.institute,
 		dr 					: 0,
 		cr 					: 0,
+        crossAccounts       : [],
 		exArray 			: [],
 		pageLoad 			: function(){
 			this.search();
@@ -55321,6 +55381,13 @@
 				});
 			}
 		},
+        goToGeneralLegder   : function(e){
+            var data = e.data, ids = this.get("crossAccounts");
+
+            ids.push(data.id);
+
+            banhji.router.navigate('/general_ledger');
+        },
 		totalDr 			: function() {
 	        var sum = 0;
 
@@ -55449,6 +55516,7 @@
 		totalLiability 		: 0,
 		totalEquity 		: 0,
 		totalLiabilityEquity: 0,
+        crossAccounts       : [],
 		pageLoad 			: function(){
 			this.search();
 		},
@@ -55754,6 +55822,14 @@
 				});
 			}
 		},
+        goToGeneralLegder   : function(e){
+            console.log("yoo");
+            var data = e.data, ids = this.get("crossAccounts");
+
+            ids.push(data.id);
+
+            banhji.router.navigate('/general_ledger');
+        },
 		printGrid			: function() {
 			var gridElement = $('#grid'),
 		        printableContent = '',

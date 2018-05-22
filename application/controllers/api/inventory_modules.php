@@ -610,7 +610,7 @@ class Inventory_modules extends REST_Controller {
 
 				$qty = floatval($unitOnHand->total);
 
-				if($cost<>0 || $qty<>0){
+				// if($cost<>0 || $qty<>0){
 					$data["results"][] = array(
 						"id" 			=> $value->id,
 						"name" 			=> $value->abbr . $value->number ." ". $value->name,
@@ -621,7 +621,7 @@ class Inventory_modules extends REST_Controller {
 						"cost" 			=> $cost,
 						"amount" 		=> $inventoryTotalCost
 					);
-				}
+				// }
 			}
 		}
 		

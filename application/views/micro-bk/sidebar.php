@@ -48,13 +48,19 @@
                     </a>
                 </li>
                 <li>
-                    <a target="_blank" class="waves-effect waves-dark" href="" aria-expanded="false">
+                    <a target="_blank" class="waves-effect waves-dark" href="<?php echo base_url(); ?>rrd" aria-expanded="false">
+                        <i class="ti-files"></i>
+                        <span class="hide-menu" data-bind="text: lang.lang.banhji">BanhJi</span>
+                    </a>
+                </li>
+                <li>
+                    <a target="_blank" class="waves-effect waves-dark" href="<?php echo base_url(); ?>micro/faq" aria-expanded="false">
                         <i class="ti-comments-smiley"></i>
                         <span class="hide-menu" data-bind="text: lang.lang.faq">FAQ</span>
                     </a>
                 </li>
                 <li>
-                    <a target="_blank" class="waves-effect waves-dark" href="" aria-expanded="false">
+                    <a target="_blank" class="waves-effect waves-dark" href="<?php echo base_url(); ?>micro/support" aria-expanded="false">
                         <i class="ti-headphone-alt"></i>
                         <span class="hide-menu" data-bind="text: lang.lang.support">Support</span>
                     </a>

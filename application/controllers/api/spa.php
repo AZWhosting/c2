@@ -3125,6 +3125,23 @@ class Spa extends REST_Controller {
 		//Response Data		
 		$this->response($data, 200);
 	}
+	function deltxn_post(){
+		$models = json_decode($this->post('models'));
+		$data["results"] = [];
+		$data["count"] = 0;
+		foreach ($models as $value) {
+			$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$obj->where("id", $value->txnid)->limit(1)->get();
+			$obj->deleted = 1;
+	   		if($obj->save()){
+			   	$data["results"][] = array(
+			   		"id" 			=> $obj->id,
+			   	);
+		    }
+		}
+		$data["count"] = count($data["results"]);
+		$this->response($data, 201);
+	}
 }
 /* End of file choulr.php */
 /* Location: ./application/controllers/api/meters.php */

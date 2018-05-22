@@ -24129,7 +24129,7 @@
                         cells: [{
                             value: self.company.name,
                             textAlign: "center",
-                            colSpan: 6
+                            colSpan: 7
                         }]
                     });
                     self.exArray.push({
@@ -24138,7 +24138,7 @@
                             bold: true,
                             fontSize: 20,
                             textAlign: "center",
-                            colSpan: 6
+                            colSpan: 7
                         }]
                     });
                     if (self.displayDate) {
@@ -24146,14 +24146,14 @@
                             cells: [{
                                 value: self.displayDate,
                                 textAlign: "center",
-                                colSpan: 6
+                                colSpan: 7
                             }]
                         });
                     }
                     self.exArray.push({
                         cells: [{
                             value: "",
-                            colSpan: 6
+                            colSpan: 7
                         }]
                     });
                     self.exArray.push({
@@ -24169,6 +24169,11 @@
                             },
                             {
                                 value: "Receipt Amount",
+                                background: "#496cad",
+                                color: "#ffffff"
+                            },
+                            {
+                                value: "Location",
                                 background: "#496cad",
                                 color: "#ffffff"
                             },
@@ -24226,6 +24231,9 @@
                                         value: kendo.parseFloat(response.results[i].line[j].amount)
                                     },
                                     {
+                                        value: response.results[i].line[j].location
+                                    },
+                                    {
                                         value: response.results[i].line[j].reference_issued_date
                                     },
                                     {
@@ -24240,7 +24248,7 @@
                         self.exArray.push({
                             cells: [{
                                 value: "",
-                                colSpan: 6
+                                colSpan: 7
                             }]
                         });
                     }
@@ -24257,6 +24265,9 @@
                                 value: kendo.parseFloat(response.balanceRec),
                                 bold: true,
                                 fontSize: 16
+                            },
+                            {
+                                value: ""
                             },
                             {
                                 value: ""

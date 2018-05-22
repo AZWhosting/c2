@@ -39727,7 +39727,7 @@
 			#=number#
 		</td>
 		<td style="color: black;">
-			#=name#
+			<a data-bind="click:goToGeneralLegder">#=name#</a>
 		</td>
 		<td style="color: black;">
 			#=type#
@@ -40486,9 +40486,9 @@
 		        	&nbsp;&nbsp;&nbsp;&nbsp; #: typeLine[i].line[j].number # #: typeLine[i].line[j].name #
 		        </td>
 		        <td align="right">
-		            &nbsp;&nbsp;&nbsp;&nbsp; #: kendo.toString(typeLine[i].line[j].amount, "c", banhji.locale) #
+		            &nbsp;&nbsp;&nbsp;&nbsp; <a data-bind="click: goToGeneralLegder">#: kendo.toString(typeLine[i].line[j].amount, "c", banhji.locale) #</a>
 		        </td>
-		        <td ></td>
+		        <td></td>
 		    </tr>
 		#}#
 		<tr>

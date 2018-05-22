@@ -593,22 +593,22 @@
 										        </div>
 										    </div>
 
-										        <div class="span6" style="padding-left: 0; font-size: 12px;">
-													<table class="table-fixed table-customer table table-bordered table-primary table-striped table-vertical-center">
-												        <thead>
-												            <tr>
-												            	<th style="vertical-align: top;" data-bind="text: lang.lang.no_"></th>
-												            	<th style="vertical-align: top;" data-bind="text: lang.lang.name"></th>
-												            </tr>
-												        </thead>
-												        <tbody data-role="listview" 
-											        		data-template="customer-select-list-tmpl" 
-											        		data-auto-bind="false"
-											        		data-bind="source: customerAR">
-											        	</tbody>
-												    </table>
-												</div>
+									        <div class="span6" style="padding-left: 0; font-size: 12px;">
+												<table class="table-fixed table-customer table table-bordered table-primary table-striped table-vertical-center">
+											        <thead>
+											            <tr>
+											            	<th style="vertical-align: top;" data-bind="text: lang.lang.no_"></th>
+											            	<th style="vertical-align: top;" data-bind="text: lang.lang.name"></th>
+											            </tr>
+											        </thead>
+											        <tbody data-role="listview" 
+										        		data-template="customer-select-list-tmpl" 
+										        		data-auto-bind="false"
+										        		data-bind="source: customerAR">
+										        	</tbody>
+											    </table>
 											</div>
+										</div>
 									</div>
 								</div>
 							</div> 
@@ -948,4 +948,4 @@
 		   	</div>		   	
    		</td>
 	</tr>
-</script>
+</script>                

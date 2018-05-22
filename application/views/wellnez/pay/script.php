@@ -4472,6 +4472,7 @@
             this.set("haveDelete",true);
         },
         delSearchDS : dataStore(apiUrl + "spa/delpwd"),
+        delDB       : dataStore(apiUrl + "spa/deltxn"),
         delApply : function(){
             var pwd = this.get("delPassword");
             var self = this;
@@ -4481,7 +4482,18 @@
             }).then(function(e){
                 var v = self.delSearchDS.view();
                 if(v.length > 0){
-                    if(confirm(''))
+                    if(confirm('សូមធ្វើការបញ្ជាក់!')){
+                        self.delDB.data([]);
+                        self.delDB.add({
+                            txnid   : self.get("invobj").id
+                        });
+                        self.delDB.sync();
+                        self.delDB.bind("requestEnd", function(e){
+                            alert('ប្រត្តិបត្រការណ៍ជោគជ័យ');
+                            self.delCancel();
+                            self.invoiceDS.query({});
+                        });
+                    }
                 }else{
                     alert('Wrong Password');
                 }
