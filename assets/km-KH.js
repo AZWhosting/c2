@@ -1,4 +1,5 @@
 var	km_KH = {
+	"home" : "ទំព័រដើម",
 	//Main Dustboard
 	"search_contact" :  "ស្វែងរក​ទំនាក់ទំនង",
 	"contact" :  "ទំនាក់ទំនង",

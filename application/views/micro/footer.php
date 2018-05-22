@@ -3,7 +3,18 @@
             </footer>
         </div>
     </div>
+    <script src="<?php echo base_url()?>assets/micro/bootstrap.min.js"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-109087721-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
 
+        gtag('config', 'UA-109087721-1');
+    </script>
+
+    <!-- Script MVVM User -->
     <script >
         var viewModel = kendo.observable({
             lang            : langVM,
@@ -60,7 +71,7 @@
                 },
                 pageSize: 50
             }),
-            logout      : function(e) {
+            logout          : function(e) {
                 e.preventDefault();
                 var userData = {
                     Username : userPool.getCurrentUser().username,
@@ -106,16 +117,24 @@
         })();
     </script>
 
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-109087721-1"></script>
+    <!-- Facebook -->
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId      : '387834344756149',
+          xfbml      : true,
+          version    : 'v2.7'
+        });
+        FB.AppEvents.logPageView();
+      };
 
-      gtag('config', 'UA-109087721-1');
+      (function(d, s, id){
+         var js, fjs = d.getElementsByTagName(s)[0];
+         if (d.getElementById(id)) {return;}
+         js = d.createElement(s); js.id = id;
+         js.src = "//connect.facebook.net/en_US/sdk.js";
+         fjs.parentNode.insertBefore(js, fjs);
+       }(document, 'script', 'facebook-jssdk'));
     </script>
-    <script src="<?php echo base_url()?>assets/micro/bootstrap.min.js"></script>
-    
 </body>
 </html>

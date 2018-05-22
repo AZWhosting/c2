@@ -3830,7 +3830,7 @@
     });
     //-----------------------------------------
     banhji.Index = kendo.observable({
-        lang     : langVM
+        lang     : langVM,
     });
     banhji.tapMenu =  kendo.observable({
         goReports          : function(){
