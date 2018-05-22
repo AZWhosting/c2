@@ -522,15 +522,22 @@
 							    </div>
 							</div>
 						</div>
+						<div class="row" style="padding: 0 15px;">
+							<span class="btn-btn" style="background: red;width: 50%;float: left;text-align: center;padding: 10px 0;cursor: pointer;" data-bind="visible: btnActive, click: payBill" >
+								<span data-bind="text: lang.lang.pay"></span>
+							</span>
+							<span class="btn-btn" style="background: green;width: 50%;float: left;text-align: center;padding: 10px 0;cursor: pointer;" data-bind="visible: btnActive, click: returnItem" >
+								<span>Return Item</span>
+							</span>
+						</div>
 						<div class="box-generic bg-action-button" data-bind="visible: btnActive">
 							<div id="ntf1" data-role="notification"></div>
 							<div class="row">
 								<div class="col-sm-12" align="right">
-									<span class="btn-btn" data-bind="visible: btnActive, click: payBill" ><span data-bind="text: lang.lang.pay"></span></span>
-									<span class="btn-btn" data-bind="visible: btnActive, click: addLoyalty" ><span>Apply Card</span></span>
+									<span class="btn-btn" data-bind="click: cancelInvoice" ><span data-bind="text: lang.lang.delete"></span></span>
+									<span class="btn-btn" data-bind="visible: btnActive, click: addLoyalty" ><span>Card</span></span>
 									<span class="btn-btn" data-bind="visible: btnActive, click: splitBill" ><span>Split Bill</span></span>
 									<span class="btn-btn" data-bind="visible: btnActive, click: printBill" ><span>Print Bill</span></span>
-									<span class="btn-btn" data-bind="click: cancelInvoice" ><span data-bind="text: lang.lang.delete"></span></span>	
 								</div>
 							</div>
 						</div>
@@ -1210,6 +1217,90 @@
 			#}#
 		</td>
 	</tr>
+</script>
+<script id="returnItem" type="text/x-kendo-template">
+	<div class="container">
+		<div class="row ">
+			<div class="span12">
+				<div class="box-generic" style="border-radius: 10px;padding: 0px;overflow: hidden;">
+					<div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 100%;background: rgba(142, 159, 167, 0.8);z-index: 999999;border-radius: 10px;">
+						<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 40%;left: 40%">Loading</i>
+					</div>
+				    <div class="tabsbar tabsbar-1">
+				        <ul class="row-fluid row-merge">
+				            <li class="span2 glyphicons nameplate_alt active">
+				            	<a href="#tab1" data-toggle="tab"><i></i> <span>Item</span></a>
+				            </li>
+				        </ul>
+				    </div>
+				    <div class="tab-content">
+				        <div class="tab-pane active" id="tab1" style="overflow: hidden;position: relative;">
+			            	<div class="span12">
+			            		<div class="rows">
+				            		<div class="span4">
+				            			<table class="table table-bordered table-primary table-striped table-vertical-center" style="margin-top: 0px; color: #333;">
+									        <thead>
+									            <tr>
+									            	<th style="vertical-align: top; background: #1c3b19;" data-bind="text: lang.lang.name"></th>
+									            	<th style="vertical-align: top; background: #1c3b19;" >QTY</th>
+									            	<th style="vertical-align: top; background: #1c3b19;" data-bind="text: lang.lang.amount"></th>
+									            </tr>
+									        </thead>
+									        <tbody data-role="listview" 
+								        		data-template="item-list-template" 
+								        		data-auto-bind="false"
+								        		data-selectable="true"
+								        		data-bind="source: itemsDS">
+								        	</tbody>
+									    </table>
+				            		</div>
+				            		<div class="span8">
+				            			<table class="table table-bordered table-primary table-striped table-vertical-center" style="margin-top: 0px; color: #333;">
+									        <thead>
+									            <tr>
+									            	<th style="vertical-align: top; background: #1c3b19;" data-bind="text: lang.lang.name"></th>
+									            	<th style="vertical-align: top; background: #1c3b19;" >QTY</th>
+									            </tr>
+									        </thead>
+									        <tbody data-role="listview" 
+								        		data-template="item-update-list-template" 
+								        		data-auto-bind="true"
+								        		data-selectable="true"
+								        		data-bind="source: itemsUpdateDS">
+								        	</tbody>
+									    </table>
+				            		</div>
+				           		</div>
+			            		<div class="box-generic bg-action-button" style="margin-top: 15px;">
+									<div class="row">
+										<div class="col-sm-12" align="right">			
+											<span class="btn-btn" data-bind="click: cancel" ><span>Cancel</span></span>	
+											<span class="btn-btn" data-bind="click: saveReturnItem, visible: correctInput"><span>Save</span></span>
+										</div>
+									</div>
+								</div>
+			            	</div>
+			        	</div>
+				    </div>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="item-list-template" type="text/x-kendo-tmpl">
+	<tr data-uid="#: uid #" style="cursor: pointer;" data-bind="click: itemClick">
+		<td style="padding: 5px !important;">#= item.name#</td>
+		<td style="padding: 5px !important;">#= quantity#</td>
+		<td style="text-align: right; padding: 5px !important;">#=kendo.toString(amount, locale=="km-KH"?"c0":"c2", locale)#</td>
+    </tr>   
+</script>
+<script id="item-update-list-template" type="text/x-kendo-tmpl">
+	<tr data-uid="#: uid #" style="cursor: pointer;">
+		<td style="padding: 5px !important;">#= name#</td>
+		<td style="padding: 5px !important;">
+			<input type="number" data-bind="value: quantity,events: {change: qtyChange}" />
+		</td>
+    </tr>   
 </script>
 <!-- Invoice Form -->
 <script id="printBill" type="text/x-kendo-template">

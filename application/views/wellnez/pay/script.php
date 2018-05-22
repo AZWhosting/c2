@@ -4502,6 +4502,9 @@
         delCancel : function(){
             this.set("haveDelete",false);
             this.set("delPassword","");
+        },
+        returnItem : function(){
+            banhji.router.navigate("/return_item/"+this.get("invobj").id);
         }
     });
     banhji.splitBill = kendo.observable({
@@ -4597,6 +4600,82 @@
         cancel      : function(){
             banhji.router.navigate("/");
             this.set("numPeople", 2);
+        }
+    });
+    banhji.returnItem = kendo.observable({
+        lang            : langVM,
+        dataSource      : dataStore(apiUrl + "spa/cashreceipt"),
+        itemsDS         : dataStore(apiUrl + "item_lines"),
+        txnID           : 0,
+        pageLoad        : function(id){
+            if(id){
+                var self = this;
+                this.set("txnID", id);
+                this.itemsDS.query({
+                    filter: {field: "transaction_id", value: id},
+                    pageSize: 100,
+                });
+            }else{
+                banhji.router.navigate("/");
+            }
+            this.itemsUpdateDS.data([]);
+        },
+        itemsUpdateDS         : dataStore(apiUrl + "spa/itemupdate"),
+        itemClick       : function(e){
+            var data = e.data;
+            var h = 0;
+            if(this.itemsUpdateDS.data().length > 0){
+                $.each(this.itemsUpdateDS.data(), function(i,v){
+                    if(data.id == v.id){
+                        h = 1;
+                    }
+                });
+            }else{
+                this.set("correctInput", false);
+            }
+            if(h == 0){
+                this.itemsUpdateDS.add({
+                    id              : data.id,
+                    quantity        : data.quantity,
+                    price           : data.price,
+                    name            : data.item.name,
+                    locale          : data.locale,
+                    transaction_id  : data.transaction_id,
+                    user_id         : banhji.userData.id,
+                });
+                this.set("correctInput", true);
+            }
+        },
+        correctInput    : false,
+        qtyChange       : function(e){
+            var data = e.data;
+            var qty = data.quantity;
+            var self = this;
+            if(qty > 0){
+                $.each(this.itemsDS.data(), function(i,v){
+                    if(v.id == data.id){
+                        if(qty > v.quantity){
+                            alert('ទន្ន័យបញ្ចូលមិនត្រឹមត្រូវ');
+                            self.set("correctInput", false);
+                        }else{
+                            self.set("correctInput", true);
+                        }
+                    }
+                });
+            }else{
+                this.set("correctInput", false);
+            }
+        },
+        saveReturnItem  : function(){
+            var self = this;
+            this.itemsUpdateDS.sync();
+            this.itemsUpdateDS.bind("requestEnd", function(e){
+                self.cancel();
+                banhji.Index.payBill(self.get("txnID"));
+            });
+        },
+        cancel          : function(){
+            banhji.router.navigate("/");
         }
     });
     banhji.printBill = kendo.observable({
@@ -4778,6 +4857,9 @@
         printBill: new kendo.Layout("#printBill", {
             model: banhji.printBill
         }),
+        returnItem: new kendo.Layout("#returnItem", {
+            model: banhji.returnItem
+        }),
     };
     /* views and layout */
     banhji.router = new kendo.Router({
@@ -4839,7 +4921,11 @@
         banhji.view.layout.showIn('#content', banhji.view.printBill);
         banhji.printBill.pageLoad();
     });
-    
+    banhji.router.route('/return_item(/:id)', function(id) {
+        var blank = new kendo.View('#blank-tmpl');
+        banhji.view.layout.showIn('#content', banhji.view.returnItem);
+        banhji.returnItem.pageLoad(id);
+    });
     $(function() {
         banhji.accessMod.query({
             filter: {
