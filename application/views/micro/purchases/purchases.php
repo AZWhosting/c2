@@ -43,9 +43,9 @@
 <!-- Purchase Menu -->
 <script id="tapMenu" type="text/x-kendo-template">
 	<ul class="nav nav-tabs customtab" role="tablist" >
-		<li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#/" data-bind="click: goReports"><span class="hidden-sm-up"><i class="ti-layout-grid2-thumb"></i></span> <span class="hidden-xs-down" data-bind="">Reports</span></a> </li>
+		<li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#/" data-bind="click: goReports"><span class="hidden-sm-up"><i class="ti-layout-grid2-thumb"></i></span> <span class="hidden-xs-down" data-bind="data-bind="text: lang.lang.reports">Reports</span></a> </li>
 	    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#/transactions" data-bind="click: goTransactions"><span class="hidden-sm-up"><i class="ti-layout-accordion-list"></i></span> <span class="hidden-xs-down">Purchases Transactions</span></a> </li>
-	    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#/purchase_center" data-bind="click: goPurchaseCenter"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="">Purchases</span></a> </li>
+	    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#/purchase_center" data-bind="click: goPurchaseCenter"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.purchase">Purchases</span></a> </li>
     </ul>
 </script>
 <!-- End -->
