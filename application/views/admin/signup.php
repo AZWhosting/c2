@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Sign Up | Free Online Accounting</title>
-    <link rel="shortcut icon" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/banhji-logo.png">
+    <link rel="shortcut icon" href="<?php echo base_url();?>assets/update/banhji.jpg">
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/libraries/kendoui/styles/kendo.common.min.css">
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/libraries/kendoui/styles/kendo.material.min.css">
     <!-- Boostrap-->
@@ -346,7 +346,7 @@
                     <div class="row" style="margin-bottom: 15px;">
                         <div class="col-sm-2 logo-onsignup" style="width: 20%;">
                             <a href="https://banhji.com/" target="_blank">
-                                <img width="100%" height="auto" alt="BanhJi Logo" src="<?php echo base_url();?>assets/industry_logos/banhji-logo-onsignup.png">
+                                <img width="100%" height="auto" alt="BanhJi Logo" src="<?php echo base_url();?>assets/update/banhji.jpg">
                             </a>
                         </div>
                         <div class="col-sm-10" style="width: 80%; margin-top: -10px; padding-left: 0;">
@@ -697,7 +697,7 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <div style="padding-right: 20px; border-right: 1px solid #fff; width: 7%; float: left; margin-right: 13px; ">
-                                <img style="width: 30px; height: 30px; " src="https://storage.googleapis.com/instapage-user-media/e315080c/7548513-0-Banhji-Logo-3.png" />
+                                <img style="width: 30px; height: 30px; " src="<?php echo base_url();?>assets/update/banhji.jpg" />
                             </div>
                             <p style="text-align: left; margin-bottom: 0; margin-top: 7px; font-size: 13px;">Taking Fear out of Accounting</p>
                             <p style="width: 85%; margin-left: 5px; font-size: 12px; margin-top: 10px; float: left; clear: both;">&copy; <?php echo date('Y'); ?> BanhJi Pte. Ltd. All rights reserved. Terms, conditions, features, support, pricing and service options subject to change without notice.</p>

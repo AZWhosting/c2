@@ -15586,6 +15586,7 @@
     	<td></td>
     	<td></td>
     	<td></td>
+    	<td></td>
     	<td class="right" style="font-weight: bold; border-top: 1px solid black !important; color: black;">
     		#=kendo.toString(amount, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#
     	</td>

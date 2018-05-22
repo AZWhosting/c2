@@ -8390,6 +8390,10 @@
 	            </li>
 	            <li><a href="#tab5-7" class="glyphicons building" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.prefix_setting"></span></span></a>
 	            </li>
+	            <li><a href="#tab6-7" class="glyphicons more_items" data-toggle="tab"><i></i><span class="strong">Custom Field</span></a>
+	            </li>
+	            <li><a href="#tab7-7" class="glyphicons vcard" data-toggle="tab"><i></i><span class="strong">Membership Type</span></a>
+	            </li>
 	        </ul>
 	    </div>
 	    <!-- // Tabs Heading END -->
@@ -8518,6 +8522,36 @@
 
 	            </div>
 	            <!-- // Tab Prefix content END -->
+
+	            <!-- Tab Custom Field content -->
+	            <div class="tab-pane" id="tab6-7">
+	            	<div data-role="grid"
+		                 data-editable="true"
+		                 data-toolbar="['create', 'save', 'cancel']"
+		                 data-columns="[
+		                                { 'field': 'name', title:'Field Name','width': 270 },
+		                                { 'field': 'description', title:'Description' },
+		                                { command: 'destroy', title: '&nbsp;', width: '100px' }
+		                 ]"
+		                 data-bind="source: customFieldDS"
+		                 style="height: 200px"></div>
+	            </div>
+	            <!-- // Tab Custom Field content END -->
+
+	            <!-- Tab Membership type content -->
+	            <div class="tab-pane" id="tab7-7">
+	            	<div data-role="grid"
+		                 data-editable="true"
+		                 data-toolbar="['create', 'save', 'cancel']"
+		                 data-columns="[
+		                                { 'field': 'name', title:'Field Name','width': 270 },
+		                                { 'field': 'description', title:'Description' },
+		                                { command: 'destroy', title: '&nbsp;', width: '100px' }
+		                 ]"
+		                 data-bind="source: membershipTypeDS"
+		                 style="height: 200px"></div>
+	            </div>
+	            <!-- // Tab Membership type content END -->
 
 	        </div>
 	    </div>
@@ -15601,7 +15635,7 @@
 	<span class="pull-right glyphicons no-js remove_2"
 			onclick="javascript:window.history.back()"><i></i></span>
 
-	<h2>Membership Setting</h2>
+	<h2 data-bind="text: lang.lang.general_customer_setting"></h2>
 
 	<br>
 
@@ -15614,17 +15648,19 @@
 	            </li>
 	            <li><a href="#/customer_group" class="glyphicons group"><i></i><span class="strong">CUSTOMER GROUP</span></a>
 	            </li>
-	            <li><a href="#tab2-7" class="glyphicons vcard" data-toggle="tab"><i></i><span class="strong">Membership Type</span></a>
+	            <li><a href="#/customer_assignee" class="glyphicons nameplate"><i></i><span class="strong">SALE REP. ASSIGMENT</span></a>
 	            </li>
-	            <li><a href="#tab3-7" class="glyphicons more_items" data-toggle="tab"><i></i><span class="strong">Custom Field</span></a>
+	            <li><a href="#tab2-7" class="glyphicons credit_card" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.payment_method"></span></span></a>
 	            </li>
-	            <li><a href="#tab4-7" class="glyphicons credit_card" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.payment_method"></span></span></a>
+	            <li><a href="#tab3-7" class="glyphicons clock" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.payment_terms"></span></span></a>
 	            </li>
-	            <li><a href="#tab5-7" class="glyphicons clock" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.payment_terms"></span></span></a>
+	            <li><a href="#tab4-7" class="glyphicons list" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.custom_forms"></span></span></a>
 	            </li>
-	            <li><a href="#tab6-7" class="glyphicons list" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.custom_forms"></span></span></a>
+	            <li><a href="#tab5-7" class="glyphicons building" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.prefix_setting"></span></span></a>
 	            </li>
-	            <li><a href="#tab7-7" class="glyphicons building" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.prefix_setting"></span></span></a>
+	            <li><a href="#tab6-7" class="glyphicons more_items" data-toggle="tab"><i></i><span class="strong">Custom Field</span></a>
+	            </li>
+	            <li><a href="#tab7-7" class="glyphicons vcard" data-toggle="tab"><i></i><span class="strong">Membership Type</span></a>
 	            </li>
 	        </ul>
 	    </div>
@@ -15634,7 +15670,7 @@
 	        <div class="tab-content">
 
 	            <!-- CUSTOMER TYPE -->
-	            <div class="tab-pane active" id="tab1-7">
+	            <div class="tab-pane" id="tab1-7">
 	            	<div class="input-append">
 					    <input class="span4" id="appendedInputButtons" type="text" placeholder="input customer type ..." data-bind="value: contactTypeName">
 					    <input class="span4" id="appendedInputButtons" type="text" placeholder="input abbr ..." data-bind="value: contactTypeAbbr">
@@ -15662,41 +15698,8 @@
 	            </div>
 	            <!-- // CUSTOMER TYPE END -->
 
-	            <!-- Tab Membership type content -->
-	            <div class="tab-pane" id="tab2-7">
-	            	<button class="btn btn-inverse" data-bind="click: addNewMembershipType"><i class="icon-plus icon-white"></i> Add New Membership</button>
-
-	            	<div data-role="grid"
-		                 data-editable="true"
-		                 data-toolbar="['save', 'cancel']"
-		                 data-columns="[
-                            { field: 'name', title:'Name','width': 270 },
-                            { field: 'description', title:'Description' },
-                            { field: 'membership_id', title: '&nbsp;', template: kendo.template($('#membershipSetting-membershipType-template').html()), width: '100px' },
-                            { command: 'destroy', title: '&nbsp;', width: '100px' }
-		                 ]"
-		                 data-bind="source: membershipTypeDS"
-		                 style="height: 200px"></div>
-	            </div>
-	            <!-- // Tab Membership type content END -->
-
-	            <!-- Tab Custom Field content -->
-	            <div class="tab-pane" id="tab3-7">
-	            	<div data-role="grid"
-		                 data-editable="true"
-		                 data-toolbar="['create', 'save', 'cancel']"
-		                 data-columns="[
-                            { 'field': 'name', title:'Field Name','width': 270 },
-                            { 'field': 'description', title:'Description' },
-                            { command: 'destroy', title: '&nbsp;', width: '100px' }
-		                 ]"
-		                 data-bind="source: customFieldDS"
-		                 style="height: 200px"></div>
-	            </div>
-	            <!-- // Tab Custom Field content END -->
-
 	            <!-- PAYMENT METHOD -->
-	            <div class="tab-pane" id="tab4-7">
+	            <div class="tab-pane" id="tab2-7">
 	            	<div class="input-append">
 					    <input class="span12" id="appendedInputButtons" type="text" placeholder="name ..." data-bind="value: paymentMethodName">
 					    <button class="btn btn-default" type="button" data-bind="click: addPaymentMethod"><i class="icon-plus"></i> <span data-bind="text: lang.lang.add_method"></span></button>
@@ -15717,7 +15720,7 @@
 	            <!-- // PAYMENT METHOD END -->
 
 	            <!-- PAYMENT TERM -->
-	            <div class="tab-pane" id="tab5-7">
+	            <div class="tab-pane" id="tab3-7">
             		<div class="input-append">
 					    <input class="span3" id="appendedInputButtons" type="text" placeholder="name ..." data-bind="value: paymentTermName">
 					    <input class="span3" id="appendedInputButtons" type="text" placeholder="net due ..." data-bind="value: paymentTermNetDue">
@@ -15744,7 +15747,7 @@
 	            <!-- // PAYMENT TERM END -->
 
 	            <!-- Tab Invocice Custom content -->
-	            <div class="tab-pane" id="tab6-7">
+	            <div class="tab-pane" id="tab4-7">
 
 	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 	            		<thead>
@@ -15768,7 +15771,7 @@
 	            <!-- // Tab Invoice Custom content END -->
 
 	            <!-- Tab Prefix content -->
-	            <div class="tab-pane" id="tab7-7">
+	            <div class="tab-pane" id="tab5-7">
 	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 	            		<thead>
 	            			<tr class="widget-head">
@@ -15788,7 +15791,38 @@
 	            </div>
 	            <!-- // Tab Prefix content END -->
 
-	            
+	            <!-- Tab Custom Field content -->
+	            <div class="tab-pane" id="tab6-7">
+	            	<div data-role="grid"
+		                 data-editable="true"
+		                 data-toolbar="['create', 'save', 'cancel']"
+		                 data-columns="[
+                            { 'field': 'name', title:'Field Name','width': 270 },
+                            { 'field': 'description', title:'Description' },
+                            { command: 'destroy', title: '&nbsp;', width: '100px' }
+		                 ]"
+		                 data-bind="source: customFieldDS"
+		                 style="height: 200px"></div>
+	            </div>
+	            <!-- // Tab Custom Field content END -->
+
+	            <!-- Tab Membership type content -->
+	            <div class="tab-pane active" id="tab7-7">
+	            	<button class="btn btn-inverse" data-bind="click: addNewMembershipType"><i class="icon-plus icon-white"></i> Add New Membership</button>
+
+	            	<div data-role="grid"
+		                 data-editable="true"
+		                 data-toolbar="['save', 'cancel']"
+		                 data-columns="[
+                            { field: 'name', title:'Name','width': 270 },
+                            { field: 'description', title:'Description' },
+                            { field: 'membership_id', title: '&nbsp;', template: kendo.template($('#membershipSetting-membershipType-template').html()), width: '100px' },
+                            { command: 'destroy', title: '&nbsp;', width: '100px' }
+		                 ]"
+		                 data-bind="source: membershipTypeDS"
+		                 style="height: 200px"></div>
+	            </div>
+	            <!-- // Tab Membership type content END -->
 
 	        </div>
 	    </div>
@@ -64854,4 +64888,4 @@
 	s0.parentNode.insertBefore(s1,s0);
 	})();
 </script> -->
-<!--End of Tawk.to Script-->                                                                                                                                                                                                                                                                                                                                                                                                      
+<!--End of Tawk.to Script-->

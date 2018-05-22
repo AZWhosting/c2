@@ -18757,15 +18757,13 @@
                 start = new Date(start);
                 end = new Date(end);
                 displayDate = "From " + kendo.toString(start, "dd-MM-yyyy") + " To " + kendo.toString(end, "dd-MM-yyyy");
-                end.setDate(end.getDate() + 30);
-                start.setDate(start.getDate() + 30);
 
                 para.push({
-                    field: "issued_date >=",
+                    field: "month_of >=",
                     value: kendo.toString(start, "yyyy-MM-dd")
                 });
                 para.push({
-                    field: "issued_date <",
+                    field: "month_of <",
                     value: kendo.toString(end, "yyyy-MM-dd")
                 });
             } else if (start) {
@@ -18773,7 +18771,7 @@
                 displayDate = "On " + kendo.toString(start, "dd-MM-yyyy");
 
                 para.push({
-                    field: "issued_date",
+                    field: "month_of",
                     value: kendo.toString(start, "yyyy-MM-dd")
                 });
             } else if (end) {
@@ -18782,7 +18780,7 @@
                 end.setDate(end.getDate() + 1);
 
                 para.push({
-                    field: "issued_date <",
+                    field: "month_of <",
                     value: kendo.toString(end, "yyyy-MM-dd")
                 });
             } else {
@@ -19521,15 +19519,13 @@
                 start = new Date(start);
                 end = new Date(end);
                 displayDate = "From " + kendo.toString(start, "dd-MM-yyyy") + " To " + kendo.toString(end, "dd-MM-yyyy");
-                end.setDate(end.getDate() + 30);
-                start.setDate(start.getDate() + 30);
 
                 para.push({
-                    field: "issued_date >=",
+                    field: "month_of >=",
                     value: kendo.toString(start, "yyyy-MM-dd")
                 });
                 para.push({
-                    field: "issued_date <",
+                    field: "month_of <",
                     value: kendo.toString(end, "yyyy-MM-dd")
                 });
             } else if (start) {
@@ -19537,7 +19533,7 @@
                 displayDate = "On " + kendo.toString(start, "dd-MM-yyyy");
 
                 para.push({
-                    field: "issued_date",
+                    field: "month_of",
                     value: kendo.toString(start, "yyyy-MM-dd")
                 });
             } else if (end) {
@@ -19546,7 +19542,7 @@
                 end.setDate(end.getDate() + 1);
 
                 para.push({
-                    field: "issued_date <",
+                    field: "month_of <",
                     value: kendo.toString(end, "yyyy-MM-dd")
                 });
             } else {

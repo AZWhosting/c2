@@ -5,7 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Login | Free Online Accounting</title>
     <!-- Boostrap-->
-    <link rel="shortcut icon" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/banhji-logo.png">
+    <link rel="shortcut icon" href="<?php echo base_url();?>assets/update/banhji.jpg">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet">
     <style>
@@ -272,7 +272,7 @@
                 <dis class="login-content">
                     <div class="col-sm-6">
                         <div class="login-image">
-                            <img style="width: 90%;" src="<?php echo base_url(); ?>assets/signup-new.png" />
+                            <img style="width: 90%;" src="<?php echo base_url(); ?>assets/banhji-login.png" />
                         </div>
                     </div>
                     <div class="col-sm-6">
@@ -301,7 +301,7 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <div style="padding-right: 20px; border-right: 1px solid #fff; width: 7%; float: left; margin-right: 13px; ">
-                                <img style="width: 30px; height: 30px; " src="https://storage.googleapis.com/instapage-user-media/e315080c/7548513-0-Banhji-Logo-3.png" />
+                                <img style="width: 30px; height: 30px; " src="<?php echo base_url();?>assets/update/banhji.jpg" />
                             </div>
                             <p style="text-align: left; margin-bottom: 0; margin-top: 7px; font-size: 13px;">Taking Fear out of Accounting</p>
                             <p style="width: 85%; margin-left: 5px; font-size: 12px; margin-top: 10px; float: left; clear: both;">&copy;
@@ -632,7 +632,7 @@
                                             if (e.response.results[0].id) {
                                                 var user = {
                                                     id: id,
-                                                    sub: attributes[0].Value,
+                                                    sub: attributes,
                                                     username: userPool.getCurrentUser().username,
                                                     role: e.response.results[0].role,
                                                     roles: e.response.results[0].roles,
@@ -722,4 +722,4 @@
     </script>
 </body>
 
-</html>
+</html>                         

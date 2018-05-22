@@ -597,6 +597,7 @@ a {
 .accounCetner-textedit{
 	border: 1px solid #ccc;
     float: left;
+    width: 100%;
 }
 .accounCetner-textedit table {
 	margin-bottom: 8px;
