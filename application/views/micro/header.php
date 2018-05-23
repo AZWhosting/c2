@@ -299,11 +299,11 @@
                                     <a class="dropdown-item menuLang" href="javascript:void(0)" onclick="langVM.changeToKh()"><i class="flag-icon flag-icon-kh  m-r-5 m-l-5"></i> ភាសាខ្មែរ</a>
                                     <a class=" dropdown-item menuLang" href="javascript:void(0)" onclick="langVM.changeToEn()"><i class="flag-icon flag-icon-us  m-r-5 m-l-5"></i> English</a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#/manage" data-bind="click: logout"><i class="fa fa-power-off m-r-5 m-l-5"></i><span data-bind="text: lang.lang.logout"></span></a>
+                                    <a class="dropdown-item" data-bind="click: logout"><i class="fa fa-power-off m-r-5 m-l-5"></i><span data-bind="text: lang.lang.logout"></span></a>
                                     
                                 </div>
                             </div>
                         </ul>
                     </div>
                 </nav>
-            </header>
+            </header>                

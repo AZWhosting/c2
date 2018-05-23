@@ -401,37 +401,13 @@ class Spa extends REST_Controller {
 		$data["results"] = [];
 		$data["count"] = 0;
 		foreach ($models as $value) {
-			//Transaction
-			$tran = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$tran->where("id", $value->transaction_id)->limit(1)->get();
-			$tran->deleted = 1;
-			$tran->save();
-			//Item
-			$it = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$it->where("transaction_id", $value->transaction_id);
-			$it->update("deleted",1);
-			//Save New Txn
 			$txn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$txn->where("id", $value->transaction_id)->limit(1)->get();
 			//Contact
 			$txn->amount = $value->amount;
 			$txn->tax = $value->tax;
 			$txn->discount = $value->discount;
 			$txn->sub_total = $value->sub_total;
-			$txn->locale = $value->locale;
-			$txn->is_journal = 1;
-			$txn->rate = floatval($tran->rate);
-			$txn->contact_id = intval($tran->contact_id);
-			$txn->account_id = intval($tran->account_id);
-			$today = date("Y-m-d");
-			$number = $this->_generate_number("Sale_Order", $today);
-			$txn->type = "Sale_Order";
-			$txn->start_date = $value->start_date;
-			$txn->issued_date = $value->start_date;
-			$txn->frequency = "Daily";
-			$txn->month_option = "Day";
-			$txn->intval = 1;
-			$txn->day = 1;
-			$txn->number = $number;
 			if($txn->save()){
 				//Work
 				$work = new Spa_work(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
@@ -440,25 +416,34 @@ class Spa extends REST_Controller {
 				$work->save();
 				//Item
 				foreach($value->items as $item){
-					$i = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-					$i->transaction_id = $txn->id;
-					$i->item_id = $item->item->id;
-					$i->contact_id = $txn->contact_id;
-					$i->measurement_id = $item->measurement->measurement_id;
-					$i->tax_item_id = $item->tax_item->id;
-					$i->assembly_id = $item->assembly_id;
-					$i->description = isset($item->description) ? $item->description : $item->name;
-					$i->quantity = $item->quantity;
-					$i->conversion_ratio = 1;
-					$i->cost = $item->cost;
-					$i->price = $item->price;
-					$i->amount = $item->amount;
-					$i->discount = $item->discount;
-					$i->tax = $item->tax;
-					$i->rate = $txn->rate;
-					$i->locale = $txn->locale;
-					$i->movement = 0;
-					$i->save();
+					$it = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$it->where("id", $item->id)->limit(1)->get();
+					if($it->exists()){
+						$it->price = $item->price;
+						$it->quantity = $item->quantity;
+						$it->amount = $item->amount;
+						$it->save();
+					}else{
+						$i = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						$i->transaction_id = $txn->id;
+						$i->item_id = $item->item->id;
+						$i->contact_id = $txn->contact_id;
+						$i->measurement_id = $item->measurement->measurement_id;
+						$i->tax_item_id = $item->tax_item->id;
+						$i->assembly_id = $item->assembly_id;
+						$i->description = isset($item->description) ? $item->description : $item->name;
+						$i->quantity = $item->quantity;
+						$i->conversion_ratio = 1;
+						$i->cost = $item->cost;
+						$i->price = $item->price;
+						$i->amount = $item->amount;
+						$i->discount = $item->discount;
+						$i->tax = $item->tax;
+						$i->rate = $txn->rate;
+						$i->locale = $txn->locale;
+						$i->movement = 0;
+						$i->save();
+					}
 				}
 				$data["results"][] = array(
 			   		"id" 			=> $txn->id
@@ -650,6 +635,10 @@ class Spa extends REST_Controller {
 			$txn->type = "Quote";
 			$txn->start_date = date('Y-m-d H:i:s', strtotime($value->start_date));
 			$txn->issued_date = date('Y-m-d H:i:s', strtotime($value->start_date));
+
+			$duedate = strtotime('30 day', strtotime($value->start_date));
+			$txn->due_date = date ('Y-m-d', $duedate);
+
 			$txn->frequency = "Daily";
 			$txn->month_option = "Day";
 			$txn->intval = 1;
@@ -990,6 +979,10 @@ class Spa extends REST_Controller {
 			$txn->amount = $saleorder->amount;
 			$txn->number = $number;
 			$txn->issued_date = $value->issued_date;
+
+			$duedate = strtotime('30 day', strtotime($value->issued_date));
+			$txn->due_date = date ('Y-m-d', $duedate);
+
 			$txn->contact_id = $saleorder->contact_id;
 			$txn->payment_term_id = 5;
 			$txn->payment_method_id = 1;
@@ -1252,6 +1245,10 @@ class Spa extends REST_Controller {
 		$txn->amount = $amount;
 		$txn->number = $number;
 		$txn->issued_date = $value->issued_date;
+
+		$duedate = strtotime('30 day', strtotime($value->issued_date));
+		$txn->due_date = date ('Y-m-d', $duedate);
+
 		$txn->contact_id = $value->contact_id;
 		$txn->payment_term_id = 5;
 		$txn->payment_method_id = 1;

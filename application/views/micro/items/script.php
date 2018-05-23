@@ -4281,7 +4281,7 @@
         }
     });
 
-     // Function
+    // Function
     banhji.item = kendo.observable({
         lang                    : langVM,
         dataSource              : dataStore(apiUrl + "items"),
@@ -5729,10 +5729,6 @@
             }
         }
     });
-
-
-    
-
     
 
     

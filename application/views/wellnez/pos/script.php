@@ -6276,7 +6276,11 @@
                 {
                     field: "work_id",
                     value: 0
-                }
+                },
+                {
+                    field: "status",
+                    value: 1
+                },
             ],
             sort: {
                 field: "id",
