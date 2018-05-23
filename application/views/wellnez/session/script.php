@@ -3083,31 +3083,37 @@
         receiveNoChangeAR: [],
         changeAR: [],
         receiveAR: [],
-        actualCountDS: dataStore(apiUrl + "cashier/blank"),
-        actualDS: dataStore(apiUrl + "cashier/blank"),
-        baseCurrency: banhji.institute.locale,
+        actualCountDS: [],
+        actualDS: [],
+        baseCurrency: "km-KH",
         defBG: "#be1e2d",
         haveDef: true,
         sessionDS: dataStore(apiUrl + "cashier"),
         noSession: true,
         sessionID: "",
         cashierID: "",
-        acAmount: 0,
+        readyRecon: false,
         pageLoad: function(id) {
+            if(banhji.userData.role == '2'){
+                this.sessionDS.query({
+                    filter: {field: "cashier_id", value: banhji.userData.id}
+                });
+            }
             var self = this;
-            this.actualCountDS.data([]);
-            this.actualDS.data([]);
-            this.currencyAR = [];
+            var that = this;
+            this.actualCountDS.splice(0, this.actualCountDS.length);
+            this.actualDS.splice(0, this.actualDS.length);
+            this.receiveNoChangeAR.splice(0, this.receiveNoChangeAR.length);
+            this.currencyAR.splice(0, this.currencyAR.length);
             if(id){
                 this.set("noSession", false);
                 this.set("sessionID", id);
                 this.startAmountDS.query({
-                    filter: {field: "id", value: id}
+                    filter: {field: "id", value: id},
+                    pageSize: 1
                 }).then(function(e){
                     var view = self.startAmountDS.view();
                     var tmpActual = [];
-                    var today = "<?php echo date('Y-m-d'); ?>";
-                    var totalAmount = 0;
                     if(view.length > 0){
                         self.set("cashierID", view[0].cashier_id);
                         //Start
@@ -3117,16 +3123,12 @@
                                     currency: v.currency,
                                     amount: v.amount
                                 });
-                                self.actualCountDS.add({
+                                self.actualCountDS.push({
                                     currency: v.currency,
                                     amount: v.amount,
                                     locale: v.locale
                                 });
-                                var rate = banhji.source.getRate(v.locale, new Date(today));
-                                totalAmount += v.amount / rate;
                             });
-
-                            self.set("actualAmount", totalAmount);
                         }
                         //Get not yet change
                         if(view[0].note_receive.length > 0){
@@ -3135,17 +3137,22 @@
                                     currency: v.currency,
                                     amount: v.amount
                                 });
-                                $.each(self.actualCountDS.data(), function(j,k){
-                                    if(v.currency == k.currency){
-                                        var o = this.amount;
-                                        this.set("amount", o + v.amount);
-                                    }
-                                });
-                                var amt = v.amount / v.rate;
-                                self.set("actualAmount", self.get("actualAmount") + amt);
+                                if(self.actualCountDS.length > 0){
+                                    $.each(self.actualCountDS, function(j,k){
+                                        if(v.currency == k.currency){
+                                            var o = this.amount;
+                                            this.set("amount", o + v.amount);
+                                        }
+                                    });
+                                }else{
+                                    self.actualCountDS.push({
+                                        currency: v.currency,
+                                        amount: v.amount,
+                                        locale: banhji.institute.locale
+                                    });
+                                }
                             });
                         }
-                        
                         //Change
                         if(view[0].note_change.length > 0){
                             $.each(view[0].note_change, function(i,v){
@@ -3153,7 +3160,7 @@
                                     currency: v.currency,
                                     amount: v.amount
                                 });
-                                $.each(self.actualCountDS.data(), function(j,k){
+                                $.each(self.actualCountDS, function(j,k){
                                     if(v.currency == k.currency){
                                         var o = this.amount;
                                         this.set("amount", o - v.amount);
@@ -3172,20 +3179,24 @@
                             });
                         }
                         //Set Base Currency
-                        self.set("actualAmount",  kendo.toString(self.get("actualAmount"), self.get("baseCurrency") == "km-KH" ? "c0" : "c", self.get("baseCurrency")));
-                        self.setCurrency();
+                        self.set("baseCurrency", view[0].rate.locale);
+                        self.calBaseCurrency();
+                        self.getCurrency();
+                        if(view[0].status == 1){
+                            self.set("readyRecon" ,true);
+                        }else{
+                            self.set("readyRecon" ,false);
+                        }
                     }else{
                         banhji.router.navigate("/");
                     }
                 });
-
-                
                 this.tmpAR = [];
             }else{
                 this.set("noSession", true);
             }
         },
-        setCurrency : function(){
+        getCurrency: function(){
             var self = this;
             this.currencyDS.query({
                 sort: {
@@ -3199,7 +3210,7 @@
                         locale: v.locale,
                         rate: v.rate
                     });
-                    self.actualDS.add({
+                    self.actualDS.push({
                         code: v.code,
                         locale: v.locale,
                         amount: 0
@@ -3221,17 +3232,17 @@
             });
         },
         actualAmount: 0,
+        acAmount: 0,
         calBaseCurrency: function(){
             var self = this;
             var total = 0;
             var today = "<?php echo date('Y-m-d'); ?>";
-            $.each(this.actualCountDS.data(), function(i,v){
+            $.each(this.receiveAR, function(i,v){
                 var rate = banhji.source.getRate(v.locale, new Date(today));
                 var arate = v.amount / rate;
                 total += arate;
             });
             this.set("actualAmount", kendo.toString(total, this.get("baseCurrency") == "km-KH" ? "c0" : "c", this.get("baseCurrency")));
-
             this.set("acAmount", total);
         },
         accountDS           : new kendo.data.DataSource({
@@ -3253,11 +3264,11 @@
             var cur = [];
             var total = 0;
             var today = "<?php echo date('Y-m-d'); ?>";
-            $.each(this.actualDS.data(), function(i,v){
+            $.each(this.actualDS, function(i,v){
                 this.set("amount", 0);
             });
             $.each(this.noteDS.data(), function(i,v ){
-                $.each(self.actualDS.data(), function(j,k){
+                $.each(self.actualDS, function(j,k){
                     if(v.currency == k.locale){
                         var o = this.amount;
                         this.set("amount", o + v.total);
@@ -3269,7 +3280,6 @@
             });
             this.set("countAmount", kendo.toString(total, this.get("baseCurrency") == "km-KH" ? "c0" : "c", this.get("baseCurrency")));
             this.set("cAmount", total);
-            console.log(this.get("acAmount"));
             var def = total - this.get("acAmount");
             this.set("deferentAmount", kendo.toString(def, this.get("baseCurrency") == "km-KH" ? "c0" : "c", this.get("baseCurrency")));
             if(def == 0){
@@ -3285,9 +3295,7 @@
             this.save(2);
         },
         saveClose: function(){
-            if(this.get("haveDef") == false){
-                this.save(1);
-            }else{
+            if(this.get("haveDef") == true){
                 if(this.get("accountSelect")){
                     this.save(1);
                 }else{
@@ -3295,6 +3303,8 @@
                         notifact.hide();
                         notifact.error(this.lang.lang.error_input);
                 }
+            }else{
+                this.save(1);
             }
         },
         save: function(act) {
@@ -3311,22 +3321,23 @@
             this.noteDS.sync();
             this.noteDS.bind("requestEnd", function(e){
                 $("#loadING").css("display", "none");
-                if(e.type != 'read' && e.response.results) {
-                    self.cancel();
+                if(e.type!="read"){
                     var notifact = $("#ntf1").data("kendoNotification");
                         notifact.hide();
                         notifact.success(self.lang.lang.success_message);
+                    self.cancel();
                 }
             });
         },
         cancel: function() {
-            this.startAR = [];
-            this.receiveNoChangeAR = [];
-            this.changeAR = [];
-            this.receiveAR = [];
+            this.startAR.splice(0, this.startAR.length);
+            this.receiveNoChangeAR.splice(0, this.receiveNoChangeAR.length);
+            this.changeAR.splice(0, this.changeAR.length);
+            this.receiveAR.splice(0, this.receiveAR.length);
             this.noteDS.data([]);
             $("#loadING").css("display", "none");
             banhji.router.navigate("/");
+            this.sessionDS.query({});
         },
         addRow              : function(){
             this.noteDS.add({

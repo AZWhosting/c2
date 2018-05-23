@@ -776,7 +776,292 @@
 </script>
 
 
+<!-- Function -->
+<script id="cashTransaction" type="text/x-kendo-template">
+	<div class="page-wrapper ">
+        <div class="container-fluid">
+        	<div class="row marginTop15">
+                <div class="col-md-12">
+                	<div class="card">
+                		<div class="btn-close" onclick="javascript:window.history.back()"><i class="ti-close"></i></div>
+                		<div class="card-body">
 
+				        <h2 data-bind="text: lang.lang.c_transaction"></h2>
+
+						<!-- Upper Part -->
+						<div class="row">
+							<div class="col-md-4">
+								<div class="box-generic">
+									<table class="table table-borderless table-condensed cart_total">
+										<tr>
+											<td style="width: 25%;"><span data-bind="text: lang.lang.no_"></span></td>
+											<td>
+												<input id="txtNumber" name="txtNumber" class="k-textbox"
+														data-bind="value: obj.number,
+															disabled: obj.is_recurring,
+															events:{change:checkExistingNumber}"
+														required data-required-msg="required"
+														placeholder="eg. ABC00001"/>
+												<div class="coverQrcode">
+													<a class="fa fa-qrcode" data-bind="click: generateNumber" title="Generate Number"><i></i></a>
+												</div>
+											</td>
+										</tr>
+										<tr>
+											<td><span data-bind="text: lang.lang.date"></span></td>
+											<td class="right">
+												<input id="issuedDate" name="issuedDate"
+														data-role="datepicker"
+														data-format="dd-MM-yyyy"
+														data-parse-formats="yyyy-MM-dd HH:mm:ss"
+														data-bind="value: obj.issued_date,
+																	events:{ change : setRate }"
+														required data-required-msg="required"/>
+											</td>
+										</tr>
+										<tr>
+											<td><span data-bind="text: lang.lang.type"></span></td>
+											<td>
+												<input id="cbbType" name="cbbType" style="width: 100%" 
+													   data-role="dropdownlist"
+									                   data-value-primitive="true"
+									                   data-text-field="name"
+									                   data-value-field="type"
+									                   data-bind="value: obj.type,
+									                              source: typeList,
+									                              events:{ change: typeChanges }"
+									                   required data-required-msg="required" />
+											</td>
+										</tr>
+										<tr>
+											<td><span data-bind="text: lang.lang.currency"></span></td>
+											<td>
+												<input id="ddlCurrency" name="ddlCurrency"
+						              				data-role="dropdownlist"
+						              				data-template="currency-list-tmpl"
+						              				data-value-primitive="true"
+								            		data-text-field="code"
+					           						data-value-field="locale"
+								            		data-bind="source: currencyDS,
+								            					value: obj.locale,
+								            					events:{change:setRate}"
+								            		data-option-label="(--- Select ---)"
+								                   required data-required-msg="required" />
+											</td>
+										</tr>
+									</table>
+								</div>
+							</div>
+							<div class="col-md-8">
+								<div class="box-generic-noborder">
+									<ul class="nav nav-tabs" role="tablist">
+	                                    <li class="nav-item"> <a class="nav-link active show" data-toggle="tab" href="#functionSetting" role="tab" aria-selected="true"><span><i class="ti-settings"></i></span></a> </li>
+	                                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#functionPaperclip" role="tab" aria-selected="false"><span><i class="icon-paper-clip"></i></span></a></li>
+	                                </ul>
+	                                <div class="tab-content tabcontent-border">
+	                                	<!--Tab Setting -->
+	                                    <div class="tab-pane active show" id="functionSetting" role="tabpanel">
+	                                        <div class="p-10">
+	                                            <div class="row">
+	                                            	<div class="col-md-12 ">
+	                                            		<div class="row">
+		                                            		<div class="col-md-12">		                                            			
+			                                            		<textarea id="memo2" cols="0" rows="4" class="k-textbox"
+													        		data-bind="value: obj.memo2" style="width:100%;"
+													        		placeholder="Please enter transaction purpose here ..."></textarea>
+			                                            	</div>
+	                                            		</div>
+	                                            		
+	                                            	</div>
+	                                        	</div>
+	                                        </div>
+	                                    </div>
+	                                    <!-- End -->
+
+	                                    <!--Tab Paperclip -->
+	                                    <div class="tab-pane" id="functionPaperclip" role="tabpanel">
+	                                    	<div class="p-10">
+	                                    		<div class="row">
+	                                    			<div class="col-md-12">
+	                                            		<p><span data-bind="text: lang.lang.file_type"></span>: [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>
+											            <input id="files" name="files"
+										                   type="file"
+										                   data-role="upload"
+										                   data-show-file-list="false"
+										                   data-bind="events: {
+								                   				select: onSelect
+										                   }">
+										               	<div class="table-responsive marginTop">
+												            <table class="table color-table dark-table">
+														        <thead>
+														            <tr>
+														                <th><span data-bind="text: lang.lang.file_name"></span></th>
+														                <th><span data-bind="text: lang.lang.description"></span></th>
+														                <th><span data-bind="text: lang.lang.date"></span></th>
+														                <th style="width: 13%;"></th>
+														            </tr>
+														        </thead>
+														        <tbody data-role="listview"
+														        		data-template="attachment-list-tmpl"
+														        		data-auto-bind="false"
+														        		data-bind="source: attachmentDS"></tbody>
+														    </table>
+														</div>
+	                                            	</div>
+	                                    		</div>
+	                                    	</div>  
+	                                    </div>
+	                                    <!-- End -->
+	                                </div>
+								</div>
+							</div>						
+						</div>
+
+						<div class="row">
+							<h4 data-bind="text: fromToTop" stye="width: 100%; float: left;"></h4>
+							<div class="col-md-12">
+								<div class="row">
+									<div class="col-md-2">
+										<p data-bind="text: lang.lang.account"></p>
+									</div>
+									<div class="col-md-4">
+										<input id="cbbAccount" name="cbbAccount"
+											   data-role="combobox"
+							                   data-header-template="account-header-tmpl"
+							                   data-template="account-list-tmpl"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.account_id,
+							                              source: accountDS"
+							                   data-placeholder="Add Account.."
+							                   required data-required-msg="required" style="width: 100%" />
+									</div>
+									<div class="col-md-2">
+										<p data-bind="text: lang.lang.segments"></p>
+									</div>
+									<div class="col-md-4">
+										<select data-role="multiselect"
+											   data-value-primitive="true"
+											   data-header-template="segment-header-tmpl"
+											   data-item-template="segment-list-tmpl"
+											   data-value-field="id"
+											   data-text-field="code"
+											   data-bind="value: obj.segments,
+											   			source: segmentItemDS,
+											   			events:{ change: transactionSegmentChanges }"
+											   data-placeholder="Add Segment.."
+											   style="width: 100%" /></select>
+									</div>
+								</div>
+							</div>
+							<h4 data-bind="text: fromToBottom" stye="width: 100%; float: left;"></h4>
+
+							<div class="col-md-12 table-responsive">
+								<table class="table color-table dark-table">
+							        <thead>
+							            <tr>
+							                <th ><span data-bind="text: lang.lang.no_"></span></th>
+							                <th ><span data-bind="text: lang.lang.account"></span></th>
+							                <th ><span data-bind="text: lang.lang.method"></span></th>
+							                <th data-bind="text: lang.lang.description"></th>
+							                <th data-bind="visible: showRef" ><span data-bind="text: lang.lang.reference"></span></th>
+							                <th data-bind="visible: showName" ><span data-bind="text: lang.lang.name"></span></th>
+							                <th data-bind="visible: showSegment" ><span data-bind="text: lang.lang.segment"></span></th>
+							                <th ><span data-bind="text: lang.lang.amount"></span></th>
+							            </tr>
+							        </thead>
+							        <tbody data-role="listview"
+							        		data-template="cashTransaction-template"
+							        		data-auto-bind="false"
+							        		data-bind="source: lineDS"></tbody>
+							    </table>
+							</div>
+						</div>						
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="cashTransaction-template" type="text/x-kendo-tmpl">
+	<tr data-uid="#: uid #">
+		<td class="center">
+			<i class="icon-trash" data-bind="events: { click: remove }"></i>
+			#:banhji.cashTransaction.lineDS.indexOf(data)+1#
+		</td>
+		<td>
+			<input id="cbbAccounts" name="cbbAccounts"
+				   data-role="combobox"
+                   data-header-template="account-header-tmpl"
+                   data-template="account-list-tmpl"
+                   data-value-primitive="true"
+                   data-text-field="name"
+                   data-value-field="id"
+                   data-filter="contains"
+                   data-min-length="3"
+                   data-bind="value: account_id,
+                              source: accountDS"
+                   data-placeholder="Add Account.."
+                   required data-required-msg="required" style="width: 100%" />
+		</td>
+		<td>
+			<input id="ddlPaymentMethod" name="ddlPaymentMethod"
+				   data-role="dropdownlist"
+                   data-value-primitive="true"
+                   data-text-field="name"
+                   data-value-field="id"
+                   data-bind="value: payment_method_id,
+                              source: paymentMethodDS"
+                   data-option-label="Select method.."
+                   required data-required-msg="required" style="width: 100%" />
+		</td>
+		<td>
+			<input name="description"
+					type="text" class="k-textbox"
+					data-bind="value: description"
+					style="width: 100%; margin-bottom: 0;" />
+		</td>
+		<td data-bind="visible: showRef">
+			<input type="text" class="k-textbox"
+					data-bind="value: reference_no"
+					style="width: 100%; margin-bottom: 0;" />
+		</td>
+		<td data-bind="visible: showName">
+			<input data-role="combobox" id="showName"
+                   data-value-primitive="true"
+                   data-template="contact-list-tmpl"
+                   data-text-field="name"
+                   data-value-field="id"
+                   data-bind="value: contact_id,
+                              source: contactDS"
+                   data-placeholder="Add Name.."
+                   style="width: 100%" />
+		</td>
+		<td data-bind="visible: showSegment">
+			<select data-role="multiselect" id="showSegment"
+				   data-value-primitive="true"
+				   data-item-template="segment-list-tmpl"
+				   data-value-field="id"
+				   data-text-field="code"
+				   data-bind="value: segments,
+				   			source: segmentItemDS,
+				   			events:{ change: segmentChanges }"
+				   data-placeholder="Add Segment.."
+				   style="width: 100%" /></select>
+		</td>
+		<td class="right">
+			<input id="txtAmount-#:uid#" name="txtAmount-#:uid#"
+				   type="number" class="k-textbox"
+				   min="0"
+			       data-bind="value: amount, events: {change : changes}"
+			       required data-required-msg="required"
+			       placeholder="Amount..."
+			       style="text-align: right; width: 100%;" />
+		</td>
+    </tr>
+</script>
 
 <!-- Report -->
 <script id="cashMovement" type="text/x-kendo-template">	

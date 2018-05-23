@@ -46758,26 +46758,112 @@
                 win.close();
             },2000);
         },
+        dataSourceEX        : dataStore(apiUrl + "inventory_modules/position_summary"),
         ExportExcel         : function(){
-            var workbook = new kendo.ooxml.Workbook({
-              sheets: [
-                {
-                  columns: [
-                    { autoWidth: true },
-                    { autoWidth: true },
-                    { autoWidth: true },
-                    { autoWidth: true },
-                    { autoWidth: true },
-                    { autoWidth: true },
-                    { autoWidth: true }
-                  ],
-                  title: "Inventory Position Summary",
-                  rows: this.exArray
+            $("#loadImport").css("display", "block");
+            var self = this, para = [],
+                obj = this.get("obj"),
+                as_of = this.get("as_of"),
+                displayDate = "";
+                group  = this.get("groupSelect");
+                category_id = this.get("categorySelect");
+
+            if(category_id){
+                para.push({field:"category_id", value: category_id});
+            }
+
+            if(group){
+                para.push({field:"item_group_id", value: group.id});
+            }
+
+            //Items
+            if(obj.itemIds.length>0){
+                var itemIds = [];
+                $.each(obj.itemIds, function(index, value){
+                     itemIds.push(value);
+                });
+                para.push({ field:"id", operator:"where_in", value:itemIds });
+            }
+
+           if(as_of){
+                as_of = new Date(as_of);
+                var displayDate = "As Of " + kendo.toString(as_of, "dd-MM-yyyy");
+                this.set("displayDate", displayDate);
+                as_of.setDate(as_of.getDate() + 1);
+                para.push({ field:"issued_date <", operator:"as_of", value:kendo.toString(as_of, "yyyy-MM-dd") });
+           }
+
+           this.dataSourceEX.query({
+                filter:para,
+           }).then(function(e){
+                self.exArray = [];
+                self.exArray.push({
+                     cells: [
+                          { value: self.institute.name, textAlign: "center", colSpan: 7 }
+                     ]
+                });
+                self.exArray.push({
+                     cells: [
+                          { value: "Inventory Position Summary",bold: true, fontSize: 20, textAlign: "center", colSpan: 7 }
+                     ]
+                });
+                if(self.displayDate){
+                     self.exArray.push({
+                          cells: [
+                               { value: self.displayDate, textAlign: "center", colSpan: 7 }
+                          ]
+                     });
+                };
+                self.exArray.push({
+                     cells: [
+                          { value: "", colSpan: 7 }
+                     ]
+                });
+                self.exArray.push({
+                     cells: [
+                          { value: "Item Name", background: "#496cad", color: "#ffffff" },
+                          { value: "QOH", background: "#496cad", color: "#ffffff" },
+                          { value: "ON PO", background: "#496cad", color: "#ffffff" },
+                          { value: "ON SO", background: "#496cad", color: "#ffffff" },
+                          { value: "Average Cost", background: "#496cad", color: "#ffffff" },
+                          { value: "Average Price", background: "#496cad", color: "#ffffff" },
+                          { value: "Amount", background: "#496cad", color: "#ffffff" }
+                     ]
+                });
+                if(self.dataSourceEX.data().length > 0){
+                     $.each(self.dataSourceEX.data(), function(i,v){
+                          self.exArray.push({
+                               cells: [
+                                    { value: v.name },
+                                    { value: kendo.parseFloat(v.qoh)},
+                                    { value: kendo.parseFloat(v.po)},
+                                    { value: kendo.parseFloat(v.so)},
+                                    { value: kendo.parseFloat(v.cost)},
+                                    { value: kendo.parseFloat(v.price)},
+                                    { value: kendo.parseFloat(v.amount)},
+                               ]
+                          });
+                     });
+                     var workbook = new kendo.ooxml.Workbook({
+                          sheets: [{
+                               columns: [
+                                    { autoWidth: true },
+                                    { autoWidth: true },
+                                    { autoWidth: true },
+                                    { autoWidth: true },
+                                    { autoWidth: true },
+                                    { autoWidth: true },
+                                    { autoWidth: true }
+                               ],
+                               title: "Inventory Position Summary",
+                               rows: self.exArray
+                          }]
+                     });
+                     //save the file as Excel file with extension xlsx
+                     kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "inventoryPositionSummary.xlsx"});
+                     $("#loadImport").css("display", "none");
                 }
-              ]
-            });
-            //save the file as Excel file with extension xlsx
-            kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "inventoryPositionSummary.xlsx"});
+           });
         }
     });
     banhji.inventoryPositionSummaryByLocation = kendo.observable({

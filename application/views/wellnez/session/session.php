@@ -301,12 +301,12 @@
 						<table class="table table-bordered table-primary table-striped table-vertical-center" style="margin-top: 15px;">
 					        <thead>
 					            <tr>
-					            	<th style="vertical-align: top;" data-bind="text: lang.lang.no_"></th>
-					            	<th style="vertical-align: top;" data-bind="text: lang.lang.employee"></th>
-					            	<th style="vertical-align: top;" data-bind="text: lang.lang.start"></th>
-					            	<th style="vertical-align: top;" data-bind="text: lang.lang.end"></th>
-					            	<th style="vertical-align: top;" data-bind="text: lang.lang.status"></th>
-					            	<th style="vertical-align: top;" data-bind="text: lang.lang.action"></th>
+					            	<th style="vertical-align: top;width: 5%" data-bind="text: lang.lang.no_"></th>
+					            	<th style="vertical-align: top;width: 20%" data-bind="text: lang.lang.employee"></th>
+					            	<th style="vertical-align: top;width: 25%" data-bind="text: lang.lang.start"></th>
+					            	<th style="vertical-align: top;width: 25%" data-bind="text: lang.lang.end"></th>
+					            	<th style="vertical-align: top;width: 15%" data-bind="text: lang.lang.status"></th>
+					            	<th style="vertical-align: top;width: 25%" data-bind="text: lang.lang.action"></th>
 					            </tr>
 					        </thead>
 					        <tbody data-role="listview" 
@@ -360,288 +360,310 @@
 </script>
 <!-- Reconcile -->
 <script id="Reconcile" type="text/x-kendo-template">
+	<style type="text/css">
+		body {
+			overflow-x: hidden;
+		}
+	</style>
 	<div class="container">
 		<div class="row session">
-			<div class="span12">
-				<div class="example">
-			    	<div class="hidden-print pull-right">
-			    		<span class="glyphicons no-js remove_2" 
-							data-bind="click: cancel"><i></i></span>	
-					</div>
-			        <h2 style="margin-bottom: 10px;" data-bind="text: lang.lang.reconcile">Reconcile</h2>
-			        <br>
-			        <div class="row-fluid" style="position: relative;">
-			        	<div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 100%;margin-top: -15px;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
-							<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
-						</div>
-			        	<div class="row" style="padding: 0;margin: 0;position: absolute;left:0;top:0;width: 100%;height: 100%;background: #fff;z-index: 999;" data-bind="visible: noSession">
-							<table class="table table-bordered table-primary table-striped table-vertical-center" style="margin-top: 15px;">
-						        <thead>
-						            <tr>
-						            	<th style="vertical-align: top;" data-bind="text: lang.lang.no_"></th>
-						            	<th style="vertical-align: top;" data-bind="text: lang.lang.employee"></th>
-						            	<th style="vertical-align: top;" data-bind="text: lang.lang.start"></th>
-						            	<th style="vertical-align: top;" data-bind="text: lang.lang.end"></th>
-						            	<th style="vertical-align: top;" data-bind="text: lang.lang.action"></th>
-						            </tr>
-						        </thead>
-						        <tbody data-role="listview" 
-					        		data-template="session-list-template" 
-					        		data-auto-bind="false"
-					        		data-bind="source: sessionDS"></tbody>
-						    </table>
-						</div>
-			        	<div class="row" style="padding: 0px;margin: 0;">
-		        			<div class="span3" style="padding-left: 0;">
-			        			<table class="table table-bordered table-primary table-striped table-vertical-center" >
-			        				<thead>
-			        					<tr>
-			        						<th colspan="2" style="background: #fefefe;color: #000;border: 1px solid #ccc;" >
-			        							ប្រាក់ដើមគ្រា
-			        						</th>
-			        					</tr>
-			        				</thead>
-			        				<tbody 
-			        					data-role="listview" 
-			        					data-bind="source: startAR" 
-			        					data-template="reconcile-start-list">
-			        				</tbody>
-			        			</table>
-			        		</div>
-			        		<div class="span3" style="">
-			        			<table class="table table-bordered table-primary table-striped table-vertical-center" >
-			        				<thead>
-			        					<tr>
-			        						<th colspan="2" style="background: #fefefe;color: #000;border: 1px solid #ccc;" >
-			        							ប្រាក់ទទួលមិនទាន់អាប់
-			        						</th>
-			        					</tr>
-			        				</thead>
-			        				<tbody 
-			        					data-role="listview" 
-			        					data-bind="source: receiveNoChangeAR" 
-			        					data-template="reconcile-receivenochange-list">
-			        				</tbody>
-			        			</table>
-			        		</div>
-			        		<div class="span3" style="">
-			        			<table class="table table-bordered table-primary table-striped table-vertical-center" >
-			        				<thead>
-			        					<tr>
-			        						<th colspan="2" style="background: #fefefe;color: #000;border: 1px solid #ccc;" >
-			        							ប្រាក់អាប់
-			        						</th>
-			        					</tr>
-			        				</thead>
-			        				<tbody 
-			        					data-role="listview" 
-			        					data-bind="source: changeAR" 
-			        					data-template="reconcile-change-list">
-			        				</tbody>
-			        			</table>
-			        		</div>
-			        		<div class="span3" style="padding-left: 0;">
-			        			<table class="table table-bordered table-primary table-striped table-vertical-center" >
-			        				<thead>
-			        					<tr>
-			        						<th colspan="2" style="background: #fefefe;color: #000;border: 1px solid #ccc;" >
-			        							សមតុលសាច់ប្រាក់ក្នុងរបាយការណ៍
-			        						</th>
-			        					</tr>
-			        				</thead>
-			        				<tbody 
-			        					data-role="listview"
-			        					data-bind="source: receiveAR" 
-			        					data-template="reconcile-recieve-list">
-			        				</tbody>
-			        			</table>
-			        		</div>
-		        		</div>
-						<div class="row" style="padding: 0;margin: 0;">
-							<table class="table table-bordered table-primary table-striped table-vertical-center" style="margin-top: 15px;">
-						        <thead>
-						            <tr>
-						            	<th style="vertical-align: top;" data-bind="text: lang.lang.no_"></th>
-						            	<th style="vertical-align: top;" data-bind="text: lang.lang.currency"></th>
-						            	<th style="vertical-align: top;" data-bind="text: lang.lang.note"></th>
-						            	<th style="vertical-align: top;" data-bind="text: lang.lang.unit"></th>
-						            	<th style="vertical-align: top;" data-bind="text: lang.lang.amount"></th>
-						            </tr>
-						        </thead>
-						        <tbody data-role="listview" 
-					        		data-template="reconcile-list-template" 
-					        		data-auto-bind="false"
-					        		data-bind="source: noteDS"></tbody>
-						    </table>
-						    <button style="float: left;" class="btn btn-inverse" data-bind="click: addRow"><i class="icon-plus icon-white"></i> Add</button>
-						</div>
-		        		<div class="row" style="padding: 0px;margin: 0;margin-top: 20px;">
-		        			<div class="span4" style="padding-left: 0;">
-			        			<table class="table table-bordered table-primary table-striped table-vertical-center" >
-			        				<thead>
-			        					<tr>
-			        						<th colspan="2" style="background: #fefefe;color: #000;border: 1px solid #ccc;" >
-			        							សមតុលសាច់ប្រាក់ជាក់ស្តែង
-			        						</th>
-			        					</tr>
-			        				</thead>
-			        				<tbody 
-			        					data-role="listview"
-			        					data-bind="source: actualCountDS" 
-			        					data-template="reconcile-actualcount-list">
-			        				</tbody>
-			        				<tfoot>
-			        					<tr>
-			        						<td colspan="2" style="text-align: center;background: #0eac00;">
-			        							<span data-bind="text: actualAmount" style="color: #fff;font-weight: bold;font-size: 18px;"></span>
-			        						</td>
-			        					</tr>
-			        				</tfoot>
-			        			</table>
-			        		</div>
-			        		<div class="span4" style="">
-			        			<table class="table table-bordered table-primary table-striped table-vertical-center" >
-			        				<thead>
-			        					<tr>
-			        						<th colspan="2" style="background: #fefefe;color: #000;border: 1px solid #ccc;" >
-			        							សមតុលសាច់ប្រាក់រាប់ជាក់ស្តែង
-			        						</th>
-			        					</tr>
-			        				</thead>
-			        				<tbody 
-			        					data-role="listview" 
-			        					data-bind="source: actualDS" 
-			        					data-template="reconcile-actual-list">
-			        				</tbody>
-			        				<tfoot>
-			        					<tr>
-			        						<td colspan="2" style="text-align: center;background: #0eac00;">
-			        							<span data-bind="text: countAmount" style="color: #fff;font-weight: bold;font-size: 18px;"></span>
-			        						</td>
-			        					</tr>
-			        				</tfoot>
-			        			</table>
-			        		</div>
-			        		<div class="span4" style="padding-right: 0;" >
-			        			<table class="table table-bordered table-primary table-striped table-vertical-center" >
-			        				<thead>
-			        					<tr>
-			        						<th colspan="2" style="background: #fefefe;color: #000;border: 1px solid #ccc;" >
-			        							ផ្ទៀងផ្ទាត់
-			        						</th>
-			        					</tr>
-			        				</thead>
-			        				<tbody >
-			        					<tr data-bind="visible: haveDef">
-			        						<td colspan="2" style="text-align: center;" data-bind="style: { backgroundColor: defBG}">
-			        							<p style="color: #333;margin: 0;">ចំនួនខុសសរុប ៖ <span style="font-weight: bold;font-size: 18px;" data-bind="text: deferentAmount"></span></p>
-			        						</td>
-			        					</tr>
-			        					<tr data-bind="invisible: haveDef">
-			        						<td colspan="2">
-			        							<p style="font-weight: bold;font-size: 18px;color: lightgreen;">
-			        								ត្រឹមត្រូវ
-			        							</p>
-			        						</td>
-			        					</tr>
-			        				</tbody>
-			        				<tfoot data-bind="visible: haveDef">
-			        					<tr>
-			        						<td colspan="2"  >
-			        							<input data-role="dropdownlist"
-								                   data-value-primitive="true"
-								                   data-text-field="name"
-								                   data-value-field="id"
-								                   style="width: 100%;" 
-								                   data-auto-bind="false"
-								                   data-bind="value: accountSelect,
-								                              source: accountDS"
-								                   data-option-label="Select Accounting..." />
-			        						</td>
-			        					</tr>
-			        				</tfoot>
-			        			</table>
-			        		</div>
-			        	</div>
-			        </div>
-			        <div class="box-generic bg-action-button" data-bind="invisible: noSession" style="margin-top: 15px;">
-						<div id="ntf1" data-role="notification"></div>
-				        <div class="row">
-							<div class="col-sm-12" align="right">
-								<span class="btn-btn" style="float: left; margin-left: 0" data-bind="click: saveDraft" ><i></i> 
-									<span data-bind="text: lang.lang.save_draft">Record</span>
-								</span>
-								<span role='presentation' class='dropdown btn-btn' style="padding: 0 0 15px 15px; float: left; height: 32px; line-height: 30px;">
-							  		<a style="color: #fff; padding: 0;" class='dropdown-toggle glyphicons' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'>
-							  			<span >Reconcile Option</span>
-							  			<span class="small-btn"><i class='caret '></i></span>
-							  		</a>
-							  		<ul class='dropdown-menu'>
-						  				<li id="saveNew" >
-						  					<span data-bind="click: saveClose">Reconcile Close</span>
-						  				</li>
-						  				<li id="savePrint">
-						  					<span >Reconcile Print</span>
-						  				</li>
-						  				<li id="savePrint">
-						  					<span >Reconcile and Transfer</span>
-						  				</li>
-						  			</ul>
-							  	</span>
-								<span class="btn-btn" style="float: right;" data-bind="click: cancel" ><i></i> 
-									<span data-bind="text: lang.lang.cancel"></span>
-								</span>
+			<div id="slide-form">
+				<div class="customer-background" style=" margin-top: 15px; overflow: hidden;width: 100%;">
+					<div class="row-fluid" style="overflow: hidden;padding: 0 20px;">					
+						<div id="example" class="k-content">
+					    	<div class="hidden-print pull-right">
+					    		<span class="glyphicons no-js remove_2" 
+									data-bind="click: cancel"><i></i></span>	
 							</div>
-						</div>
+					        <h2 style="margin-bottom: 10px;" data-bind="text: lang.lang.reconcile">Reconcile</h2>
+					        <br>
+					        <div class="row-fluid" style="position: relative;">
+					        	<div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 100%;margin-top: -15px;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
+									<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
+								</div>
+					        	<div class="row" style="padding: 0;margin: 0;position: relative;left:0;top:0;width: 100%;height: 100%;background: #fff;z-index: 999;" data-bind="visible: noSession">
+									<table class="table table-bordered table-primary table-striped table-vertical-center" style="margin-top: 15px;">
+								        <thead>
+								            <tr>
+								            	<th style="vertical-align: top;width: 5%" data-bind="text: lang.lang.no_"></th>
+								            	<th style="vertical-align: top;width: 20%" data-bind="text: lang.lang.employee"></th>
+								            	<th style="vertical-align: top;width: 25%" data-bind="text: lang.lang.start"></th>
+								            	<th style="vertical-align: top;width: 25%" data-bind="text: lang.lang.end"></th>
+								            	<!-- <th style="vertical-align: top;width: 15%" data-bind="text: lang.lang.status"></th> -->
+								            	<th style="vertical-align: top;width: 25%" data-bind="text: lang.lang.action"></th>
+								            </tr>
+								        </thead>
+								        <tbody data-role="listview" 
+							        		data-template="session-list-template" 
+							        		data-auto-bind="true"
+							        		data-bind="source: sessionDS"></tbody>
+								    </table>
+								</div>
+								<div style="overflow: hidden;" data-bind="invisible: noSession">
+						        	<div class="row" style="padding: 0px;margin: 0;">
+					        			<div class="span3" style="padding-left: 0;">
+						        			<table class="table table-bordered table-primary table-striped table-vertical-center" >
+						        				<thead>
+						        					<tr>
+						        						<th colspan="2" style="background: #fefefe;color: #000;border: 1px solid #ccc;" >
+						        							ប្រាក់ដើមគ្រា
+						        						</th>
+						        					</tr>
+						        				</thead>
+						        				<tbody 
+						        					data-role="listview" 
+						        					data-bind="source: startAR" 
+						        					data-template="reconcile-start-list">
+						        				</tbody>
+						        			</table>
+						        		</div>
+						        		<div class="span3" style="">
+						        			<table class="table table-bordered table-primary table-striped table-vertical-center" >
+						        				<thead>
+						        					<tr>
+						        						<th colspan="2" style="background: #fefefe;color: #000;border: 1px solid #ccc;" >
+						        							ប្រាក់ទទួលមិនទាន់អាប់
+						        						</th>
+						        					</tr>
+						        				</thead>
+						        				<tbody 
+						        					data-role="listview"
+						        					data-bind="source: receiveNoChangeAR" 
+						        					data-template="reconcile-receivenochange-list">
+						        				</tbody>
+						        			</table>
+						        		</div>
+						        		<div class="span3" style="">
+						        			<table class="table table-bordered table-primary table-striped table-vertical-center" >
+						        				<thead>
+						        					<tr>
+						        						<th colspan="2" style="background: #fefefe;color: #000;border: 1px solid #ccc;" >
+						        							ប្រាក់អាប់
+						        						</th>
+						        					</tr>
+						        				</thead>
+						        				<tbody 
+						        					data-role="listview" 
+						        					data-bind="source: changeAR" 
+						        					data-template="reconcile-change-list">
+						        				</tbody>
+						        			</table>
+						        		</div>
+						        		<div class="span3" style="padding-left: 0;">
+						        			<table class="table table-bordered table-primary table-striped table-vertical-center" >
+						        				<thead>
+						        					<tr>
+						        						<th colspan="2" style="background: #fefefe;color: #000;border: 1px solid #ccc;" >
+						        							សមតុលសាច់ប្រាក់ក្នុងរបាយការណ៍
+						        						</th>
+						        					</tr>
+						        				</thead>
+						        				<tbody 
+						        					data-role="listview"
+						        					data-bind="source: receiveAR" 
+						        					data-template="reconcile-recieve-list">
+						        				</tbody>
+						        			</table>
+						        		</div>
+					        		</div>
+									<div class="row" style="padding: 0;margin: 0;">
+										<table class="table table-bordered table-primary table-striped table-vertical-center" style="margin-top: 15px;">
+									        <thead>
+									            <tr>
+									            	<th style="vertical-align: top;" data-bind="text: lang.lang.no_"></th>
+									            	<th style="vertical-align: top;" data-bind="text: lang.lang.currency"></th>
+									            	<th style="vertical-align: top;" data-bind="text: lang.lang.note"></th>
+									            	<th style="vertical-align: top;" data-bind="text: lang.lang.unit"></th>
+									            	<th style="vertical-align: top;" data-bind="text: lang.lang.amount"></th>
+									            </tr>
+									        </thead>
+									        <tbody data-role="listview" 
+								        		data-template="reconcile-list-template" 
+								        		data-auto-bind="false"
+								        		data-bind="source: noteDS"></tbody>
+									    </table>
+									    <button class="btn btn-inverse" data-bind="invisible: readyRecon, click: addRow"><i class="icon-plus icon-white"></i></button>
+									</div>
+					        		<div class="row" style="padding: 0px;margin: 0;margin-top: 20px;">
+				        			<div class="span4" style="padding-left: 0;">
+					        			<table class="table table-bordered table-primary table-striped table-vertical-center" >
+					        				<thead>
+					        					<tr>
+					        						<th colspan="2" style="background: #fefefe;color: #000;border: 1px solid #ccc;" >
+					        							សមតុលសាច់ប្រាក់ជាក់ស្តែង
+					        						</th>
+					        					</tr>
+					        				</thead>
+					        				<tbody 
+					        					data-role="listview"
+					        					data-bind="source: receiveAR" 
+					        					data-template="reconcile-recieve-list">
+					        				</tbody>
+					        				<tfoot>
+					        					<tr>
+					        						<td colspan="2" style="text-align: center;background: #203864;">
+					        							<span data-bind="text: actualAmount" style="color: #fff;font-weight: bold;font-size: 18px;"></span>
+					        						</td>
+					        					</tr>
+					        				</tfoot>
+					        			</table>
+					        		</div>
+					        		<div class="span4" style="">
+					        			<table class="table table-bordered table-primary table-striped table-vertical-center" >
+					        				<thead>
+					        					<tr>
+					        						<th colspan="2" style="background: #fefefe;color: #000;border: 1px solid #ccc;" >
+					        							សមតុលសាច់ប្រាក់រាប់ជាក់ស្តែង
+					        						</th>
+					        					</tr>
+					        				</thead>
+					        				<tbody 
+					        					data-role="listview" 
+					        					data-bind="source: actualDS" 
+					        					data-template="reconcile-actual-list">
+					        				</tbody>
+					        				<tfoot>
+					        					<tr>
+					        						<td colspan="2" style="text-align: center;background: #203864;">
+					        							<span data-bind="text: countAmount" style="color: #fff;font-weight: bold;font-size: 18px;"></span>
+					        						</td>
+					        					</tr>
+					        				</tfoot>
+					        			</table>
+					        		</div>
+					        		<div class="span4" style="padding-right: 0;" >
+					        			<table class="table table-bordered table-primary table-striped table-vertical-center" >
+					        				<thead>
+					        					<tr>
+					        						<th colspan="2" style="background: #fefefe;color: #000;border: 1px solid #ccc;" >
+					        							ផ្ទៀងផ្ទាត់
+					        						</th>
+					        					</tr>
+					        				</thead>
+					        				<tbody >
+					        					<tr data-bind="visible: haveDef">
+					        						<td colspan="2" style="text-align: center;" data-bind="style: { backgroundColor: defBG}">
+					        							<p style="color: #fff;margin: 0;">ចំនួនខុសសរុប ៖ <span style="font-weight: bold;font-size: 18px;" data-bind="text: deferentAmount"></span></p>
+					        						</td>
+					        					</tr>
+					        					<tr data-bind="invisible: haveDef">
+					        						<td colspan="2">
+					        							<p style="font-weight: bold;font-size: 18px;color: lightgreen;">
+					        								ត្រឹមត្រូវ
+					        							</p>
+					        						</td>
+					        					</tr>
+					        				</tbody>
+					        				<tfoot data-bind="visible: haveDef">
+					        					<tr>
+					        						<td colspan="2"  >
+					        							<input data-role="dropdownlist"
+										                   	data-value-primitive="true"
+										                   	data-text-field="name"
+										                   	data-value-field="id"
+										                   	style="width: 100%;" 
+										                   	data-auto-bind="false"
+										                   	data-bind="
+										                   		disabled: readyRecon,
+										                   		value: accountSelect,
+										                        source: accountDS"
+										                   	data-option-label="Select Accounting..." 
+										                />
+					        						</td>
+					        					</tr>
+					        				</tfoot>
+					        			</table>
+					        		</div>
+					        		</div>
+					        	</div>
+					        </div>
+					        <div class="box-generic bg-action-button" data-bind="invisible: noSession" style="margin-top: 15px;">
+								<div id="ntf1" data-role="notification"></div>
+						        <div class="row">
+									<div class="col-sm-12" align="right">
+										<span data-bind="invisible: readyRecon" class="btn-btn" style="float: left;" data-bind="click: saveDraft" ><i></i> 
+											<span data-bind="text: lang.lang.save_draft">Record</span>
+										</span>
+										<span data-bind="invisible: readyRecon" role='presentation' class='dropdown btn-btn' style="padding: 0 15px; float: left; height: 32px; line-height: 30px;">
+									  		<a style="color: #fff; padding: 0;" class='dropdown-toggle glyphicons' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'>
+									  			<span >Reconcile Option</span>
+									  			<span class="small-btn"><i class='caret '></i></span>
+									  		</a>
+									  		<ul class='dropdown-menu'>
+								  				<li id="saveNew" >
+								  					<span data-bind="click: saveClose">Reconcile Close</span>
+								  				</li>
+								  				<!-- <li id="savePrint">
+								  					<span >Reconcile Print</span>
+								  				</li>
+								  				<li id="savePrint">
+								  					<span >Reconcile and Transfer</span>
+								  				</li> -->
+								  			</ul>
+									  	</span>
+										<span class="btn-btn" style="float: right;" data-bind="click: cancel" ><i></i> 
+											<span data-bind="text: lang.lang.cancel"></span>
+										</span>
+									</div>
+								</div>
+							</div>
+						</div>						
 					</div>
-				</div>						
+				</div>
 			</div>
 		</div>
 	</div>				  	
 </script>
-<!-- <script id="session-list-template" type="text/x-kendo-template">
+<script id="session-list-template" type="text/x-kendo-template">
     <tr>
-		<td style="border-left: 0; border-bottom: 0;">
-			#:banhji.Reconcile.sessionDS.indexOf(data)+1#
+		<td style="border-left: 0; border-bottom: 0;text-align: center;">
+			#: banhji.Index.sessionDS.indexOf(data)+1#
 		</td>
 		<td style="border-left: 0; border-bottom: 0;">
-			<a href="\\#/reconcile/#= id#">#: employee#</a>
+			#: employee#
 		</td>
 		<td style="border-left: 0; border-bottom: 0;">
-			#: kendo.toString(new Date(start_date), "dd-MMMM-yyyy", "km-KH")#
+			#: kendo.toString(new Date(start_date), "F")#
 		</td>
 		<td style="border-left: 0; border-bottom: 0;">
 			#if(end_date != "0000-00-00 00:00:00"){#
-				#: kendo.toString(new Date(end_date), "dd-MMMM-yyyy", "km-KH")#
+				#: kendo.toString(new Date(end_date), "F")#
+			#}#
+		</td>
+		<td style="border-left: 0; border-bottom: 0;">
+			#if(status == 2){#
+				Save Draft
+			#}else if(status == 1){#
+				Reconciled
+			#}else{#
+				Not yet reconcile
 			#}#
 		</td>
 		<td style="border-left: 0; border-bottom: 0; text-align: center;">
 			#if(status == 1){#
-				<span style="cursor: pointer; margin-top: 3px;" title="Finish" class="btn-action glyphicons ok_2 btn-success"><i></i></span> Done
+				<a style="cursor: pointer;width: 60px;line-height: 25px;background: green;" class="btn-action glyphicons btn-success" href="\\#/reconcile/#= id # ">View</a> | <a style="cursor: pointer;width: 60px;line-height: 25px;background: black;" class="btn-action glyphicons btn-success" href="\\#/print/#= id # ">Print</a>
 			#}else if(status == 2){#
-				<a style="cursor: pointer;" class="btn-action glyphicons btn-success" href="\\#/reconcile/#= id # ">Save Draft</a>
+				<a style="cursor: pointer;width: 60px;line-height: 25px;background: green;" class="btn-action glyphicons btn-success" href="\\#/reconcile/#= id # ">Edit</a>
 			#}else{#
-				<a style="cursor: pointer;" href="\\#/reconcile/#= id # ">Reconcile</a>
+				<a style="cursor: pointer;width: 60px;color: white; padding: 5px 38px;line-height: 25px;background: blue;" href="\\#/reconcile/#= id # ">Reconcile</a>
 			#}#
-			<a style="cursor: pointer;" class="btn-action glyphicons pencil btn-success" href="\\#/reconcile/#= id # "><i></i></a>
 		</td>
 	</tr>
-</script> -->
+</script>
 <script id="reconcile-list-template" type="text/x-kendo-template">
     <tr>
 		<td style="border-left: 0; border-bottom: 0;">
 			#if(banhji.Reconcile.noteDS.indexOf(data) > 0){#
-				<i style="cursor: pointer;" class="icon-trash" data-bind="events: {click: removeRow}" ></i>
+				<i style="cursor: pointer;" class="icon-trash" data-bind="invisible: readyRecon, events: {click: removeRow}" ></i>
 			#}#
 			#:banhji.Reconcile.noteDS.indexOf(data)+1#
 		</td>
 		<td style="border-left: 0; border-bottom: 0;">
 			<input type="text" 
 				data-role="combobox" 
-				data-bind="source: currencyAR, value: currency, events: {change: onChange}" 
+				data-bind="disabled: readyRecon, source: currencyAR, value: currency, events: {change: onChange}" 
 				data-text-field="code" 
-				data-value-field="locale"
-				style="width: 100%;">
+				data-value-field="locale">
 		</td>
 		<td style="border-left: 0; border-bottom: 0;">
 			<input 
@@ -652,7 +674,7 @@
 				data-min="0" 
 				data-spinners="false" 
 				data-bind="value: note, events: {change: onChange}" 
-				style="padding:0 5px !important ;display: inline-block; text-align: right; height: 28px; border: none; width: 100%">
+				style="padding-right: 10px;display: inline-block; text-align: right; height: 28px; border: none; width: 168px !important;">
 		</td>
 		<td style="border-left: 0; border-bottom: 0;">
 			<input 
@@ -663,7 +685,7 @@
 				data-min="0" 
 				data-spinners="false" 
 				data-bind="value: unit, events: {change: onChange}" 
-				style="padding:0 5px !important ;text-align: right; display: inline-block; height: 28px; border: none; width: 100%">
+				style="padding-right: 10px;text-align: right; display: inline-block; height: 28px; border: none; width: 168px !important;">
 		</td>
 		<td style="border-left: 0; border-bottom: 0;">
 			<input 
@@ -673,7 +695,7 @@
 				data-spinners="false" 
 				data-bind="value:total" 
 				disabled="disabled" 
-				style="text-align: right; display: inline-block; border: none; width: 100%">
+				style="padding-right: 10px;text-align: right; display: inline-block; border: none; width: 168px !important;">
 		</td>
 	</tr>
 </script>
@@ -730,41 +752,6 @@
 		</td>
 		<td>
 			<input style="text-align: right; border: 1px solid \#ccc;" id="numeric" class="k-formatted-value k-input" type="number" value="17" min="0" data-bind="value: amount" step="1" />
-		</td>
-	</tr>
-</script>
-<script id="session-list-template" type="text/x-kendo-template">
-    <tr>
-		<td style="border-left: 0; border-bottom: 0;">
-			#:banhji.Index.sessionDS.indexOf(data)+1#
-		</td>
-		<td style="border-left: 0; border-bottom: 0;">
-			<a href="\\#/reconcile/#= id#">#: employee#</a>
-		</td>
-		<td style="border-left: 0; border-bottom: 0;">
-			#: kendo.toString(new Date(start_date), "dd-MMMM-yyyy", "km-KH")#
-		</td>
-		<td style="border-left: 0; border-bottom: 0;">
-			#if(end_date != "0000-00-00 00:00:00"){#
-				#: kendo.toString(new Date(end_date), "dd-MMMM-yyyy", "km-KH")#
-			#}#
-		</td>
-		<td style="border-left: 0; border-bottom: 0; text-align: center;">
-			#if(status == 1){#
-				 Done
-			#}else if(status == 2){#
-				Already Save in Draft
-			#}else{#
-				Not yet Reconcile
-			#}#
-		</td>
-		<td style="border-left: 0; border-bottom: 0; text-align: center;">
-			#if(status == 2){#
-				<a style="cursor: pointer;" href="\\#/reconcile/#= id # ">Edit</a>
-			#}else if(status == 0){#
-				<a style="cursor: pointer;padding: 5px;background: red; color: \\#fff;" href="\\#/reconcile/#= id # ">Reconcile</a> | 
-				<a style="cursor: pointer;padding: 5px;background: green; color: \\#fff;" data-bind="click: selectSession">Continue</a>
-			#}#
 		</td>
 	</tr>
 </script>

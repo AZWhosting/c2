@@ -4159,7 +4159,7 @@
             this.itemDS.query({
                 filter: para,
                 page:1,
-                pageSize: 10
+                pageSize: 8
             });
             
             this.set("category_id", 0);
@@ -5796,6 +5796,7 @@
                 para.push({field: "category_id", value: this.get("catSelected")});
                 this.itemsDS.query({
                     filter: para,
+                    page: 1,
                     pageSize: 8,
                 });
                 this.itemGroupDS.filter({
@@ -5822,11 +5823,13 @@
                 });
                 this.itemsDS.query({
                     filter: para,
+                    page: 1,
                     pageSize: 8,
                 });
             }else{
                 this.itemsDS.query({
                     filter: para,
+                    page: 1,
                     pageSize: 8,
                 });
             }
@@ -6390,7 +6393,9 @@
                 ids.push(v);
             })
             this.itemsDS.query({
-                filter: {field: "id", operator: "where_in", value: ids}
+                filter: {field: "id", operator: "where_in", value: ids},
+                page: 1,
+                pageSize: 8,
             })
         },
         rmRoom : function(e){
