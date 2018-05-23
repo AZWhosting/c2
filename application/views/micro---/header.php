@@ -226,7 +226,7 @@
 
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <img src="<?php echo base_url()?>assets/micro/logo-banhjiNew.png" alt="user" class="img-circle" width="30">
+                                    <img src="http://192.168.1.10/c2/assets/micro/logo-banhjiNew.png" alt="user" class="img-circle" width="30">
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY ul-multiTaskList" data-template="multiTaskList-row-template" data-bind="source: multiTaskList">
                                     <span class="with-arrow"><span class="bg-primary"></span></span>
@@ -294,7 +294,7 @@
                                             <p class=" m-b-0"><span data-bind="text: userDS.data()[0].username"></span></p>
                                         </div>
                                     </div>
-                                    <a class="dropdown-item" href="<?php echo base_url()?>admin#"><i class="ti-settings m-r-5 m-l-5 " ><span class="marginLeft" data-bind="text: lang.lang.my_account_setting"></span></i></a>
+                                    <a class="dropdown-item" href="<?php echo base_url()?>admin#"><i class="ti-settings m-r-5 m-l-5"></i>Account Setting</a>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item menuLang" href="javascript:void(0)" onclick="langVM.changeToKh()"><i class="flag-icon flag-icon-kh  m-r-5 m-l-5"></i> ភាសាខ្មែរ</a>
                                     <a class=" dropdown-item menuLang" href="javascript:void(0)" onclick="langVM.changeToEn()"><i class="flag-icon flag-icon-us  m-r-5 m-l-5"></i> English</a>
@@ -306,4 +306,4 @@
                         </ul>
                     </div>
                 </nav>
-            </header>
+            </header>                                                                    

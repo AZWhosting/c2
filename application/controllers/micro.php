@@ -38,6 +38,14 @@ class Micro extends CI_Controller {
 		$this->load->view("micro/footer");
 	}
 
+	public function cashs() {	
+		$this->load->view("micro/header");
+		$this->load->view("micro/sidebar");
+		$this->load->view("micro/cashs/cashs");
+		$this->load->view("micro/cashs/script");
+		$this->load->view("micro/footer");
+	}
+
 	public function setting() {	
 		$this->load->view("micro/header");
 		$this->load->view("micro/sidebar");

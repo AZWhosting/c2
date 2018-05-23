@@ -3833,7 +3833,6 @@
         lang     : langVM
     });
     banhji.tapMenu =  kendo.observable({
-        lang     : langVM,
         goReports          : function(){
             banhji.router.navigate('/');
         },

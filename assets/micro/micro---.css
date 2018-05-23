@@ -952,13 +952,6 @@ a.fa.fa-qrcode:before{
 .topbar .menuTransaction ul li a:hover{
 	text-decoration: underline;
 	color: blue;
-}
-.titleCenter{
-	text-align: center;
-    font-size: 25px;
-    font-weight: 700;
-    margin-bottom: 15px;
-}
 
 @media (max-width: 767px){
 	.table.table-condensed.k-grid.k-widget.k-display-block{

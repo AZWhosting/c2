@@ -1,6 +1,13 @@
 var	en_US = {
 	"home" : "Home",
 	"logout" : "Logout",
+	"check_out" : "Check Out",
+	"sale_transactions" : "Sales Transactions",
+	"setting" : "settings",
+	"my_account_setting" : "My Account Setting",
+	"purchase_transaction" : "Purchases Transaction",
+	"cash_transactions" : "Cashs Transaction",
+	"item_transactions" : "Inventory Transaction",
 	//Main Dustboard
 	"search_contact" : "Search Contact",
 	"contact" : "Contact",
@@ -1564,4 +1571,4 @@ var	en_US = {
 	"number_of_bloc": "Number of Bloc",
 	"maintenance": "Maintenance",
 	"change_meter": "Change Meter",
-}
+}                                                          

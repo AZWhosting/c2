@@ -1,6 +1,13 @@
 var	km_KH = {
 	"home" : "ទំព័រដើម",
 	"logout" : "ចាកចេញ",
+	"check_out" : "គិតប្រាក់",
+	"sale_transactions" : "ប្រតិបត្តិ​ការ​លក់",
+	"setting" : "ការកំណត់",
+	"my_account_setting" : "ការកំណត់គណនីផ្ទាល់ខ្លួន",
+	"purchase_transaction" : "ប្រតិបត្តិ​ការ​ទិញ",
+	"cash_transactions" : "ប្រតិបត្តិ​ការ​សាច់ប្រាក់",
+	"item_transactions" : "ប្រតិបត្តិ​ការ​សន្និធិ",
 	//Main Dustboard
 	"search_contact" :  "ស្វែងរក​ទំនាក់ទំនង",
 	"contact" :  "ទំនាក់ទំនង",
