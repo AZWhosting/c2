@@ -46761,29 +46761,29 @@
         dataSourceEX        : dataStore(apiUrl + "inventory_modules/position_summary"),
         ExportExcel         : function(){
             $("#loadImport").css("display", "block");
-            var self = this, para = [],
+           var self = this, para = [],
                 obj = this.get("obj"),
                 as_of = this.get("as_of"),
-                displayDate = "";
-                group  = this.get("groupSelect");
-                category_id = this.get("categorySelect");
+           displayDate = "";
+           group  = this.get("groupSelect");
+           category_id = this.get("categorySelect");
 
-            if(category_id){
+           if(category_id){
                 para.push({field:"category_id", value: category_id});
-            }
+           }
 
-            if(group){
+           if(group){
                 para.push({field:"item_group_id", value: group.id});
-            }
+           }
 
-            //Items
-            if(obj.itemIds.length>0){
+           //Items
+           if(obj.itemIds.length>0){
                 var itemIds = [];
                 $.each(obj.itemIds, function(index, value){
                      itemIds.push(value);
                 });
                 para.push({ field:"id", operator:"where_in", value:itemIds });
-            }
+           }
 
            if(as_of){
                 as_of = new Date(as_of);
@@ -46822,12 +46822,12 @@
                 self.exArray.push({
                      cells: [
                           { value: "Item Name", background: "#496cad", color: "#ffffff" },
-                          { value: "QOH", background: "#496cad", color: "#ffffff" },
                           { value: "ON PO", background: "#496cad", color: "#ffffff" },
                           { value: "ON SO", background: "#496cad", color: "#ffffff" },
+                          { value: "QOH", background: "#496cad", color: "#ffffff" },
+                          { value: "UOM", background: "#496cad", color: "#ffffff" },
                           { value: "Average Cost", background: "#496cad", color: "#ffffff" },
-                          { value: "Average Price", background: "#496cad", color: "#ffffff" },
-                          { value: "Amount", background: "#496cad", color: "#ffffff" }
+                          { value: "Inventory Value", background: "#496cad", color: "#ffffff" }
                      ]
                 });
                 if(self.dataSourceEX.data().length > 0){
@@ -46835,11 +46835,11 @@
                           self.exArray.push({
                                cells: [
                                     { value: v.name },
-                                    { value: kendo.parseFloat(v.qoh)},
-                                    { value: kendo.parseFloat(v.po)},
-                                    { value: kendo.parseFloat(v.so)},
+                                    { value: kendo.parseFloat(v.on_po)},
+                                    { value: kendo.parseFloat(v.on_so)},
+                                    { value: kendo.parseFloat(v.quantity)},
+                                    { value: kendo.parseFloat(v.measurement)},
                                     { value: kendo.parseFloat(v.cost)},
-                                    { value: kendo.parseFloat(v.price)},
                                     { value: kendo.parseFloat(v.amount)},
                                ]
                           });
@@ -78009,4 +78009,3 @@
         }
     });
 </script>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
