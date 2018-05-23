@@ -6291,7 +6291,7 @@
             serverSorting: true,
             serverPaging: true,
             page: 1,
-            pageSize: 8
+            pageSize: 1000
         }),
         roomAR          : [],
         emSelect: true,
