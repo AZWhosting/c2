@@ -101,11 +101,25 @@ class Categories extends REST_Controller {
 			isset($value->is_system) 	? $obj->is_system 		= $value->is_system : "";
 						
 			if($obj->save()){
+				//Add pattern
+				$patterns = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$patterns->item_type_id  = $obj->item_type_id;
+                $patterns->category_id   = $obj->id;
+                $patterns->is_pattern    = 1;
+                $patterns->status        = 1;
+                $patterns->save();
+
+                //Update pattern_id to category
+                $patternCategorys = new Category(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$patternCategorys->get_by_id($obj->id);
+				$patternCategorys->item_id = $patterns->id;
+				$patternCategorys->save();
+
 				$data["results"][] = array(
 					"id" 			=> $obj->id,					
 					"sub_of" 		=> $obj->sub_of,
 					"item_type_id" 	=> $obj->item_type_id,
-					"item_id" 		=> $obj->item_id,
+					"item_id" 		=> $patterns->id,
 					"code" 			=> $obj->code,
 					"name" 	 		=> $obj->name,
 					"abbr" 			=> $obj->abbr,

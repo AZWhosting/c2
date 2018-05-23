@@ -41037,7 +41037,7 @@
                     obj.set("brand_id", view[0].brand_id);
                     obj.set("measurement_id", view[0].measurement_id);
                     obj.set("abbr", cat.abbr);
-                    obj.set("number", "");
+                    // obj.set("number", "");
                     obj.set("international_code", view[0].international_code);
                     obj.set("color_code", view[0].color_code);
                     obj.set("name", "");
@@ -41117,7 +41117,6 @@
                 pageSize:1
             }).then(function(){
                 var view = self.numberDS.view();
-
                 var lastNo = 0;
                 if(view.length>0){
                     lastNo = kendo.parseInt(view[0].number);
@@ -41235,9 +41234,9 @@
             if(category_id){
                 para.push({ field:"category_id", value: category_id });
                 para.push({ field:"is_pattern", value: 1 });
+            }else{
+                para.push({ field:"nature", value: "" });
             }
-
-            para.push({ field:"nature", value: "" });
 
             this.dataSource.query({
                 filter: para,
@@ -48340,7 +48339,7 @@
                         saved = true;
 
                         var response = e.response.results[0];
-                        self.addPattern(response.id, response.item_type_id);
+                        // self.addPattern(response.id, response.item_type_id);
                         banhji.source.loadCategories();
                     }
                 });
