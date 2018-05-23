@@ -4056,11 +4056,11 @@
                     field: "contact_type_id",
                     operator: "where_in",
                     value: [11,12]
-                },
-                {   
-                    field: "work_id",
-                    value: 0
                 }
+                // {   
+                //     field: "work_id",
+                //     value: 0
+                // }
             ],
             sort: {
                 field: "id",
