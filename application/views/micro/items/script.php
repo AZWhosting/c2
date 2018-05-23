@@ -4335,7 +4335,7 @@
         statusList              : banhji.source.statusList,
         confirmMessage          : banhji.source.confirmMessage,
         tagList                 : [],
-        obj                     : null,
+        obj                     : [],
         isEdit                  : false,
         saveClose               : false,
         showConfirm             : false,
@@ -4727,7 +4727,7 @@
             this.set("isEdit", false);
             this.set("obj", null);
             self.set("variantDisplay", false);
-
+            
             this.patternDS.query({
                 filter:[
                     { field:"category_id", value:1 },

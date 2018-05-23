@@ -24279,8 +24279,8 @@
                 view[0].set("cash_receipt", kendo.toString(view[0].amount - view[0].deposit, "c", view[0].locale));
                 view[0].set("amount", kendo.toString(view[0].amount, "c", view[0].locale));
                 view[0].set("deposit", kendo.toString(view[0].deposit, "c", view[0].locale));
-                view[0].set("issued_date", kendo.toString(new Date(view[0].issued_date), "dd MMM yyyy"));
-                view[0].set("due_date", kendo.toString(new Date(view[0].due_date), "dd MMM yyyy"));
+                view[0].set("issued_date", kendo.toString(new Date(view[0].issued_date), "D"));
+                view[0].set("due_date", kendo.toString(new Date(view[0].due_date), "D"));
                 if(view[0].description == "null"){
                     view[0].set("description", "No Description");
                 }
