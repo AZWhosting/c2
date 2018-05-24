@@ -55,8 +55,8 @@ class Ops extends REST_Controller {
 			    // $this->dbforge->drop_table('references');
 			    
 			    //Update data
-			    // $this->db->where('conversion_ratio', 0);
-			    // $this->db->update('item_prices', array('conversion_ratio' => 1));
+			    // $this->db->where('type', 'Wellnez_Form');
+			    // $data['results'][] = $this->db->update('transaction_templates', array('transaction_form_id' => 32));
 
 			 	//Update batch
 			 	// 	$raw = array(
@@ -73,13 +73,13 @@ class Ops extends REST_Controller {
 
 			 	//Insert data
 		 	// 	$raw = array(
-		 	//    		'transaction_form_id' 	=> 73,
+		 	//    		'transaction_form_id' 	=> 32,
 		 	//    		'user_id' 				=> 12,
-		 	//    		'type' 					=> 'Sale_Return',
-		 	//    		'name' 					=> 'Default Sale Return',
+		 	//    		'type' 					=> 'Wellnez_Form',
+		 	//    		'name' 					=> 'Default Wellnez Form',
 		 	//    		'color' 				=> '',
-		 	//    		'moduls'				=> 'customer_mg',
-		 	//    		'title' 				=> 'Sale Return',
+		 	//    		'moduls'				=> 'wellnez_mg',
+		 	//    		'title' 				=> 'Invoice',
 		 	//    		'note' 					=> '',
 		 	//    		'status' 				=> 1
 				// );
@@ -108,7 +108,7 @@ class Ops extends REST_Controller {
 				
 
 				//DELETE DATA
-				// $data['results'][] = $this->db->delete('transaction_templates', array('type' => "Sale_Return")); 
+				// $data['results'][] = $this->db->delete('transaction_templates', array('type' => "Wellnez_Form")); 
 
 				// Add new fields
 				// $fields = array(
