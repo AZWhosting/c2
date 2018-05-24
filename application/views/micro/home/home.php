@@ -58,24 +58,26 @@
                         <div class="col-md-6">
                             <div class="card" >
                                 <div class="card-body">
-                                    <div class="saleOverview" >
-                                        <h2 data-bind="text: lang.lang.sale"></h2>
-                                        <p data-format="n" data-bind="text: obj.sale"></p>
-                                        <div class="col-md-12">
-                                            <div class="col-md-4">
-                                                <span data-bind="text: obj.sale_customer"></span>
-                                                <span data-bind="text: lang.lang.customer"></span>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <span data-bind="text: obj.sale_product"></span>
-                                                <span data-bind="text: lang.lang.product"></span>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <span data-bind="text: obj.sale_ordered"></span>
-                                                <span data-bind="text: lang.lang.order"></span>
+                                    <a href="sales#/sale_summary_by_customer">
+                                        <div class="saleOverview" >
+                                            <h2 data-bind="text: lang.lang.sale"></h2>
+                                            <p data-format="n" data-bind="text: obj.sale"></p>
+                                            <div class="col-md-12">
+                                                <div class="col-md-4">
+                                                    <span data-bind="text: obj.sale_customer"></span>
+                                                    <span data-bind="text: lang.lang.customer"></span>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <span data-bind="text: obj.sale_product"></span>
+                                                    <span data-bind="text: lang.lang.product"></span>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <span data-bind="text: obj.sale_ordered"></span>
+                                                    <span data-bind="text: lang.lang.order"></span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </a>
                                 </div>
 
                             </div>
@@ -83,72 +85,78 @@
                         <div class="col-md-6">
                             <div class="card">
                                 <div class="card-body">
-                                    <div class="saleOverview">
-                                        <h2 data-bind="text: lang.lang.receivable"></h2>
-                                        <p data-format="n" data-bind="text: obj.ar"></p>
-                                        <div class="col-md-12">
-                                            <div class="col-md-4">
-                                                <span data-bind="text: obj.ar_open"></span>
-                                                <span data-bind="text: lang.lang.open"></span>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <span data-bind="text: obj.ar_customer"></span>
-                                                <span data-bind="text: lang.lang.customers"></span>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <span data-bind="text: obj.ar_overdue"></span>
-                                                <span data-bind="text: lang.lang.overdue"></span>
+                                    <a href="sales#/customer_balance_summary">
+                                        <div class="saleOverview">
+                                            <h2 data-bind="text: lang.lang.receivable"></h2>
+                                            <p data-format="n" data-bind="text: obj.ar"></p>
+                                            <div class="col-md-12">
+                                                <div class="col-md-4">
+                                                    <span data-bind="text: obj.ar_open"></span>
+                                                    <span data-bind="text: lang.lang.open"></span>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <span data-bind="text: obj.ar_customer"></span>
+                                                    <span data-bind="text: lang.lang.customers"></span>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <span data-bind="text: obj.ar_overdue"></span>
+                                                    <span data-bind="text: lang.lang.overdue"></span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </a>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="card">
                                <div class="card-body" >
-                                    <div class="saleOverview" >
-                                        <h2 data-bind="text: lang.lang.purchase"></h2>
-                                        <p data-format="n" data-bind="text: objVendor.purchase"></p>
-                                        <div class="col-md-12">
-                                            <div class="col-md-4">
-                                                <span data-bind="text: objVendor.purchase_supplier"></span>
-                                                <span data-bind="text: lang.lang.supplier"></span>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <span data-bind="text: objVendor.purchase_product"></span>
-                                                <span data-bind="text: lang.lang.product"></span>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <span data-bind="text: objVendor.purchase_ordered"></span>
-                                                <span data-bind="text: lang.lang.order"></span>
+                                    <a href="purchases#/purchase_summary_product_services">
+                                        <div class="saleOverview" >
+                                            <h2 data-bind="text: lang.lang.purchase"></h2>
+                                            <p data-format="n" data-bind="text: objVendor.purchase"></p>
+                                            <div class="col-md-12">
+                                                <div class="col-md-4">
+                                                    <span data-bind="text: objVendor.purchase_supplier"></span>
+                                                    <span data-bind="text: lang.lang.supplier"></span>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <span data-bind="text: objVendor.purchase_product"></span>
+                                                    <span data-bind="text: lang.lang.product"></span>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <span data-bind="text: objVendor.purchase_ordered"></span>
+                                                    <span data-bind="text: lang.lang.order"></span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </a>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="card">
                                 <div class="card-body">
-                                    <div class="saleOverview" >
-                                        <h2 data-bind="text: lang.lang.payables"></h2>
-                                        <p data-format="n" data-bind="text: objVendor.ap"></p>
-                                        <div class="col-md-12">
-                                            <div class="col-md-4">
-                                                <span data-bind="text: objVendor.ap_open"></span>
-                                                <span data-bind="text: lang.lang.open"></span>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <span data-bind="text: objVendor.ap_supplier"></span>
-                                                <span data-bind="text: lang.lang.supplier"></span>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <span  data-bind="text: objVendor.ap_overdue"></span>
-                                                <span data-bind="text: lang.lang.overdue"></span>
+                                    <a href="purchases#/suppliers_balance_summary">
+                                        <div class="saleOverview" >
+                                            <h2 data-bind="text: lang.lang.payables"></h2>
+                                            <p data-format="n" data-bind="text: objVendor.ap"></p>
+                                            <div class="col-md-12">
+                                                <div class="col-md-4">
+                                                    <span data-bind="text: objVendor.ap_open"></span>
+                                                    <span data-bind="text: lang.lang.open"></span>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <span data-bind="text: objVendor.ap_supplier"></span>
+                                                    <span data-bind="text: lang.lang.supplier"></span>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <span  data-bind="text: objVendor.ap_overdue"></span>
+                                                    <span data-bind="text: lang.lang.overdue"></span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </a>
                                 </div>
                             </div>
                         </div>

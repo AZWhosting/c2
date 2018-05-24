@@ -19895,7 +19895,7 @@
 				                            { field: 'tax_item', title:'TAX', editor: taxForSaleEditor, template: '#=tax_item.name#', width: '120px' },
 				                            { field: 'wht_account', title: 'WHT ACCOUNT', hidden: true, editor: whtAccountEditor, template: '#=wht_account.name#', width: '120px' },
 				                            { field: 'additional_cost', title:'ADD.COST', format: '{0:n}', hidden: true, editable: 'false', attributes: { style: 'text-align: right;' }, width: '120px' },
-				                            { field: 'additional_applied', title:'APPLY ADD.COST', hidden: true, editor: customBoolEditor, width: '120px' },
+				                            { field: 'additional_applied', title:'APPLY ADD.COST', hidden: true, editor: applyAdditionalCostEditor, width: '120px' },
 				                            { field: 'reference_no', title:'REFERENCE NO.', hidden: true, width: '120px' }
 				                         ]"
 				                         data-auto-bind="false"
@@ -64848,8 +64848,17 @@
         $('<input class="k-checkbox" type="checkbox" name="applyAdditionalCostChk" data-type="boolean" data-bind="checked:additional_applied">').appendTo(container);
         $('<label class="k-checkbox-label">&#8203;</label>').appendTo(container);
     }
-    function customBoolEditor1(container, options) {
-        $('<input id="mail-switch" data-bind="checked:additional_applied" aria-label="Mail Switch">').appendTo(container);
+    function applyAdditionalCostEditor(container, options) {
+        $('<input required name="' + options.field + '"/>')
+        .appendTo(container)
+        .kendoDropDownList({
+            dataTextField: "text",
+            dataValueField: "value",
+            dataSource: [
+                { text: "Not Apply", value: false },
+                { text: "Apply", value: true }
+            ]
+        });
     }
 </script>
 

@@ -405,10 +405,16 @@ a {
 	height: auto;
 }
 #reports .report h3{
-	font-size: 17px;
+	font-size: 16px;
 	margin-top: 0;
 	text-transform: capitalize;
-	color: #0077c5
+	color: #0077c5;
+	padding-bottom: 8px;
+	border-bottom: 1px solid #ccc;
+}
+
+#reports .report h3.marginBottom{
+	margin-bottom: 15px;
 }
 #reports .report p{
 	font-size: 13px;
@@ -1014,4 +1020,4 @@ a.fa.fa-qrcode:before{
 		border-color: #333;
 		margin: 8px 0;
 	}
-}
+}                                                       

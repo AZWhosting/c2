@@ -7,7 +7,7 @@
 
 require APPPATH.'/libraries/REST_Controller.php';
 
-    class Entities extends REST_Controller 
+    class Entities extends REST_Controller
     {
         protected $user = NULL;
         protected $inst = NULL;
@@ -29,7 +29,7 @@ require APPPATH.'/libraries/REST_Controller.php';
             $institutes = new Institute();
 
             $this->benchmark->mark('query_start');
-            // if(isset($filter)) 
+            // if(isset($filter))
             // {
             //     foreach($filter['filters'] as $f) {
             //         if(isset($f['operator']))
@@ -38,23 +38,23 @@ require APPPATH.'/libraries/REST_Controller.php';
             //         } else {
             //             $institutes->where($f['field'], $f['value']);
             //         }
-                    
+
             //     }
             // }
 
-            if(isset($id)) 
-            {     
+            if(isset($id))
+            {
                 $institutes->where('id', $id);
-                $institutes->get_paged_iterated($page, $limit);              
+                $institutes->get_paged_iterated($page, $limit);
             }
-            
+
             if($institutes->exists())
             {
                 if(isset($paramater))
                 {
                     $modules = new Module();
                     $modules->where('is_core', 'false');
-                    $modules->where_related('institute', 'id', $id)->get_iterated();
+                    $modules->where_related('user', 'id', $id)->get_iterated();
                     if($modules->exists())
                     {
                         $comp = array();
@@ -109,7 +109,7 @@ require APPPATH.'/libraries/REST_Controller.php';
                 'numberOnPage' => $institutes->paged->items_on_page,
                 'timeLapse' => $this->benchmark->elapsed_time('query_start', 'query_end')
             );
-            $this->json($result, 200);     
+            $this->json($result, 200);
         }
 
         public function modules_get($id = NULL)
@@ -124,12 +124,12 @@ require APPPATH.'/libraries/REST_Controller.php';
 
             $this->benchmark->mark('query_start');
             $modules = new Module();
-            if(isset($id)) 
+            if(isset($id))
             {
-                $modules->where('id', $id); 
-            } else 
+                $modules->where('id', $id);
+            } else
             {
-                if(isset($filter)) 
+                if(isset($filter))
                 {
                     foreach($filter['filters'] as $f) {
                         if(isset($f['operator']))
@@ -138,13 +138,13 @@ require APPPATH.'/libraries/REST_Controller.php';
                         } else {
                             $mdoules->where($f['field'], $f['value']);
                         }
-                        
+
                     }
-                }                
+                }
             }
             $modules->where_related('institute', 'id', $this->inst);
             $modules->get_paged_iterated($page, $limit);
-            
+
             if($modules->exists())
             {
                 foreach($modules as $app)
@@ -174,8 +174,8 @@ require APPPATH.'/libraries/REST_Controller.php';
                     'timeLapse' => $this->benchmark->elapsed_time('query_start', 'query_end')
                 );
                 $this->json($result, 200);
-            } 
-            else 
+            }
+            else
             {
                 $this->benchmark->mark('query_end');
                 $result = array(
@@ -187,7 +187,7 @@ require APPPATH.'/libraries/REST_Controller.php';
                 );
                 $this->json($result, 404);
             }
-                 
+
         }
 
         protected function json($data, $httpCode)

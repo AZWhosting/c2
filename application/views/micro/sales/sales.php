@@ -54,7 +54,7 @@
 
 <!-- Menu -->
 <script id="reports" type="text/x-kendo-template">
-	<div class="row " id="reports">
+	<div class="row home" id="reports">
 		<div class="col-md-4">
 			<div class="saleOverview">
 				<h2 data-bind="text: lang.lang.sale"></h2>
@@ -78,20 +78,20 @@
 			<!-- Report -->
             <div class="report ">
 				<div class="col-md-12">
-					<h3><a href="#/sale_summary_by_customer" data-bind="text: lang.lang.sale_summary_by_customer" ></a></h3>
-					<p data-bind="text: lang.lang.summarizes_total_sales"></p>
+					<h3 class="marginBottom"><a href="#/sale_summary_by_customer" data-bind="text: lang.lang.sale_summary_by_customer" ></a></h3>
+					
 				</div>
 				<div class="col-md-12">
-					<h3><a href="#/sale_summary_by_product" data-bind="text: lang.lang.sale_summary_by_product_services" ></a></h3>
-					<p data-bind="text: lang.lang.summarizes_total_sales_for_each_product"></p>
+					<h3 class="marginBottom"><a href="#/sale_summary_by_product" data-bind="text: lang.lang.sale_summary_by_product_services" ></a></h3>
+					
 				</div>
 				<div class="col-md-12">
-					<h3><a href="#/sale_detail_by_customer" data-bind="text: lang.lang.sale_detail_by_customer" ></a></h3>
-					<p data-bind="text: lang.lang.lists_individual_sale"></p>
+					<h3 class="marginBottom"><a href="#/sale_detail_by_customer" data-bind="text: lang.lang.sale_detail_by_customer" ></a></h3>
+					
 				</div>
 				<div class="col-md-12">
-					<h3><a href="#/sale_detail_by_product" data-bind="text: lang.lang.sale_detail_by_product_services" ></a></h3>
-					<p data-bind="text: lang.lang.lists_individual_sale_transactions"></p>
+					<h3 style="border-bottom: none; padding-bottom: 0;"><a href="#/sale_detail_by_product" data-bind="text: lang.lang.sale_detail_by_product_services" ></a></h3>
+					
 				</div>						    					
 			</div>
 
@@ -129,22 +129,22 @@
 			</div>
 
 			<!-- Report -->
-			<div class="report" style="min-height: 385px; ">
+			<div class="report" >
                 <div class="col-md-12">
-					<h3><a href="#/customer_balance_summary" data-bind="text: lang.lang.customer_balance_summary" ></a></h3>
-					<p data-bind="text: lang.lang.summarizes_total_sales"></p>
+					<h3 class="marginBottom"><a href="#/customer_balance_summary" data-bind="text: lang.lang.customer_balance_summary" ></a></h3>
+					
 				</div>
 				<div class="col-md-12">
-					<h3><a href="#/customer_balance_detail" data-bind="text: lang.lang.customer_balance_detail" ></a></h3>
-					<p data-bind="text: lang.lang.lists_individual_unpaid_invoices_for_each_customer"></p>
+					<h3 class="marginBottom"><a href="#/customer_balance_detail" data-bind="text: lang.lang.customer_balance_detail" ></a></h3>
+					
 				</div>
 				<div class="col-md-12">
-					<h3><a href="#/receivable_aging_summary" data-bind="text: lang.lang.receivable_aging_summary"></a></h3>
-					<p data-bind="text: lang.lang.lists_all_unpaid_invoices1"></p>	
+					<h3 class="marginBottom"><a href="#/receivable_aging_summary" data-bind="text: lang.lang.receivable_aging_summary"></a></h3>
+						
 				</div>
 				<div class="col-md-12">
-					<h3><a href="#/receivable_aging_detail" data-bind="text: lang.lang.receivable_aging_detail"></a></h3>
-					<p data-bind="text: lang.lang.lists_individual_unpaid_invoices_grouped_by_customer"></p>
+					<h3 style="border-bottom: none; padding-bottom: 0;"><a href="#/receivable_aging_detail" data-bind="text: lang.lang.receivable_aging_detail"></a></h3>
+					
 				</div>
 			</div>
 
@@ -186,14 +186,14 @@
 			</div>
 
 			<!-- Report -->
-			<div class="report" style="min-height: 385px; ">
+			<div class="report" style="min-height: 176px;">
 				<div class="col-md-12">
-					<h3><a href="#/collect_invoice" data-bind="text: lang.lang.list_of_invoices_to_be_collected"></a></h3>
-					<p data-bind="text: lang.lang.lists_all_unpaid_invoices_grouped_by_due_today_and_overdue"></p>
+					<h3 class="marginBottom"><a href="#/collect_invoice" data-bind="text: lang.lang.list_of_invoices_to_be_collected"></a></h3>
+					
 				</div>
 				<div class="col-md-12">
-					<h3><a href="#/collection_report" data-bind="text: lang.lang.collection_report"></a></h3>
-					<p data-bind="text: lang.lang.lists_of_collected_invoices_for_the_select_period_of_time_group_by_method_of_payment"></p>
+					<h3 style="border-bottom: none;" padding-bottom: 0;><a href="#/collection_report" data-bind="text: lang.lang.collection_report"></a></h3>
+					
 				</div>
 			</div>
 
@@ -6215,4 +6215,4 @@
 		#=code# - #=country#
 	</span>
 </script>
-<!-- End -->                                                                          
+<!-- End -->                                                                             

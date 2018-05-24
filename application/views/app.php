@@ -1,8 +1,8 @@
 <div id="wrapperApplication" class="container-fluid"></div>
 <!-- template section starts -->
 <script type="text/x-kendo-template" id="layout">
-	<div id="menu"></div>			
-	<div id="content" class="row-fluid container"></div>
+	<div id="menu"></div>
+	<div id="content" class="row-fluid container" style="padding-top: 0 !important; "></div>
 </script>
 <script type="text/x-kendo-template" id="blank-tmpl">
 </script>
@@ -10,21 +10,21 @@
 	<div class="menu-hidden sidebar-hidden-phone menu-left hidden-print">
 		<div class="navbar main navbar-fixed-top" id="main-menu">
 			<ul class="topnav">
-				<li><a href="#" data-bind="click: checkRole"><img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/banhji-logo.png" style="height: 40px;"></a></li>
+				<li><a href="#" data-bind="click: checkRole"><img src="<?php echo base_url();?>assets/update/banhji-blank.png" style="height: 40px;"></a></li>
 			</ul>
 			<form class="navbar-form pull-left">
-				
-			  	<input type="text" class="span2 search-query" placeholder="Search" id="search-placeholder" 
-			  			data-bind="value: searchText" 
+
+			  	<input type="text" class="span2 search-query" placeholder="Search" id="search-placeholder"
+			  			data-bind="value: searchText"
 			  			style="background-color: #555555; color: #ffffff; border-color: #333333; height: 22px;">
 			  	<button type="submit" class="btn btn-inverse" data-bind="click: search"><i class="icon-search"></i></button>
 			</form>
 			<ul class="topnav" id="secondary-menu">
-			</ul> 
+			</ul>
 			<ul class="topnav pull-right">
 				<li role="presentation" class="dropdown">
 			  		<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"> <i class="icon-th-list"></i></a>
-		  			<ul class="dropdown-menu ul-multiTaskList" data-template="multiTaskList-row-template" data-bind="source: multiTaskList">  				  				
+		  			<ul class="dropdown-menu ul-multiTaskList" data-template="multiTaskList-row-template" data-bind="source: multiTaskList">
 		  			</ul>
 			  	</li>
 			  	<!-- <li>
@@ -42,7 +42,7 @@
 										    data-item-template="contact-list-tmpl"
 										    data-value-field="id"
 										    data-text-field="name"
-										    data-bind="value: obj.contactIds, 
+										    data-bind="value: obj.contactIds,
 										   			source: contactDS"
 										    data-placeholder="Search for an app..."
 										    style="width: 77%; float: left;" /></select>
@@ -72,7 +72,7 @@
 			  			</div>
 			  			<div class="bottom-help" style="background: #fff; padding: 20px 20px 20px; text-align: left; display: inline-block; width: 100%;">
 			  				<h3 style="float: left; margin-right: 10px;">Direct Chat by</h3>
-			  				<div class="fb-messengermessageus" 
+			  				<div class="fb-messengermessageus"
 					            messenger_app_id="1301847836514973"
 					            page_id="862386433857166"
 					            color="blue"
@@ -83,14 +83,26 @@
 			  	</li> -->
 				<li role="presentation" class="dropdown">
 			  		<a style="color: #fff;" class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">[<span data-bind="text: getUsername"></span>]</a>
-		  			<ul class="dropdown-menu">  				  				
-		  				<li><a href="#" data-bind="click: lang.changeToKh">ភាសាខ្មែរ</a></li>
-    					<li><a href="#" data-bind="click: lang.changeToEn">English</a></li>
+		  			<ul class="dropdown-menu">
+		  				<li><a href="<?php echo base_url(); ?>admin" class=""><i class="icon-cogs"></i> Admin Module</a></li>
+		  				<li class="divider"></li>
+		  				<li>
+	                    	<a href="#" data-bind="click: lang.changeToKh">
+	                    		<img style="width: 20px;" class="kh-flag" src="https://lipis.github.io/flag-icon-css/flags/4x3/kh.svg">
+	                    		<span>ភាសាខ្មែរ</span>
+	                    	</a>
+	                    </li>
+    					<li>
+    						<a href="#" data-bind="click: lang.changeToEn">
+    							<img style="width: 20px;" class="en-flag" src="https://lipis.github.io/flag-icon-css/flags/4x3/gb.svg">
+    							<span>English</span>
+    						</a>
+    					</li>
 						<li class="divider"></li>
-						<li><a href="<?php echo base_url(); ?>admin">Setting</a></li>
-						<li><a href="#/manage" data-bind="click: logout"><i class="icon-power-off"></i> Logout</a></li> 				
+
+						<li><a href="#/manage" data-bind="click: logout"><i class="icon-power-off"></i> Logout</a></li>
 		  			</ul>
-			  	</li>				
+			  	</li>
 			</ul>
 		</div>
 	</div>
@@ -104,7 +116,7 @@
     		</span>
     	</a>
 
-    </li>	
+    </li>
 </script>
 
 
@@ -118,32 +130,32 @@
 		<h2 style="margin-top: 120px; float: left;">App Center</h2>
 	    <br>
 	</div> -->
-	<span style="margin-bottom: 20px;" class="glyphicons no-js remove_2 pull-right" 
+	<span style="margin-bottom: 20px;" class="glyphicons no-js remove_2 pull-right"
 		onclick="javascript:window.history.back()"
 		data-bind="click: cancel"><i></i></span>
 	<div class="span12">
 		<div class="relativeWrap" data-toggle="source-code">
 			<div class="widget widget-tabs widget-tabs-gray report-tab" style="background: #fff; overflow: hidden;">
-				<div class="widget-head head-custom" style="height: 50px;">
+				<!-- <div class="widget-head head-custom" style="height: 50px;">
 					<ul>
 						<li class="active"><a href="#tab-1" data-toggle="tab"><i></i><span >My Apps</span></a></li>
 						<li><a href="#tab-2" data-toggle="tab"><i></i><span >All Apps</span></a></li>
 					</ul>
-				</div>
+				</div> -->
 
 				<div class="widget-body" style="padding: 20px 0; float: left; width: 100%;">
 					<div class="tab-content">
 				        <div class="tab-pane active" id="tab-1">
 							<div class="row-fluid" style="padding: 0 20px;">
 								<div class="row-fluid" style="float: left; background: #ebeef3; padding: 15px 20px 20px; width: 100%;">
-					        		<h2>Bring your apps along for the ride</h2>
-					        		<p>Connect your apps to get them working together in one place.</p>
+					        		<h2>BanhJi Apps Center</h2>
+					        		<p>All of your apps/ add-on modules in one place</p>
 					        		<ul class="row" style="margin-top: 20px; padding: 0;"
 										data-role="listview" data-bind="source: dataSource.data()[0].appSubscribed"
 										data-template="entity-application-list-tmpl"
-									>	
+									>
 					        		</ul>
-					        	</div>					        	
+					        	</div>
 							</div>
 			        	</div>
 
@@ -157,7 +169,7 @@
 											    data-item-template="contact-list-tmpl"
 											    data-value-field="id"
 											    data-text-field="name"
-											    data-bind="value: obj.contactIds, 
+											    data-bind="value: obj.contactIds,
 											   			source: contactDS"
 											    data-placeholder="Search for an app..."
 											    style="width: 88%; float: left; height: 31px; border-radius: 0;" /></select>
@@ -207,7 +219,7 @@
 					        		<ul class="row" style="margin-top: 20px; padding: 0;"
 										data-role="listview" data-bind="source: applications.dataSource"
 										data-template="application-list-tmpl"
-									>	
+									>
 					        		</ul>
 					        	</div>
 
@@ -271,7 +283,7 @@
 																			<div class="col-sm-8" style="padding-left: 0; padding-right: 30px;">
 																				<div class="win-video" style="width: 100%;">
 																					<div id="carousel-1" class="carousel slide" style="margin-bottom: 0;">
-																						
+
 																						<ol class="carousel-indicators" style="bottom: 0;">
 																							<li data-target="#carousel-1" data-slide-to="0" class="active"></li>
 																							<li data-target="#carousel-1" data-slide-to="1"></li>
@@ -279,40 +291,40 @@
 																							<li data-target="#carousel-1" data-slide-to="3"></li>
 																							<li data-target="#carousel-1" data-slide-to="4"></li>
 																						</ol>
-																						
+
 																						<div class="carousel-inner">
-																						
-																							
+
+
 																							<div class="item active">
 																								<img src="http://fpoimg.com/677x405?text=Picture%201">
-																								
+
 																							</div>
-																							
+
 																							<div class="item">
 																								<img src="http://fpoimg.com/677x405?text=Picture%202">
-																								
+
 																							</div>
-																							
+
 																							<div class="item">
 																								<img src="http://fpoimg.com/677x405?text=Picture%203">
-																								
+
 																							</div>
-																							
+
 																							<div class="item">
 																								<img src="http://fpoimg.com/677x405?text=Picture%204">
-																								
+
 																							</div>
-																							
+
 																							<div class="item">
 																								<img src="http://fpoimg.com/677x405?text=Picture%205">
-																								
-																							</div>
-																							
 
-																						</div>																					
-																						
+																							</div>
+
+
+																						</div>
+
 																					</div>
-																					
+
 																				</div>
 																			</div>
 																			<div class="col-sm-4" style="padding: 0; width: 30.3%;">
@@ -420,11 +432,11 @@
 																			</div>
 															        	</div>
 														        	</div>
-														        	
+
 															    </div>
 															</div>
 														</div>
-													</div>		
+													</div>
 												</div>
 											</div>
 						    			</div>
@@ -445,7 +457,7 @@
 						    		<div class="win-wrapper" style="width: 100%;">
 						    			<div class="window-header" style="width: 93%;">
 						    				<span style="float: right; margin-top: -5px; cursor: pointer; color: #999; font-weight: 600; font-size: 15px; margin-right: -15px;" data-bind="click: closeWindow1" >x</span>
-						    				
+
 						    			</div>
 						    			<div class="window-content" style="width: 92%;">
 						    				<div class="row">
@@ -492,10 +504,10 @@
 						    					Authorize
 						    				</a>
 						    			</div>
-						    		</div>									
+						    		</div>
 								</div>
 
-					        	<div class="row-fluid" style="float: left; background: #f7f9fb ; padding: 15px 20px 15px; width: 100%;">
+					        	<!-- <div class="row-fluid" style="float: left; background: #f7f9fb ; padding: 15px 20px 15px; width: 100%;">
 					        		<h2>Newest</h2>
 					        		<div class="row" style="margin-top: 20px;">
 					        			<div class="col-xs-12 col-sm-6 col-md-3">
@@ -515,7 +527,7 @@
 							        						The all-in-one Forecasting & Reporting Engine
 							        					</div>
 						        					</div>
-						        					
+
 						        					<div class="ratings" style="float: left;">
 										                <span class="fa fa-star"></span>
 										                <span class="fa fa-star"></span>
@@ -546,7 +558,7 @@
 							        						The all-in-one Forecasting & Reporting Engine
 							        					</div>
 						        					</div>
-						        					
+
 						        					<div class="ratings" style="float: left;">
 										                <span class="fa fa-star"></span>
 										                <span class="fa fa-star"></span>
@@ -577,7 +589,7 @@
 							        						The all-in-one Forecasting & Reporting Engine
 							        					</div>
 						        					</div>
-						        					
+
 						        					<div class="ratings" style="float: left;">
 										                <span class="fa fa-star"></span>
 										                <span class="fa fa-star"></span>
@@ -608,7 +620,7 @@
 							        						The all-in-one Forecasting & Reporting Engine
 							        					</div>
 						        					</div>
-						        					
+
 						        					<div class="ratings" style="float: left;">
 										                <span class="fa fa-star"></span>
 										                <span class="fa fa-star"></span>
@@ -623,9 +635,9 @@
 					        				</a>
 					        			</div>
 					        		</div>
-					        	</div>
+					        	</div> -->
 
-					        	<div class="row-fluid" style="float: left; background: #ebeef3; padding: 15px 20px 0; width: 100%;">
+					        	<!-- <div class="row-fluid" style="float: left; background: #ebeef3; padding: 15px 20px 0; width: 100%;">
 					        		<h2>Collections</h2>
 					        		<div class="row">
 					        			<div class="collection">
@@ -639,13 +651,13 @@
 						        								</div>
 						        								<div class="bigappcard-details" style="">
 						        									<div class="bigappcard-display-name" style="">
-						        										Apps by BanhJi                                
+						        										Apps by BanhJi
 						        									</div>
 						        									<div class="bigappcard-tagline" style="">
 						        										Key apps that streamline your practice and support your business.
 						        									</div>
 						        								</div>
-						        							</div> 
+						        							</div>
 						        						</div>
 						        					</a>
 						        				</li>
@@ -658,13 +670,13 @@
 						        								</div>
 						        								<div class="bigappcard-details" style="">
 						        									<div class="bigappcard-display-name" style="">
-						        										Apps by Industry                              
+						        										Apps by Industry
 						        									</div>
 						        									<div class="bigappcard-tagline" style="">
 						        										Key apps that streamline your practice and support your business.
 						        									</div>
 						        								</div>
-						        							</div> 
+						        							</div>
 						        						</div>
 						        					</a>
 						        				</li>
@@ -677,28 +689,28 @@
 						        								</div>
 						        								<div class="bigappcard-details" style="">
 						        									<div class="bigappcard-display-name" style="">
-						        										Apps by Function                                
+						        										Apps by Function
 						        									</div>
 						        									<div class="bigappcard-tagline" style="">
 						        										Key apps that streamline your practice and support your business.
 						        									</div>
 						        								</div>
-						        							</div> 
+						        							</div>
 						        						</div>
 						        					</a>
 						        				</li>
 						        			</ul>
 						        		</div>
 					        		</div>
-					        	</div>
+					        	</div> -->
 					        </div>
 			        	</div>
-			        	
+
 				    </div>
 				</div>
 			</div>
-		</div>		
-	</div>		
+		</div>
+	</div>
 </script>
 
 
@@ -719,30 +731,19 @@
 					<div class="bigappcard-display-name">
 						#=name#
 					</div>
-					<div class="bigappcard-vendor-name">
+					<!-- <div class="bigappcard-vendor-name">
 						#=developer.name#
-					</div>
+					</div> -->
 					<!-- <div class="bigappcard-tagline">
 						#=summary#
 					</div> -->
-				</div>
-				
-				<div class="ratings" style="float: left;">
-					<span class="fa fa-star"></span>
-					<span class="fa fa-star"></span>
-					<span class="fa fa-star"></span>
-					<span class="fa fa-star"></span>
-					<span class="fa fa-star"></span>
-					<span class="review">
-						<span class="reviews">(7)</span>
-					</span>
 				</div>
 			</div>
 		</a>
 	</li>
 </script>
 <script id="entity-application-list-tmpl" type="text/x-kendo-tmpl">
-	<li class="col-xs-12 col-sm-6 col-md-3" style="list-style: none; float: left;">
+	<li class="col-xs-12 col-sm-6 col-md-3" style="list-style: none; float: left;  width: 22%; margin-bottom: 15px;">
 		<a data-bind="attr: {href:home}">
 			<div class="app-recommand ">
 				<div class="appIcon">
@@ -759,24 +760,13 @@
 						#=summary#
 					</div> -->
 				</div>
-				
-				<div class="ratings" style="float: left;">
-					<span class="fa fa-star"></span>
-					<span class="fa fa-star"></span>
-					<span class="fa fa-star"></span>
-					<span class="fa fa-star"></span>
-					<span class="fa fa-star"></span>
-					<span class="review">
-						<span class="reviews">(7)</span>
-					</span>
-				</div>
 			</div>
 		</a>
 	</li>
 </script>
 <script id="contact-list-tmpl" type="text/x-kendo-tmpl">
-	<span>#=abbr##=number#</span>	
-	<span>#=name#</span>	
+	<span>#=abbr##=number#</span>
+	<span>#=name#</span>
 </script>
 <script id="contact-header-tmpl" type="text/x-kendo-tmpl">
     <strong>
@@ -791,7 +781,7 @@
 
 <script id="errorTemplate" type="text/x-kendo-template">
     <div class="wrong-pass">
-        <img style="float: left; cursor: pointer;" src="http://demos.telerik.com/kendo-ui/content/web/notification/error-icon.png" />        
+        <img style="float: left; cursor: pointer;" src="http://demos.telerik.com/kendo-ui/content/web/notification/error-icon.png" />
         <h3>#= message #</h3>
     </div>
 </script>
@@ -811,11 +801,11 @@
 	localforage.config({
 		driver: localforage.LOCALSTORAGE,
 		name: 'userData'
-	});	
+	});
 	var banhji = banhji || {};
 	var baseUrl = "<?php echo base_url(); ?>";
 	var apiUrl = baseUrl + 'api/';
-	banhji.s3 = "https://banhji.s3.amazonaws.com/";	
+	banhji.s3 = "https://banhji.s3.amazonaws.com/";
 	banhji.token = null;
 	banhji.no_image = "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/no_image.jpg";
 
@@ -843,7 +833,7 @@
     });
 	// end of custom widget
 
-	
+
 	// Initializing AWS Cognito service
 	var userPool = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserPool(poolData);
 	// Initializing AWS S3 Service
@@ -1038,7 +1028,7 @@
                 Password : this.get('password'),
             };
             var authenticationDetails = new AWSCognito.CognitoIdentityServiceProvider.AuthenticationDetails(authenticationData);
-            
+
             var userData = {
                 Username : this.get('email'),
                 Pool : userPool
@@ -1066,7 +1056,7 @@
               cognitoUser.signOut();
               localforage.clear().then(function(){
               	window.location.replace("<?php base_url(); ?>login");
-              });              
+              });
           } else {
               console.log('No user');
           }
@@ -1116,7 +1106,7 @@
     });
 	// Check if user is logged and authenticated via cognito service
 	if(userPool.getCurrentUser() == null) {
-		// if not login return to login page		
+		// if not login return to login page
 	  	//window.location.replace('http://localhost/aws/login.html');
 	} else {
 	  	var cognitoUser = userPool.getCurrentUser();
@@ -1133,10 +1123,10 @@
 	     		}
 	    	});
 	  	}
-	}	
+	}
 	var langVM = kendo.observable({
-		lang 		: null,		
-		localeCode 	: null,		
+		lang 		: null,
+		localeCode 	: null,
 		changeToEn 	: function() {
 			localforage.setItem("lang", "EN").then(function(value){
 				location.reload(false);
@@ -1170,7 +1160,7 @@
 	banhji.institute = banhji.userData ? banhji.userData.institute : "";
 	banhji.locale = banhji.institute.currency.locale;
 	banhji.localeReport = banhji.institute.reportCurrency.locale;
-	banhji.header = { Institute: banhji.institute.id };	
+	banhji.header = { Institute: banhji.institute.id };
 	var dataStore = function(url) {
 		var o = new kendo.data.DataSource({
 			transport: {
@@ -1257,7 +1247,7 @@
 		},
 		search: function(e) {
 			e.preventDefault();
-			
+
 			banhji.searchAdvanced.set("searchText", this.get("searchText"));
 			banhji.searchAdvanced.set("searchType", this.get("searchType"));
 			banhji.searchAdvanced.search();
@@ -1268,10 +1258,10 @@
 
 			var data = e.data,
 			index = this.multiTaskList.indexOf(data);
-			
-			if(data.vm!==null){				
+
+			if(data.vm!==null){
 				data.vm.cancel();
-			}			
+			}
 
 			this.multiTaskList.splice(index, 1);
 		},
@@ -1299,7 +1289,7 @@
 			if(isExisting==false){
 				this.multiTaskList.push({ name:name, url:url, vm:vm });
 			}
-		},				
+		},
 		auth : new kendo.data.DataSource({
 			transport: {
 				read 	: {
@@ -1345,7 +1335,7 @@
 			serverFiltering: true,
 			serverPaging: true,
 			// pageSize: 100
-		}),		
+		}),
 		inst 	 : new kendo.data.DataSource({
 			transport: {
 				read 	: {
@@ -1568,7 +1558,7 @@
 			this.get('newInst').set('logo', logo);
 			this.saveIntitute();
 			// console.log(logo);
-		},	 
+		},
 		close 		: function() {
 			window.history.back(-1);
 			if(this.inst.hasChanges()) {
@@ -1674,7 +1664,7 @@
 			});
 		},
 		registerBtn: function() {
-			banhji.view.layout.showIn('#content', banhji.view.signupView);	
+			banhji.view.layout.showIn('#content', banhji.view.signupView);
 		},
 		logout 		: function(e) {
 			e.preventDefault();
@@ -1723,7 +1713,7 @@
 			// } else {
 			// 	return '\#/page/';
 			// }
-			
+
 		},
 		createComp : function() {
 			banhji.router.navigate('/create_company');
@@ -1814,7 +1804,7 @@
 				}
 			});
 		}
-	});	
+	});
 	function getDB() {
 		var entity = null;
 		if(banhji.userManagement.getLogin()) {
@@ -1822,7 +1812,7 @@
 				if(banhji.userManagement.getLogin().institute.length > 0) {
 					entity = banhji.userManagement.getLogin().institute.name
 				}
-				
+
 			} else {
 				entity = false
 			}
@@ -2117,7 +2107,7 @@
 			}
 		});
 		return o;
-	}	
+	}
 	banhji.Layout = kendo.observable({
 		locale: "km-KH",
 		menu 	: [],
@@ -2140,7 +2130,7 @@
 		// ui: function() {
 		// 	// get UI information from source base on locale
 		// }
-	});	
+	});
 	var role = kendo.observable({
 		dataStore 	: new kendo.data.DataSource({
 			transport: {
@@ -2291,7 +2281,7 @@
 
 	// SOURCE #############################################################################################
 
-	
+
 	/*************************************************
 	*   HOME PAGE MVVM		  						 *
 	*************************************************/
@@ -2400,7 +2390,7 @@
 				pageSize: 5
 			}).then(function(){
 				var view = self.dataSource.view();
-				
+
 				obj.set("ar", kendo.toString(view[0].ar, banhji.locale=="km-KH"?"c0":"c2", banhji.locale));
 				obj.set("ar_open", kendo.toString(view[0].ar_open, "n0"));
 				obj.set("ar_customer", kendo.toString(view[0].ar_customer, "n0"));
@@ -2418,11 +2408,11 @@
 				pageSize: 5
 			}).then(function(){
 				var view = self.summaryDS.view();
-				
+
 				obj.set("income", kendo.toString(view[0].income, banhji.locale=="km-KH"?"c0":"c2", banhji.locale));
 				obj.set("expense", kendo.toString(view[0].expense, banhji.locale=="km-KH"?"c0":"c2", banhji.locale));
 				obj.set("net_income", kendo.toString(view[0].net_income, banhji.locale=="km-KH"?"c0":"c2", banhji.locale));
-				
+
 				obj.set("asset", kendo.toString(view[0].asset, banhji.locale=="km-KH"?"c0":"c2", banhji.locale));
 				obj.set("liability", kendo.toString(view[0].liability, banhji.locale=="km-KH"?"c0":"c2", banhji.locale));
 				obj.set("equity", kendo.toString(view[0].equity, banhji.locale=="km-KH"?"c0":"c2", banhji.locale));
@@ -2467,7 +2457,7 @@
 	banhji.applicationEntityStore = new kendo.data.DataSource({
 		transport: {
 			read  : {
-				url: baseUrl + 'v1/entities/index/' + banhji.userData.institute.id + "/modules",
+				url: baseUrl + 'v1/entities/index/' + banhji.userData.id + "/modules",
 				type: "GET",
 				dataType: 'json',
 				headers: {
@@ -2548,7 +2538,7 @@
 	});
 	/*************************************************
 	*   APP CENTER		  							 *
-	*************************************************/	
+	*************************************************/
 	banhji.appCenter = kendo.observable({
 		lang 				: langVM,
 		applications 		: banhji.applicationViewModel,
@@ -2622,14 +2612,14 @@
 				filter: []
 			}).then(function(){
 				var view = self.dataSource.view();
-				
+
 				obj.set("sale", kendo.toString(view[0].sale, banhji.locale=="km-KH"?"c0":"c2", banhji.locale));
 				obj.set("sale_customer", kendo.toString(view[0].sale_customer, "n0"));
 				obj.set("sale_product", kendo.toString(view[0].sale_product, "n0"));
 				obj.set("sale_ordered", kendo.toString(view[0].sale_ordered, "n0"));
 
 				obj.set("so", kendo.toString(view[0].so, "n0"));
-				obj.set("so_avg", kendo.toString(view[0].so_avg, banhji.locale=="km-KH"?"c0":"c2", banhji.locale));				
+				obj.set("so_avg", kendo.toString(view[0].so_avg, banhji.locale=="km-KH"?"c0":"c2", banhji.locale));
 				obj.set("so_open", kendo.toString(view[0].so_open, "n0"));
 
 				obj.set("ar", kendo.toString(view[0].ar, banhji.locale=="km-KH"?"c0":"c2", banhji.locale));
@@ -2648,7 +2638,7 @@
 
 			this.topProductDS.query({
 				filter: []
-			});										
+			});
 		}
 	});
 
@@ -2670,16 +2660,16 @@
 		riceMill: new kendo.Layout("#riceMill", {model: banhji.riceMill}),
 		riceReportCenter: new kendo.Layout("#riceReportCenter", {model: banhji.riceReportCenter}),
 
-		
+
 		//Menu
-		
-		riceMillMenu: new kendo.View("#riceMillMenu", {model: langVM})	
+
+		riceMillMenu: new kendo.View("#riceMillMenu", {model: langVM})
 	};
 	banhji.router = new kendo.Router({
-		init: function() {	
-			var language = JSON.parse(localStorage.getItem('userData/lang'));	
+		init: function() {
+			var language = JSON.parse(localStorage.getItem('userData/lang'));
 			switch(language) {
-				case "KH": 
+				case "KH":
 					langVM.set('lang', km_KH);
 					localforage.setItem("lang", language);
 					langVM.set('localeCode', language);
@@ -2689,14 +2679,14 @@
 					localforage.setItem("lang", language);
 					langVM.set('localeCode', language);
 					break;
-				default: 
+				default:
 					langVM.set('lang', en_US);
 					localforage.setItem("lang", language);
 					langVM.set('localeCode', language);
 			}
 			localforage.getItem('user', function(err, data){
 				if (err) {
-					
+
 				} else {
 					$('#current-section').html('|&nbsp;Company');
 					$('#home-menu').addClass('active');
@@ -2716,7 +2706,7 @@
 			// banhji.view.layout.showIn("#layout-view", banhji.view.missing);
 			console.log("no resource found.")
 		}
-	});	
+	});
 
 	/*************************************************
 	*   APP CENTER ROUTER  							 	 *
@@ -2733,12 +2723,12 @@
 						break;
 					}
 				}
-			} 
+			}
 			if(allowed) {
 				banhji.view.layout.showIn("#content", banhji.view.appCenter);
 				banhji.view.layout.showIn('#menu', banhji.view.menu);
 				banhji.appCenter.dataSource.read();
-				
+
 				banhji.userManagement.addMultiTask("App Center","app_center",null);
 			} else {
 				window.location.replace(baseUrl + "admin");
@@ -2759,4 +2749,5 @@
           	}
         });
 	});
-</script>
+</script>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+         

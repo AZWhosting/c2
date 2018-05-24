@@ -32892,7 +32892,7 @@
 
                 $.each(this.lineDS.data(), function(index, value) {
                     value.set("additional_cost", 0);
-                    value.set("additional_applied", false);
+                    // value.set("additional_applied", false);
                 });
             }
 

@@ -3074,7 +3074,7 @@ a.activate {
     border-radius: 2px;
     border-bottom: 2px solid rgba(192,208,228,.5);
     /*width: 260px;*/
-    height: 320px;
+    height: 150px;
     width: 100%;
 }
 
@@ -3087,7 +3087,7 @@ a.activate {
     border-bottom: 3px solid #999999;
 }
 .app-recommand .appIcon {
-    height: 128px;
+    height: 105px;
    /* width: 210px;*/
     position: relative;
     border-bottom: 1px solid #E5E5E5;
@@ -3107,7 +3107,7 @@ a.activate {
     color: #404040;
     /*height: 135px;*/
     padding: 0 25px;
-    margin-top: 10px;
+    margin-top: 0px;
     text-align: left;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -3598,4 +3598,4 @@ html.top-full .navbar.main .topnav .dropdown > a .caret{
 .product-view.k-widget{
   padding: 10px;
   margin-bottom: 10px;
-}    
+}     
