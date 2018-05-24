@@ -28,8 +28,20 @@
 				<li role="presentation" class="dropdown">
 			  		<a style="color: #fff;" class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">[<span data-bind="text: getUsername"></span>]</a>
 		  			<ul class="dropdown-menu">
-		  				<li><a href="#" data-bind="click: lang.changeToKh">ភាសាខ្មែរ</a></li>
-    					<li><a href="#" data-bind="click: lang.changeToEn">English</a></li>
+		  				<li><a href="<?php echo base_url(); ?>admin" class=""><i class="icon-cogs"></i> Admin Module</a></li>
+		  				<li class="divider"></li>
+		  				<li>
+	                    	<a href="#" data-bind="click: lang.changeToKh">
+	                    		<img style="width: 20px;" class="kh-flag" src="https://lipis.github.io/flag-icon-css/flags/4x3/kh.svg">
+	                    		<span>ភាសាខ្មែរ</span>
+	                    	</a>
+	                    </li>
+    					<li>
+    						<a href="#" data-bind="click: lang.changeToEn">
+    							<img style="width: 20px;" class="en-flag" src="https://lipis.github.io/flag-icon-css/flags/4x3/gb.svg">
+    							<span>English</span>
+    						</a>
+    					</li>
 						<li class="divider"></li>
 					<!-- 	<li><a href="<?php echo base_url(); ?>admin">Setting</a></li> -->
 						<li><a href="#/manage" data-bind="click: logout"><i class="icon-power-off"></i> Logout</a></li>
@@ -54286,6 +54298,215 @@
                             <td class="rside" style="width: 16%;" data-bind="text: obj.amount"></td>
                         </tr>
                         
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        <div class="foot">
+        	<div class="cover-signature">
+            	<div class="singature" style="float:left">
+                	<p>ហត្ថលេខា និងឈ្មោះ​អ្នក​ទិញ<br />Customer's Signature & Name</p>
+                </div>
+                <div class="singature" style="float:right">
+                	<p>ហត្ថលេខា និងឈ្មោះ​អ្នកលក់<br />Seller's Signature & Name</p>
+                </div>
+            </div>
+            <h6 style="padding-left: 35px;">សម្គាល់៖ <span>ច្បាប់​ដើម​សម្រាប់​អ្នក​ទិញ ច្បាប់​ចម្លង​សម្រាប់​អ្នក​លក់</span><br /><span style="font-size: 10px"><strong>Note:</strong> Original invoice for customer, copied invoice for seller</span></h6>
+        </div>
+    </div>
+</script>
+<script id="defaultPurchase" type="text/x-kendo-template">
+	<div class="inv1">
+        <div class="content">
+        	<div class="advoucher-header">
+				<div class="head" style="width: 100%;">
+		        	<div class="logo" style="width: 15%;">
+		            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
+		            </div>
+		            <div class="cover-name-company" style="width: 70%!important;float: left;margin-left: 15px;">
+		            	<h2 ></h2>
+		            	<h3 style="float: none; text-align: center;font-size: 25px;line-height: 37px!important;" data-bind="text: company.name"></h3>
+		                <div class="clear" style="float: none;">
+		                	<p style="font-size: 14px!important;float: none; text-align: center;">អាស័យ​ដ្ឋាន Address: <span data-bind="text: company.address"></span></p>
+		                    <p style="font-size: 14px!important;float: none;width: 100%;text-align: center;">ទូរស័ព្ទលេខ HP <span data-bind="text: company.telephone"></span> | Email: <span data-bind="text: company.email"></span></p>
+		                </div>
+		            </div>
+		        </div>
+				<div class="title" style="">
+					<h2 class="kh">សក្ខីប័ត្រអ្នកផ្គត់ផ្គង់</h2>
+					<h2 class="en">Account Payable Voucher</h2>
+				</div>
+			</div>
+            <div class="clear mid-header" style="margin-top: 20px;padding: 10px;background: #dce6f2;padding-bottom: 10px;">
+            	<div class="cover-customer">
+                	<h5>អ្នកផ្គត់ផ្គង់:</h5>
+                    <div class="clear">
+                        <div class="left dotted-ruler" style="width: 62%;">
+                        	<p style="font-size: 12px; line-height: 20px;">ឈ្មោះ Name : <span data-bind="text: contactDS.data()[0].name"></span><br>
+		        			អាស័យ​ដ្ឋាន Address : <span data-bind="text: contactDS.data()[0].address"></span><br>
+		        			លេខទូរស័ព្ទ Tel : <span data-bind="text: contactDS.data()[0].phone"></span>
+		        			</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="cover-inv-number">
+                	<div class="clear">
+                    	<div class="left">
+                    		<p>លេខ No. :</p>
+                        </div>
+                        <div class="left dotted-ruler" style="width: 42%;">
+                        	<p style="font-weight:bold" data-bind="text: obj.number"></p>
+                        </div>
+                    </div>
+                    <div class="clear">
+                    	<div class="left">
+                    		<p>កាល​បរិច្ឆេទ Date:</p>
+                        </div>
+                        <div class="left dotted-ruler" style="width: 57%;">
+                        	<p style="font-weight:bold" data-bind="text: obj.issued_date"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        	<div class="clear">
+            	<table cellpadding="0" cellspacing="0" border="1" class="span12">
+                	<thead>
+                        <tr class="main-color" style="height: 45px;" data-bind="style: {backgroundColor: obj.color}">
+                            <th style="text-align: center;width: 10%;">ល.រ<br />N<sup>0</sup></th>
+                            <th style="text-align: center;">បរិយាយ​មុខ​ទំនិញ<br />Description</th>
+                            <th style="text-align: center;">បរិមាណ<br />Quantity</th>
+                            <th style="text-align: center;">ថ្លៃឯកតា​<br />Unit Price</th>
+                            <th style="text-align: center;width: 16%;">ថ្លៃ​ទំនិញ<br />Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody style="margin-top: 2px" 
+                    	id="formListView" 
+                    	data-role="listview"
+						data-auto-bind="false"
+						data-template="invoiceForm-lineDS-template"
+						data-bind="source: lineDS">
+                    </tbody>
+                </table>
+            </div>
+            <div class="clear" data-bind="visible: haveAccount" style="margin-top: 20px;">
+            	<table cellpadding="0" cellspacing="0" border="1" class="span12">
+                	<thead>
+                        <tr class="main-color" style="height: 45px;" data-bind="style: {backgroundColor: obj.color}">
+                            <th style="text-align: center;width: 10%;">ល.រ<br />N<sup>0</sup></th>
+                            <th style="text-align: center;">គណនី<br />Account</th>
+                            <th style="text-align: center;width: 16%;">តម្លៃ<br />Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody style="margin-top: 2px" 
+                    	id="formListView" 
+                    	data-role="listview"
+						data-auto-bind="false"
+						data-template="account-lineDS-template"
+						data-bind="source: accountLineDS">
+                    </tbody>
+                </table>
+            </div>
+            <div class="clear" style="margin-top: 20px;">
+            	<table cellpadding="0" cellspacing="0" border="1" class="span12">
+                    <tfoot>
+                        <tr>
+                        	<td colspan="2" style="text-align:right;padding:5px;font-weight: bold;">សរុប Total</td>
+                            <td class="rside" style="width: 16%;" data-bind="text: obj.amount"></td>
+                        </tr>
+                        <tr>
+                        	<td colspan="2" style="text-align:right;padding:5px;font-weight: bold;">សរុបពីវក្កយបត្រ៖ <span data-bind="text: offsetnumber"></span></td>
+                            <td class="rside" data-bind="text: offsetamount"></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        <div class="foot">
+        	<div class="cover-signature">
+            	<div class="singature" style="float:left">
+                	<p>ហត្ថលេខា និងឈ្មោះ​អ្នក​ទិញ<br />Customer's Signature & Name</p>
+                </div>
+                <div class="singature" style="float:right">
+                	<p>ហត្ថលេខា និងឈ្មោះ​អ្នកលក់<br />Seller's Signature & Name</p>
+                </div>
+            </div>
+            <h6 style="padding-left: 35px;">សម្គាល់៖ <span>ច្បាប់​ដើម​សម្រាប់​អ្នក​ទិញ ច្បាប់​ចម្លង​សម្រាប់​អ្នក​លក់</span><br /><span style="font-size: 10px"><strong>Note:</strong> Original invoice for customer, copied invoice for seller</span></h6>
+        </div>
+    </div>
+</script>
+<script id="invoiceHaveBalance" type="text/x-kendo-template">
+	<div class="inv1">
+        <div class="content">
+        	<div style="overflow: hidden;padding:10px 0;">
+        		<h1>វិក្កយបត្រ</h1>
+            	<h2 data-bind="text: obj.title"></h2>
+        	</div>
+            <div class="clear mid-header" style="padding: 10px;background: #dce6f2;padding-bottom: 10px;">
+            	<div class="cover-customer">
+                	<h5>ព័ត៌មានអតិថិជន​ CUSTOMER INFO:</h5>
+                    <div class="clear">
+                        <div class="left dotted-ruler" style="width: 62%;">
+                        	<p style="font-size: 12px; line-height: 20px;">ឈ្មោះ Name : <span data-bind="text: contactDS.data()[0].name"></span><br>
+		        			អាស័យ​ដ្ឋាន Address : <span data-bind="text: contactDS.data()[0].address"></span><br>
+		        			លេខទូរស័ព្ទ Tel : <span data-bind="text: contactDS.data()[0].phone"></span>
+		        			</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="cover-inv-number">
+                	<div class="clear">
+                    	<div class="left">
+                    		<p>លេខ No. :</p>
+                        </div>
+                        <div class="left dotted-ruler" style="width: 42%;">
+                        	<p style="font-weight:bold" data-bind="text: obj.number"></p>
+                        </div>
+                    </div>
+                    <div class="clear">
+                    	<div class="left">
+                    		<p>កាល​បរិច្ឆេទ Date:</p>
+                        </div>
+                        <div class="left dotted-ruler" style="width: 57%;">
+                        	<p style="font-weight:bold" data-bind="text: obj.issued_date"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        	<div class="clear">
+            	<table cellpadding="0" cellspacing="0" border="1" class="span12">
+                	<thead>
+                        <tr class="main-color" style="height: 45px;" data-bind="style: {backgroundColor: obj.color}">
+                            <th style="text-align: center;">ល.រ<br />N<sup>0</sup></th>
+                            <th style="text-align: center;">បរិយាយ​មុខ​ទំនិញ<br />Description</th>
+                            <th style="text-align: center;">បរិមាណ<br />Quantity</th>
+                            <th style="text-align: center;">ថ្លៃឯកតា​<br />Unit Price</th>
+                            <th style="text-align: center;">ថ្លៃ​ទំនិញ<br />Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody style="margin-top: 2px" id="formListView" data-role="listview"
+						data-auto-bind="false"
+						data-template="invoiceForm-lineDS-template"
+						                 data-bind="source: lineDS">
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                        	<td colspan="2" rowspan="4" style="text-align: left;padding-left: 10px;" data-bind="html: obj.note">
+                        	</td>
+                        	<td colspan="2" style="text-align:right;padding:5px;font-weight: bold;">បញ្ចុះតម្លៃ Discount</td>
+                            <td class="rside" data-bind="text: obj.discount"></td>
+                        </tr>
+                        <tr>
+                        	<td colspan="2" style="text-align:right;padding:5px;font-weight: bold;">សរុប Total</td>
+                            <td class="rside" data-bind="text: obj.amount"></td>
+                        </tr>
+                        <tr>
+                        	<td colspan="2" style="text-align:right;padding:5px;font-weight: bold;">ខ្វះពីមុន Old Remain</td>
+                            <td class="rside" data-bind="text: old_remain"></td>
+                        </tr>
+                        <tr>
+                        	<td colspan="2" style="text-align:right;padding:5px;font-weight: bold;">ជំពាក់សរុប Owed</td>
+                            <td class="rside" data-bind="text: amount_owed"></td>
+                        </tr>
                     </tfoot>
                 </table>
             </div>

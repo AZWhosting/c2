@@ -24060,8 +24060,10 @@
                 case 69: Active = banhji.view.commercialInvoiceKSLM; break;
                 case 70: Active = banhji.view.vatInvoiceKSLM; break;
                 case 71: Active = banhji.view.defaultCashAdvance; break;
+                case 72: Active = banhji.view.defaultPurchase; break;
                 case 73: Active = banhji.view.defaultSaleReturn; break;
                 case 74: Active = banhji.view.defaultCashRefund; break;
+                case 75: Active = banhji.view.invoiceHaveBalance; break;
             }
             banhji.view.invoiceCustom.showIn('#invFormContent', Active);
         },
@@ -24264,6 +24266,7 @@
         amountTotal         : "",
         offsetnumber        : "",
         offsetamount        : 0,
+        balanceDS           : dataStore(apiUrl + "transactions"),
         pageLoad            : function(id, is_recurring){
             var self = this;
             this.dataSource.query({
@@ -24277,10 +24280,23 @@
                 view[0].set("discount", kendo.toString(view[0].discount, "c", view[0].locale));
                 self.set("amountTotal", view[0].amount);
                 view[0].set("cash_receipt", kendo.toString(view[0].amount - view[0].deposit, "c", view[0].locale));
-                view[0].set("amount", kendo.toString(view[0].amount, "c", view[0].locale));
+                //Get Customer ballance
+                self.balanceDS.query({
+                    filter: [
+                        {field: "id <>", value: view[0].id},
+                        {field: "contact_id", value: view[0].contact_id},
+                        {field: "status <>", value: 1}
+                    ]
+                }).then(function(e){
+                    var b = self.balanceDS.view();
+                    if(b.length > 0){
+                        self.calContactBalance(b);
+                    }
+                });
                 view[0].set("deposit", kendo.toString(view[0].deposit, "c", view[0].locale));
-                view[0].set("issued_date", kendo.toString(new Date(view[0].issued_date), "D"));
-                view[0].set("due_date", kendo.toString(new Date(view[0].due_date), "D"));
+                view[0].set("issued_date", kendo.toString(new Date(view[0].issued_date), 'D'));
+                view[0].set("due_date", kendo.toString(new Date(view[0].due_date), "dd MMM yyyy"));
+                view[0].set("amount", kendo.toString(view[0].amount, "c", view[0].locale));
                 if(view[0].description == "null"){
                     view[0].set("description", "No Description");
                 }
@@ -24319,6 +24335,19 @@
                     self.jobDS.filter({field: "id", value: view[0].job_id});
                 }
             });
+        },
+        old_remain          : 0,
+        amount_owed         : 0,
+        calContactBalance   : function(data){
+            var oldremain = 0;
+            var obj = this.get("obj");
+            $.each(data, function(i,v){
+                var ba = v.amount - v.amount_paid;
+                oldremain += ba;
+            });
+            this.set("old_remain", kendo.toString(oldremain, "c", obj.locale));
+            this.set("amount_owed", kendo.toString(this.get("amountTotal") + oldremain, "c", obj.locale));
+            $("#loading-inv").remove();
         },
         printGrid           : function() {
             var obj = this.get('obj'), colorM, ts;
@@ -24463,8 +24492,10 @@
                 case 69: Active = banhji.view.commercialInvoiceKSLM; break;
                 case 70: Active = banhji.view.vatInvoiceKSLM; break;
                 case 71: Active = banhji.view.defaultCashAdvance; break;
+                case 72: Active = banhji.view.defaultPurchase; break;
                 case 73: Active = banhji.view.defaultSaleReturn; break;
                 case 74: Active = banhji.view.defaultCashRefund; break;
+                case 75: Active = banhji.view.invoiceHaveBalance; break;
             }
             banhji.view.invoiceForm.showIn('#invFormContent', Active);
         },
@@ -24527,7 +24558,7 @@
                             }
                         }
                     }
-                    $("#loading-inv").remove();
+                    
                 });
                 self.accountLineDS.query({
                     filter: { field:"transaction_id", value: transaction_id }
@@ -24580,7 +24611,6 @@
                         var CountLineRow = parseInt(self.journalLineDS.data().length);
                         var TotalRow = 12 - CountLineRow;
                         if(TotalRow > 0){
-                            $("#loading-inv").remove();
                             self.setQR();
                         }
                     }
@@ -31788,10 +31818,8 @@
         txnTemplateDS               : new kendo.data.DataSource({
             data: banhji.source.txnTemplateList,
             filter:{
-                logic: "or",
                 filters: [
-                    { field: "type", value: "Cash_Purchase" },
-                    { field: "type", value: "Credit_Purchase" }
+                    { field: "type", value: "Purchase" }
                 ]
             }
         }),
@@ -67964,6 +67992,8 @@
         defaultSaleReturn: new kendo.Layout("#defaultSaleReturn", {model: banhji.invoiceForm}),
         defaultCashAdvance: new kendo.Layout("#defaultCashAdvance", {model: banhji.invoiceForm}),
         defaultCashRefund: new kendo.Layout("#defaultCashRefund", {model: banhji.invoiceForm}),
+        defaultPurchase: new kendo.Layout("#defaultPurchase", {model: banhji.invoiceForm}),
+        invoiceHaveBalance: new kendo.Layout("#invoiceHaveBalance", {model: banhji.invoiceForm}),
         //Max Concrete
         invoiceMAXConcrete: new kendo.Layout("#invoiceMAXConcrete", {model: banhji.invoiceForm}),
         invoiceVATMAXConcrete: new kendo.Layout("#invoiceVATMAXConcrete", {model: banhji.invoiceForm}),
