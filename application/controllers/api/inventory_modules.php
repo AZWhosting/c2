@@ -1086,6 +1086,66 @@ class Inventory_modules extends REST_Controller {
 		$this->response($data, 200);
 	}
 
+	// item List
+	function item_get() {		
+		$filters 	= $this->get("filter")["filters"];		
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');							
+		$sort 	 	= $this->get("sort");		
+		$data["results"] = array();
+		$data["count"] = 0;
+		$is_pattern = 0;
+
+		$obj = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+
+		//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				if(isset($value["operator"])){
+					$obj->{$value["operator"]}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
+			}
+		}
+		
+		//Filter
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value["operator"])){
+	    			$obj->{$value["operator"]}($value['field'], $value['value']);
+	    		} else {
+	    			$obj->where($value['field'], $value['value']);
+	    		}
+			}
+		}
+
+		$obj->include_related("category", "name");
+		$obj->where("status <>", 0);
+		$obj->where("deleted <>", 1);	
+
+		//Results
+		$obj->get_paged_iterated($page, $limit);
+		$data["count"] = $obj->paged->total_rows;		
+		
+		if($obj->result_count()>0){
+			foreach ($obj as $value) {
+		 		$data["results"][] = array(
+		 			"id" 						=> $value->id,									
+					"abbr" 						=> $value->abbr,
+					"number" 					=> $value->number,					
+					"name" 						=> $value->name,
+					"description" 				=> $value->purchases_description,
+					"descriptionSale" 			=> $value->sale_description,
+					"category" 					=> $value->category_name,
+		 		);
+			}
+		}
+
+		//Response Data		
+		$this->response($data, 200);			
+	}
+
 	//POSITION DETAIL BY LOCATION
 	function position_detail_by_location_get() {
 		$filter 	= $this->get("filter");

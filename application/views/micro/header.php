@@ -155,7 +155,8 @@
                            
                             <li class="nav-item search-box"> <a class="nav-link waves-effect waves-dark" href="javascript:void(0)"><i class="ti-search"></i></a>
                                 <form class="app-search">
-                                    <input type="text" class="form-control" placeholder="Search &amp; enter"> <a class="srh-btn"><i class="ti-close"></i></a>
+                                    <input type="text" class="form-control search-query" placeholder="Search" id="search-placeholder" data-bind="value: searchText">
+                                    <a class="srh-btn" data-bind="click: search"><i class="ti-close"></i></a>
                                 </form>
                             </li>
                         </ul>

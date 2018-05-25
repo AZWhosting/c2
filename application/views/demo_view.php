@@ -112,18 +112,18 @@
 							</a>
 							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><h5 data-bind="text: lang.lang.tax" style="margin-top: 5px; display: inline-block;" style="margin-top: 5px; display: inline-block;"></h5></span>
 						</li>
-						<li style="text-align:center;">
+						<!-- <li style="text-align:center;">
 							<a href="<?php echo base_url(); ?>admin">
 								<img title="Admin Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/setting.jpg" alt="Admin">
 								<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><h5 data-bind="text: lang.lang.settings" style="margin-top: 5px; display: inline-block;" style="margin-top: 5px; display: inline-block;"></h5></span>
 							</a>
-						</li>
-						<!-- <li style="text-align:center;">
+						</li> -->
+						<li style="text-align:center;">
 							<a href="<?php echo base_url(); ?>app">
 								<img title="App Center" src="<?php echo base_url(); ?>assets/app_center/app_center.jpg" alt="App Center">
 								<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><h5 data-bind="text: lang.lang.app_center" style="margin-top: 5px; display: inline-block;" style="margin-top: 5px; display: inline-block;"></h5></span>
 							</a>
-						</li>	 -->
+						</li>	
 					</ul>
 				</div>
 			</div>
@@ -31331,7 +31331,7 @@
 									<h3><a href="#/gdn_report">Good Delivery Note Report</a></h3>
 								</td>
 								<td >
-
+									<h3><a href="#/item_list">Item List</a></h3>
 								</td>
 							</tr>
 						</table>
@@ -32736,6 +32736,69 @@
 			</div>
 		</div>
 	</div>
+</script>
+<script id="itemList" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content saleSummaryCustomer">
+			    	<span class="pull-right glyphicons no-js remove_2"
+						onclick="javascript:window.history.back()"><i></i></span>
+					<br>
+					<br>
+					<div class="row-fluid">
+					    <!-- Tabs -->
+						<div class="relativeWrap" data-toggle="source-code">
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+
+								<!-- Tabs Heading -->
+								<div class="widget-head">
+									<ul>
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab" data-bind="click: printGrid"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+						<!-- // Tabs END -->
+					</div>
+					<br>
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="html: institute.name"></h3>
+							<h2 data-bind="text: lang.lang.items"></h2>
+						</div>
+						<table class="table table-borderless table-condensed ">
+							<thead>
+								<tr>
+									<th><span data-bind="text: lang.lang.abbr"></span></th>
+									<th><span data-bind="text: lang.lang.item"></span></th>
+									<th><span data-bind="text: lang.lang.category"></span></th>
+									<th style="text-align: left;"><span data-bind="text: lang.lang.description"></span></th>
+								</tr>
+							</thead>
+							<tbody data-role="listview"
+										 data-bind="source: dataSource"
+										 data-template="itemList-temp"
+							></tbody>
+							
+						</table>
+						<div id="pager" class="k-pager-wrap"
+			            		 data-role="pager"
+						    	 data-auto-bind="false"
+					             data-bind="source: dataSource"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="itemList-temp" type="text/x-kendo-template" >
+	<tr>
+		<td>#=abbr+number#</td>
+		<td>#=name#</td>
+		<td>#=category#</td>
+		<td>#=descriptionSale#</td>
+	</tr>
 </script>
 <script id="inventorySaleByItem" type="text/x-kendo-template">
 	<div class="container-fluid">
