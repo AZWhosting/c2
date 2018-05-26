@@ -3074,7 +3074,7 @@ a.activate {
     border-radius: 2px;
     border-bottom: 2px solid rgba(192,208,228,.5);
     /*width: 260px;*/
-    height: 150px;
+        height: 225px;
     width: 100%;
 }
 
@@ -3082,15 +3082,18 @@ a.activate {
     display: inline-block;
     height: 105px;
     overflow: hidden;
-    padding-top: 8px;
+    padding: 20px 0 0 0;
     width: 100%;
     border-bottom: 3px solid #999999;
+    height: 148px;
+    float: left;
 }
 .app-recommand .appIcon {
-    height: 105px;
+    height: 160px;
    /* width: 210px;*/
     position: relative;
     border-bottom: 1px solid #E5E5E5;
+    float: left;
 }
 .app-recommand .appIcon img {
     overflow: auto;
@@ -3100,14 +3103,15 @@ a.activate {
     left: 0;
     bottom: 0;
     right: 0;
-    height: 80px;
+    height: 148px;
+    width: 137px;
 }
 
 .app-recommand .bigappcard-details {
     color: #404040;
     /*height: 135px;*/
     padding: 0 25px;
-    margin-top: 0px;
+    margin-top: 8px;
     text-align: left;
     text-overflow: ellipsis;
     overflow: hidden;

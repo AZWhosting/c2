@@ -73,12 +73,12 @@ class Ops extends REST_Controller {
 
 			 	//Insert data
 		 	// 	$raw = array(
-		 	//    		'transaction_form_id' 	=> 32,
+		 	//    		'transaction_form_id' 	=> 75,
 		 	//    		'user_id' 				=> 12,
-		 	//    		'type' 					=> 'Wellnez_Form',
-		 	//    		'name' 					=> 'Default Wellnez Form',
+		 	//    		'type' 					=> 'Invoice',
+		 	//    		'name' 					=> 'Invoice With Balance',
 		 	//    		'color' 				=> '',
-		 	//    		'moduls'				=> 'wellnez_mg',
+		 	//    		'moduls'				=> 'customer_mg',
 		 	//    		'title' 				=> 'Invoice',
 		 	//    		'note' 					=> '',
 		 	//    		'status' 				=> 1
@@ -86,29 +86,35 @@ class Ops extends REST_Controller {
 			 // 	$data['results'][] = $this->db->insert('transaction_templates', $raw);
 
 			    //Insert batch data
-			 	// 	$raw = array(
-					// 	// array(
-					//  	//    'type' 	=> 'Receipt_Note',
-					//  	//    'abbr' 	=> 'RTN',
-					//  	//    'name' 	=> 'Receipt Note'
-					//  	//),
-				 // 	   	array(
-				 // 	   		'transaction_form_id' 	=> 71,
-				 // 	   		'user_id' 				=> 12,
-				 // 	   		'type' 					=> 'Cash_Advance',
-				 // 	   		'name' 					=> 'Default Cash Advance',
-				 // 	   		'color' 				=> '',
-				 // 	   		'moduls'				=> 'account_mg',
-				 // 	   		'title' 				=> 'Cash Advance',
-				 // 	   		'note' 					=> '',
-				 // 	   		'status' 				=> 1
-				 // 	   	)
-					// );
-				 // 	$this->db->insert_batch('transaction_templates', $raw);
+		 	// 	$raw = array(
+			 // 	   	array(
+			 // 	   		'transaction_form_id' 	=> 72,
+			 // 	   		'user_id' 				=> 12,
+			 // 	   		'type' 					=> 'Purchase',
+			 // 	   		'name' 					=> 'Default Purchase',
+			 // 	   		'color' 				=> '',
+			 // 	   		'moduls'				=> 'vendor_mg',
+			 // 	   		'title' 				=> 'Purchase',
+			 // 	   		'note' 					=> '',
+			 // 	   		'status' 				=> 1
+			 // 	   	),
+			 // 	   	array(
+			 // 	   		'transaction_form_id' 	=> 75,
+			 // 	   		'user_id' 				=> 12,
+			 // 	   		'type' 					=> 'Invoice',
+			 // 	   		'name' 					=> 'Invoice With Balance',
+			 // 	   		'color' 				=> '',
+			 // 	   		'moduls'				=> 'customer_mg',
+			 // 	   		'title' 				=> 'Invoice',
+			 // 	   		'note' 					=> '',
+			 // 	   		'status' 				=> 1
+			 // 	   	)
+				// );
+			 // 	$this->db->insert_batch('transaction_templates', $raw);
 				
 
 				//DELETE DATA
-				// $data['results'][] = $this->db->delete('transaction_templates', array('type' => "Wellnez_Form")); 
+				// $data['results'][] = $this->db->delete('transaction_templates', array('transaction_form_id' => 75, 'user_id' => 12)); 
 
 				// Add new fields
 				// $fields = array(

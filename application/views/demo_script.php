@@ -55000,6 +55000,9 @@
             }
         },
         exArray             : [],
+        goToGeneralLegder   : function(){
+            alert("yooooooo");
+        },
         search              : function(){
             var self = this,
                 para = [],

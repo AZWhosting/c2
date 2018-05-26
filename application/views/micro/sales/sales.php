@@ -855,7 +855,7 @@
 									<div class="coverIcon"><i class=" ti-briefcase"></i></div>
 									<div class="txt">
 										<span data-bind="text: lang.lang.deposit"></span>
-										<span data-bind="text: deposit" ></span>
+										<span style="font-size: 25px;" data-bind="text: deposit" ></span>
 									</div>
 								</div>
 							</div>
@@ -865,8 +865,8 @@
 								<div class="blockOpenInvoice" data-bind="click: loadBalance" >
 									<div class="coverIcon"><i class="icon-info"></i></div>
 									<div class="txt">
-										<span  data-bind="text: outInvoice"></span>
-										<span  data-bind="text: lang.lang.open_invoice"></span>
+										<span style="font-size: 25px;" data-bind="text: outInvoice"></span>
+										<span data-bind="text: lang.lang.open_invoice"></span>
 									</div>
 								</div>
 							</div>
@@ -874,8 +874,8 @@
 								<div class="blockOverDue" data-bind="click: loadOverInvoice" >
 									<div class="coverIcon"><i class="ti-alarm-clock"></i></div>
 									<div class="txt" >
-										<span data-bind="text: overInvoice"></span>
-										<span data-bind="text: lang.lang.over_due"></span>
+										<span style="font-size: 25px;" data-bind="text: overInvoice"></span>
+										<span  data-bind="text: lang.lang.over_due"></span>
 									</div>
 								</div>
 							</div>
@@ -1540,13 +1540,14 @@
 									<div class="col-md-8" align="right">
 										<span id="saveCancel" class="btn-btn" onclick="javascript:window.history.back()" data-bind="click: cancel"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
 										<span class="btn-btn" data-bind="click: openConfirm, visible: isEdit"><span data-bind="text: lang.lang.delete"></span></span>
-										<button type="button" class="btn btn-info btn-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										<!-- <button type="button" class="btn btn-info btn-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 			                        		<span data-bind="text: lang.lang.save_option"></span>
 				                        </button>
 				                        <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 35px, 0px); top: 0px; left: 0px; will-change: transform;">
 				                            <a class="dropdown-item" id="saveNew" data-bind="invisible: isEdit"><span data-bind="text: lang.lang.save_new"></span></a>
 				                            <a class="dropdown-item" id="savePrint"><span data-bind="text: lang.lang.save_print"></span></a>
-				                        </div>
+				                        </div> -->
+				                        <span class="btn-btn" id="saveNew" data-bind="invisible: isEdit"><span data-bind="text: lang.lang.save_new"></span></span>
 									  	<span class="btn-btn" id="saveClose"><span data-bind="text: lang.lang.save_close"></span></span>
 									</div>
 								</div>
@@ -3706,11 +3707,11 @@
         	#if(type=="Customer_Deposit" && amount<0){#
 				<a data-bind="click: goReference">#=number#</a>
 			#}else{#
-				<a href="\#/#=type.toLowerCase()#/#=id#">#=number#</a>
+				<a href="\#/#=type.toLowerCase()#/#=id#"><i></i> #=number#</a>
 			#}#
         </td>
         <!-- Amount -->
-    	<td style="text-align: right;">
+    	<td class="right">
     		#if(type=="GDN"){#
     			#=kendo.toString(amount, "n0")#
     		#}else if(type=="Commercial_Invoice" || type=="Vat_Invoice" || type=="Invoice" || type=="Commercial_Cash_Sale" || type=="Vat_Cash_Sale" || type=="Cash_Sale"){#
@@ -3756,12 +3757,12 @@
     	<td align="center">
 			#if(type=="Commercial_Invoice" || type=="Vat_Invoice" || type=="Invoice"){#
 				#if(status=="0" || status=="2") {#
-        			<a data-bind="click: payInvoice"><span data-bind="text: lang.lang.receive_payment"></span></a>
+        			<a data-bind="click: payInvoice"><i></i> <span data-bind="text: lang.lang.receive_payment"></span></a>
         		#}#
         	#}#
 
         	#if(status=="4") {#
-				<a href="\#/#=type.toLowerCase()#/#=id#">Use</a>
+				<a href="\#/#=type.toLowerCase()#/#=id#"><i></i> Use</a>
     		#}#
 		</td>
     </tr>

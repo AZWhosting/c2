@@ -1506,7 +1506,7 @@ var	km_KH = {
 	"upload": "បញ្ចូល",
 
 	//Web Store
-	"app_center": "App Center",
+	"app_center": "ទំព័រ App",
 	"backup": "Backup",
 	"download_db": "ទាញ​យក Database",
 	"upload_db": "បញ្ចូល Database",
