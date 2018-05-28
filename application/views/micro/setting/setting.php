@@ -69,7 +69,7 @@
 <script id="customerType" type="text/x-kendo-template">
 	<div class="row">
 		<div class="col-md-12">
-			<div class="hidden-sm-up marginBottom">
+			<div class="hidden-md-up marginBottom">
 				<h3 data-bind="text: lang.lang.customer_type"></h2>
 			</div>
 

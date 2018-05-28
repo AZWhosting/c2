@@ -7698,7 +7698,7 @@
 
             var obj = this.dataSource.at(0);
             this.set("obj", obj);
-            this.typeChanges();         
+            this.applyPattern();
         },
         objSync                 : function(){
             var dfd = $.Deferred();
@@ -7834,6 +7834,7 @@
                 var view = self.patternDS.view(),
                 type = self.contactTypeDS.get(view[0].contact_type_id);
                 if(view.length>0){
+                    console.log(view[0].account_id);
                     obj.set("country_id", view[0].country_id);
                     obj.set("abbr", type.abbr);
                     obj.set("gender", view[0].gender);
