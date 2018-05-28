@@ -59407,9 +59407,7 @@
                 }
 
                 this.txnDS.query({
-                    filter: para,
-                    page: 1,
-                    pageSize: 100
+                    filter: para
                 }).then(function(){
                     var view = self.txnDS.view();
 
@@ -59841,9 +59839,7 @@
                 }
 
                 this.txnDS.query({
-                    filter: para,
-                    page: 1,
-                    pageSize: 100
+                    filter: para
                 }).then(function(){
                     var view = self.txnDS.view();
 
