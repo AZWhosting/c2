@@ -8,6 +8,9 @@ var	km_KH = {
 	"purchase_transaction" : "ប្រតិបត្តិ​ការ​ទិញ",
 	"cash_transactions" : "ប្រតិបត្តិ​ការ​សាច់ប្រាក់",
 	"item_transactions" : "ប្រតិបត្តិ​ការ​សន្និធិ",
+	"customer_group" : "ក្រុមអតិថិជន",
+	"item_type" : "ប្រភេទសន្និធិ",
+	"item_group" : "ក្រុមសន្និធិ",
 	//Main Dustboard
 	"search_contact" :  "ស្វែងរក​ទំនាក់ទំនង",
 	"contact" :  "ទំនាក់ទំនង",

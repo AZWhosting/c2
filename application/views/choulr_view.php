@@ -1527,7 +1527,7 @@
             font-weight: bold;
         }
     </style>
-    <div class="container" style="margin-top: 100px;">
+    <div class="container" >
         <div class="row">
             <div class="col-md-10">
                 <div class="col-md-12" style="padding: 0;padding-right: 5px;">
@@ -2512,58 +2512,144 @@
 <!-- End Utility-->
 <!-- Contract -->
 <script id="contractCenter" type="text/x-kendo-template">   
-    <div class="container">
-        <div class="row" style="margin-top: 30px;">
-            <div class="col-xs-12 col-sm-4 col-md-3" >
-                <div class="listWrapper" style="border: 1px solid #ddd;">
-                    <a href="#/contract" style="width: 100%;clear: both;position: relative;text-align: center;float: none!important;padding: 10px 0;font-weight: bold;" class="btn btn-primary btn-icon glyphicons edit pull-right">Add Contract</a>
-                    <div class="innerAll" style="height: 55px;">
-                        <div class="widget-search separator bottom" style="padding: 0;">
-                            <a class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></a>
-                            <div class="overflow-hidden">
-                                <input style="line-height: 26px;" type="search" placeholder="Number or Name..." data-bind="value: searchText, events:{change: search}">
+    <style>
+        /*.col-md-3{box-shadow: 2px 0px 12px 0px rgba(68,68,68,1);}*/
+        .cash-bg {
+            border-radius: 0;
+        }
+        .col-md-4 {
+            width: 32.2%;
+        }
+        .col-md-3 {
+            float: left;
+            position: relative;
+            width: 151px;
+            height: 258px;
+            padding: 0px;
+            cursor: pointer;
+            background: #fff;
+            margin-right: 5.5px;
+            margin-bottom: 5.5px;
+        }
+        .col-md-5 {
+            background: #fff;
+        }
+        h3  {
+            font-size: 14px;
+            text-align: center;
+        }
+        .col-md-3 p  {
+            font-size: 14px;
+            text-align: center;
+            margin-bottom: 0px;
+        }
+        h1{
+            font-size: 17px;
+            color:#0eac00!important; 
+        }
+        .col-md-3 form  {
+            padding-right: 0px;
+            padding-left: 4px;
+        }
+        .col-md-2 p  {
+            font-size: 12px;
+            margin-top: 5px;
+        }
+        h4{
+            font-size: 14px ;
+        }
+        .pk1{
+            padding: 1px;
+        }
+        .btn {
+            padding: 6px 11px;
+        }
+        .k-pager-wrap {
+            background: #0eac00!important;
+        }
+        h4 span {
+            font-style: normal;
+            color: #000;
+            font-weight: bold;
+        }
+    </style>
+    <div class="container" >
+        <div class="row">
+            <div class="col-md-10">
+                <div class="col-md-12" style="padding: 0;padding-right: 5px;">
+                    <div class="cash-bg " style="padding: 5px;background: #0eac00;">
+                        <div class="col-md-8">
+                            <div class="col-md-12" style="margin-top: 10px;">
+                                <a href="<?php echo base_url(); ?>choulr" style="float:left;">
+                                    <img src="<?php echo base_url();?>assets/choulr/img/logo.png" style="float: left;" width="50">
+                                    <span><b style="color: #fff;font-size: 20px;float: left;padding-top: 15px;">Choulr</b></span>
+                                </a>
+                                <form class="navbar-form pull-left hidden-xs">
+                                    <input id="search-placeholder" class="span2 search-query" type="text" placeholder="Search" data-bind="value: searchText" style="width: 220px;" />
+                                    <button class="btn btn-inverse" type="submit" data-bind="click: search" style="background-color: #56882e !important;border-radius: 2px;">
+                                        <i class="icon-search iconsearch"></i>
+                                    </button>
+                                </form>
                             </div>
                         </div>
+                        <div class="col-md-4" style="padding-left: 0px;padding-right: 10px;">
+                            <div class="col-md-4"> 
+                                <a href="#/contract" class="hvr-float">
+                                    <img title="add contract" src="<?php echo base_url(); ?>assets/choulr/img/add-contract.png" width="60">
+                                </a>
+                            </div>
+                            <div class="col-md-4"> 
+                                <a href="#/lease_unit" class="hvr-float">
+                                    <img title="add lease unit" src="<?php echo base_url(); ?>assets/choulr/img/add-lease-unit.png" width="60">
+                                </a>
+                            </div>
+                            <div class="col-md-4"> 
+                                <a href="#/meter" class="hvr-float">
+                                    <img title="add mater" src="<?php echo base_url(); ?>assets/choulr/img/add_mater.png" width="60">
+                                </a>
+                            </div>
+                        </div> 
                     </div>
-                    <span class="results"><span data-bind="text: contactDS.total"></span> <span data-bind="text: lang.lang.found_search"></span></span>
-                    <div class="table table-condensed" id="listContact" style="height: 580px; margin-bottom: 0;"
-                         data-role="grid"
-                         data-bind="source: contractDS"
-                         data-row-template="contract-list-tmpl"
-                         data-columns="[{title: 'Lease Units'}]"
-                         data-selectable="true"
-                         data-height="475"
-                         data-auto-bind="true"
-                         data-scrollable="{virtual: true}">
-                    </div>
-                </div>  
-            </div>
-            <div class="col-xs-12 col-sm-8 col-md-9 ">
-                <div class="listWrapper" style="border: 1px solid #ddd;min-height: 652px;width: 50%;">
-                    <div class="row" style="margin-bottom: 15px;">
-                        <div class="col-xs-12 col-xs-6" style="margin-bottom: 15px;">
-                            <button style="width: 100% !important; float: left; margin-right: 8px;" class="btn-btn btn-width-100 btn-center-text btn-md margin" data-bind="click: goLU">Edit Lease Unit
-                            </button>
-                            <table>
-                                <tr>
-                                    <td data-bind="text: lang.lang.name"></td>
-                                    <td data-bind="text: obj.name"></td>
-                                </tr>
-                                <tr>
-                                    <td data-bind="text: lang.lang.status"></td>
-                                    <td data-bind="text: obj.status_detail"></td>
-                                </tr>
-                                <tr>
-                                    <td>Visitor Number</td>
-                                    <td data-bind="text: obj.visitor_number"></td>
-                                </tr>
-                            </table>
+                </div>
+                <div data-role="listview"
+                    data-template="contract-list-tmpl"
+                    data-bind="source: contractDS"
+                    style="height: 535px; overflow: auto;width: 99.3%;margin-left: 0;">
+                </div>
+                <div class="col-md-12" style="padding-left: 0px;padding-right: 5px;margin-bottom: 5px;" >
+                    <div style="background: #0eac00;height: 40px;">
+                        <div id="pager" class="k-pager-wrap"
+                             data-role="pager"
+                             data-auto-bind="true"
+                             data-bind="source: contractDS">
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="col-md-2" style="background: #fff;padding: 10px;height: 669px;">
+                <div>
+                    <h1 style="margin-bottom: 20px;"><b>CONTRACT INFO</b></h1>
+                    <h4>
+                        Name: <br><b><span data-bind="text: obj.name"></span></b><br>
+                        Customer Name:<br> <span data-bind="text: obj.customer_name"></span><br>
+                        Registered Date:<br> <span data-bind="text: obj.issued_date"></span><br>
+                        Unit:<br> <span data-bind="text: obj.lease_unit_name"></span><br>
+                        Start Date:<br> <span data-bind="text: obj.start_date"></span><br>
+                        End Date:<br> <span data-bind="text: obj.end_date"></span><br>
+                        Unit:<br> <span data-bind="text: obj.lease_unit_name"></span><br>
+                    </h4>
+                    <h4><b>Rent:</b></h4>
+                    <h4 data-role="listview"
+                        data-template="rent-list"
+                        data-bind="source: rentAR">
+                    </h4>
+                </div>
+            </div>
         </div>
     </div>
+</script>
+<script id="rent-list" type="text/x-kendo-template">
+    <span>#= name# (#= kendo.toString(amount, _currency.locale=="km-KH"?"c0":"c", _currency.locale)#)</span><br>
 </script>
 <script id="Contract" type="text/x-kendo-template">
     <style type="text/css"></style>
@@ -3975,7 +4061,7 @@
                         <div class="clear"></div>
 
                         <div class=" row" style="clear:both;">
-                            <div class="col-sx-12 col-sm-2"">
+                            <div class="col-sx-12 col-sm-2">
                                 <!-- Group -->
                                 <div class="control-group">
                                     <label ><span data-bind="text: lang.lang.month_of">Month Of</span></label>
@@ -3990,7 +4076,7 @@
                                 </div>
                                 <!-- // Group END -->
                             </div>
-                            <div class="col-sx-12 col-sm-2"" >
+                            <div class="col-sx-12 col-sm-2" >
                                 <div class="control-group">
                                     <label ><span data-bind="text: lang.lang.property">License</span></label>
                                     <input 
@@ -4007,7 +4093,7 @@
                                 </div>
                             </div>
                             
-                            <div class="col-sx-12 col-sm-2"">
+                            <div class="col-sx-12 col-sm-2">
                                 <div class="control-group"> 
                                     <label ><span data-bind="text: lang.lang.action">Action</span></label>  
                                     <div class="row" style="margin: 0;">             
@@ -4130,49 +4216,174 @@
 </script>
 <!-- Invoice Form-->
 <script id="commercialInvoice" type="text/x-kendo-template">
-    <!-- <div class="inv1">
-        <div class="head" style="width: 90%">
+    <div class="inv1" style="page-break-after: always;padding-top: 20px;">
+        <style>
+            .inv2 table td {
+                padding: 10px;
+                font-size: 14px;
+            }
+            .inv1 th {
+                font-size: 14px;
+            }
+            .inv1 * {
+                font-size: 14px;
+                line-height: 25px;
+            }
+            .inv1 td {
+                font-size: 16px;
+            }
+            .inv1 .cover-signature .singature p {
+                font-size: 14px;
+                font-weight: normal;
+            }
+        </style>
+        <div class="head" style="width: 90%;">
             <div class="logo">
-                <img class="logoP" style="position: absolute;left: 0;top: 20px;width: auto;height: 90px;" src="#: banhji.institute.logo.url#" alt="#: banhji.institute.name#" title="#: banhji.institute.name#" />
+                <img src="#: banhji.institute.logo.url #" />
             </div>
-            <div class="cover-name-company" style="margin-left: 20px;width: 50%;float: left;">              
-                <h3 style="text-align:left;">#: banhji.institute.name#</h3>
-                <div class="vattin">
-                    <p>លេខ​អត្ត​សញ្ញាណ​កម្ម អតប (VATTIN)</p><span id="vat_number" >#: banhji.institute.vat_number#</span>
+            <div class="cover-name-company" style="margin-left: 20px;width: 72%;float: left;">
+                <h2></h2>
+                <h3 style="float: left;font-size: 20px;">#: banhji.institute.name #</h3>
+                <div class="vattin" style="float: left; width: 100%">
+                    <p style="float: left; width: 100%">
+                        <span style="float: left; margin-left:0;font-size: 14px; line-height: 20px;">លេខ​អត្ត​សញ្ញាណ​កម្ម អតប (VAT TIN) </span>
+                        <span style="float: left; margin-left:0;font-size:14px;line-height: 20px;">#: banhji.institute.vat_number ? banhji.institute.vat_number : "" #</span>
+                    </p>
                 </div>
-                <div class="clear">                 
-                    <p style="font-size: 10px;">ទូរស័ព្ទលេខ HP <span style="font-size: 12px;">#: banhji.institute.telephone#</span></p>
-                    <p style="font-size: 10px;">អាស័យ​ដ្ឋាន Address: <span>#: banhji.institute.address#</span></p>
+                <div class="clear" style="float: left;">
+                    <p style="float: left; text-align: left;">អាស័យ​ដ្ឋាន Address: <span>#: banhji.institute.address #</span></p>
+                    <p style="float: left;width: 100%">ទូរស័ព្ទលេខ HP <span>#: banhji.institute.telephone #</span> Email: <span>#: banhji.institute.email ? banhji.institute.email : ""#</span></p>
                 </div>
             </div>
         </div>
+        <div class="content">
+            <div style="overflow: hidden; padding:10px 0; background: \\#001F5F!important;-webkit-print-color-adjust:exact; color: \\#fff; margin-bottom: 15px;">
+                <div class="span5">
+                    <h1 style="color: \\#fff !important;margin-top: 15px;padding-left: 30px; text-align: left;text-transform: uppercase;">វិក្កយបត្រ Invoice</h1>
+                </div>
+                <div class="span6" style="float: right;">
+                    <table style="float: left; width: 100%;">
+                        <tr>
+                            <td style="border:0;text-align: left; width: 53%;text-transform: uppercase;color:\\#fff!important;">លេខវិក្កយបត្រ INVOICE NO</td>
+                            <td style="border:0;text-align: left;font-weight: bold;color:\\#fff!important;">#: number#</td>
+                        </tr>
+                        <tr>
+                            <td style="border:0;text-align: left;color:\\#fff!important;">កាលបរិច្ឆេទ DATE</td>
+                            <td style="border:0;text-align: left;color:\\#fff!important;">#=kendo.toString(new Date(issued_date), "dd-MMMM-yyyy", "km-KH")# </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="span12 pcg2" style="margin-bottom: 15px;">
+                <div class="span6" style="padding-right: 10px;">
+                    <table style="float: left; width: 100%;">
+                        <tr>
+                            <td style="text-align: left; width: 45%; background: \\#F1F1F1;">អតិថិជិន (Customer) </td>
+                            <td style="text-align: left; background: \\#F1F1F1;">អាស័យ​ដ្ឋាន (Address) </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;">#: contact.name#</td>
+                            <td style="text-align: left;">#: contact.address ? contact.address: ""#</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="span5" style="float: right;">
+                    <table style="float: left; width: 100%;">
+                        <tr>
+                            <td style="text-align: left; width: 53%; background: \\#F1F1F1;">លក្ខ័ខណ្ឌ ទូរទាត់ <br> Payment Term </td>
+                            <td style="text-align: left;">#: payment_method #</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left; background: \\#F1F1F1;">ថ្ងៃផុតកំណត់ Due Date </td>
+                            <td style="text-align: left;">#=kendo.toString(new Date(due_date), "dd-MMMM-yyyy", "km-KH")#</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="clear inv2" style="margin-bottom:20px;" >
+                <table cellpadding="0" cellspacing="0" border="1" style="width:100%;">
+                    <thead>
+                        <tr class="main-color" style="height: 45px;" data-bind="style: {backgroundColor: obj.color}">
+                            <th style="padding: 10px 0;width: 5%;text-align: center;background: \\#F1F1F1; color: \\#333;text-transform: uppercase;">ល.រ<br />No</th>
+                            <th style="padding: 10px 0;width: 55%;text-align: center;background: \\#F1F1F1; color: \\#333;text-transform: uppercase;">បរិយាយមុខទំនិញ<br />Description</th>
+                            <th style="padding: 10px 0;text-align: center;background: \\#F1F1F1; color: \\#333;text-transform: uppercase;">បរិមាណ<br />QTY</th>
+                            <th style="padding: 10px 0;text-align: center;background: \\#F1F1F1; color: \\#333;text-transform: uppercase;">ឯកតា​<br />UOM</th>
+                            <th style="padding: 10px 0;text-align: center;background: \\#F1F1F1; color: \\#333;text-transform: uppercase;">ថ្លៃឯកតា​<br />Unit Price</th>
+                            <th style="padding: 10px 0;width: 15%;text-align: center;background: \\#F1F1F1; color: \\#333;text-transform: uppercase;">ថ្លៃ​ទំនិញ<br> Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                        <tr>
+                            <td style="height:40px!important;"></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="5" style="text-align:right;padding-right:10px;font-weight:bold;">សរុប​ (បូកបញ្ជូលទាំងអាករ) GRAND TOTAL (VAT INCLUSIVE) </td>
+                            <td style="font-size: 16px;background: \\#333; color: \\#fff;" class="rside">#= kendo.toString(amount, locale=="km-KH"?"c0":"c", locale)#</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div class="span12 pcg-list" style="border-bottom: 1px solid \\#BEBEBE; padding-bottom:15px;">
+                <div class="span12">
+                    <div style="border: none!important; width: 100%; padding: 8px;border: 1px solid \\#BEBEBE; font-size: 11px;">
+                        #= note #
+                    </div>
+                </div>
+                <div class="span12">
+                    <div class="foot" style="margin-top: 80px; float: left; clear: none; width: 30%;">
+                        <div class="cover-signature">
+                            <div class="singature" style="float:left; width: 100%;">
+                                <p>ហត្ថលេខា និងឈ្មោះ​អ្នកលក់<br />Seller's Signature & Name</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="foot" style="margin-top: 80px;clear: none; float: right; width: 30%;">
+                        <div class="cover-signature">
+                            <div class="singature" style="float:left; width: 100%;">
+                                <p>ហត្ថលេខា និងឈ្មោះ​អ្នក​ទិញ<br />Customer's Signature & Name</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+<script id="normalInvoice" type="text/x-kendo-template">
+    <div class="inv1">
         <div class="content">
             <div style="overflow: hidden;padding:10px 0;">
                 <h1>វិក្កយបត្រ</h1>
                 <h2>Invoice</h2>
             </div>
-            <div class="clear mid-header" style="padding: 10px;background: \#dce6f2;padding-bottom: 10px;">
+            <div class="clear mid-header" style="padding: 10px;background: \#dce6f2!important;padding-bottom: 10px;">
                 <div class="cover-customer">
                     <h5>ព័ត៌មានអតិថិជន​ CUSTOMER INFO:</h5>
                     <div class="clear">
                         <div class="left dotted-ruler" style="width: 62%;">
-                            <p style="font-size: 12px; line-height: 20px;">ឈ្មោះ Name : <span>#: contactar.name#</span><br>
-                            អាស័យ​ដ្ឋាន Address : <span>#: contactar.address#</span><br>
-                            លេខទូរស័ព្ទ Tel : <span>#: contactar.phone#</span>
+                            <p style="font-size: 12px; line-height: 20px;">ឈ្មោះ Name : <span>#= contact.name#</span><br>
+                            អាស័យ​ដ្ឋាន Address : <span>#= contact.address#</span><br>
+                            លេខទូរស័ព្ទ Tel : <span>#= contact.phone#</span>
                             </p>
                         </div>
                     </div>
-                    <div class="vattin">
-                    <p>លេខ​អត្ត​សញ្ញាណ​កម្ម អតប (VATTIN)</p><span id="vat_number">#: contactar.vat_no#</span><p style="font-size:8px;font-weight:normal;margin-left: 8px;">(ប្រសិន​បើ​មាន / If any)</p>
-                    </div>
                 </div>
-                <div class="cover-inv-number" style="width: 42%;">
+                <div class="cover-inv-number">
                     <div class="clear">
                         <div class="left">
                             <p>លេខ No. :</p>
                         </div>
                         <div class="left dotted-ruler" style="width: 42%;">
-                            <span>#: number#</span>-<span style="font-weight:bold">#: banhji.institute.id#</span>
+                            <p style="font-weight:bold">#= number#</p>
                         </div>
                     </div>
                     <div class="clear">
@@ -4180,7 +4391,7 @@
                             <p>កាល​បរិច្ឆេទ Date:</p>
                         </div>
                         <div class="left dotted-ruler" style="width: 57%;">
-                            <p style="font-weight:bold">#: issued_date#</p>
+                            <p style="font-weight:bold">#= issued_date#</p>
                         </div>
                     </div>
                 </div>
@@ -4196,51 +4407,29 @@
                             <th style="text-align: center;">ថ្លៃ​ទំនិញ<br />Amount</th>
                         </tr>
                     </thead>
-                    <tbody style="margin-top: 2px" id="formListView">
-                        #$.each(invoice_lines, function(i,v){#
-                            #if(v.type == 'electricity_meter'){#
-                                <tr>
-                                    <td><i>#:i+1#</i>&nbsp;</td>
-                                    <td class="lside">#: name# (#: usage#kwh)</td>
-                                    <td>1</td>
-                                    <td class="rside" width="70">#= kendo.toString(v.price, "c", locale) #</td>
-                                    <td class="rside">#= kendo.toString(v.amount, "c", locale) #</td>
-                                </tr>
-                            #}else if(v.type == 'water_meter'){#
-                                <tr>
-                                    <td><i>#:i+1#</i>&nbsp;</td>
-                                    <td class="lside">#: name# (#: usage#kwh)</td>
-                                    <td>1</td>
-                                    <td class="rside" width="70">#= kendo.toString(v.price, "c", locale) #</td>
-                                    <td class="rside">#= kendo.toString(v.amount, "c", locale) #</td>
-                                </tr>
-                            #}else{#
-                                <tr>
-                                    <td><i>#:i+1#</i>&nbsp;</td>
-                                    <td class="lside">#: name#</td>
-                                    <td>1</td>
-                                    <td class="rside" width="70">#= kendo.toString(v.price, "c", locale) #</td>
-                                    <td class="rside">#= kendo.toString(v.amount, "c", locale) #</td>
-                                </tr>
-                            #}#
-                        #})#
+                    <tbody style="margin-top: 2px" id="formListView" data-role="listview"
+                        data-auto-bind="false"
+                        data-template="invoiceForm-lineDS-template"
+                        data-bind="source: lineDS">
                     </tbody>
                     <tfoot>
                         <tr>
-                            <td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">បញ្ចុះតម្លៃ Discount</td>
-                            <td style="text-align: right; padding-right: 5px;"></td>
+                            <td colspan="2" rowspan="4" style="text-align: left;padding-left: 10px;">
+                            </td>
+                            <td colspan="2" style="text-align:right;padding:5px;font-weight: bold;">បញ្ចុះតម្លៃ Discount</td>
+                            <td class="rside">#= discount#</td>
                         </tr>
                         <tr>
-                            <td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">សរុប (បូក​បញ្ចូល​ទាំង​អាករ)​ Total (VAT included)</td>
-                            <td style="text-align: right; padding-right: 5px;">#: amount#</td>
+                            <td colspan="2" style="text-align:right;padding:5px;font-weight: bold;">សរុប Total</td>
+                            <td class="rside">#= amount#</td>
                         </tr>
                         <tr>
-                            <td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">ប្រាក់កក់ Deposit</td>
-                            <td style="text-align: right; padding-right: 5px;"></td>
+                            <td colspan="2" style="text-align:right;padding:5px;font-weight: bold;">ប្រាក់កក់ Deposit</td>
+                            <td class="rside" data-bind="text: obj.deposit"></td>
                         </tr>
                         <tr>
-                            <td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">សាច់ប្រាក់ត្រូវទូទាត់ Amount Due</td>
-                            <td style="text-align: right; padding-right: 5px;"></td>
+                            <td colspan="2" style="text-align:right;padding:5px;font-weight: bold;">សាច់ប្រាក់ត្រូវទូទាត់ Amount Due</td>
+                            <td class="rside" data-bind="text: obj.amount_due"></td>
                         </tr>
                     </tfoot>
                 </table>
@@ -4256,155 +4445,6 @@
                 </div>
             </div>
             <h6 style="padding-left: 35px;">សម្គាល់៖ <span>ច្បាប់​ដើម​សម្រាប់​អ្នក​ទិញ ច្បាប់​ចម្លង​សម្រាប់​អ្នក​លក់</span><br /><span style="font-size: 10px"><strong>Note:</strong> Original invoice for customer, copied invoice for seller</span></h6>
-        </div>
-    </div> -->
-    <style>
-        body {
-            color: \#333;
-            font-family: "Open Sans", 'Battambang';
-            font-size: 12px;
-            background: \#fff;
-        }
-        *{
-          margin: 0 auto;
-          padding: 0;
-          -webkit-print-color-adjust:exact;
-          font-size: 12px;
-          color: \#000;
-        }
-        .clear{
-            clear: both;
-        }
-        table td {
-            padding: 5px;
-        }
-    </style>
-    <div class="inv1" style="width: 100%; background-color: \#fff!important; position: relative; overflow: hidden;padding-top: 40px;page-break-after: always;">
-        <div class="head" style="width: 90%;">
-            <div class="logo" style="width: 20%; float: left;">
-                <img class="logoP" style="width: 100%;" src="#: banhji.institute.logo.url#" alt="#: banhji.institute.name#" title="#: banhji.institute.name#" />
-            </div>
-            <div class="cover-name-company" style="margin-left: 20px;width: 72%;float: left;">
-                <h3 style="float: left;font-size: 20px; font-family: 'Preahvihear', 'Roboto Slab' !important;" >#: banhji.institute.name#</h3>
-                <div class="vattin" style="float: left; width: 100%">
-                    <p style="float: left; width: 100%">
-                        <span style="float: left; margin-left:0;font-size: 14px; line-height: 20px;">លេខ​អត្ត​សញ្ញាណ​កម្ម អតប (VAT TIN) </span>
-                        <span style="float: left; margin-left:0;font-size:14px;line-height: 20px;" >#: banhji.institute.vat_no#</span>
-                    </p>
-                </div>
-                <div class="clear" style="float: left;">
-                    <p style="float: left; text-align: left;font-size: 14px;margin: 0;">អាស័យ​ដ្ឋាន Address: <span >#: banhji.institute.address#</span></p>
-                    <p style="float: left;width: 100%">ទូរស័ព្ទលេខ HP: <span >#: banhji.institute.telephone# </span> <br/> Email: <span >#: banhji.institute.email#</span></p>
-                </div>
-            </div>
-        </div>
-        <div class="content" style="padding: 1% 5%; position: relative; clear: both; overflow: hidden;">
-            <div style="overflow: hidden; padding:10px 0; background: \#001F5F!important;-webkit-print-color-adjust:exact; color: \#fff; margin-bottom: 15px;">
-                <div class="span5" style="width: 41.66666667%; float: left;">
-                    <h1 style="float: left; color: \#fff!important;margin-top: 5px;padding-left: 30px; text-align: left;text-transform: uppercase;font-family: 'Preahvihear', 'Roboto Slab'!important;font-size: 23px;">វិក្កយបត្រ Invoice</h1>
-                </div>
-                <div class="span6" style="float: right; width: 51%;">
-                    <table style="float: left; width: 100%;margin-top: 10px;">
-                        <tr>
-                            <td style="border:0;text-align: left; width: 40%;text-transform: uppercase;color: \#fff!important;">លេខវិក្កយបត្រ (Invoice N0.) :</td>
-                            <td style="border:0;text-align: left;font-weight: bold;color: \#fff!important;">#: number#</td>
-                        </tr>
-                        <tr>
-                            <td style="border:0;text-align: left; text-transform: uppercase;color: \#fff!important;">កាលបរិច្ឆេទ (Date) :</td>
-                            <td style="border:0;text-align: left;font-weight: bold;color: \#fff!important;">#= issued_date#</td>
-                        </tr>
-                    </table>
-                </div>              
-            </div>
-            <div class="span12 pcg2" style="margin-bottom: 15px;padding: 0;">
-                <div class="span6" style="padding-right: 10px; width: 48%; float: left;padding: 0;">
-                    <table style="float: left; width: 100%; border: 1px solid \#000;border-collapse: collapse; margin-bottom: 0px;">
-                        <!-- <tr>
-                            <td style="padding: 5px; border: 1px solid \#000; text-align: left; width: 35%; background: \#F1F1F1!important;">អ្នកគិតលុយ (Cashier) </td>
-                            <td style="padding: 5px; border: 1px solid \#000; text-align: left;">#: cashier_name#</td>
-                        </tr> -->
-                        <tr>
-                            <td style="padding: 5px; border: 1px solid \#000; text-align: left; width: 35%; background: \#F1F1F1!important;">ឈ្មោះអតិថិជន (Customer Name) </td>
-                            <td style="padding: 5px; border: 1px solid \#000; text-align: left;">#: contactar.name#</td>
-                        </tr>
-                        <tr>
-                            <td style="padding: 5px; border: 1px solid \#000; text-align: left; width: 35%; background: \#F1F1F1!important;">លេខកុងត្រា (Contract No.) :</td>
-                            <td style="padding: 5px; border: 1px solid \#000; text-align: left;">#: contract#</td>
-                        </tr>
-                    </table>
-                </div>
-                <div class="span6" style=" width: 51%; padding-left: 0; float: right;padding: 0;">
-                    <table style="float: left; width: 100%; border: 1px solid \#000; border-collapse: collapse;">
-                        <!-- <tr>
-                            <td style="padding: 5px; border: 1px solid \#000; text-align: left; width: 35%; background: \#F1F1F1!important;">កាលបរិច្ឆេទ (Date) </td>
-                            <td style="padding: 5px; border: 1px solid \#000; text-align: left;">#= kendo.toString(new Date(issued_date), "F")#</td>
-                        </tr> -->
-                        <tr>
-                            <td style="padding: 5px; border: 1px solid \#000; text-align: left; width: 35%; background: \#F1F1F1!important;">អ្នកគិតលុយ (Cashier) :</td>
-                            <td style="padding: 5px; border: 1px solid \#000; text-align: left;"></td>
-                        </tr>
-                        <tr>
-                            <td style="padding: 5px; border: 1px solid \#000; text-align: left; width: 35%; background: \#F1F1F1!important;">បុគ្គលិក (Staff) :</td>
-                            <td style="padding: 5px; border: 1px solid \#000; text-align: left;" ></td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-            <div class="clear inv2" style="margin-bottom:20px;" > 
-                <table cellpadding="0" cellspacing="0" border="1" style="width:100%;">
-                    <thead>
-                        <tr class="main-color" style="height: 45px;">
-                            <th style="text-align: center;">ល.រ<br />N<sup>0</sup></th>
-                            <th style="text-align: center;">បរិយាយ​មុខ​ទំនិញ<br />Description</th>
-                            <th style="text-align: center;">បរិមាណ<br />Quantity</th>
-                            <th style="text-align: center;">ថ្លៃឯកតា​<br />Unit Price</th>
-                            <th style="text-align: center;">ថ្លៃ​ទំនិញ<br />Amount</th>
-                        </tr>
-                    </thead>
-                    <tbody style="margin-top: 2px" id="formListView">
-                        #$.each(invoice_lines, function(i,v){#
-                            #if(v.type == 'electricity_meter'){#
-                                <tr>
-                                    <td><i>#:i+1#</i>&nbsp;</td>
-                                    <td class="lside">#: name# (#: usage#kwh)</td>
-                                    <td>1</td>
-                                    <td class="rside" width="70">#= kendo.toString(v.price, "c", locale) #</td>
-                                    <td class="rside">#= kendo.toString(v.amount, "c", locale) #</td>
-                                </tr>
-                            #}else if(v.type == 'water_meter'){#
-                                <tr>
-                                    <td><i>#:i+1#</i>&nbsp;</td>
-                                    <td class="lside">#: name# (#: usage#kwh)</td>
-                                    <td>1</td>
-                                    <td class="rside" width="70">#= kendo.toString(v.price, "c", locale) #</td>
-                                    <td class="rside">#= kendo.toString(v.amount, "c", locale) #</td>
-                                </tr>
-                            #}else{#
-                                <tr>
-                                    <td><i>#:i+1#</i>&nbsp;</td>
-                                    <td class="lside">#: name#</td>
-                                    <td>1</td>
-                                    <td class="rside" width="70">#= kendo.toString(v.price, "c", locale) #</td>
-                                    <td class="rside">#= kendo.toString(v.amount, "c", locale) #</td>
-                                </tr>
-                            #}#
-                        #})#
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <td style="height:40px!important;"></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td colspan="4" style="padding-right: 10px;text-align: right;">សរុប (បូកបញ្ចូលទាំងអាករ) GRAND TOTAL (VAT INCLUSIVE)</td>
-                            <td style="border: 1px solid;text-align: right"><strong>#= kendo.toString(amount, locale=="km-KH"?"c0":"c", locale)#</strong></td>
-                        </tr>
-                    </tfoot>
-                </table>
-            </div>
         </div>
     </div>
 </script>
@@ -5734,13 +5774,21 @@
     <span> #= kendo.toString(amount, _currency.locale=="km-KH"?"c0":"c", _currency.locale)#</span>
 </script>
 <script id="contract-list-tmpl" type="text/x-kendo-tmpl">
-    <tr data-bind="click: selectedRow">
-        <td>
-            <div class="media-body strong" style="position: relative;">             
-                <span>#=name#</span><a style="float: right;" href="\#/contract/#=id#">Edit</a>
+    <div class="col-md-4">
+        <div class="row-fluid" style="overflow: hidden;">
+            <div class="col-xs-12 col-sm-12 col-md-12 pk1 hvr-shrink" data-bind="click: selectedRow">
+                <div>
+                    <p style="padding: 10px 0;margin: 0;text-align: left;border-bottom: 1px solid \#ccc;">Name: <span style="font-weight: bold;">#= name#</span></p>
+                    <p style="padding: 10px 0;margin: 0;text-align: left;border-bottom: 1px solid \#ccc;">Customer Name: <span style="font-weight: bold;">#= customer_name#</span></p>
+                    <p style="padding: 10px 0;margin: 0;text-align: left;border-bottom: 1px solid \#ccc;">Start Date: <span style="font-weight: bold;">#= start_date#</span></p>
+                    <p style="padding: 10px 0;margin: 0;text-align: left;border-bottom: 1px solid \#ccc;">End Date: <span style="font-weight: bold;">#= end_date#</span></p>
+                </div>
             </div>
-        </td>
-    </tr>
+            <a href="\#/contract/#= id#" class="btn btn-inverse" type="edit" style="background-color: \#254809 !important; width: 93%; border-radius: 1px;">
+                <i class="icon-idit">Edit</i>
+            </a>
+        </div>
+    </div>
 </script>
 <script id="other-charge-template" type="text/x-kendo-tmpl">
     <tr>
@@ -6020,7 +6068,7 @@
     <tr>
         <td align="center"><input type="checkbox" data-bind="checked: printed, events: {change: isCheck}" /></td>
         <td>#= contract#</td>       
-        <td>#= contactar.name#</td>
+        <td>#= contact.name#</td>
         <td class="right">#= number#</td>
         <td class="right">#= kendo.toString(amount, locale=="km-KH"?"c0":"c", locale)#</td>
     </tr>

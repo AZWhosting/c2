@@ -1020,4 +1020,7 @@ a.fa.fa-qrcode:before{
 		border-color: #333;
 		margin: 8px 0;
 	}
+	.vtabs .tabs-vertical {
+	    width: 50px;
+	}
 }                                                       

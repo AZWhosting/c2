@@ -8115,6 +8115,16 @@
         contractDS         : dataStore(apiUrl + "choulr/contract"),
         pageLoad            : function() {
         },
+        rentAR              : [],
+        selectedRow         : function(e){
+            var data = e.data;
+            this.set("obj", data);
+            var self = this;
+            this.rentAR.splice(0, this.rentAR.length);
+            $.each(data.rent_ar, function(i,v){
+                self.rentAR.push(v);
+            });
+        },
     });
     //Customer
     banhji.customerCenter = kendo.observable({
@@ -9528,6 +9538,7 @@
         attachmentDS: dataStore(apiUrl + "attachments"),
         printBTN: false,
         invoiceCollection: dataStore(apiUrl + "choulr/search_inv"),
+        // invoiceCollection: dataStore(apiUrl + "transactions"),
         invoiceNoPrint: new kendo.data.DataSource({
             transport: {
                 read: {
@@ -9908,9 +9919,6 @@
         txnFormID: null,
         user_id: banhji.userManagement.getLogin() === null ? '' : banhji.userManagement.getLogin().id,
         pageLoad: function() {
-            // if (this.dataSource.length == 0) {
-            //     banhji.router.navigate('/print_bill');
-            // }
             var self = this,
                 TempForm = $("#commercialInvoice").html();
             $("#wInvoiceContent").kendoListView({
@@ -9984,7 +9992,6 @@
             } else {
                 ts = 'color: #333;';
             }
-            banhji.invoice.dataSource.sync();
             var gridElement = $('#grid'),
                 printableContent = '',
                 win = Win,

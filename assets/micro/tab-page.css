@@ -29,7 +29,7 @@ Vertical tabs
 .vtabs {
   display: table; }
   .vtabs .tabs-vertical {
-    width: 150px;
+    /*width: 150px;*/
     border-bottom: 0px;
     border-right: 1px solid #e9ecef;
     display: table-cell;

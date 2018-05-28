@@ -3840,8 +3840,8 @@
         goTransactions      : function(){
             banhji.router.navigate('/transactions');
         },
-        goMenuCashs        : function(){
-            banhji.router.navigate('/cashs');
+        goCashCenter        : function(){
+            banhji.router.navigate('/cash_center');
         },
     });
     banhji.reports = kendo.observable({
@@ -3866,9 +3866,48 @@
             });
         }
     });
-    banhji.accountingCenter = kendo.observable({
+    banhji.cashCenter = kendo.observable({
         lang                : langVM,
-        dataSource          : dataStore(apiUrl + "accounts"),
+        // dataSource          : dataStore(apiUrl + "accounts"),
+        dataSource              : new kendo.data.DataSource({
+            transport: {
+                read    : {
+                    url: apiUrl + "accounts",
+                    type: "GET",
+                    headers: banhji.header,
+                    dataType: 'json'
+                },
+                parameterMap: function(options, operation) {
+                    if(operation === 'read') {
+                        return {
+                            page: options.page,
+                            limit: options.pageSize,
+                            filter: options.filter,
+                            sort: options.sort
+                        };
+                    } else {
+                        return {models: kendo.stringify(options.models)};
+                    }
+                }
+            },
+            schema  : {
+                model: {
+                    id: 'id'
+                },
+                data: 'results',
+                total: 'count'
+            },
+            filter:{ field: "account_type_id", value: 10 },
+            sort:[
+                { field:"account_type_id", dir:"asc" },
+                { field:"number", dir:"asc" }
+            ],
+            serverFiltering: true,
+            serverSorting: true,
+            serverPaging: true,
+            page:1,
+            pageSize: 100
+        }),
         accountTypeDS       : banhji.source.accountTypeDS,
         summaryDS           : dataStore(apiUrl + 'centers/accounting_summary'),
         transactionDS       : dataStore(apiUrl + 'centers/accounting_txn'),
@@ -6703,7 +6742,12 @@
     banhji.generalLedger =  kendo.observable({
         lang                : langVM,
         dataSource          : dataStore(apiUrl + "accounting_modules/general_ledger"),
-        accountDS           : banhji.source.accountList,
+        // accountDS           : banhji.source.accountList,
+        accountDS           : new kendo.data.DataSource({
+            data: banhji.source.accountList,
+            filter:{ field:"account_type_id", value: 10 },
+            sort: { field:"number", dir:"asc" }
+        }),
         segmentItemDS       : new kendo.data.DataSource({
             data: banhji.source.segmentItemList,
             sort: [
@@ -6782,6 +6826,9 @@
                 start = this.get("sdate"),
                 end = this.get("edate"),
                 displayDate = "";
+
+            //Cash account only
+            para.push({ field:"account_type_id", value:10 });
 
             //Account
             if(obj.account_id>0){
@@ -7055,119 +7102,6 @@
             kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "GeneralLedger.xlsx"});
         }
     });
-    banhji.generalLedgerBySegment =  kendo.observable({
-        lang                : langVM,
-        dataSource          : dataStore(apiUrl + "accounting_modules/general_ledger_by_segment"),
-        segmentDS           : banhji.source.segmentDS,
-        sortList            : banhji.source.sortList,
-        sorter              : "month",
-        sdate               : "",
-        edate               : "",
-        obj                 : { segments: [] },
-        company             : banhji.institute,
-        displayDate         : "",
-        totalAmount         : 0,
-        totalBalance        : 0,
-        pageLoad            : function(){
-            this.search();
-        },
-        sorterChanges       : function(){
-            var today = new Date(),
-            sdate = "",
-            edate = "",
-            sorter = this.get("sorter");
-
-            switch(sorter){
-                case "today":
-                    this.set("sdate", today);
-                    this.set("edate", "");
-
-                    break;
-                case "week":
-                    var first = today.getDate() - today.getDay(),
-                    last = first + 6;
-
-                    this.set("sdate", new Date(today.setDate(first)));
-                    this.set("edate", new Date(today.setDate(last)));
-
-                    break;
-                case "month":
-                    this.set("sdate", new Date(today.getFullYear(), today.getMonth(), 1));
-                    this.set("edate", new Date(today.getFullYear(), today.getMonth() + 1, 0));
-
-                    break;
-                case "year":
-                    this.set("sdate", new Date(today.getFullYear(), 0, 1));
-                    this.set("edate", new Date(today.getFullYear(), 11, 31));
-
-                    break;
-                default:
-                    this.set("sdate", "");
-                    this.set("edate", "");
-            }
-        },
-        search              : function(){
-            var self = this, para = [],
-                obj = this.get("obj"),
-                start = this.get("sdate"),
-                end = this.get("edate"),
-                displayDate = "";
-
-            //Segments
-            var segments = [];
-            if(obj.segments.length>0){
-                $.each(obj.segments, function(index, value){
-                    $.each(banhji.source.segmentItemList, function(ind, val){
-                        if(val.segment_id==value){
-                            segments.push(val.id);
-                        }
-                    });
-                });
-                para.push({ field:"id", operator:"where_in_related_segmentitem", value: segments });
-            }
-
-            //Dates
-            if(start && end){
-                start = new Date(start);
-                end = new Date(end);
-                displayDate = "From " + kendo.toString(start, "dd-MM-yyyy") + " To " + kendo.toString(end, "dd-MM-yyyy");
-                end.setDate(end.getDate()+1);
-
-                para.push({ field:"issued_date >=", operator:"where_related_transaction", value: kendo.toString(start, "yyyy-MM-dd") });
-                para.push({ field:"issued_date <", operator:"where_related_transaction", value: kendo.toString(end, "yyyy-MM-dd") });
-            }else if(start){
-                start = new Date(start);
-                displayDate = "On " + kendo.toString(start, "dd-MM-yyyy");
-
-                para.push({ field:"issued_date", operator:"where_related_transaction", value: kendo.toString(start, "yyyy-MM-dd") });
-            }else if(end){
-                end = new Date(end);
-                displayDate = "As Of " + kendo.toString(end, "dd-MM-yyyy");
-                end.setDate(end.getDate()+1);
-
-                para.push({ field:"issued_date <", operator:"where_related_transaction", value: kendo.toString(end, "yyyy-MM-dd") });
-            }else{
-
-            }
-            this.set("displayDate", displayDate);
-
-            this.dataSource.query({
-                filter: para
-            });
-            var loaded = false;
-            this.dataSource.bind("requestEnd", function(e){
-                if(e.type==="read" && loaded==false){
-                    loaded = true;
-
-                    var response = e.response;
-                    self.set("totalBalance", kendo.toString(response.totalBalance, "c2", banhji.locale));
-                }
-            });
-
-            obj.set("segments", []);
-        }
-    });
-
 
     
     // Reports
@@ -8148,8 +8082,8 @@
         // Menu
         tapMenu: new kendo.View("#tapMenu", {model: banhji.tapMenu}),
         reports: new kendo.View("#reports", {model: banhji.reports}),
-        transactions: new kendo.View("#transactions", {model: banhji.transactions}),
-        cashs: new kendo.View("#cashs", {model: banhji.accountingCenter}),
+        generalLedger: new kendo.View("#generalLedger", {model: banhji.generalLedger}),
+        cashCenter: new kendo.View("#cashCenter", {model: banhji.cashCenter}),
     };
     /* views and layout */
     banhji.router = new kendo.Router({
@@ -8209,16 +8143,16 @@
         
         banhji.view.layout.showIn('#content', banhji.view.Index);
         banhji.view.Index.showIn('#indexMenu', banhji.view.tapMenu);
-        banhji.view.Index.showIn('#indexContent', banhji.view.transactions);
+        banhji.view.Index.showIn('#indexContent', banhji.view.generalLedger);
 
         //load MVVM
-        //banhji.transactions.pageLoad();
+        banhji.generalLedger.pageLoad();
     });
-    banhji.router.route('/cashs', function() {
+    banhji.router.route('/cash_center', function() {
         
         banhji.view.layout.showIn('#content', banhji.view.Index);
         banhji.view.Index.showIn('#indexMenu', banhji.view.tapMenu);
-        banhji.view.Index.showIn('#indexContent', banhji.view.cashs);
+        banhji.view.Index.showIn('#indexContent', banhji.view.cashCenter);
 
         // if(banhji.pageLoaded["customers"]==undefined){
         //     banhji.pageLoaded["customers"] = true;
@@ -8230,10 +8164,8 @@
         //     });
         // }
 
-        
-
         //load MVVM
-        banhji.accountingCenter.pageLoad();
+        banhji.cashCenter.pageLoad();
     });
 
     // Function

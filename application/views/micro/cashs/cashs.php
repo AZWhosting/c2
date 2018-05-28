@@ -45,7 +45,7 @@
 	<ul class="nav nav-tabs customtab" role="tablist" >
 		<li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#/" data-bind="click: goReports"><span class="hidden-sm-up"><i class="ti-layout-grid2-thumb"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.reports"></span></a> </li>
 	    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#/transactions" data-bind="click: goTransactions"><span class="hidden-sm-up"><i class="ti-layout-accordion-list"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.cash_transactions"></span></a> </li>
-	    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#/cashs" data-bind="click: goMenuCashs"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.cash"></span></a> </li>
+	    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#/cashs" data-bind="click: goCashCenter"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.cash"></span></a> </li>
     </ul>
 </script>
 <!-- End -->
@@ -90,7 +90,7 @@
 		</div>
 	</div>	
 </script>
-<script id="transactions" type="text/x-kendo-template">	
+<script id="generalLedger" type="text/x-kendo-template">	
 	<div class="row">
 		<div class="col-md-7">
             <div class="btn-group">
@@ -239,12 +239,12 @@
 		        </div>
 
 		        <!-- Pagination -->
-            	<div 	id="pager" 
-            			class="k-pager-wrap" 
-	            		data-role="pager"
-				    	data-auto-bind="false"
-			            data-bind="source: dataSource"
-			            style="width: 97%; margin: 0 auto;" >
+            	<div id="pager" 
+        			class="k-pager-wrap" 
+            		data-role="pager"
+			    	data-auto-bind="false"
+		            data-bind="source: dataSource"
+		            style="width: 97%; margin: 0 auto;" >
 			    </div>
             </div>
         </div>
@@ -323,188 +323,7 @@
         <td></td>
     </tr>
 </script>
-<script id="generalLedgerBySegment" type="text/x-kendo-template">
-	<div id="slide-form">
-		<div class="customer-background ">
-			<div class="container-960">
-				<div id="example" class="k-content saleSummaryCustomer">
-		    		<span class="glyphicons no-js remove_2 pull-right"
-							onclick="javascript: window.history.back()"><i></i></span>
-					<br>
-					<br>
-
-					<!-- Search Taps -->
-					<div class="row-fluid">
-					    <!-- Tabs -->
-						<div class="relativeWrap" data-toggle="source-code">
-							<div class="widget widget-tabs widget-tabs-gray report-tab">
-
-								<!-- Tabs Heading -->
-								<div class="widget-head">
-									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i>Date</a></li>
-										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i>Filters</a></li>
-									</ul>
-								</div>
-								<!-- // Tabs Heading END -->
-								<div class="widget-body">
-									<div class="tab-content">
-										<!-- Date -->
-										<div class="tab-pane active" id="tab-1">
-											<input data-role="dropdownlist"
-												   class="sorter"
-										           data-value-primitive="true"
-										           data-text-field="text"
-										           data-value-field="value"
-										           data-bind="value: sorter,
-										                      source: sortList,
-										                      events: { change: sorterChanges }" />
-
-											<input data-role="datepicker"
-												   class="sdate"
-												   data-format="dd-MM-yyyy"
-										           data-bind="value: sdate,
-										           			  max: edate"
-										           placeholder="From ..." >
-
-										    <input data-role="datepicker"
-										    	   class="edate"
-										    	   data-format="dd-MM-yyyy"
-										           data-bind="value: edate,
-										                      min: sdate"
-										           placeholder="To ..." >
-
-										  	<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-									    </div>
-									    <!-- Filter -->
-								        <div class="tab-pane" id="tab-2">
-											<table class="table table-condensed">
-												<tr>
-									            	<td style="padding: 8px 0 0 0 !important; ">
-														<span data-bind="text: lang.lang.segment"></span>
-														<select data-role="multiselect"
-															   data-value-primitive="true"
-															   data-value-field="id"
-															   data-text-field="name"
-															   data-bind="value: obj.segments,
-															   			source: segmentDS"
-															   data-placeholder="Select Segments.."
-															   style="width: 100%" /></select>
-													</td>
-													<td style="padding-top: 31px !important; float: left;">
-										  				<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-													</td>
-												</tr>
-											</table>
-							        	</div>
-							        </div>
-								</div>
-							</div>
-						</div>
-						<!-- // Tabs END -->
-					</div>
-
-					<div id="loadImport" style="display:none;text-align: center;top:30px;position: absolute;width: 82%; height: 99.5%;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
-						<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
-					</div>
-
-					<div id="invFormContent">
-						<div class="block-title">
-							<h3 data-bind="html: company.name"></h3>
-							<h2>GENERAL LEDGER WITH SEGMENT</h2>
-							<p data-bind="text: displayDate"></p>
-						</div>
-
-						<div class="row-fluid journal_block">
-							<div class="span4" style="width: 50%;">
-								<p>No. of Account</p>
-								<span data-format="n" data-bind="text: dataSource.total"></span>
-							</div>
-							<div class="span4" style="width: 50%;">
-								<p>Total Balance</p>
-								<span data-bind="text: totalBalance"></span>
-							</div>
-						</div>
-
-						<table class="table table-borderless table-condensed">
-							<thead>
-								<tr>
-									<th><span data-bind="text: lang.lang.type"></span></th>
-									<th style="width: 10%;"><span data-bind="text: lang.lang.date"></span></th>
-									<th style="width: 15%;"><span data-bind="text: lang.lang.transaction_number"></span></th>
-									<th><span data-bind="text: lang.lang.description"></span></th>
-									<th><span data-bind="text: lang.lang.name"></span></th>
-									<th><span data-bind="text: lang.lang.segments"></span></th>
-									<th class="right"><span data-bind="text: lang.lang.amount"></span></th>
-									<th class="right"><span data-bind="text: lang.lang.balance"></span></th>
-								</tr>
-							</thead>
-							<tbody data-role="listview"
-					        		data-auto-bind="false"
-					        		data-template="generalLedgerBySegment-template"
-					        		data-bind="source: dataSource">
-					        </tbody>
-						</table>
-					</div>
-
-				</div>
-			</div>
-		</div>
-	</div>
-</script>
-<script id="generalLedgerBySegment-template" type="text/x-kendo-tmpl">
-	<tr>
-		<td colspan="7" style="font-weight: bold;">#: name #</td>
-    	<td class="right strong" style="color: black;">
-    		#=kendo.toString(balance_forward, "c2", banhji.locale)#
-    	</td>
-	</tr>
-	#var balance = balance_forward;#
-	#for(var i=0; i<line.length; i++){#
-	#balance += line[i].amount;#
-	<tr>
-		<td style="color: black;">
-			&nbsp;&nbsp; #=line[i].type#
-		</td>
-		<td style="color: black;">
-			#=kendo.toString(new Date(line[i].issued_date), "dd-MM-yyyy")#
-		</td>
-		<td style="color: black;">
-			<a href="\#/#=line[i].type.toLowerCase()#/#=line[i].id#"><i></i> #=line[i].number#</a>
-		</td>
-		<td style="color: black;">
-			#=line[i].memo#
-		</td>
-		<td style="color: black;">
-			#=line[i].name#
-		</td>
-		<td style="color: black;">
-			#for(var j=0; j<line[i].segments.length; j++){#
-				#if(j>0){#
-					:
-				#}#
-				#=line[i].segments[j].code# #=line[i].segments[j].name#
-			#}#
-		</td>
-		<td class="right" style="color: black;">
-			#=kendo.toString(line[i].amount, "c2", banhji.locale)#
-		</td>
-		<td class="right" style="color: black;">
-			#=kendo.toString(balance, "c2", banhji.locale)#
-		</td>
-    </tr>
-    #}#
-    <tr>
-    	<td colspan="7" style="font-weight: bold; color: black;"><span data-bind="text: lang.lang.total" style="text-transform: capitalize;"></span><span>#: name #</span></td>
-    	<td class="right" style="font-weight: bold; border-top: 1px solid black !important; color: black;">
-    		#=kendo.toString(balance, "c2", banhji.locale)#
-    	</td>
-    </tr>
-    <tr>
-    	<td colspan="8">&nbsp;</td>
-    </tr>
-</script>
-<script id="cashs" type="text/x-kendo-template">
+<script id="cashCenter" type="text/x-kendo-template">
 	<div class="row" id="customers">
 		<div class="col-md-3">
 			<div class="listWrapper">
@@ -668,22 +487,9 @@
 								<div class="saleOverview" style="margin-bottom: 8px;">
 		                            <p data-bind="click: loadTransaction">
 		                            	<span data-format="n" data-bind="text: lang.lang.balance_as_of_today"></span>
+		                            	<br>
 										<span data-bind="text: balance"></span>
 		                            </p>
-		                            <div class="col-md-12">
-		                                <div class="col-md-4">
-		                                    <span data-format="n0" data-bind="text: raw.quantity"></span>
-		                                    <span data-bind="text: lang.lang.qoh"></span>
-		                                </div>
-		                                <div class="col-md-4">
-		                                    <span data-format="n0" data-bind="text: raw.po"></span>
-		                                    <span data-bind="text: lang.lang.on_po"></span>
-		                                </div>
-		                                <div class="col-md-4">
-		                                    <span data-format="n0" data-bind="text: raw.so"></span>
-		                                    <span data-bind="text: lang.lang.on_so"></span>
-		                                </div>
-		                            </div>
 		                        </div>
 		                    </div>
 	                    </div>
@@ -2761,7 +2567,7 @@
 					-
 					<span >#=name#</span>
 				#}else{#
-					#if(banhji.accountingCenter.checkIsSub(sub_of_id)){#
+					#if(banhji.cashCenter.checkIsSub(sub_of_id)){#
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						<span>#=number#</span>
 						-
