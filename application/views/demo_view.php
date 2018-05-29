@@ -40101,7 +40101,7 @@
 		#if(revenue[i].name!==""){#
 			<tr>
 				<td colspan="3" style="color: black;">
-					#=revenue[i].name#
+					#=revenue[i].number# - #=revenue[i].name#
 				</td>
 		    </tr>
 
@@ -40110,7 +40110,7 @@
 				#totalRevenue += line[j].amount;#
 				<tr>
 					<td style="color: black;">
-						&nbsp;&nbsp; #=line[j].name#
+						&nbsp;&nbsp; #=line[j].number# - #=line[j].name#
 					</td>
 					<td class="right" style="color: black;">
 						#=kendo.toString(line[j].amount, "c2", banhji.locale)#
@@ -40128,7 +40128,7 @@
 				#totalRevenue += line[j].amount;#
 				<tr>
 					<td style="color: black;">
-						#=line[j].name#
+						#=line[j].number# - #=line[j].name#
 					</td>
 					<td class="right" style="color: black;">
 						#=kendo.toString(line[j].amount, "c2", banhji.locale)#
@@ -40154,7 +40154,7 @@
 		#if(expense[i].name!==""){#
 			<tr>
 				<td colspan="3" style="color: black;">
-					#=expense[i].name#
+					#=expense[i].number# - #=expense[i].name#
 				</td>
 		    </tr>
 
@@ -40163,7 +40163,7 @@
 				#totalExpense += line[j].amount;#
 				<tr>
 					<td style="color: black;">
-						&nbsp;&nbsp; #=line[j].name#
+						&nbsp;&nbsp; #=line[j].number# - #=line[j].name#
 					</td>
 					<td class="right" style="color: black;">
 						#=kendo.toString(line[j].amount, "c2", banhji.locale)#
@@ -40181,7 +40181,7 @@
 				#totalExpense += line[j].amount;#
 				<tr>
 					<td style="color: black;">
-						#=line[j].name#
+						#=line[j].number# - #=line[j].name#
 					</td>
 					<td class="right" style="color: black;">
 						#=kendo.toString(line[j].amount, "c2", banhji.locale)#

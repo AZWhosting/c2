@@ -2268,6 +2268,7 @@ class Accounting_modules extends REST_Controller {
 		$obj->where_related("transaction", "deleted <>", 1);
 		$obj->where("deleted <>", 1);
 		$obj->order_by_related("account", "account_type_id", "asc");
+		$obj->order_by_related("account", "number", "asc");
 
 		//Results
 		if($page && $limit){
@@ -2307,19 +2308,23 @@ class Accounting_modules extends REST_Controller {
 				if(isset($subList[$value["sub_of_id"]])){
 					$subList[$value["sub_of_id"]]["line"][] = $value;
 				}else{
-					$subName = "";
+					$subNumber = "";
+					$subName = ""; 
 					if(intval($value["sub_of_id"])>0){
 						$subs = new Account(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						$subs->select("number, name");
 						$subs->get_by_id(intval($value["sub_of_id"]));
 
 						if($subs->exists()){
+							$subNumber = $subs->number;
 							$subName = $subs->name; 
 						}
 					}
 
-					$subList[$value["sub_of_id"]]["type_id"] = $value["type_id"];
-					$subList[$value["sub_of_id"]]["name"] = $subName;
-					$subList[$value["sub_of_id"]]["line"][] = $value;
+					$subList[$value["sub_of_id"]]["type_id"] 	= $value["type_id"];
+					$subList[$value["sub_of_id"]]["number"] 	= $subNumber;
+					$subList[$value["sub_of_id"]]["name"] 		= $subName;
+					$subList[$value["sub_of_id"]]["line"][] 	= $value;
 				}
 			}
 

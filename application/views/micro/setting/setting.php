@@ -849,7 +849,7 @@
 										                   data-value-field="id"
 										                   data-bind="value: category_item_type_id,
 										                              source: itemTypeDS" />
-													    <button class="col-md-2 btn waves-effect waves-light btn-block btn-info  marginBottom" type="button" data-bind="click: addCategory"><i class="icon-plus marginRight"></i> <span data-bind="text: lang.lang.add_new_category"></span></button>
+													    <button style="width: 173px;" class="btn waves-effect waves-light btn-block btn-info  marginBottom" type="button" data-bind="click: addCategory"><i class="icon-plus marginRight"></i> <span data-bind="text: lang.lang.add_new_category"></span></button>
 													</div>
 												</div>
 
@@ -878,7 +878,45 @@
 					                <div class="tab-pane" id="itemGroup" role="tabpanel">
 					                	<div class="row">
 											<div class="col-md-12">
-												Group
+												<div class="hidden-md-up marginBottom">
+													<h3 data-bind="text: lang.lang.group"></h2>
+												</div>
+
+												<div class="row">
+													<div class="col-md-12">
+													    <input style="height: 35px;" class="col-md-3 marginRight marginBottom" id="appendedInputButtons" type="text" placeholder="New Group Name..." data-bind="value: item_group_name">
+													    <input style="height: 35px;" class="col-md-3 marginRight marginBottom" id="appendedInputButtons" type="text" placeholder="Group Abbr..." data-bind="value: item_group_abbr">
+													    <input class="col-md-3 marginRight marginBottom" id="appendedInputButtons"
+											            	   data-role="dropdownlist"
+									            			   data-option-label="(--- Select Category ---)"
+											                   data-value-primitive="true"
+											                   data-auto-bind="false"
+											                   data-text-field="name"
+											                   data-value-field="id"
+											                   data-bind="value: item_group_category_id,
+											                              source: categoryDS"/>
+													    <button style="width: 153px;" class="btn waves-effect waves-light btn-block btn-info  marginBottom" type="button" data-bind="click: addItemGroup"><i class="icon-plus marginRight"></i> <span data-bind="text: lang.lang.add_new_group"></span></button>
+													</div>
+												</div>
+
+												<div class="row">
+													<div class="col-md-12  table-responsive">
+												    	<table class="table color-table dark-table">
+												    		<thead>
+										            			<tr>
+										            				<th data-bind="text: lang.lang.name"></th>
+										            				<th data-bind="text: lang.lang.abbr"></th>
+										            				<th data-bind="text: lang.lang.category"></th>
+										            				<th></th>
+										            			</tr>
+										            		</thead>
+										            		<tbody data-role="listview"
+											            			data-edit-template="itemSetting-edit-item-group-template"
+													                data-template="itemSetting-item-group-template"
+													                data-bind="source: itemGroupDS"></tbody>
+												    	</table>
+													</div>
+											   	</div>
 											</div>
 										</div>
 					                </div>
@@ -951,11 +989,11 @@
    		<td style="text-align:center; ">
     		#:item_type.length>0 ? item_type[0].name : ""#
    		</td>
-   		<t style="text-align:center; ">
+   		<td style="text-align:center; ">
    			<div class="edit-buttons">
 		        <a class="k-button btn-info k-edit-button" href="\\#"><span class="k-icon k-i-edit"></span></a>
 		        #if(is_system=="0"){#
-			        <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-i-delete"></span></a>
+			        <a class="k-button btn-info k-delete-button" href="\\#"><span class="k-icon k-i-delete"></span></a>
 		        #}#
 
 		        #if(id=="4" || id=="5" || id=="6"){#
