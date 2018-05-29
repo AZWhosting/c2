@@ -818,22 +818,60 @@
                         <div class="card-body" >
                         	<h2 data-bind="text: lang.lang.products_services_setting"></h2>
                         	<div class="vtabs" style="width: 100%;">
-	                        	<ul class="nav nav-tabs tabs-vertical" role="tablist" >
-									<li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#/" id="itemCategory"><span class="hidden-sm-up"><i class="ti-layout-grid2-thumb"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.category"></span></a> </li>
-								    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#/" id="itemGroup"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.group"></span></a> </li>
-								    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#/" id="itemUomCategory"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="">UOM Category</span></a> </li>
-								    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#/" id="itemUom"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.uom"></span></a> </li>								    
-								    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#/" id="itemBrand"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.brand"></span></a> </li>
-								    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#/" id="prefixISetting"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.prefix_setting"></span></a> </li>
-								    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#/" id="itemVariants"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="">Variants</span></a> </li>
-								    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#/" id="itemLocation"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="">Location</span></a> </li>
-								    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#/" id="itemEmployeeToItemLocation"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="">Employee To Item Location</span></a> </li>
+	                        	<ul class="nav nav-tabs tabs-vertical" role="tablist" style="width: 17%; float: left;">
+									<li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#itemCategory"><span class="hidden-sm-up"><i class="ti-layout-grid2-thumb"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.category"></span></a> </li>
+								    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#itemGroup"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.group"></span></a> </li>
+								    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#itemUomCategory"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="">UOM Category</span></a> </li>
+								    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#itemUom"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.uom"></span></a> </li>								    
+								    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#itemBrand"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.brand"></span></a> </li>
+								    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#itemPrefixSetting"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.prefix_setting"></span></a> </li>
+								    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#/variants"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="">Variants</span></a> </li>
+								    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#/warehouses"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="">Location</span></a> </li>
+								    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#/employee_item_location"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="">Employee To Item Location</span></a> </li>
 							    </ul>
 				                <div class="tab-content" style="float: left; width: 83%; padding: 10px;">
 					                <div class="tab-pane active" id="itemCategory" role="tabpanel">
 					                	<div class="row">
 											<div class="col-md-12">
-												item Category
+												<div class="hidden-md-up marginBottom">
+													<h3 data-bind="text: lang.lang.category"></h2>
+												</div>
+
+												<div class="row">
+													<div class="col-md-12">
+													    <input style="height: 35px;" class="col-md-3 marginRight marginBottom" id="appendedInputButtons" type="text" placeholder="Category Name..." data-bind="value: category_name">
+													    <input style="height: 35px;" class="col-md-3 marginRight marginBottom" id="appendedInputButtons" type="text" placeholder="Category Abbr..." data-bind="value: category_abbr">
+													    <input class="col-md-3 marginRight marginBottom" id="appendedInputButtons"
+												    	   data-role="dropdownlist"
+										                   data-value-primitive="true"
+										                   data-auto-bind="false"
+										                   data-text-field="name"
+										                   data-value-field="id"
+										                   data-bind="value: category_item_type_id,
+										                              source: itemTypeDS" />
+													    <button class="col-md-2 btn waves-effect waves-light btn-block btn-info  marginBottom" type="button" data-bind="click: addCategory"><i class="icon-plus marginRight"></i> <span data-bind="text: lang.lang.add_new_category"></span></button>
+													</div>
+												</div>
+
+												<div class="row">
+													<div class="col-md-12  table-responsive">
+												    	<table class="table color-table dark-table">
+												    		<thead>
+	            												<tr>
+										            				<th data-bind="text: lang.lang.name"></th>
+										            				<th data-bind="text: lang.lang.abbr"></th>
+										            				<th data-bind="text: lang.lang.type"></th>
+										            				<th></th>
+										            			</tr>
+										            		</thead>
+										            		<tbody data-role="listview"
+											            			data-edit-template="itemSetting-edit-category-template"
+													                data-template="itemSetting-category-template"
+													                data-auto-bind="false"
+													                data-bind="source: categoryDS"></tbody>
+												    	</table>
+													</div>
+											   	</div>
 											</div>
 										</div>	
 					                </div>
@@ -865,33 +903,33 @@
 											</div>
 										</div>
 					                </div>
-					                <div class="tab-pane active" id="prefixISetting" role="tabpanel">
+					                <div class="tab-pane" id="itemPrefixSetting" role="tabpanel">
 					                	<div class="row">
 											<div class="col-md-12">
-												PrefixI Setting
+												<div class="hidden-md-up marginBottom">
+													<h3 data-bind="text: lang.lang.prefix_setting"></h2>
+												</div>
+
+												<div class="row">
+													<div class="col-md-12  table-responsive">
+												    	<table class="table color-table dark-table">
+												    		<thead>
+										            			<tr >
+										            				<th class="center" data-bind="text: lang.lang.type"></th>
+										            				<th class="center" data-bind="text: lang.lang.abbr"></th>
+										            				<th style="text-align: left;padding-left: 5px;" data-bind="text: lang.lang.name"></th>
+										            				<th class="center"><span data-bind="text: lang.lang.action"></span></th>
+										            			</tr>
+										            		</thead>
+										            		<tbody data-role="listview"
+																	 data-selectable="false"
+													                 data-template="accountSetting-prefix-template"
+													                 data-bind="source: prefixDS"></tbody>
+												    	</table>
+													</div>
+											   	</div>
 											</div>
 										</div>	
-					                </div>
-					                <div class="tab-pane" id="itemVariants" role="tabpanel">
-					                	<div class="row">
-											<div class="col-md-12">
-												Variants
-											</div>
-										</div>
-					                </div>
-					                <div class="tab-pane" id="itemLocation" role="tabpanel">
-					                	<div class="row">
-											<div class="col-md-12">
-												Location
-											</div>
-										</div>
-					                </div>
-					                <div class="tab-pane" id="itemEmployeeToItemLocation" role="tabpanel">
-					                	<div class="row">
-											<div class="col-md-12">
-												Employee To Item Location
-											</div>
-										</div>
 					                </div>
 					            </div>
 					        </div>
@@ -907,15 +945,15 @@
    		<td>
     		#:name#
    		</td>
-   		<td align="center">
+   		<td style="text-align:center; ">
     		#:abbr#
    		</td>
-   		<td align="center">
+   		<td style="text-align:center; ">
     		#:item_type.length>0 ? item_type[0].name : ""#
    		</td>
-   		<td align="left">
+   		<t style="text-align:center; ">
    			<div class="edit-buttons">
-		        <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-i-edit"></span></a>
+		        <a class="k-button btn-info k-edit-button" href="\\#"><span class="k-icon k-i-edit"></span></a>
 		        #if(is_system=="0"){#
 			        <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-i-delete"></span></a>
 		        #}#
@@ -923,7 +961,7 @@
 		        #if(id=="4" || id=="5" || id=="6"){#
 
 		        #}else{#
-		        	<span class="k-button" data-bind="click: goPattern"><span data-bind="text: lang.lang.pattern"></span></span>
+		        	<span class="k-button btn-info" data-bind="click: goPattern"><span data-bind="text: lang.lang.pattern"></span></span>
 		   		#}#
 		   	</div>
    		</td>
@@ -950,8 +988,8 @@
             </dd>
         </dl>
         <div class="edit-buttons">
-            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-i-check"></span></a>
-            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
+            <a class="k-button btn-info k-update-button" href="\\#"><span class="k-icon k-i-check"></span></a>
+            <a class="k-button btn-info k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
         </div>
     </div>
 </script>
@@ -960,16 +998,16 @@
    		<td>
     		#:name#
    		</td>
-   		<td align="center">
+   		<td style="text-align: center; ">
     		#:abbr#
    		</td>
-   		<td align="center">
+   		<td style="text-align: center; ">
     		#:category.length>0 ? category[0].name : ""#
    		</td>
-   		<td align="center">
+   		<td style="text-align: center; ">
         	<div class="edit-buttons">
-	        	<a class="k-button k-edit-button" href="\\#"><span class="k-icon k-i-edit"></span></a>
-	        	<a class="k-button k-delete-button" href="\\#"><span class="k-icon k-i-delete"></span></a>
+	        	<a class="k-button btn-info k-edit-button" href="\\#"><span class="k-icon k-i-edit"></span></a>
+	        	<a class="k-button btn-info k-delete-button" href="\\#"><span class="k-icon k-i-delete"></span></a>
         	</div>
    		</td>
    	</tr>
@@ -997,8 +1035,8 @@
             </dd>
         </dl>
         <div class="edit-buttons">
-            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-i-check"></span></a>
-            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
+            <a class="k-button btn-info k-update-button" href="\\#"><span class="k-icon k-i-check"></span></a>
+            <a class="k-button btn-info k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
         </div>
     </div>
 </script>
@@ -1007,11 +1045,11 @@
     	<td>
     		#:name#
    		</td>
-   		<td align="center">
+   		<td style="text-align: center;">
    			<div class="edit-buttons">
 		        <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-i-edit"></span></a>
 		        #if(is_system=="0"){#
-			        <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-i-delete"></span></a>
+			        <a class="k-button btn-info k-delete-button" href="\\#"><span class="k-icon k-i-delete"></span></a>
 		        #}#
 		   	</div>
    		</td>
@@ -1026,8 +1064,8 @@
             </dd>
         </dl>
         <div class="edit-buttons">
-            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-i-check"></span></a>
-            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
+            <a class="k-button btn-info k-update-button" href="\\#"><span class="k-icon k-i-check"></span></a>
+            <a class="k-button btn-info k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
         </div>
     </div>
 </script>
@@ -1039,11 +1077,11 @@
    		<td>
     		#:category#
    		</td>
-   		<td align="center">
+   		<td style="text-align: center;">
    			<div class="edit-buttons">
 		        <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-i-edit"></span></a>
 		        #if(is_system=="0"){#
-			        <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-i-delete"></span></a>
+			        <a class="k-button btn-info k-delete-button" href="\\#"><span class="k-icon k-i-delete"></span></a>
 		        #}#
 		   	</div>
    		</td>
@@ -1069,8 +1107,8 @@
             </dd>
         </dl>
         <div class="edit-buttons">
-            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-i-check"></span></a>
-            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
+            <a class="k-button btn-info k-update-button" href="\\#"><span class="k-icon k-i-check"></span></a>
+            <a class="k-button btn-info k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
         </div>
     </div>
 </script>
@@ -1079,16 +1117,16 @@
     	<td>
     		 #:code#
    		</td>
-   		<td align="center">
+   		<td style="text-align: center; ">
     		 #:name#
    		</td>
-   		<td align="center">
+   		<td style="text-align: center; ">
     		 #:abbr#
    		</td>
-   		<td align="center">
+   		<td style="text-align: center; ">
    			<div class="edit-buttons">
-	        	<a class="k-button k-edit-button" href="\\#"><span class="k-icon k-i-edit"></span></a>
-	        	<a class="k-button k-delete-button" href="\\#"><span class="k-icon k-i-delete"></span></a>
+	        	<a class="k-button btn-info k-edit-button" href="\\#"><span class="k-icon k-i-edit"></span></a>
+	        	<a class="k-button btn-info k-delete-button" href="\\#"><span class="k-icon k-i-delete"></span></a>
 		   	</div>
    		</td>
    	</tr>
@@ -1115,8 +1153,8 @@
             </dd>
         </dl>
         <div class="edit-buttons">
-            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-i-check"></span></a>
-            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
+            <a class="k-button btn-info k-update-button" href="\\#"><span class="k-icon k-i-check"></span></a>
+            <a class="k-button btn-info k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
         </div>
     </div>
 </script>
@@ -1294,10 +1332,10 @@
 			<td style="width: 36%">#:name#</td>
 			<td>
 				<div class="edit-buttons">
-				    <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-i-edit"></span></a>
-				    <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-i-delete"></span></a>
-				    <span class="k-button" data-bind="click: addNewAttributeValue"><span class="k-icon k-i-add"></span>Add Value</span>
-				    <span class="k-button" data-bind="click: viewAttributeValue"><span>View Value</span></span>
+				    <a class="k-button btn-info k-edit-button" href="\\#"><span class="k-icon k-i-edit"></span></a>
+				    <a class="k-button btn-info k-delete-button" href="\\#"><span class="k-icon k-i-delete"></span></a>
+				    <span class="k-button btn-info" data-bind="click: addNewAttributeValue"><span class="k-icon k-i-add"></span>Add Value</span>
+				    <span class="k-button btn-info" data-bind="click: viewAttributeValue"><span>View Value</span></span>
 				</div>
 			</td>
 		</tr>
@@ -1316,14 +1354,14 @@
             <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
         </div> -->
         <div class="row">
-        	<div class="span9" style="width: 60%;">
+        	<div class="col-md-9" style="width: 60%;">
         		<input type="text" class="k-textbox" data-bind="value:name" name="ProductName" required="required" validationMessage="required" style="width: 100%;" />
                 <span data-for="ProductName" class="k-invalid-msg"></span>
         	</div>
-        	<div class="span3" style="padding: 0 15px;">
+        	<div class="col-md-3" style="padding: 0 15px;">
         		<div class="edit-buttons">
-		            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-i-check"></span></a>
-		            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
+		            <a class="k-button btn-info k-update-button" href="\\#"><span class="k-icon k-i-check"></span></a>
+		            <a class="k-button btn-info k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
 		        </div>
         	</div>
         </div>
@@ -1524,10 +1562,10 @@
 			<td style="width: 36%">#:name#</td>
 			<td>
 				<div class="edit-buttons">
-				    <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-i-edit"></span></a>
-				    <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-i-delete"></span></a>
-				    <span class="k-button" data-bind="click: addNewLocation"><span class="k-icon k-i-add"></span>Add Location</span>
-				    <span class="k-button" data-bind="click: viewLocation"><span>View Location</span></span>
+				    <a class="k-button btn-info k-edit-button" href="\\#"><span class="k-icon k-i-edit"></span></a>
+				    <a class="k-button btn-info k-delete-button" href="\\#"><span class="k-icon k-i-delete"></span></a>
+				    <span class="k-button btn-info" data-bind="click: addNewLocation"><span class="k-icon k-i-add"></span>Add Location</span>
+				    <span class="k-button btn-info" data-bind="click: viewLocation"><span>View Location</span></span>
 				</div>
 			</td>
 		</tr>
@@ -1536,17 +1574,17 @@
 <script id="warehouses-edit-template" type="text/x-kendo-tmpl">
     <div class="product-view k-widget" style="float: left; width: 94%;">
         <div class="row">
-        	<div class="span9" style="width: 60%;">
+        	<div class="col-md-9" style="width: 60%;">
         		Name
         		<input type="text" class="k-textbox" data-bind="value:name" name="ProductName" required="required" validationMessage="required" style="width: 100%;" />
         		<span data-for="ProductName" class="k-invalid-msg"></span>
         		Address
         		<input type="text" class="k-textbox" data-bind="value:address" name="txtAddress" style="width: 100%;" />
         	</div>
-        	<div class="span3" style="padding: 0 15px;">
+        	<div class="col-md-3" style="padding: 0 15px;">
         		<div class="edit-buttons">
-		            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-i-check"></span></a>
-		            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
+		            <a class="k-button btn-info k-update-button" href="\\#"><span class="k-icon k-i-check"></span></a>
+		            <a class="k-button btn-info k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
 		        </div>
         	</div>
         </div>
@@ -1558,8 +1596,8 @@
 			<td style="width: 36%">#:name#</td>
 			<td>
 				<div class="edit-buttons">
-				    <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-i-edit"></span></a>
-				    <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-i-delete"></span></a>
+				    <a class="k-button btn-info k-edit-button" href="\\#"><span class="k-icon k-i-edit"></span></a>
+				    <a class="k-button btn-info k-delete-button" href="\\#"><span class="k-icon k-i-delete"></span></a>
 				</div>
 			</td>
 		</tr>
@@ -1568,7 +1606,7 @@
 <script id="warehouses-binLocation-edit-template" type="text/x-kendo-tmpl">
     <div class="product-view k-widget" style="float: left; width: 94%;">
         <div class="row">
-        	<div class="span9" style="width: 60%;">
+        	<div class="col-md-9" style="width: 60%;">
         		Warehouse
         		<input id="ddlWarehouse" name="ddlWarehouse"
         		   data-role="dropdownlist"
@@ -1654,10 +1692,10 @@
         		<input type="text" class="k-textbox" data-bind="value:number" name="txtNumber" required="required" validationMessage="required" style="width: 100%;" />
         		<span data-for="txtNumber" class="k-invalid-msg"></span>
         	</div>
-        	<div class="span3" style="padding: 0 15px;">
+        	<div class="col-md-3" style="padding: 0 15px;">
         		<div class="edit-buttons">
-		            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-i-check"></span></a>
-		            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
+		            <a class="k-button btn-info k-update-button" href="\\#"><span class="k-icon k-i-check"></span></a>
+		            <a class="k-button btn-info k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
 		        </div>
         	</div>
         </div>
@@ -1678,7 +1716,7 @@
 
 			        <a style="margin-bottom: 15px;" class="k-button k-button-icontext k-add-button" data-bind="click: addNew"><span class="k-icon k-i-add"></span>Add New Variant</a>
 			        <div class="row-fluid">
-			        	<div class="span5" style="padding-right: 15px;">
+			        	<div class="col-md-5" style="padding-right: 15px;">
 			        		<div id ="listView"
 							        	 data-role="listview"
 						                 data-edit-template="variants-edit-template"
@@ -1687,7 +1725,7 @@
 						                 style="height: 300px; overflow: auto;width: 100%; padding: 0;"></div>
 
 				            </div>
-				        <div class="span7">
+				        <div class="col-md-7">
 				            <div data-role="grid"
 				                 data-editable="true"
 				                 data-toolbar="['save','cancel']"
@@ -1717,7 +1755,7 @@
 						onclick="javascript:window.history.back()"><i></i></span>
 
 					<div class="row">
-						<div class="span6">
+						<div class="col-md-6">
 							<h2 style="margin-bottom: 15px;">EMPLOYEE TO ITEM LOCATION</h2>
 							<div style="overflow: hidden">
 								<div class="span6" style="padding-left: 0;">
@@ -1780,7 +1818,7 @@
 						    	 data-auto-bind="false"
 					             data-bind="source: obj.contacts"></div>
 						</div>
-						<div class="span6" style="padding-left:0; margin-top: 35px;">
+						<div class="col-md-6" style="padding-left:0; margin-top: 35px;">
 
 							<div data-role="grid"
 				                 data-columns="[
@@ -2002,8 +2040,8 @@
    		<td>
    			#if(is_system=="0"){#
 	   			<div class="edit-buttons">
-			        <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-i-edit"></span></a>
-			        <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-i-delete"></span></a>
+			        <a class="k-button btn-info k-edit-button" href="\\#"><span class="k-icon k-i-edit"></span></a>
+			        <a class="k-button btn-info k-delete-button" href="\\#"><span class="k-icon k-i-delete"></span></a>
 			   	</div>
 		   	#}#
    		</td>
@@ -2018,8 +2056,8 @@
             </dd>
         </dl>
         <div class="edit-buttons">
-            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-i-check"></span></a>
-            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
+            <a class="k-button btn-info k-update-button" href="\\#"><span class="k-icon k-i-check"></span></a>
+            <a class="k-button btn-info k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
         </div>
     </div>
 </script>
@@ -2030,8 +2068,8 @@
    		</td>
    		<td>
    			<div class="edit-buttons">
-		        <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-i-edit"></span></a>
-		        <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-i-delete"></span></a>
+		        <a class="k-button btn-info k-edit-button" href="\\#"><span class="k-icon k-i-edit"></span></a>
+		        <a class="k-button btn-info k-delete-button" href="\\#"><span class="k-icon k-i-delete"></span></a>
 		   	</div>
 		</td>
    	</tr>
@@ -2045,8 +2083,8 @@
             </dd>
         </dl>
         <div class="edit-buttons">
-            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-i-check"></span></a>
-            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
+            <a class="k-button btn-info k-update-button" href="\\#"><span class="k-icon k-i-check"></span></a>
+            <a class="k-button btn-info k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
         </div>
     </div>
 </script>
@@ -2063,8 +2101,8 @@
    		</td>
    		<td>
    			<div class="edit-buttons">
-		        <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-i-edit"></span></a>
-		        <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-i-delete"></span></a>
+		        <a class="k-button btn-info k-edit-button" href="\\#"><span class="k-icon k-i-edit"></span></a>
+		        <a class="k-button btn-info k-delete-button" href="\\#"><span class="k-icon k-i-delete"></span></a>
 		   	</div>
 		</td>
    	</tr>
@@ -2086,8 +2124,8 @@
             </dd>
         </dl>
         <div class="edit-buttons">
-            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-i-check"></span></a>
-            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
+            <a class="k-button btn-info k-update-button" href="\\#"><span class="k-icon k-i-check"></span></a>
+            <a class="k-button btn-info k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
         </div>
     </div>
 </script>
@@ -2095,7 +2133,7 @@
 	<div id="slide-form">
 		<div class="container-fluid">
 			<div class="row-fluid">
-				<div class="span12">
+				<div class="col-md-12">
 					<div id="example" class="k-content">
 						<div class="hidden-print">
 							<span class="pull-right glyphicons no-js remove_2"
@@ -2134,15 +2172,15 @@
 	    				onclick="javascript:window.history.back()"
 						data-bind="click: cancel"><i></i></span>
 
-			        <h2 span data-bind="text: lang.lang.segment"></h2>
+			        <h2 data-bind="text: lang.lang.segment"></h2>
 
 			        <div class="row">
-				        <div class="span6">
+				        <div class="col-md-6">
 				        	<p>
 					        	<span data-bind="text: lang.lang.segment_is_important"></span>
 					        </p>
 				        </div>
-				         <div class="span6">
+				         <div class="col-md-6">
 				         	<button class="btn btn-inverse" data-bind="click: openWindow"><i class="icon-plus icon-white"></i>&nbsp&nbsp<span data-bind="text: lang.lang.add_new_segment"></span></button>
 
 				        </div>
@@ -2177,7 +2215,7 @@
 					</div>
 
 	                <div class="row-fluid">
-		                <div class="span12 table-segment" style="padding: 0;">
+		                <div class="col-md-12 table-segment" style="padding: 0;">
 			            	<table class="table table-condensed">
 			            		<thead style="background-color: #1E4E78; color: #fff; font-weight: bold">
 			            			<tr>
@@ -2812,4 +2850,4 @@
 
 		</div>
 	</div>
-</script>                                                         
+</script>                                                                

@@ -5278,7 +5278,8 @@
             banhji.invoiceCustom.set("formType", "Purchase_Order");
             var obj= banhji.invoiceCustom.get("obj");
             obj.set("type", "Purchase_Order");
-            banhji.router.navigate('/invoice_custom');
+            //banhji.router.navigate('/invoice_custom');
+            window.location.assign(baseUrl + 'rrd#/invoice_custom');
         }
     });
     
@@ -6095,7 +6096,8 @@
 
             banhji.invoiceCustom.set("selectTypeList", banhji.source.customerFormList);
             banhji.invoiceCustom.set("formShow", banhji.view.invoiceForm10);
-            banhji.router.navigate('/invoice_custom');
+            //banhji.router.navigate('/invoice_custom');
+            window.location.assign(baseUrl + 'rrd#/invoice_custom');
         }
     });
     
@@ -6382,8 +6384,8 @@
             }
             if(allowed) {
                 banhji.view.layout.showIn("#content", banhji.view.itemSetting);
-                banhji.view.layout.showIn('#menu', banhji.view.menu);
-                banhji.view.menu.showIn('#secondary-menu', banhji.view.inventoryMenu);
+                // banhji.view.layout.showIn('#menu', banhji.view.menu);
+                // banhji.view.menu.showIn('#secondary-menu', banhji.view.inventoryMenu);
 
                 var vm = banhji.itemSetting;
 

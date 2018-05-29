@@ -2069,6 +2069,7 @@ class Accounting_modules extends REST_Controller {
 		$obj->where_related("transaction", "is_recurring <>", 1);
 		$obj->where_related("transaction", "deleted <>", 1);
 		$obj->where("deleted <>", 1);
+		$obj->order_by_related("account", "number", "asc");
 				
 		//Results
 		if($page && $limit){

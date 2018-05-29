@@ -39776,19 +39776,19 @@
 			#=number#
 		</td>
 		<td style="color: black;">
-			<a data-bind="click:goToGeneralLegder">#=name#</a>
+			#=name#
 		</td>
 		<td style="color: black;">
 			#=type#
 		</td>
 		<td class="right" style="color: black;">
 			#if(dr!==0){#
-				#=kendo.toString(dr, "c", banhji.locale)#
+				<a data-bind="click:goToGeneralLegder">#=kendo.toString(dr, "c", banhji.locale)#</a>
 			#}#
 		</td>
 		<td class="right" style="color: black;">
 			#if(cr!==0){#
-				#=kendo.toString(cr, "c", banhji.locale)#
+				<a data-bind="click:goToGeneralLegder">#=kendo.toString(cr, "c", banhji.locale)#</a>				
 			#}#
 		</td>
     </tr>
