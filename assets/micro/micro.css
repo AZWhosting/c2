@@ -242,6 +242,11 @@ a {
     right: 0;
     width: 270px;
 }
+.k-button.btn-info{
+	color: #fff !important;
+    background-color: #009efb;
+    border-color: #009efb;
+}
 /*End*/
 
 /*Customize Kendo*/

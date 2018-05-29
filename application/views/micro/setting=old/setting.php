@@ -33,7 +33,7 @@
                         	<div class="vtabs" style="width: 100%;">
 	                        	<ul class="nav nav-tabs tabs-vertical" role="tablist" style="width: 17%; float: left;">
 									<li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#customerType" id=""><span class="hidden-sm-up"><i class="ti-layout-grid2-thumb"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.customer_type"></span></a> </li>
-									<li class="nav-item"> <a class="nav-link" href="#/customer_group"><span class="hidden-sm-up"><i class="ti-layout-grid2-thumb"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.customer_group"></span></a> </li>
+									<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#customerGroup"><span class="hidden-sm-up"><i class="ti-layout-grid2-thumb"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.customer_group"></span></a> </li>
 								    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#paymentMethod"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.payment_method"></span></a> </li>
 								    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#paymentTerms"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.payment_terms"></span></a> </li>
 								    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#customForms"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.custom_forms"></span></a> </li>
@@ -47,21 +47,19 @@
 													<h3 data-bind="text: lang.lang.customer_type"></h2>
 												</div>
 
-												<div class="row">
-													<div class="col-md-12">
-													    <input style="height: 35px;" class="col-md-3 marginRight marginBottom" id="appendedInputButtons" type="text" placeholder="input customer type ..." data-bind="value: contactTypeName">
-													    <input style="height: 35px;" class="col-md-3 marginRight marginBottom" id="appendedInputButtons" type="text" placeholder="input abbr ..." data-bind="value: contactTypeAbbr">
-													    <select style="height: 35px;" class="col-md-3 marginRight marginBottom" id="appendedInputButtons" data-bind="value: contactTypeCompany" >
-											                <option value="0"><span data-bind="text: lang.lang.not_a_company"></span></option>
-											                <option value="1"><span data-bind="text: lang.lang.it_is_a_company"></span></option>
-											            </select>
-													    <button class="col-md-2 btn waves-effect waves-light btn-block btn-info  marginBottom" type="button" data-bind="click: addContactType"><i class="icon-plus marginRight"></i> <span data-bind="text: lang.lang.add_type"></span></button>
-													</div>
+												<div class="input-append">
+												    <input class="col-md-4" id="appendedInputButtons" type="text" placeholder="input customer type ..." data-bind="value: contactTypeName">
+												    <input class="col-md-4" id="appendedInputButtons" type="text" placeholder="input abbr ..." data-bind="value: contactTypeAbbr">
+												    <select class="col-md-3" id="appendedInputButtons" data-bind="value: contactTypeCompany" >
+										                <option value="0"><span data-bind="text: lang.lang.not_a_company"></span></option>
+										                <option value="1"><span data-bind="text: lang.lang.it_is_a_company"></span></option>
+										            </select>
+												    <button class="btn btn-default" type="button" data-bind="click: addContactType"><i class="icon-plus"></i> <span data-bind="text: lang.lang.add_type"></span></button>
 												</div>
 
 												<div class="row">
-													<div class="col-md-12  table-responsive">
-												    	<table class="table color-table dark-table">
+													<div class="col-md-12">
+												    	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 												    		<thead>
 												    			<tr>
 												    				<th class="center"><span data-bind="text: lang.lang.type"></span></th>
@@ -81,138 +79,20 @@
 											</div>
 										</div>	
 					                </div>
-					                <div class="tab-pane" id="paymentMethod" role="tabpanel">
-					                	<div class="row">
-											<div class="col-md-12">
-												<div class="hidden-md-up marginBottom">
-													<h3 data-bind="text: lang.lang.payment_method"></h2>
-												</div>
-
-												<div class="row">
-													<div class="col-md-12">
-													    <input style="height: 35px;" class="col-md-3 marginRight marginBottom" id="appendedInputButtons" type="text" placeholder="name ..." data-bind="value: paymentMethodName">													    
-													    <button class="col-md-2 btn waves-effect waves-light btn-block btn-info  marginBottom" type="button" data-bind="click: addPaymentMethod"><i class="icon-plus marginRight"></i> <span data-bind="text: lang.lang.add_method"></span></button>
-													</div>
-												</div>
-
-												<div class="row">
-													<div class="col-md-12  table-responsive">
-												    	<table class="table color-table dark-table">
-												    		<thead>
-												    			<tr>
-												    				<th class="center"><span data-bind="text: lang.lang.name"></span></th>
-	            													<th class="center"></th>
-												    			</tr>
-												    		</thead>
-												    		<tbody data-role="listview"
-										            			data-edit-template="customerSetting-edit-payment-method-template"
-												                data-template="customerSetting-payment-method-template"
-												                data-bind="source: paymentMethodDS"></tbody>
-												    	</table>
-													</div>
-											   	</div>
-											</div>
-										</div>
+					                <div class="tab-pane" id="customerGroup" role="tabpanel">
+					                	Customer Group
 					                </div>
-					                <div class="tab-pane" id="paymentTerms" role="tabpanel">
-					                	<div class="row">
-											<div class="col-md-12">
-												<div class="hidden-md-up marginBottom">
-													<h3 data-bind="text: lang.lang.payment_terms"></h2>
-												</div>
-
-												<div class="row">
-													<div class="col-md-12">
-														<input style="height: 35px;" class="col-md-2 marginRight marginBottom" id="appendedInputButtons" type="text" placeholder="name ..." data-bind="value: paymentTermName">
-													    <input style="height: 35px;" class="col-md-2 marginRight marginBottom" id="appendedInputButtons" type="text" placeholder="net due ..." data-bind="value: paymentTermNetDue">
-													    <input style="height: 35px;" class="col-md-2 marginRight marginBottom" id="appendedInputButtons" type="text" placeholder="period ..." data-bind="value: paymentTermPeriod">
-													    <input style="height: 35px;" class="col-md-2 marginRight marginBottom" id="appendedInputButtons" type="text" placeholder="% ..." data-bind="value: paymentTermPercentage">													    
-													    <button class="col-md-3 btn waves-effect waves-light btn-block btn-info  marginBottom" type="button" data-bind="click: addPaymentTerm"><i class="icon-plus marginRight"></i> <span data-bind="text: lang.lang.add_term"></span></button>
-													</div>
-												</div>
-
-												<div class="row">
-													<div class="col-md-12  table-responsive">
-												    	<table class="table color-table dark-table">
-												    		<thead>
-												    			<tr>
-										            				<th class="center"><span data-bind="text: lang.lang.name"></span></th>
-										            				<th class="center"><span data-bind="text: lang.lang.net_due"></span></th>
-										            				<th class="center"><span data-bind="text: lang.lang.discount_period"></span></th>
-										            				<th class="center"><span data-bind="text: lang.lang.discount_percentage"></span></th>
-										            				<th class="center"></th>
-										            			</tr>
-										            		</thead>
-										            		<tbody data-role="listview"
-											            			data-edit-template="customerSetting-edit-payment-term-template"
-													                data-template="customerSetting-payment-term-template"
-													                data-bind="source: paymentTermDS"></tbody>
-												    	</table>
-													</div>
-											   	</div>
-											</div>
-										</div>
+					                 <div class="tab-pane" id="paymentMethod" role="tabpanel">
+					                	Payment Method
 					                </div>
-					                <div class="tab-pane" id="customForms" role="tabpanel">
-					                	<div class="row">
-					                		<div class="col-md-12">
-					                			<div class="hidden-md-up marginBottom">
-													<h3 data-bind="text: lang.lang.custom_forms"></h2>
-												</div>
-
-												<div class="row">
-													<div class="col-md-12  table-responsive">
-
-							                			<table class="table color-table dark-table">
-										            		<thead>
-										            			<tr class="widget-head">
-										            				<th class="center"><span data-bind="text: lang.lang.name"></span></th>
-										            				<th class="center"><span data-bind="text: lang.lang.form_type"></span></th>
-										            				<th class="center"><span data-bind="text: lang.lang.last_edited"></span></th>
-										            				<th class="center"><span data-bind="text: lang.lang.action"></span></th>
-										            			</tr>
-										            		</thead>
-										            		<tbody data-role="listview"
-																	 data-selectable="false"
-													                 data-template="customerSetting-form-template"
-													                 data-bind="source: txnTemplateDS">
-										            		</tbody>
-										            	</table>
-
-										            	<a id="addNew" class="col-md-3 btn waves-effect waves-light btn-block btn-info  marginBottom" data-bind="click: goInvoiceCustom" style="width: 110px; color: #fff"><i></i>Add New</a>
-					                		
-										           	</div>
-										        </div>
-					                		</div>
-					                	</div>
+					                 <div class="tab-pane" id="paymentTerms" role="tabpanel">
+					                	Payment Terms
 					                </div>
-					                <div class="tab-pane" id="prefixSetting" role="tabpanel">
-					                	<div class="row">
-											<div class="col-md-12">
-												<div class="hidden-md-up marginBottom">
-													<h3 data-bind="text: lang.lang.prefix_setting"></h2>
-												</div>
-
-												<div class="row">
-													<div class="col-md-12  table-responsive">
-												    	<table class="table color-table dark-table">
-												    		<thead>
-										            			<tr >
-										            				<th class="center" data-bind="text: lang.lang.type"></th>
-										            				<th class="center" data-bind="text: lang.lang.abbr"></th>
-										            				<th style="text-align: left;padding-left: 5px;" data-bind="text: lang.lang.name"></th>
-										            				<th class="center"><span data-bind="text: lang.lang.action"></span></th>
-										            			</tr>
-										            		</thead>
-										            		<tbody data-role="listview"
-																	 data-selectable="false"
-													                 data-template="accountSetting-prefix-template"
-													                 data-bind="source: prefixDS"></tbody>
-												    	</table>
-													</div>
-											   	</div>
-											</div>
-										</div>
+					                 <div class="tab-pane" id="customForms" role="tabpanel">
+					                	Custom Forms
+					                </div>
+					                 <div class="tab-pane" id="prefixSetting" role="tabpanel">
+					                	Prefix Setting
 					                </div>
 					            </div>
 					        </div>
@@ -228,23 +108,23 @@
     	<td>
     		#:name#
    		</td>
-   		<td style="text-align: center;">
+   		<td align="center">
     		#:abbr#
    		</td>
-   		<td style="text-align: center;">
+   		<td align="center">
     		#if(is_company=="1"){#
     			Yes
     		#}else{#
     			No
     		#}#
    		</td>
-   		<td style="text-align: center;">
+   		<td align="center">
    			<div class="edit-buttons">
-		        <a class="k-button btn-info k-edit-button" href="\\#"><span class="k-icon k-i-edit"></span></a>
+		        <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-i-edit"></span></a>
 		        #if(is_system=="0"){#
-			        <a class="k-button btn-info k-delete-button" href="\\#"><span class="k-icon k-i-delete"></span></a>
+			        <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-i-delete"></span></a>
 		        #}#
-		        <a class="k-button btn-info" href="\#/customer/0/#=id#"><span data-bind="text: lang.lang.pattern"></span></a>
+		        <a class="k-button" href="\#/customer/0/#=id#"><span data-bind="text: lang.lang.pattern"></span></a>
 		   	</div>
    		</td>
    	</tr>
@@ -272,8 +152,8 @@
             </dd>
         </dl>
         <div class="edit-buttons">
-            <a class="k-button btn-info k-update-button" href="\\#"><span class="k-icon k-i-check"></span></a>
-            <a class="k-button btn-info k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
+            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-i-check"></span></a>
+            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
         </div>
     </div>
 </script>
@@ -282,11 +162,11 @@
     	<td>
     		#:name#
    		</td>
-   		<td style="text-align: center;">
+   		<td align="center">
    			<div class="edit-buttons">
-		        <a class="k-button btn-info k-edit-button" href="\\#"><span class="k-icon k-i-edit"></span></a>
+		        <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-i-edit"></span></a>
 		        #if(is_system=="0"){#
-			        <a class="k-button btn-info k-delete-button" href="\\#"><span class="k-icon k-i-delete"></span></a>
+			        <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-i-delete"></span></a>
 		        #}#
 		   	</div>
    		</td>
@@ -301,8 +181,8 @@
             </dd>
         </dl>
         <div class="edit-buttons">
-            <a class="k-button btn-info k-update-button" href="\\#"><span class="k-icon k-i-check"></span></a>
-            <a class="k-button btn-info k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
+            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-i-check"></span></a>
+            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
         </div>
     </div>
 </script>
@@ -311,20 +191,20 @@
     	<td>
     		#:name#
    		</td>
-   		<td style="text-align: center;">
+   		<td align="center">
     		#:net_due#
    		</td>
-   		<td style="text-align: center;">
+   		<td align="center">
     		#:discount_period#
    		</td>
-   		<td style="text-align: center;">
+   		<td align="center">
     		#:discount_percentage#
    		</td>
-   		<td style="text-align: center;">
+   		<td align="center">
    			<div class="edit-buttons">
-		        <a class="k-button btn-info k-edit-button" href="\\#"><span class="k-icon k-i-edit"></span></a>
+		        <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-i-edit"></span></a>
 		        #if(is_system=="0"){#
-			        <a class="k-button btn-info k-delete-button" href="\\#"><span class="k-icon k-i-delete"></span></a>
+			        <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-i-delete"></span></a>
 		        #}#
 		   	</div>
    		</td>
@@ -351,8 +231,8 @@
             </dd>
         </dl>
         <div class="edit-buttons">
-            <a class="k-button btn-info k-update-button" href="\\#"><span class="k-icon k-i-check"></span></a>
-            <a class="k-button btn-info k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
+            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-i-check"></span></a>
+            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
         </div>
     </div>
 </script>
@@ -374,119 +254,13 @@
 			 	#=kendo.toString(new Date(created_at),"D")#
 			 #}#
 		</td>
-		<td style="text-align: center;">
+		<td class="center">
 			#if( status == 0){ #
-			<a class="k-button btn-info glyphicons pencil" href="/c2/rrd\#/invoice_custom/#=id#"><span class="k-icon k-i-edit"></span></a>
-			<a data-bind="click: deleteForm" class="k-button btn-info k-delete-button"><span class="k-icon k-i-delete"></span></a>			
+			<a class="btn-action glyphicons pencil btn-success" href="\\#/invoice_custom/#= id # "><i></i></a>
+			<a data-bind="click: deleteForm" class="btn-action glyphicons remove_2 btn-danger"><i></i></a>
 			# } #
 		</td>
 	</tr>
-</script>
-<!-- Customer Group -->
-<script id="customerGroup" type="text/x-kendo-template">
-	<div class="page-wrapper ">
-        <div class="container-fluid">
-        	<div class="row marginTop15 sale">
-                <div class="col-md-12">
-                    <div class="card">
-                    	<div class="btn-close" onclick="javascript:window.history.back()"><i class="ti-close"></i></div>
-                        <div class="card-body" >
-                        	<h2>CUSTOMER GROUP</h2>
-                        	<div class="row">
-                        		<div class="col-md-6">
-                        			<div class="row">
-                        				<div class="col-md-6">
-                        					<input type="text" class="k-textbox"
-												data-bind="value: textSearch"
-												placeholder="Number / Name... " style="height: 35px; width: 89%; margin-bottom: 8px;"/>
-
-											<input data-role="dropdownlist" class="marginBottom"
-								                   data-value-primitive="true"
-								                   data-text-field="name"
-								                   data-value-field="id"
-								                   data-auto-bind="false"
-								                   data-bind="value: contact_type_id,
-								                              source: contactTypeDS"
-								                   data-option-label="Select Type..."
-								                   style="width: 75%;" />
-
-								            <button class="k-button btn-info" type="button" data-role="button" data-bind="click: search"><i class="ti-search"></i></button>
-                        				</div>
-                        				<div class="col-md-6">
-                        					<input type="text" class="k-textbox"
-												data-bind="value: obj.name"
-												placeholder="Group Name... " style="height: 35px; width: 100%; margin-bottom: 8px;"/>
-
-											<div style="margin-bottom: 15px; float: right;">
-												<span class="k-button btn-info" data-bind="click: save">Save</span>
-												<span class="k-button btn-info" data-bind="click: cancel">Cancel</span>
-											</div>
-                        				</div>
-                        			</div>
-
-                        			<div class="row">
-                        				<div class="col-md-6">
-                        					<select id="listbox1" data-role="listbox" class="marginBottom"
-								                data-text-field="name"
-								                data-value-field="id"
-								                data-toolbar='{
-								                	tools: ["moveUp", "moveDown", "transferTo", "transferFrom", "transferAllTo", "transferAllFrom", "remove"]
-								            	}'
-								                data-connect-with="listbox2"
-								                data-auto-bind="false"
-								                data-bind="source: contactDS" style="width: 100%; min-height: 550px;">
-								            </select>
-                        				</div>
-                        				<div class="col-md-6">
-                        					<select id="listbox2" data-role="listbox"
-								                data-connect-with="listbox1"
-								                data-text-field="name"
-								                data-value-field="id"
-								                data-auto-bind="false"
-								                data-bind="source: obj.contacts"
-								                style="width: 100%; min-height: 550px;">
-								            </select>
-                        				</div>
-                        			</div>
-
-                        			<div id="pager" class="k-pager-wrap" 
-				            		 data-role="pager"
-							    	 data-auto-bind="false"
-						             data-bind="source: contactDS"></div>
-                        		</div>
-                        		<div class="col-md-6 table-responsive">
-                        			<table class="table color-table dark-table">
-								        <thead>
-								            <tr>
-								                <th><span data-bind="text: lang.lang.name"></span></th>
-								                <th><span>Number of Customer</span></th>
-								                <th></th>
-								            </tr>
-								        </thead>
-								        <tbody data-role="listview"
-								        		data-template="customerGroup-template"
-								        		data-auto-bind="false"
-								        		data-bind="source: dataSource"></tbody>
-								    </table>
-
-						            <div id="ntf1" data-role="notification"></div>
-                        		</div>
-                        	</div>
-                       	</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</script>
-<script id="customerGroup-template" type="text/x-kendo-tmpl">
-	<tr data-uid="#: uid #">
-		<td>#=name#</td>
-		<td class="right">#=contacts.length#</td>
-		<td>
-			<span class="k-button btn-info" data-bind="click: edit">View/Edit</span>
-		</td>
-    </tr>
 </script>
 <!-- End -->
 
@@ -501,185 +275,46 @@
                         <div class="card-body" >
                         	<h2 data-bind="text: lang.lang.general_supplier_setting"></h2>
                         	<div class="vtabs" style="width: 100%;">
-	                        	<ul class="nav nav-tabs tabs-vertical" role="tablist" style="width: 17%; float: left;">
-									<li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#supplierType" id=""><span class="hidden-sm-up"><i class="ti-layout-grid2-thumb"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.supplier_type"></span></a> </li>									
-								    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#supplierPaymentMethod"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.payment_method"></span></a> </li>
-								    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#supplierPaymentTerms"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.payment_terms"></span></a> </li>
-								    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#supplierCustomForms"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.custom_forms"></span></a> </li>
-								    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#supplierPrefixSetting"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.prefix_setting"></span></a> </li>
+	                        	<ul class="nav nav-tabs tabs-vertical" role="tablist" style="width: 17%; float: left;" >
+									<li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#supplierType"><span class="hidden-sm-up"><i class="ti-layout-grid2-thumb"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.supplier_type"></span></a> </li>
+								    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#paymentVMethod"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.payment_method"></span></a> </li>
+								    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#paymentVTerms"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.payment_terms"></span></a> </li>
+								    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#customVForms"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.custom_forms"></span></a> </li>
+								    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#prefixVSetting"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.prefix_setting"></span></a> </li>
 							    </ul>
 				                <div class="tab-content" style="float: left; width: 83%; padding: 10px;">
 					                <div class="tab-pane active" id="supplierType" role="tabpanel">
 					                	<div class="row">
 											<div class="col-md-12">
-												<div class="hidden-md-up marginBottom">
-													<h3 data-bind="text: lang.lang.supplier_type"></h2>
-												</div>
-
-												<div class="row">
-													<div class="col-md-12">
-													    <input style="height: 35px;" class="col-md-3 marginRight marginBottom" id="appendedInputButtons" type="text" placeholder="input customer type ..." data-bind="value: contactTypeName">
-													    <input style="height: 35px;" class="col-md-3 marginRight marginBottom" id="appendedInputButtons" type="text" placeholder="input abbr ..." data-bind="value: contactTypeAbbr">
-													    <select style="height: 35px;" class="col-md-3 marginRight marginBottom" id="appendedInputButtons" data-bind="value: contactTypeCompany" >
-											                <option value="0"><span data-bind="text: lang.lang.not_a_company"></span></option>
-											                <option value="1"><span data-bind="text: lang.lang.it_is_a_company"></span></option>
-											            </select>
-													    <button class="col-md-2 btn waves-effect waves-light btn-block btn-info  marginBottom" type="button" data-bind="click: addContactType"><i class="icon-plus marginRight"></i> <span data-bind="text: lang.lang.add_type"></span></button>
-													</div>
-												</div>
-
-												<div class="row">
-													<div class="col-md-12  table-responsive">
-												    	<table class="table color-table dark-table">
-												    		<thead>
-												    			<tr>
-												    				<th class="center"><span data-bind="text: lang.lang.type"></span></th>
-												    				<th class="center"><span data-bind="text: lang.lang.abbr"></span></th>
-												    				<th class="center"><span data-bind="text: lang.lang.is_company"></span></th>
-												    				<th class="center"></th>
-												    			</tr>
-												    		</thead>
-												    		<tbody data-role="listview"
-												    				data-auto-bind="false"
-												        			data-edit-template="customerSetting-edit-contact-type-template"
-													                data-template="customerSetting-contact-type-template"
-													                data-bind="source: contactTypeDS"></tbody>
-												    	</table>
-													</div>
-											   	</div>
+												Supplier Type
 											</div>
 										</div>	
 					                </div>
-					                <div class="tab-pane" id="supplierPaymentMethod" role="tabpanel">
+					                <div class="tab-pane" id="paymentVMethod" role="tabpanel">
 					                	<div class="row">
 											<div class="col-md-12">
-												<div class="hidden-md-up marginBottom">
-													<h3 data-bind="text: lang.lang.payment_method"></h2>
-												</div>
-
-												<div class="row">
-													<div class="col-md-12">
-													    <input style="height: 35px;" class="col-md-3 marginRight marginBottom" id="appendedInputButtons" type="text" placeholder="name ..." data-bind="value: paymentMethodName">													    
-													    <button class="col-md-2 btn waves-effect waves-light btn-block btn-info  marginBottom" type="button" data-bind="click: addPaymentMethod"><i class="icon-plus marginRight"></i> <span data-bind="text: lang.lang.add_method"></span></button>
-													</div>
-												</div>
-
-												<div class="row">
-													<div class="col-md-12  table-responsive">
-												    	<table class="table color-table dark-table">
-												    		<thead>
-												    			<tr>
-												    				<th class="center"><span data-bind="text: lang.lang.name"></span></th>
-	            													<th class="center"></th>
-												    			</tr>
-												    		</thead>
-												    		<tbody data-role="listview"
-										            			data-edit-template="customerSetting-edit-payment-method-template"
-												                data-template="customerSetting-payment-method-template"
-												                data-bind="source: paymentMethodDS"></tbody>
-												    	</table>
-													</div>
-											   	</div>
+												Payment Method
 											</div>
 										</div>
 					                </div>
-					                <div class="tab-pane" id="supplierPaymentTerms" role="tabpanel">
+					                 <div class="tab-pane" id="paymentVTerms" role="tabpanel">
 					                	<div class="row">
 											<div class="col-md-12">
-												<div class="hidden-md-up marginBottom">
-													<h3 data-bind="text: lang.lang.payment_terms"></h2>
-												</div>
-
-												<div class="row">
-													<div class="col-md-12">
-														<input style="height: 35px;" class="col-md-2 marginRight marginBottom" id="appendedInputButtons" type="text" placeholder="name ..." data-bind="value: paymentTermName">
-													    <input style="height: 35px;" class="col-md-2 marginRight marginBottom" id="appendedInputButtons" type="text" placeholder="net due ..." data-bind="value: paymentTermNetDue">
-													    <input style="height: 35px;" class="col-md-2 marginRight marginBottom" id="appendedInputButtons" type="text" placeholder="period ..." data-bind="value: paymentTermPeriod">
-													    <input style="height: 35px;" class="col-md-2 marginRight marginBottom" id="appendedInputButtons" type="text" placeholder="% ..." data-bind="value: paymentTermPercentage">													    
-													    <button class="col-md-3 btn waves-effect waves-light btn-block btn-info  marginBottom" type="button" data-bind="click: addPaymentTerm"><i class="icon-plus marginRight"></i> <span data-bind="text: lang.lang.add_term"></span></button>
-													</div>
-												</div>
-
-												<div class="row">
-													<div class="col-md-12  table-responsive">
-												    	<table class="table color-table dark-table">
-												    		<thead>
-												    			<tr>
-										            				<th class="center"><span data-bind="text: lang.lang.name"></span></th>
-										            				<th class="center"><span data-bind="text: lang.lang.net_due"></span></th>
-										            				<th class="center"><span data-bind="text: lang.lang.discount_period"></span></th>
-										            				<th class="center"><span data-bind="text: lang.lang.discount_percentage"></span></th>
-										            				<th class="center"></th>
-										            			</tr>
-										            		</thead>
-										            		<tbody data-role="listview"
-											            			data-edit-template="customerSetting-edit-payment-term-template"
-													                data-template="customerSetting-payment-term-template"
-													                data-bind="source: paymentTermDS"></tbody>
-												    	</table>
-													</div>
-											   	</div>
+												Payment Terms
 											</div>
 										</div>
 					                </div>
-					                <div class="tab-pane" id="supplierCustomForms" role="tabpanel">
-					                	<div class="row">
-					                		<div class="col-md-12">
-					                			<div class="hidden-md-up marginBottom">
-													<h3 data-bind="text: lang.lang.custom_forms"></h2>
-												</div>
-
-												<div class="row">
-													<div class="col-md-12  table-responsive">
-
-							                			<table class="table color-table dark-table">
-										            		<thead>
-										            			<tr class="widget-head">
-										            				<th class="center"><span data-bind="text: lang.lang.name"></span></th>
-										            				<th class="center"><span data-bind="text: lang.lang.form_type"></span></th>
-										            				<th class="center"><span data-bind="text: lang.lang.last_edited"></span></th>
-										            				<th class="center"><span data-bind="text: lang.lang.action"></span></th>
-										            			</tr>
-										            		</thead>
-										            		<tbody data-role="listview"
-																	 data-selectable="false"
-													                 data-template="customerSetting-form-template"
-													                 data-bind="source: txnTemplateDS">
-										            		</tbody>
-										            	</table>
-
-										            	<a id="addNew" class="col-md-3 btn waves-effect waves-light btn-block k-button btn-info  marginBottom" data-bind="click: goInvoiceCustom" style="width: 110px; color: #fff"><i></i>Add New</a>
-					                		
-										           	</div>
-										        </div>
-					                		</div>
-					                	</div>
-					                </div>
-					                <div class="tab-pane" id="supplierPrefixSetting" role="tabpanel">
+					                 <div class="tab-pane" id="customVForms" role="tabpanel">
 					                	<div class="row">
 											<div class="col-md-12">
-												<div class="hidden-md-up marginBottom">
-													<h3 data-bind="text: lang.lang.prefix_setting"></h2>
-												</div>
-
-												<div class="row">
-													<div class="col-md-12  table-responsive">
-												    	<table class="table color-table dark-table">
-												    		<thead>
-										            			<tr >
-										            				<th class="center" data-bind="text: lang.lang.type"></th>
-										            				<th class="center" data-bind="text: lang.lang.abbr"></th>
-										            				<th style="text-align: left;padding-left: 5px;" data-bind="text: lang.lang.name"></th>
-										            				<th class="center"><span data-bind="text: lang.lang.action"></span></th>
-										            			</tr>
-										            		</thead>
-										            		<tbody data-role="listview"
-																	 data-selectable="false"
-													                 data-template="accountSetting-prefix-template"
-													                 data-bind="source: prefixDS"></tbody>
-												    	</table>
-													</div>
-											   	</div>
+												Custom Forms
+											</div>
+										</div>
+					                </div>
+					                 <div class="tab-pane" id="prefixVSetting" role="tabpanel">
+					                	<div class="row">
+											<div class="col-md-12">
+												Prefix Setting
 											</div>
 										</div>
 					                </div>
@@ -696,13 +331,13 @@
     <tr>
     	<td>#:name#</td>
     	<td>#:abbr#</td>
-   		<td style="text-align: center;">
+   		<td align="center">
    			<div class="edit-buttons">
-		        <a class="k-button btn-info k-edit-button" href="\\#"><span class="k-icon k-i-edit"></span></a>
+		        <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-i-edit"></span></a>
 		        #if(is_system=="0"){#
 			        <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-i-delete"></span></a>
 		        #}#
-		        <a class="k-button btn-info" href="\#/vendor/0/#=id#"><span data-bind="text: lang.lang.pattern"></span></a>
+		        <a class="k-button" href="\#/vendor/0/#=id#"><span data-bind="text: lang.lang.pattern"></span></a>
 		   	</div>
    		</td>
    	</tr>
@@ -722,8 +357,8 @@
             </dd>
         </dl>
         <div class="edit-buttons">
-            <a class="k-button btn-info k-update-button" href="\\#"><span class="k-icon k-i-check"></span></a>
-            <a class="k-button btn-info k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
+            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-i-check"></span></a>
+            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
         </div>
     </div>
 </script>
@@ -732,11 +367,11 @@
     	<td>
     		#:name#
    		</td>
-   		<td style="text-align: center;">
+   		<td align="center">
    			<div class="edit-buttons">
-		        <a class="k-button btn-info k-edit-button" href="\\#"><span class="k-icon k-i-edit"></span></a>
+		        <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-i-edit"></span></a>
 		        #if(is_system=="0"){#
-			        <a class="k-button btn-info k-delete-button" href="\\#"><span class="k-icon k-i-delete"></span></a>
+			        <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-i-delete"></span></a>
 		        #}#
 		   	</div>
    		</td>
@@ -751,8 +386,8 @@
             </dd>
         </dl>
         <div class="edit-buttons">
-            <a class="k-button btn-info k-update-button" href="\\#"><span class="k-icon k-i-check"></span></a>
-            <a class="k-button btn-info k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
+            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-i-check"></span></a>
+            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
         </div>
     </div>
 </script>
@@ -761,20 +396,20 @@
     	<td>
     		#:name#
    		</td>
-   		<td style="text-align: center;">
+   		<td align="center">
     		#:net_due#
    		</td>
-   		<td style="text-align: center;">
+   		<td align="center">
     		#:discount_period#
    		</td>
-   		<td style="text-align: center;">
+   		<td align="center">
     		#:discount_percentage#
    		</td>
    		<td>
    			<div class="edit-buttons">
-		        <a class="k-button btn-info k-edit-button" href="\\#"><span class="k-icon k-i-edit"></span></a>
+		        <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-i-edit"></span></a>
 		        #if(is_system=="0"){#
-			        <a class="k-button btn-info k-delete-button" href="\\#"><span class="k-icon k-i-delete"></span></a>
+			        <a class="k-button k-delete-button" href="\\#"><span class="k-icon k-i-delete"></span></a>
 		        #}#
 		   	</div>
    		</td>
@@ -801,8 +436,8 @@
             </dd>
         </dl>
         <div class="edit-buttons">
-            <a class="k-button btn-info k-update-button" href="\\#"><span class="k-icon k-i-check"></span></a>
-            <a class="k-button btn-info k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
+            <a class="k-button k-update-button" href="\\#"><span class="k-icon k-i-check"></span></a>
+            <a class="k-button k-cancel-button" href="\\#"><span class="k-icon k-i-cancel"></span></a>
         </div>
     </div>
 </script>
@@ -1934,65 +1569,65 @@
 		<td class="center" style="text-align: left;">
 			<a style="text-align: left;padding-left: 5px;" href="\\#/add_accountingprefix/#= id # ">#= name# </a>
 		</td>
-		<td style="text-align: center;">
-			<!-- <a class="btn-action glyphicons pencil btn-success" href="\\#/add_accountingprefix/#= id # "><i class=""></i></a> -->
-			<a class="k-button btn-info glyphicons pencil" href="\\#/add_accountingprefix/#=id#"><span class="k-icon k-i-edit"></span></a>
+		<td class="center">
+			<a class="btn-action glyphicons pencil btn-success" href="\\#/add_accountingprefix/#= id # "><i></i></a>
 		</td>
 	</tr>
 </script>
 <script id="addAccountingprefix" type="text/x-kendo-template">
-	<div class="page-wrapper ">
-        <div class="container-fluid">
-        	<div class="row marginTop15 sale">
-                <div class="col-md-12">
-                    <div class="card">
-                    	<div class="btn-close" onclick="javascript:window.history.back()"><i class="ti-close"></i></div>
-                        <div class="card-body" >
-                        	<h2>Transaction Prefix</h2>
-                        	<div class="row">
-                        		<div class="col-md-6">
-                        			<p>
-                        				At the begining of every fiscal year, all the reference numbers will start at 1. If you donot start using BanhJi at the beginning of your fiscal year, please use Starting Number to determine you next number for each transaction reference. This is important for your transaction reference number.
-                        			</p>
-                        		</div>
-                        		<div class="col-md-6 table-responsive">
-                        			<table class="table color-table dark-table">
-								    	<thead>
-									    	<tr>
-									    		<th width="40%">Name</th>
-									    		<th>Abbr</th>
-									    	</tr>
-								    	</thead>
-								    	<tbody>
-									    	<tr>
-									    		<td><span data-bind="text: obj.type"></span></td>
-									    		<td>
-									    			<input type="text" placeholder="Abbr" class="k-textbox k-invalid span4" data-bind="value: obj.abbr" style="width: 100px;" >
-									    		</td>
-									    	</tr>
-								    	</tbody>
-									</table>
-                        		</div>
-                        	</div>
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content">
+			    	<div class="hidden-print pull-right">
+			    		<span class="glyphicons no-js remove_2"
+							data-bind="click: cancel"><i></i></span>
+					</div>
+			        <h2 style="padding:0 15px;">Transaction Prefix</h2>
+				    <br>
 
-                        	<!-- Form actions -->
-							<div class="backgroundButtonFooter">
-								<div id="ntf1" data-role="notification"></div>							
+				    <span class="row-fluid">
 
-								<div class="row">
-									<div class="col-md-4" ></div>
-									<div class="col-md-8" align="right">
-									  	<span class="btn-btn" id="saveClose"><span data-bind="text: lang.lang.save_close"></span></span>									  	
-									</div>
-								</div>
-							</div>
-							<!-- // Form actions END -->
-                       	</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+				    	<span class="span6">
+				    		<p>At the begining of every fiscal year, all the reference numbers will start at 1.
+				    			If you donot start using BanhJi at the beginning of your fiscal year,
+				    			please use Starting Number to determine you next number for each transaction reference.
+				    			This is important for your transaction reference number.</p>
+				    	</span>
+
+				    	<span class="span6">
+				    		<table class="table table-borderless">
+						    	<thead>
+							    	<tr>
+							    		<th width="40%">Name</th>
+							    		<th>Abbr</th>
+							    	</tr>
+						    	</thead>
+						    	<tbody>
+							    	<tr>
+							    		<td><span data-bind="text: obj.type"></span></td>
+							    		<td>
+							    			<input type="text" placeholder="Abbr" class="k-textbox k-invalid span4" data-bind="value: obj.abbr" style="width: 100px;" >
+							    		</td>
+							    	</tr>
+						    	</tbody>
+							</table>
+				    	</span>
+
+				    </span>
+
+					<!-- Form actions -->
+					<div class="box-generic bg-action-button">
+						<div id="ntf1" data-role="notification"></div>
+						<div class="row">
+							<span id="saveClose" class="btn btn-icon btn-success glyphicons power" style="width: 80px;float:right; margin-right: 15px;"><i></i> Save Close</span>
+						</div>
+					</div>
+					<!-- // Form actions END -->
+				</div>
+			</div>
+		</div>
+	</div>
 </script>
 <script id="accountingSetting-contact-type-template" type="text/x-kendo-tmpl">
     <tr>
@@ -2812,4 +2447,4 @@
 
 		</div>
 	</div>
-</script>                                                         
+</script>                                   
