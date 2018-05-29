@@ -26,7 +26,7 @@ require APPPATH.'/libraries/REST_Controller.php';
             $modules    = NULL;
             $data       = array();
             $timeLapse  = NULL;
-            $institutes = new Institute();
+            $user = new User();
 
             $this->benchmark->mark('query_start');
             // if(isset($filter))
@@ -44,11 +44,11 @@ require APPPATH.'/libraries/REST_Controller.php';
 
             if(isset($id))
             {
-                $institutes->where('id', $id);
-                $institutes->get_paged_iterated($page, $limit);
+                $user->where('id', $id);
+                $user->get_paged_iterated($page, $limit);
             }
 
-            if($institutes->exists())
+            if($user->exists())
             {
                 if(isset($paramater))
                 {
@@ -60,7 +60,6 @@ require APPPATH.'/libraries/REST_Controller.php';
                         $comp = array();
                         foreach($modules as $app)
                         {
-                            $contact = $app->user->select('id', 'first_name', 'last_name')->get();
                             $comp[] = array(
                                 'id' => $app->id,
                                 'name' => $app->name,
@@ -68,15 +67,10 @@ require APPPATH.'/libraries/REST_Controller.php';
                                 'discription' => $app->description,
                                 'image' => $app->image_url,
                                 'home' => base_url()."$app->href",
-                                'url' => base_url()."v1/apps/index/{$app->id}",
-                                'developer' => array(
-                                    'id' => $contact->id,
-                                    'name' => $contact->first_name. ' ' .$app->last_name,
-                                    'url' => base_url().'contact/index/'.$contact->id
-                                )
+                                'url' => base_url()."v1/apps/index/{$app->id}"
                             );
                         }
-                        foreach($institutes as $row)
+                        foreach($user as $row)
                         {
                             $data[] = array(
                                 'id' => $row->id,
@@ -90,7 +84,7 @@ require APPPATH.'/libraries/REST_Controller.php';
                     }
                 } else
                 {
-                    foreach($institutes as $row)
+                    foreach($user as $row)
                     {
                         $data[] = array(
                             'id' => $row->id,
@@ -104,9 +98,9 @@ require APPPATH.'/libraries/REST_Controller.php';
             $this->benchmark->mark('query_end');
             $result = array(
                 'results'   => $data,
-                'totalRow'  => $institutes->paged->total_rows,
-                'totalPage' => $institutes->paged->total_pages,
-                'numberOnPage' => $institutes->paged->items_on_page,
+                'totalRow'  => $user->paged->total_rows,
+                'totalPage' => $user->paged->total_pages,
+                'numberOnPage' => $user->paged->items_on_page,
                 'timeLapse' => $this->benchmark->elapsed_time('query_start', 'query_end')
             );
             $this->json($result, 200);

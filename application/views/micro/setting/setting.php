@@ -923,7 +923,34 @@
 					                <div class="tab-pane" id="itemUomCategory" role="tabpanel">
 					                	<div class="row">
 											<div class="col-md-12">
-												Uom Category
+												<div class="hidden-md-up marginBottom">
+													<h3 data-bind="">UOM Category</h2>
+												</div>
+
+												<div class="row">
+													<div class="col-md-12">
+													    <input style="height: 35px;" class="col-md-3 marginRight marginBottom" id="appendedInputButtons" type="text" placeholder="UOM Category Name..." data-bind="value: measurement_category_name">													    
+													    <button style="width: 153px;" class="btn waves-effect waves-light btn-block btn-info  marginBottom" type="button" data-bind="click: addMeasurementCategory"><i class="icon-plus marginRight"></i> <span data-bind="">Add UOM</span></button>
+													</div>
+												</div>
+
+												<div class="row">
+													<div class="col-md-12  table-responsive">
+												    	<table class="table color-table dark-table">
+												    		<thead>
+										            			<tr>
+										            				<th data-bind="text: lang.lang.name"></th>
+										            				<th></th>
+										            			</tr>
+										            		</thead>
+										            		<tbody data-role="listview"
+										            				data-auto-bind="false"
+											            			data-edit-template="itemSetting-edit-measurement-category-template"
+													                data-template="itemSetting-measurement-category-template"
+													                data-bind="source: measurementCategoryDS"></tbody>
+												    	</table>
+													</div>
+											   	</div>
 											</div>
 										</div>
 					                </div>

@@ -753,9 +753,6 @@
 					<div class="bigappcard-display-name">
 						#=name#
 					</div>
-					<div class="bigappcard-vendor-name">
-						#=developer.name#
-					</div>
 					<!-- <div class="bigappcard-tagline">
 						#=summary#
 					</div> -->
