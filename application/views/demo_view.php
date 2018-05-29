@@ -8392,7 +8392,7 @@
 	            </li>
 	            <li><a href="#/customer_group" class="glyphicons group"><i></i><span class="strong">CUSTOMER GROUP</span></a>
 	            </li>
-	            <li><a href="#/customer_assignee" class="glyphicons nameplate" data-toggle="tab"><i></i><span class="strong">SALE REP. ASSEGMENT</span></a>
+	            <li><a href="#/customer_assignee" class="glyphicons nameplate"><i></i><span class="strong">SALE REP. ASSEGMENT</span></a>
 	            </li>
 	            <li><a href="#tab2-5" class="glyphicons credit_card" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.payment_method"></span></span></a>
 	            </li>

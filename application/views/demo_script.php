@@ -8552,13 +8552,15 @@
             var self = this, obj = this.get("obj");
 
             if(obj.contact_id>0){
-                this.referenceDS.filter([
-                    { field: "contact_id", value: obj.contact_id },
-                    { field: "type", operator:"where_in", value:["Sale_Order", "Quote", "GDN"] },
-                    { field: "status", value:0 },
-                    { field: "reuse", operator:"or_where", value:1 },
-                    { field: "due_date >=", value: kendo.toString(obj.issued_date, "yyyy-MM-dd") }
-                ]);
+                this.referenceDS.query({
+                    filter :[
+                        { field: "contact_id", value: obj.contact_id },
+                        { field: "type", operator:"where_in", value:["Sale_Order", "Quote", "GDN"] },
+                        { field: "status", value:0 },
+                        { field: "reuse", operator:"or_where", value:1 },
+                        { field: "due_date >=", value: kendo.toString(obj.issued_date, "yyyy-MM-dd") }
+                    ]
+                });
             }
         },
         referenceChanges    : function(e){
