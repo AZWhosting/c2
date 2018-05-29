@@ -24068,6 +24068,7 @@
                 case 73: Active = banhji.view.defaultSaleReturn; break;
                 case 74: Active = banhji.view.defaultCashRefund; break;
                 case 75: Active = banhji.view.invoiceHaveBalance; break;
+                case 76: Active = banhji.view.normalInvoiceHeritageWalk; break;
             }
             banhji.view.invoiceCustom.showIn('#invFormContent', Active);
         },
@@ -24500,6 +24501,7 @@
                 case 73: Active = banhji.view.defaultSaleReturn; break;
                 case 74: Active = banhji.view.defaultCashRefund; break;
                 case 75: Active = banhji.view.invoiceHaveBalance; break;
+                case 76: Active = banhji.view.normalInvoiceHeritageWalk; break;
             }
             banhji.view.invoiceForm.showIn('#invFormContent', Active);
         },
@@ -68054,6 +68056,7 @@
         invoiceVATHeritageWalk: new kendo.Layout("#invoiceVATHeritageWalk", {model: banhji.invoiceForm}),
         depositHeritageWalk: new kendo.Layout("#depositHeritageWalk", {model: banhji.invoiceForm}),
         receiptHeritageWalk: new kendo.Layout("#receiptHeritageWalk", {model: banhji.invoiceForm}),
+        normalInvoiceHeritageWalk: new kendo.Layout("#normalInvoiceHeritageWalk", {model: banhji.invoiceForm}),
 
         purchaseSampleService: new kendo.Layout("#purchaseSampleService", {model: banhji.invoiceForm}),
         invoiceTaxMekong: new kendo.Layout("#invoiceTaxMekong", {model: banhji.invoiceForm}),

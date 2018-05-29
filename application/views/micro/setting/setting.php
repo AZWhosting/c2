@@ -957,14 +957,80 @@
 					                <div class="tab-pane" id="itemUom" role="tabpanel">
 					                	<div class="row">
 											<div class="col-md-12">
-												Uom
+												<div class="hidden-md-up marginBottom">
+													<h3 data-bind="text: lang.lang.uom"></h2>
+												</div>
+
+												<div class="row">
+													<div class="col-md-12">
+													    <input style="height: 35px;" class="col-md-3 marginRight marginBottom" id="appendedInputButtons" type="text" placeholder="UOM..." data-bind="value: measurement_name">
+													    <input class="col-md-3 marginRight marginBottom" name="category"
+										                   data-role="dropdownlist"
+										                   data-value-primitive="true"
+										                   data-text-field="name"
+										                   data-value-field="id"
+										                   data-bind="value: measurement_category_id,
+								                              source: measurementCategoryDS"
+								                           data-option-label="Category..." />
+													    <button style="width: 153px;" class="btn waves-effect waves-light btn-block btn-info  marginBottom" type="button" data-bind="click: addMeasurement"><i class="icon-plus marginRight"></i> <span data-bind="text: lang.lang.add_new_group"></span></button>
+													</div>
+												</div>
+
+												<div class="row">
+													<div class="col-md-12  table-responsive">
+												    	<table class="table color-table dark-table">
+												    		<thead>
+										            			<tr>
+										            				<th data-bind="text: lang.lang.uom"></th>
+										            				<th data-bind="text: lang.lang.category"></th>
+										            				<th></th>
+										            			</tr>
+										            		</thead>
+										            		<tbody data-role="listview"
+										            				data-auto-bind="false"
+											            			data-edit-template="itemSetting-edit-measurement-template"
+													                data-template="itemSetting-measurement-template"
+													                data-bind="source: measurementDS"></tbody>
+													    </table>
+													</div>
+											   	</div>
 											</div>
 										</div>
 					                </div>
 					                <div class="tab-pane" id="itemBrand" role="tabpanel">
 					                	<div class="row">
 											<div class="col-md-12">
-												Brand
+												<div class="hidden-md-up marginBottom">
+													<h3 data-bind="text: lang.lang.brand"></h2>
+												</div>
+
+												<div class="row">
+													<div class="col-md-12">
+													    <input style="height: 35px;" class="col-md-2 marginRight marginBottom" id="appendedInputButtons" type="text" placeholder="Code..." data-bind="value: brand_code">
+													    <input style="height: 35px;" class="col-md-2 marginRight marginBottom" id="appendedInputButtons" type="text" placeholder="New Brand..." data-bind="value: brand_name">
+													    <input style="height: 35px;" class="col-md-2 marginRight marginBottom" id="appendedInputButtons" type="text" placeholder="abbr..." data-bind="value: brand_abbr">
+													    <button style="width: 173px;" class="btn waves-effect waves-light btn-block btn-info  marginBottom" type="button" data-bind="click: addBrand"><i class="icon-plus marginRight"></i> <span data-bind="text: lang.lang.add_brand"></span></button>
+													</div>
+												</div>
+
+												<div class="row">
+													<div class="col-md-12  table-responsive">
+												    	<table class="table color-table dark-table">
+												    		<thead>
+										            			<tr>
+										            				<th data-bind="text: lang.lang.code"></th>
+										            				<th data-bind="text: lang.lang.name"></th>
+										            				<th data-bind="text: lang.lang.abbr"></th>
+										            				<th></th>
+										            			</tr>
+										            		</thead>
+										            		<tbody data-role="listview"
+											            			data-edit-template="itemSetting-edit-brand-template"
+													                data-template="itemSetting-brand-template"
+													                data-bind="source: brandDS"></tbody>
+												    	</table>
+													</div>
+											   	</div>
 											</div>
 										</div>
 					                </div>
@@ -1112,7 +1178,7 @@
    		</td>
    		<td style="text-align: center;">
    			<div class="edit-buttons">
-		        <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-i-edit"></span></a>
+		        <a class="k-button btn-info k-edit-button" href="\\#"><span class="k-icon k-i-edit"></span></a>
 		        #if(is_system=="0"){#
 			        <a class="k-button btn-info k-delete-button" href="\\#"><span class="k-icon k-i-delete"></span></a>
 		        #}#
@@ -1144,7 +1210,7 @@
    		</td>
    		<td style="text-align: center;">
    			<div class="edit-buttons">
-		        <a class="k-button k-edit-button" href="\\#"><span class="k-icon k-i-edit"></span></a>
+		        <a class="k-button btn-info k-edit-button" href="\\#"><span class="k-icon k-i-edit"></span></a>
 		        #if(is_system=="0"){#
 			        <a class="k-button btn-info k-delete-button" href="\\#"><span class="k-icon k-i-delete"></span></a>
 		        #}#
@@ -1348,8 +1414,65 @@
 
 	</div>
 </script>
+<!-- Variants -->
 <script id="variants" type="text/x-kendo-template">
-	<div id="slide-form">
+	<div class="page-wrapper ">
+        <div class="container-fluid">
+        	<div class="row marginTop15 sale">
+                <div class="col-md-12">
+                    <div class="card">
+                    	<div class="btn-close" onclick="javascript:window.history.back()"><i class="ti-close"></i></div>
+                        <div class="card-body" >
+                        	<h2>Variants</h2>
+                        	<a style="margin-bottom: 15px;" class="k-button btn-info k-button-icontext k-add-button" data-bind="click: addNew"><span class="k-icon k-i-add"></span>Add New Variant</a>
+                        	<div class="row">
+                        		<div class="col-md-5">
+                        			<div id ="listView"
+							        	 data-role="listview"
+						                 data-edit-template="variants-edit-template"
+						                 data-template="variants-template"
+						                 data-bind="source: dataSource"
+						                 style="height: 300px; overflow: auto;width: 100%; padding: 0;"></div>
+                        		</div>
+                        		<div class="col-md-7 table-responsive">
+                        			<table class="table color-table dark-table">
+								    	<thead>
+									    	<tr>
+									    		<th width="40%">Name</th>
+									    		<th>Abbr</th>
+									    	</tr>
+								    	</thead>
+								    	<tbody>
+									    	<tr>
+									    		<td><span data-bind="text: obj.type"></span></td>
+									    		<td>
+									    			<input type="text" placeholder="Abbr" class="k-textbox k-invalid span4" data-bind="value: obj.abbr" style="width: 100px;" >
+									    		</td>
+									    	</tr>
+								    	</tbody>
+									</table>
+                        		</div>
+                        	</div>
+
+                        	<!-- Form actions -->
+							<div class="backgroundButtonFooter">
+								<div id="ntf1" data-role="notification"></div>							
+
+								<div class="row">
+									<div class="col-md-4" ></div>
+									<div class="col-md-8" align="right">
+									  	<span class="btn-btn" id="saveClose"><span data-bind="text: lang.lang.save_close"></span></span>									  	
+									</div>
+								</div>
+							</div>
+							<!-- // Form actions END -->
+                       	</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+	<!-- <div id="slide-form">
 		<div class="customer-background">
 			<div class="container-960" style="overflow: hidden;">
 				<div id="example" class="k-content">
@@ -1389,7 +1512,7 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</div> -->
 </script>
 <script id="variants-template" type="text/x-kendo-tmpl">
 	<table style="width: 100%;">
