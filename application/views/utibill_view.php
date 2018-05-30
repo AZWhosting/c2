@@ -5071,6 +5071,7 @@
 							                   data-value-field="id"
 							                   data-bind="
 							                   	source: selectType,
+							                   	events: {change: meterStatusChange},
 							                   	value: obj.status"
 							                   style="width: 100%; " ></select>
 										</div>
@@ -5093,16 +5094,19 @@
 				            					placeholder="Register Date" 
 				            					style="width: 100%;" />
 										</div>
-										<div class="control-group">
+										<div class="control-group" data-bind="visible: haveChangeMeter">
 											<label for="registeredDate"><span data-bind="text: lang.lang.change_meter"></span></label>
-								            <select data-role="dropdownlist"
-							                   data-value-primitive="true"
-							                   data-text-field="meter_number"
-							                   data-value-field="id"
-							                   data-bind="
-							                   	source: meterDS,
-							                   	value: obj.change_meter_id"
-							                   style="width: 100%; " ></select>
+								            <select 
+								            	data-role="dropdownlist"
+							                   	data-value-primitive="true"
+							                   	data-text-field="meter_number"
+							                   	data-value-field="id"
+							                   	data-auto-bind="false"
+							                   	data-bind="
+							                   		source: meterDS,
+							                   		value: obj.change_meter_id"
+							                   	style="width: 100%; " >
+							                </select>
 										</div>
 									</div>
 									<div class="col-xs-12 col-sm-6">

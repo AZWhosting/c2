@@ -33,7 +33,6 @@
                         	<div class="vtabs" style="width: 100%;">
 	                        	<ul class="nav nav-tabs tabs-vertical" role="tablist" style="width: 17%; float: left;">
 									<li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#customerType" id=""><span class="hidden-sm-up"><i class="ti-layout-grid2-thumb"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.customer_type"></span></a> </li>
-									<li class="nav-item"> <a class="nav-link" href="#/customer_group"><span class="hidden-sm-up"><i class="ti-layout-grid2-thumb"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.customer_group"></span></a> </li>
 								    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#paymentMethod"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.payment_method"></span></a> </li>
 								    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#paymentTerms"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.payment_terms"></span></a> </li>
 								    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#customForms"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.custom_forms"></span></a> </li>
@@ -820,14 +819,11 @@
                         	<div class="vtabs" style="width: 100%;">
 	                        	<ul class="nav nav-tabs tabs-vertical" role="tablist" style="width: 17%; float: left;">
 									<li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#itemCategory"><span class="hidden-sm-up"><i class="ti-layout-grid2-thumb"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.category"></span></a> </li>
-								    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#itemGroup"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.group"></span></a> </li>
-								    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#itemUomCategory"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="">UOM Category</span></a> </li>
-								    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#itemUom"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.uom"></span></a> </li>								    
-								    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#itemBrand"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.brand"></span></a> </li>
+								    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#itemGroup"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.group"></span></a> </li>								    
+								    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#itemUom"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.uom"></span></a> </li>
 								    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#itemPrefixSetting"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.prefix_setting"></span></a> </li>
-								    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#/variants"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="">Variants</span></a> </li>
-								    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#/warehouses"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="">Location</span></a> </li>
-								    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#/employee_item_location"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="">Employee To Item Location</span></a> </li>
+								    
+								    
 							    </ul>
 				                <div class="tab-content" style="float: left; width: 83%; padding: 10px;">
 					                <div class="tab-pane active" id="itemCategory" role="tabpanel">
@@ -919,41 +915,7 @@
 											   	</div>
 											</div>
 										</div>
-					                </div>
-					                <div class="tab-pane" id="itemUomCategory" role="tabpanel">
-					                	<div class="row">
-											<div class="col-md-12">
-												<div class="hidden-md-up marginBottom">
-													<h3 data-bind="">UOM Category</h2>
-												</div>
-
-												<div class="row">
-													<div class="col-md-12">
-													    <input style="height: 35px;" class="col-md-3 marginRight marginBottom" id="appendedInputButtons" type="text" placeholder="UOM Category Name..." data-bind="value: measurement_category_name">													    
-													    <button style="width: 153px;" class="btn waves-effect waves-light btn-block btn-info  marginBottom" type="button" data-bind="click: addMeasurementCategory"><i class="icon-plus marginRight"></i> <span data-bind="">Add UOM</span></button>
-													</div>
-												</div>
-
-												<div class="row">
-													<div class="col-md-12  table-responsive">
-												    	<table class="table color-table dark-table">
-												    		<thead>
-										            			<tr>
-										            				<th data-bind="text: lang.lang.name"></th>
-										            				<th></th>
-										            			</tr>
-										            		</thead>
-										            		<tbody data-role="listview"
-										            				data-auto-bind="false"
-											            			data-edit-template="itemSetting-edit-measurement-category-template"
-													                data-template="itemSetting-measurement-category-template"
-													                data-bind="source: measurementCategoryDS"></tbody>
-												    	</table>
-													</div>
-											   	</div>
-											</div>
-										</div>
-					                </div>
+					                </div>					                
 					                <div class="tab-pane" id="itemUom" role="tabpanel">
 					                	<div class="row">
 											<div class="col-md-12">
@@ -992,43 +954,6 @@
 													                data-template="itemSetting-measurement-template"
 													                data-bind="source: measurementDS"></tbody>
 													    </table>
-													</div>
-											   	</div>
-											</div>
-										</div>
-					                </div>
-					                <div class="tab-pane" id="itemBrand" role="tabpanel">
-					                	<div class="row">
-											<div class="col-md-12">
-												<div class="hidden-md-up marginBottom">
-													<h3 data-bind="text: lang.lang.brand"></h2>
-												</div>
-
-												<div class="row">
-													<div class="col-md-12">
-													    <input style="height: 35px;" class="col-md-2 marginRight marginBottom" id="appendedInputButtons" type="text" placeholder="Code..." data-bind="value: brand_code">
-													    <input style="height: 35px;" class="col-md-2 marginRight marginBottom" id="appendedInputButtons" type="text" placeholder="New Brand..." data-bind="value: brand_name">
-													    <input style="height: 35px;" class="col-md-2 marginRight marginBottom" id="appendedInputButtons" type="text" placeholder="abbr..." data-bind="value: brand_abbr">
-													    <button style="width: 173px;" class="btn waves-effect waves-light btn-block btn-info  marginBottom" type="button" data-bind="click: addBrand"><i class="icon-plus marginRight"></i> <span data-bind="text: lang.lang.add_brand"></span></button>
-													</div>
-												</div>
-
-												<div class="row">
-													<div class="col-md-12  table-responsive">
-												    	<table class="table color-table dark-table">
-												    		<thead>
-										            			<tr>
-										            				<th data-bind="text: lang.lang.code"></th>
-										            				<th data-bind="text: lang.lang.name"></th>
-										            				<th data-bind="text: lang.lang.abbr"></th>
-										            				<th></th>
-										            			</tr>
-										            		</thead>
-										            		<tbody data-role="listview"
-											            			data-edit-template="itemSetting-edit-brand-template"
-													                data-template="itemSetting-brand-template"
-													                data-bind="source: brandDS"></tbody>
-												    	</table>
 													</div>
 											   	</div>
 											</div>
@@ -1414,6 +1339,7 @@
 
 	</div>
 </script>
+
 <!-- Variants -->
 <script id="variants" type="text/x-kendo-template">
 	<div class="page-wrapper ">
@@ -1435,84 +1361,26 @@
 						                 style="height: 300px; overflow: auto;width: 100%; padding: 0;"></div>
                         		</div>
                         		<div class="col-md-7 table-responsive">
-                        			<table class="table color-table dark-table">
-								    	<thead>
-									    	<tr>
-									    		<th width="40%">Name</th>
-									    		<th>Abbr</th>
-									    	</tr>
-								    	</thead>
-								    	<tbody>
-									    	<tr>
-									    		<td><span data-bind="text: obj.type"></span></td>
-									    		<td>
-									    			<input type="text" placeholder="Abbr" class="k-textbox k-invalid span4" data-bind="value: obj.abbr" style="width: 100px;" >
-									    		</td>
-									    	</tr>
-								    	</tbody>
-									</table>
+									<div data-role="grid" class="table color-table dark-table"
+						                 data-editable="true"
+						                 data-toolbar="['save','cancel']"
+						                 data-columns="[
+						                                { 'field': 'name', 'title':'Value' },
+						                                { 'field': 'color_code', 'title':'Color Code' },
+						                                { command: 'destroy', title: '&nbsp;', width: 100 }
+						                            ]"
+						                 data-auto-bind="false"
+						                 data-bind="source: attributeValueDS"
+						                 style="height: 200px; width: 99.5%"></div>
                         		</div>
                         	</div>
-
-                        	<!-- Form actions -->
-							<div class="backgroundButtonFooter">
-								<div id="ntf1" data-role="notification"></div>							
-
-								<div class="row">
-									<div class="col-md-4" ></div>
-									<div class="col-md-8" align="right">
-									  	<span class="btn-btn" id="saveClose"><span data-bind="text: lang.lang.save_close"></span></span>									  	
-									</div>
-								</div>
-							</div>
-							<!-- // Form actions END -->
+                        	
                        	</div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-	<!-- <div id="slide-form">
-		<div class="customer-background">
-			<div class="container-960" style="overflow: hidden;">
-				<div id="example" class="k-content">
-
-					<span class="glyphicons no-js remove_2 pull-right"
-	    				onclick="javascript:window.history.back()"><i></i></span>
-
-			        <h2>Variants</h2>
-
-			        <br>
-
-			        <a style="margin-bottom: 15px;" class="k-button k-button-icontext k-add-button" data-bind="click: addNew"><span class="k-icon k-i-add"></span>Add New Variant</a>
-			        <div class="row-fluid">
-			        	<div class="span5" style="padding-right: 15px;">
-			        		<div id ="listView"
-					        	 data-role="listview"
-				                 data-edit-template="variants-edit-template"
-				                 data-template="variants-template"
-				                 data-bind="source: dataSource"
-				                 style="height: 300px; overflow: auto;width: 100%; padding: 0;"></div>
-				        </div>
-				        <div class="span7">
-				            <div data-role="grid"
-				                 data-editable="true"
-				                 data-toolbar="['save','cancel']"
-				                 data-columns="[
-				                                { 'field': 'name', 'title':'Value' },
-				                                { 'field': 'color_code', 'title':'Color Code' },
-				                                { command: 'destroy', title: '&nbsp;', width: 100 }
-				                            ]"
-				                 data-auto-bind="false"
-				                 data-bind="source: attributeValueDS"
-				                 style="height: 200px; width: 99.5%"></div>
-				        </div>
-			        </div>
-
-				</div>
-			</div>
-		</div>
-	</div> -->
 </script>
 <script id="variants-template" type="text/x-kendo-tmpl">
 	<table style="width: 100%;">
@@ -1522,7 +1390,7 @@
 				<div class="edit-buttons">
 				    <a class="k-button btn-info k-edit-button" href="\\#"><span class="k-icon k-i-edit"></span></a>
 				    <a class="k-button btn-info k-delete-button" href="\\#"><span class="k-icon k-i-delete"></span></a>
-				    <span class="k-button btn-info" data-bind="click: addNewAttributeValue"><span class="k-icon k-i-add"></span>Add Value</span>
+				    <span class="k-button btn-info" data-bind="click: addNewAttributeValue"><span class="k-icon k-i-add marginRight"></span>Add Value</span>
 				    <span class="k-button btn-info" data-bind="click: viewAttributeValue"><span>View Value</span></span>
 				</div>
 			</td>
@@ -1555,194 +1423,245 @@
         </div>
     </div>
 </script>
+<!-- End -->
+
+<!-- Location -->
 <script id="warehouses" type="text/x-kendo-template">
-	<div id="slide-form">
-		<div class="customer-background">
-			<div class="container-960" style="overflow: hidden;">
-				<div id="example" class="k-content">
+	<div class="page-wrapper ">
+        <div class="container-fluid">
+        	<div class="row marginTop15 sale">
+                <div class="col-md-12">
+                    <div class="card">
+                    	<div class="btn-close" onclick="javascript:window.history.back()"><i class="ti-close"></i></div>
+                        <div class="card-body" >
+                        	<h2 data-bind="">Warehouse</h2>
+                        	<div class="vtabs" style="width: 100%;">
+	                        	<ul class="nav nav-tabs tabs-vertical" role="tablist" style="width: 17%; float: left;">
+									<li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#warehouse" id=""><span class="hidden-sm-up"><i class="ti-layout-grid2-thumb"></i></span> <span class="hidden-xs-down" data-bind="">Warehouse / Location</span></a> </li>									
+								    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#zone"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="">Zone</span></a> </li>
+								    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#section"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="">Section</span></a> </li>
+								    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#rack"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="">Rack</span></a> </li>
+								    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#level"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="">Level</span></a> </li>								    
+								    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#position"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="">Position</span></a> </li>
+								    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#binLocation"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="">Bin Location</span></a> </li>
+							    </ul>
+				                <div class="tab-content" style="float: left; width: 83%; padding: 10px;">
+					                <div class="tab-pane active" id="warehouse" role="tabpanel">
+					                	<div class="row">
+											<div class="col-md-12">
+												<div class="hidden-md-up marginBottom">
+													<h3 data-bind="">Warehouse / Location</h2>
+												</div>
 
-					<span class="glyphicons no-js remove_2 pull-right"
-	    				onclick="javascript:window.history.back()"><i></i></span>
+												<div class="row">
+													<div class="col-md-12">
+													    <a style="margin-bottom: 15px;" class="k-button btn-info k-button-icontext k-add-button" data-bind="click: addNew"><span class="k-icon k-i-add"></span>Add New Warehouse</a>
 
-			        <h2>Warehouse</h2>
+												        <div class="row">
+												        	<div class="col-md-12 marginBottom">
+												        		<div id="listView"
+														        	 data-role="listview"
+													                 data-edit-template="warehouses-edit-template"
+													                 data-template="warehouses-template"
+													                 data-bind="source: dataSource"
+													                 style="min-height: auto; overflow: auto;width: 100%; padding: 0;"></div>
+													        </div>
+														</div>
 
-			        <br>
+														<div class="row">
+												        	<div class="col-md-12 table-responsive">
+													            <div data-role="grid" class="table color-table dark-table"
+													                 data-editable="true"
+													                 data-toolbar="['save','cancel']"
+													                 data-columns="[
+													                 				{ 'field': 'number', 'title':'Number' },
+													                                { 'field': 'name', 'title':'Name' },
+													                                { 'field': 'location_type', title: 'Location Type', editor: locationTypeEditor, template: '#=location_type.name#' },
+													                                { command: 'destroy', title: '&nbsp;', width: 100 }
+													                            ]"
+													                 data-auto-bind="false"
+													                 data-bind="source: locationDS"
+													                 style="height: 200px; width: 100%"></div>
+													        </div>
+												        </div>
+												    </div>
+												</div>
+											</div>
+										</div>	
+					                </div>
+					                <div class="tab-pane" id="zone" role="tabpanel">
+					                	<div class="row">
+											<div class="col-md-12">
+												<div class="hidden-md-up marginBottom">
+													<h3 data-bind="">Zone</h2>
+												</div>
 
-			        <div class="widget widget-tabs widget-tabs-double widget-tabs-vertical row-fluid row-merge widget-tabs-gray">
-				        <!-- Tabs Heading -->
-					    <div class="widget-head span3">
-					        <ul>
-					            <li class="active"><a href="#tab1-7" class="glyphicons cargo" data-toggle="tab"><i></i><span class="strong">Warehouse / Location</span></a>
-					            </li>
-					            <li><a href="#tab2-7" class="glyphicons google_maps" data-toggle="tab"><i></i><span class="strong">Zone</span></a>
-					            </li>
-					            <li><a href="#tab3-7" class="glyphicons google_maps" data-toggle="tab"><i></i><span class="strong">Section</span></a>
-					            </li>
-					            <li><a href="#tab4-7" class="glyphicons google_maps" data-toggle="tab"><i></i><span class="strong">Rack</span></a>
-					            </li>
-					            <li><a href="#tab5-7" class="glyphicons google_maps" data-toggle="tab"><i></i><span class="strong">Level</span></a>
-					            </li>
-					            <li><a href="#tab6-7" class="glyphicons google_maps" data-toggle="tab"><i></i><span class="strong">Position</span></a>
-					            </li>
-					            <li><a href="#tab7-7" class="glyphicons qrcode" data-toggle="tab"><i></i><span class="strong">Bin Location</span></a>
-					            </li>
-					        </ul>
-					    </div>
-					    <!-- // Tabs Heading END -->
+												<div class="row">
+													<div class="col-md-12 table-responsive">
+													    <div data-role="grid" class="table color-table dark-table"
+											                 data-editable="true"
+											                 data-toolbar="['create','save','cancel']"
+											                 data-columns="[
+											                                {
+											                                	'field': 'number',
+											                                	'title':'Number',
+											                 					'editor': twoDigitMaskedTextboxEditor
+											                 				},
+											                                { 'field': 'name', 'title':'Name' },
+											                                { command: 'destroy', title: '&nbsp;', width: 100 }
+											                            ]"
+											                 data-bind="source: zoneDS"
+											                 style="height: 200px; width: 100%"></div>
+													</div>
+												</div>
+											</div>
+										</div>
+					                </div>
+					                <div class="tab-pane" id="section" role="tabpanel">
+					                	<div class="row">
+											<div class="col-md-12">
+												<div class="hidden-md-up marginBottom">
+													<h3 data-bind="">Section</h2>
+												</div>
 
-					    <div class="widget-body span9">
-					        <div class="tab-content">
+												<div class="row">
+													<div class="col-md-12 table-responsive">
+													    <div data-role="grid" class="table color-table dark-table"
+											                 data-editable="true"
+											                 data-toolbar="['create','save','cancel']"
+											                 data-columns="[
+											                 				{
+											                                	'field': 'number',
+											                                	'title':'Number',
+											                 					'editor': twoDigitMaskedTextboxEditor
+											                 				},
+											                                { 'field': 'name', 'title':'Name' },
+											                                { command: 'destroy', title: '&nbsp;', width: 100 }
+											                            ]"
+											                 data-bind="source: sectionDS"
+											                 style="height: 200px; width: 100%"></div>
+													</div>
+												</div>
+											</div>
+										</div>
+					                </div>
+					                <div class="tab-pane" id="rack" role="tabpanel">
+					                	<div class="row">
+											<div class="col-md-12">
+												<div class="hidden-md-up marginBottom">
+													<h3 data-bind="">Rack</h2>
+												</div>
 
-					            <!-- WAREHOUSE -->
-					            <div class="tab-pane active" id="tab1-7">
+												<div class="row">
+													<div class="col-md-12 table-responsive">
+													    <div data-role="grid" class="table color-table dark-table"
+											                 data-editable="true"
+											                 data-toolbar="['create','save','cancel']"
+											                 data-columns="[
+											                                {
+											                                	'field': 'number',
+											                                	'title':'Number',
+											                 					'editor': twoDigitMaskedTextboxEditor
+											                 				},
+											                                { 'field': 'name', 'title':'Name' },
+											                                { command: 'destroy', title: '&nbsp;', width: 100 }
+											                            ]"
+											                 data-bind="source: rackDS"
+											                 style="height: 200px; width: 100%"></div>
+													</div>
+												</div>
+											</div>
+										</div>
+					                </div>
+					                <div class="tab-pane" id="level" role="tabpanel">
+					                	<div class="row">
+											<div class="col-md-12">
+												<div class="hidden-md-up marginBottom">
+													<h3 data-bind="">Level</h2>
+												</div>
 
-					            	<a style="margin-bottom: 15px;" class="k-button k-button-icontext k-add-button" data-bind="click: addNew"><span class="k-icon k-i-add"></span>Add New Warehouse</a>
+												<div class="row">
+													<div class="col-md-12 table-responsive">
+													    <div data-role="grid" class="table color-table dark-table"
+											                 data-editable="true"
+											                 data-toolbar="['create','save','cancel']"
+											                 data-columns="[
+											                 				{
+											                 					'field': 'number',
+											                 					'title': 'Number',
+											                 					'editor': oneDigitMaskedTextboxEditor
+											                 				},
+											                                { 'field': 'name', 'title': 'Name' },
+											                                { command: 'destroy', title: '&nbsp;', width: 100 }
+											                            ]"
+											                 data-bind="source: levelDS"
+											                 style="height: 200px; width: 100%"></div>
+													</div>
+												</div>
+											</div>
+										</div>
+					                </div>
+					                <div class="tab-pane" id="position" role="tabpanel">
+					                	<div class="row">
+											<div class="col-md-12">
+												<div class="hidden-md-up marginBottom">
+													<h3 data-bind="">Position</h2>
+												</div>
 
-							        <div class="row-fluid">
-						        		<div id="listView"
-								        	 data-role="listview"
-							                 data-edit-template="warehouses-edit-template"
-							                 data-template="warehouses-template"
-							                 data-bind="source: dataSource"
-							                 style="min-height: auto; overflow: auto;width: 100%; padding: 0;"></div>
+												<div class="row">
+													<div class="col-md-12 table-responsive">
+													    <div data-role="grid" class="table color-table dark-table"
+											                 data-editable="true"
+											                 data-toolbar="['create','save','cancel']"
+											                 data-columns="[
+											                                {
+											                 					'field': 'number',
+											                 					'title': 'Number',
+											                 					'editor': oneDigitMaskedTextboxEditor
+											                 				},
+											                                { 'field': 'name', 'title': 'Name' },
+											                                { command: 'destroy', title: '&nbsp;', width: 100 }
+											                            ]"
+											                 data-bind="source: positionDS"
+											                 style="height: 200px; width: 100%"></div>
+													</div>
+												</div>
+											</div>
+										</div>
+					                </div>
+					                <div class="tab-pane" id="binLocation" role="tabpanel">
+					                	<div class="row">
+					                		<div class="col-md-12">
+					                			<div class="hidden-md-up marginBottom">
+													<h3 data-bind="">Bin Location</h2>
+												</div>
 
-								    	<br>
-
-							            <div data-role="grid"
-							                 data-editable="true"
-							                 data-toolbar="['save','cancel']"
-							                 data-columns="[
-							                 				{ 'field': 'number', 'title':'Number' },
-							                                { 'field': 'name', 'title':'Name' },
-							                                { 'field': 'location_type', title: 'Location Type', editor: locationTypeEditor, template: '#=location_type.name#' },
-							                                { command: 'destroy', title: '&nbsp;', width: 100 }
-							                            ]"
-							                 data-auto-bind="false"
-							                 data-bind="source: locationDS"
-							                 style="height: 200px; width: 100%"></div>
-
-							        </div>
-						        </div>
-		            			<!-- // WAREHOUSE END -->
-
-		            			<!-- ZONE -->
-					            <div class="tab-pane" id="tab2-7">
-					            	<div data-role="grid"
-						                 data-editable="true"
-						                 data-toolbar="['create','save','cancel']"
-						                 data-columns="[
-						                                {
-						                                	'field': 'number',
-						                                	'title':'Number',
-						                 					'editor': twoDigitMaskedTextboxEditor
-						                 				},
-						                                { 'field': 'name', 'title':'Name' },
-						                                { command: 'destroy', title: '&nbsp;', width: 100 }
-						                            ]"
-						                 data-bind="source: zoneDS"
-						                 style="height: 200px; width: 100%"></div>
-						        </div>
-		            			<!-- // ZONE END -->
-
-		            			<!-- SECTION -->
-					            <div class="tab-pane" id="tab3-7">
-					            	<div data-role="grid"
-						                 data-editable="true"
-						                 data-toolbar="['create','save','cancel']"
-						                 data-columns="[
-						                 				{
-						                                	'field': 'number',
-						                                	'title':'Number',
-						                 					'editor': twoDigitMaskedTextboxEditor
-						                 				},
-						                                { 'field': 'name', 'title':'Name' },
-						                                { command: 'destroy', title: '&nbsp;', width: 100 }
-						                            ]"
-						                 data-bind="source: sectionDS"
-						                 style="height: 200px; width: 100%"></div>
-						        </div>
-		            			<!-- // SECTION END -->
-
-		            			<!-- RACK -->
-					            <div class="tab-pane" id="tab4-7">
-					            	<div data-role="grid"
-						                 data-editable="true"
-						                 data-toolbar="['create','save','cancel']"
-						                 data-columns="[
-						                                {
-						                                	'field': 'number',
-						                                	'title':'Number',
-						                 					'editor': twoDigitMaskedTextboxEditor
-						                 				},
-						                                { 'field': 'name', 'title':'Name' },
-						                                { command: 'destroy', title: '&nbsp;', width: 100 }
-						                            ]"
-						                 data-bind="source: rackDS"
-						                 style="height: 200px; width: 100%"></div>
-						        </div>
-		            			<!-- // RACK END -->
-
-		            			<!-- LEVEL -->
-					            <div class="tab-pane" id="tab5-7">
-					            	<div data-role="grid"
-						                 data-editable="true"
-						                 data-toolbar="['create','save','cancel']"
-						                 data-columns="[
-						                 				{
-						                 					'field': 'number',
-						                 					'title': 'Number',
-						                 					'editor': oneDigitMaskedTextboxEditor
-						                 				},
-						                                { 'field': 'name', 'title': 'Name' },
-						                                { command: 'destroy', title: '&nbsp;', width: 100 }
-						                            ]"
-						                 data-bind="source: levelDS"
-						                 style="height: 200px; width: 100%"></div>
-						        </div>
-		            			<!-- // LEVEL END -->
-
-		            			<!-- POSITION -->
-					            <div class="tab-pane" id="tab6-7">
-					            	<div data-role="grid"
-						                 data-editable="true"
-						                 data-toolbar="['create','save','cancel']"
-						                 data-columns="[
-						                                {
-						                 					'field': 'number',
-						                 					'title': 'Number',
-						                 					'editor': oneDigitMaskedTextboxEditor
-						                 				},
-						                                { 'field': 'name', 'title': 'Name' },
-						                                { command: 'destroy', title: '&nbsp;', width: 100 }
-						                            ]"
-						                 data-bind="source: positionDS"
-						                 style="height: 200px; width: 100%"></div>
-						        </div>
-		            			<!-- // POSITION END -->
-
-		            			<!-- BIN LOCATION -->
-					            <div class="tab-pane" id="tab7-7">
-
-					            	<a style="margin-bottom: 15px;" class="k-button k-button-icontext k-add-button" data-bind="click: addNewBinLocation"><span class="k-icon k-i-add"></span>Add New Bin Location</a>
-
-					            	<div id="lvBinLocation"
-							        	 data-role="listview"
-						                 data-edit-template="warehouses-binLocation-edit-template"
-						                 data-template="warehouses-binLocation-template"
-						                 data-bind="source: binLocationDS"
-						                 style="min-height: auto; overflow: auto;width: 100%; padding: 0;"></div>
-
-						        </div>
-		            			<!-- // BIN LOCATION END -->
-
-		            		</div>
-		    			</div>
-	    			</div>
-
-				</div>
-			</div>
-		</div>
-	</div>
+												<div class="row">
+													<div class="col-md-12  table-responsive">
+														<a style="margin-bottom: 15px;" class="k-button btn-info k-button-icontext k-add-button" data-bind="click: addNewBinLocation"><span class="k-icon k-i-add"></span>Add New Bin Location</a>
+							                			<div class="row">
+												        	<div class="col-md-12 marginBottom">
+												        		<div id="lvBinLocation"
+														        	 data-role="listview"
+													                 data-edit-template="warehouses-binLocation-edit-template"
+													                 data-template="warehouses-binLocation-template"
+													                 data-bind="source: binLocationDS"
+													                 style="min-height: auto; overflow: auto;width: 100%; padding: 0;"></div>
+													        </div>
+														</div>
+										           	</div>
+										        </div>
+					                		</div>
+					                	</div>
+					                </div>
+					            </div>
+					        </div>
+			            </div>
+			        </div>
+	            </div>
+	        </div>
+        </div>
+    </div>
 </script>
 <script id="warehouses-template" type="text/x-kendo-tmpl">
 	<table style="width: 100%;">
@@ -1752,7 +1671,7 @@
 				<div class="edit-buttons">
 				    <a class="k-button btn-info k-edit-button" href="\\#"><span class="k-icon k-i-edit"></span></a>
 				    <a class="k-button btn-info k-delete-button" href="\\#"><span class="k-icon k-i-delete"></span></a>
-				    <span class="k-button btn-info" data-bind="click: addNewLocation"><span class="k-icon k-i-add"></span>Add Location</span>
+				    <span class="k-button btn-info" data-bind="click: addNewLocation"><span class="k-icon k-i-add marginRight"></span>Add Location</span>
 				    <span class="k-button btn-info" data-bind="click: viewLocation"><span>View Location</span></span>
 				</div>
 			</td>
@@ -1889,6 +1808,9 @@
         </div>
     </div>
 </script>
+<!-- End -->
+
+<!-- Location -->
 <script id="binLocations" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background">
@@ -1933,8 +1855,104 @@
 		</div>
 	</div>
 </script>
+<!-- End -->
+
+<!-- Employee To Item Location -->
 <script id="employeeItemLocation" type="text/x-kendo-template">
-	<div id="slide-form">
+	<div class="page-wrapper ">
+        <div class="container-fluid">
+        	<div class="row marginTop15 sale">
+                <div class="col-md-12">
+                    <div class="card">
+                    	<div class="btn-close" onclick="javascript:window.history.back()"><i class="ti-close"></i></div>
+                        <div class="card-body" >
+                        	<h2>EMPLOYEE TO ITEM LOCATION</h2>
+                        	<div class="row">
+                        		<div class="col-md-6">
+                        			<div class="row">
+                        				<div class="col-md-6">
+                        					<!-- <input type="text" class="k-textbox"
+												data-bind="value: textSearch"
+												placeholder="Number / Name... " style="height: 35px; width: 89%; margin-bottom: 8px;"/> -->
+
+											<input class="marginBottom" data-role="dropdownlist"
+								                   data-value-primitive="true"
+								                   data-text-field="name"
+								                   data-value-field="id"
+								                   data-bind="value: warehouse_id,
+								                              source: warehouseDS"
+								                   data-option-label="Select Warehouse..."
+								                   style="width: 78%;" />
+
+								            <button class="k-button btn-info" type="button" data-role="button" data-bind="click: search"><i class="ti-search"></i></button>
+                        				</div>
+                        				<div class="col-md-6">
+                        					<input class="marginBottom" data-role="dropdownlist"
+												   data-value-primitive="false"
+								                   data-auto-bind="false"
+								                   data-text-field="name"
+								                   data-value-field="id"
+								                   data-bind="value: obj.contact,
+								                              source: employeeDS"
+								                   data-option-label="Select Employee..."
+								                   required data-required-msg="required" style="width: 100%;" />
+
+											<div style="margin-bottom: 15px; float: right;">
+												<span class="k-button btn-info" data-bind="click: save">Save</span>
+												<span class="k-button btn-info" data-bind="click: cancel">Cancel</span>
+											</div>
+                        				</div>
+                        			</div>
+
+                        			<div class="row">
+                        				<div class="col-md-6">
+                        					<select id="listbox1" data-role="listbox" class="marginBottom"								               
+								                data-text-field="name"
+								                data-value-field="id"
+								                data-toolbar='{
+								                	tools: ["moveUp", "moveDown", "transferTo", "transferFrom", "transferAllTo", "transferAllFrom", "remove"]
+								            	}'
+								                data-connect-with="listbox2"
+								                data-auto-bind="false"
+								                data-bind="source: locationDS" style="width: 100%; min-height: 550px;">
+								            </select>
+                        				</div>
+                        				<div class="col-md-6">
+                        					<select id="listbox2" data-role="listbox"
+								                data-connect-with="listbox1"
+								                data-text-field="name"
+								                data-value-field="id"
+								                data-auto-bind="false"
+								                data-bind="source: obj.locations"
+								                style="width: 100%; min-height: 550px;">
+								            </select>
+                        				</div>
+                        			</div>
+
+                        			<div id="pager" class="k-pager-wrap" 
+				            		 data-role="pager"
+							    	 data-auto-bind="false"
+						             data-bind="source: contactDS"></div>
+                        		</div>
+                        		<div class="col-md-6 table-responsive">
+							       <div data-role="grid" class="table color-table dark-table"
+					                 data-columns="[
+		                                 { 'field': 'contact', 'title': 'EMPLOYEE', template:'#=contact.abbr# #=contact.number# #=contact.name#' },
+		                                 { 'field': 'locations', 'title': 'TOTAL LOCATION', template:'#=locations.length#' },
+		                                 { 'title': '', template:'<button data-bind=click:edit>VIEW / EDIT</button>' }
+		                              ]"
+					                 data-bind="source: dataSource"></div>
+
+						            <div id="ntf1" data-role="notification"></div>
+                        		</div>
+                        	</div>
+                       	</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+	<!-- <div id="slide-form">
 		<div class="customer-background" style="padding-bottom: 15px;">
 			<div class="container-960">
 				<div id="example" class="k-content">
@@ -2024,8 +2042,9 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</div> -->
 </script>
+<!-- End -->
 
 
 <!-- ACCOUNTING SETTINGS -->
@@ -3038,4 +3057,4 @@
 
 		</div>
 	</div>
-</script>                                                                
+</script>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                

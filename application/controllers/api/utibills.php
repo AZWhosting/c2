@@ -3750,6 +3750,73 @@ class Utibills extends REST_Controller {
 		$this->response($data, 200);		
 	}
 
+	function meter_number_get() {		
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = array();
+		$data["count"] = 0;
+		$obj = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
+			}
+		}
+		//Filter
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value["operator"])) {
+					$obj->{$value["operator"]}($value["field"], $value["value"]);
+				} else {
+	    			$obj->where($value["field"], $value["value"]);
+				}
+			}
+		}
+		//Results
+		if($page && $limit){
+			$obj->get_paged_iterated($page, $limit);
+			$data["count"] = $obj->paged->total_rows;
+		}else{
+			$obj->get_iterated();
+			$data["count"] = $obj->result_count();
+		}
+		if($obj->result_count()>0){			
+			foreach ($obj as $value) {
+				$boxname = "";
+				$polename = "";
+				if($value->box_id != 0){
+					$box = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$box->where("id", $value->box_id)->limit(1)->get();
+					$boxname = $box->name;
+				}
+				if($value->pole_id != 0){
+					$pol = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$pol->where("id", $value->pole_id)->limit(1)->get();
+					$polename = $pol->name;
+				}
+				$location = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$location->where("id", $value->location_id)->limit(1)->get();
+				//Results				
+				$data["results"][] = array(
+					"id" 					=> intval($value->id),
+					"number" 				=> $value->number,
+					"meter_number" 			=> $value->number,
+					"location" 				=> $location->name,
+					"pole" 					=> $polename,
+					"box" 					=> $boxname,
+				);
+			}
+		}
+		//Response Data		
+		$this->response($data, 200);		
+	}
+
 	//POST
 	function meter_post() {
 		$models = json_decode($this->post('models'));

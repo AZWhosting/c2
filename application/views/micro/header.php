@@ -171,12 +171,13 @@
                                                 <p><i class="ti-receipt m-r-5 m-l-5"></i><span data-bind="text: lang.lang.sale_transactions"></span></p>
                                                 <ul>
                                                     <li><a href="sales#/customer"><span data-bind="text: lang.lang.customers"></span></a></li>
-                                                    <li><a href="sales#/quote"><span data-bind="text: lang.lang.create_quotation"></span></a></li>
+                                                   <!--  <li><a href="sales#/quote"><span data-bind="text: lang.lang.create_quotation"></span></a></li> -->
+                                                   <li><a href="sales#/sale_order"><span data-bind="text: lang.lang.create_sale_order"></span></a></li>
                                                     <li><a href="sales#/customer_deposit"><span data-bind="text: lang.lang.create_customer_deposit"></span></a></li>
                                                     <li><a href="sales#/cash_sale"><span data-bind="text: lang.lang.create_cash_sale"></span></a></li>
-                                                    <li><a href="<?php echo base_url()?>rrd#/sale_return"><span data-bind="text: lang.lang.create_sale_return"></span></a></li>
                                                     <li><a href="sales#/invoice"><span data-bind="text: lang.lang.create_invoice"></span></a></li>
                                                     <li><a href="sales#/cash_receipt"><span data-bind="text: lang.lang.create_cash_receipt"></span></a></li>
+                                                    <li><a href="<?php echo base_url()?>rrd#/sale_return"><span data-bind="text: lang.lang.create_sale_return"></span></a></li>
                                                     <li><a href="<?php echo base_url()?>rrd#/cash_refund"><span data-bind="">Cash Refund</span></a></li>
                                                 </ul>
                                             </div>
@@ -187,38 +188,21 @@
                                                 <ul>
                                                     <li><a href="purchases#/vendor"><span data-bind="text: lang.lang.add_supplier"></span></a></li>
                                                     <li><a href="purchases#/purchase_order"><span data-bind="text: lang.lang.make_purchase_order"></span></a></li>
-                                                    <li><a href="purchases#/purchase"><span data-bind="text: lang.lang.make_purchase"></span></a></li>
-                                                    <li><a href="purchases#/payment_refund"><span data-bind="">Payment Refund</span></a></li>
-                                                    <li><a href="purchases#/purchase_return"><span data-bind="text: lang.lang.make_purchase_return"></span></a></li>
                                                     <li><a href="purchases#/vendor_deposit"><span data-bind="text: lang.lang.make_vendor_deposit"></span></a></li>
-                                                    <li><a href="purchases#/cash_payment"><span data-bind="text: lang.lang.make_cash_payment"></span></a></li>
+                                                    <li><a href="purchases#/purchase"><span data-bind="text: lang.lang.make_purchase"></span></a></li>
+                                                    <li><a href="purchases#/cash_payment"><span data-bind="text: lang.lang.make_cash_payment"></span></a></li>                                                    
+                                                    <li><a href="purchases#/purchase_return"><span data-bind="text: lang.lang.make_purchase_return"></span></a></li>
+                                                    <li><a href="purchases#/payment_refund"><span data-bind="">Payment Refund</span></a></li>
                                                 </ul>
                                             </div>
                                         </div>
-                                        <!-- <div class="col-md-3">
-                                            <div >
-                                                <p><i class="ti-layout-grid2 m-r-5 m-l-5"></i>Items Transaction</p>
-                                                <ul>
-                                                    <li><a href="sales#/customer"><span data-bind="">Customer</span></a></li>
-                                                    <li><a href="sales#/quote"><span data-bind="">Quotation</span></a></li>
-                                                    <li><a href="sales#/deposit"><span data-bind="">Deposit</span></a></li>
-                                                    <li><a href="sales#/cash_sale"><span data-bind="">Cash Sale</span></a></li>
-                                                    <li><a href="<?php echo base_url()?>rrd#/sale_return"><span data-bind="">Sale Return</span></a></li>
-                                                    <li><a href="sales#/invoice"><span data-bind="">Invoice</span></a></li>
-                                                    <li><a href="sales#/cash_receipt"><span data-bind="">Cash Receipt</span></a></li>
-                                                    <li><a href="<?php echo base_url()?>rrd#/cash_refund"><span data-bind="">Cash Refund</span></a></li>
-                                                </ul>
-                                            </div>
-                                        </div> -->
                                         <div class="col-md-4">
                                             <div >
                                                 <p><i class="fa fa-dollar m-r-5 m-l-5"></i><span data-bind="text: lang.lang.c_transaction"></span></p>
                                                 <ul>
-                                                    <li><a href="cashs#/cash_transaction"><span data-bind="text: lang.lang.make_cash_transaction"></span></a></li>
-                                                    <li><a href="cashs#/cash_advance"><span data-bind="text: lang.lang.make_cash_advance"></span></a></li>
-                                                    <li><a href="cashs#/cash_advance"><span data-bind="text: lang.lang.set_exchange_rate"></span></a></li>
                                                     <li><a href="cashs#/cash_advance"><span data-bind="text: lang.lang.make_journal"></span></a></li>
-                                                    <!-- <li><a href="cashs#/Expense"><span data-bind="">Expense</span></a></li> -->
+                                                    <li><a href="cashs#/cash_transaction"><span data-bind="text: lang.lang.make_cash_transaction"></span></a></li>
+                                                    <li><a href="cashs#/cash_advance"><span data-bind="text: lang.lang.set_exchange_rate"></span></a></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -293,16 +277,16 @@
                                         <div class=""><img data-bind="attr: {src: userDS.data()[0].profile_photo.url}" alt="user" class="img-circle" width="60"></div>
                                         <div class="m-l-10">
                                             <h4 class="m-b-0"><span data-bind="text: userDS.data()[0].last_name"></span>&nbsp;
-                                    <span data-bind="text: userDS.data()[0].first_name"></span></h4>
+                                            <span data-bind="text: userDS.data()[0].first_name"></span></h4>
                                             <p class=" m-b-0"><span data-bind="text: userDS.data()[0].username"></span></p>
                                         </div>
                                     </div>
-                                    <a class="dropdown-item" href="<?php echo base_url()?>admin#"><i class="ti-settings m-r-5 m-l-5 " ><span class="marginLeft" data-bind="text: lang.lang.my_account_setting"></span></i></a>
+                                    <a class="dropdown-item" href="<?php echo base_url()?>admin#"><i class="ti-settings m-r-5 m-l-5 " ></i><span class="marginLeft" data-bind="text: lang.lang.my_account_setting"></span></a>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item menuLang" href="javascript:void(0)" onclick="langVM.changeToKh()"><i class="flag-icon flag-icon-kh  m-r-5 m-l-5"></i> ភាសាខ្មែរ</a>
                                     <a class=" dropdown-item menuLang" href="javascript:void(0)" onclick="langVM.changeToEn()"><i class="flag-icon flag-icon-us  m-r-5 m-l-5"></i> English</a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" data-bind="click: logout"><i class="fa fa-power-off m-r-5 m-l-5"></i><span data-bind="text: lang.lang.logout"></span></a>
+                                    <a class="dropdown-item" href="#/manage" data-bind="click: logout"><i class="fa fa-power-off m-r-5 m-l-5"></i><span data-bind="text: lang.lang.logout"></span></a>
                                     
                                 </div>
                             </div>

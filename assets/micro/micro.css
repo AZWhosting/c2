@@ -242,7 +242,11 @@ a {
     right: 0;
     width: 270px;
 }
-.k-button.btn-info{
+.k-button.btn-info,
+.table-responsive .k-grid-save-changes,
+.table-responsive .k-grid-cancel-changes,
+.table-responsive .k-grid-add,
+.table-responsive .k-grid-delete{
 	color: #fff !important;
     background-color: #009efb;
     border-color: #009efb;

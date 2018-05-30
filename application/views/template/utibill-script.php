@@ -8992,7 +8992,8 @@
             pageSize: 100
         }),
         attachmentDS: dataStore(apiUrl + "attachments"),
-        meterDS: dataStore(apiUrl + "utibills/meter"),
+        meterDS: dataStore(apiUrl + "utibills/meter_number"),
+        meterExistDS: dataStore(apiUrl + "utibills/meter_number"),
         itemDS: null,
         obj: null,
         objReactive: null,
@@ -9013,6 +9014,10 @@
             {
                 id: 2,
                 name: "Void"
+            },
+            {
+                id: 3,
+                name: "Change Meter"
             }
         ],
         boxSelect : "",
@@ -9091,6 +9096,7 @@
             this.selectType[0].set("name", this.lang.lang.active);
             this.selectType[1].set("name", this.lang.lang.inactive);
             this.selectType[2].set("name", this.lang.lang.void);
+            this.selectType[3].set("name", this.lang.lang.change_meter);
         },
         oldPlan: "",
         haveActivated: false,
@@ -9385,8 +9391,22 @@
             this.set("objReactive", objReactive);
         },
         meterNumberChange: function(e) {
+            $("#loadImport").css("display", "block");
             var Name = this.get("obj").meter_number + "(REACTIVE)";
             this.get("objReactive").set("meter_number", Name);
+            var self = this;
+            this.meterExistDS.query({
+                filter: {field: "number", value: this.get("obj").meter_number},
+                pageSize: 1
+            }).then(function(e){
+                if(self.meterExistDS.data().length > 0){
+                    var notificat = $("#ntf1").data("kendoNotification");
+                        notificat.hide();
+                        notificat.error('មានរួចហើយ (Already Has)!');
+                    self.get("obj").set("meter_number", "");
+                }
+                $("#loadImport").css("display", "none");
+            });
         },
         haveLocation: false,
         haveSubLocation: false,
@@ -10034,12 +10054,22 @@
                 });
             }
         },
+        haveChangeMeter     : false,
         cancel: function() {
             this.dataSource.data([]);
             banhji.router.navigate("/center");
             this.set("selectLocation", true);
             this.set("selectSLocation", true);
             $("#loadImport").css("display", "none");
+        },
+        meterStatusChange   : function(e){
+            var st = this.get("obj").status;
+            if(st == 3){
+                this.set("haveChangeMeter", true);
+            }else{
+                this.set("haveChangeMeter", false);
+                this.get("obj").set("change_meter_id", "");
+            }
         }
     });
     banhji.ActivateMeter = kendo.observable({
@@ -29060,9 +29090,10 @@
         },
         //Number        
         checkExistingNumber     : function(){
+            $("#loadImport").css("display", "block");
             var self = this, para = [], 
             obj = this.get("obj");
-            
+            var oldnum = obj.number;
             if(obj.number!==""){
 
                 if(obj.isNew()==false){
@@ -29081,12 +29112,23 @@
                     var view = self.existingDS.view();
                     
                     if(view.length>0){
-                        self.set("notDuplicateNumber", false);
-                    }else{
-                        self.set("notDuplicateNumber", true);
+                        var notificat = $("#ntf1").data("kendoNotification");
+                        notificat.hide();
+                        notificat.error(self.lang.lang.error_message);
+                        self.setNum();
                     }
+                    $("#loadImport").css("display","none");
                 });
             }
+        },
+        setNum                  : function(){
+            var self = this;
+            this.existingDS.query({
+                pageSize: 1,
+                sort: { field: "id", dir: "desc" }
+            }).then(function(e){
+                self.get("obj").set("number", self.existingDS.data()[0].id + 1);
+            });
         },
         generateNumber          : function(){
             var self = this, obj = this.get("obj");

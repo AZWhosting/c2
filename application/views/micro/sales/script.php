@@ -7832,9 +7832,9 @@
                 pageSize: 1
             }).then(function(data){
                 var view = self.patternDS.view(),
-                type = self.contactTypeDS.get(view[0].contact_type_id);
+                    type = self.contactTypeDS.get(view[0].contact_type_id);
+
                 if(view.length>0){
-                    console.log(view[0].account_id);
                     obj.set("country_id", view[0].country_id);
                     obj.set("abbr", type.abbr);
                     obj.set("gender", view[0].gender);
@@ -7851,7 +7851,7 @@
                     obj.set("payment_method_id", view[0].payment_method_id);
                     obj.set("credit_limit", view[0].credit_limit);
                     obj.set("locale", view[0].locale);
-                    obj.set("account_id", view[0].account_id);
+                    obj.set("account_id", 10);
                     obj.set("ra_id", view[0].ra_id);
                     obj.set("tax_item_id", view[0].tax_item_id);
                     obj.set("deposit_account_id", view[0].deposit_account_id);

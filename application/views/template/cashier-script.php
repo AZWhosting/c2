@@ -5359,7 +5359,9 @@
                     page: 1,
                     pageSize: 100
                 }).then(function() {
+                    
                     var view = self.txnDS.view();
+                    self.getMeterLocation(self.txnDS.data()[0].meter_id);
                     if (view.length > 0) {
                         self.set("btnActive", false);
                         $.each(view, function(index, v) {
@@ -5979,6 +5981,22 @@
         cancel: function() {
             this.dataSource.data([]);
             window.history.back();
+        },
+        invlocation : "",
+        invpole     : "",
+        invbox      : "",
+        meterLocationDS     : dataStore(apiUrl + "utibills/meter_number"),
+        getMeterLocation : function(id){
+            var self = this;
+            this.meterLocationDS.query({
+                filter: {field: "id", value: id},
+                pageSize: 1
+            }).then(function(e){
+                var v = self.meterLocationDS.data()[0];
+                self.set("invlocation", v.location);
+                self.set("invpole", v.pole);
+                self.set("invbox", v.box);
+            });
         }
     });
     //Reconcile

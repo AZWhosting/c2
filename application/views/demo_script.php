@@ -51422,13 +51422,13 @@
             this.txnTemplateDS.filter({ field:"type", value:obj.type });
 
             switch(obj.type) {
-                case "Deposit":
-                    this.set("fromToTop", "TO");
-                    this.set("fromToBottom", "FROM");
-                    break;
-                default:
+                case "Withdraw":
                     this.set("fromToTop", "FROM");
                     this.set("fromToBottom", "TO");
+                    break;
+                default:
+                    this.set("fromToTop", "TO");
+                    this.set("fromToBottom", "FROM");
             }
         },
         objSync             : function(){

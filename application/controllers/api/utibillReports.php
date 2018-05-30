@@ -996,6 +996,8 @@ class UtibillReports extends REST_Controller {
 	}
 
 	//balance List
+
+
 	function totalBalance_get() {
 		$filter 	= $this->get("filter");
 		$page 		= $this->get('page');
@@ -3100,15 +3102,15 @@ class UtibillReports extends REST_Controller {
 
 		$obj->where('status', 1);
 		$obj->where('activated', 1);
-		$obj->where("date_used >=", date("Y")."-01-01");
-		$obj->where("date_used <=", date("Y")."-12-31");						
-		$obj->order_by("date_used");	
+		$obj->where("created_at >=", date("Y")."-01-01");
+		$obj->where("created_at <=", date("Y")."-12-31");						
+		$obj->order_by("created_at");	
 		$obj->get_iterated();
 		$temp = array();
 
 		if($obj->exists()){
 			foreach ($obj as $value) {
-				$invoiceMonth = date('F', strtotime($value->date_used));
+				$invoiceMonth = date('F', strtotime($value->created_at));
 					if(isset($temp["$invoiceMonth"])) {
 						$temp["$invoiceMonth"]['contact'] +=1;
 					} else {

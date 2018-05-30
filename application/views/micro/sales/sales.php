@@ -1508,8 +1508,7 @@
 	                                    </div>
 	                                </div>
 	                            </div>
-							</div>
-								
+							</div>								
 
 							<!-- Form actions -->
 							<div class="backgroundButtonFooter">

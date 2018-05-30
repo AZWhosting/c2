@@ -1105,49 +1105,58 @@ class Transactions extends REST_Controller {
 		$data["count"] = 1;
 
 		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$objIds = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 		//Filter
 		if(!empty($filter) && isset($filter)){
 	    	foreach ($filter["filters"] as $value) {
 	    		if(isset($value["operator"])) {
 					$obj->{$value["operator"]}($value["field"], $value["value"]);
+					$objIds->{$value["operator"]}($value["field"], $value["value"]);
 				} else {
 	    			$obj->where($value["field"], $value["value"]);
+	    			$objIds->where($value["field"], $value["value"]);
 				}
 			}
 		}
-		
+
+		$obj->select_sum("amount - deposit", "total");
 		// $obj->like("type", "Invoice", "before");
 		$obj->where_in("status", array(0,2));
 		$obj->where("is_recurring <>", 1);
 		$obj->where("deleted <>", 1);
-		$obj->get_iterated();
+		$obj->get();
+
+		//Payment
+		$objIds->select("id, contact_id");
+		// $objIds->like("type", "Invoice", "before");
+		$objIds->where_in("status", array(0,2));
+		$objIds->where("is_recurring <>", 1);
+		$objIds->where("deleted <>", 1);
+		$objIds->get();
 
 		$ids = [];
-		$sum = 0;
-		if($obj->exists()){
-			foreach ($obj as $value) {
-				array_push($ids, $value->id);
-				$sum += floatval($value->amount) - floatval($value->deposit);
-			}
+		foreach ($objIds as $value) {
+			array_push($ids, $value->id);
 		}
-
-		//Paid
+		$receipt = 0;
 		if(count($ids)>0){
-			$receipt = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$receipt->where_in("reference_id", $ids);
-			$receipt->where_in("type", array("Cash_Receipt","Offset_Invoice","Cash_Payment","Offset_Bill"));
-			$receipt->where("deleted <>", 1);
-			$receipt->get_iterated();
+			$receipts = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$receipts->select_sum("amount", "total");
+			$receipts->where_in("reference_id", $ids);
+			$receipts->where_in("type", array("Cash_Receipt","Offset_Invoice","Cash_Payment","Offset_Bill","Cash_Refund","Payment_Refund"));
+			$receipts->where("is_recurring <>", 1);
+			$receipts->where("deleted <>", 1);
+			$receipts->get();
 
-			if($receipt->exists()){
-				foreach ($receipt as $value) {
-					$sum -= floatval($value->amount) + floatval($value->discount);
-				}
-			}
+			$receipt = floatval($receipts->total);
 		}
 
-		$data["results"][] = array("amount"=>$sum);
+		$data["results"][] = array(
+			"amount" 	=> floatval($obj->total) - $receipt,
+			"balance" 	=> floatval($obj->total) - $receipt,
+			"deposit" 	=> floatval($obj->total)
+		);
 
 		//Response Data
 		$this->response($data, 200);

@@ -6130,6 +6130,8 @@
         
         vendorSetting: new kendo.Layout("#vendorSetting", {model: banhji.vendorSetting}),
         itemSetting: new kendo.Layout("#itemSetting", {model: banhji.itemSetting}),
+        variants: new kendo.Layout("#variants", {model: banhji.variants}),
+        warehouses: new kendo.Layout("#warehouses", {model: banhji.warehouses}),
         accountingSetting: new kendo.Layout("#accountingSetting", {model: banhji.accountingSetting}),
         addAccountingprefix: new kendo.Layout("#addAccountingprefix", {model: banhji.addAccountingprefix}),
     };

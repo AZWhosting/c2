@@ -45,7 +45,7 @@
 <link rel="stylesheet" href="<?php echo base_url()?>assets/blue-gray.css" >
 <link href='https://fonts.googleapis.com/css?family=Content:400,700' rel='stylesheet' type='text/css'>
 <link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css?family=Preahvihear" rel="stylesheet"> 
+<link href="https://fonts.googleapis.com/css?family=Preahvihear" rel="stylesheet">
 
 <!-- Glyphicons Font Icons -->
 <link href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/common/theme/fonts/glyphicons/css/glyphicons.css" rel="stylesheet" />
@@ -67,7 +67,7 @@
 <script>window.jQuery || document.write('https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/js/libs/jquery-1.8.2.min.js"><\/script>')</script>
 <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
 <!--[if lt IE 9]>
-  
+
 <![endif]-->
 
 <!--[if IE]><!--><script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/common/theme/scripts/plugins/other/excanvas/excanvas.js"></script><!--<![endif]-->
@@ -172,6 +172,18 @@ var themerPrimaryColor = primaryColor;
 </script>
 <!--start kendo localization in Khmer-->
 
+<!-- Google Analytics -->
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-109087721-1', 'auto');
+	ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
 <!-- Le fav and touch icons -->
 <link rel="shortcut icon" href="<?php echo base_url();?>assets/update/banhji.jpg">
 
@@ -180,7 +192,7 @@ var themerPrimaryColor = primaryColor;
 <?php
 	//mail('loat.choeun@gmail.com', 'test', 'test', 'test');
 ?>
-	
+
 	<a class="aWelcome" href="#firstPopUp" data-toggle="modal"></a>
 	<div class="modal fade popRightBlog" id="firstPopUp">
 		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -188,7 +200,7 @@ var themerPrimaryColor = primaryColor;
 			<div class="span5" style="text-align: center;">
 				<img src="<?php echo base_url(); ?>assets/img/welcome/welcome.png" style="width:93%;margin-top: 20px;" />
 				<div style="padding: 20px 0;" class="span12">
-					<a href="https://www.facebook.com/BanhjiApp/" target="_blank"> 
+					<a href="https://www.facebook.com/BanhjiApp/" target="_blank">
 						<img src="<?php echo base_url(); ?>assets/img/welcome/f-icon.png" style="float: left;width: 40px;" />
 						<p style="font-size: 10px;color: #8497b0;float:left;text-align: left;width: 64%;">សូមចូលទៅកាន់ទំព័រ Facebook របស់ BanhJi ដើម្បីទទួលបានព័តមានថ្មី និងការណែនាំផ្សេង</p>
 					</a>
@@ -234,7 +246,7 @@ var themerPrimaryColor = primaryColor;
 		<div class="span12 welcome">
 			<div class="span4" style="text-align: center;">
 				<img src="<?php echo base_url(); ?>assets/img/welcome/wcustomer.png" style="margin-top: 35px;width: 63%;" />
-				
+
 			</div>
 			<div class="span8" style="float:right;margin-top: 46px;">
 				<h2 style="font-size: 16px; color: #bdd7ee;">ដើម្បីចាប់ផ្តើមប្រើទំព័រនេះ អ្នកគួរមានលក្ខខណ្ឌខាងក្រោម</h2>
@@ -273,7 +285,7 @@ var themerPrimaryColor = primaryColor;
 		<div class="span12 welcome">
 			<div class="span4" style="text-align: center;">
 				<img src="<?php echo base_url(); ?>assets/img/welcome/supplier.png" style="margin-top: 35px;width: 63%;" />
-				
+
 			</div>
 			<div class="span8" style="float:right;margin-top: 46px;">
 				<h2 style="font-size: 16px; color: #bdd7ee;">ដើម្បីចាប់ផ្តើមប្រើទំព័រនេះ អ្នកគួរមានលក្ខខណ្ឌខាងក្រោម</h2>
@@ -312,7 +324,7 @@ var themerPrimaryColor = primaryColor;
 		<div class="span12 welcome">
 			<div class="span4" style="text-align: center;">
 				<img src="<?php echo base_url(); ?>assets/img/welcome/inventory.png" style="margin-top: 35px;width: 63%;" />
-				
+
 			</div>
 			<div class="span8" style="float:right;margin-top: 46px;">
 				<h2 style="font-size: 16px; color: #bdd7ee;">ដើម្បីចាប់ផ្តើមប្រើទំព័រនេះ អ្នកគួរមានលក្ខខណ្ឌខាងក្រោម</h2>
@@ -338,7 +350,7 @@ var themerPrimaryColor = primaryColor;
 							<a href="#/invoice"><img style="width: 46%;float:left;" src="<?php echo base_url(); ?>assets/img/welcome/invoice.png"></a>
 						</div>
 					</div>
-					
+
 				</div>
 				<p style="color: #8497b0;font-size:14px;">មានទាំងអស់នេះហើយ អ្នកអាចទិញ និងលក់ផលិតផលបាន</p>
 			</div>
@@ -354,7 +366,7 @@ var themerPrimaryColor = primaryColor;
 		<div class="span12 welcome">
 			<div class="span4" style="text-align: center;">
 				<img src="<?php echo base_url(); ?>assets/img/welcome/accounting.png" style="margin-top: 35px;width: 63%;" />
-				
+
 			</div>
 			<div class="span8" style="float:right;margin-top: 46px;">
 				<h2 style="font-size: 16px; color: #bdd7ee;">ដើម្បីចាប់ផ្តើមប្រើទំព័រនេះ អ្នកគួរមានលក្ខខណ្ឌខាងក្រោម</h2>
@@ -372,7 +384,7 @@ var themerPrimaryColor = primaryColor;
 							<a href="#/vendor"><img style="width: 46%;float:left;" src="<?php echo base_url(); ?>assets/img/welcome/2.png"></a>
 						</div>
 					</div>
-					
+
 				</div>
 				<p style="color: #8497b0;font-size:14px;">មានទាំងអស់នេះហើយ អ្នកអាចទិញ និងលក់ផលិតផលបាន</p>
 			</div>
@@ -416,7 +428,7 @@ var themerPrimaryColor = primaryColor;
 	<?php echo $body ?>
 
 	<!-- extra js-->
-	
+
 	<script>
     // Google Font
 	WebFontConfig = {
@@ -466,7 +478,7 @@ var themerPrimaryColor = primaryColor;
 				var quickFitSetClass="text-large";			//Elements with size set will get this class
 				var quickFitFontSizeData="quickfit-font-size";
 				//Set the font-size property of your element to the MINIMUM size you want for your content
-				
+
 				if(reset)
 				{ jQuery("."+quickFitSetClass).removeClass(quickFitSetClass); }
 
@@ -475,7 +487,7 @@ var themerPrimaryColor = primaryColor;
 					//Get and set the font size into data for reuse upon resize
 					var fontSize=parseInt(jElement.data(quickFitFontSizeData)) || parseInt(jElement.css("font-size"));
 					jElement.data(quickFitFontSizeData,fontSize);
-				
+
 					//Gradually increase font size unti the element gets a big increase in height (ie line break)
 					var i=0;
 					var previousHeight;
@@ -521,9 +533,9 @@ var themerPrimaryColor = primaryColor;
 				var UserName = banhji.userData.username;
 				var d = new Date();
 				var strDate = d.getFullYear() + "/" + (d.getMonth()+1) + "/" + d.getDate();
-				$.ajax({  
+				$.ajax({
 				    type: 'POST',
-				    url: '<?php echo base_url(); ?>api/feedbacks', 
+				    url: '<?php echo base_url(); ?>api/feedbacks',
 				    data: { msg: MSG, cURL: CurrentURL, uName: UserName, datesend: strDate },
 				    success: function(response) {
 				        alert(response.message);
@@ -546,7 +558,7 @@ var themerPrimaryColor = primaryColor;
 				var UserName = banhji.userData.username;
 				var d = new Date();
 				var strDate = d.getFullYear() + "/" + (d.getMonth()+1) + "/" + d.getDate();
-				$.ajax({  
+				$.ajax({
 				    type: 'POST',
 				    url: '<?php echo base_url(); ?>api/referrals',
 				    data: { uName: UserName, datesend: strDate, rName1: name1, rName2: name2, rName3: name3, rName4: name4, rName5: name5, rMail1: email1, rMail2: email2, rMail3: email3, rMail4: email4, rMail5: email5 },
@@ -560,10 +572,10 @@ var themerPrimaryColor = primaryColor;
 
 			//eraseCookie("isshow");
 			var isshow = readCookie("isshow");
-			
+
 		    if (isshow != 1) {
 		        createCookie("isshow", 1);
-				$(".aWelcome").click();  
+				$(".aWelcome").click();
 			}
 
 			$(".cover-welcome-four-blog a").click(function(){

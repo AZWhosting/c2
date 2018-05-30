@@ -648,7 +648,7 @@ var	en_US = {
 	"status" : "Status",
 	"active" : "Active",
 	"inactive" : "Inactive",
-	"void" : "Inactive",
+	"void" : "Void",
 	"meter_void" : "Void",
 	"unit_measure" : "Unit measure",
 	"unit" : "Unit",

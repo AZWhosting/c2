@@ -339,6 +339,22 @@
 										<table class="table table-bordered table-primary table-striped table-vertical-center" style="margin-top: 15px;">
 									        <thead>
 									            <tr>
+									            	<th style="vertical-align: top;color:#000;background: #ccc!important;" data-bind="text: lang.lang.location"></th>
+									            	<th style="vertical-align: top;color:#000;background: #ccc!important;" data-bind="text: lang.lang.pole"></th>
+									            	<th style="vertical-align: top;color:#000;background: #ccc!important;" data-bind="text: lang.lang.box"></th>
+									            </tr>
+									        </thead>
+									        <tbody>
+									        	<tr>
+									        		<td style="border: 1px solid #ccc;" data-bind="text: invlocation"></td>
+									        		<td style="border: 1px solid #ccc;" data-bind="text: invpole"></td>
+									        		<td style="border: 1px solid #ccc;" data-bind="text: invbox"></td>
+									        	</tr>
+									        </tbody>
+									    </table>
+										<table class="table table-bordered table-primary table-striped table-vertical-center" style="margin-top: 15px;">
+									        <thead>
+									            <tr>
 									            	<th style="vertical-align: top;" data-bind="text: lang.lang.no_"></th>
 									            	<th style="vertical-align: top;" data-bind="text: lang.lang.date"></th>
 									            	<th style="vertical-align: top;" data-bind="text: lang.lang.name"></th>
