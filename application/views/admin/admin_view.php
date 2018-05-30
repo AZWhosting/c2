@@ -24,6 +24,16 @@
     <!-- Custom style -->
     <link rel="stylesheet" href="<?php echo base_url()?>assets/admin-style.css">
     <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/jsbn.js"></script>
+    <script>
+    	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    	ga('create', 'UA-109087721-1', 'auto');
+    	ga('send', 'pageview');
+    </script>
+    <!-- End Google Analytics -->
 </head>
 
 <body class="nav-md">
@@ -1320,6 +1330,7 @@
     <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/js/libs/localforage.min.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js"></script>
     <script>
+      ga('send', 'event', 'admin', 'view', 'Dashboard');
         var banhji = banhji || {};
         var baseUrl = "<?php echo base_url(); ?>";
         var institute = null;
