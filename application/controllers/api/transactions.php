@@ -1103,6 +1103,7 @@ class Transactions extends REST_Controller {
 		$filter 	= $this->get("filter");
 		$data["results"] = [];
 		$data["count"] = 1;
+		$contact_id = 0;
 
 		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$objIds = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
@@ -1114,6 +1115,9 @@ class Transactions extends REST_Controller {
 					$obj->{$value["operator"]}($value["field"], $value["value"]);
 					$objIds->{$value["operator"]}($value["field"], $value["value"]);
 				} else {
+					if($value["field"]=="contact_id") {
+						$contact_id = $value["value"];
+					}
 	    			$obj->where($value["field"], $value["value"]);
 	    			$objIds->where($value["field"], $value["value"]);
 				}
@@ -1128,7 +1132,7 @@ class Transactions extends REST_Controller {
 		$obj->get();
 
 		//Payment
-		$objIds->select("id, contact_id");
+		$objIds->select("id");
 		// $objIds->like("type", "Invoice", "before");
 		$objIds->where_in("status", array(0,2));
 		$objIds->where("is_recurring <>", 1);
@@ -1152,10 +1156,24 @@ class Transactions extends REST_Controller {
 			$receipt = floatval($receipts->total);
 		}
 
+		//Deposit
+		$deposit = 0;
+		if($contact_id>0){
+			$deposits = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$deposits->select_sum("amount", "total");
+			$deposits->where("contact_id", $contact_id);
+			$deposits->where_in("type", array("Customer_Deposit","Vendor_Deposit"));
+			$deposits->where("is_recurring <>", 1);
+			$deposits->where("deleted <>", 1);
+			$deposits->get();
+
+			$deposit = floatval($deposits->total);
+		}
+
 		$data["results"][] = array(
 			"amount" 	=> floatval($obj->total) - $receipt,
 			"balance" 	=> floatval($obj->total) - $receipt,
-			"deposit" 	=> floatval($obj->total)
+			"deposit" 	=> $deposit
 		);
 
 		//Response Data
@@ -1429,6 +1447,7 @@ class Transactions extends REST_Controller {
 		
 		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$bf = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$bfReceipts = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 		//Sort
 		if(!empty($sort) && isset($sort)){
@@ -1447,12 +1466,14 @@ class Transactions extends REST_Controller {
 	    		if(isset($value['operator'])) {
 	    			if($value["field"]=="type"){
 						$bf->{$value['operator']}($value['field'], $value['value']);
+						$bfReceipts->{$value['operator']}($value['field'], $value['value']);
 					}
 
 					$obj->{$value['operator']}($value['field'], $value['value']);
 				} else {
 					if($value["field"]=="contact_id"){
 						$bf->where($value["field"], $value["value"]);
+						$bfReceipts->where($value["field"], $value["value"]);
 					}
 					$obj->where($value["field"], $value["value"]);
 				}
@@ -1478,7 +1499,31 @@ class Transactions extends REST_Controller {
 					$bf->get();
 
 					if($bf->exists()){
-						$balance += floatval($bf->total);
+						//BF Receipts
+						$bfReceipts->select("id");
+						$bfReceipts->where("issued_date <", $value->issued_date);
+						$bfReceipts->where("is_recurring <>", 1);
+						$bfReceipts->where("deleted <>", 1);
+						$bfReceipts->get();
+
+						$ids = [];
+						foreach ($bfReceipts as $value) {
+							array_push($ids, $value->id);
+						}
+						$receipt = 0;
+						if(count($ids)>0){
+							$receipts = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+							$receipts->select_sum("amount", "total");
+							$receipts->where_in("reference_id", $ids);
+							$receipts->where("type", "Cash_Receipt");
+							$receipts->where("is_recurring <>", 1);
+							$receipts->where("deleted <>", 1);
+							$receipts->get();
+
+							$receipt = floatval($receipts->total);
+						}
+						$data["xxx"] = $receipt;
+						$balance += floatval($bf->total) - $receipt;
 						$bfDate = date('Y-m-d', strtotime('-1 day', strtotime($value->issued_date)));
 
 						$data["results"][] = array(
@@ -1490,7 +1535,7 @@ class Transactions extends REST_Controller {
 						   	"reference_no" 		=> "",
 						   	"number" 			=> "",
 						   	"status" 			=> "",
-						   	"amount" 			=> floatval($bf->total),
+						   	"amount" 			=> $balance,
 						   	"total"				=> 0,
 						   	"balance" 			=> $balance,
 						   	"rate" 				=> 1,
@@ -1510,7 +1555,7 @@ class Transactions extends REST_Controller {
 					$reference = $value->transaction->get_raw()->result();
 				}
 
-				$amount = (floatval($value->amount) - floatval($value->deposit)) / floatval($value->rate);
+				$amount = (floatval($value->amount) - floatval($value->deposit));
 				$balance += $amount;
 
 				$data["results"][] = array(

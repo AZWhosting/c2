@@ -3078,6 +3078,7 @@ class UtibillReports extends REST_Controller {
 		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
 		$sort 	 	= $this->get("sort");		
 		$data = array();
+		$today = new DateTime();
 		// $data["count"] = 0;
 
 		$obj = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
@@ -3102,15 +3103,15 @@ class UtibillReports extends REST_Controller {
 
 		$obj->where('status', 1);
 		$obj->where('activated', 1);
-		$obj->where("created_at >=", date("Y")."-01-01");
-		$obj->where("created_at <=", date("Y")."-12-31");						
-		$obj->order_by("created_at");	
+		$obj->where("date_used >=", date("Y")."-01-01");
+		$obj->where("date_used <=", date("Y")."-12-31");						
+		$obj->order_by("date_used");	
 		$obj->get_iterated();
 		$temp = array();
 
 		if($obj->exists()){
 			foreach ($obj as $value) {
-				$invoiceMonth = date('F', strtotime($value->created_at));
+				$invoiceMonth = date('F', strtotime($value->date_used));
 					if(isset($temp["$invoiceMonth"])) {
 						$temp["$invoiceMonth"]['contact'] +=1;
 					} else {

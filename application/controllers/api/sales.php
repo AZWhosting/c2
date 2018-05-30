@@ -2267,7 +2267,7 @@ class Sales extends REST_Controller {
 		
 		$obj->where("is_pattern", $is_pattern);
 		$obj->where("deleted <>", 1);
-		$obj->where_in("contact_type_id", array(4, 5, 11,12,13));
+		$obj->where_related("contact_type", "parent_id", 1);
 		$obj->include_related("contact_type", "name");		
 
 		//Results

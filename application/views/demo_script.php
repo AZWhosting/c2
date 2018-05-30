@@ -7388,18 +7388,18 @@
                 ]);
             }
 
-            if(obj.contact_id>0){
-                this.amountSumDS.query({
-                    filter:[
-                        { field:"contact_id", value: obj.contact_id },
-                        { field:"type", value: "Customer_Deposit" }
-                    ]
-                }).then(function(){
-                    var view = self.amountSumDS.view();
+            // if(obj.contact_id>0){
+            //     this.amountSumDS.query({
+            //         filter:[
+            //             { field:"contact_id", value: obj.contact_id },
+            //             { field:"type", value: "Customer_Deposit" }
+            //         ]
+            //     }).then(function(){
+            //         var view = self.amountSumDS.view();
 
-                    self.set("total_deposit", view[0].amount + obj.deposit);
-                });
-            }
+            //         self.set("total_deposit", view[0].amount + obj.deposit);
+            //     });
+            // }
         },
         addDeposit          : function(id){
             var obj = this.get("obj");
@@ -7490,6 +7490,7 @@
                     creditAllowed = contact.credit_limit - balance;
                 }
 
+                self.set("total_deposit", view[0].deposit + obj.deposit);
                 self.set("balance", kendo.toString(balance, "c", obj.locale));
                 obj.set("credit_allowed", creditAllowed);
             });
@@ -9096,19 +9097,19 @@
                 ]);
             }
 
-            if(obj.contact_id>0){
-                this.txnDS.query({
-                    filter:[
-                        { field:"amount", operator:"select_sum", value:"amount" },
-                        { field:"contact_id", value: obj.contact_id },
-                        { field:"type", value: "Customer_Deposit" }
-                    ]
-                }).then(function(){
-                    var view = self.txnDS.view();
+            // if(obj.contact_id>0){
+            //     this.txnDS.query({
+            //         filter:[
+            //             { field:"amount", operator:"select_sum", value:"amount" },
+            //             { field:"contact_id", value: obj.contact_id },
+            //             { field:"type", value: "Customer_Deposit" }
+            //         ]
+            //     }).then(function(){
+            //         var view = self.txnDS.view();
 
-                    self.set("total_deposit", view[0].amount + obj.deposit);
-                });
-            }
+            //         self.set("total_deposit", view[0].amount + obj.deposit);
+            //     });
+            // }
         },
         addDeposit          : function(id){
             var obj = this.get("obj");
@@ -9201,6 +9202,7 @@
                     creditAllowed = contact.credit_limit - balance;
                 }
 
+                self.set("total_deposit", view[0].deposit + obj.deposit);
                 self.set("balance", kendo.toString(balance, "c", obj.locale));
                 obj.set("credit_allowed", creditAllowed);
             });
@@ -16086,8 +16088,6 @@
                     });
                 }
             });
-
-
         },
         setContact      : function(contact){
             this.set("obj", contact);
