@@ -723,7 +723,7 @@ class UtibillReports extends REST_Controller {
 	}
 
 	//BALANCE
-	function balance_summary_get() {
+		function balance_summary_get() {
 		$filter 	= $this->get("filter");
 		$page 		= $this->get('page');
 		$limit 		= $this->get('limit');
@@ -759,7 +759,6 @@ class UtibillReports extends REST_Controller {
 		$obj->include_related("contact", array("abbr", "number", "name"));
 		$obj->include_related("location", "name");
 		$obj->where("type", "Utility_Invoice");
-		$obj->where("amount >", 0);
 		$obj->where_in("status", array(0,2));
 		$obj->where("is_recurring <>", 1);
 		$obj->where("deleted <>", 1);
@@ -775,7 +774,6 @@ class UtibillReports extends REST_Controller {
 					$paid->select_sum("amount");
 					$paid->select_sum("discount");
 					$paid->where("reference_id", $value->id);
-					$paid->where("month_of", $value->id);
 					$paid->where_in("type", array("Cash_Receipt", "Offset_Invoice"));
 					$paid->where("is_recurring <>",1);
 					$paid->where("deleted <>",1);
@@ -845,7 +843,6 @@ class UtibillReports extends REST_Controller {
 		$obj->include_related("location", "name");
 		$obj->where("type", "Utility_Invoice");
 		$obj->where_in("status", array(0,2));
-		$obj->where("amount >", 0);
 		$obj->where("is_recurring <>", 1);
 		$obj->where("deleted <>", 1);
 		$obj->get_iterated();
@@ -860,7 +857,6 @@ class UtibillReports extends REST_Controller {
 					$paid->select_sum("amount");
 					$paid->select_sum("discount");
 					$paid->where("reference_id", $value->id);
-					$paid->where("month_of", $value->id);
 					$paid->where_in("type", array("Cash_Receipt", "Offset_Invoice"));
 					$paid->where("is_recurring <>",1);
 					$paid->where("deleted <>",1);
@@ -900,6 +896,7 @@ class UtibillReports extends REST_Controller {
 		//Response Data
 		$this->response($data, 200);
 	}
+
 
 	//Account Receiveble Water
 	function Reciveble_invoice_get() {
@@ -1095,7 +1092,7 @@ class UtibillReports extends REST_Controller {
 				$total = $amount + $amountOwed;
 					$data["results"][] = array(
 						"id" 				=> $value->id,
-						"number"			=> $value->abbr."".$value->contact_number,
+						"number"			=> $value->contact_abbr."".$value->contact_number,
 						"name"				=> $value->contact_name,
 						"type" 				=> $value->type,
 						"date" 				=> $value->issued_date,

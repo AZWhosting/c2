@@ -2811,14 +2811,24 @@
 								        </thead>
 								        <tbody data-role="listview"
 								        		data-template="waterCenter-water-sale-list-template"
-								        		data-auto-bind=false 
-								        		data-bind="source: invoiceVM.dataSource">
+								        		data-auto-bind="false" 
+								        		data-bind="source: centerTransaction">
 								        </tbody>
 								    </table>
 								    <div id="pager" class="k-pager-wrap"
 								        	 data-role="pager"
 											 data-auto-bind="false"
-										     data-bind="source: invoiceVM.dataSource"></div>
+										     data-bind="source: centerTransaction"></div>
+									<div class="col-sm-3" style="padding: 0;padding-top: 10px;">
+										<input data-role="dropdownlist"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-auto-bind="false"
+							                   data-bind="value: TemplateSelect,
+							                              source: txnTemplateDS"
+							                   data-option-label="Select Template..." />
+									</div>
 					        	</div>
 						        <div class="tab-pane" id="tab-3">
 						        	<h2 style="margin-left: 0;" data-bind="text: lang.lang.add_single_reading">Add Single Reading</h2>
@@ -3144,8 +3154,8 @@
 			#if(type=="Utility_Invoice"){#
 				#if(status=="0"){#
 					<a data-bind="click: viewInv"><i></i> <span style="border-radius: 3px;background: green;color:\\#fff;padding: 5px 10px;" data-bind="text: lang.lang.print"></span></a>
-				#}#
-				#if(status=="0" || status=="2") {#
+				#}else{#
+					<a data-bind="click: viewInv"><i></i> <span style="border-radius: 3px;background: grey;color:\\#fff;padding: 5px 10px;" data-bind="text: lang.lang.print"></span></a>
         			<!-- <a data-bind="click: payInvoice"><i></i> <span data-bind="text: lang.lang.receive_payment"></span></a> -->
         		#}#
         	#}#
@@ -7470,7 +7480,7 @@
 						<div class="clear"></div>
 
 						<div class=" row" style="clear:both;">
-				        	<div class="col-sx-12 col-sm-2"">
+				        	<div class="col-sx-12 col-sm-2">
 								<!-- Group -->
 								<div class="control-group">
 									<label ><span data-bind="text: lang.lang.month_of">Month Of</span></label>
@@ -7485,7 +7495,7 @@
 								</div>
 								<!-- // Group END -->
 							</div>
-							<div class="col-sx-12 col-sm-2"" >
+							<div class="col-sx-12 col-sm-2" >
 								<div class="control-group">
 									<label ><span data-bind="text: lang.lang.license">License</span></label>
 									<input 
@@ -7502,7 +7512,7 @@
 		                  					events: {change: licenseChange}">
 		                  		</div>
 							</div>
-							<div class="col-sx-12 col-sm-2"">
+							<div class="col-sx-12 col-sm-2">
 								<div class="control-group">								
 									<label ><span data-bind="text: lang.lang.location">Location</span></label>
 									<input 
@@ -7520,7 +7530,7 @@
 		                  					source: blocDS">
 		                  		</div>
 							</div>
-							<div class="col-sx-12 col-sm-2"">
+							<div class="col-sx-12 col-sm-2">
 								<div class="control-group">								
 									<label ><span data-bind="text: lang.lang.sub_location">Location</span></label>
 									<input 
@@ -7538,7 +7548,7 @@
 		                  					source: subLocationDS">
 		                  		</div>
 							</div>
-							<div class="col-sx-12 col-sm-2"">
+							<div class="col-sx-12 col-sm-2">
 								<div class="control-group">								
 									<label ><span data-bind="text: lang.lang.box">Location</span></label>
 									<input 
@@ -7555,7 +7565,7 @@
 		                  					source: boxDS">
 		                  		</div>
 							</div>
-							<div class="col-sx-12 col-sm-2"">
+							<div class="col-sx-12 col-sm-2">
 								<div class="control-group">	
 									<label ><span data-bind="text: lang.lang.action">Action</span></label>	
 									<div class="row" style="margin: 0;">					
@@ -17031,33 +17041,58 @@
 								        <!-- //Date -->
 								        <div class="tab-pane active" id="tab-1">
 									        	<div class="col-sm-12 row" style="padding:20px 0;padding-top: 0;">
-											<div class="col-xs-12 col-sm-3">
-												<span data-bind="text: lang.lang.license">Licenses</span>
-												<input 
-													data-role="dropdownlist" 
-													data-option-label="License ..." 
-													data-auto-bind="false" 
-													data-value-primitive="true" 
-													data-text-field="name" 
-													data-value-field="id" 
-													data-bind="
-														value: licenseSelect,
-															source: licenseDS,
-															events: {change: licenseChange}" style="width: 100%">
-											</div>
-											<div class="col-xs-12 col-sm-3">
-												<span data-bind="text: lang.lang.location">Locations</span>
+											<div class="col-xs-12 col-sm-2" >
+												<div class="control-group">	
+													<label ><span data-bind="text: lang.lang.license">License</span></label>
 													<input 
 														data-role="dropdownlist" 
+														style="width: 100%;" 
+														data-option-label="License ..." 
+														data-auto-bind="false" 
+														data-value-primitive="true" 
+														data-text-field="name" 
+														data-value-field="id" 
+														data-bind="
+															value: licenseSelect,
+						                  					source: licenseDS,
+						                  					events: {change: licenseChange}">
+						                  		</div>
+											</div>
+											<div class="col-xs-12 col-sm-2" >
+												<div class="control-group">								
+													<label ><span data-bind="text: lang.lang.location">Location</span></label>
+													<input 
+														data-role="dropdownlist" 
+														style="width: 100%;" 
 														data-option-label="Location ..." 
 														data-auto-bind="false" 
-														data-value-primitive="false" 
+														data-value-primitive="true" 
 														data-text-field="name" 
 														data-value-field="id" 
 														data-bind="
 															value: blocSelect,
-															enabled: haveBloc,
-															source: blocDS" style="width: 100%">
+															enabled: haveLicense,
+															events: {change: onLocationChange},
+						                  					source: blocDS">
+						                  		</div>
+											</div>
+											<div class="col-xs-12 col-sm-3">
+												<div class="control-group">								
+													<label ><span data-bind="text: lang.lang.sub_location">Location</span></label>
+													<input 
+														data-role="dropdownlist" 
+														style="width: 100%;" 
+														data-option-label="Sub Location ..." 
+														data-auto-bind="false" 
+														data-value-primitive="true" 
+														data-text-field="name" 
+														data-value-field="id" 
+														data-bind="
+															value: subLocationSelect,
+															enabled: haveLocation,
+															events: {change: onSubLocationChange},
+						                  					source: subLocationDS">
+						                  		</div>
 											</div>
 											<div class="col-xs-12 col-sm-2">
 												<div class="control-group">	
@@ -17107,7 +17142,7 @@
 								<div class="col-xs-12 col-sm-6">
 									<div class="total-sale">
 										<p data-bind="text: lang.lang.number_of_customer">Number of Customer</p>
-										<span data-bind="text: dataSource.count" ></span>
+										<span data-bind="text: dataSource.total" ></span>
 									</div>
 								</div>
 							</div>

@@ -23125,7 +23125,7 @@
     banhji.totalBalance = kendo.observable({
         lang: langVM,
         dataSource: dataStore(apiUrl + "utibillReports/totalBalance"),
-        licenseDS: dataStore(apiUrl + "branches"),
+              licenseDS: dataStore(apiUrl + "branches"),
         blocDS: dataStore(apiUrl + "locations"),
         subLocationDS: dataStore(apiUrl + "locations"),
         boxDS: dataStore(apiUrl + "locations"),
@@ -23308,8 +23308,10 @@
         },
         search: function() {
             var monthOfSearch = this.get("monthOfUpload"),
-                license = this.get("licenseSelect"),
-                bloc = this.get("blocSelect");
+                license_id = this.get("licenseSelect"),
+                bloc_id = this.get("blocSelect");
+                pole_id = this.get("subLocationSelect");
+                box_id = this.get("boxSelect");
             var self = this;
 
             var para = [];
@@ -23333,147 +23335,162 @@
                     value: monthL
                 });
                 this.set("monthOf", monthOf);
-                this.dataSource.filter(para);
-                   
+                //this.dataSource.filter(para);
+                    if(license_id){
+                        para.push({
+                            field: "branch_id",
+                            operator: "where_related_meter",
+                            value: license_id
+                        });
+                    }
 
-                    if (bloc) {
+                    if (box_id) {
+                        para.push({
+                            field: "box_id",
+                            operator: "where_related_meter",
+                            value: box_id
+                        });
+                    } 
+
+                    if (pole_id) {
+                        para.push({
+                            field: "pole_id",
+                            operator: "where_related_meter",
+                            value: pole_id
+                        });
+                    } 
+
+                    if (bloc_id){
                         para.push({
                             field: "location_id",
-                            value: bloc.id
+                            operator: "where_related_meter",
+                            value: bloc_id
                         });
                     }
                     this.dataSource.query({
                         filter: para,
-                    }).then(function() {
-                        var view = self.dataSource.view();
+                        page: 1,
+                        pageSize: 100
+                    }).then(function(e) {
+                    // if (e.type == "read") {
+                        var response = self.dataSource.view();
 
-                        var amount = 0;
-                        $.each(view, function(index, value) {
-                            amount += value.amount;
+                        self.exArray = [];
+
+                        self.exArray.push({
+                            cells: [{
+                                value: "Total Balance",
+                                bold: true,
+                                fontSize: 20,
+                                textAlign: "center",
+                                colSpan: 9
+                            }]
                         });
-
-                        self.set("totalAmount", kendo.toString(amount, banhji.locale == "km-KH" ? "c0" : "c", banhji.locale));
-                    });
-                    this.dataSource.bind("requestEnd", function(e) {
-                        if (e.type == "read") {
-                            var response = e.response,
-                                balanceRec = 0;
-                            self.exArray = [];
-
+                        if (self.displayDate) {
                             self.exArray.push({
                                 cells: [{
-                                    value: self.company.name,
+                                    value: self.displayDate,
                                     textAlign: "center",
                                     colSpan: 9
                                 }]
                             });
-                            self.exArray.push({
-                                cells: [{
-                                    value: "Total Balance",
-                                    bold: true,
-                                    fontSize: 20,
-                                    textAlign: "center",
-                                    colSpan: 9
-                                }]
-                            });
-                            if (self.displayDate) {
-                                self.exArray.push({
-                                    cells: [{
-                                        value: self.displayDate,
-                                        textAlign: "center",
-                                        colSpan: 9
-                                    }]
-                                });
-                            }
-                            self.exArray.push({
-                                cells: [{
-                                    value: "",
-                                    colSpan: 9
-                                }]
-                            });
-                            self.exArray.push({
-                                    cells: [{
-                                            value: "Code",
-                                            background: "#496cad",
-                                            color: "#ffffff"
-                                        },
-                                        {
-                                            value: "Customer",
-                                            background: "#496cad",
-                                            color: "#ffffff"
-                                        },
-                                        {
-                                            value: "Meter Number",
-                                            background: "#496cad",
-                                            color: "#ffffff"
-                                        },
-                                        {
-                                            value: "Previous",
-                                            background: "#496cad",
-                                            color: "#ffffff"
-                                        },
-                                        {
-                                            value: "Current",
-                                            background: "#496cad",
-                                            color: "#ffffff"
-                                        },
-                                        {
-                                            value: "Usage",
-                                            background: "#496cad",
-                                            color: "#ffffff"
-                                        },
-                                        {
-                                            value: "Balance",
-                                            background: "#496cad",
-                                            color: "#ffffff"
-                                        },
-                                        {
-                                            value: "Amount",
-                                            background: "#496cad",
-                                            color: "#ffffff"
-                                        },
-                                        {
-                                            value: "Total",
-                                            background: "#496cad",
-                                            color: "#ffffff"
-                                        }
-                                    ]
-                                });
-                             for (var i = 0; i < response.length; i++) {
-                                    self.exArray.push({
-                                        cells: [{
-                                                value: response[i].number,
-                                            },
-                                            {
-                                                value: response[i].name,
-                                            },
-                                            {
-                                                value: response[i].meter_number
-                                            },
-                                            {
-                                                value: response[i].previous
-                                            },
-                                            {
-                                                value: response[i].current
-                                            },
-                                            {
-                                                value: response[i].usage
-                                            },
-                                            {
-                                                  value: kendo.parseFloat(response.results[i].balance)
-                                            },
-                                            {
-                                                value: kendo.parseFloat(response.results[i].amount)
-                                            },
-                                            {
-                                                value: kendo.parseFloat(response.results[i].total)
-                                            },
-                                        ]
-                                    });
-                                }
                         }
-                    
-                    
+                        self.exArray.push({
+                            cells: [{
+                                value: "",
+                                colSpan: 9
+                            }]
+                        });
+                        self.exArray.push({
+                            cells: [{
+                                    value: "Code",
+                                    background: "#496cad",
+                                    color: "#ffffff"
+                                },
+                                {
+                                    value: "Customer",
+                                    background: "#496cad",
+                                    color: "#ffffff"
+                                },
+                                {
+                                    value: "Meter Number",
+                                    background: "#496cad",
+                                    color: "#ffffff"
+                                },
+                                {
+                                    value: "Previous",
+                                    background: "#496cad",
+                                    color: "#ffffff"
+                                },
+                                {
+                                    value: "Current",
+                                    background: "#496cad",
+                                    color: "#ffffff"
+                                },
+                                {
+                                    value: "Usage",
+                                    background: "#496cad",
+                                    color: "#ffffff"
+                                },
+                                {
+                                    value: "Balance",
+                                    background: "#496cad",
+                                    color: "#ffffff"
+                                },
+                                 {
+                                    value: "Amount",
+                                    background: "#496cad",
+                                    color: "#ffffff"
+                                },
+                                 {
+                                    value: "Total",
+                                    background: "#496cad",
+                                    color: "#ffffff"
+                                },
+                            ]
+                        });
+                        for (var i = 0; i < response.length; i++) {
+                            self.exArray.push({
+                                cells: [{
+                                        value: response[i].number,
+                                        bold: true,
+                                    },
+                                    {
+                                        value: response[i].name,
+                                        bold: true,
+                                    },
+                                    {
+                                         value: response[i].meter_number,
+                                        bold: true,
+                                    },
+                                    {
+                                         value: response[i].previous,
+                                        bold: true,
+                                    },
+                                    {
+                                         value: response[i].current,
+                                        bold: true,
+                                    },
+                                    {
+                                        value: response[i].usage,
+                                        bold: true,
+                                    },
+                                    {
+                                        value: response[i].balance,
+                                        bold: true,
+                                    },
+                                    {
+                                        value: response[i].amount,
+                                        bold: true,
+                                    },
+                                    {
+                                        value: response[i].total,
+                                        bold: true,
+                                    }
+                                ]
+                            });
+                        }
+                    // }
                 });                  
         },
         cancel: function() {
@@ -28666,9 +28683,9 @@
         },
         loadTransaction: function() {
             if(this.objMeter){
-                if (this.invoiceVM.dataSource.total() == 0) {
+                // if (this.invoiceVM.dataSource.total() == 0) {
                     this.searchTransaction();
-                }
+                // }
             }
         },
         loadReading: function() {
@@ -28814,6 +28831,7 @@
                 self.meterDS.filter({field: "property_id", value: self.get("propertyID")});
             });
         },
+        centerTransaction: dataStore(apiUrl + "utibills/center_transaction"),
         searchTransaction: function() {
             var self = this,
                 start = kendo.toString(this.get("sdate"), "yyyy-MM-dd"),
@@ -28852,7 +28870,7 @@
 
                 }
 
-                this.invoiceVM.dataSource.query({
+                this.centerTransaction.query({
                     filter: para,
                     sort: [{
                             field: "issued_date",
@@ -28909,29 +28927,89 @@
             }
         },
         branchDS: dataStore(apiUrl + "branches"),
+        txnTemplateDS : new kendo.data.DataSource({
+            transport: {
+                read: {
+                    url: baseUrl + 'api/transaction_templates',
+                    type: "GET",
+                    dataType: 'json',
+                    headers: {
+                        Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id
+                    }
+                },
+                parameterMap: function(options, operation) {
+                    if (operation === 'read') {
+                        return {
+                            limit: options.take,
+                            page: options.page,
+                            filter: options.filter
+                        };
+                    } else {
+                        return {
+                            models: kendo.stringify(options.models)
+                        };
+                    }
+                }
+            },
+            schema: {
+                model: {
+                    id: 'id'
+                },
+                data: 'results',
+                total: 'count'
+            },
+            filter: {field: "moduls", value: "water_mg"},
+            batch: true,
+            serverFiltering: true,
+            serverPaging: true,
+            pageSize: 100
+        }),
         viewInv: function(e){
             var data = e.data;
             var self = this;
-            this.singleInvDS.data([]);
-            this.singleInvDS.query({
-                filter: {field: "id", value: data.id}
-            }).then(function(e){
-                var view = self.singleInvDS.view();
+            if(this.get('TemplateSelect')){
                 banhji.InvoicePrint.dataSource = [];
-                banhji.InvoicePrint.dataSource.push(view[0]);
-                banhji.InvoicePrint.txnFormID = 14;
-                self.branchDS.query({
+                banhji.InvoicePrint.dataSource.push(data);
+                banhji.InvoicePrint.txnFormID = this.get('TemplateSelect');
+                this.branchDS.query({
                     filter: {
                         field: "id",
-                        value: view[0].meter.branch_id
+                        value: data.meter.branch_id
                     }
                 }).then(function(e) {
                     var v = self.branchDS.view();
                     banhji.InvoicePrint.license = v[0];
-                    banhji.router.navigate('/invoice_print');
+                    self.getTemplate(self.get('TemplateSelect'));
                 });
-                
-                
+            }
+        },
+        txnTemplateDSQ: dataStore(apiUrl + "transaction_templates"),
+        getTemplate: function(id){
+            var self = this;
+            this.txnTemplateDSQ.query({
+                filter: {
+                    field: "id",
+                    value: id
+                }
+            })
+            .then(function(e) {
+                if (self.txnTemplateDSQ.data()[0].transaction_form_id == "45") {
+                    banhji.InvoicePrint.formVisible = 'visibility: visible;';
+                    banhji.InvoicePrint.formBorder = 'border: 1px solid #000!important;';
+                } else {
+                    if (self.txnTemplateDSQ.data()[0].transaction_form_id == "44" || self.txnTemplateDSQ.data()[0].transaction_form_id == "66") {
+                        banhji.InvoicePrint.formVisible = 'visibility: hidden;';
+                        banhji.InvoicePrint.formBorder = 'border: 1px solid #fff!important;';
+                    } else {
+                        banhji.InvoicePrint.formVisible = 'visibility: visible;';
+                        banhji.InvoicePrint.formBorder = 'border: 1px solid #000!important;';
+                    }
+                }
+                if (self.txnTemplateDSQ.data()[0].color) {
+                    banhji.InvoicePrint.formColor = self.txnTemplateDSQ.data()[0].color;
+                } 
+                banhji.InvoicePrint.txnFormID = self.txnTemplateDSQ.data()[0].transaction_form_id;
+                banhji.router.navigate('/invoice_print');
             });
         }
     });

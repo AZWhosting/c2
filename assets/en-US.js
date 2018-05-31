@@ -11,6 +11,7 @@ var	en_US = {
 	"customer_group" : "Customer Group",
 	"item_type" : "Inventory Type",
 	"item_group" : "Inventory Group",
+	"dashbaord" : "Dashbaord",
 	//Main Dustboard
 	"search_contact" : "Search Contact",
 	"contact" : "Contact",
