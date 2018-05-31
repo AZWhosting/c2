@@ -6,6 +6,14 @@ class Micro extends CI_Controller {
 		parent::__construct();
 	}
 	
+	public function index() {	
+		$this->load->view("micro/header");		
+		$this->load->view("micro/sidebar");
+		$this->load->view("micro/home/home");
+		$this->load->view("micro/home/script");
+		$this->load->view("micro/footer");
+	}
+
 	public function home() {	
 		$this->load->view("micro/header");		
 		$this->load->view("micro/sidebar");

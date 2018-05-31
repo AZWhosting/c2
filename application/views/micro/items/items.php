@@ -46,7 +46,7 @@
 	<ul class="nav nav-tabs customtab" role="tablist" >
 		<li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#/" data-bind="click: goReports"><span class="hidden-sm-up"><i class="ti-layout-grid2-thumb"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.reports"></span></a> </li>
 	    <!-- <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#/transactions" data-bind="click: goTransactions"><span class="hidden-sm-up"><i class="ti-layout-accordion-list"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.item_transactions">Item Transactions</span></a> </li> -->
-	    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#/items" data-bind="click: goMenuItems"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.inventory_for_sale" ></span></a> </li>
+	    <li class="nav-item hidden-sm-down"> <a class="nav-link" data-toggle="tab" href="#/items" data-bind="click: goMenuItems"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.inventory_for_sale" ></span></a> </li>
     </ul>
 </script>
 <!-- End -->

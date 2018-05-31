@@ -7320,17 +7320,13 @@
         numberDS                : dataStore(apiUrl + "contacts"),
         deleteDS                : dataStore(apiUrl + "transactions"),
         existingDS              : dataStore(apiUrl + "contacts"),
-        contactPersonDS         : dataStore(apiUrl + "contact_persons"),
+        contactTypeDS           : dataStore(apiUrl + "contacts/type"),
         paymentTermDS           : banhji.source.paymentTermDS,
         paymentMethodDS         : banhji.source.paymentMethodDS,
         countryDS               : banhji.source.countryDS,
         currencyDS              : new kendo.data.DataSource({
             data: banhji.source.currencyList,
             filter: { field:"status", value: 1 }
-        }),
-        contactTypeDS           : new kendo.data.DataSource({
-            data: banhji.source.contactTypeList,
-            filter: { field:"parent_id", value: 1 }//Customer
         }),
         arDS                    : new kendo.data.DataSource({
             data: banhji.source.accountList,
@@ -7419,50 +7415,6 @@
                         this.addEmpty();
                     }
                 }
-            }
-        },
-        //Contact Person
-        addEmptyContactPerson   : function(){
-            var obj = this.get("obj");
-
-            this.contactPersonDS.add({
-                contact_id          : obj.id,
-                prefix              : "",
-                name                : "",
-                department          : "",
-                phone               : "",
-                email               : ""
-            });
-        },
-        deleteContactPerson     : function(e){
-            if (confirm("Are you sure, you want to delete it?")) {
-                var d = e.data,
-                obj = this.contactPersonDS.getByUid(d.uid);
-
-                this.contactPersonDS.remove(obj);
-            }
-        },
-        //Map
-        loadMap                 : function(){
-            var obj = this.get("obj"), lat = kendo.parseFloat(obj.latitute),
-            lng = kendo.parseFloat(obj.longtitute);
-
-            if(lat && lng){
-                var myLatLng = {lat:lat, lng:lng};
-                var mapOptions = {
-                    zoom: 17,
-                    center: myLatLng,
-                    mapTypeControl: false,
-                    zoomControl: false,
-                    scaleControl: false,
-                    streetViewControl: false
-                };
-                var map = new google.maps.Map(document.getElementById('map'),mapOptions);
-                var marker = new google.maps.Marker({
-                    position: myLatLng,
-                    map: map,
-                    title: obj.number
-                });
             }
         },
         copyBillTo              : function(){
@@ -7647,11 +7599,8 @@
                 var view = self.dataSource.view();
 
                 self.set("obj", view[0]);
-                self.loadMap();
                 self.checkExistingTxn();
             });
-
-            this.contactPersonDS.filter({ field:"contact_id", value: id });
         },
         addEmpty                : function(){
             this.dataSource.insert(0, {
@@ -7772,10 +7721,7 @@
         },
         clear                   : function(){
             this.dataSource.cancelChanges();
-            this.contactPersonDS.cancelChanges();
-
-            // this.dataSource.data([]);
-            // this.contactPersonDS.data([]);
+            this.dataSource.data([]);
 
             this.set("isEdit", false);
             this.set("isProtected", false);
@@ -7812,14 +7758,6 @@
             this.set("showConfirm", false);
         },
         //Pattern
-        typeChanges             : function(){
-            var obj = this.get("obj");
-
-            if(obj.contact_type_id){
-                this.applyPattern();
-                this.generateNumber();
-            }
-        },
         applyPattern            : function(){
             var self = this, obj = self.get("obj");
 
@@ -7831,33 +7769,41 @@
                 page: 1,
                 pageSize: 1
             }).then(function(data){
-                var view = self.patternDS.view(),
-                    type = self.contactTypeDS.get(view[0].contact_type_id);
+                var view = self.patternDS.view();
 
-                if(view.length>0){
-                    obj.set("country_id", view[0].country_id);
-                    obj.set("abbr", type.abbr);
-                    obj.set("gender", view[0].gender);
-                    obj.set("company", view[0].company);
-                    obj.set("vat_no", view[0].vat_no);
-                    obj.set("memo", view[0].memo);
-                    obj.set("city", view[0].city);
-                    obj.set("post_code", view[0].post_code);
-                    obj.set("address", view[0].address);
-                    obj.set("bill_to", view[0].bill_to);
-                    obj.set("ship_to", view[0].ship_to);
-                    obj.set("invoice_note", view[0].invoice_note);
-                    obj.set("payment_term_id", view[0].payment_term_id);
-                    obj.set("payment_method_id", view[0].payment_method_id);
-                    obj.set("credit_limit", view[0].credit_limit);
-                    obj.set("locale", view[0].locale);
-                    obj.set("account_id", 10);
-                    obj.set("ra_id", view[0].ra_id);
-                    obj.set("tax_item_id", view[0].tax_item_id);
-                    obj.set("deposit_account_id", view[0].deposit_account_id);
-                    obj.set("trade_discount_id", view[0].trade_discount_id);
-                    obj.set("settlement_discount_id", view[0].settlement_discount_id);
-                }
+                obj.set("country_id", view[0].country_id);
+                // obj.set("abbr", type.abbr);
+                obj.set("gender", view[0].gender);
+                obj.set("company", view[0].company);
+                obj.set("vat_no", view[0].vat_no);
+                obj.set("memo", view[0].memo);
+                obj.set("city", view[0].city);
+                obj.set("post_code", view[0].post_code);
+                obj.set("address", view[0].address);
+                obj.set("bill_to", view[0].bill_to);
+                obj.set("ship_to", view[0].ship_to);
+                obj.set("invoice_note", view[0].invoice_note);
+                obj.set("payment_term_id", view[0].payment_term_id);
+                obj.set("payment_method_id", view[0].payment_method_id);
+                obj.set("credit_limit", view[0].credit_limit);
+                obj.set("locale", view[0].locale);
+
+                obj.set("account_id", view[0].account_id);
+                obj.set("ra_id", view[0].ra_id);
+                obj.set("tax_item_id", view[0].tax_item_id);
+                obj.set("deposit_account_id", view[0].deposit_account_id);
+                obj.set("trade_discount_id", view[0].trade_discount_id);
+                obj.set("settlement_discount_id", view[0].settlement_discount_id);
+            });
+
+            this.contactTypeDS.query({
+                filter: { field:"id", value: obj.contact_type_id },
+                page: 1,
+                pageSize: 1
+            }).then(function(data){
+                var view = self.contactTypeDS.view();
+
+                obj.set("abbr", view[0].abbr);
             });
         }
     });

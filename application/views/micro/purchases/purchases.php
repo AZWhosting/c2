@@ -45,7 +45,7 @@
 	<ul class="nav nav-tabs customtab" role="tablist" >
 		<li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#/" data-bind="click: goReports"><span class="hidden-sm-up"><i class="ti-layout-grid2-thumb"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.reports"></span></a> </li>
 	    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#/transactions" data-bind="click: goTransactions"><span class="hidden-sm-up"><i class="ti-layout-accordion-list"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.purchase_transaction"></span></a> </li>
-	    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#/purchase_center" data-bind="click: goPurchaseCenter"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.purchase"></span></a> </li>
+	    <li class="nav-item hidden-sm-down"> <a class="nav-link" data-toggle="tab" href="#/purchase_center" data-bind="click: goPurchaseCenter"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.purchase"></span></a> </li>
     </ul>
 </script>
 <!-- End -->
@@ -75,14 +75,6 @@
 
 			<!-- Report -->
             <div class="report ">
-				<div class="col-md-12">
-					<h3 class="marginBottom"><a href="#/expenses_purchase_summary_supplier" data-bind="text: lang.lang.expenses_purchase_summary_by_supplier" ></a></h3>
-					
-				</div>
-				<div class="col-md-12">
-					<h3 class="marginBottom"><a href="#/expenses_purchase_detail_supplier" data-bind="text: lang.lang.expeneses_purchase_detail_by_suppplier" ></a></h3>
-					
-				</div>
 				<div class="col-md-12">
 					<h3 class="marginBottom"><a href="#/purchase_summary_product_services" data-bind="text: lang.lang.purchase_summary_by_product_services" ></a></h3>
 					
@@ -127,21 +119,13 @@
 			</div>
 
 			<!-- Report -->
-			<div class="report" style="min-height: 195px;">
+			<div class="report" >
                 <div class="col-md-12">
 					<h3 class="marginBottom"><a href="#/suppliers_balance_summary" data-bind="text: lang.lang.suppliers_balance_summary" ></a></h3>
 					
 				</div>
 				<div class="col-md-12">
-					<h3 class="marginBottom"><a href="#/suppliers_balance_detail" data-bind="text: lang.lang.suppliers_balance_detail" ></a></h3>
-					
-				</div>
-				<div class="col-md-12">
-					<h3 class="marginBottom"><a href="#/payables_aging_summary" data-bind="text: lang.lang.payables_aging_summary"></a></h3>
-					
-				</div>
-				<div class="col-md-12">
-					<h3 style="border-bottom: none; padding-bottom: 0;"><a href="#/payables_aging_detail" data-bind="text: lang.lang.payables_aging_detail"></a></h3>
+					<h3 style="border-bottom: none; padding-bottom: 0;"><a href="#/payables_aging_summary" data-bind="text: lang.lang.payables_aging_summary"></a></h3>
 					
 				</div>
 			</div>
@@ -184,7 +168,7 @@
 			</div>
 
 			<!-- Report -->
-			<div class="report" style="min-height: 195px;">
+			<div class="report" >
 				<div class="col-md-12">
 					<h3 class="marginBottom"><a href="#/list_bills_paid" data-bind="text: lang.lang.list_of_invoices_to_be_collected"></a></h3>
 				</div>
@@ -216,14 +200,14 @@
 <script id="transactions" type="text/x-kendo-template">	
 	<div class="row">
 		<div class="card-body">
-			<div class="reportHeader">
-                <!-- Nav tabs -->
+			<!-- <div class="reportHeader">
+               
                 <ul class="nav nav-tabs" role="tablist">
                     <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#date" role="tab"><i class=" ti-calendar"></i><span class="marginLeft hidden-xs-down" data-bind="text: lang.lang.date">Date</span></a> </li>
                     <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#filter" role="tab"><i class="ti-filter"></i><span class="marginLeft hidden-xs-down" data-bind="text: lang.lang.filter">filter</span></a> </li>
                     <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#print_export" role="tab"><i class="ti-printer"></i><span class="marginLeft hidden-xs-down" data-bind="text: lang.lang.print_export">Print/Export</span></a> </li>
                 </ul>
-                <!-- Tab panes -->
+                
                 <div class="tab-content tabcontent-border">
                     <div class="tab-pane active" id="date" role="tabpanel">
                         <div class="p-20">
@@ -285,10 +269,40 @@
                     </div>
                     
                 </div>
-            </div>
+            </div> -->
+
+            <div class="row ">
+            	<div class="col-md-7">
+					<input data-role="dropdownlist"  
+						   class="sorter marginRight marginBottom"
+				           data-value-primitive="true"
+				           data-text-field="text"
+				           data-value-field="value"
+				           data-bind="value: sorter,
+				                      source: sortList,
+				                      events: { change: sorterChanges }" />
+
+					<input data-role="datepicker"
+						   class="sdate marginRight marginBottom"
+						   data-format="dd-MM-yyyy"
+				           data-bind="value: sdate,
+				           			  max: edate"
+				           placeholder="From ..." />
+
+				    <input data-role="datepicker" 
+				    	   class="edate marginRight marginBottom"
+				    	   data-format="dd-MM-yyyy"
+				           data-bind="value: edate,
+				                      min: sdate"
+				           placeholder="To ..." />
+
+				  	<button class="btnSearch" type="button" data-role="button" data-bind="click: search"><i class="ti-search"></i></button>
+				</div>
+			</div>
+
             <div id="invFormContent" style="page-break-after: always;">
             	<!-- Style For Print -->
-            	<style type="text/css">
+            	<!-- <style type="text/css">
             		* {
 						-webkit-print-color-adjust: true;
 					}
@@ -300,18 +314,18 @@
 					    background-color: #f4f5f8 !important;
 					    -webkit-print-color-adjust: exact;
 					}
-            	</style>
+            	</style> -->
 
 	            <!-- Title -->
-	            <div class="reportTitle" style="text-align: center; width: 97%; margin: 15px auto;">
+	            <!-- <div class="reportTitle" style="text-align: center; width: 97%; margin: 15px auto;">
 	            	<h3 style="font-size: 15px; color: #203864 !important; margin-bottom: 10px;" data-bind="html: company.name"></h3>
 					<h2 style="font-size: 20px; font-weight: 600; margin-top: 0px; color: #203864 !important;" data-bind="text: lang.lang.suppliers_transaction_list"></h2>
 					<p style="font-size: 15px; margin-bottom: 0;" data-bind="text: displayDate"></p>
-	            </div>
+	            </div> -->
 
 	            <!-- Table -->
 	            <div class="reportTable home-footer table-responsive" style="width: 97%; margin: 0 auto;">
-	            	<table class="table color-table dark-table" style="width: 100%; height: auto; ">
+	            	<!-- <table class="table color-table dark-table" style="width: 100%; height: auto; ">
                         <thead>
                             <tr>
 								<th style="background-color: #343a40 !important; -webkit-print-color-adjust: exact; color: #fff !important; text-align: center; text-transform: uppercase; vertical-align: top; font-weight: 400; padding: 10px;" data-bind="text: lang.lang.type"></th>
@@ -327,7 +341,22 @@
 				                data-template="supplierTransaction-temp"
 				                data-bind="source: dataSource" >
 				        </tbody>
-	            	</table>
+	            	</table> -->
+
+	            	  <div data-role="grid"
+			             data-editable="true"
+			             data-auto-bind="false"
+			             
+			             data-columns="[
+			             	 { 'field': 'item', 'editor': itemEditor, 'template': '#=item.name#' },
+			                 { 'field': 'quantity', 'editor': numberTextboxEditor },
+			                 { 'field': 'conversion_ratio', 'editor': numberTextboxEditor },
+			                 { 'field': 'cost', 'editor': numberTextboxEditor },
+			                 { 'field': 'cost_avg', 'editor': numberTextboxEditor },
+			                 { 'field': 'price', 'editor': numberTextboxEditor }
+			                 
+			             ]"
+			             data-bind="source: dataSource"></div>
 	            </div>
 	        </div>
 
