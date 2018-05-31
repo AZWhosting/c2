@@ -770,13 +770,13 @@ class UtibillReports extends REST_Controller {
 				$amount = floatval($value->amount) / floatval($value->rate);
 
 				if($value->status=="2"){
-					$paid = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-					$paid->select_sum("amount");
-					$paid->select_sum("discount");
+					$paid = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);					
 					$paid->where("reference_id", $value->id);
 					$paid->where_in("type", array("Cash_Receipt", "Offset_Invoice"));
 					$paid->where("is_recurring <>",1);
 					$paid->where("deleted <>",1);
+					$paid->select_sum("amount");
+					$paid->select_sum("discount");
 					$paid->get();
 					$amount -= floatval($paid->amount) + floatval($paid->discount);
 				}
@@ -854,12 +854,13 @@ class UtibillReports extends REST_Controller {
 
 				if($value->status=="2"){
 					$paid = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-					$paid->select_sum("amount");
-					$paid->select_sum("discount");
+					
 					$paid->where("reference_id", $value->id);
 					$paid->where_in("type", array("Cash_Receipt", "Offset_Invoice"));
 					$paid->where("is_recurring <>",1);
 					$paid->where("deleted <>",1);
+					$paid->select_sum("amount");
+					$paid->select_sum("discount");
 					$paid->get();
 					$amount -= floatval($paid->amount) + floatval($paid->discount);
 				}
