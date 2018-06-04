@@ -435,11 +435,10 @@
 	</tr>
 </script>
 <script id="transactions" type="text/x-kendo-template">	
-	<div class="row">
-		
+	<div class="row">		
         <div class="col-md-12">
         	<div class="card-body">
-    		    <div class="row " style="width: 99%; margin: 0 auto;">
+    		    <div class="row ">
 	            	<div class="col-md-8">
 						<input data-role="dropdownlist"  
 							   class="sorter marginRight marginBottom float-left"
@@ -481,9 +480,7 @@
 			        </div>
 				</div>
 
-	            <div id="invFormContent" class="marginTop" style="page-break-after: always;">
-	            	
-		            <!-- Table -->
+	            <!-- <div id="invFormContent" class="marginTop" style="page-break-after: always;">	            	
 		            <div class="reportTable home-footer table-responsive" style="width: 97%; margin: 0 auto;">
 		            	<table class="table color-table dark-table" style="width: 100%; height: auto; ">
                             <thead>
@@ -503,16 +500,27 @@
 					        </tbody>
 		            	</table>
 		            </div>
+		        </div> -->
+
+		        <div  class="row ">
+		            <div class="col-md-12 marginTop table-responsive" >
+		            	<div data-role="grid" class="table color-table dark-table"
+				             data-pageable='true'
+				             data-auto-bind="false"
+				             data-filterable="true"
+				             data-columns="[
+				             	 { field: 'type' , title : 'TYPE' , filterable: { multi: true, search: true} },
+				                 { field: 'issued_date' , title : 'DATE' , filterable: { multi: true, search: true}, template:'#=kendo.toString(new Date(issued_date), banhji.dateFormat)#'},
+				                 { field: 'number' , title: 'REFERENCE' , filterable: { multi: true, search: true} , template: '<a href=\'purchases\\#/#=type.toLowerCase()#/#=id#\'>#=number#</a>'},
+				                 { field: 'amount' , title: 'AMOUNT' , filterable: { multi: true, search: true}, format: '{0:n}' , attributes: { style: 'text-align: right;'} },
+				                 { title: 'actions' },
+				                 { title: 'status' }
+				                 
+				             ]"
+				             data-bind="source: dataSource"></div>
+		            </div>
 		        </div>
 
-		        <!-- Pagination -->
-            	<div 	id="pager" 
-            			class="k-pager-wrap" 
-	            		data-role="pager"
-				    	data-auto-bind="false"
-			            data-bind="source: dataSource"
-			            style="width: 97%; margin: 0 auto;" >
-			    </div>
             </div>
         </div>
 	</div>

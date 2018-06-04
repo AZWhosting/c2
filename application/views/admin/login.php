@@ -509,7 +509,7 @@
         banhji.profileDS = new kendo.data.DataSource({
             transport: {
                 read: {
-                    url: baseUrl + 'api/profiles/login',
+                    url: pro[0] === "https:" ? "https://app.banhji.com/c2/" + "api/profiles/login" : baseUrl + 'api/profiles/login',
                     type: "POST",
                     dataType: 'json'
                 },
