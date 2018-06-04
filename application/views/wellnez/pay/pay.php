@@ -268,6 +268,7 @@
 						            	<th style="vertical-align: top; background: #1c3b19;" data-bind="text: lang.lang.number"></th>
 						            	<th style="vertical-align: top; background: #1c3b19;" >Room</th>
 						            	<th style="vertical-align: top; background: #1c3b19;" data-bind="text: lang.lang.amount"></th>
+						            	<th style="vertical-align: top; background: #1c3b19;" data-bind="text: lang.lang.action"></th>
 						            </tr>
 						        </thead>
 						        <tbody data-role="listview" 
@@ -539,6 +540,7 @@
 		</div>
 	</div>
 </script>
+<!--Spilt Bill-->
 <script id="splitBill" type="text/x-kendo-template">
 	<div class="container">
 		<div class="row ">
@@ -727,6 +729,7 @@
 		</td>
     </tr> 
 </script>
+
 <script id="cashReceipt" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background">
@@ -1017,6 +1020,7 @@
 		<td style="padding: 5px !important;">#= number#</td>
 		<td style="padding: 5px !important;">#= room#</td>
 		<td style="text-align: right; padding: 5px !important;">#=kendo.toString(amount, locale=="km-KH"?"c0":"c2", locale)#</td>
+		<td style="text-align: center"><a href="\#/add_items/#= id#">Add Items</a></td>
     </tr>   
 </script>
 <script id="customerDeposit" type="text/x-kendo-template">
@@ -1215,6 +1219,7 @@
 		</td>
 	</tr>
 </script>
+<!--Return Items-->
 <script id="returnItem" type="text/x-kendo-template">
 	<div class="container">
 		<div class="row ">
@@ -1298,6 +1303,125 @@
 			<input type="number" data-bind="value: quantity,events: {change: qtyChange}" />
 		</td>
     </tr>   
+</script>
+<!--Add Itesm-->
+<script id="addItems" type="text/x-kendo-template">
+	<div class="container">
+		<div class="row ">
+			<div class="span12">
+				<div class="box-generic" style="border-radius: 10px;padding: 0px;overflow: hidden;">
+					<div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 100%;background: rgba(142, 159, 167, 0.8);z-index: 999999;border-radius: 10px;">
+						<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 40%;left: 40%">Loading</i>
+					</div>
+				    <div class="span12">
+						<div class="example" style="box-shadow: 2px 0px 12px 0px rgba(68,68,68,1); border-radius: 10px 10px 0 0 ; margin-bottom: 1px;">
+							<div data-role="grid" class="costom-grid"
+						    	 data-column-menu="true"
+						    	 data-reorderable="true"
+						    	 data-scrollable="false"
+						    	 data-resizable="true"
+						    	 data-editable="true"
+				                 data-columns="[
+								    { 
+								    	title:'NO',
+								    	width: '50px', 
+								    	attributes: { style: 'text-align: center;' }, 
+								        template: function (dataItem) {
+								        	var rowIndex = banhji.Index.lineDS.indexOf(dataItem)+1;
+								        	return '<i class=icon-trash data-bind=click:removeRow></i>' + ' ' + rowIndex;
+								      	}
+								    },
+				                 	{ 
+				                 		field: 'item', 
+				                 		title: 'Name', 
+				                 		editor: itemEditor, 
+				                 		template: '#=item.name#', width: '170px' 
+				                 	},
+		                            { 
+		                            	field: 'measurement', 
+		                            	title: 'UOM', 
+		                            	editor: measurementEditor, 
+		                            	template: '#=measurement?measurement.measurement:banhji.emptyString#', 
+		                            	width: '80px' 
+		                            },
+		                            {
+									    field: 'quantity',
+									    title: 'QTY',
+									    format: '{0:n}',
+									    editor: numberTextboxEditor,
+									    width: '120px',
+									    attributes: { style: 'text-align: right;' }
+									},
+		                            {
+									    field: 'price',
+									    title: 'PRICE',
+									    hidden: true,
+									    format: '{0:n}',
+									    editor: numberTextboxEditor,
+									    width: '120px',
+									    attributes: { style: 'text-align: right;' }
+									},
+		                            { 
+		                            	field: 'amount', 
+		                            	title:'AMOUNT', 
+		                            	format: '{0:n}', 
+		                            	editable: 'false', 
+		                            	attributes: { style: 'text-align: right;' }, width: '120px' 
+		                            }
+		                         ]"
+		                         data-auto-bind="false"
+				                 data-bind="source: lineDS" >
+		                 	</div>
+		                 	<div data-bind="visible: haveWork">
+					            <button style="background: #1c3b19; float:left;" class="btn btn-inverse" data-bind="click: addRow"><i class="icon-plus icon-white"></i><span style="float: right; margin-left: 10px;">Add Serving</span></button>
+					            <button style="background: darkred;float: left;border: 1px solid darkred;" class="btn btn-inverse" data-bind="click: saveWork"><i class="icon-plus icon-white"></i><span style="float: right; margin-left: 10px;" data-bind="text: lang.lang.save">Add Serving</span></button>
+					        </div>
+						</div>
+						<div class="example" style="box-shadow: 2px 0px 12px 0px rgba(68,68,68,1); border-radius: 0 0 10px 10px;">
+							<div class="row ">
+								<div class="span6 ">
+									<table class="table table-condensed table-striped table-white" >
+										<tbody>
+											<tr>
+												<td style="width: 60%;"><span data-bind="text: lang.lang.subtotal" style="font-size: 15px; font-weight: 700;"></span></td>
+												<td class="right strong" width="40%"><span data-format="n" data-bind="text: obj.sub_total" style="font-size: 15px; font-weight: 700;"></span></td>
+											</tr>               
+											<tr>
+												<td><span>Service Charge</span></td>
+												<td class="right ">
+													<span data-format="n" data-bind="text: obj.service_charge"></span>
+												</td>
+											</tr>               
+											<tr>
+												<td><span data-bind="text: lang.lang.total_tax"></span></td>
+												<td class="right "><span data-format="n" data-bind="text: obj.tax"></span></td>
+											</tr>                             
+											<tr>
+												<td><h4 span data-bind="text: lang.lang.total" style="font-weight: 700;  color: #fff !important;"></h4></td>
+												<td class="right strong"><h4 data-bind="text: total" style="font-weight: 700; color: #fff !important;"></h4></td>
+											</tr>               
+										</tbody>
+									</table>
+								</div>
+								<div class="span6 botton" style="padding-left: 0;">
+									<div class="">
+										<div class=" ">
+											<div class="button-service" data-bind="click: printBill">
+												<div class="img">
+													<img src="<?php echo base_url();?>assets/spa/icon/pay-green.png" >
+												</div>
+												<p class="textBig">Print </p>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </script>
 <!-- Invoice Form -->
 <script id="printBill" type="text/x-kendo-template">

@@ -6468,7 +6468,7 @@
     });
     banhji.transactions = kendo.observable({
         lang                : langVM,
-        dataSource          : dataStore(apiUrl + "sales/customer_transaction_list"),
+        dataSource          : dataStore(apiUrl + "sales/customer_transaction_list_grid"),
         contactDS           : banhji.source.customerDS,
         sortList            : banhji.source.sortList,
         sorter              : "month",

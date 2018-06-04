@@ -509,8 +509,9 @@
 				             data-auto-bind="false"
 				             data-filterable="true"
 				             data-columns="[
-				             	 { field: 'type' , title : 'TYPE' , filterable: { multi: true, search: true} },
-				                 { field: 'issued_date' , title : 'DATE' , filterable: { multi: true, search: true}, template:'#=kendo.toString(new Date(issued_date), banhji.dateFormat)#'},
+				             	 { field: 'issued_date' , title : 'DATE' , filterable: { multi: true, search: true}, template:'#=kendo.toString(new Date(issued_date), banhji.dateFormat)#'},
+				             	 { field: 'name' , title : 'NAME' , filterable: { multi: true, search: true} },
+				             	 { field: 'type' , title : 'TYPE' , filterable: { multi: true, search: true} },				                 
 				                 { field: 'number' , title: 'REFERENCE' , filterable: { multi: true, search: true} , template: '<a href=\'purchases\\#/#=type.toLowerCase()#/#=id#\'>#=number#</a>'},
 				                 { field: 'amount' , title: 'AMOUNT' , filterable: { multi: true, search: true}, format: '{0:n}' , attributes: { style: 'text-align: right;'} },
 				                 { title: 'actions' },

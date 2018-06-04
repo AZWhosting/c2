@@ -108,6 +108,72 @@ class Sales extends REST_Controller {
 		//Response Data
 		$this->response($data, 200);
 	}
+	function customer_transaction_list_grid_get() {
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
+		$data["count"] = 0;
+
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				if(isset($value["operator"])){
+					$obj->{$value["operator"]}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
+			}
+		}
+		
+		//Filter
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value["operator"])){
+	    			$obj->{$value["operator"]}($value['field'], $value['value']);
+	    		} else {
+	    			$obj->where($value['field'], $value['value']);
+	    		}
+			}
+		}
+
+		//Results
+		$obj->include_related("contact", array("abbr", "number", "name"));
+		$obj->where("is_recurring <>", 1);
+		$obj->where("deleted <>", 1);
+		$obj->order_by("issued_date", "asc");
+
+		//Results
+		if($page && $limit){
+			$obj->get_paged_iterated($page, $limit);
+			$data["count"] = $obj->paged->total_rows;
+		}else{
+			$obj->get_iterated();
+			$data["count"] = $obj->result_count();
+		}
+		
+		if($obj->exists()){
+			foreach ($obj as $value) {								
+				$amount = (floatval($value->amount) - floatval($value->deposit)) / floatval($value->rate);
+				
+				$data["results"][] = array(
+					"id" 				=> $value->id,
+					"name" 				=> $value->contact_abbr.$value->contact_number." ".$value->contact_name,
+					"type" 				=> $value->type,
+					"number" 			=> $value->number,
+					"issued_date" 		=> $value->issued_date,
+					"rate" 				=> $value->rate,
+					"amount" 			=> $amount
+				);
+			}
+		}
+
+		//Response Data
+		$this->response($data, 200);
+	}
 
 	//DEPOSIT DETAIL BY CUSTOMER
 	function deposit_detail_by_customer_get() {
