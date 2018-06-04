@@ -11898,7 +11898,7 @@
                 '<link href="https://fonts.googleapis.com/css?family=Preahvihear" rel="stylesheet" />' +
                 '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
                 '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
-                '<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Battambang&amp;subset=khmer" media="all">' +
+                '<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Battambang&amp;subset=khmer" media="all">' +
                 '<style type="text/css" media="print">' +
                 '@page { size: portrait; margin:0.1cm;' +
                 'size: A4;' +
@@ -16239,7 +16239,7 @@
                     '<link href="https://fonts.googleapis.com/css?family=Preahvihear" rel="stylesheet" />' +
                     '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
                     '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
-                    '<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Battambang&amp;subset=khmer" media="all">' +
+                    '<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Battambang&amp;subset=khmer" media="all">' +
                     '<style type="text/css" media="print">' +
                     '@page { size: portrait; margin:0.1cm;' +
                     'size: A4;' +
@@ -16330,7 +16330,7 @@
                     '<link href="<?php echo base_url(); ?>resources/common/theme/css/style-default-menus-dark.css" rel="stylesheet" />' +
                     '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
                     '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
-                    '<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Battambang&amp;subset=khmer" media="all">' +
+                    '<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Battambang&amp;subset=khmer" media="all">' +
                     '<style type="text/css" media="print">' +
                     '@page { size: portrait; margin:0.2cm;' +
                     'size: A5;' +
@@ -38044,7 +38044,7 @@
                     '<head>' +
                     '<meta charset="utf-8" />' +
                     '<title></title>' +
-                    '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
+                    '<link href="https://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
                     '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
                     '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/responsive.css">' +
                     '<link href="<?php echo base_url(); ?>assets/invoice/invoice.css" rel="stylesheet" />'+
@@ -38207,7 +38207,7 @@
                     '<head>' +
                     '<meta charset="utf-8" />' +
                     '<title></title>' +
-                    '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
+                    '<link href="https://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
                     '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
                     '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/responsive.css">' +
                     '<link href="<?php echo base_url(); ?>assets/invoice/invoice.css" rel="stylesheet" />'+
@@ -38363,7 +38363,7 @@
                     '<head>' +
                     '<meta charset="utf-8" />' +
                     '<title></title>' +
-                    '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
+                    '<link href="https://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
                     '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
                     '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/responsive.css">' +
                     '<link href="<?php echo base_url(); ?>assets/invoice/invoice.css" rel="stylesheet" />'+
@@ -38509,7 +38509,7 @@
                     '<head>' +
                     '<meta charset="utf-8" />' +
                     '<title></title>' +
-                    '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
+                    '<link href="https://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
                     '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
                     '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/responsive.css">' +
                     '<link href="<?php echo base_url(); ?>assets/invoice/invoice.css" rel="stylesheet" />'+
@@ -38661,7 +38661,7 @@
                     '<head>' +
                     '<meta charset="utf-8" />' +
                     '<title></title>' +
-                    '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
+                    '<link href="https://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
                     '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
                     '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/responsive.css">' +
                     '<link href="<?php echo base_url(); ?>assets/invoice/invoice.css" rel="stylesheet" />'+
@@ -38807,7 +38807,7 @@
                     '<head>' +
                     '<meta charset="utf-8" />' +
                     '<title></title>' +
-                    '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
+                    '<link href="https://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
                     '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
                     '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/responsive.css">' +
                     '<link href="<?php echo base_url(); ?>assets/invoice/invoice.css" rel="stylesheet" />'+
@@ -39019,7 +39019,7 @@
                     '<head>' +
                     '<meta charset="utf-8" />' +
                     '<title></title>' +
-                    '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
+                    '<link href="https://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
                     '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
                     '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/responsive.css">' +
                     '<link href="<?php echo base_url(); ?>assets/invoice/invoice.css" rel="stylesheet" />'+
@@ -39190,7 +39190,7 @@
                     '<head>' +
                     '<meta charset="utf-8" />' +
                     '<title></title>' +
-                    '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
+                    '<link href="https://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
                     '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
                     '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
                     '<link href="<?php echo base_url(); ?>assets/responsive.css" rel="stylesheet" >' +
@@ -46727,7 +46727,7 @@
                     '<head>' +
                     '<meta charset="utf-8" />' +
                     '<title></title>' +
-                    '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
+                    '<link href="https://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
                     '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
                     '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/responsive.css">' +
                     '<link href="<?php echo base_url(); ?>assets/invoice/invoice.css" rel="stylesheet" />'+
@@ -47096,7 +47096,7 @@
                     '<head>' +
                     '<meta charset="utf-8" />' +
                     '<title></title>' +
-                    '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
+                    '<link href="https://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
                     '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
                     '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/responsive.css">' +
                     '<link href="<?php echo base_url(); ?>assets/invoice/invoice.css" rel="stylesheet" />'+
@@ -47469,7 +47469,7 @@
                     '<head>' +
                     '<meta charset="utf-8" />' +
                     '<title></title>' +
-                    '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
+                    '<link href="https://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
                     '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
                     '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/responsive.css">' +
                     '<link href="<?php echo base_url(); ?>assets/invoice/invoice.css" rel="stylesheet" />'+
@@ -47728,7 +47728,7 @@
                     '<head>' +
                     '<meta charset="utf-8" />' +
                     '<title></title>' +
-                    '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
+                    '<link href="https://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
                     '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
                     '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
                     '<link href="<?php echo base_url(); ?>assets/responsive.css" rel="stylesheet" >' +
@@ -47883,7 +47883,7 @@
                   '<head>' +
                   '<meta charset="utf-8" />' +
                   '<title></title>' +
-                  '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
+                  '<link href="https://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
                   '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
                   '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
                   '<link href="<?php echo base_url(); ?>assets/responsive.css" rel="stylesheet" >' +
@@ -53899,7 +53899,7 @@
                     '<head>' +
                     '<meta charset="utf-8" />' +
                     '<title></title>' +
-                    '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
+                    '<link href="https://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
                     '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
                     '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/responsive.css">' +
                     '<link href="<?php echo base_url(); ?>assets/invoice/invoice.css" rel="stylesheet" />'+
@@ -54520,7 +54520,7 @@
                     '<head>' +
                     '<meta charset="utf-8" />' +
                     '<title></title>' +
-                    '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
+                    '<link href="https://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
                     '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
                     '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/responsive.css">' +
                     '<link href="<?php echo base_url(); ?>assets/invoice/invoice.css" rel="stylesheet" />'+
@@ -54894,7 +54894,7 @@
                     '<head>' +
                     '<meta charset="utf-8" />' +
                     '<title></title>' +
-                    '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
+                    '<link href="https://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
                     '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
                     '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/responsive.css">' +
                     '<link href="<?php echo base_url(); ?>assets/invoice/invoice.css" rel="stylesheet" />'+
@@ -55140,7 +55140,7 @@
                     '<head>' +
                     '<meta charset="utf-8" />' +
                     '<title></title>' +
-                    '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
+                    '<link href="https://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
                     '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
                     '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/responsive.css">' +
                     '<link href="<?php echo base_url(); ?>assets/invoice/invoice.css" rel="stylesheet" />'+
@@ -55594,7 +55594,7 @@
                     '<head>' +
                     '<meta charset="utf-8" />' +
                     '<title></title>' +
-                    '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
+                    '<link href="https://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
                     '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
                     '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/responsive.css">' +
                     '<link href="<?php echo base_url(); ?>assets/invoice/invoice.css" rel="stylesheet" />'+
@@ -56013,7 +56013,7 @@
                     '<head>' +
                     '<meta charset="utf-8" />' +
                     '<title></title>' +
-                    '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
+                    '<link href="https://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
                     '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
                     '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/responsive.css">' +
                     '<link href="<?php echo base_url(); ?>assets/invoice/invoice.css" rel="stylesheet" />'+
@@ -57991,7 +57991,7 @@
                     '<head>' +
                     '<meta charset="utf-8" />' +
                     '<title></title>' +
-                    '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
+                    '<link href="https://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
                     '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
                     '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/responsive.css">' +
                     '<link href="<?php echo base_url(); ?>assets/invoice/invoice.css" rel="stylesheet" />'+
@@ -58260,7 +58260,7 @@
                     '<head>' +
                     '<meta charset="utf-8" />' +
                     '<title></title>' +
-                    '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
+                    '<link href="https://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
                     '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
                     '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/responsive.css">' +
                     '<link href="<?php echo base_url(); ?>assets/invoice/invoice.css" rel="stylesheet" />'+
@@ -60677,7 +60677,7 @@
                     '<head>' +
                     '<meta charset="utf-8" />' +
                     '<title></title>' +
-                    '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
+                    '<link href="https://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
                     '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
                     '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/responsive.css">' +
                     '<link href="<?php echo base_url(); ?>assets/invoice/invoice.css" rel="stylesheet" />'+
@@ -60885,7 +60885,7 @@
                     '<head>' +
                     '<meta charset="utf-8" />' +
                     '<title></title>' +
-                    '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
+                    '<link href="https://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
                     '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
                     '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
                     '<link href="<?php echo base_url(); ?>assets/responsive.css" rel="stylesheet" >' +
@@ -61080,7 +61080,7 @@
                     '<head>' +
                     '<meta charset="utf-8" />' +
                     '<title></title>' +
-                    '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
+                    '<link href="https://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
                     '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
                     '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/responsive.css">' +
                     '<link href="<?php echo base_url(); ?>assets/invoice/invoice.css" rel="stylesheet" />'+
@@ -63449,7 +63449,7 @@
                     '<head>' +
                     '<meta charset="utf-8" />' +
                     '<title></title>' +
-                    '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
+                    '<link href="https://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
                     '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
                     '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/responsive.css">' +
                     '<link href="<?php echo base_url(); ?>assets/invoice/invoice.css" rel="stylesheet" />'+
@@ -67842,7 +67842,7 @@
                     '<head>' +
                     '<meta charset="utf-8" />' +
                     '<title></title>' +
-                    '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
+                    '<link href="https://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
                     '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
                     '<link href="<?php echo base_url(); ?>assets/invoice/invoice.css" rel="stylesheet" />'+
                     '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
