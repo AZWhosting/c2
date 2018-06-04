@@ -9838,7 +9838,7 @@
 							 data-sortable="true"
 	                         data-column-menu="true"
 			                 data-columns="[
-                                { field: 'number', title:'NUMBER', hidden: true },
+                                { field: 'number', title:'NUMBER', hidden: true, width: 150 },
                                 { field: 'name', title:'NAME' },
                                 { 
                                 	field: 'quantity', 
@@ -9846,16 +9846,18 @@
                                 	format: '{0:n}', 
                                 	attributes: {
 								      	style: 'text-align: right;'
-								    }
+								    },
+								    width: 150
                                 },
-                                { field: 'measurement', title:'MEASUREMENT' },
+                                { field: 'measurement', title:'UOM', width: 150 },
                                 { 
                                 	field: 'amount', 
                                 	title:'AMOUNT',
                                 	format: '{0:n}',
                                 	attributes: {
 								      	style: 'text-align: right;'
-								    } 
+								    },
+								    width: 200 
                                 }
                              ]"
                              data-auto-bind="false"

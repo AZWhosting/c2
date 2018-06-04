@@ -356,7 +356,7 @@ class Sales extends REST_Controller {
 		}
 
 		//Results
-		$obj->select_sum("quantity * conversion_ratio * movement", "totalQuantity");
+		$obj->select_sum("quantity * conversion_ratio", "totalQuantity");
 		$obj->select_sum("item_lines.amount / transactions.rate", "totalAmount");
 		$obj->include_related("item", array("abbr", "number", "name", "measurement_id"));
 		$obj->include_related("measurement", array("name"));

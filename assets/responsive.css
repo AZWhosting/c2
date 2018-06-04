@@ -38,6 +38,9 @@ h1,h2,h3,h4,h5,h6{
   background: #203864 !important;
   color: #fff;
 }
+.costom-grid table tr th a{
+  color: #fff !important;
+}
 .costom-grid table tr:hover {
     color: #000!important;
     background: rgba(57,58,61,0.2) !important;
