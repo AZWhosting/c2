@@ -17755,7 +17755,7 @@
     });
     banhji.saleSummaryByProduct =  kendo.observable({
         lang                : langVM,
-        dataSource          : dataStore(apiUrl + "sales/sale_summary_by_product"),
+        dataSource          : dataStore(apiUrl + "sales/sale_summary_by_product_with_filter"),
         itemDS              : new kendo.data.DataSource({
             transport: {
                 read    : {
@@ -51327,6 +51327,8 @@
                         self.lineDS.filter({ field: "transaction_id", value: id });
                         self.journalLineDS.filter({ field: "transaction_id", value: id });
                         self.attachmentDS.filter({ field: "transaction_id", value: id });
+
+                        self.typeChanges();
                     }
                 });
             }
@@ -51588,12 +51590,12 @@
             //Add Journal
             var objAccountID = kendo.parseInt(obj.account_id);
             if(objAccountID>0){
-                if(obj.type=="Deposit"){
-                    raw = "dr"+objAccountID;
-                    dr = obj.amount;
-                }else{
+                if(obj.type=="Withdraw"){
                     raw = "cr"+objAccountID;
                     cr = obj.amount;
+                }else{
+                    raw = "dr"+objAccountID;
+                    dr = obj.amount;
                 }
 
                 if(entries[raw]===undefined){
@@ -51617,12 +51619,12 @@
 
             $.each(this.lineDS.data(), function(index, value){
                 dr = 0; cr = 0;
-                if(obj.type=="Deposit"){
-                    raw = "cr"+value.account_id;
-                    cr = value.amount;
-                }else{
+                if(obj.type=="Withdraw"){
                     raw = "dr"+value.account_id;
                     dr = value.amount;
+                }else{
+                    raw = "cr"+value.account_id;
+                    cr = value.amount;
                 }
 
                 if(entries[raw]===undefined){

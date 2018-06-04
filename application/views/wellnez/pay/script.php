@@ -4410,11 +4410,11 @@
         searchCardDS    : dataStore(apiUrl + "spa/card"),
         searchLoyalty   : function(){
             $("#loadING").css("display", "block");
-            var num = this.get("cardNum"), serial = this.get("serialNum"), self = this;
+            var num = this.get("cardNum"), self = this;
             this.searchCardDS.query({
                 filter: [
                     {field: "number", value: num},
-                    {field: "serial", value: serial}
+                    {field: "status", value: 1}
                 ]
             }).then(function(e){
                 $("#loadING").css("display", "none");

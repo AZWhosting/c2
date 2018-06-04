@@ -464,7 +464,9 @@
         });
         var auth = new banhjiAuth();
         var baseUrl = "<?php echo base_url(); ?>"
-        var apiUrl = baseUrl + "api/";
+        var url = window.location.href;
+        var pro = url.split("/");
+        var apiUrl = pro[0] === "https:" ? "https://app.banhji.com/c2/" + "api/" : baseUrl + "api/";
         banhji.companyDS = new kendo.data.DataSource({
             transport: {
                 read: {

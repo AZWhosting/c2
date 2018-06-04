@@ -1454,7 +1454,7 @@
 					    </div>
 					    <div class="tab-content">
 					        <div class="tab-pane active" id="tab1">
-					        	<span data-bind="visible: haveRight" style="float: right!important;width: 130px;margin-right: 18px;" class="btn btn-primary btn-icon glyphicons edit pull-right" data-bind="click: addLoyalty"><i></i><span>Add Loyalty</span></span>
+					        	<span data-bind="visible: haveRight, click: addLoyalty" style="float: right!important;width: 130px;margin-right: 18px;" class="btn btn-primary btn-icon glyphicons edit pull-right"><i></i><span>Add Loyalty</span></span>
 					        	<div data-role="window"
 					                data-title="Add Loyalty"
 					                data-width="400"

@@ -288,21 +288,13 @@
 								    <div class="tab-content">
 								        <div class="tab-pane active" id="tab1">
 							            	<div class="row">
-												<div class="span7">
+												<div class="span12">
 													<p style="float: left;color: #333;">Card</p>
 													<input type="text" name="" style="width: 100%; font-weight: 500; border: 1px solid #ccc; padding: 5px; height: 35px; color: #333;"
 														data-role="maskedtextbox"
 							                   			data-mask="LL0-000-000-000"
 							                   			data-bind="
 							                        		value: cardNum"
-													/>
-												</div>
-												<div class="span5" style="padding-left: 0;">
-													<p style="float: left;color: #333;">Serial Number</p>
-													<input type="number" style="width: 100%; font-weight: 500; border: 1px solid #ccc; padding: 5px; height: 35px; color: #333;"
-														data-role="maskedtextbox"
-							                   			data-mask="0000"
-														data-bind="value: serialNum"
 													/>
 												</div>
 												<div style="overflow: hidden;position: relative;clear: both;">
@@ -1206,14 +1198,19 @@
 			#= reward#
 		</td>
 		<td align="center">
-			#if(status == 'Active'){#
-				#if(base == 'Point'){#
-					<a data-bind="click: earnPoint" style="color: red;">Earn</a> | #if(reward_amount > 0){# <a data-bind="click: applyPoint">Apply</a> #}#
+			#var today = new Date()#
+			#if(new Date(expire) >= today){#
+				#if(status == 'Active'){#
+					#if(base == 'Point'){#
+						<a data-bind="click: earnPoint" style="color: red;">Earn</a> | #if(reward_amount > 0){# <a data-bind="click: applyPoint">Apply</a> #}#
+					#}else{#
+						<a data-bind="click: applyLoyalty">Apply</a>
+					#}#
 				#}else{#
-					<a data-bind="click: applyLoyalty">Apply</a>
+					#: status#
 				#}#
 			#}else{#
-				#: status#
+				Expire
 			#}#
 		</td>
 	</tr>

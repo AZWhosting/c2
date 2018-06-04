@@ -866,6 +866,7 @@
     var apiUrl = baseUrl + 'api/';
     banhji.s3 = "https://banhji.s3.amazonaws.com/";
     banhji.token = null;
+    banhji.dateFormat = "dd-MM-yyyy";
     banhji.no_image = "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/no_image.jpg";
     // custom widget for min and max
     kendo.data.binders.widget.max = kendo.data.Binder.extend({
@@ -3874,7 +3875,7 @@
     });
     banhji.transactions = kendo.observable({
         lang                : langVM,
-        dataSource          : dataStore(apiUrl + "vendorReports/transaction_vendor"),
+        dataSource          : dataStore(apiUrl + "vendorReports/transaction_vendor_grid"),
         contactDS           : banhji.source.supplierDS,
         sortList            : banhji.source.sortList,
         sorter              : "month",
@@ -14932,6 +14933,117 @@
         //  }
         // });
     });    
+    banhji.router.route("/credit_purchase(/:id)", function(id){
+        // banhji.accessMod.query({
+        //  filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+        // }).then(function(e){
+        //  var allowed = false;
+        //  if(banhji.accessMod.data().length > 0) {
+        //      for(var i = 0; i < banhji.accessMod.data().length; i++) {
+        //          if("supplier" == banhji.accessMod.data()[i].name.toLowerCase()) {
+        //              allowed = true;
+        //              break;
+        //          }
+        //      }
+        //  }
+        //  if(allowed) {
+                banhji.view.layout.showIn("#content", banhji.view.purchase);
+                kendo.fx($("#slide-form")).slideIn("down").play();
+
+                var vm = banhji.purchase;
+                banhji.userManagement.addMultiTask("Purchase","purchase",vm);
+
+                if(banhji.pageLoaded["purchase"]==undefined){
+                    banhji.pageLoaded["purchase"] = true;
+
+                    vm.lineDS.bind("change", vm.itemLineDSChanges);
+                    vm.accountLineDS.bind("change", vm.accountLineDSChanges);
+
+                    var validator = $("#example").kendoValidator({
+                        rules: {
+                            customRule1: function(input) {
+                                if (input.is("[name=txtRecurringName]") && vm.recurring_validate) {
+                                    vm.set("recurring_validate", false);
+                                    return $.trim(input.val()) !== "";
+                                }
+                                return true;
+                            },
+                            customRule2: function(input){
+                                if (input.is("[name=txtNumber]")) {
+                                    return vm.get("notDuplicateNumber");
+                                }
+                                return true;
+                            }
+                        },
+                        messages: {
+                            customRule1: banhji.source.requiredMessage,
+                            customRule2: banhji.source.duplicateNumber
+                        }
+                    }).data("kendoValidator");
+
+                    $("#saveDraft1").click(function(e){
+                        e.preventDefault();
+
+                        if(validator.validate()){
+                            vm.set("saveDraft", true);
+                            vm.save();
+                        }else{
+                            $("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+                        }
+                    });
+
+                    $("#saveNew").click(function(e){
+                        e.preventDefault();
+
+                        if(validator.validate() && vm.validating()){
+                            vm.save();
+                        }else{
+                            $("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+                        }
+                    });
+
+                    $("#saveClose").click(function(e){
+                        e.preventDefault();
+
+                        if(validator.validate() && vm.validating()){
+                            vm.set("saveClose", true);
+                            vm.save();
+                        }else{
+                            $("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+                        }
+                    });
+
+                    $("#savePrint").click(function(e){
+                        e.preventDefault();
+
+                        if(validator.validate() && vm.validating()){
+                            vm.set("savePrint", true);
+                            vm.save();
+                        }else{
+                            $("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+                        }
+                    });
+
+                    $("#saveRecurring").click(function(e){
+                        e.preventDefault();
+
+                        vm.set("recurring_validate", true);
+
+                        if(validator.validate() && vm.validating()){
+                            vm.set("saveRecurring", true);
+                            vm.save();
+                        }else{
+                            $("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+                        }
+                    });
+                }
+
+                vm.pageLoad(id);
+        //  } else {
+        //      window.location.replace(baseUrl + "admin");
+        //  }
+        // });
+    });
     banhji.router.route("/cash_purchase(/:id)", function(id){
         // banhji.accessMod.query({
         //  filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
@@ -15403,4 +15515,4 @@
         banhji.router.start();
         banhji.source.pageLoad();
     });    
-</script>
+</script>              

@@ -5160,7 +5160,7 @@ class Utibills extends REST_Controller {
 				$remain->where("meter_id", $row->meter_id);
 				$remain->where("type", "Utility_Invoice");
 				$remain->where("month_of <=", $row->month_of);
-				// $remain->where("id <>", $row->id);
+				$remain->where("id <>", $row->id);
 				$remain->where("deleted", 0);
 				$remain->where("status <>", 1)->get_iterated();
 				$amountOwed = 0;

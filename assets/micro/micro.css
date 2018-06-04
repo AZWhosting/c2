@@ -251,6 +251,12 @@ a {
     background-color: #009efb;
     border-color: #009efb;
 }
+.table-responsive .k-icon.k-i-filter{
+	color: #fff;
+}
+.table-responsive .k-grid-filter.k-state-active {
+    background-color: #009efb;
+}
 /*End*/
 
 /*Customize Kendo*/
@@ -1032,4 +1038,4 @@ a.fa.fa-qrcode:before{
 	.vtabs .tabs-vertical {
 	    width: 50px;
 	}
-}                                                       
+}                                                                                                             

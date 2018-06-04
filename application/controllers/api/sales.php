@@ -219,8 +219,8 @@ class Sales extends REST_Controller {
 	//SALE BY PRODUCT
 	function sale_summary_by_product_get() {
 		$filter 	= $this->get("filter");
-		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
-		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 10000;	
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
 		$sort 	 	= $this->get("sort");
 		$data["results"] = [];
 		$data["count"] = 0;
@@ -239,7 +239,7 @@ class Sales extends REST_Controller {
 		}
 		
 		//Filter		
-		if(!empty($filter) && isset($filter)){
+		if(!empty($filter["filters"]) && isset($filter["filters"])){
 	    	foreach ($filter["filters"] as $value) {
 	    		if(isset($value['operator'])){
 	    			$obj->{$value['operator']}($value['field'], $value['value']);	    		
@@ -259,13 +259,10 @@ class Sales extends REST_Controller {
 		$obj->where_related("transaction", "deleted <>", 1);
 		$obj->order_by_related("transaction", "issued_date", "asc");
 		$obj->where("deleted <>", 1);
-		if($page && $limit){
-			$obj->get_paged_iterated($page, $limit);
-			$data["count"] = $obj->paged->total_rows;
-		}else{
-			$obj->get_iterated();
-			$data["count"] = $obj->result_count();
-		}
+		$obj->group_by("item_id");
+			
+		$obj->get_iterated();
+		$data["count"] = $obj->result_count();
 		
 		if($obj->exists()){
 			$objList = [];
@@ -321,6 +318,70 @@ class Sales extends REST_Controller {
 				$data["results"][] = $value;
 			}
 			$data["count"] = count($data["results"]);
+		}
+
+		//Response Data
+		$this->response($data, 200);
+	}
+	function sale_summary_by_product_with_filter_get() {
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
+		$data["count"] = 0;
+
+		$obj = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
+			}
+		}
+		
+		//Filter		
+		if(!empty($filter["filters"]) && isset($filter["filters"])){
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value['operator'])){
+	    			$obj->{$value['operator']}($value['field'], $value['value']);	    		
+	    		} else {
+	    			$obj->where($value['field'], $value['value']);
+	    		}
+			}
+		}
+
+		//Results
+		$obj->select_sum("quantity * conversion_ratio * movement", "totalQuantity");
+		$obj->select_sum("item_lines.amount / transactions.rate", "totalAmount");
+		$obj->include_related("item", array("abbr", "number", "name", "measurement_id"));
+		$obj->include_related("measurement", array("name"));
+		$obj->where_related("item", "item_type_id", array(1,4));
+		$obj->where_in_related("transaction", "type", array("Commercial_Invoice","Vat_Invoice","Invoice", "Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale"));
+		$obj->where_related("transaction", "is_recurring <>", 1);
+		$obj->where_related("transaction", "deleted <>", 1);
+		$obj->order_by_related("transaction", "issued_date", "asc");
+		$obj->where("deleted <>", 1);
+		$obj->group_by("item_id");
+		
+		$obj->get_iterated();
+		$data["count"] = $obj->result_count();
+
+		if($obj->exists()){
+			foreach ($obj as $value) {
+				$data["results"][] = array(
+					"id" 			=> $value->item_id,					
+					"number" 		=> $value->item_abbr . $value->item_number,
+					"name" 			=> $value->item_name,
+					"quantity" 		=> floatval($value->totalQuantity),
+					"measurement"	=> $value->measurement_name,
+					"amount" 		=> floatval($value->totalAmount)
+				);
+			}
 		}
 
 		//Response Data

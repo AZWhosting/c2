@@ -9392,8 +9392,10 @@
         },
         meterNumberChange: function(e) {
             $("#loadImport").css("display", "block");
-            var Name = this.get("obj").meter_number + "(REACTIVE)";
-            this.get("objReactive").set("meter_number", Name);
+            if(this.get("objReactive")){
+                var Name = this.get("obj").meter_number + "(REACTIVE)";
+                this.get("objReactive").set("meter_number", Name);
+            }
             var self = this;
             this.meterExistDS.query({
                 filter: {field: "number", value: this.get("obj").meter_number},
@@ -21196,11 +21198,11 @@
                 end.setDate(end.getDate() + 1);
 
                 para.push({
-                    field: "issued_date >=",
+                    field: "month_of >=",
                     value: kendo.toString(start, "yyyy-MM-dd")
                 });
                 para.push({
-                    field: "issued_date <",
+                    field: "month_of <",
                     value: kendo.toString(end, "yyyy-MM-dd")
                 });
             } else if (start) {
@@ -21208,7 +21210,7 @@
                 displayDate = "On " + kendo.toString(start, "dd-MM-yyyy");
 
                 para.push({
-                    field: "issued_date",
+                    field: "month_of",
                     value: kendo.toString(start, "yyyy-MM-dd")
                 });
             } else if (end) {
@@ -21217,7 +21219,7 @@
                 end.setDate(end.getDate() + 1);
 
                 para.push({
-                    field: "issued_date <",
+                    field: "month_of <",
                     value: kendo.toString(end, "yyyy-MM-dd")
                 });
             } else {
@@ -28981,6 +28983,8 @@
                     banhji.InvoicePrint.license = v[0];
                     self.getTemplate(self.get('TemplateSelect'));
                 });
+            }else{
+                alert('សូមរើសទម្រង់វក្កយបត្រ (Please Select Form)!');
             }
         },
         txnTemplateDSQ: dataStore(apiUrl + "transaction_templates"),

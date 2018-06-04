@@ -439,81 +439,10 @@
 		
         <div class="col-md-12">
         	<div class="card-body">
-    			<!-- <div class="reportHeader">
-	               
-	                <ul class="nav nav-tabs" role="tablist">
-	                    <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#date" role="tab"><i class=" ti-calendar"></i><span class="marginLeft hidden-xs-down" data-bind="text: lang.lang.date">Date</span></a> </li>
-	                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#filter" role="tab"><i class="ti-filter"></i><span class="marginLeft hidden-xs-down" data-bind="text: lang.lang.filter">filter</span></a> </li>
-	                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#print_export" role="tab"><i class="ti-printer"></i><span class="marginLeft hidden-xs-down" data-bind="text: lang.lang.print_export">Print/Export</span></a> </li>
-	                </ul>
-	               
-	                <div class="tab-content tabcontent-border">
-	                    <div class="tab-pane active" id="date" role="tabpanel">
-	                        <div class="p-20">
-	                        	<div class="row ">
-			    					<input data-role="dropdownlist"  
-										   class="sorter marginRight marginBottom"
-								           data-value-primitive="true"
-								           data-text-field="text"
-								           data-value-field="value"
-								           data-bind="value: sorter,
-								                      source: sortList,
-								                      events: { change: sorterChanges }" />
-
-									<input data-role="datepicker"
-										   class="sdate marginRight marginBottom"
-										   data-format="dd-MM-yyyy"
-								           data-bind="value: sdate,
-								           			  max: edate"
-								           placeholder="From ..." >
-
-								    <input data-role="datepicker" 
-								    	   class="edate marginRight marginBottom"
-								    	   data-format="dd-MM-yyyy"
-								           data-bind="value: edate,
-								                      min: sdate"
-								           placeholder="To ..." >
-
-								  	<button class="btnSearch" type="button" data-role="button" data-bind="click: search"><i class="ti-search"></i></button>
-			    				</div>
-	                        </div>
-	                    </div>
-	                    <div class="tab-pane" id="filter" role="tabpanel">
-	                    	<div class="p-20">
-	                        	<div class="row">						    					
-									<p data-bind="text: lang.lang.customers" style=""></p>
-									<select data-role="multiselect"
-										   data-value-primitive="true"
-										   data-header-template="contact-header-tmpl"
-										   data-item-template="contact-list-tmpl"
-										   data-value-field="id"
-										   data-text-field="name"
-										   data-bind="value: obj.contactIds,
-										   			source: contactDS"
-										   data-placeholder="Select Customer.."
-										   style="width: 50%; float: left; margin-right: 8px; " /></select>
-										
-								  	<button type="button" data-role="button" data-bind="click: search"><i class="ti-search"></i></button>
-											
-			    				</div>
-			    			</div>
-	                    </div>
-	                    <div class="tab-pane" id="print_export" role="tabpanel">
-	                    	<div class="p-20">
-	                        	<div class="row">
-			    					<button class="col-md-1 btnPrint " type="button" data-role="button" data-bind="click: printGrid"><i class="ti-printer"></i><span class="marginLeft">Print</span></button>
-			    					<button class="col-md-2 btnExport" type="button" data-role="button" data-bind="click: ExportExcel"><i class="ti-export"></i><span class="marginLeft">Export to Excel</span></button>
-			    				</div>
-			    			</div>
-	                    </div>
-	                    
-	                </div>
-	            </div> -->
-
-	            <div class="row ">
+    		    <div class="row " style="width: 99%; margin: 0 auto;">
 	            	<div class="col-md-8">
 						<input data-role="dropdownlist"  
-							   class="sorter marginRight marginBottom"
+							   class="sorter marginRight marginBottom float-left"
 					           data-value-primitive="true"
 					           data-text-field="text"
 					           data-value-field="value"
@@ -522,23 +451,23 @@
 					                      events: { change: sorterChanges }" />
 
 						<input data-role="datepicker"
-							   class="sdate marginRight marginBottom"
+							   class="sdate marginRight marginBottom float-left"
 							   data-format="dd-MM-yyyy"
 					           data-bind="value: sdate,
 					           			  max: edate"
 					           placeholder="From ..." />
 
 					    <input data-role="datepicker" 
-					    	   class="edate marginRight marginBottom"
+					    	   class="edate marginRight marginBottom float-left"
 					    	   data-format="dd-MM-yyyy"
 					           data-bind="value: edate,
 					                      min: sdate"
 					           placeholder="To ..." />
 
-					  	<button class="btnSearch" type="button" data-role="button" data-bind="click: search"><i class="ti-search"></i></button>
+					  	<button class="btnSearch float-left" type="button" data-role="button" data-bind="click: search"><i class="ti-search"></i></button>
 					</div>
 					<div class="col-md-4">
-			            <div class="btn-group">
+			            <div class="btn-group float-right">
 			                <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 			                	Add New Transaction
 			                </button>
@@ -552,7 +481,7 @@
 			        </div>
 				</div>
 
-	            <div id="invFormContent" style="page-break-after: always;">
+	            <div id="invFormContent" class="marginTop" style="page-break-after: always;">
 	            	
 		            <!-- Table -->
 		            <div class="reportTable home-footer table-responsive" style="width: 97%; margin: 0 auto;">

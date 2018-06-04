@@ -9833,27 +9833,33 @@
 							</div>
 						</div>
 
-						<table class="table table-borderless table-condensed ">
-							<thead>
-								<tr>
-									<th style="text-transform: uppercase;" data-bind="text: lang.lang.item"></th>
-									<th style="text-align: right;" data-bind="text: lang.lang.qty"></th>
-									<th style="text-align: right; text-transform: uppercase;" data-bind="text: lang.lang.amount"></th>
-									<th style="text-align: right; text-transform: uppercase;" data-bind="text: lang.lang.avg_price"></th>
-									<th style="text-align: right; text-transform: uppercase;" data-bind="text: lang.lang.avg_cost"></th>
-									<th style="text-align: right; text-transform: uppercase;" data-bind="text: lang.lang.gross_profit_margin"></th>
-								</tr>
-							</thead>
-							<tbody data-role="listview"
-										 data-template="saleSummaryByProduct-template"
-										 data-auto-bind="false"
-										 data-bind="source: dataSource"
-							></tbody>
-						</table>
-						<div id="pager" class="k-pager-wrap"
-			            		 data-role="pager"
-						    	 data-auto-bind="false"
-					             data-bind="source: dataSource"></div>
+						<div class="costom-grid"
+							 data-role="grid"
+							 data-sortable="true"
+	                         data-column-menu="true"
+			                 data-columns="[
+                                { field: 'number', title:'NUMBER', hidden: true },
+                                { field: 'name', title:'NAME' },
+                                { 
+                                	field: 'quantity', 
+                                	title:'QUANTITY',
+                                	format: '{0:n}', 
+                                	attributes: {
+								      	style: 'text-align: right;'
+								    }
+                                },
+                                { field: 'measurement', title:'MEASUREMENT' },
+                                { 
+                                	field: 'amount', 
+                                	title:'AMOUNT',
+                                	format: '{0:n}',
+                                	attributes: {
+								      	style: 'text-align: right;'
+								    } 
+                                }
+                             ]"
+                             data-auto-bind="false"
+			                 data-bind="source: dataSource"></div>
 					</div>
 				</div>
 			</div>
@@ -10048,7 +10054,7 @@
 
 	#}#
 	<tr>
-    	<td colspan="4" style="font-weight: bold; color: black;"><span data-bind="text: lang.lang.total"></span>Total #: name #</td>
+    	<td colspan="4" style="font-weight: bold; color: black;"><span data-bind="text: lang.lang.total"></span>#: name #</td>
     	<td class="right" style="font-weight: bold; border-top: 1px solid black !important; color: black;">
     		#=kendo.toString(totalQty, "n")#
     	</td>
