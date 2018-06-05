@@ -24070,6 +24070,7 @@
                 case 75: Active = banhji.view.invoiceHaveBalance; break;
                 case 76: Active = banhji.view.normalInvoiceHeritageWalk; break;
                 case 77: Active = banhji.view.posInvoiceKSLM; break;
+                case 78: Active = banhji.view.posCashSaleKSLM; break;
             }
             banhji.view.invoiceCustom.showIn('#invFormContent', Active);
         },
@@ -24507,6 +24508,7 @@
                 case 75: Active = banhji.view.invoiceHaveBalance; break;
                 case 76: Active = banhji.view.normalInvoiceHeritageWalk; break;
                 case 77: Active = banhji.view.posInvoiceKSLM; break;
+                case 78: Active = banhji.view.posCashSaleKSLM; break;
             }
             banhji.view.invoiceForm.showIn('#invFormContent', Active);
         },
@@ -24533,6 +24535,7 @@
                     filter: { field:"transaction_id", value: transaction_id }
                 })
                 .then(function(e){
+                    $("#loading-inv").remove();
                     var CountItemsRow = parseInt(self.lineDS.data().length);
                     var TotalRow = 10 - CountItemsRow;
                     if(banhji.institute.id != 1021){
@@ -68089,6 +68092,7 @@
         commercialInvoiceKSLM: new kendo.Layout("#commercialInvoiceKSLM", {model: banhji.invoiceForm}),
         vatInvoiceKSLM: new kendo.Layout("#vatInvoiceKSLM", {model: banhji.invoiceForm}),
         posInvoiceKSLM: new kendo.Layout("#posInvoiceKSLM", {model: banhji.invoiceForm}),
+        posCashSaleKSLM: new kendo.Layout("#posCashSaleKSLM", {model: banhji.invoiceForm}),
         //Ricemill form
         recieptNoteRicemill: new kendo.Layout("#recieptNoteRicemill", {model: banhji.invoiceForm}),
         statementDetail: new kendo.Layout("#statementDetail", {model: banhji.statementDetail}),

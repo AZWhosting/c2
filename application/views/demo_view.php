@@ -58389,6 +58389,87 @@
 	                </table>
 	            </div>
 	        </div>
+	        <div class="foot">
+	            <h6 style="padding-left: 35px;">សម្គាល់៖ <span>ច្បាប់​ដើម​សម្រាប់​អ្នក​ទិញ ច្បាប់​ចម្លង​សម្រាប់​អ្នក​លក់</span><br /><span style="font-size: 10px"><strong>Note:</strong> Original invoice for customer, copied invoice for seller</span></h6>
+	        </div>
+	    </div>
+	</div>
+</script>
+<script id="posCashSaleKSLM" type="text/x-kendo-template">
+	<div style="margin: 0 auto;">		
+		<div class="inv1" style="width: 500px;margin: 0 auto;">
+	        <div class="content">
+	        	<div style="overflow: hidden;padding:10px 0;">
+	        		<h1>វិក្កយបត្រ</h1>
+	            	<h2>Invoice</h2>
+	        	</div>
+	            <div class="clear mid-header" style="padding-bottom: 10px;">
+	            	<div class="cover-customer" style="width: 100%!important;">
+	                	<h5>ព័ត៌មានអតិថិជន​ CUSTOMER INFO:</h5>
+	                    <div class="clear">
+	                        <div class="left dotted-ruler" style="width: 62%;">
+	                        	<p style="font-size: 12px; line-height: 20px;">ឈ្មោះ Name : <span data-bind="text: contactDS.data()[0].name"></span><br>
+			        			អាស័យ​ដ្ឋាន Address : <span data-bind="text: contactDS.data()[0].address"></span><br>
+			        			លេខទូរស័ព្ទ Tel : <span data-bind="text: contactDS.data()[0].phone"></span>
+			        			</p>
+	                        </div>
+	                    </div>
+	                </div>
+	                <div class="cover-inv-number" style="width: 100%!important;margin-top: 10px;">
+	                	<div class="clear">
+	                    	<div class="left">
+	                    		<p>លេខ No. :</p>
+	                        </div>
+	                        <div class="left dotted-ruler" style="width: 42%;">
+	                        	<p style="font-weight:bold" data-bind="text: obj.number"></p>
+	                        </div>
+	                    </div>
+	                    <div class="clear">
+	                    	<div class="left">
+	                    		<p>កាល​បរិច្ឆេទ Date:</p>
+	                        </div>
+	                        <div class="left dotted-ruler" style="width: 57%;">
+	                        	<p style="font-weight:bold" data-bind="text: obj.issued_date"></p>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	        	<div class="clear">
+	            	<table cellpadding="0" cellspacing="0" border="1" class="span12">
+	                	<thead>
+	                        <tr class="main-color" style="height: 45px;" data-bind="style: {backgroundColor: obj.color}">
+	                            <th style="text-align: center;width: 8%;">ល.រ<br />N<sup>0</sup></th>
+	                            <th style="text-align: center;">បរិយាយ​មុខ​ទំនិញ<br />Description</th>
+	                            <th style="text-align: center;">បរិមាណ<br />Quantity</th>
+	                            <th style="text-align: center;">ថ្លៃឯកតា​<br />Unit Price</th>
+	                            <th style="text-align: center;width: 20%;">ថ្លៃ​ទំនិញ<br />Amount</th>
+	                        </tr>
+	                    </thead>
+	                    <tbody style="margin-top: 2px" id="formListView" data-role="listview"
+							data-auto-bind="false"
+			                data-template="invoiceForm-lineDS-template-pos"
+			                data-bind="source: lineDS">
+	                    </tbody>
+	                    <tfoot>
+	                        <tr>
+	                        	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">បញ្ចុះតម្លៃ Discount</td>
+	                            <td class="rside" data-bind="text: obj.discount"></td>
+	                        </tr>
+	                        <tr>
+	                        	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">សរុប Total</td>
+	                            <td class="rside" data-bind="text: obj.amount"></td>
+	                        </tr>
+	                        <tr>
+	                        	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">សាច់ប្រាក់ត្រូវទូទាត់ Amount Due</td>
+	                            <td class="rside" data-bind="text: obj.amount_due"></td>
+	                        </tr>
+	                    </tfoot>
+	                </table>
+	            </div>
+	        </div>
+	        <div class="foot">
+	            <h6 style="padding-left: 35px;">សម្គាល់៖ <span>ច្បាប់​ដើម​សម្រាប់​អ្នក​ទិញ ច្បាប់​ចម្លង​សម្រាប់​អ្នក​លក់</span><br /><span style="font-size: 10px"><strong>Note:</strong> Original invoice for customer, copied invoice for seller</span></h6>
+	        </div>
 	    </div>
 	</div>
 </script>
