@@ -168,6 +168,14 @@
                                                     <li><a href="cashs#/cash_advance"><span data-bind="text: lang.lang.set_exchange_rate"></span></a></li>
                                                 </ul>
                                             </div>
+                                             <div >
+                                                <p><i class="fa fa-dollar m-r-5 m-l-5"></i><span data-bind="text: lang.lang.reports"></span></p>
+                                                <ul>
+                                                    <li><a href="cashs#/cash_advance"><span data-bind="text: lang.lang.make_journal"></span></a></li>
+                                                    <li><a href="cashs#/cash_transaction"><span data-bind="text: lang.lang.make_cash_transaction"></span></a></li>
+                                                    <li><a href="cashs#/cash_advance"><span data-bind="text: lang.lang.set_exchange_rate"></span></a></li>
+                                                </ul>
+                                            </div>
                                         </div>
                                     </div>
                                     

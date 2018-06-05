@@ -1313,6 +1313,13 @@
 					<div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 100%;background: rgba(142, 159, 167, 0.8);z-index: 999999;border-radius: 10px;">
 						<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 40%;left: 40%">Loading</i>
 					</div>
+					<div class="tabsbar tabsbar-1">
+				        <ul class="row-fluid row-merge">
+				            <li class="span2 glyphicons nameplate_alt active">
+				            	<a href="#tab1" data-toggle="tab"><i></i> <span>Item</span></a>
+				            </li>
+				        </ul>
+				    </div>
 				    <div class="span12">
 						<div class="example" style="box-shadow: 2px 0px 12px 0px rgba(68,68,68,1); border-radius: 10px 10px 0 0 ; margin-bottom: 1px;">
 							<div data-role="grid" class="costom-grid"
@@ -1327,7 +1334,7 @@
 								    	width: '50px', 
 								    	attributes: { style: 'text-align: center;' }, 
 								        template: function (dataItem) {
-								        	var rowIndex = banhji.Index.lineDS.indexOf(dataItem)+1;
+								        	var rowIndex = banhji.addItems.lineDS.indexOf(dataItem)+1;
 								        	return '<i class=icon-trash data-bind=click:removeRow></i>' + ' ' + rowIndex;
 								      	}
 								    },
@@ -1372,7 +1379,7 @@
 		                         data-auto-bind="false"
 				                 data-bind="source: lineDS" >
 		                 	</div>
-		                 	<div data-bind="visible: haveWork">
+		                 	<div>
 					            <button style="background: #1c3b19; float:left;" class="btn btn-inverse" data-bind="click: addRow"><i class="icon-plus icon-white"></i><span style="float: right; margin-left: 10px;">Add Serving</span></button>
 					            <button style="background: darkred;float: left;border: 1px solid darkred;" class="btn btn-inverse" data-bind="click: saveWork"><i class="icon-plus icon-white"></i><span style="float: right; margin-left: 10px;" data-bind="text: lang.lang.save">Add Serving</span></button>
 					        </div>
@@ -1403,24 +1410,28 @@
 										</tbody>
 									</table>
 								</div>
-								<div class="span6 botton" style="padding-left: 0;">
-									<div class="">
-										<div class=" ">
-											<div class="button-service" data-bind="click: printBill">
-												<div class="img">
-													<img src="<?php echo base_url();?>assets/spa/icon/pay-green.png" >
-												</div>
-												<p class="textBig">Print </p>
-											</div>
-										</div>
-									</div>
-								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+	</div>
+</script>
+<script id="item-list-tmpl" type="text/x-kendo-tmpl">
+	<div class="pull-left">
+		#=abbr##=number# #=name#
+		&nbsp;&nbsp;
+		#if(variant.length>0){#
+			[
+			#for(var i=0; i < variant.length; i++){# 
+				#=variant[i].name#, 
+			#}#
+			]
+		#}#
+	</div>
+	<div class="pull-right">
+		#=category#
 	</div>
 </script>
 <!-- Invoice Form -->

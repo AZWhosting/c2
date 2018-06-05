@@ -5714,6 +5714,13 @@
             if(id){
                 this.set("isEdit", true);
                 // this.loadObj(id);
+                this.dataSource.query({
+                    filter: {field: "id", value: id},
+                    pageSize: 1,
+                }).then(function(e){
+                    var v = self.dataSource.view();
+                    self.set("obj", v[0]);
+                });
                 this.lineDS.filter({field: "transaction_id", value: id});
                 this.sessionDS.query({
                     filter: [
@@ -5730,8 +5737,6 @@
             }else{              
                 banhji.router.navigate("/");
             }
-            
-            
         },
         loadData            : function(){
             this.setRate();
@@ -6276,7 +6281,7 @@
             }
         },
         lineDSChanges       : function(arg){
-            var self = banhji.Index;
+            var self = banhji.addItems;
 
             if(arg.field){
                 if(arg.field=="item"){
@@ -7363,7 +7368,7 @@
                 this.saveWorkDS.add({
                     items : this.lineDS.data(),
                     work_id: obj.id,
-                    transaction_id: obj.transaction_id,
+                    transaction_id: obj.id,
                     amount: obj.amount,
                     locale: obj.locale,
                     tax: obj.tax,
@@ -7375,11 +7380,8 @@
                 this.saveWorkDS.bind("requestEnd", function(e){
                     var type = e.type;
                     if (type !== 'read') {
-                        var noti = $("#ntf1").data("kendoNotification");
-                        noti.hide();
-                        noti.success(self.lang.lang.success_message);
+                        alert(self.lang.lang.success_message);
                         $("#loadImport").css("display", "none");
-                        self.workDS.query({});
                     }
                 });
             }
@@ -7529,6 +7531,8 @@
         var blank = new kendo.View('#blank-tmpl');
         banhji.view.layout.showIn('#content', banhji.view.addItems);
         banhji.addItems.pageLoad(id);
+        var vm = banhji.addItems;
+        vm.lineDS.bind("change", vm.lineDSChanges);
     });
     $(function() {
         banhji.accessMod.query({

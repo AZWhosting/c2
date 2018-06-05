@@ -43,7 +43,7 @@
 <!-- Menu -->
 <script id="tapMenu" type="text/x-kendo-template">
 	<ul class="nav nav-tabs customtab" role="tablist" >
-		<li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#/" data-bind="click: goReports"><span class="hidden-sm-up"><i class="ti-layout-grid2-thumb"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.reports"></span></a> </li>
+		<li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#/" data-bind="click: goReports"><span class="hidden-sm-up"><i class="ti-layout-grid2-thumb"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.dashbaord"></span></a> </li>
 	    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#/transactions" data-bind="click: goTransactions"><span class="hidden-sm-up"><i class="ti-layout-accordion-list"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.cash_transactions"></span></a> </li>
 	    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#/cashs" data-bind="click: goCashCenter"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.cash"></span></a> </li>
     </ul>
@@ -57,13 +57,11 @@
 			<!-- Report -->
             <div class="report ">
 				<div class="col-md-12">
-					<h3><a href="#/cash_movement" data-bind="text: lang.lang.cash_movement" ></a></h3>
-					<p >List of detail movement transaction by each Cash & Cash Equivalent accounts</p>
+					<h3 style="border-bottom: none; padding-bottom: 0;"><a href="#/cash_movement" data-bind="text: lang.lang.cash_movement" ></a></h3>
 				</div>
-				<div class="col-md-12">
+				<!-- <div class="col-md-12">
 					<h3><a href="#/cash_advance_report" data-bind="text: lang.lang.cash_advance" ></a></h3>
-					<p >List of detail movement transaction by each Cash Advance accounts</p>
-				</div>
+				</div> -->
 			</div>
 		</div>
 		<div class="col-md-4">
@@ -71,8 +69,7 @@
 			<!-- Report -->
 			<div class="report">
                 <div class="col-md-12">
-					<h3><a href="#/collection_report" data-bind="text: lang.lang.cash_collection_report" ></a></h3>
-					<p >Lists of collected invoices for the select period of time, group by method of payment.</p>
+					<h3 style="border-bottom: none; padding-bottom: 0;"><a href="#/collection_report" data-bind="text: lang.lang.cash_collection_report" ></a></h3>
 				</div>
 			</div>
 
@@ -82,8 +79,7 @@
 			<!-- Report -->
 			<div class="report">
 				<div class="col-md-12">
-					<h3><a href="#/bill_payment_list" data-bind="text: lang.lang.bill_payment_report" ></a></h3>
-					<p>Lists of paid bills for the select period of time, group by method of payments.</p>
+					<h3 style="border-bottom: none; padding-bottom: 0;"><a href="#/bill_payment_list" data-bind="text: lang.lang.bill_payment_report" ></a></h3>
 				</div>
 			</div>
 							                        

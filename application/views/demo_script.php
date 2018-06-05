@@ -24069,6 +24069,7 @@
                 case 74: Active = banhji.view.defaultCashRefund; break;
                 case 75: Active = banhji.view.invoiceHaveBalance; break;
                 case 76: Active = banhji.view.normalInvoiceHeritageWalk; break;
+                case 77: Active = banhji.view.posInvoiceKSLM; break;
             }
             banhji.view.invoiceCustom.showIn('#invFormContent', Active);
         },
@@ -24296,6 +24297,8 @@
                     var b = self.balanceDS.view();
                     if(b.length > 0){
                         self.calContactBalance(b);
+                    }else{
+                        $("#loading-inv").remove();
                     }
                 });
                 view[0].set("deposit", kendo.toString(view[0].deposit, "c", view[0].locale));
@@ -24431,6 +24434,7 @@
             },2000);
         },
         activeInvoiceTmp        : function(e){
+            console.log(e);
             var Active;
             switch(e) {
                 case 1: Active = banhji.view.invoiceForm1; break;
@@ -24502,6 +24506,7 @@
                 case 74: Active = banhji.view.defaultCashRefund; break;
                 case 75: Active = banhji.view.invoiceHaveBalance; break;
                 case 76: Active = banhji.view.normalInvoiceHeritageWalk; break;
+                case 77: Active = banhji.view.posInvoiceKSLM; break;
             }
             banhji.view.invoiceForm.showIn('#invFormContent', Active);
         },
@@ -68083,6 +68088,7 @@
         normalInvoiceKSLM: new kendo.Layout("#normalInvoiceKSLM", {model: banhji.invoiceForm}),
         commercialInvoiceKSLM: new kendo.Layout("#commercialInvoiceKSLM", {model: banhji.invoiceForm}),
         vatInvoiceKSLM: new kendo.Layout("#vatInvoiceKSLM", {model: banhji.invoiceForm}),
+        posInvoiceKSLM: new kendo.Layout("#posInvoiceKSLM", {model: banhji.invoiceForm}),
         //Ricemill form
         recieptNoteRicemill: new kendo.Layout("#recieptNoteRicemill", {model: banhji.invoiceForm}),
         statementDetail: new kendo.Layout("#statementDetail", {model: banhji.statementDetail}),

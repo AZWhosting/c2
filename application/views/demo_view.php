@@ -58317,6 +58317,92 @@
         </div>
     </div>
 </script>
+<script id="posInvoiceKSLM" type="text/x-kendo-template">
+	<div style="margin: 0 auto;">		
+		<div class="inv1" style="width: 500px;margin: 0 auto;">
+	        <div class="content">
+	        	<div style="overflow: hidden;padding:10px 0;">
+	        		<h1>វិក្កយបត្រ</h1>
+	            	<h2>Invoice</h2>
+	        	</div>
+	            <div class="clear mid-header" style="padding-bottom: 10px;">
+	            	<div class="cover-customer" style="width: 100%!important;">
+	                	<h5>ព័ត៌មានអតិថិជន​ CUSTOMER INFO:</h5>
+	                    <div class="clear">
+	                        <div class="left dotted-ruler" style="width: 62%;">
+	                        	<p style="font-size: 12px; line-height: 20px;">ឈ្មោះ Name : <span data-bind="text: contactDS.data()[0].name"></span><br>
+			        			អាស័យ​ដ្ឋាន Address : <span data-bind="text: contactDS.data()[0].address"></span><br>
+			        			លេខទូរស័ព្ទ Tel : <span data-bind="text: contactDS.data()[0].phone"></span>
+			        			</p>
+	                        </div>
+	                    </div>
+	                </div>
+	                <div class="cover-inv-number" style="width: 100%!important;margin-top: 10px;">
+	                	<div class="clear">
+	                    	<div class="left">
+	                    		<p>លេខ No. :</p>
+	                        </div>
+	                        <div class="left dotted-ruler" style="width: 42%;">
+	                        	<p style="font-weight:bold" data-bind="text: obj.number"></p>
+	                        </div>
+	                    </div>
+	                    <div class="clear">
+	                    	<div class="left">
+	                    		<p>កាល​បរិច្ឆេទ Date:</p>
+	                        </div>
+	                        <div class="left dotted-ruler" style="width: 57%;">
+	                        	<p style="font-weight:bold" data-bind="text: obj.issued_date"></p>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	        	<div class="clear">
+	            	<table cellpadding="0" cellspacing="0" border="1" class="span12">
+	                	<thead>
+	                        <tr class="main-color" style="height: 45px;" data-bind="style: {backgroundColor: obj.color}">
+	                            <th style="text-align: center;width: 8%;">ល.រ<br />N<sup>0</sup></th>
+	                            <th style="text-align: center;">បរិយាយ​មុខ​ទំនិញ<br />Description</th>
+	                            <th style="text-align: center;">បរិមាណ<br />Quantity</th>
+	                            <th style="text-align: center;">ថ្លៃឯកតា​<br />Unit Price</th>
+	                            <th style="text-align: center;width: 20%;">ថ្លៃ​ទំនិញ<br />Amount</th>
+	                        </tr>
+	                    </thead>
+	                    <tbody style="margin-top: 2px" id="formListView" data-role="listview"
+							data-auto-bind="false"
+			                data-template="invoiceForm-lineDS-template-pos"
+			                data-bind="source: lineDS">
+	                    </tbody>
+	                    <tfoot>
+	                        <tr>
+	                        	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">បញ្ចុះតម្លៃ Discount</td>
+	                            <td class="rside" data-bind="text: obj.discount"></td>
+	                        </tr>
+	                        <tr>
+	                        	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">សរុប Total</td>
+	                            <td class="rside" data-bind="text: obj.amount"></td>
+	                        </tr>
+	                        <tr>
+	                        	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">សាច់ប្រាក់ត្រូវទូទាត់ Amount Due</td>
+	                            <td class="rside" data-bind="text: obj.amount_due"></td>
+	                        </tr>
+	                    </tfoot>
+	                </table>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+</script>
+<script id="invoiceForm-lineDS-template-pos" type="text/x-kendo-template">
+	#if(amount){#
+		<tr>
+			<td><i>#:banhji.invoiceForm.lineDS.indexOf(data)+1#</i>&nbsp;</td>
+			<td class="lside">#= description ? description : "" #</td>
+			<td>#= quantity#</td>
+			<td class="rside" width="70">#if(price > 0){# #= kendo.toString(price, "c", locale) # #}#</td>
+			<td class="rside">#= kendo.toString(amount, "c", locale) #</td>
+		</tr>
+	#}#
+</script>
 <!--Invoice Line-->
 <script id="invoiceCustom-txn-form-template" type="text/x-kendo-template">
 	<a class="span4 #= type #" data-id="#= id #" data-bind="click: selectedForm" style="padding-right: 0; width: 32%;">
@@ -58392,7 +58478,7 @@
 		<td class="lside" style="color:\\#000">#= description ? description : "" #</td>
 		<td style="color:\\#000">#= item_prices.measurement ? item_prices.measurement : "" #</td>
 		<td style="color:\\#000">#= quantity#</td>
-		<td class="rside" width="70" style="color:\\#000">#= kendo.toString(price, "c", locale) #</td>
+		<td class="rside" width="70" style="color:\\#000">#if(price > 0){##= kendo.toString(price, "c", locale) ##}#</td>
 		<td class="rside" style="background-color: \\#eee;color: \\#000">#= kendo.toString(amount, "c", locale) #</td>
 	</tr>
 </script>
