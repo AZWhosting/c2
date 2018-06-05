@@ -90,30 +90,6 @@
 	});
 </script>
 <!--start kendo localization in Khmer-->
-<!-- Facebook -->
-<script>
-    window.fbAsyncInit = function() {
-        FB.init({
-            appId: '387834344756149',
-            xfbml: true,
-            version: 'v2.7'
-        });
-        FB.AppEvents.logPageView();
-    };
-
-    (function(d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) {
-            return;
-        }
-        js = d.createElement(s);
-        js.id = id;
-        js.src = "//connect.facebook.net/en_US/sdk.js";
-        fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
-</script>
-
-
 </head>
 <body class="skin-default-dark fixed-layout" >
 	<div class="preloader">
@@ -128,23 +104,13 @@
                 <nav class="navbar top-navbar navbar-expand-md navbar-dark">
                     <div class="navbar-header">
                         <a class="navbar-brand" href="<?php echo base_url();?>micro/home">
-                            <!-- Logo icon --><b>
-                                <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
-                                <!-- Dark Logo icon -->
-                                <!-- <img src="<?php echo base_url()?>assets/micro/logo-icon.png" alt="homepage" class="dark-logo" /> -->
+                            <b>                                
                                 <img src="<?php echo base_url()?>assets/micro/logo-banhjiNew.png" style="height: 36px;" alt="homepage" class="dark-logo" />
-                                <!-- Light Logo icon -->
-                                <!-- <img src="<?php echo base_url()?>assets/micro/logo-light-icon.png" alt="homepage" class="light-logo" /> -->
-                                <!-- <img src="<?php echo base_url()?>assets/micro/logo-micro.png" alt="homepage" > -->
                             </b>
-                            <!--End Logo icon -->
-                            <!-- Logo text --><span>
-                             <!-- dark Logo text -->
-                             <!-- <img src="<?php echo base_url()?>assets/micro/logo-text.png" alt="homepage" class="dark-logo" /> -->
-                             <img src="<?php echo base_url()?>assets/micro/logo-micro.png" style="height: 36px;" alt="homepage" class="dark-logo" />
-                             <!-- Light Logo text -->
-                            <!-- 
-                             --></a>
+                            <span>                             
+                                <img src="<?php echo base_url()?>assets/micro/logo-micro.png" style="height: 36px;" alt="homepage" class="dark-logo" />
+                            </span>
+                            </a>
                     </div>
 
                     <div class="navbar-collapse">
@@ -171,13 +137,11 @@
                                                 <p><i class="ti-receipt m-r-5 m-l-5"></i><span data-bind="text: lang.lang.sale_transactions"></span></p>
                                                 <ul>
                                                     <li><a href="sales#/customer"><span data-bind="text: lang.lang.customers"></span></a></li>
-                                                   <!--  <li><a href="sales#/quote"><span data-bind="text: lang.lang.create_quotation"></span></a></li> -->
                                                    <li><a href="sales#/sale_order"><span data-bind="text: lang.lang.create_sale_order"></span></a></li>
                                                     <li><a href="sales#/customer_deposit"><span data-bind="text: lang.lang.create_customer_deposit"></span></a></li>
                                                     <li><a href="sales#/cash_sale"><span data-bind="text: lang.lang.create_cash_sale"></span></a></li>
                                                     <li><a href="sales#/invoice"><span data-bind="text: lang.lang.create_invoice"></span></a></li>
                                                     <li><a href="sales#/cash_receipt"><span data-bind="text: lang.lang.create_cash_receipt"></span></a></li>
-                                                    <li><a href="<?php echo base_url()?>rrd#/sale_return"><span data-bind="text: lang.lang.create_sale_return"></span></a></li>
                                                     <li><a href="<?php echo base_url()?>rrd#/cash_refund"><span data-bind="">Cash Refund</span></a></li>
                                                 </ul>
                                             </div>
@@ -190,8 +154,7 @@
                                                     <li><a href="purchases#/purchase_order"><span data-bind="text: lang.lang.make_purchase_order"></span></a></li>
                                                     <li><a href="purchases#/vendor_deposit"><span data-bind="text: lang.lang.make_vendor_deposit"></span></a></li>
                                                     <li><a href="purchases#/purchase"><span data-bind="text: lang.lang.make_purchase"></span></a></li>
-                                                    <li><a href="purchases#/cash_payment"><span data-bind="text: lang.lang.make_cash_payment"></span></a></li>                                                    
-                                                    <li><a href="purchases#/purchase_return"><span data-bind="text: lang.lang.make_purchase_return"></span></a></li>
+                                                    <li><a href="purchases#/cash_payment"><span data-bind="text: lang.lang.make_cash_payment"></span></a></li>
                                                     <li><a href="purchases#/payment_refund"><span data-bind="">Payment Refund</span></a></li>
                                                 </ul>
                                             </div>
@@ -218,7 +181,7 @@
                                 <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY ul-multiTaskList" data-template="multiTaskList-row-template" data-bind="source: multiTaskList">
                                     <span class="with-arrow"><span class="bg-primary"></span></span>
                                     
-                                    <a class="dropdown-item" href="<?php echo base_url();?>rrd">Back to BanhJi</a>
+                                    <a class="dropdown-item" target="_blank" href="<?php echo base_url();?>rrd">Back to BanhJi</a>
                                 </div>
                             </li>
 

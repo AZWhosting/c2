@@ -28,7 +28,7 @@
 				<li role="presentation" class="dropdown">
 			  		<a style="color: #fff;" class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">[<span data-bind="text: getUsername"></span>]</a>
 		  			<ul class="dropdown-menu">
-		  				<li><a href="<?php echo base_url(); ?>admin" class=""><i class="icon-cogs"></i> Admin Module</a></li>
+		  				<li><a href="<?php echo base_url(); ?>admin" class=""><i class="icon-cog"></i> Admin Module</a></li>
 		  				<li class="divider"></li>
 		  				<li>
 	                    	<a href="#" data-bind="click: lang.changeToKh">
