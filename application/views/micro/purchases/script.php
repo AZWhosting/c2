@@ -3854,8 +3854,8 @@
         graphDS             : dataStore(apiUrl + "vendor_modules/monthly_purchase"),
         obj                 : {},
         pageLoad            : function(){
-            //this.loadData();
-            console.log("sdds");
+            this.loadData();
+            //console.log("sdds");
         },
         loadData            : function(){
             var self = this;

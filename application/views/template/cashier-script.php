@@ -5359,10 +5359,9 @@
                     page: 1,
                     pageSize: 100
                 }).then(function() {
-                    
                     var view = self.txnDS.view();
-                    self.getMeterLocation(self.txnDS.data()[0].meter_id);
                     if (view.length > 0) {
+                        self.getMeterLocation(self.txnDS.data()[0].meter_id);
                         self.set("btnActive", false);
                         $.each(view, function(index, v) {
                             if (v.amount_fine > 0) {

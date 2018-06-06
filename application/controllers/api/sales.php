@@ -160,13 +160,16 @@ class Sales extends REST_Controller {
 				$amount = (floatval($value->amount) - floatval($value->deposit)) / floatval($value->rate);
 				
 				$data["results"][] = array(
-					"id" 				=> $value->id,
-					"name" 				=> $value->contact_abbr.$value->contact_number." ".$value->contact_name,
-					"type" 				=> $value->type,
-					"number" 			=> $value->number,
-					"issued_date" 		=> $value->issued_date,
-					"rate" 				=> $value->rate,
-					"amount" 			=> $amount
+					"id" 			=> $value->id,
+					"name" 			=> $value->contact_abbr.$value->contact_number." ".$value->contact_name,
+					"type" 			=> $value->type,
+					"number" 		=> $value->number,
+					"issued_date" 	=> $value->issued_date,
+					"due_date" 		=> $value->due_date,
+					"rate" 			=> $value->rate,
+					"amount" 		=> $amount,
+					"status" 		=> $value->status,
+					"progress" 		=> $value->progress
 				);
 			}
 		}
