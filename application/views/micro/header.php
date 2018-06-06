@@ -142,7 +142,7 @@
                                                     <li><a href="sales#/cash_sale"><span data-bind="text: lang.lang.create_cash_sale"></span></a></li>
                                                     <li><a href="sales#/invoice"><span data-bind="text: lang.lang.create_invoice"></span></a></li>
                                                     <li><a href="sales#/cash_receipt"><span data-bind="text: lang.lang.create_cash_receipt"></span></a></li>
-                                                    <li><a href="<?php echo base_url()?>rrd#/cash_refund"><span data-bind="">Cash Refund</span></a></li>
+                                                    <li><a href="sales#/cash_refund"><span data-bind="">Cash Refund</span></a></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -163,7 +163,7 @@
                                             <div >
                                                 <p><i class="fa fa-dollar m-r-5 m-l-5"></i><span data-bind="text: lang.lang.c_transaction"></span></p>
                                                 <ul>
-                                                    <li><a href="cashs#/cash_advance"><span data-bind="text: lang.lang.make_journal"></span></a></li>
+                                                    <li><a href="cashs#/journal"><span data-bind="text: lang.lang.make_journal"></span></a></li>
                                                     <li><a href="cashs#/cash_transaction"><span data-bind="text: lang.lang.make_cash_transaction"></span></a></li>
                                                     <li><a href="cashs#/cash_advance"><span data-bind="text: lang.lang.set_exchange_rate"></span></a></li>
                                                 </ul>
@@ -171,7 +171,7 @@
                                              <div >
                                                 <p><i class="fa fa-dollar m-r-5 m-l-5"></i><span data-bind="text: lang.lang.reports"></span></p>
                                                 <ul>
-                                                    <li><a href="cashs#/cash_advance"><span data-bind="text: lang.lang.make_journal"></span></a></li>
+                                                    <li><a href="cashs#/journal"><span data-bind="text: lang.lang.make_journal"></span></a></li>
                                                     <li><a href="cashs#/cash_transaction"><span data-bind="text: lang.lang.make_cash_transaction"></span></a></li>
                                                     <li><a href="cashs#/cash_advance"><span data-bind="text: lang.lang.set_exchange_rate"></span></a></li>
                                                 </ul>
@@ -264,4 +264,4 @@
                         </ul>
                     </div>
                 </nav>
-            </header>                                         
+            </header>                                                                        

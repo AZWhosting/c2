@@ -108,7 +108,7 @@
 				<p data-format="n0" data-bind="text: obj.po"></p>
 				<div class="col-md-12">
 					<div class="col-md-6">
-						<span data-format="n0" data-bind="text: obj.po_avg"></span>
+						<span data-format="n" data-bind="text: obj.po_avg"></span>
 						<span data-bind="text: lang.lang.average"></span>
 					</div>
 					<div class="col-md-6">
@@ -355,14 +355,14 @@
                                     	<div class="col-sm-6">
                                     		<a class="btn waves-effect waves-light btn-block btn-info" data-bind="click: goPaymentRefund"><span data-bind="text: lang.lang.payment_refund"></span></a>
                                     	</div>
-                                    	<div class="col-sm-6">
+                                    	<!-- <div class="col-sm-6">
                                     		<a class="btn waves-effect waves-light btn-block btn-info" data-bind="click: goPurchaseReturn"><span data-bind="text: lang.lang.purchase_return"></span></a>
-                                    	</div>
-                                    </div>
-                                    <div class="row">
+                                    	</div> -->
                                     	<div class="col-sm-6">
                                     		<a class="btn waves-effect waves-light btn-block btn-info" data-bind="click: goDeposit"><span data-bind="text: lang.lang.deposit"></span></a>
                                     	</div>
+                                    </div>
+                                    <div class="row">                                    	
                                     	<div class="col-sm-6">
                                     		<a class="btn waves-effect waves-light btn-block btn-info" data-bind="click: goCashPayment"><span data-bind="text: lang.lang.cash_payment"></span></a>
                                     	</div>
@@ -1015,7 +1015,7 @@
 	                                    	<div class="p-10">
 	                                    		<div class="row">
 	                                    			<span style="margin-bottom: 15px; margin-left: 10px; padding: 5px 15px; width: 188px;" class="btn waves-effect waves-light btn-block btn-info" data-bind="click: addEmptyContactPerson"><i class="icon-user-follow marginRight"></i><span data-bind="text: lang.lang.new_contact_person"></span></span>
-	                                    			<div class="col-md-12 table-responsive">		                                    			
+	                                    			<div class="col-md-12 table-responsive">
 		                                    			<table class="table color-table dark-table">
 													        <thead>
 													            <tr>
@@ -1346,10 +1346,8 @@
 			                        	<span data-bind="text: lang.lang.add_new_item"></span>
 			                        </button>
 			                        <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 35px, 0px); top: 0px; left: 0px; will-change: transform;">
-			                            <a class="dropdown-item" href='<?php echo base_url()?>rrd#/item'><span data-bind="text: lang.lang.add_inventory_for_sale"></span></a>
-			                            <a class="dropdown-item" href='<?php echo base_url()?>rrd#/non_inventory_part'><span data-bind="text: lang.lang.add_noninventory_for_sale"></span></a>
-			                            <a class="dropdown-item" href='<?php echo base_url()?>rrd#/item_service'><span data-bind="text: lang.lang.add_services"></span></a>
-			                            <a class="dropdown-item" href='<?php echo base_url()?>rrd#/txn_item'><span data-bind="text: lang.lang.add_transaction_item"></span></a>
+			                            <a class="dropdown-item" href='items#/item'><span data-bind="text: lang.lang.add_inventory_for_sale"></span></a>
+			                            <a class="dropdown-item" href='items#/item_service'><span data-bind="text: lang.lang.add_services"></span></a>
 			                        </div>
 
 									<!--End Add New Item -->
@@ -1858,10 +1856,8 @@
 								                        	<span data-bind="text: lang.lang.add_new_item"></span>
 								                        </button>
 								                        <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 35px, 0px); top: 0px; left: 0px; will-change: transform;">
-								                            <a class="dropdown-item" href='<?php echo base_url()?>rrd#/item'><span data-bind="text: lang.lang.add_inventory_for_sale"></span></a>
-								                            <a class="dropdown-item" href='<?php echo base_url()?>rrd#/non_inventory_part'><span data-bind="text: lang.lang.add_noninventory_for_sale"></span></a>
-								                            <a class="dropdown-item" href='<?php echo base_url()?>rrd#/item_service'><span data-bind="text: lang.lang.add_services"></span></a>
-								                            <a class="dropdown-item" href='<?php echo base_url()?>rrd#/txn_item'><span data-bind="text: lang.lang.add_transaction_item"></span></a>
+								                            <a class="dropdown-item" href='items#/item'><span data-bind="text: lang.lang.add_inventory_for_sale"></span></a>
+								                            <a class="dropdown-item" href='items#/item_service'><span data-bind="text: lang.lang.add_services"></span></a>
 								                        </div>
 													</div>
 													<!-- Column END -->
@@ -2769,11 +2765,8 @@
 			                        	<span data-bind="text: lang.lang.add_new_item"></span>
 			                        </button>
 			                        <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 35px, 0px); top: 0px; left: 0px; will-change: transform;">
-			                            <a class="dropdown-item" href='<?php echo base_url()?>rrd#/item'><span data-bind="text: lang.lang.add_inventory_for_sale"></span></a>
-			                            <a class="dropdown-item" href='<?php echo base_url()?>rrd#/non_inventory_part'><span data-bind="text: lang.lang.add_noninventory_for_sale"></span></a>
-			                            <a class="dropdown-item" href='<?php echo base_url()?>rrd#/fixed_assets'><span data-bind="text: lang.lang.add_fixed_assets"></span></a>
-			                            <a class="dropdown-item" href='<?php echo base_url()?>rrd#/item_service'><span data-bind="text: lang.lang.add_services"></span></a>
-			                            <a class="dropdown-item" href='<?php echo base_url()?>rrd#/txn_item'><span data-bind="text: lang.lang.add_transaction_item"></span></a>
+			                            <a class="dropdown-item" href='items#/item'><span data-bind="text: lang.lang.add_inventory_for_sale"></span></a>
+			                            <a class="dropdown-item" href='items#/item_service'><span data-bind="text: lang.lang.add_services"></span></a>
 			                        </div>
 								</div>
 								<!-- Column END -->
@@ -3234,10 +3227,8 @@
 			                        	<span data-bind="text: lang.lang.add_new_item"></span>
 			                        </button>
 			                        <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 35px, 0px); top: 0px; left: 0px; will-change: transform;">
-			                            <a class="dropdown-item" href='<?php echo base_url()?>rrd#/item'><span data-bind="text: lang.lang.add_inventory_for_sale"></span></a>
-			                            <a class="dropdown-item" href='<?php echo base_url()?>rrd#/non_inventory_part'><span data-bind="text: lang.lang.add_noninventory_for_sale"></span></a>
-			                            <a class="dropdown-item" href='<?php echo base_url()?>rrd#/item_service'><span data-bind="text: lang.lang.add_services"></span></a>
-			                            <a class="dropdown-item" href='<?php echo base_url()?>rrd#/txn_item'><span data-bind="text: lang.lang.add_transaction_item"></span></a>
+			                            <a class="dropdown-item" href='items#/item'><span data-bind="text: lang.lang.add_inventory_for_sale"></span></a>
+			                            <a class="dropdown-item" href='items#/item_service'><span data-bind="text: lang.lang.add_services"></span></a>
 			                        </div>
 
 								</div>
@@ -6003,4 +5994,4 @@
 		</td>
 	</tr>
 </script>
-<!-- End -->                                                                                                                                                                                     
+<!-- End -->                                                                                                                                                                                      

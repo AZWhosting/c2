@@ -2580,7 +2580,7 @@
 																disabled: obj.is_recurring,
 																events:{change:checkExistingNumber}"
 													required data-required-msg="required"
-													placeholder="eg. ABC00001" style="width: 83%; float: left; margin-right: 5px;"" />
+													placeholder="eg. ABC00001" style="width: 83%; float: left; margin-right: 5px;" />
 											<div style="padding-left: 0; width: 25px; float: left;">
 												<a class="glyphicons no-js qrcode" data-bind="click: generateNumber" title="Generate Number" style="float: left; margin: 2px 0 0 0 ;"><i></i></a>
 											</div>

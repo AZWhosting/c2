@@ -4917,6 +4917,530 @@
             this.set("showConfirm", false);
         }
     });
+    banhji.itemService =  kendo.observable({
+        lang                    : langVM,
+        dataSource              : dataStore(apiUrl + "items"),
+        patternDS               : dataStore(apiUrl + "items"),
+        numberDS                : dataStore(apiUrl + "items"),
+        deleteDS                : dataStore(apiUrl + "item_lines"),
+        itemGroupDS             : dataStore(apiUrl + "items/group"),
+        itemVendorDS            : dataStore(apiUrl + "items/contact"),
+        itemCustomerDS          : dataStore(apiUrl + "items/contact"),
+        attachmentDS            : dataStore(apiUrl + "attachments"),
+        currencyDS              : new kendo.data.DataSource({
+            data: banhji.source.currencyList,
+            filter: { field:"status", value: 1 }
+        }),
+        categoryDS              : new kendo.data.DataSource({
+            data: banhji.source.categoryList,
+            filter: { field:"item_type_id", value: 4 }//Service
+        }),
+        measurementDS           : banhji.source.measurementDS,
+        vendorDS                : banhji.source.supplierDS,
+        customerDS              : banhji.source.customerDS,
+        incomeAccountDS         : new kendo.data.DataSource({
+            data: banhji.source.accountList,
+            filter: {
+                logic: "or",
+                filters: [
+                    { field: "account_type_id", value: 35 },
+                    { field: "account_type_id", value: 39 }
+                ]
+            },
+            sort: { field:"number", dir:"asc" }
+        }),
+        cogsAccountDS           : new kendo.data.DataSource({
+            data: banhji.source.accountList,
+            filter: {
+                logic: "or",
+                filters: [
+                    { field: "account_type_id", value: 36 },//Expense
+                    { field: "account_type_id", value: 37 },
+                    { field: "account_type_id", value: 38 },
+                    { field: "account_type_id", value: 40 },
+                    { field: "account_type_id", value: 41 },
+                    { field: "account_type_id", value: 42 },
+                    { field: "account_type_id", value: 43 }
+                ]
+            },
+            sort: { field:"number", dir:"asc" }
+        }),
+        statusList              : banhji.source.statusList,
+        confirmMessage          : banhji.source.confirmMessage,
+        obj                     : null,
+        isEdit                  : false,
+        isLock                  : false,
+        saveClose               : false,
+        showConfirm             : false,
+        notDuplicateNumber      : true,
+        pageLoad                : function(id, category_id){
+            if(id){
+                this.set("isEdit", true);
+                this.loadObj(id, category_id);
+                this.checkExistingTxn(id);
+            }else{
+                if(this.get("isEdit") || this.dataSource.total()==0){
+                    this.addEmpty();
+                }
+            }
+        },
+        //Upload
+        onSelect                : function(e){
+            // Array with information about the uploaded files
+            var self = this,
+            files = e.files[0],
+            obj = this.get("obj");
+
+            var fileReader = new FileReader();
+            fileReader.onload = function (event) {
+                var mapImage = event.target.result;
+                self.obj.set('image_url', mapImage);
+            }
+            fileReader.readAsDataURL(files.rawFile);
+
+            // Check the extension of each file and abort the upload if it is not .jpg
+            if (files.extension.toLowerCase() === ".jpg"
+                || files.extension.toLowerCase() === ".jpeg"
+                || files.extension.toLowerCase() === ".tiff"
+                || files.extension.toLowerCase() === ".png"
+                || files.extension.toLowerCase() === ".gif"){
+
+                if(this.attachmentDS.total()>0){
+                    var att = this.attachmentDS.at(0);
+                    this.attachmentDS.remove(att);
+                }
+
+                var key = 'ITEM_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ files.name;
+
+                this.attachmentDS.add({
+                    user_id         : this.get("user_id"),
+                    item_id         : obj.id,
+                    type            : "Item",
+                    name            : files.name,
+                    description     : "",
+                    key             : key,
+                    url             : banhji.s3 + key,
+                    size            : files.size,
+                    created_at      : new Date(),
+
+                    file            : files.rawFile
+                });
+            }else{
+                alert("This type of file is not allowed to attach.");
+            }
+        },
+        saveAttachment          : function(){
+            $.each(this.attachmentDS.data(), function(index, value){
+                if(!value.id){
+                    var params = {
+                        Body: value.file,
+                        Key: value.key
+                    };
+                    bucket.upload(params, function (err, data) {
+                        // console.log(err, data);
+                        // var url = data.Location;
+                    });
+                }
+            });
+
+            this.attachmentDS.sync();
+            var saved = false;
+            this.attachmentDS.bind("requestEnd", function(e){
+                //Delete File
+                if(e.type=="destroy"){
+                    if(saved==false && e.response){
+                        saved = true;
+
+                        var response = e.response.results;
+                        $.each(response, function(index, value){
+                            var params = {
+                                //Bucket: 'STRING_VALUE', /* required */
+                                Delete: { /* required */
+                                    Objects: [ /* required */
+                                        {
+                                            Key: value.data.key /* required */
+                                        }
+                                      /* more items */
+                                    ]
+                                }
+                            };
+                            bucket.deleteObjects(params, function(err, data) {
+                                //console.log(err, data);
+                            });
+                        });
+                    }
+                }
+            });
+        },
+        //Pattern
+        loadPattern             : function(){
+            var self = this, obj = self.get("obj"),
+            cat = this.categoryDS.get(obj.category_id);
+
+            this.patternDS.query({
+                filter: [
+                    { field:"category_id", value: obj.category_id },
+                    { field:"is_pattern", value: 1 }
+                ],
+                page: 1,
+                pageSize: 1
+            }).then(function(data){
+                var view = self.patternDS.view();
+
+                if(view.length>0){
+                    obj.set("measurement_id", view[0].measurement_id),
+                    obj.set("abbr", cat.abbr),
+                    obj.set("price", view[0].price);
+                    obj.set("cost", view[0].cost);
+                    obj.set("locale", view[0].locale);
+                    obj.set("purchase_description", view[0].purchase_description),
+                    obj.set("sale_description", view[0].sale_description),
+                    obj.set("income_account_id", view[0].income_account_id);
+                    obj.set("expense_account_id", view[0].expense_account_id);
+                }else{
+                    obj.set("measurement_id", 0),
+                    obj.set("abbr", ""),
+                    obj.set("price", view[0].price);
+                    obj.set("cost", view[0].cost);
+                    obj.set("locale", banhji.locale);
+                    obj.set("purchase_description", ""),
+                    obj.set("sale_description", ""),
+                    obj.set("income_account_id", 0);
+                    obj.set("expense_account_id", 0);
+                }
+            });
+        },
+        //Number
+        checkExistingNumber     : function(){
+            var self = this, para = [],
+            obj = this.get("obj");
+
+            if(obj.number!==""){
+
+                if(this.get("isEdit")){
+                    para.push({ field:"id", operator:"where_not_in", value: [obj.id] });
+                }
+
+                para.push({ field:"abbr", value: obj.abbr });
+                para.push({ field:"number", value: obj.number });
+                para.push({ field:"category_id", value: obj.category_id });
+
+                this.numberDS.query({
+                    filter: para,
+                    page: 1,
+                    pageSize: 1
+                }).then(function(e){
+                    var view = self.numberDS.view();
+
+                    if(view.length>0){
+                        self.set("notDuplicateNumber", false);
+                    }else{
+                        self.set("notDuplicateNumber", true);
+                    }
+                });
+            }
+        },
+        generateNumber          : function(){
+            var self = this, obj = this.get("obj");
+
+            this.numberDS.query({
+                filter:[
+                    { field:"category_id", value:obj.category_id }
+                ],
+                sort: { field:"number", dir:"desc" },
+                page:1,
+                pageSize:1
+            }).then(function(){
+                var view = self.numberDS.view();
+
+                var lastNo = 0;
+                if(view.length>0){
+                    lastNo = kendo.parseInt(view[0].number);
+                }
+                lastNo++;
+                obj.set("number",kendo.toString(lastNo, "00000"));
+            });
+        },
+        categoryChanges         : function(){
+            var obj = this.get("obj");
+
+            if(obj.category_id && obj.isNew()){
+                this.loadPattern();
+                this.generateNumber();
+            }
+        },
+        //Item Contact
+        loadItemContact         : function(){
+            var obj = this.get("obj");
+
+            this.itemVendorDS.query({
+                filter: [
+                    { "field":"item_id", value: obj.id },
+                    { "field":"type", value: "vendor" }
+                ],
+                page: 1,
+                pageSize: 100
+            });
+
+            this.itemCustomerDS.query({
+                filter: [
+                    { "field":"item_id", value: obj.id },
+                    { "field":"type", value: "customer" }
+                ],
+                page: 1,
+                pageSize: 100
+            });
+        },
+        addEmptyItemVendor      : function(){
+            var item_id = 0;
+            if(this.get("isEdit")){
+                item_id = this.get("obj").id;
+            }
+
+            this.itemVendorDS.add({
+                item_id     : item_id,
+                contact_id  : "",
+                code        : "",
+                type        : "vendor"
+            });
+        },
+        deleteItemVendor        : function(e){
+            if (confirm("Are you sure, you want to delete it?")) {
+                var d = e.data,
+                obj = this.itemVendorDS.getByUid(d.uid);
+
+                this.itemVendorDS.remove(obj);
+            }
+        },
+        addEmptyItemCustomer    : function(){
+            var item_id = 0;
+            if(this.get("isEdit")){
+                item_id = this.get("obj").id;
+            }
+
+            this.itemCustomerDS.add({
+                item_id     : item_id,
+                contact_id  : "",
+                code        : "",
+                type        : "customer"
+            });
+        },
+        deleteItemCustomer      : function(e){
+            if (confirm("Are you sure, you want to delete it?")) {
+                var d = e.data,
+                obj = this.itemCustomerDS.getByUid(d.uid);
+
+                this.itemCustomerDS.remove(obj);
+            }
+        },
+        checkExistingTxn        : function(id){
+            var self = this;
+
+            this.deleteDS.query({
+                filter: { field: "item_id", value: id },
+                page: 1,
+                pageSize: 1
+            }).then(function() {
+                var view = self.deleteDS.view();
+
+                if(view.length>0){
+                    self.set("isLock", true);
+                }else{
+                    self.set("isLock", false);
+                }
+            });
+        },
+        //Obj
+        loadObj                 : function(id, category_id){
+            var self = this, para = [];
+
+            if(id>0){
+                para.push({ field:"id", value: id });
+            }
+
+            if(category_id){
+                para.push({ field:"category_id", value: category_id });
+                para.push({ field:"is_pattern", value: 1 });
+            }
+
+            this.dataSource.query({
+                filter: para,
+            }).then(function(e){
+                var view = self.dataSource.view();
+
+                self.set("obj", view[0]);
+                self.loadItemContact();
+            });
+        },
+        addEmpty                : function(){
+            var self = this;
+
+            this.dataSource.data([]);
+            this.itemVendorDS.data([]);
+            this.itemCustomerDS.data([]);
+
+            this.set("isLock", false);
+            this.set("isEdit", false);
+            this.set("obj", null);
+
+            this.patternDS.query({
+                filter:[
+                    { field:"category_id", value: 3 },
+                    { field:"is_pattern", value: 1 }
+                ],
+                page:1,
+                pageSize:1
+            }).then(function(){
+                var view = self.patternDS.view(),
+                cat = self.categoryDS.get(view[0].category_id);
+
+                self.dataSource.insert(0, {
+                    item_type_id            : 4,//Service
+                    category_id             : view[0].category_id,
+                    item_group_id           : view[0].item_group_id,
+                    measurement_id          : view[0].measurement_id,
+                    abbr                    : cat.abbr,
+                    number                  : "",
+                    name                    : "",
+                    price                   : view[0].price,
+                    cost                    : view[0].cost,
+                    locale                  : view[0].locale,
+                    purchase_description    : view[0].purchase_description,
+                    sale_description        : view[0].sale_description,
+                    income_account_id       : view[0].income_account_id,
+                    expense_account_id      : view[0].expense_account_id,
+                    image_url               : banhji.no_image,
+                    favorite                : view[0].favorite,
+                    is_pattern              : 0,
+                    status                  : 1
+                });
+
+                var obj = self.dataSource.at(0);
+                //Pattern
+                // if(self.get("contact_type_id")>0){
+                //  obj.set("contact_type_id", self.get("contact_type_id"));
+                //  obj.set("abbr", "");
+                //  obj.set("is_pattern", 1);
+                // }
+
+                self.set("obj", obj);
+                self.generateNumber();
+            });
+        },
+        objSync                 : function(){
+            var dfd = $.Deferred();
+
+            this.dataSource.sync();
+            this.dataSource.bind("requestEnd", function(e){
+                if(e.response){
+                    dfd.resolve(e.response.results);
+                }
+            });
+            this.dataSource.bind("error", function(e){
+                dfd.reject(e.errorThrown);
+            });
+
+            return dfd;
+        },
+        save                    : function(){
+            var self = this, obj = this.get("obj");
+
+            //Edit Mode
+            if(this.get("isEdit")){
+                //Contact Item has changes
+                if(this.itemVendorDS.hasChanges() || this.itemCustomerDS.hasChanges()){
+                    obj.set("dirty", true);
+                }
+            }
+
+            //Attachment
+            if(this.attachmentDS.total()>0){
+                var att = this.attachmentDS.at(0);
+                obj.set("image_url", att.url);
+            }
+
+            //Save Obj
+            this.objSync()
+            .then(function(data){ //Success
+                if(self.get("isEdit")==false){
+                    $.each(self.itemVendorDS.data(), function(index, value){
+                        value.set("item_id", data[0].id);
+                    });
+
+                    $.each(self.itemCustomerDS.data(), function(index, value){
+                        value.set("item_id", data[0].id);
+                    });
+
+                    //Attachment
+                    $.each(self.attachmentDS.data(), function(index, value){
+                        value.set("item_id", data[0].id);
+                    });
+                }
+
+                self.itemVendorDS.sync();
+                self.itemCustomerDS.sync();
+                self.saveAttachment();
+
+                return data;
+            }, function(reason) { //Error
+                $("#ntf1").data("kendoNotification").error(reason);
+            }).then(function(result){
+                $("#ntf1").data("kendoNotification").success(banhji.source.successMessage);
+
+                if(self.get("saveClose")){
+                    //Save Close
+                    self.set("saveClose", false);
+                    self.cancel();
+                    window.history.back();
+                }else{
+                    //Save New
+                    self.addEmpty();
+                }
+            });
+        },
+        cancel                  : function(){
+            this.dataSource.cancelChanges();
+            this.itemVendorDS.cancelChanges();
+            this.itemCustomerDS.cancelChanges();
+
+            this.dataSource.data([]);
+            this.itemVendorDS.data([]);
+            this.itemCustomerDS.data([]);
+
+            banhji.userManagement.removeMultiTask("item_service");
+        },
+        delete                  : function(){
+            var self = this, obj = this.get("obj");
+            this.set("showConfirm",false);
+
+            if(!obj.is_system==1){
+                this.deleteDS.query({
+                    filter: { field: "item_id", value: obj.id },
+                    page: 1,
+                    pageSize: 1
+                }).then(function() {
+                    var view = self.deleteDS.view();
+
+                    if(view.length>0){
+                        alert("Sorry, you can not delete it because it is using now.");
+                    }else{
+                        obj.set("deleted", 1);
+                        self.dataSource.sync();
+
+                        window.history.back();
+                    }
+                });
+            }else{
+                alert("Sorry, you can not delete it because it is system's item.");
+            }
+        },
+        openConfirm             : function(){
+            this.set("showConfirm", true);
+        },
+        closeConfirm            : function(){
+            this.set("showConfirm", false);
+        }
+    });
     banhji.itemCatalog =  kendo.observable({
         lang                    : langVM,
         dataSource              : dataStore(apiUrl + "items"),
@@ -6820,6 +7344,7 @@
 
         // Function
         item: new kendo.Layout("#item", {model: banhji.item}),
+        itemService: new kendo.Layout("#itemService", {model: banhji.itemService}),
         itemPrice: new kendo.Layout("#itemPrice", {model: banhji.itemPrice}),
         itemCatalog: new kendo.Layout("#itemCatalog", {model: banhji.itemCatalog}),
         itemAssembly: new kendo.Layout("#itemAssembly", {model: banhji.itemAssembly}),
@@ -7033,6 +7558,71 @@
                 }
 
                 vm.pageLoad(id);
+            } else {
+                window.location.replace(baseUrl + "admin");
+            }
+        });
+    });
+    banhji.router.route("/item_service(/:id)(/:category_id)", function(id, category_id){
+        banhji.accessMod.query({
+            filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+        }).then(function(e){
+            var allowed = false;
+            if(banhji.accessMod.data().length > 0) {
+                for(var i = 0; i < banhji.accessMod.data().length; i++) {
+                    if("products/services" == banhji.accessMod.data()[i].name.toLowerCase()) {
+                        allowed = true;
+                        break;
+                    }
+                }
+            }
+            if(allowed) {
+                var vm = banhji.itemService;
+
+                banhji.userManagement.addMultiTask("Service","item_service",vm);
+
+                banhji.view.layout.showIn("#content", banhji.view.itemService);
+
+                if(banhji.pageLoaded["item_service"]==undefined){
+                    banhji.pageLoaded["item_service"] = true;
+
+                    var validator = $("#example").kendoValidator({
+                        rules: {
+                            customRule1: function(input){
+                                if (input.is("[name=txtNumber]")) {
+                                    return vm.get("notDuplicateNumber");
+                                }
+                                return true;
+                            }
+                        },
+                        messages: {
+                            customRule1: banhji.source.duplicateNumber
+                        }
+                    }).data("kendoValidator");
+
+                    $("#saveNew").click(function(e){
+                        e.preventDefault();
+
+                        if(validator.validate()){
+                            vm.save();
+                        }else{
+                            $("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+                        }
+                    });
+
+                    $("#saveClose").click(function(e){
+                        e.preventDefault();
+
+                        if(validator.validate()){
+                            vm.set("saveClose", true);
+                            vm.save();
+                        }else{
+                            $("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+                        }
+                    });
+                }
+
+                vm.pageLoad(id, category_id);
             } else {
                 window.location.replace(baseUrl + "admin");
             }
