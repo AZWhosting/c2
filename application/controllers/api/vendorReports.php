@@ -286,7 +286,7 @@ class Vendorreports extends REST_Controller {
 		}
 		
 		//Filter		
-		if(!empty($filter) && isset($filter)){
+		if(!empty($filter["filters"]) && isset($filter["filters"])){
 	    	foreach ($filter["filters"] as $value) {
 	    		if(isset($value['operator'])){
 	    			if($value['operator']=="eq"){
@@ -320,12 +320,16 @@ class Vendorreports extends REST_Controller {
 			$objList = [];
 			foreach ($obj as $value) {
 				$data["results"][] = array(
-					"id" 				=> $value->id,
-					"type" 				=> $value->type,
-					"number" 			=> $value->number,
-					"issued_date" 		=> $value->issued_date,
-					"rate" 				=> $value->rate,
-					"amount" 			=> floatval($value->amount),
+					"id" 			=> $value->id,
+					"name" 			=> $value->contact_abbr . $value->contact_number . "-" . $value->contact_name, 
+					"type" 			=> $value->type,
+					"number" 		=> $value->number,
+					"issued_date" 	=> $value->issued_date,
+					"due_date" 		=> $value->due_date,
+					"rate" 			=> floatval($value->rate),
+					"amount" 		=> floatval($value->amount),
+					"status" 		=> floatval($value->status),
+					"progress" 		=> $value->progress
 				);
 			}
 		}

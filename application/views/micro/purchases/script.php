@@ -3969,100 +3969,13 @@
 
             this.dataSource.filter(para);
         },
-        printGrid           : function() {
-            var gridElement = $('#grid'),
-                printableContent = '',
-                win = window.open('', '', 'width=990, height=900'),
-                doc = win.document.open();
-            var htmlStart =
-                    '<!DOCTYPE html>' +
-                    '<html>' +
-                    '<head>' +
-                    '<meta charset="utf-8" />' +
-                    '<title></title>' +
-                    '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
-                    '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
-                    '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/responsive.css">' +
-                    '<link href="<?php echo base_url(); ?>assets/invoice/invoice.css" rel="stylesheet" />'+
-                    '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
-                    '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
-                    '<style>' +
-                    'html { font: 11pt sans-serif; }' +
-                    '.k-grid { border-top-width: 0; }' +
-                    '.k-grid, .k-grid-content { height: auto !important; }' +
-                    '.k-grid-content { overflow: visible !important; }' +
-                    'div.k-grid table { table-layout: auto; width: 100% !important; }' +
-                    '.k-grid .k-grid-header th { border-top: 1px solid; }' +
-                    '.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
-                    '</style><style type="text/css" media="print"> @page { size: portrait; margin:1mm; }'+
-                        '.inv1 .main-color {' +
+        payBill             : function(e){
+            var data = e.data;
 
-                            '-webkit-print-color-adjust:exact; ' +
-                        '} ' +
-                        '.table.table-borderless.table-condensed  tr th { background-color: #1E4E78!important;' +
-                        '-webkit-print-color-adjust:exact; color:#fff!important;}' +
-                        '.table.table-borderless.table-condensed  tr th * { color: #fff!important; -webkit-print-color-adjust:exact;}' +
-                        '.inv1 .light-blue-td { ' +
-                            'background-color: #c6d9f1!important;' +
-                            'text-align: left;' +
-                            'padding-left: 5px;' +
-                            '-webkit-print-color-adjust:exact; ' +
-                        '}' +
-                        '.saleSummaryCustomer .table.table-borderless.table-condensed tr td { ' +
-                            'background-color: #F2F2F2!important; -webkit-print-color-adjust:exact;' +
-                        '}'+
-                        '.saleSummaryCustomer .table.table-borderless.table-condensed tr:nth-child(2n+1) td { ' +
-                            ' background-color: #fff!important; -webkit-print-color-adjust:exact;' +
-                        '}' +
-                        '.journal_block1>.span2 *, .journal_block1>.span5 * {color: #fff!important;}' +
-                        '.journal_block1>.span2:first-child { ' +
-                            'background-color: #bbbbbb!important; -webkit-print-color-adjust:exact;' +
-                        '}' +
-                        '.journal_block1>.span5:last-child {' +
-                            'background-color: #496cad!important; color: #fff!important; -webkit-print-color-adjust:exact; ' +
-                        '}' +
-                        '.journal_block1>.span5 {' +
-                            'background-color: #5cc7dd!important; color: #fff!important; -webkit-print-color-adjust:exact;' +
-                        '}' +
-                        '.saleSummaryCustomer .table.table-borderless.table-condensed tfoot .bg-total td {' +
-                            'background-color: #1C2633!important;' +
-                            'color: #fff!important; ' +
-                            '-webkit-print-color-adjust:exact;' +
-                        '}' +
-                        '</style>' +
-                    '</head>' +
-                    '<body><div class="saleSummaryCustomer" style="padding: 0 10px;">';
-            var htmlEnd =
-                    '</div></body>' +
-                    '</html>';
-
-            printableContent = $('#invFormContent').html();
-            doc.write(htmlStart + printableContent + htmlEnd);
-            doc.close();
-            setTimeout(function(){
-                win.print();
-                win.close();
-            },2000);
-        },
-        ExportExcel         : function(){
-            var workbook = new kendo.ooxml.Workbook({
-              sheets: [
-                {
-                  columns: [
-                    { autoWidth: true },
-                    { autoWidth: true },
-                    { autoWidth: true },
-                    { autoWidth: true },
-                    { autoWidth: true },
-                    { autoWidth: true }
-                  ],
-                  title: "General Ledger",
-                  rows: this.exArray
-                }
-              ]
-            });
-            //save the file as Excel file with extension xlsx
-            kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "GeneralLedger.xlsx"});
+            if(obj!==null){
+                banhji.router.navigate('/cash_payment');
+                banhji.cashPayment.loadInvoice(data.id);
+            }
         }
     });
     // Function
@@ -15515,4 +15428,4 @@
         banhji.router.start();
         banhji.source.pageLoad();
     });    
-</script>              
+</script>

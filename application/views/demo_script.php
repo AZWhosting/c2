@@ -69002,7 +69002,7 @@
         //  }
         // });
     });
-    banhji.router.route("/vat_sale(/:id)", function(id){
+    banhji.router.route("/vat_cash_sale(/:id)", function(id){
         // banhji.accessMod.query({
         //  filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
         // }).then(function(e){

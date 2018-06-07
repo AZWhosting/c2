@@ -237,12 +237,19 @@
 			             data-auto-bind="false"
 			             data-filterable="true"
 			             data-columns="[
-			             	 { field: 'type' , title : 'TYPE' , filterable: { multi: true, search: true} },
-			                 { field: 'issued_date' , title : 'DATE' , filterable: { multi: true, search: true}, template:'#=kendo.toString(new Date(issued_date), banhji.dateFormat)#'},
-			                 { field: 'number' , title: 'REFERENCE' , filterable: { multi: true, search: true} , template: '<a href=\'purchases\\#/#=type.toLowerCase()#/#=id#\'>#=number#</a>'},
-			                 { field: 'amount' , title: 'AMOUNT' , filterable: { multi: true, search: true}, format: '{0:n}' , attributes: { style: 'text-align: right;'} },
-			                 { title: 'actions' },
-			                 { title: 'status' }
+			                { field: 'issued_date' , title : 'DATE' , filterable: { multi: true, search: true}, template:'#=kendo.toString(new Date(issued_date), banhji.dateFormat)#'},
+			                { field: 'name' , title : 'NAME' , filterable: { multi: true, search: true} },
+			                { field: 'type' , title : 'TYPE' , filterable: { multi: true, search: true} },
+			                { field: 'number' , title: 'REFERENCE' , filterable: { multi: true, search: true} , template: '<a href=\'purchases\\#/#=type.toLowerCase()#/#=id#\'>#=number#</a>'},
+			                { field: 'amount' , title: 'AMOUNT' , filterable: { multi: true, search: true}, format: '{0:n}' , attributes: { style: 'text-align: right;'} },
+			                { 
+			                	title: 'STATUS', 
+			                	template: kendo.template($('#transactions-status-tmpl').html()) 
+			                },
+			                { 
+			                	title: 'ACTIONS',
+			                	template: kendo.template($('#transactions-action-tmpl').html())
+			                }
 			                 
 			             ]"
 			             data-bind="source: dataSource"></div>
@@ -250,6 +257,49 @@
 	        </div>
         </div>
 	</div>
+</script>
+<script id="transactions-status-tmpl" type="text/x-kendo-tmpl">
+	#if(status=="4") {#
+		#=progress#
+	#}#
+
+	#if(type=="Credit_Purchase"){#
+		#if(status=="0" || status=="2") {#
+			# var date = new Date(), dueDate = new Date(due_date).getTime(), toDay = new Date(date).getTime(); #
+			#if(dueDate < toDay) {#
+				Over Due #:Math.floor((toDay - dueDate)/(1000*60*60*24))# days
+			#} else {#
+				#:Math.floor((dueDate - toDay)/(1000*60*60*24))# days to pay
+			#}#
+		#} else if(status=="1") {#
+			Paid
+		#} else if(status=="3") {#
+			Returned
+		#}#
+	#}else if(type=="Purchase_Order"){#
+		#if(status=="0"){#
+			Open
+		#}else if(status=="1"){#
+			Done
+		#}#
+	#}else if(type=="GRN"){#
+		#if(status=="0"){#
+			Open
+		#}else if(status=="1"){#
+			Received
+		#}#
+	#}#
+</script>
+<script id="transactions-action-tmpl" type="text/x-kendo-tmpl">
+	#if(type=="Credit_Purchase"){#
+		#if(status=="0" || status=="2") {#
+			<a data-bind="click: payBill"><i></i> Pay Bill</a>
+		#}#
+	#}#
+
+	#if(status=="4") {#
+		<a href="\#/#=type.toLowerCase()#/#=id#"><button>Use</button></a>
+	#}#
 </script>
 <script id="supplierTransaction-temp-old" type="text/x-kendo-template">
 	<tr style="font-weight: bold">
@@ -5994,4 +6044,4 @@
 		</td>
 	</tr>
 </script>
-<!-- End -->                                                                                                                                                                                      
+<!-- End -->

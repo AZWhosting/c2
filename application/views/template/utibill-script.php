@@ -9037,7 +9037,6 @@
                 if (this.propertyID > 0) {
                     this.addEmpty(this.propertyID);
                     this.addEmptyRe(this.propertyID);
-                    this.meterDS.filter({field: "property_id", value: this.propertyID});
                 } else {
                     banhji.router.navigate("/center");
                 }
@@ -9159,6 +9158,10 @@
                 }else{
                     self.set("btnSave", self.lang.lang.save);
                     self.set("haveActivated", true);
+                }
+                //Filter Change meter
+                if(view[0].status){
+                    self.meterDS.filter({field: "property_id", value: self.propertyID});
                 }
                 //Add Item Line
                 if(view[0].item.length > 0){
@@ -10068,6 +10071,7 @@
             var st = this.get("obj").status;
             if(st == 3){
                 this.set("haveChangeMeter", true);
+                this.meterDS.filter({field: "property_id", value: this.propertyID});
             }else{
                 this.set("haveChangeMeter", false);
                 this.get("obj").set("change_meter_id", "");
