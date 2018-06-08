@@ -4669,39 +4669,37 @@
             duedate.setDate(duedate.getDate() + 30);
 
             this.dataSource.insert(0, {
+                transaction_template_id: 10,
                 contact_id          : "",//Customer
-                transaction_template_id : 3,
-                discount_account_id : 0,
-                payment_term_id     : 0,
                 payment_method_id   : 0,
                 reference_id        : "",
                 recurring_id        : "",
+                account_id          : 1,
+                discount_account_id : 0,
                 job_id              : 0,
                 user_id             : this.get("user_id"),
                 employee_id         : "",//Sale Rep
-                type                : "Commercial_Invoice",//Required
+                type                : "Cash_Sale",//Required
                 number              : "",
                 sub_total           : 0,
                 discount            : 0,
                 tax                 : 0,
-                deposit             : 0,
                 amount              : 0,
+                deposit             : 0,
                 remaining           : 0,
                 credit_allowed      : 0,
-                rate                : 1,//Required
-                locale              : banhji.locale,//Required
-                issued_date         : new Date(),//Required
-                due_date            : duedate,
+                credit              : 0,
+                check_no            : "",
+                rate                : 1,
+                locale              : banhji.locale,
+                issued_date         : new Date(),
                 bill_to             : "",
                 ship_to             : "",
                 memo                : "",
                 memo2               : "",
-                note                : "",
                 status              : 0,
-                progress            : "",
-                references          : [],
                 segments            : [],
-                is_journal          : 1,//Required
+                is_journal          : 1,
                 //Recurring
                 recurring_name      : "",
                 start_date          : new Date(),
@@ -4713,18 +4711,17 @@
                 month               : 0,
                 is_recurring        : 0,
 
-                contact             : { id:"", name:"" }
-            });                 
+                contact             : { id:"", name:"" },
+                references          : []
+            });                
             
             var obj = this.dataSource.at(0);
             this.set("obj", obj);
             this.setRate();
             this.generateNumber();
 
-            //Default rows
-            // for (var i = 0; i < banhji.source.defaultLines; i++) {
-            //     this.addRow();
-            // }
+            this.receipCurrencyDS.data([]);
+            this.receipChangeDS.data([]);
         },
         addRow        : function(e){
             var obj = this.get("obj");
@@ -6290,6 +6287,260 @@
                 this.receipChangeDS.data()[0].set("amount", AMOUNT + totalChangeMoney);
             }
         },
+        objSync             : function(){
+            var dfd = $.Deferred();
+
+            this.dataSource.sync();
+            this.dataSource.bind("requestEnd", function(e){
+                if(e.response){
+                    dfd.resolve(e.response.results);
+                }
+            });
+            this.dataSource.bind("error", function(e){
+                dfd.reject(e.errorThrown);
+            });
+
+            return dfd;
+        },
+        saveCashSale        : function(){
+            var self = this, obj = this.get("obj"), segments = [];
+
+            obj.set("issued_date", kendo.toString(new Date(this.get("dateSelected")), "s"));
+            obj.set("due_date", kendo.toString(new Date(obj.due_date), "yyyy-MM-dd"));
+
+            //Warning over credit allowed
+            if(obj.credit_limit>0 && obj.amount>obj.credit_allowed){
+                alert("Over credit allowed!");
+            }
+
+            this.removeEmptyRow();
+
+            //Segment
+            $.each(this.segmentItemDS.data(), function(index, value){
+                segments.push(value.id);
+            });
+            obj.set("segments", segments);
+
+            //Save Draft
+            if(this.get("saveDraft")){
+                obj.set("status", 4); //In progress
+                obj.set("progress", "Draft");
+                obj.set("is_journal", 0);//No Journal
+            }
+
+            //Recurring
+            if(this.get("saveRecurring")){
+                this.set("saveRecurring", false);
+
+                obj.set("number", "");
+                obj.set("is_recurring", 1);
+            }
+
+            //Edit Mode
+            if(obj.isNew()==false){
+                //Use draft
+                if(obj.status==4){
+                    obj.set("status", 0);//Open
+                    obj.set("progress", "");
+                    obj.set("is_journal", 1);//Add Journal
+                }
+            }
+
+            //Save Obj
+            this.objSync()
+            .then(function(data){ //Success
+                if(self.get("isEdit")==false){
+                    //Item line
+                    $.each(self.lineDS.data(), function(index, value){
+                        value.set("transaction_id", data[0].id);
+                    });
+
+                    //Assembly Item line
+                    $.each(self.assemblyLineDS.data(), function(index, value){
+                        value.set("transaction_id", data[0].id);
+                    });
+
+                    //Attachment
+                    $.each(self.attachmentDS.data(), function(index, value){
+                        value.set("transaction_id", data[0].id);
+                    });
+                }
+
+                //Journal
+                if(data[0].is_recurring==0 && data[0].is_journal==1){
+                    self.addJournal(data[0].id);
+                    self.saveDeposit(data[0].id);
+                }
+
+                self.lineDS.sync();
+                self.assemblyLineDS.sync();
+                self.receipChangeDS.sync();
+                self.receipCurrencyDS.sync();
+                self.uploadFile();
+
+                return data;
+            }, function(reason) { //Error
+                $("#ntf1").data("kendoNotification").error(reason);
+            }).then(function(result){
+                self.addEmpty();
+                $("#ntf1").data("kendoNotification").success(banhji.source.successMessage);
+
+            });
+        },
+    });
+    banhji.printBill = kendo.observable({
+        lang: langVM,
+        dataSource: [],
+        amountperson: 0,
+        company: banhji.institute,
+        pageLoad: function() {
+            if (this.dataSource.length <= 0) {
+                banhji.router.navigate('/');
+            }
+            var self = this;
+            var TempForm = $("#invoiceForm").html();
+            $("#invoiceContent").kendoListView({
+                dataSource: this.dataSource,
+                template: kendo.template(TempForm)
+            });
+            this.barcod("do");
+        },
+        barcod: function(re) {
+            var view = this.dataSource;
+            for (var i = 0; i < view.length; i++) {
+                var d = view[i];
+                if (re == "reset") {
+                    $("#secondwnumber" + d.id).css("height", "0px").data("kendoBarcode").resize();
+                    $("#footwnumber" + d.id).css("height", "0px").data("kendoBarcode").resize();
+                } else {
+                    $("#secondwnumber" + d.id).kendoBarcode({
+                        renderAs: "svg",
+                        value: d.number,
+                        type: "code128",
+                        width: 350,
+                        height: 40,
+                        text: {
+                            visible: false
+                        }
+                    });
+                    $(".secondwnumber" + d.id).kendoBarcode({
+                        renderAs: "svg",
+                        value: d.number,
+                        type: "code128",
+                        width: 350,
+                        height: 40,
+                        text: {
+                            visible: false
+                        }
+                    });
+                    $("#footwnumber" + d.id).kendoBarcode({
+                        renderAs: "svg",
+                        value: d.number,
+                        type: "code128",
+                        width: 450,
+                        height: 40,
+                        text: {
+                            visible: false
+                        }
+                    });
+                }
+            }
+        },
+        printGrid       : function(){
+            var self = this, Win, pHeight, pWidth, ts;
+            Win = window.open('', '', 'width=1048, height=900');
+            pHeight = "210mm";
+            pWidth = "150mm";
+            var gridElement = $('#grid'),
+                printableContent = '',
+                win = Win,
+                doc = win.document.open();
+            var htmlStart =
+                    '<!DOCTYPE html>' +
+                    '<html>' +
+                    '<head>' +
+                    '<meta charset="utf-8" />' +
+                    '<title></title>' +
+                    '<link rel="stylesheet" href="<?php echo base_url(); ?>resources/js/kendoui/styles/kendo.bootstrap.min.css">'+
+                    '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/bootstrap.css">'+
+                    '<link href="<?php echo base_url(); ?>assets/css/water/water.css" rel="stylesheet" />'+
+                    '<link href="<?php echo base_url(); ?>assets/css/offline/offline.css" rel="stylesheet" />'+
+                    '<link href="<?php echo base_url(); ?>assets/css/water/winvoice-print.css" rel="stylesheet" />'+
+                    '<link href="<?php echo base_url(); ?>assets/kendo/styles/kendo.common.min.css" rel="stylesheet" />'+
+                    '<link href="<?php echo base_url(); ?>assets/spa/wellnez.css" rel="stylesheet" />'+
+                    '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">'+
+                    '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
+                    '<link href="https://fonts.googleapis.com/css?family=Preahvihear" rel="stylesheet">'+
+                    '<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Battambang&amp;subset=khmer" media="all">'+
+                    '<style type="text/css" media="print">' +
+                        '@page { size: portrait; margin:0.05cm;' +
+                            
+                        '} '+
+                        '@media print {' +
+                            'html, body {' +
+                            '}' +
+                            '.main-color {' +
+                                '-webkit-print-color-adjust:exact; ' +
+                            '} ' +
+                        '}' +
+                        '* {' +
+                            '-webkit-print-color-adjust:exact; ' +
+                        '} ' +
+                        '.inv1 .light-blue-td { ' +
+                            'background-color: #c6d9f1!important;' +
+                            'text-align: left;' +
+                            'padding-left: 5px;' +
+                            '-webkit-print-color-adjust:exact; ' +
+                        '}' +
+                        '.logoP{ max-height 50px;max-width100px}' +
+                        '.inv1 thead tr {'+
+                            'background-color: rgb(242, 242, 242)!important;'+
+                            '-webkit-print-color-adjust:exact; ' +
+                        '}'+
+                        '.pcg .mid-title div {}' +
+                        '.pcg .mid-header {' +
+                            'background-color: #dce6f2!important; ' +
+                            '-webkit-print-color-adjust:exact; ' +
+                        '}'+
+                        '.winvoice-print table thead .darkbblue, .winvoice-print table tbody td.darkbblue { ' +
+                            'background-color: #355176!important;' +
+                            'color: #fff!important;' +
+                            '-webkit-print-color-adjust:exact; ' +
+                        '}' +
+                        '.winvoice-print table td.greyy {' +
+                        'background-color: #ccc!important;-webkit-print-color-adjust:exact;' +
+                        '}' +
+                        '.inv1 span.total-amount { ' +
+                            'color:#fff!important;' +
+                        '}</style>' +
+                    '</head>' + 
+                    '<body><div class="row-fluid" ><div id="invoicecontent" class="k-content">';
+            var htmlEnd =
+                    '</div></div></body>' +
+                    '</html>';
+            printableContent = $('#invoiceContent').html();
+            doc.write(htmlStart + printableContent + htmlEnd);
+            doc.close();
+            setTimeout(function(){
+                win.print();    
+                // win.close();
+            },1000);
+        },
+        hideFrameInvoice: function(e) {
+            var printBtn = e.target;
+            if (printBtn.checked) {
+                $(".hiddenPrint").css("visibility", "hidden");
+            } else {
+                $(".hiddenPrint").css("visibility", "visible");
+            }
+        },
+        cancel: function() {
+            this.dataSource = [];
+            this.barcod("reset");
+            var listview = $("#invoiceContent").data("kendoListView");
+            listview.refresh();
+            banhji.router.navigate("/check_out");
+        }
     });
     banhji.transactions = kendo.observable({
         lang                : langVM,
@@ -18251,6 +18502,9 @@
         checkOut: new kendo.View("#checkOut", {model: banhji.checkOut}),
         transactions: new kendo.View("#transactions", {model: banhji.transactions}),
         customers: new kendo.View("#customers", {model: banhji.customers}),
+        printBill: new kendo.Layout("#printBill", {
+            model: banhji.printBill
+        }),
     };
     /* views and layout */
     banhji.router = new kendo.Router({
@@ -19674,7 +19928,11 @@
             vm.pageLoad();
         }
     });
-
+    banhji.router.route('/print_bill', function() {
+        var blank = new kendo.View('#blank-tmpl');
+        banhji.view.layout.showIn('#content', banhji.view.printBill);
+        banhji.printBill.pageLoad();
+    });
     //Router Start 
     $(function() {
         banhji.router.start();

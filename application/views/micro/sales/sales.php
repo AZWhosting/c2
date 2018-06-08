@@ -327,16 +327,16 @@
 						<div id="posProductList" class="box-generic-noborder table-responsive marginBottom" style="min-height: 140px!important; height: 230px; padding-bottom: 0;">
 							<!-- Item List -->
 						    <div data-role="grid" class="costom-grid table color-table dark-table"
-						    	data-column-menu="true"
-			    	 			data-reorderable="true"
-				    	 		data-scrollable="false"
-				    	 		data-resizable="true"
-				    	 		data-editable="true"
-				                data-columns="[
-								    { 
+						    	 data-column-menu="true"
+						    	 data-reorderable="true"
+						    	 data-scrollable="false"
+						    	 data-resizable="true"
+						    	 data-editable="true"
+				                 data-columns="[
+								    {
 								    	title:'NO',
 								    	width: '50px',
-								    	attributes: { style: 'text-align: center;' }, 
+								    	attributes: { style: 'text-align: center;' },
 								        template: function (dataItem) {
 								        	var rowIndex = banhji.checkOut.lineDS.indexOf(dataItem)+1;
 								        	return '<i class=icon-trash data-bind=click:removeRow></i>' + ' ' + rowIndex;
@@ -344,23 +344,49 @@
 								    },
 				                 	{ 
 				                 		field: 'item', 
-				                 		title: 'SERVICES', 
-				                 		editable: 'false',
-				                 		editor: itemEditor, template: '#=item.name#', width: '170px' 
+				                 		title: 'PRODUCTS/SERVICES', 
+				                 		editor: itemEditor, 
+				                 		template: '#=item.name#', width: '170px' 
 				                 	},
-		                            { 
-		                            	field: 'item_price', 
-		                            	title: 'UOM', 
-		                            	editor: measurementEditor, 
-		                            	template: '#=item_price?item_price.measurement:banhji.emptyString#', 
-		                            	width: '80px' 
+		                            {
+									    field: 'quantity',
+									    title: 'QTY',
+									    format: '{0:n}',
+									    editor: numberTextboxEditor,
+									    width: '120px',
+									    attributes: { style: 'text-align: right;' }
+									},
+		                            {
+		                            	field: 'item_price',
+		                            	title: 'UOM',
+		                            	editor: measurementEditor,
+		                            	template: '#=item_price?item_price.measurement:banhji.emptyString#',
+		                            	width: '80px'
 		                            },
 		                            {
 									    field: 'price',
 									    title: 'PRICE',
+									    format: '{0:n}',
+									    editor: numberTextboxEditor,
+									    width: '120px',
+									    hidden: true,
+									    attributes: { style: 'text-align: right;' }
+									},
+									{
+									    field: 'discount',
+									    title: 'DISCOUNT VALUE',
 									    hidden: true,
 									    format: '{0:n}',
 									    editor: numberTextboxEditor,
+									    width: '120px',
+									    attributes: { style: 'text-align: right;' }
+									},
+									{
+									    field: 'discount_percentage',
+									    title: 'DISCOUNT %',
+									    hidden: true,
+									    format: '{0:p}',
+									    editor: discountEditor,
 									    width: '120px',
 									    attributes: { style: 'text-align: right;' }
 									},
@@ -369,13 +395,12 @@
 		                            	title:'AMOUNT', 
 		                            	format: '{0:n}', 
 		                            	editable: 'false', 
-		                            	attributes: { style: 'text-align: right;' }, width: '120px' 
-		                            },
+		                            	attributes: { style: 'text-align: right;' }, width: '120px' },
 		                            { 
 		                            	field: 'tax_item', 
-		                            	title:'TAX',
+		                            	title:'TAX', 
 		                            	hidden: true,
-		                            	editor: taxForSaleEditor,
+		                            	editor: taxForSaleEditor, 
 		                            	template: '#=tax_item.name#', width: '90px' 
 		                            }
 		                         ]"
@@ -438,13 +463,182 @@
 				        		data-bind="source: receipChangeDS">
 				        	</tbody>
 					    </table>
-						<a class="btn waves-effect waves-light btn-block btn-info" data-bind=""><span data-bind="">Pay</span></a>
+						<a class="btn waves-effect waves-light btn-block btn-info" data-bind=""><span data-bind="click: saveCashSale">Pay</span></a>
 					</div>
 				</div>
 			</div>
 			
 		</div>
 	</div>
+</script>
+<!-- Invoice Form -->
+<script id="printBill" type="text/x-kendo-template">
+	<div class="container">
+		<div class="row-fluid">
+			<div class="background">
+				<div class="row-fluid">
+					<div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 100%;margin-top: -15px;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
+						<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
+					</div>
+					<div id="example" class="k-content">
+						<div style="overflow: hidden;position: relative;padding: 15px;">
+							<div style="clear:both;position: relative;">
+								<div class="hidden-print pull-right">
+						    		<span class="glyphicons no-js remove_2" 
+										data-bind="click: cancel"><i></i></span>
+								</div>
+							</div>
+
+							<span id="savePrint" class="btn btn-icon btn-primary glyphicons print" data-bind="click: printGrid" style="width: 120px; margin-bottom: 15px; float: none; clear: both;"><i></i><span data-bind="text: lang.lang.save_pdf">Print</span></span>
+						</div>
+						<div class="clear"></div>
+
+						<div id="invoiceContent" style="margin-bottom: 15px;"></div>
+
+						<!-- Form actions -->
+						<div class="box-generic bg-action-button" align="right">
+							<span id="notification"></span>
+							<span class="btn-btn" data-bind="click: cancel" ><span data-bind="text: lang.lang.cancel">Cancel </span></span>	
+							<span id="savePrint" class="btn-btn" data-bind="click: printGrid"><span>Print</span></span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="invoiceForm" type="text/x-kendo-tmpl">	
+  	<style>
+		body {
+		    color: \#333;
+		    font-family: "Open Sans", 'Battambang';
+		    font-size: 12px;
+		    background: \#fff;
+		}
+		*{
+		  margin: 0 auto;
+		  padding: 0;
+		  -webkit-print-color-adjust:exact;
+		  font-size: 12px;
+		  color: \#000;
+		}
+		.clear{
+			clear: both;
+		}
+		table td {
+			padding: 5px;
+		}
+	</style>
+	<div class="inv1" style="width: 100%; background-color: \#fff!important; position: relative; overflow: hidden;padding-top: 40px;page-break-after: always;">
+    	<div class="head" style="width: 90%;">
+        	<div class="logo" style="width: 20%; float: left;">
+            	<img class="logoP" style="width: 100%;" src="#: banhji.institute.logo.url#" alt="#: banhji.institute.name#" title="#: banhji.institute.name#" />
+            </div>
+            <div class="cover-name-company" style="margin-left: 20px;width: 72%;float: left;">
+            	<h3 style="float: left;font-size: 20px; font-family: 'Preahvihear', 'Roboto Slab' !important;" >#: banhji.institute.name#</h3>
+                <div class="clear" style="float: left;">
+                	<p style="float: left; text-align: left;font-size: 14px;margin: 0;">អាស័យ​ដ្ឋាន Address: <span >#: banhji.institute.address#</span></p>
+                    <p style="float: left;width: 100%">ទូរស័ព្ទលេខ HP: <span >#: banhji.institute.telephone# </span> <br/> Email: <span >#: banhji.institute.email#</span></p>
+                </div>
+            </div>
+        </div>
+        <div class="content" style="padding: 1% 5%; position: relative; clear: both; overflow: hidden;">
+        	<div style="overflow: hidden; padding:10px 0; background: \#001F5F!important;-webkit-print-color-adjust:exact; color: \#fff; margin-bottom: 15px;">
+        		<div class="span5" style="width: 41.66666667%; float: left;">
+        			<h1 style="float: left; color: \#fff!important;margin-top: 5px;padding-left: 30px; text-align: left;text-transform: uppercase;font-family: 'Preahvihear', 'Roboto Slab'!important;font-size: 23px;">វិក្កយបត្រ Invoice</h1>
+        		</div>
+        		<div class="span6" style="float: right; width: 51%;">
+        			<table style="float: left; width: 100%;margin-top: 10px;">
+        				<tr>
+        					<td style="border:0;text-align: left; width: 40%;text-transform: uppercase;color: \#fff!important;">លេខវិក្កយបត្រ (Invoice N0.) :</td>
+        					<td style="border:0;text-align: left;font-weight: bold;color: \#fff!important;">#: number#</td>
+        				</tr>
+        				<tr>
+        					<td style="border:0;text-align: left; text-transform: uppercase;color: \#fff!important;">កាលបរិច្ឆេទ (Date) :</td>
+        					<td style="border:0;text-align: left;font-weight: bold;color: \#fff!important;">#= kendo.toString(new Date(issued_date), "F")#</td>
+        				</tr>
+        			</table>
+        		</div>        		
+        	</div>
+        	<div class="span12 pcg2" style="margin-bottom: 15px;padding: 0;">
+        		<div class="span6" style="padding-right: 10px; width: 48%; float: left;padding: 0;">
+        			<table style="float: left; width: 100%; border: 1px solid \#000;border-collapse: collapse; margin-bottom: 0px;">
+        				<tr>
+        					<td style="padding: 5px; border: 1px solid \#000; text-align: left; width: 35%; background: \#F1F1F1!important;">ឈ្មោះអតិថិជន (Customer Name) </td>
+        					<td style="padding: 5px; border: 1px solid \#000; text-align: left;">#: contact.name#</td>
+        				</tr>
+        				<tr>
+        					<td style="padding: 5px; border: 1px solid \#000; text-align: left; width: 35%; background: \#F1F1F1!important;">លេខបន្ទប់ (Room No.) :</td>
+        					<td style="padding: 5px; border: 1px solid \#000; text-align: left;">#: room_number#</td>
+        				</tr>
+        			</table>
+        		</div>
+        		<div class="span6" style=" width: 51%; padding-left: 0; float: right;padding: 0;">
+        			<table style="float: left; width: 100%; border: 1px solid \#000; border-collapse: collapse;">
+        				<tr>
+        					<td style="padding: 5px; border: 1px solid \#000; text-align: left; width: 35%; background: \#F1F1F1!important;">អ្នកគិតលុយ (Cashier) :</td>
+        					<td style="padding: 5px; border: 1px solid \#000; text-align: left;">#: cashier_name#</td>
+        				</tr>
+        				<tr>
+        					<td style="padding: 5px; border: 1px solid \#000; text-align: left; width: 35%; background: \#F1F1F1!important;">បុគ្គលិក (Staff) :</td>
+        					<td style="padding: 5px; border: 1px solid \#000; text-align: left;" >#= employee_name#</td>
+        				</tr>
+        			</table>
+        		</div>
+        	</div>
+        	<div class="clear inv2" style="margin-bottom:20px;" > 
+            	<table cellpadding="0" cellspacing="0" border="1" style="width:100%;">
+                	<thead>
+                        <tr class="main-color" style="height: 45px;">
+                            <th style="width: 8%;text-align: center;background: \#F1F1F1!important; color: \#333!important;">ល.រ<br />N<sup>o</sup></th>
+                            <th style="text-align: center;background: \#F1F1F1!important; color: \#333!important;">បរិយាយមុខទំនិញ<br />Description</th>
+                            <th style="width: 12%;text-align: center;background: \#F1F1F1!important; color: \#333!important;">បរិមាណ<br />QTY</th>
+                            <th style="text-align: center;background: \#F1F1F1!important; color: \#333!important;">ឯកតា​<br />UOM</th>
+                            <th style="text-align: center;background: \#F1F1F1!important; color: \#333!important;">ថ្លៃឯកតា​<br />Unit Price</th>
+                            <th style="width: 20%;text-align: center;background: \#F1F1F1!important; color: \#333!important;">តម្លៃ<br> Amount</th>
+                        </tr>
+                    </thead>
+					<tbody style="margin-top: 2px" id="formListView">
+						#$.each(items, function(i,v){#
+							<tr>
+								<td align="center">#: i+ 1#</td>
+								<td>#: v.item.name#</td>
+								<td align="center"><strong>#: v.quantity #</strong></td>
+								<td align="center"><strong>#: v.measurement.measurement#</strong></td>
+								<td align="right">#= kendo.toString(v.price, v.locale=="km-KH"?"c0":"c", v.locale)#</td>
+								<td align="right"><strong>#= kendo.toString(v.amount, v.locale=="km-KH"?"c0":"c", v.locale)#</strong></td>
+							</tr>
+						#})#
+					</tbody>
+                    <tfoot>
+                    	<tr>
+							<td style="height:40px!important;"></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td colspan="5" style="padding-right: 10px;text-align: right;">សរុប (បូកបញ្ចូលទាំងអាករ) GRAND TOTAL (VAT INCLUSIVE)</td>
+							<td style="border: 1px solid;text-align: right"><strong>#= kendo.toString(amount, locale=="km-KH"?"c0":"c", locale)#</strong></td>
+						</tr>
+						#if(banhji.printBill.amountperson > 0){#
+							<tr>
+								<td colspan="5" style="padding-right: 10px;text-align: right;">ទឹកប្រាក់ត្រូវបង់</td>
+								<td style="border: 1px solid;text-align: right"><strong>#= kendo.toString(banhji.printBill.amountperson, locale=="km-KH"?"c0":"c", locale)#</strong></td>
+							</tr>
+						#}#
+                    </tfoot>
+                </table>
+            </div>
+            <div class="clear">
+            	<div class="span6">
+            		<span class="secondwnumber#= id#" style="margin-left: -14px; float: left;"></span>
+            	</div>
+            </div>
+        </div>
+    </div>
 </script>
 <script id="cash-currency-template" type="text/x-kendo-template">
 	<tr>

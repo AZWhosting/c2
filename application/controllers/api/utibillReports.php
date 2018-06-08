@@ -1079,7 +1079,7 @@ class UtibillReports extends REST_Controller {
 						}
 					}
 					$remf = floatval($rem->amount) + $fineAmount;
-					$amountOwed += $remf;
+					$total += $remf;
 					if($rem->status == 2) {
 						$qu = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 						$qu->where("type", "Cash_Receipt");
@@ -1090,7 +1090,7 @@ class UtibillReports extends REST_Controller {
 					}
 				}
 				$amount = $value->amount;
-				$total = $amount + $amountOwed;
+				$amountOwed = $total - $amount;
 					$data["results"][] = array(
 						"id" 				=> $value->id,
 						"number"			=> $value->contact_abbr."".$value->contact_number,
