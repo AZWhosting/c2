@@ -212,7 +212,7 @@
 					<div class="col-md-6">
 						<div class="widget-search marginBottom">
 							<div class="overflow-hidden" style="width: 100%;">
-								<input type="search" placeholder="Barcode..." data-bind="value: searchText" style="width: 100%;" />
+								<input type="search" placeholder="Barcode..." data-bind="value: barcode, events: {change: barcodeChange}" style="width: 100%;" />
 							</div>
 							
 						</div>
@@ -227,9 +227,37 @@
 					</div>
 				</div>
 				<div class="row hidden-sm-down">
-					<div class="col-md-12">
-						<div class="demo-section k-content wide span12">
+					<div class="col-md-12" style="position: relative;overflow: hidden;">
+						<div id="loading" class="preloader" style="display: none;position: absolute;background: rgba(255,255,255,.6);">
+					        <div class="loader">
+					            <div class="loader__figure"></div>
+					        </div>
+					    </div>
+						<div data-bind="invisible: haveItems" class="demo-section k-content wide span12">
 							<p style="color: #fff; margin-bottom: 5px;" >Category</p>
+							<div class="demo-section k-content wide">
+								<div 
+									id="productListView"
+									data-role="listview"
+									data-template="category-list-view-template"
+									data-auto-bind="true"
+									data-bind="source: categoryDS">
+								</div>
+								<div id="pager" class="k-pager-wrap"
+							    	 data-role="pager"
+							    	 data-auto-bind="true"
+						             data-bind="source: categoryDS">
+						        </div>
+							</div>
+						</div>
+						<div data-bind="visible: haveItems" class="demo-section k-content wide span12">
+							<p style="color: #fff; margin-bottom: 5px;" >
+								<span style="float: left; width: 50%;">Items</span>
+								<span class="textAlignRight" data-bind="click: backCategory" style="float: right; width: 50%; cursor: pointer;">
+									<i class=" ti-control-backward"></i>
+									back
+								</span>
+							</p>
 							<div class="demo-section k-content wide">
 								<div 
 									id="productListView"
@@ -346,7 +374,7 @@
 		                            { 
 		                            	field: 'tax_item', 
 		                            	title:'TAX',
-		                            	hidden: 'true',
+		                            	hidden: true,
 		                            	editor: taxForSaleEditor,
 		                            	template: '#=tax_item.name#', width: '90px' 
 		                            }
@@ -381,15 +409,78 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-md-6">						
+					<div class="col-md-6">
+						<table class="table color-table dark-table">
+					        <thead>
+					            <tr>
+					            	<th style="vertical-align: top;" data-bind="text: lang.lang.currency"></th>
+					            	<th style="vertical-align: top;" data-bind="text: lang.lang.amount"></th>
+					            </tr>
+					        </thead>
+					        <tbody data-role="listview" 
+				        		data-template="cash-currency-template" 
+				        		data-auto-bind="false"
+				        		data-bind="source: receipCurrencyDS">
+				        	</tbody>
+					    </table>				
 					</div>
 					<div class="col-md-6">
+					    <table class="table color-table dark-table">
+					        <thead>
+					            <tr>
+					            	<th style="vertical-align: top;" data-bind="text: lang.lang.currency"></th>
+					            	<th style="vertical-align: top;" data-bind="text: lang.lang.amount"></th>
+					            </tr>
+					        </thead>
+					        <tbody data-role="listview" 
+				        		data-template="change-currency-receipt-template" 
+				        		data-auto-bind="false"
+				        		data-bind="source: receipChangeDS">
+				        	</tbody>
+					    </table>
 						<a class="btn waves-effect waves-light btn-block btn-info" data-bind=""><span data-bind="">Pay</span></a>
 					</div>
 				</div>
 			</div>
 			
 		</div>
+	</div>
+</script>
+<script id="cash-currency-template" type="text/x-kendo-template">
+	<tr>
+		<td data-bind="text: currency">
+		</td>
+		<td>
+			<input data-role="numerictextbox"
+               data-format="n"
+               data-spinners="false"
+               data-min="0"
+               data-bind="value: amount,
+                          events: { change: checkChange }"
+               style="width: 90%; text-align: right;">
+		</td>
+	</tr>
+</script>
+<script id="change-currency-receipt-template" type="text/x-kendo-template">
+	<tr>
+		<td data-bind="text: currency">
+		</td>
+		<td>
+			<input data-role="numerictextbox"
+               data-format="n"
+               data-spinners="false"
+               data-min="0"
+               data-bind="value: amount,
+                          events: { change: checkChangeMoney }"
+               style="width: 90%; text-align: right;">
+		</td>
+	</tr>
+</script>
+<script id="category-list-view-template" type="text/x-kendo-template">
+	<div class="product" data-bind="click:searchItemByCategory" style="text-align: center;">
+		<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/no_image.jpg" />
+		<h3>#:name#</h3>
+		<p>#=abbr#</p>
 	</div>
 </script>
 <script id="item-list-view-template" type="text/x-kendo-template">
@@ -2652,7 +2743,9 @@
 										<div class="box-generic-noborder">
 											<ul class="nav nav-tabs" role="tablist">
 			                                    <li class="nav-item"> <a class="nav-link active show" data-toggle="tab" href="#functionSetting" role="tab" aria-selected="true"><span><i class="ti-settings"></i></span></a> </li>
+			                                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#functionLink" role="tab" aria-selected="false"><span><i class="ti-link"></i></span></a></li>
 			                                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#functionPaperclip" role="tab" aria-selected="false"><span><i class="icon-paper-clip"></i></span></a></li>
+			                                    
 			                                </ul>
 			                                <div class="tab-content tabcontent-border">
 			                                	<!--Tab Setting -->
@@ -2723,6 +2816,38 @@
 			                                    </div>
 			                                    <!-- End -->
 
+			                                    <!--Tab -->
+			                                    <div class="tab-pane " id="functionLink" role="tabpanel">
+			                                        <div class="p-10">
+			                                            <div class="row">
+			                                            	<div class="col-md-12 ">
+			                                            		<p class="marginBottom" data-bind="text: lang.lang.reference"></p>
+		                                            			<input class="marginBottom" data-role="dropdownlist"
+										            			   data-item-template="reference-list-tmpl"
+												                   data-auto-bind="false"
+												                   data-value-primitive="true"
+												                   data-filter="startswith"
+												                   data-text-field="number"
+												                   data-value-field="id"
+												                   data-bind="value: reference_id,
+												                              source: referenceDS,
+												                              events: { change: referenceChanges }"
+												                   data-option-label="Add Reference..."
+												                   style="width: 100%;"
+																/>
+
+			                                            		<div class="table-responsive marginTop">
+														            <table class="table color-table dark-table">
+																        <tbody data-template="invoice-reference-template"
+												        		data-bind="source: obj.references"></tbody>
+																    </table>
+																</div>
+			                                            	</div>
+			                                        	</div>
+			                                        </div>
+			                                    </div>
+			                                    <!-- End -->
+
 			                                    <!--Tab Paperclip -->
 			                                    <div class="tab-pane" id="functionPaperclip" role="tabpanel">
 			                                    	<div class="p-10">
@@ -2757,6 +2882,8 @@
 			                                    	</div>  
 			                                    </div>
 			                                    <!-- End -->
+
+			                                    
 			                                </div>
 										</div>
 									</div>						
@@ -3066,7 +3193,7 @@
 			<i class="icon-trash" data-bind="events: { click: referenceRemoveRow }"></i>
 			#=number#
 		</td>
-		<td align="right">
+		<td class="textAlignRight">
 			#if(type=="GDN"){#
 				#=kendo.toString(kendo.parseFloat(amount), "n2")#
 			#}else{#
@@ -3168,6 +3295,7 @@
 									<div class="box-generic-noborder">
 										<ul class="nav nav-tabs" role="tablist">
 		                                    <li class="nav-item"> <a class="nav-link active show" data-toggle="tab" href="#functionSetting" role="tab" aria-selected="true"><span><i class="ti-settings"></i></span></a> </li>
+		                                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#functionLink" role="tab" aria-selected="false"><span><i class="ti-link"></i></span></a></li>
 		                                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#functionPaperclip" role="tab" aria-selected="false"><span><i class="icon-paper-clip"></i></span></a></li>
 		                                </ul>
 		                                <div class="tab-content tabcontent-border">
@@ -3234,6 +3362,38 @@
 		                                        </div>
 		                                    </div>
 		                                    <!-- End -->
+
+		                                    <!--Tab -->
+			                                    <div class="tab-pane " id="functionLink" role="tabpanel">
+			                                        <div class="p-10">
+			                                            <div class="row">
+			                                            	<div class="col-md-12 ">
+			                                            		<p class="marginBottom" data-bind="text: lang.lang.reference"></p>
+		                                            			<input class="marginBottom" data-role="dropdownlist"
+										            			   data-item-template="reference-list-tmpl"
+												                   data-auto-bind="false"
+												                   data-value-primitive="true"
+												                   data-filter="startswith"
+												                   data-text-field="number"
+												                   data-value-field="id"
+												                   data-bind="value: reference_id,
+												                              source: referenceDS,
+												                              events: { change: referenceChanges }"
+												                   data-option-label="Add Reference..."
+												                   style="width: 100%;"
+																/>
+
+			                                            		<div class="table-responsive marginTop">
+														            <table class="table color-table dark-table">
+																        <tbody data-template="invoice-reference-template"
+												        		data-bind="source: obj.references"></tbody>
+																    </table>
+																</div>
+			                                            	</div>
+			                                        	</div>
+			                                        </div>
+			                                    </div>
+			                                    <!-- End -->
 
 		                                    <!--Tab Paperclip -->
 		                                    <div class="tab-pane" id="functionPaperclip" role="tabpanel">

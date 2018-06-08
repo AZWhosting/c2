@@ -18938,6 +18938,381 @@
 		<td style="text-align: right;">#=kendo.toString(amount, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#</td>
 	</tr>
 </script>
+<script id="sale_power" type="text/x-kendo-template">
+	<style>
+		.inv2 table td {
+			padding: 5px;
+			font-size: 12px;
+		}
+		.inv1 th {
+			font-size: 12px;
+		}
+		.inv1 * {
+			font-size: 12px;
+			line-height: 20px;
+		}
+		.inv1 td {
+			font-size: 12px;
+		}
+		.inv1 .cover-signature .singature p {
+			font-size: 12px;
+			font-weight: normal;
+		}
+		text {
+			display: none!important;
+		}
+	</style>
+	<div class="inv1">
+    	<div class="head" style="width: 90%;">
+            <div class="cover-name-company" style="margin-left: 20px;width: 72%;float: left;">
+            	<div class="col-sm-12 row" style="padding:20px 0;padding-top: 0;">
+					<div class="col-xs-12 col-sm-3" >
+						<div class="control-group">	
+							<label ><span data-bind="text: lang.lang.license">License</span></label>
+							<input 
+								data-role="dropdownlist" 
+								style="width: 100%;" 
+								data-option-label="License ..." 
+								data-auto-bind="false" 
+								data-value-primitive="true" 
+								data-text-field="name" 
+								data-value-field="id" 
+								data-bind="
+									value: licenseSelect,
+                  					source: licenseDS,
+                  					events: {change: licenseChange}">
+                  		</div>
+					</div>
+					<div class="col-xs-12 col-sm-1">
+						<div class="control-group">	
+							
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-2">   
+					<label ><span data-bind="text: lang.lang.start">Start Date</span></label>                 
+						<input data-role="datepicker"
+							   class="sdate"
+							   data-format="dd-MM-yyyy"
+					           data-bind="value: sdate,
+					           			  max: edate"
+					           placeholder="From ..." style="width: 100%" >
+					</div>
+					<div class="col-xs-12 col-sm-1">
+						<div class="control-group">	
+							
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-2">
+						<label ><span data-bind="text: lang.lang.end">License</span></label>
+					    <input data-role="datepicker"
+					    	   class="edate"
+					    	   data-format="dd-MM-yyyy"
+					           data-bind="value: edate,
+					                      min: sdate"
+					           placeholder="To ..." style="width: 100%" >
+					</div>
+					<div class="col-xs-12 col-sm-1">
+						<div class="control-group">	
+							
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-2" >
+						<div class="control-group">	
+							<label ><span data-bind="text: lang.lang.search">search</span></label>	
+							<div class="row" style="margin: 0;">					
+								<button type="button" data-role="button" data-bind="click: search" class="k-button" role="button" aria-disabled="false" tabindex="0"><i class="icon-search"></i></button>
+							</div>
+                  		</div>
+					</div>
+					<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" ><i></i> Print</span>
+				</div>
+                
+            </div>
+        </div>
+        <div id="printContent">
+	        <div class="contentPurchasePower" style="page-break-after: always;">
+	        	<div class="clear" style="float: left;">
+	                	<p style="float: left; text-align: left;">អាជ្ញាប័ណ្ណលេខ ៖ <span data-bind="text: number.number"></span></p>
+	                    <p style="float: left;width: 100%">ឈ្មោះអ្នកកាន់អាជ្ញាប័ណ្ណ ៖ <span data-bind="text: company.name"></span></p>
+	                    <p style="float: left;width: 100%">ទិន្នន័យសម្រាប់ខែ ៖ <span data-bind="text: displayDate"></span></p>
+	                </div>
+	        	<div style="overflow: hidden; padding:10px 0; color: #fff; margin-bottom: 15px;">
+	        		<div class="span12">
+	        			<table style="float: left; width: 100%;">
+	        				<tr>
+	        					<h1 style="border:0;text-align: center; width: 100%">តារាងទិញ និងផលិតថាមពលអគ្គិសនី</h1>
+	        				</tr>
+	        				<tr>
+	        					<h1 style="border:0;text-align: center; width: 100%">Table for Purchase and Generation of Electricity</h1>
+	        				</tr>
+	        			</table>
+	        		</div>
+	        	</div>
+	        	<div class="clear inv2" style="margin-bottom:5px;" >
+	            	<table cellpadding="0" cellspacing="0" border="1" style="width:100%;">
+	                	<thead>
+	                        <tr class="main-color" style="height: 45px;" data-bind="style: {backgroundColor: obj.color}">
+	                            <th style="text-align: center;background: #F1F1F1!important; color: #333!important;">លេខរៀង<br />( No )</th>
+	                            <th style="text-align: center;background: #F1F1F1!important; color: #333!important;">បរិយាថាមពល<br />( Description )</th>
+	                            <th style="text-align: center;background: #F1F1F1!important; color: #333!important;">ចំនួនថាមពល<br />( KWh )</th>
+	                            <th style="text-align: center;background: #F1F1F1!important; color: #333!important;">អត្រាថ្លៃ<br />( Rate )</th>
+	                        </tr>
+	                        <tr>
+	                        	<td colspan="4" style="text-align:left;padding-right:10px;font-weight:bold;">ការទិញថាមពល</td>
+	                        </tr>
+	                    </thead>
+						<tbody 
+							data-role="listview"
+	        				data-auto-bind="false"
+			                data-template="purchase_power-template"
+			                data-bind="source: purchaseDatasource" >
+						</tbody>
+	                    <tfoot>
+	                    	<tr >
+								<td style="height:40px!important;"></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+	                    </tfoot>
+	                </table>
+	            </div>
+	        </div>
+	        <div class="contentSalePower" style="page-break-after: always;">
+	        	<div class="clear" style="float: left;">
+	            	<p style="float: left; text-align: left;">អាជ្ញាប័ណ្ណលេខ៖ <span data-bind="text: company.number"></span></p>
+	                <p style="float: left;width: 100%">ឈ្មោះអ្នកកាន់អាជ្ញាប័ណ្ណ៖<span data-bind="text: company.name"></span></p>
+	                <p style="float: left;width: 100%">ទិន្នន័យសម្រាប់ខែ៖ <span data-bind="text: displayDate"></span></p>
+	            </div>
+	        	<div style="overflow: hidden; padding:10px 0; color: #fff; margin-bottom: 15px;">
+	        		<div class="span12">
+	        			<table style="float: left; width: 100%;">
+	        				<tr>
+	        					<h1 style="border:0;text-align: center; width: 100%">តារាងលក់ថាមពល</h1>
+	        				</tr>
+	        				<tr>
+	        					<h1 style="border:0;text-align: center; width: 100%">Table for Total Sale</h1>
+	        				</tr>
+	        			</table>
+	        		</div>
+	        	</div>
+	        	<div class="clear inv2" style="margin-bottom:5px;" >
+	            	<table cellpadding="0" cellspacing="0" border="1" style="width:100%;">
+	                	<thead>
+	                        <tr class="main-color" style="height: 45px;" data-bind="style: {backgroundColor: obj.color}">
+	                            <th style="text-align: center;background: #F1F1F1!important; color: #333!important;">ប្រភេទនៃកាលក់<br />( Type of Sale )	</th>
+	                            <th style="text-align: center;background: #F1F1F1!important; color: #333!important;">ចំនួនអតិថិជន<br />( No. of Consumer )</th>
+	                            <th style="text-align: center;background: #F1F1F1!important; color: #333!important;">ចំនួនថាមពលលក់<br />( KWh sold )</th>
+	                            <th style="text-align: center;background: #F1F1F1!important; color: #333!important;">អត្រាថ្លៃ<br />( Tariff of Sale )</th>
+	                        </tr>
+	                        <tr>
+	                        	<td colspan="4" style="padding-left:30px;font-weight:bold;">I . ថាមពលលក់ឲ្យអតិថិជនអ្នកកាន់អាជ្ញាបណ្ណ</td>
+	                        </tr>
+	                        <tr>
+	                        	<td  style="padding-left: 100px !important; font-weight:bold;">1 . ថាមពលលក់លើ MV នាឡិកាស្ទង់​ MV</td>
+	                        	<td style=" text-align: center" data-bind="text: licenseMVCount"></td>
+	                        	<td style=" text-align: right" data-bind="text: licenseMVUsage"></td>
+	                        	<td style=" text-align: right" data-bind="text: costLicense"></td>
+	                        </tr>
+	                        <tr>
+	                        	<td class="no" style="padding-right:10px;font-weight:bold;">2 . ថាមពលលក់លើ MV នាឡិកាស្ទង់​ LV ក្រោមនៃត្រង់ស្វូ ( វិនិយោគដោយអ្នកទិញ )</td>                        	
+	                        	<td></td>
+	                        	<td></td>
+	                        	<td></td>
+	                        </tr>
+	                        <tr>
+	                        	<td  class="no" style="padding-right:10px;font-weight:bold;">3​ . ថាមពលលក់លើ MV នាឡិកាស្ទង់​ LV ក្រោមនៃត្រង់ស្វូ ( វិនិយោគដោយអ្នកលក់ )</td>
+	                        	<td></td>
+	                        	<td></td>
+	                        	<td></td>
+	                        </tr>
+	                        <tr>
+	                        	<td colspan="4" style="padding-right:10px;font-weight:bold;">II . ថាមពលលក់ឲ្យអតិថិជនដែលពុំទទ្ួលថវិកា ឧបត្ថម្ភធន (​ ឧស្សាហកម្ម ពាណិជ្ជកម្ម អាជីវកម្ម )</td>
+	                        </tr>
+	                        <tr>
+	                        	<td class="no" style="padding-right:10px;font-weight:bold;">          1 . ថាមពលលក់លើ MV នាឡិកាស្ទង់​ MV</td>
+	                        	<td style=" text-align: center" data-bind="text: MVtoMVCount"></td>
+	                        	<td style=" text-align: right" data-bind="text: MVtoMVUsage"></td>
+	                        	<td style=" text-align: right" data-bind="text: costCompanyMV"></td>
+	                        </tr>
+	                        <tr>
+	                        	<td class="no" style="padding-right:10px;font-weight:bold;">2 . ថាមពលលក់លើ MV នាឡិកាស្ទង់​ LV ក្រោមនៃត្រង់ស្វូ (​ វិនិយោគដោយអ្នកទិញ )</td>
+	                        	<td style=" text-align: center" data-bind="text: MVtoLVCount"></td>
+	                        	<td style=" text-align: right" data-bind="text: MVtoLVUsage"></td>
+	                        	<td style=" text-align: right" data-bind="text: costCompanyLV"></td>
+	                        </tr>
+	                        <tr>
+	                        	<td class="no" style="padding-right:10px;font-weight:bold;">3​ . ថាមពលលក់លើ MV នាឡិកាស្ទង់​ LV ក្រោមនៃត្រង់ស្វូ ( វិនិយោគដោយអ្នកលក់ )</td>
+	                        	<td></td>
+	                        	<td></td>
+	                        	<td></td>
+	                        </tr>
+	                        <tr>
+	                        	<td class="no" style="padding-right:10px;font-weight:bold;">4 . ថាមពលលក់ឲ្យអតិថិជន អាជីវកម្ម ប្រើចាប់ពី 2001​ kWh/ខែឡើង</td>
+	                        	<td style=" text-align: center" data-bind="text: company2000UpCount"></td>
+	                        	<td style=" text-align: right" data-bind="text: company2000UpUsage"></td>
+	                        	<td style=" text-align: right" data-bind="text: cost50Up"></td>
+	                        </tr>
+	                        <tr>
+	                        	<td colspan="4" style="padding-right:10px;font-weight:bold;">ថាមពលលក់ឲ្យអតិថិជនដែលត្រូវទទ្ួលថវិកា ឧបត្ថម្ភធនប៉ះប៉ូវ (​ លក់លើតង់ស្យុងទាប ភ្ជាប់ពីខ្សែសាធារណះ )</td>
+	                        </tr>
+	                         <tr>
+	                        	<td class="no" style="padding-right:10px;font-weight:bold;">1 . ថាមពលលក់ឲ្យអតិថិជន អាជីវកម្ម ប្រើក្រោម 2001​ kWh/ខែ</td>
+	                        	<td style=" text-align: center" data-bind="text: company2000downCount"></td>
+	                        	<td style=" text-align: right" data-bind="text: company2000downUsage"></td>
+	                        	<td style=" text-align: right" data-bind="text: cost50Up"></td>
+	                        </tr>
+	                         <tr>
+	                        	<td class="no" style="padding-right:10px;font-weight:bold;">2 . ថាមពលលក់ឲ្យអតិថិជនលំនៅដ្ឋាន</td>
+	                        	<td style=" text-align: center" data-bind="text: totalCustomer"></td>
+	                        	<td style=" text-align: right" data-bind="text: usage"></td>
+	                        	<td style=" text-align: right" data-bind="text: cost50Up"></td>
+	                        </tr>
+	                         <tr>
+	                        	<td class="n1" style="padding-right:10px;font-weight:bold;">3 . ថាមពលលក់ឲ្យលំនៅដ្ឋានប្រើ មិនលើសពី 10 kWh/ខែ</td>
+	                        	<td style=" text-align: center" data-bind="text: total10Down"></td>
+	                        	<td style=" text-align: right" data-bind="text: totalUsage10Down"></td>
+	                        	<td style=" text-align: right" data-bind="text: cost10down"></td>
+	                        </tr>
+	                         <tr>
+	                        	<td class="n1" style="padding-right:10px;font-weight:bold;">4 . ថាមពលលក់ឲ្យលំនៅដ្ឋានប្រើ ចាប់ពី 11 ដល់ 50 kWh/ខែ</td>
+	                        	<td style=" text-align: center" data-bind="text: total10Up"></td>
+	                        	<td style=" text-align: right" data-bind="text: totalUsage10Up"></td>
+	                        	<td style=" text-align: right" data-bind="text: cost50down"></td>
+	                        </tr>
+	                         <tr>
+	                        	<td class="n1" style="padding-right:10px;font-weight:bold;">5 . ថាមពលលក់ឲ្យលំនៅដ្ឋានប្រើ ចាប់ពី 51 kWh/ខែ</td>
+	                        	<td style=" text-align: center" data-bind="text: total50Up"></td>
+	                        	<td style=" text-align: right" data-bind="text: totalUsage50Up"></td>
+	                        	<td style=" text-align: right" data-bind="text: cost50Up"></td>
+	                        </tr>
+	                    </thead>
+						<tbody 
+							data-role="listview"
+	        				data-auto-bind="false"
+			                data-bind="source: dataSource" >
+						</tbody>
+	                </table>
+	            </div>
+	        </div>
+	        <div class="contentCalculate" style="page-break-after: always;">
+	        	<div class="clear" style="float: left;">
+	            	<p style="float: left; text-align: left;">អាជ្ញាប័ណ្ណលេខ៖ <span data-bind="text: company.number"></span></p>
+	                <p style="float: left;width: 100%">ឈ្មោះអ្នកកាន់អាជ្ញាប័ណ្ណ៖<span data-bind="text: company.name"></span></p>
+	                <p style="float: left;width: 100%">ទិន្នន័យសម្រាប់ខែ៖ <span data-bind="text: displayDate"></span></p>
+	            </div>
+	        	<div style="overflow: hidden; padding:10px 0; color: #fff; margin-bottom: 15px;">
+	        		<div class="span12">
+	        			<table style="float: left; width: 100%;">
+	        				<tr>
+	        					<h1 style="border:0;text-align: center; width: 100%">តារាងគណនាចំន្ួនប្រាក់ឧបត្ថម្ភ</h1>
+	        				</tr>
+	        				<tr>
+	        					<h1 style="border:0;text-align: center; width: 100%">Table for Calculation of Subsidy Amount</h1>
+	        				</tr>
+	        			</table>
+	        		</div>
+	        	</div>
+	        	<div class="clear inv2" style="margin-bottom:5px;" >
+	            	<table cellpadding="0" cellspacing="0" border="1" style="width:100%;">
+	                	<thead>
+	                        <tr class="main-color" style="height: 45px;" data-bind="style: {backgroundColor: obj.color}">
+	                        	<th style="text-align: center;background: #F1F1F1!important; color: #333!important;"></th>
+	                            <th style="text-align: center;background: #F1F1F1!important; color: #333!important;">ប្រភេទនៃកាលក់<br />( Type of Sale )	</th>
+	                            <th style="text-align: center;background: #F1F1F1!important; color: #333!important;">សរុបចំន្ួនថាមពលលក់<br />( Total Sold kWh )</th>
+	                            <th style="text-align: center;background: #F1F1F1!important; color: #333!important;">អត្រាថ្លៃគោលកំណត់ដោយ អ.អ.ក<br />( Cost based Tariff Approved by EAC )</th>
+	                            <th style="text-align: center;background: #F1F1F1!important; color: #333!important;">អត្រាថ្លៃឧបត្ថម្ភកំណត់ដោយ អ.អ.ក <br />( Subsidizes Tariff of Sale )</th>
+	                            <th style="text-align: center;background: #F1F1F1!important; color: #333!important;">អត្រាថ្លៃឧបត្ថម្ភ <br />( Tariff of Sale )</th>
+	                             <th style="text-align: center;background: #F1F1F1!important; color: #333!important;">ចំនួនទឹកប្រាក់ឧបត្ថម្ភ <br />( Amount of Subsidy )</th>
+	                        </tr>
+	                        <tr>
+	                        	<td  style=" font-weight:bold;">a</td>
+	                        	<td  style=" font-weight:bold;">b</td>
+	                        	<td  style=" font-weight:bold;">c</td>
+	                        	<td  style="font-weight:bold;">d</td>
+	                        	<td  style=" font-weight:bold;">e</td>
+	                        	<td  style="font-weight:bold;">f = d - e</td>
+	                        	<td  style=" font-weight:bold;">g = c * f</td>
+	                        </tr>
+	                        <tr>
+	                        	<td  style=" font-weight:bold;">1</td>
+	                        	<td class="no" style="text-align: left; font-weight:bold;">ថាមពលលក់ឲ្យអតិថិជនដែលត្រូវទទ្ួលថវិកា ឧបត្ថម្ភធនប៉ះប៉ូវ</td>
+	                        	<td style=" text-align: center" data-bind="text: totalUsageSubsidy"></td>
+	                        	<td style=" text-align: center" data-bind="text: costGoverment"></td>
+	                        	<td style=" text-align: center" data-bind="text: cost50Up"></td>
+	                        	<td style=" text-align: center" data-bind="text: tariffSale"></td>
+	                        	<td style=" text-align: right" data-bind="text: totalSubsidy"></td>
+	                        </tr>
+	                    </thead>
+						<tbody 
+							data-role="listview"
+	        				data-auto-bind="false"
+			                data-bind="source: dataSource" >
+						</tbody>
+	                </table>
+	            </br>
+	                <table cellpadding="0" cellspacing="0" border="1" style="width:100%;">
+	                	<thead>
+	                        <tr class="main-color" style="height: 45px;" data-bind="style: {backgroundColor: obj.color}">
+	                        	<th style="text-align: center;background: #F1F1F1!important; color: #333!important;"></th>
+	                            <th style="text-align: center;background: #F1F1F1!important; color: #333!important;">ប្រភេទនៃកាលក់<br />( Type of Sale )	</th>
+	                            <th style="text-align: center;background: #F1F1F1!important; color: #333!important;">ចំន្ួនអតិថិជន<br />( No. of Consumer )</th>
+	                            <th style="text-align: center;background: #F1F1F1!important; color: #333!important;">ចំន្ួនថាមពលលក់<br />( Total Sold kWh )</th>
+	                            <th style="text-align: center;background: #F1F1F1!important; color: #333!important;">អត្រាថ្លៃឧបត្ថម្ភ<br />( Tariff of Sale )</th>
+	                            <th style="text-align: center;background: #F1F1F1!important; color: #333!important;">ចំនួនទឹកប្រាក់ឧបត្ថម្ភបន្ថែម<br />( Amount of Subsidy )</th>
+	                        </tr>
+	                        <tr>
+	                        	<td  style=" font-weight:bold;">a</td>
+	                        	<td  style=" font-weight:bold;">b</td>
+	                        	<td  style=" font-weight:bold;">c</td>
+	                        	<td  style="font-weight:bold;">d</td>
+	                        	<td  style="font-weight:bold;">e</td>
+	                        	<td  style="font-weight:bold;">f = d * e</td>
+	                        </tr>
+	                        <tr>
+	                        	<td  style="important; font-weight:bold;">1</td>
+	                        	<td class="no" style="text-align: left; font-weight:bold;">លក់ឲ្យលំនៅដ្ឋានប្រើ មិនលើសពី 10 kWh/ខែ</td>
+	                        	<td style=" text-align: center" data-bind="text: homeCount10down"></td>
+	                        	<td style=" text-align: center" data-bind="text: homeTotal10down"></td>
+	                        	<td style=" text-align: center" data-bind="text: homeCost10down"></td>
+	                        	<td style=" text-align: right" data-bind="text: totalSubsidy10down"></td>
+	                        </tr>
+	                         <tr>
+	                        	<td  style=" font-weight:bold;">2</td>
+	                        	<td class="no" style="text-align: left; font-weight:bold;">លក់ឲ្យលំនៅដ្ឋានប្រើ ចាប់ពី 11 ដល់ 50 kWh/ខែ</td>
+	                        	<td style=" text-align: center" data-bind="text: homeCount50down"></td>
+	                        	<td style=" text-align: center" data-bind="text: homeTotal50down"></td>
+	                        	<td style=" text-align: center" data-bind="text: homeCost10up"></td>
+	                        	<td style=" text-align: right" data-bind="text: totalSubsidy10up"></td>
+	                        </tr>
+	                         <tr>
+	                        	<td  style="font-weight:bold;">3</td>
+	                        	<td class="no" style="text-align: left; font-weight:bold;">លក់ឲ្យការបូមទឹកធ្វើកសិកម្មម៉ោង09:00យប់ ដល់07:00ព្រឹក</td>
+	                        	<td></td>
+	                        	<td></td>
+	                        	<td></td>
+	                        	<td></td>
+	                        </tr>
+	                    </thead>
+						<tbody 
+							data-role="listview"
+	        				data-auto-bind="false"
+			                data-bind="source: dataSource" >
+						</tbody>
+	                </table>
+	            </div>
+	        </div>
+	    </div>
+    </div>
+</script>
+<script id="purchase_power-template" type="text/x-kendo-template">
+	<tr>
+		<td style="text-align: center;">#=banhji.purchase_power.dataSource.indexOf(banhji.purchase_power.dataSource.get(id)) +1 #</td>
+		<td style="text-align: left;">#=name#</td>
+		<td style="text-align: right;">#=quantity#</td>
+		<td style="text-align: right;">#=kendo.toString(cost, banhji.locale=="km-KH"?"n3":"c", banhji.locale)#</td>
+	</tr>
+</script>
 <script id="importView" type="text/x-kendo-template">
 	<div class="container">
 		<div class="row-fluid">

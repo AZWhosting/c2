@@ -2866,6 +2866,326 @@ class UtibillReports extends REST_Controller {
 		$this->response($data, 200);
 	}
 
+	//Calculate Power
+	function sale_power_get() {
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
+		$data["count"] = 0;
+
+		$obj = new Winvoice_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		
+		//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
+			}
+		}
+		
+		//Filter		
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value['operator'])){
+	    			$obj->{$value['operator']}($value['field'], $value['value']);	    		
+	    		} else {
+	    			$obj->where($value['field'], $value['value']);
+	    		}
+			}
+		}
+
+		//Results
+		$obj->where_related("transaction", "type", "Utility_Invoice");
+		$obj->where_related("transaction", "deleted <>", 1);
+		$obj->where_related("transaction/contact", "contact_type_id", array(11, 13, 14, 15, 16));
+		$obj->include_related("transaction/contact", "contact_type_id");
+		$obj->where_in("type", array("usage", "tariff", "total_usage"));
+		$obj->get_iterated();
+		$licenseMVCount = 0;
+		$licenseMVUsage = 0;
+		$licenseMVPrice = 0;
+		$MVtoMVCount = 0;
+		$MVtoMVUsage = 0;
+		$MVtoMVPrice = 0;
+		$MVtoLVCount = 0;
+		$MVtoLVUsage = 0;
+		$MVtoLVPrice = 0;
+		$company2000downCount = 0;
+		$company2000downUsage = 0;
+		$companyUsagedownCount = 0;
+		$companyUsagedownUsage = 0;
+		$company2000UpCount = 0;
+		$company2000UpUsage = 0;
+		$companyUsageUpCount = 0;
+		$companyUsageUpUsage = 0;
+		$companyPrice = 0;
+		$total10Down = 0;
+		$totalUsage10Down = 0;
+		$total50Up = 0;
+		$totalUsage50Up = 0;
+		$total10Up = 0;
+		$totalUsage10Up = 0;
+		$total10DownUsage = 0;
+		$totalUsage10DownUsage = 0;
+		$total50UpUsage = 0;
+		$totalUsage50UpUsage = 0;
+		$total10UpUsage = 0;
+		$totalUsage10UpUsage = 0;
+		$totalUsage = 0;
+		$totalCustomer = 0;
+		$price = 0;
+		$totalUsage1 = 0;
+		$totalCustomer1 = 0;
+		$totalUsageSubsidy = 0;
+		$homeTotal10down = 0;
+		$homeCount10down = 0;
+		$homeTotal50down = 0;
+		$homeCount50down = 0;
+			foreach ($obj as $value) {
+				if($value->transaction_contact_contact_type_id == 13){
+					if($value->type == "usage"){
+						$licenseMVCount += 1;
+						$licenseMVUsage += $value->quantity;
+					}else{
+						$licenseMVPrice = $value->amount;
+					}
+				}else if ($value->transaction_contact_contact_type_id == 14){
+					if($value->type == "usage"){
+						$MVtoMVCount += 1;
+						$MVtoMVUsage += $value->quantity;
+					}else{
+						$MVtoMVPrice = $value->amount;
+					}
+				}else if ($value->transaction_contact_contact_type_id == 15){
+					if($value->type == "usage"){
+						$MVtoLVCount += 1;
+						$MVtoLVUsage += $value->quantity;
+					}else{
+						$MVtoLVPrice = $value->amount;
+					}
+				}else if ($value->transaction_contact_contact_type_id == 16){
+					if($value->type == "usage"){
+						if($value->quantity < 2001){
+							$company2000downCount += 1;
+							$company2000downUsage += $value->quantity;
+						}else{
+							$company2000UpCount += 1;
+							$company2000UpUsage += $value->quantity;
+						}
+					}else if($value->type == "total_usage"){
+						if($value->amount < 2001){
+							$companyUsagedownCount += 1;
+							$companyUsagedownUsage += $value->amount;
+						}else{
+							$companyUsageUpCount += 1;
+							$companyUsageUpUsage += $value->amount;
+						}
+					}else{
+						$companyPrice = $value->amount;
+					}
+				}else{
+					if($value->type == "usage"){
+						if($value->quantity < 11){
+							$total10Down += 1;
+							$totalUsage10Down += $value->quantity;
+						}else if($value->quantity > 50){
+							$total50Up += 1;
+							$totalUsage50Up += $value->quantity;
+						}else{
+							$total10Up += 1;
+							$totalUsage10Up += $value->quantity;
+						}
+						$totalCustomer += 1;
+						$totalUsage += $value->quantity;
+					}else if($value->type == "total_usage"){
+						if($value->amount < 11){
+							$total10DownUsage += 1;
+							$totalUsage10DownUsage += $value->amount;
+						}else if($value->amount > 50){
+							$total50UpUsage += 1;
+							$totalUsage50UpUsage += $value->amount;
+						}else{
+							$total10UpUsage += 1;
+							$totalUsage10UpUsage += $value->amount;
+						}
+						$totalCustomer1 += 1;
+						$totalUsage1 += $value->amount;
+					}else{
+						$price = $value->amount;
+					}
+				}
+
+				if ($value->type == "usage"){
+					if($value->quantity < 11){
+						$homeCount10down += 1;
+						$homeTotal10down += $value->quantity;
+					}else if ( $value->quantity < 51){
+						$homeCount50down += 1;
+						$homeTotal50down += $value->quantity;
+					}
+				}
+
+			$totalUsageSubsidy = $totalUsage1 + $totalUsage + $companyUsagedownUsage + $company2000downUsage;
+				
+				
+			}
+			$cost = new Plan_item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$cost->where("type", "tariff");
+			$cost->get_iterated();
+
+			foreach ($cost as $key) {
+				if($key->name == "ប្រើប្រាស់អស់1-10"){
+					$cost10down = $key->amount;
+				}else if($key->name == "ប្រើប្រាស់អស់11-50"){
+					$cost50down = $key->amount;
+				}else if($key->name == "ប្រើប្រាស់អស់51-......"){
+					$cost50Up = $key->amount;
+				}else if($key->name == "100A"){
+					$costCompanyLV = $key->amount;
+				}else if($key->name == "800A"){
+					$costCompanyMV = $key->amount;
+				}else if($key->name == "150A"){
+					$costLicense = $key->amount;
+				}
+			}
+			$tariffSale = 0;
+			$totalSubsidy = 0;
+			$totalSubsidy10down = 0;
+			$totalSubsidy10up = 0;
+			$costGov = new Cost_base(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$costGov->get_iterated();
+			foreach ($costGov as $cost) {
+				$costGoverment = $cost->cost;
+			}
+
+			$tariffSale = $costGoverment - $cost50Up;
+			$totalSubsidy = $tariffSale * $totalUsageSubsidy;
+			$totalSubsidy10down = ($cost50Up - $cost10down) * $homeTotal10down;
+			$totalSubsidy10up   = ($cost50Up - $cost50down) * ($homeTotal50down - $homeTotal10down);
+
+			$data["results"][] = array(
+					
+					"licenseMVCount" 			=> floatval($licenseMVCount) ,
+					"licenseMVUsage" 			=> floatval($licenseMVUsage),
+					"licenseMVPrice" 			=> floatval($licenseMVPrice),
+					"MVtoMVCount" 				=> floatval($MVtoMVCount) ,
+					"MVtoMVUsage" 				=> floatval($MVtoMVUsage),
+					"MVtoMVPrice" 				=> floatval($MVtoMVPrice),
+					"MVtoLVCount" 				=> floatval($MVtoLVCount) ,
+					"MVtoLVUsage" 				=> floatval($MVtoLVUsage),
+					"MVtoLVPrice" 				=> floatval($MVtoLVPrice),
+					"company2000downCount" 		=> floatval($company2000downCount) + floatval($companyUsagedownCount) ,
+					"company2000downUsage" 		=>  floatval($company2000downUsage) + floatval($companyUsagedownUsage) ,
+					"company2000UpCount" 		=> floatval($company2000UpCount) + floatval($companyUsageUpCount),
+					"company2000UpUsage" 		=> floatval($company2000UpUsage) + floatval($companyUsageUpUsage),
+					"companyPrice" 				=> floatval($companyPrice),
+					"usage" 					=> floatval($totalUsage) + floatval($totalUsage1),
+					"price" 					=> floatval($price),
+					"totalCustomer" 			=> floatval($totalCustomer) + floatval($totalCustomer1),
+					"total10Down" 				=> floatval($total10Down) + floatval($total10DownUsage),
+					"totalUsage10Down" 			=> floatval($totalUsage10Down) + floatval($totalUsage10DownUsage),
+					"total10Up" 				=> floatval($total10Up) + floatval($total10UpUsage),
+					"totalUsage10Up" 			=> floatval($totalUsage10Up) + floatval($totalUsage10UpUsage),
+					"total50Up" 				=> floatval($total50Up) + floatval($total50UpUsage),
+					"totalUsage50Up" 			=> floatval($totalUsage50Up) + floatval($totalUsage50UpUsage),
+					"totalUsageSubsidy" 		=> floatval($totalUsageSubsidy),
+					"cost10down"				=> floatval($cost10down),
+					"cost50down"				=> floatval($cost50down),
+					"cost50Up"					=> floatval($cost50Up),
+					"costCompanyLV"				=> floatval($costCompanyLV),
+					"costCompanyMV"				=> floatval($costCompanyMV),
+					"costLicense"				=> floatval($costLicense),
+					"costGoverment"				=> floatval($costGoverment),
+					"tariffSale"				=> floatval($tariffSale),
+					"totalSubsidy"				=> floatval($totalSubsidy),
+					"totalSubsidy10down"		=> floatval($totalSubsidy10down),
+					"totalSubsidy10up"			=> $totalSubsidy10up ,
+					"homeCount10down"			=> $homeCount10down ,
+					"homeTotal10down"		    => $homeTotal10down,
+					"homeCount50down"			=> $homeCount50down ,
+					"homeTotal50down"			=> $homeTotal50down ,
+				);	
+			
+			$data["count"] = count($data["results"]);
+
+		//Response Data
+		$this->response($data, 200);
+	}
+
+	function purchase_power_get() {
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 10000;	
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
+		$data["count"] = 0;
+		$totalUsage = 0;
+
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
+			}
+		}
+		
+		//Filter		
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value['operator'])){
+	    			$obj->{$value['operator']}($value['field'], $value['value']);	    		
+	    		} else {
+	    			$obj->where($value['field'], $value['value']);
+	    		}
+			}
+		}
+		
+		//Results
+		$obj->include_related("contact", array("abbr", "number", "name"));
+		$obj->include_related("item_line", array("quantity", "cost"));
+		$obj->where("type", "Cash_Purchase");
+		$obj->where("memo", "Power Purchase");
+		$obj->get_iterated();
+
+		if($obj->exists()){
+			$objList = [];
+			$quantity = 0;
+			foreach ($obj as $value) {	
+				$quantity = $value->item_line_quantity;		
+				
+				if(isset($objList[$value->contact_id])){
+					$objList[$value->contact_id]["invoice"] 		+= 1;
+					$objList[$value->contact_id]["quantity"] 		+= $quantity;
+					$objList[$value->contact_id]["cost"]			=  floatval($value->item_line_cost);
+				}else{
+					$objList[$value->contact_id]["id"] 				= $value->contact_id;
+					$objList[$value->contact_id]["name"] 			= $value->contact_abbr.$value->contact_number." ".$value->contact_name;
+					$objList[$value->contact_id]["invoice"]			= 1;
+					$objList[$value->contact_id]["quantity"] 		= $quantity;
+					$objList[$value->contact_id]["cost"]			= floatval($value->item_line_cost);
+				}
+			}
+
+			foreach ($objList as $value) {
+				$data["results"][] = $value;
+			}
+			// $data["count"] = count($data["results"]);
+		}
+
+		//Response Data
+		$this->response($data, 200);
+	}
+
 	//Graph>>>>>>>>>>>>>>>>>>>>>>>>>>>>.
 	//Graph Money
 	function money_collection_get() {

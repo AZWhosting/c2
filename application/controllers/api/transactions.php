@@ -26,6 +26,34 @@ class Transactions extends REST_Controller {
 	// $obj->where("is_recurring <>", 1);
 	// $obj->where("deleted <>", 1);
 
+	function run_get() {
+		$data["results"] = [];
+		$data["count"] = 0;
+
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$obj->where_related("contact", "locale", "km-KH");
+		$obj->where("locale", "en-US");
+		$obj->get_iterated();
+		// $data["results"] = $obj->get_raw()->result();
+
+		$ids = [];
+		foreach ($obj as $value) {
+			array_push($ids, $value->id);
+
+			$txns = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$txns->get_by_id($value->id);
+
+			$txns->locale = "km-KH";
+			$txns->rate = 4000;
+			$txns->save();
+		}
+		
+		$data["count"] = count($data["results"]);
+		$data["ids"] = $ids;
+
+		$this->response($data, 200);
+	}
+
 	function test_get() {
 		$data["results"] = [];
 		$data["count"] = 0;

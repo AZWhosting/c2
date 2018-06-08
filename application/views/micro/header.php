@@ -119,12 +119,12 @@
                             <!-- This is  -->
                             <li class="nav-item hidden-sm-up"> <a class="nav-link nav-toggler waves-effect waves-light" href="javascript:void(0)"><i class="ti-menu"></i></a></li>                        
                            
-                            <li class="nav-item search-box"> <a class="nav-link waves-effect waves-dark" href="javascript:void(0)"><i class="ti-search"></i></a>
+                            <!-- <li class="nav-item search-box"> <a class="nav-link waves-effect waves-dark" href="javascript:void(0)"><i class="ti-search"></i></a>
                                 <form class="app-search">
                                     <input type="text" class="form-control search-query" placeholder="Search" id="search-placeholder" data-bind="value: searchText">
                                     <a class="srh-btn" data-bind="click: search"><i class="ti-close"></i></a>
                                 </form>
-                            </li>
+                            </li> -->
                         </ul>
                         <ul class="navbar-nav my-lg-0" id="companyDash">
                            	<li class="nav-item dropdown">

@@ -907,7 +907,7 @@ class Inventory_modules extends REST_Controller {
 		$obj->where_related("item", "item_type_id", 1);
 		$obj->where("deleted <>", 1);		
 		$obj->order_by_related("transaction", "issued_date", "asc");
-		$obj->get();
+		$obj->get_iterated();
 
 		if($obj->exists()){
 			$objList = [];

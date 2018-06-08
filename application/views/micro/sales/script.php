@@ -3784,6 +3784,8 @@
         item_group_id       : 0,
         user_id             : banhji.source.user_id,
         sessionDS           : dataStore(apiUrl + "cashier"),
+        haveItems           : false,
+        currencyDS: dataStore(apiUrl + "utibills/currency"),
         pageLoad            : function(){
             // if(id){
             //     this.set("isEdit", true);
@@ -3793,18 +3795,27 @@
                     this.addEmpty();
             //     }
             // }
-            var self = this;
-            this.sessionDS.query({
-                filter: [
-                    {field: "cashier_id", value: banhji.userData.id},
-                    {field: "active", value: 1}
-                ],
-                pageSize: 1
-            }).then(function(e){
-                if(self.sessionDS.data().length <= 0){
-                    alert("You didn't have session yet.");
-                    window.location.href = "<?php echo base_url(); ?>wellnez/session";
+            // var self = this;
+            // this.sessionDS.query({
+            //     filter: [
+            //         {field: "cashier_id", value: banhji.userData.id},
+            //         {field: "active", value: 1}
+            //     ],
+            //     pageSize: 1
+            // }).then(function(e){
+            //     if(self.sessionDS.data().length <= 0){
+            //         alert("You didn't have session yet.");
+            //         window.location.href = "<?php echo base_url(); ?>wellnez/session";
+            //     }
+            // });
+            // this.lineDSChanges();
+            this.currencyDS.query({
+                sort: {
+                    field: "created_at",
+                    dir: "asc"
                 }
+            }).then(function(e) {
+                self.setCashierItems();
             });
         },
         loadData            : function(){
@@ -4406,9 +4417,10 @@
                     this.assemblyLineDS.remove(item);
                 }
             }
+            this.setDefaultReceiptCurrency(total);
         },
         lineDSChanges       : function(arg){
-            var self = banhji.Index;
+            var self = banhji.checkOut;
 
             if(arg.field){
                 if(arg.field=="item"){
@@ -4710,9 +4722,9 @@
             this.generateNumber();
 
             //Default rows
-            for (var i = 0; i < banhji.source.defaultLines; i++) {
-                this.addRow();
-            }
+            // for (var i = 0; i < banhji.source.defaultLines; i++) {
+            //     this.addRow();
+            // }
         },
         addRow        : function(e){
             var obj = this.get("obj");
@@ -5534,7 +5546,11 @@
                     operator: "where_in",
                     value: [1,4]
                 });
-                this.itemsDS.filter(para);
+                this.itemsDS.query({
+                    filter: para,
+                    page: 1,
+                    pageSize: 8,
+                });
             }
         },
         bookDS : dataStore(apiUrl + "spa/book"),
@@ -6103,6 +6119,177 @@
         },
         toDay : new Date(),
         dateSelected: new Date(),
+        searchItemByCategory: function(e){
+            var data = e.data;
+            var self = this;
+            $("#loading").css("display", "block");
+            this.itemsDS.query({
+                filter: {field: "category_id", value: data.id},
+                page: 1,
+                pageSize: 8,
+            }).then(function(e){
+                $("#loading").css("display", "none");
+                if(self.itemsDS.data().length > 0){
+                    self.set("haveItems", true);
+                }else{
+                    alert('មិនមានទិន្ន័យ (No Data)!');
+                }
+            });
+        },
+        backCategory    : function(){
+            this.set("haveItems", false);
+        },
+        barcodeChange   : function(e){
+        },
+        //Session
+        cashierSessionDS: dataStore(apiUrl + "cashier_sessions"),
+        updateSessionDS: dataStore(apiUrl + "cashier_sessions"),
+        cashierItemDS: dataStore(apiUrl + "cashier_sessions/item"),
+        sessionReceiveDS: dataStore(apiUrl + "cashier_sessions/receive"),
+        setCashierItems: function() {
+            var self = this;
+            this.cashierItemDS.data([]);
+            $.each(this.currencyDS.data(), function(i, v) {
+                self.cashierItemDS.add({
+                    cashier_session_id: "",
+                    currency: v.code,
+                    amount: 0,
+                });
+            });
+        },
+        checkChange: function(e) {
+            var data = e.data;
+            var self = this;
+            var obj = this.get("obj");
+            var currencyReceipt = 0;
+            $.each(this.receipCurrencyDS.data(), function(i, v) {
+                var amountAfterRate = parseFloat(v.amount) / parseFloat(v.rate);
+                currencyReceipt += amountAfterRate;
+            });
+            //Check wrong input
+            if(currencyReceipt < obj.sub_total){
+                alert(this.lang.lang.error_input);
+                $.each(this.receipCurrencyDS.data(), function(i,v){
+                    if(i == 0){
+                        self.receipCurrencyDS.data()[i].set("amount", obj.sub_total);
+                    }else{
+                        self.receipCurrencyDS.data()[i].set("amount", 0);
+                    }
+                });
+                this.set("haveChangeMoney", false);
+            }else if(currencyReceipt > obj.sub_total){
+                this.set("haveChangeMoney", true);
+                var ramount = currencyReceipt - obj.sub_total;
+                this.setDefaultChangeCurrency(ramount);
+            }
+        },
+        CashierID: 1,
+        receipCurrencyDS: dataStore(apiUrl + "cashier_sessions/currency"),
+        receipChangeDS: dataStore(apiUrl + "cashier_sessions/currency"),
+        setDefaultChangeCurrency: function(firstReceipt) {
+            var self = this,
+                FR = firstReceipt;
+            this.set("changeMoney", FR);
+            this.receipChangeDS.data([]);
+            var j = 1;
+            $.each(this.currencyDS.data(), function(i, v) {
+                if (j == 1) {
+                    self.receipChangeDS.add({
+                        cashier_session_id: self.get("CashierID"),
+                        type: 1,
+                        currency: v.code,
+                        locale: v.locale,
+                        rate: v.rate,
+                        amount: FR
+                    });
+                } else {
+                    self.receipChangeDS.add({
+                        cashier_session_id: self.get("CashierID"),
+                        type: 1,
+                        currency: v.code,
+                        locale: v.locale,
+                        rate: v.rate,
+                        amount: 0
+                    });
+                }
+                j++;
+            });
+        },
+        setDefaultReceiptCurrency: function(firstReceipt) {
+            var self = this,
+                FR = firstReceipt;
+            this.receipCurrencyDS.data([]);
+            this.set("haveChangeMoney", false);
+            this.receipChangeDS.data([]);
+            var j = 1;
+            $.each(this.currencyDS.data(), function(i, v) {
+                if (j == 1) {
+                    self.receipCurrencyDS.add({
+                        cashier_session_id: self.get("CashierID"),
+                        type: 0,
+                        currency: v.code,
+                        locale: v.locale,
+                        rate: v.rate,
+                        amount: FR
+                    });
+                } else {
+                    self.receipCurrencyDS.add({
+                        cashier_session_id: self.get("CashierID"),
+                        type: 0,
+                        currency: v.code,
+                        locale: v.locale,
+                        rate: v.rate,
+                        amount: 0
+                    });
+                }
+                j++;
+            });
+        },
+        tmpChangeMoney: 0,
+        checkChangeMoney: function(e) {
+            var data = e.data;
+            var currentAmountChange = data.amount / parseFloat(data.rate);
+            var changeMoney = 0;
+            var currencyReceipt = 0;
+            if (data.amount === undefined || data.amount === null) {
+                var index = this.receipChangeDS.indexOf(data);
+                alert(this.lang.lang.error_input);
+                this.receipChangeDS.data()[index].set("amount", 0);
+            } else {
+                if (this.get("tmpChangeMoney") == 0) {
+                    changeMoney = parseFloat(this.get("changeMoney"));
+                } else {
+                    changeMoney = this.get("tmpChangeMoney");
+                }
+                if (currentAmountChange < this.receipChangeDS.data()[0].amount) {
+                    var firstAmountChagne = changeMoney - currentAmountChange;
+                    this.receipChangeDS.data()[0].set("amount", firstAmountChagne);
+                    this.set("tmpChangeMoney", firstAmountChagne);
+                } else {
+                    var index = this.receipChangeDS.indexOf(data);
+                    alert(this.lang.lang.error_input);
+                    this.receipChangeDS.data()[index].set("amount", 0);
+                }
+            }
+            this.recheckChangeMoney();
+        },
+        recheckChangeMoney: function() {
+            var allChangeMoney = 0,
+                totalChangeMoney = 0;
+            $.each(this.receipChangeDS.data(), function(i, v) {
+                var amountAfterRate = parseFloat(v.amount) / parseFloat(v.rate);
+                allChangeMoney += amountAfterRate;
+            });
+            if (allChangeMoney > this.get("changeMoney")) {
+                totalChangeMoney = allChangeMoney - this.get("changeMoney");
+                var AMOUNT = this.receipChangeDS.data()[0].amount;
+                this.receipChangeDS.data()[0].set("amount", AMOUNT - totalChangeMoney);
+            } else {
+                totalChangeMoney = this.get("changeMoney") - allChangeMoney;
+                var AMOUNT = this.receipChangeDS.data()[0].amount;
+                this.receipChangeDS.data()[0].set("amount", AMOUNT + totalChangeMoney);
+            }
+        },
     });
     banhji.transactions = kendo.observable({
         lang                : langVM,
@@ -18124,7 +18311,11 @@
         banhji.view.layout.showIn('#content', banhji.view.Index);
         banhji.view.Index.showIn('#indexMenu', banhji.view.tapMenu);
         banhji.view.Index.showIn('#indexContent', banhji.view.checkOut);
-
+        var vm = banhji.checkOut;
+        if(banhji.pageLoaded["check_out"]==undefined){
+            banhji.pageLoaded["check_out"] = true;
+            vm.lineDS.bind("change", vm.lineDSChanges);
+        }
         //load MVVM
         banhji.checkOut.pageLoad();
     });

@@ -25906,6 +25906,406 @@
             });
         }
     });
+    banhji.sale_power = kendo.observable({
+        lang: langVM,
+
+        contactDS: new kendo.data.DataSource({
+            data: banhji.source.customerList,
+            sort: {
+                field: "number",
+                dir: "asc"
+            }
+        }),
+        dataSource: new kendo.data.DataSource({
+            transport: {
+                read: {
+                    url: baseUrl + 'api/utibillReports/sale_power',
+                    type: "GET",
+                    dataType: 'json',
+                    headers: {
+                        Institute: JSON.parse(localStorage.getItem('userData/user')).institute.id
+                    }
+                },
+                parameterMap: function(options, operation) {
+                    if (operation === 'read') {
+                        return {
+                            limit: options.take,
+                            page: options.page,
+                            filter: options.filter
+                        };
+                    } else {
+                        return {
+                            models: kendo.stringify(options.models)
+                        };
+                    }
+                }
+            },
+            schema: {
+                model: {
+                    id: 'id'
+                },
+                data: 'results',
+                total: 'count'
+            },
+            change: function(e) {
+                banhji.wDashBoard.set('licenseMVCount', kendo.toString(this.data()[0].licenseMVCount, banhji.locale == "km-KH" ? "c0" : "c", banhji.locale));               
+                banhji.wDashBoard.set('licenseMVUsage', kendo.toString(this.data()[0].licenseMVUsage, "n0", banhji.locale));
+                banhji.wDashBoard.set('licenseMVPrice', kendo.toString(this.data()[0].licenseMVPrice, "n0", banhji.locale));
+            },
+            batch: true,
+            serverFiltering: true,
+            serverPaging: true,
+            pageSize: 100
+        }),
+        purchaseDatasource: dataStore(apiUrl + "utibillReports/purchase_power"),
+        licenseDS: dataStore(apiUrl + "branches"),
+        blocDS: dataStore(apiUrl + "locations"),
+        sortList: banhji.source.sortList,
+        sorter: "month",
+        sdate: "",
+        edate: "",
+        obj: {
+            contactIds: [],
+            licenseID: 0,
+            locationID: []
+        },
+        company: banhji.institute,
+        number: banhji.branches,
+        displayDate: "",
+        totalAmount: 0,
+        exArray: [],
+        pageLoad: function() {
+            this.search();
+            this.set("haveBloc", false);
+        },
+        sorterChanges: function() {
+            var today = new Date(),
+                sdate = "",
+                edate = "",
+                sorter = this.get("sorter");
+
+            switch (sorter) {
+                case "today":
+                    this.set("sdate", today);
+                    this.set("edate", "");
+
+                    break;
+                case "week":
+                    var first = today.getDate() - today.getDay(),
+                        last = first + 6;
+
+                    this.set("sdate", new Date(today.setDate(first)));
+                    this.set("edate", new Date(today.setDate(last)));
+
+                    break;
+                case "month":
+                    this.set("sdate", new Date(today.getFullYear(), today.getMonth(), 1));
+                    this.set("edate", new Date(today.getFullYear(), today.getMonth() + 1, 0));
+
+                    break;
+                case "year":
+                    this.set("sdate", new Date(today.getFullYear(), 0, 1));
+                    this.set("edate", new Date(today.getFullYear(), 11, 31));
+
+                    break;
+                default:
+                    this.set("sdate", "");
+                    this.set("edate", "");
+            }
+        },
+        licenseChange: function(e) {
+            var data = e.data;
+            var license = this.licenseDS.at(e.sender.selectedIndex - 1);
+            this.set("licenseSelect", license);
+            this.blocDS.filter({
+                field: "branch_id",
+                value: license.id
+            });
+            this.set("haveBloc", true);
+        },
+        search: function() {
+            var self = this,
+                para = [],
+                obj = this.get("obj"),
+                start = this.get("sdate"),
+                end = this.get("edate"),
+                displayDate = "";
+            license = this.get("licenseSelect"),
+                bloc = this.get("blocSelect");
+            this.set("licenseMVCount", '');
+            if (license) {
+                para.push({
+                    field: "branch_id",
+                    value: license.id
+                });
+            }
+
+            if (bloc) {
+                para.push({
+                    field: "location_id",
+                    value: bloc.id
+                });
+            }
+
+            //Customer
+            if (obj.contactIds.length > 0) {
+                var contactIds = [];
+                $.each(obj.contactIds, function(index, value) {
+                    contactIds.push(value);
+                });
+                para.push({
+                    field: "contact_id",
+                    operator: "where_in",
+                    value: contactIds
+                });
+            }
+
+            //Dates
+            if (start && end) {
+                start = new Date(start);
+                end = new Date(end);
+                displayDate = kendo.toString(start, "dd-MM-yyyy") + " - " + kendo.toString(end, "dd-MM-yyyy");
+                end.setDate(end.getDate() + 1);
+
+                para.push({
+                    field: "month_of >=",
+                    operator : "where_related_transaction",
+                    value: kendo.toString(start, "yyyy-MM-dd")
+                });
+                para.push({
+                    field: "month_of <",
+                    operator : "where_related_transaction",
+                    value: kendo.toString(end, "yyyy-MM-dd")
+                });
+            } else if (start) {
+                start = new Date(start);
+                displayDate = "On " + kendo.toString(start, "dd-MM-yyyy");
+
+                para.push({
+                    field: "month_of",
+                    operator : "where_related_transaction",
+                    value: kendo.toString(start, "yyyy-MM-dd")
+                });
+            } else if (end) {
+                end = new Date(end);
+                displayDate = "As Of " + kendo.toString(end, "dd-MM-yyyy");
+                end.setDate(end.getDate() + 1);
+
+                para.push({
+                    field: "month_of <",
+                    operator : "where_related_transaction",
+                    value: kendo.toString(end, "yyyy-MM-dd")
+                });
+            } else {
+
+            }
+            this.set("displayDate", displayDate);
+            this.dataSource.query({
+                filter: para,
+            }).then(function() {
+                var view = self.dataSource.view();
+
+                $.each(view, function(index, value) {
+                    licenseMVCount = value.licenseMVCount;
+                    licenseMVUsage = value.licenseMVUsage;
+                    costLicense = value.costLicense;
+                    MVtoMVCount = value.MVtoMVCount;
+                    MVtoMVUsage = value.MVtoMVUsage;
+                    costCompanyMV = value.costCompanyMV;
+                    MVtoLVCount = value.MVtoLVCount;
+                    MVtoLVUsage = value.MVtoLVUsage;
+                    costCompanyLV = value.costCompanyLV;
+                    company2000UpCount = value.company2000UpCount;
+                    company2000UpUsage = value.company2000UpUsage;
+                    cost50Up = value.cost50Up;
+                    company2000downCount = value.company2000downCount;
+                    company2000downUsage = value.company2000downUsage;
+                    totalCustomer = value.totalCustomer;
+                    usage = value.usage;
+                    total10Down = value.total10Down;
+                    totalUsage10Down = value.totalUsage10Down;
+                    cost10down = value.cost10down;
+                    total10Up = value.total10Up;
+                    totalUsage10Up = value.totalUsage10Up;
+                    cost50down = value.cost50down;
+                    total50Up = value.total50Up;
+                    totalUsage50Up = value.totalUsage50Up;
+                    totalUsageSubsidy = value.totalUsageSubsidy;
+                    costGoverment = value.costGoverment;
+                    tariffSale = value.tariffSale;
+                    totalSubsidy = value.totalSubsidy;
+                    homeCount10down = value.homeCount10down;
+                    homeTotal10down = value.homeTotal10down;
+                    totalSubsidy10down = value.totalSubsidy10down;
+                    homeCost10down = value.cost50Up - value.cost10down;
+                    homeCount50down = value.homeCount50down;
+                    homeTotal50down = value.homeTotal50down;
+                    totalSubsidy10up = value.totalSubsidy10up;
+                    homeCost10up = value.cost50Up - value.cost50down;
+
+
+
+                });
+
+                self.set("licenseMVCount", kendo.toString(licenseMVCount, banhji.locale == "km-KH" ? "n0" : "c", banhji.locale));
+                self.set("licenseMVUsage", kendo.toString(licenseMVUsage, banhji.locale == "km-KH" ? "n0" : "c", banhji.locale));
+                self.set("costLicense", kendo.toString(costLicense, banhji.locale == "km-KH" ? "c4" : "c", banhji.locale));
+                self.set("MVtoMVCount", kendo.toString(MVtoMVCount, banhji.locale == "km-KH" ? "n0" : "c", banhji.locale));
+                self.set("MVtoMVUsage", kendo.toString(MVtoMVUsage, banhji.locale == "km-KH" ? "n0" : "c", banhji.locale));
+                self.set("costCompanyMV", kendo.toString(costCompanyMV, banhji.locale == "km-KH" ? "c4" : "c", banhji.locale));
+                self.set("MVtoLVCount", kendo.toString(MVtoLVCount, banhji.locale == "km-KH" ? "n0" : "c", banhji.locale));
+                self.set("MVtoLVUsage", kendo.toString(MVtoLVUsage, banhji.locale == "km-KH" ? "n0" : "c", banhji.locale));
+                self.set("costCompanyLV", kendo.toString(costCompanyLV, banhji.locale == "km-KH" ? "c4" : "c", banhji.locale));
+                self.set("company2000UpCount", kendo.toString(company2000UpCount, banhji.locale == "km-KH" ? "n0" : "c", banhji.locale));
+                self.set("company2000UpUsage", kendo.toString(company2000UpUsage, banhji.locale == "km-KH" ? "n0" : "c", banhji.locale));
+                self.set("cost50Up", kendo.toString(cost50Up, banhji.locale == "km-KH" ? "c0" : "c", banhji.locale));
+                self.set("company2000downCount", kendo.toString(company2000downCount, banhji.locale == "km-KH" ? "n0" : "c", banhji.locale));
+                self.set("company2000downUsage", kendo.toString(company2000downUsage, banhji.locale == "km-KH" ? "n0" : "c", banhji.locale));
+                self.set("totalCustomer", kendo.toString(totalCustomer, banhji.locale == "km-KH" ? "n0" : "c", banhji.locale));
+                self.set("usage", kendo.toString(usage, banhji.locale == "km-KH" ? "n0" : "c", banhji.locale));
+                self.set("total10Down", kendo.toString(total10Down, banhji.locale == "km-KH" ? "n0" : "c", banhji.locale));
+                self.set("totalUsage10Down", kendo.toString(totalUsage10Down, banhji.locale == "km-KH" ? "n0" : "c", banhji.locale));
+                self.set("cost10down", kendo.toString(cost10down, banhji.locale == "km-KH" ? "c0" : "c", banhji.locale));
+                self.set("total10Up", kendo.toString(total10Up, banhji.locale == "km-KH" ? "n0" : "c", banhji.locale));
+                self.set("totalUsage10Up", kendo.toString(totalUsage10Up, banhji.locale == "km-KH" ? "n0" : "c", banhji.locale));
+                self.set("cost50down", kendo.toString(cost50down, banhji.locale == "km-KH" ? "no" : "c", banhji.locale));
+                self.set("total50Up", kendo.toString(total50Up, banhji.locale == "km-KH" ? "c0" : "c", banhji.locale));
+                self.set("totalUsage50Up", kendo.toString(totalUsage50Up, banhji.locale == "km-KH" ? "n0" : "c", banhji.locale));
+                self.set("totalUsageSubsidy", kendo.toString(totalUsageSubsidy, banhji.locale == "km-KH" ? "n0" : "c", banhji.locale));
+                self.set("costGoverment", kendo.toString(costGoverment, banhji.locale == "km-KH" ? "n0" : "c", banhji.locale));
+                self.set("tariffSale", kendo.toString(tariffSale, banhji.locale == "km-KH" ? "n0" : "c", banhji.locale));
+                self.set("totalSubsidy", kendo.toString(totalSubsidy, banhji.locale == "km-KH" ? "c0" : "c", banhji.locale));
+                self.set("homeCount10down", kendo.toString(homeCount10down, banhji.locale == "km-KH" ? "n0" : "c", banhji.locale));
+                self.set("homeTotal10down", kendo.toString(homeTotal10down, banhji.locale == "km-KH" ? "n0" : "c", banhji.locale));
+                self.set("homeCost10down", kendo.toString(homeCost10down, banhji.locale == "km-KH" ? "n0" : "c", banhji.locale));
+                self.set("totalSubsidy10down", kendo.toString(totalSubsidy10down, banhji.locale == "km-KH" ? "c0" : "c", banhji.locale));
+                self.set("homeCount50down", kendo.toString(homeCount50down, banhji.locale == "km-KH" ? "n0" : "c", banhji.locale));
+                self.set("homeTotal50down", kendo.toString(homeTotal50down, banhji.locale == "km-KH" ? "n0" : "c", banhji.locale));
+                self.set("homeCost10up", kendo.toString(homeCost10up, banhji.locale == "km-KH" ? "n0" : "c", banhji.locale));
+                self.set("totalSubsidy10up", kendo.toString(totalSubsidy10up, banhji.locale == "km-KH" ? "c0" : "c", banhji.locale));
+
+            });
+
+            this.purchaseDatasource.query({
+                filter: para,
+            }).then(function() {
+                var view = self.purchaseDatasource.view();
+
+                var amount = 0;
+                $.each(view, function(index, value) {
+                    amount += value.amount;
+                });
+
+                self.set("totalAmount", kendo.toString(amount, banhji.locale == "km-KH" ? "c0" : "c", banhji.locale));
+            });
+            
+
+        },
+        printGrid: function() {
+            var gridElement = $('#grid'),
+                printableContent = '',
+                win = window.open('', '', 'width=990, height=900'),
+                doc = win.document.open();
+            var htmlStart =
+                '<!DOCTYPE html>' +
+                '<html>' +
+                '<head>' +
+                '<meta charset="utf-8" />' +
+                '<title></title>' +
+                '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />' +
+                '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
+                '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/responsive.css">' +
+                '<link href="<?php echo base_url(); ?>assets/invoice/invoice.css" rel="stylesheet" />' +
+                '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
+                '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
+                '<style>' +
+                'html { font: 11pt sans-serif; }' +
+                '.k-grid { border-top-width: 0; }' +
+                '.k-grid, .k-grid-content { height: auto !important; }' +
+                '.k-grid-content { overflow: visible !important; }' +
+                'div.k-grid table { table-layout: auto; width: 100% !important; }' +
+                '.k-grid .k-grid-header th { border-top: 1px solid; }' +
+                '.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
+                '</style><style type="text/css" media="print"> @page { size: portrait; margin:1mm; }' +
+                '.inv1 .main-color {' +
+
+                '-webkit-print-color-adjust:exact; ' +
+                '} ' +
+                '.table.table-borderless.table-condensed  tr th { background-color: #1E4E78!important;' +
+                '-webkit-print-color-adjust:exact; color:#fff!important;}' +
+                '.table.table-borderless.table-condensed  tr th * { color: #fff!important; -webkit-print-color-adjust:exact;}' +
+                '.inv1 .light-blue-td { ' +
+                'background-color: #c6d9f1!important;' +
+                'text-align: left;' +
+                'padding-left: 5px;' +
+                '-webkit-print-color-adjust:exact; ' +
+                '}' +
+                '.saleSummaryCustomer .table.table-borderless.table-condensed tr td { ' +
+                'background-color: #F2F2F2!important; -webkit-print-color-adjust:exact;' +
+                '}' +
+                '.saleSummaryCustomer .table.table-borderless.table-condensed tr:nth-child(2n+1) td { ' +
+                ' background-color: #fff!important; -webkit-print-color-adjust:exact;' +
+                '}' +
+                '.journal_block1>.span2 *, .journal_block1>.span5 * {color: #fff!important;}' +
+                '.journal_block1>.span2:first-child { ' +
+                'background-color: #bbbbbb!important; -webkit-print-color-adjust:exact;' +
+                '}' +
+                '.journal_block1>.span5:last-child {' +
+                'background-color: #496cad!important; color: #fff!important; -webkit-print-color-adjust:exact; ' +
+                '}' +
+                '.journal_block1>.span5 {' +
+                'background-color: #5cc7dd!important; color: #fff!important; -webkit-print-color-adjust:exact;' +
+                '}' +
+                '.saleSummaryCustomer .table.table-borderless.table-condensed tfoot .bg-total td {' +
+                'background-color: #1C2633!important;' +
+                'color: #fff!important; ' +
+                '-webkit-print-color-adjust:exact;' +
+                '}' +
+                '</style>' +
+                '</head>' +
+                '<body><div class="saleSummaryCustomer" style="padding: 0 10px;">';
+            var htmlEnd =
+                '</div></body>' +
+                '</html>';
+
+            printableContent = $('#printContent').html();
+            doc.write(htmlStart + printableContent + htmlEnd);
+            doc.close();
+            setTimeout(function() {
+                win.print();
+                win.close();
+            }, 2000);
+        },
+        ExportExcel: function() {
+            var workbook = new kendo.ooxml.Workbook({
+                sheets: [{
+                    columns: [{
+                            autoWidth: true
+                        },
+                        {
+                            autoWidth: true
+                        },
+                        {
+                            autoWidth: true
+                        },
+                        {
+                            autoWidth: true
+                        },
+                        {
+                            autoWidth: true
+                        },
+                    ],
+                    title: "Sale Summary",
+                    rows: this.exArray
+                }]
+            });
+            //save the file as Excel file with extension xlsx
+            kendo.saveAs({
+                dataURI: workbook.toDataURL(),
+                fileName: "saleSummary.xlsx"
+            });
+        }
+    });
 
     banhji.importContact = kendo.observable({
         lang: langVM,
@@ -30325,6 +30725,9 @@
         dailyCashReceipt: new kendo.Layout("#dailyCashReceipt", {
             model: banhji.dailyCashReceipt
         }),
+        sale_power: new kendo.Layout("#sale_power", {
+            model: banhji.sale_power
+        }),
         imports: new kendo.Layout("#importView", {
             model: banhji.importView
         }),
@@ -31614,6 +32017,23 @@
 
             if (banhji.pageLoaded["daily_cash"] == undefined) {
                 banhji.pageLoaded["daily_cash"] == true;
+
+                vm.sorterChanges();
+            }
+            vm.pageLoad();
+        }
+    });
+    banhji.router.route("/sale_power_report", function() {
+        if (!banhji.userManagement.getLogin()) {
+            banhji.router.navigate('/manage');
+        } else {
+            banhji.view.layout.showIn("#content", banhji.view.sale_power);
+
+            var vm = banhji.sale_power;
+            banhji.userManagement.addMultiTask(" Water Sale Summary", "sale_power_report", null);
+
+            if (banhji.pageLoaded["sale_power_report"] == undefined) {
+                banhji.pageLoaded["sale_power_report"] == true;
 
                 vm.sorterChanges();
             }

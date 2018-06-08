@@ -586,38 +586,34 @@ class Utibills extends REST_Controller {
 		$data["results"] = [];
 		$data["count"] = 0;
 		$sort 	 	= $this->get("sort");
-		$obj = new Currency(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$obj->where("status", 1);
-		//Sort
-		if(!empty($sort) && isset($sort)){
-			foreach ($sort as $value) {
-				if(isset($value['operator'])){
-					$obj->{$value['operator']}($value["field"], $value["dir"]);
-				}else{
-					$obj->order_by($value["field"], $value["dir"]);
-				}
-			}
-		}
+		$obj = new Currency_rate(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		$obj->order_by("is_system", "desc");
+		$obj->order_by("date", "desc");
 		//Results
 		$obj->get_iterated();
+		$checkexist = array();
 		if($obj->exists()){
+			$i = 0;
 			foreach ($obj as $value) {
-				$rate = new Currency_rate(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$rate->where("currency_id", $value->id);
-				$rate->order_by("date", "desc")->limit(1)->get_iterated();
-				foreach ($rate as $rates) {
-					$data["results"][] = array(
-						"id" 		=> $rates->id,
-						"code" 		=> $value->code,
-						"country" 	=> $value->code,
-						"currency_id" => $value->id,
-						"locale" 	=> $rates->locale,
-						"rate" 		=> $rates->rate,
-						"date" 		=> $rates->date
-					);
+				$data["results"][] = array(
+					"id" 		=> $value->id,
+					"code" 		=> $value->locale,
+					"country" 	=> $value->locale,
+					"currency_id" => $value->id,
+					"locale" 	=> $value->locale,
+					"rate" 		=> $value->rate,
+					"date" 		=> $value->date
+				);
+				// print_r($checkexist);
+				if(in_array($value->locale, $checkexist)){
+					unset($data["results"][$i]);
+				}else{
+					array_push($checkexist, $value->locale);
 				}
-				
+				$i++;
 			}
+			
 		}
 		//Response Data
 		$this->response($data, 200);

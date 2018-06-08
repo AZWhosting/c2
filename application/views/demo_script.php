@@ -2645,7 +2645,8 @@
 
                 self.set("obj", view[0]);
             });
-        }
+        },
+        dss          : dataStore(apiUrl + "transactions/run")
     });
     banhji.customerCenter = kendo.observable({
         lang                : langVM,

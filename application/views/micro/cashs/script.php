@@ -3830,201 +3830,33 @@
     });
     //-----------------------------------------
     banhji.Index = kendo.observable({
-        lang     : langVM,
-    });
-    banhji.tapMenu =  kendo.observable({
-        lang     : langVM,
-        goReports          : function(){
-            banhji.router.navigate('/');
-        },
-        goTransactions      : function(){
-            banhji.router.navigate('/transactions');
-        },
-        goCashCenter        : function(){
-            banhji.router.navigate('/cash_center');
-        },
-    });
-    banhji.reports = kendo.observable({
         lang                : langVM,
-        dataSource          : dataStore(apiUrl + "inventory_modules/dashboard"),
-        graphDS             : dataStore(apiUrl + "inventory_modules/monthly_item_purchase_sale"),
-        obj                 : {},
-        pageLoad            : function(){
-            this.loadData();
-        },
-        loadData            : function(){
-            var self = this;
-
-            this.graphDS.read();
-
-            this.dataSource.query({
-                filter: []
-            }).then(function(){
-                var view = self.dataSource.view();
-
-                self.set("obj", view[0]);
-            });
-        }
-    });
-    banhji.cashCenter = kendo.observable({
-        lang                : langVM,
-        // dataSource          : dataStore(apiUrl + "accounts"),
-        dataSource              : new kendo.data.DataSource({
-            transport: {
-                read    : {
-                    url: apiUrl + "accounts",
-                    type: "GET",
-                    headers: banhji.header,
-                    dataType: 'json'
-                },
-                parameterMap: function(options, operation) {
-                    if(operation === 'read') {
-                        return {
-                            page: options.page,
-                            limit: options.pageSize,
-                            filter: options.filter,
-                            sort: options.sort
-                        };
-                    } else {
-                        return {models: kendo.stringify(options.models)};
-                    }
-                }
-            },
-            schema  : {
-                model: {
-                    id: 'id'
-                },
-                data: 'results',
-                total: 'count'
-            },
-            filter:{ field: "account_type_id", value: 10 },
-            sort:[
-                { field:"account_type_id", dir:"asc" },
-                { field:"number", dir:"asc" }
-            ],
-            serverFiltering: true,
-            serverSorting: true,
-            serverPaging: true,
-            page:1,
-            pageSize: 100
+        dataSource          : dataStore(apiUrl + "accounting_modules/general_ledger"),
+        // accountDS           : banhji.source.accountList,
+        accountDS           : new kendo.data.DataSource({
+            data: banhji.source.accountList,
+            filter:{ field:"account_type_id", value: 10 },
+            sort: { field:"number", dir:"asc" }
         }),
-        accountTypeDS       : banhji.source.accountTypeDS,
-        summaryDS           : dataStore(apiUrl + 'centers/accounting_summary'),
-        transactionDS       : dataStore(apiUrl + 'centers/accounting_txn'),
-        attachmentDS        : dataStore(apiUrl + "attachments"),
+        segmentItemDS       : new kendo.data.DataSource({
+            data: banhji.source.segmentItemList,
+            sort: [
+                { field: "segment_id", dir: "asc" },
+                { field: "code", dir: "asc" }
+            ]
+        }),
         sortList            : banhji.source.sortList,
-        sorter              : "all",
+        sorter              : "month",
         sdate               : "",
         edate               : "",
-        obj                 : null,
-        searchText          : "",
-        balance             : 0,
-        totalTxn            : 0,
-        subName             : "",
-        typeName            : "",
-        nature              : "",
-        user_id             : banhji.source.user_id,
-        pageLoad            : function(id){
+        obj                 : { account_id: 0, segments: [] },
+        company             : banhji.institute,
+        displayDate         : "",
+        totalAmount         : 0,
+        totalBalance        : 0,
+        exArray             : [],
+        pageLoad            : function(){
             this.search();
-
-            if(id){
-                this.loadObj(id);
-            }
-            //Refresh
-            if(this.dataSource.total()>0){
-                this.dataSource.fetch();
-                this.loadSummary();
-                this.searchTransaction();
-            }
-        },
-        //Upload
-        onSelect            : function(e){
-            // Array with information about the uploaded files
-            var self = this,
-            files = e.files,
-            obj = this.get("obj");
-
-            if(obj!==null){
-                // Check the extension of each file and abort the upload if it is not .jpg
-                $.each(files, function(index, value){
-                    if (value.extension.toLowerCase() === ".jpg"
-                        || value.extension.toLowerCase() === ".jpeg"
-                        || value.extension.toLowerCase() === ".tiff"
-                        || value.extension.toLowerCase() === ".png"
-                        || value.extension.toLowerCase() === ".gif"
-                        || value.extension.toLowerCase() === ".pdf"){
-
-                        var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ value.name;
-
-                        self.attachmentDS.add({
-                            user_id         : self.get("user_id"),
-                            account_id      : obj.id,
-                            type            : "Account",
-                            name            : value.name,
-                            description     : "",
-                            key             : key,
-                            url             : banhji.s3 + key,
-                            size            : value.size,
-                            created_at      : new Date(),
-
-                            file            : value.rawFile
-                        });
-                    }else{
-                        alert("This type of file is not allowed to attach.");
-                    }
-                });
-            }
-        },
-        removeFile          : function(e){
-            var data = e.data;
-
-            if (confirm(banhji.source.confirmMessage)) {
-                this.attachmentDS.remove(data);
-                this.attachmentDS.sync();
-            }
-        },
-        uploadFile          : function(){
-            $.each(this.attachmentDS.data(), function(index, value){
-                if(!value.id){
-                    var params = {
-                        Body: value.file,
-                        Key: value.key
-                    };
-                    bucket.upload(params, function (err, data) {
-                        // console.log(err, data);
-                        // var url = data.Location;
-                    });
-                }
-            });
-
-            this.attachmentDS.sync();
-            var saved = false;
-            this.attachmentDS.bind("requestEnd", function(e){
-                //Delete File
-                if(e.type=="destroy"){
-                    if(saved==false && e.response){
-                        saved = true;
-
-                        var response = e.response.results;
-                        $.each(response, function(index, value){
-                            var params = {
-                                //Bucket: 'STRING_VALUE', /* required */
-                                Delete: { /* required */
-                                    Objects: [ /* required */
-                                        {
-                                            Key: value.data.key /* required */
-                                        }
-                                      /* more items */
-                                    ]
-                                }
-                            };
-                            bucket.deleteObjects(params, function(err, data) {
-                                //console.log(err, data);
-                            });
-                        });
-                    }
-                }
-            });
         },
         sorterChanges       : function(){
             var today = new Date(),
@@ -4061,207 +3893,303 @@
                     this.set("edate", "");
             }
         },
-        loadObj             : function(id){
-            var self = this;
+        segmentChanges      : function() {
+            var dataArr = this.get("obj").segments,
+            lastIndex = dataArr.length - 1,
+            last = this.segmentItemDS.get(dataArr[lastIndex]);
 
-            this.dataSource.bind("requestEnd", function(e){
-                if(e.type=="read"){
-                    var data = e.response.results;
+            if(dataArr.length > 1) {
+                for(var i = 0; i < dataArr.length - 1; i++) {
+                    var current_index = dataArr[i],
+                    current = this.segmentItemDS.get(current_index);
 
-                    $.each(data, function(index, value){
-                        if(value.id==id){
-                            if(value.sub_of_id>0){
-                                self.set("subName", value.name);
-                            }else{
-                                self.set("subName", "");
-                            }
-
-                            self.set("obj", value);
-                            self.loadSummary();
-                            self.searchTransaction();
-
-                            return false;
-                        }
-                    });
-
-                    //Sub Account
-                    var obj = self.get("obj");
-                    if(obj.sub_of_id>0){
-                        $.each(data, function(index, value){
-                            if(value.id==obj.sub_of_id){
-                                self.set("subName", value.name);
-
-                                return false;
-                            }
-                        });
-                    }else{
-                        self.set("subName", "");
+                    if(current.segment_id === last.segment_id) {
+                        dataArr.splice(lastIndex, 1);
+                        break;
                     }
-
-                    var type = self.accountTypeDS.get(obj.account_type_id);
-                    self.set("typeName", type.name);
-                    self.set("nature", type.nature);
                 }
-            });
-        },
-        loadSummary         : function(){
-            var self = this, obj = this.get("obj");
-
-            this.summaryDS.query({
-                filter: [
-                    { field:"account_id", value: obj.id }
-                ],
-                page: 1,
-                pageSize: 100
-            }).then(function(){
-                var view = self.summaryDS.view();
-
-                if(view.length>0){
-                    self.set("balance", kendo.toString(view[0].balance, view[0].locale=="km-KH"?"c0":"c", view[0].locale));
-                    self.set("totalTxn", self.summaryDS.total());
-                }else{
-                    self.set("balance", 0);
-                    self.set("totalTxn", 0);
-                }
-            });
-        },
-        selectedRow         : function(e){
-            var data = e.data,
-            sub = this.dataSource.get(data.sub_of_id),
-            type = this.accountTypeDS.get(data.account_type_id);
-
-            if(sub && data.sub_of_id>0){
-                this.set("subName", sub.name);
-            }else{
-                this.set("subName", "");
             }
-
-            this.set("typeName", type.name);
-            this.set("nature", type.nature);
-
-            this.set("obj", data);
-            this.loadSummary();
-            this.searchTransaction();
-
-            this.attachmentDS.query({
-                filter:{ field:"account_id", value: data.id },
-                page: 1,
-                pageSize:10
-            });
-        },
-        enterSearch         : function(e){
-            e.preventDefault();
-
-            this.search();
         },
         search              : function(){
-            var self = this,
-            para = [],
-            account_type_id = this.get("account_type_id"),
-            txtSearch = this.get("searchText");
-
-            if(txtSearch){
-                para.push(
-                    { field: "number", operator: "like", value: txtSearch },
-                    { field: "name", operator: "or_like", value: txtSearch }
-                );
-            }
-
-            if(account_type_id){
-                para.push({ field:"account_type_id", value:account_type_id });
-            }
-
-            para.push({ field:"status", value:1 });
-
-            this.dataSource.query({
-                filter:para,
-                sort:[
-                    { field:"account_type_id", dir:"asc" },
-                    { field:"number", dir:"asc" }
-                ],
-                page:1,
-                pageSize:100
-            });
-
-            //Clear search filters
-            this.set("searchText", "");
-            this.set("account_type_id", "");
-        },
-        searchTransaction   : function(){
-            var self = this,
-                para = [],
+            var self = this, para = [],
                 obj = this.get("obj"),
                 start = this.get("sdate"),
-                end = this.get("edate");
+                end = this.get("edate"),
+                displayDate = "";
 
-            if(obj.id){
-                para.push({ field:"account_id", value: obj.id });
+            //Cash account only
+            para.push({ field:"account_type_id", value:10 });
+
+            //Account
+            if(obj.account_id>0){
+                para.push({ field:"account_id", value:obj.account_id });
+            }
+
+            //Segment
+            if(obj.segments.length>0){
+                var segments = [];
+                $.each(obj.segments, function(index, value){
+                    segments.push(value);
+                });
+                para.push({ field:"segments", operator:"like_related_transaction", value:"%"+segments.toString()+"%" });
             }
 
             //Dates
             if(start && end){
                 start = new Date(start);
                 end = new Date(end);
+                displayDate = "From " + kendo.toString(start, "dd-MM-yyyy") + " To " + kendo.toString(end, "dd-MM-yyyy");
                 end.setDate(end.getDate()+1);
 
-                para.push({ field:"issued_date >=", operator: "where_related_transaction", value: kendo.toString(start, "yyyy-MM-dd") });
-                para.push({ field:"issued_date <=", operator: "where_related_transaction", value: kendo.toString(end, "yyyy-MM-dd") });
+                para.push({ field:"issued_date >=", operator:"where_related_transaction", value: kendo.toString(start, "yyyy-MM-dd") });
+                para.push({ field:"issued_date <", operator:"where_related_transaction", value: kendo.toString(end, "yyyy-MM-dd") });
             }else if(start){
                 start = new Date(start);
-                para.push({ field:"issued_date", operator: "where_related_transaction", value: kendo.toString(start, "yyyy-MM-dd") });
+                displayDate = "On " + kendo.toString(start, "dd-MM-yyyy");
+
+                para.push({ field:"issued_date", operator:"where_related_transaction", value: kendo.toString(start, "yyyy-MM-dd") });
             }else if(end){
                 end = new Date(end);
+                displayDate = "As Of " + kendo.toString(end, "dd-MM-yyyy");
                 end.setDate(end.getDate()+1);
-                para.push({ field:"issued_date <=", operator: "where_related_transaction", value: kendo.toString(end, "yyyy-MM-dd") });
-            }else{}
 
-            this.transactionDS.query({
-                filter: para,
-                page: 1,
-                pageSize: 10
-            });
-        },
-        showActive          : function(){
-            this.dataSource.filter({ field:"status", value: 1 });
-        },
-        showInactive        : function(){
-            this.dataSource.filter({ field:"status", value: 0 });
-        },
-        loadTransaction     : function(){
-            var self = this,
-                para = [],
-                obj = this.get("obj"),
-                today = new Date(),
-                start = kendo.toString(banhji.source.getFiscalDate(), "yyyy-MM-dd"),
-                end = kendo.toString(today, "yyyy-MM-dd");
+                para.push({ field:"issued_date <", operator:"where_related_transaction", value: kendo.toString(end, "yyyy-MM-dd") });
+            }else{
 
-            if(obj.id){
-                para.push({ field:"account_id", value: obj.id });
             }
+            this.set("displayDate", displayDate);
 
-            para.push({ field:"issued_date >=", operator:"where_related_transaction", value: start });
-            para.push({ field:"issued_date <=", operator:"where_related_transaction", value: end });
-
-            this.transactionDS.query({
-                filter: para,
-                page: 1,
-                pageSize: 100
+            this.dataSource.query({
+                filter:para,
+                sort:[
+                    { field:"account_type_id", operator:"order_by_related_account", dir:"asc" },
+                    { field:"number", operator:"order_by_related_account", dir:"asc" },
+                    { field:"issued_date", operator:"order_by_related_transaction", dir:"asc" },
+                    { field:"number", operator:"order_by_related_transaction", dir:"asc" }
+                ]
             });
-        },
-        goEdit              : function(){
-            var obj = this.get("obj");
-            banhji.router.navigate('/account/'+obj.id);
-        },
-        checkIsSub          : function(sub_of_id){
-            var isSub = false, data = this.dataSource.get(sub_of_id);
+            this.dataSource.bind("requestEnd", function(e){
+                if(e.type=="read"){
+                    var response = e.response, balanceCal = 0;
+                    self.exArray = [];
+                    // self.set("totalAmount", kendo.toString(response.totalAmount, "c", banhji.locale));
+                    // self.set("totalBalance", kendo.toString(response.totalBalance, "c", banhji.locale));
 
-            if(data){
-                if(data.sub_of_id>0){
-                    isSub = true;
+                    self.exArray.push({
+                        cells: [
+                            { value: self.company.name, textAlign: "center", colSpan: 6 }
+                        ]
+                    });
+                    self.exArray.push({
+                        cells: [
+                            { value: "General Ledger",bold: true, fontSize: 20, textAlign: "center", colSpan: 6 }
+                        ]
+                    });
+                    if(self.displayDate){
+                        self.exArray.push({
+                            cells: [
+                                { value: self.displayDate, textAlign: "center", colSpan: 6 }
+                            ]
+                        });
+                    }
+                    self.exArray.push({
+                        cells: [
+                            { value: "", colSpan: 6 }
+                        ]
+                    });
+                    self.exArray.push({
+                        cells: [
+                            { value: "Type", background: "#496cad", color: "#ffffff" },
+                            { value: "Date", background: "#496cad", color: "#ffffff" },
+                            { value: "Reference No", background: "#496cad", color: "#ffffff" },
+                            { value: "Description", background: "#496cad", color: "#ffffff" },
+                            { value: "Name", background: "#496cad", color: "#ffffff" },
+                            { value: "Debit", background: "#496cad", color: "#ffffff" },
+                            { value: "Credit", background: "#496cad", color: "#ffffff" },
+                            { value: "Balance", background: "#496cad", color: "#ffffff" }
+                        ]
+                    });
+                    for (var i = 0; i < response.results.length; i++){
+                        self.exArray.push({
+                            cells: [
+                                { value: response.results[i].name, bold: true, },
+                                { value: "" },
+                                { value: "" },
+                                { value: "" },
+                                { value: "" },
+                                { value: "" },
+                                { value: "" },
+                                { value: kendo.parseFloat(response.results[i].balance_forward), bold: true },
+                            ]
+                        });
+                        var totalCr = 0, totalDr = 0;
+                        balanceCal = response.results[i].balance_forward;
+                        for(var j = 0; j < response.results[i].line.length; j++){
+                            balanceCal += response.results[i].line[j].amount;
+                            totalDr += response.results[i].line[j].dr;
+                            totalCr += response.results[i].line[j].cr;
+                            self.exArray.push({
+                                cells: [
+                                    { value: "    "+response.results[i].line[j].type },
+                                    { value: kendo.toString(new Date(response.results[i].line[j].issued_date), "dd-MM-yyyy")  },
+                                    { value: response.results[i].line[j].number },
+                                    { value: response.results[i].line[j].memo },
+                                    { value: response.results[i].line[j].contact },
+                                    { value: kendo.parseFloat(response.results[i].line[j].dr)},
+                                    { value: kendo.parseFloat(response.results[i].line[j].cr)},
+                                    { value: kendo.parseFloat(balanceCal)}
+                                ]
+                            });
+                        }
+                        self.exArray.push({
+                            cells: [
+                                { value: "Total " + response.results[i].name, bold: true, },
+                                { value: "" },
+                                { value: "" },
+                                { value: "" },
+                                { value: "" },
+                                { value: kendo.parseFloat(totalDr), bold: true, borderTop: { color: "#000000", size: 1 }  },
+                                { value: kendo.parseFloat(totalCr), bold: true, borderTop: { color: "#000000", size: 1 }  },
+                                { value: kendo.parseFloat(balanceCal), bold: true, borderTop: { color: "#000000", size: 1 }  },
+                            ]
+                        });
+                        self.exArray.push({
+                            cells: [
+                                { value: "", colSpan: 7 }
+                            ]
+                        });
+                    }
+                    self.exArray.push({
+                        cells: [
+                            { value: "TOTAL", bold: true,fontSize: 16 },
+                            { value: "" },
+                            { value: "" },
+                            { value: "" },
+                            { value: "" },
+                            { value: kendo.parseFloat(response.totalAmount), bold: true, fontSize: 16 },
+                            { value: kendo.parseFloat(response.totalBalance), bold: true, fontSize: 16 },
+                        ]
+                    });
                 }
-            }
+            });
+        },
+        totalDr             : function() {
+            var sum = 0;
 
-            return isSub;
+            $.each(this.dataSource.data(), function(index, value) {
+                $.each(value.line, function(ind, val) {
+                    sum += kendo.parseFloat(val.dr);
+                });
+            });
+
+            return sum;
+        },
+        totalCr             : function() {
+            var sum = 0;
+
+            $.each(this.dataSource.data(), function(index, value) {
+                $.each(value.line, function(ind, val) {
+                    sum += kendo.parseFloat(val.cr);
+                });
+            });
+
+            return sum;
+        },
+        printGrid           : function() {
+            var gridElement = $('#grid'),
+                printableContent = '',
+                win = window.open('', '', 'width=990, height=900'),
+                doc = win.document.open();
+            var htmlStart =
+                    '<!DOCTYPE html>' +
+                    '<html>' +
+                    '<head>' +
+                    '<meta charset="utf-8" />' +
+                    '<title></title>' +
+                    '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
+                    '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
+                    '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/responsive.css">' +
+                    '<link href="<?php echo base_url(); ?>assets/invoice/invoice.css" rel="stylesheet" />'+
+                    '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
+                    '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
+                    '<style>' +
+                    'html { font: 11pt sans-serif; }' +
+                    '.k-grid { border-top-width: 0; }' +
+                    '.k-grid, .k-grid-content { height: auto !important; }' +
+                    '.k-grid-content { overflow: visible !important; }' +
+                    'div.k-grid table { table-layout: auto; width: 100% !important; }' +
+                    '.k-grid .k-grid-header th { border-top: 1px solid; }' +
+                    '.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
+                    '</style><style type="text/css" media="print"> @page { size: portrait; margin:1mm; }'+
+                        '.inv1 .main-color {' +
+
+                            '-webkit-print-color-adjust:exact; ' +
+                        '} ' +
+                        '.table.table-borderless.table-condensed  tr th { background-color: #1E4E78!important;' +
+                        '-webkit-print-color-adjust:exact; color:#fff!important;}' +
+                        '.table.table-borderless.table-condensed  tr th * { color: #fff!important; -webkit-print-color-adjust:exact;}' +
+                        '.inv1 .light-blue-td { ' +
+                            'background-color: #c6d9f1!important;' +
+                            'text-align: left;' +
+                            'padding-left: 5px;' +
+                            '-webkit-print-color-adjust:exact; ' +
+                        '}' +
+                        '.saleSummaryCustomer .table.table-borderless.table-condensed tr td { ' +
+                            'background-color: #F2F2F2!important; -webkit-print-color-adjust:exact;' +
+                        '}'+
+                        '.saleSummaryCustomer .table.table-borderless.table-condensed tr:nth-child(2n+1) td { ' +
+                            ' background-color: #fff!important; -webkit-print-color-adjust:exact;' +
+                        '}' +
+                        '.journal_block1>.span2 *, .journal_block1>.span5 * {color: #fff!important;}' +
+                        '.journal_block1>.span2:first-child { ' +
+                            'background-color: #bbbbbb!important; -webkit-print-color-adjust:exact;' +
+                        '}' +
+                        '.journal_block1>.span5:last-child {' +
+                            'background-color: #496cad!important; color: #fff!important; -webkit-print-color-adjust:exact; ' +
+                        '}' +
+                        '.journal_block1>.span5 {' +
+                            'background-color: #5cc7dd!important; color: #fff!important; -webkit-print-color-adjust:exact;' +
+                        '}' +
+                        '.saleSummaryCustomer .table.table-borderless.table-condensed tfoot .bg-total td {' +
+                            'background-color: #1C2633!important;' +
+                            'color: #fff!important; ' +
+                            '-webkit-print-color-adjust:exact;' +
+                        '}' +
+                        '</style>' +
+                    '</head>' +
+                    '<body><div class="saleSummaryCustomer" style="padding: 0 10px;">';
+            var htmlEnd =
+                    '</div></body>' +
+                    '</html>';
+
+            printableContent = $('#invFormContent').html();
+            doc.write(htmlStart + printableContent + htmlEnd);
+            doc.close();
+            setTimeout(function(){
+                win.print();
+                win.close();
+            },2000);
+        },
+        ExportExcel         : function(){
+            var workbook = new kendo.ooxml.Workbook({
+              sheets: [
+                {
+                  columns: [
+                    { autoWidth: true },
+                    { autoWidth: true },
+                    { autoWidth: true },
+                    { autoWidth: true },
+                    { autoWidth: true },
+                    { autoWidth: true },
+                    { autoWidth: true }
+                  ],
+                  title: "General Ledger",
+                  rows: this.exArray
+                }
+              ]
+            });
+            //save the file as Excel file with extension xlsx
+            kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "GeneralLedger.xlsx"});
         }
     });
 

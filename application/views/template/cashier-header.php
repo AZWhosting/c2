@@ -188,8 +188,18 @@ var themerPrimaryColor = primaryColor;
 <body class="document-body ">
 	<div class="row logout">
 		<div class="container" style="text-align: right; padding-top: 30px;">
-			<span>Hello [<span id="userCut"></span>] |
-			<a href="<?php echo base_url(); ?>login" >Logout</a></span>
+			<div style="text-align: left;float: left;">
+				<a href="#" onclick="langVM.changeToKh()">
+	        		<span>ភាសាខ្មែរ</span>
+	        	</a> | 
+				<a href="#" onclick="langVM.changeToEn()">
+					<span>English</span>
+				</a>
+			</div>
+			<div style="text-align: right;float: right;">
+				<span>Hello [<span id="userCut"></span>] |
+				<a href="<?php echo base_url(); ?>login" >Logout</a></span>
+			</div>
 		</div>
 	</div>
 	
