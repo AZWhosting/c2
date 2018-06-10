@@ -494,7 +494,12 @@
 		.inv1 td {
 			padding: 5px;
 		}
-		* {-webkit-print-color-adjust:exact; }
+		* {
+			-webkit-print-color-adjust:exact; 
+			font-size: 14px;
+			padding: 0;
+			margin: 0;
+		}
 	</style>
   	<div style="margin: 0 auto;">		
 		<div class="inv1" style="width: 500px;margin: 0 auto;">
@@ -530,13 +535,13 @@
 	            </div>
 	        	<div class="clear">
 	            	<table cellpadding="0" cellspacing="0" border="1" class="span12" style="width: 100%; margin-bottom: 20px;">
-	                	<thead style="background: \#203864!important;">
-	                        <tr class="main-color" style="height: 45px;">
-	                            <th style="text-align: center;width: 8%;color: \#fff!important;">ល.រ<br />N<sup>0</sup></th>
-	                            <th style="text-align: center;color: \#fff!important;">បរិយាយ​មុខ​ទំនិញ<br />Description</th>
-	                            <th style="text-align: center;color: \#fff!important;">បរិមាណ<br />Quantity</th>
-	                            <th style="text-align: center;color: \#fff!important;">ថ្លៃឯកតា​<br />Unit Price</th>
-	                            <th style="text-align: center;width: 20%;color: \#fff!important;">ថ្លៃ​ទំនិញ<br />Amount</th>
+	                	<thead style="">
+	                        <tr class="main-color" style="height: 45px;background: \#203864!important;">
+	                            <th style="text-align: center;width: 8%;color: \#fff!important;background: \#203864!important;">ល.រ<br />N<sup>0</sup></th>
+	                            <th style="text-align: center;color: \#fff!important;background: \#203864!important;">បរិយាយ​មុខ​ទំនិញ<br />Description</th>
+	                            <th style="text-align: center;color: \#fff!important;background: \#203864!important;">បរិមាណ<br />Quantity</th>
+	                            <th style="text-align: center;color: \#fff!important;background: \#203864!important;">ថ្លៃឯកតា​<br />Unit Price</th>
+	                            <th style="text-align: center;width: 20%;color: \#fff!important;background: \#203864!important;">ថ្លៃ​ទំនិញ<br />Amount</th>
 	                        </tr>
 	                    </thead>
 	                    <tbody style="margin-top: 2px" id="formListView">
@@ -566,7 +571,7 @@
 	            </div>
 	        </div>
 	        <div class="foot">
-	            <h6 style="padding-left: 35px;">សម្គាល់៖ <span>ច្បាប់​ដើម​សម្រាប់​អ្នក​ទិញ ច្បាប់​ចម្លង​សម្រាប់​អ្នក​លក់</span><br /><span style="font-size: 10px"><strong>Note:</strong> Original invoice for customer, copied invoice for seller</span></h6>
+	            <h6 style="font-size: 12px;">សម្គាល់៖ <span style="font-size:12px;">ច្បាប់​ដើម​សម្រាប់​អ្នក​ទិញ ច្បាប់​ចម្លង​សម្រាប់​អ្នក​លក់</span><br /><span style="font-size: 10px"><strong>Note:</strong> Original invoice for customer, copied invoice for seller</span></h6>
 	        </div>
 	    </div>
 	</div>

@@ -6179,7 +6179,7 @@
             $.each(this.currencyDS.data(), function(i, v) {
                 if (j == 1) {
                     self.receipChangeDS.add({
-                        cashier_session_id: self.get("CashierID"),
+                        cashier_session_id: 1,
                         type: 1,
                         currency: v.code,
                         locale: v.locale,
@@ -6188,7 +6188,7 @@
                     });
                 } else {
                     self.receipChangeDS.add({
-                        cashier_session_id: self.get("CashierID"),
+                        cashier_session_id: 1,
                         type: 1,
                         currency: v.code,
                         locale: v.locale,
@@ -6209,7 +6209,7 @@
             $.each(this.currencyDS.data(), function(i, v) {
                 if (j == 1) {
                     self.receipCurrencyDS.add({
-                        cashier_session_id: self.get("CashierID"),
+                        cashier_session_id: 1,
                         type: 0,
                         currency: v.code,
                         locale: v.locale,
@@ -6218,7 +6218,7 @@
                     });
                 } else {
                     self.receipCurrencyDS.add({
-                        cashier_session_id: self.get("CashierID"),
+                        cashier_session_id: 1,
                         type: 0,
                         currency: v.code,
                         locale: v.locale,
@@ -6363,7 +6363,8 @@
 
                 self.lineDS.sync();
                 self.assemblyLineDS.sync();
-                self.syncSession();
+                self.receipCurrencyDS.sync();
+                self.receipChangeDS.sync();
                 self.uploadFile();
                 return data;
             }, function(reason) { //Error
