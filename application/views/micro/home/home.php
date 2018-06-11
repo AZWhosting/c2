@@ -28,32 +28,46 @@
 	<div class="page-wrapper ">
         <div class="container-fluid">
             <div class="row marginTop15 home">
-                <div class="col-lg-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="home-chart">
-                                <div data-role="chart"
-                                     data-legend="{ position: 'top' }"
-                                     data-series-defaults="{ type: 'column' }"
-                                     data-tooltip='{
-                                        visible: true,
-                                        format: "{0}%",
-                                        template: "#= series.name #: #= kendo.toString(value, &#39;c&#39;, banhji.locale) #"
-                                     }'
-                                     data-series="[
-                                                     { field: 'sale', name: langVM.lang.monthly_sale, categoryField:'month', color: '#203864', overlay:{ gradient: 'none'} },
-                                                     { field: 'order', name: langVM.lang.monthly_order, categoryField:'month', color: '#9CB9D9', overlay:{ gradient: 'none'} }
-                                                 ]"
-                                     data-auto-bind="false"
-                                     data-bind="source: graphDS"
-                                     style="height: 280px;" ></div>
+                <div class="col">                   
+                    <div class=" board-chart" style="margin-bottom: 19px;">
+                        <div class="row">
+                            <div class="col-3 col-md-3" >
+                                <div class="marginBottom" style=" height: 117px; text-align: center;">
+                                    <img style="width: auto; height: auto; max-width: 100%; max-height: 100%" data-bind="attr: { src: companyLogo, alt: companyName, title: companyName }" />
                                 </div>
-                            
+                            </div>
+                            <div class="col-9 col-md-9" style="text-align: center;">
+                                <h4 data-bind="html: companyName"></h4>
+                                <h3 data-bind="text: lang.lang.financial_snapshot"></h3>
+                                <span style="color: #000000;"><span data-bind="text: lang.lang.as_of"></span>:&nbsp;<span id="today-date" data-bind="text: today"></span></span>
+                            </div>
                         </div>
                     </div>
+                    <div style="float: left; width: 100%">
+                        <div class="row">
+                            <div class="col-6 col-md-3">
+                                <div class="functionHome">
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <div class="functionHome">
+                                </div>
+                            </div>
+
+                            <div class="col-6 col-md-3">
+                                <div class="functionHome">
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <div class="functionHome">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                       
                 </div>
-                <!-- Column -->
-                <div class=" col-lg-6">
+
+                <div class=" col">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="card" >
@@ -62,19 +76,16 @@
                                         <div class="saleOverview" >
                                             <h2 data-bind="text: lang.lang.sale"></h2>
                                             <p data-format="n" data-bind="text: obj.sale"></p>
-                                            <div class="col-md-12">
-                                                <div class="col-md-4">
-                                                    <span data-bind="text: obj.sale_customer"></span>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <span data-bind="text: obj.sale_customer"></span> <br/>
                                                     <span data-bind="text: lang.lang.customer"></span>
                                                 </div>
-                                                <div class="col-md-4">
-                                                    <span data-bind="text: obj.sale_product"></span>
+                                                <div class="col">
+                                                    <span data-bind="text: obj.sale_product"></span><br/>
                                                     <span data-bind="text: lang.lang.product"></span>
                                                 </div>
-                                                <div class="col-md-4">
-                                                    <span data-bind="text: obj.sale_ordered"></span>
-                                                    <span data-bind="text: lang.lang.order"></span>
-                                                </div>
+                                                
                                             </div>
                                         </div>
                                     </a>
@@ -89,16 +100,12 @@
                                         <div class="saleOverview">
                                             <h2 data-bind="text: lang.lang.receivable"></h2>
                                             <p data-format="n" data-bind="text: obj.ar"></p>
-                                            <div class="col-md-12">
-                                                <div class="col-md-4">
+                                            <div class="row">
+                                                <div class="col">
                                                     <span data-bind="text: obj.ar_open"></span>
                                                     <span data-bind="text: lang.lang.open"></span>
                                                 </div>
-                                                <div class="col-md-4">
-                                                    <span data-bind="text: obj.ar_customer"></span>
-                                                    <span data-bind="text: lang.lang.customers"></span>
-                                                </div>
-                                                <div class="col-md-4">
+                                                <div class="col">
                                                     <span data-bind="text: obj.ar_overdue"></span>
                                                     <span data-bind="text: lang.lang.overdue"></span>
                                                 </div>
@@ -115,18 +122,14 @@
                                         <div class="saleOverview" >
                                             <h2 data-bind="text: lang.lang.purchase"></h2>
                                             <p data-format="n" data-bind="text: objVendor.purchase"></p>
-                                            <div class="col-md-12">
-                                                <div class="col-md-4">
+                                            <div class="row">
+                                                <div class="col">
                                                     <span data-bind="text: objVendor.purchase_supplier"></span>
                                                     <span data-bind="text: lang.lang.supplier"></span>
                                                 </div>
-                                                <div class="col-md-4">
+                                                <div class="col">
                                                     <span data-bind="text: objVendor.purchase_product"></span>
                                                     <span data-bind="text: lang.lang.product"></span>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <span data-bind="text: objVendor.purchase_ordered"></span>
-                                                    <span data-bind="text: lang.lang.order"></span>
                                                 </div>
                                             </div>
                                         </div>
@@ -141,16 +144,12 @@
                                         <div class="saleOverview" >
                                             <h2 data-bind="text: lang.lang.payables"></h2>
                                             <p data-format="n" data-bind="text: objVendor.ap"></p>
-                                            <div class="col-md-12">
-                                                <div class="col-md-4">
+                                            <div class="row">
+                                                <div class="col">
                                                     <span data-bind="text: objVendor.ap_open"></span>
                                                     <span data-bind="text: lang.lang.open"></span>
                                                 </div>
-                                                <div class="col-md-4">
-                                                    <span data-bind="text: objVendor.ap_supplier"></span>
-                                                    <span data-bind="text: lang.lang.supplier"></span>
-                                                </div>
-                                                <div class="col-md-4">
+                                                <div class="col">
                                                     <span  data-bind="text: objVendor.ap_overdue"></span>
                                                     <span data-bind="text: lang.lang.overdue"></span>
                                                 </div>
@@ -162,12 +161,12 @@
                         </div>
                     </div>
                 </div>
-                <!-- Column -->
+
             </div>
             
-            <div class="row home-footer">
+            <div class="row home-footer hidden-sm-down">
                 <!-- Column -->
-                <div class="col-lg-3">
+                <div class="col">
                     <div class="card card-body">
                         <div class="top5" >
                             <table class="table color-table dark-table">
@@ -188,7 +187,7 @@
                 </div>
                 <!-- Column -->
                 <!-- Column -->
-                <div class="col-lg-3">
+                <div class="col">
                     <div class="card card-body">
                         <div class="top5" >
                             <table class="table color-table dark-table">
@@ -209,7 +208,7 @@
                 </div>
                 <!-- Column -->
                 <!-- Column -->
-                <div class="col-lg-3">
+                <div class="col">
                     <div class="card card-body">
                         <div class="top5" >
                             <table class="table color-table dark-table">
@@ -230,7 +229,7 @@
                 </div>
                 <!-- Column -->
                 <!-- Column -->
-                <div class="col-lg-3">
+                <div class="col">
                     <div class="card card-body">
                         <table class="table color-table dark-table">
                             <thead>
@@ -286,4 +285,4 @@
         </td>
     </tr>
 </script>
-<!-- End -->
+<!-- End -->                                                                                                                                                                                                                                                  

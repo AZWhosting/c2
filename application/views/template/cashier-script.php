@@ -6016,7 +6016,48 @@
         baseCurrency: "km-KH",
         defBG: "#be1e2d",
         haveDef: true,
-        sessionDS: dataStore(apiUrl + "cashier"),
+        sessionDS: new kendo.data.DataSource({
+            transport: {
+                read: {
+                    url: apiUrl + "cashier",
+                    type: "GET",
+                    headers: banhji.header,
+                    dataType: 'json'
+                },
+                parameterMap: function(options, operation) {
+                    if (operation === 'read') {
+                        return {
+                            page: options.page,
+                            limit: options.pageSize,
+                            filter: options.filter,
+                            sort: options.sort
+                        };
+                    } else {
+                        return {
+                            models: kendo.stringify(options.models)
+                        };
+                    }
+                }
+            },
+            schema: {
+                model: {
+                    id: 'id'
+                },
+                data: 'results',
+                total: 'count'
+            },
+            // filter: { field:"parent_id", operator:"where_related_contact_type", value:1 },
+            // sort: {
+            //     field: "id",
+            //     dir: "asc"
+            // },
+            batch: true,
+            serverFiltering: true,
+            serverSorting: true,
+            serverPaging: true,
+            page: 1,
+            pageSize: 10
+        }), //dataStore(apiUrl + "cashier"),
         noSession: true,
         sessionID: "",
         cashierID: "",

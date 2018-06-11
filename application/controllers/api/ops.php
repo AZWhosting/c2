@@ -130,14 +130,14 @@ class Ops extends REST_Controller {
 				// 	// 	"null" 		=> FALSE,
 				// 	// 	"default" 	=> ""
 				// 	// ),
-				// 	"membership_id" => array(
-				// 		"type" 		=> "INT",
-				// 		"constraint"=> 11,
+				// 	"sub_type" => array(
+				// 		"type" 		=> "VARCHAR",
+				// 		"constraint"=> 255,
 				// 		"null" 		=> FALSE,
-				// 		"default" 	=> 0
+				// 		"default" 	=> ""
 				// 	)
 				// );
-				// $data['results'][] = $this->dbforge->add_column("membership_types", $fields);
+				// $data['results'][] = $this->dbforge->add_column("transactions", $fields);
 				
 			    // Modify fields
 		 	// 	$fields = array(

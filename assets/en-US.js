@@ -12,6 +12,7 @@ var	en_US = {
 	"item_type" : "Inventory Type",
 	"item_group" : "Inventory Group",
 	"dashbaord" : "Dashbaord",
+	"microitems" : "Items",
 	//Main Dustboard
 	"search_contact" : "Search Contact",
 	"contact" : "Contact",

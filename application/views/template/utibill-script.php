@@ -3047,6 +3047,7 @@
         duplicateSelectedItemMessage: "You already selected this item.",
         meterDS: dataStore(apiUrl + "meters"),
         meterlist: [],
+        defaultLines : 2,
         pageLoad: function() {
             this.loadAccounts();
             // this.accountTypeDS.read();

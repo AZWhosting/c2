@@ -20,11 +20,17 @@
 			<ul class="topnav" id="secondary-menu">
 			</ul>
 			<ul class="topnav pull-right">
+				<li >
+			  		<a onclick="fullScreen(); return false;" class="fullscreen " href="#" role="button" aria-haspopup="true" aria-expanded="false"> <i class="icon-fullscreen"></i></a>
+		  			<a onclick="exitFullScreen(); return false;" class="exitfullscreen " style="display: none;"  href="#" role="button" aria-haspopup="true" aria-expanded="false"> <i class="icon-resize-small"></i></a>
+			  	</li>
+
 				<li role="presentation" class="dropdown">
 			  		<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"> <i class="icon-th-list"></i></a>
 		  			<ul class="dropdown-menu ul-multiTaskList" data-template="multiTaskList-row-template" data-bind="source: multiTaskList">
 		  			</ul>
 			  	</li>
+			  	
 				<li role="presentation" class="dropdown">
 			  		<a style="color: #fff;" class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">[<span data-bind="text: getUsername"></span>]</a>
 		  			<ul class="dropdown-menu">
@@ -51,6 +57,38 @@
 		</div>
 	</div>
 </script>
+<script type="text/javascript">
+	
+    function fullScreen(){
+        var docElm = document.documentElement;
+        if (docElm.requestFullscreen) {
+            docElm.requestFullscreen();
+        }
+        else if (docElm.mozRequestFullScreen) {
+            docElm.mozRequestFullScreen();
+        }
+        else if (docElm.webkitRequestFullScreen) {
+            docElm.webkitRequestFullScreen();
+        }
+        $('.exitfullscreen').show();
+        $('.fullscreen').hide();
+    }
+    function exitFullScreen(){
+        var docElm = document.documentElement;
+        if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.webkitExitFullscreen) {
+                document.webkitExitFullscreen();
+            } else if (document.mozCancelFullScreen) {
+                document.mozCancelFullScreen();
+            } else if (document.msExitFullscreen) {
+                document.msExitFullscreen();
+            }
+        $('.exitfullscreen').hide();
+        $('.fullscreen').show();
+    }
+</script>
+
 <script id="multiTaskList-row-template" type="text/x-kendo-template">
     <li>
     	<a href="\#/#=url#">
@@ -39704,7 +39742,7 @@
 
 								    	<!-- //GENERAL INFO -->
 								        <div class="tab-pane active" id="tab-1">
-									        <span style="text-transform: capitalize;" data-bind="text: lang.lang.as_of"></span>As of:
+									        <span style="text-transform: capitalize;" data-bind="text: lang.lang.as_of"></span>:
 									        <input data-role="datepicker"
 													data-format="dd-MM-yyyy"
 													data-parse-formats="yyyy-MM-dd"
@@ -39756,29 +39794,44 @@
 							</div>
 						</div>
 
-						<table class="table table-borderless table-condensed">
-							<thead>
-					            <tr>
-					                <th data-bind="text: lang.lang.code" style="text-transform: uppercase;">CODE</th>
-					                <th data-bind="text: lang.lang.name" style="text-transform: uppercase;">NAME</th>
-					                <th data-bind="text: lang.lang.type" style="text-transform: uppercase;">TYPE</th>
-					                <th class="right" data-bind="text: lang.lang.debit" style="text-transform: uppercase;">DEBIT</th>
-					                <th class="right" data-bind="text: lang.lang.credit" style="text-transform: uppercase;">CREDIT</th>
-					            </tr>
-					        </thead>
-					        <tbody data-template="trialBalance-template"
-					        		data-auto-bind="false"
-					        		data-bind="source: dataSource"></tbody>
-					        <tfoot data-template="trialBalance-footer-template"
-					        		data-bind="source: this"></tfoot>
-						</table>
+						<div class="costom-grid"
+							 data-role="grid"
+							 data-groupable="true"
+							 data-sortable="true"
+	                         data-column-menu="true"
+			                 data-columns="[
+                                { field: 'number', title:'NUMBER', width: 100 },
+                                { field: 'name', title:'NAME' },
+                                { field: 'type', title:'TYPE', width: 200 },
+                                { 
+                                	field: 'dr', 
+                                	title:'DR',
+                                	template: '#=Math.abs(dr)#',
+                                	attributes: {
+								      	style: 'text-align: right;'
+								    },
+								    width: 200
+                                },
+                                { 
+                                	field: 'cr', 
+                                	title:'CR',
+                                	template: '#=Math.abs(cr)#',
+                                	attributes: {
+								      	style: 'text-align: right;'
+								    },
+								    width: 200
+                                }
+                             ]"
+                             data-auto-bind="false"
+			                 data-bind="source: dataSource"></div>
+
 					</div>
 		        </div>
 			</div>
 		</div>
 	</div>
 </script>
-<script id="trialBalance-template" type="text/x-kendo-tmpl">
+<!-- <script id="trialBalance-template" type="text/x-kendo-tmpl">
 	<tr>
 		<td style="color: black;">
 			#=number#
@@ -39813,7 +39866,7 @@
             #: totalCr() #
         </td>
     </tr>
-</script>
+</script> -->
 <script id="chartOfAccount" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background ">
@@ -54404,8 +54457,8 @@
 		            </div>
 		        </div>
 				<div class="title" style="">
-					<h2 class="kh">សក្ខីប័ត្រអ្នកផ្គត់ផ្គង់</h2>
-					<h2 class="en">Account Payable Voucher</h2>
+					<h2 class="kh" style="font-size: 20px; line-height: 35px!important;">សក្ខីប័ត្រអ្នកផ្គត់ផ្គង់</h2>
+					<h2 class="en" style="font-size: 16px;">Account Payable Voucher</h2>
 				</div>
 			</div>
             <div class="clear mid-header" style="margin-top: 20px;padding: 10px;background: #dce6f2;padding-bottom: 10px;">
@@ -54493,7 +54546,21 @@
             </div>
         </div>
         <div class="foot">
-        	<div class="cover-signature">
+        	<div style="margin-top: 60px;overflow:hidden;">
+				<div class="span4" style="text-align: center;">
+					<div style="padding: 10px 5px;">រៀបចំដោយ <br> PREPARED BY</div>
+					<div style="padding-top: 60px;border-bottom: 1px solid #000;width: 90%;margin: 0 auto;"></div>
+				</div>
+				<div class="span4" style="text-align: center;">
+					<div style="padding: 10px 5px;">ត្រួតពិនិត្យដោយ <br> REVIEWED BY</div>
+					<div style="padding-top: 60px;border-bottom: 1px solid #000;width: 90%;margin: 0 auto;"></div>
+				</div>
+				<div class="span4" style="text-align: center;">
+					<div style="padding: 10px 5px;">សំរេចដោយ <br> APPROVED BY</div>
+					<div style="padding-top: 60px;border-bottom: 1px solid #000;width: 90%;margin: 0 auto;"></div>
+				</div>
+			</div>
+        	<!-- <div class="cover-signature">
             	<div class="singature" style="float:left">
                 	<p>ហត្ថលេខា និងឈ្មោះ​អ្នក​ទិញ<br />Customer's Signature & Name</p>
                 </div>
@@ -54501,7 +54568,7 @@
                 	<p>ហត្ថលេខា និងឈ្មោះ​អ្នកលក់<br />Seller's Signature & Name</p>
                 </div>
             </div>
-            <h6 style="padding-left: 35px;">សម្គាល់៖ <span>ច្បាប់​ដើម​សម្រាប់​អ្នក​ទិញ ច្បាប់​ចម្លង​សម្រាប់​អ្នក​លក់</span><br /><span style="font-size: 10px"><strong>Note:</strong> Original invoice for customer, copied invoice for seller</span></h6>
+            <h6 style="padding-left: 35px;">សម្គាល់៖ <span>ច្បាប់​ដើម​សម្រាប់​អ្នក​ទិញ ច្បាប់​ចម្លង​សម្រាប់​អ្នក​លក់</span><br /><span style="font-size: 10px"><strong>Note:</strong> Original invoice for customer, copied invoice for seller</span></h6> -->
         </div>
     </div>
 </script>
@@ -58483,6 +58550,204 @@
 			<td class="rside">#= kendo.toString(amount, "c", locale) #</td>
 		</tr>
 	#}#
+</script>
+<!--Hurban Hub-->
+<script id="advanceVoucherHurbanHub" type="text/x-kendo-template">
+	<style >
+		.advance-voucher{
+			width: 100%;
+			margin: 50px auto 0;
+		}
+		.advance-voucher .advoucher-header .title{
+			float: right;
+			padding: 10px 10px 0;
+			margin-bottom: 15px;
+			line-height: 45px;
+			width: 100%;
+		}
+		.advance-voucher .advoucher-header .title .kh{
+			float: none;
+			width: 100%;
+			text-align: center;
+			font-size: 30px;
+			font-weight: 700;
+			line-height: 55px!important;
+			margin-right: 8px;
+		}
+		.advance-voucher .advoucher-header .title .en{
+			float: none;
+			font-size: 20px;
+			font-weight: 700;
+			text-align: center;
+			text-transform: uppercase;
+			line-height: 46px;
+		}
+		.advance-voucher .advoucher-header table{
+			width: 100%;
+			float: left;
+			border: 1px solid #333;
+			border-collapse: collapse;
+		}
+		.advance-voucher .advoucher-header table tr td{
+			padding: 5px;
+			border: 1px solid #333;
+			font-size: 13px;
+		}
+		.advance-voucher .advoucher-content table{
+			width: 100%;
+			float: left;
+			border: 1px solid #333;
+			border-collapse: collapse;
+		}
+		.advance-voucher .advoucher-content table tr th{
+			padding: 5px;
+			font-size: 13px;
+			font-weight: 700;
+			background: #1E4E78;
+			text-transform: uppercase;
+			border: 1px solid #333;
+			color: #fff;
+		}
+		.advance-voucher .advoucher-content table tr td{
+			padding: 5px;
+			border: 1px solid #333;
+			font-size: 13px;
+		}
+		.advance-voucher .advoucher-footer table{
+			width: 100%;
+			float: left;
+			border: 1px solid #333;
+			border-collapse: collapse;
+		}
+		.advance-voucher .advoucher-footer table tr th{
+			padding: 5px;
+			font-size: 13px;
+			font-weight: 700;
+			background: #ccc;
+			text-transform: uppercase;
+			border: 1px solid #333;
+			color: #333;
+		}
+		.advance-voucher .advoucher-footer table tr td{
+			padding: 5px;
+			border: 1px solid #333;
+			font-size: 13px;
+		}
+		.advance-voucher .advoucher-footer table tr td.rotate {
+		    -moz-transform: rotate(-90.0deg);
+		    -o-transform: rotate(-90.0deg);
+		    -webkit-transform: rotate(-90.0deg);
+		    filter:  progid:DXImageTransform.Microsoft.BasicImage(rotation=0.083);
+		    -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=0.083)";
+		}
+		.inv1 td {
+			text-align: left;
+		}
+	</style>
+	<div class="inv1">
+		<div class="advance-voucher" style="width: 90%;">
+			<div class="advoucher-header" style="overflow: hidden;position: relative;clear: both;">
+				<div class="head" style="width: 100%;">
+		        	<div class="logo" style="width: 15%;">
+		            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
+		            </div>
+		            <div class="cover-name-company" style="width: 70%!important;float: left;margin-left: 15px;">
+		            	<h2 ></h2>
+		            	<h3 style="float: none; text-align: center;font-size: 25px;line-height: 37px!important;" data-bind="text: company.name"></h3>
+		                <div class="clear" style="float: none;">
+		                	<p style="font-size: 14px!important;float: none; text-align: center;">អាស័យ​ដ្ឋាន Address: <span data-bind="text: company.address"></span></p>
+		                    <p style="font-size: 14px!important;float: none;width: 100%;text-align: center;">ទូរស័ព្ទលេខ HP <span data-bind="text: company.telephone"></span> | Email: <span data-bind="text: company.email"></span></p>
+		                </div>
+		            </div>
+		        </div>
+				<div class="title">
+					<h2 class="kh">សក្ខីប័ត្របុរេប្រទាន </h2>
+					<h2 class="en">advance voucher</h2>
+				</div>
+				<table>
+					<tr>
+						<td style="width: 22%;"><b>អ្នកស្នើសុំ Name</b></td>
+						<td style="width: 20%;" data-bind="text: contactDS.data()[0].name"></td>
+						<td><b>លេខសក្ខីប័ត្រ AV No.</b></td>
+						<td style="width: 20%;" data-bind="text: obj.number"></td>
+					</tr>
+					<tr>
+						<td><b>តំណែង Position</b></td>
+						<td></td>
+						<td><b>កាលបរិចេ្ឆទ Date</b></td>
+						<td data-bind="text: obj.issued_date"></td>
+					</tr>
+					<tr>
+						<td><b>ផ្នែក Department</b></td>
+						<td></td>
+						<td><b>លេខប័ណ្ណលទ្ធកម្ម PR No.</b></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td><b>ទូទាត់ដោយ Mode of Payment</b></td>
+						<td colspan="3">
+							<b>ទូទាត់ដោយ Mode of Payment</b> : <span data-bind="text: paymentMethodDS.data()[0].name"></span><br>
+							<b>ប្រភេទរូបិយប័ណ្ណ Currency Required : </b> <span data-bind="text: currencyDS.data()[0].code"></span>
+						</td>
+					</tr>
+					<tr>
+						<td><b>គោលបំណងនៃបុរេប្រទាន <br> Purpose of Advance</b></td>
+						<td colspan="3" data-bind="text: accountLineDS.data()[0].description"></td>
+					</tr>
+				</table>
+			</div>
+			<div class="advoucher-content" style="overflow: hidden;position: relative;clear: both;">
+				<table>
+					<tr>
+						<th style="background: #1E4E78!important;color: #fff!important;width: 22%;">Account Code</th>
+						<th style="background: #1E4E78!important;color: #fff!important;">Account Description</th>
+						<th style="background: #1E4E78!important;color: #fff!important;">Debit</th>
+						<th style="background: #1E4E78!important;color: #fff!important;width: 19%;">Credit</th>
+					</tr>
+					<tr>
+						<td data-bind="text: journalLineDS.data()[0].account.number"></td>
+						<td data-bind="text: journalLineDS.data()[0].account.name"></td>
+						<td style="text-align: right;" data-bind="text: journalLineDS.data()[0].dr"></td>
+						<td style="text-align: right;"></td>
+					</tr>
+					<tr>
+						<td data-bind="text: journalLineDS.data()[1].account.number"></td>
+						<td data-bind="text: journalLineDS.data()[1].account.name"></td>
+						<td style="text-align: right;"></td>
+						<td style="text-align: right;" data-bind="text: journalLineDS.data()[1].cr"></td>
+					</tr>
+					<tr>
+						<td colspan="3" style="text-align: right; font-size: 18px; font-weight: 700;"> <span style="font-size: 17px;">សរុប</span> Total</td>
+						<td style="text-align: right; font-weight: bold;" data-bind="text: obj.amount"></td>
+					</tr>
+					<tr>
+						<td colspan="2" style="background: #1E4E78!important; color: #fff!important;">ចំនួនជាអក្សរ Amount in Words</td>
+						<td colspan="2" data-bind="text: numberToString"></td>
+					</tr>
+				</table>
+			</div>
+			<div class="advoucher-footer" style="overflow: hidden;position: relative;clear: both;">
+				<div style="margin-top: 160px;overflow:hidden;">
+					<div class="span3" style="text-align: center;">
+						<div style="padding: 10px 5px;">រៀបចំដោយ <br> PREPARED BY</div>
+						<div style="padding-top: 60px;border-bottom: 1px solid #000;width: 90%;margin: 0 auto;"></div>
+					</div>
+					<div class="span3" style="text-align: center;">
+						<div style="padding: 10px 5px;">ត្រួតពិនិត្យដោយ <br> REVIEWED BY</div>
+						<div style="padding-top: 60px;border-bottom: 1px solid #000;width: 90%;margin: 0 auto;"></div>
+					</div>
+					<div class="span3" style="text-align: center;">
+						<div style="padding: 10px 5px;">សំរេចដោយ <br> APPROVED BY</div>
+						<div style="padding-top: 60px;border-bottom: 1px solid #000;width: 90%;margin: 0 auto;"></div>
+					</div>
+					<div class="span3" style="text-align: center;">
+						<div style="padding: 10px 5px;">ទទួលដោយ <br> RECEIVED BY</div>
+						<div style="padding-top: 60px;border-bottom: 1px solid #000;width: 90%;margin: 0 auto;"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </script>
 <!--Invoice Line-->
 <script id="invoiceCustom-txn-form-template" type="text/x-kendo-template">
@@ -65424,4 +65689,4 @@
 	s0.parentNode.insertBefore(s1,s0);
 	})();
 </script> -->
-<!--End of Tawk.to Script--> 
+<!--End of Tawk.to Script-->

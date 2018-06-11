@@ -1136,7 +1136,7 @@ class Accounting_modules extends REST_Controller {
 	}
 
 	//GET TRIAL BALANCE
-	function trial_balance_get() {		
+	function trial_balance_old_get() {		
 		$filter 	= $this->get("filter");
 		$page 		= $this->get('page');
 		$limit 		= $this->get('limit');
@@ -1165,6 +1165,7 @@ class Accounting_modules extends REST_Controller {
 		//Add 1 day
 		$asOf = date("Y-m-d", strtotime($asOf . "+1 days"));
 		$startDate = date("Y-m-d", strtotime($startDate . "+1 days"));
+
 
 		//BALANCE SHEET (As Of)
 		$balanceSheet = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
@@ -1369,6 +1370,177 @@ class Accounting_modules extends REST_Controller {
 		   	"cr" 			=> $totalRetainEarning
 		);
 		
+				
+		$data["count"] = count($data["results"]);
+
+		//Response Data		
+		$this->response($data, 200);	
+	}
+	function trial_balance_get() {		
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
+		$data["count"] = 0;
+		$asOf = date("Y-m-d");
+		$objList = [];
+		
+		//Filter
+		if(!empty($filter['filters']) && isset($filter['filters'])){
+	    	foreach ($filter['filters'] as $value) {
+				$asOf = $value["value"];
+			}
+		}			
+
+		//Fiscal Date
+		$asOfYear = date("Y",strtotime($asOf));
+		$fdate = $asOfYear ."-". $this->fiscalDate;
+		if($asOf > $fdate){
+			$startDate 	= $asOfYear ."-". $this->fiscalDate;
+			$endDate 	= intval($asOfYear)+1 ."-". $this->fiscalDate;
+		}else{
+			$startDate 	= intval($asOfYear)-1 ."-". $this->fiscalDate;
+			$endDate 	= $asOfYear ."-". $this->fiscalDate;
+		}
+
+		//Add 1 day
+		$asOf = date("Y-m-d", strtotime($asOf . "+1 days"));
+		$startDate = date("Y-m-d", strtotime($startDate . "+1 days"));
+
+		//BALANCE SHEET (As Of)
+		$balanceSheets = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$balanceSheets->select("account_id");
+		$balanceSheets->select_sum("(dr - cr) / transactions.rate", "total");
+		$balanceSheets->include_related("account", array("number","name"));
+		$balanceSheets->include_related("account/account_type", array("name"));		
+		$balanceSheets->where_related("account", "account_type_id >=", 10);
+		$balanceSheets->where_related("account", "account_type_id <=", 33);
+		$balanceSheets->where_related("transaction", "issued_date <", $asOf);
+		$balanceSheets->where_related("transaction", "is_recurring <>", 1);
+		$balanceSheets->where_related("transaction", "deleted <>", 1);
+		$balanceSheets->where_related("transaction", "is_journal", 1);
+		$balanceSheets->where("deleted <>", 1);
+		$balanceSheets->order_by_related("account", "number", "asc");
+		$balanceSheets->group_by("account_id");
+		$balanceSheets->get();
+
+		foreach ($balanceSheets as $value) {
+			$objList[] = array(
+				"id" 			=> $value->account_id,
+				"number" 		=> $value->account_number,
+				"name" 			=> $value->account_name,				
+			   	"type" 			=> $value->account_account_type_name,
+			   	"amount" 		=> floatval($value->total)
+			);
+		}
+		//END BALANCE SHEET
+
+
+		//CURRENT PROFIT AND LOSS (startFiscalDate to As Of)
+		$currPL = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$currPL->select("account_id");
+		$currPL->select_sum("(dr - cr) / transactions.rate", "total");
+		$currPL->include_related("account", array("number","name"));
+		$currPL->include_related("account/account_type", array("name"));		
+		$currPL->where_related("account", "account_type_id >=", 35);
+		$currPL->where_related("account", "account_type_id <=", 43);
+		$currPL->where_related("transaction", "issued_date >=", $startDate);
+		$currPL->where_related("transaction", "issued_date <", $asOf);
+		$currPL->where_related("transaction", "is_recurring <>", 1);
+		$currPL->where_related("transaction", "deleted <>", 1);		
+		$currPL->where("deleted <>", 1);
+		$currPL->order_by_related("account", "number", "asc");
+		$currPL->group_by("account_id");
+		$currPL->get();
+
+		foreach ($currPL as $value) {
+			$objList[] = array(
+				"id" 			=> $value->account_id,
+				"number" 		=> $value->account_number,
+				"name" 			=> $value->account_name,				
+			   	"type" 			=> $value->account_account_type_name,
+			   	"amount" 		=> floatval($value->total)
+			);
+		}
+		//END CURRENT PROFIT AND LOSS
+
+
+		//RETAINED EARNING = Profit Loss + Retained Earning
+		//PREVIOUSE PROFIT AND LOSS (From Begining to startFiscalDate) Cr - Dr
+		$prevPL = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);				
+		$prevPL->select("account_id");
+		$prevPL->select_sum("(dr - cr) / transactions.rate", "total");
+		$prevPL->include_related("account", array("number","name"));
+		$prevPL->include_related("account/account_type", array("name"));
+		$prevPL->where_related("account", "account_type_id >=", 35);
+		$prevPL->where_related("account", "account_type_id <=", 43);
+		$prevPL->where_related("transaction", "issued_date <", $startDate);
+		$prevPL->where_related("transaction", "is_recurring <>", 1);
+		$prevPL->where_related("transaction", "deleted <>", 1);		
+		$prevPL->where("deleted <>", 1);
+		$prevPL->order_by_related("account", "number", "asc");
+		$prevPL->group_by("account_id");
+		$prevPL->get();
+
+		$prevPLAmount = 0;
+		foreach ($prevPL as $value) {
+			$prevPLAmount += floatval($value->total);
+
+			$objList[] = array(
+				"id" 			=> $value->account_id,
+				"number" 		=> $value->account_number,
+				"name" 			=> $value->account_name,				
+			   	"type" 			=> $value->account_account_type_name,
+			   	"amount" 		=> floatval($value->total)
+			);
+		}
+		//END PREVIOUSE PROFIT AND LOSS
+		
+
+		//RETAINED EARNING (As Of)
+		$retainEarning = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$retainEarning->select("account_id");
+		$retainEarning->select_sum("(dr - cr) / transactions.rate", "total");
+		$retainEarning->include_related("account", array("number","name"));
+		$retainEarning->include_related("account/account_type", array("name"));
+		$retainEarning->where("account_id", 70);
+		$retainEarning->where_related("transaction", "issued_date <", $asOf);		
+		$retainEarning->where_related("transaction", "is_recurring <>", 1);
+		$retainEarning->where_related("transaction", "deleted <>", 1);		
+		$retainEarning->where("deleted <>", 1);
+		$retainEarning->get();
+
+		$retainEarningAmount = floatval($retainEarning->total);
+		$objList[] = array(
+			"id" 			=> $retainEarning->account_id,
+			"number" 		=> $retainEarning->account_number,
+			"name" 			=> $retainEarning->account_name,				
+		   	"type" 			=> $retainEarning->account_account_type_name,
+		   	"amount" 		=> $prevPLAmount + $retainEarningAmount
+		);
+		//END RETAINED EARNING
+
+		foreach ($objList as $value) {
+			$dr = $value["amount"];
+			$cr = 0;
+			if($value["amount"]<0){
+				$dr = 0;
+				$cr = $value["amount"];
+			}
+
+			$data["results"][] = array(
+				"id" 		=> $value["id"],
+				"number" 	=> $value["number"],
+				"name" 		=> $value["name"],
+			   	"type" 		=> $value["type"],
+			   	"dr" 		=> $dr,
+			   	"cr" 		=> $cr
+			);
+		}
+
+		$data["asof"] = $asOf;
+		$data["sd"] = $startDate;	
 				
 		$data["count"] = count($data["results"]);
 

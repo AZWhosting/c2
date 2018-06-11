@@ -311,6 +311,30 @@ a {
 
 
 /*Home Page*/
+.board-chart{
+	width: 100%; 
+	padding: 18px 15px; 
+	background: #fff; 
+	float: left; 
+	position: relative; 
+	color: #333; 
+	overflow: hidden; 
+	box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;
+}
+
+.board-chart h3{
+	color: #113051;
+    margin-bottom: 11px;
+    display: inline-block;
+    width: 100%;
+}
+.functionHome{
+	background: #fff;
+	box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;
+	min-height: 160px;
+	text-align: center;
+	color: #333; 
+}
 .home.page-titles{
 	margin-bottom: 0;
 }
@@ -404,11 +428,19 @@ a {
 	padding: 0;
 }
 .saleOverview .col-md-12 .col-md-4 span,
-.saleOverview .col-md-12 .col-md-6 span{
+.saleOverview .col-md-12 .col-md-6 span,
+.saleOverview .col span{
 	font-size: 14px;
 	text-align: center;
 	width: 100%;
 	float: left;
+}
+.saleOverview .col span{
+	font-size: 14px;
+	text-align: center;
+	width: 100%;
+	float: left;
+	margin-bottom: 5px;
 }
 .saleOverview .col-md-12 .col-md-3 span{
 	font-size: 14px;
@@ -525,7 +557,7 @@ a {
     width: 84%;
 }
 #customers .listWrapper .innerAll{
-	height: 96px;
+	height: 55px;
 	float: left;
 }
 .btnAddCustomer{
@@ -716,7 +748,7 @@ a {
     text-align: left;
     cursor: pointer;
     color: #fff;
-    height: 129px;
+    height: 111px;
     margin-bottom: 15px;
     overflow: hidden;
     position: relative;
@@ -989,8 +1021,43 @@ a.fa.fa-qrcode:before{
     font-weight: 700;
     margin-bottom: 15px;
 }
-
+.checkOut-button a:hover span{
+	color: #fff;
+}
+.checkOut-button a.buttoninvoice,
+.checkOut-button a.buttonparksale,
+.checkOut-button a.buttoncancelsale{
+	background: #2b2f3a;
+	border-color: #2b2f3a;
+	padding: 18px 15px; 
+	box-shadow: 2px 0px 12px 0px rgba(68,68,68,1);
+}
+.checkOut-button a.buttonpay:hover{
+	background: #2b2f3a;
+	border-color: #2b2f3a;
+}
+.checkOut-button a.buttoninvoice:hover,
+.checkOut-button a.buttonparksale:hover,
+.checkOut-button a.buttoncancelsale:hover{
+	background: #009efb;
+	border-color: #009efb;
+}
 @media (max-width: 767px){
+	.board-chart{
+		min-height: 110px;
+	    padding: 15px 15px 0;
+	    height: 110px;
+	}
+	.board-chart h4{
+		font-size: 12px;
+	}
+	.board-chart h3{
+		font-size: 15px;
+		margin-bottom: 6px;
+	}
+	.functionHome{
+		margin-bottom: 15px; 
+	}
 	.table.table-condensed.k-grid.k-widget.k-display-block{
 		height: 256px;
 		-webkit-overflow-scrolling: touch;
@@ -1047,4 +1114,9 @@ a.fa.fa-qrcode:before{
 	.vtabs .tabs-vertical {
 	    width: 50px;
 	}
-}                                                                                                                      
+	.checkOut-button a.buttoninvoice,
+	.checkOut-button a.buttonparksale,
+	.checkOut-button a.buttoncancelsale{
+		margin-bottom: 15px;
+	}
+}

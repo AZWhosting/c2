@@ -127,7 +127,42 @@
                             </li> -->
                         </ul>
                         <ul class="navbar-nav my-lg-0" id="companyDash">
-                           	<li class="nav-item dropdown">
+                            <li class="nav-item dropdown">
+                                <a onclick="fullScreen(); return false;" class="fullscreen nav-link dropdown-toggle text-muted waves-effect waves-dark" href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icon-size-fullscreen"></i></a>
+                                <a onclick="exitFullScreen(); return false;" class="exitfullscreen nav-link dropdown-toggle text-muted waves-effect waves-dark" href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icon-size-actual"></i></a>
+                            </li>
+                           	<script type="text/javascript">
+                                $('.exitfullscreen').hide();
+                                function fullScreen(){
+                                    var docElm = document.documentElement;
+                                    if (docElm.requestFullscreen) {
+                                        docElm.requestFullscreen();
+                                    }
+                                    else if (docElm.mozRequestFullScreen) {
+                                        docElm.mozRequestFullScreen();
+                                    }
+                                    else if (docElm.webkitRequestFullScreen) {
+                                        docElm.webkitRequestFullScreen();
+                                    }
+                                    $('.exitfullscreen').show();
+                                    $('.fullscreen').hide();
+                                }
+                                function exitFullScreen(){
+                                    var docElm = document.documentElement;
+                                    if (document.exitFullscreen) {
+                                            document.exitFullscreen();
+                                        } else if (document.webkitExitFullscreen) {
+                                            document.webkitExitFullscreen();
+                                        } else if (document.mozCancelFullScreen) {
+                                            document.mozCancelFullScreen();
+                                        } else if (document.msExitFullscreen) {
+                                            document.msExitFullscreen();
+                                        }
+                                    $('.exitfullscreen').hide();
+                                    $('.fullscreen').show();
+                                }
+                            </script>
+                            <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="ti-plus"></i></a>
                                 <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY menuTransaction">
                                     <span class="with-arrow"><span class="bg-primary"></span></span>
@@ -137,7 +172,7 @@
                                                 <p><i class="ti-receipt m-r-5 m-l-5"></i><span data-bind="text: lang.lang.sale_transactions"></span></p>
                                                 <ul>
                                                     <li><a href="sales#/customer"><span data-bind="text: lang.lang.customers"></span></a></li>
-                                                   <li><a href="sales#/sale_order"><span data-bind="text: lang.lang.create_sale_order"></span></a></li>
+                                                    <li><a href="sales#/sale_order"><span data-bind="text: lang.lang.create_sale_order"></span></a></li>
                                                     <li><a href="sales#/customer_deposit"><span data-bind="text: lang.lang.create_customer_deposit"></span></a></li>
                                                     <li><a href="sales#/cash_sale"><span data-bind="text: lang.lang.create_cash_sale"></span></a></li>
                                                     <li><a href="sales#/invoice"><span data-bind="text: lang.lang.create_invoice"></span></a></li>
@@ -241,6 +276,7 @@
                                     <img data-bind="attr: {src: userDS.data()[0].profile_photo.url}" alt="user" class="img-circle" width="30">
                                 </a>                            
                             </li>
+
                             <div class="right-sidebar">
                                 <div class="slimscrollright">
                                     <div class="d-flex no-block align-items-center p-15 bg-primary text-white m-b-10">                  

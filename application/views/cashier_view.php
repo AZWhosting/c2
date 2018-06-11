@@ -964,6 +964,10 @@
 					        		data-auto-bind="true"
 					        		data-bind="source: sessionDS"></tbody>
 						    </table>
+						    <div id="pager" class="k-pager-wrap"
+			            		 data-role="pager"
+						    	 data-auto-bind="false"
+					             data-bind="source: sessionDS"></div>
 						</div>
 						<div style="overflow: hidden;" data-bind="invisible: noSession">
 				        	<div class="row" style="padding: 0px;margin: 0;">

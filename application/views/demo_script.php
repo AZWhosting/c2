@@ -24072,6 +24072,7 @@
                 case 76: Active = banhji.view.normalInvoiceHeritageWalk; break;
                 case 77: Active = banhji.view.posInvoiceKSLM; break;
                 case 78: Active = banhji.view.posCashSaleKSLM; break;
+                case 79: Active = banhji.view.advanceVoucherHurbanHub; break;
             }
             banhji.view.invoiceCustom.showIn('#invFormContent', Active);
         },
@@ -24510,6 +24511,7 @@
                 case 76: Active = banhji.view.normalInvoiceHeritageWalk; break;
                 case 77: Active = banhji.view.posInvoiceKSLM; break;
                 case 78: Active = banhji.view.posCashSaleKSLM; break;
+                case 79: Active = banhji.view.advanceVoucherHurbanHub; break;
             }
             banhji.view.invoiceForm.showIn('#invFormContent', Active);
         },
@@ -55448,11 +55450,9 @@
                 data: 'results',
                 total: 'count'
             },
-            sort:{ field:"number", dir:"asc" },
-            batch: true,
+            sort: { field: "number", dir: "asc" },
             serverFiltering: true,
-            page:1,
-            pageSize: 100
+            serverSorting: false
         }),
         as_of               : new Date(),
         displayDate         : "",
@@ -55491,7 +55491,8 @@
             this.dataSource.sort({ field:col, dir:this.get("currentSort") });
         },
         search              : function(){
-            var as_of = this.get("as_of"), self = this, totalDR = 0, totalCR = 0;
+            var self = this, 
+                as_of = this.get("as_of"), totalDR = 0, totalCR = 0;
 
             if(as_of){
                 as_of = new Date(as_of);
@@ -55499,8 +55500,18 @@
                 this.set("displayDate", displayDate);
 
                 this.dataSource.query({
-                    filter: { field:"issued_date <", value:kendo.toString(as_of, "yyyy-MM-dd") },
-                    sort: {field: "number", dir: "asc" }
+                    filter: { field:"issued_date <", value:kendo.toString(as_of, "yyyy-MM-dd") }
+                }).then(function(e) {
+                    var view = self.dataSource.view(),
+                        sumDR = 0, sumCR = 0;
+
+                    $.each(view, function(index, value){
+                        sumDR += value.dr;
+                        sumCR += value.cr;
+                    });
+
+                    self.set("dr", kendo.toString(Math.abs(sumDR), "c", banhji.locale));
+                    self.set("cr", kendo.toString(Math.abs(sumCR), "c", banhji.locale));
                 });
 
                 this.dataSource.bind("requestEnd", function(e){
@@ -55569,28 +55580,6 @@
             ids.push(data.id);
 
             banhji.router.navigate('/general_ledger');
-        },
-        totalDr             : function() {
-            var sum = 0;
-
-            $.each(this.dataSource.data(), function(index, value) {
-                sum += kendo.parseFloat(value.dr);
-            });
-
-            this.set("dr", kendo.toString(sum, "c", banhji.locale));
-
-            return kendo.toString(sum, "c", banhji.locale);
-        },
-        totalCr             : function() {
-            var sum = 0;
-
-            $.each(this.dataSource.data(), function(index, value) {
-                sum += kendo.parseFloat(value.cr);
-            });
-
-            this.set("cr", kendo.toString(sum, "c", banhji.locale));
-
-            return kendo.toString(sum, "c", banhji.locale);
         },
         printGrid           : function() {
             var gridElement = $('#grid'),
@@ -68094,6 +68083,8 @@
         vatInvoiceKSLM: new kendo.Layout("#vatInvoiceKSLM", {model: banhji.invoiceForm}),
         posInvoiceKSLM: new kendo.Layout("#posInvoiceKSLM", {model: banhji.invoiceForm}),
         posCashSaleKSLM: new kendo.Layout("#posCashSaleKSLM", {model: banhji.invoiceForm}),
+        //Hurban Hub
+        advanceVoucherHurbanHub: new kendo.Layout("#advanceVoucherHurbanHub", {model: banhji.invoiceForm}),
         //Ricemill form
         recieptNoteRicemill: new kendo.Layout("#recieptNoteRicemill", {model: banhji.invoiceForm}),
         statementDetail: new kendo.Layout("#statementDetail", {model: banhji.statementDetail}),

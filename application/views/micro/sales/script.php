@@ -3488,12 +3488,14 @@
     banhji.reports = kendo.observable({
         lang                : langVM,
         dataSource          : dataStore(apiUrl + "customer_modules/dashboard"),
-        graphDS             : dataStore(apiUrl + "customer_modules/monthly_sale"),
+        txnDS               : dataStore(apiUrl + "sales/customer_transaction_list_grid"),
+        sortList            : banhji.source.sortList,
+        sorter              : "month",
+        sdate               : "",
+        edate               : "",
         obj                 : {},
         pageLoad            : function(){
             var self = this;
-
-            this.graphDS.read();
 
             this.dataSource.query({
                 filter: []
@@ -3502,7 +3504,75 @@
 
                 self.set("obj", view[0]);
             });
-        }
+        },
+        sorterChanges       : function(){
+            var today = new Date(),
+            sdate = "",
+            edate = "",
+            sorter = this.get("sorter");
+
+            switch(sorter){
+                case "today":
+                    this.set("sdate", today);
+                    this.set("edate", "");
+
+                    break;
+                case "week":
+                    var first = today.getDate() - today.getDay(),
+                    last = first + 6;
+
+                    this.set("sdate", new Date(today.setDate(first)));
+                    this.set("edate", new Date(today.setDate(last)));
+
+                    break;
+                case "month":
+                    this.set("sdate", new Date(today.getFullYear(), today.getMonth(), 1));
+                    this.set("edate", new Date(today.getFullYear(), today.getMonth() + 1, 0));
+
+                    break;
+                case "year":
+                    this.set("sdate", new Date(today.getFullYear(), 0, 1));
+                    this.set("edate", new Date(today.getFullYear(), 11, 31));
+
+                    break;
+                default:
+                    this.set("sdate", "");
+                    this.set("edate", "");
+            }
+        },
+        search              : function(){
+            var self = this, para = [],
+                start = this.get("sdate"),
+                end = this.get("edate"),
+                displayDate = "";
+
+            //Dates
+            if(start && end){
+                start = new Date(start);
+                end = new Date(end);
+                displayDate = "From " + kendo.toString(start, "dd-MM-yyyy") + " To " + kendo.toString(end, "dd-MM-yyyy");
+                end.setDate(end.getDate()+1);
+
+                para.push({ field:"issued_date >=", value: kendo.toString(start, "yyyy-MM-dd") });
+                para.push({ field:"issued_date <", value: kendo.toString(end, "yyyy-MM-dd") });
+            }else if(start){
+                start = new Date(start);
+                displayDate = "On " + kendo.toString(start, "dd-MM-yyyy");
+
+                para.push({ field:"issued_date", value: kendo.toString(start, "yyyy-MM-dd") });
+            }else if(end){
+                end = new Date(end);
+                displayDate = "As Of " + kendo.toString(end, "dd-MM-yyyy");
+                end.setDate(end.getDate()+1);
+
+                para.push({ field:"issued_date <", value: kendo.toString(end, "yyyy-MM-dd") });
+            }else{
+
+            }
+            this.set("displayDate", displayDate);
+
+            this.txnDS.filter(para);
+        },
     });
     banhji.checkOut = kendo.observable({
         lang                : langVM,
@@ -19942,4 +20012,4 @@
         banhji.router.start();
         banhji.source.pageLoad();
     });
-</script>
+</script>                                                                                                                                                                                                                                                                                                                                                                                                                                            

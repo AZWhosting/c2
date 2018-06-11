@@ -311,6 +311,7 @@ class Transactions extends REST_Controller {
 					"employee_id" 				=> $value->employee_id,
 				   	"number" 					=> $value->number,
 				   	"type" 						=> $value->type,
+				   	"sub_type" 					=> $value->sub_type,
 				   	"journal_type" 				=> $value->journal_type,
 				   	"sub_total"					=> floatval($value->sub_total),
 				   	"discount" 					=> floatval($value->discount),
@@ -430,6 +431,7 @@ class Transactions extends REST_Controller {
 			isset($value->employee_id) 				? $obj->employee_id 				= $value->employee_id : "";
 			$obj->number = $number;
 		   	isset($value->type) 					? $obj->type 						= $value->type : "";
+		   	isset($value->sub_type) 				? $obj->sub_type 					= $value->sub_type : "";
 		   	isset($value->journal_type) 			? $obj->journal_type 				= $value->journal_type : "";
 		   	isset($value->sub_total) 				? $obj->sub_total 					= $value->sub_total : "";
 		   	isset($value->discount) 				? $obj->discount 					= $value->discount : "";
@@ -551,6 +553,7 @@ class Transactions extends REST_Controller {
 					"employee_id" 				=> $obj->employee_id,
 					"number" 					=> $obj->number,
 				   	"type" 						=> $obj->type,
+				   	"sub_type" 					=> $obj->sub_type,
 				   	"journal_type" 				=> $obj->journal_type,
 				   	"sub_total"					=> floatval($obj->sub_total),
 				   	"discount" 					=> floatval($obj->discount),
@@ -648,6 +651,7 @@ class Transactions extends REST_Controller {
 			isset($value->employee_id) 				? $obj->employee_id 				= $value->employee_id : "";
 			isset($value->number) 					? $obj->number 						= $value->number : "";
 		   	isset($value->type) 					? $obj->type 						= $value->type : "";
+		   	isset($value->sub_type) 				? $obj->sub_type 					= $value->sub_type : "";
 		   	isset($value->journal_type) 			? $obj->journal_type 				= $value->journal_type : "";
 		   	isset($value->sub_total) 				? $obj->sub_total 					= $value->sub_total : "";
 		   	isset($value->discount) 				? $obj->discount 					= $value->discount : "";
@@ -786,6 +790,7 @@ class Transactions extends REST_Controller {
 					"employee_id" 				=> $obj->employee_id,
 					"number" 					=> $obj->number,
 				   	"type" 						=> $obj->type,
+				   	"sub_type" 					=> $obj->sub_type,
 				   	"journal_type" 				=> $obj->journal_type,
 				   	"sub_total"					=> floatval($obj->sub_total),
 				   	"discount" 					=> floatval($obj->discount),

@@ -27,9 +27,19 @@
                     <div class="card">
                         <div class="card-body" >
                         	<div id="indexMenu">
-                        		<a class="textAlignRight" style="position: absolute; right: 25px; top: 10px; font-size: 23px; cursor: pointer;">
-                        			<i class="ti-fullscreen"></i>
-                        		</a>
+                        		<div class="hidden-sm-down" style="position: absolute; right: 15px; top: 15px;">
+                        			<div class="btn-group float-right">
+						                <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						                	Add New Transaction
+						                </button>
+						                <div class="dropdown-menu">
+						                    <a class="dropdown-item" href="#/quote"><span data-bind="text: lang.lang.create_quotation"></span></a>
+						                    <a class="dropdown-item" href="#/invoice"><span data-bind="text: lang.lang.create_invoice"></span></a>
+						                    <a class="dropdown-item" href="#/cash_sale"><span data-bind="text: lang.lang.create_cash_sale"></span></a>
+						                    <a class="dropdown-item" href="#/cash_receipt"><span data-bind="text: lang.lang.create_cash_receipt"></span></a>
+						                </div>
+						            </div>
+                        		</div>
                         	</div>
 			                <div class="tab-content">	
 				                <div class="tab-pane active" role="tabpanel">
@@ -48,9 +58,9 @@
 <!-- Menu -->
 <script id="tapMenu" type="text/x-kendo-template">
 	<ul class="nav nav-tabs customtab" role="tablist" >
-		<li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#/" data-bind="click: goReports"><span class="hidden-sm-up"><i class="ti-layout-grid2-thumb"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.dashbaord"></span></a> </li>
+		<li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#/" data-bind="click: goReports"><span class="hidden-sm-up"><i class="ti-layout-grid2-thumb"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.reports"></span></a> </li>
 	    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#/check_out" data-bind="click: goCheckOut"><span class="hidden-sm-up"><i class="ti-layout-accordion-list"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.check_out"></span></a> </li>
-	    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#/transactions" data-bind="click: goTransactions"><span class="hidden-sm-up"><i class="ti-layout-accordion-list"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.sale_transactions"></span></a> </li>
+	    <!-- <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#/transactions" data-bind="click: goTransactions"><span class="hidden-sm-up"><i class="ti-layout-accordion-list"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.sale_transactions"></span></a> </li> -->
 	    <li class="nav-item hidden-sm-down"> <a class="nav-link" data-toggle="tab" href="#/customers" data-bind="click: goMenuCustomers"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.customers"></span></a> </li>
     </ul>
 </script>
@@ -59,28 +69,26 @@
 <!-- Menu -->
 <script id="reports" type="text/x-kendo-template">
 	<div class="row home" id="reports">
-		<div class="col-md-4">
-			<div class="saleOverview">
+
+		<!-- 111 -->
+		<div class="col-12 col-md-4">
+			<div class="saleOverview"  style="margin-bottom: 15px;">
 				<h2 data-bind="text: lang.lang.sale"></h2>
 				<p data-format="n" data-bind="text: obj.sale"></p>
-				<div class="col-md-12">
-					<div class="col-md-4">
+				<div class="row">
+					<div class="col">
 						<span data-bind="text: obj.sale_customer"></span>
 						<span data-bind="text: lang.lang.customer"></span>
 					</div>
-					<div class="col-md-4">
+					<div class="col">
 						<span data-bind="text: obj.sale_product"></span>
 						<span data-bind="text: lang.lang.product"></span>
-					</div>
-					<div class="col-md-4">
-						<span data-bind="text: obj.sale_ordered"></span>
-						<span data-bind="text: lang.lang.order"></span>
 					</div>
 				</div>
 			</div>
 
 			<!-- Report -->
-            <div class="report ">
+            <!-- <div class="report ">
 				<div class="col-md-12">
 					<h3 class="marginBottom"><a href="#/sale_detail_by_customer" data-bind="text: lang.lang.sale_detail_by_customer" ></a></h3>
 					
@@ -88,8 +96,8 @@
 				<div class="col-md-12">
 					<h3 style="border-bottom: none; padding-bottom: 0;"><a href="#/sale_detail_by_product" data-bind="text: lang.lang.sale_detail_by_product_services" ></a></h3>
 					
-				</div>						    					
-			</div>
+				</div>
+			</div> -->
 
 			<!-- Top 4 -->
 			<div class="top5 home-footer">
@@ -108,24 +116,27 @@
                 </table>
             </div>					                        
 		</div>
-		<div class="col-md-4">
-			<div class="saleOverview">
-				<h2 data-bind="text: lang.lang.sale_order"></h2>
-				<p data-format="n0" data-bind="text: obj.so"></p>
-				<div class="col-md-12">
-					<div class="col-md-6">
-						<span data-format="n0" data-bind="text: obj.so_avg"></span>
-						<span data-bind="text: lang.lang.average"></span>
+
+
+		<!-- 222 -->
+		<div class="col-12 col-md-4">
+			<div class="saleOverview" style="margin-bottom: 15px;">
+				<h2 data-bind="text: lang.lang.receivable"></h2>
+				<p data-format="n0" data-bind="text: obj.ar"></p>
+				<div class="row">
+					<div class="col">
+						<span data-format="n0" data-bind="text: obj.ar_open"></span>
+						<span data-bind="text: lang.lang.open"></span>
 					</div>
-					<div class="col-md-6">
-						<span data-bind="text: obj.so_open"></span>
-						<span data-bind="text: lang.lang.order_open"></span>
+					<div class="col">
+						<span data-bind="text: obj.ar_overdue"></span>
+						<span data-bind="text: lang.lang.overdue"></span>
 					</div>
 				</div>
 			</div>
 
 			<!-- Report -->
-			<div class="report" >
+			<!-- <div class="report" >
 				<div class="col-md-12">
 					<h3 class="marginBottom"><a href="#/customer_balance_detail" data-bind="text: lang.lang.customer_balance_detail" ></a></h3>
 					
@@ -134,7 +145,7 @@
 					<h3 style="border-bottom: none; padding-bottom: 0;"><a href="#/receivable_aging_summary" data-bind="text: lang.lang.receivable_aging_summary"></a></h3>
 						
 				</div>
-			</div>
+			</div> -->
 
 			<!-- Top 4 -->
 			<div class="top5 home-footer">
@@ -153,39 +164,29 @@
                 </table>
             </div>					                        
 		</div>
-		<div class="col-md-4">
-			<div class="saleOverview">
-				<h2 data-bind="text: lang.lang.receivable"></h2>
-				<p data-format="n" data-bind="text: obj.ar"></p>
-				<div class="col-md-12">
-					<div class="col-md-4">
-						<span data-format="n0" data-bind="text: obj.ar_open"></span>
-						<span data-bind="text: lang.lang.open"></span>
-					</div>
-					<div class="col-md-4">
-						<span data-bind="text: obj.ar_customer"></span>
-						<span data-bind="text: lang.lang.customers"></span>
-					</div>
-					<div class="col-md-4">
-						<span data-bind="text: obj.ar_overdue"></span>
-						<span data-bind="text: lang.lang.overdue"></span>
+
+		<!-- 333 -->
+		<div class="col-12 col-md-4">
+			<div class="saleOverview" style="margin-bottom: 15px;">
+				<div class="col">
+					<div class="draf" style="min-height: 95px;">
 					</div>
 				</div>
+				<div class="col btn-group float-right">
+	                <button style="width: 100%;" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	                	Reports
+	                </button>
+	                <div class="dropdown-menu">
+	                    <a class="dropdown-item" href="#/sale_detail_by_customer" data-bind="text: lang.lang.sale_detail_by_customer"></a>
+	                    <a class="dropdown-item" href="#/sale_detail_by_product" data-bind="text: lang.lang.sale_detail_by_product_services"></a>
+	                    <a class="dropdown-item" href="#/customer_balance_detail" data-bind="text: lang.lang.customer_balance_detail"></a>
+	                    <a class="dropdown-item" href="#/receivable_aging_summary" data-bind="text: lang.lang.receivable_aging_summary"></a>
+	                    <a class="dropdown-item" href="#/collect_invoice" data-bind="text: lang.lang.list_of_invoices_to_be_collected"></a>
+	                    <a class="dropdown-item" href="#/collection_report" data-bind="text: lang.lang.collection_report"></a>
+	                </div>
+	            </div>
 			</div>
 
-			<!-- Report -->
-			<div class="report">
-				<div class="col-md-12">
-					<h3 class="marginBottom"><a href="#/collect_invoice" data-bind="text: lang.lang.list_of_invoices_to_be_collected"></a></h3>
-					
-				</div>
-				<div class="col-md-12">
-					<h3 style="border-bottom: none; padding-bottom: 0;"><a href="#/collection_report" data-bind="text: lang.lang.collection_report"></a></h3>
-					
-				</div>
-			</div>
-
-			<!-- Top 4 -->
 			<div class="top5 home-footer">
                 <table class="table color-table dark-table">
                     <thead>
@@ -200,16 +201,74 @@
                          data-template="top-product-template"
                          data-bind="source: obj.top_cash_receipt"></tbody>
                 </table>
-            </div>					                        
+            </div>
 		</div>
-	</div>	
+
+	</div>
+
+	<div class="row ">
+    	<div class="col-md-8">
+			<input data-role="dropdownlist"  
+				   class="sorter marginRight marginBottom float-left"
+		           data-value-primitive="true"
+		           data-text-field="text"
+		           data-value-field="value"
+		           data-bind="value: sorter,
+		                      source: sortList,
+		                      events: { change: sorterChanges }" />
+
+			<input data-role="datepicker"
+				   class="sdate marginRight marginBottom float-left"
+				   data-format="dd-MM-yyyy"
+		           data-bind="value: sdate,
+		           			  max: edate"
+		           placeholder="From ..." />
+
+		    <input data-role="datepicker" 
+		    	   class="edate marginRight marginBottom float-left"
+		    	   data-format="dd-MM-yyyy"
+		           data-bind="value: edate,
+		                      min: sdate"
+		           placeholder="To ..." />
+
+		  	<button class="btnSearch float-left" type="button" data-role="button" data-bind="click: search"><i class="ti-search"></i></button>
+		</div>
+	</div>
+
+	<div  class="row ">
+        <div class="col-md-12 marginTop table-responsive grid" >
+        	<div data-role="grid" class="table color-table dark-table"
+	             data-pageable='true'
+	             data-auto-bind="false"
+	             data-filterable="true"
+	             data-columns="[
+	             	{ field: 'issued_date', title : 'DATE', template:'#=kendo.toString(new Date(issued_date), banhji.dateFormat)#', filterable: { multi: true, search: true}, attributes: { style: 'text-align: center;'}},
+	             	{ field: 'name', title : 'NAME', filterable: { multi: true, search: true} },
+	             	{ field: 'type', title : 'TYPE', filterable: { multi: true, search: true} },				                 
+	                { field: 'number', title: 'REFERENCE', template: '<a href=\'purchases\\#/#=type.toLowerCase()#/#=id#\'>#=number#</a>', filterable: { multi: true, search: true} , attributes: { style: 'text-align: center;'} },
+	                { field: 'amount', title: 'AMOUNT', format: '{0:n}', attributes: { style: 'text-align: right;'}, filterable: { multi: true, search: true} },
+	                { 
+	                	title: 'STATUS', 
+	                	template: kendo.template($('#transactions-status-tmpl').html()),
+	                	attributes: { style: 'text-align: center;'}              	
+	                },
+	                { 
+	                	title: 'ACTIONS',
+	                	template: kendo.template($('#transactions-action-tmpl').html()),
+	                	attributes: { style: 'text-align: center;'}
+	                }
+	             ]"
+	             data-bind="source: txnDS"></div>
+        </div>
+    </div>
+
 </script>
 <script id="checkOut" type="text/x-kendo-template">	
 	<div class="row" id="checkOut">
-		<div class="col-md-6">
+		<div class="col">
 			<div class="listWrapper">
 				<div class="row">
-					<div class="col-md-6">
+					<div class="col">
 						<div class="widget-search marginBottom">
 							<div class="overflow-hidden" style="width: 100%;">
 								<input type="search" placeholder="Barcode..." data-bind="value: barcode, events: {change: barcodeChange}" style="width: 100%;" />
@@ -217,7 +276,7 @@
 							
 						</div>
 					</div>
-					<div class="col-md-6">
+					<div class="col">
 						<div class="widget-search marginBottom">
 							<div class="overflow-hidden">
 								<input type="search" placeholder="Number or Name..." data-bind="value: searchText" />
@@ -278,10 +337,10 @@
 
 			</div>
 		</div>
-		<div class="col-md-6">
+		<div class="col">
 			<div class="listWrapper marginBottom" style="height: auto;">
 				<div class="row hidden-sm-down">
-					<div class="col-md-6">
+					<div class="col">
 						<input 
 							data-role="dropdownlist"
 							data-template="contact-list-tmpl" 
@@ -299,14 +358,23 @@
                             aria-invalid="true" 
                             class="k-invalid marginBottom"
                         />
-                        <input type="text" 
-		                	style="width: 100%; margin-bottom: 5px;" 
-		                	data-role="datetimepicker"
-				           	data-bind="
-				           		value: dateSelected
-				           	" />
+                        <div class="table-responsive">
+							<table class="table color-table dark-table">
+						        <thead>
+						            <tr>
+						            	<th style="vertical-align: top;" data-bind="text: lang.lang.no_"></th>
+						            	<th style="vertical-align: top;" data-bind="text: lang.lang.name"></th>
+						            </tr>
+						        </thead>
+						        <tbody data-role="listview" 
+					        		data-template="customer-select-list-tmpl" 
+					        		data-auto-bind="false"
+					        		data-bind="source: customerAR">
+					        	</tbody>
+						    </table>
+		                </div>
                     </div>
-					<div class="col-md-6 table-responsive">
+					<div class="col table-responsive">
 						<table class="table color-table dark-table">
 					        <thead>
 					            <tr>
@@ -408,33 +476,54 @@
 				                 data-bind="source: lineDS" >
 				            </div>
 						</div>
-
-						<table class="table color-table dark-table marginBottom">
-							<tbody>
-								<tr>
-									<td class="textAlignRight" style="width: 60%;"><span data-bind="text: lang.lang.subtotal" style="font-size: 15px; font-weight: 700;"></span></td>
-									<td class="textAlignRight" width="40%"><span data-format="n" data-bind="text: obj.sub_total" style="font-size: 15px; font-weight: 700;"></span></td>
-								</tr>
-								<tr>
-									<td class="textAlignRight"><span>Discount</span></td>
-									<td class="textAlignRight ">
-										<span data-format="n" data-bind="text: obj.discount"></span>
-									</td>
-								</tr>               
-								<tr>
-									<td class="textAlignRight"><span data-bind="text: lang.lang.total_tax"></span></td>
-									<td class="textAlignRight "><span data-format="n" data-bind="text: obj.tax"></span></td>
-								</tr>
-								<tr>
-									<td class="textAlignRight"><h4 data-bind="text: lang.lang.total" style="font-weight: 700;"></h4></td>
-									<td class="textAlignRight"><h4 data-bind="text: total" style="font-weight: 700;"></h4></td>
-								</tr>
-							</tbody>
-						</table>
+						<div class="row">
+							<div class="col-12 col-md-6">
+								<table class="table color-table dark-table marginBottom">
+									<tbody>
+										<tr>
+											<td class="textAlignRight" style="width: 60%;"><span data-bind="text: lang.lang.subtotal" style="font-size: 15px; font-weight: 700;"></span></td>
+											<td class="textAlignRight" width="40%"><span data-format="n" data-bind="text: obj.sub_total" style="font-size: 15px; font-weight: 700;"></span></td>
+										</tr>
+										<tr>
+											<td class="textAlignRight"><span>Discount</span></td>
+											<td class="textAlignRight ">
+												<span data-format="n" data-bind="text: obj.discount"></span>
+											</td>
+										</tr>               
+										<tr>
+											<td class="textAlignRight"><span data-bind="text: lang.lang.total_tax"></span></td>
+											<td class="textAlignRight "><span data-format="n" data-bind="text: obj.tax"></span></td>
+										</tr>
+										<tr>
+											<td class="textAlignRight"><h4 data-bind="text: lang.lang.total" style="font-weight: 700;"></h4></td>
+											<td class="textAlignRight"><h4 data-bind="text: total" style="font-weight: 700;"></h4></td>
+										</tr>
+									</tbody>
+								</table>
+							</div> 
+							<div class="col-12 col-md-6 checkOut-button">
+								<div class="row">
+									<div class="col" >
+										<a style="padding: 25px 15px; box-shadow: 2px 0px 12px 0px rgba(68,68,68,1); border-radius: 5px 5px 0 0; margin-bottom: 1px; " class="buttonpay btn waves-effect waves-light btn-block btn-info" data-bind="click: saveInvoice" data-bind="click: saveCashSale"><span style="font-size: 15px;" data-bind="text: lang.lang.pay">Pay</span></a>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-4" style="padding-right: 0;">
+										<a style="border-radius: 0 0 0 5px; " class="buttoninvoice btn waves-effect waves-light btn-block btn-info" data-bind="click: saveInvoice" data-bind="click: saveInvoice"><span data-bind="text: lang.lang.invoice">Issue <br/>Invoice</span></a>
+									</div>
+									<div class="col-4" style="padding: 0;">
+										<a style="margin: 0 2px; width: 96%; " class="buttonparksale btn waves-effect waves-light btn-block btn-info" data-bind="click: saveInvoice"><span data-bind="">Park <br/> Sale</span></a>
+									</div>
+									<div class="col-4" style="padding-left: 0;">
+										<a style="border-radius: 0 0 5px 0; " class="buttoncancelsale btn waves-effect waves-light btn-block btn-info" data-bind="click: saveInvoice"><span data-bind="">Cancel <br/> Sale</span></a>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-md-6">
+					<div class="col">
 						<table class="table color-table dark-table">
 					        <thead>
 					            <tr>
@@ -449,7 +538,7 @@
 				        	</tbody>
 					    </table>				
 					</div>
-					<div class="col-md-6">
+					<div class="col">
 					    <table class="table color-table dark-table">
 					        <thead>
 					            <tr>
@@ -463,8 +552,10 @@
 				        		data-bind="source: receipChangeDS">
 				        	</tbody>
 					    </table>
-					    <a class="btn waves-effect waves-light btn-block btn-info" data-bind="click: saveInvoice"><span data-bind="text: lang.lang.invoice">Invoice</span></a>
-						<a class="btn waves-effect waves-light btn-block btn-info" data-bind="click: saveCashSale"><span data-bind="text: lang.lang.pay">Pay</span></a>
+					   <!--  <div class="checkOut-button">
+						    <a class="btn waves-effect waves-light btn-block btn-info" data-bind="click: saveInvoice"><span data-bind="text: lang.lang.invoice">Invoice</span></a>
+							<a class="btn waves-effect waves-light btn-block btn-info" data-bind="click: saveCashSale"><span data-bind="text: lang.lang.pay">Pay</span></a>
+						</div> -->
 					</div>
 				</div>
 			</div>
@@ -616,8 +707,7 @@
 <script id="item-list-view-template" type="text/x-kendo-template">
 	<div class="product" data-bind="click:addRow" style="text-align: center;">
 		<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/no_image.jpg" />
-		<h3>#:name#</h3>
-		<p>#=kendo.toString(price, locale=="km-KH"?"c0":"c", locale)#</p>
+		<h3>#:name#</h3>		
 	</div>
 </script>
 <script id="customer-select-list-tmpl" type="text/x-kendo-tmpl">
@@ -629,6 +719,7 @@
 		<td>#= name#</td>
 	</tr>
 </script>
+<!--  -->
 <script id="transactions" type="text/x-kendo-template">	
 	<div class="row">		
         <div class="col-md-12">
@@ -761,7 +852,7 @@
 <script id="transactions-action-tmpl" type="text/x-kendo-tmpl">
 	#if(type=="Commercial_Invoice" || type=="Vat_Invoice" || type=="Invoice"){#
 		#if(status=="0" || status=="2") {#
-			<button data-bind="click: payInvoice"><i></i> <span data-bind="text: lang.lang.receive_payment"></span></button>
+			<button class="k-button btn-info" data-bind="click: payInvoice"><i></i> <span data-bind="text: lang.lang.receive_payment"></span></button>
 		#}#
 	#}#
 
@@ -812,7 +903,7 @@
 	<div class="row" id="customers">
 		<div class="col-md-3">
 			<div class="listWrapper">
-				<a href="#/customer" class="btn waves-effect waves-light btn-block btn-info btnAddCustomer"><i class="icon-user-follow marginRight"></i><span data-bind="">Add New Customer</span></a>
+				<a href="#/customer" style="padding: 5px 0; font-size: 18px;" class="btn waves-effect waves-light btn-block btn-info btnAddCustomer"><i class="icon-user-follow marginRight"></i><span data-bind="">New Customer</span></a>
 				<div class="innerAll">
 					<form autocomplete="off" class="form-inline">
 						<div class="widget-search">
@@ -821,15 +912,7 @@
 							</div>
 							<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="ti-search"></i></button>
 						</div>
-						<div class="select2-container">
-							<input data-role="dropdownlist" style="width: 100%;" 
-				                   data-option-label="Select Type..."
-				                   data-value-primitive="true"
-				                   data-text-field="name"
-				                   data-value-field="id"
-				                   data-bind="value: contact_type_id,
-				                              source: contactTypeDS"/>
-						</div>
+						
 					</form>
 				</div>
 
@@ -7128,4 +7211,4 @@
 		#=code# - #=country#
 	</span>
 </script>
-<!-- End -->
+<!-- End -->                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           

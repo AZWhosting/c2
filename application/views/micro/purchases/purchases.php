@@ -231,24 +231,26 @@
 			</div>
 
             <div  class="row ">
-	            <div class="col-md-12 marginTop table-responsive" >
+	            <div class="col-md-12 marginTop table-responsive grid" >
 	            	<div data-role="grid" class="table color-table dark-table"
 			             data-pageable='true'
 			             data-auto-bind="false"
 			             data-filterable="true"
 			             data-columns="[
-			                { field: 'issued_date' , title : 'DATE', template:'#=kendo.toString(new Date(issued_date), banhji.dateFormat)#', filterable: { multi: true, search: true} },
+			                { field: 'issued_date' , title : 'DATE', template:'#=kendo.toString(new Date(issued_date), banhji.dateFormat)#', filterable: { multi: true, search: true},attributes: { style: 'text-align: center;'} },
 			                { field: 'name' , title : 'NAME' , filterable: { multi: true, search: true} },
 			                { field: 'type' , title : 'TYPE' , filterable: { multi: true, search: true} },
-			                { field: 'number' , title: 'REFERENCE' , filterable: { multi: true, search: true} , template: '<a href=\'purchases\\#/#=type.toLowerCase()#/#=id#\'>#=number#</a>'},
+			                { field: 'number' , title: 'REFERENCE' , filterable: { multi: true, search: true} ,attributes: { style: 'text-align: center;'}, template: '<a href=\'purchases\\#/#=type.toLowerCase()#/#=id#\'>#=number#</a>' },
 			                { field: 'amount' , title: 'AMOUNT' , filterable: { multi: true, search: true}, format: '{0:n}' , attributes: { style: 'text-align: right;'} },
 			                { 
 			                	title: 'STATUS', 
-			                	template: kendo.template($('#transactions-status-tmpl').html()) 
+			                	template: kendo.template($('#transactions-status-tmpl').html()),
+			                	attributes: { style: 'text-align: center;'}
 			                },
 			                { 
 			                	title: 'ACTIONS',
-			                	template: kendo.template($('#transactions-action-tmpl').html())
+			                	template: kendo.template($('#transactions-action-tmpl').html()),
+			                	attributes: { style: 'text-align: center;'}
 			                }
 			                 
 			             ]"
@@ -293,7 +295,7 @@
 <script id="transactions-action-tmpl" type="text/x-kendo-tmpl">
 	#if(type=="Credit_Purchase"){#
 		#if(status=="0" || status=="2") {#
-			<a data-bind="click: payBill"><button>Pay Bill</button></a>
+			<a class="k-button btn-info" data-bind="click: payBill"><button>Pay Bill</button></a>
 		#}#
 	#}#
 
@@ -353,15 +355,7 @@
 							</div>
 							<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="ti-search"></i></button>
 						</div>
-						<div class="select2-container">
-							<input data-role="dropdownlist" style="width: 100%;" 
-				                   data-option-label="Select Type..."
-				                   data-value-primitive="true"
-				                   data-text-field="name"
-				                   data-value-field="id"
-				                   data-bind="value: contact_type_id,
-				                              source: contactTypeDS"/>
-						</div>
+						
 					</form>
 				</div>
 
