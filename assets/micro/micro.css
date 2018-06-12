@@ -943,7 +943,7 @@ a.fa.fa-qrcode:before{
     float: left;
     position: relative;
     width: 123px;
-    height: 165px;
+    height: 170px;
     cursor: pointer;
     background: #fff;
     margin-right: 2px;
@@ -984,11 +984,17 @@ a.fa.fa-qrcode:before{
     content: "";
     display: block;
     width: 123px;
-    height: 165px;
+    height: 130px;
     position: absolute;
     top: 0;
     left: 0;
     background-color: rgba(0,0,0,0);
+}
+.view-details:hover:after {
+    background-color: rgba(0,0,0,0.75);
+    background-image: url(https://demos.telerik.com/kendo-ui/content/spa/websushi/css/images/arrow-right.png);
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
 }
 /*End*/
 
