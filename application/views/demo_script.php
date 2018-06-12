@@ -9,6 +9,8 @@
     banhji.s3 = "https://banhji.s3.amazonaws.com/";
     banhji.token = null;
     banhji.dateFormat = "dd-MM-yyyy";
+    banhji.numberFormat = "n";
+    banhji.currencyFormat = "c";
     banhji.emptyString = "";
     banhji.no_image = "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/no_image.jpg";
     // custom widget for min and max

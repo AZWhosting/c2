@@ -12,6 +12,8 @@ var	km_KH = {
 	"item_type" : "ប្រភេទសន្និធិ",
 	"item_group" : "ក្រុមសន្និធិ",
 	"dashbaord" : "ផ្ទាំងគ្រប់គ្រង",
+	"microinvoice" : "វិក្កយបត្រ",
+	"microparksale" : "Parksale",
 	//Main Dustboard
 	"search_contact" :  "ស្វែងរក​ទំនាក់ទំនង",
 	"contact" :  "ទំនាក់ទំនង",

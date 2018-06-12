@@ -27,10 +27,10 @@
                     <div class="card">
                         <div class="card-body" >
                         	<div id="indexMenu">
-                        		<div class="hidden-sm-down" style="position: absolute; right: 15px; top: 15px;">
+                        		<div class="hidden-sm-down" style="position: absolute; right: 20px; top: 20px;">
                         			<div class="btn-group float-right">
-						                <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						                	Add New Transaction
+						                <button style="font-size: 17px; " type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						                	New Transaction
 						                </button>
 						                <div class="dropdown-menu">
 						                    <a class="dropdown-item" href="#/quote"><span data-bind="text: lang.lang.create_quotation"></span></a>
@@ -58,8 +58,8 @@
 <!-- Menu -->
 <script id="tapMenu" type="text/x-kendo-template">
 	<ul class="nav nav-tabs customtab" role="tablist" >
-		<li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#/" data-bind="click: goReports"><span class="hidden-sm-up"><i class="ti-layout-grid2-thumb"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.reports"></span></a> </li>
-	    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#/check_out" data-bind="click: goCheckOut"><span class="hidden-sm-up"><i class="ti-layout-accordion-list"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.check_out"></span></a> </li>
+		<li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#/check_out" data-bind="click: goCheckOut"><span class="hidden-sm-up"><i class="ti-layout-accordion-list"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.check_out"></span></a> </li>
+		<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#/" data-bind="click: goReports"><span class="hidden-sm-up"><i class="ti-layout-grid2-thumb"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.reports"></span></a> </li>	    
 	    <!-- <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#/transactions" data-bind="click: goTransactions"><span class="hidden-sm-up"><i class="ti-layout-accordion-list"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.sale_transactions"></span></a> </li> -->
 	    <li class="nav-item hidden-sm-down"> <a class="nav-link" data-toggle="tab" href="#/customers" data-bind="click: goMenuCustomers"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.customers"></span></a> </li>
     </ul>
@@ -293,7 +293,7 @@
 					        </div>
 					    </div>
 						<div data-bind="invisible: haveItems" class="demo-section k-content wide span12">
-							<p style="color: #fff; margin-bottom: 5px;" >Category</p>
+							<p style="color: #fff; margin-bottom: 5px; float: left; width: 100%;" >Category</p>
 							<div class="demo-section k-content wide">
 								<div 
 									id="productListView"
@@ -509,13 +509,13 @@
 								</div>
 								<div class="row">
 									<div class="col-4" style="padding-right: 0;">
-										<a style="border-radius: 0 0 0 5px; " class="buttoninvoice btn waves-effect waves-light btn-block btn-info" data-bind="click: saveInvoice" data-bind="click: saveInvoice"><span data-bind="text: lang.lang.invoice">Issue <br/>Invoice</span></a>
+										<a style="border-radius: 0 0 0 5px; " class="buttoninvoice btn waves-effect waves-light btn-block btn-info" data-bind="click: saveInvoice" data-bind="click: saveInvoice"><span data-bind="text: lang.lang.microinvoice">Issue <br/>Invoice</span></a>
 									</div>
 									<div class="col-4" style="padding: 0;">
-										<a style="margin: 0 2px; width: 96%; " class="buttonparksale btn waves-effect waves-light btn-block btn-info" data-bind="click: saveInvoice"><span data-bind="">Park <br/> Sale</span></a>
+										<a style="margin: 0 2px; width: 96%; " class="buttonparksale btn waves-effect waves-light btn-block btn-info" data-bind="click: saveInvoice"><span data-bind="text: lang.lang.microparksale">Parksale</span></a>
 									</div>
 									<div class="col-4" style="padding-left: 0;">
-										<a style="border-radius: 0 0 5px 0; " class="buttoncancelsale btn waves-effect waves-light btn-block btn-info" data-bind="click: saveInvoice"><span data-bind="">Cancel <br/> Sale</span></a>
+										<a style="border-radius: 0 0 5px 0; " class="buttoncancelsale btn waves-effect waves-light btn-block btn-info" data-bind="click: saveInvoice"><span data-bind="text: lang.lang.cancel">Cancel</span></a>
 									</div>
 								</div>
 							</div>
@@ -706,8 +706,10 @@
 </script>
 <script id="item-list-view-template" type="text/x-kendo-template">
 	<div class="product" data-bind="click:addRow" style="text-align: center;">
-		<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/no_image.jpg" />
-		<h3>#:name#</h3>		
+		<a class="view-details">
+			<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/no_image.jpg" />
+			<h3>#:name#</h3>
+		</a>		
 	</div>
 </script>
 <script id="customer-select-list-tmpl" type="text/x-kendo-tmpl">
@@ -7151,7 +7153,7 @@
                     #=name#
                 #}#
             </span>
-            <span class="pull-right">#:kendo.toString(kendo.parseInt(total), "n0")#</span>
+            <span class="pull-right">#:kendo.toString(kendo.parseInt(total), banhji.locale=="km-KH"?"c0":"c2", banhji.locale)#</span>
         </td>
     </tr>
 </script>
@@ -7211,4 +7213,4 @@
 		#=code# - #=country#
 	</span>
 </script>
-<!-- End -->                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+<!-- End -->     

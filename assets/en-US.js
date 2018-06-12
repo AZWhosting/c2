@@ -13,6 +13,8 @@ var	en_US = {
 	"item_group" : "Inventory Group",
 	"dashbaord" : "Dashbaord",
 	"microitems" : "Items",
+	"microinvoice" : "Invoice",
+	"microparksale" : "Parksale",
 	//Main Dustboard
 	"search_contact" : "Search Contact",
 	"contact" : "Contact",

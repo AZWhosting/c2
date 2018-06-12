@@ -1376,6 +1376,7 @@ class Accounting_modules extends REST_Controller {
 		//Response Data		
 		$this->response($data, 200);	
 	}
+	//GET TRIAL BALANCE OPTIMIZED
 	function trial_balance_get() {		
 		$filter 	= $this->get("filter");
 		$page 		= $this->get('page');
@@ -1509,16 +1510,19 @@ class Accounting_modules extends REST_Controller {
 		$retainEarning->where_related("transaction", "is_recurring <>", 1);
 		$retainEarning->where_related("transaction", "deleted <>", 1);		
 		$retainEarning->where("deleted <>", 1);
-		$retainEarning->get();
+		//$retainEarning->get();
+		$data["xxx"] = $retainEarning->get_raw()->result();
 
-		$retainEarningAmount = floatval($retainEarning->total);
-		$objList[] = array(
-			"id" 			=> $retainEarning->account_id,
-			"number" 		=> $retainEarning->account_number,
-			"name" 			=> $retainEarning->account_name,				
-		   	"type" 			=> $retainEarning->account_account_type_name,
-		   	"amount" 		=> $prevPLAmount + $retainEarningAmount
-		);
+		$retainEarningAmount = $prevPLAmount + floatval($retainEarning->total);
+		// if($retainEarningAmount>0){
+			$objList[] = array(
+				"id" 			=> $retainEarning->account_id,
+				"number" 		=> $retainEarning->account_number,
+				"name" 			=> $retainEarning->account_name,				
+			   	"type" 			=> $retainEarning->account_account_type_name,
+			   	"amount" 		=> $retainEarningAmount
+			);
+		// }
 		//END RETAINED EARNING
 
 		foreach ($objList as $value) {
@@ -1537,10 +1541,7 @@ class Accounting_modules extends REST_Controller {
 			   	"dr" 		=> $dr,
 			   	"cr" 		=> $cr
 			);
-		}
-
-		$data["asof"] = $asOf;
-		$data["sd"] = $startDate;	
+		}	
 				
 		$data["count"] = count($data["results"]);
 

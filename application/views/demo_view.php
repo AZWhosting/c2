@@ -39806,7 +39806,7 @@
                                 { 
                                 	field: 'dr', 
                                 	title:'DR',
-                                	template: '#=Math.abs(dr)#',
+                                	template: kendo.template($('#trialBalance-dr-tmpl').html()),
                                 	attributes: {
 								      	style: 'text-align: right;'
 								    },
@@ -39815,7 +39815,7 @@
                                 { 
                                 	field: 'cr', 
                                 	title:'CR',
-                                	template: '#=Math.abs(cr)#',
+                                	template: kendo.template($('#trialBalance-cr-tmpl').html()),
                                 	attributes: {
 								      	style: 'text-align: right;'
 								    },
@@ -39831,42 +39831,16 @@
 		</div>
 	</div>
 </script>
-<!-- <script id="trialBalance-template" type="text/x-kendo-tmpl">
-	<tr>
-		<td style="color: black;">
-			#=number#
-		</td>
-		<td style="color: black;">
-			#=name#
-		</td>
-		<td style="color: black;">
-			#=type#
-		</td>
-		<td class="right" style="color: black;">
-			#if(dr!==0){#
-				<a data-bind="click:goToGeneralLegder">#=kendo.toString(dr, "c", banhji.locale)#</a>
-			#}#
-		</td>
-		<td class="right" style="color: black;">
-			#if(cr!==0){#
-				<a data-bind="click:goToGeneralLegder">#=kendo.toString(cr, "c", banhji.locale)#</a>				
-			#}#
-		</td>
-    </tr>
+<script id="trialBalance-dr-tmpl" type="text/x-kendo-tmpl">
+	#if(dr!==0){#
+		<a data-bind="click:goToGeneralLegder">#=kendo.toString(Math.abs(dr), "n", banhji.locale)#</a>
+	#}#
 </script>
-<script id="trialBalance-footer-template" type="text/x-kendo-template">
-    <tr class="bg-total">
-        <td data-bind="text: lang.lang.total" style="text-transform: uppercase;">TOTAL:</td>
-        <td></td>
-        <td></td>
-        <td class="right">
-            #: totalDr() #
-        </td>
-        <td class="right">
-            #: totalCr() #
-        </td>
-    </tr>
-</script> -->
+<script id="trialBalance-cr-tmpl" type="text/x-kendo-tmpl">
+	#if(cr!==0){#
+		<a data-bind="click:goToGeneralLegder">#=kendo.toString(Math.abs(cr), "n", banhji.locale)#</a>
+	#}#
+</script>
 <script id="chartOfAccount" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background ">

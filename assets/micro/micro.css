@@ -942,9 +942,8 @@ a.fa.fa-qrcode:before{
 .product {
     float: left;
     position: relative;
-    width: 93px;
-    height: 180px;
-    padding: 15px;
+    width: 123px;
+    height: 165px;
     cursor: pointer;
     background: #fff;
     margin-right: 2px;
@@ -955,7 +954,6 @@ a.fa.fa-qrcode:before{
     margin-bottom: 5px;
     border-bottom: 1px solid #0eac00;
     width: 100%;
-    padding-bottom: 15px;
 }
 .product h3 {
     margin: 0 auto;
@@ -977,6 +975,20 @@ a.fa.fa-qrcode:before{
 }
 .listWrapper.marginBottom a{
 	color: #fff;
+}
+.view-details, .view-details:hover {
+    display: block;
+    position: relative;
+}
+.view-details:after {
+    content: "";
+    display: block;
+    width: 123px;
+    height: 165px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(0,0,0,0);
 }
 /*End*/
 
@@ -1119,4 +1131,4 @@ a.fa.fa-qrcode:before{
 	.checkOut-button a.buttoncancelsale{
 		margin-bottom: 15px;
 	}
-}
+}                                            
