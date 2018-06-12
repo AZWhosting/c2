@@ -43,9 +43,9 @@
 <!-- Purchase Menu -->
 <script id="tapMenu" type="text/x-kendo-template">
 	<ul class="nav nav-tabs customtab" role="tablist" >
-		<li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#/" data-bind="click: goReports"><span class="hidden-sm-up"><i class="ti-layout-grid2-thumb"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.dashbaord"></span></a> </li>
+		<li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#/" data-bind="click: goReports"><span class="hidden-sm-up"><i class="ti-layout-grid2-thumb"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.reports"></span></a> </li>
 	    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#/transactions" data-bind="click: goTransactions"><span class="hidden-sm-up"><i class="ti-layout-accordion-list"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.purchase_transaction"></span></a> </li>
-	    <li class="nav-item hidden-sm-down"> <a class="nav-link" data-toggle="tab" href="#/purchase_center" data-bind="click: goPurchaseCenter"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.purchase"></span></a> </li>
+	    <li class="nav-item hidden-sm-down"> <a class="nav-link" data-toggle="tab" href="#/purchase_center" data-bind="click: goPurchaseCenter"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.suppliers"></span></a> </li>
     </ul>
 </script>
 <!-- End -->
@@ -346,7 +346,7 @@
 	<div class="row" id="customers">
 		<div class="col-md-3">
 			<div class="listWrapper">
-				<a href="#/vendor" class="btn waves-effect waves-light btn-block btn-info btnAddCustomer"><i class="icon-user-follow marginRight"></i><span data-bind="">Add New Supplier</span></a>
+				<a style="padding: 5px 0; font-size: 18px;" href="#/vendor" class="btn waves-effect waves-light btn-block btn-info btnAddCustomer"><i class="icon-user-follow marginRight"></i><span data-bind="">New Supplier</span></a>
 				<div class="innerAll">
 					<form autocomplete="off" class="form-inline">
 						<div class="widget-search">
@@ -6042,4 +6042,4 @@
 		</td>
 	</tr>
 </script>
-<!-- End -->
+<!-- End -->  

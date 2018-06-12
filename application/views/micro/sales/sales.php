@@ -58,8 +58,8 @@
 <!-- Menu -->
 <script id="tapMenu" type="text/x-kendo-template">
 	<ul class="nav nav-tabs customtab" role="tablist" >
-		<li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#/check_out" data-bind="click: goCheckOut"><span class="hidden-sm-up"><i class="ti-layout-accordion-list"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.check_out"></span></a> </li>
-		<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#/" data-bind="click: goReports"><span class="hidden-sm-up"><i class="ti-layout-grid2-thumb"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.reports"></span></a> </li>	    
+		<li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#/" data-bind="click: goCheckOut"><span class="hidden-sm-up"><i class="ti-layout-accordion-list"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.check_out"></span></a> </li>
+		<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#/reports" data-bind="click: goReports"><span class="hidden-sm-up"><i class="ti-layout-grid2-thumb"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.reports"></span></a> </li>	    
 	    <!-- <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#/transactions" data-bind="click: goTransactions"><span class="hidden-sm-up"><i class="ti-layout-accordion-list"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.sale_transactions"></span></a> </li> -->
 	    <li class="nav-item hidden-sm-down"> <a class="nav-link" data-toggle="tab" href="#/customers" data-bind="click: goMenuCustomers"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.customers"></span></a> </li>
     </ul>
@@ -268,7 +268,7 @@
 		<div class="col">
 			<div class="listWrapper">
 				<div class="row">
-					<div class="col">
+					<div class="col-12 col-md-6">
 						<div class="widget-search marginBottom">
 							<div class="overflow-hidden" style="width: 100%;">
 								<input type="search" placeholder="Barcode..." data-bind="value: barcode, events: {change: barcodeChange}" style="width: 100%;" />
@@ -276,7 +276,7 @@
 							
 						</div>
 					</div>
-					<div class="col">
+					<div class="col-12 col-md-6">
 						<div class="widget-search marginBottom">
 							<div class="overflow-hidden">
 								<input type="search" placeholder="Number or Name..." data-bind="value: searchText" />
@@ -310,7 +310,7 @@
 							</div>
 						</div>
 						<div data-bind="visible: haveItems" class="demo-section k-content wide span12">
-							<p style="color: #fff; margin-bottom: 5px;" >
+							<p style="color: #fff; margin-bottom: 5px; float: left; width: 100%;" >
 								<span style="float: left; width: 50%;">Items</span>
 								<span class="textAlignRight" data-bind="click: backCategory" style="float: right; width: 50%; cursor: pointer;">
 									<i class=" ti-control-backward"></i>
@@ -699,17 +699,19 @@
 </script>
 <script id="category-list-view-template" type="text/x-kendo-template">
 	<div class="product" data-bind="click:searchItemByCategory" style="text-align: center;">
-		<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/no_image.jpg" />
-		<h3>#:name#</h3>
-		<p>#=abbr#</p>
+		<a class="view-details">
+			<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/no_image.jpg" />
+			<h3>#:name#</h3>
+			<p>#=abbr#</p>
+		</a>
 	</div>
 </script>
 <script id="item-list-view-template" type="text/x-kendo-template">
 	<div class="product" data-bind="click:addRow" style="text-align: center;">
-		<a class="view-details">
+		<a class="view-details">		
 			<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/no_image.jpg" />
 			<h3>#:name#</h3>
-		</a>		
+		</a>			
 	</div>
 </script>
 <script id="customer-select-list-tmpl" type="text/x-kendo-tmpl">
@@ -977,28 +979,15 @@
                             <div class="tab-pane" id="customerInformation" role="tabpanel">
                             	<div class="p-10">
                             		<div class="row">
-                                    	<div class="col-sm-4">
+                                    	<div class="col-md-4">
                                     		<img class="main-image" data-bind="attr: { src: obj.image_url, alt: obj.name, title: obj.name }">
                                     	</div>
-                                    	<div class="col-sm-8">
+                                    	<div class="col-md-8">
                                     		<div class="accounCetner-textedit">
 								            	<table width="100%">
 													<tr>
-														<td width="40%"><span data-bind="text: lang.lang.customer_type"></span></td>
+														<td width="40%"><span data-bind="text: lang.lang.name"></span></td>
 														<td width="60%">
-															<span data-bind="text: objCustomerCenter.contact_type"></span>
-														</td>
-													</tr>
-													<tr>
-														<td><span data-bind="text: lang.lang.number"></span></td>
-														<td>
-															<span data-bind="text: objCustomerCenter.abbr"></span>
-															<span data-bind="text: objCustomerCenter.number"></span>
-														</td>
-													</tr>
-													<tr>
-														<td><span data-bind="text: lang.lang.name"></span></td>
-														<td>
 															<span data-bind="text: objCustomerCenter.name"></span>
 														</td>
 													</tr>
@@ -1006,12 +995,6 @@
 														<td><span data-bind="text: lang.lang.phone"></span></td>
 														<td>
 															<span data-bind="text: objCustomerCenter.phone"></span>
-														</td>
-													</tr>
-													<tr>
-														<td><span data-bind="text: lang.lang.currency"></span></td>
-														<td>
-															<span data-bind="text: currencyCode"></span>
 														</td>
 													</tr>
 												</table>
@@ -4721,10 +4704,10 @@
 <!--Tab Customer -->
 <script id="customerCenter-transaction-tmpl" type="text/x-kendo-tmpl">
     <tr>
-    	<td>#=kendo.toString(new Date(issued_date), "dd-MM-yyyy")#</td>
+    	<td style="text-align: center;">#=kendo.toString(new Date(issued_date), "dd-MM-yyyy")#</td>
     	<td>#=type#</td>
         <!-- Reference -->
-        <td>
+        <td style="text-align: center;">
         	#if(type=="Customer_Deposit" && amount<0){#
 				<a data-bind="click: goReference">#=number#</a>
 			#}else{#
@@ -4732,7 +4715,7 @@
 			#}#
         </td>
         <!-- Amount -->
-    	<td class="right">
+    	<td style="text-align: right;">
     		#if(type=="GDN"){#
     			#=kendo.toString(amount, "n0")#
     		#}else if(type=="Commercial_Invoice" || type=="Vat_Invoice" || type=="Invoice" || type=="Commercial_Cash_Sale" || type=="Vat_Cash_Sale" || type=="Cash_Sale"){#
@@ -4742,7 +4725,7 @@
     		#}#
     	</td>
     	<!-- Status -->
-    	<td align="center">
+    	<td style="text-align: center;">
     		#if(status=="4") {#
     			#=progress#
     		#}#
@@ -4775,10 +4758,10 @@
         	#}#
 		</td>
 		<!-- Actions -->
-    	<td align="center">
+    	<td style="text-align: center;">
 			#if(type=="Commercial_Invoice" || type=="Vat_Invoice" || type=="Invoice"){#
 				#if(status=="0" || status=="2") {#
-        			<a data-bind="click: payInvoice"><i></i> <span data-bind="text: lang.lang.receive_payment"></span></a>
+        			<a href="" data-bind="click: payInvoice"><i></i> <span data-bind="text: lang.lang.receive_payment"></span></a>
         		#}#
         	#}#
 
@@ -7213,4 +7196,4 @@
 		#=code# - #=country#
 	</span>
 </script>
-<!-- End -->     
+<!-- End -->       

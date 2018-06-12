@@ -929,6 +929,7 @@ a.fa.fa-qrcode:before{
 }
 #checkOut .k-content{
 	background: #2b2f3a;
+	min-width: 100%;
 }
 .demo-section.span12 {
     padding: 15px;
@@ -992,7 +993,7 @@ a.fa.fa-qrcode:before{
 }
 .view-details:hover:after {
     background-color: rgba(0,0,0,0.75);
-    background-image: url(https://demos.telerik.com/kendo-ui/content/spa/websushi/css/images/arrow-right.png);
+    background-image: url(arrow-right.png);
     background-repeat: no-repeat;
     background-position: 50% 50%;
 }
@@ -1137,4 +1138,4 @@ a.fa.fa-qrcode:before{
 	.checkOut-button a.buttoncancelsale{
 		margin-bottom: 15px;
 	}
-}                                            
+}                                                                   

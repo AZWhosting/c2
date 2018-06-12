@@ -38689,12 +38689,15 @@
 					        		data-template="journalReport-template"
 					        		data-bind="source: dataSource"></tbody>
 					    </table>
+
+					    <div id="pager" class="k-pager-wrap"
+					    	 data-role="pager"
+					    	 data-auto-bind="false"
+				             data-bind="source: dataSource">
+				        </div>
+			        
 					</div>
-		            <div id="pager" class="k-pager-wrap"
-				    	 data-role="pager"
-				    	 data-auto-bind="false"
-			             data-bind="source: dataSource">
-			        </div>
+		            
 				</div>
 			</div>
 		</div>
@@ -39080,6 +39083,39 @@
 							<h2 span data-bind="text: lang.lang.general_ledger"></h2>
 							<p data-bind="text: displayDate"></p>
 						</div>
+
+						<!-- <div class="costom-grid"
+							 data-role="grid"
+							 data-groupable="true"
+							 data-sortable="true"
+	                         data-column-menu="true"
+			                 data-columns="[
+			                 	{ field: 'issued_date', title:'DATE', width: 100 },
+			                 	{ field: 'type', title:'TYPE', width: 100 },
+                                { field: 'number', title:'REFERENCE NO.', width: 100 },
+                                { field: 'description', title:'DESCRIPTION' },
+                                { field: 'name', title:'NAME' },                                
+                                { 
+                                	field: 'dr', 
+                                	title:'DR',
+                                	template: kendo.template($('#trialBalance-dr-tmpl').html()),
+                                	attributes: {
+								      	style: 'text-align: right;'
+								    },
+								    width: 200
+                                },
+                                { 
+                                	field: 'cr', 
+                                	title:'CR',
+                                	template: kendo.template($('#trialBalance-cr-tmpl').html()),
+                                	attributes: {
+								      	style: 'text-align: right;'
+								    },
+								    width: 200
+                                }
+                             ]"
+                             data-auto-bind="false"
+			                 data-bind="source: dataSource"></div> -->
 
 						<table class="table table-borderless table-condensed">
 							<thead>

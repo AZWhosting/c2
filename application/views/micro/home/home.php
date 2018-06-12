@@ -46,21 +46,29 @@
                     <div style="float: left; width: 100%">
                         <div class="row">
                             <div class="col-6 col-md-3">
-                                <div class="functionHome">
-                                </div>
+                                <a href="sales">
+                                    <div class="functionHome">
+                                    </div>
+                                </a>
                             </div>
                             <div class="col-6 col-md-3">
-                                <div class="functionHome">
-                                </div>
+                                <a href="">
+                                    <div class="functionHome">
+                                    </div>
+                                </a>
                             </div>
 
                             <div class="col-6 col-md-3">
-                                <div class="functionHome">
-                                </div>
+                                <a href="">
+                                    <div class="functionHome">
+                                    </div>
+                                </a>
                             </div>
                             <div class="col-6 col-md-3">
-                                <div class="functionHome">
-                                </div>
+                                <a href="">
+                                    <div class="functionHome">
+                                    </div>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -285,4 +293,4 @@
         </td>
     </tr>
 </script>
-<!-- End -->                                                                                                                                                                                                                                                  
+<!-- End -->

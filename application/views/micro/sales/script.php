@@ -3473,10 +3473,10 @@
     banhji.tapMenu =  kendo.observable({
         lang     : langVM,
         goReports          : function(){
-            banhji.router.navigate('/');
+            banhji.router.navigate('/reports');
         },
         goCheckOut         : function(){
-            banhji.router.navigate('/check_out');
+            banhji.router.navigate('/');
         },
         goTransactions      : function(){
             banhji.router.navigate('/transactions');
@@ -18629,22 +18629,22 @@
 
         banhji.view.layout.showIn('#content', banhji.view.Index);
         banhji.view.Index.showIn('#indexMenu', banhji.view.tapMenu);
-        banhji.view.Index.showIn('#indexContent', banhji.view.reports);
+        banhji.view.Index.showIn('#indexContent', banhji.view.checkOut);
 
-        banhji.reports.pageLoad();        
+        banhji.checkOut.pageLoad();        
     });
-    banhji.router.route('/check_out', function() {
+    banhji.router.route('/reports', function() {
         
         banhji.view.layout.showIn('#content', banhji.view.Index);
         banhji.view.Index.showIn('#indexMenu', banhji.view.tapMenu);
-        banhji.view.Index.showIn('#indexContent', banhji.view.checkOut);
-        var vm = banhji.checkOut;
-        if(banhji.pageLoaded["check_out"]==undefined){
-            banhji.pageLoaded["check_out"] = true;
-            vm.lineDS.bind("change", vm.lineDSChanges);
-        }
+        banhji.view.Index.showIn('#indexContent', banhji.view.reports);
+        // var vm = banhji.reports;
+        // if(banhji.pageLoaded["reports"]==undefined){
+        //     banhji.pageLoaded["reports"] = true;
+        //     vm.lineDS.bind("change", vm.lineDSChanges);
+        // }
         //load MVVM
-        banhji.checkOut.pageLoad();
+        banhji.reports.pageLoad();
     });
     banhji.router.route('/transactions', function() {
         
@@ -20012,4 +20012,4 @@
         banhji.router.start();
         banhji.source.pageLoad();
     });
-</script>                                                                                                                                                                                                                                                                                                                                                                                                                                            
+</script>                                                                                                                                                                                                                                                                                                                                                                                                                                          

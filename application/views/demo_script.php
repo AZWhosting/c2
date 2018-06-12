@@ -2617,9 +2617,15 @@
             var id = this.get("id");
 
             this.txnDS.filter({ field:"id", value: id });
-            this.itemLineDS.filter({ field:"transaction_id", value: id });
-            this.accountLineDS.filter({ field:"transaction_id", value: id });
-            this.journalLineDS.filter({ field:"transaction_id", value: id });
+            this.itemLineDS.query({
+                filter:{ field:"transaction_id", value: id }
+            });
+            this.accountLineDS.query({
+                filter:{ field:"transaction_id", value: id }
+            });
+            this.journalLineDS.query({
+                filter:{ field:"transaction_id", value: id }
+            });
         }
     });
 
@@ -75287,6 +75293,7 @@
             if(banhji.pageLoaded["general_ledger"]==undefined){
                 banhji.pageLoaded["general_ledger"] = true;
 
+                vm.sorterChanges();
             }
 
             vm.pageLoad();
