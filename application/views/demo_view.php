@@ -38695,7 +38695,7 @@
 					    	 data-auto-bind="false"
 				             data-bind="source: dataSource">
 				        </div>
-			        
+
 					</div>
 		            
 				</div>
@@ -39094,7 +39094,8 @@
 			                 	{ field: 'type', title:'TYPE', width: 100 },
                                 { field: 'number', title:'REFERENCE NO.', width: 100 },
                                 { field: 'description', title:'DESCRIPTION' },
-                                { field: 'name', title:'NAME' },                                
+                                { field: 'name', title:'NAME' },
+                                { field: 'account', title:'ACCOUNT' },                                
                                 { 
                                 	field: 'dr', 
                                 	title:'DR',

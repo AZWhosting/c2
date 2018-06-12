@@ -52962,8 +52962,12 @@
                     self.set("obj", view[0]);
                     self.set("total", kendo.toString(view[0].amount, "c2", view[0].locale));
 
-                    self.lineDS.filter({ field: "transaction_id", value: id });
-                    self.journalLineDS.filter({ field: "transaction_id", value: id });
+                    self.lineDS.query({
+                        filter:{ field: "transaction_id", value: id }
+                    });
+                    self.journalLineDS.query({
+                        filter:{ field: "transaction_id", value: id }
+                    });
                     self.attachmentDS.filter({ field: "transaction_id", value: id });
 
                     self.referenceLineDS.filter({ field: "transaction_id", value: view[0].reference_id });

@@ -25,7 +25,21 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body" >
-                        	<div id="indexMenu"></div>
+                        	<div id="indexMenu">
+                        		<div class="hidden-sm-down" style="position: absolute; right: 20px; top: 20px;">
+                        			<div class="btn-group float-right">
+						                <button style="font-size: 17px; " type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						                	New Transaction
+						                </button>
+						                <div class="dropdown-menu">
+						                    <a class="dropdown-item" href="purchases#/purchase_order"><span data-bind="text: lang.lang.make_purchase_order">Create Quotation</span></a>
+						                    <a class="dropdown-item" href="#/invoice"><span data-bind="text: lang.lang.create_invoice">Create Invoice</span></a>
+						                    <a class="dropdown-item" href="#/cash_sale"><span data-bind="text: lang.lang.create_cash_sale">Create Cash Sale</span></a>
+						                    <a class="dropdown-item" href="#/cash_receipt"><span data-bind="text: lang.lang.create_cash_receipt">Create Cash Receipt</span></a>
+						                </div>
+						            </div>
+                        		</div>
+                        	</div>
 			                <div class="tab-content">	
 				                <div class="tab-pane active" role="tabpanel">
 				                	<div id="indexContent"></div>
@@ -541,7 +555,7 @@
 					<div class="col-md-6">
 						<div class="row">
 							<div class="col-md-6">
-								<div class="blockBalance" data-bind="click: loadBalance" style="height: 112px;">
+								<div class="blockBalance" data-bind="click: loadBalance" style="height: 108px;">
 									<div class="coverIcon"><i class="ti-server"></i></div>
 									<div class="txt">
 										<span  data-bind="text: lang.lang.balance"></span>
@@ -550,7 +564,7 @@
 								</div>
 							</div>
 							<div class="col-md-6">
-								<div class="blockDeposit" data-bind="click: loadPO" style="height: 112px;">
+								<div class="blockDeposit" data-bind="click: loadPO" style="height: 108px;">
 									<div class="coverIcon"><i class=" ti-briefcase"></i></div>
 									<div class="txt">
 										<span data-bind="text: lang.lang.po"></span>
@@ -561,7 +575,7 @@
 						</div>
 						<div class="row">
 							<div class="col-md-6">
-								<div class="blockOpenInvoice" data-bind="click: loadBalance" style="height: 112px;">
+								<div class="blockOpenInvoice" data-bind="click: loadBalance" style="height: 108px;">
 									<div class="coverIcon"><i class="icon-info"></i></div>
 									<div class="txt">
 										<span style="font-size: 25px;" data-bind="text: outInvoice"></span>
@@ -570,7 +584,7 @@
 								</div>
 							</div>
 							<div class="col-md-6">
-								<div class="blockOverDue" data-bind="click: loadOverInvoice" style="height: 112px;">
+								<div class="blockOverDue" data-bind="click: loadOverInvoice" style="height: 108px;">
 									<div class="coverIcon"><i class="ti-alarm-clock"></i></div>
 									<div class="txt" >
 										<span style="font-size: 25px;" data-bind="text: overInvoice"></span>
@@ -1665,8 +1679,7 @@
 								<div class="col-md-8">
 									<div class="box-generic-noborder">
 										<ul class="nav nav-tabs" role="tablist">
-		                                    <li class="nav-item"> <a class="nav-link active show" data-toggle="tab" href="#functionSetting" role="tab" aria-selected="true"><span><i class="ti-settings"></i></span></a> </li>
-		                                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#functionInfo" role="tab" aria-selected="false"><span><i class="ti-info"></i></span></a></li>
+		                                    <li class="nav-item"> <a class="nav-link active show" data-toggle="tab" href="#functionSetting" role="tab" aria-selected="true"><span><i class="ti-settings"></i></span></a> </li>		                                    
 		                                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#functionPaperclip" role="tab" aria-selected="false"><span><i class="icon-paper-clip"></i></span></a></li>
 		                                </ul>
 		                                <div class="tab-content tabcontent-border">
@@ -1733,42 +1746,7 @@
 		                                        </div>
 		                                    </div>
 		                                    <!-- End -->
-
-		                                    <!--Tab Infor -->
-		                                    <div class="tab-pane" id="functionInfo" role="tabpanel">
-		                                        <div class="p-10">
-		                                            <div class="row">
-		                                            	<div class="col-md-12 ">
-		                                            		<div class="row">
-			                                            		<div class="col-md-6">
-			                                            			<p class="marginBottom" data-bind="text: lang.lang.balance"><span data-bind="text: balance"></span></p>
-			                                            			<p class="marginBottom" data-bind="text: lang.lang.expected_date"></p>
-			                                            			<input id="txtDueDate" name="txtDueDate" class="marginBottom"
-																		data-role="datepicker"
-																		data-format="dd-MM-yyyy"
-																		data-parse-formats="yyyy-MM-dd"
-																		data-bind="value: obj.due_date"
-																		required data-required-msg="required"
-																		style="width:100%;" />
-
-				                                            		<p class="marginBottom width100" data-bind="text: lang.lang.billing_address"></p>
-																	<textarea cols="0" rows="2" class="k-textbox marginBottom " data-bind="value: obj.bill_to" placeholder="Billing to ..."></textarea>
-				                                            	</div>
-
-				                                            	<div class="col-md-6">
-				                                            		<p class="marginBottom" data-bind="text: lang.lang.credit_allowed"><span data-format="n" data-bind="text: obj.credit_allowed"></span></p>
-														            <input class="marginBottom" type="checkbox" data-bind="checked: obj.reuse" /> 
-														            <p class="marginBottom">Re-use this purchase order?</p>				 
-																	<p class="marginBottom width100" data-bind="text: lang.lang.delivery_address"></p>
-																	<textarea cols="0" rows="2" class="k-textbox marginBottom " data-bind="value: obj.ship_to" placeholder="Shipping to ..."></textarea>
-				                                            	</div>
-		                                            		</div>
-		                                            		
-		                                            	</div>
-		                                        	</div>
-		                                        </div>
-		                                    </div>
-		                                    <!-- End -->
+		                                    
 
 		                                    <!--Tab Paperclip -->
 		                                    <div class="tab-pane" id="functionPaperclip" role="tabpanel">

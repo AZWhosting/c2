@@ -1068,7 +1068,7 @@ class Accounting_modules extends REST_Controller {
 		$obj->include_related("contact", array("abbr","number","name"));
 		$obj->include_related("account", array("number","name"));
 		$obj->include_related("account/account_type", array("name","nature"));
-		// $obj->where_related("transaction", "is_journal", 1);
+		$obj->where_related("transaction", "is_journal", 1);
 		$obj->where_in_related("account", "account_type_id", [10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34]);
 		$obj->where_related("transaction", "is_recurring <>", 1);		
 		$obj->where_related("transaction", "deleted <>", 1);
