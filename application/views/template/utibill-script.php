@@ -18793,14 +18793,17 @@
             if (start && end) {
                 start = new Date(start);
                 end = new Date(end);
-                displayDate = "From " + kendo.toString(start, "dd-MM-yyyy") + " To " + kendo.toString(end, "dd-MM-yyyy");
+                displayDate = kendo.toString(start, "dd-MM-yyyy") + " - " + kendo.toString(end, "dd-MM-yyyy");
+                end.setDate(end.getDate() + 1);
 
                 para.push({
                     field: "month_of >=",
+                    operator : "where_related_transaction",
                     value: kendo.toString(start, "yyyy-MM-dd")
                 });
                 para.push({
                     field: "month_of <",
+                    operator : "where_related_transaction",
                     value: kendo.toString(end, "yyyy-MM-dd")
                 });
             } else if (start) {
@@ -18809,6 +18812,7 @@
 
                 para.push({
                     field: "month_of",
+                    operator : "where_related_transaction",
                     value: kendo.toString(start, "yyyy-MM-dd")
                 });
             } else if (end) {
@@ -18818,6 +18822,7 @@
 
                 para.push({
                     field: "month_of <",
+                    operator : "where_related_transaction",
                     value: kendo.toString(end, "yyyy-MM-dd")
                 });
             } else {
@@ -19552,17 +19557,20 @@
             }
 
             //Dates
-            if (start && end) {
+           if (start && end) {
                 start = new Date(start);
                 end = new Date(end);
-                displayDate = "From " + kendo.toString(start, "dd-MM-yyyy") + " To " + kendo.toString(end, "dd-MM-yyyy");
+                displayDate = kendo.toString(start, "dd-MM-yyyy") + " - " + kendo.toString(end, "dd-MM-yyyy");
+                end.setDate(end.getDate() + 1);
 
                 para.push({
                     field: "month_of >=",
+                    operator : "where_related_transaction",
                     value: kendo.toString(start, "yyyy-MM-dd")
                 });
                 para.push({
                     field: "month_of <",
+                    operator : "where_related_transaction",
                     value: kendo.toString(end, "yyyy-MM-dd")
                 });
             } else if (start) {
@@ -19571,6 +19579,7 @@
 
                 para.push({
                     field: "month_of",
+                    operator : "where_related_transaction",
                     value: kendo.toString(start, "yyyy-MM-dd")
                 });
             } else if (end) {
@@ -19580,6 +19589,7 @@
 
                 para.push({
                     field: "month_of <",
+                    operator : "where_related_transaction",
                     value: kendo.toString(end, "yyyy-MM-dd")
                 });
             } else {
@@ -31622,6 +31632,7 @@
                 if (e.response) {
                     banhji.saleSummary.set('count', e.response.count);
                     banhji.saleSummary.set('totalUsage', kendo.toString(e.response.totalUsage, 'n0'));
+                    banhji.saleSummary.set('totalCount', kendo.toString(e.response.totalCount, 'n0'));
                 }
             });
             vm.pageLoad();

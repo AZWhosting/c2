@@ -32,10 +32,10 @@
 						                	New Transaction
 						                </button>
 						                <div class="dropdown-menu">
-						                    <a class="dropdown-item" href="purchases#/purchase_order"><span data-bind="text: lang.lang.make_purchase_order">Create Quotation</span></a>
-						                    <a class="dropdown-item" href="#/invoice"><span data-bind="text: lang.lang.create_invoice">Create Invoice</span></a>
-						                    <a class="dropdown-item" href="#/cash_sale"><span data-bind="text: lang.lang.create_cash_sale">Create Cash Sale</span></a>
-						                    <a class="dropdown-item" href="#/cash_receipt"><span data-bind="text: lang.lang.create_cash_receipt">Create Cash Receipt</span></a>
+						                    <a class="dropdown-item" href="purchases#/purchase"><span data-bind="text: lang.lang.make_purchase"></span></a>
+						                    <a class="dropdown-item" href="purchases#/purchase_order"><span data-bind="text: lang.lang.make_purchase_order"></span></a>
+						                    <a class="dropdown-item" href="purchases#/vendor_deposit"><span data-bind="text: lang.lang.make_vendor_deposit"></span></a>
+						                    <a class="dropdown-item" href="purchases#/cash_payment"><span data-bind="text: lang.lang.make_cash_payment"></span></a>
 						                </div>
 						            </div>
                         		</div>
@@ -58,7 +58,7 @@
 <script id="tapMenu" type="text/x-kendo-template">
 	<ul class="nav nav-tabs customtab" role="tablist" >
 		<li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#/" data-bind="click: goReports"><span class="hidden-sm-up"><i class="ti-layout-grid2-thumb"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.reports"></span></a> </li>
-	    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#/transactions" data-bind="click: goTransactions"><span class="hidden-sm-up"><i class="ti-layout-accordion-list"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.purchase_transaction"></span></a> </li>
+	    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#/transactions" data-bind="click: goTransactions"><span class="hidden-sm-up"><i class="ti-layout-accordion-list"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.purchase"></span></a> </li>
 	    <li class="nav-item hidden-sm-down"> <a class="nav-link" data-toggle="tab" href="#/purchase_center" data-bind="click: goPurchaseCenter"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.suppliers"></span></a> </li>
     </ul>
 </script>
@@ -67,28 +67,24 @@
 <!-- Menu -->
 <script id="reports" type="text/x-kendo-template">
 	<div class="row home" id="reports">
-		<div class="col-md-4">
-			<div class="saleOverview">
+		<div class="col-12 col-md-4">
+			<div class="saleOverview"  style="margin-bottom: 15px;">
 				<h2 data-bind="text: lang.lang.purchase"></h2>
 				<p data-format="n" data-bind="text: obj.purchase"></p>
-				<div class="col-md-12">
-					<div class="col-md-4">
+				<div class="row">
+					<div class="col">
 						<span data-bind="text: obj.purchase_supplier"></span>
 						<span data-bind="text: lang.lang.supplier"></span>
 					</div>
-					<div class="col-md-4">
+					<div class="col">
 						<span data-bind="text: obj.purchase_product"></span>
 						<span data-bind="text: lang.lang.product"></span>
-					</div>
-					<div class="col-md-4">
-						<span data-bind="text: obj.purchase_ordered"></span>
-						<span data-bind="text: lang.lang.order"></span>
 					</div>
 				</div>
 			</div>
 
 			<!-- Report -->
-            <div class="report ">
+            <!-- <div class="report ">
 				<div class="col-md-12">
 					<h3 class="marginBottom"><a href="#/purchase_summary_product_services" data-bind="text: lang.lang.purchase_summary_by_product_services" ></a></h3>
 					
@@ -97,10 +93,10 @@
 					<h3 style="border-bottom: none; padding-bottom: 0;"><a href="#/purchase_detail_product_services" data-bind="text: lang.lang.purchase_detail_by_product_services" ></a></h3>
 					
 				</div>						    					
-			</div>
+			</div> -->
 
 			<!-- Top 4 -->
-			<div class="top5 home-footer">
+			<!-- <div class="top5 home-footer">
                 <table class="table color-table dark-table">
                     <thead>
                         <tr>
@@ -114,10 +110,10 @@
                          data-template="top-contact-template"
                          data-bind="source: obj.top_supplier"></tbody>
                 </table>
-            </div>
+            </div> -->
 		</div>
-		<div class="col-md-4">
-			<div class="saleOverview">
+		<!-- <div class="col-12 col-md-4"> -->
+			<!-- <div class="saleOverview"  style="margin-bottom: 15px;">
 				<h2 data-bind="text: lang.lang.purchase_order"></h2>
 				<p data-format="n0" data-bind="text: obj.po"></p>
 				<div class="col-md-12">
@@ -130,10 +126,10 @@
 						<span data-bind="text: lang.lang.order_open"></span>
 					</div>
 				</div>
-			</div>
+			</div> -->
 
 			<!-- Report -->
-			<div class="report" >
+			<!-- <div class="report" >
                 <div class="col-md-12">
 					<h3 class="marginBottom"><a href="#/suppliers_balance_summary" data-bind="text: lang.lang.suppliers_balance_summary" ></a></h3>
 					
@@ -142,10 +138,10 @@
 					<h3 style="border-bottom: none; padding-bottom: 0;"><a href="#/payables_aging_summary" data-bind="text: lang.lang.payables_aging_summary"></a></h3>
 					
 				</div>
-			</div>
+			</div> -->
 
 			<!-- Top 4 -->
-			<div class="top5 home-footer">
+			<!-- <div class="top5 home-footer">
                 <table class="table color-table dark-table">
                     <thead>
                         <tr>
@@ -159,22 +155,18 @@
                          data-template="top-contact-template"
                          data-bind="source: obj.top_ap"></tbody>
                 </table>
-            </div>
-		</div>
-		<div class="col-md-4">
-			<div class="saleOverview">
+            </div> -->
+		<!-- </div> -->
+		<div class="col-12 col-md-4">
+			<div class="saleOverview"  style="margin-bottom: 15px;">
 				<h2 data-bind="text: lang.lang.payables"></h2>
 				<p data-format="n" data-bind="text: obj.ap"></p>
-				<div class="col-md-12">
-					<div class="col-md-4">
+				<div class="row">
+					<div class="col">
 						<span data-format="n0" data-bind="text: obj.ap_open"></span>
 						<span data-bind="text: lang.lang.open"></span>
 					</div>
-					<div class="col-md-4">
-						<span data-bind="text: obj.ap_supplier"></span>
-						<span data-bind="text: lang.lang.supplier"></span>
-					</div>
-					<div class="col-md-4">
+					<div class="col">
 						<span data-bind="text: obj.ap_overdue"></span>
 						<span data-bind="text: lang.lang.overdue"></span>
 					</div>
@@ -182,7 +174,7 @@
 			</div>
 
 			<!-- Report -->
-			<div class="report" >
+			<!-- <div class="report" >
 				<div class="col-md-12">
 					<h3 class="marginBottom"><a href="#/list_bills_paid" data-bind="text: lang.lang.list_of_invoices_to_be_collected"></a></h3>
 				</div>
@@ -190,10 +182,10 @@
 					<h3 style="border-bottom: none; padding-bottom: 0;"><a href="#/bill_payment_list" data-bind="text: lang.lang.bill_payment_list"></a></h3>
 					
 				</div>
-			</div>
+			</div> -->
 
 			<!-- Top 4 -->
-			<div class="top5 home-footer">
+			<!-- <div class="top5 home-footer">
                 <table class="table color-table dark-table">
                     <thead>
                         <tr>
@@ -207,12 +199,108 @@
                          data-template="top-product-template"
                          data-bind="source: obj.top_cash_payment"></tbody>
                 </table>
-            </div>
+            </div> -->
+		</div>
+		<!-- 333 -->
+		<div class="col-12 col-md-4">
+			<div class="saleOverview" style="margin-bottom: 15px;">
+				<div class="col">
+					<div class="draf" style="min-height: 95px;">
+					</div>
+				</div>
+				<div class="col btn-group float-right">
+	                <button style="width: 100%;" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	                	Reports
+	                </button>
+	                <div class="dropdown-menu">
+	                    <a class="dropdown-item" href="#/purchase_summary_product_services" data-bind="text: lang.lang.purchase_summary_by_product_services"></a>
+	                    <a class="dropdown-item" href="#/purchase_detail_product_services" data-bind="text: lang.lang.purchase_detail_by_product_services"></a>
+	                    <a class="dropdown-item" href="#/suppliers_balance_summary" data-bind="text: lang.lang.suppliers_balance_summary"></a>
+	                    <a class="dropdown-item" href="#/payables_aging_summary" data-bind="text: lang.lang.payables_aging_summary"></a>
+	                    <a class="dropdown-item" href="#/list_bills_paid" data-bind="text: lang.lang.list_of_invoices_to_be_collected"></a>
+	                    <a class="dropdown-item" href="#/bill_payment_list" data-bind="text: lang.lang.bill_payment_list"></a>
+	                </div>
+	            </div>
+			</div>
+
+			<!-- <div class="top5 home-footer">
+                <table class="table color-table dark-table">
+                    <thead>
+                        <tr>
+                            <th colspan="2" class="center">
+                                <span data-bind="text: lang.lang.top_5_Receipt"></span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody data-role="listview"
+                         data-auto-bind="false"
+                         data-template="top-product-template"
+                         data-bind="source: obj.top_cash_receipt"></tbody>
+                </table>
+            </div> -->
 		</div>
 	</div>
+
+	<div class="row " >
+    	<div class="col-md-8">
+			<input data-role="dropdownlist"  
+				   class="sorter marginRight marginBottom float-left"
+		           data-value-primitive="true"
+		           data-text-field="text"
+		           data-value-field="value"
+		           data-bind="value: sorter,
+		                      source: sortList,
+		                      events: { change: sorterChanges }" />
+
+			<input data-role="datepicker"
+				   class="sdate marginRight marginBottom float-left"
+				   data-format="dd-MM-yyyy"
+		           data-bind="value: sdate,
+		           			  max: edate"
+		           placeholder="From ..." />
+
+		    <input data-role="datepicker" 
+		    	   class="edate marginRight marginBottom float-left"
+		    	   data-format="dd-MM-yyyy"
+		           data-bind="value: edate,
+		                      min: sdate"
+		           placeholder="To ..." />
+
+		  	<button class="btnSearch float-left" type="button" data-role="button" data-bind="click: search"><i class="ti-search"></i></button>
+		</div>
+		<div class="col-md-4"></div>
+	</div>
+
+    <div  class="row ">
+        <div class="col-md-12 marginTop table-responsive grid" >
+        	<div data-role="grid" class="table color-table dark-table"
+	             data-pageable='true'
+	             data-auto-bind="false"
+	             data-filterable="true"
+	             data-columns="[
+	                { field: 'issued_date' , title : 'DATE', template:'#=kendo.toString(new Date(issued_date), banhji.dateFormat)#', filterable: { multi: true, search: true},attributes: { style: 'text-align: center;'} },
+	                { field: 'name' , title : 'NAME' , filterable: { multi: true, search: true} },
+	                { field: 'type' , title : 'TYPE' , filterable: { multi: true, search: true} },
+	                { field: 'number' , title: 'REFERENCE' , filterable: { multi: true, search: true} ,attributes: { style: 'text-align: center;'}, template: '<a href=\'purchases\\#/#=type.toLowerCase()#/#=id#\'>#=number#</a>' },
+	                { field: 'amount' , title: 'AMOUNT' , filterable: { multi: true, search: true}, format: '{0:n}' , attributes: { style: 'text-align: right;'} },
+	                { 
+	                	title: 'STATUS', 
+	                	template: kendo.template($('#transactions-status-tmpl').html()),
+	                	attributes: { style: 'text-align: center;'}
+	                },
+	                { 
+	                	title: 'ACTIONS',
+	                	template: kendo.template($('#transactions-action-tmpl').html()),
+	                	attributes: { style: 'text-align: center;'}
+	                }
+	                 
+	             ]"
+	             data-bind="source: txnDS"></div>
+        </div>
+    </div>
 </script>
 <script id="transactions" type="text/x-kendo-template">	
-	<div class="row">
+	<!-- <div class="row">
 		<div class="card-body">
 			<div class="row " >
             	<div class="col-md-8">
@@ -272,8 +360,470 @@
 	            </div>
 	        </div>
         </div>
+	</div> -->
+	<div class="row" id="checkOut">
+		<div class="col">
+			<div class="listWrapper">
+				<div class="row">
+					<div class="col-12 col-md-6">
+						<div class="widget-search marginBottom">
+							<div class="overflow-hidden" style="width: 100%;">
+								<input type="search" placeholder="Barcode..." data-bind="value: barcode, events: {change: barcodeChange}" style="width: 100%;" />
+							</div>
+							
+						</div>
+					</div>
+					<div class="col-12 col-md-6">
+						<div class="widget-search marginBottom">
+							<div class="overflow-hidden">
+								<input type="search" placeholder="Number or Name..." data-bind="value: searchText" />
+							</div>
+							<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="ti-search"></i></button>
+						</div>
+					</div>
+				</div>
+				<div class="row hidden-sm-down">
+					<div class="col-md-12" style="position: relative;overflow: hidden;">
+						<div id="loading" class="preloader" style="display: none;position: absolute;background: rgba(255,255,255,.6);">
+					        <div class="loader">
+					            <div class="loader__figure"></div>
+					        </div>
+					    </div>
+						<div data-bind="invisible: haveItems" class="demo-section k-content wide span12">
+							<p style="color: #fff; margin-bottom: 5px; float: left; width: 100%;" >Category</p>
+							<div class="demo-section k-content wide">
+								<div 
+									id="productListView"
+									data-role="listview"
+									data-template="category-list-view-template"
+									data-auto-bind="true"
+									data-bind="source: categoryDS">
+								</div>
+								<div id="pager" class="k-pager-wrap"
+							    	 data-role="pager"
+							    	 data-auto-bind="true"
+						             data-bind="source: categoryDS">
+						        </div>
+							</div>
+						</div>
+						<div data-bind="visible: haveItems" class="demo-section k-content wide span12">
+							<p style="color: #fff; margin-bottom: 5px; float: left; width: 100%;" >
+								<span style="float: left; width: 50%;">Items</span>
+								<span class="textAlignRight" data-bind="click: backCategory" style="float: right; width: 50%; cursor: pointer;">
+									<i class=" ti-control-backward"></i>
+									back
+								</span>
+							</p>
+							<div class="demo-section k-content wide">
+								<div 
+									id="productListView"
+									data-role="listview"
+									data-template="item-list-view-template"
+									data-auto-bind="true"
+									data-bind="source: itemsDS">
+								</div>
+								<div id="pager" class="k-pager-wrap"
+							    	 data-role="pager"
+							    	 data-auto-bind="true"
+						             data-bind="source: itemsDS">
+						        </div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<div class="col">
+			<div class="listWrapper marginBottom" style="height: auto;">
+				<div class="row hidden-sm-down">
+					<div class="col">
+						<input 
+							data-role="dropdownlist"
+							data-template="contact-list-tmpl" 
+							data-auto-bind="false" 
+							data-value-primitive="true" 
+							data-filter="startswith" 
+							data-text-field="name" 
+							data-value-field="id"
+							data-option-label="Select Customer..."
+							data-bind="
+								value: customerSelected,
+                              	source: contactDS,
+                              	events: {change: addCustomer}"
+                            style="width: 100%; float: left;margin-right: 2%; margin-bottom: 5px;" 
+                            aria-invalid="true" 
+                            class="k-invalid marginBottom"
+                        />
+                        <div class="table-responsive">
+							<table class="table color-table dark-table">
+						        <thead>
+						            <tr>
+						            	<th style="vertical-align: top;" data-bind="text: lang.lang.no_"></th>
+						            	<th style="vertical-align: top;" data-bind="text: lang.lang.name"></th>
+						            </tr>
+						        </thead>
+						        <tbody data-role="listview" 
+					        		data-template="customer-select-list-tmpl" 
+					        		data-auto-bind="false"
+					        		data-bind="source: customerAR">
+					        	</tbody>
+						    </table>
+		                </div>
+                    </div>
+					<div class="col table-responsive">
+						<table class="table color-table dark-table">
+					        <thead>
+					            <tr>
+					            	<th style="vertical-align: top;" data-bind="text: lang.lang.no_"></th>
+					            	<th style="vertical-align: top;" data-bind="text: lang.lang.name"></th>
+					            </tr>
+					        </thead>
+					        <tbody data-role="listview" 
+				        		data-template="customer-select-list-tmpl" 
+				        		data-auto-bind="false"
+				        		data-bind="source: customerAR">
+				        	</tbody>
+					    </table>
+	                </div>
+				</div>
+				<div class="row">
+					<div class="col-md-12 ">
+						<div id="posProductList" class="box-generic-noborder table-responsive marginBottom" style="min-height: 140px!important; height: 230px; padding-bottom: 0;">
+							<!-- Item List -->
+						    <div data-role="grid" class="costom-grid table color-table dark-table"
+						    	 data-column-menu="true"
+						    	 data-reorderable="true"
+						    	 data-scrollable="false"
+						    	 data-resizable="true"
+						    	 data-editable="true"
+				                 data-columns="[
+								    {
+								    	title:'NO',
+								    	width: '50px',
+								    	attributes: { style: 'text-align: center;' },
+								        template: function (dataItem) {
+								        	var rowIndex = banhji.checkOut.lineDS.indexOf(dataItem)+1;
+								        	return '<i class=icon-trash data-bind=click:removeRow></i>' + ' ' + rowIndex;
+								      	}
+								    },
+				                 	{ 
+				                 		field: 'item', 
+				                 		title: 'PRODUCTS/SERVICES', 
+				                 		editor: itemEditor, 
+				                 		template: '#=item.name#', width: '170px' 
+				                 	},
+		                            {
+									    field: 'quantity',
+									    title: 'QTY',
+									    format: '{0:n}',
+									    editor: numberTextboxEditor,
+									    width: '120px',
+									    attributes: { style: 'text-align: right;' }
+									},
+		                            {
+		                            	field: 'item_price',
+		                            	title: 'UOM',
+		                            	editor: measurementEditor,
+		                            	template: '#=item_price?item_price.measurement:banhji.emptyString#',
+		                            	width: '80px'
+		                            },
+		                            {
+									    field: 'price',
+									    title: 'PRICE',
+									    format: '{0:n}',
+									    editor: numberTextboxEditor,
+									    width: '120px',
+									    hidden: true,
+									    attributes: { style: 'text-align: right;' }
+									},
+									{
+									    field: 'discount',
+									    title: 'DISCOUNT VALUE',
+									    hidden: true,
+									    format: '{0:n}',
+									    editor: numberTextboxEditor,
+									    width: '120px',
+									    attributes: { style: 'text-align: right;' }
+									},
+									{
+									    field: 'discount_percentage',
+									    title: 'DISCOUNT %',
+									    hidden: true,
+									    format: '{0:p}',
+									    editor: discountEditor,
+									    width: '120px',
+									    attributes: { style: 'text-align: right;' }
+									},
+		                            { 
+		                            	field: 'amount', 
+		                            	title:'AMOUNT', 
+		                            	format: '{0:n}', 
+		                            	editable: 'false', 
+		                            	attributes: { style: 'text-align: right;' }, width: '120px' },
+		                            { 
+		                            	field: 'tax_item', 
+		                            	title:'TAX', 
+		                            	hidden: true,
+		                            	editor: taxForSaleEditor, 
+		                            	template: '#=tax_item.name#', width: '90px' 
+		                            }
+		                         ]"
+		                         data-auto-bind="false"
+				                 data-bind="source: lineDS" >
+				            </div>
+						</div>
+						<div class="row">
+							<div class="col-12 col-md-6">
+								<table class="table color-table dark-table marginBottom">
+									<tbody>
+										<tr>
+											<td class="textAlignRight" style="width: 60%;"><span data-bind="text: lang.lang.subtotal" style="font-size: 15px; font-weight: 700;"></span></td>
+											<td class="textAlignRight" width="40%"><span data-format="n" data-bind="text: obj.sub_total" style="font-size: 15px; font-weight: 700;"></span></td>
+										</tr>
+										<tr>
+											<td class="textAlignRight"><span>Discount</span></td>
+											<td class="textAlignRight ">
+												<span data-format="n" data-bind="text: obj.discount"></span>
+											</td>
+										</tr>               
+										<tr>
+											<td class="textAlignRight"><span data-bind="text: lang.lang.total_tax"></span></td>
+											<td class="textAlignRight "><span data-format="n" data-bind="text: obj.tax"></span></td>
+										</tr>
+										<tr>
+											<td class="textAlignRight"><h4 data-bind="text: lang.lang.total" style="font-weight: 700;"></h4></td>
+											<td class="textAlignRight"><h4 data-bind="text: total" style="font-weight: 700;"></h4></td>
+										</tr>
+									</tbody>
+								</table>
+							</div> 
+							<div class="col-12 col-md-6 checkOut-button">
+								<div class="row">
+									<div class="col" >
+										<a style="padding: 25px 15px; box-shadow: 2px 0px 12px 0px rgba(68,68,68,1); border-radius: 5px 5px 0 0; margin-bottom: 1px; " class="buttonpay btn waves-effect waves-light btn-block btn-info" data-bind="click: saveCashSale"><span style="font-size: 15px;" data-bind="text: lang.lang.pay">Pay</span></a>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-4" style="padding-right: 0;">
+										<a style="border-radius: 0 0 0 5px; " class="buttoninvoice btn waves-effect waves-light btn-block btn-info" data-bind="click: saveInvoice" data-bind="click: saveInvoice"><span data-bind="text: lang.lang.microinvoice">Issue <br/>Invoice</span></a>
+									</div>
+									<div class="col-4" style="padding: 0;">
+										<a style="margin: 0 2px; width: 96%; " class="buttonparksale btn waves-effect waves-light btn-block btn-info" data-bind="click: parkSale"><span data-bind="text: lang.lang.microparksale">Parksale</span></a>
+									</div>
+									<div class="col-4" style="padding-left: 0;">
+										<a style="border-radius: 0 0 5px 0; " class="buttoncancelsale btn waves-effect waves-light btn-block btn-info" data-bind="click: addEmptey"><span data-bind="text: lang.lang.cancel">Cancel</span></a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">
+						<table class="table color-table dark-table">
+					        <thead>
+					            <tr>
+					            	<th style="vertical-align: top;" data-bind="text: lang.lang.currency"></th>
+					            	<th style="vertical-align: top;" data-bind="text: lang.lang.amount"></th>
+					            </tr>
+					        </thead>
+					        <tbody data-role="listview" 
+				        		data-template="cash-currency-template" 
+				        		data-auto-bind="false"
+				        		data-bind="source: receipCurrencyDS">
+				        	</tbody>
+					    </table>				
+					</div>
+					<div class="col">
+					    <table class="table color-table dark-table">
+					        <thead>
+					            <tr>
+					            	<th style="vertical-align: top;" data-bind="text: lang.lang.currency"></th>
+					            	<th style="vertical-align: top;" data-bind="text: lang.lang.amount"></th>
+					            </tr>
+					        </thead>
+					        <tbody data-role="listview" 
+				        		data-template="change-currency-receipt-template" 
+				        		data-auto-bind="false"
+				        		data-bind="source: receipChangeDS">
+				        	</tbody>
+					    </table>
+					   <!--  <div class="checkOut-button">
+						    <a class="btn waves-effect waves-light btn-block btn-info" data-bind="click: saveInvoice"><span data-bind="text: lang.lang.invoice">Invoice</span></a>
+							<a class="btn waves-effect waves-light btn-block btn-info" data-bind="click: saveCashSale"><span data-bind="text: lang.lang.pay">Pay</span></a>
+						</div> -->
+					</div>
+				</div>
+			</div>
+			
+		</div>
 	</div>
 </script>
+<!-- Invoice Form -->
+<script id="printBill" type="text/x-kendo-template">
+	<div class="row" id="checkOut">
+		<div class="col-md-6" style="margin: 0 auto;">
+			<div class="listWrapper marginBottom" style="height: auto;">
+				<div class="row">
+					<div class="col-md-12">
+					    <div id="invoiceContent" style="margin-bottom: 15px;"></div>
+					    <a class="btn waves-effect waves-light btn-block btn-info" data-bind="click: printGrid"><span data-bind="text: lang.lang.print">Invoice</span></a>
+						<a class="btn waves-effect waves-light btn-block btn-info" data-bind="click: cancel"><span data-bind="text: lang.lang.cancel">Pay</span></a>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+</script>
+<script id="invoiceForm" type="text/x-kendo-tmpl">	
+	<style>
+		.inv1 td {
+			padding: 5px;
+		}
+		* {
+			-webkit-print-color-adjust:exact; 
+			font-size: 14px;
+			padding: 0;
+			margin: 0;
+		}
+	</style>
+  	<div style="margin: 0 auto;">		
+		<div class="inv1" style="width: 500px;margin: 0 auto;">
+	        <div class="content">
+	        	<div style="overflow: hidden;padding:10px 0;">
+	        		<h1 style="font-size: 25px; text-align: center; line-height: 40px;margin-bottom: 0;">វិក្កយបត្រ</h1>
+	            	<h2 style="font-size: 18px; text-transform: uppercase; text-align: center;">Invoice</h2>
+	        	</div>
+	            <div class="clear mid-header" style="padding-bottom: 10px;">
+	            	<div class="cover-customer" style="width: 100%!important;">
+	                	<h5 style="font-weight: bold;font-size: 14px;">ព័ត៌មានអតិថិជន​ CUSTOMER INFO:</h5>
+	                    <div class="clear">
+	                        <div class="left dotted-ruler" style="width: 100%;">
+	                        	<p style="font-size: 12px; line-height: 20px;">ឈ្មោះ Name : <span>#= contact.name#</span><br>
+			        			អាស័យ​ដ្ឋាន Address : <span>#= contact.address ? contact.address : ""#</span><br>
+			        			លេខទូរស័ព្ទ Tel : <span>#= contact.phone ? contact.phone: ""#</span>
+			        			</p>
+	                        </div>
+	                    </div>
+	                </div>
+	                <div class="cover-inv-number" style="width: 100%!important;margin-top: 10px;">
+	                	<div class="clear">
+	                    	<div class="left">
+	                    		<p>លេខ No. : <strong>#= number#</strong></p>
+	                        </div>
+	                    </div>
+	                    <div class="clear">
+	                    	<div class="left">
+	                    		<p>កាល​បរិច្ឆេទ Date: <strong>#= issued_date#</strong></p>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	        	<div class="clear">
+	            	<table cellpadding="0" cellspacing="0" border="1" class="span12" style="width: 100%; margin-bottom: 20px;">
+	                	<thead style="">
+	                        <tr class="main-color" style="height: 45px;background: \#203864!important;">
+	                            <th style="text-align: center;width: 8%;color: \#fff!important;background: \#203864!important;">ល.រ<br />N<sup>0</sup></th>
+	                            <th style="text-align: center;color: \#fff!important;background: \#203864!important;">បរិយាយ​មុខ​ទំនិញ<br />Description</th>
+	                            <th style="text-align: center;color: \#fff!important;background: \#203864!important;">បរិមាណ<br />Quantity</th>
+	                            <th style="text-align: center;color: \#fff!important;background: \#203864!important;">ថ្លៃឯកតា​<br />Unit Price</th>
+	                            <th style="text-align: center;width: 20%;color: \#fff!important;background: \#203864!important;">ថ្លៃ​ទំនិញ<br />Amount</th>
+	                        </tr>
+	                    </thead>
+	                    <tbody style="margin-top: 2px" id="formListView">
+	                    	#$.each(banhji.printBill.line, function(i,v){#
+	                    		#if(v.amount){#
+									<tr>
+										<td style="text-align: center;"><i>#: i+1#</i>&nbsp;</td>
+										<td class="lside">#= v.description ? v.description : v.item.name #</td>
+										<td style="text-align: center;">#= v.quantity#</td>
+										<td class="rside" style="text-align: right;" width="70">#if(v.price > 0){# #= kendo.toString(v.price, "c", v.locale) # #}#</td>
+										<td class="rside" style="text-align: right;">#= kendo.toString(v.amount, "c", v.locale) #</td>
+									</tr>
+								#}#
+	                    	#})#
+	                    </tbody>
+	                    <tfoot>
+	                        <tr>
+	                        	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">បញ្ចុះតម្លៃ Discount</td>
+	                            <td class="rside" style="text-align: right;">#= kendo.toString(discount, "c", locale) #</td>
+	                        </tr>
+	                        <tr>
+	                        	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">សរុប Total</td>
+	                            <td class="rside" style="text-align: right;">#= kendo.toString(amount, "c", locale)#</td>
+	                        </tr>
+	                    </tfoot>
+	                </table>
+	            </div>
+	        </div>
+	        <div class="foot">
+	            <h6 style="font-size: 12px;">សម្គាល់៖ <span style="font-size:12px;">ច្បាប់​ដើម​សម្រាប់​អ្នក​ទិញ ច្បាប់​ចម្លង​សម្រាប់​អ្នក​លក់</span><br /><span style="font-size: 10px"><strong>Note:</strong> Original invoice for customer, copied invoice for seller</span></h6>
+	        </div>
+	    </div>
+	</div>
+</script>
+<script id="cash-currency-template" type="text/x-kendo-template">
+	<tr>
+		<td data-bind="text: currency">
+		</td>
+		<td>
+			<input data-role="numerictextbox"
+               data-format="n"
+               data-spinners="false"
+               data-min="0"
+               data-bind="value: amount,
+                          events: { change: checkChange }"
+               style="width: 90%; text-align: right;">
+		</td>
+	</tr>
+</script>
+<script id="change-currency-receipt-template" type="text/x-kendo-template">
+	<tr>
+		<td data-bind="text: currency">
+		</td>
+		<td>
+			<input data-role="numerictextbox"
+               data-format="n"
+               data-spinners="false"
+               data-min="0"
+               data-bind="value: amount,
+                          events: { change: checkChangeMoney }"
+               style="width: 90%; text-align: right;">
+		</td>
+	</tr>
+</script>
+<script id="category-list-view-template" type="text/x-kendo-template">
+	<div class="product" data-bind="click:searchItemByCategory" style="text-align: center;">
+		<a class="view-details">
+			<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/no_image.jpg" />
+			<h3>#:name#</h3>
+			<p>#=abbr#</p>
+		</a>
+	</div>
+</script>
+<script id="item-list-view-template" type="text/x-kendo-template">
+	<div class="product" data-bind="click:addRow" style="text-align: center;">
+		<a class="view-details">		
+			<div style="height:130px;">
+				<img src="#= image_url? image_url: 'https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/no_image.jpg'#" />
+			</div>
+			<h3>#:name#</h3>
+		</a>			
+	</div>
+</script>
+<script id="customer-select-list-tmpl" type="text/x-kendo-tmpl">
+	<tr data-uid="#: uid #">
+		<td>
+			<i class="icon-trash" data-bind="events: { click: rmCustomer }"></i>
+			#:banhji.checkOut.customerAR.indexOf(data)+1#      
+		</td>
+		<td>#= name#</td>
+	</tr>
+</script>
+<!--  -->
+
 <script id="transactions-status-tmpl" type="text/x-kendo-tmpl">
 	#if(status=="4") {#
 		#=progress#
@@ -309,7 +859,7 @@
 <script id="transactions-action-tmpl" type="text/x-kendo-tmpl">
 	#if(type=="Credit_Purchase"){#
 		#if(status=="0" || status=="2") {#
-			<a class="k-button btn-info" data-bind="click: payBill"><button>Pay Bill</button></a>
+			<a data-bind="click: payBill"><button class="k-button btn-info">Pay Bill</button></a>
 		#}#
 	#}#
 
@@ -6020,4 +6570,4 @@
 		</td>
 	</tr>
 </script>
-<!-- End -->  
+<!-- End -->                                                                                                                                                                                                                                                                                                                                                                                                                                            

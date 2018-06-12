@@ -7438,6 +7438,92 @@
             return dfd;
         }
     });
+    banhji.currencyRate =  kendo.observable({
+        lang                : langVM,
+        dataSource          : dataStore(apiUrl + "currencies/rate"),
+        currencyDS          : new kendo.data.DataSource({
+            data: banhji.source.currencyList,
+            filter: { field:"status", value: 1 }
+        }),
+        currencyAllDS       : new kendo.data.DataSource({
+            data: banhji.source.currencyList
+        }),
+        obj                 : null,
+        isEdit              : false,
+        baseCode            : banhji.institute.currency.country +' - '+ banhji.institute.currency.code,
+        reportCode          : banhji.institute.reportCurrency.country +' - '+ banhji.institute.reportCurrency.code,
+        windowVisible       : false,
+        user_id             : banhji.source.user_id,
+        pageLoad            : function(){
+        },
+        getCode             : function(id){
+            var raw = banhji.source.currencyDS.get(id);
+            if(raw){
+                return raw.code;
+            }else{
+                return "";
+            }
+        },
+        getCountry             : function(id){
+            var raw = banhji.source.currencyDS.get(id);
+            if(raw){
+                return raw.country;
+            }else{
+                return "";
+            }
+        },
+        openWindow          : function(){
+            this.addEmpty();
+
+            this.set("windowVisible", true);
+        },
+        closeWindow         : function(){
+            this.dataSource.cancelChanges();
+
+            this.set("windowVisible", false);
+        },
+        addEmpty            : function(){
+            this.dataSource.insert(0, {
+                user_id     : this.get("user_id"),
+                currency_id : 0,
+                rate        : 1,
+                locale      : "",
+                source      : "",
+                method      : "Manual",
+                date        : new Date(),
+
+                currency    : []
+            });
+
+            var obj = this.dataSource.at(0);
+            this.set("obj", obj);
+        },
+        save                : function(){
+            var obj = this.get("obj"),
+            currency = this.currencyAllDS.get(obj.currency_id);
+            obj.set("locale", currency.locale);
+
+            this.dataSource.sync();
+            this.dataSource.bind("requestEnd", function(e){
+                if(e.type==="create" || e.type==="update"){
+                    banhji.source.loadCurrencies();
+                    banhji.source.loadRates();
+                }
+            });
+
+            this.set("windowVisible", false);
+        },
+        edit                : function(e){
+            var data = e.data;
+
+            this.set("obj", data);
+
+            this.set("windowVisible", true);
+        },
+        cancel              : function(){
+            banhji.userManagement.removeMultiTask("currency_rate");
+        }
+    });
 
     
     // Transaction
@@ -8773,6 +8859,7 @@
         cashAdvance: new kendo.Layout("#cashAdvance", {model: banhji.cashAdvance}),
         expense: new kendo.Layout("#expense", {model: banhji.expense}),
         journal: new kendo.Layout("#journal", {model: banhji.journal}),
+        currencyRate: new kendo.Layout("#currencyRate", {model: banhji.currencyRate}),
 
         // Report
         cashMovement: new kendo.Layout("#cashMovement", {model: banhji.cashMovement}),
@@ -9302,6 +9389,23 @@
         //      window.location.replace(baseUrl + "admin");
         //  }
         // });
+    });
+    banhji.router.route("/currency_rate", function(){
+        if(!banhji.userManagement.getLogin()){
+            banhji.router.navigate('/manage');
+        }else{
+            banhji.view.layout.showIn("#content", banhji.view.currencyRate);
+            kendo.fx($("#slide-form")).slideIn("down").play();
+
+            var vm = banhji.currencyRate;
+            banhji.userManagement.addMultiTask("Currency Rate","currency_rate",null);
+
+            if(banhji.pageLoaded["currency_rate"]==undefined){
+                banhji.pageLoaded["currency_rate"] = true;
+            }
+
+            vm.pageLoad();
+        }
     });
 
 

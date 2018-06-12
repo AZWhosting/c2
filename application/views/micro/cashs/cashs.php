@@ -1681,6 +1681,133 @@
 		#=segments[i].code# #=segments[i].name#,
 	#}#
 </script>
+<script id="currencyRate" type="text/x-kendo-template">
+	<div class="page-wrapper ">
+        <div class="container-fluid">
+        	<div class="row marginTop15">
+                <div class="col-md-12">
+                	<div class="card">
+                		<div class="btn-close" onclick="javascript:window.history.back()"><i class="ti-close"></i></div>
+                		<div class="card-body">
+
+							<h2 data-bind="text: lang.lang.exchange_rate" style="margin-bottom: 15px;"></h2>
+							<!-- Collapsible Widget -->
+							<div class="widget" style="border: 0; margin-bottom: 0;">
+							    <div class="widget-body">
+
+							    	<div class="row-">
+								    	<div class="col-md-6 alert alert-primary" style="background: #343a40; color: #fff;"><span data-bind="text: lang.lang.company_currency"></span> <span data-bind="text: baseCode"></span> </div>
+								    	<div class="col-md-6 alert alert-primary" style="background: #343a40; color: #fff;"><span data-bind="text: lang.lang.reporting_currency"></span> <span data-bind="text: reportCode"></span> </div>
+							    	</div>
+
+									<br>
+
+									<button style="background: #009efb; color: #fff;" class="btn btn-inverse hidden-print marginBottom" data-bind="click: openWindow"><i class="icon-plus icon-white"></i> <span data-bind="text: lang.lang.add_new_rate"></span></button>
+
+									<!-- Item List -->
+									<div class="table-responsive">
+										<table class="table color-table dark-table">
+									        <thead>
+									            <tr>
+									                <th style="width: 15%; vertical-align: top;"><span data-bind="text: lang.lang.date"></span></th>
+									                <th style="width: 10%; vertical-align: top;"><span data-bind="text: lang.lang.code"></span></th>
+									                <th style="width: 25%; vertical-align: top;"><span data-bind="text: lang.lang.country"></span></th>
+									                <th style="width: 10%; vertical-align: top;"><span data-bind="text: lang.lang.rate"></span></th>
+									                <th style="width: 15%; vertical-align: top;"><span data-bind="text: lang.lang.source"></span></th>
+									                <th style="width: 15%; vertical-align: top;"><span data-bind="text: lang.lang.method"></span></th>
+									                <th style="width: 10%; vertical-align: top;"></th>
+									            </tr>
+									        </thead>
+									        <tbody data-role="listview"
+									        		data-template="currencyRate-template"
+									        		data-bind="source: dataSource"></tbody>
+									    </table>
+
+							            <div data-role="pager"
+								            data-bind="source: dataSource"></div>
+								    </div>
+
+								    <!-- Window -->
+								    <div data-role="window"
+							                 data-title="Exchange Rate"
+							                 data-width="350"
+							                 data-height="250"
+							                 data-actions="{}"
+							                 data-position="{top: '30%', left: '37%'}"
+							                 data-bind="visible: windowVisible">
+
+								    	<table class="table table-borderless table-condensed cart_total" >
+											<tr>
+												<td>
+											    	<input data-role="dropdownlist"
+										                   data-option-label="Select Currency"
+										                   data-value-primitive="true"
+										                   data-text-field="code"
+										                   data-value-field="id"
+										                   data-template="currency-list-tmpl"
+										                   data-bind="value: obj.currency_id,
+										                              source: currencyAllDS"
+										                   style="width: 100%" />
+									            </td>
+							            	</tr>
+							            	<tr>
+												<td>
+									                <input id="date" name="date"
+									            		data-role="datepicker"
+							        					data-bind="value: obj.date" CASH ADVANCE
+							        					data-format="dd-MM-yyyy"
+							        					data-parse-formats="yyyy-MM-dd"
+							        					placeholder="dd-MM-yyyy"
+							        					required data-required-msg="required"
+							        					style="width: 100%" />
+							        			</td>
+							            	</tr>
+							            	<tr>
+												<td>
+							        				<input type="number" class="k-textbox"
+							        				   min="0"
+									                   data-bind="value: obj.rate"
+									                   placeholder="Rate(per 1 unit of base currency) ..."
+									                   style="width: 100%" />
+									            </td>
+							            	</tr>
+						                </table>
+
+						                <p>
+						                	<span data-bind="text: lang.lang.note_the_exchange_rate_here"></span>
+						                </p>
+
+							            <div align="center">
+											<span class="btn btn-success btn-icon glyphicons ok_2" data-bind="click: save"><i></i><span data-bind="text: lang.lang.save"></span></span>
+											<span class="btn btn-danger btn-icon glyphicons remove_2" data-bind="click: closeWindow"><i></i><span data-bind="text: lang.lang.close"></span></span>
+										</div>
+
+									</div>
+
+
+								</div> <!-- End Widget-Body List -->
+							</div>
+							<!-- // Collapsible Widget END -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="currencyRate-template" type="text/x-kendo-tmpl">
+	<tr>
+		<td>#=kendo.toString(new Date(date), "dd-MM-yyyy")#</td>
+		<td>#=banhji.currencyRate.getCode(currency_id)#</td>
+		<td>#=banhji.currencyRate.getCountry(currency_id)#</td>
+		<td align="right">#=rate#</td>
+		<td>#=source#</td>
+		<td>#=method#</td>
+		<td style="text-align: center;">
+			<span class="k-button btn-info" data-bind="click: edit" style="cursor: pointer;"><i class="icon-edit"></i> <span data-bind="text: lang.lang.edit"></span></span>
+		</td>
+    </tr>
+</script>
 <!-- End -->
 
 

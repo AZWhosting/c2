@@ -501,9 +501,7 @@
                         	<h2 data-bind="text: lang.lang.general_supplier_setting"></h2>
                         	<div class="vtabs" style="width: 100%;">
 	                        	<ul class="nav nav-tabs tabs-vertical" role="tablist" style="width: 17%; float: left;">
-									<li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#supplierType" id=""><span class="hidden-sm-up"><i class="ti-layout-grid2-thumb"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.supplier_type"></span></a> </li>									
-								    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#supplierPaymentMethod"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.payment_method"></span></a> </li>
-								    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#supplierPaymentTerms"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.payment_terms"></span></a> </li>
+									<li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#supplierType" id=""><span class="hidden-sm-up"><i class="ti-layout-grid2-thumb"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.supplier_type"></span></a> </li>
 								    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#supplierCustomForms"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.custom_forms"></span></a> </li>
 								    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#supplierPrefixSetting"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.prefix_setting"></span></a> </li>
 							    </ul>
@@ -548,78 +546,6 @@
 											   	</div>
 											</div>
 										</div>	
-					                </div>
-					                <div class="tab-pane" id="supplierPaymentMethod" role="tabpanel">
-					                	<div class="row">
-											<div class="col-md-12">
-												<div class="hidden-md-up marginBottom">
-													<h3 data-bind="text: lang.lang.payment_method"></h2>
-												</div>
-
-												<div class="row">
-													<div class="col-md-12">
-													    <input style="height: 35px;" class="col-md-3 marginRight marginBottom" id="appendedInputButtons" type="text" placeholder="name ..." data-bind="value: paymentMethodName">													    
-													    <button class="col-md-2 btn waves-effect waves-light btn-block btn-info  marginBottom" type="button" data-bind="click: addPaymentMethod"><i class="icon-plus marginRight"></i> <span data-bind="text: lang.lang.add_method"></span></button>
-													</div>
-												</div>
-
-												<div class="row">
-													<div class="col-md-12  table-responsive">
-												    	<table class="table color-table dark-table">
-												    		<thead>
-												    			<tr>
-												    				<th class="center"><span data-bind="text: lang.lang.name"></span></th>
-	            													<th class="center"></th>
-												    			</tr>
-												    		</thead>
-												    		<tbody data-role="listview"
-										            			data-edit-template="customerSetting-edit-payment-method-template"
-												                data-template="customerSetting-payment-method-template"
-												                data-bind="source: paymentMethodDS"></tbody>
-												    	</table>
-													</div>
-											   	</div>
-											</div>
-										</div>
-					                </div>
-					                <div class="tab-pane" id="supplierPaymentTerms" role="tabpanel">
-					                	<div class="row">
-											<div class="col-md-12">
-												<div class="hidden-md-up marginBottom">
-													<h3 data-bind="text: lang.lang.payment_terms"></h2>
-												</div>
-
-												<div class="row">
-													<div class="col-md-12">
-														<input style="height: 35px;" class="col-md-2 marginRight marginBottom" id="appendedInputButtons" type="text" placeholder="name ..." data-bind="value: paymentTermName">
-													    <input style="height: 35px;" class="col-md-2 marginRight marginBottom" id="appendedInputButtons" type="text" placeholder="net due ..." data-bind="value: paymentTermNetDue">
-													    <input style="height: 35px;" class="col-md-2 marginRight marginBottom" id="appendedInputButtons" type="text" placeholder="period ..." data-bind="value: paymentTermPeriod">
-													    <input style="height: 35px;" class="col-md-2 marginRight marginBottom" id="appendedInputButtons" type="text" placeholder="% ..." data-bind="value: paymentTermPercentage">													    
-													    <button class="col-md-3 btn waves-effect waves-light btn-block btn-info  marginBottom" type="button" data-bind="click: addPaymentTerm"><i class="icon-plus marginRight"></i> <span data-bind="text: lang.lang.add_term"></span></button>
-													</div>
-												</div>
-
-												<div class="row">
-													<div class="col-md-12  table-responsive">
-												    	<table class="table color-table dark-table">
-												    		<thead>
-												    			<tr>
-										            				<th class="center"><span data-bind="text: lang.lang.name"></span></th>
-										            				<th class="center"><span data-bind="text: lang.lang.net_due"></span></th>
-										            				<th class="center"><span data-bind="text: lang.lang.discount_period"></span></th>
-										            				<th class="center"><span data-bind="text: lang.lang.discount_percentage"></span></th>
-										            				<th class="center"></th>
-										            			</tr>
-										            		</thead>
-										            		<tbody data-role="listview"
-											            			data-edit-template="customerSetting-edit-payment-term-template"
-													                data-template="customerSetting-payment-term-template"
-													                data-bind="source: paymentTermDS"></tbody>
-												    	</table>
-													</div>
-											   	</div>
-											</div>
-										</div>
 					                </div>
 					                <div class="tab-pane" id="supplierCustomForms" role="tabpanel">
 					                	<div class="row">
@@ -3057,4 +2983,4 @@
 
 		</div>
 	</div>
-</script>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+</script>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         

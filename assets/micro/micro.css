@@ -957,7 +957,7 @@ a.fa.fa-qrcode:before{
     width: 100%;
 }
 .product h3 {
-    margin: 0 auto;
+    margin: 1px auto;
     width: 75%;
     overflow: hidden;
     line-height: 1.5em;
@@ -1048,7 +1048,7 @@ a.fa.fa-qrcode:before{
 .checkOut-button a.buttoncancelsale{
 	background: #2b2f3a;
 	border-color: #2b2f3a;
-	padding: 18px 15px; 
+	padding: 28px 15px; 
 	box-shadow: 2px 0px 12px 0px rgba(68,68,68,1);
 }
 .checkOut-button a.buttonpay:hover{
@@ -1138,4 +1138,4 @@ a.fa.fa-qrcode:before{
 	.checkOut-button a.buttoncancelsale{
 		margin-bottom: 15px;
 	}
-}                                                                   
+}                                                                       

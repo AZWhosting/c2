@@ -5186,7 +5186,7 @@
 
             this.depositDS.sync();
         },
-        payCash         : function(e){
+        payCash             : function(e){
             var self = this, obj = this.get("obj"), segments = [];
 
             obj.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
@@ -5292,7 +5292,7 @@
                 }
             });
         },
-        payPopup           : function(){
+        payPopup            : function(){
             this.payVisible = this.payVisible == true ? false : true;
             console.log('payVisible', this.payVisible);
             $("#dialog").kendoWindow({
@@ -5312,7 +5312,7 @@
             dialog.open();
             dialog.center();
         },
-        save        : function(){
+        save                : function(){
             var self = this, obj = this.get("obj");
 
             obj.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
@@ -5393,7 +5393,7 @@
                 }
             });
         },
-        clear         : function(){
+        clear               : function(){
             this.dataSource.cancelChanges();
             this.lineDS.cancelChanges();
             this.assemblyLineDS.cancelChanges();
@@ -5406,11 +5406,11 @@
 
             banhji.userManagement.removeMultiTask("quote");
         },
-        cancel        : function(){
+        cancel              : function(){
             this.clear();
             window.history.back();
         },
-        delete        : function(){
+        delete              : function(){
             var self = this, obj = this.get("obj");
             this.set("showConfirm",false);
 
@@ -5436,8 +5436,8 @@
                 }
             });
         },
-        workDS : dataStore(apiUrl + "spa/work"),
-        addInvoice : function(e){
+        workDS              : dataStore(apiUrl + "spa/work"),
+        addInvoice          : function(e){
             var self = this;
             if(this.lineDS.data().length > 0){
                 if(this.employeeAR.length > 0){
@@ -5488,12 +5488,12 @@
                 this.alertRequiredMSG();
             }
         },
-        alertRequiredMSG: function(){
+        alertRequiredMSG    : function(){
            var noti = $("#ntf1").data("kendoNotification");
                 noti.hide();
                 noti.error(this.lang.lang.error_input);
         },
-        addWorkSuccess: function(){
+        addWorkSuccess      : function(){
             var noti = $("#ntf1").data("kendoNotification");
                 noti.hide();
                 noti.success(this.lang.lang.success_message);
@@ -5522,7 +5522,7 @@
                 pageSize: 8,
             })
         },
-        catChange: function(e){
+        catChange           : function(e){
             var para = [];
             para.push({
                 field: "item_type_id",
@@ -5545,7 +5545,7 @@
                 });
             }
         },
-        groupChange: function(e){
+        groupChange         : function(e){
             var para = [];
             para.push({
                 field: "item_type_id",
@@ -5568,7 +5568,7 @@
                 });
             }
         },
-        search: function() {
+        search              : function() {
             var self = this,
                 para = [],
                 searchText = this.get("searchText");
@@ -5605,8 +5605,8 @@
                 });
             }
         },
-        bookDS : dataStore(apiUrl + "spa/book"),
-        addBook : function(e){
+        bookDS              : dataStore(apiUrl + "spa/book"),
+        addBook             : function(e){
             var self = this;
             if(this.lineDS.data().length > 0){
                 if(this.employeeAR.length > 0){
@@ -5657,7 +5657,7 @@
                 this.alertRequiredMSG();
             }
         },
-        editBook: function(e){
+        editBook            : function(e){
             var data = e.data;
             var self = this;
             console.log(data);
@@ -6359,7 +6359,7 @@
 
             return dfd;
         },
-        saveCashSale        : function(){
+        saveCashSale        : function(status){
             var self = this, obj = this.get("obj"), segments = [];
 
             obj.set("issued_date", kendo.toString(new Date(this.get("dateSelected")), "s"));
@@ -6377,21 +6377,6 @@
                 segments.push(value.id);
             });
             obj.set("segments", segments);
-
-            //Save Draft
-            if(this.get("saveDraft")){
-                obj.set("status", 4); //In progress
-                obj.set("progress", "Draft");
-                obj.set("is_journal", 0);//No Journal
-            }
-
-            //Recurring
-            if(this.get("saveRecurring")){
-                this.set("saveRecurring", false);
-
-                obj.set("number", "");
-                obj.set("is_recurring", 1);
-            }
 
             //Edit Mode
             if(obj.isNew()==false){
@@ -6436,11 +6421,25 @@
                 self.receipCurrencyDS.sync();
                 self.receipChangeDS.sync();
                 self.uploadFile();
+                self.parkSaleDS.query({
+                    filter: [
+                        { field:"status", value:4 },
+                        { field: "type", value: "Cash_Sale"}
+                    ],
+                    sort: {
+                        field: "id",
+                        dir: "asc"
+                    },
+                    page: 1,
+                    pageSize: 100
+                });
                 return data;
             }, function(reason) { //Error
                 $("#ntf1").data("kendoNotification").error(reason);
             }).then(function(result){
-                banhji.router.navigate("/print_bill/"+self.dataSource.data()[0].id);
+                if(status != 3){
+                    banhji.router.navigate("/print_bill/"+self.dataSource.data()[0].id);
+                }
                 self.addEmpty();
                 $("#ntf1").data("kendoNotification").success(banhji.source.successMessage);
             });
@@ -6451,7 +6450,59 @@
             this.get("obj").set("transaction_template_id", 3);
             this.get("obj").set("account_id", "");
             this.setTerm();
-            this.saveCashSale();
+            this.saveCashSale(2);
+        },
+        parkSale            : function(){
+            this.get("obj").set("status", 4);
+            this.saveCashSale(3);
+        },
+        parkSaleDS          : new kendo.data.DataSource({
+            transport: {
+                read: {
+                    url: apiUrl + "transactions",
+                    type: "GET",
+                    headers: banhji.header,
+                    dataType: 'json'
+                },
+                parameterMap: function(options, operation) {
+                    if (operation === 'read') {
+                        return {
+                            page: options.page,
+                            limit: options.pageSize,
+                            filter: options.filter,
+                            sort: options.sort
+                        };
+                    } else {
+                        return {
+                            models: kendo.stringify(options.models)
+                        };
+                    }
+                }
+            },
+            schema: {
+                model: {
+                    id: 'id'
+                },
+                data: 'results',
+                total: 'count'
+            },
+            filter:[
+                { field:"status", value:4 },
+                { field: "type", value: "Cash_Sale"}
+            ],
+            sort: {
+                field: "id",
+                dir: "asc"
+            },
+            batch: true,
+            serverFiltering: true,
+            serverSorting: true,
+            serverPaging: true,
+            page: 1,
+            pageSize: 100
+        }),
+        rmParkSale          : function(e){
+            console.log(e.data);
         }
     });
     banhji.printBill = kendo.observable({
@@ -6612,7 +6663,7 @@
             this.barcod("reset");
             var listview = $("#invoiceContent").data("kendoListView");
             listview.refresh();
-            banhji.router.navigate("/check_out");
+            banhji.router.navigate("/");
         }
     });
     banhji.transactions = kendo.observable({
@@ -18630,7 +18681,8 @@
         banhji.view.layout.showIn('#content', banhji.view.Index);
         banhji.view.Index.showIn('#indexMenu', banhji.view.tapMenu);
         banhji.view.Index.showIn('#indexContent', banhji.view.checkOut);
-
+        var vm = banhji.checkOut;
+        vm.lineDS.bind("change", vm.lineDSChanges);
         banhji.checkOut.pageLoad();        
     });
     banhji.router.route('/reports', function() {
@@ -20012,4 +20064,4 @@
         banhji.router.start();
         banhji.source.pageLoad();
     });
-</script>                                                                                                                                                                                                                                                                                                                                                                                                                                          
+</script>

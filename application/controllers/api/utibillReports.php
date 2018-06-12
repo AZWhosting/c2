@@ -251,7 +251,7 @@ class UtibillReports extends REST_Controller {
 		$data["count"] = 0;
 		$totalUsage = 0;
 
-		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$obj = new Winvoice_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 		//Sort
 		if(!empty($sort) && isset($sort)){
@@ -276,53 +276,46 @@ class UtibillReports extends REST_Controller {
 		}
 
 		//Results
-		$obj->include_related("contact", array("abbr", "number", "name"));
-		$obj->include_related("location", "name");
-		$obj->include_related("winvoice_line", array("quantity", "type", "amount"));
-		$obj->include_related('winvoice_line/meter_record', "usage");
-		$obj->where_related("winvoice_line", "type", "tariff");
-		// $obj->where_related("meter", "deleted <>", 1);
-		$obj->where("type", "Utility_Invoice");
-		$obj->where("is_recurring <>", 1);
-		$obj->where("deleted <>", 1);
-		$obj->order_by("issued_date", "asc");
-		// $obj->get_iterated();
-		//Results
-		if($page && $limit){
-			$obj->get_paged_iterated($page, $limit);
-			$data["count"] = $obj->paged->total_rows;
-		}else{
-			$obj->get_iterated();
-			$data["count"] = $obj->result_count();
-		}
+		$obj->include_related("transaction/contact", array("abbr", "number", "name", "id"));
+		$obj->where_related("transaction", "type", "Utility_Invoice");
+		$obj->include_related("transaction/location", "name");
+		$obj->include_related('meter_record', "usage");
+		$obj->where("type", "tariff");
+		$obj->where_related("transaction","deleted <>", 1);
+		$obj->where_related("transaction","is_recurring <>", 1);
+		// $obj->where_related("transaction/is_recurring <>", 1);
+		// $obj->where_related("transaction/deleted <>", 1);
+		$obj->get_iterated();
 
 		if($obj->exists()){
 			$objList = [];
 			$usage = 0;
 			$amount = 0;
 			$price = 0;
+			$totalCount = 0;
 			foreach ($obj as $value) {	
-				$usage = $value->winvoice_line_meter_record_usage;
-				$price = $value->winvoice_line_amount;
+				$usage = $value->meter_record_usage;
+				$price = $value->amount;
 				if ($usage < 1){
-					$amount = 1*$price; 
+					$amount = 1 * $price; 
 				}else{
 					$amount = $usage*$price;
 				}
 					
-				$totalUsage += $usage;			
+				$totalUsage += $usage;
+				$totalCount += 1;				
 				
-				if(isset($objList[$value->contact_id])){
-					$objList[$value->contact_id]["invoice"] 		+= 1;
-					$objList[$value->contact_id]["amount"] 			+= $amount;
-					$objList[$value->contact_id]["usage"]			+= $usage;
+				if(isset($objList[$value->transaction_contact_id])){
+					$objList[$value->transaction_contact_id]["invoice"] 		+= 1;
+					$objList[$value->transaction_contact_id]["amount"] 			+= $amount;
+					$objList[$value->transaction_contact_id]["usage"]			+= $usage;
 				}else{
-					$objList[$value->contact_id]["id"] 				= $value->contact_id;
-					$objList[$value->contact_id]["name"] 			= $value->contact_abbr.$value->contact_number." ".$value->contact_name;
-					$objList[$value->contact_id]["invoice"]			= 1;
-					$objList[$value->contact_id]["location"]		= $value->location_name;
-					$objList[$value->contact_id]["amount"]			= $amount;
-					$objList[$value->contact_id]["usage"]			= $usage;
+					$objList[$value->transaction_contact_id]["id"] 				= $value->transaction_contact_id;
+					$objList[$value->transaction_contact_id]["name"] 			= $value->transaction_contact_abbr.$value->transaction_contact_number." ".$value->transaction_contact_name;
+					$objList[$value->transaction_contact_id]["invoice"]			= 1;
+					$objList[$value->transaction_contact_id]["location"]		= $value->transaction_location_name;
+					$objList[$value->transaction_contact_id]["amount"]			= $amount;
+					$objList[$value->transaction_contact_id]["usage"]			= $usage;
 				}
 			}
 
@@ -330,6 +323,7 @@ class UtibillReports extends REST_Controller {
 				$data["results"][] = $value;
 			}
 			$data['totalUsage'] = $totalUsage;
+			$data['totalCount'] = $totalCount;
 			// $data["count"] = count($data["results"]);
 		}
 
@@ -347,7 +341,7 @@ class UtibillReports extends REST_Controller {
 		$totalUser = 0;
 		$totalUsage = 0;
 
-		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$obj = new Winvoice_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 		//Sort
 		if(!empty($sort) && isset($sort)){
@@ -373,15 +367,16 @@ class UtibillReports extends REST_Controller {
 
 		//Results
 
-		$obj->include_related("contact", array("abbr", "number", "name"));
-		$obj->include_related("location", "name");
-		$obj->include_related("winvoice_line", array("quantity", "type", "amount"));
-		$obj->include_related('winvoice_line/meter_record', "usage");
-		$obj->where_related("winvoice_line", "type", "tariff");
-		$obj->where("type", "Utility_Invoice");
-		$obj->where("is_recurring <>", 1);
-		$obj->where("deleted <>", 1);
-		$obj->order_by("issued_date", "asc");
+		$obj->include_related("transaction/contact", array("abbr", "number", "name", "id"));
+		$obj->where_related("transaction", "type", "Utility_Invoice");
+		$obj->include_related("transaction/location", "name");
+		$obj->include_related("transaction", array("type", "month_of", "issued_date", "number"));
+		$obj->include_related('meter_record', "usage");
+		$obj->where("type", "tariff");
+		$obj->where_related("transaction","deleted <>", 1);
+		$obj->where_related("transaction","is_recurring <>", 1);
+		// $obj->where_related("transaction/is_recurring <>", 1);
+		// $obj->where_related("transaction/deleted <>", 1);
 		$obj->get_iterated();
 
 		if($obj->exists()){
@@ -390,34 +385,35 @@ class UtibillReports extends REST_Controller {
 			$amount = 0;
 			$price = 0;
 			foreach ($obj as $value) {								
-				$usage = $value->winvoice_line_meter_record_usage;
-				$price = $value->winvoice_line_amount;
+				$usage = $value->meter_record_usage;
+				$price = $value->amount;
 				if ($usage < 1){
-					$amount = 1*$price; 
+					$amount = 1 * $price; 
 				}else{
 					$amount = $usage*$price;
 				}
-				if(isset($objList[$value->contact_id])){
-					$objList[$value->contact_id]["line"][] = array(
+				
+				if(isset($objList[$value->transaction_contact_id])){
+					$objList[$value->transaction_contact_id]["line"][] = array(
 						"id" 				=> $value->id,
-						"type" 				=> $value->type,
-						"month" 			=> $value->month_of,
-						"date" 				=> $value->issued_date,
-						"location" 			=> $value->location_name,
-						"number" 			=> $value->number,
+						"type" 				=> $value->transaction_type,
+						"month" 			=> $value->transaction_month_of,
+						"date" 				=> $value->transaction_issued_date,
+						"location" 			=> $value->transaction_location_name,
+						"number" 			=> $value->transaction_number,
 						"usage" 			=> $usage,
 						"amount"			=> $amount
 					);
 				}else{
-					$objList[$value->contact_id]["id"] 		= $value->contact_id;
-					$objList[$value->contact_id]["name"] 	= $value->contact_abbr.$value->contact_number." ".$value->contact_name;
-					$objList[$value->contact_id]["line"][]	= array(
+					$objList[$value->transaction_contact_id]["id"] 		= $value->transaction_contact_id;
+					$objList[$value->transaction_contact_id]["name"] 	= $value->transaction_contact_abbr.$value->transaction_contact_number." ".$value->transaction_contact_name;
+					$objList[$value->transaction_contact_id]["line"][]	= array(
 						"id" 				=> $value->id,
-						"type" 				=> $value->type,
-						"month" 			=> $value->month_of,
-						"date" 				=> $value->issued_date,
-						"location" 			=> $value->location_name,
-						"number" 			=> $value->number,
+						"type" 				=> $value->transaction_type,
+						"month" 			=> $value->transaction_month_of,
+						"date" 				=> $value->transaction_issued_date,
+						"location" 			=> $value->transaction_location_name,
+						"number" 			=> $value->transaction_number,
 						"usage" 			=> $usage,
 						"amount"			=> $amount
 					);

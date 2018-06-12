@@ -15153,7 +15153,7 @@
 								<div class="col-xs-12 col-sm-3">
 									<div class="total-sale">
 										<p data-bind="text: lang.lang.number_of_customer">Number of Customer</p>
-										<span data-bind="text: dataSource.total"></span>
+										<span data-bind="text: totalCount"></span>
 									</div>
 								</div>
 								<div class="col-xs-12 col-sm-3">

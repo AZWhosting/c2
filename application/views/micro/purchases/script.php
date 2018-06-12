@@ -3489,16 +3489,24 @@
     banhji.reports = kendo.observable({
         lang                : langVM,
         dataSource          : dataStore(apiUrl + "vendor_modules/dashboard"),
-        graphDS             : dataStore(apiUrl + "vendor_modules/monthly_purchase"),
+        txnDS               : dataStore(apiUrl + "vendorReports/transaction_vendor_grid"),
+        sortList            : banhji.source.sortList,
+        sorter              : "month",
+        sdate               : "",
+        edate               : "",
         obj                 : {},
+        company             : banhji.institute,
+        displayDate         : "",
+        totalCustomer       : 0,
+        totalSale           : 0,
+        totalBalance        : 0,
+        exArray             : [],
         pageLoad            : function(){
             this.loadData();
-            //console.log("sdds");
+            this.search();
         },
         loadData            : function(){
             var self = this;
-
-            this.graphDS.read();
 
             this.dataSource.query({
                 filter: [],
@@ -3509,25 +3517,6 @@
 
                 self.set("obj", view[0]);
             });
-        }
-    });
-    banhji.transactions = kendo.observable({
-        lang                : langVM,
-        dataSource          : dataStore(apiUrl + "vendorReports/transaction_vendor_grid"),
-        contactDS           : banhji.source.supplierDS,
-        sortList            : banhji.source.sortList,
-        sorter              : "month",
-        sdate               : "",
-        edate               : "",
-        obj                 : { contactIds: [] },
-        company             : banhji.institute,
-        displayDate         : "",
-        totalCustomer       : 0,
-        totalSale           : 0,
-        totalBalance        : 0,
-        exArray             : [],
-        pageLoad            : function(){
-            this.search();
         },
         sorterChanges       : function(){
             var today = new Date(),
@@ -3566,19 +3555,9 @@
         },
         search              : function(){
             var self = this, para = [],
-                obj = this.get("obj"),
                 start = this.get("sdate"),
                 end = this.get("edate"),
                 displayDate = "";
-
-            //Customer
-            if(obj.contactIds.length>0){
-                var contactIds = [];
-                $.each(obj.contactIds, function(index, value){
-                    contactIds.push(value);
-                });
-                para.push({ field:"contact_id", operator:"where_in", value:contactIds });
-            }
 
             //Dates
             if(start && end){
@@ -3605,7 +3584,7 @@
             }
             this.set("displayDate", displayDate);
 
-            this.dataSource.filter(para);
+            this.txnDS.filter(para);
         },
         payBill             : function(e){
             var data = e.data;
@@ -3615,6 +3594,392 @@
                 banhji.cashPayment.loadInvoice(data.id);
             }
         }
+    });
+    banhji.transactions = kendo.observable({
+        // lang                : langVM,
+        // dataSource          : dataStore(apiUrl + "vendorReports/transaction_vendor_grid"),
+        // contactDS           : banhji.source.supplierDS,
+        // sortList            : banhji.source.sortList,
+        // sorter              : "month",
+        // sdate               : "",
+        // edate               : "",
+        // obj                 : { contactIds: [] },
+        // company             : banhji.institute,
+        // displayDate         : "",
+        // totalCustomer       : 0,
+        // totalSale           : 0,
+        // totalBalance        : 0,
+        // exArray             : [],
+        // pageLoad            : function(){
+        //     this.search();
+        // },
+        // sorterChanges       : function(){
+        //     var today = new Date(),
+        //     sdate = "",
+        //     edate = "",
+        //     sorter = this.get("sorter");
+
+        //     switch(sorter){
+        //         case "today":
+        //             this.set("sdate", today);
+        //             this.set("edate", "");
+
+        //             break;
+        //         case "week":
+        //             var first = today.getDate() - today.getDay(),
+        //             last = first + 6;
+
+        //             this.set("sdate", new Date(today.setDate(first)));
+        //             this.set("edate", new Date(today.setDate(last)));
+
+        //             break;
+        //         case "month":
+        //             this.set("sdate", new Date(today.getFullYear(), today.getMonth(), 1));
+        //             this.set("edate", new Date(today.getFullYear(), today.getMonth() + 1, 0));
+
+        //             break;
+        //         case "year":
+        //             this.set("sdate", new Date(today.getFullYear(), 0, 1));
+        //             this.set("edate", new Date(today.getFullYear(), 11, 31));
+
+        //             break;
+        //         default:
+        //             this.set("sdate", "");
+        //             this.set("edate", "");
+        //     }
+        // },
+        // search              : function(){
+        //     var self = this, para = [],
+        //         obj = this.get("obj"),
+        //         start = this.get("sdate"),
+        //         end = this.get("edate"),
+        //         displayDate = "";
+
+        //     //Customer
+        //     if(obj.contactIds.length>0){
+        //         var contactIds = [];
+        //         $.each(obj.contactIds, function(index, value){
+        //             contactIds.push(value);
+        //         });
+        //         para.push({ field:"contact_id", operator:"where_in", value:contactIds });
+        //     }
+
+        //     //Dates
+        //     if(start && end){
+        //         start = new Date(start);
+        //         end = new Date(end);
+        //         displayDate = "From " + kendo.toString(start, "dd-MM-yyyy") + " To " + kendo.toString(end, "dd-MM-yyyy");
+        //         end.setDate(end.getDate()+1);
+
+        //         para.push({ field:"issued_date >=", value: kendo.toString(start, "yyyy-MM-dd") });
+        //         para.push({ field:"issued_date <", value: kendo.toString(end, "yyyy-MM-dd") });
+        //     }else if(start){
+        //         start = new Date(start);
+        //         displayDate = "On " + kendo.toString(start, "dd-MM-yyyy");
+
+        //         para.push({ field:"issued_date", value: kendo.toString(start, "yyyy-MM-dd") });
+        //     }else if(end){
+        //         end = new Date(end);
+        //         displayDate = "As Of " + kendo.toString(end, "dd-MM-yyyy");
+        //         end.setDate(end.getDate()+1);
+
+        //         para.push({ field:"issued_date <", value: kendo.toString(end, "yyyy-MM-dd") });
+        //     }else{
+
+        //     }
+        //     this.set("displayDate", displayDate);
+
+        //     this.dataSource.filter(para);
+        // },
+        // payBill             : function(e){
+        //     var data = e.data;
+
+        //     if(obj!==null){
+        //         banhji.router.navigate('/cash_payment');
+        //         banhji.cashPayment.loadInvoice(data.id);
+        //     }
+        // }
+        lang                : langVM,
+        dataSource          : dataStore(apiUrl + "transactions"),
+        lineDS              : dataStore(apiUrl + "item_lines"),
+        assemblyLineDS      : dataStore(apiUrl + "item_lines"),
+        txnDS               : dataStore(apiUrl + "transactions"),
+        numberDS            : dataStore(apiUrl + "transactions/number"),
+        balanceDS           : dataStore(apiUrl + "transactions/balance"),
+        journalLineDS       : dataStore(apiUrl + "journal_lines"),
+        recurringDS         : dataStore(apiUrl + "transactions"),
+        recurringLineDS     : dataStore(apiUrl + "item_lines"),
+        referenceDS         : dataStore(apiUrl + "transactions"),
+        referenceLineDS     : dataStore(apiUrl + "item_lines"),
+        depositDS           : dataStore(apiUrl + "transactions"),
+        wacDS               : dataStore(apiUrl + "items/weighted_average_costing"),
+        itemDS              : dataStore(apiUrl + "items"),
+        itemPriceDS         : dataStore(apiUrl + "item_prices"),
+        assemblyDS          : dataStore(apiUrl + "item_assemblies"),
+        attachmentDS        : dataStore(apiUrl + "attachments"),
+        segmentDS           : dataStore(apiUrl + "segments"),
+        segItemDS           : dataStore(apiUrl + "segments/item"),
+        segmentItemDS       : dataStore(apiUrl + "segments/item"),      
+        typeList            : new kendo.data.DataSource({
+            data: banhji.source.prefixList,
+            filter:{
+                logic: "or",
+                filters: [
+                    { field: "type", value: "Commercial_Invoice" },
+                    { field: "type", value: "Vat_Invoice" },
+                    { field: "type", value: "Invoice" }
+                ]
+            }
+        }),
+        contactDS          : new kendo.data.DataSource({
+            transport: {
+                read: {
+                    url: apiUrl + "contacts",
+                    type: "GET",
+                    headers: banhji.header,
+                    dataType: 'json'
+                },
+                parameterMap: function(options, operation) {
+                    if (operation === 'read') {
+                        return {
+                            page: options.page,
+                            limit: options.pageSize,
+                            filter: options.filter,
+                            sort: options.sort
+                        };
+                    } else {
+                        return {
+                            models: kendo.stringify(options.models)
+                        };
+                    }
+                }
+            },
+            schema: {
+                model: {
+                    id: 'id'
+                },
+                data: 'results',
+                total: 'count'
+            },
+            filter:{ field:"parent_id", operator:"where_related_contact_type", value:1 },
+            sort: {
+                field: "id",
+                dir: "asc"
+            },
+            batch: true,
+            serverFiltering: true,
+            serverSorting: true,
+            serverPaging: true,
+            page: 1,
+            pageSize: 100
+        }),
+        categoryDS         : new kendo.data.DataSource({
+            transport: {
+                read: {
+                    url: apiUrl + "categories",
+                    type: "GET",
+                    headers: banhji.header,
+                    dataType: 'json'
+                },
+                parameterMap: function(options, operation) {
+                    if (operation === 'read') {
+                        return {
+                            page: options.page,
+                            limit: options.pageSize,
+                            filter: options.filter,
+                            sort: options.sort
+                        };
+                    } else {
+                        return {
+                            models: kendo.stringify(options.models)
+                        };
+                    }
+                }
+            },
+            schema: {
+                model: {
+                    id: 'id'
+                },
+                data: 'results',
+                total: 'count'
+            },
+            filter: [
+                {
+                    field: "is_system",
+                    value: 0
+                }
+            ],
+            sort: {
+                field: "id",
+                dir: "asc"
+            },
+            batch: true,
+            serverFiltering: true,
+            serverSorting: true,
+            serverPaging: true,
+            page: 1,
+            pageSize: 100
+        }),        
+        discountAccountDS   : new kendo.data.DataSource({
+            data: banhji.source.accountList,
+            filter: { field:"id", value: 72 },
+            sort: { field:"number", dir:"asc" }
+        }),
+        txnTemplateDS       : new kendo.data.DataSource({
+            data: banhji.source.txnTemplateList,
+            filter:{
+                logic: "or",
+                filters: [
+                    { field: "type", value: "Commercial_Invoice" },
+                    { field: "type", value: "Vat_Invoice" },
+                    { field: "type", value: "Invoice" }
+                ]
+            }
+        }),
+        jobDS               : new kendo.data.DataSource({
+            data: banhji.source.jobList,
+            sort: { field: "name", dir: "asc" }
+        }),
+        itemsDS             : new kendo.data.DataSource({
+            transport: {
+                read: {
+                    url: apiUrl + "items",
+                    type: "GET",
+                    headers: banhji.header,
+                    dataType: 'json'
+                },
+                parameterMap: function(options, operation) {
+                    if (operation === 'read') {
+                        return {
+                            page: options.page,
+                            limit: options.pageSize,
+                            filter: options.filter,
+                            sort: options.sort
+                        };
+                    } else {
+                        return {
+                            models: kendo.stringify(options.models)
+                        };
+                    }
+                }
+            },
+            schema: {
+                model: {
+                    id: 'id'
+                },
+                data: 'results',
+                total: 'count'
+            },
+            filter: [
+                {
+                    field: "item_type_id",
+                    operator: "where_in",
+                    value: [1, 4]
+                }
+            ],
+            sort: {
+                field: "id",
+                dir: "asc"
+            },
+            batch: true,
+            serverFiltering: true,
+            serverSorting: true,
+            serverPaging: true,
+            page: 1,
+            pageSize: 8
+        }),
+        employeeDS          : new kendo.data.DataSource({
+            transport: {
+                read: {
+                    url: apiUrl + "contacts",
+                    type: "GET",
+                    headers: banhji.header,
+                    dataType: 'json'
+                },
+                parameterMap: function(options, operation) {
+                    if (operation === 'read') {
+                        return {
+                            page: options.page,
+                            limit: options.pageSize,
+                            filter: options.filter,
+                            sort: options.sort
+                        };
+                    } else {
+                        return {
+                            models: kendo.stringify(options.models)
+                        };
+                    }
+                }
+            },
+            schema: {
+                model: {
+                    id: 'id'
+                },
+                data: 'results',
+                total: 'count'
+            },
+            filter: [
+                {
+                    field: "contact_type_id",
+                    operator: "where_in",
+                    value: [11,12]
+                },
+                {   
+                    field: "work_id",
+                    value: 0
+                }
+            ],
+            sort: {
+                field: "id",
+                dir: "asc"
+            },
+            batch: true,
+            serverFiltering: true,
+            serverSorting: true,
+            serverPaging: true,
+            page: 1,
+            pageSize: 100
+        }),
+        itemGroupDS         : banhji.source.itemGroupDS,
+        statusObj           : banhji.source.statusObj,
+        paymentTermDS       : banhji.source.paymentTermDS,
+        paymentMethodDS     : banhji.source.paymentMethodDS,
+        amtDueColor         : banhji.source.amtDueColor,
+        confirmMessage      : banhji.source.confirmMessage,
+        frequencyList       : banhji.source.frequencyList,
+        monthOptionList     : banhji.source.monthOptionList,
+        monthList           : banhji.source.monthList,
+        weekDayList         : banhji.source.weekDayList,
+        dayList             : banhji.source.dayList,
+        showMonthOption     : false,
+        showMonth           : false,
+        showWeek            : false,
+        showDay             : false,
+        obj                 : null,
+        isEdit              : false,
+        saveDraft           : false,
+        saveClose           : false,
+        savePrint           : false,
+        saveRecurring       : false,
+        showConfirm         : false,
+        notDuplicateNumber  : true,
+        recurring           : "",
+        recurring_validate  : false,
+        reference_id        : 0,
+        balance             : 0,
+        total_deposit       : 0,
+        total               : 0,
+        amount_due          : 0,
+        segment_id          : "",
+        segmentitem_id      : "",
+        barcode             : "",
+        barcodeVisible      : false,
+        category_id         : 0,
+        item_group_id       : 0,
+        user_id             : banhji.source.user_id,
+        sessionDS           : dataStore(apiUrl + "cashier"),
+        haveItems           : false,
+        currencyDS: dataStore(apiUrl + "utibills/currency"),
     });
     // Function
     banhji.purchaseCenter = kendo.observable({
@@ -15066,4 +15431,4 @@
         banhji.router.start();
         banhji.source.pageLoad();
     });    
-</script>
+</script>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           

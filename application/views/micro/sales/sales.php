@@ -100,7 +100,7 @@
 			</div> -->
 
 			<!-- Top 4 -->
-			<div class="top5 home-footer">
+			<!-- <div class="top5 home-footer">
                 <table class="table color-table dark-table">
                     <thead>
                         <tr>
@@ -114,7 +114,7 @@
                          data-template="top-contact-template"
                          data-bind="source: obj.top_customer"></tbody>
                 </table>
-            </div>					                        
+            </div> -->					                        
 		</div>
 
 
@@ -148,7 +148,7 @@
 			</div> -->
 
 			<!-- Top 4 -->
-			<div class="top5 home-footer">
+			<!-- <div class="top5 home-footer">
                 <table class="table color-table dark-table">
                     <thead>
                         <tr>
@@ -162,7 +162,7 @@
                          data-template="top-contact-template"
                          data-bind="source: obj.top_ar"></tbody>
                 </table>
-            </div>					                        
+            </div> -->					                        
 		</div>
 
 		<!-- 333 -->
@@ -187,7 +187,7 @@
 	            </div>
 			</div>
 
-			<div class="top5 home-footer">
+			<!-- <div class="top5 home-footer">
                 <table class="table color-table dark-table">
                     <thead>
                         <tr>
@@ -201,7 +201,7 @@
                          data-template="top-product-template"
                          data-bind="source: obj.top_cash_receipt"></tbody>
                 </table>
-            </div>
+            </div> -->
 		</div>
 
 	</div>
@@ -339,8 +339,8 @@
 		</div>
 		<div class="col">
 			<div class="listWrapper marginBottom" style="height: auto;">
-				<div class="row hidden-sm-down">
-					<div class="col">
+				<div class="row ">
+					<div class="col hidden-sm-down">
 						<input 
 							data-role="dropdownlist"
 							data-template="contact-list-tmpl" 
@@ -360,12 +360,12 @@
                         />
                         <div class="table-responsive">
 							<table class="table color-table dark-table">
-						        <thead>
+						        <!-- <thead>
 						            <tr>
 						            	<th style="vertical-align: top;" data-bind="text: lang.lang.no_"></th>
 						            	<th style="vertical-align: top;" data-bind="text: lang.lang.name"></th>
 						            </tr>
-						        </thead>
+						        </thead> -->
 						        <tbody data-role="listview" 
 					        		data-template="customer-select-list-tmpl" 
 					        		data-auto-bind="false"
@@ -374,8 +374,12 @@
 						    </table>
 		                </div>
                     </div>
-					<div class="col table-responsive">
-						<table class="table color-table dark-table">
+					<div class="col checkOut-button">
+						<a style="padding: 20px 15px; box-shadow: 2px 0px 12px 0px rgba(68,68,68,1); border-radius: 5px; margin-bottom: 1px; " class="buttonpay btn waves-effect waves-light btn-block btn-info" data-bind="click: saveCashSale">
+							<span style="font-size: 15px; width: 50%; float: left;" data-bind="text: lang.lang.microparksale"></span>
+							<span style="font-size: 15px; width: 50%; float: right;" data-bind="">100</span>
+						</a>
+						<!-- <table class="table color-table dark-table">
 					        <thead>
 					            <tr>
 					            	<th style="vertical-align: top;" data-bind="text: lang.lang.no_"></th>
@@ -383,15 +387,15 @@
 					            </tr>
 					        </thead>
 					        <tbody data-role="listview" 
-				        		data-template="customer-select-list-tmpl" 
-				        		data-auto-bind="false"
-				        		data-bind="source: customerAR">
+				        		data-template="parksale-list-tmpl" 
+				        		data-auto-bind="true"
+				        		data-bind="source: parkSaleDS">
 				        	</tbody>
-					    </table>
+					    </table> -->
 	                </div>
 				</div>
 				<div class="row">
-					<div class="col-md-12 ">
+					<div class="col-md-12 table-responsive">
 						<div id="posProductList" class="box-generic-noborder table-responsive marginBottom" style="min-height: 140px!important; height: 230px; padding-bottom: 0;">
 							<!-- Item List -->
 						    <div data-role="grid" class="costom-grid table color-table dark-table"
@@ -504,7 +508,7 @@
 							<div class="col-12 col-md-6 checkOut-button">
 								<div class="row">
 									<div class="col" >
-										<a style="padding: 25px 15px; box-shadow: 2px 0px 12px 0px rgba(68,68,68,1); border-radius: 5px 5px 0 0; margin-bottom: 1px; " class="buttonpay btn waves-effect waves-light btn-block btn-info" data-bind="click: saveInvoice" data-bind="click: saveCashSale"><span style="font-size: 15px;" data-bind="text: lang.lang.pay">Pay</span></a>
+										<a style="padding: 25px 15px; box-shadow: 2px 0px 12px 0px rgba(68,68,68,1); border-radius: 5px 5px 0 0; margin-bottom: 1px; " class="buttonpay btn waves-effect waves-light btn-block btn-info" data-bind="click: saveCashSale"><span style="font-size: 15px;" data-bind="text: lang.lang.pay">Pay</span></a>
 									</div>
 								</div>
 								<div class="row">
@@ -512,10 +516,10 @@
 										<a style="border-radius: 0 0 0 5px; " class="buttoninvoice btn waves-effect waves-light btn-block btn-info" data-bind="click: saveInvoice" data-bind="click: saveInvoice"><span data-bind="text: lang.lang.microinvoice">Issue <br/>Invoice</span></a>
 									</div>
 									<div class="col-4" style="padding: 0;">
-										<a style="margin: 0 2px; width: 96%; " class="buttonparksale btn waves-effect waves-light btn-block btn-info" data-bind="click: saveInvoice"><span data-bind="text: lang.lang.microparksale">Parksale</span></a>
+										<a style="margin: 0 2px; width: 96%; " class="buttonparksale btn waves-effect waves-light btn-block btn-info" data-bind="click: parkSale"><span data-bind="text: lang.lang.microparksale">Parksale</span></a>
 									</div>
 									<div class="col-4" style="padding-left: 0;">
-										<a style="border-radius: 0 0 5px 0; " class="buttoncancelsale btn waves-effect waves-light btn-block btn-info" data-bind="click: saveInvoice"><span data-bind="text: lang.lang.cancel">Cancel</span></a>
+										<a style="border-radius: 0 0 5px 0; " class="buttoncancelsale btn waves-effect waves-light btn-block btn-info" data-bind="click: addEmptey"><span data-bind="text: lang.lang.cancel">Cancel</span></a>
 									</div>
 								</div>
 							</div>
@@ -524,6 +528,7 @@
 				</div>
 				<div class="row">
 					<div class="col">
+						<p data-bind="text: lang.lang.amount_to_pay"></p>
 						<table class="table color-table dark-table">
 					        <thead>
 					            <tr>
@@ -539,6 +544,7 @@
 					    </table>				
 					</div>
 					<div class="col">
+						<p data-bind="text: lang.lang.amount_change"></p>
 					    <table class="table color-table dark-table">
 					        <thead>
 					            <tr>
@@ -709,11 +715,23 @@
 <script id="item-list-view-template" type="text/x-kendo-template">
 	<div class="product" data-bind="click:addRow" style="text-align: center;">
 		<a class="view-details">		
-			<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/no_image.jpg" />
+			<div style="height:130px;">
+				<img src="#= image_url? image_url: 'https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/no_image.jpg'#" />
+			</div>
 			<h3>#:name#</h3>
 		</a>			
 	</div>
 </script>
+<script id="parksale-list-tmpl" type="text/x-kendo-template">
+	<tr data-uid="#: uid #">
+		<td>
+			<i class="icon-trash" data-bind="events: { click: rmParkSale }"></i>
+			#:banhji.checkOut.parkSaleDS.indexOf(data)+1#      
+		</td>
+		<td>#= number#</td>
+	</tr>
+</script>
+
 <script id="customer-select-list-tmpl" type="text/x-kendo-tmpl">
 	<tr data-uid="#: uid #">
 		<td>

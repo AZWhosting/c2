@@ -52,20 +52,20 @@
                                 </a>
                             </div>
                             <div class="col-6 col-md-3">
-                                <a href="">
+                                <a href="purchases">
                                     <div class="functionHome">
                                     </div>
                                 </a>
                             </div>
 
                             <div class="col-6 col-md-3">
-                                <a href="">
+                                <a href="items">
                                     <div class="functionHome">
                                     </div>
                                 </a>
                             </div>
                             <div class="col-6 col-md-3">
-                                <a href="">
+                                <a href="cashs">
                                     <div class="functionHome">
                                     </div>
                                 </a>
@@ -273,7 +273,7 @@
                     #=name#
                 #}#
             </span>
-            <span class="pull-right">#:kendo.toString(kendo.parseInt(total), "n0")#</span>
+            <span class="pull-right">#:kendo.toString(kendo.parseInt(total), banhji.locale=="km-KH"?"c0":"c2", banhji.locale)#</span>
         </td>
     </tr>
 </script>
@@ -293,4 +293,4 @@
         </td>
     </tr>
 </script>
-<!-- End -->
+<!-- End --> 
