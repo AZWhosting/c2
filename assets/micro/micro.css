@@ -944,11 +944,12 @@ a.fa.fa-qrcode:before{
     float: left;
     position: relative;
     width: 24.5%;
-    height: 170px;
+    height: auto;
     cursor: pointer;
     background: #fff;
     margin-right: 2px;
-    margin-bottom: 1px;
+    margin-bottom: 2px;
+    overflow: hidden;
 }
 .product img {
     height: auto;
@@ -966,7 +967,6 @@ a.fa.fa-qrcode:before{
     color: #333;
     font-weight: 700;
     text-align: center;
-    height: 35px;
 }
 #checkOut #pager{
 	box-shadow: none;
@@ -984,8 +984,8 @@ a.fa.fa-qrcode:before{
 .view-details:after {
     content: "";
     display: block;
-    width: 123px;
-    height: 130px;
+    width: 100%;
+    height: 111%;
     position: absolute;
     top: 0;
     left: 0;
@@ -1071,6 +1071,10 @@ a.fa.fa-qrcode:before{
 	background: #009efb;
 	border-color: #009efb;
 }
+.accounCetner-textedit a:hover i,
+.accounCetner-textedit a:hover span{
+	color: #fff;
+}
 @media (max-width: 767px){
 	.board-chart{
 		min-height: 110px;
@@ -1150,4 +1154,4 @@ a.fa.fa-qrcode:before{
 		margin-bottom: 15px;
 	}
 
-}                                                                                 
+}                                                                                                     

@@ -28,8 +28,7 @@
                         	<div id="indexMenu">
                         		<div class="hidden-sm-down" style="position: absolute; right: 20px; top: 20px;">
                         			<div class="btn-group float-right">
-						                <button style="font-size: 17px; " type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						                	New Transaction
+						                <button style="font-size: 17px; " type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-bind="text: lang.lang.new_transaction">
 						                </button>
 						                <div class="dropdown-menu">
 						                    <a class="dropdown-item" href="purchases#/purchase"><span data-bind="text: lang.lang.make_purchase"></span></a>
@@ -57,8 +56,8 @@
 <!-- Purchase Menu -->
 <script id="tapMenu" type="text/x-kendo-template">
 	<ul class="nav nav-tabs customtab" role="tablist" >
-		<li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#/" data-bind="click: goReports"><span class="hidden-sm-up"><i class="ti-layout-grid2-thumb"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.reports"></span></a> </li>
-	    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#/transactions" data-bind="click: goTransactions"><span class="hidden-sm-up"><i class="ti-layout-accordion-list"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.purchase"></span></a> </li>
+		 <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#/" data-bind="click: goTransactions"><span class="hidden-sm-up"><i class="ti-layout-accordion-list"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.purchase"></span></a> </li>
+		<li class="nav-item"> <a class="nav-link " data-toggle="tab" href="#/reports" data-bind="click: goReports"><span class="hidden-sm-up"><i class="ti-layout-grid2-thumb"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.reports"></span></a> </li>	   
 	    <li class="nav-item hidden-sm-down"> <a class="nav-link" data-toggle="tab" href="#/purchase_center" data-bind="click: goPurchaseCenter"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.suppliers"></span></a> </li>
     </ul>
 </script>
@@ -209,8 +208,8 @@
 					</div>
 				</div>
 				<div class="col btn-group float-right">
-	                <button style="width: 100%;" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	                	Reports
+	                <button style="width: 100%;" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-bind="text: lang.lang.reports">
+	                	
 	                </button>
 	                <div class="dropdown-menu">
 	                    <a class="dropdown-item" href="#/purchase_summary_product_services" data-bind="text: lang.lang.purchase_summary_by_product_services"></a>
@@ -362,25 +361,56 @@
         </div>
 	</div> -->
 	<div class="row" id="checkOut">
-		<div class="col">
+		<div class="col-12 col-md-6" id="example">
 			<div class="listWrapper">
 				<div class="row">
-					<div class="col-12 col-md-6">
-						<div class="widget-search marginBottom">
-							<div class="overflow-hidden" style="width: 100%;">
-								<input type="search" placeholder="Barcode..." data-bind="value: barcode, events: {change: barcodeChange}" style="width: 100%;" />
-							</div>
-							
-						</div>
+            		<div class="col-md-6">
+            			<input type="radio" value="Cash_Purchase" class="k-radio"
+        					name="payOption" id="payOption1"
+        					data-bind="checked: obj.type,
+        								events:{ change: typeChanges }">
+        				<label class="k-radio-label" for="payOption1"><span data-bind="text: lang.lang.cash"></span></label>
+
+        				<input type="radio" value="Credit_Purchase" class="k-radio"
+		            		name="payOption" id="payOption2"
+		            		data-bind="checked: obj.type,
+		            					events:{ change: typeChanges }">
+		            	<label class="k-radio-label" for="payOption2"><span data-bind="text: lang.lang.credit"></span></label>
+		            	
+		            	
+		            	<p class="marginBottom" data-bind="text: lang.lang.account"></p>
+		            	<input class="marginBottom" id="ddlAccount" name="ddlAccount"
+							data-role="dropdownlist"
+              				data-header-template="account-header-tmpl"
+              				data-template="account-list-tmpl"
+              				data-value-primitive="true"
+							data-text-field="name"
+              				data-value-field="id"
+              				data-bind="value: obj.account_id,
+              							source: accountDS"
+              				data-option-label="Select Account..."
+              				required data-required-msg="required"
+              				style="width: 100%" />
+                	</div>
+
+                	<div class="col-md-6" >
+                        		<div data-bind="invisible: isCash">
+                            		<span class="marginBottom" data-bind="text: lang.lang.due_date" style="width: 25%; float:left;"></span>
+				            		<input id="txtDueDate" name="txtDueDate" class="pull-right marginBottom"
+											data-role="datepicker"
+											data-format="dd-MM-yyyy"
+											data-parse-formats="yyyy-MM-dd"
+											data-bind="value: obj.due_date" style="width: 75%; float:left;"/>
+								</div>
+
+								<p class="marginBottom" data-bind="text: lang.lang.bill_date"></p>
+			            		<input id="txtBillDate" name="txtBillDate" class="pull-right marginBottom"
+			            				data-role="datepicker"
+										data-format="dd-MM-yyyy"
+										data-parse-formats="yyyy-MM-dd"
+										data-bind="value: obj.bill_date" />
 					</div>
-					<div class="col-12 col-md-6">
-						<div class="widget-search marginBottom">
-							<div class="overflow-hidden">
-								<input type="search" placeholder="Number or Name..." data-bind="value: searchText" />
-							</div>
-							<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="ti-search"></i></button>
-						</div>
-					</div>
+
 				</div>
 				<div class="row hidden-sm-down">
 					<div class="col-md-12" style="position: relative;overflow: hidden;">
@@ -434,58 +464,60 @@
 
 			</div>
 		</div>
-		<div class="col">
-			<div class="listWrapper marginBottom" style="height: auto;">
-				<div class="row hidden-sm-down">
-					<div class="col">
-						<input 
-							data-role="dropdownlist"
-							data-template="contact-list-tmpl" 
-							data-auto-bind="false" 
-							data-value-primitive="true" 
-							data-filter="startswith" 
-							data-text-field="name" 
-							data-value-field="id"
-							data-option-label="Select Customer..."
-							data-bind="
-								value: customerSelected,
-                              	source: contactDS,
-                              	events: {change: addCustomer}"
-                            style="width: 100%; float: left;margin-right: 2%; margin-bottom: 5px;" 
-                            aria-invalid="true" 
-                            class="k-invalid marginBottom"
-                        />
-                        <div class="table-responsive">
-							<table class="table color-table dark-table">
-						        <thead>
-						            <tr>
-						            	<th style="vertical-align: top;" data-bind="text: lang.lang.no_"></th>
-						            	<th style="vertical-align: top;" data-bind="text: lang.lang.name"></th>
-						            </tr>
-						        </thead>
-						        <tbody data-role="listview" 
-					        		data-template="customer-select-list-tmpl" 
-					        		data-auto-bind="false"
-					        		data-bind="source: customerAR">
-					        	</tbody>
-						    </table>
-		                </div>
-                    </div>
-					<div class="col table-responsive">
-						<table class="table color-table dark-table">
-					        <thead>
-					            <tr>
-					            	<th style="vertical-align: top;" data-bind="text: lang.lang.no_"></th>
-					            	<th style="vertical-align: top;" data-bind="text: lang.lang.name"></th>
-					            </tr>
-					        </thead>
-					        <tbody data-role="listview" 
-				        		data-template="customer-select-list-tmpl" 
-				        		data-auto-bind="false"
-				        		data-bind="source: customerAR">
-				        	</tbody>
-					    </table>
-	                </div>
+		<div class="col-12 col-md-6">
+			<div class="listWrapper marginBottom" style="height: auto; padding-top: 0;">
+				<div class="row">
+					<div class="box-generic" style="border: none;">
+						<table class="table table-borderless table-condensed cart_total" style="margin-bottom:0;">
+							<tr>
+								<td style="width: 25%;"><span data-bind="text: lang.lang.no_"></span></td>
+								<td>
+									<input id="txtNumber" name="txtNumber" class="k-textbox"
+											data-bind="value: obj.number,
+														disabled: obj.is_recurring,
+														events:{change:checkExistingNumber}"
+											required data-required-msg="required"
+											placeholder="eg. ABC00001"/>
+									<div class="coverQrcode">
+										<a class="fa fa-qrcode" data-bind="click: generateNumber" title="Generate Number"><i></i></a>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td><span data-bind="text: lang.lang.date"></span></td>
+								<td class="right">
+									<input id="issuedDate" name="issuedDate" style="width: 100%;"
+											data-role="datepicker"
+											data-format="dd-MM-yyyy"
+											data-parse-formats="yyyy-MM-dd HH:mm:ss"
+											data-bind="value: obj.issued_date,
+														events:{ change : setRate }"
+											required data-required-msg="required"
+											style="width: 210px;"/>
+								</td>
+							</tr>
+							<tr>
+								<td><span data-bind="text: lang.lang.suppliers"></span></td>
+								<td>
+									<input id="cbbContact" name="cbbContact" style="width: 100%;"
+									   data-role="dropdownlist"
+									   data-header-template="vendor-header-tmpl"
+					                   data-template="contact-list-tmpl"
+					                   data-auto-bind="false"
+					                   data-value-primitive="false"
+					                   data-filter="startswith"
+					                   data-text-field="name"
+					                   data-value-field="id"
+					                   data-bind="value: obj.contact,
+					                              source: contactDS,
+					                              events: {change: contactChanges}"
+					                   data-option-label="Select Supplier..."
+					                   required data-required-msg="required" />
+								</td>
+							</tr>
+						</table>
+
+					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-12 ">
@@ -524,6 +556,13 @@
 		                            {
 		                            	field: 'item_price',
 		                            	title: 'UOM',
+		                            	editor: measurementEditor,
+		                            	template: '#=item_price?item_price.measurement:banhji.emptyString#',
+		                            	width: '80px'
+		                            },
+		                            {
+		                            	field: 'cost',
+		                            	title: 'COST',
 		                            	editor: measurementEditor,
 		                            	template: '#=item_price?item_price.measurement:banhji.emptyString#',
 		                            	width: '80px'
@@ -573,88 +612,104 @@
 				                 data-bind="source: lineDS" >
 				            </div>
 						</div>
+
 						<div class="row">
 							<div class="col-12 col-md-6">
-								<table class="table color-table dark-table marginBottom">
+								<table class="table color-table dark-table">
 									<tbody>
 										<tr>
-											<td class="textAlignRight" style="width: 60%;"><span data-bind="text: lang.lang.subtotal" style="font-size: 15px; font-weight: 700;"></span></td>
-											<td class="textAlignRight" width="40%"><span data-format="n" data-bind="text: obj.sub_total" style="font-size: 15px; font-weight: 700;"></span></td>
+											<td class="textAlignRight" style="width: 60%"><span data-bind="text: lang.lang.subtotal" style="font-size: 15px; font-weight: 700;"></span></td>
+											<td class="textAlignRight"><span data-format="n" data-bind="text: obj.sub_total" style="font-size: 15px; font-weight: 700;"></span></td>
 										</tr>
 										<tr>
-											<td class="textAlignRight"><span>Discount</span></td>
-											<td class="textAlignRight ">
-												<span data-format="n" data-bind="text: obj.discount"></span>
-											</td>
-										</tr>               
+											<td class="textAlignRight"><span data-bind="text: lang.lang.total_discount"></span></td>
+											<td class="textAlignRight"><span data-format="n" data-bind="text: obj.discount"></span></td>
+										</tr>
 										<tr>
 											<td class="textAlignRight"><span data-bind="text: lang.lang.total_tax"></span></td>
-											<td class="textAlignRight "><span data-format="n" data-bind="text: obj.tax"></span></td>
+											<td class="textAlignRight"><span data-format="n" data-bind="text: obj.tax"></span></td>
 										</tr>
 										<tr>
 											<td class="textAlignRight"><h4 data-bind="text: lang.lang.total" style="font-weight: 700;"></h4></td>
 											<td class="textAlignRight"><h4 data-bind="text: total" style="font-weight: 700;"></h4></td>
 										</tr>
+										<tr>
+											<td class="textAlignRight">
+												<span data-bind="text: lang.lang.deposit"></span>
+												<span data-format="n" data-bind="text: total_deposit"></span>
+											</td>
+											<td class="textAlignRight">
+												<input data-role="numerictextbox"
+									                   data-format="n"
+									                   data-spinners="false"
+									                   data-min="0"
+									                   data-bind="value: obj.deposit,
+									                              events: { change: changes }"
+									                   style="width: 90%; text-align: right;">
+											</td>
+										</tr>
+										<tr>
+											<td class="textAlignRight">
+												<span data-bind="text: lang.lang.remaining" style="font-size: 15px; font-weight: 700;"></span>
+											</td>
+											<td class="textAlignRight">
+												<span data-format="n" data-bind="text: obj.remaining" style="font-size: 15px; font-weight: 700;"></span>
+											</td>
+										</tr>
 									</tbody>
 								</table>
 							</div> 
-							<div class="col-12 col-md-6 checkOut-button">
+							<!-- <div class="col-12 col-md-6 checkOut-button">
 								<div class="row">
 									<div class="col" >
-										<a style="padding: 25px 15px; box-shadow: 2px 0px 12px 0px rgba(68,68,68,1); border-radius: 5px 5px 0 0; margin-bottom: 1px; " class="buttonpay btn waves-effect waves-light btn-block btn-info" data-bind="click: saveCashSale"><span style="font-size: 15px;" data-bind="text: lang.lang.pay">Pay</span></a>
+										<button style="padding: 25px 15px; box-shadow: 2px 0px 12px 0px rgba(68,68,68,1); border-radius: 5px 5px 0 0; margin-bottom: 1px; "  type="button" class="btn btn-info btn-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span style="font-size: 15px;" data-bind="text: lang.lang.save_option"></span></button>
+										<div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 35px, 0px); top: 0px; left: 0px; will-change: transform;">
+				                            <a class="dropdown-item" id="saveNew" data-bind="invisible: isEdit"><span data-bind="text: lang.lang.save_new"></span></a>
+				                            <a class="dropdown-item" id="savePrint"><span data-bind="text: lang.lang.save_print"></span></a>
+				                        </div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-8" style="padding-right: 0;">
+										<div class="col-md-12" style="padding: 0;">
+											<a style="margin: 1px 1px 1px 0; width: 99%;" class="buttoninvoice btn waves-effect waves-light btn-block btn-info" data-bind="invisible: isEdit" id="saveDraft1"><span data-bind="text: lang.lang.save_draft"></span></a>
+										</div>
+										<div class="col-md-12" style="padding: 0;">
+											<a style="border-radius: 0 0 0 5px; width: 99%;" class="buttonparksale btn waves-effect waves-light btn-block btn-info" id="saveClose"><span data-bind="text: lang.lang.save_close"></span></a>
+										</div>
+									</div>
+									
+									<div class="col-4" style="padding-left: 0;">
+										<a style="border-radius: 0 0 5px 0; height: 159px; line-height: 100px; " class="buttoncancelsale btn waves-effect waves-light btn-block btn-info" data-bind="click: cancel"><span data-bind="text: lang.lang.cancel"></span></a>
+									</div>
+								</div>
+							</div> -->
+
+							<div class="col-12 col-md-6 checkOut-button">
+								<div class="row">
+									<div class="col-6" style="padding-right: 0;">
+										<a style=" width: 99%; margin-right: 1px; padding: 25px 15px; box-shadow: 2px 0px 12px 0px rgba(68,68,68,1); border-radius: 5px 5px 0 0; margin-bottom: 1px; " class="buttonpay btn waves-effect waves-light btn-block btn-info" id="saveNew" data-bind="invisible: isEdit"><span style="font-size: 15px;" data-bind="text: lang.lang.save_new"></span></a>
+									</div>
+									<div class="col-6" style="padding-left: 0;">
+										<a style=" width: 99%; padding: 25px 15px; box-shadow: 2px 0px 12px 0px rgba(68,68,68,1); border-radius: 5px 5px 0 0; margin-bottom: 1px; " class="buttonpay btn waves-effect waves-light btn-block btn-info" id="savePrint"><span style="font-size: 15px;" data-bind="text: lang.lang.save_print"></span></a>
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-4" style="padding-right: 0;">
-										<a style="border-radius: 0 0 0 5px; " class="buttoninvoice btn waves-effect waves-light btn-block btn-info" data-bind="click: saveInvoice" data-bind="click: saveInvoice"><span data-bind="text: lang.lang.microinvoice">Issue <br/>Invoice</span></a>
+										<a style="border-radius: 0 0 0 5px; " class="buttoninvoice btn waves-effect waves-light btn-block btn-info" data-bind="click: saveInvoice" id="saveDraft1" data-bind="invisible: isEdit"><span data-bind="text: lang.lang.save_draft"></span></a>
 									</div>
 									<div class="col-4" style="padding: 0;">
-										<a style="margin: 0 2px; width: 96%; " class="buttonparksale btn waves-effect waves-light btn-block btn-info" data-bind="click: parkSale"><span data-bind="text: lang.lang.microparksale">Parksale</span></a>
+										<a style="margin: 0 2px; width: 96%; " class="buttonparksale btn waves-effect waves-light btn-block btn-info" id="saveClose" ><span data-bind="text: lang.lang.save_close"></span></a>
 									</div>
 									<div class="col-4" style="padding-left: 0;">
-										<a style="border-radius: 0 0 5px 0; " class="buttoncancelsale btn waves-effect waves-light btn-block btn-info" data-bind="click: addEmptey"><span data-bind="text: lang.lang.cancel">Cancel</span></a>
+										<a style="border-radius: 0 0 5px 0; " class="buttoncancelsale btn waves-effect waves-light btn-block btn-info" onclick="javascript:window.history.back()" data-bind="click: cancel"><span data-bind="text: lang.lang.cancel">Cancel</span></a>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="row">
-					<div class="col">
-						<table class="table color-table dark-table">
-					        <thead>
-					            <tr>
-					            	<th style="vertical-align: top;" data-bind="text: lang.lang.currency"></th>
-					            	<th style="vertical-align: top;" data-bind="text: lang.lang.amount"></th>
-					            </tr>
-					        </thead>
-					        <tbody data-role="listview" 
-				        		data-template="cash-currency-template" 
-				        		data-auto-bind="false"
-				        		data-bind="source: receipCurrencyDS">
-				        	</tbody>
-					    </table>				
-					</div>
-					<div class="col">
-					    <table class="table color-table dark-table">
-					        <thead>
-					            <tr>
-					            	<th style="vertical-align: top;" data-bind="text: lang.lang.currency"></th>
-					            	<th style="vertical-align: top;" data-bind="text: lang.lang.amount"></th>
-					            </tr>
-					        </thead>
-					        <tbody data-role="listview" 
-				        		data-template="change-currency-receipt-template" 
-				        		data-auto-bind="false"
-				        		data-bind="source: receipChangeDS">
-				        	</tbody>
-					    </table>
-					   <!--  <div class="checkOut-button">
-						    <a class="btn waves-effect waves-light btn-block btn-info" data-bind="click: saveInvoice"><span data-bind="text: lang.lang.invoice">Invoice</span></a>
-							<a class="btn waves-effect waves-light btn-block btn-info" data-bind="click: saveCashSale"><span data-bind="text: lang.lang.pay">Pay</span></a>
-						</div> -->
-					</div>
-				</div>
+
 			</div>
 			
 		</div>
@@ -915,7 +970,7 @@
 					<form autocomplete="off" class="form-inline">
 						<div class="widget-search">
 							<div class="overflow-hidden">
-								<input type="search" placeholder="Number or Name..." data-bind="value: searchText">
+								<input style="padding: 6px;" type="search" placeholder="Number or Name..." data-bind="value: searchText">
 							</div>
 							<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="ti-search"></i></button>
 						</div>
@@ -990,7 +1045,7 @@
                                     	<div class="col-sm-8">
                                     		<div class="accounCetner-textedit">
 								            	<table width="100%">
-													<tr>
+													<!-- <tr>
 														<td width="40%"><span data-bind="text: lang.lang.supplier_type"></span></td>
 														<td width="60%">
 															<span data-bind="text: obj.contact_type"></span>
@@ -1002,7 +1057,7 @@
 															<span data-bind="text: obj.abbr"></span>
 															<span data-bind="text: obj.number"></span>
 														</td>
-													</tr>
+													</tr> -->
 													<tr>
 														<td><span data-bind="text: lang.lang.name"></span></td>
 														<td>
@@ -1015,12 +1070,12 @@
 															<span data-bind="text: obj.phone"></span>
 														</td>
 													</tr>
-													<tr>
+													<!-- <tr>
 														<td><span data-bind="text: lang.lang.currency"></span></td>
 														<td>
 															<span data-bind="text: currencyCode"></span>
 														</td>
-													</tr>
+													</tr> -->
 												</table>
 
 												<a class="btn waves-effect waves-light btn-block btn-info btnViewEditCustomer" data-bind="click: goEdit"><i class="ti-pencil-alt marginRight"></i><span data-bind="text: lang.lang.view_edit_profile"></span></a>
@@ -6570,4 +6625,4 @@
 		</td>
 	</tr>
 </script>
-<!-- End -->                                                                                                                                                                                                                                                                                                                                                                                                                                            
+<!-- End -->                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     

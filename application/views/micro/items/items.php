@@ -70,7 +70,7 @@
 			</div>
 
 			<!-- Top 4 -->
-			<div class="top5 home-footer">
+			<!-- <div class="top5 home-footer">
                 <table class="table color-table dark-table">
                     <thead>
                         <tr>
@@ -84,7 +84,7 @@
                          data-template="top-contact-template"
                          data-bind="source: obj.top_customer"></tbody>
                 </table>
-            </div>					                        
+            </div> -->
 		</div>
 		<div class="col-md-4">
 			<div class="saleOverview">
@@ -105,7 +105,7 @@
 			</div>
 
 			<!-- Top 4 -->
-			<div class="top5 home-footer">
+			<!-- <div class="top5 home-footer">
                 <table class="table color-table dark-table">
                     <thead>
                         <tr>
@@ -119,7 +119,7 @@
                          data-template="top-contact-template"
                          data-bind="source: obj.top_supplier"></tbody>
                 </table>
-            </div>					                        
+            </div>	 -->				                        
 		</div>
 		<div class="col-md-4">
 			<div class="saleOverview">
@@ -139,7 +139,7 @@
 			</div>
 
 			<!-- Top 4 -->
-			<div class="top5 home-footer">
+			<!-- <div class="top5 home-footer">
                 <table class="table color-table dark-table">
                     <thead>
                         <tr>
@@ -153,7 +153,7 @@
                          data-template="top-product-template"
                          data-bind="source: obj.top_product"></tbody>
                 </table>
-            </div>					                        
+            </div>	 -->				                        
 		</div>
 	</div>	
 </script>

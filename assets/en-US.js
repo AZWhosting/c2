@@ -20,6 +20,9 @@ var	en_US = {
 	"inventory_setting" : "Item Setting",
 	"amount_to_pay" : "Amount to Pay",
 	"amount_change" : "Amount Change",
+	"micropurchase" : "Purchases",
+	"new_transaction" : "New Transaction",
+	"new_customer" : "New Customer",
 	//Main Dustboard
 	"search_contact" : "Search Contact",
 	"contact" : "Contact",
@@ -1586,4 +1589,10 @@ var	en_US = {
 	"pos": "Point of Sale",
 	"session_management": "Session Management",
 	"booking_management": "Booking Management",
+	"serving_customer": "Serving Customer",
+	"room_facility": "Rooms / Facilities",
+	"loyalty": "Loyalty",
+	"serving": "Serving",
+	"booking": "Booking",
+	"pay_installment": "Pay All Installments"
 }

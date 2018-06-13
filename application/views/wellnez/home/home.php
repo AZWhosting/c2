@@ -230,7 +230,7 @@
 								<div class="img">
 									<img src="<?php echo base_url();?>assets/spa/icon/pos-green.png" >
 								</div>
-								<p class="textBig">Point of Sale</p>
+								<p class="textBig" data-bind="text: lang.lang.pos">Point of Sale</p>
 							</div>
 						</a>
 					</div>
@@ -242,7 +242,7 @@
 										<div class="img">
 											<img src="<?php echo base_url();?>assets/spa/icon/session.png" >
 										</div>
-										<p class="textSmall">Session Management</p>
+										<p class="textSmall" data-bind="text: lang.lang.session_management">Session Management</p>
 									</div>
 								</div>
 							</a>
@@ -252,7 +252,7 @@
 										<div class="img">
 											<img src="<?php echo base_url();?>assets/spa/icon/book.png" >
 										</div>
-										<p class="textSmall">Booking Management</p>
+										<p class="textSmall" data-bind="text: lang.lang.booking_management">Booking Management</p>
 									</div>
 								</div>
 							</a>
@@ -269,7 +269,7 @@
 								<div class="img">
 									<img src="<?php echo base_url();?>assets/spa/icon/serving.png" >
 								</div>
-								<p class="textBig">Servicing Customers</p>
+								<p class="textBig" data-bind="text: lang.lang.serving_customer">Servicing Customers</p>
 							</div>
 						</a>
 					</div>
@@ -281,7 +281,7 @@
 										<div class="img">
 											<img src="<?php echo base_url();?>assets/spa/icon/pay.png" >
 										</div>
-										<p class="textSmall">Receipt</p>
+										<p class="textSmall" data-bind="text: lang.lang.cash_receipt">Receipt</p>
 									</div>
 								</a>
 							</div>
@@ -291,7 +291,7 @@
 										<div class="img">
 											<img src="<?php echo base_url();?>assets/spa/icon/report.png" >
 										</div>
-										<p class="textSmall">Reports</p>
+										<p class="textSmall" data-bind="text: lang.lang.reports">Reports</p>
 									</div>
 								</a>
 							</div>
@@ -310,7 +310,7 @@
 										<div class="img">
 											<img src="<?php echo base_url();?>assets/spa/icon/customers.png" >
 										</div>
-										<p>Customer</p>
+										<p data-bind="text: lang.lang.customer">Customer</p>
 									</div>
 								</a>
 							</div>
@@ -320,7 +320,7 @@
 										<div class="img">
 											<img src="<?php echo base_url();?>assets/spa/icon/rooms-facilities.png" >
 										</div>
-										<p>Rooms/ facilities</p>
+										<p data-bind="text: lang.lang.room_facility">Rooms/ facilities</p>
 									</div>
 								</a>
 							</div>
@@ -330,7 +330,7 @@
 										<div class="img">
 											<img src="<?php echo base_url();?>assets/spa/icon/serving.png" >
 										</div>
-										<p>Therapist</p>
+										<p data-bind="text: lang.lang.employee">Therapist</p>
 									</div>
 								</a>
 							</div>
@@ -346,7 +346,7 @@
 												<div class="img" style="padding-left: 31%; padding-top: 10%;">
 													<img src="<?php echo base_url();?>assets/spa/icon/loyalty.png" >
 												</div>
-												<p>Cards</p>
+												<p data-bind="text: lang.lang.loyalty">Cards</p>
 											</div>
 										</a>
 									</div>
@@ -356,7 +356,7 @@
 												<div class="img" style="padding-left: 31%; padding-top: 10%;">
 													<img src="<?php echo base_url();?>assets/spa/icon/loyalty.png" > 
 												</div>
-												<p>Setting</p>
+												<p data-bind="text: lang.lang.setting">Setting</p>
 											</div>
 										</a>
 									</div>

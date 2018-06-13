@@ -26,6 +26,9 @@ class Ops extends REST_Controller {
 				// $counter = $this->db->count_all('transactions');
 				// $data["results"][] = array( "db" => $db, "rows" => $counter );
 
+				// $this->db->select_sum('amount / rate');
+				// $data["results"][] = $this->db->get();
+
 			    //Check missing field
 				// if ($this->db->field_exists('account_id', 'attachments')===FALSE){
 				//    	$data["results"][] = $db;

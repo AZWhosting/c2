@@ -811,7 +811,7 @@
 												<td class="right strong" width="40%"><span data-format="n" data-bind="text: obj.sub_total" style="font-size: 15px; font-weight: 700;"></span></td>
 											</tr>               
 											<tr>
-												<td class="right"><span>Discount</span></td>
+												<td class="right"><span data-bind="text: lang.lang.discount">Discount</span></td>
 												<td class="right ">
 													<span data-format="n" data-bind="text: obj.discount"></span>
 												</td>
@@ -835,7 +835,7 @@
 											<div class="img">
 												<img src="<?php echo base_url();?>assets/spa/icon/serving.png" >
 											</div>
-											<p class="textBig">Serving </p>
+											<p class="textBig" data-bind="text: lang.lang.serving">Serving </p>
 										</div>
 									</div>
 								</div>
@@ -845,7 +845,7 @@
 											<div class="img">
 												<img src="<?php echo base_url();?>assets/spa/icon/book.png" >
 											</div>
-											<p class="textSmall">Booking</p>
+											<p class="textSmall" style="text-align: center;" data-bind="text: lang.lang.booking">Booking</p>
 										</div>
 									</div>
 									<div class="span4 " style="padding: 0;">
@@ -854,13 +854,13 @@
 												<div class="img">
 													<img src="<?php echo base_url();?>assets/spa/icon/pay.png" >
 												</div>
-												<p class="textSmall">Pay</p>
+												<p class="textSmall" data-bind="text: lang.lang.pay">Pay</p>
 											</div>
 										</a>
 									</div>
 									<div class="span4 " style="padding-left: 0;">
 										<a href="<?php echo base_url(); ?>wellnez/services">
-											<p class="button-cancel" ><span>X</span> <br> Cancel</p>
+											<p class="button-cancel" ><span>X</span> <br> <b data-bind="text: lang.lang.cancel" style="font-size: 14px;"></b></p>
 										</a>
 									</div>
 								</div>
@@ -879,7 +879,7 @@
 
 <script id="item-list-view-template" type="text/x-kendo-template">
 	<div class="product" data-bind="click:addRow" style="text-align: center;">
-		<img src="#= image_url#" />
+		<img src="#= image_url? image_url: 'https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/no_image.jpg'#" />
 		<h3>#:name#</h3>
 		<p>#=kendo.toString(price, locale=="km-KH"?"c0":"c", locale)#</p>
 	</div>

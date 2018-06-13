@@ -324,16 +324,16 @@
             <div class="enquiry-content">
                 <ul style="text-align: left; font-size: 13px; color: #000; ">
                     <li><a href="<?php echo base_url(); ?>wellnez/pos"><span data-bind="text: lang.lang.pos"></span></a></li>
-                    <li><a href="<?php echo base_url(); ?>wellnez/session"><span data-bind="text: lang.lang.session_management"></span>Session Management</a></li>
-                    <li><a href="<?php echo base_url(); ?>wellnez/books"><span data-bind="text: lang.lang.booking_management"></span>Booking Management</a></li>
-                    <li><a href="<?php echo base_url(); ?>wellnez/services">Serving Customer</a></li>
+                    <li><a href="<?php echo base_url(); ?>wellnez/session"><span data-bind="text: lang.lang.session_management"></span></a></li>
+                    <li><a href="<?php echo base_url(); ?>wellnez/books"><span data-bind="text: lang.lang.booking_management"></span></a></li>
+                    <li><a href="<?php echo base_url(); ?>wellnez/services"><span data-bind="text: lang.lang.serving_customer"></span></a></li>
                     <li><a href="<?php echo base_url(); ?>wellnez/pay"><span data-bind="text: lang.lang.cash_receipt"></span></a></li>
                     <li class="divider"></li>
-                    <li><a href="<?php echo base_url(); ?>wellnez/customer">Customer</a></li>
-                    <li><a href="<?php echo base_url(); ?>wellnez/rooms">Rooms / Facilities</a></li>
-                    <li><a href="<?php echo base_url(); ?>wellnez/employee">Employee</a></li>
-                    <li><a href="<?php echo base_url(); ?>wellnez/loyalty">Loyalty</a></li>
-                    <li><a href="<?php echo base_url(); ?>wellnez/setting">Setting</a></li>
+                    <li><a href="<?php echo base_url(); ?>wellnez/customer"><span data-bind="text: lang.lang.customer"></span></a></li>
+                    <li><a href="<?php echo base_url(); ?>wellnez/rooms"><span data-bind="text: lang.lang.room_facility"></span></a></li>
+                    <li><a href="<?php echo base_url(); ?>wellnez/employee"><span data-bind="text: lang.lang.employee"></span></a></li>
+                    <li><a href="<?php echo base_url(); ?>wellnez/loyalty"><span data-bind="text: lang.lang.loyalty"></span></a></li>
+                    <li><a href="<?php echo base_url(); ?>wellnez/setting"><span data-bind="text: lang.lang.setting"></span></a></li>
                     <li class="divider"></li>
                     <li><a href="<?php echo base_url()?>rrd" target="_blank">Back to BanhJi</a></li>
                 </ul>
@@ -348,7 +348,7 @@
                 <ul >
                     <li>
                         <a href="<?php echo base_url(); ?>wellnez/reports">
-                            Reports Dashbaord                         
+                            <span data-bind="text: lang.lang.reports"></span>         
                         </a>
                     </li>
                 </ul>

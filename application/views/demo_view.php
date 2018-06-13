@@ -39803,7 +39803,14 @@
 							 data-sortable="true"
 	                         data-column-menu="true"
 			                 data-columns="[
-                                { field: 'number', title:'NUMBER', width: 100 },
+                                { 
+                                	field: 'number', 
+                                	title:'NUMBER',
+                                	attributes: {
+								      	style: 'text-align: center;'
+								    }, 
+                                	width: 100 
+                                },
                                 { field: 'name', title:'NAME' },
                                 { field: 'type', title:'TYPE', width: 200 },
                                 { 
@@ -39813,6 +39820,10 @@
                                 	attributes: {
 								      	style: 'text-align: right;'
 								    },
+								    headerAttributes: {
+								      	'class': 'table-header-cell',
+								      	style: 'text-align: right; font-size: 14px'
+								    },
 								    width: 200
                                 },
                                 { 
@@ -39821,6 +39832,10 @@
                                 	template: kendo.template($('#trialBalance-cr-tmpl').html()),
                                 	attributes: {
 								      	style: 'text-align: right;'
+								    },
+								    headerAttributes: {
+								      	'class': 'table-header-cell',
+								      	style: 'text-align: right; font-size: 14px'
 								    },
 								    width: 200
                                 }
@@ -40014,7 +40029,7 @@
 				&nbsp;&nbsp; #=line[i].number# - #=line[i].name#
 			</td>
 			<td class="right" style="color: black;">
-				#=kendo.toString(line[i].amount, "c", banhji.locale)#
+				#=kendo.toString(line[i].amount, "n")#
 			</td>
 			<td style="width:15%;" ></td>
 	    </tr>
@@ -40023,13 +40038,13 @@
 	    	<td style="font-weight: bold; color: black;">Total #: type #</td>
 	    	<td></td>
 	    	<td class="right" style="font-weight: bold; border-top: 1px solid black !important; color: black;">
-	    		#=kendo.toString(total, "c", banhji.locale)#
+	    		#=kendo.toString(total, "n")#
 	    	</td>
 	    </tr>
 	#}else{#
 		<tr>
 			<td colspan="2" style="font-weight: bold; color: black;">#: name #</td>
-			<td class="right" style="font-weight: bold; color: black;">#: kendo.toString(amount, "c", banhji.locale) #</td>
+			<td class="right" style="font-weight: bold; color: black;">#: kendo.toString(amount, "n") #</td>
 		</tr>
 	#}#
 </script>
@@ -40457,42 +40472,7 @@
 							<p data-bind="text: displayDate"></p>
 						</div>
 
-						<div class="costom-grid"
-							 data-role="grid"
-			                 data-columns="[
-                                { 
-                                	field: 'number', 
-                                	title: 'ASSETS',
-                                	groupFooterTemplate: 'TOTAL:',
-                                	width: 100 
-                                },
-                                { field: 'name', title:'&nbsp;' },
-                                { 
-                                	field: 'order', 
-                                	title:'&nbsp;',
-                                	groupHeaderTemplate: '#=items[0].type#', 
-                                	hidden: true, 
-                                	width: 200
-                                },
-                                { 
-                                	field: 'amount', 
-                                	title: '&nbsp;',
-                                	aggregates: ['sum'],
-                                	template: '#=kendo.toString(amount, banhji.numberFormat)#',
-                                	groupFooterTemplate: '#=kendo.toString(sum, banhji.numberFormat)#',
-                                	attributes: {
-								      	style: 'text-align: right;'
-								    },
-								    footerAttributes: {
-								      	style: 'text-align: right;'
-								    },
-								    width: 200
-                                }
-                             ]"
-                             data-auto-bind="false"
-			                 data-bind="source: dataSource"></div>
-
-						<!-- <table class="table table-borderless table-condensed" style="width: 70%; margin: 0 auto;">
+						<table class="table table-borderless table-condensed" style="width: 70%; margin: 0 auto;">
 							<thead>
 								<tr>
 									<th style="background: none; color: #333;">ASSETS</th>
@@ -40503,17 +40483,17 @@
 							<tbody data-role="listview"
 								data-template="statementFinancialPosition-template"
 								data-auto-bind="false"
-								data-bind="source: dataSource"></tbody>
+								data-bind="source: obj.asset"></tbody>
 							<tfoot>
 								<tr>
 									<td style="font-weight: bold; font-size: large; background: #1E4E78; color: #fff;">TOTAL ASSETS</td>
 									<td style="background: #1E4E78;" width="15%"></td>
 									<td width="15%" style="font-weight: bold; font-size: large; color: #fff; background: #1E4E78;" align="right">
-										<span data-bind="text: totalAsset"></span>
+										<span data-format="n" data-bind="text: totalAsset"></span>
 									</td>
 								</tr>
 							</tfoot>
-						</table> -->
+						</table>
 
 						<br>
 
@@ -40528,13 +40508,13 @@
 							<tbody data-role="listview"
 								data-template="statementFinancialPosition-template"
 								data-auto-bind="false"
-								data-bind="source: liabilityDS"></tbody>
+								data-bind="source: obj.liability"></tbody>
 							<tfoot>
 								<tr>
 									<td style="font-weight: bold; font-size: large;">TOTAL LIABILITIES</td>
 									<td width="15%"></td>
 									<td width="15%" style="font-weight: bold; font-size: large;" align="right">
-										<span data-bind="text: totalLiability"></span>
+										<span data-format="n" data-bind="text: totalLiability"></span>
 									</td>
 								</tr>
 							</tfoot>
@@ -40553,13 +40533,13 @@
 							<tbody data-role="listview"
 								data-template="statementFinancialPosition-template"
 								data-auto-bind="false"
-								data-bind="source: equityDS"></tbody>
+								data-bind="source: obj.equity"></tbody>
 							<tfoot>
 								<tr>
 									<td style="font-weight: bold; font-size: large;">TOTAL EQUITY</td>
 									<td width="15%"></td>
 									<td width="15%" style="font-weight: bold; font-size: large;" align="right">
-										<span data-bind="text: totalEquity"></span>
+										<span data-format="n" data-bind="text: totalEquity"></span>
 									</td>
 								</tr>
 							</tfoot>

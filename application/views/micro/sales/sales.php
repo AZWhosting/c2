@@ -29,8 +29,7 @@
                         	<div id="indexMenu">
                         		<div class="hidden-sm-down" style="position: absolute; right: 20px; top: 20px;">
                         			<div class="btn-group float-right">
-						                <button style="font-size: 17px; " type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						                	New Transaction
+						                <button style="font-size: 17px; " type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-bind="text: lang.lang.new_transaction">
 						                </button>
 						                <div class="dropdown-menu">
 						                    <a class="dropdown-item" href="#/quote"><span data-bind="text: lang.lang.create_quotation"></span></a>
@@ -173,8 +172,7 @@
 					</div>
 				</div>
 				<div class="col btn-group float-right">
-	                <button style="width: 100%;" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	                	Reports
+	                <button style="width: 100%;" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-bind="text: lang.lang.reports">
 	                </button>
 	                <div class="dropdown-menu">
 	                    <a class="dropdown-item" href="#/sale_detail_by_customer" data-bind="text: lang.lang.sale_detail_by_customer"></a>
@@ -265,7 +263,7 @@
 </script>
 <script id="checkOut" type="text/x-kendo-template">	
 	<div class="row" id="checkOut">
-		<div class="col">
+		<div class="col-12 col-md-6">
 			<div class="listWrapper">
 				<div class="row">
 					<div class="col-12 col-md-6">
@@ -337,7 +335,7 @@
 
 			</div>
 		</div>
-		<div class="col">
+		<div class="col-12 col-md-6">
 			<div class="listWrapper marginBottom" style="height: auto;">
 				<div class="row ">
 					<div class="col hidden-sm-down">
@@ -715,7 +713,7 @@
 <script id="item-list-view-template" type="text/x-kendo-template">
 	<div class="product" data-bind="click:addRow" style="text-align: center;">
 		<a class="view-details">		
-			<div style="height:130px;">
+			<div >
 				<img src="#= image_url? image_url: 'https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/no_image.jpg'#" />
 			</div>
 			<h3>#:name#</h3>
@@ -925,12 +923,12 @@
 	<div class="row" id="customers">
 		<div class="col-md-3">
 			<div class="listWrapper">
-				<a href="#/customer" style="padding: 5px 0; font-size: 18px;" class="btn waves-effect waves-light btn-block btn-info btnAddCustomer"><i class="icon-user-follow marginRight"></i><span data-bind="">New Customer</span></a>
+				<a href="#/customer" style="padding: 5px 0; font-size: 18px;" class="btn waves-effect waves-light btn-block btn-info btnAddCustomer"><i class="icon-user-follow marginRight"></i><span data-bind="text: lang.lang.new_customer"></span></a>
 				<div class="innerAll">
 					<form autocomplete="off" class="form-inline">
 						<div class="widget-search">
 							<div class="overflow-hidden">
-								<input type="search" placeholder="Number or Name..." data-bind="value: searchText">
+								<input type="search" placeholder="Number or Name..." data-bind="value: searchText" style="padding: 6px;">
 							</div>
 							<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="ti-search"></i></button>
 						</div>
@@ -7214,4 +7212,4 @@
 		#=code# - #=country#
 	</span>
 </script>
-<!-- End -->                                                                                         
+<!-- End -->                                                                                                              

@@ -20,6 +20,9 @@ var	km_KH = {
 	"inventory_setting": "កំណត់​ផលិតផល ឬ ទំនិញ​",
 	"amount_to_pay" : "សាច់ប្រាក់ត្រូវទូទាត់",
 	"amount_change" : "សាច់ប្រាក់ត្រូវអាប់",
+	"micropurchase" : "ទិញ ឬ ចំណាយ",
+	"new_transaction" : "ប្រតិបត្តិ​ការ​ថ្មី",
+	"new_customer" : "អតិថិជនថ្មី",
 	//Main Dustboard
 	"search_contact" :  "ស្វែងរក​ទំនាក់ទំនង",
 	"contact" :  "ទំនាក់ទំនង",
@@ -1561,5 +1564,11 @@ var	km_KH = {
 	"change_meter": "ប្តូរកុងទ៍រ",
 	"pos": "ការលក់",
 	"session_management": "បិត / បើក ថ្ងៃលក់",
-	"booking_management": "គរ្ប់គ្រងការកក់",
+	"booking_management": "គ្រប់គ្រងការកក់",
+	"serving_customer": "បម្រីសេវ៉ាអតិថិជន",
+	"room_facility": "បន្ទប់ / គ្រឿងបរិក្ខារ",
+	"loyalty": "កាត / សន្សំពន្ទុ",
+	"serving": "ទទួលសេវ៉ា",
+	"booking": "កក់",
+	"pay_installment": "បង់ផ្តាច់",
 }

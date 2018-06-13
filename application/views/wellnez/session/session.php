@@ -289,11 +289,11 @@
 		<div class="row session">
 			<div class="span12">
 				<div class="example">
-					<h2 style="width: 30%; float: left;">Session Management</h2>
+					<h2 style="width: 30%; float: left;" data-bind="text: lang.lang.session_management">Session Management</h2>
 					<ul class="topnav addNew" style="float: left;width: 14%; background: #0eac00">
 						<li role="presentation" class="dropdown ">
 					  		<a class="dropdown-toggle" data-bind="click: addNewSession" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-					  			<span > Add New Session</span>
+					  			<span data-bind="text: lang.lang.add"> Add New Session</span>
 					  		</a>
 					  	</li>
 					</ul>
