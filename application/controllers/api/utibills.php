@@ -2085,7 +2085,11 @@ class Utibills extends REST_Controller {
 		   			// 	$oldwline->delete_all();
 		   			// }
 					$line = new Winvoice_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		   			$line->transaction_id 	= $txn->id;
+					// $line->where("transaction_id", $txn->id);
+					// $line->where("type", $value->type)->limit(1);
+					// $line->get();
+				   // $line->transaction_id 	= $txn->id;
+				   // if($line->exists()){
 		   			if($value->type == "usage"){
 		   				$line->item_id 			= $value->meter_id;
 		   			}else{
@@ -2103,6 +2107,7 @@ class Utibills extends REST_Controller {
 		   			$line->rate 			= isset($value->rate) ? $value->rate : "";
 		   			$line->locale 			= isset($value->locale) ? $value->locale : "";
 		   			$line->type 			= isset($value->type) ? $value->type:"";
+			   		// }
 		   			
 		   			if($value->type == 'installment') {
 		   				$ints = new Installment(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);

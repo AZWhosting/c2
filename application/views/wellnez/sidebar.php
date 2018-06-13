@@ -313,25 +313,25 @@
         z-index: 9999999;
     }
     .cover-fix-menu:hover {
-        width: 350px;
+        /*width: 350px;*/
     }
 </style>
-<div class="cover-fix-menu" style="position: fixed;left: 0;">
+<div class="cover-fix-menu" id="sidemenu" style="position: fixed;left: 0;">
     <!-- Side fix right -->
     <div class="cover-rightfixed cover-rightfixed1 " style="z-index: 99999;">
         <div class="rightfixed enquiries text-t btn-rounded  no-js " style="">
             Menu
             <div class="enquiry-content">
                 <ul style="text-align: left; font-size: 13px; color: #000; ">
-                    <li><a href="<?php echo base_url(); ?>wellnez/pos">Point of Sale</a></li>
-                    <li><a href="<?php echo base_url(); ?>wellnez/session">Session Management</a></li>
-                    <li><a href="<?php echo base_url(); ?>wellnez/books">Booking Management</a></li>
+                    <li><a href="<?php echo base_url(); ?>wellnez/pos"><span data-bind="text: lang.lang.pos"></span></a></li>
+                    <li><a href="<?php echo base_url(); ?>wellnez/session"><span data-bind="text: lang.lang.session_management"></span>Session Management</a></li>
+                    <li><a href="<?php echo base_url(); ?>wellnez/books"><span data-bind="text: lang.lang.booking_management"></span>Booking Management</a></li>
                     <li><a href="<?php echo base_url(); ?>wellnez/services">Serving Customer</a></li>
-                    <li><a href="<?php echo base_url(); ?>wellnez/pay">Receipt</a></li>
+                    <li><a href="<?php echo base_url(); ?>wellnez/pay"><span data-bind="text: lang.lang.cash_receipt"></span></a></li>
                     <li class="divider"></li>
                     <li><a href="<?php echo base_url(); ?>wellnez/customer">Customer</a></li>
                     <li><a href="<?php echo base_url(); ?>wellnez/rooms">Rooms / Facilities</a></li>
-                    <li><a href="<?php echo base_url(); ?>wellnez/employee">Therapist</a></li>
+                    <li><a href="<?php echo base_url(); ?>wellnez/employee">Employee</a></li>
                     <li><a href="<?php echo base_url(); ?>wellnez/loyalty">Loyalty</a></li>
                     <li><a href="<?php echo base_url(); ?>wellnez/setting">Setting</a></li>
                     <li class="divider"></li>
@@ -370,4 +370,4 @@
         </a>
     </div>
     <!-- End -->
-</div>                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+</div>

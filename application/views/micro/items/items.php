@@ -167,7 +167,16 @@
 	<div class="row" id="customers">
 		<div class="col-md-3">
 			<div class="listWrapper">
-				<a href="#/item" class="btn waves-effect waves-light btn-block btn-info btnAddCustomer"><!-- <i class="icon-user-follow marginRight"></i> --><span data-bind="">Add New Item</span></a>
+				<!-- <a href="#/item" class="btn waves-effect waves-light btn-block btn-info btnAddCustomer"> --><!-- <i class="icon-user-follow marginRight"></i> --><!-- <span data-bind="">Add New Item</span></a> -->
+				<div class="btn-group  btn-info btn-block" style="margin-bottom: 8px;">
+	                <button style="width: 100%; font-size: 18px;" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	                	Add New Item
+	                </button>
+	                <div class="dropdown-menu">
+	                    <a class="dropdown-item" href="#/item"><span data-bind="text: lang.lang.add_inventory_for_sale"></span></a>
+	                    <a class="dropdown-item" href="#/item_service"><span data-bind="text: lang.lang.add_services"></span></a>
+	                </div>
+	            </div>
 				<div class="innerAll">
 					<form autocomplete="off" class="form-inline">
 						<div class="widget-search">
@@ -176,7 +185,7 @@
 							</div>
 							<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="ti-search"></i></button>
 						</div>
-						<div class="select2-container">
+						<!-- <div class="select2-container">
 							<input data-role="dropdownlist" style="width: 100%;" 
 				                   data-option-label="Select Category..."
 					                   data-value-primitive="true"
@@ -184,7 +193,7 @@
 					                   data-value-field="id"
 					                   data-bind="value: category_id,
 					                              source: categoryDS"/>
-						</div>
+						</div> -->
 					</form>
 				</div>
 
@@ -218,30 +227,38 @@
                                     		<img class="main-image" data-bind="attr: { src: obj.image_url, alt: obj.name, title: obj.name }">
                                     	</div>
                                     	<div class="col-sm-8">
-                                    		<div class="accounCetner-textedit" >
+                                    		<div class="accounCetner-textedit" style="margin-bottom: 0;" >
 								            	<table width="100%">
 													<tr>
-														<td colspan="2">
+														<td>
 															<span data-bind="text: lang.lang.weighted_avg_cost"></span>
 														</td>
-													</tr>
-													<tr>
-														<td style="text-align: right" colspan="2">
+														<td style="text-align: right" >
 															<span data-format="n" data-bind="text: raw.cost"></span>
 															<span data-bind="text: raw.currency_code"></span>
 														</td>
 													</tr>
+													<!-- <tr>
+														<td style="text-align: right" colspan="2">
+															<span data-format="n" data-bind="text: raw.cost"></span>
+															<span data-bind="text: raw.currency_code"></span>
+														</td>
+													</tr> -->
 													<tr>
-														<td colspan="2">
+														<td >
 															<span data-bind="text: lang.lang.price"></span>
 														</td>
-													</tr>
-													<tr>
-														<td style="text-align: right" colspan="2">
+														<td style="text-align: right" >
 															<span data-format="n" data-bind="text: raw.price"></span>
 															<span data-bind="text: raw.currency_code"></span>
 														</td>
 													</tr>
+													<!-- <tr>
+														<td style="text-align: right" colspan="2">
+															<span data-format="n" data-bind="text: raw.price"></span>
+															<span data-bind="text: raw.currency_code"></span>
+														</td>
+													</tr> -->
 													<tr>
 														<td>
 															<span data-bind="text: lang.lang.uom"></span>
@@ -305,21 +322,21 @@
 					<div class="col-md-6">
 						<div class="row">
 	                        <div class="col-md-12">
-								<div class="saleOverview" style="margin-bottom: 8px;">
+								<div class="saleOverview" style="margin-bottom: 20px;">
 		                            <p >
 		                            	<span data-format="n" data-bind="text: raw.amount"></span>
 										<span data-bind="text: raw.currency_code"></span>
 		                            </p>
 		                            <div class="col-md-12">
-		                                <div class="col-md-4">
+		                                <!-- <div class="col-md-4">
 		                                    <span data-format="n0" data-bind="text: raw.quantity"></span>
 		                                    <span data-bind="text: lang.lang.qoh"></span>
-		                                </div>
-		                                <div class="col-md-4">
+		                                </div> -->
+		                                <div class="col-md-6">
 		                                    <span data-format="n0" data-bind="text: raw.po"></span>
 		                                    <span data-bind="text: lang.lang.on_po"></span>
 		                                </div>
-		                                <div class="col-md-4">
+		                                <div class="col-md-6">
 		                                    <span data-format="n0" data-bind="text: raw.so"></span>
 		                                    <span data-bind="text: lang.lang.on_so"></span>
 		                                </div>
@@ -329,16 +346,17 @@
 	                    </div>
                     	<div class="row">
 							<div class="col-md-6">
-								<div class="blockOpenInvoice" data-bind="click: loadBalance" >
+								<div class="blockOpenInvoice" data-bind="click: loadBalance" style="height: 119px;">
 									<div class="coverIcon"><i class="icon-info"></i></div>
 									<div class="txt">
-										<span data-bind="text: raw.item_type"></span>
+										<span data-format="n0" data-bind="text: raw.quantity"></span>
+										<span data-bind="text: lang.lang.qoh"></span>
 										<!-- <span  data-bind="text: lang.lang.open_invoice"></span> -->
 									</div>
 								</div>
 							</div>
 							<div class="col-md-6">
-								<div class="blockOverDue" data-bind="click: loadOverInvoice" >
+								<div class="blockOverDue" data-bind="click: loadOverInvoice" style="height: 119px;">
 									<div class="coverIcon"><i class="ti-alarm-clock"></i></div>
 									<div class="txt" >
 										<span data-bind="text: raw.txn"></span>
@@ -1793,6 +1811,370 @@
 		</td>
 	</tr>
 </script>
+<script id="itemAdjustment" type="text/x-kendo-template">
+	<div class="page-wrapper ">
+        <div id="example" class="container-fluid">
+        	<div class="row marginTop15">
+                <div class="col-md-12">
+                	<div class="card">
+                		<div class="btn-close" onclick="javascript:window.history.back()"><i class="ti-close"></i></div>
+                		<div class="card-body">
+
+					        <h2 data-bind="text: lang.lang.item_adjustment"></h2>
+
+					        <!-- Upper Part -->
+							<div class="row">
+								<div class="col-md-4" >
+									<div class="box-generic well" >
+										<table class="table table-borderless table-condensed cart_total" style="margin-bottom: 0;">
+											<tr>
+												<td style="width: 25%;"><span data-bind="text: lang.lang.no_"></span></td>
+												<td>
+													<input id="txtNumber" name="txtNumber" class="k-textbox"
+															data-bind="value: obj.number,
+																		disabled: obj.is_recurring,
+																		events:{change:checkExistingNumber}"
+															required data-required-msg="required"
+															placeholder="eg. ABC00001" style="width: 83%; float: left; margin-right: 5px;" />
+													<div style="padding-left: 0; width: 25px; float: left;">
+														<a class="fa fa-qrcode" data-bind="click: generateNumber" title="Generate Number" style="float: left; margin: 2px 0 0 0 ;"><i></i></a>
+													</div>
+												</td>
+											</tr>
+											<tr>
+												<td><span data-bind="text: lang.lang.date"></span></td>
+												<td class="right">
+													<input id="issuedDate" name="issuedDate"
+															data-role="datepicker"
+															data-format="dd-MM-yyyy"
+															data-parse-formats="yyyy-MM-dd HH:mm:ss"
+															data-bind="value: obj.issued_date,
+																		events:{ change : setRate }"
+															required data-required-msg="required"
+															style="width: 100%" />
+												</td>
+											</tr>
+											<tr>
+												<td>
+													<span data-bind="text: lang.lang.employee"></span>
+												</td>
+												<td>
+													<input id="cbbContact" name="cbbContact"
+														   data-role="dropdownlist"
+														   data-header-template="employee-header-tmpl"
+										                   data-template="contact-list-tmpl"
+										                   data-auto-bind="false"
+										                   data-value-primitive="false"
+										                   data-filter="startswith"
+										                   data-text-field="name"
+										                   data-value-field="id"
+										                   data-bind="value: obj.employee,
+										                              source: contactDS,
+										                              events: {change: employeeChanges}"
+										                   data-option-label="Select Employee..."
+										                   style="width: 100%" />
+												</td>
+											</tr>
+										</table>
+									</div>
+								</div>
+
+								<div class="col-md-8" >
+									<div class="box-generic-noborder marginBottom">
+										<ul class="nav nav-tabs" role="tablist">
+		                                    <li class="nav-item"> <a class="nav-link active show" data-toggle="tab" href="#functionSetting" role="tab" aria-selected="true"><span><i class="ti-settings"></i></span></a> </li>
+		                                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#functionPaperclip" role="tab" aria-selected="false"><span><i class="icon-paper-clip"></i></span></a></li>
+		                                </ul>
+		                                <div class="tab-content tabcontent-border">
+		                                	<!--Tab Setting -->
+		                                    <div class="tab-pane active show" id="functionSetting" role="tabpanel">
+		                                        <div class="p-10">
+		                                            <div class="row">
+		                                            	<div class="col-md-12 ">
+		                                            		<div class="row">
+			                                            		<div class="col-md-6">
+			                                            			<p class="marginBottom" data-bind="text: lang.lang.adjustment_account"></p>
+
+				                                            		<p class="marginBottom width100" data-bind="text: lang.lang.billing_address"></p>
+																	<textarea cols="0" rows="2" class="k-textbox marginBottom " data-bind="value: obj.bill_to" placeholder="Billing to ..."></textarea>
+				                                            	</div>
+
+				                                            	<div class="col-md-6">
+				                                            		<input id="cbbAccount" name="cbbAccount" class="marginBottom"
+											            			   data-role="combobox"
+																	   data-header-template="account-header-tmpl"
+																	   data-template="account-list-tmpl"
+													                   data-value-primitive="true"
+													                   data-text-field="name"
+													                   data-value-field="id"
+													                   data-bind="value: obj.account_id,
+													                              source: accountDS"
+													                   placeholder="Select Account..."
+													                   required data-required-msg="required" style="width: 100%;" />
+
+																	<!-- <p class="marginBottom width100" data-bind="text: lang.lang.delivery_address"></p>
+																	<textarea cols="0" rows="2" class="k-textbox marginBottom " data-bind="value: obj.ship_to" placeholder="Shipping to ..."></textarea> -->
+				                                            	</div>
+		                                            		</div>
+		                                            		
+		                                            	</div>
+		                                        	</div>
+		                                        </div>
+		                                    </div>
+		                                    <!-- End -->
+
+		                                    <!--Tab Paperclip -->
+		                                    <div class="tab-pane" id="functionPaperclip" role="tabpanel">
+		                                    	<div class="p-10">
+		                                    		<div class="row">
+		                                    			<div class="col-md-12">
+		                                            		<p><span data-bind="text: lang.lang.file_type"></span>: [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>
+												            <input id="files" name="files"
+											                   type="file"
+											                   data-role="upload"
+											                   data-show-file-list="false"
+											                   data-bind="events: {
+									                   				select: onSelect
+											                   }">
+											               	<div class="table-responsive marginTop">
+													            <table class="table color-table dark-table">
+															        <thead>
+															            <tr>
+															                <th><span data-bind="text: lang.lang.file_name"></span></th>
+															                <th><span data-bind="text: lang.lang.description"></span></th>
+															                <th><span data-bind="text: lang.lang.date"></span></th>
+															                <th style="width: 13%;"></th>
+															            </tr>
+															        </thead>
+															        <tbody data-role="listview"
+															        		data-template="attachment-list-tmpl"
+															        		data-auto-bind="false"
+															        		data-bind="source: attachmentDS"></tbody>
+															    </table>
+															</div>
+		                                            	</div>
+		                                    		</div>
+		                                    	</div>  
+		                                    </div>
+		                                    <!-- End -->
+		                                </div>
+									</div>
+							    </div>
+							</div>
+
+							<div class="row">
+									<div class="col-md-12 table-responsive">
+										<!-- Item List -->
+									    <div data-role="grid" class="costom-grid table color-table dark-table"
+								    	 data-column-menu="true"
+								    	 data-reorderable="true"
+								    	 data-scrollable="false"
+								    	 data-resizable="true"
+								    	 data-editable="true"
+						                 data-columns="[
+										    {
+										    	title:'NO',
+										    	width: '50px',
+										    	attributes: { style: 'text-align: center;' },
+										        template: function (dataItem) {
+										        	var rowIndex = banhji.itemAdjustment.lineDS.indexOf(dataItem)+1;
+										        	return '<i class=icon-trash data-bind=click:removeRow></i>' + ' ' + rowIndex;
+										      	}
+										    },
+						                 	{
+						                 		field: 'item',
+						                 		title: 'PRODUCTS/SERVICES',
+						                 		editor: itemEditor,
+						                 		template: '#=item.name#',
+						                 		width: '170px'
+						                 	},
+				                            { field: 'description', title:'DESCRIPTION', width: '250px' },
+				                            {
+				                            	field: 'measurement',
+				                            	title: 'UOM',
+				                            	editor: measurementEditor,
+				                            	template: '#=measurement?measurement.measurement:banhji.emptyString#',
+				                            	width: '80px'
+				                            },
+				                            {
+											    field: 'cost',
+											    title: 'COST',
+											    format: '{0:n}',
+											    editor: numberTextboxEditor,
+											    width: '120px',
+											    attributes: { style: 'text-align: right;' }
+											},
+											{
+												field: 'on_hand',
+												title:'ON HAND',
+												format: '{0:n}',
+												editable: 'false',
+												attributes: { style: 'text-align: right;' },
+												width: '120px'
+											},
+				                            {
+											    field: 'quantity_adjusted',
+											    title: 'COUNT',
+											    format: '{0:n}',
+											    editor: numberTextboxEditor,
+											    width: '120px',
+											    attributes: { style: 'text-align: right;' }
+											},
+				                            {
+				                            	field: 'quantity',
+				                            	title:'DIFFERENT',
+				                            	format: '{0:n}',
+				                            	editable: 'false',
+				                            	attributes: { style: 'text-align: right;' },
+				                            	width: '120px'
+				                            }
+				                         ]"
+				                         data-auto-bind="false"
+						                 data-bind="source: lineDS" ></div>
+						        </div>
+						    </div>
+
+						    <div class="row marginBottom">
+								<div class="col-md-4">
+						            <button class="btn waves-effect waves-light btn-block btn-info btnPlus marginRight" data-bind="click: addRow"><i class="icon-plus icon-white"></i></button>
+						            <button class="btn waves-effect waves-light btn-block btn-info btnBarcode marginRight" data-bind="click: openBarcodeWindow" style="background: green !important; margin-left: 0 !important;"><i class="fa fa-barcode marginRight" style="margin-right: 10px;"></i> Barcode</button>
+						        </div>
+						    </div>
+
+				            <!-- Window Barcode -->
+							<div data-role="window" id="cuswindow"
+				                 data-title="false"
+				                 data-width="600"
+				                 data-height="405"
+				                 data-iframe="true"
+				                 data-modal="true"
+				                 data-visible="false"
+				                 data-position="{top:'30%',left:'30%'}"
+				                 data-actions="{}"
+				                 data-resizable="false"
+				                 data-bind="visible: barcodeVisible"
+				                 style="text-align:center;">
+
+				                <table style="margin-bottom: 0;" class="table table-borderless table-condensed cart_total">
+					        		<tr>
+					        			<td style="padding: 0 !important;">
+					        				<input type="text" class="k-textbox"
+					        						data-bind="value: barcode,
+					        									events: {change: searchByBarcode}"
+					        						placeholder="Scan barcode ..." style="width: 100%;padding: 5px;border: #333 1px solid;" />
+					        			</td>
+					        			<td>
+					        				<input id="ddlCategory" id="ddlCategory"
+											   data-role="dropdownlist"
+											   data-option-label="Select Category..."
+											   data-header-template="item-category-header-tmpl"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: category_id,
+							                              source: categoryDS,
+							                              events: {change: search}"
+							                   style="width: 100%;" />
+					        			</td>
+					        			<td style="padding: 0 !important;">
+					        				<input id="ddlItemGroup" id="ddlItemGroup"
+											   data-role="dropdownlist"
+											   data-header-template="item-group-header-tmpl"
+											   data-option-label="Select Group..."
+											   data-cascade-from="ddlCategory"
+											   data-cascade-from-field="category_id"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: item_group_id,
+							                              source: itemGroupDS,
+							                              events: {change: search}"
+							                   style="width: 100%;" />
+					        			</td>
+					        		</tr>
+					        	</table>
+
+					        	<div data-role="grid" class="test"
+					                 data-auto-bind="false"
+					                 data-columns='[
+		                                { field: "number", title: "NUMBER", template:"#=abbr##=number#" },
+		                                { field: "name", title: "NAME" },
+		                                { field: "category", title: "CATEGORY" },
+		                                { title: "", template:"<button class=k-button data-bind=click:addSearchItem style=min-width:30px><i class=icon-plus></i></button>", width:"50px" }
+		                             ]'
+					                 data-bind="source: itemDS"
+					                 style="height: 212px; margin-top: 5px;"></div>
+
+					            <div id="pager" class="k-pager-wrap"
+						             data-role="pager"
+						             data-auto-bind="false"
+									 data-bind="source: itemDS"></div>
+								<br>
+
+								<div class="box-generic bg-action-button" style="width: 94%;">
+									<div class="row">
+										<div class="span10">
+
+										</div>
+										<div class="span2"  style="float: right;">
+											<span class="btn-btn" data-bind="click: closeBarcodeWindow"><i></i> <span data-bind="text: lang.lang.close"></span></span>
+										</div>
+									</div>
+								</div>
+
+				            </div>
+				            <!-- // End Window Barcode -->
+
+							
+							<!-- Form actions -->
+							<div class="backgroundButtonFooter">
+								<div id="ntf1" data-role="notification"></div>
+
+								<!-- Delete Confirmation -->
+								<div data-role="window"
+					                 data-title="Delete Confirmation"
+					                 data-width="350"
+					                 data-height="200"
+					                 data-iframe="true"
+					                 data-modal="true"
+					                 data-visible="false"
+					                 data-position="{top:'40%',left:'35%'}"
+					                 data-actions="{}"
+					                 data-resizable="false"
+					                 data-bind="visible: showConfirm"
+					                 style="text-align:center;">
+					                <p style="font-size:25px; margin: 15px 0 25px;" class="delete-message" data-bind="text: confirmMessage"></p>
+								    <button style="font-size:14px; border:none; background:#496cad; color:#fff; padding:5px 25px;" data-bind="click:delete">Yes</button>
+								    <button style="font-size:14px; border:none; background:red; color:#fff; padding:5px 25px;" data-bind="click:closeConfirm">No</button>
+					            </div>
+					            <!-- // Delete Confirmation -->
+
+								<div class="row">
+									<div class="col-md-4" ></div>
+									<div class="col-md-8" align="right">
+										<span id="saveCancel" class="btn-btn" onclick="javascript:window.history.back()" data-bind="click: cancel"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
+										<span class="btn-btn" data-bind="click: openConfirm, visible: isEdit"><span data-bind="text: lang.lang.delete"></span></span>
+										<button type="button" class="btn btn-info btn-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			                        		<span data-bind="text: lang.lang.save_option"></span>
+				                        </button>
+				                        <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 35px, 0px); top: 0px; left: 0px; will-change: transform;">
+				                            <a class="dropdown-item" id="saveNew" data-bind="invisible: isEdit"><span data-bind="text: lang.lang.save_new"></span></a>
+				                            <a class="dropdown-item" id="savePrint"><span data-bind="text: lang.lang.save_print"></span></a>
+				                        </div>
+									  	<span class="btn-btn" id="saveClose"><span data-bind="text: lang.lang.save_close"></span></span>
+									</div>
+								</div>
+							</div>
+							<!-- // Form actions END -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+
+
 
 
 <script id="vendor-header-tmpl" type="text/x-kendo-tmpl">
@@ -2460,4 +2842,4 @@
 		#=code# - #=country#
 	</span>
 </script>
-<!-- End -->
+<!-- End -->                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           

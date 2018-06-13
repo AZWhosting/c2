@@ -39084,40 +39084,6 @@
 							<p data-bind="text: displayDate"></p>
 						</div>
 
-						<!-- <div class="costom-grid"
-							 data-role="grid"
-							 data-groupable="true"
-							 data-sortable="true"
-	                         data-column-menu="true"
-			                 data-columns="[
-			                 	{ field: 'issued_date', title:'DATE', width: 100 },
-			                 	{ field: 'type', title:'TYPE', width: 100 },
-                                { field: 'number', title:'REFERENCE NO.', width: 100 },
-                                { field: 'description', title:'DESCRIPTION' },
-                                { field: 'name', title:'NAME' },
-                                { field: 'account', title:'ACCOUNT' },                                
-                                { 
-                                	field: 'dr', 
-                                	title:'DR',
-                                	template: kendo.template($('#trialBalance-dr-tmpl').html()),
-                                	attributes: {
-								      	style: 'text-align: right;'
-								    },
-								    width: 200
-                                },
-                                { 
-                                	field: 'cr', 
-                                	title:'CR',
-                                	template: kendo.template($('#trialBalance-cr-tmpl').html()),
-                                	attributes: {
-								      	style: 'text-align: right;'
-								    },
-								    width: 200
-                                }
-                             ]"
-                             data-auto-bind="false"
-			                 data-bind="source: dataSource"></div> -->
-
 						<table class="table table-borderless table-condensed">
 							<thead>
 								<tr>
@@ -40491,7 +40457,42 @@
 							<p data-bind="text: displayDate"></p>
 						</div>
 
-						<table class="table table-borderless table-condensed" style="width: 70%; margin: 0 auto;">
+						<div class="costom-grid"
+							 data-role="grid"
+			                 data-columns="[
+                                { 
+                                	field: 'number', 
+                                	title: 'ASSETS',
+                                	groupFooterTemplate: 'TOTAL:',
+                                	width: 100 
+                                },
+                                { field: 'name', title:'&nbsp;' },
+                                { 
+                                	field: 'order', 
+                                	title:'&nbsp;',
+                                	groupHeaderTemplate: '#=items[0].type#', 
+                                	hidden: true, 
+                                	width: 200
+                                },
+                                { 
+                                	field: 'amount', 
+                                	title: '&nbsp;',
+                                	aggregates: ['sum'],
+                                	template: '#=kendo.toString(amount, banhji.numberFormat)#',
+                                	groupFooterTemplate: '#=kendo.toString(sum, banhji.numberFormat)#',
+                                	attributes: {
+								      	style: 'text-align: right;'
+								    },
+								    footerAttributes: {
+								      	style: 'text-align: right;'
+								    },
+								    width: 200
+                                }
+                             ]"
+                             data-auto-bind="false"
+			                 data-bind="source: dataSource"></div>
+
+						<!-- <table class="table table-borderless table-condensed" style="width: 70%; margin: 0 auto;">
 							<thead>
 								<tr>
 									<th style="background: none; color: #333;">ASSETS</th>
@@ -40512,7 +40513,7 @@
 									</td>
 								</tr>
 							</tfoot>
-						</table>
+						</table> -->
 
 						<br>
 
@@ -56782,8 +56783,8 @@
                 </table>
             </div>
             <div class="span12 pcg-list" style="padding-bottom:15px;">
-            	<div class="span12">
-					<div style="border-radius: 5px; width: 100%; padding: 8px; font-size: 11px;" data-bind="html: obj.note">
+            	<div class="span12" style="border: 1px solid #ccc;">
+					<div style="border-radius: 5px; width: 100%; padding: 8px; font-size: 13px;" data-bind="html: obj.note">
 					</div>
 				</div>
 				<div class="span12">
@@ -56934,8 +56935,8 @@
                 </table>
             </div>
             <div class="span12 pcg-list" style="padding-bottom:15px;">
-            	<div class="span12">
-					<div style="border-radius: 5px; width: 100%; padding: 8px; font-size: 11px;" data-bind="html: obj.note">
+            	<div class="span12" style="border: 1px solid #ccc;">
+					<div style="border-radius: 5px; width: 100%; padding: 8px; font-size: 13px;" data-bind="html: obj.note">
 					</div>
 				</div>
 				<div class="span12">

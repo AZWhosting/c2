@@ -52970,7 +52970,9 @@
                     });
                     self.attachmentDS.filter({ field: "transaction_id", value: id });
 
-                    self.referenceLineDS.filter({ field: "transaction_id", value: view[0].reference_id });
+                    self.referenceLineDS.query({
+                        filter:{ field: "transaction_id", value: view[0].reference_id }
+                    });
                     self.referenceDS.query({
                         filter:{ field: "id", value: view[0].reference_id }
                     }).then(function(){
@@ -55689,7 +55691,52 @@
     });
     banhji.statementFinancialPosition =  kendo.observable({
         lang                : langVM,
-        dataSource          : dataStore(apiUrl + "accounting_modules/balance_sheet_asset"),
+        // dataSource          : dataStore(apiUrl + "accounting_modules/balance_sheet"),
+        dataSource          : new kendo.data.DataSource({
+            transport: {
+                read: {
+                    url: apiUrl + "accounting_modules/balance_sheet",
+                    type: "GET",
+                    headers: banhji.header,
+                    dataType: 'json'
+                },
+                parameterMap: function(options, operation) {
+                    if (operation === 'read') {
+                        return {
+                            page: options.page,
+                            limit: options.pageSize,
+                            filter: options.filter,
+                            sort: options.sort
+                        };
+                    } else {
+                        return {
+                            models: kendo.stringify(options.models)
+                        };
+                    }
+                }
+            },
+            schema: {
+                model: {
+                    id: 'id'
+                },
+                data: 'results',
+                total: 'count'
+            },
+            group: {
+                field: "order", 
+                aggregates:[
+                    { field: "amount", aggregate: "sum"}
+                ]
+            },
+            aggregate: [
+                { field: "amount", aggregate: "sum" }
+            ],
+            sort: [
+                { field: "sub_of_id", dir: "asc" },
+                { field: "number", dir: "asc" }
+            ],
+            serverFiltering: true
+        }),
         liabilityDS         : dataStore(apiUrl + "accounting_modules/balance_sheet_liability"),
         equityDS            : dataStore(apiUrl + "accounting_modules/balance_sheet_equity"),
         as_of               : new Date(),
@@ -55717,292 +55764,291 @@
                 // as_of.setDate(as_of.getDate()+1);
 
                 this.dataSource.filter([
-                    { field:"issued_date", value:kendo.toString(as_of, "yyyy-MM-dd") },
-                    { field:"account_type_id", value:[10,11,12,13,14,15,16,17,18,19,20,21,22] }
+                    { field:"issued_date", value:kendo.toString(as_of, "yyyy-MM-dd") }
                 ]);
-                var unReadAsset = true;
-                this.dataSource.bind("requestEnd", function(e){
-                    if(e.type=="read" && unReadAsset){
-                        unReadAsset = false;
-                        var response = e.response.totalAmount;
+                // var unReadAsset = true;
+                // this.dataSource.bind("requestEnd", function(e){
+                //     if(e.type=="read" && unReadAsset){
+                //         unReadAsset = false;
+                //         var response = e.response.totalAmount;
 
-                        self.set("totalAsset", kendo.toString(response, "c", banhji.locale));
+                //         self.set("totalAsset", kendo.toString(response, "c", banhji.locale));
 
-                        var response = e.response;
-                        self.exArray = [];
-                        self.exArray.push({
-                            cells: [
-                                { value: self.company.name, textAlign: "center", colSpan: 3 }
-                            ]
-                        });
-                        self.exArray.push({
-                            cells: [
-                                { value: "Statement of Financial Position",bold: true, fontSize: 20, textAlign: "center", colSpan: 3 }
-                            ]
-                        });
-                        if(self.displayDate){
-                            self.exArray.push({
-                                cells: [
-                                    { value: self.displayDate, textAlign: "center", colSpan: 3 }
-                                ]
-                            });
-                        }
-                        self.exArray.push({
-                            cells: [
-                                { value: "", colSpan: 3 }
-                            ]
-                        });
-                        self.exArray.push({
-                            cells: [
-                                { value: "ASSETS", bold: true, fontSize: 16 },
-                                { value: "" },
-                                { value: "" }
-                            ]
-                        });
-                        for (var i = 0; i < response.results.length; i++){
-                            self.exArray.push({
-                                cells: [
-                                    { value: response.results[i].name, bold: true, italic: true },
-                                    { value: "" },
-                                    { value: "" }
-                                ]
-                            });
-                            for(var j = 0; j < response.results[i].typeLine.length; j++){
-                                self.exArray.push({
-                                    cells: [
-                                        { value: response.results[i].typeLine[j].type, bold: true },
-                                        { value: "" },
-                                        { value: "" }
-                                    ]
-                                });
-                                for(var k = 0; k < response.results[i].typeLine[j].line.length; k++){
-                                    self.exArray.push({
-                                        cells: [
-                                            { value: response.results[i].typeLine[j].line[k].number + " " + response.results[i].typeLine[j].line[k].name },
-                                            { value: kendo.parseFloat(response.results[i].typeLine[j].line[k].amount) },
-                                            { value: "" }
-                                        ]
-                                    });
+                //         var response = e.response;
+                //         self.exArray = [];
+                //         self.exArray.push({
+                //             cells: [
+                //                 { value: self.company.name, textAlign: "center", colSpan: 3 }
+                //             ]
+                //         });
+                //         self.exArray.push({
+                //             cells: [
+                //                 { value: "Statement of Financial Position",bold: true, fontSize: 20, textAlign: "center", colSpan: 3 }
+                //             ]
+                //         });
+                //         if(self.displayDate){
+                //             self.exArray.push({
+                //                 cells: [
+                //                     { value: self.displayDate, textAlign: "center", colSpan: 3 }
+                //                 ]
+                //             });
+                //         }
+                //         self.exArray.push({
+                //             cells: [
+                //                 { value: "", colSpan: 3 }
+                //             ]
+                //         });
+                //         self.exArray.push({
+                //             cells: [
+                //                 { value: "ASSETS", bold: true, fontSize: 16 },
+                //                 { value: "" },
+                //                 { value: "" }
+                //             ]
+                //         });
+                //         for (var i = 0; i < response.results.length; i++){
+                //             self.exArray.push({
+                //                 cells: [
+                //                     { value: response.results[i].name, bold: true, italic: true },
+                //                     { value: "" },
+                //                     { value: "" }
+                //                 ]
+                //             });
+                //             for(var j = 0; j < response.results[i].typeLine.length; j++){
+                //                 self.exArray.push({
+                //                     cells: [
+                //                         { value: response.results[i].typeLine[j].type, bold: true },
+                //                         { value: "" },
+                //                         { value: "" }
+                //                     ]
+                //                 });
+                //                 for(var k = 0; k < response.results[i].typeLine[j].line.length; k++){
+                //                     self.exArray.push({
+                //                         cells: [
+                //                             { value: response.results[i].typeLine[j].line[k].number + " " + response.results[i].typeLine[j].line[k].name },
+                //                             { value: kendo.parseFloat(response.results[i].typeLine[j].line[k].amount) },
+                //                             { value: "" }
+                //                         ]
+                //                     });
 
-                                    totalCurrent += kendo.parseFloat(response.results[i].typeLine[j].line[k].amount);
-                                    totalAll += kendo.parseFloat(response.results[i].typeLine[j].line[k].amount);
-                                    totalAsCu += kendo.parseFloat(response.results[i].typeLine[j].line[k].amount);
-                                    totalBlock += kendo.parseFloat(response.results[i].typeLine[j].line[k].amount);
-                                }
-                                self.exArray.push({
-                                    cells: [
-                                        { value: "Total " + response.results[i].typeLine[j].type, bold: true },
-                                        { value: totalBlock, bold: true, borderTop: { color: "#000000", size: 1 } },
-                                        { value: "" }
-                                    ]
-                                });
-                                totalBlock = 0;
-                                self.exArray.push({
-                                    cells: [
-                                        { value: "" },
-                                        { value: "" },
-                                        { value: "" }
-                                    ]
-                                });
-                            }
-                            self.exArray.push({
-                                cells: [
-                                    { value: "Total " + response.results[i].name, bold: true, italic: true },
-                                    { value: "" },
-                                    { value: totalCurrent , bold: true, borderTop: { color: "#000000", size: 1 } }
-                                ]
-                            });
-                            totalCurrent = 0;
-                        }
-                        self.exArray.push({
-                            cells: [
-                                { value: "TOTAL ASSETS", bold: true, color: "#ffffff", background: "#1E4E78", fontSize: 20 },
-                                { value: "", background: "#1E4E78" },
-                                { value: totalAsCu, bold: true, color: "#ffffff", background: "#1E4E78", fontSize: 20 }
-                            ]
-                        });
-                        self.exArray.push({
-                            cells: [
-                                { value: "", colSpan: 3 },
-                            ]
-                        });
-                    }
-                });
-                totalAll = 0;
-                //Liability
-                this.liabilityDS.filter([
-                    { field:"issued_date", value:kendo.toString(as_of, "yyyy-MM-dd") },
-                    { field:"account_type_id", value:[23,24,25,26,27,28,29,30,31] }
-                ]);
-                var unReadLiability = true;
-                this.liabilityDS.bind("requestEnd", function(e){
-                    if(e.type=="read" && unReadLiability){
-                        unReadLiability = false;
-                        var response = e.response.totalAmount;
-                        var total = self.get("totalLiabilityEquity");
-                        total += response;
-                        self.set("totalLiabilityEquity", total);
-                        self.set("totalLiability", kendo.toString(response, "c", banhji.locale));
-                        //Excel Export
+                //                     totalCurrent += kendo.parseFloat(response.results[i].typeLine[j].line[k].amount);
+                //                     totalAll += kendo.parseFloat(response.results[i].typeLine[j].line[k].amount);
+                //                     totalAsCu += kendo.parseFloat(response.results[i].typeLine[j].line[k].amount);
+                //                     totalBlock += kendo.parseFloat(response.results[i].typeLine[j].line[k].amount);
+                //                 }
+                //                 self.exArray.push({
+                //                     cells: [
+                //                         { value: "Total " + response.results[i].typeLine[j].type, bold: true },
+                //                         { value: totalBlock, bold: true, borderTop: { color: "#000000", size: 1 } },
+                //                         { value: "" }
+                //                     ]
+                //                 });
+                //                 totalBlock = 0;
+                //                 self.exArray.push({
+                //                     cells: [
+                //                         { value: "" },
+                //                         { value: "" },
+                //                         { value: "" }
+                //                     ]
+                //                 });
+                //             }
+                //             self.exArray.push({
+                //                 cells: [
+                //                     { value: "Total " + response.results[i].name, bold: true, italic: true },
+                //                     { value: "" },
+                //                     { value: totalCurrent , bold: true, borderTop: { color: "#000000", size: 1 } }
+                //                 ]
+                //             });
+                //             totalCurrent = 0;
+                //         }
+                //         self.exArray.push({
+                //             cells: [
+                //                 { value: "TOTAL ASSETS", bold: true, color: "#ffffff", background: "#1E4E78", fontSize: 20 },
+                //                 { value: "", background: "#1E4E78" },
+                //                 { value: totalAsCu, bold: true, color: "#ffffff", background: "#1E4E78", fontSize: 20 }
+                //             ]
+                //         });
+                //         self.exArray.push({
+                //             cells: [
+                //                 { value: "", colSpan: 3 },
+                //             ]
+                //         });
+                //     }
+                // });
+                // totalAll = 0;
+                // //Liability
+                // this.liabilityDS.filter([
+                //     { field:"issued_date", value:kendo.toString(as_of, "yyyy-MM-dd") },
+                //     { field:"account_type_id", value:[23,24,25,26,27,28,29,30,31] }
+                // ]);
+                // var unReadLiability = true;
+                // this.liabilityDS.bind("requestEnd", function(e){
+                //     if(e.type=="read" && unReadLiability){
+                //         unReadLiability = false;
+                //         var response = e.response.totalAmount;
+                //         var total = self.get("totalLiabilityEquity");
+                //         total += response;
+                //         self.set("totalLiabilityEquity", total);
+                //         self.set("totalLiability", kendo.toString(response, "c", banhji.locale));
+                //         //Excel Export
 
-                        var response = e.response;
-                        self.liArray = [];
-                        self.liArray.push({
-                            cells: [
-                                { value: "LIABILITIES", bold: true, fontSize: 16 },
-                                { value: "" },
-                                { value: "" }
-                            ]
-                        });
-                        for (var i = 0; i < response.results.length; i++){
-                            self.liArray.push({
-                                cells: [
-                                    { value: response.results[i].name, bold: true, italic: true },
-                                    { value: "" },
-                                    { value: "" }
-                                ]
-                            });
-                            for(var j = 0; j < response.results[i].typeLine.length; j++){
-                                self.liArray.push({
-                                    cells: [
-                                        { value: response.results[i].typeLine[j].type, bold: true },
-                                        { value: "" },
-                                        { value: "" }
-                                    ]
-                                });
-                                for(var k = 0; k < response.results[i].typeLine[j].line.length; k++){
-                                    self.liArray.push({
-                                        cells: [
-                                            { value: response.results[i].typeLine[j].line[k].number + " " + response.results[i].typeLine[j].line[k].name },
-                                            { value: kendo.parseFloat(response.results[i].typeLine[j].line[k].amount) },
-                                            { value: "" }
-                                        ]
-                                    });
-                                    totalBlock += kendo.parseFloat(response.results[i].typeLine[j].line[k].amount);
-                                    totalLi += kendo.parseFloat(response.results[i].typeLine[j].line[k].amount);
-                                    totalAll += kendo.parseFloat(response.results[i].typeLine[j].line[k].amount);
-                                }
-                                self.liArray.push({
-                                    cells: [
-                                        { value: "Total " + response.results[i].typeLine[j].type, bold: true },
-                                        { value: totalBlock, bold: true, borderTop: { color: "#000000", size: 1 } },
-                                        { value: "" }
-                                    ]
-                                });
-                                totalBlock = 0;
-                                self.liArray.push({
-                                    cells: [
-                                        { value: "" },
-                                        { value: "" },
-                                        { value: "" }
-                                    ]
-                                });
-                            }
-                            self.liArray.push({
-                                cells: [
-                                    { value: "Total " + response.results[i].name, bold: true, italic: true },
-                                    { value: "" },
-                                    { value: totalLi, bold: true, borderTop: { color: "#000000", size: 1 } }
-                                ]
-                            });
-                        }
-                        self.liArray.push({
-                            cells: [
-                                { value: "TOTAL LIABILITIES", bold: true, color: "#000000", fontSize: 20 },
-                                { value: "" },
-                                { value: totalLi, bold: true, color: "#000000", fontSize: 20 }
-                            ]
-                        });
-                        self.liArray.push({
-                            cells: [
-                                { value: "", colSpan: 3 },
-                            ]
-                        });
-                    }
-                });
+                //         var response = e.response;
+                //         self.liArray = [];
+                //         self.liArray.push({
+                //             cells: [
+                //                 { value: "LIABILITIES", bold: true, fontSize: 16 },
+                //                 { value: "" },
+                //                 { value: "" }
+                //             ]
+                //         });
+                //         for (var i = 0; i < response.results.length; i++){
+                //             self.liArray.push({
+                //                 cells: [
+                //                     { value: response.results[i].name, bold: true, italic: true },
+                //                     { value: "" },
+                //                     { value: "" }
+                //                 ]
+                //             });
+                //             for(var j = 0; j < response.results[i].typeLine.length; j++){
+                //                 self.liArray.push({
+                //                     cells: [
+                //                         { value: response.results[i].typeLine[j].type, bold: true },
+                //                         { value: "" },
+                //                         { value: "" }
+                //                     ]
+                //                 });
+                //                 for(var k = 0; k < response.results[i].typeLine[j].line.length; k++){
+                //                     self.liArray.push({
+                //                         cells: [
+                //                             { value: response.results[i].typeLine[j].line[k].number + " " + response.results[i].typeLine[j].line[k].name },
+                //                             { value: kendo.parseFloat(response.results[i].typeLine[j].line[k].amount) },
+                //                             { value: "" }
+                //                         ]
+                //                     });
+                //                     totalBlock += kendo.parseFloat(response.results[i].typeLine[j].line[k].amount);
+                //                     totalLi += kendo.parseFloat(response.results[i].typeLine[j].line[k].amount);
+                //                     totalAll += kendo.parseFloat(response.results[i].typeLine[j].line[k].amount);
+                //                 }
+                //                 self.liArray.push({
+                //                     cells: [
+                //                         { value: "Total " + response.results[i].typeLine[j].type, bold: true },
+                //                         { value: totalBlock, bold: true, borderTop: { color: "#000000", size: 1 } },
+                //                         { value: "" }
+                //                     ]
+                //                 });
+                //                 totalBlock = 0;
+                //                 self.liArray.push({
+                //                     cells: [
+                //                         { value: "" },
+                //                         { value: "" },
+                //                         { value: "" }
+                //                     ]
+                //                 });
+                //             }
+                //             self.liArray.push({
+                //                 cells: [
+                //                     { value: "Total " + response.results[i].name, bold: true, italic: true },
+                //                     { value: "" },
+                //                     { value: totalLi, bold: true, borderTop: { color: "#000000", size: 1 } }
+                //                 ]
+                //             });
+                //         }
+                //         self.liArray.push({
+                //             cells: [
+                //                 { value: "TOTAL LIABILITIES", bold: true, color: "#000000", fontSize: 20 },
+                //                 { value: "" },
+                //                 { value: totalLi, bold: true, color: "#000000", fontSize: 20 }
+                //             ]
+                //         });
+                //         self.liArray.push({
+                //             cells: [
+                //                 { value: "", colSpan: 3 },
+                //             ]
+                //         });
+                //     }
+                // });
 
-                //Equity
-                this.equityDS.filter({ field:"issued_date", value:kendo.toString(as_of, "yyyy-MM-dd") });
-                var unReadEquity = true;
-                this.equityDS.bind("requestEnd", function(e){
-                    if(e.type=="read" && unReadEquity){
-                        unReadEquity = false;
-                        var response = e.response.totalAmount;
-                        var total = self.get("totalLiabilityEquity");
-                        total += response;
-                        self.set("totalLiabilityEquity", total);
-                        self.set("totalEquity", kendo.toString(response, "c", banhji.locale));
-                        //export Excel
-                        var response = e.response;
-                        self.eqArray = [];
-                        self.eqArray.push({
-                            cells: [
-                                { value: "EQUITY", bold: true, fontSize: 16 },
-                                { value: "" },
-                                { value: "" }
-                            ]
-                        });
-                        for (var i = 0; i < response.results.length; i++){
-                            self.eqArray.push({
-                                cells: [
-                                    { value: response.results[i].name, bold: true, italic: true },
-                                    { value: "" },
-                                    { value: "" }
-                                ]
-                            });
-                            for(var j = 0; j < response.results[i].typeLine.length; j++){
-                                self.eqArray.push({
-                                    cells: [
-                                        { value: response.results[i].typeLine[j].type, bold: true },
-                                        { value: "" },
-                                        { value: "" }
-                                    ]
-                                });
-                                for(var k = 0; k < response.results[i].typeLine[j].line.length; k++){
-                                    self.eqArray.push({
-                                        cells: [
-                                            { value: response.results[i].typeLine[j].line[k].number + " " + response.results[i].typeLine[j].line[k].name },
-                                            { value: response.results[i].typeLine[j].line[k].amount },
-                                            { value: "" }
-                                        ]
-                                    });
-                                    totalBlock += kendo.parseFloat(response.results[i].typeLine[j].line[k].amount);
-                                    totalEq += kendo.parseFloat(response.results[i].typeLine[j].line[k].amount);
-                                    totalAll += kendo.parseFloat(response.results[i].typeLine[j].line[k].amount);
-                                }
-                                self.eqArray.push({
-                                    cells: [
-                                        { value: "Total " + response.results[i].typeLine[j].type, bold: true },
-                                        { value: totalBlock, bold: true, borderTop: { color: "#000000", size: 1 } },
-                                        { value: "" }
-                                    ]
-                                });
-                                totalBlock = 0;
-                                self.eqArray.push({
-                                    cells: [
-                                        { value: "" },
-                                        { value: "" },
-                                        { value: "" }
-                                    ]
-                                });
-                            }
-                            self.eqArray.push({
-                                cells: [
-                                    { value: "Total " + response.results[i].name, bold: true, italic: true },
-                                    { value: "" },
-                                    { value: totalEq, bold: true, borderTop: { color: "#000000", size: 1 } }
-                                ]
-                            });
-                        }
-                        self.eqArray.push({
-                            cells: [
-                                { value: "TOTAL LIABILITIES & EQUITY", bold: true, color: "#ffffff", background: "#1E4E78", fontSize: 20 },
-                                { value: "", background: "#1E4E78" },
-                                { value: totalAll, bold: true, color: "#ffffff", background: "#1E4E78", fontSize: 20 }
-                            ]
-                        });
-                    }
-                });
+                // //Equity
+                // this.equityDS.filter({ field:"issued_date", value:kendo.toString(as_of, "yyyy-MM-dd") });
+                // var unReadEquity = true;
+                // this.equityDS.bind("requestEnd", function(e){
+                //     if(e.type=="read" && unReadEquity){
+                //         unReadEquity = false;
+                //         var response = e.response.totalAmount;
+                //         var total = self.get("totalLiabilityEquity");
+                //         total += response;
+                //         self.set("totalLiabilityEquity", total);
+                //         self.set("totalEquity", kendo.toString(response, "c", banhji.locale));
+                //         //export Excel
+                //         var response = e.response;
+                //         self.eqArray = [];
+                //         self.eqArray.push({
+                //             cells: [
+                //                 { value: "EQUITY", bold: true, fontSize: 16 },
+                //                 { value: "" },
+                //                 { value: "" }
+                //             ]
+                //         });
+                //         for (var i = 0; i < response.results.length; i++){
+                //             self.eqArray.push({
+                //                 cells: [
+                //                     { value: response.results[i].name, bold: true, italic: true },
+                //                     { value: "" },
+                //                     { value: "" }
+                //                 ]
+                //             });
+                //             for(var j = 0; j < response.results[i].typeLine.length; j++){
+                //                 self.eqArray.push({
+                //                     cells: [
+                //                         { value: response.results[i].typeLine[j].type, bold: true },
+                //                         { value: "" },
+                //                         { value: "" }
+                //                     ]
+                //                 });
+                //                 for(var k = 0; k < response.results[i].typeLine[j].line.length; k++){
+                //                     self.eqArray.push({
+                //                         cells: [
+                //                             { value: response.results[i].typeLine[j].line[k].number + " " + response.results[i].typeLine[j].line[k].name },
+                //                             { value: response.results[i].typeLine[j].line[k].amount },
+                //                             { value: "" }
+                //                         ]
+                //                     });
+                //                     totalBlock += kendo.parseFloat(response.results[i].typeLine[j].line[k].amount);
+                //                     totalEq += kendo.parseFloat(response.results[i].typeLine[j].line[k].amount);
+                //                     totalAll += kendo.parseFloat(response.results[i].typeLine[j].line[k].amount);
+                //                 }
+                //                 self.eqArray.push({
+                //                     cells: [
+                //                         { value: "Total " + response.results[i].typeLine[j].type, bold: true },
+                //                         { value: totalBlock, bold: true, borderTop: { color: "#000000", size: 1 } },
+                //                         { value: "" }
+                //                     ]
+                //                 });
+                //                 totalBlock = 0;
+                //                 self.eqArray.push({
+                //                     cells: [
+                //                         { value: "" },
+                //                         { value: "" },
+                //                         { value: "" }
+                //                     ]
+                //                 });
+                //             }
+                //             self.eqArray.push({
+                //                 cells: [
+                //                     { value: "Total " + response.results[i].name, bold: true, italic: true },
+                //                     { value: "" },
+                //                     { value: totalEq, bold: true, borderTop: { color: "#000000", size: 1 } }
+                //                 ]
+                //             });
+                //         }
+                //         self.eqArray.push({
+                //             cells: [
+                //                 { value: "TOTAL LIABILITIES & EQUITY", bold: true, color: "#ffffff", background: "#1E4E78", fontSize: 20 },
+                //                 { value: "", background: "#1E4E78" },
+                //                 { value: totalAll, bold: true, color: "#ffffff", background: "#1E4E78", fontSize: 20 }
+                //             ]
+                //         });
+                //     }
+                // });
             }
         },
         goToGeneralLegder   : function(e){

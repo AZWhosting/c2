@@ -497,9 +497,8 @@ a {
     background: #424242;
 }
 .widget-search .overflow-hidden>input {
-    border: none;
+    border: #d5d5d5 1px solid;
     padding: 7px;
-    border-right: none !important;
     width: 100%;
     border-radius: 0;
 }
@@ -513,6 +512,7 @@ a {
 }
 .widget-search .btn.btn-default.pull-right{
 	border-radius: 0;
+	border: #d5d5d5 1px solid;
 }
 .btn-default {
     background: #e7e7e7;
@@ -554,7 +554,7 @@ a {
 }
 #checkOut .widget-search .overflow-hidden {
     float: left;
-    width: 84%;
+    width: 81%;
 }
 #customers .listWrapper .innerAll{
 	height: 55px;
@@ -943,7 +943,7 @@ a.fa.fa-qrcode:before{
 .product {
     float: left;
     position: relative;
-    width: 123px;
+    width: 24.5%;
     height: 170px;
     cursor: pointer;
     background: #fff;
@@ -1055,6 +1055,16 @@ a.fa.fa-qrcode:before{
 	background: #2b2f3a;
 	border-color: #2b2f3a;
 }
+.checkOut-button a.custom{
+	background: #fff;
+	border-color: #fff;
+	color: #333;
+}
+.checkOut-button a.custom:hover{
+	background-color: #009efb;
+    border-color: #009efb;
+	color: #009efb;
+}
 .checkOut-button a.buttoninvoice:hover,
 .checkOut-button a.buttonparksale:hover,
 .checkOut-button a.buttoncancelsale:hover{
@@ -1135,7 +1145,9 @@ a.fa.fa-qrcode:before{
 	}
 	.checkOut-button a.buttoninvoice,
 	.checkOut-button a.buttonparksale,
-	.checkOut-button a.buttoncancelsale{
+	.checkOut-button a.buttoncancelsale,
+	.checkOut-button a.custom{
 		margin-bottom: 15px;
 	}
-}                                                                       
+
+}                                                                                 

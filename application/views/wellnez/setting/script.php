@@ -1,7 +1,7 @@
 <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/js/libs/localforage.min.js"></script>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/jszip/2.4.0/jszip.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.4.0/jszip.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.js"></script>
-<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
 <script>
     function itemComboBoxEditor(container, options) {
         $('<input name="' + options.field + '"/>')
@@ -4782,8 +4782,8 @@
                         var notificat = $("#ntf1").data("kendoNotification");
                         notificat.hide();
                         notificat.success(self.lang.lang.success_message);
-                        banhji.router.navigate("/setting");
-                        banhji.setting.licenseDS.fetch();
+                        banhji.router.navigate("/");
+                        banhji.Index.licenseDS.fetch();
                     }
                 });
                 this.dataSource.bind("error", function(e) {

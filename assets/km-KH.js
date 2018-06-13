@@ -1559,4 +1559,7 @@ var	km_KH = {
 	"number_of_bloc": "ចំនួនទីតាំង",
 	"maintenance": "ថែទាំ",
 	"change_meter": "ប្តូរកុងទ៍រ",
+	"pos": "ការលក់",
+	"session_management": "បិត / បើក ថ្ងៃលក់",
+	"booking_management": "គរ្ប់គ្រងការកក់",
 }

@@ -375,9 +375,9 @@
 		                </div>
                     </div>
 					<div class="col checkOut-button">
-						<a style="padding: 20px 15px; box-shadow: 2px 0px 12px 0px rgba(68,68,68,1); border-radius: 5px; margin-bottom: 1px; " class="buttonpay btn waves-effect waves-light btn-block btn-info" data-bind="click: saveCashSale">
-							<span style="font-size: 15px; width: 50%; float: left;" data-bind="text: lang.lang.microparksale"></span>
-							<span style="font-size: 15px; width: 50%; float: right;" data-bind="">100</span>
+						<a style="padding: 9px 15px; box-shadow: 2px 0px 12px 0px rgba(68,68,68,1); border-radius: 5px;" class="custom btn waves-effect waves-light btn-block btn-info" data-bind="click: saveCashSale">
+							<span style="font-size: 15px; width: 50%; float: left; line-height: 45px;" data-bind="text: lang.lang.microparksale"></span>
+							<span style="font-size: 30px; width: 50%; float: right;" data-bind="">100</span>
 						</a>
 						<!-- <table class="table color-table dark-table">
 					        <thead>
@@ -7214,4 +7214,4 @@
 		#=code# - #=country#
 	</span>
 </script>
-<!-- End -->       
+<!-- End -->                                                                                         

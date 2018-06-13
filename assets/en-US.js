@@ -1583,4 +1583,7 @@ var	en_US = {
 	"number_of_bloc": "Number of Bloc",
 	"maintenance": "Maintenance",
 	"change_meter": "Change Meter",
+	"pos": "Point of Sale",
+	"session_management": "Session Management",
+	"booking_management": "Booking Management",
 }
