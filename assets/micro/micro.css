@@ -944,7 +944,7 @@ a.fa.fa-qrcode:before{
     float: left;
     position: relative;
     width: 24.5%;
-    height: auto;
+    height: 265px;
     cursor: pointer;
     background: #fff;
     margin-right: 2px;
@@ -1045,7 +1045,8 @@ a.fa.fa-qrcode:before{
 }
 .checkOut-button a.buttoninvoice,
 .checkOut-button a.buttonparksale,
-.checkOut-button a.buttoncancelsale{
+.checkOut-button a.buttoncancelsale,
+.checkOut-button a.buttoninvoiceSale{
 	background: #2b2f3a;
 	border-color: #2b2f3a;
 	padding: 28px 15px; 
@@ -1067,7 +1068,8 @@ a.fa.fa-qrcode:before{
 }
 .checkOut-button a.buttoninvoice:hover,
 .checkOut-button a.buttonparksale:hover,
-.checkOut-button a.buttoncancelsale:hover{
+.checkOut-button a.buttoncancelsale:hover,
+.checkOut-button a.buttoninvoiceSale:hover{
 	background: #009efb;
 	border-color: #009efb;
 }
@@ -1075,6 +1077,45 @@ a.fa.fa-qrcode:before{
 .accounCetner-textedit a:hover span{
 	color: #fff;
 }
+@media (min-width: 1281px) {
+	.checkOut-button a.buttoninvoice{
+		padding: 10px 15px;
+	}
+	.checkOut-button a.buttoninvoiceSale{
+		padding: 20px 15px;
+	}
+ 	.checkOut-button a.buttonparksale{
+ 		padding: 20px 15px;
+ 	}
+  	.checkOut-button a.buttoncancelsale{
+  		padding: 20px 15px;
+  	}
+}
+@media (min-width: 1025px) and (max-width: 1280px) {
+	.checkOut-button a.buttoninvoice{
+		padding: 10px 15px;
+	}
+ 	.checkOut-button a.buttonparksale{
+ 		padding: 21px 15px;
+ 	}
+  	.checkOut-button a.buttoncancelsale{
+  		padding: 31px 15px;
+  	}
+  	.product{
+  		height: 180px;
+  	}
+  
+}
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+	.product {
+	    width: 24.3%;
+	    height: 168px;
+	}
+	.checkOut-button a.buttoncancelsale {
+	    padding: 30px 15px;
+	}
+}  
+
 @media (max-width: 767px){
 	.board-chart{
 		min-height: 110px;
@@ -1153,5 +1194,5 @@ a.fa.fa-qrcode:before{
 	.checkOut-button a.custom{
 		margin-bottom: 15px;
 	}
-
-}                                                                                                     
+	
+}                                                                                                                                                                                      

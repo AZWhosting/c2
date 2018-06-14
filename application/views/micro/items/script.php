@@ -3473,7 +3473,7 @@
     banhji.tapMenu =  kendo.observable({
         lang                : langVM,
         goReports          : function(){
-            banhji.router.navigate('/');
+            banhji.router.navigate('/reports');
         },
         goCheckOut         : function(){
             banhji.router.navigate('/check_out');
@@ -3482,7 +3482,7 @@
             banhji.router.navigate('/transactions');
         },
         goMenuItems        : function(){
-            banhji.router.navigate('/items');
+            banhji.router.navigate('/');
         },
     });
     banhji.reports = kendo.observable({
@@ -7905,9 +7905,9 @@
 
         banhji.view.layout.showIn('#content', banhji.view.Index);
         banhji.view.Index.showIn('#indexMenu', banhji.view.tapMenu);
-        banhji.view.Index.showIn('#indexContent', banhji.view.reports);
+        banhji.view.Index.showIn('#indexContent', banhji.view.items);
 
-        banhji.reports.pageLoad();        
+        banhji.items.pageLoad();        
     });
     banhji.router.route('/check_out', function() {
         
@@ -7927,11 +7927,11 @@
         //load MVVM
         //banhji.transactions.pageLoad();
     });
-    banhji.router.route('/items', function() {
+    banhji.router.route('/reports', function() {
         
         banhji.view.layout.showIn('#content', banhji.view.Index);
         banhji.view.Index.showIn('#indexMenu', banhji.view.tapMenu);
-        banhji.view.Index.showIn('#indexContent', banhji.view.items);
+        banhji.view.Index.showIn('#indexContent', banhji.view.reports);
 
         // if(banhji.pageLoaded["customers"]==undefined){
         //     banhji.pageLoaded["customers"] = true;
@@ -7946,7 +7946,7 @@
         
 
         //load MVVM
-        banhji.items.pageLoad();
+        banhji.reports.pageLoad();
     });
 
     // Function

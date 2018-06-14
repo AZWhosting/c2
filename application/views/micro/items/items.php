@@ -44,30 +44,30 @@
 <!-- Menu -->
 <script id="tapMenu" type="text/x-kendo-template">
 	<ul class="nav nav-tabs customtab" role="tablist" >
-		<li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#/" data-bind="click: goReports"><span class="hidden-sm-up"><i class="ti-layout-grid2-thumb"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.reports"></span></a> </li>	    
-	    <li class="nav-item hidden-sm-down"> <a class="nav-link" data-toggle="tab" href="#/items" data-bind="click: goMenuItems"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.inventory_for_sale" ></span></a> </li>
-    </ul>
+		<li class="nav-item hidden-sm-down"> <a class="nav-link active" data-toggle="tab" href="#/" data-bind="click: goMenuItems"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.inventory_for_sale" ></span></a> </li>
+		<li class="nav-item"> <a class="nav-link " data-toggle="tab" href="#/reports" data-bind="click: goReports"><span class="hidden-sm-up"><i class="ti-layout-grid2-thumb"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.reports"></span></a> </li>  
+	</ul>
 </script>
 <!-- End -->
 
 <!-- Menu -->
 <script id="reports" type="text/x-kendo-template">
-	<div class="row " id="reports">
+	<div class="row home" id="reports">
 		<div class="col-md-4">
-			<div class="saleOverview">
+			<div class="saleOverview" style="min-height: 143px;">
 				<h2 data-bind="text: lang.lang.inventory_value"></h2>
 				<p data-format="n" data-bind="text: obj.inventory_value"></p>
 			</div>
 
 			<!-- Report -->
-            <div class="report ">
+            <!-- <div class="report ">
 				<div class="col-md-12">
 					<h3><a href="#/inventory_position_summary" data-bind="text: lang.lang.inventory_position_summary" ></a></h3>					
 				</div>
 				<div class="col-md-12">
 					<h3 style="border-bottom: none; padding-bottom: 0;"><a href="#/inventory_position_detail" data-bind="text: lang.lang.inventory_position_detail" ></a></h3>					
 				</div>				
-			</div>
+			</div> -->
 
 			<!-- Top 4 -->
 			<!-- <div class="top5 home-footer">
@@ -87,13 +87,13 @@
             </div> -->
 		</div>
 		<div class="col-md-4">
-			<div class="saleOverview">
+			<div class="saleOverview" style="min-height: 143px;">
 				<h2 data-bind="text: lang.lang.gross_profit_margin"></h2>
 				<p data-format="n0" data-bind="text: obj.gross_profit_margin"></p>
 			</div>
 
 			<!-- Report -->
-			<div class="report ">
+			<!-- <div class="report ">
 				<div class="col-md-12">
 					<h3 class="marginBottom"><a href="sales#/sale_detail_by_customer" data-bind="text: lang.lang.sale_detail_by_customer" ></a></h3>
 					
@@ -102,7 +102,7 @@
 					<h3 style="border-bottom: none; padding-bottom: 0;"><a href="sales#/sale_detail_by_product" data-bind="text: lang.lang.sale_detail_by_product_services" ></a></h3>
 					
 				</div>						    					
-			</div>
+			</div> -->
 
 			<!-- Top 4 -->
 			<!-- <div class="top5 home-footer">
@@ -123,12 +123,27 @@
 		</div>
 		<div class="col-md-4">
 			<div class="saleOverview">
-				<h2 data-bind="text: lang.lang.turnover_days"></h2>
-				<p data-format="n" data-bind="text: obj.inventory_turnover_day"></p>
+				<div class="col">
+					<h2 data-bind="text: lang.lang.turnover_days"></h2>
+					<p data-format="n" data-bind="text: obj.inventory_turnover_day"></p>
+				</div>
+				<div class="col btn-group float-right">
+	                <button style="width: 100%;" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-bind="text: lang.lang.reports">
+	                </button>
+	                <div class="dropdown-menu">
+	                    <a class="dropdown-item" href="#/inventory_position_summary" data-bind="text: lang.lang.inventory_position_summary"></a>
+	                    <a class="dropdown-item" href="#/inventory_position_detail" data-bind="text: lang.lang.inventory_position_detail"></a>
+	                    <a class="dropdown-item" href="sales#/sale_detail_by_customer" data-bind="text: lang.lang.sale_detail_by_customer"></a>
+	                    <a class="dropdown-item" href="sales#/sale_detail_by_product" data-bind="text: lang.lang.sale_detail_by_product_services"></a>
+	                    <a class="dropdown-item" href="purchases#/list_bills_paid" data-bind="text: lang.lang.list_of_invoices_to_be_collected"></a>
+	                    <a class="dropdown-item" href="purchases#/bill_payment_list" data-bind="text: lang.lang.bill_payment_list"></a>
+	                </div>
+	            </div>
 			</div>
+			
 
 			<!-- Report -->
-			<div class="report" >
+			<!-- <div class="report" >
 				<div class="col-md-12">
 					<h3 class="marginBottom"><a href="purchases#/list_bills_paid" data-bind="text: lang.lang.list_of_invoices_to_be_collected"></a></h3>
 				</div>
@@ -136,7 +151,7 @@
 					<h3 style="border-bottom: none; padding-bottom: 0;"><a href="purchases#/bill_payment_list" data-bind="text: lang.lang.bill_payment_list"></a></h3>
 					
 				</div>
-			</div>
+			</div> -->
 
 			<!-- Top 4 -->
 			<!-- <div class="top5 home-footer">
@@ -181,7 +196,7 @@
 					<form autocomplete="off" class="form-inline">
 						<div class="widget-search">
 							<div class="overflow-hidden">
-								<input type="search" placeholder="Number or Name..." data-bind="value: searchText">
+								<input style="padding: 6px;" type="search" placeholder="Number or Name..." data-bind="value: searchText">
 							</div>
 							<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="ti-search"></i></button>
 						</div>
@@ -2842,4 +2857,4 @@
 		#=code# - #=country#
 	</span>
 </script>
-<!-- End -->                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+<!-- End -->                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             

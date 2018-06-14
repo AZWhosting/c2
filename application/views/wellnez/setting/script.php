@@ -3760,7 +3760,6 @@
         addContactType: function() {
             var self = this,
                 name = this.get("contactTypeName");
-
             if (name !== "") {
                 this.contactTypeDS.add({
                     parent_id: 1,
@@ -3779,7 +3778,6 @@
                         banhji.source.loadContactTypes();
                     }
                 });
-
                 this.set("contactTypeName", "");
                 this.set("contactTypeAbbr", "");
                 this.set("contactTypeCompany", 0);
@@ -4560,8 +4558,48 @@
         },
         cancellationDS : dataStore(apiUrl + "spa/cancel_reason"),
         goCancellation : function(e){
-            
-        }
+        },
+        txnFormDS       : new kendo.data.DataSource({
+            transport: {
+                read: {
+                    url: apiUrl + "transaction_forms",
+                    type: "GET",
+                    headers: banhji.header,
+                    dataType: 'json'
+                },
+                parameterMap: function(options, operation) {
+                    if (operation === 'read') {
+                        return {
+                            page: options.page,
+                            limit: options.pageSize,
+                            filter: options.filter,
+                            sort: options.sort
+                        };
+                    } else {
+                        return {
+                            models: kendo.stringify(options.models)
+                        };
+                    }
+                }
+            },
+            schema: {
+                model: {
+                    id: 'id'
+                },
+                data: 'results',
+                total: 'count'
+            },
+            filter: [
+                { field: "type", value: "Wellnez_Invoice" },
+                { field: "moduls", value: "wellnez_mg" },
+            ],
+            batch: true,
+            serverFiltering: true,
+            serverSorting: true,
+            serverPaging: true,
+            page: 1,
+            pageSize: 100
+        }),
     });
     banhji.Branch = kendo.observable({
         lang: langVM,

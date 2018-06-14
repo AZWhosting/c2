@@ -28,29 +28,29 @@
                         <div class="card-body"  >
                         	<div class="row home" id="reports" style="margin-top: 25px;">
 	                        	<div class="col-md-4">
-									<div class="saleOverview">
+									<div class="saleOverview" style="min-height: 143px; ">
 										<h2 data-bind="">Cash In</h2>
 										<p data-format="n0" data-bind="">100000.000</p>
 									</div>
-									<div class="report" >
+									<!-- <div class="report" >
 										<div class="col-md-12">
 											<h3 style="border-bottom: none; padding-bottom: 0;"><a href="#/cash_movement" data-bind="text: lang.lang.cash_movement" ></a></h3>
 										</div>
-									</div>
+									</div> -->
 								</div>
 								<div class="col-md-4">
-									<div class="saleOverview">
+									<div class="saleOverview" style="min-height: 143px; ">
 										<h2 data-bind="">Cash Out</h2>
 										<p data-format="n0" data-bind="">100000.000</p>
 									</div>
-									<div class="report" >
+									<!-- <div class="report" >
 										<div class="col-md-12">
 											<h3 style="border-bottom: none; padding-bottom: 0;"><a href="#/cash_movement" data-bind="text: lang.lang.cash_movement" ></a></h3>
 										</div>
-									</div>									                        
+									</div>		 -->							                        
 								</div>
 								<div class="col-md-4">
-									<div class="saleOverview">
+									<!-- <div class="saleOverview">
 										<h2 data-bind="">Cash Balance</h2>
 										<p data-format="n0" data-bind="">100000.000</p>
 									</div>
@@ -58,7 +58,22 @@
 										<div class="col-md-12">
 											<h3 style="border-bottom: none; padding-bottom: 0;"><a href="#/cash_movement" data-bind="text: lang.lang.cash_movement" ></a></h3>
 										</div>
-									</div>									                        
+									</div> -->
+									<div class="saleOverview" style="margin-bottom: 15px;">
+										<div class="col">
+											<h2 data-bind="">Cash Balance</h2>
+											<p data-format="n0" data-bind="">100000.000</p>
+										</div>
+										<div class="col btn-group float-right">
+							                <button style="width: 100%;" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-bind="text: lang.lang.reports">
+							                </button>
+							                <div class="dropdown-menu">
+							                    <a class="dropdown-item" href="#/cash_movement" data-bind="text: lang.lang.cash_movement"></a>
+							                    <a class="dropdown-item" href="#/collection_report" data-bind="text: lang.lang.cash_collection_report"></a>
+							                    <a class="dropdown-item" href="#/bill_payment_list" data-bind="text: lang.lang.bill_payment_report"></a>
+							                </div>
+							            </div>
+									</div>
 								</div>
 							</div>
 
@@ -2922,4 +2937,4 @@
 		#=code# - #=country#
 	</span>
 </script>
-<!-- End -->                                                                                                                                                                                                                                                                                                                                                       
+<!-- End -->                                                                                                                                                                                                                                                                                                                                                                                    

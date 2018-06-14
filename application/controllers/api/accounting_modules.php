@@ -1016,6 +1016,81 @@ class Accounting_modules extends REST_Controller {
 		//Response Data		
 		$this->response($data, 200);	
 	}
+	function general_ledger_new_get() {		
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
+		$data["count"] = 0;
+
+		$obj = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		
+		//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
+			}
+		}
+		
+		//Filter		
+		if(!empty($filter["filters"]) && isset($filter["filters"])){			
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value['operator'])){
+	    			$obj->{$value['operator']}($value['field'], $value['value']);
+	    		} else {
+	    			$obj->where($value['field'], $value['value']);
+	    		}
+			}
+		}
+		
+		//Balance Sheet Items 10-34 balance as_of start date
+		$obj->select_sum("(dr - cr) / transactions.rate", "total");
+		$obj->include_related("contact", array("abbr","number","name"));
+		$obj->include_related("account", array("number","name"));
+		$obj->include_related("account/account_type", array("name","nature"));
+		$obj->where_related("transaction", "is_journal", 1);
+		$obj->where_in_related("account", "account_type_id", [10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34]);
+		$obj->where_related("transaction", "is_recurring <>", 1);		
+		$obj->where_related("transaction", "deleted <>", 1);
+		$obj->where("deleted <>", 1);
+		$obj->group_by("account_id");
+		$obj->get();
+		
+		$objList = [];
+		if($obj->exists()){
+			foreach ($obj as $key => $value) {
+				$amount = floatval($value->total);
+				if($value->account_account_type_nature=="Cr"){
+					$amount = floatval($value->total) * -1;
+				}
+
+				$data["results"][] = array(
+					"id" 				=> $value->account_id,
+					"number" 			=> $value->account_number,
+					"name" 				=> $value->account_name,
+					"description" 		=> $value->description,
+					"amount" 			=> $amount,
+					"contacts" 			=> isset($value->contact_name) ? $value->contact_name : ""
+				);
+			}
+		}
+		//End Balance Sheet Items
+
+		//Add to results
+		foreach ($objList as $value) {
+			$data["results"][] = $value;
+		}
+
+		$data["count"] = count($data["results"]);
+
+		//Response Data		
+		$this->response($data, 200);	
+	}
 	function general_ledger_by_segment_get() {		
 		$filter 	= $this->get("filter");
 		$page 		= $this->get('page');

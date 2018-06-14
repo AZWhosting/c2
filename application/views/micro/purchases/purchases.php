@@ -614,7 +614,7 @@
 						</div>
 
 						<div class="row">
-							<div class="col-12 col-md-6">
+							<div class="col-12 col-md-12 col-lg-6">
 								<table class="table color-table dark-table">
 									<tbody>
 										<tr>
@@ -685,24 +685,24 @@
 								</div>
 							</div> -->
 
-							<div class="col-12 col-md-6 checkOut-button">
+							<div class="col-12 col-md-12 col-lg-6 checkOut-button">
 								<div class="row">
 									<div class="col-6" style="padding-right: 0;">
-										<a style=" width: 99%; margin-right: 1px; padding: 25px 15px; box-shadow: 2px 0px 12px 0px rgba(68,68,68,1); border-radius: 5px 5px 0 0; margin-bottom: 1px; " class="buttonpay btn waves-effect waves-light btn-block btn-info" id="saveNew" data-bind="invisible: isEdit"><span style="font-size: 15px;" data-bind="text: lang.lang.save_new"></span></a>
+										<a style=" width: 99%; margin-right: 1px; padding: 25px 0; box-shadow: 2px 0px 12px 0px rgba(68,68,68,1); border-radius: 5px 5px 0 0; margin-bottom: 1px; " class="buttonpay btn waves-effect waves-light btn-block btn-info" id="saveNew" data-bind="invisible: isEdit"><span style="font-size: 13px;" data-bind="text: lang.lang.save_new"></span></a>
 									</div>
 									<div class="col-6" style="padding-left: 0;">
-										<a style=" width: 99%; padding: 25px 15px; box-shadow: 2px 0px 12px 0px rgba(68,68,68,1); border-radius: 5px 5px 0 0; margin-bottom: 1px; " class="buttonpay btn waves-effect waves-light btn-block btn-info" id="savePrint"><span style="font-size: 15px;" data-bind="text: lang.lang.save_print"></span></a>
+										<a style=" width: 99%; padding: 25px 0; box-shadow: 2px 0px 12px 0px rgba(68,68,68,1); border-radius: 5px 5px 0 0; margin-bottom: 1px; " class="buttonpay btn waves-effect waves-light btn-block btn-info" id="savePrint"><span style="font-size: 13px;" data-bind="text: lang.lang.save_print"></span></a>
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-4" style="padding-right: 0;">
-										<a style="border-radius: 0 0 0 5px; " class="buttoninvoice btn waves-effect waves-light btn-block btn-info" data-bind="click: saveInvoice" id="saveDraft1" data-bind="invisible: isEdit"><span data-bind="text: lang.lang.save_draft"></span></a>
+										<a style="white-space: pre-wrap; border-radius: 0 0 0 5px;" class="buttoninvoice btn waves-effect waves-light btn-block btn-info" data-bind="click: saveInvoice" id="saveDraft1" data-bind="invisible: isEdit"><span data-bind="html: lang.lang.save_draft"><br/></span></a>
 									</div>
 									<div class="col-4" style="padding: 0;">
-										<a style="margin: 0 2px; width: 96%; " class="buttonparksale btn waves-effect waves-light btn-block btn-info" id="saveClose" ><span data-bind="text: lang.lang.save_close"></span></a>
+										<a style="white-space: pre-wrap; margin: 0 2px; width: 96%;" class="buttonparksale btn waves-effect waves-light btn-block btn-info" id="saveClose" ><span data-bind="text: lang.lang.save_close"></span></a>
 									</div>
 									<div class="col-4" style="padding-left: 0;">
-										<a style="border-radius: 0 0 5px 0; " class="buttoncancelsale btn waves-effect waves-light btn-block btn-info" onclick="javascript:window.history.back()" data-bind="click: cancel"><span data-bind="text: lang.lang.cancel">Cancel</span></a>
+										<a style="white-space: pre-wrap; border-radius: 0 0 5px 0;" class="buttoncancelsale btn waves-effect waves-light btn-block btn-info" onclick="javascript:window.history.back()" data-bind="click: cancel"><span data-bind="text: lang.lang.cancel">Cancel</span></a>
 									</div>
 								</div>
 							</div>

@@ -39084,6 +39084,40 @@
 							<p data-bind="text: displayDate"></p>
 						</div>
 
+						<!-- div class="costom-grid"
+							 data-role="grid"
+							 data-groupable="true"
+							 data-sortable="true"
+	                         data-column-menu="true"
+	                         data-detailInit="detailInit"
+			                 data-columns="[
+                                { 
+                                	field: 'number', 
+                                	title:'NUMBER',
+                                	attributes: {
+								      	style: 'text-align: center;'
+								    }, 
+                                	width: 100 
+                                },
+                                { field: 'name', title:'ACCOUNT' },
+                                { field: 'contacts', title:'NAME' },
+                                { field: 'description', title:'DESCRIPTION' },
+                                { 
+                                	field: 'amount', 
+                                	title:'AMOUNT',
+                                	attributes: {
+								      	style: 'text-align: right;'
+								    },
+								    headerAttributes: {
+								      	'class': 'table-header-cell',
+								      	style: 'text-align: right; font-size: 14px'
+								    },
+								    width: 200
+                                }
+                             ]"
+                             data-auto-bind="false"
+			                 data-bind="source: dataSource"></div> -->
+
 						<table class="table table-borderless table-condensed">
 							<thead>
 								<tr>
@@ -39102,6 +39136,7 @@
 					        		data-bind="source: dataSource"></tbody>
 					       	<tfoot data-template="generalLedger-footer-template" data-bind="source: this"></tfoot>
 						</table>
+						
 					</div>
 				</div>
 			</div>

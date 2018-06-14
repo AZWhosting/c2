@@ -622,11 +622,11 @@
 					            		<i></i><span class="strong"><span >Service Charge</span></span>
 					            	</a>
 					            </li>
-					            <!-- <li>
-					            	<a href="#RefSource" class="glyphicons list" data-toggle="tab">
-					            		<i></i><span class="strong"><span >Referral Sources</span></span>
+					            <li>
+					            	<a href="#CustomForm" class="glyphicons list" data-toggle="tab">
+					            		<i></i><span class="strong"><span data-bind="text: lang.lang.custom_forms"></span></span>
 					            	</a>
-					            </li> -->
+					            </li>
 					            <li>
 					            	<a href="#CancelReason" class="glyphicons lock" data-toggle="tab" data-bind="click: goCancellation">
 					            		<i></i><span class="strong"><span>Cancellation Reasons</span></span>
@@ -661,6 +661,19 @@
 								                data-bind="source: branchDS">
 								            </tbody>
 						            	</table>
+						            </div>
+						            <div class="tab-pane" id="CustomForm">
+						            	<div class="row" style="clear:both;">
+								        	<div class="row formstyle">
+												<div id="formStyle"
+													 data-role="listview"
+													 data-selectable="true"
+									                 data-template="invoiceCustom-txn-form-template"
+									                 data-bind="source: txnFormDS"
+									                 style="overflow: auto">
+									            </div>
+									        </div>
+										</div>
 						            </div>
 						            <div class="tab-pane" id="ServiceCharge">
 						            	<div class="row" style="clear:both;">
@@ -724,6 +737,11 @@
 			</div>
 		</div>
 	</div>
+</script>
+<script id="invoiceCustom-txn-form-template" type="text/x-kendo-template">
+	<a class="span4 #= type #" data-id="#= id #" data-bind="click: selectedForm" style="padding-right: 0; width: 32%;">
+    	<img src="<?php echo base_url(); ?>assets/invoice/img/#= image_url #.jpg" alt="#: name # image" />
+    </a>
 </script>
 <script id="room-template" type="text/x-kendo-tmpl">
     <tr>

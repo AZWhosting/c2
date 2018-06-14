@@ -75266,6 +75266,110 @@
                 banhji.pageLoaded["general_ledger"] = true;
 
                 vm.sorterChanges();
+
+                // var element = $("#grid").kendoGrid({
+                //     dataSource: {
+                //         transport: {
+                //             read    : {
+                //                 url: apiUrl + "accounting_modules/general_ledger_new",
+                //                 type: "GET",
+                //                 headers: banhji.header,
+                //                 dataType: 'json'
+                //             },
+                //             parameterMap: function(options, operation) {
+                //                 if(operation === 'read') {
+                //                     return {
+                //                         page: options.page,
+                //                         limit: options.pageSize,
+                //                         filter: options.filter,
+                //                         sort: options.sort
+                //                     };
+                //                 } else {
+                //                     return {models: kendo.stringify(options.models)};
+                //                 }
+                //             }
+                //         },
+                //         pageSize: 6,
+                //         serverPaging: true,
+                //         serverSorting: true
+                //     },
+                //     autoBind:false,
+                //     height: 600,
+                //     sortable: true,
+                //     pageable: true,
+                //     // detailInit: detailInit,
+                //     dataBound: function() {
+                //         this.expandRow(this.tbody.find("tr.k-master-row").first());
+                //     },
+                //     columns: [
+                //         {
+                //             field: "number",
+                //             title: "First Name",
+                //             width: "110px"
+                //         },
+                //         {
+                //             field: "name",
+                //             title: "Last Name",
+                //             width: "110px"
+                //         },
+                //         {
+                //             field: "description",
+                //             width: "110px"
+                //         },
+                //         {
+                //             field: "amount",
+                //             width: "110px"
+                //         }
+                //     ]
+                // });
+
+                // function detailInit(e) {
+                //     $("<div/>").appendTo(e.detailCell).kendoGrid({
+                //         dataSource: {
+                //             transport: {
+                //                 read    : {
+                //                     url: apiUrl + "transactions",
+                //                     type: "GET",
+                //                     headers: banhji.header,
+                //                     dataType: 'json'
+                //                 },
+                //                 parameterMap: function(options, operation) {
+                //                     if(operation === 'read') {
+                //                         return {
+                //                             page: options.page,
+                //                             limit: options.pageSize,
+                //                             filter: options.filter,
+                //                             sort: options.sort
+                //                         };
+                //                     } else {
+                //                         return {models: kendo.stringify(options.models)};
+                //                     }
+                //                 }
+                //             },
+                //             schema  : {
+                //                 model: {
+                //                     id: 'id'
+                //                 },
+                //                 data: 'results',
+                //                 total: 'count'
+                //             },
+                //             serverPaging: true,
+                //             serverSorting: true,
+                //             serverFiltering: true,
+                //             pageSize: 10,
+                //             filter: { field: "id", value: e.data.id }
+                //         },
+                //         scrollable: false,
+                //         sortable: true,
+                //         pageable: true,
+                //         columns: [
+                //             { field: "issued_date", title: "DATE", width: "300px" },
+                //             { field: "number", title: "NUMBER", width: "100px" },
+                //             { field: "type", title:"TYPE", width: "110px" },
+                //             { field: "amount", title:"AMOUNT" }
+                //         ]
+                //     });
+                // }
             }
 
             vm.pageLoad();

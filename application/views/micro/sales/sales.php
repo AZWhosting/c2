@@ -479,7 +479,7 @@
 				            </div>
 						</div>
 						<div class="row">
-							<div class="col-12 col-md-6">
+							<div class="col-12 col-md-12 col-lg-6">
 								<table class="table color-table dark-table marginBottom">
 									<tbody>
 										<tr>
@@ -503,7 +503,7 @@
 									</tbody>
 								</table>
 							</div> 
-							<div class="col-12 col-md-6 checkOut-button">
+							<div class="col-12 col-md-12 col-lg-6 checkOut-button">
 								<div class="row">
 									<div class="col" >
 										<a style="padding: 25px 15px; box-shadow: 2px 0px 12px 0px rgba(68,68,68,1); border-radius: 5px 5px 0 0; margin-bottom: 1px; " class="buttonpay btn waves-effect waves-light btn-block btn-info" data-bind="click: saveCashSale"><span style="font-size: 15px;" data-bind="text: lang.lang.pay">Pay</span></a>
@@ -511,7 +511,7 @@
 								</div>
 								<div class="row">
 									<div class="col-4" style="padding-right: 0;">
-										<a style="border-radius: 0 0 0 5px; " class="buttoninvoice btn waves-effect waves-light btn-block btn-info" data-bind="click: saveInvoice" data-bind="click: saveInvoice"><span data-bind="text: lang.lang.microinvoice">Issue <br/>Invoice</span></a>
+										<a style="white-space: pre-wrap; border-radius: 0 0 0 5px; " class="buttoninvoiceSale btn waves-effect waves-light btn-block btn-info" data-bind="click: saveInvoice" data-bind="click: saveInvoice"><span data-bind="text: lang.lang.microinvoice">Issue <br/>Invoice</span></a>
 									</div>
 									<div class="col-4" style="padding: 0;">
 										<a style="margin: 0 2px; width: 96%; " class="buttonparksale btn waves-effect waves-light btn-block btn-info" data-bind="click: parkSale"><span data-bind="text: lang.lang.microparksale">Parksale</span></a>
