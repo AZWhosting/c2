@@ -511,7 +511,7 @@
 								</div>
 								<div class="row">
 									<div class="col-4" style="padding-right: 0;">
-										<a style="white-space: pre-wrap; border-radius: 0 0 0 5px; " class="buttoninvoiceSale btn waves-effect waves-light btn-block btn-info" data-bind="click: saveInvoice" data-bind="click: saveInvoice"><span data-bind="text: lang.lang.microinvoice">Issue <br/>Invoice</span></a>
+										<a style="white-space: pre-wrap; border-radius: 0 0 0 5px; " class="buttoninvoiceSale btn waves-effect waves-light btn-block btn-info" data-bind="click: saveInvoice" data-bind="click: saveInvoice"><span style="font-size: 13px" data-bind="text: lang.lang.microinvoice"></span></a>
 									</div>
 									<div class="col-4" style="padding: 0;">
 										<a style="margin: 0 2px; width: 96%; " class="buttonparksale btn waves-effect waves-light btn-block btn-info" data-bind="click: parkSale"><span data-bind="text: lang.lang.microparksale">Parksale</span></a>
@@ -705,8 +705,8 @@
 	<div class="product" data-bind="click:searchItemByCategory" style="text-align: center;">
 		<a class="view-details">
 			<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/no_image.jpg" />
-			<h3>#:name#</h3>
-			<p>#=abbr#</p>
+			<h3>#:name.substring(0, 10)#...</h3>
+			<p>#=abbr.substring(0, 10)#...</p>
 		</a>
 	</div>
 </script>
@@ -716,7 +716,8 @@
 			<div >
 				<img src="#= image_url? image_url: 'https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/no_image.jpg'#" />
 			</div>
-			<h3>#:name#</h3>
+			<h3>#:name.substring(0, 10)#...</h3>
+			<p>#=abbr.substring(0, 10)#...</p>
 		</a>			
 	</div>
 </script>

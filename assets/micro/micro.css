@@ -985,7 +985,7 @@ a.fa.fa-qrcode:before{
     content: "";
     display: block;
     width: 100%;
-    height: 111%;
+    height: 120%;
     position: absolute;
     top: 0;
     left: 0;
@@ -1090,6 +1090,7 @@ a.fa.fa-qrcode:before{
   	.checkOut-button a.buttoncancelsale{
   		padding: 20px 15px;
   	}
+
 }
 @media (min-width: 1025px) and (max-width: 1280px) {
 	.checkOut-button a.buttoninvoice{
@@ -1102,7 +1103,7 @@ a.fa.fa-qrcode:before{
   		padding: 31px 15px;
   	}
   	.product{
-  		height: 180px;
+  		height: 195px;
   	}
   
 }

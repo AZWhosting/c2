@@ -1023,6 +1023,9 @@ class Accounting_modules extends REST_Controller {
 		$sort 	 	= $this->get("sort");
 		$data["results"] = [];
 		$data["count"] = 0;
+		$asOf = date("Y-m-d");
+		$fromDate = "";
+		$plIdList = [35,36,37,38,39,40,41,42,43];
 
 		$obj = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		
@@ -1042,46 +1045,127 @@ class Accounting_modules extends REST_Controller {
 	    	foreach ($filter["filters"] as $value) {
 	    		if(isset($value['operator'])){
 	    			$obj->{$value['operator']}($value['field'], $value['value']);
+
+	    			//Get start date
+	    			if($value['field']=="issued_date >=" || $value['field']=="issued_date"){
+	    				$fromDate = $value['value'];
+	    			}
 	    		} else {
 	    			$obj->where($value['field'], $value['value']);
 	    		}
 			}
 		}
+
+		//Fiscal Date
+		$asOfYear = date("Y",strtotime($asOf));
+		$fdate = $asOfYear ."-". $this->fiscalDate;
+		if($asOf > $fdate){
+			$startFD 	= $asOfYear ."-". $this->fiscalDate;
+			$endFD 		= intval($asOfYear)+1 ."-". $this->fiscalDate;
+		}else{
+			$startFD 	= intval($asOfYear)-1 ."-". $this->fiscalDate;
+			$endFD 		= $asOfYear ."-". $this->fiscalDate;
+		}
+
+		//Add 1 day
+		$asOf = date("Y-m-d", strtotime($asOf . "+1 days"));
+		$startFD = date("Y-m-d", strtotime($startFD . "+1 days"));
 		
-		//Balance Sheet Items 10-34 balance as_of start date
-		$obj->select_sum("(dr - cr) / transactions.rate", "total");
+		$obj->include_related("transaction", array("type", "number", "issued_date", "memo", "rate"));
 		$obj->include_related("contact", array("abbr","number","name"));
-		$obj->include_related("account", array("number","name"));
+		$obj->include_related("account", array("number","name","account_type_id"));
 		$obj->include_related("account/account_type", array("name","nature"));
 		$obj->where_related("transaction", "is_journal", 1);
-		$obj->where_in_related("account", "account_type_id", [10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34]);
+		$obj->where_in_related("account", "account_type_id", [10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43]);
 		$obj->where_related("transaction", "is_recurring <>", 1);		
 		$obj->where_related("transaction", "deleted <>", 1);
+		$obj->order_by("account_id", "asc");
 		$obj->where("deleted <>", 1);
-		$obj->group_by("account_id");
-		$obj->get();
+		$obj->get_iterated();
+
+		//Results
+		// if($page && $limit){
+		// 	$obj->get_paged_iterated($page, $limit);
+		// 	$data["count"] = $obj->paged->total_rows;
+		// }else{
+		// 	$obj->get_iterated();
+		// 	$data["count"] = $obj->result_count();
+		// }
 		
 		$objList = [];
 		if($obj->exists()){
-			foreach ($obj as $key => $value) {
-				$amount = floatval($value->total);
+			foreach ($obj as $value) {
+				$amount = (floatval($value->dr) - floatval($value->cr)) / floatval($value->transaction_rate);
+				$dr = $amount;
+				$cr = 0;
 				if($value->account_account_type_nature=="Cr"){
-					$amount = floatval($value->total) * -1;
+					$dr = 0;
+					$cr = $amount * -1;
 				}
 
-				$data["results"][] = array(
-					"id" 				=> $value->account_id,
-					"number" 			=> $value->account_number,
-					"name" 				=> $value->account_name,
-					"description" 		=> $value->description,
-					"amount" 			=> $amount,
-					"contacts" 			=> isset($value->contact_name) ? $value->contact_name : ""
-				);
+				$description = $value->description;
+				if($description==""){
+					$description = $value->transaction_memo;
+				}
+
+				if(isset($objList[$value->account_id])){
+					$objList[$value->account_id]["line"][] = array(
+						"id" 				=> $value->transaction_id,
+						"type" 				=> $value->transaction_type,
+						"number" 			=> $value->transaction_number,
+						"issued_date" 		=> $value->transaction_issued_date,
+						"memo" 				=> $description,
+						"dr" 				=> $dr,
+						"cr" 				=> $cr,
+						"contact" 			=> isset($value->contact_name) ? $value->contact_name : ""
+					);
+				}else{
+					$bfAmount = 0;
+					if($fromDate <> ""){
+						$balanceForwards = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						$balanceForwards->select_sum("(dr - cr) / transactions.rate", "total");
+						$balanceForwards->include_related("account/account_type", array("name","nature"));
+						$balanceForwards->where("account_id", $value->account_id);
+
+						if(array_key_exists($value->account_account_type_id,$plIdList)){
+							//PL Items 35-43 BALANCE FORWARD (START FD) to (FROM DATE)
+							$balanceForwards->where_related("transaction", "issued_date >=", $startFD);
+							$balanceForwards->where_related("transaction", "issued_date <", $fromDate);
+						}else{
+							//Balance Sheet Items 10-34 BALANCE FORWARD (AS OF) to (FROM DATE)
+							$balanceForwards->where_related("transaction", "issued_date <", $fromDate);
+						}
+
+						$balanceForwards->where_related("transaction", "is_recurring <>", 1);
+						$balanceForwards->where_related("transaction", "deleted <>", 1);
+						$balanceForwards->where("deleted <>", 1);
+						$balanceForwards->get();
+						
+						$bfAmount = floatval($balanceForwards->total);
+						if($value->account_account_type_nature=="Cr"){
+							$bfAmount = floatval($balanceForwards->total) * -1;
+						}
+					}
+
+					$objList[$value->account_id]["id"] 				= $value->account_id;
+					$objList[$value->account_id]["name"] 			= $value->account_number ." - ". $value->account_name;
+					$objList[$value->account_id]["nature"] 			= $value->account_account_type_nature;
+					$objList[$value->account_id]["balance_forward"] = $bfAmount;
+					$objList[$value->account_id]["line"][] 			= array(
+						"id" 				=> $value->transaction_id,
+						"type" 				=> $value->transaction_type,
+						"number" 			=> $value->transaction_number,
+						"issued_date" 		=> $value->transaction_issued_date,
+						"memo" 				=> $description,
+						"dr" 				=> $dr,
+						"cr" 				=> $cr,
+						"contact" 			=> isset($value->contact_name) ? $value->contact_name : ""
+					);			
+				}
 			}
 		}
 		//End Balance Sheet Items
 
-		//Add to results
 		foreach ($objList as $value) {
 			$data["results"][] = $value;
 		}

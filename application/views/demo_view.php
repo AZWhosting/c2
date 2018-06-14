@@ -39084,12 +39084,11 @@
 							<p data-bind="text: displayDate"></p>
 						</div>
 
-						<!-- div class="costom-grid"
+						<!-- <div class="costom-grid"
 							 data-role="grid"
 							 data-groupable="true"
 							 data-sortable="true"
 	                         data-column-menu="true"
-	                         data-detailInit="detailInit"
 			                 data-columns="[
                                 { 
                                 	field: 'number', 
@@ -39154,7 +39153,7 @@
 	#var totalDr = 0;#
 	#var totalCr = 0;#
 	#for(var i=0; i < line.length; i++){#
-	#balance += line[i].amount;#
+	#balance += (line[i].dr + line[i].cr);#
 	#totalDr += line[i].dr;#
 	#totalCr += line[i].cr;#
 	<tr>
@@ -39174,10 +39173,14 @@
 			#=line[i].contact#
 		</td>
 		<td class="right" style="color: black;">
-			#=kendo.toString(line[i].dr, "n2")#
+			#if(line[i].dr!==0){#
+				#=kendo.toString(line[i].dr, "n2")#
+			#}#
 		</td>
 		<td class="right" style="color: black;">
-			#=kendo.toString(line[i].cr, "n2")#
+			#if(line[i].cr!==0){#
+				#=kendo.toString(line[i].cr, "n2")#
+			#}#
 		</td>
 		<td class="right" style="color: black;">
 			#=kendo.toString(balance, "n2")#
@@ -39188,10 +39191,14 @@
     <tr>
     	<td colspan="5" style="font-weight: bold; color: black;"><span data-bind="text: lang.lang.total" style="text-transform: capitalize;"></span><span>#: name #</span></td>
     	<td class="right" style="font-weight: bold; border-top: 1px solid black !important; color: black;">
-    		#=kendo.toString(totalDr, "n2")#
+    		#if(totalDr!==0){#
+    			#=kendo.toString(totalDr, "n2")#
+    		#}#
     	</td>
     	<td class="right" style="font-weight: bold; border-top: 1px solid black !important; color: black;">
-    		#=kendo.toString(totalCr, "n2")#
+    		#if(totalCr!==0){#
+    			#=kendo.toString(totalCr, "n2")#
+    		#}#
     	</td>
     	<td class="right" style="font-weight: bold; border-top: 1px solid black !important; color: black;">
     		#=kendo.toString(balance, "n2")#
@@ -39208,10 +39215,10 @@
             TOTAL
         </td>
         <td align="right">
-           <h3 data-format="n2" data-bind="text: totalDr()"></h3>
+           <h3 data-format="n2" data-bind="text: totalDr"></h3>
         </td>
         <td align="right">
-            <h3 data-format="n2" data-bind="text: totalCr()"></h3>
+            <h3 data-format="n2" data-bind="text: totalCr"></h3>
         </td>
         <td></td>
     </tr>

@@ -659,33 +659,34 @@
 									</tbody>
 								</table>
 							</div> 
-							<!-- <div class="col-12 col-md-6 checkOut-button">
+							<div class="col-12 col-md-6 checkOut-button">
 								<div class="row">
 									<div class="col" >
-										<button style="padding: 25px 15px; box-shadow: 2px 0px 12px 0px rgba(68,68,68,1); border-radius: 5px 5px 0 0; margin-bottom: 1px; "  type="button" class="btn btn-info btn-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span style="font-size: 15px;" data-bind="text: lang.lang.save_option"></span></button>
+										<button style="width: 100%; padding: 20px 15px; box-shadow: 2px 0px 12px 0px rgba(68,68,68,1); border-radius: 5px 5px 0 0; margin-bottom: 1px; "  type="button" class="btn btn-info btn-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span style="font-size: 15px;" data-bind="text: lang.lang.save_option"></span></button>
 										<div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 35px, 0px); top: 0px; left: 0px; will-change: transform;">
-				                            <a class="dropdown-item" id="saveNew" data-bind="invisible: isEdit"><span data-bind="text: lang.lang.save_new"></span></a>
-				                            <a class="dropdown-item" id="savePrint"><span data-bind="text: lang.lang.save_print"></span></a>
+				                            <a style="color: #333;" class="dropdown-item" data-bind="invisible: isEdit" id="saveDraft1"><span data-bind="text: lang.lang.save_draft"></span></a>
+				                            <a style="color: #333;" class="dropdown-item" id="savePrint"><span data-bind="text: lang.lang.save_print"></span></a>
 				                        </div>
 									</div>
 								</div>
 								<div class="row">
-									<div class="col-8" style="padding-right: 0;">
-										<div class="col-md-12" style="padding: 0;">
-											<a style="margin: 1px 1px 1px 0; width: 99%;" class="buttoninvoice btn waves-effect waves-light btn-block btn-info" data-bind="invisible: isEdit" id="saveDraft1"><span data-bind="text: lang.lang.save_draft"></span></a>
-										</div>
-										<div class="col-md-12" style="padding: 0;">
+									<div class="col" style="padding-right: 0;">
+										
+											<!-- <a style="margin: 1px 1px 1px 0; width: 99%;" class="buttoninvoice btn waves-effect waves-light btn-block btn-info" data-bind="invisible: isEdit" id="saveDraft1"><span data-bind="text: lang.lang.save_draft"></span></a> -->
+											<a  style="margin: 1px 1px 1px 0; width: 99%;" class="buttoninvoice btn waves-effect waves-light btn-block btn-info" id="saveNew" data-bind="invisible: isEdit"><span data-bind="text: lang.lang.save_new"></span></a>
+										
+										<!-- <div class="col-md-12" style="padding: 0;">
 											<a style="border-radius: 0 0 0 5px; width: 99%;" class="buttonparksale btn waves-effect waves-light btn-block btn-info" id="saveClose"><span data-bind="text: lang.lang.save_close"></span></a>
-										</div>
+										</div> -->
 									</div>
 									
-									<div class="col-4" style="padding-left: 0;">
-										<a style="border-radius: 0 0 5px 0; height: 159px; line-height: 100px; " class="buttoncancelsale btn waves-effect waves-light btn-block btn-info" data-bind="click: cancel"><span data-bind="text: lang.lang.cancel"></span></a>
+									<div class="col" style="padding-left: 0;">
+										<a style="border-radius: 0 0 5px 0; " class="buttoncancelpurchase btn waves-effect waves-light btn-block btn-info" data-bind="click: cancel"><span data-bind="text: lang.lang.cancel"></span></a>
 									</div>
 								</div>
-							</div> -->
+							</div>
 
-							<div class="col-12 col-md-12 col-lg-6 checkOut-button">
+							<!-- <div class="col-12 col-md-12 col-lg-6 checkOut-button">
 								<div class="row">
 									<div class="col-6" style="padding-right: 0;">
 										<a style=" width: 99%; margin-right: 1px; padding: 25px 0; box-shadow: 2px 0px 12px 0px rgba(68,68,68,1); border-radius: 5px 5px 0 0; margin-bottom: 1px; " class="buttonpay btn waves-effect waves-light btn-block btn-info" id="saveNew" data-bind="invisible: isEdit"><span style="font-size: 13px;" data-bind="text: lang.lang.save_new"></span></a>
@@ -705,7 +706,7 @@
 										<a style="white-space: pre-wrap; border-radius: 0 0 5px 0;" class="buttoncancelsale btn waves-effect waves-light btn-block btn-info" onclick="javascript:window.history.back()" data-bind="click: cancel"><span data-bind="text: lang.lang.cancel">Cancel</span></a>
 									</div>
 								</div>
-							</div>
+							</div> -->
 						</div>
 					</div>
 				</div>
@@ -853,8 +854,8 @@
 	<div class="product" data-bind="click:searchItemByCategory" style="text-align: center;">
 		<a class="view-details">
 			<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/no_image.jpg" />
-			<h3>#:name#</h3>
-			<p>#=abbr#</p>
+			<h3>#:name.substring(0, 10)#...</h3>
+			<p>#=abbr.substring(0, 10)#...</p>
 		</a>
 	</div>
 </script>
@@ -864,7 +865,7 @@
 			<div style="height:130px;">
 				<img src="#= image_url? image_url: 'https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/no_image.jpg'#" />
 			</div>
-			<h3>#:name#</h3>
+			<h3>#:name.substring(0, 10)#...</h3>
 		</a>			
 	</div>
 </script>
@@ -6625,4 +6626,4 @@
 		</td>
 	</tr>
 </script>
-<!-- End -->                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+<!-- End -->                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              

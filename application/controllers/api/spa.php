@@ -2140,6 +2140,7 @@ class Spa extends REST_Controller {
 		
 		$obj->where("status", 0);
 		$obj->where("deleted <>", 1);
+		$obj->where_in("type", "Invoice");
 		//Results
 		if($page && $limit){
 			$obj->get_paged_iterated($page, $limit);
