@@ -1052,6 +1052,7 @@ a.fa.fa-qrcode:before{
 	padding: 28px 15px; 
 	box-shadow: 2px 0px 12px 0px rgba(68,68,68,1);
 }
+
 .checkOut-button a.buttonpay:hover{
 	background: #2b2f3a;
 	border-color: #2b2f3a;
@@ -1077,6 +1078,39 @@ a.fa.fa-qrcode:before{
 .accounCetner-textedit a:hover span{
 	color: #fff;
 }
+.checkOut-button a.buttoncancelpurchase{
+	padding: 9.5px 15px;
+	box-shadow: 2px 0px 12px 0px rgba(68,68,68,1);
+	background: #2b2f3a;
+	border-color: #2b2f3a;
+}
+.checkOut-button a.buttoninvoicepurchase{
+	padding: 9px 15px;
+	box-shadow: 2px 0px 12px 0px rgba(68,68,68,1);
+	background: #2b2f3a;
+	border-color: #2b2f3a;
+}
+.checkOut-button a.buttoncancelpurchase:hover,
+.checkOut-button a.buttoninvoicepurchase:hover{
+	background: #009efb;
+	border-color: #009efb;
+}
+.checkOut-button .buttonoptionpurchase{
+	width: 100%; 
+	padding: 20px 15px;
+	box-shadow: 2px 0px 12px 0px rgba(68,68,68,1); 
+	border-radius: 5px 5px 0 0; 
+	margin-bottom: 1px; 
+}
+.checkOut-button a.buttoninvoicepurchase{
+	margin: 1px 1px 1px 0; 
+	border-radius: 0 0 0 5px; 
+	width: 99%;
+}
+.checkOut-button a.buttoncancelpurchase{
+	border-radius: 0 0 5px 0; 
+}
+/*Serface*/
 @media (min-width: 1281px) {
 	.checkOut-button a.buttoninvoice{
 		padding: 10px 15px;
@@ -1090,22 +1124,37 @@ a.fa.fa-qrcode:before{
   	.checkOut-button a.buttoncancelsale{
   		padding: 20px 15px;
   	}
-
+  	.checkOut-button a.buttoncancelpurchase{
+  		padding: 10px 15px;
+  	}
 }
+/*End*/
+
+/*My Screen*/
 @media (min-width: 1025px) and (max-width: 1280px) {
 	.checkOut-button a.buttoninvoice{
 		padding: 10px 15px;
 	}
- 	.checkOut-button a.buttonparksale{
- 		padding: 21px 15px;
- 	}
-  	.checkOut-button a.buttoncancelsale{
-  		padding: 31px 15px;
-  	}
+	.view-details:after {
+	    height: 130%;
+	}
   	.product{
   		height: 195px;
-  	}
-  
+  	}  
+}
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px) 
+and (orientation : portrait) { 
+	.product {
+		height: auto;
+	    width: 24.2%;
+	    min-height: 163px;
+	}
+	.checkOut-button .buttonoptionpurchase{
+		width: 100%; 
+		padding: 20px 15px;
+	}
 }
 @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
 	.product {
@@ -1113,7 +1162,24 @@ a.fa.fa-qrcode:before{
 	    height: 168px;
 	}
 	.checkOut-button a.buttoncancelsale {
-	    padding: 30px 15px;
+	    padding: 28px 15px;
+	}
+	.checkOut-button a.buttoninvoiceSale{
+		padding: 18px 15px;
+	}
+	.checkOut-button a.buttonparksale{
+		padding: 28px 15px;
+	}
+	.checkOut-button a.buttoninvoicepurchase{
+		width: 94%;
+		border-radius: 0;
+	}
+	.checkOut-button a.buttoncancelpurchase{
+		margin-left: 11px;
+    	width: 94%;
+	}
+	.checkOut-button a.buttoncancelpurchase{
+		border-radius: 0 0 5px 5px; 
 	}
 }  
 
@@ -1138,8 +1204,7 @@ a.fa.fa-qrcode:before{
 		-webkit-overflow-scrolling: touch;
 		-webkit-overflow-scrolling: auto; 
 		overflow-y: scroll;
-  		scroll-behavior: smooth;
-		
+  		scroll-behavior: smooth;		
 	}
 	.box-generic-noborder{
 		margin-bottom: 15px;
@@ -1195,5 +1260,7 @@ a.fa.fa-qrcode:before{
 	.checkOut-button a.custom{
 		margin-bottom: 15px;
 	}
-	
-}                                                                                                                                                                                      
+	.checkOut-button a.buttoninvoicepurchase{
+		padding: 9px 15px;
+	}	
+}

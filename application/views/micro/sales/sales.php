@@ -266,7 +266,7 @@
 		<div class="col-12 col-md-6">
 			<div class="listWrapper">
 				<div class="row">
-					<div class="col-12 col-md-6">
+					<div class="col-12 col-md-12 col-lg-6">
 						<div class="widget-search marginBottom">
 							<div class="overflow-hidden" style="width: 100%;">
 								<input type="search" placeholder="Barcode..." data-bind="value: barcode, events: {change: barcodeChange}" style="width: 100%;" />
@@ -274,7 +274,7 @@
 							
 						</div>
 					</div>
-					<div class="col-12 col-md-6">
+					<div class="col-12 col-md-12 col-lg-6">
 						<div class="widget-search marginBottom">
 							<div class="overflow-hidden">
 								<input type="search" placeholder="Number or Name..." data-bind="value: searchText" />
@@ -705,8 +705,7 @@
 	<div class="product" data-bind="click:searchItemByCategory" style="text-align: center;">
 		<a class="view-details">
 			<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/no_image.jpg" />
-			<h3>#:name.substring(0, 10)#...</h3>
-			<p>#=abbr.substring(0, 10)#...</p>
+			<h3>#:name.substring(0, 25)#...</h3>
 		</a>
 	</div>
 </script>
@@ -716,8 +715,7 @@
 			<div >
 				<img src="#= image_url? image_url: 'https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/no_image.jpg'#" />
 			</div>
-			<h3>#:name.substring(0, 10)#...</h3>
-			<p>#=abbr.substring(0, 10)#...</p>
+			<h3>#:name.substring(0, 25)#...</h3>
 		</a>			
 	</div>
 </script>

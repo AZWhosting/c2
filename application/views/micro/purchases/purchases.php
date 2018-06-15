@@ -299,67 +299,6 @@
     </div>
 </script>
 <script id="transactions" type="text/x-kendo-template">	
-	<!-- <div class="row">
-		<div class="card-body">
-			<div class="row " >
-            	<div class="col-md-8">
-					<input data-role="dropdownlist"  
-						   class="sorter marginRight marginBottom float-left"
-				           data-value-primitive="true"
-				           data-text-field="text"
-				           data-value-field="value"
-				           data-bind="value: sorter,
-				                      source: sortList,
-				                      events: { change: sorterChanges }" />
-
-					<input data-role="datepicker"
-						   class="sdate marginRight marginBottom float-left"
-						   data-format="dd-MM-yyyy"
-				           data-bind="value: sdate,
-				           			  max: edate"
-				           placeholder="From ..." />
-
-				    <input data-role="datepicker" 
-				    	   class="edate marginRight marginBottom float-left"
-				    	   data-format="dd-MM-yyyy"
-				           data-bind="value: edate,
-				                      min: sdate"
-				           placeholder="To ..." />
-
-				  	<button class="btnSearch float-left" type="button" data-role="button" data-bind="click: search"><i class="ti-search"></i></button>
-				</div>
-				<div class="col-md-4"></div>
-			</div>
-
-            <div  class="row ">
-	            <div class="col-md-12 marginTop table-responsive grid" >
-	            	<div data-role="grid" class="table color-table dark-table"
-			             data-pageable='true'
-			             data-auto-bind="false"
-			             data-filterable="true"
-			             data-columns="[
-			                { field: 'issued_date' , title : 'DATE', template:'#=kendo.toString(new Date(issued_date), banhji.dateFormat)#', filterable: { multi: true, search: true},attributes: { style: 'text-align: center;'} },
-			                { field: 'name' , title : 'NAME' , filterable: { multi: true, search: true} },
-			                { field: 'type' , title : 'TYPE' , filterable: { multi: true, search: true} },
-			                { field: 'number' , title: 'REFERENCE' , filterable: { multi: true, search: true} ,attributes: { style: 'text-align: center;'}, template: '<a href=\'purchases\\#/#=type.toLowerCase()#/#=id#\'>#=number#</a>' },
-			                { field: 'amount' , title: 'AMOUNT' , filterable: { multi: true, search: true}, format: '{0:n}' , attributes: { style: 'text-align: right;'} },
-			                { 
-			                	title: 'STATUS', 
-			                	template: kendo.template($('#transactions-status-tmpl').html()),
-			                	attributes: { style: 'text-align: center;'}
-			                },
-			                { 
-			                	title: 'ACTIONS',
-			                	template: kendo.template($('#transactions-action-tmpl').html()),
-			                	attributes: { style: 'text-align: center;'}
-			                }
-			                 
-			             ]"
-			             data-bind="source: dataSource"></div>
-	            </div>
-	        </div>
-        </div>
-	</div> -->
 	<div class="row" id="checkOut">
 		<div class="col-12 col-md-6" id="example">
 			<div class="listWrapper">
@@ -408,7 +347,7 @@
 			            				data-role="datepicker"
 										data-format="dd-MM-yyyy"
 										data-parse-formats="yyyy-MM-dd"
-										data-bind="value: obj.bill_date" />
+										data-bind="value: obj.bill_date" style="width: 100%;"/>
 					</div>
 
 				</div>
@@ -465,7 +404,7 @@
 			</div>
 		</div>
 		<div class="col-12 col-md-6">
-			<div class="listWrapper marginBottom" style="height: auto; padding-top: 0;">
+			<div class="listWrapper marginBottom" style="height: auto; padding-top: 0; overflow: inherit;">
 				<div class="row">
 					<div class="box-generic" style="border: none;">
 						<table class="table table-borderless table-condensed cart_total" style="margin-bottom:0;">
@@ -659,10 +598,10 @@
 									</tbody>
 								</table>
 							</div> 
-							<div class="col-12 col-md-6 checkOut-button">
+							<div class="col-12 col-md-12 col-lg-6 checkOut-button">
 								<div class="row">
 									<div class="col" >
-										<button style="width: 100%; padding: 20px 15px; box-shadow: 2px 0px 12px 0px rgba(68,68,68,1); border-radius: 5px 5px 0 0; margin-bottom: 1px; "  type="button" class="btn btn-info btn-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span style="font-size: 15px;" data-bind="text: lang.lang.save_option"></span></button>
+										<button  type="button" class="buttonoptionpurchase btn btn-info btn-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span style="font-size: 15px;" data-bind="text: lang.lang.save_option"></span></button>
 										<div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 35px, 0px); top: 0px; left: 0px; will-change: transform;">
 				                            <a style="color: #333;" class="dropdown-item" data-bind="invisible: isEdit" id="saveDraft1"><span data-bind="text: lang.lang.save_draft"></span></a>
 				                            <a style="color: #333;" class="dropdown-item" id="savePrint"><span data-bind="text: lang.lang.save_print"></span></a>
@@ -671,42 +610,14 @@
 								</div>
 								<div class="row">
 									<div class="col" style="padding-right: 0;">
-										
-											<!-- <a style="margin: 1px 1px 1px 0; width: 99%;" class="buttoninvoice btn waves-effect waves-light btn-block btn-info" data-bind="invisible: isEdit" id="saveDraft1"><span data-bind="text: lang.lang.save_draft"></span></a> -->
-											<a  style="margin: 1px 1px 1px 0; width: 99%;" class="buttoninvoice btn waves-effect waves-light btn-block btn-info" id="saveNew" data-bind="invisible: isEdit"><span data-bind="text: lang.lang.save_new"></span></a>
-										
-										<!-- <div class="col-md-12" style="padding: 0;">
-											<a style="border-radius: 0 0 0 5px; width: 99%;" class="buttonparksale btn waves-effect waves-light btn-block btn-info" id="saveClose"><span data-bind="text: lang.lang.save_close"></span></a>
-										</div> -->
+										<a class="buttoninvoicepurchase btn waves-effect waves-light btn-block btn-info" id="saveNew" data-bind="invisible: isEdit"><span data-bind="text: lang.lang.save_new"></span></a>
 									</div>
 									
 									<div class="col" style="padding-left: 0;">
-										<a style="border-radius: 0 0 5px 0; " class="buttoncancelpurchase btn waves-effect waves-light btn-block btn-info" data-bind="click: cancel"><span data-bind="text: lang.lang.cancel"></span></a>
+										<a class="buttoncancelpurchase btn waves-effect waves-light btn-block btn-info" data-bind="click: cancel"><span data-bind="text: lang.lang.cancel"></span></a>
 									</div>
 								</div>
 							</div>
-
-							<!-- <div class="col-12 col-md-12 col-lg-6 checkOut-button">
-								<div class="row">
-									<div class="col-6" style="padding-right: 0;">
-										<a style=" width: 99%; margin-right: 1px; padding: 25px 0; box-shadow: 2px 0px 12px 0px rgba(68,68,68,1); border-radius: 5px 5px 0 0; margin-bottom: 1px; " class="buttonpay btn waves-effect waves-light btn-block btn-info" id="saveNew" data-bind="invisible: isEdit"><span style="font-size: 13px;" data-bind="text: lang.lang.save_new"></span></a>
-									</div>
-									<div class="col-6" style="padding-left: 0;">
-										<a style=" width: 99%; padding: 25px 0; box-shadow: 2px 0px 12px 0px rgba(68,68,68,1); border-radius: 5px 5px 0 0; margin-bottom: 1px; " class="buttonpay btn waves-effect waves-light btn-block btn-info" id="savePrint"><span style="font-size: 13px;" data-bind="text: lang.lang.save_print"></span></a>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-4" style="padding-right: 0;">
-										<a style="white-space: pre-wrap; border-radius: 0 0 0 5px;" class="buttoninvoice btn waves-effect waves-light btn-block btn-info" data-bind="click: saveInvoice" id="saveDraft1" data-bind="invisible: isEdit"><span data-bind="html: lang.lang.save_draft"><br/></span></a>
-									</div>
-									<div class="col-4" style="padding: 0;">
-										<a style="white-space: pre-wrap; margin: 0 2px; width: 96%;" class="buttonparksale btn waves-effect waves-light btn-block btn-info" id="saveClose" ><span data-bind="text: lang.lang.save_close"></span></a>
-									</div>
-									<div class="col-4" style="padding-left: 0;">
-										<a style="white-space: pre-wrap; border-radius: 0 0 5px 0;" class="buttoncancelsale btn waves-effect waves-light btn-block btn-info" onclick="javascript:window.history.back()" data-bind="click: cancel"><span data-bind="text: lang.lang.cancel">Cancel</span></a>
-									</div>
-								</div>
-							</div> -->
 						</div>
 					</div>
 				</div>
@@ -854,8 +765,7 @@
 	<div class="product" data-bind="click:searchItemByCategory" style="text-align: center;">
 		<a class="view-details">
 			<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/no_image.jpg" />
-			<h3>#:name.substring(0, 10)#...</h3>
-			<p>#=abbr.substring(0, 10)#...</p>
+			<h3>#:name.substring(0, 25)#...</h3>
 		</a>
 	</div>
 </script>
@@ -865,7 +775,7 @@
 			<div style="height:130px;">
 				<img src="#= image_url? image_url: 'https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/no_image.jpg'#" />
 			</div>
-			<h3>#:name.substring(0, 10)#...</h3>
+			<h3>#:name.substring(0, 25)#...</h3>
 		</a>			
 	</div>
 </script>
