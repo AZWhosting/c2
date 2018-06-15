@@ -21392,7 +21392,7 @@
 
                 self.set("totalBalance", kendo.toString(balance, "c2", banhji.locale));
             });
-                        this.dataSource.bind("requestEnd", function(e){
+            this.dataSource.bind("requestEnd", function(e){
                 if(e.type=="read"){
                     var response = e.response;
                     self.exArray = [];
@@ -46514,44 +46514,44 @@
     });
     banhji.inventoryPositionSummary = kendo.observable({
         lang                : langVM,
-        // dataSource           : dataStore(apiUrl + "inventory_modules/position_summary"),
-        dataSource              : new kendo.data.DataSource({
-            transport: {
-                read    : {
-                    url: apiUrl + "inventory_modules/position_summary",
-                    type: "GET",
-                    headers: banhji.header,
-                    dataType: 'json'
-                },
-                parameterMap: function(options, operation) {
-                    if(operation === 'read') {
-                        return {
-                            page: options.page,
-                            limit: options.pageSize,
-                            filter: options.filter,
-                            sort: options.sort
-                        };
-                    } else {
-                        return {models: kendo.stringify(options.models)};
-                    }
-                }
-            },
-            schema  : {
-                model: {
-                    id: 'id'
-                },
-                data: 'results',
-                total: 'count'
-            },
-            sort: [
-                { field:"quantity", dir:"desc" },
-                { field:"amount", dir:"desc" }
-            ],
-            serverFiltering: true,
-            serverPaging: true,
-            page: 1,
-            pageSize: 10
-        }),
+        dataSource           : dataStore(apiUrl + "inventory_modules/position_summary"),
+        // dataSource              : new kendo.data.DataSource({
+        //     transport: {
+        //         read    : {
+        //             url: apiUrl + "inventory_modules/position_summary",
+        //             type: "GET",
+        //             headers: banhji.header,
+        //             dataType: 'json'
+        //         },
+        //         parameterMap: function(options, operation) {
+        //             if(operation === 'read') {
+        //                 return {
+        //                     page: options.page,
+        //                     limit: options.pageSize,
+        //                     filter: options.filter,
+        //                     sort: options.sort
+        //                 };
+        //             } else {
+        //                 return {models: kendo.stringify(options.models)};
+        //             }
+        //         }
+        //     },
+        //     schema  : {
+        //         model: {
+        //             id: 'id'
+        //         },
+        //         data: 'results',
+        //         total: 'count'
+        //     },
+        //     sort: [
+        //         { field:"quantity", dir:"desc" },
+        //         { field:"amount", dir:"desc" }
+        //     ],
+        //     serverFiltering: true,
+        //     serverPaging: true,
+        //     page: 1,
+        //     pageSize: 10
+        // }),
         itemDS              : new kendo.data.DataSource({
             transport: {
                 read    : {
@@ -46659,238 +46659,173 @@
 
             this.dataSource.query({
                 filter: para,
-            }).then(function() {
+                page: 1,
+                pageSize: 100,
+            }).then(function(){
                 var view = self.dataSource.view();
 
-                var amount = 0;
-                $.each(view, function(index, value) {
-                    amount += value.amount;
+                var balance = 0;
+                $.each(view, function(index, value){
+                    balance += value.amount;
                 });
 
-                self.set("totalAmount", kendo.toString(amount, banhji.locale == "km-KH" ? "c0" : "c", banhji.locale));
+                self.set("totalBalance", kendo.toString(balance, "c2", banhji.locale));
             });
-            this.dataSource.bind("requestEnd", function(e) {
-                if (e.type == "read") {
-                    var response = e.response,
-                        balanceRec = 0;
+            this.dataSource.bind("requestEnd", function(e){
+                if(e.type=="read"){
+                    var response = e.response;
                     self.exArray = [];
 
                     self.exArray.push({
-                        cells: [{
-                            value: self.institute.name,
-                            textAlign: "center",
-                            colSpan: 7
-                        }]
-                    });
-                    self.exArray.push({
-                        cells: [{
-                            value: "Inventory Position Summary",
-                            bold: true,
-                            fontSize: 20,
-                            textAlign: "center",
-                            colSpan: 7
-                        }]
-                    });
-                    if (self.displayDate) {
-                        self.exArray.push({
-                            cells: [{
-                                value: self.displayDate,
-                                textAlign: "center",
-                                colSpan: 7
-                            }]
-                        });
-                    }
-                    self.exArray.push({
-                        cells: [{
-                            value: "",
-                            colSpan: 7
-                        }]
-                    });
-                    self.exArray.push({
-                        cells: [{
-                                value: "Item Name",
-                                background: "#496cad",
-                                color: "#ffffff"
-                            },
-                            {
-                                value: "ON PO",
-                                background: "#496cad",
-                                color: "#ffffff"
-                            },
-                            {
-                                value: "ON SO",
-                                background: "#496cad",
-                                color: "#ffffff"
-                            },
-                            {
-                                value: "QOH",
-                                background: "#496cad",
-                                color: "#ffffff"
-                            },
-                            {
-                                value: "UOM",
-                                background: "#496cad",
-                                color: "#ffffff"
-                            },
-                            {
-                                value: "Average Cost",
-                                background: "#496cad",
-                                color: "#ffffff"
-                            },
-                            {
-                                value: "Inventory Value",
-                                background: "#496cad",
-                                color: "#ffffff"
-                            },
+                        cells: [
+                            { value: self.institute.name, textAlign: "center", colSpan: 7}
                         ]
                     });
-                    for (var i = 0; i < response.results.length; i++) {
-                        balanceRec += response.results[i].amount;
+                    self.exArray.push({
+                        cells: [
+                            { value: "Inventory Position Summary",bold: true, fontSize: 20, textAlign: "center", colSpan: 7}
+                        ]
+                    });
+                    if(self.displayDate){
                         self.exArray.push({
-                            cells: [{
-                                    value: response.results[i].name
-                                },
-                                {
-                                    value: response.results[i].on_po
-                                },
-                                {
-                                    value: response.results[i].on_so
-                                },
-                                {
-                                    value: response.results[i].qantity
-                                },
-                                {
-                                    value: response.results[i].measurement
-                                },
-                                {
-                                    value: kendo.parseFloat(response.results[i].cost)
-                                },
-                                {
-                                    value: kendo.parseFloat(response.results[i].amount)
-                                },
+                            cells: [
+                                { value: self.displayDate, textAlign: "center", colSpan: 7}
                             ]
                         });
+                    };
+                    self.exArray.push({
+                        cells: [
+                            { value: "", colSpan: 7}
+                        ]
+                    });
+                    self.exArray.push({
+                        cells: [
+                            { value: "Item Name", background: "#496cad", color: "#ffffff" },
+                            { value: "ON PO", background: "#496cad", color: "#ffffff" },
+                            { value: "ON SO", background: "#496cad", color: "#ffffff" },
+                            { value: "QOH", background: "#496cad", color: "#ffffff" },
+                            { value: "UOM", background: "#496cad", color: "#ffffff" },
+                            { value: "Average Cost", background: "#496cad", color: "#ffffff" },
+                            { value: "Inventory Value", background: "#496cad", color: "#ffffff" },
+                        ]
+                    });
+                    for (var i = 0; i < response.results.length; i++){
+                            self.exArray.push({
+                                cells: [
+                                    { value: response.results[i].name },
+                                    { value: response.results[i].on_po },
+                                    { value: response.results[i].on_so },
+                                    { value: response.results[i].quantity },
+                                    { value: response.results[i].measurement },
+                                    { value: kendo.parseFloat(response.results[i].cost)},
+                                    { value: kendo.parseFloat(response.results[i].amount)},
+                                ]
+                            });
                         self.exArray.push({
-                            cells: [{
-                                value: "",
-                                colSpan: 7
-                            }]
+                            cells: [
+                                { value: "", colSpan: 7 }
+                            ]
                         });
                     }
                 }
             });
         },
-        printGrid: function() {
+        printGrid           : function() {
             var gridElement = $('#grid'),
                 printableContent = '',
                 win = window.open('', '', 'width=990, height=900'),
                 doc = win.document.open();
             var htmlStart =
-                '<!DOCTYPE html>' +
-                '<html>' +
-                '<head>' +
-                '<meta charset="utf-8" />' +
-                '<title></title>' +
-                '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />' +
-                '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
-                '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/responsive.css">' +
-                '<link href="<?php echo base_url(); ?>assets/invoice/invoice.css" rel="stylesheet" />' +
-                '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
-                '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
-                '<style>' +
-                'html { font: 11pt sans-serif; }' +
-                '.k-grid { border-top-width: 0; }' +
-                '.k-grid, .k-grid-content { height: auto !important; }' +
-                '.k-grid-content { overflow: visible !important; }' +
-                'div.k-grid table { table-layout: auto; width: 100% !important; }' +
-                '.k-grid .k-grid-header th { border-top: 1px solid; }' +
-                '.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
-                '</style><style type="text/css" media="print"> @page { size: portrait; margin:1mm; }' +
-                '.inv1 .main-color {' +
+                    '<!DOCTYPE html>' +
+                    '<html>' +
+                    '<head>' +
+                    '<meta charset="utf-8" />' +
+                    '<title></title>' +
+                    '<link href="https://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
+                    '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
+                    '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/responsive.css">' +
+                    '<link href="<?php echo base_url(); ?>assets/invoice/invoice.css" rel="stylesheet" />'+
+                    '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
+                    '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
+                    '<style>' +
+                    'html { font: 11pt sans-serif; }' +
+                    '.k-grid { border-top-width: 0; }' +
+                    '.k-grid, .k-grid-content { height: auto !important; }' +
+                    '.k-grid-content { overflow: visible !important; }' +
+                    'div.k-grid table { table-layout: auto; width: 100% !important; }' +
+                    '.k-grid .k-grid-header th { border-top: 1px solid; }' +
+                    '.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
+                    '</style><style type="text/css" media="print"> @page { size: portrait; margin:1mm; }'+
+                        '.inv1 .main-color {' +
 
-                '-webkit-print-color-adjust:exact; ' +
-                '} ' +
-                '.table.table-borderless.table-condensed  tr th { background-color: #1E4E78!important;' +
-                '-webkit-print-color-adjust:exact; color:#fff!important;}' +
-                '.table.table-borderless.table-condensed  tr th * { color: #fff!important; -webkit-print-color-adjust:exact;}' +
-                '.inv1 .light-blue-td { ' +
-                'background-color: #c6d9f1!important;' +
-                'text-align: left;' +
-                'padding-left: 5px;' +
-                '-webkit-print-color-adjust:exact; ' +
-                '}' +
-                '.saleSummaryCustomer .table.table-borderless.table-condensed tr td { ' +
-                'background-color: #F2F2F2!important; -webkit-print-color-adjust:exact;' +
-                '}' +
-                '.saleSummaryCustomer .table.table-borderless.table-condensed tr:nth-child(2n+1) td { ' +
-                ' background-color: #fff!important; -webkit-print-color-adjust:exact;' +
-                '}' +
-                '.journal_block1>.span2 *, .journal_block1>.span5 * {color: #fff!important;}' +
-                '.journal_block1>.span2:first-child { ' +
-                'background-color: #bbbbbb!important; -webkit-print-color-adjust:exact;' +
-                '}' +
-                '.journal_block1>.span5:last-child {' +
-                'background-color: #496cad!important; color: #fff!important; -webkit-print-color-adjust:exact; ' +
-                '}' +
-                '.journal_block1>.span5 {' +
-                'background-color: #5cc7dd!important; color: #fff!important; -webkit-print-color-adjust:exact;' +
-                '}' +
-                '.saleSummaryCustomer .table.table-borderless.table-condensed tfoot .bg-total td {' +
-                'background-color: #1C2633!important;' +
-                'color: #fff!important; ' +
-                '-webkit-print-color-adjust:exact;' +
-                '}' +
-                '</style>' +
-                '</head>' +
-                '<body><div class="saleSummaryCustomer" style="padding: 0 10px;">';
+                            '-webkit-print-color-adjust:exact; ' +
+                        '} ' +
+                        '.table.table-borderless.table-condensed  tr th { background-color: #1E4E78!important;' +
+                        '-webkit-print-color-adjust:exact; color:#fff!important;}' +
+                        '.table.table-borderless.table-condensed  tr th * { color: #fff!important; -webkit-print-color-adjust:exact;}' +
+                        '.inv1 .light-blue-td { ' +
+                            'background-color: #c6d9f1!important;' +
+                            'text-align: left;' +
+                            'padding-left: 5px;' +
+                            '-webkit-print-color-adjust:exact; ' +
+                        '}' +
+                        '.saleSummaryCustomer .table.table-borderless.table-condensed tr td { ' +
+                            'background-color: #F2F2F2!important; -webkit-print-color-adjust:exact;' +
+                        '}'+
+                        '.saleSummaryCustomer .table.table-borderless.table-condensed tr:nth-child(2n+1) td { ' +
+                            ' background-color: #fff!important; -webkit-print-color-adjust:exact;' +
+                        '}' +
+                        '.journal_block1>.span2 *, .journal_block1>.span5 * {color: #fff!important;}' +
+                        '.journal_block1>.span2:first-child { ' +
+                            'background-color: #bbbbbb!important; -webkit-print-color-adjust:exact;' +
+                        '}' +
+                        '.journal_block1>.span5:last-child {' +
+                            'background-color: #496cad!important; color: #fff!important; -webkit-print-color-adjust:exact; ' +
+                        '}' +
+                        '.journal_block1>.span5 {' +
+                            'background-color: #5cc7dd!important; color: #fff!important; -webkit-print-color-adjust:exact;' +
+                        '}' +
+                        '.saleSummaryCustomer .table.table-borderless.table-condensed tfoot .bg-total td {' +
+                            'background-color: #1C2633!important;' +
+                            'color: #fff!important; ' +
+                            '-webkit-print-color-adjust:exact;' +
+                        '}' +
+                        '</style>' +
+                    '</head>' +
+                    '<body><div class="saleSummaryCustomer" style="padding: 0 10px;">';
             var htmlEnd =
-                '</div></body>' +
-                '</html>';
+                    '</div></body>' +
+                    '</html>';
 
             printableContent = $('#invFormContent').html();
             doc.write(htmlStart + printableContent + htmlEnd);
             doc.close();
-            setTimeout(function() {
+            setTimeout(function(){
                 win.print();
                 win.close();
-            }, 2000);
+            },2000);
         },
-        ExportExcel: function() {
+        ExportExcel         : function(){
             var workbook = new kendo.ooxml.Workbook({
-                sheets: [{
-                    columns: [{
-                            autoWidth: true
-                        },
-                        {
-                            autoWidth: true
-                        },
-                        {
-                            autoWidth: true
-                        },
-                        {
-                            autoWidth: true
-                        },
-                        {
-                            autoWidth: true
-                        },
-                        {
-                            autoWidth: true
-                        },
-                        {
-                            autoWidth: true
-                        },
-                    ],
-                    title: "Inventory Position Summary",
-                    rows: this.exArray
-                }]
+              sheets: [
+                {
+                  columns: [
+                    { autoWidth: true },
+                    { autoWidth: true },
+                    { autoWidth: true },
+                    { autoWidth: true },
+                    { autoWidth: true },
+                    { autoWidth: true },
+                    { autoWidth: true }
+                  ],
+                  title: "Inventory Position Summary",
+                  rows: this.exArray
+                }
+              ]
             });
             //save the file as Excel file with extension xlsx
-            kendo.saveAs({
-                dataURI: workbook.toDataURL(),
-                fileName: "inventoryPositionSummary.xlsx"
-            });
+            kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "inventoryPositionSummary.xlsx"});
         }
-      
     });
     banhji.inventoryPositionSummaryByLocation = kendo.observable({
         lang                : langVM,
@@ -54232,6 +54167,7 @@
         lang                : langVM,
         dataSource          : dataStore(apiUrl + "accounting_modules/general_ledger_new"),
         accountDS           : banhji.source.accountList,
+        accountTypeDS       : banhji.source.accountTypeDS,
         segmentItemDS       : new kendo.data.DataSource({
             data: banhji.source.segmentItemList,
             sort: [
@@ -54251,6 +54187,7 @@
         exArray             : [],
         totalDr             : 0,
         totalCr             : 0,
+        account_type_id     : 10,
         pageLoad            : function(){
             this.search();
         },
@@ -54309,6 +54246,7 @@
         search              : function(){
             var self = this, para = [],
                 obj = this.get("obj"),
+                account_type_id = this.get("account_type_id"),
                 start = this.get("sdate"),
                 end = this.get("edate"),
                 displayDate = "";
@@ -54316,6 +54254,11 @@
             //Account
             if(obj.account_id>0){
                 para.push({ field:"account_id", operator:"where_in", value:obj.account_id });
+            }
+
+            //Account Type
+            if(account_type_id>0){
+                para.push({ field:"account_type_id", operator:"where_related_account", value:account_type_id });
             }
 
             //Trial Balance cross accounts
@@ -54385,123 +54328,123 @@
                 page: 1,
                 pageSize: 50
             }).then(function(){
-                var view = self.dataSource.view(),
-                    totalDr = 0, totalCr = 0;
+                // var view = self.dataSource.view(),
+                //     totalDr = 0, totalCr = 0;
 
-                $.each(view, function(index, value){
-                    $.each(value.line, function(ind, val){
-                        totalDr += val.dr;
-                        totalCr += val.cr;
-                    });
-                });
+                // $.each(view, function(index, value){
+                //     $.each(value.line, function(ind, val){
+                //         totalDr += val.dr;
+                //         totalCr += val.cr;
+                //     });
+                // });
 
-                self.set("totalDr", kendo.toString(totalDr, "n"));
-                self.set("totalCr", kendo.toString(totalCr, "n"));
+                // self.set("totalDr", kendo.toString(totalDr, "n"));
+                // self.set("totalCr", kendo.toString(totalCr, "n"));
             });
-            // this.dataSource.bind("requestEnd", function(e){
-            //     if(e.type=="read"){
-            //         var response = e.response, balanceCal = 0;
-            //         self.exArray = [];
-            //         // self.set("totalAmount", kendo.toString(response.totalAmount, "c", banhji.locale));
-            //         // self.set("totalBalance", kendo.toString(response.totalBalance, "c", banhji.locale));
+            this.dataSource.bind("requestEnd", function(e){
+                if(e.type=="read"){
+                    var response = e.response, balanceCal = 0;
+                    self.exArray = [];
+                    // self.set("totalAmount", kendo.toString(response.totalAmount, "c", banhji.locale));
+                    // self.set("totalBalance", kendo.toString(response.totalBalance, "c", banhji.locale));
 
-            //         self.exArray.push({
-            //             cells: [
-            //                 { value: self.company.name, textAlign: "center", colSpan: 6 }
-            //             ]
-            //         });
-            //         self.exArray.push({
-            //             cells: [
-            //                 { value: "General Ledger",bold: true, fontSize: 20, textAlign: "center", colSpan: 6 }
-            //             ]
-            //         });
-            //         if(self.displayDate){
-            //             self.exArray.push({
-            //                 cells: [
-            //                     { value: self.displayDate, textAlign: "center", colSpan: 6 }
-            //                 ]
-            //             });
-            //         }
-            //         self.exArray.push({
-            //             cells: [
-            //                 { value: "", colSpan: 6 }
-            //             ]
-            //         });
-            //         self.exArray.push({
-            //             cells: [
-            //                 { value: "Type", background: "#496cad", color: "#ffffff" },
-            //                 { value: "Date", background: "#496cad", color: "#ffffff" },
-            //                 { value: "Reference No", background: "#496cad", color: "#ffffff" },
-            //                 { value: "Description", background: "#496cad", color: "#ffffff" },
-            //                 { value: "Name", background: "#496cad", color: "#ffffff" },
-            //                 { value: "Debit", background: "#496cad", color: "#ffffff" },
-            //                 { value: "Credit", background: "#496cad", color: "#ffffff" },
-            //                 { value: "Balance", background: "#496cad", color: "#ffffff" }
-            //             ]
-            //         });
-            //         for (var i = 0; i < response.results.length; i++){
-            //             self.exArray.push({
-            //                 cells: [
-            //                     { value: response.results[i].name, bold: true, },
-            //                     { value: "" },
-            //                     { value: "" },
-            //                     { value: "" },
-            //                     { value: "" },
-            //                     { value: "" },
-            //                     { value: "" },
-            //                     { value: kendo.parseFloat(response.results[i].balance_forward), bold: true },
-            //                 ]
-            //             });
-            //             var totalCr = 0, totalDr = 0;
-            //             balanceCal = response.results[i].balance_forward;
-            //             for(var j = 0; j < response.results[i].line.length; j++){
-            //                 balanceCal += response.results[i].line[j].amount;
-            //                 totalDr += response.results[i].line[j].dr;
-            //                 totalCr += response.results[i].line[j].cr;
-            //                 self.exArray.push({
-            //                     cells: [
-            //                         { value: "    "+response.results[i].line[j].type },
-            //                         { value: kendo.toString(new Date(response.results[i].line[j].issued_date), "dd-MM-yyyy")  },
-            //                         { value: response.results[i].line[j].number },
-            //                         { value: response.results[i].line[j].memo },
-            //                         { value: response.results[i].line[j].contact },
-            //                         { value: kendo.parseFloat(response.results[i].line[j].dr)},
-            //                         { value: kendo.parseFloat(response.results[i].line[j].cr)},
-            //                         { value: kendo.parseFloat(balanceCal)}
-            //                     ]
-            //                 });
-            //             }
-            //             self.exArray.push({
-            //                 cells: [
-            //                     { value: "Total " + response.results[i].name, bold: true, },
-            //                     { value: "" },
-            //                     { value: "" },
-            //                     { value: "" },
-            //                     { value: "" },
-            //                     { value: kendo.parseFloat(totalDr), bold: true, borderTop: { color: "#000000", size: 1 }  },
-            //                     { value: kendo.parseFloat(totalCr), bold: true, borderTop: { color: "#000000", size: 1 }  },
-            //                     { value: kendo.parseFloat(balanceCal), bold: true, borderTop: { color: "#000000", size: 1 }  },
-            //                 ]
-            //             });
-            //             self.exArray.push({
-            //                 cells: [
-            //                     { value: "", colSpan: 7 }
-            //                 ]
-            //             });
-            //         }
-            //         self.exArray.push({
-            //             cells: [
-            //                 { value: "TOTAL", bold: true,fontSize: 16 },
-            //                 { value: "" },
-            //                 { value: "" },
-            //                 { value: "" },
-            //                 { value: "" },
-            //                 { value: kendo.parseFloat(response.totalAmount), bold: true, fontSize: 16 },
-            //                 { value: kendo.parseFloat(response.totalBalance), bold: true, fontSize: 16 },
-            //             ]
-            //         });
-            //     }
-            // });
+                    self.exArray.push({
+                        cells: [
+                            { value: self.company.name, textAlign: "center", colSpan: 6 }
+                        ]
+                    });
+                    self.exArray.push({
+                        cells: [
+                            { value: "General Ledger",bold: true, fontSize: 20, textAlign: "center", colSpan: 6 }
+                        ]
+                    });
+                    if(self.displayDate){
+                        self.exArray.push({
+                            cells: [
+                                { value: self.displayDate, textAlign: "center", colSpan: 6 }
+                            ]
+                        });
+                    }
+                    self.exArray.push({
+                        cells: [
+                            { value: "", colSpan: 6 }
+                        ]
+                    });
+                    self.exArray.push({
+                        cells: [
+                            { value: "Type", background: "#496cad", color: "#ffffff" },
+                            { value: "Date", background: "#496cad", color: "#ffffff" },
+                            { value: "Reference No", background: "#496cad", color: "#ffffff" },
+                            { value: "Description", background: "#496cad", color: "#ffffff" },
+                            { value: "Name", background: "#496cad", color: "#ffffff" },
+                            { value: "Debit", background: "#496cad", color: "#ffffff" },
+                            { value: "Credit", background: "#496cad", color: "#ffffff" },
+                            { value: "Balance", background: "#496cad", color: "#ffffff" }
+                        ]
+                    });
+                    for (var i = 0; i < response.results.length; i++){
+                        self.exArray.push({
+                            cells: [
+                                { value: response.results[i].name, bold: true, },
+                                { value: "" },
+                                { value: "" },
+                                { value: "" },
+                                { value: "" },
+                                { value: "" },
+                                { value: "" },
+                                { value: kendo.parseFloat(response.results[i].balance_forward), bold: true },
+                            ]
+                        });
+                        var totalCr = 0, totalDr = 0;
+                        balanceCal = response.results[i].balance_forward;
+                        for(var j = 0; j < response.results[i].line.length; j++){
+                            balanceCal += response.results[i].line[j].amount;
+                            totalDr += response.results[i].line[j].dr;
+                            totalCr += response.results[i].line[j].cr;
+                            self.exArray.push({
+                                cells: [
+                                    { value: "    "+response.results[i].line[j].type },
+                                    { value: kendo.toString(new Date(response.results[i].line[j].issued_date), "dd-MM-yyyy")  },
+                                    { value: response.results[i].line[j].number },
+                                    { value: response.results[i].line[j].memo },
+                                    { value: response.results[i].line[j].contact },
+                                    { value: kendo.parseFloat(response.results[i].line[j].dr)},
+                                    { value: kendo.parseFloat(response.results[i].line[j].cr)},
+                                    { value: kendo.parseFloat(balanceCal)}
+                                ]
+                            });
+                        }
+                        self.exArray.push({
+                            cells: [
+                                { value: "Total " + response.results[i].name, bold: true, },
+                                { value: "" },
+                                { value: "" },
+                                { value: "" },
+                                { value: "" },
+                                { value: kendo.parseFloat(totalDr), bold: true, borderTop: { color: "#000000", size: 1 }  },
+                                { value: kendo.parseFloat(totalCr), bold: true, borderTop: { color: "#000000", size: 1 }  },
+                                { value: kendo.parseFloat(balanceCal), bold: true, borderTop: { color: "#000000", size: 1 }  },
+                            ]
+                        });
+                        self.exArray.push({
+                            cells: [
+                                { value: "", colSpan: 7 }
+                            ]
+                        });
+                    }
+                    self.exArray.push({
+                        cells: [
+                            { value: "TOTAL", bold: true,fontSize: 16 },
+                            { value: "" },
+                            { value: "" },
+                            { value: "" },
+                            { value: "" },
+                            { value: kendo.parseFloat(response.totalAmount), bold: true, fontSize: 16 },
+                            { value: kendo.parseFloat(response.totalBalance), bold: true, fontSize: 16 },
+                        ]
+                    });
+                }
+            });
         },
         printGrid           : function() {
             var gridElement = $('#grid'),

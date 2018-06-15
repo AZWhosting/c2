@@ -31691,6 +31691,10 @@
 					                data-bind="source: dataSource" >
 					        </tbody>
 		            	</table>
+		            	<div id="pager" class="k-pager-wrap"
+			            		 data-role="pager"
+						    	 data-auto-bind="false"
+					             data-bind="source: dataSource"></div>
 		            </div>
 				</div>
 			</div>
@@ -39007,8 +39011,14 @@
 										                      min: sdate"
 										           placeholder="To ..." >
 
-										  	<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+										    <input data-role="dropdownlist"
+								                   data-value-primitive="true"
+								                   data-text-field="name"
+								                   data-value-field="id"
+								                   data-bind="value: account_type_id,
+								                              source: accountTypeDS" />
 
+										  	<button type="button" data-bind="click: search"><i class="icon-search"></i></button>
 							        	</div>
 
 							        	<!-- Filter -->
@@ -39031,7 +39041,7 @@
 									              				style="width: 100%" />
 													</td>
 													<td style="padding-top: 31px !important; float: left;">
-										  				<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+										  				<button type="button" data-bind="click: search"><i class="icon-search"></i></button>
 													</td>
 												</tr>
 												<tr>
@@ -39080,39 +39090,6 @@
 							<p data-bind="text: displayDate"></p>
 						</div>
 
-						<!-- <div class="costom-grid"
-							 data-role="grid"
-							 data-groupable="true"
-							 data-sortable="true"
-	                         data-column-menu="true"
-			                 data-columns="[
-                                { 
-                                	field: 'number', 
-                                	title:'NUMBER',
-                                	attributes: {
-								      	style: 'text-align: center;'
-								    }, 
-                                	width: 100 
-                                },
-                                { field: 'name', title:'ACCOUNT' },
-                                { field: 'contacts', title:'NAME' },
-                                { field: 'description', title:'DESCRIPTION' },
-                                { 
-                                	field: 'amount', 
-                                	title:'AMOUNT',
-                                	attributes: {
-								      	style: 'text-align: right;'
-								    },
-								    headerAttributes: {
-								      	'class': 'table-header-cell',
-								      	style: 'text-align: right; font-size: 14px'
-								    },
-								    width: 200
-                                }
-                             ]"
-                             data-auto-bind="false"
-			                 data-bind="source: dataSource"></div> -->
-
 						<table class="table table-borderless table-condensed">
 							<thead>
 								<tr>
@@ -39129,7 +39106,6 @@
 							<tbody data-auto-bind="false"
 					        		data-template="generalLedger-template"
 					        		data-bind="source: dataSource"></tbody>
-					       	<tfoot data-template="generalLedger-footer-template" data-bind="source: this"></tfoot>
 						</table>
 						
 					</div>
@@ -39170,12 +39146,12 @@
 		</td>
 		<td class="right" style="color: black;">
 			#if(line[i].dr!==0){#
-				#=kendo.toString(line[i].dr, "n2")#
+				#=kendo.toString(Math.abs(line[i].dr), "n2")#
 			#}#
 		</td>
 		<td class="right" style="color: black;">
 			#if(line[i].cr!==0){#
-				#=kendo.toString(line[i].cr, "n2")#
+				#=kendo.toString(Math.abs(line[i].cr), "n2")#
 			#}#
 		</td>
 		<td class="right" style="color: black;">
@@ -39188,12 +39164,12 @@
     	<td colspan="5" style="font-weight: bold; color: black;"><span data-bind="text: lang.lang.total" style="text-transform: capitalize;"></span><span>#: name #</span></td>
     	<td class="right" style="font-weight: bold; border-top: 1px solid black !important; color: black;">
     		#if(totalDr!==0){#
-    			#=kendo.toString(totalDr, "n2")#
+    			#=kendo.toString(Math.abs(totalDr), "n2")#
     		#}#
     	</td>
     	<td class="right" style="font-weight: bold; border-top: 1px solid black !important; color: black;">
     		#if(totalCr!==0){#
-    			#=kendo.toString(totalCr, "n2")#
+    			#=kendo.toString(Math.abs(totalCr), "n2")#
     		#}#
     	</td>
     	<td class="right" style="font-weight: bold; border-top: 1px solid black !important; color: black;">

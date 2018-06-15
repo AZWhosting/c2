@@ -127,7 +127,7 @@
                             </li> -->
                         </ul>
                         <ul class="navbar-nav my-lg-0" id="companyDash">
-                            <li class="nav-item dropdown">
+                            <li class="nav-item dropdown hidden-sm-down">
                                 <a onclick="fullScreen(); return false;" class="fullscreen nav-link dropdown-toggle text-muted waves-effect waves-dark" href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icon-size-fullscreen"></i></a>
                                 <a onclick="exitFullScreen(); return false;" class="exitfullscreen nav-link dropdown-toggle text-muted waves-effect waves-dark" href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icon-size-actual"></i></a>
                             </li>

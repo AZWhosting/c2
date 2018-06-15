@@ -1076,14 +1076,14 @@ class Accounting_modules extends REST_Controller {
 		$obj->include_related("account", array("number","name","account_type_id"));
 		$obj->include_related("account/account_type", array("name","nature"));
 		$obj->where_related("transaction", "is_journal", 1);
-		$obj->where_in_related("account", "account_type_id", [10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43]);
-		$obj->where_related("transaction", "is_recurring <>", 1);		
+		// $obj->where_in_related("account", "account_type_id", [10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43]);
+		$obj->where_related("transaction", "is_recurring <>", 1);
 		$obj->where_related("transaction", "deleted <>", 1);
 		$obj->order_by("account_id", "asc");
 		$obj->where("deleted <>", 1);
 		$obj->get_iterated();
 
-		//Results
+		// //Results
 		// if($page && $limit){
 		// 	$obj->get_paged_iterated($page, $limit);
 		// 	$data["count"] = $obj->paged->total_rows;
@@ -1095,13 +1095,15 @@ class Accounting_modules extends REST_Controller {
 		$objList = [];
 		if($obj->exists()){
 			foreach ($obj as $value) {
-				$amount = (floatval($value->dr) - floatval($value->cr)) / floatval($value->transaction_rate);
-				$dr = $amount;
-				$cr = 0;
-				if($value->account_account_type_nature=="Cr"){
-					$dr = 0;
-					$cr = $amount * -1;
+				if($value->account_account_type_nature=="Dr"){
+					$dr = floatval($value->dr) / floatval($value->transaction_rate);
+					$cr = floatval($value->cr) / floatval($value->transaction_rate) * -1;
+				}else{
+					$dr = floatval($value->dr) / floatval($value->transaction_rate) * -1;
+					$cr = floatval($value->cr) / floatval($value->transaction_rate);
 				}
+
+				$amount = $dr + $cr;
 
 				$description = $value->description;
 				if($description==""){
@@ -1117,6 +1119,7 @@ class Accounting_modules extends REST_Controller {
 						"memo" 				=> $description,
 						"dr" 				=> $dr,
 						"cr" 				=> $cr,
+						"amount" 			=> $amount,
 						"contact" 			=> isset($value->contact_name) ? $value->contact_name : ""
 					);
 				}else{
@@ -1159,6 +1162,7 @@ class Accounting_modules extends REST_Controller {
 						"memo" 				=> $description,
 						"dr" 				=> $dr,
 						"cr" 				=> $cr,
+						"amount" 			=> $amount,
 						"contact" 			=> isset($value->contact_name) ? $value->contact_name : ""
 					);			
 				}

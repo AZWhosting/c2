@@ -28,7 +28,7 @@
 	<div class="page-wrapper ">
         <div class="container-fluid">
             <div class="row marginTop15 home">
-                <div class="col">                   
+                <div class="col-12 col-md-6 col-lg-6">
                     <div class=" board-chart" style="margin-bottom: 19px;">
                         <div class="row">
                             <div class="col-3 col-md-3" >
@@ -46,27 +46,35 @@
                     <div style="float: left; width: 100%">
                         <div class="row">
                             <div class="col-6 col-md-3">
-                                <a href="sales">
+                                <a href="sales#/">
                                     <div class="functionHome">
+                                        <img src="<?php echo base_url()?>assets/micro/sale.png "/>
+                                        <p data-bind="text: lang.lang.check_out"></p>
                                     </div>
                                 </a>
                             </div>
                             <div class="col-6 col-md-3">
-                                <a href="purchases">
+                                <a href="purchases#/">
                                     <div class="functionHome">
+                                        <img src="<?php echo base_url()?>assets/micro/purchases.png "/>
+                                        <p data-bind="text: lang.lang.purchase"></p>
                                     </div>
                                 </a>
                             </div>
 
                             <div class="col-6 col-md-3">
-                                <a href="items">
+                                <a href="items#/">
                                     <div class="functionHome">
+                                        <img src="<?php echo base_url()?>assets/micro/inventory.png"/>
+                                        <p data-bind="text: lang.lang.items"></p>
                                     </div>
                                 </a>
                             </div>
                             <div class="col-6 col-md-3">
-                                <a href="cashs">
+                                <a href="cashs#/">
                                     <div class="functionHome">
+                                        <img src="<?php echo base_url()?>assets/micro/cash.png "/>
+                                        <p data-bind="text: lang.lang.cash"></p>
                                     </div>
                                 </a>
                             </div>
@@ -75,7 +83,7 @@
                        
                 </div>
 
-                <div class=" col">
+                <div class="col-12 col-md-6 col-lg-6">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="card" >
@@ -293,4 +301,4 @@
         </td>
     </tr>
 </script>
-<!-- End --> 
+<!-- End -->                         

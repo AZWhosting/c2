@@ -1,4 +1,11 @@
 /*@import url('https://fonts.googleapis.com/css?family=Content|Moul|Preahvihear|Roboto+Slab');*/
+.icon-search:before {
+    content: "\f002";
+    font-size: 18px;
+}
+.exitfullscreen, .fullscreen  {
+  color: #fff;
+}
 h1,h2,h3,h4,h5,h6{
   font-family: 'Preahvihear', 'Roboto Slab' !important;
   color: #203864 !important;
