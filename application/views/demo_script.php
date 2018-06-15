@@ -24081,6 +24081,7 @@
                 case 77: Active = banhji.view.posInvoiceKSLM; break;
                 case 78: Active = banhji.view.posCashSaleKSLM; break;
                 case 79: Active = banhji.view.advanceVoucherHurbanHub; break;
+                case 82: Active = banhji.view.MAXConcreteCashAdvance; break;
             }
             banhji.view.invoiceCustom.showIn('#invFormContent', Active);
         },
@@ -24520,6 +24521,7 @@
                 case 77: Active = banhji.view.posInvoiceKSLM; break;
                 case 78: Active = banhji.view.posCashSaleKSLM; break;
                 case 79: Active = banhji.view.advanceVoucherHurbanHub; break;
+                case 82: Active = banhji.view.MAXConcreteCashAdvance; break;
             }
             banhji.view.invoiceForm.showIn('#invFormContent', Active);
         },
@@ -67952,6 +67954,7 @@
         //Max Concrete
         invoiceMAXConcrete: new kendo.Layout("#invoiceMAXConcrete", {model: banhji.invoiceForm}),
         invoiceVATMAXConcrete: new kendo.Layout("#invoiceVATMAXConcrete", {model: banhji.invoiceForm}),
+        MAXConcreteCashAdvance: new kendo.Layout("#MAXConcreteCashAdvance", {model: banhji.invoiceForm}),
         //Form Heritage Walk
         invoiceHeritageWalk: new kendo.Layout("#invoiceHeritageWalk", {model: banhji.invoiceForm}),
         invoiceVATHeritageWalk: new kendo.Layout("#invoiceVATHeritageWalk", {model: banhji.invoiceForm}),

@@ -46,6 +46,7 @@
 
 			<!-- Menu rigth Desktop -->
 			<ul class="menu-right col-sm-3 topnav pull-right hidden-xs">
+				
 				<li role="presentation" class="setting dropdown">
 			  		<a style="color: #fff;" class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">[<span data-bind="text: getUsername"></span>]</a>
 		  			<ul class="dropdown-menu">
@@ -76,6 +77,10 @@
 			  		</a>
 		  			<ul class="dropdown-menu ul-multiTaskList" data-template="multiTaskList-row-template" data-bind="source: multiTaskList">  				  				
 		  			</ul>
+			  	</li>
+			  	<li style="list-style: none;">
+			  		<a onclick="fullScreen(); return false;" class="fullscreen " href="#" role="button" aria-haspopup="true" aria-expanded="false"> <i class="icon-fullscreen"></i></a>
+		  			<a onclick="exitFullScreen(); return false;" class="exitfullscreen " style="display: none;"  href="#" role="button" aria-haspopup="true" aria-expanded="false"> <i class="icon-resize-small"></i></a>
 			  	</li>
 			</ul>
 
@@ -165,6 +170,37 @@
         <!-- /.container -->
     </nav>	
 </script>
+<script type="text/javascript">
+	
+    function fullScreen(){
+        var docElm = document.documentElement;
+        if (docElm.requestFullscreen) {
+            docElm.requestFullscreen();
+        }
+        else if (docElm.mozRequestFullScreen) {
+            docElm.mozRequestFullScreen();
+        }
+        else if (docElm.webkitRequestFullScreen) {
+            docElm.webkitRequestFullScreen();
+        }
+        $('.exitfullscreen').show();
+        $('.fullscreen').hide();
+    }
+    function exitFullScreen(){
+        var docElm = document.documentElement;
+        if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.webkitExitFullscreen) {
+                document.webkitExitFullscreen();
+            } else if (document.mozCancelFullScreen) {
+                document.mozCancelFullScreen();
+            } else if (document.msExitFullscreen) {
+                document.msExitFullscreen();
+            }
+        $('.exitfullscreen').hide();
+        $('.fullscreen').show();
+    }
+</script>
 <script id="multiTaskList-row-template" type="text/x-kendo-template">
     <li >
     	<a data-toggle="collapse" data-target=".navbar-collapse.in" href="\#/#=url#">
@@ -175,6 +211,7 @@
     	</a>
     </li>	
 </script>
+
 
 <!-- ***************************
 *	Water Section      	  *
@@ -2178,6 +2215,22 @@
 	</span>
 	<span style="width:15%; text-align: right; float: right; padding-right: 15px; text-transform: capitalize;">#=type#</span>
 </script>
+<script id="item-list-tmpl-purchase" type="text/x-kendo-tmpl">
+	<div class="pull-left">
+		#=abbr##=number# #=name#
+		&nbsp;&nbsp;
+		#if(variant.length>0){#
+			[
+			#for(var i=0; i < variant.length; i++){#
+				#=variant[i].name#,
+			#}#
+			]
+		#}#
+	</div>
+	<div class="pull-right">
+		#=category#
+	</div>
+</script>
 <script id="item-list-tmpl-1" type="text/x-kendo-tmpl">
 	<div class="pull-left">
 		#= code#
@@ -2931,6 +2984,8 @@
 
 					        	</div>
 						        <div class="tab-pane" id="tab-4">
+						        	<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="click: payAllInstallment"><i></i> <span data-bind="text: lang.lang.pay_installment"></span></span>
+
 						        	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 								        <thead>
 								            <tr>
@@ -12814,6 +12869,9 @@
 					            <li >
 					            	<a href="#tab6" data-toggle="tab"><span data-bind="text: lang.lang.cash_receipt_report"></span></a>
 					            </li>
+					            <li >
+					            	<a href="#tab7" data-toggle="tab"><span data-bind="text: lang.lang.electricity_report"></span></a>
+					            </li>
 					           <!--  <li data-bind="click: viewMap">
 					            	<a href="#tab7" data-toggle="tab"><span data-bind="text: lang.lang.meter_report_map" ></span></a>
 					            </li> -->
@@ -13345,7 +13403,34 @@
 								</div>
 				        	</div>
 					        <!-- //ACCOUNTING END -->
-
+							<div class="tab-pane" id="tab7">
+								<div class="row-fluid sale-report">
+									<h2 style="margin-bottom: 10px;" data-bind="text: lang.lang.cash_receipt_report">Cash Receipt Report</h2>
+									<p data-bind="text: lang.lang.summary_and_detail_cash">
+										Summary and detail cash receipt reports grouped by sources/ methods of receipts 
+									</p>
+									<div class="row">
+										<div class="col-sm-6">
+											<table class="table table-borderless table-condensed">
+												<tr>
+													<td style="width: 50%">
+														<h3><a href="#/sale_power_report" data-bind="text: lang.lang.subsidy_report">Subsidy Amount</a></h3>
+													</td>
+													
+												</tr>
+												<tr>
+													<td >
+														<p>
+														</p>
+													</td>
+													
+												</tr>
+		
+											</table>
+										</div>
+									</div>
+								</div>
+				        	</div>
 
 					       <!--  <div class="tab-pane" id="tab7" >
 								<div class="row-fluid sale-report">
@@ -15620,51 +15705,52 @@
 					<div id="example" class="k-content">
 						<div class="hidden-print pull-right" style="margin-bottom: 15px;">
 				    		<span class="pull-right glyphicons no-js remove_2"
-						data-bind="click: cancel"><i></i></span>
+						onclick="javascript:window.history.back()"><i></i></span>
 						</div>
 						<div class="clear"></div>
+
+					    <!-- Tabs -->
 						<div class="relativeWrap" data-toggle="source-code">
-							<div class="widget widget-tabs widget-tabs-gray report-tab">
+							<div class="widget widget-tabs widget-tabs-gray report-tab">							
+								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active">
-											<a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date">Date</span></a>
-										</li>	
-										<!-- <li>
-											<a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.filter">Filter</span></a>
-										</li> -->
-										<li>
-											<a class="glyphicons print" href="#tab-3" data-toggle="tab" ><i></i><span data-bind="text: lang.lang.print_export">Print/Export</span></a>
-										</li>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date">Date</span></a></li>	
+										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.filter">Filter</span></a></li>
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab" ><i></i><span data-bind="text: lang.lang.print_export">Print/Export</span></a></li>
 									</ul>
 								</div>
+								<!-- // Tabs Heading END -->								
 								<div class="widget-body">
 									<div class="tab-content">
-								        <div class="tab-pane active" id="tab-1">
+								        <!-- //Date -->
+								        <div class="tab-pane active" id="tab-1">									        	
 											<div class="row">
 												<div class="col-xs-12 col-sm-2">
-													<input 
-														data-role="dropdownlist" 
-														style="width: 100%;" 
-														data-option-label="License ..." 
-														data-auto-bind="false" 
-														data-value-primitive="true" 
-														data-text-field="name" 
-														data-value-field="id" 
-														data-bind="
-															value: licenseSelect,
-						                  					source: licenseDS">
+													<input data-role="dropdownlist"
+														   class="sorter"                  
+												           data-value-primitive="true"
+												           data-text-field="text"
+												           data-value-field="value"
+												           data-bind="value: sorter,
+												                      source: sortList,                              
+												                      events: { change: sorterChanges }" style="width: 100%" />
+												</div>
+												<div class="col-xs-12 col-sm-2">  
+													<input data-role="datepicker"
+														   class="sdate"
+														   data-format="dd-MM-yyyy"
+												           data-bind="value: sdate,
+												           			  max: edate"
+												           placeholder="From ..." style="width: 100%" >
 												</div>
 												<div class="col-xs-12 col-sm-2">
-													<input type="text" 
-									                	style="width: 100%;" 
-									                	data-role="datepicker"
-									                	data-format="MM-yyyy"
-									                	data-start="year" 
-										  				data-depth="year"
-									                	placeholder="Moth of ..."
-											           	data-bind="
-											           		value: monthOfSelect" />
+												    <input data-role="datepicker"
+												    	   class="edate"
+												    	   data-format="dd-MM-yyyy"
+												           data-bind="value: edate,
+												                      min: sdate"
+												           placeholder="To ..." style="width: 100%" >
 												</div>
 												<div class="col-xs-12 col-sm-1">
 												  	<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
@@ -15703,13 +15789,26 @@
 																enabled: haveBloc,
 																source: blocDS" style="width: 100%">
 												</div>
+												<div class="col-xs-12 col-sm-3">
+													<span data-bind="text: lang.lang.customers"></span>
+													<select data-role="multiselect"
+														   data-value-primitive="true"
+														   data-header-template="customer-header-tmpl"
+														   data-item-template="contact-list-tmpl"
+														   data-value-field="id"
+														   data-text-field="name"
+														   data-bind="value: obj.contactIds, 
+														   			source: contactDS"
+														   data-placeholder="Select Customer.."
+														   style="width: 100%" /></select>
+												</div>
 												<div class="col-xs-12 col-sm-1">											
 										  			<button style="margin-top: 20px;" type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 												</div>														
 											</div>		
 							        	</div>
-							        	<!-- PRINT/EXPORT  -->
-								        <div class="tab-pane report" id="tab-3">
+							        	 <!-- PRINT/EXPORT  -->
+								        <div class="tab-pane report" id="tab-3">								        	
 								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" ><i></i> Print</span>
 											<span id="excel" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" >
 												<i class="fa fa-file-excel-o"></i>
@@ -15720,155 +15819,65 @@
 								</div>
 							</div>
 						</div>
-						<!-- // Tabs END -->						
-					
+						<!-- // Tabs END -->
 
 						<div id="invFormContent">
 							<div class="block-title">
 								<h3 data-bind="text: company.name"></h3>
-								<h2 data-bind="text: lang.lang.total_sale">Sale Detail</h2>
+								<h2>Total Sale</h2>
 								<p data-bind="text: displayDate"></p>
 							</div>
-
 							<div class="row">
 								<div class="col-xs-12 col-sm-3">
 									<div class="total-sale">
-										<p data-bind="text: lang.lang.number_of_bloc">Number of Customers</p>
+										<p data-bind="text: lang.lang.number_of_customer">Number of Customer</p>
 										<span data-bind="text: dataSource.total"></span>
 									</div>
-
 								</div>
 								<div class="col-xs-12 col-sm-9">
 									<div class="total-sale">
-										<p data-bind="text: lang.lang.amount">Amount</p>
-										<span data-bind="text: total"></sapn>
+										<p data-bind="text: lang.lang.cash_receipt">Cash Receipt</p>
+										<span data-bind="text: totalAmount"></sapn>
 									</div>
 								</div>
 							</div>
-							<div style="overflow-x: scroll;">
-								<div data-role="grid" class="costom-grid"
-							    	 data-column-menu="true"
-							    	 data-reorderable="true"
-							    	 data-scrollable="false"
-							    	 data-resizable="true"
-							    	 data-editable="true"
-					                 data-columns="[
-									    { 
-									    	field: 'bloc_name',
-									    	title: langVM.lang.bloc,
-									    	editable: 'false', 
-			                            	attributes: { style: 'text-align: left;' }
-									    },
-									    { 
-									    	field: 'total_customer',
-									    	title: langVM.lang.customer,
-									    	editable: 'false', 
-			                            	attributes: { style: 'text-align: center;' }
-									    },
-									    { 
-									    	field: 'void_customer',
-									    	title: langVM.lang.void,
-									    	hidden: true,
-									    	editable: 'false', 
-			                            	attributes: { style: 'text-align: center;' }
-									    },
-									    { 
-									    	field: 'total_usage',
-									    	title: langVM.lang.usage,
-									    	editable: 'false', 
-			                            	attributes: { style: 'text-align: center;' }
-									    },
-									    { 
-									    	field: 'amount_invoice',
-									    	title: langVM.lang.cash,
-									    	format: '{0:n}',
-									    	editable: 'false', 
-			                            	attributes: { style: 'text-align: right;' }
-									    },
-									    { 
-									    	field: 'amount_maintenance',
-									    	title: langVM.lang.maintenance,
-									    	editable: 'false', 
-									    	format: '{0:n}',									    	
-			                            	attributes: { style: 'text-align: right;' } 
-									    },
-									    { 
-									    	field: 'amount_int',
-									    	title: langVM.lang.installment,
-									    	format: '{0:n}',
-									    	hidden: true,
-									    	editable: 'false', 
-			                            	attributes: { style: 'text-align: right;' }
-									    },
-									    { 
-									    	field: 'amount_other_service',
-									    	title: langVM.lang.other_charge,
-									    	format: '{0:n}',
-									    	editable: 'false', 
-			                            	attributes: { style: 'text-align: right;' }
-									    },
-									    { 
-									    	field: 'amount_exemption',
-									    	title: langVM.lang.exemption,
-									    	editable: 'false',
-									    	format: '{0:n}',
-			                            	attributes: { style: 'text-align: right;' }
-									    },
-									    { 
-									    	field: 'amount_fine',
-									    	title: langVM.lang.fine,
-									    	format: '{0:n}',
-									    	editable: 'false', 
-									    	hidden: true,
-			                            	attributes: { style: 'text-align: right;' }
-									    },
-			                            { 
-									    	field: 'balance_last_month',
-									    	title: langVM.lang.balance_last_month,
-									    	editable: 'false', 									    
-							    			format: '{0:n}',
-			                            	attributes: { style: 'text-align: right;' }
-									    },
-									    { 
-									    	field: 'subtotal_amount',
-									    	title: langVM.lang.subtotal,
-									    	editable: 'false', 
-									    	format: '{0:n}',
-			                            	attributes: { style: 'text-align: right;' }
-									    },
-									    { 
-									    	field: 'amount_receive',
-									    	title: langVM.lang.amount_received,
-									    	format: '{0:n}',
-									    	editable: 'false', 
-			                            	attributes: { style: 'text-align: right;' }
-									    },
-									    { 
-									    	field: 'discount',
-									    	title: langVM.lang.discount,
-									    	hidden: true,
-									    	format: '{0:n}',
-									    	editable: 'false', 
-			                            	attributes: { style: 'text-align: right;' }
-									    },
-									    { 
-									    	field: 'ending_balance',
-									    	title: langVM.lang.ending_balance,
-									    	format: '{0:n}',
-									    	editable: 'false', 
-			                            	attributes: { style: 'text-align: right;' },
-									    }
-			                         ]"
-			                         data-auto-bind="false"
-					                 data-bind="source: dataSource" >
-					            </div>
-					        </div>
+							<table style="margin-bottom: 0;" class="table table-bordered table-condensed table-striped table-primary table-vertical-center">
+								<thead>
+									<tr>
+										<th style="vertical-align: top;"><span data-bind="text: lang.lang.location">Location</span></th>
+										<th style="vertical-align: top;"><span data-bind="text: lang.lang.active_meter">Active Customer</span></th>
+										<th style="text-align: right; vertical-align: top;"><span data-bind="text: lang.lang.usage">Usage</span></th>
+										<th style="text-align: right; vertical-align: top;"><span data-bind="text: lang.lang.amount">Amount</span></th>
+										<th style="text-align: right; vertical-align: top;"><span data-bind="text: lang.lang.maintenance">maintenance</span></th>
+										<th style="text-align: right; vertical-align: top;"><span data-bind="text: lang.lang.exemption">exemption</span></th>
+									</tr>
+								</thead>
+			            		<tbody  data-role="listview"
+			            				data-auto-bind="false"
+						                data-template="totalSale-template"
+						                data-bind="source: dataSource" >
+						        </tbody>
+			            	</table>
+	<!-- 		            	<div id="pager" class="k-pager-wrap"						    	
+					             data-role="pager" data-bind="source: dataSource"
+					             data-page-size= "true"></div> -->
 						</div>
-					</div>
+			            </div>
+			        </span>
 				</div>
 			</div>
 		</div>
-	</div>
+	</div>	
+</script>
+<script id="totalSale-template" type="text/x-kendo-template">
+	<tr>
+		<td>#=name#</td>
+		<td style="text-align: right;">#=customerActive#</td>
+		<td style="text-align: right;">#=totalUsage#</td>
+		<td style="text-align: right;">#=kendo.toString(amount, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#</td>
+		<td style="text-align: right;">#=kendo.toString(maintenance, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#</td>
+		<td style="text-align: right;">#=kendo.toString(exemption, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#</td>
+	</tr>
 </script>
 <script id="fineCollect" type="text/x-kendo-template">
 	<div class="container">
@@ -18939,7 +18948,7 @@
 	</tr>
 </script>
 <script id="sale_power" type="text/x-kendo-template">
-	<style>
+	<!-- <style>
 		.inv2 table td {
 			padding: 5px;
 			font-size: 12px;
@@ -19303,14 +19312,378 @@
 	            </div>
 	        </div>
 	    </div>
-    </div>
+    </div> -->
+    
+    <div class="container">
+		<div class="row-fluid">
+			<div id="waterreport" class="background">
+				<div class="row-fluid">
+					<div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 100%;margin-top: -15px;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
+						<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
+					</div>
+					<div id="example" class="k-content">
+						<div class="hidden-print pull-right" style="margin-bottom: 15px;">
+				    		<span class="pull-right glyphicons no-js remove_2"
+						onclick="javascript:window.history.back()"><i></i></span>
+						</div>
+						<div class="clear"></div>
+
+					    <!-- Tabs -->
+						<div class="relativeWrap" data-toggle="source-code">
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+								<!-- Tabs Heading -->
+								<div class="widget-head">
+									<ul>
+										<li class="active"><a class="glyphicons filter" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.filter">Filter</span></a></li>	
+										<li><a class="glyphicons print" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export">Print/Export</span></a></li>
+									</ul>
+								</div>
+								<!-- // Tabs Heading END -->
+								<div class="widget-body">
+									<div class="tab-content">
+								        <div class="tab-pane active" id="tab-1">
+								        	<div class="row">
+												<div class="col-xs-12-3 col-sm-2">
+													<label ><span data-bind="text: lang.lang.license">License</span></label>
+													<input 
+														data-role="dropdownlist" 
+														style="width: 100%;" 
+														data-option-label="License ..." 
+														data-auto-bind="false" 
+														data-value-primitive="true" 
+														data-text-field="name" 
+														data-value-field="id" 
+														data-bind="
+															value: licenseSelect,
+						                  					source: licenseDS,
+						                  					events: {change: licenseChange}">
+						                  		</div>
+												<div class="col-xs-12-3 col-sm-2">
+													<label ><span data-bind="text: lang.lang.start">Start Date</span></label>
+											        <input data-role="datepicker"
+													   class="sdate"
+													   data-format="dd-MM-yyyy"
+											           data-bind="value: sdate,
+											           			  max: edate"
+											           placeholder="From ..." style="width: 100%" >
+												</div>
+												<div class="col-xs-12 col-sm-3">
+													<div class="control-group">
+														<label ><span data-bind="text: lang.lang.end">End</span></label>
+													    <input data-role="datepicker"
+													    	   class="edate"
+													    	   data-format="dd-MM-yyyy"
+													           data-bind="value: edate,
+													                      min: sdate"
+													           placeholder="To ..." style="width: 100%" >
+							                  		</div>
+												</div>
+												<div class="col-xs-12-3 col-sm-1">
+													<label ><span data-bind="text: lang.lang.search">search</span></label>	
+												  	<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>							
+									    		</div>
+									    	</div>
+									    </div>	
+									    <!-- PRINT/EXPORT  -->
+								        <div class="tab-pane report" id="tab-2">
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" ><i></i> Print</span>
+								        	<!-- <span id="excel" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" >
+								        		<i class="fa fa-file-excel-o"></i>
+								        		Export to Excel
+								        	</span> -->
+							        	</div>
+								    </div>
+								</div>
+							</div>
+						</div>
+
+						<div id="printContent">
+					        <div class="contentPurchasePower" style="page-break-after: always;">
+					        	<div class="clear" style="float: left;">
+					                	<p style="float: left; text-align: left;  margin-bottom: 0;">អាជ្ញាប័ណ្ណលេខ ៖ <span data-bind="text: number.number"></span></p>
+					                    <p style="float: left;width: 100%; margin-bottom: 0;">ឈ្មោះអ្នកកាន់អាជ្ញាប័ណ្ណ ៖ <span data-bind="text: company.name"></span></p>
+					                    <p style="float: left;width: 100%;">ទិន្នន័យសម្រាប់ខែ ៖ <span data-bind="text: displayDate"></span></p>
+					                </div>
+					        	<div >
+					        		<div class="span12">
+					        			<table style="float: left; width: 100%;">
+					        				<tr>
+					        					<h2 style="border:0;text-align: center; width: 100%; margin-bottom: 0;">តារាងទិញ និងផលិតថាមពលអគ្គិសនី</h2>
+					        				</tr>
+					        				<tr>
+					        					<h2 style="border:0;text-align: center; width: 100%">Table for Purchase and Generation of Electricity</h2>
+					        				</tr>
+					        			</table>
+					        		</div>
+					        	</div>
+					        	<div class="clear inv2" style="margin-bottom:5px;" >
+					            	<table cellpadding="0" cellspacing="0" border="1" style="width:100%;">
+					                	<thead>
+					                        <tr class="main-color" style="height: 45px;" data-bind="style: {backgroundColor: obj.color}">
+					                            <th style="text-align: center;background: #F1F1F1!important; color: #333!important; padding: 5px;">លេខរៀង<br />( No )</th>
+					                            <th style="text-align: center;background: #F1F1F1!important; color: #333!important; padding: 5px;">បរិយាថាមពល<br />( Description )</th>
+					                            <th style="text-align: center;background: #F1F1F1!important; color: #333!important; padding: 5px;">ចំនួនថាមពល<br />( KWh )</th>
+					                            <th style="text-align: center;background: #F1F1F1!important; color: #333!important; padding: 5px;">អត្រាថ្លៃ<br />( Rate )</th>
+					                        </tr>
+					                        <tr>
+					                        	<td colspan="4" style="text-align:left; padding: 5px;font-weight:bold;">ការទិញថាមពល</td>
+					                        </tr>
+					                    </thead>
+										<tbody 
+											data-role="listview"
+					        				data-auto-bind="false"
+							                data-template="purchase_power-template"
+							                data-bind="source: purchaseDatasource" >
+										</tbody>
+					                    <tfoot>
+					                    	<tr >
+												<td style="height:40px!important;"></td>
+												<td></td>
+												<td></td>
+												<td></td>
+											</tr>
+					                    </tfoot>
+					                </table>
+					            </div>
+					        </div>
+					        <div class="contentSalePower" style="page-break-after: always;">
+					        	<div class="clear" style="float: left;">
+					            	<p style="float: left; text-align: left; margin-bottom: 0;">អាជ្ញាប័ណ្ណលេខ៖ <span data-bind="text: company.number"></span></p>
+					                <p style="float: left;width: 100%; margin-bottom: 0;">ឈ្មោះអ្នកកាន់អាជ្ញាប័ណ្ណ៖<span data-bind="text: company.name"></span></p>
+					                <p style="float: left;width: 100%">ទិន្នន័យសម្រាប់ខែ៖ <span data-bind="text: displayDate"></span></p>
+					            </div>
+					        	<div >
+					        		<div class="span12">
+					        			<table style="float: left; width: 100%;">
+					        				<tr>
+					        					<h2 style="border:0;text-align: center; width: 100%; margin-bottom: 0;">តារាងលក់ថាមពល</h2>
+					        				</tr>
+					        				<tr>
+					        					<h2 style="border:0;text-align: center; width: 100%">Table for Total Sale</h2>
+					        				</tr>
+					        			</table>
+					        		</div>
+					        	</div>
+					        	<div class="clear inv2" style="margin-bottom:5px;" >
+					            	<table cellpadding="0" cellspacing="0" border="1" style="width:100%;">
+					                	<thead>
+					                        <tr class="main-color" style="height: 45px;" data-bind="style: {backgroundColor: obj.color}">
+					                            <th style="text-align: center;background: #F1F1F1!important; color: #333!important; padding: 5px;">ប្រភេទនៃកាលក់<br />( Type of Sale )	</th>
+					                            <th style="text-align: center;background: #F1F1F1!important; color: #333!important; padding: 5px;">ចំនួនអតិថិជន<br />( No. of Consumer )</th>
+					                            <th style="text-align: center;background: #F1F1F1!important; color: #333!important; padding: 5px;">ចំនួនថាមពលលក់<br />( KWh sold )</th>
+					                            <th style="text-align: center;background: #F1F1F1!important; color: #333!important; padding: 5px;">អត្រាថ្លៃ<br />( Tariff of Sale )</th>
+					                        </tr>
+					                        <tr>
+					                        	<td colspan="4" style="padding: 5px; font-weight:bold;">I . ថាមពលលក់ឲ្យអតិថិជនអ្នកកាន់អាជ្ញាបណ្ណ</td>
+					                        </tr>
+					                        <tr>
+					                        	<td  style="padding: 5px 5px 5px 20px; font-weight:bold;">1 . ថាមពលលក់លើ MV នាឡិកាស្ទង់​ MV</td>
+					                        	<td style="padding: 5px; text-align: center" data-bind="text: licenseMVCount"></td>
+					                        	<td style="padding: 5px; text-align: right" data-bind="text: licenseMVUsage"></td>
+					                        	<td style="padding: 5px; text-align: right" data-bind="text: costLicense"></td>
+					                        </tr>
+					                        <tr>
+					                        	<td class="no" style="padding: 5px 5px 5px 20px; font-weight:bold;">2 . ថាមពលលក់លើ MV នាឡិកាស្ទង់​ LV ក្រោមនៃត្រង់ស្វូ ( វិនិយោគដោយអ្នកទិញ )</td>                        	
+					                        	<td></td>
+					                        	<td></td>
+					                        	<td></td>
+					                        </tr>
+					                        <tr>
+					                        	<td  class="no" style="padding: 5px 5px 5px 20px; font-weight:bold;">3​ . ថាមពលលក់លើ MV នាឡិកាស្ទង់​ LV ក្រោមនៃត្រង់ស្វូ ( វិនិយោគដោយអ្នកលក់ )</td>
+					                        	<td></td>
+					                        	<td></td>
+					                        	<td></td>
+					                        </tr>
+					                        <tr>
+					                        	<td colspan="4" style="padding: 5px; font-weight:bold;">II . ថាមពលលក់ឲ្យអតិថិជនដែលពុំទទ្ួលថវិកា ឧបត្ថម្ភធន (​ ឧស្សាហកម្ម ពាណិជ្ជកម្ម អាជីវកម្ម )</td>
+					                        </tr>
+					                        <tr>
+					                        	<td class="no" style="padding: 5px 5px 5px 20px; font-weight:bold;">          1 . ថាមពលលក់លើ MV នាឡិកាស្ទង់​ MV</td>
+					                        	<td style="padding: 5px; text-align: center" data-bind="text: MVtoMVCount"></td>
+					                        	<td style="padding: 5px; text-align: right" data-bind="text: MVtoMVUsage"></td>
+					                        	<td style="padding: 5px; text-align: right" data-bind="text: costCompanyMV"></td>
+					                        </tr>
+					                        <tr>
+					                        	<td class="no" style="padding: 5px 5px 5px 20px; font-weight:bold;">2 . ថាមពលលក់លើ MV នាឡិកាស្ទង់​ LV ក្រោមនៃត្រង់ស្វូ (​ វិនិយោគដោយអ្នកទិញ )</td>
+					                        	<td style="padding: 5px; text-align: center" data-bind="text: MVtoLVCount"></td>
+					                        	<td style="padding: 5px; text-align: right" data-bind="text: MVtoLVUsage"></td>
+					                        	<td style="padding: 5px; text-align: right" data-bind="text: costCompanyLV"></td>
+					                        </tr>
+					                        <tr>
+					                        	<td class="no" style="padding: 5px 5px 5px 20px; font-weight:bold;">3​ . ថាមពលលក់លើ MV នាឡិកាស្ទង់​ LV ក្រោមនៃត្រង់ស្វូ ( វិនិយោគដោយអ្នកលក់ )</td>
+					                        	<td></td>
+					                        	<td></td>
+					                        	<td></td>
+					                        </tr>
+					                        <tr>
+					                        	<td class="no" style="padding: 5px 5px 5px 20px; font-weight:bold;">4 . ថាមពលលក់ឲ្យអតិថិជន អាជីវកម្ម ប្រើចាប់ពី 2001​ kWh/ខែឡើង</td>
+					                        	<td style="padding: 5px; text-align: center" data-bind="text: company2000UpCount"></td>
+					                        	<td style="padding: 5px; text-align: right" data-bind="text: company2000UpUsage"></td>
+					                        	<td style="padding: 5px; text-align: right" data-bind="text: cost50Up"></td>
+					                        </tr>
+					                        <tr>
+					                        	<td colspan="4" style="padding: 5px; font-weight:bold;">III . ថាមពលលក់ឲ្យអតិថិជនដែលត្រូវទទ្ួលថវិកា ឧបត្ថម្ភធនប៉ះប៉ូវ (​ លក់លើតង់ស្យុងទាប ភ្ជាប់ពីខ្សែសាធារណះ )</td>
+					                        </tr>
+					                         <tr>
+					                        	<td class="no" style="padding: 5px 5px 5px 20px; font-weight:bold;">1 . ថាមពលលក់ឲ្យអតិថិជន អាជីវកម្ម ប្រើក្រោម 2001​ kWh/ខែ</td>
+					                        	<td style="padding: 5px; text-align: center" data-bind="text: company2000downCount"></td>
+					                        	<td style="padding: 5px; text-align: right" data-bind="text: company2000downUsage"></td>
+					                        	<td style="padding: 5px; text-align: right" data-bind="text: cost50Up"></td>
+					                        </tr>
+					                         <tr>
+					                        	<td class="no" style="padding: 5px 5px 5px 20px; font-weight:bold;">2 . ថាមពលលក់ឲ្យអតិថិជនលំនៅដ្ឋាន</td>
+					                        	<td style="padding: 5px; text-align: center" data-bind="text: totalCustomer"></td>
+					                        	<td style="padding: 5px; text-align: right" data-bind="text: usage"></td>
+					                        	<td style="padding: 5px; text-align: right" data-bind="text: cost50Up"></td>
+					                        </tr>
+					                         <tr>
+					                        	<td class="n1" style="padding: 5px 5px 5px 20px; font-weight:bold;">3 . ថាមពលលក់ឲ្យលំនៅដ្ឋានប្រើ មិនលើសពី 10 kWh/ខែ</td>
+					                        	<td style="padding: 5px; text-align: center" data-bind="text: total10Down"></td>
+					                        	<td style="padding: 5px; text-align: right" data-bind="text: totalUsage10Down"></td>
+					                        	<td style="padding: 5px; text-align: right" data-bind="text: cost10down"></td>
+					                        </tr>
+					                         <tr>
+					                        	<td class="n1" style="padding: 5px 5px 5px 20px; font-weight:bold;">4 . ថាមពលលក់ឲ្យលំនៅដ្ឋានប្រើ ចាប់ពី 11 ដល់ 50 kWh/ខែ</td>
+					                        	<td style="padding: 5px; text-align: center" data-bind="text: total10Up"></td>
+					                        	<td style="padding: 5px; text-align: right" data-bind="text: totalUsage10Up"></td>
+					                        	<td style="padding: 5px; text-align: right" data-bind="text: cost50down"></td>
+					                        </tr>
+					                         <tr>
+					                        	<td class="n1" style="padding: 5px 5px 5px 20px; font-weight:bold;">5 . ថាមពលលក់ឲ្យលំនៅដ្ឋានប្រើ ចាប់ពី 51 kWh/ខែ</td>
+					                        	<td style="padding: 5px; text-align: center" data-bind="text: total50Up"></td>
+					                        	<td style="padding: 5px; text-align: right" data-bind="text: totalUsage50Up"></td>
+					                        	<td style="padding: 5px; text-align: right" data-bind="text: cost50Up"></td>
+					                        </tr>
+					                    </thead>
+										<tbody 
+											data-role="listview"
+					        				data-auto-bind="false"
+							                data-bind="source: dataSource" >
+										</tbody>
+					                </table>
+					            </div>
+					        </div>
+					        <div class="contentCalculate" style="page-break-after: always;">
+					        	<div class="clear" style="float: left;">
+					            	<p style="float: left; text-align: left; margin-bottom: 0;">អាជ្ញាប័ណ្ណលេខ៖ <span data-bind="text: company.number"></span></p>
+					                <p style="float: left;width: 100%; margin-bottom: 0;">ឈ្មោះអ្នកកាន់អាជ្ញាប័ណ្ណ៖<span data-bind="text: company.name"></span></p>
+					                <p style="float: left;width: 100%">ទិន្នន័យសម្រាប់ខែ៖ <span data-bind="text: displayDate"></span></p>
+					            </div>
+					        	<div >
+					        		<div class="span12">
+					        			<table style="float: left; width: 100%;">
+					        				<tr>
+					        					<h2 style="border:0;text-align: center; width: 100%; margin-bottom: 0;">តារាងគណនាចំន្ួនប្រាក់ឧបត្ថម្ភ</h2>
+					        				</tr>
+					        				<tr>
+					        					<h2 style="border:0;text-align: center; width: 100%">Table for Calculation of Subsidy Amount</h2>
+					        				</tr>
+					        			</table>
+					        		</div>
+					        	</div>
+					        	<div class="clear inv2" style="margin-bottom:5px;" >
+					            	<table cellpadding="0" cellspacing="0" border="1" style="width:100%;">
+					                	<thead>
+					                        <tr class="main-color" style="height: 45px;" data-bind="style: {backgroundColor: obj.color}">
+					                        	<th style="padding: 5px;vertical-align: top; text-align: center;background: #F1F1F1!important; color: #333!important;"></th>
+					                            <th style="padding: 5px;vertical-align: top; text-align: center;background: #F1F1F1!important; color: #333!important;">ប្រភេទនៃកាលក់<br />( Type of Sale )	</th>
+					                            <th style="padding: 5px;vertical-align: top; text-align: center;background: #F1F1F1!important; color: #333!important;">សរុបចំន្ួនថាមពលលក់<br />( Total Sold kWh )</th>
+					                            <th style="padding: 5px;vertical-align: top; text-align: center;background: #F1F1F1!important; color: #333!important;">អត្រាថ្លៃគោលកំណត់ដោយ អ.អ.ក<br />( Cost based Tariff Approved by EAC )</th>
+					                            <th style="padding: 5px;vertical-align: top; text-align: center;background: #F1F1F1!important; color: #333!important;">អត្រាថ្លៃឧបត្ថម្ភកំណត់ដោយ អ.អ.ក <br />( Subsidizes Tariff of Sale )</th>
+					                            <th style="padding: 5px;vertical-align: top; text-align: center;background: #F1F1F1!important; color: #333!important;">អត្រាថ្លៃឧបត្ថម្ភ <br />( Tariff of Sale )</th>
+					                            <th style="padding: 5px;vertical-align: top; text-align: center;background: #F1F1F1!important; color: #333!important;">ចំនួនទឹកប្រាក់ឧបត្ថម្ភ <br />( Amount of Subsidy )</th>
+					                        </tr>
+					                        <tr>
+					                        	<td  style="padding: 5px; font-weight:bold;">a</td>
+					                        	<td  style="padding: 5px; font-weight:bold;">b</td>
+					                        	<td  style="padding: 5px; font-weight:bold;">c</td>
+					                        	<td  style="padding: 5px; font-weight:bold;">d</td>
+					                        	<td  style="padding: 5px; font-weight:bold;">e</td>
+					                        	<td  style="padding: 5px; font-weight:bold;">f = d - e</td>
+					                        	<td  style="padding: 5px; font-weight:bold;">g = c * f</td>
+					                        </tr>
+					                        <tr>
+					                        	<td style="padding: 5px; font-weight:bold;">1</td>
+					                        	<td class="no" style="padding: 5px; text-align: left; font-weight:bold;">ថាមពលលក់ឲ្យអតិថិជនដែលត្រូវទទ្ួលថវិកា ឧបត្ថម្ភធនប៉ះប៉ូវ</td>
+					                        	<td style="padding: 5px; text-align: center" data-bind="text: totalUsageSubsidy"></td>
+					                        	<td style="padding: 5px; text-align: center" data-bind="text: costGoverment"></td>
+					                        	<td style="padding: 5px; text-align: center" data-bind="text: cost50Up"></td>
+					                        	<td style="padding: 5px; text-align: center" data-bind="text: tariffSale"></td>
+					                        	<td style="padding: 5px; text-align: right" data-bind="text: totalSubsidy"></td>
+					                        </tr>
+					                    </thead>
+										<tbody 
+											data-role="listview"
+					        				data-auto-bind="false"
+							                data-bind="source: dataSource" >
+										</tbody>
+					                </table>
+					            </br>
+					                <table cellpadding="0" cellspacing="0" border="1" style="width:100%;">
+					                	<thead>
+					                        <tr class="main-color" style="height: 45px;" data-bind="style: {backgroundColor: obj.color}">
+					                        	<th style="padding: 5px;vertical-align: top; text-align: center;background: #F1F1F1!important; color: #333!important;"></th>
+					                            <th style="padding: 5px;vertical-align: top; text-align: center;background: #F1F1F1!important; color: #333!important;">ប្រភេទនៃកាលក់<br />( Type of Sale )	</th>
+					                            <th style="padding: 5px;vertical-align: top; text-align: center;background: #F1F1F1!important; color: #333!important;">ចំន្ួនអតិថិជន<br />( No. of Consumer )</th>
+					                            <th style="padding: 5px;vertical-align: top; text-align: center;background: #F1F1F1!important; color: #333!important;">ចំន្ួនថាមពលលក់<br />( Total Sold kWh )</th>
+					                            <th style="padding: 5px;vertical-align: top; text-align: center;background: #F1F1F1!important; color: #333!important;">អត្រាថ្លៃឧបត្ថម្ភ<br />( Tariff of Sale )</th>
+					                            <th style="padding: 5px;vertical-align: top; text-align: center;background: #F1F1F1!important; color: #333!important;">ចំនួនទឹកប្រាក់ឧបត្ថម្ភបន្ថែម<br />( Amount of Subsidy )</th>
+					                        </tr>
+					                        <tr>
+					                        	<td  style="padding: 5px; font-weight:bold;">a</td>
+					                        	<td  style="padding: 5px; font-weight:bold;">b</td>
+					                        	<td  style="padding: 5px; font-weight:bold;">c</td>
+					                        	<td  style="padding: 5px; font-weight:bold;">d</td>
+					                        	<td  style="padding: 5px; font-weight:bold;">e</td>
+					                        	<td  style="padding: 5px; font-weight:bold;">f = d * e</td>
+					                        </tr>
+					                        <tr>
+					                        	<td style="padding: 5px; font-weight:bold;">1</td>
+					                        	<td class="no" style="padding: 5px; text-align: left; font-weight:bold;">លក់ឲ្យលំនៅដ្ឋានប្រើ មិនលើសពី 10 kWh/ខែ</td>
+					                        	<td style="padding: 5px; text-align: center" data-bind="text: homeCount10down"></td>
+					                        	<td style="padding: 5px; text-align: center" data-bind="text: homeTotal10down"></td>
+					                        	<td style="padding: 5px; text-align: center" data-bind="text: homeCost10down"></td>
+					                        	<td style="padding: 5px; text-align: right" data-bind="text: totalSubsidy10down"></td>
+					                        </tr>
+					                         <tr>
+					                        	<td  style="padding: 5px; font-weight:bold;">2</td>
+					                        	<td class="no" style="padding: 5px; text-align: left; font-weight:bold;">លក់ឲ្យលំនៅដ្ឋានប្រើ ចាប់ពី 11 ដល់ 50 kWh/ខែ</td>
+					                        	<td style="padding: 5px; text-align: center" data-bind="text: homeCount50down"></td>
+					                        	<td style="padding: 5px; text-align: center" data-bind="text: homeTotal50down"></td>
+					                        	<td style="padding: 5px; text-align: center" data-bind="text: homeCost10up"></td>
+					                        	<td style="padding: 5px; text-align: right" data-bind="text: totalSubsidy10up"></td>
+					                        </tr>
+					                         <tr>
+					                        	<td  style="padding: 5px; font-weight:bold;">3</td>
+					                        	<td class="no" style="padding: 5px; text-align: left; font-weight:bold;">លក់ឲ្យការបូមទឹកធ្វើកសិកម្មម៉ោង09:00យប់ ដល់07:00ព្រឹក</td>
+					                        	<td></td>
+					                        	<td></td>
+					                        	<td></td>
+					                        	<td></td>
+					                        </tr>
+					                    </thead>
+										<tbody 
+											data-role="listview"
+					        				data-auto-bind="false"
+							                data-bind="source: dataSource" >
+										</tbody>
+					                </table>
+					            </div>
+					        </div>
+					    </div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
 </script>
 <script id="purchase_power-template" type="text/x-kendo-template">
 	<tr>
-		<td style="text-align: center;">#=banhji.purchase_power.dataSource.indexOf(banhji.purchase_power.dataSource.get(id)) +1 #</td>
-		<td style="text-align: left;">#=name#</td>
-		<td style="text-align: right;">#=quantity#</td>
-		<td style="text-align: right;">#=kendo.toString(cost, banhji.locale=="km-KH"?"n3":"c", banhji.locale)#</td>
+		<td style="text-align: center; padding: 5px;">#=banhji.purchase_power.dataSource.indexOf(banhji.purchase_power.dataSource.get(id)) +1 #</td>
+		<td style="text-align: left; padding: 5px;">#=name#</td>
+		<td style="text-align: right; padding: 5px;">#=quantity#</td>
+		<td style="text-align: right; padding: 5px;">#=kendo.toString(cost, banhji.locale=="km-KH"?"n3":"c", banhji.locale)#</td>
 	</tr>
 </script>
 <script id="importView" type="text/x-kendo-template">
@@ -20100,4 +20473,4 @@
 			#}#
 		</td>
     </tr>
-</script>
+</script>                                                                                                                                                                                                                                                                                                                                                                                                            

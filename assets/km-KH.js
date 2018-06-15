@@ -1305,6 +1305,8 @@ var	km_KH = {
 	"sale_detail_report": "របាយការណ៍​ការ​លក់​លំអិត",
 	"connection_service_revenue_report": "របាយការណ៍​ចំណូល​ភ្ជាប់​ប្រព័ន្ធ",
 	"cash_receipt_report": "របាយការណ៍​ទទួល​ប្រាក់",
+	"electricity_report": "របាយការណ៍​ភ្លើង",
+	"subsidy_report": "របាយការណ៍​ឧបត្ថម្ភថ្លៃអគ្គិសនី",
 	"summary_and_detail_cash": "Summary and detail cash receipt reports grouped by sources ឬ  methods of receipts",
 	"cash_receipt_detail": "របាយការណ៍​ទទួល​ប្រាក់​លំអិត",
 	"cash_receipt_summary": "របាយការណ៍​ទទួល​ប្រាក់​សង្ខេប",

@@ -571,7 +571,7 @@
             dataValueField: "id",
             autoWidth: true,
             height: 200,
-            template: kendo.template($("#item-list-tmpl").html()),
+            template: kendo.template($("#item-list-tmpl-purchase").html()),
             dataSource: {
                 transport: {
                     read    : {
@@ -2533,7 +2533,7 @@
         employeeList: [],
         contactDS: dataStore(apiUrl + "contacts"),
         customerDS: dataStore(apiUrl + "contacts"),
-        supplierDS: dataStore(apiUrl + "contacts"),
+        
         employeeDS: dataStore(apiUrl + "contacts"),
         //user
         employeeUserDS                  : new kendo.data.DataSource({
@@ -2571,6 +2571,49 @@
             serverSorting: true,
             serverPaging: true,
             page:1,
+            pageSize: 100
+        }),
+
+        supplierDS                  : new kendo.data.DataSource({
+            transport: {
+                read    : {
+                    url: apiUrl + "contacts",
+                    type: "GET",
+                    headers: banhji.header,
+                    dataType: 'json'
+                },
+                parameterMap: function(options, operation) {
+                    if(operation === 'read') {
+                        return {
+                            page: options.page,
+                            limit: options.pageSize,
+                            filter: options.filter,
+                            sort: options.sort
+                        };
+                    } else {
+                        return {models: kendo.stringify(options.models)};
+                    }
+                }
+            },
+            schema  : {
+                model: {
+                    id: 'id'
+                },
+                data: 'results',
+                total: 'count'
+            },
+            filter:[
+                { field:"parent_id", operator:"where_related_contact_type", value:2 },//Supplier
+                { field:"status", value:1 }
+            ],
+            sort:[
+                { field:"contact_type_id", dir:"asc" },
+                { field:"number", dir:"asc" }
+            ],
+            serverFiltering: true,
+            serverSorting: true,
+            serverPaging: true,
+            page: 1,
             pageSize: 100
         }),
         //Contact Type
@@ -6617,7 +6660,7 @@
     //Add Purchase
     banhji.purchase =  kendo.observable({
         lang                        : langVM,
-        dataSource                  : dataStore(apiUrl + "transactions/electricity"),
+        dataSource                  : dataStore(apiUrl + "transactions"),
         lineDS                      : dataStore(apiUrl + "item_lines"),
         txnDS                       : dataStore(apiUrl + "transactions"),
         numberDS                    : dataStore(apiUrl + "transactions/number"),
@@ -7863,6 +7906,8 @@
             //Set Date
             var duedate = new Date();
             duedate.setDate(duedate.getDate() + 30);
+            var month_of = new Date();
+            month_of.setDate(month_of.getDate());
 
             this.dataSource.insert(0, {
                 transaction_template_id : 0,
@@ -7877,6 +7922,7 @@
                 type                : "Cash_Purchase", //Required
                 number              : "",
                 sub_total           : 0,
+                sub_type            : "Power_Purchase",
                 discount            : 0,
                 tax                 : 0,
                 amount              : 0,
@@ -7907,6 +7953,7 @@
                 interval            : 1,
                 day                 : 1,
                 week                : 0,
+                month_of             : month_of,
                 month               : 0,
                 is_recurring        : 0,
 
@@ -19874,268 +19921,365 @@
     });
     banhji.totalSale = kendo.observable({
         lang: langVM,
-        dataSource: dataStore(apiUrl + "utibillReports/sale_total"),
-        licenseDS: dataStore(apiUrl + "branches"),
-        blocDS: new kendo.data.DataSource({
-            transport: {
-                read: {
-                    url: apiUrl + "locations",
-                    type: "GET",
-                    headers: banhji.header,
-                    dataType: 'json'
-                },
-                parameterMap: function(options, operation) {
-                    if (operation === 'read') {
-                        return {
-                            page: options.page,
-                            limit: options.pageSize,
-                            filter: options.filter,
-                            sort: options.sort
-                        };
-                    } else {
-                        return {
-                            models: kendo.stringify(options.models)
-                        };
-                    }
-                }
-            },
-            schema: {
-                model: {
-                    id: 'id'
-                },
-                data: 'results',
-                total: 'count'
-            },
-            filter: [
-                {
-                    field: "main_bloc",
-                    value: 0
-                },
-                {
-                    field: "main_pole",
-                    value: 0
-                }
-            ],
+        dataSource: dataStore(apiUrl + "utibillReports/total_cash"),
+        ballanceDS: dataStore(apiUrl + "utibillReports/total_cash"),
+        cashReceiptDS: dataStore(apiUrl + "utibillReports/cash_receipt_totalsale"),
+
+        contactDS: new kendo.data.DataSource({
+            data: banhji.source.customerList,
             sort: {
-                field: "id",
+                field: "number",
                 dir: "asc"
-            },
-            batch: true,
-            serverFiltering: true,
-            serverSorting: true,
-            serverPaging: true,
-            page: 1,
-            pageSize: 100
+            }
         }),
-        total: 0,
+        licenseDS: dataStore(apiUrl + "branches"),
+        blocDS: dataStore(apiUrl + "locations"),
+        sortList: banhji.source.sortList,
+        sorter: "today",
+        sdate: "",
+        edate: "",
+        obj: {
+            contactIds: [],
+            licenseID: 0,
+            locationID: []
+        },
+        company: banhji.institute,
+        displayDate: "",
+        totalAmount: 0,
         exArray: [],
         pageLoad: function() {
+            this.search();
+            this.set("haveBloc", false);
         },
-        licenseName: "",
-        onLicenseChange: function(e){
-            this.set("licenseName", e.sender.span[0].innerText);
+        sorterChanges: function() {
+            var today = new Date(),
+                sdate = "",
+                edate = "",
+                sorter = this.get("sorter");
+
+            switch (sorter) {
+                case "today":
+                    this.set("sdate", today);
+                    this.set("edate", today);
+
+                    break;
+                case "week":
+                    var first = today.getDate() - today.getDay(),
+                        last = first + 6;
+
+                    this.set("sdate", new Date(today.setDate(first)));
+                    this.set("edate", new Date(today.setDate(last)));
+
+                    break;
+                case "month":
+                    this.set("sdate", new Date(today.getFullYear(), today.getMonth(), 1));
+                    this.set("edate", new Date(today.getFullYear(), today.getMonth() + 1, 0));
+
+                    break;
+                case "year":
+                    this.set("sdate", new Date(today.getFullYear(), 0, 1));
+                    this.set("edate", new Date(today.getFullYear(), 11, 31));
+
+                    break;
+                default:
+                    this.set("sdate", "");
+                    this.set("edate", "");
+            }
+        },
+        licenseChange: function(e) {
+            var data = e.data;
+            var license = this.licenseDS.at(e.sender.selectedIndex - 1);
+            this.set("licenseSelect", license);
+            this.blocDS.filter({
+                field: "branch_id",
+                value: license.id
+            });
+            this.set("haveBloc", true);
         },
         search: function() {
-            var self = this;
-            var monthOfSearch = this.get("monthOfSelect");
-            var para = [];
-            if (monthOfSearch) {
-                var monthOf = new Date(monthOfSearch);
-                monthOf.setDate(1);
-                monthOf = kendo.toString(monthOf, "yyyy-MM-dd");
+            var self = this,
+                para = [],
+                obj = this.get("obj"),
+                start = this.get("sdate"),
+                end = this.get("edate"),
+                displayDate = "";
+                license = this.get("licenseSelect"),
+                bloc = this.get("blocSelect");
 
-                var monthL = new Date(monthOfSearch);
-                var lastDayOfMonth = new Date(monthL.getFullYear(), monthL.getMonth() + 1, 0);
-                lastDayOfMonth = lastDayOfMonth.getDate();
+            if (license) {
+                para.push({
+                    field: "branch_id",
+                    value: license.id
+                });
+            }
 
-                monthL.setDate(lastDayOfMonth);
-                monthL = kendo.toString(monthL, "yyyy-MM-dd");
+            if (bloc) {
+                para.push({
+                    field: "location_id",
+                    value: bloc.id
+                });
+            }
+
+            //Customer
+            if (obj.contactIds.length > 0) {
+                var contactIds = [];
+                $.each(obj.contactIds, function(index, value) {
+                    contactIds.push(value);
+                });
+                para.push({
+                    field: "contact_id",
+                    operator: "where_in",
+                    value: contactIds
+                });
+            }
+
+            //Dates
+            if (start && end) {
+                start = new Date(start);
+                end = new Date(end);
+                displayDate = kendo.toString(start, "dd-MM-yyyy") + " - " + kendo.toString(end, "dd-MM-yyyy");
+                end.setDate(end.getDate() + 1);
 
                 para.push({
                     field: "month_of >=",
-                    value: monthOf
-                }, {
-                    field: "month_of <=",
-                    value: monthL
+                    operator : "where_related_transaction",
+                    value: kendo.toString(start, "yyyy-MM-dd")
                 });
-                //this.dataSource.filter(para);
-                if (this.get("licenseSelect")) {
-                    para.push({
-                        field: "branch_id",
-                        value: this.get("licenseSelect")
+                para.push({
+                    field: "month_of <",
+                    operator : "where_related_transaction",
+                    value: kendo.toString(end, "yyyy-MM-dd")
+                });
+            } else if (start) {
+                start = new Date(start);
+                displayDate = "On " + kendo.toString(start, "dd-MM-yyyy");
+
+                para.push({
+                    field: "month_of",
+                    operator : "where_related_transaction",
+                    value: kendo.toString(start, "yyyy-MM-dd")
+                });
+            } else if (end) {
+                end = new Date(end);
+                displayDate = "As Of " + kendo.toString(end, "dd-MM-yyyy");
+                end.setDate(end.getDate() + 1);
+
+                para.push({
+                    field: "month_of <",
+                    operator : "where_related_transaction",
+                    value: kendo.toString(end, "yyyy-MM-dd")
+                });
+            } else {
+
+            }
+            this.set("displayDate", displayDate);
+
+            this.dataSource.query({
+                filter: para,
+            }).then(function() {
+                var view = self.dataSource.view();
+
+                var amount = 0;
+                $.each(view, function(index, value) {
+                    amount += value.amount;
+                });
+                self.getOldMonthBallance();
+                self.set("totalAmount", kendo.toString(amount, banhji.locale == "km-KH" ? "c0" : "c", banhji.locale));
+            });
+            this.dataSource.bind("requestEnd", function(e) {
+                if (e.type == "read") {
+                    var response = e.response,
+                        balanceRec = 0,
+                        numberCustomer = 0;
+                    self.exArray = [];
+
+                    self.exArray.push({
+                        cells: [{
+                            value: self.company.name,
+                            textAlign: "center",
+                            colSpan: 3
+                        }]
                     });
-                    
-                    this.dataSource.query({
-                        filter: para,
-                    }).then(function(e){
-                        var total = 0;
-                        self.exArray = [];
+                    self.exArray.push({
+                        cells: [{
+                            value: "Daily Cash Receipt",
+                            bold: true,
+                            fontSize: 20,
+                            textAlign: "center",
+                            colSpan: 3
+                        }]
+                    });
+                    if (self.displayDate) {
                         self.exArray.push({
                             cells: [{
-                                value: self.get("licenseName"),
+                                value: self.displayDate,
                                 textAlign: "center",
-                                colSpan: 15
+                                colSpan: 3
                             }]
                         });
+                    }
+                    self.exArray.push({
+                        cells: [{
+                            value: "",
+                            colSpan: 3
+                        }]
+                    });
+                    self.exArray.push({
+                        cells: [{
+                                value: "Location",
+                                background: "#496cad",
+                                color: "#ffffff"
+                            },
+                            {
+                                value: "Number of Cusomter",
+                                background: "#496cad",
+                                color: "#ffffff"
+                            },
+                            {
+                                value: "Amount",
+                                background: "#496cad",
+                                color: "#ffffff"
+                            }
+                        ]
+                    });
+                    for (var i = 0; i < response.results.length; i++) {
+                        balanceRec += response.results[i].amount;
+                        numberCustomer += response.results[i].customer;
                         self.exArray.push({
                             cells: [{
-                                value: "Total Sale Report",
-                                bold: true,
-                                fontSize: 20,
-                                textAlign: "center",
-                                colSpan: 15
-                            }]
+                                    value: response.results[i].name
+                                },
+                                {
+                                    value: response.results[i].customer
+                                },
+                                {
+                                    value: response.results[i].amount
+                                }
+                            ]
                         });
-                        self.exArray.push({
-                            cells: [{
-                                value: kendo.toString(monthOf, "MM-yyyy"),
-                                textAlign: "center",
-                                colSpan: 15
-                            }]
-                        });
+                        
                         self.exArray.push({
                             cells: [{
                                 value: "",
-                                colSpan: 15
+                                colSpan: 3
                             }]
                         });
-                        self.exArray.push({
-                            cells: [{
-                                    value: "ប្លុក | Bloc",
-                                    background: "#496cad",
-                                    color: "#ffffff"
-                                },
-                                {
-                                    value: "ចំ​នួនអតិថិជនសរុប | Total Customer",
-                                    background: "#496cad",
-                                    color: "#ffffff"
-                                },
-                                {
-                                    value: "ចំ​នួនអតិថិជនផ្អាកប្រើ | Void",
-                                    background: "#496cad",
-                                    color: "#ffffff"
-                                },
-                                {
-                                    value: "បរិមាណប្រើប្រាស់ | Usage",
-                                    background: "#496cad",
-                                    color: "#ffffff"
-                                },
-                                {
-                                    value: "ជាសាច់ប្រាក់ | Cash",
-                                    background: "#496cad",
-                                    color: "#ffffff"
-                                },
-                                {
-                                    value: "សេវាថែទាំ | Maintenance",
-                                    background: "#496cad",
-                                    color: "#ffffff"
-                                },
-                                {
-                                    value: "រំលោះ | Installment",
-                                    background: "#496cad",
-                                    color: "#ffffff"
-                                },
-                                {
-                                    value: "សេវាផ្សេងៗ | Other Service",
-                                    background: "#496cad",
-                                    color: "#ffffff"
-                                },
-                                {
-                                    value: "អនុគ្រោះ | Exemption",
-                                    background: "#496cad",
-                                    color: "#ffffff"
-                                },
-                                {
-                                    value: "ពិន័យ | Fine",
-                                    background: "#496cad",
-                                    color: "#ffffff"
-                                },
-                                {
-                                    value: "បំណុលខែមុន | Balance Last Month",
-                                    background: "#496cad",
-                                    color: "#ffffff"
-                                },
-                                {
-                                    value: "សរុបរួម | Sub Total",
-                                    background: "#496cad",
-                                    color: "#ffffff"
-                                },
-                                {
-                                    value: "សាច់ប្រាក់ទទួលបាន | Cash Receipt",
-                                    background: "#496cad",
-                                    color: "#ffffff"
-                                },
-                                {
-                                    value: "បញ្ចុះតម្លៃ | Discount",
-                                    background: "#496cad",
-                                    color: "#ffffff"
-                                },
-                                {
-                                    value: "បំណុលចុងគ្រា | Ending Balance",
-                                    background: "#496cad",
-                                    color: "#ffffff"
-                                },
-                            ]
-                        });
-                        $.each(self.dataSource.data(), function(i,v){
-                            total += v.subtotal_amount
-                            self.exArray.push({
-                                cells: [{
-                                        value: v.bloc_name,
-                                    },
-                                    {
-                                        value: v.total_customer,
-                                    },
-                                    {
-                                        value: v.void_customer,
-                                    },
-                                    {
-                                        value: v.total_usage,
-                                    },
-                                    {
-                                        value: v.amount_invoice,
-                                    },
-                                    {
-                                        value: v.amount_maintenance,
-                                    },
-                                    {
-                                        value: v.amount_int,
-                                    },
-                                    {
-                                        value: v.amount_other_service,
-                                    },
-                                    {
-                                        value: v.amount_exemption,
-                                    },
-                                    {
-                                        value: v.amount_fine,
-                                    },
-                                    {
-                                        value: v.balance_last_month,
-                                    },
-                                    {
-                                        value: v.subtotal_amount,
-                                    },
-                                    {
-                                        value: v.amount_receive,
-                                    },
-                                    {
-                                        value: v.discount,
-                                    },
-                                    {
-                                        value: v.ending_balance,
-                                    },
-                                ]
-                            });
-                        });
-                        self.set("total", kendo.toString(total, banhji.locale == "km-KH" ? "c0" : "c", banhji.locale));
-                    });
-                } else {
-                    alert("Please Select License");
+                    }
+                    self.exArray.push({
+                        cells: [
+                            { value: "Total",bold: true, textAlign: "left" },
+                            { value: numberCustomer,bold: true},
+                            { value: balanceRec,bold: true},
+                        ]
+                    }); 
+
                 }
-            }else{
-                alert("Please Select License");
+
+            });
+        },
+        getOldMonthBallance : function(){
+            var para = [];
+            var self = this;
+            var start = this.get("sdate"),
+                end = this.get("edate"),
+                license = this.get("licenseSelect"),
+                bloc = this.get("blocSelect");
+            end.setDate((end.getDate() - 30) + 1);
+            if (start && end) {
+                start.setDate(start.getDate() - 30);
+                end = new Date(end);
+                para.push({
+                    field: "month_of >=",
+                    operator : "where_related_transaction",
+                    value: kendo.toString(start, "yyyy-MM-dd")
+                });
+                para.push({
+                    field: "month_of <",
+                    operator : "where_related_transaction",
+                    value: kendo.toString(end, "yyyy-MM-dd")
+                });
+            } else if (start) {
+                start = new Date(start);
+
+                para.push({
+                    field: "month_of",
+                    operator : "where_related_transaction",
+                    value: kendo.toString(start, "yyyy-MM-dd")
+                });
+            } else if (end) {
+                end = new Date(end);
+                end.setDate((end.getDate() - 30) + 1);
+                para.push({
+                    field: "month_of <",
+                    operator : "where_related_transaction",
+                    value: kendo.toString(end, "yyyy-MM-dd")
+                });
             }
+
+            this.ballanceDS.query({
+                filter: para,
+            }).then(function(e) {
+                self.getCashReceipt();
+                
+            });
+        },
+        getCashReceipt : function(){
+            var para = [];
+            var self = this;
+            var start = this.get("sdate"),
+                end = this.get("edate"),
+                license = this.get("licenseSelect"),
+                bloc = this.get("blocSelect");
+
+
+             if (start && end) {
+                start = new Date(start);
+                end = new Date(end);
+                displayDate = kendo.toString(start, "dd-MM-yyyy") + " - " + kendo.toString(end, "dd-MM-yyyy");
+                end.setDate(end.getDate() + 1);
+
+                para.push({
+                    field: "month_of >=",
+                    value: kendo.toString(start, "yyyy-MM-dd")
+                });
+                para.push({
+                    field: "month_of <",
+                    value: kendo.toString(end, "yyyy-MM-dd")
+                });
+            } else if (start) {
+                start = new Date(start);
+                displayDate = "On " + kendo.toString(start, "dd-MM-yyyy");
+
+                para.push({
+                    field: "month_of",
+                    value: kendo.toString(start, "yyyy-MM-dd")
+                });
+            } else if (end) {
+                end = new Date(end);
+                displayDate = "As Of " + kendo.toString(end, "dd-MM-yyyy");
+                end.setDate(end.getDate() + 1);
+
+                para.push({
+                    field: "month_of <",
+                    value: kendo.toString(end, "yyyy-MM-dd")
+                });
+            } else {
+
+            }
+
+            this.cashReceiptDS.query({
+                filter: para,
+            }).then(function() {
+                var view = self.cashReceiptDS.view();
+                // $.each(self.ballanceDS.data(), function(i,v){
+                //     $.each(view, function(j,k){
+                //         if(v.id == k.id){
+                //             var amountow = v.amount - k.amount;
+                //             // self.dataSource.data()[i].set("old_ballance", k.amount);
+                //         }
+                //     });
+                // });
+            });
         },
         printGrid: function() {
             var gridElement = $('#grid'),
@@ -20224,56 +20368,16 @@
                         {
                             autoWidth: true
                         },
-                        {
-                            autoWidth: true
-                        },
-                        {
-                            autoWidth: true
-                        },
-                        {
-                            autoWidth: true
-                        },
-                        {
-                            autoWidth: true
-                        },
-                        {
-                            autoWidth: true
-                        },
-                        {
-                            autoWidth: true
-                        },
-                        {
-                            autoWidth: true
-                        },
-                        {
-                            autoWidth: true
-                        },
-                        {
-                            autoWidth: true
-                        },
-                        {
-                            autoWidth: true
-                        },
-                        {
-                            autoWidth: true
-                        },
-                        {
-                            autoWidth: true
-                        }
                     ],
-                    title: "Sale Detail",
+                    title: "Daily Cash Receipt Summary",
                     rows: this.exArray
                 }]
             });
             //save the file as Excel file with extension xlsx
             kendo.saveAs({
                 dataURI: workbook.toDataURL(),
-                fileName: "saleDetail.xlsx"
+                fileName: "dailyCash.xlsx"
             });
-        },
-        cancel: function(){
-            this.dataSource.data([]);
-            banhji.router.navigate('/reports');
         }
     });
     banhji.fineCollect = kendo.observable({
@@ -26200,14 +26304,7 @@
             this.purchaseDatasource.query({
                 filter: para,
             }).then(function() {
-                var view = self.purchaseDatasource.view();
 
-                var amount = 0;
-                $.each(view, function(index, value) {
-                    amount += value.amount;
-                });
-
-                self.set("totalAmount", kendo.toString(amount, banhji.locale == "km-KH" ? "c0" : "c", banhji.locale));
             });
             
 
@@ -31695,7 +31792,13 @@
             banhji.view.layout.showIn("#content", banhji.view.totalSale);
 
             var vm = banhji.totalSale;
-            banhji.userManagement.addMultiTask("Total Sale Report", "total_sale", null);
+            banhji.userManagement.addMultiTask("Daily Cash Receipt", "total_sale", null);
+
+            if (banhji.pageLoaded["total_sale"] == undefined) {
+                banhji.pageLoaded["total_sale"] == true;
+
+                vm.sorterChanges();
+            }
             vm.pageLoad();
         }
     });

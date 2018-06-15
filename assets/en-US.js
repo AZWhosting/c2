@@ -1327,6 +1327,8 @@ var	en_US = {
 	"sale_detail_report": "Sale Detail Report",
 	"connection_service_revenue_report": "Connection Service Revenue Report",
 	"cash_receipt_report": "Cash Receipt Report",
+	"electricity_report": "Electricity Report",
+	"subsidy_report": "Subsidy Report",
 	"summary_and_detail_cash": "Summary and detail cash receipt reports grouped by sources/ methods of receipts",
 	"cash_receipt_detail": "Cash Receipt Detail",
 	"cash_receipt_summary": "Cash Receipt Summary",

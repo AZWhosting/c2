@@ -105,10 +105,10 @@
                     <div class="navbar-header">
                         <a class="navbar-brand" href="<?php echo base_url();?>micro/home">
                             <b>                                
-                                <img src="<?php echo base_url()?>assets/micro/logo-banhjiNew.png" style="height: 36px;" alt="homepage" class="dark-logo" />
+                                <img src="<?php echo base_url()?>assets/micro/banhji-micro-new.png" style="height: 36px;" alt="homepage" class="dark-logo" />
                             </b>
                             <span>                             
-                                <img src="<?php echo base_url()?>assets/micro/logo-micro.png" style="height: 36px;" alt="homepage" class="dark-logo" />
+                                <img src="<?php echo base_url()?>assets/micro/banhji-micro-new1.png" style="height: 36px;" alt="homepage" class="dark-logo" />
                             </span>
                             </a>
                     </div>
