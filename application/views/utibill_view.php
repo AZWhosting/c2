@@ -13405,7 +13405,7 @@
 					        <!-- //ACCOUNTING END -->
 							<div class="tab-pane" id="tab7">
 								<div class="row-fluid sale-report">
-									<h2 style="margin-bottom: 10px;" data-bind="text: lang.lang.cash_receipt_report">Cash Receipt Report</h2>
+									<h2 style="margin-bottom: 10px;" >Electricity Report</h2>
 									<p data-bind="text: lang.lang.summary_and_detail_cash">
 										Summary and detail cash receipt reports grouped by sources/ methods of receipts 
 									</p>
