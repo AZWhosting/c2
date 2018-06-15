@@ -54257,7 +54257,8 @@
             }
 
             //Account Type
-            if(account_type_id>0){
+            if(account_type_id){
+                console.log(account_type_id);
                 para.push({ field:"account_type_id", operator:"where_related_account", value:account_type_id });
             }
 
@@ -54445,6 +54446,14 @@
                     });
                 }
             });
+        },
+        typeChanges         : function(){
+            var account_type_id = this.get("account_type_id");
+            // if(account_type_id){
+            //     this.accountDS.filter({ field:"account_type_id", value:account_type_id });
+            // }else{
+            //     this.accountDS.filter([]);
+            // }
         },
         printGrid           : function() {
             var gridElement = $('#grid'),

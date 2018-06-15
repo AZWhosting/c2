@@ -39016,7 +39016,9 @@
 								                   data-text-field="name"
 								                   data-value-field="id"
 								                   data-bind="value: account_type_id,
-								                              source: accountTypeDS" />
+								                              source: accountTypeDS,
+								                              events:{ change: typeChanges }"
+								                   data-option-label="--- All Types ---" />
 
 										  	<button type="button" data-bind="click: search"><i class="icon-search"></i></button>
 							        	</div>
