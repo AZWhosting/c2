@@ -172,7 +172,7 @@ class Customer_modules extends REST_Controller {
 		$cash->where_related("transaction", "is_recurring <>", 1);		
 		$cash->where_related("transaction", "deleted <>", 1);
 		$cash->where("deleted <>", 1);
-		$cash->get_iterated();
+		$cash->get();
 
 		$totalCashPosition = floatval($cash->total);
 		
@@ -186,8 +186,6 @@ class Customer_modules extends REST_Controller {
 		$product->where("item_id >", 0);
 		$product->where_related("item", "item_type_id", 1);
 		$product->group_by("item_id");
-		$product->get();
-
 		$sale_product = $product->count();
 
 

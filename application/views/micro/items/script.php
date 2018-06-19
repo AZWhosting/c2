@@ -3484,6 +3484,12 @@
         goMenuItems        : function(){
             banhji.router.navigate('/');
         },
+        goInventoryPositionSummary  :function(){
+            banhji.router.navigate('/inventory_position_summary');
+        },
+        goInventoryPositionDetail  :function(){
+            banhji.router.navigate('/inventory_position_detail');
+        },
     });
     banhji.reports = kendo.observable({
         lang                : langVM,
@@ -8319,7 +8325,9 @@
         if(!banhji.userManagement.getLogin()){
             banhji.router.navigate('/manage');
         }else{
-            banhji.view.layout.showIn("#content", banhji.view.inventoryPositionSummary);
+            banhji.view.layout.showIn('#content', banhji.view.Index);
+            banhji.view.Index.showIn('#indexMenu', banhji.view.tapMenu);
+            banhji.view.Index.showIn('#indexContent', banhji.view.inventoryPositionSummary);
 
             var vm = banhji.inventoryPositionSummary;
             banhji.userManagement.addMultiTask("Inventory Position Summary","inventory_position_summary",null);
@@ -8335,7 +8343,9 @@
         if(!banhji.userManagement.getLogin()){
             banhji.router.navigate('/manage');
         }else{
-            banhji.view.layout.showIn("#content", banhji.view.inventoryPositionSummaryByLocation);
+            banhji.view.layout.showIn('#content', banhji.view.Index);
+            banhji.view.Index.showIn('#indexMenu', banhji.view.tapMenu);
+            banhji.view.layout.showIn("#indexContent", banhji.view.inventoryPositionSummaryByLocation);
 
             var vm = banhji.inventoryPositionSummaryByLocation;
             banhji.userManagement.addMultiTask("Inventory Position Summary By Location","inventory_position_summary_by_location",null);
@@ -8350,7 +8360,10 @@
         if(!banhji.userManagement.getLogin()){
             banhji.router.navigate('/manage');
         }else{
-            banhji.view.layout.showIn("#content", banhji.view.inventoryPositionDetail);
+            
+             banhji.view.layout.showIn('#content', banhji.view.Index);
+            banhji.view.Index.showIn('#indexMenu', banhji.view.tapMenu);
+            banhji.view.layout.showIn("#indexContent", banhji.view.inventoryPositionDetail);
 
             var vm = banhji.inventoryPositionDetail;
             banhji.userManagement.addMultiTask("Inventory Position Detail","inventory_position_detail",null);

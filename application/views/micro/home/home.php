@@ -29,8 +29,8 @@
         <div class="container-fluid">
             <div class="row marginTop15 home">
                 <div class="col-12 col-md-6 col-lg-6">
-                    <div class=" board-chart" style="margin-bottom: 19px;">
-                        <div class="row">
+                    <div class=" board-chart hidden-sm-down" style="margin-bottom: 19px;">
+                        <div class="row ">
                             <div class="col-3 col-md-3" >
                                 <div class="marginBottom" style=" height: 117px; text-align: center;">
                                     <img style="width: auto; height: auto; max-width: 100%; max-height: 100%" data-bind="attr: { src: companyLogo, alt: companyName, title: companyName }" />

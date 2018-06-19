@@ -70,6 +70,14 @@ class Micro extends CI_Controller {
 		$this->load->view("micro/footer");
 	}
 
+	public function guide() {	
+		$this->load->view("micro/header");
+		$this->load->view("micro/sidebar");
+		$this->load->view("micro/guide/guide");
+		$this->load->view("micro/guide/script");
+		$this->load->view("micro/footer");
+	}
+	
 	public function sidebar() {
 		$this->load->view("micro/sidebar");
 	}

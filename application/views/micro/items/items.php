@@ -45,7 +45,9 @@
 <script id="tapMenu" type="text/x-kendo-template">
 	<ul class="nav nav-tabs customtab" role="tablist" >
 		<li class="nav-item hidden-sm-down"> <a class="nav-link active" data-toggle="tab" href="#/" data-bind="click: goMenuItems"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.inventory_for_sale" ></span></a> </li>
-		<li class="nav-item"> <a class="nav-link " data-toggle="tab" href="#/reports" data-bind="click: goReports"><span class="hidden-sm-up"><i class="ti-layout-grid2-thumb"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.reports"></span></a> </li>  
+		<!-- <li class="nav-item"> <a class="nav-link " data-toggle="tab" href="#/reports" data-bind="click: goReports"><span class="hidden-sm-up"><i class="ti-layout-grid2-thumb"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.reports"></span></a> </li> -->
+		<li class="nav-item"> <a class="nav-link " data-toggle="tab" href="" data-bind="click: goInventoryPositionSummary"><span class="hidden-sm-up"><i class="ti-layout-grid2-thumb"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.inventory_position_summary"></span></a> </li>
+		<li class="nav-item"> <a class="nav-link " data-toggle="tab" href="" data-bind="click: goInventoryPositionDetail"><span class="hidden-sm-up"><i class="ti-layout-grid2-thumb"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.inventory_position_detail"></span></a> </li>  
 	</ul>
 </script>
 <!-- End -->
@@ -184,15 +186,15 @@
 			<div class="listWrapper">
 				<!-- <a href="#/item" class="btn waves-effect waves-light btn-block btn-info btnAddCustomer"> --><!-- <i class="icon-user-follow marginRight"></i> --><!-- <span data-bind="">Add New Item</span></a> -->
 				<div class="btn-group  btn-info btn-block" style="margin-bottom: 8px;">
-	                <button style="width: 100%; font-size: 18px;" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	                	Add New Item
+	                <button style="width: 100%; font-size: 18px;" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-bind="text: lang.lang.add_inventory_for_sale">
+	                
 	                </button>
 	                <div class="dropdown-menu">
 	                    <a class="dropdown-item" href="#/item"><span data-bind="text: lang.lang.add_inventory_for_sale"></span></a>
 	                    <a class="dropdown-item" href="#/item_service"><span data-bind="text: lang.lang.add_services"></span></a>
 	                </div>
 	            </div>
-				<div class="innerAll">
+				<div class="innerAll" style="height: 93px;">
 					<form autocomplete="off" class="form-inline">
 						<div class="widget-search">
 							<div class="overflow-hidden">
@@ -200,7 +202,7 @@
 							</div>
 							<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="ti-search"></i></button>
 						</div>
-						<!-- <div class="select2-container">
+						<div class="select2-container">
 							<input data-role="dropdownlist" style="width: 100%;" 
 				                   data-option-label="Select Category..."
 					                   data-value-primitive="true"
@@ -208,7 +210,7 @@
 					                   data-value-field="id"
 					                   data-bind="value: category_id,
 					                              source: categoryDS"/>
-						</div> -->
+						</div>
 					</form>
 				</div>
 
@@ -238,10 +240,10 @@
                             <div class="tab-pane active" id="customerInformation" role="tabpanel">
                             	<div class="p-10">
                             		<div class="row">
-                                    	<div class="col-sm-4">
+                                    	<div class="col-sm-6">
                                     		<img class="main-image" data-bind="attr: { src: obj.image_url, alt: obj.name, title: obj.name }">
                                     	</div>
-                                    	<div class="col-sm-8">
+                                    	<div class="col-sm-6">
                                     		<div class="accounCetner-textedit" style="margin-bottom: 0;" >
 								            	<table width="100%">
 													<tr>
@@ -284,7 +286,7 @@
 													</tr>
 												</table>
 
-												<a class="btn waves-effect waves-light btn-block btn-info btnViewEditCustomer" data-bind="click: goEdit"><i class="ti-pencil-alt marginRight"></i><span data-bind="text: lang.lang.view_edit_profile"></span></a>
+												<a class="btn waves-effect waves-light btn-block btn-info btnViewEditCustomer" data-bind="click: goEdit"><i class="ti-pencil-alt marginRight"></i><span data-bind="text: lang.lang.view_edit_profile_micro"></span></a>
 											</div>
                                     	</div>
                                     </div>
@@ -337,16 +339,16 @@
 					<div class="col-md-6">
 						<div class="row">
 	                        <div class="col-md-12">
-								<div class="saleOverview" style="margin-bottom: 20px;">
-		                            <p >
+								<div class="saleOverview" style="margin-bottom: 20px; padding-top: 50px; padding-bottom: 47px;">
+		                            <p style="font-size: 35px;">
 		                            	<span data-format="n" data-bind="text: raw.amount"></span>
 										<span data-bind="text: raw.currency_code"></span>
 		                            </p>
-		                            <div class="col-md-12">
-		                                <!-- <div class="col-md-4">
+		                            <!-- <div class="col-md-12">
+		                                <div class="col-md-4">
 		                                    <span data-format="n0" data-bind="text: raw.quantity"></span>
 		                                    <span data-bind="text: lang.lang.qoh"></span>
-		                                </div> -->
+		                                </div>
 		                                <div class="col-md-6">
 		                                    <span data-format="n0" data-bind="text: raw.po"></span>
 		                                    <span data-bind="text: lang.lang.on_po"></span>
@@ -355,7 +357,7 @@
 		                                    <span data-format="n0" data-bind="text: raw.so"></span>
 		                                    <span data-bind="text: lang.lang.on_so"></span>
 		                                </div>
-		                            </div>
+		                            </div> -->
 		                        </div>
 		                    </div>
 	                    </div>
@@ -448,373 +450,355 @@
 
 
 <!-- Report -->
-<script id="inventoryPositionSummary" type="text/x-kendo-template">
-	<div class="page-wrapper ">
-        <div class="container-fluid">
-        	<div class="row page-titles">
-                <div class="col-md-12">
-                	<div class="card">
-                		<div class="btn-close" onclick="javascript:window.history.back()"><i class="ti-close"></i></div>
-                		<div class="card-body">
-                			<div class="reportHeader">
-				                <!-- Nav tabs -->
-				                <ul class="nav nav-tabs" role="tablist">
-				                    <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#date" role="tab"><i class=" ti-calendar"></i><span class="marginLeft hidden-xs-down" data-bind="text: lang.lang.date">Date</span></a> </li>
-				                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#filter" role="tab"><i class="ti-filter"></i><span class="marginLeft hidden-xs-down" data-bind="text: lang.lang.filter">filter</span></a> </li>
-				                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#print_export" role="tab"><i class="ti-printer"></i><span class="marginLeft hidden-xs-down" data-bind="text: lang.lang.print_export">Print/Export</span></a> </li>
-				                </ul>
-				                <!-- Tab panes -->
-				                <div class="tab-content tabcontent-border">
-				                    <div class="tab-pane active" id="date" role="tabpanel">
-				                        <div class="p-20">
-				                        	<div class="row ">
-						    					<p data-bind="text: lang.lang.as_of"></p>
-												<input data-role="datepicker" class="marginRight"
-													data-format="dd-MM-yyyy"
-													data-parse-formats="yyyy-MM-dd"
-													data-bind="value: as_of" />
-													
-											  	<button type="button" data-role="button" data-bind="click: search"><i class="ti-search"></i></button>
-						    				</div>
-				                        </div>
-				                    </div>
-				                    <div class="tab-pane" id="filter" role="tabpanel">
-				                    	<div class="p-20">
-				                        	<div class="row">
-												<div class="col-md-3">
-													<span data-bind="text: lang.lang.category">Category</span>
-													<input
-														data-role="dropdownlist"
-														data-option-label="Category ..."
-														data-auto-bind="false"
-														data-value-primitive="true"
-														data-text-field="name"
-														data-value-field="id"
-														data-bind="
-															value: categorySelect,
-															source: categoryDS,
-															events: {change: catagoryChange}" style="width: 100%">
-												</div>
-												<div class="col-md-3">
-													<span>Group</span>
-														<input
-															data-role="dropdownlist"
-															data-option-label="Group ..."
-															data-auto-bind="false"
-															data-value-primitive="false"
-															data-text-field="name"
-															data-value-field="id"
-															data-bind="
-																value: groupSelect,
-																enabled: haveGroup,
-																source: itemGroupDS" style="width: 100%">
-												</div>
-												<div class="col-md-5">
-													<span data-bind="text: lang.lang.item"></span>
-													<select data-role="multiselect"
-														   data-value-primitive="true"
-														   data-header-template="item-header-tmpl"
-														   data-item-template="item-list-tmpl"
-														   data-value-field="id"
-														   data-text-field="name"
-														   data-bind="value: obj.itemIds,
-														   			source: itemDS"
-														   data-placeholder="Select Item.."
-														   style="width: 100%" /></select>
-												</div>
-													
-											  	<button style="margin-top: 18px;" type="button" data-role="button" data-bind="click: search"><i class="ti-search"></i></button>														
-						    				</div>
-						    			</div>
-				                    </div>
-				                    <div class="tab-pane" id="print_export" role="tabpanel">
-				                    	<div class="p-20">
-				                        	<div class="row">
-						    					<button class="col-md-1 btnPrint " type="button" data-role="button" data-bind="click: printGrid"><i class="ti-printer"></i><span class="marginLeft">Print</span></button>
-						    					<button class="col-md-2 btnExport" type="button" data-role="button" data-bind="click: ExportExcel"><i class="ti-export"></i><span class="marginLeft">Export to Excel</span></button>
-						    				</div>
-						    			</div>
-				                    </div>
-				                    
-				                </div>
-				            </div>
-				            <div id="invFormContent" style="page-break-after: always;">
-				            	<!-- Style For Print -->
-				            	<style type="text/css">
-				            		* {
-										-webkit-print-color-adjust: true;
-									}
-									.home-footer .table tbody td {
-									    background-color: #fff !important;
-									    -webkit-print-color-adjust: exact;
-									}
-									.home-footer .table tbody tr:nth-child(odd) td {
-									    background-color: #f4f5f8 !important;
-									    -webkit-print-color-adjust: exact;
-									}
-				            	</style>
+<script id="inventoryPositionSummary" type="text/x-kendo-template">	
+	<div class="row">    		
+		<div class="card-body" style="padding-top: 0; ">
+			<div class="reportHeader">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#date" role="tab"><i class=" ti-calendar"></i><span class="marginLeft hidden-xs-down" data-bind="text: lang.lang.date">Date</span></a> </li>
+                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#filter" role="tab"><i class="ti-filter"></i><span class="marginLeft hidden-xs-down" data-bind="text: lang.lang.filter">filter</span></a> </li>
+                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#print_export" role="tab"><i class="ti-printer"></i><span class="marginLeft hidden-xs-down" data-bind="text: lang.lang.print_export">Print/Export</span></a> </li>
+                </ul>
+                <!-- Tab panes -->
+                <div class="tab-content tabcontent-border">
+                    <div class="tab-pane active" id="date" role="tabpanel">
+                        <div class="p-20">
+                        	<div class="row ">
+		    					<p data-bind="text: lang.lang.as_of"></p>
+								<input data-role="datepicker" class="marginRight"
+									data-format="dd-MM-yyyy"
+									data-parse-formats="yyyy-MM-dd"
+									data-bind="value: as_of" />
+									
+							  	<button class="k-button btn-info" type="button" data-role="button" data-bind="click: search"><i class="ti-search"></i></button>
+		    				</div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="filter" role="tabpanel">
+                    	<div class="p-20">
+                        	<div class="row">
+								<div class="col-md-3">
+									<span data-bind="text: lang.lang.category">Category</span>
+									<input
+										data-role="dropdownlist"
+										data-option-label="Category ..."
+										data-auto-bind="false"
+										data-value-primitive="true"
+										data-text-field="name"
+										data-value-field="id"
+										data-bind="
+											value: categorySelect,
+											source: categoryDS,
+											events: {change: catagoryChange}" style="width: 100%">
+								</div>
+								<div class="col-md-3">
+									<span>Group</span>
+										<input
+											data-role="dropdownlist"
+											data-option-label="Group ..."
+											data-auto-bind="false"
+											data-value-primitive="false"
+											data-text-field="name"
+											data-value-field="id"
+											data-bind="
+												value: groupSelect,
+												enabled: haveGroup,
+												source: itemGroupDS" style="width: 100%">
+								</div>
+								<div class="col-md-5">
+									<span data-bind="text: lang.lang.item"></span>
+									<select data-role="multiselect"
+										   data-value-primitive="true"
+										   data-header-template="item-header-tmpl"
+										   data-item-template="item-list-tmpl"
+										   data-value-field="id"
+										   data-text-field="name"
+										   data-bind="value: obj.itemIds,
+										   			source: itemDS"
+										   data-placeholder="Select Item.."
+										   style="width: 100%" /></select>
+								</div>
+									
+							  	<button class="k-button btn-info" style="margin-top: 18px;" type="button" data-role="button" data-bind="click: search"><i class="ti-search"></i></button>														
+		    				</div>
+		    			</div>
+                    </div>
+                    <div class="tab-pane" id="print_export" role="tabpanel">
+                    	<div class="p-20">
+                        	<div class="row">
+		    					<button class="col-md-1 btnPrint k-button btn-info" type="button" data-role="button" data-bind="click: printGrid"><i class="ti-printer"></i><span class="marginLeft">Print</span></button>
+		    					<button class="col-md-2 btnExport k-button btn-info" type="button" data-role="button" data-bind="click: ExportExcel"><i class="ti-export"></i><span class="marginLeft">Export to Excel</span></button>
+		    				</div>
+		    			</div>
+                    </div>
+                    
+                </div>
+            </div>
+            <div id="invFormContent" style="page-break-after: always;">
+            	<!-- Style For Print -->
+            	<style type="text/css">
+            		* {
+						-webkit-print-color-adjust: true;
+					}
+					.home-footer .table tbody td {
+					    background-color: #fff !important;
+					    -webkit-print-color-adjust: exact;
+					}
+					.home-footer .table tbody tr:nth-child(odd) td {
+					    background-color: #f4f5f8 !important;
+					    -webkit-print-color-adjust: exact;
+					}
+            	</style>
 
-					            <!-- Title -->
-					            <div class="reportTitle" style="text-align: center; width: 97%; margin: 15px auto;">
-					            	<h3 style="font-size: 15px; color: #203864 !important; margin-bottom: 10px;" data-bind="html: institute.name"></h3>
-									<h2 style="font-size: 20px; font-weight: 600; margin-top: 0px; color: #203864 !important;" data-bind="text: lang.lang.inventory_position_summary"></h2>
-									<p style="font-size: 15px; margin-bottom: 0;" data-bind="text: displayDate"></p>
-					            </div>
+	            <!-- Title -->
+	            <div class="reportTitle" style="text-align: center; width: 97%; margin: 15px auto;">
+	            	<h3 style="font-size: 15px; color: #203864 !important; margin-bottom: 10px;" data-bind="html: institute.name"></h3>
+					<h2 style="font-size: 20px; font-weight: 600; margin-top: 0px; color: #203864 !important;" data-bind="text: lang.lang.inventory_position_summary"></h2>
+					<p style="font-size: 15px; margin-bottom: 0;" data-bind="text: displayDate"></p>
+	            </div>
 
-					            <!-- Block -->
-					            <div class="reportBlock" style="width: 97%; margin: 0 auto;">
-					            	<div class="row">
-					            		<div class="col-md-2">
-					            			<div class="total-sale" style="width: 100%; padding: 10px; background-color: #DDEBF7 !important; -webkit-print-color-adjust: exact; text-align: center; margin-bottom: 15px; display: inline-block; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
-												<p style="font-size: 14px;" data-bind="text: lang.lang.product_items"></p>
-												<span style="font-size: 20px; font-weight: 700;" data-bind="text: dataSource.total"></span>
-											</div>
-					            		</div>
-					            		<div class="col-md-10" >
-					            			<div class="total-sale" style="width: 100%; padding: 10px; background-color: #DDEBF7 !important; -webkit-print-color-adjust: exact; text-align: center; margin-bottom: 15px; display: inline-block; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
-												<p style="font-size: 14px;" data-bind="text: lang.lang.total_inventory_value"></p>
-												<span style="font-size: 20px; font-weight: 700;" data-bind="text: total"></span>
-											</div>
-					            		</div>
-					            	</div>
-					            </div>
+	            <!-- Block -->
+	            <div class="reportBlock" style="width: 97%; margin: 0 auto;">
+	            	<div class="row">
+	            		<div class="col-md-2">
+	            			<div class="total-sale" style="width: 100%; padding: 10px; background-color: #DDEBF7 !important; -webkit-print-color-adjust: exact; text-align: center; margin-bottom: 15px; display: inline-block; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
+								<p style="font-size: 14px;" data-bind="text: lang.lang.product_items"></p>
+								<span style="font-size: 20px; font-weight: 700;" data-bind="text: dataSource.total"></span>
+							</div>
+	            		</div>
+	            		<div class="col-md-10" >
+	            			<div class="total-sale" style="width: 100%; padding: 10px; background-color: #DDEBF7 !important; -webkit-print-color-adjust: exact; text-align: center; margin-bottom: 15px; display: inline-block; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
+								<p style="font-size: 14px;" data-bind="text: lang.lang.total_inventory_value"></p>
+								<span style="font-size: 20px; font-weight: 700;" data-bind="text: total"></span>
+							</div>
+	            		</div>
+	            	</div>
+	            </div>
 
-					            <!-- Table -->
-					            <div class="reportTable home-footer table-responsive" style="width: 97%; margin: 0 auto;">
-					            	<table class="table color-table dark-table" style="width: 100%; height: auto; ">
-		                                <thead>
-		                                    <tr>
-												<th style="background-color: #343a40 !important; -webkit-print-color-adjust: exact; color: #fff !important; text-align: center; text-transform: uppercase; vertical-align: top; font-weight: 400; padding: 10px;" data-bind="text: lang.lang.item_name"></th>
-												<th style="background-color: #343a40 !important; -webkit-print-color-adjust: exact; color: #fff !important; text-align: center; text-transform: uppercase; vertical-align: top; font-weight: 400; padding: 10px;" data-bind="text: lang.lang.on_po"></th>
-												<th style="background-color: #343a40 !important; -webkit-print-color-adjust: exact; color: #fff !important; text-align: center; text-transform: uppercase; vertical-align: top; font-weight: 400; padding: 10px;" data-bind="text: lang.lang.on_so"></th>
-												<th style="background-color: #343a40 !important; -webkit-print-color-adjust: exact; color: #fff !important; text-align: center; text-transform: uppercase; vertical-align: top; font-weight: 400; padding: 10px;" data-bind="text: lang.lang.qoh"></th>
-												<th style="background-color: #343a40 !important; -webkit-print-color-adjust: exact; color: #fff !important; text-align: center; text-transform: uppercase; vertical-align: top; font-weight: 400; padding: 10px;" data-bind="text: lang.lang.uom"></th>
-												<th style="background-color: #343a40 !important; -webkit-print-color-adjust: exact; color: #fff !important; text-align: center; text-transform: uppercase; vertical-align: top; font-weight: 400; padding: 10px;" data-bind="text: lang.lang.average_cost"></th>
-												<th style="background-color: #343a40 !important; -webkit-print-color-adjust: exact; color: #fff !important; text-align: center; text-transform: uppercase; vertical-align: top; font-weight: 400; padding: 10px;" data-bind="text: lang.lang.inventory_value"></th>
-											</tr>
-		                                </thead>
-		                                <tbody  data-role="listview"
-					            				data-auto-bind="false"
-								                data-template="inventoryPositionSummary-template"
-								                data-bind="source: dataSource" >
-								        </tbody>
-					            	</table>
-					            </div>
-					        </div>
+	            <!-- Table -->
+	            <div class="reportTable home-footer table-responsive" style="width: 97%; margin: 0 auto;">
+	            	<table class="table color-table dark-table" style="width: 100%; height: auto; ">
+                        <thead>
+                            <tr>
+								<th style="background-color: #343a40 !important; -webkit-print-color-adjust: exact; color: #fff !important; text-align: center; text-transform: uppercase; vertical-align: top; font-weight: 400; padding: 10px;" data-bind="text: lang.lang.item_name"></th>
+								<th class="hidden-sm-down" style="background-color: #343a40 !important; -webkit-print-color-adjust: exact; color: #fff !important; text-align: center; text-transform: uppercase; vertical-align: top; font-weight: 400; padding: 10px;" data-bind="text: lang.lang.on_po"></th>
+								<th class="hidden-sm-down" style="background-color: #343a40 !important; -webkit-print-color-adjust: exact; color: #fff !important; text-align: center; text-transform: uppercase; vertical-align: top; font-weight: 400; padding: 10px;" data-bind="text: lang.lang.on_so"></th>
+								<th style="background-color: #343a40 !important; -webkit-print-color-adjust: exact; color: #fff !important; text-align: center; text-transform: uppercase; vertical-align: top; font-weight: 400; padding: 10px;" data-bind="text: lang.lang.qoh"></th>
+								<th class="hidden-sm-down" style="background-color: #343a40 !important; -webkit-print-color-adjust: exact; color: #fff !important; text-align: center; text-transform: uppercase; vertical-align: top; font-weight: 400; padding: 10px;" data-bind="text: lang.lang.uom"></th>
+								<th class="hidden-sm-down" style="background-color: #343a40 !important; -webkit-print-color-adjust: exact; color: #fff !important; text-align: center; text-transform: uppercase; vertical-align: top; font-weight: 400; padding: 10px;" data-bind="text: lang.lang.average_cost"></th>
+								<th style="background-color: #343a40 !important; -webkit-print-color-adjust: exact; color: #fff !important; text-align: center; text-transform: uppercase; vertical-align: top; font-weight: 400; padding: 10px;" data-bind="text: lang.lang.inventory_value"></th>
+							</tr>
+                        </thead>
+                        <tbody  data-role="listview"
+	            				data-auto-bind="false"
+				                data-template="inventoryPositionSummary-template"
+				                data-bind="source: dataSource" >
+				        </tbody>
+	            	</table>
+	            </div>
+	        </div>
 
-					        <!-- Pagination -->
-			            	<div 	id="pager" 
-			            			class="k-pager-wrap" 
-				            		data-role="pager"
-							    	data-auto-bind="false"
-						            data-bind="source: dataSource"
-						            style="width: 97%; margin: 0 auto;" >
-						    </div>
-			            </div>
-                	</div>
-				</div>
-			</div>
-		</div>
-	</div>
+	        <!-- Pagination -->
+        	<div 	id="pager" 
+        			class="k-pager-wrap" 
+            		data-role="pager"
+			    	data-auto-bind="false"
+		            data-bind="source: dataSource"
+		            style="width: 97%; margin: 0 auto;" >
+		    </div>
+        </div>        	
+	</div>	
 </script>
 <script id="inventoryPositionSummary-template" type="text/x-kendo-tmpl">
 	<tr>
 	    <td>#=name#</td>
-	    <td align="right">#=kendo.toString(on_po, "n2")#</td>
-	    <td align="right">#=kendo.toString(on_so, "n2")#</td>
+	    <td class="hidden-sm-down" align="right">#=kendo.toString(on_po, "n2")#</td>
+	    <td class="hidden-sm-down" align="right">#=kendo.toString(on_so, "n2")#</td>
 	    <td align="right">#=kendo.toString(quantity, "n2")#</td>
-	    <td align="right">#=measurement#</td>
-	    <td align="right">#=kendo.toString(cost, "c2", banhji.locale)#</td>
+	    <td class="hidden-sm-down" align="right">#=measurement#</td>
+	    <td class="hidden-sm-down" align="right">#=kendo.toString(cost, "c2", banhji.locale)#</td>
 	    <td align="right">#=kendo.toString(amount, "c2", banhji.locale)#</td>
 	</tr>
 </script>
 <script id="inventoryPositionDetail" type="text/x-kendo-template">
-	<div class="page-wrapper ">
-        <div class="container-fluid">
-        	<div class="row page-titles">
-                <div class="col-md-12">
-                	<div class="card">
-                		<div class="btn-close" onclick="javascript:window.history.back()"><i class="ti-close"></i></div>
-                		<div class="card-body">
-                			<div class="reportHeader">
-				                <!-- Nav tabs -->
-				                <ul class="nav nav-tabs" role="tablist">
-				                    <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#date" role="tab"><i class=" ti-calendar"></i><span class="marginLeft hidden-xs-down" data-bind="text: lang.lang.date">Date</span></a> </li>
-				                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#filter" role="tab"><i class="ti-filter"></i><span class="marginLeft hidden-xs-down" data-bind="text: lang.lang.filter">filter</span></a> </li>
-				                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#print_export" role="tab"><i class="ti-printer"></i><span class="marginLeft hidden-xs-down" data-bind="text: lang.lang.print_export">Print/Export</span></a> </li>
-				                </ul>
-				                <!-- Tab panes -->
-				                <div class="tab-content tabcontent-border">
-				                    <div class="tab-pane active" id="date" role="tabpanel">
-				                        <div class="p-20">
-				                        	<div class="row ">
-						    					<input data-role="dropdownlist"  
-													   class="sorter marginRight marginBottom"
-											           data-value-primitive="true"
-											           data-text-field="text"
-											           data-value-field="value"
-											           data-bind="value: sorter,
-											                      source: sortList,
-											                      events: { change: sorterChanges }" />
+	<div class="row">
+		<div class="card-body" style="padding-top: 0; ">
+			<div class="reportHeader">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#date" role="tab"><i class=" ti-calendar"></i><span class="marginLeft hidden-xs-down" data-bind="text: lang.lang.date">Date</span></a> </li>
+                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#filter" role="tab"><i class="ti-filter"></i><span class="marginLeft hidden-xs-down" data-bind="text: lang.lang.filter">filter</span></a> </li>
+                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#print_export" role="tab"><i class="ti-printer"></i><span class="marginLeft hidden-xs-down" data-bind="text: lang.lang.print_export">Print/Export</span></a> </li>
+                </ul>
+                <!-- Tab panes -->
+                <div class="tab-content tabcontent-border">
+                    <div class="tab-pane active" id="date" role="tabpanel">
+                        <div class="p-20">
+                        	<div class="row ">
+		    					<input data-role="dropdownlist"  
+									   class="sorter marginRight marginBottom"
+							           data-value-primitive="true"
+							           data-text-field="text"
+							           data-value-field="value"
+							           data-bind="value: sorter,
+							                      source: sortList,
+							                      events: { change: sorterChanges }" />
 
-												<input data-role="datepicker"
-													   class="sdate marginRight marginBottom"
-													   data-format="dd-MM-yyyy"
-											           data-bind="value: sdate,
-											           			  max: edate"
-											           placeholder="From ..." >
+								<input data-role="datepicker"
+									   class="sdate marginRight marginBottom"
+									   data-format="dd-MM-yyyy"
+							           data-bind="value: sdate,
+							           			  max: edate"
+							           placeholder="From ..." >
 
-											    <input data-role="datepicker" 
-											    	   class="edate marginRight marginBottom"
-											    	   data-format="dd-MM-yyyy"
-											           data-bind="value: edate,
-											                      min: sdate"
-											           placeholder="To ..." >
+							    <input data-role="datepicker" 
+							    	   class="edate marginRight marginBottom"
+							    	   data-format="dd-MM-yyyy"
+							           data-bind="value: edate,
+							                      min: sdate"
+							           placeholder="To ..." >
 
-											  	<button class="btnSearch" type="button" data-role="button" data-bind="click: search"><i class="ti-search"></i></button>
-						    				</div>
-				                        </div>
-				                    </div>
-				                    <div class="tab-pane" id="filter" role="tabpanel">
-				                    	<div class="p-20">
-				                        	<div class="row">
-												<div class="col-md-3">
-													<span data-bind="text: lang.lang.category">Category</span>
-													<input
-														data-role="dropdownlist"
-														data-option-label="Category ..."
-														data-auto-bind="false"
-														data-value-primitive="true"
-														data-text-field="name"
-														data-value-field="id"
-														data-bind="
-															value: categorySelect,
-															source: categoryDS,
-															events: {change: catagoryChange}" style="width: 100%">
-												</div>
-												<div class="col-md-3">
-													<span>Group</span>
-														<input
-															data-role="dropdownlist"
-															data-option-label="Group ..."
-															data-auto-bind="false"
-															data-value-primitive="false"
-															data-text-field="name"
-															data-value-field="id"
-															data-bind="
-																value: groupSelect,
-																enabled: haveGroup,
-																source: itemGroupDS" style="width: 100%">
-												</div>
-												<div class="col-md-5">
-													<span data-bind="text: lang.lang.item"></span>
-													<select data-role="multiselect"
-														   data-value-primitive="true"
-														   data-header-template="item-header-tmpl"
-														   data-item-template="item-list-tmpl"
-														   data-value-field="id"
-														   data-text-field="name"
-														   data-bind="value: obj.itemIds,
-														   			source: itemDS"
-														   data-placeholder="Select Item.."
-														   style="width: 100%" /></select>
-												</div>
-													
-											  	<button style="margin-top: 18px;" type="button" data-role="button" data-bind="click: search"><i class="ti-search"></i></button>														
-						    				</div>
-						    			</div>
-				                    </div>
-				                    <div class="tab-pane" id="print_export" role="tabpanel">
-				                    	<div class="p-20">
-				                        	<div class="row">
-						    					<button class="col-md-1 btnPrint " type="button" data-role="button" data-bind="click: printGrid"><i class="ti-printer"></i><span class="marginLeft">Print</span></button>
-						    					<button class="col-md-2 btnExport" type="button" data-role="button" data-bind="click: ExportExcel"><i class="ti-export"></i><span class="marginLeft">Export to Excel</span></button>
-						    				</div>
-						    			</div>
-				                    </div>
-				                    
-				                </div>
-				            </div>
-				            <div id="invFormContent" style="page-break-after: always;">
-				            	<!-- Style For Print -->
-				            	<style type="text/css">
-				            		* {
-										-webkit-print-color-adjust: true;
-									}
-									.home-footer .table tbody td {
-									    background-color: #fff !important;
-									    -webkit-print-color-adjust: exact;
-									}
-									.home-footer .table tbody tr:nth-child(odd) td {
-									    background-color: #f4f5f8 !important;
-									    -webkit-print-color-adjust: exact;
-									}
-				            	</style>
+							  	<button class="btnSearch k-button btn-info" type="button" data-role="button" data-bind="click: search"><i class="ti-search"></i></button>
+		    				</div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="filter" role="tabpanel">
+                    	<div class="p-20">
+                        	<div class="row">
+								<div class="col-md-3">
+									<span data-bind="text: lang.lang.category">Category</span>
+									<input
+										data-role="dropdownlist"
+										data-option-label="Category ..."
+										data-auto-bind="false"
+										data-value-primitive="true"
+										data-text-field="name"
+										data-value-field="id"
+										data-bind="
+											value: categorySelect,
+											source: categoryDS,
+											events: {change: catagoryChange}" style="width: 100%">
+								</div>
+								<div class="col-md-3">
+									<span>Group</span>
+										<input
+											data-role="dropdownlist"
+											data-option-label="Group ..."
+											data-auto-bind="false"
+											data-value-primitive="false"
+											data-text-field="name"
+											data-value-field="id"
+											data-bind="
+												value: groupSelect,
+												enabled: haveGroup,
+												source: itemGroupDS" style="width: 100%">
+								</div>
+								<div class="col-md-5">
+									<span data-bind="text: lang.lang.item"></span>
+									<select data-role="multiselect"
+										   data-value-primitive="true"
+										   data-header-template="item-header-tmpl"
+										   data-item-template="item-list-tmpl"
+										   data-value-field="id"
+										   data-text-field="name"
+										   data-bind="value: obj.itemIds,
+										   			source: itemDS"
+										   data-placeholder="Select Item.."
+										   style="width: 100%" /></select>
+								</div>
+									
+							  	<button class="k-button btn-info" style="margin-top: 18px;" type="button" data-role="button" data-bind="click: search"><i class="ti-search"></i></button>														
+		    				</div>
+		    			</div>
+                    </div>
+                    <div class="tab-pane" id="print_export" role="tabpanel">
+                    	<div class="p-20">
+                        	<div class="row">
+		    					<button class="col-md-1 btnPrint k-button btn-info" type="button" data-role="button" data-bind="click: printGrid"><i class="ti-printer"></i><span class="marginLeft">Print</span></button>
+		    					<button class="col-md-2 btnExport k-button btn-info" type="button" data-role="button" data-bind="click: ExportExcel"><i class="ti-export"></i><span class="marginLeft">Export to Excel</span></button>
+		    				</div>
+		    			</div>
+                    </div>
+                    
+                </div>
+            </div>
+            <div id="invFormContent" style="page-break-after: always;">
+            	<!-- Style For Print -->
+            	<style type="text/css">
+            		* {
+						-webkit-print-color-adjust: true;
+					}
+					.home-footer .table tbody td {
+					    background-color: #fff !important;
+					    -webkit-print-color-adjust: exact;
+					}
+					.home-footer .table tbody tr:nth-child(odd) td {
+					    background-color: #f4f5f8 !important;
+					    -webkit-print-color-adjust: exact;
+					}
+            	</style>
 
-					            <!-- Title -->
-					            <div class="reportTitle" style="text-align: center; width: 97%; margin: 15px auto;">
-					            	<h3 style="font-size: 15px; color: #203864 !important; margin-bottom: 10px;" data-bind="html: institute.name"></h3>
-									<h2 style="font-size: 20px; font-weight: 600; margin-top: 0px; color: #203864 !important;" data-bind="text: lang.lang.inventory_position_detail"></h2>
-									<p style="font-size: 15px; margin-bottom: 0;" data-bind="text: displayDate"></p>
-					            </div>
+	            <!-- Title -->
+	            <div class="reportTitle" style="text-align: center; width: 97%; margin: 15px auto;">
+	            	<h3 style="font-size: 15px; color: #203864 !important; margin-bottom: 10px;" data-bind="html: institute.name"></h3>
+					<h2 style="font-size: 20px; font-weight: 600; margin-top: 0px; color: #203864 !important;" data-bind="text: lang.lang.inventory_position_detail"></h2>
+					<p style="font-size: 15px; margin-bottom: 0;" data-bind="text: displayDate"></p>
+	            </div>
 
-					            <!-- Block -->
-					            <div class="reportBlock" style="width: 97%; margin: 0 auto;">
-					            	<div class="row">
-					            		<div class="col-md-2">
-					            			<div class="total-sale" style="width: 100%; padding: 10px; background-color: #DDEBF7 !important; -webkit-print-color-adjust: exact; text-align: center; margin-bottom: 15px; display: inline-block; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
-												<p style="font-size: 14px;" data-bind="text: lang.lang.product_items"></p>
-												<span style="font-size: 20px; font-weight: 700;" data-bind="text: dataSource.total"></span>
-											</div>
-					            		</div>
-					            		<div class="col-md-10" >
-					            			<div class="total-sale" style="width: 100%; padding: 10px; background-color: #DDEBF7 !important; -webkit-print-color-adjust: exact; text-align: center; margin-bottom: 15px; display: inline-block; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
-												<p style="font-size: 14px;" data-bind="text: lang.lang.total"></p>
-												<span style="font-size: 20px; font-weight: 700;" data-bind="text: total"></span>
-											</div>
-					            		</div>
-					            	</div>
-					            </div>
+	            <!-- Block -->
+	            <div class="reportBlock" style="width: 97%; margin: 0 auto;">
+	            	<div class="row">
+	            		<div class="col-md-2">
+	            			<div class="total-sale" style="width: 100%; padding: 10px; background-color: #DDEBF7 !important; -webkit-print-color-adjust: exact; text-align: center; margin-bottom: 15px; display: inline-block; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
+								<p style="font-size: 14px;" data-bind="text: lang.lang.product_items"></p>
+								<span style="font-size: 20px; font-weight: 700;" data-bind="text: dataSource.total"></span>
+							</div>
+	            		</div>
+	            		<div class="col-md-10" >
+	            			<div class="total-sale" style="width: 100%; padding: 10px; background-color: #DDEBF7 !important; -webkit-print-color-adjust: exact; text-align: center; margin-bottom: 15px; display: inline-block; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
+								<p style="font-size: 14px;" data-bind="text: lang.lang.total"></p>
+								<span style="font-size: 20px; font-weight: 700;" data-bind="text: total"></span>
+							</div>
+	            		</div>
+	            	</div>
+	            </div>
 
-					            <!-- Table -->
-					            <div class="reportTable home-footer table-responsive" style="width: 97%; margin: 0 auto;">
-					            	<table class="table color-table dark-table" style="width: 100%; height: auto; ">
-		                                <thead>
-		                                    <tr>
-		                                    	<th style="background-color: #343a40 !important; -webkit-print-color-adjust: exact; color: #fff !important; text-align: center; text-transform: uppercase; vertical-align: top; font-weight: 400; padding: 10px;" data-bind="text: lang.lang.txn_type"></th>
-												<th style="background-color: #343a40 !important; -webkit-print-color-adjust: exact; color: #fff !important; text-align: center; text-transform: uppercase; vertical-align: top; font-weight: 400; padding: 10px;" data-bind="text: lang.lang.date"></th>
-												<th style="background-color: #343a40 !important; -webkit-print-color-adjust: exact; color: #fff !important; text-align: center; text-transform: uppercase; vertical-align: top; font-weight: 400; padding: 10px;" data-bind="text: lang.lang.ref"></th>
-												<th style="background-color: #343a40 !important; -webkit-print-color-adjust: exact; color: #fff !important; text-align: center; text-transform: uppercase; vertical-align: top; font-weight: 400; padding: 10px;" data-bind="text: lang.lang.qty"></th>
-												<th style="background-color: #343a40 !important; -webkit-print-color-adjust: exact; color: #fff !important; text-align: center; text-transform: uppercase; vertical-align: top; font-weight: 400; padding: 10px;" data-bind="text: lang.lang.cost"></th>
-												<th style="background-color: #343a40 !important; -webkit-print-color-adjust: exact; color: #fff !important; text-align: center; text-transform: uppercase; vertical-align: top; font-weight: 400; padding: 10px;" data-bind="text: lang.lang.price"></th>
-												<th style="background-color: #343a40 !important; -webkit-print-color-adjust: exact; color: #fff !important; text-align: center; text-transform: uppercase; vertical-align: top; font-weight: 400; padding: 10px;" data-bind="text: lang.lang.on_hand"></th>
-												<th style="background-color: #343a40 !important; -webkit-print-color-adjust: exact; color: #fff !important; text-align: center; text-transform: uppercase; vertical-align: top; font-weight: 400; padding: 10px;" data-bind="text: lang.lang.avg_cost"></th>
-												<th style="background-color: #343a40 !important; -webkit-print-color-adjust: exact; color: #fff !important; text-align: center; text-transform: uppercase; vertical-align: top; font-weight: 400; padding: 10px;" data-bind="text: lang.lang.inventory_value"></th>
-											</tr>
-		                                </thead>
-		                                <tbody  data-role="listview"
-					            				data-auto-bind="false"
-								                data-template="inventoryPositionDetail-template"
-								                data-bind="source: dataSource" >
-								        </tbody>
-					            	</table>
-					            </div>
-					        </div>
+	            <!-- Table -->
+	            <div class="reportTable home-footer table-responsive" style="width: 97%; margin: 0 auto;">
+	            	<table class="table color-table dark-table" style="width: 100%; height: auto; ">
+                        <thead>
+                            <tr>
+                            	<th style="background-color: #343a40 !important; -webkit-print-color-adjust: exact; color: #fff !important; text-align: center; text-transform: uppercase; vertical-align: top; font-weight: 400; padding: 10px;" data-bind="text: lang.lang.txn_type"></th>
+								<th class="hidden-sm-down" style="background-color: #343a40 !important; -webkit-print-color-adjust: exact; color: #fff !important; text-align: center; text-transform: uppercase; vertical-align: top; font-weight: 400; padding: 10px;" data-bind="text: lang.lang.date"></th>
+								<th class="hidden-sm-down" style="background-color: #343a40 !important; -webkit-print-color-adjust: exact; color: #fff !important; text-align: center; text-transform: uppercase; vertical-align: top; font-weight: 400; padding: 10px;" data-bind="text: lang.lang.ref"></th>
+								<th style="background-color: #343a40 !important; -webkit-print-color-adjust: exact; color: #fff !important; text-align: center; text-transform: uppercase; vertical-align: top; font-weight: 400; padding: 10px;" data-bind="text: lang.lang.qty"></th>
+								<th class="hidden-sm-down" style="background-color: #343a40 !important; -webkit-print-color-adjust: exact; color: #fff !important; text-align: center; text-transform: uppercase; vertical-align: top; font-weight: 400; padding: 10px;" data-bind="text: lang.lang.cost"></th>
+								<th class="hidden-sm-down" style="background-color: #343a40 !important; -webkit-print-color-adjust: exact; color: #fff !important; text-align: center; text-transform: uppercase; vertical-align: top; font-weight: 400; padding: 10px;" data-bind="text: lang.lang.price"></th>
+								<th class="hidden-sm-down" style="background-color: #343a40 !important; -webkit-print-color-adjust: exact; color: #fff !important; text-align: center; text-transform: uppercase; vertical-align: top; font-weight: 400; padding: 10px;" data-bind="text: lang.lang.on_hand"></th>
+								<th style="background-color: #343a40 !important; -webkit-print-color-adjust: exact; color: #fff !important; text-align: center; text-transform: uppercase; vertical-align: top; font-weight: 400; padding: 10px;" data-bind="text: lang.lang.avg_cost"></th>
+								<th class="hidden-sm-down" style="background-color: #343a40 !important; -webkit-print-color-adjust: exact; color: #fff !important; text-align: center; text-transform: uppercase; vertical-align: top; font-weight: 400; padding: 10px;" data-bind="text: lang.lang.inventory_value"></th>
+							</tr>
+                        </thead>
+                        <tbody  data-role="listview"
+	            				data-auto-bind="false"
+				                data-template="inventoryPositionDetail-template"
+				                data-bind="source: dataSource" >
+				        </tbody>
+	            	</table>
+	            </div>
+	        </div>
 
-					        <!-- Pagination -->
-			            	<div 	id="pager" 
-			            			class="k-pager-wrap" 
-				            		data-role="pager"
-							    	data-auto-bind="false"
-						            data-bind="source: dataSource"
-						            style="width: 97%; margin: 0 auto;" >
-						    </div>
-			            </div>
-                	</div>					
-				</div>
-			</div>
-		</div>
-	</div>
+	        <!-- Pagination -->
+        	<div 	id="pager" 
+        			class="k-pager-wrap" 
+            		data-role="pager"
+			    	data-auto-bind="false"
+		            data-bind="source: dataSource"
+		            style="width: 97%; margin: 0 auto;" >
+		    </div>
+        </div>
+	</div>				
 </script>
 <script id="inventoryPositionDetail-template" type="text/x-kendo-tmpl">
 	<tr>
@@ -2857,4 +2841,4 @@
 		#=code# - #=country#
 	</span>
 </script>
-<!-- End -->                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+<!-- End -->

@@ -6,6 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 <link rel="icon" type="image/png" href="<?php echo base_url()?>assets/banhji-micro-icon.png" >
+<link href="https://fonts.googleapis.com/css?family=Roboto+Slab:300" rel="stylesheet">
 
 <!-- Theme CSS Elegant-->
 <link rel="stylesheet" href="<?php echo base_url()?>assets/micro/style.min.css" >
@@ -177,7 +178,7 @@
                                                     <li><a href="sales#/cash_sale"><span data-bind="text: lang.lang.create_cash_sale"></span></a></li>
                                                     <li><a href="sales#/invoice"><span data-bind="text: lang.lang.create_invoice"></span></a></li>
                                                     <li><a href="sales#/cash_receipt"><span data-bind="text: lang.lang.create_cash_receipt"></span></a></li>
-                                                    <li><a href="sales#/cash_refund"><span data-bind="">Cash Refund</span></a></li>
+                                                    <li><a href="sales#/cash_refund"><span data-bind="text: lang.lang.cash_refund"></span></a></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -190,26 +191,28 @@
                                                     <li><a href="purchases#/vendor_deposit"><span data-bind="text: lang.lang.make_vendor_deposit"></span></a></li>
                                                     <li><a href="purchases#/purchase"><span data-bind="text: lang.lang.make_purchase"></span></a></li>
                                                     <li><a href="purchases#/cash_payment"><span data-bind="text: lang.lang.make_cash_payment"></span></a></li>
-                                                    <li><a href="purchases#/payment_refund"><span data-bind="">Payment Refund</span></a></li>
+                                                    <li><a href="purchases#/payment_refund"><span data-bind="text: lang.lang.payment_refund"></span></a></li>
                                                     <li><a href="items#/item_adjustment"><span data-bind="text: lang.lang.item_adjustment"></span></a></li>
                                                 </ul>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div >
-                                                <p><span data-bind="text: lang.lang.c_transaction"></span></p>
+                                                <p><span data-bind="text: lang.lang.account_transaction"></span></p>
                                                 <ul>
                                                     <li><a href="cashs#/cash_transaction"><span data-bind="text: lang.lang.make_cash_transaction"></span></a></li>
+                                                    <li><a href="cashs#/journal"><span data-bind="text: lang.lang.make_journal"></span></a></li>
                                                     <li><a href="cashs#/currency_rate"><span data-bind="text: lang.lang.set_exchange_rate"></span></a></li>
+                                                    <li><a href="<?php echo base_url();?>rrd#/imports"><span data-bind="text: lang.lang.imports"></span></a></li>
                                                 </ul>
                                             </div>
                                              <div >
-                                                <p><span data-bind="text: lang.lang.reports"></span></p>
+                                                <p><span data-bind="text: lang.lang.financial_statements"></span></p>
                                                 <ul>
                                                     <li><a href="<?php echo base_url();?>rrd#/statement_profit_loss"><span data-bind="text: lang.lang.statement_of_profit_or_loss"></span></a></li>
                                                     <li><a href="<?php echo base_url();?>rrd#/statement_financial_position"><span data-bind="text: lang.lang.statement_of_financial_position"></span></a></li>                                                   
-                                                    <li><a href="cashs#/journal"><span data-bind="text: lang.lang.make_journal"></span></a></li>
-                                                    <li><a href="<?php echo base_url();?>rrd#/imports"><span data-bind="">Imports</span></a></li>
+                                                    
+                                                    
                                                 </ul>
                                             </div>
                                         </div>
@@ -301,4 +304,4 @@
                         </ul>
                     </div>
                 </nav>
-            </header>
+            </header>                                              

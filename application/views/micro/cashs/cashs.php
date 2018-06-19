@@ -28,38 +28,38 @@
                         <div class="card-body"  >
                         	<div class="row home" id="reports" style="margin-top: 25px;">
 	                        	<div class="col-md-4">
-									<div class="saleOverview" style="min-height: 143px; ">
-										<h2 data-bind="">Cash In</h2>
-										<p data-format="n0" data-bind="">100000.000</p>
-									</div>
-									<!-- <div class="report" >
-										<div class="col-md-12">
-											<h3 style="border-bottom: none; padding-bottom: 0;"><a href="#/cash_movement" data-bind="text: lang.lang.cash_movement" ></a></h3>
-										</div>
-									</div> -->
-								</div>
-								<div class="col-md-4">
-									<div class="saleOverview" style="min-height: 143px; ">
-										<h2 data-bind="">Cash Out</h2>
-										<p data-format="n0" data-bind="">100000.000</p>
-									</div>
-									<!-- <div class="report" >
-										<div class="col-md-12">
-											<h3 style="border-bottom: none; padding-bottom: 0;"><a href="#/cash_movement" data-bind="text: lang.lang.cash_movement" ></a></h3>
-										</div>
-									</div>		 -->							                        
-								</div>
-								<div class="col-md-4">
-									<!-- <div class="saleOverview">
-										<h2 data-bind="">Cash Balance</h2>
-										<p data-format="n0" data-bind="">100000.000</p>
-									</div>
-									<div class="report" >
-										<div class="col-md-12">
-											<h3 style="border-bottom: none; padding-bottom: 0;"><a href="#/cash_movement" data-bind="text: lang.lang.cash_movement" ></a></h3>
-										</div>
-									</div> -->
 									<div class="saleOverview" style="margin-bottom: 15px;">
+										<h2 data-bind="text: lang.lang.cash_in">Cash In</h2>
+										<p style="margin-bottom: 0;" data-format="n0" data-bind="">100000.000</p>
+									</div>
+									<!-- <div class="report" >
+										<div class="col-md-12">
+											<h3 style="border-bottom: none; padding-bottom: 0;"><a href="#/cash_movement" data-bind="text: lang.lang.cash_movement" ></a></h3>
+										</div>
+									</div> -->
+								</div>
+								<div class="col-md-4">
+									<div class="saleOverview" style="margin-bottom: 15px;">
+										<h2 data-bind="text: lang.lang.cash_out">Cash Out</h2>
+										<p style="margin-bottom: 0;" data-format="n0" data-bind="">100000.000</p>
+									</div>
+									<!-- <div class="report" >
+										<div class="col-md-12">
+											<h3 style="border-bottom: none; padding-bottom: 0;"><a href="#/cash_movement" data-bind="text: lang.lang.cash_movement" ></a></h3>
+										</div>
+									</div> -->									                        
+								</div>
+								<div class="col-md-4">
+									<div class="saleOverview" style="margin-bottom: 15px;">
+										<h2 data-bind="text: lang.lang.cash_balance">Cash Balance</h2>
+										<p style="margin-bottom: 0;" data-format="n0" data-bind="">100000.000</p>
+									</div>
+									<!-- <div class="report" >
+										<div class="col-md-12">
+											<h3 style="border-bottom: none; padding-bottom: 0;"><a href="#/cash_movement" data-bind="text: lang.lang.cash_movement" ></a></h3>
+										</div>
+									</div> -->
+									<!-- <div class="saleOverview" style="margin-bottom: 15px;">
 										<div class="col">
 											<h2 data-bind="">Cash Balance</h2>
 											<p data-format="n0" data-bind="">100000.000</p>
@@ -73,7 +73,7 @@
 							                    <a class="dropdown-item" href="#/bill_payment_list" data-bind="text: lang.lang.bill_payment_report"></a>
 							                </div>
 							            </div>
-									</div>
+									</div> -->
 								</div>
 							</div>
 
@@ -106,14 +106,15 @@
 								</div>
 								<div class="col-md-4">
 						            <div class="btn-group float-right">
-						                <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						            	<a style="font-size: 17px; padding: 5px 70px;" class="btn waves-effect waves-light btn-block btn-info btnAddCustomer" href="cashs#/cash_transaction"><span data-bind="text: lang.lang.cash_transactions">Cash​ Transaction</span></a>
+						               <!--  <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						                	Add New Transaction
 						                </button>
 						                <div class="dropdown-menu">
 						                    <a class="dropdown-item" href="cashs#/cash_transaction"><span data-bind="">Cash​ Transaction</span></a>
 						                    <a class="dropdown-item" href="cashs#/cash_advance"><span data-bind="">Cash Advance</span></a>
 						                    <a class="dropdown-item" href="cashs#/Expense"><span data-bind="">Expense</span></a>
-						                </div>
+						                </div> -->
 						            </div>
 						        </div>
 						       
@@ -1526,13 +1527,7 @@
 							        		placeholder="Please enter transaction purpose here ..."></textarea>
 	                                            	</div>
                                         		</div>
-                                        		<div class="row">
-                                        			<div class="col-md-12">
-                                        			<textarea id="memo2" cols="0" rows="4" class="k-textbox marginBottom"
-											        		data-bind="value: obj.memo2" style="width:100%;"
-											        		placeholder="Please enter transaction purpose here ..."></textarea>
-                                        			</div>
-                                        		</div>
+                                        		
 	                                        </div>
 	                                    </div>
 	                                    <!-- End -->
@@ -2937,4 +2932,4 @@
 		#=code# - #=country#
 	</span>
 </script>
-<!-- End -->                                                                                                                                                                                                                                                                                                                                                                                    
+<!-- End -->                                                                                                                                                                                                                                                                                                                                                                                                                                                                    

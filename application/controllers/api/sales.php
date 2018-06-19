@@ -142,7 +142,7 @@ class Sales extends REST_Controller {
 
 		//Results
 		$obj->include_related("contact", array("abbr", "number", "name"));
-		$obj->where_in("type",array("Sale_Order","Customer_Deposit","Cash_Receipt","Cash_Refund","Commercial_Invoice","Vat_Invoice","Invoice","Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale"));
+		// $obj->where_in("type",array("Sale_Order","Customer_Deposit","Cash_Receipt","Cash_Refund","Commercial_Invoice","Vat_Invoice","Invoice","Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale"));
 		$obj->where("is_recurring <>", 1);
 		$obj->where("deleted <>", 1);
 		$obj->order_by("issued_date", "asc");

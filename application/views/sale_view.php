@@ -209,7 +209,6 @@
 	    margin: 0 auto;
 	    width: 78%;
 	}
-	
 </style>
 <div id="wrapperApplication" class="container-fluid"></div>
 <!-- template section starts -->

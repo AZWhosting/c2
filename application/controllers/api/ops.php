@@ -133,11 +133,11 @@ class Ops extends REST_Controller {
 				// 	// 	"null" 		=> FALSE,
 				// 	// 	"default" 	=> ""
 				// 	// ),
-				// 	"sub_type" => array(
-				// 		"type" 		=> "VARCHAR",
-				// 		"constraint"=> 255,
+				// 	"movement" => array(
+				// 		"type" 		=> "TINYINT",
+				// 		"constraint"=> 1,
 				// 		"null" 		=> FALSE,
-				// 		"default" 	=> ""
+				// 		"default" 	=> 0
 				// 	)
 				// );
 				// $data['results'][] = $this->dbforge->add_column("transactions", $fields);

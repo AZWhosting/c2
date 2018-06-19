@@ -7,51 +7,51 @@
         $('<input name="' + options.field + '"/>')
         .appendTo(container)
         .kendoComboBox({
-            placeholder: "Select Item",
+          placeholder: "Select Item",
             dataTextField: "name",
             dataValueField: "id",
             autoWidth: true,
             height: 200,
             template: kendo.template($("#item-list-tmpl").html()),
             dataSource: {
-                transport: {
-                    read    : {
-                        url: apiUrl + "items",
-                        type: "GET",
-                        headers: banhji.header,
-                        dataType: 'json'
-                    },
-                    parameterMap: function(options, operation) {
-                        if(operation === 'read') {
-                            return {
-                                page: options.page,
-                                limit: options.pageSize,
-                                filter: options.filter,
-                                sort: options.sort
-                            };
-                        } else {
-                            return {models: kendo.stringify(options.models)};
-                        }
-                    }
-                },
-                schema  : {
-                    model: {
-                        id: 'id'
-                    },
-                    data: 'results',
-                    total: 'count'
-                },
-                filter:{ field: "item_type_id <>", value: 3 },
-                sort: [
-                    { field:"item_type_id", dir:"asc" },
-                    { field:"number", dir:"asc" }
-                ],
-                batch: true,
-                serverFiltering: true,
-                serverSorting: true,
-                serverPaging: true,
-                page: 1,
-                pageSize: 50
+              transport: {
+          read  : {
+            url: apiUrl + "items",
+            type: "GET",
+            headers: banhji.header,
+            dataType: 'json'
+          },
+          parameterMap: function(options, operation) {
+            if(operation === 'read') {
+              return {
+                page: options.page,
+                limit: options.pageSize,
+                filter: options.filter,
+                sort: options.sort
+              };
+            } else {
+              return {models: kendo.stringify(options.models)};
+            }
+          }
+        },
+        schema  : {
+          model: {
+            id: 'id'
+          },
+          data: 'results',
+          total: 'count'
+        },
+        filter:{ field: "item_type_id <>", value: 3 },
+        sort: [
+          { field:"item_type_id", dir:"asc" },
+          { field:"number", dir:"asc" }
+        ],
+        batch: true,
+        serverFiltering: true,
+        serverSorting: true,
+        serverPaging: true,
+        page: 1,
+        pageSize: 50
             }
         });
     }
@@ -60,51 +60,51 @@
         $('<input name="' + options.field + '" />')
         .appendTo(container)
         .kendoDropDownList({
-            filter: "contains",
+          filter: "contains",
             dataTextField: "name",
             dataValueField: "id",
             autoWidth: true,
             height: 200,
             template: kendo.template($("#item-list-tmpl").html()),
             dataSource: {
-                transport: {
-                    read    : {
-                        url: apiUrl + "items",
-                        type: "GET",
-                        headers: banhji.header,
-                        dataType: 'json'
-                    },
-                    parameterMap: function(options, operation) {
-                        if(operation === 'read') {
-                            return {
-                                page: options.page,
-                                limit: options.pageSize,
-                                filter: options.filter,
-                                sort: options.sort
-                            };
-                        } else {
-                            return {models: kendo.stringify(options.models)};
-                        }
-                    }
-                },
-                schema  : {
-                    model: {
-                        id: 'id'
-                    },
-                    data: 'results',
-                    total: 'count'
-                },
-                filter:{ field: "item_type_id <>", value: 3 },
-                sort: [
-                    { field:"item_type_id", dir:"asc" },
-                    { field:"number", dir:"asc" }
-                ],
-                batch: true,
-                serverFiltering: true,
-                serverSorting: true,
-                serverPaging: true,
-                page: 1,
-                pageSize: 50
+              transport: {
+          read  : {
+            url: apiUrl + "items",
+            type: "GET",
+            headers: banhji.header,
+            dataType: 'json'
+          },
+          parameterMap: function(options, operation) {
+            if(operation === 'read') {
+              return {
+                page: options.page,
+                limit: options.pageSize,
+                filter: options.filter,
+                sort: options.sort
+              };
+            } else {
+              return {models: kendo.stringify(options.models)};
+            }
+          }
+        },
+        schema  : {
+          model: {
+            id: 'id'
+          },
+          data: 'results',
+          total: 'count'
+        },
+        filter:{ field: "item_type_id <>", value: 3 },
+        sort: [
+          { field:"item_type_id", dir:"asc" },
+          { field:"number", dir:"asc" }
+        ],
+        batch: true,
+        serverFiltering: true,
+        serverSorting: true,
+        serverPaging: true,
+        page: 1,
+        pageSize: 50
             }
         });
     }
@@ -113,54 +113,54 @@
         $('<input name="' + options.field + '" />')
         .appendTo(container)
         .kendoDropDownList({
-            filter: "contains",
+          filter: "contains",
             dataTextField: "name",
             dataValueField: "id",
             autoWidth: true,
             height: 200,
             template: kendo.template($("#item-list-tmpl").html()),
             dataSource: {
-                transport: {
-                    read    : {
-                        url: apiUrl + "items",
-                        type: "GET",
-                        headers: banhji.header,
-                        dataType: 'json'
-                    },
-                    parameterMap: function(options, operation) {
-                        if(operation === 'read') {
-                            return {
-                                page: options.page,
-                                limit: options.pageSize,
-                                filter: options.filter,
-                                sort: options.sort
-                            };
-                        } else {
-                            return {models: kendo.stringify(options.models)};
-                        }
-                    }
-                },
-                schema  : {
-                    model: {
-                        id: 'id'
-                    },
-                    data: 'results',
-                    total: 'count'
-                },
-                filter:[
-                    { field: "item_type_id <>", value: 3 },
-                    { field: "is_assembly", value: 0 }
-                ],
-                sort: [
-                    { field:"item_type_id", dir:"asc" },
-                    { field:"number", dir:"asc" }
-                ],
-                batch: true,
-                serverFiltering: true,
-                serverSorting: true,
-                serverPaging: true,
-                page: 1,
-                pageSize: 50
+              transport: {
+          read  : {
+            url: apiUrl + "items",
+            type: "GET",
+            headers: banhji.header,
+            dataType: 'json'
+          },
+          parameterMap: function(options, operation) {
+            if(operation === 'read') {
+              return {
+                page: options.page,
+                limit: options.pageSize,
+                filter: options.filter,
+                sort: options.sort
+              };
+            } else {
+              return {models: kendo.stringify(options.models)};
+            }
+          }
+        },
+        schema  : {
+          model: {
+            id: 'id'
+          },
+          data: 'results',
+          total: 'count'
+        },
+        filter:[
+          { field: "item_type_id <>", value: 3 },
+          { field: "is_assembly", value: 0 }
+        ],
+        sort: [
+          { field:"item_type_id", dir:"asc" },
+          { field:"number", dir:"asc" }
+        ],
+        batch: true,
+        serverFiltering: true,
+        serverSorting: true,
+        serverPaging: true,
+        page: 1,
+        pageSize: 50
             }
         });
     }
@@ -169,8 +169,8 @@
         $('<input name="' + options.field + '" />')
         .appendTo(container)
         .kendoDropDownList({
-            valuePrimitive: false,
-            filter: "startswith",
+          valuePrimitive: false,
+          filter: "startswith",
             dataTextField: "name",
             dataValueField: "id",
             autoWidth: true,
@@ -183,46 +183,46 @@
         $('<input name="' + options.field + '" />')
         .appendTo(container)
         .kendoMultiSelect({
-            valuePrimitive: false,
+          valuePrimitive: false,
             dataTextField: "name",
             dataValueField: "id",
             autoBind: false,
             dataSource: {
-                transport: {
-                    read    : {
-                        url: apiUrl + "attribute_values",
-                        type: "GET",
-                        headers: banhji.header,
-                        dataType: 'json'
-                    },
-                    parameterMap: function(options, operation) {
-                        if(operation === 'read') {
-                            return {
-                                page: options.page,
-                                limit: options.pageSize,
-                                filter: options.filter,
-                                sort: options.sort
-                            };
-                        } else {
-                            return {models: kendo.stringify(options.models)};
-                        }
-                    }
-                },
-                schema  : {
-                    model: {
-                        id: 'id'
-                    },
-                    data: 'results',
-                    total: 'count'
-                },
-                filter:{ field: "variant_attribute_id", value: options.model.variant_attribute.id },
-                sort: { field:"name", dir:"asc" },
-                batch: true,
-                serverFiltering: true,
-                serverSorting: true,
-                serverPaging: true,
-                page: 1,
-                pageSize: 100
+              transport: {
+          read  : {
+            url: apiUrl + "attribute_values",
+            type: "GET",
+            headers: banhji.header,
+            dataType: 'json'
+          },
+          parameterMap: function(options, operation) {
+            if(operation === 'read') {
+              return {
+                page: options.page,
+                limit: options.pageSize,
+                filter: options.filter,
+                sort: options.sort
+              };
+            } else {
+              return {models: kendo.stringify(options.models)};
+            }
+          }
+        },
+        schema  : {
+          model: {
+            id: 'id'
+          },
+          data: 'results',
+          total: 'count'
+        },
+        filter:{ field: "variant_attribute_id", value: options.model.variant_attribute.id },
+        sort: { field:"name", dir:"asc" },
+        batch: true,
+        serverFiltering: true,
+        serverSorting: true,
+        serverPaging: true,
+        page: 1,
+        pageSize: 100
             }
         });
     }
@@ -236,39 +236,39 @@
             autoWidth: true,
             height: 200,
             dataSource: {
-                transport: {
-                    read    : {
-                        url: apiUrl + "location_types",
-                        type: "GET",
-                        headers: banhji.header,
-                        dataType: 'json'
-                    },
-                    parameterMap: function(options, operation) {
-                        if(operation === 'read') {
-                            return {
-                                page: options.page,
-                                limit: options.pageSize,
-                                filter: options.filter,
-                                sort: options.sort
-                            };
-                        } else {
-                            return {models: kendo.stringify(options.models)};
-                        }
-                    }
-                },
-                schema  : {
-                    model: {
-                        id: 'id'
-                    },
-                    data: 'results',
-                    total: 'count'
-                },
-                batch: true,
-                serverFiltering: true,
-                serverSorting: true,
-                serverPaging: true,
-                page: 1,
-                pageSize: 100
+              transport: {
+          read  : {
+            url: apiUrl + "location_types",
+            type: "GET",
+            headers: banhji.header,
+            dataType: 'json'
+          },
+          parameterMap: function(options, operation) {
+            if(operation === 'read') {
+              return {
+                page: options.page,
+                limit: options.pageSize,
+                filter: options.filter,
+                sort: options.sort
+              };
+            } else {
+              return {models: kendo.stringify(options.models)};
+            }
+          }
+        },
+        schema  : {
+          model: {
+            id: 'id'
+          },
+          data: 'results',
+          total: 'count'
+        },
+        batch: true,
+        serverFiltering: true,
+        serverSorting: true,
+        serverPaging: true,
+        page: 1,
+        pageSize: 100
             }
         });
     }
@@ -277,48 +277,48 @@
         $('<input name="' + options.field + '" />')
         .appendTo(container)
         .kendoDropDownList({
-            filter: "contains",
+          filter: "contains",
             dataTextField: "name",
             dataValueField: "id",
             autoWidth: true,
             height: 200,
             template: kendo.template($("#item-list-tmpl").html()),
             dataSource: {
-                transport: {
-                    read    : {
-                        url: apiUrl + "items",
-                        type: "GET",
-                        headers: banhji.header,
-                        dataType: 'json'
-                    },
-                    parameterMap: function(options, operation) {
-                        if(operation === 'read') {
-                            return {
-                                page: options.page,
-                                limit: options.pageSize,
-                                filter: options.filter,
-                                sort: options.sort
-                            };
-                        } else {
-                            return {models: kendo.stringify(options.models)};
-                        }
-                    }
-                },
-                schema  : {
-                    model: {
-                        id: 'id'
-                    },
-                    data: 'results',
-                    total: 'count'
-                },
-                filter:{ field: "item_type_id", value: 1 },
-                sort: { field:"number", dir:"asc" },
-                batch: true,
-                serverFiltering: true,
-                serverSorting: true,
-                serverPaging: true,
-                page: 1,
-                pageSize: 100
+              transport: {
+          read  : {
+            url: apiUrl + "items",
+            type: "GET",
+            headers: banhji.header,
+            dataType: 'json'
+          },
+          parameterMap: function(options, operation) {
+            if(operation === 'read') {
+              return {
+                page: options.page,
+                limit: options.pageSize,
+                filter: options.filter,
+                sort: options.sort
+              };
+            } else {
+              return {models: kendo.stringify(options.models)};
+            }
+          }
+        },
+        schema  : {
+          model: {
+            id: 'id'
+          },
+          data: 'results',
+          total: 'count'
+        },
+        filter:{ field: "item_type_id", value: 1 },
+        sort: { field:"number", dir:"asc" },
+        batch: true,
+        serverFiltering: true,
+        serverSorting: true,
+        serverPaging: true,
+        page: 1,
+        pageSize: 100
             }
         });
     }
@@ -327,18 +327,18 @@
         $('<input name="' + options.field + '" />')
         .appendTo(container)
         .kendoDropDownList({
-            filter: "contains",
+          filter: "contains",
             dataTextField: "name",
             dataValueField: "id",
             autoWidth: true,
             height: 200,
             template: kendo.template($("#account-list-tmpl").html()),
             dataSource: {
-                data: banhji.source.accountList,
-                sort: [
-                    { field: "account_type_id", dir: "asc" },
-                    { field: "number", dir: "asc" }
-                ]
+              data: banhji.source.accountList,
+          sort: [
+            { field: "account_type_id", dir: "asc" },
+            { field: "number", dir: "asc" }
+        ]
             }
         });
     }
@@ -347,23 +347,23 @@
         $('<input name="' + options.field + '" />')
         .appendTo(container)
         .kendoDropDownList({
-            filter: "contains",
+          filter: "contains",
             dataTextField: "name",
             dataValueField: "id",
             autoWidth: true,
             height: 200,
             template: kendo.template($("#account-list-tmpl").html()),
             dataSource: {
-                data: banhji.source.accountList,
-                filter: [
-                    { field: "account_type_id", operator:"neq", value: 10 },
-                    { field: "account_type_id", operator:"neq", value: 11 },
-                    { field: "account_type_id", operator:"neq", value: 12 }
-                ],
-                sort: [
-                    { field: "account_type_id", dir: "asc" },
-                    { field: "number", dir: "asc" }
-                ]
+              data: banhji.source.accountList,
+              filter: [
+              { field: "account_type_id", operator:"neq", value: 10 },
+              { field: "account_type_id", operator:"neq", value: 11 },
+              { field: "account_type_id", operator:"neq", value: 12 }
+          ],
+          sort: [
+            { field: "account_type_id", dir: "asc" },
+            { field: "number", dir: "asc" }
+        ]
             }
         });
     }
@@ -372,33 +372,33 @@
         $('<input name="' + options.field + '" />')
         .appendTo(container)
         .kendoDropDownList({
-            filter: "contains",
+          filter: "contains",
             dataTextField: "name",
             dataValueField: "id",
             autoWidth: true,
             height: 200,
             template: kendo.template($("#account-list-tmpl").html()),
             dataSource: {
-                data: banhji.source.accountList,
-                filter: {
-                    logic: "or",
-                    filters: [
-                        { field: "account_type_id", value: 13 },//Inventory
-                        { field: "account_type_id", value: 16 },//Fixed Asset
-                        { field: "account_type_id", value: 17 },//Intangible Assets
-                        { field: "account_type_id", value: 36 },//Expense
-                        { field: "account_type_id", value: 37 },
-                        { field: "account_type_id", value: 38 },
-                        { field: "account_type_id", value: 40 },
-                        { field: "account_type_id", value: 41 },
-                        { field: "account_type_id", value: 42 },
-                        { field: "account_type_id", value: 43 }
-                    ]
-                },
-                sort: [
-                    { field: "account_type_id", dir: "asc" },
-                    { field: "number", dir: "asc" }
-                ]
+              data: banhji.source.accountList,
+              filter: {
+              logic: "or",
+            filters: [
+                { field: "account_type_id", value: 13 },//Inventory
+                { field: "account_type_id", value: 16 },//Fixed Asset
+                { field: "account_type_id", value: 17 },//Intangible Assets
+                { field: "account_type_id", value: 36 },//Expense
+                { field: "account_type_id", value: 37 },
+                { field: "account_type_id", value: 38 },
+                { field: "account_type_id", value: 40 },
+                { field: "account_type_id", value: 41 },
+                { field: "account_type_id", value: 42 },
+                { field: "account_type_id", value: 43 }
+            ]
+        },
+          sort: [
+            { field: "account_type_id", dir: "asc" },
+            { field: "number", dir: "asc" }
+        ]
             }
         });
     }
@@ -412,43 +412,43 @@
             autoWidth: true,
             height: 200,
             dataSource: {
-                transport: {
-                    read    : {
-                        url: apiUrl + "item_prices",
-                        type: "GET",
-                        headers: banhji.header,
-                        dataType: 'json'
-                    },
-                    parameterMap: function(options, operation) {
-                        if(operation === 'read') {
-                            return {
-                                page: options.page,
-                                limit: options.pageSize,
-                                filter: options.filter,
-                                sort: options.sort
-                            };
-                        } else {
-                            return {models: kendo.stringify(options.models)};
-                        }
-                    }
-                },
-                schema  : {
-                    model: {
-                        id: 'id'
-                    },
-                    data: 'results',
-                    total: 'count'
-                },
-                filter:[
-                    { field:"item_id", value: options.model.item_id },
-                    { field:"assembly_id", value: 0 }
-                ],
-                batch: true,
-                serverFiltering: true,
-                serverSorting: true,
-                serverPaging: true,
-                page: 1,
-                pageSize: 100
+              transport: {
+          read  : {
+            url: apiUrl + "item_prices",
+            type: "GET",
+            headers: banhji.header,
+            dataType: 'json'
+          },
+          parameterMap: function(options, operation) {
+            if(operation === 'read') {
+              return {
+                page: options.page,
+                limit: options.pageSize,
+                filter: options.filter,
+                sort: options.sort
+              };
+            } else {
+              return {models: kendo.stringify(options.models)};
+            }
+          }
+        },
+        schema  : {
+          model: {
+            id: 'id'
+          },
+          data: 'results',
+          total: 'count'
+        },
+        filter:[
+          { field:"item_id", value: options.model.item_id },
+          { field:"assembly_id", value: 0 }
+        ],
+        batch: true,
+        serverFiltering: true,
+        serverSorting: true,
+        serverPaging: true,
+        page: 1,
+        pageSize: 100
             }
         });
     }
@@ -467,18 +467,18 @@
             autoWidth: true,
             height: 200,
             dataSource: {
-                data: banhji.source.taxList,
-                filter:{
-                    logic: "or",
-                    filters: [
-                        { field: "tax_type_id", value: 3 },//Customer Tax
-                        { field: "tax_type_id", value: 9 }
-                    ]
-                },
-                sort: [
-                    { field: "tax_type_id", dir: "asc" },
-                    { field: "name", dir: "asc" }
-                ]
+              data: banhji.source.taxList,
+          filter:{
+            logic: "or",
+            filters: [
+                { field: "tax_type_id", value: 3 },//Customer Tax
+                { field: "tax_type_id", value: 9 }
+            ]
+        },
+          sort: [
+            { field: "tax_type_id", dir: "asc" },
+            { field: "name", dir: "asc" }
+        ]
             }
         });
     }
@@ -492,20 +492,20 @@
             autoWidth: true,
             height: 200,
             dataSource: {
-                data: banhji.source.taxList,
-                filter:{
-                    logic: "or",
-                    filters: [
-                        { field: "tax_type_id", value: 1 },//Supplier Tax
-                        { field: "tax_type_id", value: 2 },
-                        { field: "tax_type_id", value: 3 },
-                        { field: "tax_type_id", value: 9 }
-                    ]
-                },
-                sort: [
-                    { field: "tax_type_id", dir: "asc" },
-                    { field: "name", dir: "asc" }
-                ]
+              data: banhji.source.taxList,
+          filter:{
+            logic: "or",
+            filters: [
+                { field: "tax_type_id", value: 1 },//Supplier Tax
+                { field: "tax_type_id", value: 2 },
+                { field: "tax_type_id", value: 3 },
+                { field: "tax_type_id", value: 9 }
+            ]
+        },
+          sort: [
+            { field: "tax_type_id", dir: "asc" },
+            { field: "name", dir: "asc" }
+        ]
             }
         });
     }
@@ -514,44 +514,44 @@
         $('<input name="' + options.field + '" />')
         .appendTo(container)
         .kendoDropDownList({
-            filter: "startswith",
+          filter: "startswith",
             dataTextField: "name",
             dataValueField: "id",
             autoWidth: true,
             height: 200,
             dataSource: {
-                transport: {
-                    read    : {
-                        url: apiUrl + "segments",
-                        type: "GET",
-                        headers: banhji.header,
-                        dataType: 'json'
-                    },
-                    parameterMap: function(options, operation) {
-                        if(operation === 'read') {
-                            return {
-                                page: options.page,
-                                limit: options.pageSize,
-                                filter: options.filter,
-                                sort: options.sort
-                            };
-                        } else {
-                            return {models: kendo.stringify(options.models)};
-                        }
-                    }
-                },
-                schema  : {
-                    model: {
-                        id: 'id'
-                    },
-                    data: 'results',
-                    total: 'count'
-                },
-                serverFiltering: true,
-                serverSorting: true,
-                serverPaging: true,
-                page: 1,
-                pageSize: 100
+              transport: {
+          read  : {
+            url: apiUrl + "segments",
+            type: "GET",
+            headers: banhji.header,
+            dataType: 'json'
+          },
+          parameterMap: function(options, operation) {
+            if(operation === 'read') {
+              return {
+                page: options.page,
+                limit: options.pageSize,
+                filter: options.filter,
+                sort: options.sort
+              };
+            } else {
+              return {models: kendo.stringify(options.models)};
+            }
+          }
+        },
+        schema  : {
+          model: {
+            id: 'id'
+          },
+          data: 'results',
+          total: 'count'
+        },
+        serverFiltering: true,
+        serverSorting: true,
+        serverPaging: true,
+        page: 1,
+        pageSize: 100
             }
         });
     }
@@ -560,46 +560,46 @@
         $('<input name="' + options.field + '" />')
         .appendTo(container)
         .kendoDropDownList({
-            filter: "startswith",
+          filter: "startswith",
             dataTextField: "name",
             dataValueField: "id",
             autoWidth: true,
             height: 200,
             template: kendo.template($("#segment-list-tmpl").html()),
             dataSource: {
-                transport: {
-                    read    : {
-                        url: apiUrl + "segments/item",
-                        type: "GET",
-                        headers: banhji.header,
-                        dataType: 'json'
-                    },
-                    parameterMap: function(options, operation) {
-                        if(operation === 'read') {
-                            return {
-                                page: options.page,
-                                limit: options.pageSize,
-                                filter: options.filter,
-                                sort: options.sort
-                            };
-                        } else {
-                            return {models: kendo.stringify(options.models)};
-                        }
-                    }
-                },
-                schema  : {
-                    model: {
-                        id: 'id'
-                    },
-                    data: 'results',
-                    total: 'count'
-                },
-                filter:{ field: "segment_id", value: options.model.segment.id },
-                serverFiltering: true,
-                serverSorting: true,
-                serverPaging: true,
-                page: 1,
-                pageSize: 100
+              transport: {
+          read  : {
+            url: apiUrl + "segments/item",
+            type: "GET",
+            headers: banhji.header,
+            dataType: 'json'
+          },
+          parameterMap: function(options, operation) {
+            if(operation === 'read') {
+              return {
+                page: options.page,
+                limit: options.pageSize,
+                filter: options.filter,
+                sort: options.sort
+              };
+            } else {
+              return {models: kendo.stringify(options.models)};
+            }
+          }
+        },
+        schema  : {
+          model: {
+            id: 'id'
+          },
+          data: 'results',
+          total: 'count'
+        },
+        filter:{ field: "segment_id", value: options.model.segment.id },
+        serverFiltering: true,
+        serverSorting: true,
+        serverPaging: true,
+        page: 1,
+        pageSize: 100
             }
         });
     }
@@ -613,232 +613,241 @@
         $('<input name="' + options.field + '" class="k-textbox" style="width: 95%;" />')
         .appendTo(container)
         .kendoMaskedTextBox({
-            mask: "A",
-            promptChar: "_"
+          mask: "A",
+          promptChar: "_"
         });;
     }
-
     function twoDigitMaskedTextboxEditor(container, options) {
         $('<input name="' + options.field + '" class="k-textbox" style="width: 95%;" />')
         .appendTo(container)
         .kendoMaskedTextBox({
-            mask: "AA",
-            promptChar: "_"
+          mask: "AA",
+          promptChar: "_"
         });;
     }
-
+    //Date
     function dateEditor(container, options) {
         $('<input name="' + options.field + '" />')
         .appendTo(container)
         .kendoDatePicker({
-            format: "dd-MM-yyyy",
-            parseFormats: ["yyyy-MM-dd"]
+          format: "dd-MM-yyyy",
+          parseFormats: ["yyyy-MM-dd"]
         });
     }
-
-    function customBoolEditor(container, options) {
-        $('<input class="k-checkbox" type="checkbox" name="applyAdditionalCostChk" data-type="boolean" data-bind="checked:additional_applied">').appendTo(container);
-        $('<label class="k-checkbox-label">&#8203;</label>').appendTo(container);
-    }
-
+    //Contact
     function supplierEditor(container, options) {
         $('<input name="' + options.field + '" />')
         .appendTo(container)
         .kendoDropDownList({
-            filter: "contains",
+          filter: "contains",
             dataTextField: "name",
             dataValueField: "id",
             autoWidth: true,
             height: 200,
             template: kendo.template($("#contact-list-tmpl").html()),
             dataSource: {
-                transport: {
-                    read    : {
-                        url: apiUrl + "contacts",
-                        type: "GET",
-                        headers: banhji.header,
-                        dataType: 'json'
-                    },
-                    parameterMap: function(options, operation) {
-                        if(operation === 'read') {
-                            return {
-                                page: options.page,
-                                limit: options.pageSize,
-                                filter: options.filter,
-                                sort: options.sort
-                            };
-                        } else {
-                            return {models: kendo.stringify(options.models)};
-                        }
-                    }
-                },
-                schema  : {
-                    model: {
-                        id: 'id'
-                    },
-                    data: 'results',
-                    total: 'count'
-                },
-                filter:{ field: "parent_id", operator:"where_related_contact_type", value: 2 },
-                sort: [
-                    { field:"contact_type_id", dir:"asc" },
-                    { field:"number", dir:"asc" }
-                ],
-                batch: true,
-                serverFiltering: true,
-                serverSorting: true,
-                serverPaging: true,
-                page: 1,
-                pageSize: 100
+              transport: {
+          read  : {
+            url: apiUrl + "contacts",
+            type: "GET",
+            headers: banhji.header,
+            dataType: 'json'
+          },
+          parameterMap: function(options, operation) {
+            if(operation === 'read') {
+              return {
+                page: options.page,
+                limit: options.pageSize,
+                filter: options.filter,
+                sort: options.sort
+              };
+            } else {
+              return {models: kendo.stringify(options.models)};
+            }
+          }
+        },
+        schema  : {
+          model: {
+            id: 'id'
+          },
+          data: 'results',
+          total: 'count'
+        },
+        filter:{ field: "parent_id", operator:"where_related_contact_type", value: 2 },
+        sort: [
+          { field:"contact_type_id", dir:"asc" },
+          { field:"number", dir:"asc" }
+        ],
+        batch: true,
+        serverFiltering: true,
+        serverSorting: true,
+        serverPaging: true,
+        page: 1,
+        pageSize: 100
             }
         });
     }
-
     function contactEditor(container, options) {
         $('<input name="' + options.field + '" />')
         .appendTo(container)
         .kendoDropDownList({
-            filter: "contains",
+          filter: "contains",
             dataTextField: "name",
             dataValueField: "id",
             autoWidth: true,
             height: 200,
             template: kendo.template($("#contact-list-tmpl").html()),
             dataSource: {
-                transport: {
-                    read    : {
-                        url: apiUrl + "contacts",
-                        type: "GET",
-                        headers: banhji.header,
-                        dataType: 'json'
-                    },
-                    parameterMap: function(options, operation) {
-                        if(operation === 'read') {
-                            return {
-                                page: options.page,
-                                limit: options.pageSize,
-                                filter: options.filter,
-                                sort: options.sort
-                            };
-                        } else {
-                            return {models: kendo.stringify(options.models)};
-                        }
-                    }
-                },
-                schema  : {
-                    model: {
-                        id: 'id'
-                    },
-                    data: 'results',
-                    total: 'count'
-                },
-                sort: [
-                    { field:"contact_type_id", dir:"asc" },
-                    { field:"number", dir:"asc" }
-                ],
-                batch: true,
-                serverFiltering: true,
-                serverSorting: true,
-                serverPaging: true,
-                page: 1,
-                pageSize: 20
+              transport: {
+          read  : {
+            url: apiUrl + "contacts",
+            type: "GET",
+            headers: banhji.header,
+            dataType: 'json'
+          },
+          parameterMap: function(options, operation) {
+            if(operation === 'read') {
+              return {
+                page: options.page,
+                limit: options.pageSize,
+                filter: options.filter,
+                sort: options.sort
+              };
+            } else {
+              return {models: kendo.stringify(options.models)};
+            }
+          }
+        },
+        schema  : {
+          model: {
+            id: 'id'
+          },
+          data: 'results',
+          total: 'count'
+        },
+        sort: [
+          { field:"contact_type_id", dir:"asc" },
+          { field:"number", dir:"asc" }
+        ],
+        batch: true,
+        serverFiltering: true,
+        serverSorting: true,
+        serverPaging: true,
+        page: 1,
+        pageSize: 20
             }
         });
     }
-
+    //Job
     function jobEditor(container, options) {
         $('<input name="' + options.field + '" />')
         .appendTo(container)
         .kendoDropDownList({
-            filter: "contains",
+          filter: "contains",
             dataTextField: "name",
             dataValueField: "id",
             autoWidth: true,
             height: 200,
             dataSource: {
-                transport: {
-                    read    : {
-                        url: apiUrl + "jobs",
-                        type: "GET",
-                        headers: banhji.header,
-                        dataType: 'json'
-                    },
-                    parameterMap: function(options, operation) {
-                        if(operation === 'read') {
-                            return {
-                                page: options.page,
-                                limit: options.pageSize,
-                                filter: options.filter,
-                                sort: options.sort
-                            };
-                        } else {
-                            return {models: kendo.stringify(options.models)};
-                        }
-                    }
-                },
-                schema  : {
-                    model: {
-                        id: 'id'
-                    },
-                    data: 'results',
-                    total: 'count'
-                },
-                batch: true,
-                serverFiltering: true,
-                serverSorting: true,
-                serverPaging: true,
-                page: 1,
-                pageSize: 20
+              transport: {
+          read  : {
+            url: apiUrl + "jobs",
+            type: "GET",
+            headers: banhji.header,
+            dataType: 'json'
+          },
+          parameterMap: function(options, operation) {
+            if(operation === 'read') {
+              return {
+                page: options.page,
+                limit: options.pageSize,
+                filter: options.filter,
+                sort: options.sort
+              };
+            } else {
+              return {models: kendo.stringify(options.models)};
+            }
+          }
+        },
+        schema  : {
+          model: {
+            id: 'id'
+          },
+          data: 'results',
+          total: 'count'
+        },
+        batch: true,
+        serverFiltering: true,
+        serverSorting: true,
+        serverPaging: true,
+        page: 1,
+        pageSize: 20
             }
         });
     }
-
+    //Custom Field
     function customFieldEditor(container, options) {
         $('<input name="' + options.field + '" />')
         .appendTo(container)
         .kendoDropDownList({
-            filter: "startswith",
+          filter: "startswith",
             dataTextField: "name",
             dataValueField: "id",
             autoWidth: true,
             height: 200,
             dataSource: {
-                transport: {
-                    read    : {
-                        url: apiUrl + "custom_fields",
-                        type: "GET",
-                        headers: banhji.header,
-                        dataType: 'json'
-                    },
-                    parameterMap: function(options, operation) {
-                        if(operation === 'read') {
-                            return {
-                                page: options.page,
-                                limit: options.pageSize,
-                                filter: options.filter,
-                                sort: options.sort
-                            };
-                        } else {
-                            return {models: kendo.stringify(options.models)};
-                        }
-                    }
-                },
-                schema  : {
-                    model: {
-                        id: 'id'
-                    },
-                    data: 'results',
-                    total: 'count'
-                },
-                // filter:{ field: "type", value: "contacts" },
-                sort: { field:"name", dir:"asc" },
-                batch: true,
-                serverFiltering: true,
-                serverSorting: true,
-                serverPaging: true,
-                page: 1,
-                pageSize: 50
+              transport: {
+          read  : {
+            url: apiUrl + "custom_fields",
+            type: "GET",
+            headers: banhji.header,
+            dataType: 'json'
+          },
+          parameterMap: function(options, operation) {
+            if(operation === 'read') {
+              return {
+                page: options.page,
+                limit: options.pageSize,
+                filter: options.filter,
+                sort: options.sort
+              };
+            } else {
+              return {models: kendo.stringify(options.models)};
             }
+          }
+        },
+        schema  : {
+          model: {
+            id: 'id'
+          },
+          data: 'results',
+          total: 'count'
+        },
+        // filter:{ field: "type", value: "contacts" },
+        sort: { field:"name", dir:"asc" },
+        batch: true,
+        serverFiltering: true,
+        serverSorting: true,
+        serverPaging: true,
+        page: 1,
+        pageSize: 50
+            }
+        });
+    }
+    function customBoolEditor(container, options) {
+        $('<input class="k-checkbox" type="checkbox" name="applyAdditionalCostChk" data-type="boolean" data-bind="checked:additional_applied">').appendTo(container);
+        $('<label class="k-checkbox-label">&#8203;</label>').appendTo(container);
+    }
+    function applyAdditionalCostEditor(container, options) {
+        $('<input required name="' + options.field + '"/>')
+        .appendTo(container)
+        .kendoDropDownList({
+            dataTextField: "text",
+            dataValueField: "value",
+            dataSource: [
+                { text: "Not Apply", value: false },
+                { text: "Apply", value: true }
+            ]
         });
     }
 </script>
@@ -3488,19 +3497,13 @@
     });
     banhji.reports = kendo.observable({
         lang                : langVM,
-        dataSource          : dataStore(apiUrl + "vendor_modules/dashboard"),
-        txnDS               : dataStore(apiUrl + "vendorReports/transaction_vendor_grid"),
+        dataSource          : dataStore(apiUrl + "micro_modules/purchases_reports_snapshot"),
+        txnDS               : dataStore(apiUrl + "micro_modules/vendor_transaction_list"),
         sortList            : banhji.source.sortList,
         sorter              : "month",
         sdate               : "",
         edate               : "",
         obj                 : {},
-        company             : banhji.institute,
-        displayDate         : "",
-        totalCustomer       : 0,
-        totalSale           : 0,
-        totalBalance        : 0,
-        exArray             : [],
         pageLoad            : function(){
             this.loadData();
             this.search();
@@ -3585,6 +3588,24 @@
             this.set("displayDate", displayDate);
 
             this.txnDS.filter(para);
+        },
+        loadPurchase            : function(){
+            this.txnDS.filter(
+                { field:"type", operator:"where_in", value:["Cash_Purchase","Credit_Purchase"] }
+            );
+        },
+        loadPayable            : function(){
+            this.txnDS.filter([
+                { field:"type", value:"Credit_Purchase" },
+                { field:"status", operator:"where_in", value:[0,2] }
+            ]);
+        },
+        loadDraft            : function(){
+            this.txnDS.filter([
+                { field:"type", operator:"where_in", value:["Purchase_Order","Vendor_Deposit","Cash_Payment","Payment_Refund","Cash_Purchase","Credit_Purchase"] },
+                { field:"status", value:4 },
+                { field:"progress", value:"Draft" }
+            ]);
         },
         payBill             : function(e){
             var data = e.data;
@@ -3980,6 +4001,23 @@
         sessionDS           : dataStore(apiUrl + "cashier"),
         haveItems           : false,
         currencyDS: dataStore(apiUrl + "utibills/currency"),
+        searchItemByCategory: function(e){
+            var data = e.data;
+            var self = this;
+            $("#loading").css("display", "block");
+            this.itemsDS.query({
+                filter: {field: "category_id", value: data.id},
+                page: 1,
+                pageSize: 8,
+            }).then(function(e){
+                $("#loading").css("display", "none");
+                if(self.itemsDS.data().length > 0){
+                    self.set("haveItems", true);
+                }else{
+                    alert('មិនមានទិន្ន័យ (No Data)!');
+                }
+            });
+        },
     });
     // Function
     banhji.purchaseCenter = kendo.observable({
@@ -8543,15 +8581,15 @@
 
             });
         },
-        addRow              : function(){
+        addRow              : function(e){
             var obj = this.get("obj");
-
+            var item = e.data;
             this.lineDS.add({
                 transaction_id      : obj.id,
                 tax_item_id         : "",
                 wht_account_id      : "",
                 item_id             : "",
-                measurement_id      : 0,
+                measurement_id      : item.measurement.measurement_id,
                 description         : "",
                 quantity            : 1,
                 conversion_ratio    : 1,
@@ -8566,8 +8604,15 @@
                 reference_no        : "",
 
                 discount_percentage : 0,
-                item                : { id:"", name:"" },
-                item_price          : { measurement_id:"", measurement:"" },
+                item                : { 
+                    id:item.id, 
+                    name:item.name , 
+                    item_type_id: item.item_type_id
+                },
+                item_price          : { 
+                    measurement_id: item.measurement.measurement_id, 
+                    measurement:item.measurement.measurement 
+                },
                 tax_item            : { id:"", name:"" },
                 wht_account         : { id:"", name:"" }
             });
@@ -9104,7 +9149,7 @@
             duedate.setDate(duedate.getDate() + 30);
 
             this.dataSource.insert(0, {
-                transaction_template_id : 0,
+                transaction_template_id : 31,
                 account_id          : 1,
                 contact_id          : "",
                 payment_term_id     : 0,
@@ -9160,10 +9205,10 @@
             this.generateNumber();
 
             //Default rows
-            for (var i = 0; i < banhji.source.defaultLines; i++) {
-                this.addRow();
-                this.addRowAccount();
-            }
+            // for (var i = 0; i < banhji.source.defaultLines; i++) {
+            //     this.addRow();
+            //     this.addRowAccount();
+            // }
         },
         objSync             : function(){
             var dfd = $.Deferred();
@@ -9927,8 +9972,140 @@
             });
 
             return dfd;
+        },
+        itemsDS             : new kendo.data.DataSource({
+            transport: {
+                read: {
+                    url: apiUrl + "items",
+                    type: "GET",
+                    headers: banhji.header,
+                    dataType: 'json'
+                },
+                parameterMap: function(options, operation) {
+                    if (operation === 'read') {
+                        return {
+                            page: options.page,
+                            limit: options.pageSize,
+                            filter: options.filter,
+                            sort: options.sort
+                        };
+                    } else {
+                        return {
+                            models: kendo.stringify(options.models)
+                        };
+                    }
+                }
+            },
+            schema: {
+                model: {
+                    id: 'id'
+                },
+                data: 'results',
+                total: 'count'
+            },
+            filter: [
+                {
+                    field: "item_type_id",
+                    operator: "where_in",
+                    value: [1, 4]
+                }
+            ],
+            sort: {
+                field: "id",
+                dir: "asc"
+            },
+            batch: true,
+            serverFiltering: true,
+            serverSorting: true,
+            serverPaging: true,
+            page: 1,
+            pageSize: 8
+        }),
+        searchItemByCategory: function(e){
+            var data = e.data;
+            var self = this;
+            $("#loading").css("display", "block");
+            this.itemsDS.query({
+                filter: {field: "category_id", value: data.id},
+                page: 1,
+                pageSize: 8,
+            }).then(function(e){
+                $("#loading").css("display", "none");
+                if(self.itemsDS.data().length > 0){
+                    self.set("haveItems", true);
+                }else{
+                    alert('មិនមានទិន្ន័យ (No Data)!');
+                }
+            });
+        },
+        backCategory    : function(){
+            this.set("haveItems", false);
+        },
+        saveNew2             : function(e){
+            this.set("saveNew", true);
+            this.set("saveDraft", false);
+            this.set("saveClose", false);
+            this.set("savePrint", false);
+            var obj = this.get("obj");
+            if(obj.account_id && obj.contact_id && this.lineDS.data().length > 0){
+                this.save();
+            }else{
+                superChoeunNTF('error', this.lang.lang.error_input);
+            }
+        },
+        savePrint2           : function(e){
+            this.set("saveNew", false);
+            this.set("saveDraft", false);
+            this.set("saveClose", false);
+            this.set("savePrint", true);
+            if(obj.account_id && obj.contact_id && this.lineDS.data().length > 0){
+                this.save();
+            }else{
+                superChoeunNTF('error', this.lang.lang.error_input);
+            }
+        },
+        cashClick           : function(e){
+            $('.module-active').removeClass('module-active');
+            $('.cashmodule').addClass('module-active');
+            this.get("obj").set("type", "Cash_Purchase");
+            this.typeChanges();
+        },
+        creditClick         : function(e){
+            $('.module-active').removeClass('module-active');
+            $('.creditmodule').addClass('module-active');
+            this.get("obj").set("type", "Credit_Purchase");
+            this.typeChanges();
         }
     });
+    function superChoeunNTF(module, message){
+        var it = $('#supercheoun-ntf');
+        it.css("right", "-800px");
+        it.css({
+            "padding": "10px", 
+            "color": "#fff", 
+            "position": "fixed", 
+            "bottom": "20%", 
+            "box-shadow": "3px 3px #888888",
+            "z-index": "9999"
+        });
+        it.animate({right: '0px'});
+        if(module == 'success'){
+            it.css("background", "#4CAF50");
+            it.children(".message").html("<p style='margin: 0px;'>"+message+"</p>");
+        }else{
+            it.css("background", "#be1e2d");
+            it.children(".message").html("<p style='margin: 0px;'>"+message+"</p>");
+        }
+        var i = 5;
+        var x = setInterval(function() {
+            it.children(".second").html(i);
+            i -= 1;
+            if(i == 0){
+                it.animate({right: '-800px'});
+                clearInterval(x);
+            }
+        }, 1000);
+    }
     banhji.purchaseReturn =  kendo.observable({
         lang                : langVM,
         dataSource          : dataStore(apiUrl + "transactions"),
@@ -14338,7 +14515,8 @@
         // Function
         vendor: new kendo.Layout("#vendor", {model: banhji.vendor}),
         purchaseOrder: new kendo.Layout("#purchaseOrder", {model: banhji.purchaseOrder}),
-        purchase: new kendo.Layout("#purchase", {model: banhji.purchase}),
+        // purchase: new kendo.Layout("#purchase", {model: banhji.purchase}),
+        purchase: new kendo.Layout("#transactions", {model: banhji.purchase}),
         purchaseReturn: new kendo.Layout("#purchaseReturn", {model: banhji.purchaseReturn}),
         paymentRefund: new kendo.Layout("#paymentRefund", {model: banhji.paymentRefund}),
         vendorDeposit: new kendo.Layout("#vendorDeposit", {model: banhji.vendorDeposit}),
@@ -14415,9 +14593,11 @@
 
         banhji.view.layout.showIn('#content', banhji.view.Index);
         banhji.view.Index.showIn('#indexMenu', banhji.view.tapMenu);
-        banhji.view.Index.showIn('#indexContent', banhji.view.transactions);
-
-        banhji.transactions.pageLoad();
+        // banhji.view.Index.showIn('#indexContent', banhji.view.transactions);
+        banhji.view.Index.showIn('#indexContent', banhji.view.purchase);
+        var vm = banhji.purchase;
+        vm.pageLoad();
+        vm.lineDS.bind("change", vm.itemLineDSChanges);
     });
     banhji.router.route('/check_out', function() {
         
@@ -14434,7 +14614,7 @@
         banhji.view.Index.showIn('#indexMenu', banhji.view.tapMenu);
         banhji.view.Index.showIn('#indexContent', banhji.view.reports);
 
-        var vm= banhji.reports;
+        var vm = banhji.reports;
 
         if(banhji.pageLoaded["reports"]==undefined){
             banhji.pageLoaded["reports"] = true;
@@ -14442,7 +14622,6 @@
             vm.sorterChanges();
         }
 
-        //load MVVM
         vm.pageLoad();
     });
     banhji.router.route('/purchase_center', function() {

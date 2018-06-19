@@ -574,6 +574,11 @@ class Item_lines extends REST_Controller {
 			}
 			$obj->conversion_ratio = $conversion_ratio;
 
+			//Measurement
+		   	if(isset($value->measurement)){
+				$obj->measurement_id = $value->measurement->id;
+			}
+
 		   	if($obj->save()){
 		   		//Item line locations
 		   		if(isset($value->item_line_locations)){
@@ -714,6 +719,11 @@ class Item_lines extends REST_Controller {
 				}
 			}
 			$obj->conversion_ratio = $conversion_ratio;
+
+			//Measurement
+		   	if(isset($value->measurement)){
+				$obj->measurement_id = $value->measurement->id;
+			}
 
 			//Update item costing
 			if($value->movement==1){
