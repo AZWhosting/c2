@@ -3876,7 +3876,7 @@
                 });
             }
         },
-        edit                : function(){
+        goEdit                : function(){
             var obj = this.get("obj");
 
             if(obj!==null){
