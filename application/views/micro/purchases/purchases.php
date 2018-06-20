@@ -80,6 +80,7 @@
 						<span data-bind="text: lang.lang.product"></span>
 					</div>
 				</div>
+				<div class="mask"></div>
 			</div>
 
 			<!-- Report -->
@@ -345,7 +346,7 @@
         </div>
     </div>
 </script>
-<script id="purchaseDashBoard" type="text/x-kendo-template">	
+<script id="purchaseDashBoard" type="text/x-kendo-template">
 	<div class="row" id="checkOut">
 		<style>
 			.module-active {
@@ -797,7 +798,7 @@
 							<div id="ntf1" data-role="notification" style="display: none;"></div>
 							<div class="row">
 								<div class="col" align="right">
-									<span id="saveCancel" class="btn-btn" data-bind="click: addEmpty"><i></i> <span data-bind="text: lang.lang.cancel">Cancel </span></span>
+									<span  class="btn-btn" data-bind="click: addEmpty"><i></i> <span data-bind="text: lang.lang.cancel">Cancel </span></span>
 									<span class="btn-btn" data-bind="click: openConfirm, visible: isEdit" style="display: none;"><span data-bind="text: lang.lang.delete">Delete</span></span>
 									<span class="btn-btn" data-bind="click: saveNew2" id="saveNew" data-bind="invisible: isEdit"><span data-bind="text: lang.lang.save_new">Save and New</span></span>
 			                        <span class="btn-btn" data-bind="click: savePrint2" id="savePrint"><span data-bind="text: lang.lang.save_print">Save and Print</span></span>

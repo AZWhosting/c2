@@ -278,7 +278,8 @@
 	             	{ field: 'issued_date', title : 'DATE', template:'#=kendo.toString(new Date(issued_date), banhji.dateFormat)#', filterable: false, attributes: { style: 'text-align: center;'}},
 	             	{ field: 'name', title : 'NAME', filterable: false },
 	             	{ field: 'type', title : 'TYPE', filterable: { multi: true, search: true} },				                 
-	                { field: 'number', title: 'REFERENCE', template: '<a href=\'purchases\\#/#=type.toLowerCase()#/#=id#\'>#=number#</a>', filterable: false, attributes: { style: 'text-align: left;'} },
+	                { field: 'number', title: 'REFERENCE', 
+	                	template: '<a href=\'sales\\#/#=type.toLowerCase()#/#=id#\'>#=number#</a>', filterable: false, attributes: { style: 'text-align: left;'} },
 	                { field: 'amount', title: 'AMOUNT', format: '{0:n}', filterable: false, attributes: { style: 'text-align: right; padding-right: 30px;'} },
 	                { 
 	                	title: 'STATUS', 
@@ -456,7 +457,7 @@
 					                { 
 					                	field: 'number', 
 					                	title: 'REFERENCE', 
-					                	template: '<a href=\'purchases\\#/#=type.toLowerCase()#/#=id#\'>#=number#</a>', 
+					                	template: '<a href=\'sales\\#/#=type.toLowerCase()#/#=id#\'>#=number#</a>', 
 					                	filterable: false, 
 					                	attributes: { style: 'text-align: left;'} 
 					                },
@@ -624,7 +625,7 @@
 				                 	{ 
 				                 		field: 'item', 
 				                 		title: 'PRODUCTS/SERVICES', 
-				                 		editor: itemEditor, 
+				                 		editor: false, 
 				                 		template: '#=item.name#', width: '170px' 
 				                 	},
 		                            {
@@ -723,7 +724,7 @@
 										<a style="white-space: pre-wrap; border-radius: 0 0 0 5px; " class="buttoninvoiceSale btn waves-effect waves-light btn-block btn-info" data-bind="click: saveInvoice" data-bind="click: saveInvoice"><span style="font-size: 13px" data-bind="text: lang.lang.microinvoice"></span></a>
 									</div> -->
 									<div class="col-6" style="padding-right: 0;">
-										<a style="margin: 0 2px; width: 97%; " class="buttonparksale btn waves-effect waves-light btn-block btn-info" data-bind="click: parkSale"><span data-bind="text: lang.lang.microparksale">Parksale</span></a>
+										<a style="border-radius: 0 0 0 5px; margin: 0 2px 0 0; width: 99%; " class="buttonparksale btn waves-effect waves-light btn-block btn-info" data-bind="click: parkSale"><span data-bind="text: lang.lang.microparksale">Parksale</span></a>
 									</div>
 									<div class="col-6" style="padding-left: 0;">
 										<a style="border-radius: 0 0 5px 0; " class="buttoncancelsale btn waves-effect waves-light btn-block btn-info" data-bind="click: addEmpty"><span data-bind="text: lang.lang.cancel">Cancel</span></a>
@@ -873,7 +874,9 @@
 	<div class="col">
 		<div style="text-align: center;font-size:20px; line-height: 35px;" data-bind="text: amount_rate"></div>
 		<div style="text-align: center;">
-			<input data-role="numerictextbox"
+			<input 
+				type="number"
+				data-role="numerictextbox"
 	           data-format="n"
 	           data-spinners="false"
 	           data-min="0"
@@ -898,6 +901,7 @@
 		    #}else{#
 		    	<input data-role="numerictextbox"
 		           data-format="n"
+		           type="number"
 		           data-spinners="false"
 		           data-min="0"
 		           disabled
@@ -6641,12 +6645,12 @@
 		<td colspan="4">#=name#</td>
 	</tr>	
 	# var amount = 0;#
-	#for(var i= 0; i <line.length; i++) {#
+	#for(var i= 0; i < line.length; i++) {#
 		# amount += kendo.parseFloat(line[i].amount);#
 		<tr>
 			<td style="padding-left: 20px !important;">#=line[i].type#</td>
 			<td style="text-align: left; ">#=kendo.toString(new Date(line[i].issued_date), "dd-MM-yyyy")#</td>
-			<td class="hidden-sm-down" style="text-align: left; ">#=line[i].number#</td>			
+			<td class="hidden-sm-down" style="text-align: left; "><a href='sales\#/#= line[i].type.toLowerCase()#/#= line[i].id#'> #=line[i].number#</a></td>			
 			<td style="text-align: right; ">#=kendo.toString(line[i].amount, "c2", banhji.locale)#</td>
 		</tr>
 	#}#

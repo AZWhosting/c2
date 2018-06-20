@@ -64,7 +64,7 @@
             </div>
             <div class="login">
                 <div class="login-content">
-                    
+
                     <div class="row">
                         <div class="col-xs-12 col-md-6">
                             <div class="login-image">
@@ -76,7 +76,7 @@
                                 <form action="" method="">
                                     <input type="text" data-bind="value: email" placeholder="Your email" class="login-email"><br>
                                     <input type="password" data-bind="value: password" placeholder="Password " class="login-email"><br>
-                                    <input id="loginBtn" type="button" data-bind="click: btnSignIn" class="btn-login" value="Login"><br><br>
+                                    <input style="z-index: 99999;" id="loginBtn" type="button" data-bind="click: btnSignIn" class="btn-login" value="Login"><br><br>
                                     <div id="loginInformation" style="text-align: center;margin-bottom: 15px;color: #a22314"></div>
                                 </form>
                                 <p>By clicking Login, you agree to our <a href="https://www.banhji.com/terms" target="_blank">Term of Service.</a></p>

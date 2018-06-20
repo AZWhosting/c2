@@ -40378,7 +40378,7 @@
 
                     self.attachmentDS.add({
                         user_id         : self.get("user_id"),
-                        transaction_id  : obj.id,
+                        item_id         : obj.id,
                         type            : "Item",
                         name            : value.name,
                         description     : "",

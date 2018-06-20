@@ -6265,6 +6265,9 @@
             var obj = this.get("obj");
             var currencyReceipt = 0;
             $.each(this.receipCurrencyDS.data(), function(i, v) {
+                if(v.amount == null){
+                    v.amount = 0;
+                }
                 var amountAfterRate = parseFloat(v.amount) / parseFloat(v.rate);
                 currencyReceipt += amountAfterRate;
             });
@@ -6599,10 +6602,31 @@
                         template: kendo.template(TempForm)
                     });
                     self.barcod("do");
+                    if(self.line.length == 0){
+                        self.getItem(self.dataSource.data()[0].id);
+                    }
                 });
             } else {
                 banhji.router.navigate('/');
             }
+        },
+        itemDS          : dataStore(apiUrl + "item_lines"),
+        getItem         : function(transaction_id){
+            var self = this;
+            this.itemDS.query({
+                filter: [
+                    {field: "transaction_id", value: transaction_id},
+                    {field: "deleted", value: 0}
+                ]
+            }).then(function(e){
+                var data = self.itemDS.data();
+                self.line.splice(0, self.line.length);
+                $.each(data, function(i,v){
+                    self.line.push(v);
+                });
+                var listview = $("#invoiceContent").data("kendoListView");
+                listview.refresh();
+            });
         },
         barcod: function(re) {
             var view = this.dataSource.data();
@@ -6739,7 +6763,7 @@
             this.barcod("reset");
             var listview = $("#invoiceContent").data("kendoListView");
             listview.refresh();
-            window.history.back();
+            banhji.router.navigate("/");
         }
     });
     banhji.transactions = kendo.observable({
@@ -6847,7 +6871,15 @@
             }
         }
     });
-
+    banhji.invoiceForm =  kendo.observable({
+        pageLoad            : function(id){
+            if(id){
+                banhji.router.navigate("/print_bill/"+id);
+            }else{
+                banhji.router.navigate("/");
+            }
+        }
+    });
 
 
     banhji.customers = kendo.observable({
@@ -15003,6 +15035,10 @@
                 memo2               : "",
                 segments            : []
             });
+
+            this.dataSource.data([]);
+            this.txnDS.data([]);
+            this.journalLineDS.data([]);
         },
         objSync             : function(){
             var dfd = $.Deferred();
@@ -15105,16 +15141,20 @@
                 $("#ntf1").data("kendoNotification").error(reason);
             }).then(function(result){
                 $("#ntf1").data("kendoNotification").success(banhji.source.successMessage);
-
+                
                 if(self.get("saveClose")){
                     //Save Close
+                    banhji.router.navigate("/");
                     self.set("saveClose", false);
-                    self.clear();
-                    window.history.back();
+                    self.addEmpty();
+                    // self.clear();
+                    
                 }else if(self.get("savePrint")){
                     //Save Print
                     self.set("savePrint", false);
-                    self.clear();
+                    self.addEmpty();
+                    // self.clear();
+                    
                     if(result[0].transaction_template_id>0){
                         banhji.router.navigate("/invoice_form/"+result[0].id);
                     }
@@ -18694,7 +18734,7 @@
         invoice: new kendo.Layout("#invoice", {model: banhji.invoice}),
         cashReceipt: new kendo.Layout("#cashReceipt", {model: banhji.cashReceipt}),
         cashRefund: new kendo.Layout("#cashRefund", {model: banhji.cashRefund}),
-
+        invoiceForm: new kendo.Layout("#printBill", {model: banhji.invoiceForm}),
         // Add Customer
         customer: new kendo.Layout("#customer", {model: banhji.customer}),
 
@@ -20136,6 +20176,13 @@
             }
             vm.pageLoad();
         }
+    });
+    banhji.router.route('/invoice_form(/:id)', function(id) {
+        var blank = new kendo.View('#blank-tmpl');
+        banhji.view.layout.showIn('#content', banhji.view.Index);
+        banhji.view.Index.showIn('#indexMenu', banhji.view.tapMenu);
+        banhji.view.Index.showIn('#indexContent', banhji.view.invoiceForm);
+        banhji.invoiceForm.pageLoad(id);
     });
     banhji.router.route('/print_bill(/:id)', function(id) {
         var blank = new kendo.View('#blank-tmpl');

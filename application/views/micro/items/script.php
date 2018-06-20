@@ -3642,7 +3642,7 @@
 
                     self.attachmentDS.add({
                         user_id         : self.get("user_id"),
-                        transaction_id  : obj.id,
+                        item_id         : obj.id,
                         type            : "Item",
                         name            : value.name,
                         description     : "",
@@ -8321,7 +8321,6 @@
     
     // Report
     banhji.router.route("/inventory_position_summary", function(){
-        // banhji.view.layout.showIn("#content", banhji.view.underConstruction);
         if(!banhji.userManagement.getLogin()){
             banhji.router.navigate('/manage');
         }else{
@@ -8334,24 +8333,6 @@
 
             if(banhji.pageLoaded["inventory_position_summary"]==undefined){
                 banhji.pageLoaded["inventory_position_summary"] = true;
-            }
-            vm.pageLoad();
-        }
-    });
-    banhji.router.route("/inventory_position_summary_by_location", function(){
-        // banhji.view.layout.showIn("#content", banhji.view.underConstruction);
-        if(!banhji.userManagement.getLogin()){
-            banhji.router.navigate('/manage');
-        }else{
-            banhji.view.layout.showIn('#content', banhji.view.Index);
-            banhji.view.Index.showIn('#indexMenu', banhji.view.tapMenu);
-            banhji.view.layout.showIn("#indexContent", banhji.view.inventoryPositionSummaryByLocation);
-
-            var vm = banhji.inventoryPositionSummaryByLocation;
-            banhji.userManagement.addMultiTask("Inventory Position Summary By Location","inventory_position_summary_by_location",null);
-
-            if(banhji.pageLoaded["inventory_position_summary_by_location"]==undefined){
-                banhji.pageLoaded["inventory_position_summary_by_location"] = true;
             }
             vm.pageLoad();
         }
