@@ -602,7 +602,7 @@ class Items extends REST_Controller {
 			}
 		}
 
-		$unitOnHand->select_sum("quantity * conversion_ratio * movement", "total");
+		$unitOnHand->select_sum("quantity * conversion_ratio * item_lines.movement", "total");
 		$unitOnHand->where_related("transaction", "is_recurring <>", 1);
 		$unitOnHand->where_related("transaction", "deleted <>", 1);
 		$unitOnHand->where("movement <>", 0);
@@ -623,7 +623,7 @@ class Items extends REST_Controller {
 		$costOfSales->where("deleted <>", 1);
 		$costOfSales->get();
 
-		$inventoryCosts->select_sum("(quantity * conversion_ratio * movement * cost) + inventory_adjust_value", "total");
+		$inventoryCosts->select_sum("(quantity * conversion_ratio * item_lines.movement * cost) + inventory_adjust_value", "total");
 		$inventoryCosts->where_in_related("transaction", "type", $inventoryList);
 		$inventoryCosts->where_related("transaction", "is_recurring <>", 1);
 		$inventoryCosts->where_related("transaction", "deleted <>", 1);

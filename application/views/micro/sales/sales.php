@@ -280,7 +280,7 @@
 	             	{ field: 'name', title : 'NAME', filterable: false },
 	             	{ field: 'type', title : 'TYPE', filterable: { multi: true, search: true} },				                 
 	                { field: 'number', title: 'REFERENCE', template: '<a href=\'purchases\\#/#=type.toLowerCase()#/#=id#\'>#=number#</a>', filterable: false, attributes: { style: 'text-align: left;'} },
-	                { field: 'amount', title: 'AMOUNT', format: '{0:n}', filterable: false, attributes: { style: 'text-align: right;'} },
+	                { field: 'amount', title: 'AMOUNT', format: '{0:n}', filterable: false, attributes: { style: 'text-align: right; padding-right: 30px;'} },
 	                { 
 	                	title: 'STATUS', 
 	                	template: kendo.template($('#transactions-status-tmpl').html()),
@@ -436,6 +436,11 @@
 				</div>
 				<div class="row hidden-sm-down">
 					<div class="col-md-12" style="position: relative;overflow: hidden;">
+						<div id="loading" class="preloader" style="display: none;position: absolute;background: rgba(255,255,255,.6);">
+					        <div class="loader">
+					            <div class="loader__figure"></div>
+					        </div>
+					    </div>
 						<div data-bind="invisible: haveItems" class="demo-section k-content wide span12">
 							<p style="color: #fff; margin-bottom: 5px; float: left; width: 100%;" >Category</p>
 							<div class="demo-section k-content wide">
@@ -483,12 +488,12 @@
 		</div>
 		<div class="col-12 col-md-6">
 			<div class="listWrapper marginBottom" style="height: auto;">
-				<div class="row ">
+				<div class="row " style="margin-bottom: 10px;">
 					<div class="col hidden-sm-down">
-						<div>Cashier Name: <span data-bind="text: displayUserName"></span></div>
-						<div style="background:#fff;padding: 10px 0;text-align: center;">
+						<div style="margin-top: 10px;">Cashier Name: <span data-bind="text: displayUserName"></span></div>
+						<div style="padding: 5px 0;text-align: left;">
 							<!-- <div id="date-part"></div> -->
-							<div id='time-part'></div>
+							Time: <span id='time-part'></span>
 						</div>
 						<!-- <input 
 							data-role="dropdownlist"
@@ -520,7 +525,7 @@
 					<div class="col checkOut-button">
 						<a style="padding: 9px 15px; box-shadow: 2px 0px 12px 0px rgba(68,68,68,1); border-radius: 5px;" class="custom btn waves-effect waves-light btn-block btn-info" data-bind="click: saveCashSale">
 							<span style="font-size: 15px; width: 50%; float: left; line-height: 45px;" data-bind="text: lang.lang.microparksale"></span>
-							<span style="font-size: 30px; width: 50%; float: right;" data-bind="">100</span>
+							<span style="font-size: 30px; width: 50%; float: right;" data-bind="text: numberParkSale">100</span>
 						</a>
 	                </div>
 				</div>
@@ -645,8 +650,8 @@
 									<!-- <div class="col-4" style="padding-right: 0;">
 										<a style="white-space: pre-wrap; border-radius: 0 0 0 5px; " class="buttoninvoiceSale btn waves-effect waves-light btn-block btn-info" data-bind="click: saveInvoice" data-bind="click: saveInvoice"><span style="font-size: 13px" data-bind="text: lang.lang.microinvoice"></span></a>
 									</div> -->
-									<div class="col-6" style="padding: 0;">
-										<a style="margin: 0 2px; width: 96%; " class="buttonparksale btn waves-effect waves-light btn-block btn-info" data-bind="click: parkSale"><span data-bind="text: lang.lang.microparksale">Parksale</span></a>
+									<div class="col-6" style="padding-right: 0;">
+										<a style="margin: 0 2px; width: 97%; " class="buttonparksale btn waves-effect waves-light btn-block btn-info" data-bind="click: parkSale"><span data-bind="text: lang.lang.microparksale">Parksale</span></a>
 									</div>
 									<div class="col-6" style="padding-left: 0;">
 										<a style="border-radius: 0 0 5px 0; " class="buttoncancelsale btn waves-effect waves-light btn-block btn-info" data-bind="click: addEmptey"><span data-bind="text: lang.lang.cancel">Cancel</span></a>
@@ -822,7 +827,7 @@
 	                		<td style="padding: 0;">:</td>
 	                		<td style="text-align: right; padding: 0;">#= number#</td>
 	                	</tr>
-	                	<tr>
+	                	<!-- <tr>
 	                		<td style="padding: 0;">
 	                			<span style="font-size: 13px;">អ្នកគិតលុយ</span>
 	                			/
@@ -830,7 +835,7 @@
 	                		</td>
 	                		<td style="padding: 0;">:</td>
 	                		<td style="text-align: right; padding: 0; text-transform: uppercase">sreypich</td>
-	                	</tr>
+	                	</tr> -->
 	                	<tr>
 	                		<td style="padding: 0;">
 	                			<span style="font-size: 13px;">កាល​បរិច្ឆេទ</span>
@@ -840,7 +845,7 @@
 	                		<td style="padding: 0;">:</td>
 	                		<td style="text-align: right; padding: 0; ">#= issued_date#</td>
 	                	</tr>
-	                	<tr>
+	                	<!-- <tr>
 	                		<td style="padding: 0;">
 	                			<span style="font-size: 13px;">សមាជិក</span>
 	                			/
@@ -857,7 +862,7 @@
 	                		</td>
 	                		<td style="padding: 0;">:</td>
 	                		<td style="text-align: right; padding: 0; ">14</td>
-	                	</tr>
+	                	</tr> -->
 	                </table>
 	            </div>
 	        	<div class="clear">
@@ -884,22 +889,51 @@
 								#}#
 	                    	#})#
 	                    </tbody>
-	                    <tfoot>
+	                    <tfoot style="border: none;">
+	                    	<tr style="border: none;">
+	                        	<td colspan="4" style="text-align: right; padding: 5px; font-weight: bold;">សរុប/Sub Total:</td>
+	                            <td class="rside" style="text-align: right;">#= kendo.toString(amount, "c", locale)#</td>
+	                        </tr>
 	                        <tr>
-	                        	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">បញ្ចុះតម្លៃ Discount</td>
+	                        	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">បញ្ចុះតម្លៃ/Discount:</td>
 	                            <td class="rside" style="text-align: right;">#= kendo.toString(discount, "c", locale) #</td>
 	                        </tr>
 	                        <tr>
-	                        	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">សរុប Total</td>
+	                        	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">ប្រាក់ត្រូវបង់ជា/Grand Total:</td>
 	                            <td class="rside" style="text-align: right;">#= kendo.toString(amount, "c", locale)#</td>
 	                        </tr>
 	                    </tfoot>
 	                </table>
+	                <table  style="width: 100%; ">
+	                	<tr>
+	                		<td style="padding: 0;">Receive ($):</td>
+	                		<td style="text-align: right;     padding: 0 5px;">0$</td>
+	                		<td></td>
+	                		<td style="padding: 0;">Change ($):</td>
+	                		<td style="text-align: right;     padding: 0 5px;">0.50 $</td>
+	                	</tr>
+	                	<tr>
+	                		<td style="padding: 0;">Receive (៛):</td>
+	                		<td style="text-align: right;     padding: 0 5px;">10,000៛</td>
+	                		<td></td>
+	                		<td style="padding: 0;">Change (៛):</td>
+	                		<td style="text-align: right;     padding: 0 5px;">2,000 ៛</td>
+	                	</tr>
+	                </table>
+	                <p style="text-align: center; margin-top: 10px; margin-bottom: 5px;">
+	                	<i>អត្រាប្តូរប្រាក់/Exchange rate (1$): 4,000៛</i>
+	                </p>
+	                <p style="text-align: center; font-size: 12px; margin-top: 8px; margin-bottom: 5px;">
+	                	សូមអរគុណ សូមអញ្ជើញមកម្តងទៀត ! <i>Thanks, Please come again!</i>
+	                </p>
+	                <div style="text-align: center; background: black; height: 30px; width: 50%; margin: 0 auto;">
+	                	Code
+	                </div>
 	            </div>
 	        </div>
-	        <div class="foot">
+	        <!-- <div class="foot">
 	            <h6 style="font-size: 12px;">សម្គាល់៖ <span style="font-size:12px;">ច្បាប់​ដើម​សម្រាប់​អ្នក​ទិញ ច្បាប់​ចម្លង​សម្រាប់​អ្នក​លក់</span><br /><span style="font-size: 10px"><strong>Note:</strong> Original invoice for customer, copied invoice for seller</span></h6>
-	        </div>
+	        </div> -->
 	    </div>
 	</div>
 </script>
@@ -934,19 +968,28 @@
 	</div>
 </script>
 <script id="change-currency-receipt-template" type="text/x-kendo-template">
-	<tr>
-		<td data-bind="text: currency">
-		</td>
-		<td>
-			<input data-role="numerictextbox"
-               data-format="n"
-               data-spinners="false"
-               data-min="0"
-               data-bind="value: amount,
-                          events: { change: checkChangeMoney }"
-               style="width: 90%; text-align: right;">
-		</td>
-	</tr>
+	<div class="col">
+		<div style="text-align: center;font-size:20px; line-height: 35px;" data-bind="text: currency"></div>
+		<div style="text-align: center;">
+			#if(banhji.checkOut.receipChangeDS.indexOf(data) > 0){#
+				<input data-role="numerictextbox"
+		           data-format="n"
+		           data-spinners="false"
+		           data-min="0"
+		           data-bind="value: amount,
+		                      events: { change: checkChangeMoney }"
+		           style="width: 90%; text-align: center; font-size: 20px;" />
+		    #}else{#
+		    	<input data-role="numerictextbox"
+		           data-format="n"
+		           data-spinners="false"
+		           data-min="0"
+		           disabled
+		           data-bind="value: amount"
+		           style="width: 90%; text-align: center; font-size: 20px;" />
+		    #}#
+		</div>
+	</div>
 </script>
 <!-- <script id="change-currency-receipt-template" type="text/x-kendo-template">
 	<div class="col">
@@ -1148,7 +1191,7 @@
 	#}#
 
 	#if(status=="4") {#
-		<a href="\#/#=type.toLowerCase()#/#=id#"><button>Use</button></a>
+		<a href="\#/#=type.toLowerCase()#/#=id#"><button class="k-button btn-info">Use</button></a>
 	#}#
 </script>
 <script id="customerTransactionList-template" type="text/x-kendo-template">
@@ -7569,4 +7612,4 @@
 		#=code# - #=country#
 	</span>
 </script>
-<!-- End -->             
+<!-- End -->                                                           

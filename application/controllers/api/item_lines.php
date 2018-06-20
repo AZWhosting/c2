@@ -332,7 +332,7 @@ class Item_lines extends REST_Controller {
 							|| in_array($transaction->type, $inventoryList)){
 
 							$unitOnHand = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);							
-							$unitOnHand->select_sum("quantity * conversion_ratio * movement", "total");
+							$unitOnHand->select_sum("quantity * conversion_ratio * item_lines.movement", "total");
 							$unitOnHand->where_related("transaction", "issued_date <=", $transaction->issued_date);
 							$unitOnHand->where_related("transaction", "is_recurring <>", 1);
 							$unitOnHand->where_related("transaction", "deleted <>", 1);
@@ -362,7 +362,7 @@ class Item_lines extends REST_Controller {
 							$costOfSales->get();
 
 							$inventoryCosts = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-							$inventoryCosts->select_sum("(quantity * conversion_ratio * movement * cost) + inventory_adjust_value", "total");
+							$inventoryCosts->select_sum("(quantity * conversion_ratio * item_lines.movement * cost) + inventory_adjust_value", "total");
 							$inventoryCosts->where_in_related("transaction", "type", $inventoryList);
 							$inventoryCosts->where_related("transaction", "issued_date <=", $transaction->issued_date);
 							$inventoryCosts->where_related("transaction", "is_recurring <>", 1);
@@ -748,8 +748,8 @@ class Item_lines extends REST_Controller {
 							$lineTxns->get_by_id($line->transaction_id);
 
 							$itemWAC = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-							$itemWAC->select_sum('quantity * conversion_ratio * movement', "totalQuantity");
-							$itemWAC->select_sum('(quantity * conversion_ratio * movement * cost) + inventory_adjust_value', "totalAmount");
+							$itemWAC->select_sum('quantity * conversion_ratio * item_lines.movement', "totalQuantity");
+							$itemWAC->select_sum('(quantity * conversion_ratio * item_lines.movement * cost) + inventory_adjust_value', "totalAmount");
 							$itemWAC->where_related("transaction", "issued_date <", $lineTxns->issued_date);
 							$itemWAC->where_related("transaction", "is_recurring <>", 1);
 							$itemWAC->where_related("transaction", "deleted <>", 1);
@@ -888,7 +888,7 @@ class Item_lines extends REST_Controller {
 
 		//Find Item Quantity and Amount
 		$unitOnHand = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);							
-		$unitOnHand->select_sum("quantity * conversion_ratio * movement", "total");
+		$unitOnHand->select_sum("quantity * conversion_ratio * item_lines.movement", "total");
 		$unitOnHand->where_related("transaction", "is_recurring <>", 1);
 		$unitOnHand->where_related("transaction", "deleted <>", 1);
 		$unitOnHand->where("item_id", 10430);
@@ -926,7 +926,7 @@ class Item_lines extends REST_Controller {
 		$costOfSales->get();
 
 		$inventoryCosts = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$inventoryCosts->select_sum("(quantity * conversion_ratio * movement * cost) + inventory_adjust_value", "total");
+		$inventoryCosts->select_sum("(quantity * conversion_ratio * item_lines.movement * cost) + inventory_adjust_value", "total");
 		$inventoryCosts->where_in_related("transaction", "type", $inventoryList);
 		$inventoryCosts->where_related("transaction", "is_recurring <>", 1);
 		$inventoryCosts->where_related("transaction", "deleted <>", 1);

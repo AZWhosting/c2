@@ -596,13 +596,15 @@ class Utibills extends REST_Controller {
 		if($obj->exists()){
 			$i = 0;
 			foreach ($obj as $value) {
+				$ccode = new Currency(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$ccode->where('locale', $value->locale)->limit(1)->get();
 				$data["results"][] = array(
 					"id" 		=> $value->id,
-					"code" 		=> $value->locale,
+					"code" 		=> $ccode->code,
 					"country" 	=> $value->locale,
 					"currency_id" => $value->id,
 					"locale" 	=> $value->locale,
-					"rate" 		=> $value->rate,
+					"rate" 		=> floatval($value->rate),
 					"date" 		=> $value->date
 				);
 				// print_r($checkexist);

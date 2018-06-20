@@ -3889,30 +3889,24 @@
         user_id             : banhji.source.user_id,
         sessionDS           : dataStore(apiUrl + "cashier"),
         haveItems           : false,
+        parkSaleDS          : dataStore(apiUrl + "transactions"),
         currencyDS: dataStore(apiUrl + "utibills/currency"),
+        numberParkSale      : 0,
         pageLoad            : function(){
-            // if(id){
-            //     this.set("isEdit", true);
-            //     this.loadObj(id);
-            // }else{              
-            //     if(this.get("isEdit") || this.dataSource.total()==0){
-                    this.addEmpty();
-            //     }
-            // }
-            // var self = this;
-            // this.sessionDS.query({
-            //     filter: [
-            //         {field: "cashier_id", value: banhji.userData.id},
-            //         {field: "active", value: 1}
-            //     ],
-            //     pageSize: 1
-            // }).then(function(e){
-            //     if(self.sessionDS.data().length <= 0){
-            //         alert("You didn't have session yet.");
-            //         window.location.href = "<?php echo base_url(); ?>wellnez/session";
-            //     }
-            // });
-            // this.lineDSChanges();
+            var self = this;
+            this.parkSaleDS.query({
+                filter: [
+                    {field: "status", value: 4},
+                    {field: "type", value: "Cash_Sale"}
+                ],
+                sort: {
+                    field: "id",
+                    dir: "desc"
+                }
+            }).then(function(e){
+                self.set("numberParkSale", self.parkSaleDS.data().length);
+            });
+            this.addEmpty();
             this.currencyDS.query({
                 sort: {
                     field: "created_at",
@@ -6490,10 +6484,10 @@
                     ],
                     sort: {
                         field: "id",
-                        dir: "asc"
+                        dir: "desc"
                     },
-                    page: 1,
-                    pageSize: 100
+                }).then(function(e){
+                    self.set("numberParkSale", self.parkSaleDS.data().length);
                 });
                 return data;
             }, function(reason) { //Error
@@ -6522,54 +6516,11 @@
             }
         },
         parkSale            : function(){
-            this.get("obj").set("status", 4);
+            this.get("obj").set("status", 4); //In progress
+            this.get("obj").set("progress", "Draft");
+            this.get("obj").set("is_journal", 0);//No Journal
             this.saveCashSale(3);
         },
-        parkSaleDS          : new kendo.data.DataSource({
-            transport: {
-                read: {
-                    url: apiUrl + "transactions",
-                    type: "GET",
-                    headers: banhji.header,
-                    dataType: 'json'
-                },
-                parameterMap: function(options, operation) {
-                    if (operation === 'read') {
-                        return {
-                            page: options.page,
-                            limit: options.pageSize,
-                            filter: options.filter,
-                            sort: options.sort
-                        };
-                    } else {
-                        return {
-                            models: kendo.stringify(options.models)
-                        };
-                    }
-                }
-            },
-            schema: {
-                model: {
-                    id: 'id'
-                },
-                data: 'results',
-                total: 'count'
-            },
-            filter:[
-                { field:"status", value:4 },
-                { field: "type", value: "Cash_Sale"}
-            ],
-            sort: {
-                field: "id",
-                dir: "asc"
-            },
-            batch: true,
-            serverFiltering: true,
-            serverSorting: true,
-            serverPaging: true,
-            page: 1,
-            pageSize: 100
-        }),
         rmParkSale          : function(e){
             console.log(e.data);
         },

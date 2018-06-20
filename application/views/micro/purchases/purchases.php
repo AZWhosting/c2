@@ -345,7 +345,7 @@
         </div>
     </div>
 </script>
-<script id="transactions" type="text/x-kendo-template">	
+<script id="purchaseDashBoard" type="text/x-kendo-template">	
 	<div class="row" id="checkOut">
 		<style>
 			.module-active {
@@ -562,7 +562,7 @@
 					<div class="col-md-12 ">
 						<div id="posProductList" class="box-generic-noborder table-responsive marginBottom" style="min-height: 140px!important; height: 230px; padding-bottom: 0;">
 							<!-- Item List -->
-						     <div id="grid" data-role="grid" class="costom-grid"
+						     <div data-role="grid" class="costom-grid table color-table dark-table"
 						    	 data-column-menu="true"
 						    	 data-reorderable="true"
 						    	 data-scrollable="false"
@@ -797,15 +797,17 @@
 							<div id="ntf1" data-role="notification" style="display: none;"></div>
 							<div class="row">
 								<div class="col" align="right">
-									<!-- <span id="saveCancel" class="btn-btn" onclick="javascript:window.history.back()" data-bind="click: cancel"><i></i> <span data-bind="text: lang.lang.cancel">Cancel </span></span> -->
+									<span id="saveCancel" class="btn-btn" data-bind="click: addEmpty"><i></i> <span data-bind="text: lang.lang.cancel">Cancel </span></span>
 									<span class="btn-btn" data-bind="click: openConfirm, visible: isEdit" style="display: none;"><span data-bind="text: lang.lang.delete">Delete</span></span>
-									<button type="button" class="btn btn-info btn-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									<span class="btn-btn" data-bind="click: saveNew2" id="saveNew" data-bind="invisible: isEdit"><span data-bind="text: lang.lang.save_new">Save and New</span></span>
+			                        <span class="btn-btn" data-bind="click: savePrint2" id="savePrint"><span data-bind="text: lang.lang.save_print">Save and Print</span></span>
+									<!-- <button type="button" class="btn btn-info btn-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 		                        		<span data-bind="text: lang.lang.save_option">Save Options</span>
 			                        </button>
 			                        <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 35px, 0px); top: 0px; left: 0px; will-change: transform;">
 			                            <a class="dropdown-item" data-bind="click: saveNew2" id="saveNew" data-bind="invisible: isEdit"><span data-bind="text: lang.lang.save_new">Save and New</span></a>
 			                            <a class="dropdown-item" data-bind="click: savePrint2" id="savePrint"><span data-bind="text: lang.lang.save_print">Save and Print</span></a>
-			                        </div>
+			                        </div> -->
 								  	<!-- <span class="btn-btn" id="saveClose"><span data-bind="text: lang.lang.save_close">Save Close </span></span> -->
 								</div>
 							</div>
@@ -954,20 +956,32 @@
 </script>
 <script id="category-list-view-template" type="text/x-kendo-template">
 	<div class="product" data-bind="click:searchItemByCategory" style="text-align: center;">
-		<a class="view-details">
+		<!-- <a class="view-details">
 			<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/no_image.jpg" />
 			<h3>#:name.substring(0, 25)#...</h3>
-		</a>
+		</a> -->
+		<div class="cover-img" >
+			<a class="view-details">
+				<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/no_image.jpg" />
+			</a>
+		</div>
+		<h3>#:name.substring(0, 20)#...</h3>
 	</div>
 </script>
 <script id="item-list-view-template" type="text/x-kendo-template">
 	<div class="product" data-bind="click:addRow" style="text-align: center;">
-		<a class="view-details">		
+		<!-- <a class="view-details">		
 			<div style="height:130px;">
 				<img src="#= image_url? image_url: 'https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/no_image.jpg'#" />
 			</div>
 			<h3>#:name.substring(0, 25)#...</h3>
-		</a>			
+		</a> -->
+		<div class="cover-img" >
+			<a class="view-details">
+				<img src=#:image_url# />
+			</a>
+		</div>
+		<h3>#:name.substring(0, 20)#...</h3>			
 	</div>
 </script>
 <script id="customer-select-list-tmpl" type="text/x-kendo-tmpl">

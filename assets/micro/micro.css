@@ -363,6 +363,7 @@ a:hover .functionHome p{
 	background: #fff;
 	margin-bottom: 0;
 	box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;
+	cursor: pointer;
 }
 .home .saleOverview h2{
 	color: #333;

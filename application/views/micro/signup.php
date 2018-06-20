@@ -483,7 +483,7 @@
                                     data-option-label="Select the main Currency" style="text-align: left; border: 1px solid #d0cfd5;">
                             </select>
                         </div>
-                        <div class="col-sm-6">
+                        <!-- <div class="col-sm-6">
                             <select class="signup-country"
                                     data-role="dropdownlist"
                                     data-bind="source: countries, value: country"
@@ -491,10 +491,10 @@
                                     data-value-field="id"
                                     data-option-label="Select Country" style="text-align: left; border: 1px solid #d0cfd5;">
                             </select>
-                        </div>
+                        </div> -->
                     </div>
                     <div class="row">
-                        <div class="col-sm-6" style="padding-right: 0;">
+                        <!-- <div class="col-sm-6" style="padding-right: 0;">
                             <select class="signup-country"
                                 data-role="dropdownlist"
                                 data-bind="source: types, value: type"
@@ -502,7 +502,7 @@
                                 data-value-field="id"
                                 data-option-label="Select Business Type" style="text-align: left; border: 1px solid #d0cfd5;">
                             </select>
-                        </div>
+                        </div> -->
                         <!-- <div class="col-sm-6"">
                             <input type="date"
                                 class="k-input"
@@ -1357,10 +1357,10 @@
                                     banhji.companyDS.insert(0, {
                                         name:  banhji.index.get('name'),
                                         currency: banhji.index.get('currency'),
-                                        country:  banhji.index.get('country'),
+                                        country:  {id: 36}, //banhji.index.get('country'),
                                         industry:  banhji.index.get('industry'),
                                         fiscal_date : dd.getTime(),
-                                        type: banhji.index.get('type'),
+                                        type: {id: 1}, //banhji.index.get('type'),
                                         telephone: banhji.index.get('telephone'),
                                         username:result.user.username
                                     });
@@ -1377,7 +1377,7 @@
                                         banhji.index.set('type', null);
                                         // go to confirm
                                         //window.location.replace(baseUrl + "confirm/");
-                                        window.location.replace(baseUrl + "confirm/?e=" + self.get('email'));
+                                        window.location.replace(baseUrl + "micro/confirm/?e=" + self.get('email'));
                                     });
                                 }
                             });

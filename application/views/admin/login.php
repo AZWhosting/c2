@@ -266,43 +266,45 @@
         <div class="container">
             <div class="cover-rightfixed">
                 <a class="rightfixed enquiries btn-rounded glyphicons no-js conversation" style="width: 144px;float:left;">
-          Support
-          <div class="enquiry-content">
-            <p style="font-size: 14px;">Call us by<br><span style="font-weight: bold;font-size: 16px">+855 10 413 777</span><br>Mon-Fri<br>09:00 - 18:00</p>
-            <div class="fb-messengermessageus"
-              messenger_app_id="1301847836514973"
-              page_id="862386433857166"
-              color="blue"
-              width="180"
-              size="standard" ></div>
-          </div>
-        </a>
+                  Support
+                  <div class="enquiry-content">
+                    <p style="font-size: 14px;">Call us by<br><span style="font-weight: bold;font-size: 16px">+855 10 413 777</span><br>Mon-Fri<br>09:00 - 18:00</p>
+                    <div class="fb-messengermessageus"
+                      messenger_app_id="1301847836514973"
+                      page_id="862386433857166"
+                      color="blue"
+                      width="180"
+                      size="standard" ></div>
+                  </div>
+                </a>
             </div>
             <div class="login">
-                <dis class="login-content">
-                    <div class="col-sm-6">
-                        <div class="login-image">
-                            <img style="width: 90%;" src="<?php echo base_url(); ?>assets/banhji-login.png" />
+                <div class="login-content">
+                    <div class="row">
+                        <div class="col-xs-12 col-md-6">
+                            <div class="login-image">
+                                <img style="width: 90%;" src="<?php echo base_url(); ?>assets/banhji-login.png" />
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="login-form">
-                            <form action="" method="">
+                        <div class="col-xs-12 col-md-6">
+                            <div class="login-form">
+                                <form action="" method="">
 
-                                <input type="text" data-bind="value: email" placeholder="Your email" class="login-email"><br>
+                                    <input type="text" data-bind="value: email" placeholder="Your email" class="login-email"><br>
 
-                                <input type="password" data-bind="value: password" placeholder="Password " class="login-email"><br>
+                                    <input type="password" data-bind="value: password" placeholder="Password " class="login-email"><br>
 
-                                <input id="loginBtn" type="button" data-bind="click: btnSignIn" class="btn-login" value="Login"><br><br>
-                                <div id="loginInformation" style="text-align: center;margin-bottom: 15px;color: #a22314"></div>
-                            </form>
-                            <p>By clicking Login, you agree to our <a href="https://www.banhji.com/terms" target="_blank">Term of Service.</a></p>
-                            <a href="<?php echo base_url(); ?>forgetpassword">Forget Password</a> | <a href="<?php echo base_url(); ?>signup"> Sign Up</a>
-                        </div>
-                    </div>
+                                    <input id="loginBtn" type="button" data-bind="click: btnSignIn" class="btn-login" value="Login"><br><br>
+                                    <div id="loginInformation" style="text-align: center;margin-bottom: 15px;color: #a22314"></div>
+                                </form>
+                                <p>By clicking Login, you agree to our <a href="https://www.banhji.com/terms" target="_blank">Term of Service.</a></p>
+                                <a href="<?php echo base_url(); ?>forgetpassword">Forget Password</a> | <a href="<?php echo base_url(); ?>signup"> Sign Up</a>
+                            </div>
+                        </div>     
+                    </div>           
+                </div>
             </div>
         </div>
-    </div>
     </div>
     <div class="footer-wrapper" style="position: fixed; width: 100%; bottom:0; left: 0;">
         <div class="footer" style="width: 100%; background: #111F3F; padding: 10px 0; color: #839ABA;">

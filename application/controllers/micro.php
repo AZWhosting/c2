@@ -82,6 +82,14 @@ class Micro extends CI_Controller {
 		$this->load->view("micro/sidebar");
 	}
 
+	public function confirm() {
+		$this->load->view("micro/confirm_view");
+	}
+
+	public function forgetpassword() {
+		$this->load->view("micro/forgetpassword");
+	}
+
 }
 
 /* End of file home.php */
