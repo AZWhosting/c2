@@ -10787,7 +10787,7 @@
                 additional_applied  : false,
                 movement            : 1,
                 reference_no        : "",
-
+                item_id             : item.id,
                 discount_percentage : 0,
                 item                : { 
                     id:item.id, 
@@ -10840,7 +10840,7 @@
             }
         },
         itemLineDSChanges       : function(arg){
-            var self = banhji.purchase;
+            var self = banhji.purchaseDashBoard;
 
             if(arg.field){
                 if(arg.field=="item"){
@@ -12243,7 +12243,8 @@
             this.set("saveDraft", false);
             this.set("saveClose", false);
             this.set("savePrint", true);
-            if(obj.account_id && obj.contact_id && this.lineDS.data().length > 0){
+            var obj = this.get("obj");
+            if(obj.account_id && obj.contact_id && this.lineDS._total > 0){
                 this.save();
             }else{
                 superChoeunNTF('error', this.lang.lang.error_input);

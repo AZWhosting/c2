@@ -1605,5 +1605,6 @@ var	en_US = {
 	"loyalty": "Loyalty",
 	"serving": "Serving",
 	"booking": "Booking",
-	"pay_installment": "Pay All Installments"
+	"pay_installment": "Pay All Installments",
+	"summary":"Summary",
 }

@@ -1581,5 +1581,6 @@ var	km_KH = {
 	"loyalty": "កាត / សន្សំពន្ទុ",
 	"serving": "ទទួលសេវ៉ា",
 	"booking": "កក់",
-	"pay_installment": "បង់ផ្តាច់"
+	"pay_installment": "បង់ផ្តាច់",
+	"summary":"សង្ខេប",
 }

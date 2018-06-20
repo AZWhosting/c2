@@ -1769,58 +1769,68 @@ class Accounting_modules extends REST_Controller {
 		$totalEquity = 0;
 		$totalAmount = 0;
 		foreach ($obj as $value) {
-			if(isset($typeList[$value->account_account_type_id])){
-				$typeList[$value->account_account_type_id]["line"][] = array(
-					"id" 		=> $value->account_id,
-					"number" 	=> $value->account_number,
-					"name" 		=> $value->account_name,
-					"amount" 	=> floatval($value->total) * $typeList[$value->account_account_type_id]["multiplier"]
-				);
+			$multiplier = 1;
 
+			$amount = floatval($value->total);
+			if($value->account_account_type_nature=="Cr"){
+				$amount = floatval($value->total) * -1;
+			}
+
+			if(isset($typeList[$value->account_account_type_id])){
 				switch ($typeList[$value->account_account_type_id]["parent"]) {
 				    case 1:
-				        $totalAsset += floatval($value->total) * $typeList[$value->account_account_type_id]["multiplier"];
+				    	if($value->account_account_type_nature=="Cr"){
+							$totalAsset -= $amount;
+							$multiplier = -1;
+						}else{
+							$totalAsset += $amount;
+						}
 				        break;
 				    case 2:
-				        $totalLiability += floatval($value->total) * $typeList[$value->account_account_type_id]["multiplier"];
+				        $totalLiability += $amount;
 				        break;
 				    default:
-				        $totalEquity += floatval($value->total) * $typeList[$value->account_account_type_id]["multiplier"];
+				        $totalEquity += $amount;
 				}
+
+				$typeList[$value->account_account_type_id]["line"][] = array(
+					"id" 			=> $value->account_id,
+					"number" 		=> $value->account_number,
+					"name" 			=> $value->account_name,
+					"amount" 		=> $amount,
+					"multiplier" 	=> $multiplier
+				);
 			} else {
 				$subOfs = new Account_type(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				$subOfs->get_by_id($value->account_account_type_sub_of_id);
-				
-				$multiplier = 1;
-				// if($subOfs->nature!==$value->account_account_type_nature){
-				// 	$multiplier = -1;
-				// };
-				if($value->account_account_type_nature=="Cr"){
-					$multiplier = -1;
-				};
 
 				switch ($subOfs->sub_of_id) {
 				    case 1:
-				        $totalAsset += floatval($value->total) * $multiplier;
+				        if($value->account_account_type_nature=="Cr"){
+							$totalAsset -= $amount;
+							$multiplier = -1;
+						}else{
+							$totalAsset += $amount;
+						}
 				        break;
 				    case 2:
-				        $totalLiability += floatval($value->total) * $multiplier;
+				        $totalLiability += $amount;
 				        break;
 				    default:
-				        $totalEquity += floatval($value->total) * $multiplier;
+				        $totalEquity += $amount;
 				}
 
 				$typeList[$value->account_account_type_id]["id"] 			= $value->account_account_type_id;
 				$typeList[$value->account_account_type_id]["sub_of_id"] 	= $value->account_account_type_sub_of_id;
 				$typeList[$value->account_account_type_id]["sub_of_name"] 	= $subOfs->name;
-				$typeList[$value->account_account_type_id]["multiplier"] 	= $multiplier;
 				$typeList[$value->account_account_type_id]["parent"] 		= $subOfs->sub_of_id;
 				$typeList[$value->account_account_type_id]["type"] 			= $value->account_account_type_name;				
 				$typeList[$value->account_account_type_id]["line"][] 		= array(
-					"id" 		=> $value->account_id,
-					"number" 	=> $value->account_number,
-					"name" 		=> $value->account_name,
-					"amount" 	=> floatval($value->total) * $multiplier
+					"id" 			=> $value->account_id,
+					"number" 		=> $value->account_number,
+					"name" 			=> $value->account_name,
+					"amount" 		=> $amount,
+					"multiplier" 	=> $multiplier
 				);
 			}			
 		}

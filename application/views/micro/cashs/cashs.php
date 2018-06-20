@@ -122,33 +122,42 @@
 
 							<div class="row">
 							 	<div class="col-md-12 marginTop table-responsive">
-							 		<table class="table color-table dark-table" style="width: 100%; height: auto; ">
-			                            <thead>
-			                                <tr>
-												<th data-bind="text: lang.lang.type"></th>
-												<th data-bind="text: lang.lang.date"></th>
-												<th data-bind="text: lang.lang.reference_no"></th>
-												<th data-bind="text: lang.lang.description"></th>
-												<th data-bind="text: lang.lang.name"></th>
-												<th data-bind="text: lang.lang.debit"></th>
-												<th data-bind="text: lang.lang.credit"></th>
-												<th data-bind="text: lang.lang.balance"></th>
-											</tr>
-			                            </thead>
-			                            <tbody  data-role="listview"
-					            				data-auto-bind="false"
-								                data-template="generalLedger-template"
-								                data-bind="source: dataSource" >
-								        </tbody>
-								        <tfoot data-template="generalLedger-footer-template" data-bind="source: this"></tfoot>
-					            	</table>
-					            	<div id="pager" 
-					        			class="k-pager-wrap" 
-					            		data-role="pager"
-								    	data-auto-bind="false"
-							            data-bind="source: dataSource"
-							            style="width: 97%; margin: 0 auto;" >
-								    </div>
+							 		<div class="table color-table dark-table" 
+							 			 data-role="grid"
+						                 data-pageable="true"
+						                 data-columns="[
+			                                { 
+			                                	field: 'issued_date', 
+			                                	title:'DATE',
+			                                	width: 100 
+			                                },
+			                                { 
+			                                	field: 'number', 
+			                                	title:'NUMBER',
+			                                	attributes: {
+											      	style: 'text-align: center;'
+											    }, 
+			                                	width: 100 
+			                                },
+			                                { field: 'type', title:'TYPE', width: 200 },
+			                                { field: 'contact', title:'NAME' },
+			                                { field: 'memo', title:'DESCRIPTION' },
+			                                { field: 'account_name', title:'ACCOUNT' },			                                
+			                                { 
+			                                	field: 'amount', 
+			                                	title:'AMOUNT',
+			                                	attributes: {
+											      	style: 'text-align: right;'
+											    },
+											    headerAttributes: {
+											      	'class': 'table-header-cell',
+											      	style: 'text-align: right; font-size: 14px'
+											    },
+											    width: 200
+			                                }
+			                             ]"
+						                 data-bind="source: dataSource"
+						                 style="width: 100%; height: auto;"></div>
 						        </div>
 						    </div>
 			            </div>
@@ -2932,4 +2941,4 @@
 		#=code# - #=country#
 	</span>
 </script>
-<!-- End -->                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+<!-- End -->

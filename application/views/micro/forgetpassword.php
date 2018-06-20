@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Forget Password | Free Online Accounting</title>
   <!-- Boostrap-->
-  <link rel="shortcut icon" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/banhji-logo.png">
+ <link rel="shortcut icon" href="<?php echo base_url();?>assets/update/banhji.jpg">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"> 
   <link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet">
   <style>
@@ -436,4 +436,4 @@
     </script>
 </body>
 </html>
- 
+                           

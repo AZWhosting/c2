@@ -574,7 +574,7 @@
 								    	width: '50px',
 								    	attributes: { style: 'text-align: center;' },
 								        template: function (dataItem) {
-								        	var rowIndex = banhji.purchase.lineDS.indexOf(dataItem)+1;
+								        	var rowIndex = banhji.purchaseDashBoard.lineDS.indexOf(dataItem)+1;
 								        	return '<i class=icon-trash data-bind=click:removeRow></i>' + ' ' + rowIndex;
 								      	}
 								    },

@@ -4841,6 +4841,7 @@
             this.customerAR.splice(0, this.customerAR.length);
             this.customerAR.push({id: 6, name: "Walk-In Customer"});
             $('#havepay').css({"display": "none"});
+            this.set('haveParkSale', false);
         },
         addRow        : function(e){
             var obj = this.get("obj");
@@ -6282,6 +6283,9 @@
                 this.set("haveChangeMoney", true);
                 var ramount = currencyReceipt - obj.sub_total;
                 this.setDefaultChangeCurrency(ramount);
+            }else{
+                this.set("haveChangeMoney", false);
+                this.receipChangeDS.data([]);
             }
         },
         CashierID: 1,
@@ -6296,14 +6300,12 @@
             this.receipChangeDS.data([]);
             var j = 1;
             $.each(this.currencyDS.data(), function(i, v) {
-                var amount = kendo.toString(FR * v.rate, "c", v.locale);
                 if (j == 1) {
                     self.receipChangeDS.add({
                         cashier_session_id: 1,
                         type: 1,
                         currency: v.code,
                         locale: v.locale,
-                        amount_rate: amount,
                         rate: v.rate,
                         amount: FR
                     });
@@ -6313,7 +6315,6 @@
                         type: 1,
                         currency: v.code,
                         locale: v.locale,
-                        amount_rate: amount,
                         rate: v.rate,
                         amount: 0
                     });
@@ -6524,6 +6525,13 @@
         rmParkSale          : function(e){
             console.log(e.data);
         },
+        haveParkSale        : false,
+        parkSaleShow        : function(e){
+            this.set('haveParkSale', true);
+        },   
+        parkSaleClose       : function(e){
+            this.set('haveParkSale', false);
+        },
         payClick            : function(e){
             if(this.lineDS.data().length){
                 $('#havepay').css('display', 'block');
@@ -6567,6 +6575,9 @@
         clickInvoice        : function(e){
             this.set("haveInvoice", true);
             // this.saveInvoice();
+        },
+        cancelClickInvoice  : function(){
+            this.set("haveInvoice", false);
         }
     });
     banhji.printBill = kendo.observable({
@@ -6587,14 +6598,14 @@
                         dataSource: self.dataSource.data(),
                         template: kendo.template(TempForm)
                     });
-                    this.barcod("do");
+                    self.barcod("do");
                 });
             } else {
                 banhji.router.navigate('/');
             }
         },
         barcod: function(re) {
-            var view = this.dataSource;
+            var view = this.dataSource.data();
             for (var i = 0; i < view.length; i++) {
                 var d = view[i];
                 if (re == "reset") {
@@ -6631,6 +6642,7 @@
                             visible: false
                         }
                     });
+                    // console.log(d.number);
                 }
             }
         },
@@ -6722,12 +6734,12 @@
                 $(".hiddenPrint").css("visibility", "visible");
             }
         },
-        cancel: function() {
-            this.dataSource = [];
+        cancel          : function() {
+            this.dataSource.data([]);
             this.barcod("reset");
             var listview = $("#invoiceContent").data("kendoListView");
             listview.refresh();
-            banhji.router.navigate("/");
+            window.history.back();
         }
     });
     banhji.transactions = kendo.observable({
@@ -18758,7 +18770,7 @@
         
         vm.pageLoad();        
     });
-    banhji.router.route('/reports', function() {        
+    banhji.router.route('/reports', function() {
         banhji.view.layout.showIn('#content', banhji.view.Index);
         banhji.view.Index.showIn('#indexMenu', banhji.view.tapMenu);
         banhji.view.Index.showIn('#indexContent', banhji.view.reports);
@@ -20126,6 +20138,7 @@
         }
     });
     banhji.router.route('/print_bill(/:id)', function(id) {
+        var blank = new kendo.View('#blank-tmpl');
         banhji.view.layout.showIn('#content', banhji.view.Index);
         banhji.view.Index.showIn('#indexMenu', banhji.view.tapMenu);
         banhji.view.Index.showIn('#indexContent', banhji.view.printBill);

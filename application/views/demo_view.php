@@ -40596,15 +40596,15 @@
 	        <td ></td>
 	    </tr>
 	    #var totalType = 0;#
-		#for(var j=0; j<typeLine[i].line.length; j++){#
-			#total += typeLine[i].line[j].amount;#
+		#for(var j = 0; j < typeLine[i].line.length; j++){#
+			#total += typeLine[i].line[j].amount * typeLine[i].line[j].multiplier;#
 			#totalType += typeLine[i].line[j].amount;#
 		    <tr>
 		        <td>
 		        	&nbsp;&nbsp;&nbsp;&nbsp; #: typeLine[i].line[j].number # #: typeLine[i].line[j].name #
 		        </td>
 		        <td align="right">
-		            &nbsp;&nbsp;&nbsp;&nbsp; <a data-bind="click: goToGeneralLegder">#: kendo.toString(typeLine[i].line[j].amount, "c", banhji.locale) #</a>
+		            &nbsp;&nbsp;&nbsp;&nbsp; <a data-bind="click: goToGeneralLegder">#: kendo.toString(typeLine[i].line[j].amount, "n") #</a>
 		        </td>
 		        <td></td>
 		    </tr>
@@ -40614,7 +40614,7 @@
 	            &nbsp;&nbsp; Total #:typeLine[i].type#
 	        </td>
 	        <td style="font-weight: bold; border-top: 1px solid black !important;" align="right">
-	            #=kendo.toString(totalType, "c", banhji.locale)#
+	            #= kendo.toString(totalType, "n") #
 	        </td>
 	        <td ></td>
 	    </tr>
@@ -40628,7 +40628,7 @@
         </td>
         <td></td>
         <td style="font-weight: bold; border-top: 1px solid black !important;" align="right">
-            #=kendo.toString(total, "c", banhji.locale)#
+            #= kendo.toString(total, "n") #
         </td>
     </tr>
 </script>

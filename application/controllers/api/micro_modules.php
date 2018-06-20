@@ -399,6 +399,90 @@ class Micro_modules extends REST_Controller {
 		$this->response($data, 200);
 	}
 
+	//CASH
+	//CASH GENERAL LEDGER
+	function cash_general_ledger_get() {		
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
+		$data["count"] = 0;
+
+		$obj = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		
+		//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
+			}
+		}
+		
+		//Filter		
+		if(!empty($filter["filters"]) && isset($filter["filters"])){			
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value['operator'])){
+	    			$obj->{$value['operator']}($value['field'], $value['value']);
+	    		} else {
+	    			$obj->where($value['field'], $value['value']);
+	    		}
+			}
+		}
+		
+		$obj->select_sum("(dr - cr) / transactions.rate", "total");
+		$obj->include_related("transaction", array("type", "number", "issued_date", "memo", "rate"));
+		$obj->include_related("contact", array("abbr","number","name"));
+		$obj->include_related("account", array("number","name","account_type_id"));
+		$obj->include_related("account/account_type", array("name","nature"));
+		$obj->where_related("transaction", "is_journal", 1);
+		$obj->where_related("account", "account_type_id", 10);//Cash only
+		$obj->where_related("transaction", "is_recurring <>", 1);
+		$obj->where_related("transaction", "deleted <>", 1);
+		$obj->order_by("account_id", "asc");
+		$obj->where("deleted <>", 1);
+		$obj->group_by("account_id");
+		// $obj->get_iterated();
+
+		//Results
+		if($page && $limit){
+			$obj->get_paged_iterated($page, $limit);
+			$data["count"] = $obj->paged->total_rows;
+		}else{
+			$obj->get_iterated();
+			$data["count"] = $obj->result_count();
+		}
+		
+		$objList = [];
+		if($obj->exists()){
+			foreach ($obj as $value) {
+				$description = $value->description;
+				if($description==""){
+					$description = $value->transaction_memo;
+				}
+				
+				$data["results"][] = array(
+					"id" 				=> $value->transaction_id,
+					"type" 				=> $value->transaction_type,
+					"number" 			=> $value->transaction_number,
+					"issued_date" 		=> $value->transaction_issued_date,
+					"memo" 				=> $description,
+					"account_number"	=> $value->account_number,
+					"account_name" 		=> $value->account_name,
+					"amount" 			=> floatval($value->total),
+					"contact" 			=> isset($value->contact_name) ? $value->contact_name : ""
+				);
+			}
+		}
+		//End Balance Sheet Items
+
+		//Response Data		
+		$this->response($data, 200);	
+	}
+
 	
 
 }//End Of Class
