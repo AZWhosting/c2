@@ -342,7 +342,7 @@
     <div class="container">
         <div class="sign-up">
             <dis class="signup-content">
-                <div class="col-sm-6">
+                <div class="col-xs-12 col-md-6">
                     <div class="row" style="margin-bottom: 15px;">
                         <div class="col-sm-2 logo-onsignup" style="width: 20%;">
                             <a href="https://banhji.com/" target="_blank">
@@ -465,7 +465,7 @@
                             </div>
                     </div>
                 </div>
-                <div class="col-sm-6">
+                <div class="col-xs-12 col-md-6">
                     <div class="cover">
                         <img src="<?php echo base_url();?>assets/img/form-loader.gif" class="imgLoad" />
                         <img src="<?php echo base_url();?>assets/img/form-tick.png" class="imgTick" />
