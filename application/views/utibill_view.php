@@ -3097,7 +3097,7 @@
 			# } #
 		</td>
 		<td style="text-align: right;">
-			# if(status == 2){ # 
+			# if(status == 0){ # 
 				<span style="" title="Group" class="btn-action glyphicons settings btn-danger"><i></i></span>
 			# } #
 			# if(activated != "1") { #
@@ -7860,7 +7860,7 @@
 								#}else{#
 									<td align="center">#= invoice_lines[j].amount#</td>
 									<td align="center"></td>
-									<td align="right">-#= kendo.toString(invoice_lines[j].amount * amountTariff, locale=="km-KH"?"c0":"c", locale)#</td>
+									<td align="right">-#= invoice_lines[0].consumption - invoice_lines[j].amount#</td>
 								#}#
 							</tr>
 						#}else if(invoice_lines[j].type == "fine"){#
@@ -20473,4 +20473,4 @@
 			#}#
 		</td>
     </tr>
-</script>                                                                                                                                                                                                                                                                                                                                                                                                            
+</script>

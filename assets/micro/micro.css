@@ -965,7 +965,7 @@ a.fa.fa-qrcode:before{
     float: left;
     position: relative;
     width: 24.5%;
-    height: 195px;
+    height: 188px;
     cursor: pointer;
     background: #fff;
     margin-right: 2px;
@@ -974,20 +974,23 @@ a.fa.fa-qrcode:before{
 }
 .cover-img{
 	height: 131px;
-    width: 123px;
+    /*width: 123px;*/
     overflow: hidden;
+    width: 100%;
 }
 .product img {
-    margin-bottom: 5px;
     border-bottom: 1px solid #0eac00;
     height: 130px;
-    width: 123px;
+    /*width: 123px;*/
+    text-align: center;
+    margin: 0 auto;
+    width: 100%
 }
 .product h3 {
     margin: 1px auto;
     width: 92%;
     overflow: hidden;
-    line-height: 1.5em;
+    line-height: 23px;
     font-size: .9em;
     text-transform: uppercase;
     color: #333;
@@ -1226,21 +1229,25 @@ a.fa.fa-qrcode:before{
 and (min-device-width : 768px) 
 and (max-device-width : 1024px) 
 and (orientation : portrait) { 
-	/*.product {
+	.product {
 		height: auto;
 	    width: 24.2%;
 	    min-height: 163px;
-	}*/
+	}
 	.checkOut-button .buttonoptionpurchase{
 		width: 100%; 
 		padding: 20px 15px;
 	}
 }
 @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
-	/*.product {
+	.product {
 	    width: 24.3%;
-	    height: 168px;
-	}*/
+	    height: 156px;
+	}
+	.product img{
+		height: auto;
+		min-height: 130px;
+	}
 	.checkOut-button a.buttoncancelsale {
 	    padding: 28px 15px;
 	}

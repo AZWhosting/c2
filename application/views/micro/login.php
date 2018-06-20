@@ -654,7 +654,7 @@
                                                 };
                                                 localforage.setItem('user', user);
                                                 $("#loginBtn").val("Redirecting...");
-                                                window.location.replace(baseUrl + "micro/");
+                                                window.location.replace(baseUrl + "micro/home");
                                             } else {
                                                 console.log('bad');
                                             }
