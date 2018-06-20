@@ -7916,13 +7916,14 @@
         segmentDS                   : dataStore(apiUrl + "segments"),
         segItemDS                   : dataStore(apiUrl + "segments/item"),
         segmentItemDS               : dataStore(apiUrl + "segments/item"),
+        accountDS               : dataStore(apiUrl + "accounts"),
         jobDS                       : new kendo.data.DataSource({
             data: banhji.source.jobList,
             sort: { field: "name", dir: "asc" }
         }),
-        accountDS                   : new kendo.data.DataSource({
-            data: banhji.source.accountList
-        }),
+        // accountDS                   : new kendo.data.DataSource({
+        //     data: banhji.source.accountList
+        // }),
         whtAccountDS                : new kendo.data.DataSource({
             data: banhji.source.accountList,
             filter: {
@@ -7948,10 +7949,8 @@
         txnTemplateDS               : new kendo.data.DataSource({
             data: banhji.source.txnTemplateList,
             filter:{
-                logic: "or",
                 filters: [
-                    { field: "type", value: "Cash_Purchase" },
-                    { field: "type", value: "Credit_Purchase" }
+                    { field: "type", value: "Purchase" }
                 ]
             }
         }),
@@ -8581,15 +8580,15 @@
 
             });
         },
-        addRow              : function(e){
+        addRow              : function(){
             var obj = this.get("obj");
-            var item = e.data;
+
             this.lineDS.add({
                 transaction_id      : obj.id,
                 tax_item_id         : "",
                 wht_account_id      : "",
                 item_id             : "",
-                measurement_id      : item.measurement.measurement_id,
+                measurement_id      : 0,
                 description         : "",
                 quantity            : 1,
                 conversion_ratio    : 1,
@@ -8604,15 +8603,8 @@
                 reference_no        : "",
 
                 discount_percentage : 0,
-                item                : { 
-                    id:item.id, 
-                    name:item.name , 
-                    item_type_id: item.item_type_id
-                },
-                item_price          : { 
-                    measurement_id: item.measurement.measurement_id, 
-                    measurement:item.measurement.measurement 
-                },
+                item                : { id:"", name:"" },
+                item_price          : { measurement_id:"", measurement:"" },
                 tax_item            : { id:"", name:"" },
                 wht_account         : { id:"", name:"" }
             });
@@ -9059,7 +9051,7 @@
 
                 $.each(this.lineDS.data(), function(index, value) {
                     value.set("additional_cost", 0);
-                    value.set("additional_applied", false);
+                    // value.set("additional_applied", false);
                 });
             }
 
@@ -9118,8 +9110,8 @@
                 obj.set("account_id", 0);
 
                 var dropdownlist = $("#ddlAccount").data("kendoDropDownList");
-                //dropdownlist.select(1);
-                //dropdownlist.trigger("change");
+                dropdownlist.select(1);
+                dropdownlist.trigger("change");
             }else{
                 this.set("isCash", false);
 
@@ -9149,8 +9141,8 @@
             duedate.setDate(duedate.getDate() + 30);
 
             this.dataSource.insert(0, {
-                transaction_template_id : 31,
-                account_id          : 1,
+                transaction_template_id : 0,
+                account_id          : 7,
                 contact_id          : "",
                 payment_term_id     : 0,
                 payment_method_id   : 0,
@@ -9205,10 +9197,10 @@
             this.generateNumber();
 
             //Default rows
-            // for (var i = 0; i < banhji.source.defaultLines; i++) {
-            //     this.addRow();
-            //     this.addRowAccount();
-            // }
+            for (var i = 0; i < banhji.source.defaultLines; i++) {
+                this.addRow();
+                this.addRowAccount();
+            }
         },
         objSync             : function(){
             var dfd = $.Deferred();
@@ -9972,109 +9964,6 @@
             });
 
             return dfd;
-        },
-        itemsDS             : new kendo.data.DataSource({
-            transport: {
-                read: {
-                    url: apiUrl + "items",
-                    type: "GET",
-                    headers: banhji.header,
-                    dataType: 'json'
-                },
-                parameterMap: function(options, operation) {
-                    if (operation === 'read') {
-                        return {
-                            page: options.page,
-                            limit: options.pageSize,
-                            filter: options.filter,
-                            sort: options.sort
-                        };
-                    } else {
-                        return {
-                            models: kendo.stringify(options.models)
-                        };
-                    }
-                }
-            },
-            schema: {
-                model: {
-                    id: 'id'
-                },
-                data: 'results',
-                total: 'count'
-            },
-            filter: [
-                {
-                    field: "item_type_id",
-                    operator: "where_in",
-                    value: [1, 4]
-                }
-            ],
-            sort: {
-                field: "id",
-                dir: "asc"
-            },
-            batch: true,
-            serverFiltering: true,
-            serverSorting: true,
-            serverPaging: true,
-            page: 1,
-            pageSize: 8
-        }),
-        searchItemByCategory: function(e){
-            var data = e.data;
-            var self = this;
-            $("#loading").css("display", "block");
-            this.itemsDS.query({
-                filter: {field: "category_id", value: data.id},
-                page: 1,
-                pageSize: 8,
-            }).then(function(e){
-                $("#loading").css("display", "none");
-                if(self.itemsDS.data().length > 0){
-                    self.set("haveItems", true);
-                }else{
-                    alert('មិនមានទិន្ន័យ (No Data)!');
-                }
-            });
-        },
-        backCategory    : function(){
-            this.set("haveItems", false);
-        },
-        saveNew2             : function(e){
-            this.set("saveNew", true);
-            this.set("saveDraft", false);
-            this.set("saveClose", false);
-            this.set("savePrint", false);
-            var obj = this.get("obj");
-            if(obj.account_id && obj.contact_id && this.lineDS.data().length > 0){
-                this.save();
-            }else{
-                superChoeunNTF('error', this.lang.lang.error_input);
-            }
-        },
-        savePrint2           : function(e){
-            this.set("saveNew", false);
-            this.set("saveDraft", false);
-            this.set("saveClose", false);
-            this.set("savePrint", true);
-            if(obj.account_id && obj.contact_id && this.lineDS.data().length > 0){
-                this.save();
-            }else{
-                superChoeunNTF('error', this.lang.lang.error_input);
-            }
-        },
-        cashClick           : function(e){
-            $('.module-active').removeClass('module-active');
-            $('.cashmodule').addClass('module-active');
-            this.get("obj").set("type", "Cash_Purchase");
-            this.typeChanges();
-        },
-        creditClick         : function(e){
-            $('.module-active').removeClass('module-active');
-            $('.creditmodule').addClass('module-active');
-            this.get("obj").set("type", "Credit_Purchase");
-            this.typeChanges();
         }
     });
     banhji.purchaseDashBoard =  kendo.observable({
@@ -11390,10 +11279,10 @@
             this.generateNumber();
 
             //Default rows
-            // for (var i = 0; i < banhji.source.defaultLines; i++) {
-            //     this.addRow();
-            //     this.addRowAccount();
-            // }
+            for (var i = 0; i < banhji.source.defaultLines; i++) {
+                this.addRow();
+                this.addRowAccount();
+            }
         },
         objSync             : function(){
             var dfd = $.Deferred();

@@ -453,7 +453,7 @@
 <script id="inventoryPositionSummary" type="text/x-kendo-template">	
 	<div class="row">    		
 		<div class="card-body" style="padding-top: 0; ">
-			<div class="reportHeader">
+			<div class="reportHeader" style="margin-bottom: 15px;">
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs" role="tablist">
                     <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#date" role="tab"><i class=" ti-calendar"></i><span class="marginLeft hidden-xs-down" data-bind="text: lang.lang.date">Date</span></a> </li>
@@ -552,11 +552,11 @@
             	</style>
 
 	            <!-- Title -->
-	            <div class="reportTitle" style="text-align: center; width: 97%; margin: 15px auto;">
+	            <!-- <div class="reportTitle" style="text-align: center; width: 97%; margin: 15px auto;">
 	            	<h3 style="font-size: 15px; color: #203864 !important; margin-bottom: 10px;" data-bind="html: institute.name"></h3>
 					<h2 style="font-size: 20px; font-weight: 600; margin-top: 0px; color: #203864 !important;" data-bind="text: lang.lang.inventory_position_summary"></h2>
 					<p style="font-size: 15px; margin-bottom: 0;" data-bind="text: displayDate"></p>
-	            </div>
+	            </div> -->
 
 	            <!-- Block -->
 	            <div class="reportBlock" style="width: 97%; margin: 0 auto;">
@@ -624,7 +624,7 @@
 <script id="inventoryPositionDetail" type="text/x-kendo-template">
 	<div class="row">
 		<div class="card-body" style="padding-top: 0; ">
-			<div class="reportHeader">
+			<div class="reportHeader" style="margin-bottom: 15px;">
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs" role="tablist">
                     <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#date" role="tab"><i class=" ti-calendar"></i><span class="marginLeft hidden-xs-down" data-bind="text: lang.lang.date">Date</span></a> </li>
@@ -740,11 +740,11 @@
             	</style>
 
 	            <!-- Title -->
-	            <div class="reportTitle" style="text-align: center; width: 97%; margin: 15px auto;">
+	            <!-- <div class="reportTitle" style="text-align: center; width: 97%; margin: 15px auto;">
 	            	<h3 style="font-size: 15px; color: #203864 !important; margin-bottom: 10px;" data-bind="html: institute.name"></h3>
 					<h2 style="font-size: 20px; font-weight: 600; margin-top: 0px; color: #203864 !important;" data-bind="text: lang.lang.inventory_position_detail"></h2>
 					<p style="font-size: 15px; margin-bottom: 0;" data-bind="text: displayDate"></p>
-	            </div>
+	            </div> -->
 
 	            <!-- Block -->
 	            <div class="reportBlock" style="width: 97%; margin: 0 auto;">
