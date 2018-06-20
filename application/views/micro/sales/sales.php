@@ -827,20 +827,30 @@
 </script> -->
 <script id="category-list-view-template" type="text/x-kendo-template">
 	<div class="product" data-bind="click:searchItemByCategory" style="text-align: center;">
-		<a class="view-details">
-			<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/no_image.jpg" />
-			<h3>#:name.substring(0, 25)#...</h3>
-		</a>
+		
+		<div class="cover-img" >
+			<a class="view-details">
+				<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/no_image.jpg" />
+			</a>
+		</div>
+		<h3>#:name.substring(0, 25)#...</h3>
+		
 	</div>
 </script>
 <script id="item-list-view-template" type="text/x-kendo-template">
 	<div class="product" data-bind="click:addRow" style="text-align: center;">
-		<a class="view-details">		
+		<!-- <a class="view-details"> -->		
 			<!-- <div style="border-bottom: 1px solid \#0eac00;min-height: 130px;max-height: 130px;background: url(#= image_url? image_url: 'https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/no_image.jpg'#) center;">
 			</div> -->
-			<img src=#:image_url# />
+			<!-- <img src=#:image_url# />
 			<h3>#:name.substring(0, 20)#...</h3>
-		</a>			
+		</a> -->
+		<div class="cover-img" >
+			<a class="view-details">
+				<img src=#:image_url# />
+			</a>
+		</div>
+		<h3>#:name.substring(0, 25)#...</h3>		
 	</div>
 </script>
 <script id="parksale-list-tmpl" type="text/x-kendo-template">

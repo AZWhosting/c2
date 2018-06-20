@@ -2046,6 +2046,13 @@ class Utibills extends REST_Controller {
 			    }
 			    // Save Records
 			    $record = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			    $record->where('meter_id', $value->meter_id);
+			    $record->where('previous', $value->previous);
+			    $record->where('current', $value->current);
+			    $record->limit(1)->get();
+			    if($record->exists()){
+			    	$record->get_by_id($record->id);
+			    }
 			    $record->meter_id = $value->meter_id;
 			    $record->read_by = $value->read_by;
 			    $record->input_by = $value->input_by;
@@ -2085,16 +2092,19 @@ class Utibills extends REST_Controller {
 		   			// 	$oldwline->delete_all();
 		   			// }
 					$line = new Winvoice_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-					// $line->where("transaction_id", $txn->id);
-					// $line->where("type", $value->type)->limit(1);
-					// $line->get();
-				   // $line->transaction_id 	= $txn->id;
-				   // if($line->exists()){
+					$line->where("transaction_id", $txn->id);
+					$line->where("type", $value->type)->limit(1);
+					$line->get();
+				   	
+				   	if($line->exists()){
+				   		$line->get_by_id($line->id);
+				   	}
 		   			if($value->type == "usage"){
 		   				$line->item_id 			= $value->meter_id;
 		   			}else{
 		   				$line->item_id 			= isset($value->item_id) ? $value->item_id:"";
 		   			}
+		   			$line->transaction_id 	= $txn->id;
 		   			//get meter record for field meter_record_id
 		   			$meterrecord = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		   			$meterrecord->where("meter_id", $value->meter_id)->order_by("id", "desc")->limit(1)->get();
