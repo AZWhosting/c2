@@ -55,9 +55,9 @@
 	
 	<div class="row home" id="reports" >
     	<div class="col-md-4">
-			<div class="saleOverview" style="margin-bottom: 15px;">
+			<div class="saleOverview" data-bind="click: loadCashIn" style="margin-bottom: 15px;">
 				<h2 data-bind="text: lang.lang.cash_in">Cash In</h2>
-				<p style="margin-bottom: 0;" data-format="n0" data-bind="">100000.000</p>
+				<p style="margin-bottom: 0;" data-format="n0" data-bind="text: obj.cash_in"></p>
 			</div>
 			<!-- <div class="report" >
 				<div class="col-md-12">
@@ -66,9 +66,9 @@
 			</div> -->
 		</div>
 		<div class="col-md-4">
-			<div class="saleOverview" style="margin-bottom: 15px;">
+			<div class="saleOverview" data-bind="click: loadCashOut" style="margin-bottom: 15px;">
 				<h2 data-bind="text: lang.lang.cash_out">Cash Out</h2>
-				<p style="margin-bottom: 0;" data-format="n0" data-bind="">100000.000</p>
+				<p style="margin-bottom: 0;" data-format="n0" data-bind="text: obj.cash_out"></p>
 			</div>
 			<!-- <div class="report" >
 				<div class="col-md-12">
@@ -79,7 +79,7 @@
 		<div class="col-md-4">
 			<div class="saleOverview" style="margin-bottom: 15px;">
 				<h2 data-bind="text: lang.lang.cash_balance">Cash Balance</h2>
-				<p style="margin-bottom: 0;" data-format="n0" data-bind="">100000.000</p>
+				<p style="margin-bottom: 0;" data-format="n0" data-bind="text: obj.balance"></p>
 			</div>
 			<!-- <div class="report" >
 				<div class="col-md-12">
@@ -148,15 +148,15 @@
 	</div>
 
 	<div class="row">
-	 	<div class="col-md-12 marginTop table-responsive">
+	 	<div class="col-md-12 marginTop table-responsive grid">
 	 		<div class="table color-table dark-table" 
 	 			 data-role="grid"
-                 data-pageable="true"
                  data-columns="[
                     { 
                     	field: 'issued_date', 
                     	title:'DATE',
-                    	width: 100 
+                    	width: 100,
+                    	template: '#=kendo.toString(new Date(issued_date), banhji.dateFormat)#' 
                     },
                     { 
                     	field: 'number', 
@@ -164,15 +164,16 @@
                     	attributes: {
 					      	style: 'text-align: center;'
 					    }, 
-                    	width: 100 
+                    	width: 120
                     },
-                    { field: 'type', title:'TYPE', width: 200 },
+                    { field: 'type', title:'TYPE', width: 125 },
                     { field: 'contact', title:'NAME' },
                     { field: 'memo', title:'DESCRIPTION' },
                     { field: 'account_name', title:'ACCOUNT' },			                                
                     { 
                     	field: 'amount', 
                     	title:'AMOUNT',
+                    	format: '{0:n}',
                     	attributes: {
 					      	style: 'text-align: right;'
 					    },
@@ -183,8 +184,9 @@
 					    width: 200
                     }
                  ]"
-                 data-bind="source: dataSource"
-                 style="width: 100%; height: auto;"></div>
+                 data-auto-bind="false"
+                 data-bind="source: txnDS"
+                 style="width: 100%;"></div>
         </div>
     </div>
 	            

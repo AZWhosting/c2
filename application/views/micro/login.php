@@ -45,6 +45,12 @@
 </head>
 
 <body>
+    <!-- <form action="" method="" class="login" style="background: none;">
+        <input type="text" data-bind="value: email" placeholder="Your email"  /><br/>
+        <input type="password" data-bind="value: password" placeholder="Password "  /><br/>
+        <a style="z-index: 99999;" id="loginBtn" type="submit" data-bind="click: btnSignIn"  value="Login">Login</a><br/>
+        <div id="loginInformation" style="text-align: center;margin-bottom: 15px;color: #a22314"></div>
+    </form> -->
 
     <div class="body-wrapper">
         <div class="container">

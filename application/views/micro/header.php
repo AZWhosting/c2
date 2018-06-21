@@ -173,6 +173,7 @@
                                                 <p><span data-bind="text: lang.lang.sale_transactions"></span></p>
                                                 <ul>
                                                     <li><a href="sales#/customer"><span data-bind="text: lang.lang.customers"></span></a></li>
+                                                    <li><a href="sales#/quote"><span data-bind="text: lang.lang.create_quotation"></span></a></li>
                                                     <li><a href="sales#/sale_order"><span data-bind="text: lang.lang.create_sale_order"></span></a></li>
                                                     <li><a href="sales#/customer_deposit"><span data-bind="text: lang.lang.create_customer_deposit"></span></a></li>
                                                     <li><a href="sales#/cash_sale"><span data-bind="text: lang.lang.create_cash_sale"></span></a></li>

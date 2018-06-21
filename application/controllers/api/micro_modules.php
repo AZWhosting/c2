@@ -400,6 +400,34 @@ class Micro_modules extends REST_Controller {
 	}
 
 	//CASH
+	//CASH SNAPSHOT
+	function cash_reports_snapshot_get() {
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
+		$data["count"] = 0;
+		$today = date("Y-m-d");
+
+		//Sales
+		$sales = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$sales->select_sum("amount / rate", "total");
+		$sales->where_in("type", array("Cash_Receipt","Cash_Refund","Commercial_Invoice","Vat_Invoice","Invoice","Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale"));
+		$sales->where("is_recurring <>", 1);
+		$sales->where("deleted <>", 1);
+		$sales->get();		
+				
+		$data["results"][] = array(
+			"id" 		=> 0,
+			"cash_in" 	=> 0,
+			"cash_out"	=> 0,
+			"balance" 	=> 0
+		);
+
+		//Response Data
+		$this->response($data, 200);
+	}
 	//CASH GENERAL LEDGER
 	function cash_general_ledger_get() {		
 		$filter 	= $this->get("filter");
@@ -439,22 +467,22 @@ class Micro_modules extends REST_Controller {
 		$obj->include_related("account", array("number","name","account_type_id"));
 		$obj->include_related("account/account_type", array("name","nature"));
 		$obj->where_related("transaction", "is_journal", 1);
-		$obj->where_related("account", "account_type_id", 10);//Cash only
+		// $obj->where_related("account", "account_type_id", 10);//Cash only
 		$obj->where_related("transaction", "is_recurring <>", 1);
 		$obj->where_related("transaction", "deleted <>", 1);
 		$obj->order_by("account_id", "asc");
 		$obj->where("deleted <>", 1);
 		$obj->group_by("account_id");
-		// $obj->get_iterated();
+		$obj->get_iterated();
 
-		//Results
-		if($page && $limit){
-			$obj->get_paged_iterated($page, $limit);
-			$data["count"] = $obj->paged->total_rows;
-		}else{
-			$obj->get_iterated();
-			$data["count"] = $obj->result_count();
-		}
+		// //Results
+		// if($page && $limit){
+		// 	$obj->get_paged_iterated($page, $limit);
+		// 	$data["count"] = $obj->paged->total_rows;
+		// }else{
+		// 	$obj->get_iterated();
+		// 	$data["count"] = $obj->result_count();
+		// }
 		
 		$objList = [];
 		if($obj->exists()){
@@ -477,7 +505,8 @@ class Micro_modules extends REST_Controller {
 				);
 			}
 		}
-		//End Balance Sheet Items
+
+		$data["count"] = count($data["results"]);
 
 		//Response Data		
 		$this->response($data, 200);	

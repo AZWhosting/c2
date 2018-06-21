@@ -864,6 +864,7 @@
     var banhji = banhji || {};
     var baseUrl = "<?php echo base_url(); ?>";
     var apiUrl = baseUrl + 'api/';
+    banhji.dateFormat = "dd-MM-yyyy";
     banhji.s3 = "https://banhji.s3.amazonaws.com/";
     banhji.token = null;
     banhji.no_image = "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/no_image.jpg";
@@ -3845,7 +3846,8 @@
     });
     banhji.reports = kendo.observable({
         lang                : langVM,
-        dataSource          : dataStore(apiUrl + "micro_modules/cash_general_ledger"),
+        dataSource          : dataStore(apiUrl + "micro_modules/cash_reports_snapshot"),
+        txnDS               : dataStore(apiUrl + "micro_modules/cash_general_ledger"),
         sortList            : banhji.source.sortList,
         sorter              : "month",
         sdate               : "",
@@ -3854,7 +3856,17 @@
         company             : banhji.institute,
         displayDate         : "",
         pageLoad            : function(){
+            var self = this;
+
             this.search();
+
+            this.dataSource.query({
+                filter: []
+            }).then(function(){
+                var view = self.dataSource.view();
+
+                self.set("obj", view[0]);
+            });
         },
         sorterChanges       : function(){
             var today = new Date(),
@@ -3891,29 +3903,14 @@
                     this.set("edate", "");
             }
         },
-        segmentChanges      : function() {
-            var dataArr = this.get("obj").segments,
-            lastIndex = dataArr.length - 1,
-            last = this.segmentItemDS.get(dataArr[lastIndex]);
-
-            if(dataArr.length > 1) {
-                for(var i = 0; i < dataArr.length - 1; i++) {
-                    var current_index = dataArr[i],
-                    current = this.segmentItemDS.get(current_index);
-
-                    if(current.segment_id === last.segment_id) {
-                        dataArr.splice(lastIndex, 1);
-                        break;
-                    }
-                }
-            }
-        },
         search              : function(){
             var self = this, para = [],
                 obj = this.get("obj"),
                 start = this.get("sdate"),
                 end = this.get("edate"),
                 displayDate = "";
+
+            para.push({ field:"account_type_id", operator:"where_related_account", value: 10 });
 
             //Dates
             if(start && end){
@@ -3940,17 +3937,21 @@
             }
             this.set("displayDate", displayDate);
 
-            this.dataSource.query({
+            this.txnDS.query({
                 filter:para,
                 sort:[
                     { field:"account_type_id", operator:"order_by_related_account", dir:"asc" },
                     { field:"number", operator:"order_by_related_account", dir:"asc" },
                     { field:"issued_date", operator:"order_by_related_transaction", dir:"asc" },
                     { field:"number", operator:"order_by_related_transaction", dir:"asc" }
-                ],
-                page:1,
-                pageSize:100
+                ]
             });
+        },
+        loadCashIn          : function(){
+            this.txnDS.filter({ field:"account_type_id", operator:"where_related_account", value: 10 });
+        },
+        loadCashOut          : function(){
+            this.txnDS.filter({ field:"account_type_id", operator:"where_related_account", value: 10 });
         }
     });
     banhji.accountingCenter = kendo.observable({
@@ -5809,7 +5810,14 @@
         banhji.view.Index.showIn('#indexMenu', banhji.view.tapMenu);
         banhji.view.Index.showIn('#indexContent', banhji.view.reports);
 
-        banhji.reports.pageLoad();        
+        var vm = banhji.reports;
+        if(banhji.pageLoaded["index"]==undefined){
+            banhji.pageLoaded["index"] = true;
+
+            vm.sorterChanges();
+        }
+
+        vm.pageLoad();        
     });
     banhji.router.route('/transactions', function() {
         

@@ -15,6 +15,17 @@
             font-size: 16px;
             font-family: 'Roboto Slab', serif !important;
         }
+        input.text,
+        input[type="text"],
+        input[type="button"],
+        input[type="submit"],
+        input[type="password"],
+        .input-checkbox {
+            -webkit-appearance: none;
+            border-radius: 0;
+            -moz-appearance: none;
+            appearance: none;
+        }
 
         * {
             margin: 0;
@@ -261,6 +272,33 @@
 </head>
 
 <body>
+    <!--  <form action="" method="" class="login" style="background: none;">
+        <input type="text" data-bind="value: email" placeholder="Your email"  /><br/><br/>
+        <input type="password" data-bind="value: password" placeholder="Password "  /><br/><br/>
+        <input style="z-index: 99999;" id="loginBtn" type="submit" data-bind="click: btnSignIn"  value="Login" /><br/>
+        <div id="loginInformation" style="text-align: center;margin-bottom: 15px;color: #a22314"></div>
+    </form> -->
+
+   <!--  <h3>Using CSS to style an HTML Form</h3>
+
+<div class="login">
+  <form action="">
+    <label for="fname">First Name</label>
+    <input type="text" id="fname" name="firstname" placeholder="Your name.."><br/><br/>
+
+    <label for="lname">Last Name</label>
+    <input type="text" id="lname" name="lastname" placeholder="Your last name.."><br/><br/>
+
+    <label for="country">Country</label>
+    <select id="country" name="country">
+      <option value="australia">Australia</option>
+      <option value="canada">Canada</option>
+      <option value="usa">USA</option>
+    </select><br/><br/>
+
+    <input type="submit" value="Submit" data-bind="click: btnSignIn">
+  </form>
+</div> -->
 
     <div class="body-wrapper">
         <div class="container">
@@ -288,20 +326,20 @@
                         </div>
                         <div class="col-xs-12 col-md-6">
                             <div class="login-form">
-                                <form action="" method="">
+                                <form onsubmit="return loginForm();">
 
                                     <input type="text" data-bind="value: email" placeholder="Your email" class="login-email"><br>
 
                                     <input type="password" data-bind="value: password" placeholder="Password " class="login-email"><br>
 
-                                    <input id="loginBtn" type="button" data-bind="click: btnSignIn" class="btn-login" value="Login"><br><br>
+                                    <input id="loginBtn" type="submit" class="btn-login" value="Login"><br><br>
                                     <div id="loginInformation" style="text-align: center;margin-bottom: 15px;color: #a22314"></div>
                                 </form>
                                 <p>By clicking Login, you agree to our <a href="https://www.banhji.com/terms" target="_blank">Term of Service.</a></p>
                                 <a href="<?php echo base_url(); ?>forgetpassword">Forget Password</a> | <a href="<?php echo base_url(); ?>signup"> Sign Up</a>
                             </div>
-                        </div>     
-                    </div>           
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -588,13 +626,14 @@
             email: null,
             password: null,
             signIn: function(e) {
-                // var decimal=  /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/;
-                // if(this.get('password').match(decimal) != null)  {
-                // layout.showIn("#main-container", watingView);
-                // if(e.keyCode == 13) {
-                //   console.log(this.get('password'));
-                // banhji.aws.btnSignIn();
-                // }
+                var decimal=  /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/;
+                if(this.get('password').match(decimal) != null)  {
+                    layout.showIn("#main-container", watingView);
+                }
+                if(e.keyCode == 13) {
+                  console.log(this.get('password'));
+                banhji.aws.btnSignIn();
+                }
                 console.log(this.get('password'));
             },
             btnSignIn: function() {
@@ -662,21 +701,6 @@
                                             }
                                         })
                                     })
-                                    // if(e.response.results[0].id) {
-                                    //   var user = {
-                                    //     id: id,
-                                    //     sub:
-                                    //     username: userPool.getCurrentUser().username,
-                                    //     role: e.response.results[0].role,
-                                    //     roles: e.response.results[0].roles,
-                                    //     institute: data
-                                    //   };
-                                    //   localforage.setItem('user', user);
-                                    //   $("#loginBtn").val("Redirecting...");
-                                    //   window.location.replace(baseUrl + "rrd/");
-                                    // } else {
-                                    //   console.log('bad');
-                                    // }
                                 });
                             });
                         },
@@ -689,6 +713,7 @@
                 } else {
                     alert('Please Fill Username and Password!');
                 }
+                return false;
             },
             redirect: function(data) {
                 // console.log(data.length > 0);
@@ -727,10 +752,16 @@
                 return cognitoUser;
             }
         });
+        function loginForm() {
+            banhji.aws.btnSignIn();
+            return false;
+            // banhji.aws.btnSignIn(e);
+        }
 
         $(function() {
 
             auth.getSession();
+
 
             kendo.bind($('.login'), banhji.aws);
 
@@ -738,4 +769,4 @@
     </script>
 </body>
 
-</html>
+</html>                        

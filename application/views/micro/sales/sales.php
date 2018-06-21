@@ -330,28 +330,22 @@
 							</table>				
 						</div>
 						<div class="col">
-							<p style="font-size: 18px;margin-top: 15px;" data-bind="text: lang.lang.amount_to_pay"></p>
-						    <div 
-						    	class="row" 
-						    	style="background: none;" 
-						    	data-role="listview" 
-				        		data-template="cash-currency-template" 
-				        		data-auto-bind="false"
-				        		data-bind="source: receipCurrencyDS">
-				        	</div>
-				        	<div data-bind="visible: haveChangeMoney">
-								<p data-bind="text: lang.lang.amount_change" style="font-size: 18px;margin-top: 20px;margin-bottom: 8px;"></p>
-						        <div 
-						        	class="row"
-						        	style="background: none;"
-						        	data-role="listview" 
-					        		data-template="change-currency-receipt-template" 
-					        		data-auto-bind="false"
-					        		data-bind="source: receipChangeDS">
-					        	</div>
-							</div>
-							<div class="col" data-bind="visible: haveInvoice" style="margin-top: 15px;">
-								<input 
+							<div class="row" data-bind="visible: haveMakeChoice">
+								<div class="col">
+	            					<a class="cashmodule module-active" data-bind="click: cashClick" style="margin-top: 59px;text-align: center;  width: 100%; float: left; border: 1px solid #d5d5d5; padding: 52px 0; cursor: pointer;">
+	            						<i style="font-size: 28px;" class="ti-wallet"></i><br>
+	            						<span data-bind="text: lang.lang.cash_receipt">សាច់ប្រាក់</span>
+	            					</a>
+	            				</div>
+	            				<div class="col">
+	            					<a class="creditmodule" data-bind="click: clickInvoice" style="margin-top: 59px;text-align: center;  width: 100%; float: left; border: 1px solid #d5d5d5; padding: 52px 0; cursor: pointer;">
+	            						<i style="font-size: 28px;" class=" ti-receipt"></i><br>
+	            						<span data-bind="text: lang.lang.credit">Credit</span>
+	            					</a>
+	            				</div>
+	            			</div>
+	            			<div class="row" style="margin-top: 59px;" data-bind="visible: haveInvoice">
+	            				<input 
 									data-role="dropdownlist"
 									data-template="contact-list-tmpl" 
 									data-auto-bind="false" 
@@ -377,14 +371,48 @@
 							        	</tbody>
 								    </table>
 				                </div>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col">
-							<div class="clear" style="margin-top: 35px;">
 				                <button 
-				                	style="font-size: 17px; width: 48%;padding: 15px 0;border-radius: 5px;" 
+				                	style="font-size: 17px; background: darkgreen; width: 48%; float: left;padding: 15px 0;border-radius: 5px;" 
+				                	type="button" 
+				                	class="btn btn-info " 
+				                	data-toggle="dropdown" 
+				                	aria-haspopup="true" 
+				                	aria-expanded="false" 
+				                	data-bind="text: lang.lang.invoice, click: saveInvoice">
+				                </button>
+				                <button 
+				                	style="font-size: 17px; background: darkgreen; width: 48%; float: right;padding: 15px 0;border-radius: 5px;background: #2b2f3a;" 
+				                	type="button" 
+				                	class="btn btn-info " 
+				                	data-toggle="dropdown" 
+				                	aria-haspopup="true" 
+				                	aria-expanded="false" 
+				                	data-bind="text: lang.lang.cancel, click: makeChoice">
+				                </button>
+	            			</div>
+	            			<div class="row" data-bind="visible: haveCash">
+	            				<p style="width: 100%;text-align: center;font-size: 18px;margin-top: 15px;" data-bind="text: lang.lang.amount_to_pay"></p>
+							    <div 
+							    	class="row" 
+							    	style="background: none;" 
+							    	data-role="listview" 
+					        		data-template="cash-currency-template" 
+					        		data-auto-bind="false"
+					        		data-bind="source: receipCurrencyDS">
+					        	</div>
+					        	<div data-bind="visible: haveChangeMoney">
+									<p data-bind="text: lang.lang.amount_change" style="width: 100%;text-align: center;font-size: 18px;margin-top: 20px;margin-bottom: 8px;"></p>
+							        <div 
+							        	class="row"
+							        	style="background: none;"
+							        	data-role="listview" 
+						        		data-template="change-currency-receipt-template" 
+						        		data-auto-bind="false"
+						        		data-bind="source: receipChangeDS">
+						        	</div>
+								</div>
+	            				<button 
+				                	style="margin-left: 10px; font-size: 17px; background: darkgreen; width: 44%; float: left;padding: 15px 0;border-radius: 5px;margin-top: 15px;" 
 				                	type="button" 
 				                	class="btn btn-info " 
 				                	data-toggle="dropdown" 
@@ -393,35 +421,15 @@
 				                	data-bind="text: lang.lang.cash_receipt, click: saveCashSale">
 				                </button>
 				                <button 
-				                	style="font-size: 17px; background: darkgreen; width: 48%; float: right;padding: 15px 0;border-radius: 5px;" 
+				                	style="margin-left: 32px; font-size: 17px; background: darkgreen; width: 43%; float: right;padding: 15px 0;border-radius: 5px;margin-top: 15px;background: #2b2f3a;" 
 				                	type="button" 
 				                	class="btn btn-info " 
 				                	data-toggle="dropdown" 
 				                	aria-haspopup="true" 
 				                	aria-expanded="false" 
-				                	data-bind="invisible:haveInvoice,text: lang.lang.microinvoice, click: clickInvoice">
+				                	data-bind="text: lang.lang.cancel, click: makeChoice">
 				                </button>
-				                <div data-bind="visible: haveInvoice" style="overflow:hidden;width: 49%;float: right;" class="col">
-				                	<button 
-					                	style="font-size: 17px; background: darkgreen; width: 48%; float: left;padding: 15px 0;border-radius: 5px;" 
-					                	type="button" 
-					                	class="btn btn-info " 
-					                	data-toggle="dropdown" 
-					                	aria-haspopup="true" 
-					                	aria-expanded="false" 
-					                	data-bind="text: lang.lang.invoice, click: saveInvoice">
-					                </button>
-					                <button 
-					                	style="font-size: 17px; background: darkgreen; width: 48%; float: right;padding: 15px 0;border-radius: 5px;background: #2b2f3a;" 
-					                	type="button" 
-					                	class="btn btn-info " 
-					                	data-toggle="dropdown" 
-					                	aria-haspopup="true" 
-					                	aria-expanded="false" 
-					                	data-bind="text: lang.lang.cancel, click: cancelClickInvoice">
-					                </button>
-				                </div>
-				            </div>
+	            			</div>
 						</div>
 					</div>
 				</div>
