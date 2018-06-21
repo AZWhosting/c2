@@ -364,7 +364,6 @@ a:hover .functionHome p{
 	margin-bottom: 0;
 	box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;
 	cursor: pointer;
-	overflow: hidden;
 }
 .mask{
 	background-color: rgba(0,0,0,0.75);
@@ -1281,7 +1280,7 @@ and (orientation : portrait) {
 	}
 }  
 
-@media (min-width: 768px){
+@media (max-width: 768px){
 	.board-chart{
 		min-height: 160px;
 	    padding: 15px 15px 0;
@@ -1364,4 +1363,4 @@ and (orientation : portrait) {
 	.video-wrapper{
 		margin-bottom: 15px;
 	}
-}
+}                   

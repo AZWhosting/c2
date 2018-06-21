@@ -322,6 +322,16 @@
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
     </script>
+    <script>
+    	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    	ga('create', 'UA-109087721-1', 'auto');
+    	ga('send', 'pageview');
+    </script>
+    <!-- End Google Analytics -->
 </head>
 
 <body>
@@ -1318,6 +1328,7 @@
                 var self = this;
                 if(this.err == null){
                     $("#signupBtn").val("Signing up...");
+                    ga('send', 'event', 'signup', `this.get('email')`, 'Micro');
                     // create user
                     var attributeList = [];
                     this.comChange();
@@ -1362,7 +1373,8 @@
                                         fiscal_date : dd.getTime(),
                                         type: {id: 1}, //banhji.index.get('type'),
                                         telephone: banhji.index.get('telephone'),
-                                        username:result.user.username
+                                        username:result.user.username,
+                                        micro: true
                                     });
                                     banhji.companyDS.sync();
                                     banhji.companyDS.bind('requestEnd', function(e){

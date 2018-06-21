@@ -2624,352 +2624,146 @@
 								</div>
 							</div>
 						    
-							<!-- <div class="row">
-								<div class="col-md-12 fontIcon17" style="margin-bottom: 15px;">
-									<ul class="nav nav-tabs" role="tablist">
-	                                    <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#purchaseItem" role="tab"><span class="hidden-xs-up marginRight"><i class="ti-id-badge"></i></span> <span class="hidden-xs-down" data-bind=""></span>ITEM</a> </li>
-	                                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#additionalCost" role="tab"><span class="hidden-xs-up marginRight"><i class="fa fa-dollar"></i></span> <span class="hidden-xs-down" data-bind=""></span>Additional Cost</a> </li>
-	                                </ul>
-	                                <div class="tab-content tabcontent-border" style="box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
-	                                    <div class="tab-pane active" id="purchaseItem" role="tabpanel">
-	                                        <div class="p-10"> -->
-	                                        	<div class="row">
-													<div class="col-md-12 table-responsive">
-														<!-- Item List -->
-														<div data-role="grid" class="costom-grid table color-table dark-table"
-												    	 	 data-column-menu="true"
-													    	 data-reorderable="true"
-													    	 data-scrollable="false"
-													    	 data-resizable="true"
-													    	 data-editable="true"
-											                 data-columns="[
-															    {
-															    	title:'NO.',
-															    	width: '50px',
-															    	attributes: { style: 'text-align: center;' },
-															        template: function (dataItem) {
-															        	var rowIndex = banhji.purchase.lineDS.indexOf(dataItem)+1;
-															        	return '<i class=icon-trash data-bind=click:removeRow></i>' + ' ' + rowIndex;
-															      	}
-															    },
-											                 	{ field: 'item', title: 'PRODUCTS/SERVICES', editor: itemPurchaseEditor, template: '#=item.name#', width: '170px' },
-									                            { field: 'description', title:'DESCRIPTION', width: '250px' },
-									                            {
-																    field: 'quantity',
-																    title: 'QTY',
-																    format: '{0:n}',
-																    editor: numberTextboxEditor,
-																    width: '120px',
-																    attributes: { style: 'text-align: right;' }
-																},
-									                            {
-									                            	field: 'item_price',
-									                            	title: 'UOM',
-									                            	editor: measurementEditor,
-									                            	template: '#=item_price?item_price.measurement:banhji.emptyString#',
-									                            	width: '80px'
-									                            },
-									                            {
-																    field: 'cost',
-																    title: 'COST',
-																    format: '{0:n}',
-																    editor: numberTextboxEditor,
-																    width: '120px',
-																    attributes: { style: 'text-align: right;' }
-																},
-																{
-																    field: 'discount',
-																    title: 'DISCOUNT VALUE',
-																    hidden: true,
-																    format: '{0:n}',
-																    editor: numberTextboxEditor,
-																    width: '120px',
-																    attributes: { style: 'text-align: right;' }
-																},
-																{
-																    field: 'discount_percentage',
-																    title: 'DISCOUNT %',
-																    hidden: true,
-																    format: '{0:p}',
-																    editor: discountEditor,
-																    width: '120px',
-																    attributes: { style: 'text-align: right;' }
-																},
-									                            { field: 'amount', title:'AMOUNT', format: '{0:n}', editable: 'false', attributes: { style: 'text-align: right;' }, width: '120px' },
-									                            { field: 'tax_item', title:'TAX', editor: taxForSaleEditor, template: '#=tax_item.name#', width: '120px' },
-									                            { field: 'wht_account', title: 'WHT ACCOUNT', hidden: true, editor: whtAccountEditor, template: '#=wht_account.name#', width: '120px' },
-									                            { field: 'additional_cost', title:'ADD.COST', format: '{0:n}', hidden: true, editable: 'false', attributes: { style: 'text-align: right;' }, width: '120px' },
-									                            { field: 'additional_applied', title:'APPLY ADD.COST', hidden: true, editor: customBoolEditor, width: '120px' },
-									                            { field: 'reference_no', title:'REFERENCE NO.', hidden: true, width: '120px' }
-									                         ]"
-									                         data-auto-bind="false"
-											                 data-bind="source: lineDS"></div>
-										            </div>
-												</div>
+							
+                        	<div class="row">
+								<div class="col-md-12 table-responsive">
+									<!-- Item List -->
+									<div data-role="grid" class="costom-grid table color-table dark-table"
+							    	 	 data-column-menu="true"
+								    	 data-reorderable="true"
+								    	 data-scrollable="false"
+								    	 data-resizable="true"
+								    	 data-editable="true"
+						                 data-columns="[
+										    {
+										    	title:'NO.',
+										    	width: '50px',
+										    	attributes: { style: 'text-align: center;' },
+										        template: function (dataItem) {
+										        	var rowIndex = banhji.purchase.lineDS.indexOf(dataItem)+1;
+										        	return '<i class=icon-trash data-bind=click:removeRow></i>' + ' ' + rowIndex;
+										      	}
+										    },
+						                 	{ field: 'item', title: 'PRODUCTS/SERVICES', editor: itemPurchaseEditor, template: '#=item.name#', width: '170px' },
+				                            { field: 'description', title:'DESCRIPTION', width: '250px' },
+				                            {
+											    field: 'quantity',
+											    title: 'QTY',
+											    format: '{0:n}',
+											    editor: numberTextboxEditor,
+											    width: '120px',
+											    attributes: { style: 'text-align: right;' }
+											},
+				                            {
+				                            	field: 'item_price',
+				                            	title: 'UOM',
+				                            	editor: measurementEditor,
+				                            	template: '#=item_price?item_price.measurement:banhji.emptyString#',
+				                            	width: '80px'
+				                            },
+				                            {
+											    field: 'cost',
+											    title: 'COST',
+											    format: '{0:n}',
+											    editor: numberTextboxEditor,
+											    width: '120px',
+											    attributes: { style: 'text-align: right;' }
+											},
+											{
+											    field: 'discount',
+											    title: 'DISCOUNT VALUE',
+											    hidden: true,
+											    format: '{0:n}',
+											    editor: numberTextboxEditor,
+											    width: '120px',
+											    attributes: { style: 'text-align: right;' }
+											},
+											{
+											    field: 'discount_percentage',
+											    title: 'DISCOUNT %',
+											    hidden: true,
+											    format: '{0:p}',
+											    editor: discountEditor,
+											    width: '120px',
+											    attributes: { style: 'text-align: right;' }
+											},
+				                            { field: 'amount', title:'AMOUNT', format: '{0:n}', editable: 'false', attributes: { style: 'text-align: right;' }, width: '120px' },
+				                            { field: 'tax_item', title:'TAX', editor: taxForSaleEditor, template: '#=tax_item.name#', width: '120px' },
+				                            { field: 'wht_account', title: 'WHT ACCOUNT', hidden: true, editor: whtAccountEditor, template: '#=wht_account.name#', width: '120px' },
+				                            { field: 'additional_cost', title:'ADD.COST', format: '{0:n}', hidden: true, editable: 'false', attributes: { style: 'text-align: right;' }, width: '120px' },
+				                            { field: 'additional_applied', title:'APPLY ADD.COST', hidden: true, editor: customBoolEditor, width: '120px' },
+				                            { field: 'reference_no', title:'REFERENCE NO.', hidden: true, width: '120px' }
+				                         ]"
+				                         data-auto-bind="false"
+						                 data-bind="source: lineDS"></div>
+					            </div>
+							</div>
 
-												<!-- Bottom part -->
-									            <div class="row">
-													<!-- Column -->
-													<div class="col-md-4">
-														<button class="btn waves-effect waves-light btn-block btn-info btnPlus marginRight" data-bind="click: addRow"><i class="ti-plus"></i></button>
-														<button class="btn waves-effect waves-light btn-block btn-info btnBarcode marginRight" data-bind="click: openBarcodeWindow" ><i class="fa fa-barcode marginRight"></i>Barcode</button>
-														
-														<!-- Add New Item -->
-														<button type="button" class="btn btn-info dropdown-toggle btnBackgroundBlack" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								                        	<span data-bind="text: lang.lang.add_new_item"></span>
-								                        </button>
-								                        <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 35px, 0px); top: 0px; left: 0px; will-change: transform;">
-								                            <a class="dropdown-item" href='items#/item'><span data-bind="text: lang.lang.add_inventory_for_sale"></span></a>
-								                            <a class="dropdown-item" href='items#/item_service'><span data-bind="text: lang.lang.add_services"></span></a>
-								                        </div>
-													</div>
-													<!-- Column END -->
-	                                        	</div>
+							<!-- Bottom part -->
+				            <div class="row">
+								<!-- Column -->
+								<div class="col-md-4">
+									<button class="btn waves-effect waves-light btn-block btn-info btnPlus marginRight" data-bind="click: addRow"><i class="ti-plus"></i></button>
+									<button class="btn waves-effect waves-light btn-block btn-info btnBarcode marginRight" data-bind="click: openBarcodeWindow" ><i class="fa fa-barcode marginRight"></i>Barcode</button>
+									
+									<!-- Add New Item -->
+									<button type="button" class="btn btn-info dropdown-toggle btnBackgroundBlack" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			                        	<span data-bind="text: lang.lang.add_new_item"></span>
+			                        </button>
+			                        <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 35px, 0px); top: 0px; left: 0px; will-change: transform;">
+			                            <a class="dropdown-item" href='items#/item'><span data-bind="text: lang.lang.add_inventory_for_sale"></span></a>
+			                            <a class="dropdown-item" href='items#/item_service'><span data-bind="text: lang.lang.add_services"></span></a>
+			                        </div>
+								</div>
+								<!-- Column END -->
+                        	</div>
 
-	                                        	<div class="row">
-													<div class="col-md-12 table-responsive marginTop15" >
-														<!-- Item List -->
-														<div data-role="grid" class="costom-grid table color-table dark-table"
-															data-column-menu="true"
-													    	 data-reorderable="true"
-													    	 data-scrollable="false"
-													    	 data-resizable="true"
-													    	 data-editable="true"
-											                 data-columns="[
-															    {
-															    	title:'NO.',
-															    	width: '50px',
-															    	attributes: { style: 'text-align: center;' },
-															        template: function (dataItem) {
-															        	var rowIndex = banhji.purchase.accountLineDS.indexOf(dataItem)+1;
-															        	return '<i class=icon-trash data-bind=click:removeRowAccount></i>' + ' ' + rowIndex;
-															      	}
-															    },
-											                 	{ field: 'account', title: 'ACCOUNT', editor: accountEditor, template: '#=account.name#' },
-									                            { field: 'description', title:'DESCRIPTION' },
-									                            {
-																    field: 'amount',
-																    title: 'AMOUNT',
-																    format: '{0:n}',
-																    editor: numberTextboxEditor,
-																    width: '150px',
-																    attributes: { style: 'text-align: right;' }
-																},
-																{ field: 'tax_item', title:'TAX', editor: taxForSaleEditor, template: '#=tax_item.name#', width: '150px' },
-									                            { field: 'wht_account', title: 'WHT ACCOUNT', hidden: true, editor: whtAccountEditor, template: '#=wht_account.name#', width: '150px' }
-									                         ]"
-									                         data-auto-bind="false"
-											                 data-bind="source: accountLineDS" ></div>
-													</div>
-												</div>
+                        	<div class="row">
+								<div class="col-md-12 table-responsive marginTop15" >
+									<!-- Item List -->
+									<div data-role="grid" class="costom-grid table color-table dark-table"
+										data-column-menu="true"
+								    	 data-reorderable="true"
+								    	 data-scrollable="false"
+								    	 data-resizable="true"
+								    	 data-editable="true"
+						                 data-columns="[
+										    {
+										    	title:'NO.',
+										    	width: '50px',
+										    	attributes: { style: 'text-align: center;' },
+										        template: function (dataItem) {
+										        	var rowIndex = banhji.purchase.accountLineDS.indexOf(dataItem)+1;
+										        	return '<i class=icon-trash data-bind=click:removeRowAccount></i>' + ' ' + rowIndex;
+										      	}
+										    },
+						                 	{ field: 'account', title: 'ACCOUNT', editor: accountEditor, template: '#=account.name#' },
+				                            { field: 'description', title:'DESCRIPTION' },
+				                            {
+											    field: 'amount',
+											    title: 'AMOUNT',
+											    format: '{0:n}',
+											    editor: numberTextboxEditor,
+											    width: '150px',
+											    attributes: { style: 'text-align: right;' }
+											},
+											{ field: 'tax_item', title:'TAX', editor: taxForSaleEditor, template: '#=tax_item.name#', width: '150px' },
+				                            { field: 'wht_account', title: 'WHT ACCOUNT', hidden: true, editor: whtAccountEditor, template: '#=wht_account.name#', width: '150px' }
+				                         ]"
+				                         data-auto-bind="false"
+						                 data-bind="source: accountLineDS" ></div>
+								</div>
+							</div>
 
-												<!-- Bottom part -->
-									            <div class="row marginBottom">
-													<!-- Column -->
-													<div class="col-md-6">
-														<button class="btn waves-effect waves-light btn-block btn-info btnPlus marginRight" data-bind="click: addRowAccount"><i class="ti-plus"></i></button>
-														<a href="<?php echo base_url()?>rrd#/account" class="btn waves-effect waves-light btn-block btn-info btnAddAccount"><i class="icon-user-follow marginRight"></i>Add Account</a>
-													</div>
-													<!-- Column END -->
-												</div>
-	                                        <!-- </div>
-	                                    </div>
-	                                    <div class="tab-pane" id="additionalCost" role="tabpanel">
-	                                    	<div class="p-10">
-	                                    		<div class="row">
-	                                    			<div class="col-md-12 table-responsive">
-														<table class="table color-table dark-table">
-															<thead>
-													            <tr>
-													                <th data-bind="text: lang.lang.no_"></th>
-													                <th data-bind="text: lang.lang.type"></th>
-													                <th data-bind="text: lang.lang.description"></th>
-													                <th data-bind="text: lang.lang.ref"></th>
-													                <th data-bind="text: lang.lang.amount"></th>
-													                <th data-bind="text: lang.lang.tax"></th>
-													            </tr>
-													        </thead>
-													        <tbody data-role="listview"
-													        		data-template="purchase-additional-cost-template"
-													        		data-auto-bind="false"
-													        		data-bind="source: additionalCostDS"></tbody>
-														</table>
-													</div>
-												</div>
-												
-									            <div class="row">
-													
-													<div class="col-md-4">
-														<button class="btn waves-effect waves-light btn-block btn-info btnPlus marginRight" data-bind="click: windowCreate"><i class="ti-plus"></i></button>
-														<span data-bind="text: lang.lang.additional_cost_apply"></span>
-
-														<input type="radio" name="engine" id="engine1" class="k-radio" value="Equal"
-																data-bind="checked: obj.additional_apply,
-																			events:{ change: changes }">
-											            <label class="k-radio-label" for="engine1"><span data-bind="text: lang.lang.equal"></span></label>
-
-											            <input type="radio" name="engine" id="engine2" class="k-radio" value="Weighted"
-											            		data-bind="checked: obj.additional_apply,
-																			events:{ change: changes }">
-											            <label class="k-radio-label" for="engine2"><span data-bind="text: lang.lang.weighted"></span></label>
-													</div>
-													
-	                                        	</div>
-
-
-	                                        	
-											    <div data-role="window" class="table-responsive"
-									                 data-title="Additional Cost"
-									                 data-width="650"
-									                 data-actions="{}"
-									                 data-position="{top: '150px', left: '30%'}"
-									                 data-height="355"
-									                 data-bind="visible: windowVisible">
-
-													<table class="table color-table dark-table">
-														<tr>
-							            					<td colspan="2">
-										            			<input type="radio" value="Cash_Purchase" class="k-radio"
-										            					name="additCostOption" id="additCostOption1"
-										            					data-bind="checked: additCostObj.type,
-										            								events:{ change: additCostTypeChanges }">
-										            			<label class="k-radio-label" for="additCostOption1"><span data-bind="text: lang.lang.cash"></span></label>
-
-													            <input type="radio" value="Credit_Purchase" class="k-radio"
-													            		name="additCostOption" id="additCostOption2"
-													            		data-bind="checked: additCostObj.type,
-													            					events:{ change: additCostTypeChanges }">
-													            <label class="k-radio-label" for="additCostOption2"><span data-bind="text: lang.lang.credit"></span></label>
-											            	</td>
-															<td data-bind="invisible: isAdditCostCash">Due Date</td>
-															<td data-bind="invisible: isAdditCostCash">
-																<input data-role="datepicker"
-																		data-format="dd-MM-yyyy"
-																		data-parse-formats="yyyy-MM-dd"
-																		data-bind="value: additCostObj.due_date"
-																		style="width:100%;" />
-															</td>
-														</tr>
-														<tr>
-															<td>Supplier</td>
-															<td>
-																<input id="cbbContact" name="cbbContact"
-																	   data-role="dropdownlist"
-																	   data-header-template="vendor-header-tmpl"
-													                   data-template="contact-list-tmpl"
-													                   data-auto-bind="false"
-													                   data-value-primitive="false"
-													                   data-filter="startswith"
-													                   data-text-field="name"
-													                   data-value-field="id"
-													                   data-bind="value: additCostObj.contact,
-													                              source: additionalContactDS,
-													                              events: {change: additCostContactChanges}"
-													                   data-option-label="Select Supplier..."
-													                   style="width: 100%;" />
-															</td>
-															<td>Bill Date</td>
-															<td>
-																<input data-role="datepicker"
-																		data-format="dd-MM-yyyy"
-																		data-parse-formats="yyyy-MM-dd"
-																		data-bind="value: additCostObj.issued_date,
-																					events: { change: additCostSetRate }"
-																		style="width:100%;" />
-															</td>
-														</tr>
-														<tr>
-															<td>Account</td>
-															<td>
-																<input data-role="dropdownlist"
-																		data-header-template="account-header-tmpl"
-													      				data-template="account-list-tmpl"
-																		data-value-primitive="true"
-																		data-text-field="name"
-													      				data-value-field="id"
-													      				data-bind="value: additCostObj.account_id,
-													      							source: additionalCostAccountDS"
-													      				data-option-label="Select Account..."
-													      				style="width: 100%" />
-															</td>
-															<td>Number</td>
-															<td>
-																<input type="text" class="k-textbox"
-																		data-bind="value: additCostObj.number"
-																		style="width: 100%; margin-bottom: 0;" />
-															</td>
-														</tr>
-														<tr>
-															<td>Memo</td>
-															<td>
-																<input type="text" class="k-textbox"
-																		data-bind="value: additCostObj.memo"
-																		style="width: 100%; margin-bottom: 0;" />
-															</td>
-															<td>Reference No.</td>
-															<td>
-																<input type="text" class="k-textbox"
-																		data-bind="value: additCostObj.reference_no"
-																		style="width: 100%; margin-bottom: 0;" />
-															</td>
-														</tr>
-														<tr>
-															<td>Amount</td>
-															<td>
-																<input data-role="numerictextbox"
-																		data-spinners="false"
-																		data-format="n"
-																		data-min="0"
-																		data-bind="value: additCostObj.sub_total, events: {change : changes}"
-																		required data-required-msg="required" style="width: 70%;" />
-																&nbsp;
-																<span data-bind="text: additCostCurrency"></span>
-															</td>
-															<td>Tax</td>
-															<td>
-																<input data-role="combobox"
-																	   data-header-template="tax-header-tmpl"
-																	   data-value-primitive="true"
-													                   data-text-field="name"
-													                   data-value-field="id"
-													                   data-bind="value: additCostObj.tax_item_id,
-													                   			  source: taxItemDS,
-													                   			  events:{ change: changes }"
-													                   style="width: 100%" />
-															</td>
-													    </tr>
-													    <tr>
-													    	<td colspan="2"></td>
-													    	<td>WHT Account</td>
-													    	<td>
-																<input id="cbbWHTAccount" name="cbbWHTAccount"
-																	   data-role="combobox"
-													                   data-template="account-list-tmpl"
-													                   data-value-primitive="true"
-													                   data-autoWidth="true"
-													                   data-text-field="name"
-													                   data-value-field="id"
-													                   data-bind="value: additCostObj.wht_account_id,
-													                              source: whtAccountDS"
-													                   data-placeholder="Add WHT Account.."
-													                   style="width: 100%" />
-															</td>
-														</tr>
-													</table>
-
-													<br>
-
-													<div align="center">
-														<span class="btn btn-icon btn-success glyphicons power" data-bind="click: windowSave" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_close"></span></span>
-														<span class="btn btn-icon btn-danger glyphicons remove_2" data-bind="click: windowDiscard" style="width: 80px;"><i></i> Discard</span>
-													</div>
-												</div>
-
-	                                    	</div>
-	                                    </div>
-	                                </div>
-	                            </div>
-							</div> -->
+							<!-- Bottom part -->
+				            <div class="row marginBottom">
+								<!-- Column -->
+								<div class="col-md-6">
+									<button class="btn waves-effect waves-light btn-block btn-info btnPlus marginRight" data-bind="click: addRowAccount"><i class="ti-plus"></i></button>
+									<a href="<?php echo base_url()?>rrd#/account" class="btn waves-effect waves-light btn-block btn-info btnAddAccount"><i class="icon-user-follow marginRight"></i>Add Account</a>
+								</div>
+								<!-- Column END -->
+							</div>
 
 							<!-- Bottom part -->
 				            <div class="row">

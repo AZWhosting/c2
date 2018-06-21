@@ -409,6 +409,9 @@ class Profiles extends REST_Controller {
 				$user->where('username', $r->username);
 				$user->get();
 				$modules = new Module();
+				if(isset($r->micro) && $r->micro == 'true') {
+					$modules->where('id', 24);
+				}
 				$modules->where('is_core', 'true')->get();
 				$fx = new Role(null);
 				$fx->where('type', 'UTB');

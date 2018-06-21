@@ -729,11 +729,11 @@ class Banhji extends REST_Controller {
 				$country = new Country();
 				$country->select('code');
 				$country->where('id', $inst->country_id)->get();
-				
+
 				$tz = new Timezone();
 				$tz->where('country_code', strtoupper($country->code));
 				$tz->get();
-				
+
 				$now = new DateTime();
 				$db_name = 'db_'. $now->getTimestamp();
 				$conn = new Connection();
@@ -759,7 +759,7 @@ class Banhji extends REST_Controller {
 							$files->where('industry_id', 0);
 						}
 						$files->where('country_id', $inst->country_id)->get();
-						
+
 						// $files->get();
 						$my_table = new Systemtable();
 						$my_table->get();
@@ -787,13 +787,13 @@ class Banhji extends REST_Controller {
 						$this->db->update('currencies', array('status' => 1));
 						// add currency to rate
 						$this->db->insert('currency_rates', array(
-							'currency_id' => "$inst->monetary_id", 
-							'user_id' => 0, 
-							'rate' => 1, 
-							'source' => '', 
-							'method' => 'Manual', 
-							'date' => date('Y-m-d'), 
-							'is_system' => 1, 
+							'currency_id' => "$inst->monetary_id",
+							'user_id' => 0,
+							'rate' => 1,
+							'source' => '',
+							'method' => 'Manual',
+							'date' => date('Y-m-d'),
+							'is_system' => 1,
 							'created_at' => date('Y-m-d'),
 							'locale'=> "$inst->monetary_locale"
 						));

@@ -7916,14 +7916,13 @@
         segmentDS                   : dataStore(apiUrl + "segments"),
         segItemDS                   : dataStore(apiUrl + "segments/item"),
         segmentItemDS               : dataStore(apiUrl + "segments/item"),
-        accountDS               : dataStore(apiUrl + "accounts"),
         jobDS                       : new kendo.data.DataSource({
             data: banhji.source.jobList,
             sort: { field: "name", dir: "asc" }
         }),
-        // accountDS                   : new kendo.data.DataSource({
-        //     data: banhji.source.accountList
-        // }),
+        accountDS                   : new kendo.data.DataSource({
+            data: banhji.source.accountList
+        }),
         whtAccountDS                : new kendo.data.DataSource({
             data: banhji.source.accountList,
             filter: {
@@ -9972,28 +9971,10 @@
         lineDS                      : dataStore(apiUrl + "item_lines"),
         txnDS                       : dataStore(apiUrl + "transactions"),
         numberDS                    : dataStore(apiUrl + "transactions/number"),
-        accountLineDS               : dataStore(apiUrl + "account_lines"),
         journalLineDS               : dataStore(apiUrl + "journal_lines"),
-        additionalCostDS            : dataStore(apiUrl + "transactions"),
-        recurringDS                 : dataStore(apiUrl + "transactions"),
-        recurringLineDS             : dataStore(apiUrl + "item_lines"),
-        recurringAccountLineDS      : dataStore(apiUrl + "account_lines"),
-        recurringAdditionalCostDS   : dataStore(apiUrl + "transactions"),
-        referenceDS                 : dataStore(apiUrl + "transactions"),
-        referenceLineDS             : dataStore(apiUrl + "item_lines"),
-        attachmentDS                : dataStore(apiUrl + "attachments"),
-        depositDS                   : dataStore(apiUrl + "transactions"),
-        balanceDS                   : dataStore(apiUrl + "transactions/balance"),
         itemDS                      : dataStore(apiUrl + "items"),
         itemPriceDS                 : dataStore(apiUrl + "item_prices"),
         assemblyDS                  : dataStore(apiUrl + "item_assemblies"),
-        segmentDS                   : dataStore(apiUrl + "segments"),
-        segItemDS                   : dataStore(apiUrl + "segments/item"),
-        segmentItemDS               : dataStore(apiUrl + "segments/item"),
-        jobDS                       : new kendo.data.DataSource({
-            data: banhji.source.jobList,
-            sort: { field: "name", dir: "asc" }
-        }),
         accountDS                   : new kendo.data.DataSource({
             data: banhji.source.accountList
         }),
@@ -10015,9 +9996,6 @@
                 ]
             },
             sort: { field:"number", dir:"asc" }
-        }),
-        additionalCostAccountDS     : new kendo.data.DataSource({
-            data: banhji.source.accountList
         }),
         txnTemplateDS               : new kendo.data.DataSource({
             data: banhji.source.txnTemplateList,
@@ -10057,32 +10035,17 @@
         paymentTermDS               : banhji.source.paymentTermDS,
         paymentMethodDS             : banhji.source.paymentMethodDS,
         contactDS                   : banhji.source.supplierDS,
-        additionalContactDS         : banhji.source.supplierDS,
         statusObj                   : banhji.source.statusObj,
         amtDueColor                 : banhji.source.amtDueColor,
         confirmMessage              : banhji.source.confirmMessage,
-        frequencyList               : banhji.source.frequencyList,
-        monthOptionList             : banhji.source.monthOptionList,
-        monthList                   : banhji.source.monthList,
-        weekDayList                 : banhji.source.weekDayList,
-        dayList                     : banhji.source.dayList,
-        showMonthOption             : false,
-        showMonth                   : false,
-        showWeek                    : false,
-        showDay                     : false,
         obj                         : null,
-        additCostObj                : null,
         isEdit                      : false,
         saveDraft                   : false,
         saveClose                   : false,
         savePrint                   : false,
-        saveRecurring               : false,
         showConfirm                 : false,
         notDuplicateNumber          : true,
-        recurring                   : "",
-        recurring_validate          : false,
         isCash                      : true,
-        isAdditCostCash             : true,
         windowVisible               : false,
         balance                     : 0,
         total                       : 0,
@@ -10195,92 +10158,6 @@
                 item_price          : item_price,
                 tax_item            : { id:"", name:"" },
                 wht_account         : { id:"", name:"" }
-            });
-        },
-        //Upload
-        onSelect            : function(e){
-            // Array with information about the uploaded files
-            var self = this,
-            files = e.files,
-            obj = this.get("obj");
-
-            // Check the extension of each file and abort the upload if it is not .jpg
-            $.each(files, function(index, value){
-                if (value.extension.toLowerCase() === ".jpg"
-                    || value.extension.toLowerCase() === ".jpeg"
-                    || value.extension.toLowerCase() === ".tiff"
-                    || value.extension.toLowerCase() === ".png"
-                    || value.extension.toLowerCase() === ".gif"
-                    || value.extension.toLowerCase() === ".pdf"){
-
-                    var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ value.name;
-
-                    self.attachmentDS.add({
-                        user_id         : self.get("user_id"),
-                        transaction_id  : obj.id,
-                        type            : "Transaction",
-                        name            : value.name,
-                        description     : "",
-                        key             : key,
-                        url             : banhji.s3 + key,
-                        size            : value.size,
-                        created_at      : new Date(),
-
-                        file            : value.rawFile
-                    });
-                }else{
-                    alert("This type of file is not allowed to attach.");
-                }
-            });
-        },
-        removeFile          : function(e){
-            var data = e.data;
-
-            if (confirm(banhji.source.confirmMessage)) {
-                this.attachmentDS.remove(data);
-            }
-        },
-        uploadFile          : function(){
-            $.each(this.attachmentDS.data(), function(index, value){
-                if(!value.id){
-                    var params = {
-                        Body: value.file,
-                        Key: value.key
-                    };
-                    bucket.upload(params, function (err, data) {
-                        // console.log(err, data);
-                        // var url = data.Location;
-                    });
-                }
-            });
-
-            this.attachmentDS.sync();
-            var saved = false;
-            this.attachmentDS.bind("requestEnd", function(e){
-                //Delete File
-                if(e.type=="destroy"){
-                    if(saved==false && e.response){
-                        saved = true;
-
-                        var response = e.response.results;
-                        $.each(response, function(index, value){
-                            var params = {
-                                //Bucket: 'STRING_VALUE', /* required */
-                                Delete: { /* required */
-                                    Objects: [ /* required */
-                                        {
-                                            Key: value.data.key /* required */
-                                        }
-                                      /* more items */
-                                    ]
-                                }
-                            };
-                            bucket.deleteObjects(params, function(err, data) {
-                                //console.log(err, data);
-                            });
-                        });
-                    }
-                }
             });
         },
         //Deposit
@@ -10406,186 +10283,6 @@
                 var itemRate = rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));
                 value.set("rate", itemRate);
             });
-
-            //Account Line
-            $.each(this.accountLineDS.data(), function(index, value){
-                value.set("rate", rate);
-                value.set("locale", obj.locale);
-            });
-        },
-        //Segments
-        addSegmentItem      : function(){
-            var obj = this.get("obj"),
-                notExisting = true,
-                segment_id = this.get("segment_id"),
-                segmentitem_id = this.get("segmentitem_id");
-
-            if(segment_id && segmentitem_id){
-                $.each(this.segmentItemDS.data(), function(index, value){
-                    if(value.segment_id==segment_id){
-                        notExisting = false;
-
-                        return false;
-                    }
-                });
-
-                if(notExisting){
-                    var segments = this.segmentDS.get(segment_id),
-                        segmentitems = this.segItemDS.get(segmentitem_id);
-
-                    this.segmentItemDS.add({
-                        id : segmentitems.id,
-                        segment_id: segment_id,
-                        code: segmentitems.code,
-                        name: segmentitems.name,
-                        segment: { id : segment_id, name : segments.name}
-                    });
-                }else{
-                    $("#ntf1").data("kendoNotification").warning("This segment is already selected!");
-                }
-            }
-
-            this.set("segment_id", ""),
-            this.set("segmentitem_id", "");
-        },
-        //Additional Cost
-        additCostContactChanges: function(){
-            var additCostObj = this.get("additCostObj");
-
-            if(additCostObj.contact){
-                var contact = additCostObj.contact,
-                    code = banhji.source.getCurrencyCode(contact.locale);
-
-                additCostObj.set("contact_id", contact.id);
-                additCostObj.set("locale", contact.locale);
-                this.set("additCostCurrency", code);
-                this.additCostSetRate();
-            }
-        },
-        additCostTypeChanges: function(){
-            var additCostObj = this.get("additCostObj");
-
-            if(additCostObj.type=="Cash_Purchase"){
-                this.set("isAdditCostCash", true);
-
-                this.additionalCostAccountDS.filter({ field:"account_type_id", value: 10 });
-            }else{
-                this.set("isAdditCostCash", false);
-
-                this.additionalCostAccountDS.filter({
-                    logic: "or",
-                    filters: [
-                      { field: "account_type_id", value: 23 },
-                      { field: "account_type_id", value: 24 }
-                    ]
-                });
-            }
-
-            additCostObj.set("account_id", 0);
-        },
-        additCostSetRate: function(){
-            var additCostObj = this.get("additCostObj"),
-                rate = banhji.source.getRate(additCostObj.locale, new Date(additCostObj.issued_date));
-
-                additCostObj.set("rate", rate);
-        },
-        windowCreate        : function(){
-            var self = this,
-                obj = this.get("obj"),
-                additCostObj = this.get("additCostObj");
-
-            this.additionalCostAccountDS.filter({ field:"account_type_id", value:10 });
-
-            this.additionalCostDS.insert(0, {
-                contact_id          : "",
-                account_id          : 1,
-                payment_term_id     : 0,
-                reference_id        : obj.id,
-                recurring_id        : "",
-                tax_item_id         : "",
-                wht_account_id      : "",
-                user_id             : this.get("user_id"),
-                reference_no        : "",
-                type                : "Cash_Purchase",//Required
-                sub_total           : 0,
-                amount              : 0,
-                tax                 : 0,
-                rate                : 1,
-                locale              : obj.locale,
-                issued_date         : new Date(),
-                due_date            : new Date(),
-                bill_to             : "",
-                ship_to             : "",
-                memo                : "",
-                memo2               : "",
-                status              : 0,
-                segments            : [],
-                //Recurring
-                recurring_name      : "",
-                start_date          : new Date(),
-                frequency           : "Daily",
-                month_option        : "Day",
-                interval            : 1,
-                day                 : 1,
-                week                : 0,
-                month               : 0,
-                is_recurring        : 0,
-
-                contact             : { id:0, name:"" }
-            });
-
-            var additCostObj = this.additionalCostDS.at(0);
-            this.set("additCostObj", additCostObj);
-            this.additCostSetRate();
-
-            // Apply additional cost to item line
-            $.each(this.lineDS.data(), function(index, value) {
-                if(value.item_id>0){
-                    if(value.item.item_type_id==1){
-                        value.set("additional_applied", true);
-                    }
-                }
-            });
-
-            this.set("windowVisible", true);
-        },
-        windowEdit          : function(e){
-            var data = e.data;
-
-            if(data.type=="Cash_Purchase"){
-                this.set("isAdditCostCash", true);
-
-                this.additionalCostAccountDS.filter({ field:"account_type_id", value: 10 });
-            }else{
-                this.set("isAdditCostCash", false);
-
-                this.additionalCostAccountDS.filter({
-                    logic: "or",
-                    filters: [
-                      { field: "account_type_id", value: 23 },
-                      { field: "account_type_id", value: 24 }
-                    ]
-                });
-            }
-
-            this.set("additCostObj", data);
-            this.set("windowVisible", true);
-        },
-        windowSave          : function(){
-            this.set("windowVisible", false);
-        },
-        windowDiscard       : function(){
-            var additCostObj = this.get("additCostObj"),
-                index = this.additionalCostDS.indexOf(additCostObj),
-                selected = this.additionalCostDS.at(index);
-
-            this.additionalCostDS.remove(selected);
-            this.changes();
-
-            this.set("windowVisible", false);
-        },
-        windowClose         : function(){
-            this.set("windowVisible", false);
         },
         //Item
         addItem             : function(uid){
@@ -10755,70 +10452,6 @@
                         percentageAmount = dataRow.quantity * dataRow.cost * dataRow.discount_percentage;
 
                     dataRow.set("discount", percentageAmount);
-                }else if(arg.field=="tax_item"){
-                    var dataRow = arg.items[0];
-
-                    dataRow.set("tax_item_id", dataRow.tax_item.id);
-                    dataRow.set("tax", 0);
-
-                    self.changes();
-                }else if(arg.field=="wht_account"){
-                    var dataRow = arg.items[0];
-
-                    dataRow.set("wht_account_id", dataRow.wht_account.id);
-
-                    self.changes();
-                }
-            }
-        },
-        //Account
-        addRowAccount       : function(){
-            var obj = this.get("obj");
-
-            this.accountLineDS.add({
-                transaction_id      : obj.id,
-                tax_item_id         : "",
-                wht_account_id      : "",
-                account_id          : "",
-                description         : "",
-                reference_no        : "",
-                segments            : [],
-                amount              : 0,
-                rate                : obj.rate,
-                locale              : obj.locale,
-
-                account             : { id:"", name:"" },
-                tax_item            : { id:"", name:"" },
-                wht_account         : { id:"", name:"" }
-            });
-        },
-        addExtraRowAccount      : function(uid){
-            var row = this.accountLineDS.getByUid(uid),
-                index = this.accountLineDS.indexOf(row);
-
-            if(index==this.accountLineDS.total()-1){
-                this.addRowAccount();
-            }
-        },
-        removeRowAccount    : function(e){
-            var d = e.data;
-
-            this.accountLineDS.remove(d);
-            this.changes();
-        },
-        accountLineDSChanges        : function(arg){
-            var self = banhji.purchase;
-
-            if(arg.field){
-                if(arg.field=="account"){
-                    var dataRow = arg.items[0],
-                        account = dataRow.account;
-
-                    dataRow.set("account_id", account.id);
-
-                    self.addExtraRowAccount(dataRow.uid);
-                }else if(arg.field=="amount"){
-                    self.changes();
                 }else if(arg.field=="tax_item"){
                     var dataRow = arg.items[0];
 
@@ -11184,33 +10817,23 @@
         },
         typeChanges         : function(){
             var obj = this.get("obj");
-
             if(obj.type=="Cash_Purchase"){
                 this.set("isCash", true);
-
                 this.accountDS.filter({ field:"account_type_id", value: 10 });
                 obj.set("account_id", 0);
-
-                var dropdownlist = $("#ddlAccount").data("kendoDropDownList");
-                //dropdownlist.select(1);
-                //dropdownlist.trigger("change");
+                obj.set("account_id", 7);
             }else{
                 this.set("isCash", false);
-
                 this.accountDS.filter({ field: "account_type_id", value: 23 });
                 obj.set("account_id", 0);
                 obj.set("account_id", obj.contact.account_id);
             }
-
             this.generateNumber();
         },
         addEmpty            : function(){
             this.dataSource.data([]);
             this.lineDS.data([]);
-            this.accountLineDS.data([]);
             this.journalLineDS.data([]);
-            this.additionalCostDS.data([]);
-            this.attachmentDS.data([]);
 
             this.set("isEdit", false);
             this.set("obj", null);
@@ -11224,8 +10847,8 @@
 
             this.dataSource.insert(0, {
                 transaction_template_id : 31,
-                account_id          : 1,
-                contact_id          : "",
+                account_id          : 7,
+                contact_id          : 8,
                 payment_term_id     : 0,
                 payment_method_id   : 0,
                 reference_id        : "",
@@ -11268,7 +10891,7 @@
                 month               : 0,
                 is_recurring        : 0,
 
-                contact             : { id:0, name:"" },
+                contact             : { id:8, name:"General Supplier" },
                 references          : []
             });
 
@@ -11279,10 +10902,10 @@
             this.generateNumber();
 
             //Default rows
-            for (var i = 0; i < banhji.source.defaultLines; i++) {
-                this.addRow();
-                this.addRowAccount();
-            }
+            // for (var i = 0; i < banhji.source.defaultLines; i++) {
+            //     this.addRow();
+            //     this.addRowAccount();
+            // }
         },
         objSync             : function(){
             var dfd = $.Deferred();
@@ -11312,12 +10935,6 @@
             }
 
             this.removeEmptyRow();
-
-            //Segment
-            $.each(this.segmentItemDS.data(), function(index, value){
-                segments.push(value.id);
-            });
-            obj.set("segments", segments);
 
             //Save Draft
             if(this.get("saveDraft")){
@@ -16668,8 +16285,8 @@
 
         banhji.view.layout.showIn('#content', banhji.view.Index);
         banhji.view.Index.showIn('#indexMenu', banhji.view.tapMenu);
-        // banhji.view.Index.showIn('#indexContent', banhji.view.transactions);
         banhji.view.Index.showIn('#indexContent', banhji.view.purchaseDashBoard);
+
         var vm = banhji.purchaseDashBoard;
         vm.pageLoad();
         vm.lineDS.bind("change", vm.itemLineDSChanges);

@@ -3713,11 +3713,9 @@
                 data: 'results',
                 total: 'count'
             },
-            filter: [
-                {
-                    field: "is_system",
-                    value: 0
-                }
+            filter:  [
+                { field: "id", operator: "where_in", value: [1, 3, 5, 6] },
+                { field: "is_system",  operator: "or_where", value: 0 }
             ],
             sort: {
                 field: "id",
@@ -3728,7 +3726,7 @@
             serverSorting: true,
             serverPaging: true,
             page: 1,
-            pageSize: 100
+            pageSize: 8
         }),        
         discountAccountDS   : new kendo.data.DataSource({
             data: banhji.source.accountList,
@@ -6241,7 +6239,24 @@
         backCategory    : function(){
             this.set("haveItems", false);
         },
+        barcodItemDS    : dataStore(apiUrl + "items"),
         barcodeChange   : function(e){
+            var barcode = this.get("barcode");
+            var self = this;
+            this.barcodItemDS.query({
+                filter: {field: "barcode", value: barcode},
+                page: 1,
+                pageSize: 1
+            }).then(function(e){
+
+                if(self.barcodItemDS.data().length > 0){
+                    var data = self.barcodItemDS.data()[0];
+                    self.addRow(data);
+                }else{
+                    self.superChoeunNTF('error',self.lang.lang.no_data);
+                }
+                self.set("barcode", "");
+            });
         },
         //Session
         cashierSessionDS: dataStore(apiUrl + "cashier_sessions"),
@@ -6601,10 +6616,10 @@
                         dataSource: self.dataSource.data(),
                         template: kendo.template(TempForm)
                     });
-                    self.barcod("do");
                     if(self.line.length == 0){
                         self.getItem(self.dataSource.data()[0].id);
                     }
+                    self.barcod("do");
                 });
             } else {
                 banhji.router.navigate('/');
@@ -6626,6 +6641,8 @@
                 });
                 var listview = $("#invoiceContent").data("kendoListView");
                 listview.refresh();
+                self.barcod("reset");
+                self.barcod("do");
             });
         },
         barcod: function(re) {
