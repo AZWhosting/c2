@@ -476,6 +476,7 @@ class Micro_modules extends REST_Controller {
 		$sort 	 	= $this->get("sort");
 		$data["results"] = [];
 		$data["count"] = 0;
+		$include_balance_forward = false;
 
 		$obj = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		
@@ -494,8 +495,10 @@ class Micro_modules extends REST_Controller {
 		if(!empty($filter["filters"]) && isset($filter["filters"])){			
 	    	foreach ($filter["filters"] as $value) {
 	    		if(isset($value['operator'])){
-	    			if($value['operator']=="include_balance_forward"){
+	    			if($value['operator']=="cash_balance"){
 	    				$include_balance_forward = $value['value'];
+
+	    				$obj->where_related("transaction", "issued_date >", $this->startFiscalDate);
 	    			}else{
 	    				$obj->{$value['operator']}($value['field'], $value['value']);
 	    			}
@@ -508,9 +511,7 @@ class Micro_modules extends REST_Controller {
 		$obj->include_related("transaction", array("type", "number", "issued_date", "memo", "rate"));
 		$obj->include_related("contact", array("abbr","number","name"));
 		$obj->include_related("account", array("number","name","account_type_id"));
-		$obj->include_related("account/account_type", array("name","nature"));
 		$obj->where_related("transaction", "is_journal", 1);
-		// $obj->where_related("account", "account_type_id", 10);//Cash only
 		$obj->where_related("transaction", "is_recurring <>", 1);
 		$obj->where_related("transaction", "deleted <>", 1);
 		$obj->where("deleted <>", 1);
@@ -526,7 +527,32 @@ class Micro_modules extends REST_Controller {
 		
 		$objList = [];
 		if($obj->exists()){
-			foreach ($obj as $value) {
+			foreach ($obj as $key =>$value) {
+				//Balance Forward
+				if($key==0 && $include_balance_forward){
+					$balanceForwards = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$balanceForwards->select_sum("(dr - cr) / transactions.rate", "total");
+					$balanceForwards->where_related("account", "account_type_id", 10);//Cash only
+					$balanceForwards->where_related("transaction", "is_journal", 1);
+					$balanceForwards->where_related("transaction", "is_recurring <>", 1);
+					$balanceForwards->where_related("transaction", "deleted <>", 1);
+					$balanceForwards->where("deleted <>", 1);
+					$balanceForwards->get();
+
+					$data["results"][] = array(
+						"id" 				=> 0,
+						"type" 				=> "",
+						"number" 			=> "",
+						"issued_date" 		=> "",
+						"memo" 				=> "",
+						"account_number"	=> "",
+						"account_name" 		=> "",
+						"amount" 			=> floatval($balanceForwards->total),
+						"contact" 			=> ""
+					);
+				}
+				//End Balance Forward
+
 				$description = $value->description;
 				if($description==""){
 					$description = $value->transaction_memo;

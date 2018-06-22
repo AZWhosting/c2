@@ -430,7 +430,7 @@ var	km_KH = {
 	"lists_individual_unpaid_bills_grouped_by_suppliers_this_includes" : "បញ្ជី​នៃ​វិក្កយបត្រ​មិន​ទាន់​ទូទាត់​នីមួយៗ​​ ដែល​បាន​ដាក់​ជា​ក្រុម​​ រួម​ទាំង​កាល​បរិច្ឆេទ​កំណត់​ ថ្ងៃ​ជំពាក់​នៅ​សល់​ និង​ចំនួន",
 	"list_of_bills_to_be_paid" : "បញ្ជី​នៃ​​វិក្កយបត្រ​ដែល​ត្រូវ​ទូ​ទាត់",
 	"lists_all_unpaid_invoices_grouped_by_due_today_and_0verdue" : "បញ្ជី​នៃ​​វិក្កយបត្រ​មិន​ទាន់​​ទូ​ទាត់​ដែល​ដាក់​ជា​ក្រុម​តាម​ កាល​បរិច្ឆេទ​ដល់​កា​រ​កំណត់​​ និង​កាល​បរិច្ឆេទ​ហួស​ការ​កំណត់",
-	"bill_payment_list" : "បញ្ជី​នៃ​ការ​ទូទាត់​វិក្កយបត្រ",
+	"bill_payment_list" : "បញ្ជី​វិក្កយបត្រដែលទូទាត់​រួច",
 	"lists_of_paid_bills_for_the_select_period_of_time_group_by_method_of_payments" : "បញ្ជីនៃ​វិក្កយបត្រ​ទូទាត់​រួច​​សម្រាប់​​អំឡុង​ពេល​ជាក់​លាក់​មួយ​​ ដែល​បាន​​ដាក់​ជា​ក្រុម​តាម​វិធី​សាស្ត្រ​នៃ​ការ​ទូទាត់",
 	"other_reports_lists" : "របាយការណ៍​ផ្សេងៗ​ និង បញ្ជី",
 	"product_service_list" : "តារាង​ផលិតផល​ ឬ សេវាកម្ម",
@@ -547,7 +547,6 @@ var	km_KH = {
 	"memo" : "ការ​កំណត់​សម្គាល់",
 	"balance " : "សមតុល្យ",
 	"total" : "សរុប",
-	"bill_payment_list" : "បញ្ជី​នៃ​ការ​ទូទាត់​វិក្កយបត្រ",
 	"total_purchase" : "ការ​ទិញ​សរុប",
 	"supplier_balance" : "សមតុល្យ​អ្នកផ្គត់ផ្គង់",
 	"type" : "ប្រភេទ",
@@ -1367,7 +1366,6 @@ var	km_KH = {
 	"record": "កត់​ត្រា",
 
 	//Water Imports
-	"imports": "បញ្ចូល",
 	"please_upload_contacts_file": "សូម​បញ្ចូល​អតិថិជន",
 	"please_upload_inventory_file": "សូមបញ្ចូលសន្និធិ",
 	"download_file_example": "ទាញ​យក",

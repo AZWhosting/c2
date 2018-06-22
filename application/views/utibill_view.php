@@ -15716,7 +15716,6 @@
 								<div class="widget-head">
 									<ul>
 										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date">Date</span></a></li>	
-										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.filter">Filter</span></a></li>
 										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab" ><i></i><span data-bind="text: lang.lang.print_export">Print/Export</span></a></li>
 									</ul>
 								</div>
@@ -15725,87 +15724,25 @@
 									<div class="tab-content">
 								        <!-- //Date -->
 								        <div class="tab-pane active" id="tab-1">									        	
-											<div class="row">
+											<div class="row">												
 												<div class="col-xs-12 col-sm-2">
-													<input data-role="dropdownlist"
-														   class="sorter"                  
-												           data-value-primitive="true"
-												           data-text-field="text"
-												           data-value-field="value"
-												           data-bind="value: sorter,
-												                      source: sortList,                              
-												                      events: { change: sorterChanges }" style="width: 100%" />
-												</div>
-												<div class="col-xs-12 col-sm-2">  
-													<input data-role="datepicker"
-														   class="sdate"
-														   data-format="dd-MM-yyyy"
-												           data-bind="value: sdate,
-												           			  max: edate"
-												           placeholder="From ..." style="width: 100%" >
-												</div>
-												<div class="col-xs-12 col-sm-2">
-												    <input data-role="datepicker"
-												    	   class="edate"
-												    	   data-format="dd-MM-yyyy"
-												           data-bind="value: edate,
-												                      min: sdate"
-												           placeholder="To ..." style="width: 100%" >
-												</div>
+													<div class="control-group">	
+														<label ><span data-bind="text: lang.lang.month_of">Month Of</span></label>
+											            <input type="text" 
+										                	style="width: 100%;" 
+										                	data-role="datepicker"
+										                	data-format="MM-yyyy"
+										                	data-start="year" 
+											  				data-depth="year"
+										                	placeholder="Moth of ..." 
+												           	data-bind="value: monthOfUpload" />
+													</div>
+												</div>	
 												<div class="col-xs-12 col-sm-1">
+													<label ><span data-bind="text: lang.lang.search">search</span></label>
 												  	<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
 												</div>
 											</div>
-							        	</div>
-
-								    	<!-- Filter -->
-								        <div class="tab-pane" id="tab-2">
-											<div class="row">
-												<div class="col-xs-12 col-sm-3">
-													<span data-bind="text: lang.lang.license">Licenses</span>
-													<input 
-														data-role="dropdownlist" 
-														data-option-label="License ..." 
-														data-auto-bind="false" 
-														data-value-primitive="true" 
-														data-text-field="name" 
-														data-value-field="id" 
-														data-bind="
-															value: licenseSelect,
-																source: licenseDS,
-																events: {change: licenseChange}" style="width: 100%">
-												</div>
-												<div class="col-xs-12 col-sm-3">
-													<span data-bind="text: lang.lang.location">Locations</span>
-														<input 
-															data-role="dropdownlist" 
-															data-option-label="Location ..." 
-															data-auto-bind="false" 
-															data-value-primitive="false" 
-															data-text-field="name" 
-															data-value-field="id" 
-															data-bind="
-																value: blocSelect,
-																enabled: haveBloc,
-																source: blocDS" style="width: 100%">
-												</div>
-												<div class="col-xs-12 col-sm-3">
-													<span data-bind="text: lang.lang.customers"></span>
-													<select data-role="multiselect"
-														   data-value-primitive="true"
-														   data-header-template="customer-header-tmpl"
-														   data-item-template="contact-list-tmpl"
-														   data-value-field="id"
-														   data-text-field="name"
-														   data-bind="value: obj.contactIds, 
-														   			source: contactDS"
-														   data-placeholder="Select Customer.."
-														   style="width: 100%" /></select>
-												</div>
-												<div class="col-xs-12 col-sm-1">											
-										  			<button style="margin-top: 20px;" type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-												</div>														
-											</div>		
 							        	</div>
 							        	 <!-- PRINT/EXPORT  -->
 								        <div class="tab-pane report" id="tab-3">								        	
@@ -15824,22 +15761,8 @@
 						<div id="invFormContent">
 							<div class="block-title">
 								<h3 data-bind="text: company.name"></h3>
-								<h2>Total Sale</h2>
+								<h2> Total Sale</h2>
 								<p data-bind="text: displayDate"></p>
-							</div>
-							<div class="row">
-								<div class="col-xs-12 col-sm-3">
-									<div class="total-sale">
-										<p data-bind="text: lang.lang.number_of_customer">Number of Customer</p>
-										<span data-bind="text: dataSource.total"></span>
-									</div>
-								</div>
-								<div class="col-xs-12 col-sm-9">
-									<div class="total-sale">
-										<p data-bind="text: lang.lang.cash_receipt">Cash Receipt</p>
-										<span data-bind="text: totalAmount"></sapn>
-									</div>
-								</div>
 							</div>
 							<table style="margin-bottom: 0;" class="table table-bordered table-condensed table-striped table-primary table-vertical-center">
 								<thead>
@@ -15850,10 +15773,17 @@
 										<th style="text-align: right; vertical-align: top;"><span data-bind="text: lang.lang.amount">Amount</span></th>
 										<th style="text-align: right; vertical-align: top;"><span data-bind="text: lang.lang.maintenance">maintenance</span></th>
 										<th style="text-align: right; vertical-align: top;"><span data-bind="text: lang.lang.exemption">exemption</span></th>
+										<th style="text-align: right; vertical-align: top;"><span>Previous Balance</span></th>
+										</span></th>
+										<th style="text-align: right; vertical-align: top;"><span "text: lang.lang.subtotal">Sub Total </span></th>
+										<th style="text-align: right; vertical-align: top;"><span "text: lang.lang.cashReceipt"> Cash Receipt </span></th>
+										<th style="text-align: right; vertical-align: top;"><span "text: lang.lang.cashReceipt">Total </span></th>
 									</tr>
 								</thead>
-			            		<tbody  data-role="listview"
-			            				data-auto-bind="false"
+			            		<tbody  
+			            			id="dailycontent"
+			            			data-role="listview"
+			            			data-auto-bind="false"
 						                data-template="totalSale-template"
 						                data-bind="source: dataSource" >
 						        </tbody>
@@ -15870,6 +15800,11 @@
 	</div>	
 </script>
 <script id="totalSale-template" type="text/x-kendo-template">
+	
+	
+	# balance = old_ballance +old_amount + old_maintenance + old_exemption - old_cash_receipt;#
+	# subTotal = amount + balance + maintenance + exemption;#
+	# total = (amount + balance + maintenance + exemption) - cash_receipt;#
 	<tr>
 		<td>#=name#</td>
 		<td style="text-align: right;">#=customerActive#</td>
@@ -15877,6 +15812,11 @@
 		<td style="text-align: right;">#=kendo.toString(amount, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#</td>
 		<td style="text-align: right;">#=kendo.toString(maintenance, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#</td>
 		<td style="text-align: right;">#=kendo.toString(exemption, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#</td>
+		<td style="text-align: right;">#=kendo.toString(balance, "c0", banhji.locale)#</td>
+		<td style="text-align: right;">#=kendo.toString(subTotal, "c0", banhji.locale)#</td>
+		<td style="text-align: right;">#=kendo.toString(cash_receipt, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#</td>
+		<td style="text-align: right;">#=kendo.toString(total, "c0", banhji.locale)#</td>
+
 	</tr>
 </script>
 <script id="fineCollect" type="text/x-kendo-template">

@@ -19921,9 +19921,11 @@
     });
     banhji.totalSale = kendo.observable({
         lang: langVM,
-        dataSource: dataStore(apiUrl + "utibillReports/total_cash"),
-        ballanceDS: dataStore(apiUrl + "utibillReports/total_cash"),
+        dataSource: dataStore(apiUrl + "utibillReports/total_sale"),
+        dataSourceOld: dataStore(apiUrl + "utibillReports/total_sale"),
+        ballanceDS: dataStore(apiUrl + "utibillReports/balance_total_sale"),
         cashReceiptDS: dataStore(apiUrl + "utibillReports/cash_receipt_totalsale"),
+        oldCashReceiptDS: dataStore(apiUrl + "utibillReports/cash_receipt_totalsale"),
 
         contactDS: new kendo.data.DataSource({
             data: banhji.source.customerList,
@@ -19948,7 +19950,6 @@
         totalAmount: 0,
         exArray: [],
         pageLoad: function() {
-            this.search();
             this.set("haveBloc", false);
         },
         sorterChanges: function() {
@@ -19997,82 +19998,32 @@
             this.set("haveBloc", true);
         },
         search: function() {
-            var self = this,
-                para = [],
-                obj = this.get("obj"),
-                start = this.get("sdate"),
-                end = this.get("edate"),
-                displayDate = "";
-                license = this.get("licenseSelect"),
-                bloc = this.get("blocSelect");
+            var monthOfSearch = this.get("monthOfUpload");
+            var self = this;
 
-            if (license) {
-                para.push({
-                    field: "branch_id",
-                    value: license.id
-                });
-            }
+            var para = [];
+            var monthPara = [];
+            var monthOf = new Date(monthOfSearch);
+                monthOf.setDate(1);
+                monthOf = kendo.toString(monthOf, "yyyy-MM-dd");
 
-            if (bloc) {
-                para.push({
-                    field: "location_id",
-                    value: bloc.id
-                });
-            }
+                var monthL = new Date(monthOfSearch);
+                var lastDayOfMonth = new Date(monthL.getFullYear(), monthL.getMonth() + 1, 0);
+                lastDayOfMonth = lastDayOfMonth.getDate();
 
-            //Customer
-            if (obj.contactIds.length > 0) {
-                var contactIds = [];
-                $.each(obj.contactIds, function(index, value) {
-                    contactIds.push(value);
-                });
-                para.push({
-                    field: "contact_id",
-                    operator: "where_in",
-                    value: contactIds
-                });
-            }
-
-            //Dates
-            if (start && end) {
-                start = new Date(start);
-                end = new Date(end);
-                displayDate = kendo.toString(start, "dd-MM-yyyy") + " - " + kendo.toString(end, "dd-MM-yyyy");
-                end.setDate(end.getDate() + 1);
+                monthL.setDate(lastDayOfMonth);
+                monthL = kendo.toString(monthL, "yyyy-MM-dd");
 
                 para.push({
                     field: "month_of >=",
                     operator : "where_related_transaction",
-                    value: kendo.toString(start, "yyyy-MM-dd")
-                });
-                para.push({
-                    field: "month_of <",
+                    value: monthOf
+                }, {
+                    field: "month_of <=",
                     operator : "where_related_transaction",
-                    value: kendo.toString(end, "yyyy-MM-dd")
+                    value: monthL
                 });
-            } else if (start) {
-                start = new Date(start);
-                displayDate = "On " + kendo.toString(start, "dd-MM-yyyy");
-
-                para.push({
-                    field: "month_of",
-                    operator : "where_related_transaction",
-                    value: kendo.toString(start, "yyyy-MM-dd")
-                });
-            } else if (end) {
-                end = new Date(end);
-                displayDate = "As Of " + kendo.toString(end, "dd-MM-yyyy");
-                end.setDate(end.getDate() + 1);
-
-                para.push({
-                    field: "month_of <",
-                    operator : "where_related_transaction",
-                    value: kendo.toString(end, "yyyy-MM-dd")
-                });
-            } else {
-
-            }
-            this.set("displayDate", displayDate);
+                this.set("monthOf", monthOf);
 
             this.dataSource.query({
                 filter: para,
@@ -20083,7 +20034,11 @@
                 $.each(view, function(index, value) {
                     amount += value.amount;
                 });
+                self.getOldCashReceipt();
                 self.getOldMonthBallance();
+                self.getCashReceipt();
+                self.getOldAmount();
+
                 self.set("totalAmount", kendo.toString(amount, banhji.locale == "km-KH" ? "c0" : "c", banhji.locale));
             });
             this.dataSource.bind("requestEnd", function(e) {
@@ -20097,16 +20052,16 @@
                         cells: [{
                             value: self.company.name,
                             textAlign: "center",
-                            colSpan: 3
+                            colSpan: 10
                         }]
                     });
                     self.exArray.push({
                         cells: [{
-                            value: "Daily Cash Receipt",
+                            value: "Total Sale",
                             bold: true,
                             fontSize: 20,
                             textAlign: "center",
-                            colSpan: 3
+                            colSpan: 10
                         }]
                     });
                     if (self.displayDate) {
@@ -20114,7 +20069,7 @@
                             cells: [{
                                 value: self.displayDate,
                                 textAlign: "center",
-                                colSpan: 3
+                                colSpan: 10
                             }]
                         });
                     }
@@ -20131,7 +20086,12 @@
                                 color: "#ffffff"
                             },
                             {
-                                value: "Number of Cusomter",
+                                value: "Active Meter",
+                                background: "#496cad",
+                                color: "#ffffff"
+                            },
+                            {
+                                value: "Usage",
                                 background: "#496cad",
                                 color: "#ffffff"
                             },
@@ -20139,146 +20099,254 @@
                                 value: "Amount",
                                 background: "#496cad",
                                 color: "#ffffff"
-                            }
+                            },
+                            {
+                                value: "Maintenance",
+                                background: "#496cad",
+                                color: "#ffffff"
+                            },
+                            {
+                                value: "Exemption",
+                                background: "#496cad",
+                                color: "#ffffff"
+                            },
+                            {
+                                value: "Previous Balance",
+                                background: "#496cad",
+                                color: "#ffffff"
+                            },
+                            {
+                                value: "Sub Total",
+                                background: "#496cad",
+                                color: "#ffffff"
+                            },
+                            {
+                                value: "Cash Receipt",
+                                background: "#496cad",
+                                color: "#ffffff"
+                            },
+                            {
+                                value: "Total",
+                                background: "#496cad",
+                                color: "#ffffff"
+                            },
                         ]
                     });
                     for (var i = 0; i < response.results.length; i++) {
-                        balanceRec += response.results[i].amount;
-                        numberCustomer += response.results[i].customer;
+                        balance = response.results[i].old_ballance + response.results[i].old_amount + response.results[i].old_maintenance + response.results[i].old_exemption - response.results[i].old_cash_receipt;
+                        subTotal = response.results[i].amount + response.results[i].balance + response.results[i].maintenance + response.results[i].exemption;
+                        total = (response.results[i].amount + response.results[i].balance + response.results[i].maintenance + response.results[i].exemption) - response.results[i].cash_receipt;
                         self.exArray.push({
                             cells: [{
                                     value: response.results[i].name
                                 },
                                 {
-                                    value: response.results[i].customer
+                                    value: response.results[i].customerActive
+                                },
+                                {
+                                    value: response.results[i].totalUsage
                                 },
                                 {
                                     value: response.results[i].amount
-                                }
+                                },
+                                {
+                                    value: response.results[i].maintenance
+                                },
+                                {
+                                    value: response.results[i].exemption
+                                },
+                                {
+                                    value: balance
+                                },
+                                {
+                                    value: subTotal
+                                },
+                                {
+                                    value: response.results[i].cash_receipt
+                                },
+                                {
+                                    value: total
+                                },
                             ]
                         });
                         
-                        self.exArray.push({
-                            cells: [{
-                                value: "",
-                                colSpan: 3
-                            }]
-                        });
                     }
-                    self.exArray.push({
-                        cells: [
-                            { value: "Total",bold: true, textAlign: "left" },
-                            { value: numberCustomer,bold: true},
-                            { value: balanceRec,bold: true},
-                        ]
-                    }); 
 
                 }
 
             });
         },
-        getOldMonthBallance : function(){
-            var para = [];
+        getOldAmount : function(){
+            var monthOfSearch = this.get("monthOfUpload");
             var self = this;
-            var start = this.get("sdate"),
-                end = this.get("edate"),
-                license = this.get("licenseSelect"),
-                bloc = this.get("blocSelect");
-            end.setDate((end.getDate() - 30) + 1);
-            if (start && end) {
-                start.setDate(start.getDate() - 30);
-                end = new Date(end);
+
+            var para = [];
+            var monthPara = [];
+            var monthOf = new Date(monthOfSearch);
+                monthOf.setDate(-30);
+                monthOf = kendo.toString(monthOf, "yyyy-MM-dd");
+
+                var monthL = new Date(monthOfSearch);
+
+                var lastDayOfMonth = new Date(monthL.getFullYear(), monthL.getMonth() + 1, 0);
+                lastDayOfMonth = lastDayOfMonth.getDate();
+
+                monthL.setDate(lastDayOfMonth);
+                monthL.setDate(-1);
+                monthL = kendo.toString(monthL, "yyyy-MM-dd");
+
                 para.push({
                     field: "month_of >=",
                     operator : "where_related_transaction",
-                    value: kendo.toString(start, "yyyy-MM-dd")
-                });
-                para.push({
-                    field: "month_of <",
+                    value: monthOf
+                }, {
+                    field: "month_of <=",
                     operator : "where_related_transaction",
-                    value: kendo.toString(end, "yyyy-MM-dd")
+                    value: monthL
                 });
-            } else if (start) {
-                start = new Date(start);
+                this.set("monthOf", monthOf);
 
-                para.push({
-                    field: "month_of",
-                    operator : "where_related_transaction",
-                    value: kendo.toString(start, "yyyy-MM-dd")
-                });
-            } else if (end) {
-                end = new Date(end);
-                end.setDate((end.getDate() - 30) + 1);
-                para.push({
-                    field: "month_of <",
-                    operator : "where_related_transaction",
-                    value: kendo.toString(end, "yyyy-MM-dd")
-                });
-            }
-
-            this.ballanceDS.query({
+            this.dataSourceOld.query({
                 filter: para,
-            }).then(function(e) {
-                self.getCashReceipt();
+            }).then(function() {
+                var view = self.dataSourceOld.view();
+                $.each(self.dataSource.data(), function(i,v){
+                    $.each(view, function(j,k){
+                        if(v.id == k.id){
+                            // var amountow = v.amount - k.amount;
+                            self.dataSource.data()[i].set("old_amount", k.amount);
+                            self.dataSource.data()[i].set("old_maintenance", k.maintenance);
+                            self.dataSource.data()[i].set("old_exemption", k.exemption)
+                        }
+                    });
+                });
                 
+                var listview = $("#dailycontent").data("kendoListView");
+                listview.refresh();
             });
         },
         getCashReceipt : function(){
-            var para = [];
+           var monthOfSearch = this.get("monthOfUpload");
             var self = this;
-            var start = this.get("sdate"),
-                end = this.get("edate"),
-                license = this.get("licenseSelect"),
-                bloc = this.get("blocSelect");
 
+            var para = [];
+            var monthPara = [];
+            var monthOf = new Date(monthOfSearch);
+                monthOf.setDate(1);
+                monthOf = kendo.toString(monthOf, "yyyy-MM-dd");
 
-             if (start && end) {
-                start = new Date(start);
-                end = new Date(end);
-                displayDate = kendo.toString(start, "dd-MM-yyyy") + " - " + kendo.toString(end, "dd-MM-yyyy");
-                end.setDate(end.getDate() + 1);
+                var monthL = new Date(monthOfSearch);
+                var lastDayOfMonth = new Date(monthL.getFullYear(), monthL.getMonth() + 1, 0);
+                lastDayOfMonth = lastDayOfMonth.getDate();
 
-                para.push({
-                    field: "month_of >=",
-                    value: kendo.toString(start, "yyyy-MM-dd")
-                });
-                para.push({
-                    field: "month_of <",
-                    value: kendo.toString(end, "yyyy-MM-dd")
-                });
-            } else if (start) {
-                start = new Date(start);
-                displayDate = "On " + kendo.toString(start, "dd-MM-yyyy");
+                monthL.setDate(lastDayOfMonth);
+                monthL = kendo.toString(monthL, "yyyy-MM-dd");
 
                 para.push({
-                    field: "month_of",
-                    value: kendo.toString(start, "yyyy-MM-dd")
+                    field: "issued_date >=",
+                    value: monthOf
+                }, {
+                    field: "issued_date <=",
+                    value: monthL
                 });
-            } else if (end) {
-                end = new Date(end);
-                displayDate = "As Of " + kendo.toString(end, "dd-MM-yyyy");
-                end.setDate(end.getDate() + 1);
+                this.set("monthOf", monthOf);
+            this.cashReceiptDS.query({
+                filter: para,
+            }).then(function() {
+                var view = self.cashReceiptDS.view();
+                $.each(self.dataSource.data(), function(i,v){
+                    $.each(view, function(j,k){
+                        if(v.id == k.id){
+                            // var amountow = v.amount - k.amount;
+                            self.dataSource.data()[i].set("cash_receipt", k.amount);
+                        }
+                    });
+                });
+                
+                var listview = $("#dailycontent").data("kendoListView");
+                listview.refresh();
+            });
+        },
+        getOldMonthBallance : function(){
+            var monthOfSearch = this.get("monthOfUpload");
+            var self = this;
+
+            var para = [];
+            var monthPara = [];
+            var monthOf = new Date(monthOfSearch);
+                monthOf.setDate(1);
+                monthOf = kendo.toString(monthOf, "yyyy-MM-dd");
+
+                var monthL = new Date(monthOfSearch);
+
+                var lastDayOfMonth = new Date(monthL.getFullYear(), monthL.getMonth() + 1, 0);
+                lastDayOfMonth = lastDayOfMonth.getDate();
+
+                monthL.setDate(lastDayOfMonth);
+                monthL = kendo.toString(monthL, "yyyy-MM-dd");
 
                 para.push({
-                    field: "month_of <",
-                    value: kendo.toString(end, "yyyy-MM-dd")
+                    field: "issued_date <=",
+                    value: monthOf
                 });
-            } else {
+                this.set("monthOf", monthOf);
 
-            }
+            this.ballanceDS.query({
+                filter: para,
+            }).then(function() {
+                var view = self.ballanceDS.view();
+                $.each(self.dataSource.data(), function(i,v){
+                    $.each(view, function(j,k){
+                        if(v.id == k.id){
+                            // var amountow = v.amount - k.amount;
+                            self.dataSource.data()[i].set("old_ballance", k.amount);
+                        }
+                    });
+                });
+
+                var listview = $("#dailycontent").data("kendoListView");
+                listview.refresh();
+            });
+        },
+        getOldCashReceipt : function(){
+            var monthOfSearch = this.get("monthOfUpload");
+            var self = this;
+
+            var para = [];
+            var monthPara = [];
+            var monthOf = new Date(monthOfSearch);
+                monthOf.setDate(-1);
+                monthOf = kendo.toString(monthOf, "yyyy-MM-dd");
+
+                var monthL = new Date(monthOfSearch);
+
+                var lastDayOfMonth = new Date(monthL.getFullYear(), monthL.getMonth() + 1, 0);
+                lastDayOfMonth = lastDayOfMonth.getDate();
+
+                monthL.setDate(lastDayOfMonth);
+                monthL = kendo.toString(monthL, "yyyy-MM-dd");
+
+                para.push({
+                    field: "issued_date <=",
+                    value: monthOf
+                });
+                this.set("monthOf", monthOf);
 
             this.cashReceiptDS.query({
                 filter: para,
             }).then(function() {
                 var view = self.cashReceiptDS.view();
-                // $.each(self.ballanceDS.data(), function(i,v){
-                //     $.each(view, function(j,k){
-                //         if(v.id == k.id){
-                //             var amountow = v.amount - k.amount;
-                //             // self.dataSource.data()[i].set("old_ballance", k.amount);
-                //         }
-                //     });
-                // });
+                $.each(self.dataSource.data(), function(i,v){
+                    $.each(view, function(j,k){
+                        if(v.id == k.id){
+                            // var amountow = v.amount - k.amount;
+                            self.dataSource.data()[i].set("old_cash_receipt", k.amount);
+                        }
+                    });
+                });
+                
+                var listview = $("#dailycontent").data("kendoListView");
+                listview.refresh();
             });
         },
         printGrid: function() {
@@ -20368,15 +20436,33 @@
                         {
                             autoWidth: true
                         },
+                        {
+                            autoWidth: true
+                        },
+                        {
+                            autoWidth: true
+                        },
+                        {
+                            autoWidth: true
+                        },
+                        {
+                            autoWidth: true
+                        },
+                        {
+                            autoWidth: true
+                        },
+                        {
+                            autoWidth: true
+                        },
                     ],
-                    title: "Daily Cash Receipt Summary",
+                    title: "Total Sale",
                     rows: this.exArray
                 }]
             });
             //save the file as Excel file with extension xlsx
             kendo.saveAs({
                 dataURI: workbook.toDataURL(),
-                fileName: "dailyCash.xlsx"
+                fileName: "totalSale.xlsx"
             });
         }
     });

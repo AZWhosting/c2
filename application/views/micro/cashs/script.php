@@ -3960,7 +3960,7 @@
 
             this.txnDS.filter([
                 { field:"account_type_id", operator:"where_related_account", value: 10 },
-                { field:"balance_forward", operator:"include_balance_forward", value: true }
+                { field:"balance_forward", operator:"cash_balance", value: true }
             ]);
         }
     });
