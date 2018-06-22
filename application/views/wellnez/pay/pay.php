@@ -1603,3 +1603,114 @@
         </div>
     </div>
 </script>
+<script id="invoiceFormPOS" type="text/x-kendo-tmpl">
+	<style>
+		.inv1 td {
+			padding: 5px;
+		}
+		* {
+			-webkit-print-color-adjust:exact; 
+			font-size: 14px;
+			padding: 0;
+			margin: 0;
+		}
+	</style>
+  	<div style="margin: 0 auto;">
+		<div class="inv1" style="width: 500px;margin: 0 auto;">
+	        <div class="content">
+	        	<div style="overflow: hidden;padding:10px 0;">
+	        		<div style="text-align: center; margin: 0 auto; width:100% ;">
+	        			<img style="text-align: center; width: 150px; margin-bottom: 10px;" src="#= banhji.institute.logo.url#" />
+	            	</div>
+	            	<p style="text-align: center; margin-bottom: 5px;">#= banhji.institute.name #</p>
+	            	<p style="text-align: center; margin-bottom: 5px;">Tel: #= banhji.institute.telephone#</p>
+	            	<p style="text-align: center; margin-bottom: 5px;"><span style="font-size: 15px; font-weight: 700;">បង្កាន់ដៃបង់ប្រាក់</span>/<span style="font-size: 16px; font-weight: 700;">Receipt</span></p>
+	        	</div>
+	            <div class="clear mid-header" style="padding-bottom: 10px;">
+	                <table style="width: 100%; ">
+	                	<tr>
+	                		<td style="width: 35%; padding: 0;">
+	                			<span style="font-size: 13px;">វិក្កយបត្រ</span>
+	                			/
+	                			<span style="font-size: 14px;">Invoice No</span>
+	                		</td>
+	                		<td style="padding: 0;">:</td>
+	                		<td style="text-align: right; padding: 0;"><b>#= number#</b></td>
+	                	</tr>
+	                	<tr>
+	                		<td style="padding: 0;">
+	                			<span style="font-size: 13px;">កាល​បរិច្ឆេទ</span>
+	                			/
+	                			<span style="font-size: 14px;">Date Time</span>
+	                		</td>
+	                		<td style="padding: 0;">:</td>
+	                		<td style="text-align: right; padding: 0; ">#= issued_date#</td>
+	                	</tr>
+	                	<tr>
+        					<td style="padding: 0;">ឈ្មោះអតិថិជន (Customer Name) </td>
+        					<td style="padding: 0;">:</td>
+        					<td style="text-align: right; padding: 0; ">#: contact.name#</td>
+        				</tr>
+        				<tr>
+        					<td style="padding: 0;">លេខបន្ទប់ (Room No.) :</td>
+        					<td style="padding: 0;">:</td>
+        					<td style="text-align: right; padding: 0; ">#: room_number#</td>
+        				</tr>
+	                </table>
+	            </div>
+	        	<div class="clear">
+	            	<table cellpadding="0" cellspacing="0" border="1" class="span12" style="width: 100%; margin-bottom: 20px;">
+	                	<thead style="">
+	                        <tr class="main-color" style="height: 45px;background: \#203864!important;">
+	                            <th style="text-align: center;width: 8%;color: \#fff!important;background: \#203864!important;">ល.រ<br />N<sup>0</sup></th>
+	                            <th style="text-align: center;color: \#fff!important;background: \#203864!important;">បរិយាយ​មុខ​ទំនិញ<br />Description</th>
+	                            <th style="text-align: center;color: \#fff!important;background: \#203864!important;">បរិមាណ<br />Quantity</th>
+	                            <th style="text-align: center;color: \#fff!important;background: \#203864!important;">ថ្លៃឯកតា​<br />Unit Price</th>
+	                            <th style="text-align: center;color: \#fff!important;background: \#203864!important;">ថ្លៃឯកតា​<br />Unit Price</th>
+	                            <th style="text-align: center;width: 20%;color: \#fff!important;background: \#203864!important;">ថ្លៃ​ទំនិញ<br />Amount</th>
+	                        </tr>
+	                    </thead>
+						<tbody style="margin-top: 2px" id="formListView">
+							#$.each(items, function(i,v){#
+								<tr>
+									<td align="center">#: i+ 1#</td>
+									<td>#: v.item.name#</td>
+									<td align="center"><strong>#: v.quantity #</strong></td>
+									<td align="center"><strong>#: v.measurement.measurement#</strong></td>
+									<td align="right">#= kendo.toString(v.price, v.locale=="km-KH"?"c0":"c", v.locale)#</td>
+									<td align="right"><strong>#= kendo.toString(v.amount, v.locale=="km-KH"?"c0":"c", v.locale)#</strong></td>
+								</tr>
+							#})#
+						</tbody>
+	                    <tfoot>
+	                    	<tr>
+								<td style="height:40px!important;"></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td colspan="5" style="padding-right: 10px;text-align: right;">សរុប (បូកបញ្ចូលទាំងអាករ) GRAND TOTAL (VAT INCLUSIVE)</td>
+								<td style="border: 1px solid;text-align: right"><strong>#= kendo.toString(amount, locale=="km-KH"?"c0":"c", locale)#</strong></td>
+							</tr>
+							#if(banhji.printBill.amountperson > 0){#
+								<tr>
+									<td colspan="5" style="padding-right: 10px;text-align: right;">ទឹកប្រាក់ត្រូវបង់</td>
+									<td style="border: 1px solid;text-align: right"><strong>#= kendo.toString(banhji.printBill.amountperson, locale=="km-KH"?"c0":"c", locale)#</strong></td>
+								</tr>
+							#}#
+	                    </tfoot>
+	                </table>
+	                <p style="text-align: center; font-size: 12px; margin-top: 8px; margin-bottom: 5px;">
+	                	សូមអរគុណ សូមអញ្ជើញមកម្តងទៀត ! <i>Thanks, Please come again!</i>
+	                </p>
+	                <div style="text-align: center; height: 30px; width: 90%; margin: 0 auto;">
+	                	<span id="footwnumber#= id#"></span>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+</script>

@@ -416,58 +416,6 @@ class Micro_modules extends REST_Controller {
 	}
 
 	//CASH
-	//CASH SNAPSHOT
-	function cash_reports_snapshot_get() {
-		$filter 	= $this->get("filter");
-		$page 		= $this->get('page');
-		$limit 		= $this->get('limit');
-		$sort 	 	= $this->get("sort");
-		$data["results"] = [];
-		$data["count"] = 0;
-		$today = date("Y-m-d");
-
-		//Cash In
-		$cashin = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$cashin->select_sum("dr / transactions.rate", "total");
-		$cashin->where_related("transaction", "is_journal", 1);
-		$cashin->where_related("account", "account_type_id", 10);//Cash only
-		$cashin->where_related("transaction", "issued_date >", $this->startFiscalDate);
-		$cashin->where_related("transaction", "is_recurring <>", 1);
-		$cashin->where_related("transaction", "deleted <>", 1);
-		$cashin->where("deleted <>", 1);
-		$cashin->get();
-
-		//Cash Out
-		$cashout = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$cashout->select_sum("cr / transactions.rate", "total");
-		$cashout->where_related("transaction", "is_journal", 1);
-		$cashout->where_related("account", "account_type_id", 10);//Cash only
-		$cashout->where_related("transaction", "issued_date >", $this->startFiscalDate);
-		$cashout->where_related("transaction", "is_recurring <>", 1);
-		$cashout->where_related("transaction", "deleted <>", 1);
-		$cashout->where("deleted <>", 1);
-		$cashout->get();
-
-		//Cash Balance
-		$balance = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$balance->select_sum("(dr - cr) / transactions.rate", "total");
-		$balance->where_related("transaction", "is_journal", 1);
-		$balance->where_related("account", "account_type_id", 10);//Cash only
-		$balance->where_related("transaction", "is_recurring <>", 1);
-		$balance->where_related("transaction", "deleted <>", 1);
-		$balance->where("deleted <>", 1);
-		$balance->get();
-				
-		$data["results"][] = array(
-			"id" 		=> 0,
-			"cash_in" 	=> floatval($cashin->total),
-			"cash_out"	=> floatval($cashout->total),
-			"balance" 	=> floatval($balance->total)
-		);
-
-		//Response Data
-		$this->response($data, 200);
-	}
 	//CASH GENERAL LEDGER
 	function cash_general_ledger_get() {		
 		$filter 	= $this->get("filter");
@@ -479,6 +427,7 @@ class Micro_modules extends REST_Controller {
 		$include_balance_forward = false;
 
 		$obj = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$cashinout = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		
 		//Sort
 		if(!empty($sort) && isset($sort)){
@@ -498,12 +447,14 @@ class Micro_modules extends REST_Controller {
 	    			if($value['operator']=="cash_balance"){
 	    				$include_balance_forward = $value['value'];
 
-	    				$obj->where_related("transaction", "issued_date >", $this->startFiscalDate);
+	    				$obj->where_related("transaction", "issued_date >=", $this->startFiscalDate);
 	    			}else{
 	    				$obj->{$value['operator']}($value['field'], $value['value']);
+	    				$cashinout->{$value['operator']}($value['field'], $value['value']);
 	    			}
 	    		} else {
 	    			$obj->where($value['field'], $value['value']);
+	    			$cashinout->where($value['field'], $value['value']);
 	    		}
 			}
 		}
@@ -525,14 +476,14 @@ class Micro_modules extends REST_Controller {
 			$data["count"] = $obj->result_count();
 		}
 		
-		$objList = [];
 		if($obj->exists()){
 			foreach ($obj as $key =>$value) {
 				//Balance Forward
-				if($key==0 && $include_balance_forward){
+				if($key==0 && $page==1 && $include_balance_forward){
 					$balanceForwards = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 					$balanceForwards->select_sum("(dr - cr) / transactions.rate", "total");
 					$balanceForwards->where_related("account", "account_type_id", 10);//Cash only
+					$balanceForwards->where_related("transaction", "issued_date <", $this->startFiscalDate);
 					$balanceForwards->where_related("transaction", "is_journal", 1);
 					$balanceForwards->where_related("transaction", "is_recurring <>", 1);
 					$balanceForwards->where_related("transaction", "deleted <>", 1);
@@ -543,10 +494,10 @@ class Micro_modules extends REST_Controller {
 						"id" 				=> 0,
 						"type" 				=> "",
 						"number" 			=> "",
-						"issued_date" 		=> "",
+						"issued_date" 		=> date("Y-m-d", strtotime($value->transaction_issued_date . "-1 days")),
 						"memo" 				=> "",
 						"account_number"	=> "",
-						"account_name" 		=> "",
+						"account_name" 		=> "Balance Forward",
 						"amount" 			=> floatval($balanceForwards->total),
 						"contact" 			=> ""
 					);
@@ -573,6 +524,30 @@ class Micro_modules extends REST_Controller {
 				);
 			}
 		}
+
+		//Cash In Out
+		$cashinout->select_sum("dr / transactions.rate", "totalIn");
+		$cashinout->select_sum("cr / transactions.rate", "totalOut");
+		$cashinout->where_related("transaction", "is_journal", 1);
+		$cashinout->where_related("account", "account_type_id", 10);//Cash only
+		$cashinout->where_related("transaction", "is_recurring <>", 1);
+		$cashinout->where_related("transaction", "deleted <>", 1);
+		$cashinout->where("deleted <>", 1);
+		$cashinout->get();
+
+		//Cash Balance
+		$cashBalance = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$cashBalance->select_sum("(dr - cr) / transactions.rate", "total");
+		$cashBalance->where_related("transaction", "is_journal", 1);
+		$cashBalance->where_related("account", "account_type_id", 10);//Cash only
+		$cashBalance->where_related("transaction", "is_recurring <>", 1);
+		$cashBalance->where_related("transaction", "deleted <>", 1);
+		$cashBalance->where("deleted <>", 1);
+		$cashBalance->get();
+
+		$data["cash_in"] = floatval($cashinout->totalIn);
+		$data["cash_out"] = floatval($cashinout->totalOut);
+		$data["cash_balance"] = floatval($cashBalance->total);
 
 		//Response Data		
 		$this->response($data, 200);	

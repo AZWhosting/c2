@@ -5591,12 +5591,13 @@
         BranchName          : "",
         BranchPhone         : "",
         voidMeter           : "",
+        amountperson        : 0,
         pageLoad            : function(id){
             if(this.dataSource.length <= 0){
                 banhji.router.navigate('/');
             }
             var self = this, TempForm = "";
-            TempForm = $("#invoiceform").html();
+            TempForm = $("#invoiceFormPOS").html();
             $("#invoicecontent").kendoListView({
                 dataSource: this.dataSource,
                 template: kendo.template(TempForm)

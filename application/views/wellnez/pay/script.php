@@ -5479,7 +5479,7 @@
                 banhji.router.navigate('/');
             }
             var self = this;
-            var TempForm = $("#invoiceForm").html();
+            var TempForm = $("#invoiceFormPOS").html();
             $("#invoiceContent").kendoListView({
                 dataSource: this.dataSource,
                 template: kendo.template(TempForm)

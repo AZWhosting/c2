@@ -34,7 +34,7 @@
 				<li role="presentation" class="dropdown">
 			  		<a style="color: #fff;" class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">[<span data-bind="text: getUsername"></span>]</a>
 		  			<ul class="dropdown-menu">
-		  				<li><a href="<?php echo base_url(); ?>admin" class=""><i class="icon-cog"></i> Admin Module</a></li>
+		  				<li><a href="<?php echo base_url(); ?>admin" class="" ><i class="icon-cog"></i> <span data-bind="text: lang.lang.admin_module">Admin Module</span></a></li>
 		  				<li class="divider"></li>
 		  				<li>
 	                    	<a href="#" data-bind="click: lang.changeToKh">
@@ -50,7 +50,7 @@
     					</li>
 						<li class="divider"></li>
 					<!-- 	<li><a href="<?php echo base_url(); ?>admin">Setting</a></li> -->
-						<li><a href="#/manage" data-bind="click: logout"><i class="icon-power-off"></i> Logout</a></li>
+						<li><a href="#/manage" data-bind="click: logout" ><i class="icon-power-off"></i> <span data-bind="text: lang.lang.logout">Logout</span></a></li>
 		  			</ul>
 			  	</li>
 			</ul>
@@ -8428,9 +8428,9 @@
 	        <ul>
 	            <li class="active"><a href="#tab1-5" class="glyphicons parents" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.customer_type"></span></span></a>
 	            </li>
-	            <li><a href="#/customer_group" class="glyphicons group"><i></i><span class="strong">CUSTOMER GROUP</span></a>
+	            <li><a href="#/customer_group" class="glyphicons group"><i></i><span class="strong"><span data-bind="text: lang.lang.customer_group"></span></span></a>
 	            </li>
-	            <li><a href="#/customer_assignee" class="glyphicons nameplate"><i></i><span class="strong">SALE REP. ASSEGMENT</span></a>
+	            <li><a href="#/customer_assignee" class="glyphicons nameplate"><i></i><span class="strong"><span data-bind="text: lang.lang.sale_rep_assignments">SALE REP. ASSEGMENT</span></span></a>
 	            </li>
 	            <li><a href="#tab2-5" class="glyphicons credit_card" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.payment_method"></span></span></a>
 	            </li>
@@ -30245,7 +30245,7 @@
 	            </li>
 	            <li><a href="#tab-2" class="glyphicons tag" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.group"></span></span></a>
 	            </li>
-	            <li><a href="#tab-3" class="glyphicons ruller" data-toggle="tab"><i></i><span class="strong">UOM Category</span></a>
+	            <li><a href="#tab-3" class="glyphicons ruller" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.uom_category"></span></span></a>
 	            </li>
 	            <li><a href="#tab-4" class="glyphicons ruller" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.uom"></span></span></a>
 	            </li>
@@ -30253,11 +30253,11 @@
 	            </li>
 	            <li><a href="#tab-6" class="glyphicons building" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.prefix_setting"></span></span></a>
 	            </li>
-	            <li><a href="#/variants" class="glyphicons sampler"><i></i><span class="strong">Variants</span></a>
+	            <li><a href="#/variants" class="glyphicons sampler"><i></i><span class="strong"><span data-bind="text: lang.lang.variants">Variants</span></span></a>
 	            </li>
-	            <li><a href="#/warehouses" class="glyphicons google_maps"><i></i><span class="strong">Location</span></a>
+	            <li><a href="#/warehouses" class="glyphicons google_maps"><i></i><span class="strong"><span data-bind="text: lang.lang.warehouse_location">Location</span></span></a>
 	            </li>
-	            <li><a href="#/employee_item_location" class="glyphicons magic"><i></i><span class="strong">Employee To Item Location</span></a>
+	            <li><a href="#/employee_item_location" class="glyphicons magic"><i></i><span class="strong"><span data-bind="text: lang.lang.employee_to_item_location">Employee To Item Location</span></span></a>
 	            </li>
 	        </ul>
 	    </div>
@@ -31374,10 +31374,10 @@
 							</tr>
 							<tr>
 								<td width="55%">
-									<h3><a href="#/gdn_report">Good Delivery Note Report</a></h3>
+									<h3><a href="#/gdn_report" data-bind="text: lang.lang.goods_delivery_note_report">Good Delivery Note Report</a></h3>
 								</td>
 								<td >
-									<h3><a href="#/item_list">Item List</a></h3>
+									<h3><a href="#/item_list" data-bind="text: lang.lang.item_list">Item List</a></h3>
 								</td>
 							</tr>
 						</table>
@@ -31504,7 +31504,7 @@
 			<div class="span5">
 				<div class="report-chart" style="margin-bottom: 20px; padding: 15px; margin-top: 10px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
 					<div class="widget-body alert alert-primary sale-overview">
-						<h2>Inventory Value</h2>
+						<h2 data-bind="text: lang.lang.inventory_value">Inventory Value</h2>
 						<div align="center" class="text-large strong" data-bind="text: obj.inventory_value"></div>
 						<table width="100%">
 							<tr align="center">
@@ -64691,14 +64691,14 @@
   				<li><a href='#/cash_advance'><span data-bind="text: lang.lang.make_cash_advance"></span></a></li>
   				<li><a href='#/expense'><span data-bind="text: lang.lang.make_expense"></span></a></li>
   				<li> <span class="li-line"></span></li>
-  				<li><a href='#/txn_item_list'><span >Transaction Item List</span></a></li>
-  				<li><a href='#/fixed_asset_item_list'><span >Fixed Asset Item List</span></a></li>
+  				<li><a href='#/txn_item_list'><span data-bind="text: lang.lang.transaction_item_list">Transaction Item List</span></a></li>
+  				<!-- <li><a href='#/fixed_asset_item_list'><span data-bind="text: lang.lang.transaction_item">Fixed Asset Item List</span></a></li> -->
   				<li><a href='#/currency_rate'><span data-bind="text: lang.lang.set_exchange_rate"></span></a></li>
   				<li><a href='#/accounting_recurring'><span data-bind="text: lang.lang.accounting_recurring_list"></span></a></li>
   				<li><a href='#/chart_of_account'><span data-bind="text: lang.lang.chart_of_account"></span></a></li>
   				<li> <span class="li-line"></span></li>
-  				<li><a href='#/draft_list'>Draft List</a></li>
-  				<li><a href='#/imports'><span ></span>Imports</a></li>
+  				<li><a href='#/draft_list'><span data-bind="text: lang.lang.draft_list">Draft List</span></a></li>
+  				<li><a href='#/imports'><span data-bind="text: lang.lang.imports">Imports</span></a></li>
   			</ul>
 	  	</li>
 	  	<li><a href='#/accounting_report_center' style="color: #fff;">REPORTS</a></li>
@@ -64741,10 +64741,10 @@
   				<li><a href='#/purchase'><span data-bind="text: lang.lang.make_purchase"></span></a></li>
   				<li><a href='#/purchase_return'><span data-bind="text: lang.lang.make_purchase_return"></span></a></li>
   				<li><a href='#/cash_payment'><span data-bind="text: lang.lang.make_cash_payment"></span></a></li>
-  				<li><a href='#/payment_refund'><span >Make Payment Refund</span></a></li>
+  				<li><a href='#/payment_refund'><span data-bind="text: lang.lang.payment_refund">Make Payment Refund</span></a></li>
   				<li> <span class="li-line"></span></li>
   				<li><a href='#/vendor_recurring'><span data-bind="text: lang.lang.supplier_recurring_list"></span></a></li>
-  				<li><a href='#/imports'><span ></span>Imports</a></li>
+  				<li><a href='#/imports'><span data-bind="text: lang.lang.imports">Imports</span></a></li>
   			</ul>
 	  	</li>
 	  	<li><a href='#/vendor_report_center' style="color: #fff;">REPORTS</a></li>
@@ -64771,14 +64771,14 @@
   				<li><a href='#/customer_deposit'><span data-bind="text: lang.lang.create_customer_deposit"></span></a></li>
   				<li><a href='#/cash_sale'><span data-bind="text: lang.lang.create_cash_sale"></span></a></li>
   				<li><a href='#/invoice'><span data-bind="text: lang.lang.create_invoice"></span></span></a></li>
-  				<li><a href='#/invoice_batch'><span>Create Batch Invoices</span></a></li>
+  				<li><a href='#/invoice_batch'><span data-bind="text: lang.lang.create_batch_invoice">Create Batch Invoices</span></a></li>
   				<li><a href='#/cash_receipt'><span data-bind="text: lang.lang.create_cash_receipt"></span></span></a></li>
   				<li><a href='#/sale_return'><span data-bind="text: lang.lang.create_sale_return"></span></a></li>
   				<li><a href='#/statement'><span data-bind="text: lang.lang.create_statement"></span></a></li>
-  				<li><a href='#/cash_refund'><span >Create Cash Refund</span></a></li>
+  				<li><a href='#/cash_refund'><span data-bind="text: lang.lang.cash_refund">Create Cash Refund</span></a></li>
   				<li> <span class="li-line"></span></li>
   				<li><a href='#/customer_recurring'><span data-bind="text: lang.lang.customer_recurring_list"></span></a></li>
-  				<li><a href='#/imports'><span ></span>Imports</a></li>
+  				<li><a href='#/imports'><span data-bind="text: lang.lang.imports">Imports</span></a></li>
   			</ul>
 	  	</li>
 	  	<li><a href="#/customer_report_center" style="color: #fff;">Reports</a></li>
@@ -64812,7 +64812,7 @@
   				<li><a href='#/cash_refund'><span >Create Cash Refund</span></a></li>
   				<li> <span class="li-line"></span></li>
   				<li><a href='#/customer_recurring'><span data-bind="text: lang.lang.customer_recurring_list"></span></a></li>
-  				<li><a href='#/imports'><span ></span>Imports</a></li>
+  				<li><a href='#/imports'><span data-bind="text: lang.lang.imports">Imports</span></a></li>
   			</ul>
 	  	</li>
 	  	<li><a href="#/customer_report_center" style="color: #fff;">Reports</a></li>
@@ -64836,7 +64836,7 @@
   				<li><a href='#/cash_receipt'>Receive Payment</a></li>
   				<li><a href="#/customerInvoiceSent">Invoice Sent To</a></li>
   				<li><a href='#/customer'>Add <span data-bind="text: lang.new_customer"></span></a></li>
-  				<li><a href='#/imports'><span ></span>Imports</a></li>
+  				<li><a href='#/imports'><span data-bind="text: lang.lang.imports">Imports</span></a></li>
   			</ul>
 	  	</li>
 	  	<li><a href='#/cash_report_center' style="color: #fff;">REPORTS</a></li>
@@ -64862,8 +64862,8 @@
   				<li><a href='#/item_adjustment'><span data-bind="text: lang.lang.create_item_adjustment"></span></a></li>
   				<li><a href='#/internal_usage'><span data-bind="text: lang.lang.create_internal_usage"></span></a></li>
   				<li><span class="li-line"></span></li>
-  				<li><a href='#/item_recurring'>Inventory Recurring List</a></li>
-  				<li><a href='#/imports'><span ></span>Imports</a></li>
+  				<li><a href='#/item_recurring'><span data-bind="text: lang.lang.inventory_recurring_list">Inventory Recurring List</span></a></li>
+  				<li><a href='#/imports'><span data-bind="text: lang.lang.imports">Imports</span></a></li>
   			</ul>
 	  	</li>
 	  	<li><a href='#/item_report_center' style="color: #fff;">REPORTS</a></li>
@@ -64878,7 +64878,7 @@
   			<ul class='dropdown-menu'>
   				<li><a href='#/journal'>Journal</a></li>
   				<li><a href='#/tax'>Tax</a></li>
-  				<li><a href='#/imports'><span ></span>Imports</a></li>
+  				<li><a href='#/imports'><span data-bind="text: lang.lang.imports">Imports</span></a></li>
   			</ul>
 	  	</li>
 	  	<li><a href='#/tax_report_center' style="color: #fff;">REPORTS</a></li>

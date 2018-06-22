@@ -45,7 +45,7 @@
 <script id="tapMenu" type="text/x-kendo-template">
 	<ul class="nav nav-tabs customtab" role="tablist" >
 		<li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#/" data-bind="click: goReports"><span class="hidden-sm-up"><i class="ti-layout-grid2-thumb"></i></span> <span class="hidden-xs-down" data-bind="">Reports</span></a> </li>	    
-	    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#/cashs" data-bind="click: goMenuCashs"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="">Cash</span></a> </li>
+	    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#/cashs" data-bind="click: goMenuCashs"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="">Cash Center</span></a> </li>
     </ul>
 </script>
 <!-- End -->
@@ -79,7 +79,7 @@
 		<div class="col-md-4">
 			<div class="saleOverview" data-bind="click: loadCashBalance" style="margin-bottom: 15px;">
 				<h2 data-bind="text: lang.lang.cash_balance">Cash Balance</h2>
-				<p style="margin-bottom: 0;" data-format="n0" data-bind="text: obj.balance"></p>
+				<p style="margin-bottom: 0;" data-format="n0" data-bind="text: obj.cash_balance"></p>
 			</div>
 			<!-- <div class="report" >
 				<div class="col-md-12">
@@ -186,7 +186,7 @@
                     }
                  ]"
                  data-auto-bind="false"
-                 data-bind="source: txnDS"
+                 data-bind="source: dataSource"
                  style="width: 100%;"></div>
         </div>
     </div>
@@ -653,7 +653,7 @@
 					 data-bind="source: dataSource"
 					 data-row-template="accountingCenter-list-tmpl"
 					 data-columns="[{title: ''}]"
-					 data-selectable=true
+					 data-selectable="true"
 					 data-height="600"
 					 data-scrollable="{virtual: true}"></div>
 		</div>
@@ -663,12 +663,13 @@
 				<div class="row">
 					<div class="col-md-6 marginBottom">
 						<input class="customerName" type="text" name="" data-bind="value: obj.name" disabled="disabled" style="background: #fff;" />
-						<ul class="nav nav-tabs" role="tablist">
+						<a class="btn waves-effect waves-light btn-block btn-info btnViewEditCustomer" data-bind="click: goEdit"><i class="ti-pencil-alt marginRight"></i><span data-bind="text: lang.lang.edit"></span></a>
+						<!-- <ul class="nav nav-tabs" role="tablist">
                             <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#customerInformation" role="tab" aria-selected="false"><span><i class="icon-info"></i></span></a> </li>
                             <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#customerAttachment" role="tab" aria-selected="false"><span><i class="icon-paper-clip"></i></span></a> </li>
                         </ul>
                         <div class="tab-content tabcontent-border">
-                           	<!--Tab Customer Information -->
+                           
                             <div class="tab-pane active" id="customerInformation" role="tabpanel">
                             	<div class="p-10">
                             		<div class="row">
@@ -720,9 +721,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- End -->
-
-                            <!--Tab Customer Attachment -->
+                           
                             <div class="tab-pane" id="customerAttachment" role="tabpanel">
                             	<div class="p-10">
                             		<div class="row">
@@ -761,8 +760,7 @@
 							        </div>
                             	</div>  
                             </div>
-                            <!-- End -->
-                        </div>
+                        </div> -->
 					</div>
 					<div class="col-md-6">
 						<div class="row">
@@ -772,7 +770,7 @@
 		                            	<span data-format="n" data-bind="text: lang.lang.balance_as_of_today"></span>
 										<span data-bind="text: balance"></span>
 		                            </p>
-		                            <div class="col-md-12">
+		                            <!-- <div class="col-md-12">
 		                                <div class="col-md-4">
 		                                    <span data-format="n0" data-bind="text: raw.quantity"></span>
 		                                    <span data-bind="text: lang.lang.qoh"></span>
@@ -785,11 +783,11 @@
 		                                    <span data-format="n0" data-bind="text: raw.so"></span>
 		                                    <span data-bind="text: lang.lang.on_so"></span>
 		                                </div>
-		                            </div>
+		                            </div> -->
 		                        </div>
 		                    </div>
 	                    </div>
-                    	<div class="row">
+                    	<!-- <div class="row">
 							<div class="col-md-6">
 								<div class="blockOpenInvoice" >
 									<div class="coverIcon"><i class="icon-info"></i></div>
@@ -808,7 +806,7 @@
 									</div>
 								</div>
 							</div>
-						</div>
+						</div> -->
 					</div>
 				</div>
 
