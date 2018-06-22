@@ -17,9 +17,25 @@ class Micro_modules extends REST_Controller {
 			$conn = $institute->connection->get();
 			$this->server_host = $conn->server_name;
 			$this->server_user = $conn->username;
-			$this->server_pwd = $conn->password;
+			$this->server_pwd = $conn->password;	
 			$this->_database = $conn->inst_database;
-			
+			date_default_timezone_set("$conn->time_zone");
+
+			//Fiscal Date
+			$this->fiscalDate = date("m-d", $institute->fiscal_date/1000);
+			$currentFiscalDate = date("Y") ."-". $this->fiscalDate;
+			$today = date("Y-m-d");
+			if($today > $currentFiscalDate){
+				$this->startFiscalDate 	= date("Y") ."-". $this->fiscalDate;
+				$this->endFiscalDate 	= date("Y",strtotime("+1 year")) ."-". $this->fiscalDate;
+			}else{
+				$this->startFiscalDate 	= date("Y",strtotime("-1 year")) ."-". $this->fiscalDate;
+				$this->endFiscalDate 	= date("Y") ."-". $this->fiscalDate;
+			}
+
+			//Add 1 day
+			$this->startFiscalDate = date("Y-m-d", strtotime($this->startFiscalDate . "+1 days"));
+			$this->endFiscalDate = date("Y-m-d", strtotime($this->endFiscalDate . "+1 days"));
 		}
 	}
 	
@@ -410,19 +426,43 @@ class Micro_modules extends REST_Controller {
 		$data["count"] = 0;
 		$today = date("Y-m-d");
 
-		//Sales
-		$sales = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$sales->select_sum("amount / rate", "total");
-		$sales->where_in("type", array("Cash_Receipt","Cash_Refund","Commercial_Invoice","Vat_Invoice","Invoice","Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale"));
-		$sales->where("is_recurring <>", 1);
-		$sales->where("deleted <>", 1);
-		$sales->get();		
+		//Cash In
+		$cashin = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$cashin->select_sum("dr / transactions.rate", "total");
+		$cashin->where_related("transaction", "is_journal", 1);
+		$cashin->where_related("account", "account_type_id", 10);//Cash only
+		$cashin->where_related("transaction", "issued_date >", $this->startFiscalDate);
+		$cashin->where_related("transaction", "is_recurring <>", 1);
+		$cashin->where_related("transaction", "deleted <>", 1);
+		$cashin->where("deleted <>", 1);
+		$cashin->get();
+
+		//Cash Out
+		$cashout = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$cashout->select_sum("cr / transactions.rate", "total");
+		$cashout->where_related("transaction", "is_journal", 1);
+		$cashout->where_related("account", "account_type_id", 10);//Cash only
+		$cashout->where_related("transaction", "issued_date >", $this->startFiscalDate);
+		$cashout->where_related("transaction", "is_recurring <>", 1);
+		$cashout->where_related("transaction", "deleted <>", 1);
+		$cashout->where("deleted <>", 1);
+		$cashout->get();
+
+		//Cash Balance
+		$balance = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$balance->select_sum("(dr - cr) / transactions.rate", "total");
+		$balance->where_related("transaction", "is_journal", 1);
+		$balance->where_related("account", "account_type_id", 10);//Cash only
+		$balance->where_related("transaction", "is_recurring <>", 1);
+		$balance->where_related("transaction", "deleted <>", 1);
+		$balance->where("deleted <>", 1);
+		$balance->get();
 				
 		$data["results"][] = array(
 			"id" 		=> 0,
-			"cash_in" 	=> 0,
-			"cash_out"	=> 0,
-			"balance" 	=> 0
+			"cash_in" 	=> floatval($cashin->total),
+			"cash_out"	=> floatval($cashout->total),
+			"balance" 	=> floatval($balance->total)
 		);
 
 		//Response Data
@@ -454,14 +494,17 @@ class Micro_modules extends REST_Controller {
 		if(!empty($filter["filters"]) && isset($filter["filters"])){			
 	    	foreach ($filter["filters"] as $value) {
 	    		if(isset($value['operator'])){
-	    			$obj->{$value['operator']}($value['field'], $value['value']);
+	    			if($value['operator']=="include_balance_forward"){
+	    				$include_balance_forward = $value['value'];
+	    			}else{
+	    				$obj->{$value['operator']}($value['field'], $value['value']);
+	    			}
 	    		} else {
 	    			$obj->where($value['field'], $value['value']);
 	    		}
 			}
 		}
 		
-		$obj->select_sum("(dr - cr) / transactions.rate", "total");
 		$obj->include_related("transaction", array("type", "number", "issued_date", "memo", "rate"));
 		$obj->include_related("contact", array("abbr","number","name"));
 		$obj->include_related("account", array("number","name","account_type_id"));
@@ -470,19 +513,16 @@ class Micro_modules extends REST_Controller {
 		// $obj->where_related("account", "account_type_id", 10);//Cash only
 		$obj->where_related("transaction", "is_recurring <>", 1);
 		$obj->where_related("transaction", "deleted <>", 1);
-		$obj->order_by("account_id", "asc");
 		$obj->where("deleted <>", 1);
-		$obj->group_by("account_id");
-		$obj->get_iterated();
-
-		// //Results
-		// if($page && $limit){
-		// 	$obj->get_paged_iterated($page, $limit);
-		// 	$data["count"] = $obj->paged->total_rows;
-		// }else{
-		// 	$obj->get_iterated();
-		// 	$data["count"] = $obj->result_count();
-		// }
+		
+		//Results
+		if($page && $limit){
+			$obj->get_paged_iterated($page, $limit);
+			$data["count"] = $obj->paged->total_rows;
+		}else{
+			$obj->get_iterated();
+			$data["count"] = $obj->result_count();
+		}
 		
 		$objList = [];
 		if($obj->exists()){
@@ -491,6 +531,8 @@ class Micro_modules extends REST_Controller {
 				if($description==""){
 					$description = $value->transaction_memo;
 				}
+
+				$amount = (floatval($value->dr) - floatval($value->cr)) / floatval($value->rate);
 				
 				$data["results"][] = array(
 					"id" 				=> $value->transaction_id,
@@ -500,13 +542,11 @@ class Micro_modules extends REST_Controller {
 					"memo" 				=> $description,
 					"account_number"	=> $value->account_number,
 					"account_name" 		=> $value->account_name,
-					"amount" 			=> floatval($value->total),
+					"amount" 			=> $amount,
 					"contact" 			=> isset($value->contact_name) ? $value->contact_name : ""
 				);
 			}
 		}
-
-		$data["count"] = count($data["results"]);
 
 		//Response Data		
 		$this->response($data, 200);	

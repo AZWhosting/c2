@@ -1005,6 +1005,7 @@ class Spa extends REST_Controller {
 			$txn->day = 1;
 			$txn->status = 0;
 			$txn->is_journal = 1;
+			$txn->work_id = $value->work_id;
 			//Add Segment
 			$brancht = new Branch(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$brancht->where("id", $txn->branch_id)->limit(1)->get();
@@ -1303,6 +1304,8 @@ class Spa extends REST_Controller {
 			$w->status = $work->status;
 			$roomshow = "";
 			if($w->save()){
+				$txn->work_id = $w->id;
+				$txn->save();
 				$work_room = new Spa_work_room(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				$work_room->where("work_id", $work->id)->get();
 				if($work_room->exists()){
@@ -3392,7 +3395,7 @@ class Spa extends REST_Controller {
 		$data["results"] = [];
 		$data["count"] = 0;
 		$is_pattern = 0;
-		$obj = new Spa_room(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$obj = new Transactions(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		//Sort
 		if(!empty($sort) && isset($sort)){
 			foreach ($sort as $value) {
@@ -3413,6 +3416,7 @@ class Spa extends REST_Controller {
 				}
 			}
 		}
+		$obj->where("type", "Invoice");
 		//Results
 		if($page && $limit){
 			$obj->get_paged_iterated($page, $limit);
@@ -3422,14 +3426,18 @@ class Spa extends REST_Controller {
 			$data["count"] = $obj->result_count();
 		}
 		if($obj->exists()){
+			$objList = [];
 			foreach ($obj as $value) {
-		 		$data["results"][] = array(
-		 			"id" 		=> $value->id,
-		 			"name" 		=> $value->name,
-		 			"number" 	=> $value->number,
-		 			"square_meter" 	=> $value->square_meter,
-		 			"branch_id" => $value->branch_id
-		 		);
+				if($value->work_id > 0){
+			 		$swr = new Spa_work_room(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			 		$swr->where("id", $value->work_id)->limit(1)->get();
+			 		$r = new Spa_room(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			 		$r->where("id", $swr->room_id)->limit(1)->get();
+			 		$data["results"][] = array(
+						"id" 			=> $value->id,
+						"amount" 		=> floatval($value->amount),
+					);
+			 	}
 		 	}
 		}
 		//Response Data		

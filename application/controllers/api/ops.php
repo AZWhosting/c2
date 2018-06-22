@@ -8,14 +8,14 @@ class Ops extends REST_Controller {
 		$this->load->dbutil();
 		$this->load->dbforge();
 		$dbs = $this->dbutil->list_databases();
-		$companyList = array("db_banhji","db_1505276837","api","banhji","banhji0055","choeun_reeco","banhji_center","banhji_mac","information_schema","innodb","mysql","performance_schema","tmp");
+		$companyBlackList = array("db_1505276837","api","banhji","banhji0055","choeun_reeco","banhji_center","banhji_mac","information_schema","innodb","mysql","performance_schema","tmp");
 		$data["results"] = [];
 		$data["count"] = 0;
 		$startQ = false;
 
 		foreach ($dbs as $key => $db)
 		{	
-			if (!in_array("$db", $companyList)) {
+			if (!in_array("$db", $companyBlackList)) {
 				$connection = 'use ' . $db;
 				$this->db->query($connection);
 
@@ -120,27 +120,39 @@ class Ops extends REST_Controller {
 				// $data['results'][] = $this->db->delete('transaction_templates', array('transaction_form_id' => 75, 'user_id' => 12)); 
 
 				// Add new fields
-				// $fields = array(
-				// 	// "tags" => array(
-				// 	// 	"type" 		=> "DECIMAL",
-				// 	// 	"constraint"=> "30,15",
-				// 	// 	"null" 		=> FALSE,
-				// 	// 	"default" 	=> 0
-				// 	// ),
-				// 	// "batch_number" => array(
-				// 	// 	"type" 		=> "VARCHAR",
-				// 	// 	"constraint"=> 255,
-				// 	// 	"null" 		=> FALSE,
-				// 	// 	"default" 	=> ""
-				// 	// ),
-				// 	"movement" => array(
-				// 		"type" 		=> "TINYINT",
-				// 		"constraint"=> 1,
-				// 		"null" 		=> FALSE,
-				// 		"default" 	=> 0
-				// 	)
-				// );
-				// $data['results'][] = $this->dbforge->add_column("transactions", $fields);
+				$fields = array(
+					// "tags" => array(
+					// 	"type" 		=> "DECIMAL",
+					// 	"constraint"=> "30,15",
+					// 	"null" 		=> FALSE,
+					// 	"default" 	=> 0
+					// ),
+					"card_id" => array(
+						"type" 		=> "INT",
+						"constraint"=> 11,
+						"null" 		=> FALSE,
+						"default" 	=> 0
+					),
+					"loyalty_id" => array(
+						"type" 		=> "INT",
+						"constraint"=> 11,
+						"null" 		=> FALSE,
+						"default" 	=> 0
+					),
+					"canceled_by" => array(
+						"type" 		=> "INT",
+						"constraint"=> 11,
+						"null" 		=> FALSE,
+						"default" 	=> 0
+					),
+					"room_id" => array(
+						"type" 		=> "INT",
+						"constraint"=> 11,
+						"null" 		=> FALSE,
+						"default" 	=> 0
+					)
+				);
+				$data['results'][] = $this->dbforge->add_column("transactions", $fields);
 				
 			    // Modify fields
 		 	// 	$fields = array(

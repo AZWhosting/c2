@@ -77,7 +77,7 @@
 			</div> -->									                        
 		</div>
 		<div class="col-md-4">
-			<div class="saleOverview" style="margin-bottom: 15px;">
+			<div class="saleOverview" data-bind="click: loadCashBalance" style="margin-bottom: 15px;">
 				<h2 data-bind="text: lang.lang.cash_balance">Cash Balance</h2>
 				<p style="margin-bottom: 0;" data-format="n0" data-bind="text: obj.balance"></p>
 			</div>
@@ -151,6 +151,7 @@
 	 	<div class="col-md-12 marginTop table-responsive grid">
 	 		<div class="table color-table dark-table" 
 	 			 data-role="grid"
+	 			 data-pageable="true"
                  data-columns="[
                     { 
                     	field: 'issued_date', 

@@ -3910,6 +3910,7 @@
                 end = this.get("edate"),
                 displayDate = "";
 
+            //Cash Account Only
             para.push({ field:"account_type_id", operator:"where_related_account", value: 10 });
 
             //Dates
@@ -3940,11 +3941,11 @@
             this.txnDS.query({
                 filter:para,
                 sort:[
-                    { field:"account_type_id", operator:"order_by_related_account", dir:"asc" },
                     { field:"number", operator:"order_by_related_account", dir:"asc" },
-                    { field:"issued_date", operator:"order_by_related_transaction", dir:"asc" },
-                    { field:"number", operator:"order_by_related_transaction", dir:"asc" }
-                ]
+                    { field:"issued_date", operator:"order_by_related_transaction", dir:"desc" }
+                ],
+                page: 1,
+                pageSize: 50
             });
         },
         loadCashIn          : function(){
@@ -3952,6 +3953,15 @@
         },
         loadCashOut          : function(){
             this.txnDS.filter({ field:"account_type_id", operator:"where_related_account", value: 10 });
+        },
+        loadCashBalance          : function(){
+            this.set("sorter", "all");
+            this.sorterChanges();
+
+            this.txnDS.filter([
+                { field:"account_type_id", operator:"where_related_account", value: 10 },
+                { field:"balance_forward", operator:"include_balance_forward", value: true }
+            ]);
         }
     });
     banhji.accountingCenter = kendo.observable({
