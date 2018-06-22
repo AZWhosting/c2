@@ -527,8 +527,8 @@
                     <div class="tab-pane" id="print_export" role="tabpanel">
                     	<div class="p-20">
                         	<div class="row">
-		    					<button class="col-md-1 btnPrint k-button btn-info" type="button" data-role="button" data-bind="click: printGrid"><i class="ti-printer"></i><span class="marginLeft">Print</span></button>
-		    					<button class="col-md-2 btnExport k-button btn-info" type="button" data-role="button" data-bind="click: ExportExcel"><i class="ti-export"></i><span class="marginLeft">Export to Excel</span></button>
+		    					<button class="col-md-1 btnPrint k-button btn-info" type="button" data-role="button" data-bind="click: printGrid"><i class="ti-printer"></i><span class="marginLeft" data-bind="text: lang.lang.print">Print</span></button>
+		    					<!-- <button class="col-md-2 btnExport k-button btn-info" type="button" data-role="button" data-bind="click: ExportExcel"><i class="ti-export"></i><span class="marginLeft">Export to Excel</span></button> -->
 		    				</div>
 		    			</div>
                     </div>
@@ -715,8 +715,8 @@
                     <div class="tab-pane" id="print_export" role="tabpanel">
                     	<div class="p-20">
                         	<div class="row">
-		    					<button class="col-md-1 btnPrint k-button btn-info" type="button" data-role="button" data-bind="click: printGrid"><i class="ti-printer"></i><span class="marginLeft">Print</span></button>
-		    					<button class="col-md-2 btnExport k-button btn-info" type="button" data-role="button" data-bind="click: ExportExcel"><i class="ti-export"></i><span class="marginLeft">Export to Excel</span></button>
+		    					<button class="col-md-1 btnPrint k-button btn-info" type="button" data-role="button" data-bind="click: printGrid"><i class="ti-printer"></i><span class="marginLeft" data-bind="text: lang.lang.print">Print</span></button>
+		    					<!-- <button class="col-md-2 btnExport k-button btn-info" type="button" data-role="button" data-bind="click: ExportExcel"><i class="ti-export"></i><span class="marginLeft">Export to Excel</span></button> -->
 		    				</div>
 		    			</div>
                     </div>

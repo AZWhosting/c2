@@ -343,6 +343,11 @@
 																		</p>
 																	</td>
 																</tr>
+																<tr>
+																	<td class="span4">
+																		<h3 ><a href="#/sale_summary_by_room" data-bind="text: lang.lang.sale_summary_by_room" style="text-transform: capitalize;"></a></h3>
+																	</td>
+																</tr>
 															</table>
 														</div>
 													</div>													
@@ -2386,7 +2391,154 @@
     	<td colspan="8">&nbsp;</td>
     </tr>
 </script>
+<!-- KTV -->
+<script id="saleSummaryByRoom" type="text/x-kendo-template">
+	<div class="container">
+		<div class="row addCusto">
+			<div class="span12">
+				<div class="example k-content saleSummaryCustomer" >
+			    	<span class="glyphicons no-js remove_2 pull-right"
+						onclick="javascript:window.history.back()"><i></i>
+					</span>
 
+					<div class="row-fluid">
+					    <!-- Tabs -->
+						<div class="relativeWrap" data-toggle="source-code" style="margin-top: 30px;" >
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+
+								<!-- Tabs Heading -->
+								<div class="widget-head">
+									<ul>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>
+										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.filter"></span></a></li>
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
+									</ul>
+								</div>
+								<!-- // Tabs Heading END -->
+								<div class="widget-body">
+									<div class="tab-content">
+
+								        <!-- Date -->
+								        <div class="tab-pane active" id="tab-1">
+
+											<input data-role="dropdownlist"
+												   class="sorter"
+										           data-value-primitive="true"
+										           data-text-field="text"
+										           data-value-field="value"
+										           data-bind="value: sorter,
+										                      source: sortList,
+										                      events: { change: sorterChanges }" />
+
+											<input data-role="datepicker"
+												   class="sdate"
+												   data-format="dd-MM-yyyy"
+										           data-bind="value: sdate,
+										           			  max: edate"
+										           placeholder="From ..." >
+
+										    <input data-role="datepicker"
+										    	   class="edate"
+										    	   data-format="dd-MM-yyyy"
+										           data-bind="value: edate,
+										                      min: sdate"
+										           placeholder="To ..." >
+
+										  	<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+
+							        	</div>
+
+								    	<!-- Filter -->
+								        <div class="tab-pane" id="tab-2">
+											<table class="table table-condensed">
+												<tr>
+									            	<td style="padding: 8px 0 0 0 !important; ">
+														<span data-bind="text: lang.lang.room"></span>
+														<select data-role="multiselect"
+															   data-value-primitive="true"
+															   data-header-template="contact-header-tmpl"
+															   data-item-template="contact-list-tmpl"
+															   data-value-field="id"
+															   data-text-field="name"
+															   data-bind="value: obj.roomIds,
+															   			source: roomDS"
+															   data-placeholder="Select Room.."
+															   style="width: 100%" /></select>
+													</td>
+													<td style="padding-top: 31px !important; float: left;">
+										  				<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+													</td>
+												</tr>
+											</table>
+							        	</div>
+										<!-- PRINT/EXPORT  -->
+								        <div class="tab-pane" id="tab-3">
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
+								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
+								        		<i class="fa fa-file-pdf-o"></i>
+								        		Print as PDF
+								        	</span> -->
+								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" style="width: 80px;">
+								        		<i class="fa fa-file-excel-o"></i>
+								        		Export to Excel
+								        	</span>
+							        	</div>
+								    </div>
+								</div>
+							</div>
+						</div>
+						<!-- // Tabs END -->
+					</div>
+
+					<div class="row-fluid">
+						<div id="invFormContent">
+							<div class="block-title">
+								<h3 data-bind="html: company.name"></h3>
+								<h2 data-bind="text: lang.lang.sale_summary_by_customer"></h2>
+								<p data-bind="text: displayDate"></p>
+							</div>
+							<div class="row">
+								<div class="span3">
+									<div class="total-customer">
+										<p data-bind="text: lang.lang.number_of_customer"></p>
+										<span data-bind="text: dataSource.total"></span>
+									</div>
+								</div>
+								<div class="span9">
+									<div class="total-sale">
+										<p data-bind="text: lang.lang.total_sale"></p>
+										<span data-bind="text: totalAmount"></sapn>
+									</div>
+								</div>
+							</div>
+							<div class="row-fluid">
+								<table class="table table-borderless table-condensed ">
+									<thead>
+										<tr>
+											<th data-bind="text:lang.lang.customer"></th>
+											<th style="text-align: center;" data-bind="text: lang.lang.number_of_invoice"></th>
+											<th style="text-align: center;" data-bind="text: lang.lang.number_of_cash_sale"></th>
+											<th style="text-align: right;" data-bind="text: lang.lang.total_sale"></th>
+										</tr>
+									</thead>
+				            		<tbody  data-role="listview"
+				            				data-auto-bind="false"
+							                data-template="saleSummaryByCustomer-template"
+							                data-bind="source: dataSource" >
+							        </tbody>
+				            	</table>
+				            	<div id="pager" class="k-pager-wrap"
+					            		 data-role="pager"
+								    	 data-auto-bind="false"
+							             data-bind="source: dataSource"></div>
+							</div>
+			            </div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
 <!-- Template -->
 <script id="contact-header-tmpl" type="text/x-kendo-tmpl">
     <strong>

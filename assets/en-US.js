@@ -32,6 +32,7 @@ var	en_US = {
 	"user_guide" : "User Guide",
 	"view_edit_profile_micro" :  "View/ Edit",
 	"pos_setting" : "POS Setting",
+	"micro_credit" : "Credit",
 	//Main Dustboard
 	"search_contact" : "Search Contact",
 	"contact" : "Contact",
@@ -1607,4 +1608,5 @@ var	en_US = {
 	"booking": "Booking",
 	"pay_installment": "Pay All Installments",
 	"summary":"Summary",
+	"sale_summary_by_room": "Sale Summary by Room",
 }

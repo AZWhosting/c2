@@ -329,7 +329,7 @@
 	                { field: 'name' , title : 'NAME', filterable: false },
 	                { field: 'type' , title : 'TYPE', filterable: { multi: true, search: true} },
 	                { field: 'number' , title: 'REFERENCE', filterable: false, attributes: { style: 'text-align: left;'}, template: '<a href=\'purchases\\#/#=type.toLowerCase()#/#=id#\'>#=number#</a>' },
-	                { field: 'amount' , title: 'AMOUNT', filterable: false, format: '{0:n}' , attributes: { style: 'text-align: right;'} },
+	                { field: 'amount' , title: 'AMOUNT', filterable: false, format: '{0:n}' , attributes: { style: 'text-align: right; padding-right: 30px;'} },
 	                { 
 	                	title: 'STATUS', 
 	                	template: kendo.template($('#transactions-status-tmpl').html()),
@@ -370,7 +370,7 @@
             				<div class="col">
             					<a class="creditmodule" data-bind="click: creditClick" style="text-align: center;  width: 100%; float: left; border: 1px solid #d5d5d5; padding: 5px; cursor: pointer;">
             						<i style="font-size: 28px;" class=" ti-receipt"></i><br/>
-            						<span data-bind="text: lang.lang.credit"></span>
+            						<span data-bind="text: lang.lang.micro_credit"></span>
             					</a>
             				</div>
             			</div>
@@ -5055,8 +5055,8 @@
 				                    <div class="tab-pane" id="print_export" role="tabpanel">
 				                    	<div class="p-20">
 				                        	<div class="row">
-						    					<button class="col-md-1 btnPrint k-button btn-info" type="button" data-role="button" data-bind="click: printGrid"><i class="ti-printer"></i><span class="marginLeft">Print</span></button>
-						    					<button class="col-md-2 btnExport k-button btn-info" type="button" data-role="button" data-bind="click: ExportExcel"><i class="ti-export"></i><span class="marginLeft">Export to Excel</span></button>
+						    					<button class="col-md-1 btnPrint k-button btn-info" type="button" data-role="button" data-bind="click: printGrid"><i class="ti-printer"></i><span class="marginLeft" data-bind="text: lang.lang.print">Print</span></button>
+						    					<!-- <button class="col-md-2 btnExport k-button btn-info" type="button" data-role="button" data-bind="click: ExportExcel"><i class="ti-export"></i><span class="marginLeft">Export to Excel</span></button> -->
 						    				</div>
 						    			</div>
 				                    </div>
@@ -5223,8 +5223,8 @@
 				                    <div class="tab-pane" id="print_export" role="tabpanel">
 				                    	<div class="p-20">
 				                        	<div class="row">
-						    					<button class="col-md-1 btnPrint k-button btn-info" type="button" data-role="button" data-bind="click: printGrid"><i class="ti-printer"></i><span class="marginLeft">Print</span></button>
-						    					<button class="col-md-2 btnExport k-button btn-info" type="button" data-role="button" data-bind="click: ExportExcel"><i class="ti-export"></i><span class="marginLeft">Export to Excel</span></button>
+						    					<button class="col-md-1 btnPrint k-button btn-info" type="button" data-role="button" data-bind="click: printGrid"><i class="ti-printer"></i><span class="marginLeft" data-bind="text: lang.lang.print">Print</span></button>
+						    					<!-- <button class="col-md-2 btnExport k-button btn-info" type="button" data-role="button" data-bind="click: ExportExcel"><i class="ti-export"></i><span class="marginLeft">Export to Excel</span></button> -->
 						    				</div>
 						    			</div>
 				                    </div>
@@ -5382,8 +5382,8 @@
 				                    <div class="tab-pane" id="print_export" role="tabpanel">
 				                    	<div class="p-20">
 				                        	<div class="row">
-						    					<button class="col-md-1 btnPrint k-button btn-info" type="button" data-role="button" data-bind="click: printGrid"><i class="ti-printer"></i><span class="marginLeft">Print</span></button>
-						    					<button class="col-md-2 btnExport k-button btn-info" type="button" data-role="button" data-bind="click: ExportExcel"><i class="ti-export"></i><span class="marginLeft">Export to Excel</span></button>
+						    					<button class="col-md-1 btnPrint k-button btn-info" type="button" data-role="button" data-bind="click: printGrid"><i class="ti-printer"></i><span class="marginLeft" data-bind="text: lang.lang.print">Print</span></button>
+						    					<!-- <button class="col-md-2 btnExport k-button btn-info" type="button" data-role="button" data-bind="click: ExportExcel"><i class="ti-export"></i><span class="marginLeft">Export to Excel</span></button> -->
 						    				</div>
 						    			</div>
 				                    </div>
@@ -5686,8 +5686,8 @@
 				                    <div class="tab-pane" id="print_export" role="tabpanel">
 				                    	<div class="p-20">
 				                        	<div class="row">
-						    					<button class="col-md-1 btnPrint k-button btn-info" type="button" data-role="button" data-bind="click: printGrid"><i class="ti-printer"></i><span class="marginLeft">Print</span></button>
-						    					<button class="col-md-2 btnExport k-button btn-info" type="button" data-role="button" data-bind="click: ExportExcel"><i class="ti-export"></i><span class="marginLeft">Export to Excel</span></button>
+						    					<button class="col-md-1 btnPrint k-button btn-info" type="button" data-role="button" data-bind="click: printGrid"><i class="ti-printer"></i><span class="marginLeft" data-bind="text: lang.lang.print">Print</span></button>
+						    					<!-- <button class="col-md-2 btnExport k-button btn-info" type="button" data-role="button" data-bind="click: ExportExcel"><i class="ti-export"></i><span class="marginLeft">Export to Excel</span></button> -->
 						    				</div>
 						    			</div>
 				                    </div>
@@ -6027,8 +6027,8 @@
 				                    <div class="tab-pane" id="print_export" role="tabpanel">
 				                    	<div class="p-20">
 				                        	<div class="row">
-						    					<button class="col-md-1 btnPrint k-button btn-info" type="button" data-role="button" data-bind="click: printGrid"><i class="ti-printer"></i><span class="marginLeft">Print</span></button>
-						    					<button class="col-md-2 btnExport k-button btn-info" type="button" data-role="button" data-bind="click: ExportExcel"><i class="ti-export"></i><span class="marginLeft">Export to Excel</span></button>
+						    					<button class="col-md-1 btnPrint k-button btn-info" type="button" data-role="button" data-bind="click: printGrid"><i class="ti-printer"></i><span class="marginLeft" data-bind="text: lang.lang.print">Print</span></button>
+						    					<!-- <button class="col-md-2 btnExport k-button btn-info" type="button" data-role="button" data-bind="click: ExportExcel"><i class="ti-export"></i><span class="marginLeft">Export to Excel</span></button> -->
 						    				</div>
 						    			</div>
 				                    </div>
@@ -6204,8 +6204,8 @@
 				                    <div class="tab-pane" id="print_export" role="tabpanel">
 				                    	<div class="p-20">
 				                        	<div class="row">
-						    					<button class="col-md-1 btnPrint k-button btn-info" type="button" data-role="button" data-bind="click: printGrid"><i class="ti-printer"></i><span class="marginLeft">Print</span></button>
-						    					<button class="col-md-2 btnExport k-button btn-info" type="button" data-role="button" data-bind="click: ExportExcel"><i class="ti-export"></i><span class="marginLeft">Export to Excel</span></button>
+						    					<button class="col-md-1 btnPrint k-button btn-info" type="button" data-role="button" data-bind="click: printGrid"><i class="ti-printer"></i><span class="marginLeft" data-bind="text: lang.lang.print">Print</span></button>
+						    					<!-- <button class="col-md-2 btnExport k-button btn-info" type="button" data-role="button" data-bind="click: ExportExcel"><i class="ti-export"></i><span class="marginLeft">Export to Excel</span></button> -->
 						    				</div>
 						    			</div>
 				                    </div>
@@ -6654,4 +6654,4 @@
 		</td>
 	</tr>
 </script>
-<!-- End -->
+<!-- End -->  

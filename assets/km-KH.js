@@ -32,6 +32,7 @@ var	km_KH = {
 	"user_guide" : "ឯកសារជំនួយ",
 	"view_edit_profile_micro" :  "មើល ឬ កែ​ប្រែ​",
 	"pos_setting" : "ការកំណត់ប្រតិបត្តិការលក់",
+	"micro_credit" : "ជំពាក់",
 	//Main Dustboard
 	"search_contact" :  "ស្វែងរក​ទំនាក់ទំនង",
 	"contact" :  "ទំនាក់ទំនង",
@@ -1169,7 +1170,7 @@ var	km_KH = {
 	"trx_no": "ចំនួន​ប្រតិបត្តិការ", // newly added
 	"txn": "ប្រតិបត្តិការ",
 	"account": "គណនី",
-	"filter": "filter",
+	"filter": "ជ្រើសរើស",
 	"total_asset" : "ទ្រព្យ​សកម្ម​សរុប",
 	"total_liabilities" : "បំណុល​សរុប",
 	"total_equity" : "ដើម​ទុន​សរុប",
@@ -1583,4 +1584,5 @@ var	km_KH = {
 	"booking": "កក់",
 	"pay_installment": "បង់ផ្តាច់",
 	"summary":"សង្ខេប",
+	"sale_summary_by_room": "របាយការណ៍លក់​សង្ខេប​តាម​បន្ទប់",
 }
