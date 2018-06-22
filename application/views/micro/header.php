@@ -172,14 +172,14 @@
                                             <div>
                                                 <p><span data-bind="text: lang.lang.sale_transactions"></span></p>
                                                 <ul>
-                                                    <li><a href="sales#/customer"><span data-bind="text: lang.lang.customers"></span></a></li>
-                                                    <li><a href="sales#/quote"><span data-bind="text: lang.lang.create_quotation"></span></a></li>
-                                                    <li><a href="sales#/sale_order"><span data-bind="text: lang.lang.create_sale_order"></span></a></li>
-                                                    <li><a href="sales#/customer_deposit"><span data-bind="text: lang.lang.create_customer_deposit"></span></a></li>
-                                                    <li><a href="sales#/cash_sale"><span data-bind="text: lang.lang.create_cash_sale"></span></a></li>
-                                                    <li><a href="sales#/invoice"><span data-bind="text: lang.lang.create_invoice"></span></a></li>
-                                                    <li><a href="sales#/cash_receipt"><span data-bind="text: lang.lang.create_cash_receipt"></span></a></li>
-                                                    <li><a href="sales#/cash_refund"><span data-bind="text: lang.lang.cash_refund"></span></a></li>
+                                                    <li><a href="<?php echo base_url();?>micro/sales#/customer"><span data-bind="text: lang.lang.customers"></span></a></li>
+                                                    <li><a href="<?php echo base_url();?>micro/sales#/quote"><span data-bind="text: lang.lang.create_quotation"></span></a></li>
+                                                    <li><a href="<?php echo base_url();?>micro/sales#/sale_order"><span data-bind="text: lang.lang.create_sale_order"></span></a></li>
+                                                    <li><a href="<?php echo base_url();?>micro/sales#/customer_deposit"><span data-bind="text: lang.lang.create_customer_deposit"></span></a></li>
+                                                    <li><a href="<?php echo base_url();?>micro/sales#/cash_sale"><span data-bind="text: lang.lang.create_cash_sale"></span></a></li>
+                                                    <li><a href="<?php echo base_url();?>micro/sales#/invoice"><span data-bind="text: lang.lang.create_invoice"></span></a></li>
+                                                    <li><a href="<?php echo base_url();?>micro/sales#/cash_receipt"><span data-bind="text: lang.lang.create_cash_receipt"></span></a></li>
+                                                    <li><a href="<?php echo base_url();?>micro/sales#/cash_refund"><span data-bind="text: lang.lang.cash_refund"></span></a></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -187,13 +187,13 @@
                                             <div >
                                                 <p><span data-bind="text: lang.lang.purchase_transaction"></span></p>
                                                 <ul>
-                                                    <li><a href="purchases#/vendor"><span data-bind="text: lang.lang.add_supplier"></span></a></li>
-                                                    <li><a href="purchases#/purchase_order"><span data-bind="text: lang.lang.make_purchase_order"></span></a></li>
-                                                    <li><a href="purchases#/vendor_deposit"><span data-bind="text: lang.lang.make_vendor_deposit"></span></a></li>
-                                                    <li><a href="purchases#/purchase"><span data-bind="text: lang.lang.make_purchase"></span></a></li>
-                                                    <li><a href="purchases#/cash_payment"><span data-bind="text: lang.lang.make_cash_payment"></span></a></li>
-                                                    <li><a href="purchases#/payment_refund"><span data-bind="text: lang.lang.payment_refund"></span></a></li>
-                                                    <li><a href="items#/item_adjustment"><span data-bind="text: lang.lang.item_adjustment"></span></a></li>
+                                                    <li><a href="<?php echo base_url();?>micro/purchases#/vendor"><span data-bind="text: lang.lang.add_supplier"></span></a></li>
+                                                    <li><a href="<?php echo base_url();?>micro/purchases#/purchase_order"><span data-bind="text: lang.lang.make_purchase_order"></span></a></li>
+                                                    <li><a href="<?php echo base_url();?>micro/purchases#/vendor_deposit"><span data-bind="text: lang.lang.make_vendor_deposit"></span></a></li>
+                                                    <li><a href="<?php echo base_url();?>micro/purchases#/purchase"><span data-bind="text: lang.lang.make_purchase"></span></a></li>
+                                                    <li><a href="<?php echo base_url();?>micro/purchases#/cash_payment"><span data-bind="text: lang.lang.make_cash_payment"></span></a></li>
+                                                    <li><a href="<?php echo base_url();?>micro/purchases#/payment_refund"><span data-bind="text: lang.lang.payment_refund"></span></a></li>
+                                                    <li><a href="<?php echo base_url();?>items#/item_adjustment"><span data-bind="text: lang.lang.item_adjustment"></span></a></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -201,9 +201,9 @@
                                             <div >
                                                 <p><span data-bind="text: lang.lang.account_transaction"></span></p>
                                                 <ul>
-                                                    <li><a href="cashs#/cash_transaction"><span data-bind="text: lang.lang.make_cash_transaction"></span></a></li>
-                                                    <li><a href="cashs#/journal"><span data-bind="text: lang.lang.make_journal"></span></a></li>
-                                                    <li><a href="cashs#/currency_rate"><span data-bind="text: lang.lang.set_exchange_rate"></span></a></li>
+                                                    <li><a href="<?php echo base_url();?>micro/cashs#/cash_transaction"><span data-bind="text: lang.lang.make_cash_transaction"></span></a></li>
+                                                    <li><a href="<?php echo base_url();?>micro/cashs#/journal"><span data-bind="text: lang.lang.make_journal"></span></a></li>
+                                                    <li><a href="<?php echo base_url();?>micro/cashs#/currency_rate"><span data-bind="text: lang.lang.set_exchange_rate"></span></a></li>
                                                     <li><a href="<?php echo base_url();?>rrd#/imports"><span data-bind="text: lang.lang.imports"></span></a></li>
                                                 </ul>
                                             </div>
