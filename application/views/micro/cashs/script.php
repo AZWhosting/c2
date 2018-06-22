@@ -4016,6 +4016,236 @@
         }
     });
 
+    banhji.account =  kendo.observable({
+        lang                    : langVM,
+        dataSource              : dataStore(apiUrl + "accounts"),
+        deleteDS                : dataStore(apiUrl + "account_lines"),
+        numberDS                : dataStore(apiUrl + "accounts"),
+        accountTypeDS           : banhji.source.accountTypeDS,
+        currencyDS              : new kendo.data.DataSource({
+            data: banhji.source.currencyList,
+            filter: { field:"status", value: 1 }
+        }),
+        subAccountDS            : new kendo.data.DataSource({
+            data: banhji.source.accountList
+        }),
+        statusList              : banhji.source.statusList,
+        confirmMessage          : banhji.source.confirmMessage,
+        obj                     : null,
+        isEdit                  : false,
+        isProtected             : false,
+        saveClose               : false,
+        showConfirm             : false,
+        notDuplicateNumber      : true,
+        showBank                : false,
+        pageLoad                : function(id){
+            if(id){
+                this.set("isEdit", true);
+                this.loadObj(id);
+            }else{
+                if(this.get("isEdit") || this.dataSource.total()==0){
+                    this.addEmpty();
+                }
+            }
+        },
+        //Number
+        checkExistingNumber     : function(){
+            var self = this, para = [],
+            obj = this.get("obj");
+
+            if(obj.number!==""){
+
+                if(obj.isNew()==false){
+                    para.push({ field:"id", operator:"where_not_in", value: [obj.id] });
+                }
+
+                para.push({ field:"number", value: obj.number });
+                para.push({ field:"account_type_id", value: obj.account_type_id });
+
+                this.numberDS.query({
+                    filter: para,
+                    page: 1,
+                    pageSize: 1
+                }).then(function(e){
+                    var view = self.numberDS.view();
+
+                    if(view.length>0){
+                        self.set("notDuplicateNumber", false);
+                    }else{
+                        self.set("notDuplicateNumber", true);
+                    }
+                });
+            }
+        },
+        generateNumber          : function(){
+            var self = this, para = [],
+            obj = this.get("obj");
+
+            if(obj.sub_of_id>0){
+                para.push({ field:"sub_of_id", value: obj.sub_of_id });
+                para.push({ field:"id", operator:"or_where", value: obj.sub_of_id });
+            }else{
+                para.push({ field:"account_type_id", value:obj.account_type_id });
+            }
+
+            this.numberDS.query({
+                filter: para,
+                sort: { field:"number", dir:"desc" },
+                page:1,
+                pageSize:1
+            }).then(function(){
+                var view = self.numberDS.view();
+
+                var lastNo = 0;
+                if(view.length>0){
+                    lastNo = kendo.parseInt(view[0].number);
+                }
+                lastNo++;
+                obj.set("number",kendo.toString(lastNo, "00000"));
+            });
+        },
+        //Obj
+        loadObj                 : function(id){
+            var self = this;
+
+            this.dataSource.query({
+                filter: { field:"id", value: id },
+                page:1,
+                pageSize:1
+            }).then(function(e){
+                var view = self.dataSource.view();
+
+                self.set("obj", view[0]);
+
+                if(view[0].account_type_id==10){
+                    self.set("showBank", true);
+                }else{
+                    self.set("showBank", false);
+                }
+            });
+        },
+        typeChanges             : function(){
+            var obj = this.get("obj");
+            this.set("showBank", false);
+
+            if(obj.account_type_id){
+                if(obj.account_type_id==10){
+                    this.set("showBank", true);
+                }
+                this.generateNumber();
+            }
+        },
+        addEmpty                : function(){
+            this.dataSource.data([]);
+
+            this.set("isEdit", false);
+            this.set("notDuplicateNumber", true);
+
+            this.dataSource.insert(0, {
+                account_type_id         : 0,
+                sub_of_id               : 0,
+                number                  : "",
+                name                    : "",
+                name_2                  : "",
+                description             : "",
+                bank_name               : "",
+                bank_account_number     : "",
+                locale                  : banhji.locale,
+                is_taxable              : 0,
+                status                  : 1,
+                is_system               : 0
+            });
+
+            var obj = this.dataSource.at(0);
+            this.set("obj", obj);
+        },
+        objSync                 : function(){
+            var dfd = $.Deferred();
+
+            this.dataSource.sync();
+            this.dataSource.bind("requestEnd", function(e){
+                if(e.response){
+                    dfd.resolve(e.response.results);
+                }
+            });
+            this.dataSource.bind("error", function(e){
+                dfd.reject(e.errorThrown);
+            });
+
+            return dfd;
+        },
+        save                    : function(){
+            var self = this, obj = this.get("obj");
+
+            //Save Obj
+            this.objSync()
+            .then(function(data){ //Success
+
+                return data;
+            }, function(reason) { //Error
+                $("#ntf1").data("kendoNotification").error(reason);
+            }).then(function(result){
+                $("#ntf1").data("kendoNotification").success(banhji.source.successMessage);
+
+                if(self.get("saveClose")){
+                    //Save Close
+                    self.set("saveClose", false);
+                    self.cancel();
+                    window.history.back();
+                }else{
+                    //Save New
+                    self.addEmpty();
+                }
+
+                //Refresh all account
+                banhji.source.loadAccounts();
+            });
+        },
+        cancel                  : function(){
+            this.dataSource.cancelChanges();
+            this.dataSource.data([]);
+
+            banhji.userManagement.removeMultiTask("account");
+        },
+        delete                  : function(){
+            var self = this, obj = this.get("obj");
+            this.set("showConfirm",false);
+
+            if(obj.is_system!=="1"){
+                this.deleteDS.query({
+                    filter:[
+                        { field:"account_id", value:obj.id },
+                    ],
+                    page:1,
+                    pageSize:1
+                }).then(function(){
+                    var view = self.deleteDS.view();
+
+                    if(view.length>0){
+                        alert("Sorry, you can not delete it.");
+                    }else{
+                        var data = self.dataSource.get(obj.id);
+                        self.dataSource.remove(data);
+                        self.dataSource.sync();
+                        self.dataSource.bind("requestEnd", function(e){
+                            if(e.type==="destroy"){
+                                //Refresh all account
+                                banhji.source.loadAccounts();
+                                window.history.back();
+                            }
+                        });
+                    }
+                });
+            }
+        },
+        openConfirm             : function(){
+            this.set("showConfirm", true);
+        },
+        closeConfirm            : function(){
+            this.set("showConfirm", false);
+        }
+    });
+
     banhji.generalLedger =  kendo.observable({
         lang                : langVM,
         dataSource          : dataStore(apiUrl + "accounting_modules/general_ledger"),
@@ -5445,6 +5675,7 @@
         generalLedger: new kendo.Layout("#generalLedger", {model: banhji.generalLedger}),
         generalLedgerBySegment: new kendo.Layout("#generalLedgerBySegment", {model: banhji.generalLedgerBySegment}),
         
+        account: new kendo.Layout("#account", {model: banhji.account}),
 
         cashMovement: new kendo.Layout("#cashMovement", {model: banhji.cashMovement}),
         //cashCollectionReport: new kendo.Layout("#cashCollectionReport", {model: banhji.cashCollection}),
@@ -5550,6 +5781,72 @@
 
         //load MVVM
         banhji.accountingCenter.pageLoad();
+    });
+
+    banhji.router.route("/account(/:id)", function(id){
+        banhji.accessMod.query({
+            filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+        }).then(function(e){
+            var allowed = false;
+            if(banhji.accessMod.data().length > 0) {
+                for(var i = 0; i < banhji.accessMod.data().length; i++) {
+                    if("accounting" == banhji.accessMod.data()[i].name.toLowerCase()) {
+                        allowed = true;
+                        break;
+                    }
+                }
+            }
+            if(allowed) {
+                var vm = banhji.account;
+                banhji.userManagement.addMultiTask("Account","account",vm);
+
+                banhji.view.layout.showIn("#content", banhji.view.account);
+                // kendo.fx($("#slide-form")).slideIn("down").play();
+
+                if(banhji.pageLoaded["account"]==undefined){
+                    banhji.pageLoaded["account"] = true;
+
+                    var validator = $("#example").kendoValidator({
+                        rules: {
+                            customRule1: function(input){
+                                if (input.is("[name=txtNumber]")) {
+                                    return vm.get("notDuplicateNumber");
+                                }
+                                return true;
+                            }
+                        },
+                        messages: {
+                            customRule1: banhji.source.duplicateNumber
+                        }
+                    }).data("kendoValidator");
+
+                    $("#saveNew").click(function(e){
+                        e.preventDefault();
+
+                        if(validator.validate()){
+                            vm.save();
+                        }else{
+                            $("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+                        }
+                    });
+
+                    $("#saveClose").click(function(e){
+                        e.preventDefault();
+
+                        if(validator.validate()){
+                            vm.set("saveClose", true);
+                            vm.save();
+                        }else{
+                            $("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+                        }
+                    });
+                }
+
+                vm.pageLoad(id);
+            } else {
+                window.location.replace(baseUrl + "admin");
+            }
+        });
     });
     
     banhji.router.route("/general_ledger", function(){

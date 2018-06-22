@@ -38,8 +38,8 @@
 									</a>
                         		</div>
                         		<div class="col-lg-4 ">
-                        			<a target="_blank" href="<?php echo base_url(); ?>/assets/micro/test.pdf">
-                        				<img style="height: 220px;" src="<?php echo base_url(); ?>/assets/micro/cover-pdf.png" />
+                        			<a target="_blank" href="<?php echo base_url(); ?>/assets/micro/pdf.pdf">
+                        				<img style="height: 220px;" src="<?php echo base_url(); ?>assets/micro/img.jpeg" />
                         				<div class="mask"></div>
                         			</a>
                         		</div>
@@ -69,10 +69,10 @@
 									</a>
                         		</div>
                         		<div class="col-lg-4 ">
-                        			<a target="_blank" href="<?php echo base_url(); ?>/assets/micro/test.pdf">
-                        				<img style="height: 220px;" src="<?php echo base_url(); ?>/assets/micro/cover-pdf.png" />
-                        				<div class="mask"></div>
-                        			</a>
+                        			<a target="_blank" href="<?php echo base_url(); ?>/assets/micro/pdf.pdf">
+                                        <img style="height: 220px;" src="<?php echo base_url(); ?>assets/micro/img.jpeg" />
+                                        <div class="mask"></div>
+                                    </a>
                         		</div>
                         	</div>
 			            </div>
@@ -100,10 +100,10 @@
 									</a>
                         		</div>
                         		<div class="col-lg-4 ">
-                        			<a target="_blank" href="<?php echo base_url(); ?>/assets/micro/test.pdf">
-                        				<img style="height: 220px;" src="<?php echo base_url(); ?>/assets/micro/cover-pdf.png" />
-                        				<div class="mask"></div>
-                        			</a>
+                        			<a target="_blank" href="<?php echo base_url(); ?>/assets/micro/pdf.pdf">
+                                        <img style="height: 220px;" src="<?php echo base_url(); ?>assets/micro/img.jpeg" />
+                                        <div class="mask"></div>
+                                    </a>
                         		</div>
                         	</div>
 			            </div>
@@ -131,10 +131,10 @@
 									</a>
                         		</div>
                         		<div class="col-lg-4 ">
-                        			<a target="_blank" href="<?php echo base_url(); ?>/assets/micro/test.pdf">
-                        				<img style="height: 220px;" src="<?php echo base_url(); ?>/assets/micro/cover-pdf.png" />
-                        				<div class="mask"></div>
-                        			</a>
+                        			<a target="_blank" href="<?php echo base_url(); ?>/assets/micro/pdf.pdf">
+                                        <img style="height: 220px;" src="<?php echo base_url(); ?>assets/micro/img.jpeg" />
+                                        <div class="mask"></div>
+                                    </a>
                         		</div>
                         	</div>
 			            </div>
@@ -162,10 +162,10 @@
 									</a>
                         		</div>
                         		<div class="col-lg-4 ">
-                        			<a target="_blank" href="<?php echo base_url(); ?>/assets/micro/test.pdf">
-                        				<img style="height: 220px;" src="<?php echo base_url(); ?>/assets/micro/cover-pdf.png" />
-                        				<div class="mask"></div>
-                        			</a>
+                        			<a target="_blank" href="<?php echo base_url(); ?>/assets/micro/pdf.pdf">
+                                        <img style="height: 220px;" src="<?php echo base_url(); ?>assets/micro/img.jpeg" />
+                                        <div class="mask"></div>
+                                    </a>
                         		</div>
                         	</div>
 			            </div>

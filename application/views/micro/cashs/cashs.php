@@ -663,7 +663,27 @@
 				<div class="row">
 					<div class="col-md-6 marginBottom">
 						<input class="customerName" type="text" name="" data-bind="value: obj.name" disabled="disabled" style="background: #fff;" />
-						<a class="btn waves-effect waves-light btn-block btn-info btnViewEditCustomer" data-bind="click: goEdit"><i class="ti-pencil-alt marginRight"></i><span data-bind="text: lang.lang.edit"></span></a>
+						<a style="margin-bottom: 15px;" class="btn waves-effect waves-light btn-block btn-info btnViewEditCustomer" data-bind="click: goEdit"><i class="ti-pencil-alt marginRight"></i><span data-bind="text: lang.lang.edit"></span></a>
+						<div class="saleOverview" style="margin-bottom: 8px; padding: 55px 0;">
+                            <p data-bind="click: loadTransaction">
+                            	<span data-format="n" data-bind="text: lang.lang.balance_as_of_today"></span><br/>
+								<span data-bind="text: balance"></span>
+                            </p>
+                            <!-- <div class="col-md-12">
+                                <div class="col-md-4">
+                                    <span data-format="n0" data-bind="text: raw.quantity"></span>
+                                    <span data-bind="text: lang.lang.qoh"></span>
+                                </div>
+                                <div class="col-md-4">
+                                    <span data-format="n0" data-bind="text: raw.po"></span>
+                                    <span data-bind="text: lang.lang.on_po"></span>
+                                </div>
+                                <div class="col-md-4">
+                                    <span data-format="n0" data-bind="text: raw.so"></span>
+                                    <span data-bind="text: lang.lang.on_so"></span>
+                                </div>
+                            </div> -->
+                        </div>
 						<!-- <ul class="nav nav-tabs" role="tablist">
                             <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#customerInformation" role="tab" aria-selected="false"><span><i class="icon-info"></i></span></a> </li>
                             <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#customerAttachment" role="tab" aria-selected="false"><span><i class="icon-paper-clip"></i></span></a> </li>
@@ -765,11 +785,41 @@
 					<div class="col-md-6">
 						<div class="row">
 	                        <div class="col-md-12">
-								<div class="saleOverview" style="margin-bottom: 8px;">
+	                        	<p><span data-bind="text: lang.lang.file_type"></span> [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>
+					            <input id="files" name="files"
+				                   type="file"
+				                   data-role="upload"
+				                   data-show-file-list="false"
+				                   data-bind="events: {
+		                   				select: onSelect
+				                   }">
+				                <div class="table-responsive">
+					                <table class="table color-table dark-table">
+								        <thead>
+								            <tr>
+								                <th data-bind="text: lang.lang.file_name"></th>
+								                <th data-bind="text: lang.lang.description"></th>
+								                <th data-bind="text: lang.lang.date"></th>
+								                <th data-bind="text: lang.lang.action"></th>
+								            </tr>
+								        </thead>
+								        <tbody data-role="listview"
+								        		data-template="attachment-list-tmpl"
+								        		data-auto-bind="false"
+								        		data-bind="source: attachmentDS"></tbody>
+								    </table>
+								</div>
+							    <div id="pager" class="k-pager-wrap" style="margin-bottom: 15px;"
+							    	 data-role="pager"
+							    	 data-auto-bind="false"
+						             data-bind="source: attachmentDS"></div>
+
+							    <a href="" style="margin-bottom: 15px;" class="btn waves-effect waves-light btn-block btn-info btnAddAttachment col-md-3" data-bind="click: uploadFile" ><i class="ti-check marginRight"></i><span data-bind="text: lang.lang.save"></span></a>
+								<!-- <div class="saleOverview" style="margin-bottom: 8px;">
 		                            <p data-bind="click: loadTransaction">
-		                            	<span data-format="n" data-bind="text: lang.lang.balance_as_of_today"></span>
+		                            	<span data-format="n" data-bind="text: lang.lang.balance_as_of_today"></span><br/>
 										<span data-bind="text: balance"></span>
-		                            </p>
+		                            </p> -->
 		                            <!-- <div class="col-md-12">
 		                                <div class="col-md-4">
 		                                    <span data-format="n0" data-bind="text: raw.quantity"></span>
@@ -784,7 +834,7 @@
 		                                    <span data-bind="text: lang.lang.on_so"></span>
 		                                </div>
 		                            </div> -->
-		                        </div>
+		                       <!--  </div> -->
 		                    </div>
 	                    </div>
                     	<!-- <div class="row">
@@ -874,6 +924,219 @@
 	</div>
 </script>
 
+
+<script id="account" type="text/x-kendo-template">
+	<div class="page-wrapper ">
+        <div class="container-fluid">
+        	<div id="example">
+	        	<div class="row marginTop15">
+	                <div class="col-md-12">
+	                	<div class="card">
+	                		<div class="btn-close" onclick="javascript:window.history.back()"><i class="ti-close"></i></div>
+	                		<div class="card-body">
+
+							    <h2 data-bind="text: lang.lang.account"></h2>
+							    <div class="row">
+							    	<div class="col-md-6">
+										<!-- Group -->
+										<div class="control-group">
+											<label for="ddlType"><span data-bind="text: lang.lang.account_type"></span><span style="color:red">*</span></label>
+											<input id="ddlType" name="ddlType"
+												   data-role="dropdownlist"
+								                   data-value-primitive="true"
+								                   data-text-field="name"
+								                   data-value-field="id"
+								                   data-bind="value: obj.account_type_id,
+								                   			  disabled: obj.is_system,
+								                              source: accountTypeDS,
+								                              events:{change:typeChanges}"
+								                   data-option-label="Select Type..."
+								                   required data-required-msg="required" style="width: 100%;" />
+										</div>
+										<!-- // Group END -->
+									</div>
+							    	<div class="col-md-5" style="padding: 0 5px 0 15px;width: 46%;">
+										<!-- Group -->
+										<div class="control-group">
+											<label for="txtNumber"><span data-bind="text: lang.lang.account_code"></span><span style="color:red">*</span></label>
+											<input id="txtNumber" name="txtNumber"
+													class="k-textbox"
+													data-bind="value: obj.number,
+																events:{change: checkExistingNumber}"
+													required data-required-msg="required" style="width: 100%;">
+										</div>
+										<!-- // Group END -->
+									</div>
+									<div class="col-md-1" style="padding-left: 0;width: 25px;float: left;">
+										<a class="glyphicons no-js qrcode" data-bind="click: generateNumber" title="Generate Number" style="float: left; margin: 26px 0 0 0 ;"><i></i></a>
+									</div>
+							    </div>
+
+							    <div class="row">
+							    	<div class="col-md-6">
+										<!-- Group -->
+										<div class="control-group">
+											<label for="txtName"><span data-bind="text: lang.lang.account_name"></span><span style="color:red">*</span></label>
+											<input id="txtName" name="txtName"
+													class="k-textbox"
+													data-bind="value: obj.name"
+													required data-required-msg="required" style="width: 100%;">
+										</div>
+										<!-- // Group END -->
+									</div>
+							    	<div class="col-md-6">
+										<!-- Group -->
+										<div class="control-group">
+											<label for="txtNonLocalName"><span data-bind="text: lang.lang.non_local_name"></span></label>
+											<input id="txtNonLocalName" name="txtNonLocalName"
+													class="k-textbox"
+													data-bind="value: obj.name_2"
+													style="width: 100%;">
+										</div>
+										<!-- // Group END -->
+									</div>
+							    </div>
+
+							    <div class="row">
+							    	<div class="col-md-6">
+										<!-- Group -->
+										<div class="control-group">
+											<label for="ddlSubOf"><span data-bind="text: lang.lang.sub_account"></span></label>
+											<input id="ddlSubOf" name="ddlSubOf"
+												   data-role="dropdownlist"
+												   data-template="account-list-tmpl"
+								                   data-value-primitive="true"
+								                   data-auto-bind="false"
+								                   data-cascade-from="ddlType"
+												   data-cascade-from-field="account_type_id"
+								                   data-text-field="name"
+								                   data-value-field="id"
+								                   data-bind="value: obj.sub_of_id,
+								                              source: subAccountDS"
+								                   data-option-label="Select Sub Account..."
+								                   style="width: 100%;" />
+										</div>
+										<!-- // Group END -->
+									</div>
+							    	<div class="col-md-6">
+										<!-- Group -->
+										<div class="control-group">
+											<label for="ddlStatus"><span data-bind="text: lang.lang.status"></span><span style="color:red">*</span></label>
+											<input id="ddlStatus" name="ddlStatus"
+												   data-role="dropdownlist"
+								                   data-value-primitive="true"
+								                   data-text-field="name"
+								                   data-value-field="id"
+								                   data-bind="value: obj.status,
+								                   			  disabled: obj.is_system,
+								                              source: statusList"
+								                   data-option-label="Select Status..."
+								                   required data-required-msg="required" style="width: 100%;" />
+										</div>
+										<!-- // Group END -->
+									</div>
+							    </div>
+
+							    <div class="row">
+							    	<div class="col-md-6">
+										<!-- Group -->
+										<div class="control-group">
+											<label><input type="checkbox" data-bind="checked: obj.is_taxable" /> <span data-bind="text: lang.lang.taxable"></span></label>
+										</div>
+										<!-- // Group END -->
+									</div>
+							    	<div class="col-md-6">
+										<!-- Group -->
+										<div class="control-group">
+											<label for="txtDescription"><span data-bind="text: lang.lang.description"></span></label>
+											<input id="txtDescription" name="txtDescription"
+													class="k-textbox"
+													data-bind="value: obj.description"
+													style="height: 50px; width: 100%;">
+										</div>
+										<!-- // Group END -->
+									</div>
+							    </div>
+
+
+							    <div class="row" data-bind="visible: showBank">
+							    	<div class="well" style="margin-left: 15px; width: 92%; float: left; margin-top: 15px;">
+								    	<div class="col-md-6">
+											<!-- Group -->
+											<div class="control-group">
+												<label for="txtBankName"><span data-bind="text: lang.lang.bank_name"></span></label>
+												<input id="txtBankName" name="txtBankName"
+														class="k-textbox"
+														data-bind="value: obj.bank_name"
+														style="width: 100%;">
+											</div>
+											<!-- // Group END -->
+										</div>
+								    	<div class="col-md-6">
+											<!-- Group -->
+											<div class="control-group">
+												<label for="txtBankAccountNumber"><span data-bind="text: lang.lang.bank_account_no"></span></label>
+												<input id="txtBankAccountNumber" name="txtBankAccountNumber"
+														class="k-textbox"
+														data-bind="value: obj.bank_account_number"
+														style="width: 100%;" />
+											</div>
+											<!-- // Group END -->
+										</div>
+									</div>
+							    </div>
+
+							    
+							    <!-- Form actions -->
+								<div class="backgroundButtonFooter">
+									<div id="ntf1" data-role="notification"></div>
+
+									<!-- Delete Confirmation -->
+									<div data-role="window"
+						                 data-title="Delete Confirmation"
+						                 data-width="350"
+						                 data-height="200"
+						                 data-iframe="true"
+						                 data-modal="true"
+						                 data-visible="false"
+						                 data-position="{top:'40%',left:'35%'}"
+						                 data-actions="{}"
+						                 data-resizable="false"
+						                 data-bind="visible: showConfirm"
+						                 style="text-align:center;">
+						                <p style="font-size:25px; margin: 15px 0 25px;" class="delete-message" data-bind="text: confirmMessage"></p>
+									    <button style="font-size:14px; border:none; background:#496cad; color:#fff; padding:5px 25px;" data-bind="click:delete">Yes</button>
+									    <button style="font-size:14px; border:none; background:red; color:#fff; padding:5px 25px;" data-bind="click:closeConfirm">No</button>
+						            </div>
+						            <!-- // Delete Confirmation -->
+
+									<div class="row">
+										<div class="col-md-4" ></div>
+
+										<div class="col-md-8" align="right">
+											<span id="saveCancel" class="btn-btn" onclick="javascript:window.history.back()" data-bind="click: cancel"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
+											<span class="btn-btn" data-bind="click: openConfirm, visible: isEdit"><span data-bind="text: lang.lang.delete"></span></span>
+											<!-- <button type="button" class="btn btn-info btn-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				                        		<span data-bind="text: lang.lang.save_option"></span>
+					                        </button>
+					                        <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 35px, 0px); top: 0px; left: 0px; will-change: transform;">
+					                            <a class="dropdown-item" id="saveNew" data-bind="invisible: isEdit"><span data-bind="text: lang.lang.save_new"></span></a>
+					                            <a class="dropdown-item" id="savePrint"><span data-bind="text: lang.lang.save_print"></span></a>
+					                        </div> -->
+					                        <span class="btn-btn" id="saveNew" data-bind="invisible: isEdit"><span data-bind="text: lang.lang.save_new"></span></span>
+										  	<span class="btn-btn" id="saveClose"><span data-bind="text: lang.lang.save_close"></span></span>
+										</div>
+									</div>
+								</div>
+								<!-- // Form actions END -->
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
 
 
 
