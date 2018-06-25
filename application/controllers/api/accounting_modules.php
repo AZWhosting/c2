@@ -1570,7 +1570,7 @@ class Accounting_modules extends REST_Controller {
 
 		//Add 1 day
 		$asOf = date("Y-m-d", strtotime($asOf . "+1 days"));
-		$startDate = date("Y-m-d", strtotime($startDate . "+1 days"));
+		// $startDate = date("Y-m-d", strtotime($startDate . "+1 days"));
 
 		//BALANCE SHEET (As Of) Dr - Cr
 		$balanceSheets = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
@@ -1623,7 +1623,7 @@ class Accounting_modules extends REST_Controller {
 			$objList[] = array(
 				"id" 			=> $value->account_id,
 				"number" 		=> $value->account_number,
-				"name" 			=> $value->account_name,				
+				"name" 			=> $value->account_name,
 			   	"type" 			=> $value->account_account_type_name,
 			   	"nature" 		=> $value->account_account_type_nature,
 			   	"amount" 		=> floatval($value->total)
@@ -1635,35 +1635,16 @@ class Accounting_modules extends REST_Controller {
 		//RETAINED EARNING = Profit Loss + Retained Earning
 		//PREVIOUSE PROFIT AND LOSS (From Begining to startFiscalDate) Cr - Dr
 		$prevPL = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);				
-		$prevPL->select("account_id");
 		$prevPL->select_sum("(dr - cr) / transactions.rate", "total");
-		$prevPL->include_related("account", array("number","name"));
-		$prevPL->include_related("account/account_type", array("name","nature"));
 		$prevPL->where_related("account", "account_type_id >=", 35);
 		$prevPL->where_related("account", "account_type_id <=", 43);
 		$prevPL->where_related("transaction", "issued_date <", $startDate);
 		$prevPL->where_related("transaction", "is_recurring <>", 1);
 		$prevPL->where_related("transaction", "deleted <>", 1);		
 		$prevPL->where("deleted <>", 1);
-		$prevPL->order_by_related("account", "number", "asc");
-		$prevPL->group_by("account_id");
 		$prevPL->get();
-
-		$prevPLAmount = 0;
-		foreach ($prevPL as $value) {
-			$prevPLAmount += floatval($value->total);
-
-			$objList[] = array(
-				"id" 			=> $value->account_id,
-				"number" 		=> $value->account_number,
-				"name" 			=> $value->account_name,				
-			   	"type" 			=> $value->account_account_type_name,
-			   	"nature" 		=> $value->account_account_type_nature,
-			   	"amount" 		=> floatval($value->total)
-			);
-		}
 		//END PREVIOUSE PROFIT AND LOSS
-		
+
 
 		//RETAINED EARNING (As Of) Cr - Dr
 		$retainEarning = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
@@ -1679,7 +1660,7 @@ class Accounting_modules extends REST_Controller {
 		$retainEarning->get();
 		
 		if($retainEarning->account_id!==null){
-			$retainEarningAmount = $prevPLAmount + floatval($retainEarning->total);
+			$retainEarningAmount = floatval($prevPL->total) + floatval($retainEarning->total);
 
 			$objList[] = array(
 				"id" 			=> $retainEarning->account_id,
@@ -1879,7 +1860,8 @@ class Accounting_modules extends REST_Controller {
 			"id" 		=> 0,
 			"number" 	=> "",
 			"name" 		=> "Retained Earning",
-			"amount" 	=> $totalRetainEarning
+			"amount" 	=> $totalRetainEarning,
+			"multiplier"=> 1
 		);
 
 		//CURRENT PROFIT FOR THE YEAR (startFiscalDate -> As Of)
@@ -1901,7 +1883,8 @@ class Accounting_modules extends REST_Controller {
 			"id" 		=> 0,
 			"number" 	=> "",
 			"name" 		=> "Profit For The Year",
-			"amount" 	=> $currentPFYAmount
+			"amount" 	=> $currentPFYAmount,
+			"multiplier"=> 1
 		);
 		//END CURRENT PROFIT AND LOSS		
 		//End Retain Earning		
@@ -1915,6 +1898,7 @@ class Accounting_modules extends REST_Controller {
 				$subOfList[$value["sub_of_id"]]["id"] 			= $value["sub_of_id"];
 				$subOfList[$value["sub_of_id"]]["name"] 		= $value["sub_of_name"];
 				$subOfList[$value["sub_of_id"]]["parent"] 		= $value["parent"];
+				$subOfList[$value["sub_of_id"]]["multiplier"] 	= 1;
 				$subOfList[$value["sub_of_id"]]["typeLine"][] 	= $value;
 			}
 		}

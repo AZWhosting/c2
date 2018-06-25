@@ -46,7 +46,7 @@
                         <span class="hide-menu" data-bind="text: lang.lang.setting"></span>
                     </a>
                     <ul aria-expanded="false" class="collapse">
-                        <li><a href="<?php echo base_url(); ?>micro/setting#/pos_setting" ><i class="ti-receipt"></i><span data-bind="text: lang.lang.pos_setting"></span></a></li>
+                        <!-- <li><a href="<?php echo base_url(); ?>micro/setting#/pos_setting" ><i class="ti-receipt"></i><span data-bind="text: lang.lang.pos_setting"></span></a></li> -->
                         <li><a href="<?php echo base_url(); ?>micro/setting#/customer_setting" ><i class="ti-receipt"></i><span data-bind="text: lang.lang.customer_setting"></span></a></li>
                         <li><a href="<?php echo base_url(); ?>micro/setting#/vendor_setting" ><i class="ti-view-list"></i><span  data-bind="text: lang.lang.purchase_settinig"></span></a></li>
                         <li><a href="<?php echo base_url(); ?>micro/setting#/item_setting" ><i class="ti-layout-grid2"></i><span data-bind="text: lang.lang.inventory_setting"></span></a></li>
@@ -59,7 +59,7 @@
                         <img style="width: 20px; float: right; margin-right: 6px;" src="<?php echo base_url(); ?>assets/micro/app.ico">
                     </a>
                 </li>
-                <li>
+                <!-- <li>
                     <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
                         <i class="ti-bookmark-alt"></i>
                         <span class="hide-menu" data-bind="text: lang.lang.user_guide"></span>
@@ -71,7 +71,7 @@
                         <li><a href="<?php echo base_url(); ?>micro/guide#/item_guide" ><i class="ti-layout-grid2"></i><span data-bind="text: lang.lang.products_services"></span></a></li>
                         <li><a href="<?php echo base_url(); ?>micro/guide#/cash_guide" ><i class="fa fa-dollar"></i><span data-bind="text: lang.lang.cash"></span></a></li>
                     </ul>
-                </li>
+                </li> -->
             </ul>
         </nav>
         <!-- End Sidebar navigation -->

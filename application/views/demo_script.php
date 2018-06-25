@@ -55688,213 +55688,220 @@
 					{ value: "" }
 				]
 			});
-			for (var i = 0; i < data.asset.length; i++){
-				self.exArray.push({
-					cells: [
-						{ value: data.asset[i].name, bold: true, italic: true },
-						{ value: "" },
-						{ value: "" }
-					]
-				});
-				for(var j = 0; j < data.asset[i].typeLine.length; j++){
+			//Asset
+			if(data.asset){
+				for (var i = 0; i < data.asset.length; i++){
 					self.exArray.push({
 						cells: [
-							{ value: data.asset[i].typeLine[j].type, bold: true },
+							{ value: data.asset[i].name, bold: true, italic: true },
 							{ value: "" },
 							{ value: "" }
 						]
 					});
-					for(var k = 0; k < data.asset[i].typeLine[j].line.length; k++){
+					for(var j = 0; j < data.asset[i].typeLine.length; j++){
 						self.exArray.push({
 							cells: [
-								{ value: data.asset[i].typeLine[j].line[k].number + " " + data.asset[i].typeLine[j].line[k].name },
-								{ value: kendo.parseFloat(data.asset[i].typeLine[j].line[k].amount) },
+								{ value: data.asset[i].typeLine[j].type, bold: true },
+								{ value: "" },
 								{ value: "" }
 							]
 						});
+						for(var k = 0; k < data.asset[i].typeLine[j].line.length; k++){
+							self.exArray.push({
+								cells: [
+									{ value: data.asset[i].typeLine[j].line[k].number + " " + data.asset[i].typeLine[j].line[k].name },
+									{ value: kendo.parseFloat(data.asset[i].typeLine[j].line[k].amount) },
+									{ value: "" }
+								]
+							});
 
-						totalCurrent += kendo.parseFloat(data.asset[i].typeLine[j].line[k].amount);
-						totalAll += kendo.parseFloat(data.asset[i].typeLine[j].line[k].amount);
-						totalAsCu += kendo.parseFloat(data.asset[i].typeLine[j].line[k].amount);
-						totalBlock += kendo.parseFloat(data.asset[i].typeLine[j].line[k].amount);
+							totalCurrent += kendo.parseFloat(data.asset[i].typeLine[j].line[k].amount);
+							totalAll += kendo.parseFloat(data.asset[i].typeLine[j].line[k].amount);
+							totalAsCu += kendo.parseFloat(data.asset[i].typeLine[j].line[k].amount);
+							totalBlock += kendo.parseFloat(data.asset[i].typeLine[j].line[k].amount);
+						}
+						self.exArray.push({
+							cells: [
+								{ value: "Total " + data.asset[i].typeLine[j].type, bold: true },
+								{ value: totalBlock, bold: true, borderTop: { color: "#000000", size: 1 } },
+								{ value: "" }
+							]
+						});
+						totalBlock = 0;
+						self.exArray.push({
+							cells: [
+								{ value: "" },
+								{ value: "" },
+								{ value: "" }
+							]
+						});
 					}
 					self.exArray.push({
 						cells: [
-							{ value: "Total " + data.asset[i].typeLine[j].type, bold: true },
-							{ value: totalBlock, bold: true, borderTop: { color: "#000000", size: 1 } },
-							{ value: "" }
+							{ value: "Total " + data.asset[i].name, bold: true, italic: true },
+							{ value: "" },
+							{ value: totalCurrent , bold: true, borderTop: { color: "#000000", size: 1 } }
 						]
 					});
-					totalBlock = 0;
-					self.exArray.push({
-						cells: [
-							{ value: "" },
-							{ value: "" },
-							{ value: "" }
-						]
-					});
+					totalCurrent = 0;
 				}
-				self.exArray.push({
+				this.exArray.push({
 					cells: [
-						{ value: "Total " + data.asset[i].name, bold: true, italic: true },
-						{ value: "" },
-						{ value: totalCurrent , bold: true, borderTop: { color: "#000000", size: 1 } }
+						{ value: "TOTAL ASSETS", bold: true, color: "#ffffff", background: "#1E4E78", fontSize: 20 },
+						{ value: "", background: "#1E4E78" },
+						{ value: totalAsCu, bold: true, color: "#ffffff", background: "#1E4E78", fontSize: 20 }
 					]
 				});
-				totalCurrent = 0;
+				this.exArray.push({
+					cells: [
+						{ value: "", colSpan: 3 },
+					]
+				});
 			}
-			this.exArray.push({
-				cells: [
-					{ value: "TOTAL ASSETS", bold: true, color: "#ffffff", background: "#1E4E78", fontSize: 20 },
-					{ value: "", background: "#1E4E78" },
-					{ value: totalAsCu, bold: true, color: "#ffffff", background: "#1E4E78", fontSize: 20 }
-				]
-			});
-			this.exArray.push({
-				cells: [
-					{ value: "", colSpan: 3 },
-				]
-			});
 			//Liability
-			totalAll = 0;
-			this.exArray.push({
-				cells: [
-					{ value: "LIABILITIES", bold: true, fontSize: 16 },
-					{ value: "" },
-					{ value: "" }
-				]
-			});
-			for (var i = 0; i < data.liability.length; i++){
-				self.exArray.push({
+			if(data.liability){
+				totalAll = 0;
+				this.exArray.push({
 					cells: [
-						{ value: data.liability[i].name, bold: true, italic: true },
+						{ value: "LIABILITIES", bold: true, fontSize: 16 },
 						{ value: "" },
 						{ value: "" }
 					]
 				});
-				for(var j = 0; j < data.liability[i].typeLine.length; j++){
+				for (var i = 0; i < data.liability.length; i++){
 					self.exArray.push({
 						cells: [
-							{ value: data.liability[i].typeLine[j].type, bold: true },
+							{ value: data.liability[i].name, bold: true, italic: true },
 							{ value: "" },
 							{ value: "" }
 						]
 					});
-					for(var k = 0; k < data.liability[i].typeLine[j].line.length; k++){
+					for(var j = 0; j < data.liability[i].typeLine.length; j++){
 						self.exArray.push({
 							cells: [
-								{ value: data.liability[i].typeLine[j].line[k].number + " " + data.liability[i].typeLine[j].line[k].name },
-								{ value: kendo.parseFloat(data.liability[i].typeLine[j].line[k].amount) },
+								{ value: data.liability[i].typeLine[j].type, bold: true },
+								{ value: "" },
 								{ value: "" }
 							]
 						});
-						totalBlock += kendo.parseFloat(data.liability[i].typeLine[j].line[k].amount);
-						totalLi += kendo.parseFloat(data.liability[i].typeLine[j].line[k].amount);
-						totalAll += kendo.parseFloat(data.liability[i].typeLine[j].line[k].amount);
+						for(var k = 0; k < data.liability[i].typeLine[j].line.length; k++){
+							self.exArray.push({
+								cells: [
+									{ value: data.liability[i].typeLine[j].line[k].number + " " + data.liability[i].typeLine[j].line[k].name },
+									{ value: kendo.parseFloat(data.liability[i].typeLine[j].line[k].amount) },
+									{ value: "" }
+								]
+							});
+							totalBlock += kendo.parseFloat(data.liability[i].typeLine[j].line[k].amount);
+							totalLi += kendo.parseFloat(data.liability[i].typeLine[j].line[k].amount);
+							totalAll += kendo.parseFloat(data.liability[i].typeLine[j].line[k].amount);
+						}
+						self.exArray.push({
+							cells: [
+								{ value: "Total " + data.liability[i].typeLine[j].type, bold: true },
+								{ value: totalBlock, bold: true, borderTop: { color: "#000000", size: 1 } },
+								{ value: "" }
+							]
+						});
+						totalBlock = 0;
+						self.exArray.push({
+							cells: [
+								{ value: "" },
+								{ value: "" },
+								{ value: "" }
+							]
+						});
 					}
 					self.exArray.push({
 						cells: [
-							{ value: "Total " + data.liability[i].typeLine[j].type, bold: true },
-							{ value: totalBlock, bold: true, borderTop: { color: "#000000", size: 1 } },
-							{ value: "" }
-						]
-					});
-					totalBlock = 0;
-					self.exArray.push({
-						cells: [
+							{ value: "Total " + data.liability[i].name, bold: true, italic: true },
 							{ value: "" },
-							{ value: "" },
-							{ value: "" }
+							{ value: totalLi, bold: true, borderTop: { color: "#000000", size: 1 } }
 						]
 					});
 				}
-				self.exArray.push({
+				this.exArray.push({
 					cells: [
-						{ value: "Total " + data.liability[i].name, bold: true, italic: true },
+						{ value: "TOTAL LIABILITIES", bold: true, color: "#000000", fontSize: 20 },
 						{ value: "" },
-						{ value: totalLi, bold: true, borderTop: { color: "#000000", size: 1 } }
+						{ value: totalLi, bold: true, color: "#000000", fontSize: 20 }
+					]
+				});
+				this.exArray.push({
+					cells: [
+						{ value: "", colSpan: 3 },
 					]
 				});
 			}
-			this.exArray.push({
-				cells: [
-					{ value: "TOTAL LIABILITIES", bold: true, color: "#000000", fontSize: 20 },
-					{ value: "" },
-					{ value: totalLi, bold: true, color: "#000000", fontSize: 20 }
-				]
-			});
-			this.exArray.push({
-				cells: [
-					{ value: "", colSpan: 3 },
-				]
-			});
 			//Equity
-			this.exArray.push({
-				cells: [
-					{ value: "EQUITY", bold: true, fontSize: 16 },
-					{ value: "" },
-					{ value: "" }
-				]
-			});
-			for (var i = 0; i < data.equity.length; i++){
-				self.exArray.push({
+			if(data.equity){
+				this.exArray.push({
 					cells: [
-						{ value: data.equity[i].name, bold: true, italic: true },
+						{ value: "EQUITY", bold: true, fontSize: 16 },
 						{ value: "" },
 						{ value: "" }
 					]
 				});
-				for(var j = 0; j < data.equity[i].typeLine.length; j++){
+				for (var i = 0; i < data.equity.length; i++){
 					self.exArray.push({
 						cells: [
-							{ value: data.equity[i].typeLine[j].type, bold: true },
+							{ value: data.equity[i].name, bold: true, italic: true },
 							{ value: "" },
 							{ value: "" }
 						]
 					});
-					for(var k = 0; k < data.equity[i].typeLine[j].line.length; k++){
+					for(var j = 0; j < data.equity[i].typeLine.length; j++){
 						self.exArray.push({
 							cells: [
-								{ value: data.equity[i].typeLine[j].line[k].number + " " + data.equity[i].typeLine[j].line[k].name },
-								{ value: data.equity[i].typeLine[j].line[k].amount },
+								{ value: data.equity[i].typeLine[j].type, bold: true },
+								{ value: "" },
 								{ value: "" }
 							]
 						});
-						totalBlock += kendo.parseFloat(data.equity[i].typeLine[j].line[k].amount);
-						totalEq += kendo.parseFloat(data.equity[i].typeLine[j].line[k].amount);
-						totalAll += kendo.parseFloat(data.equity[i].typeLine[j].line[k].amount);
+						for(var k = 0; k < data.equity[i].typeLine[j].line.length; k++){
+							self.exArray.push({
+								cells: [
+									{ value: data.equity[i].typeLine[j].line[k].number + " " + data.equity[i].typeLine[j].line[k].name },
+									{ value: data.equity[i].typeLine[j].line[k].amount },
+									{ value: "" }
+								]
+							});
+							totalBlock += kendo.parseFloat(data.equity[i].typeLine[j].line[k].amount);
+							totalEq += kendo.parseFloat(data.equity[i].typeLine[j].line[k].amount);
+							totalAll += kendo.parseFloat(data.equity[i].typeLine[j].line[k].amount);
+						}
+						self.exArray.push({
+							cells: [
+								{ value: "Total " + data.equity[i].typeLine[j].type, bold: true },
+								{ value: totalBlock, bold: true, borderTop: { color: "#000000", size: 1 } },
+								{ value: "" }
+							]
+						});
+						totalBlock = 0;
+						self.exArray.push({
+							cells: [
+								{ value: "" },
+								{ value: "" },
+								{ value: "" }
+							]
+						});
 					}
 					self.exArray.push({
 						cells: [
-							{ value: "Total " + data.equity[i].typeLine[j].type, bold: true },
-							{ value: totalBlock, bold: true, borderTop: { color: "#000000", size: 1 } },
-							{ value: "" }
-						]
-					});
-					totalBlock = 0;
-					self.exArray.push({
-						cells: [
+							{ value: "Total " + data.equity[i].name, bold: true, italic: true },
 							{ value: "" },
-							{ value: "" },
-							{ value: "" }
+							{ value: totalEq, bold: true, borderTop: { color: "#000000", size: 1 } }
 						]
 					});
 				}
-				self.exArray.push({
+				this.exArray.push({
 					cells: [
-						{ value: "Total " + data.equity[i].name, bold: true, italic: true },
-						{ value: "" },
-						{ value: totalEq, bold: true, borderTop: { color: "#000000", size: 1 } }
+						{ value: "TOTAL LIABILITIES & EQUITY", bold: true, color: "#ffffff", background: "#1E4E78", fontSize: 20 },
+						{ value: "", background: "#1E4E78" },
+						{ value: totalAll, bold: true, color: "#ffffff", background: "#1E4E78", fontSize: 20 }
 					]
 				});
 			}
-			this.exArray.push({
-				cells: [
-					{ value: "TOTAL LIABILITIES & EQUITY", bold: true, color: "#ffffff", background: "#1E4E78", fontSize: 20 },
-					{ value: "", background: "#1E4E78" },
-					{ value: totalAll, bold: true, color: "#ffffff", background: "#1E4E78", fontSize: 20 }
-				]
-			});
 		},
 		goToGeneralLegder   : function(e){
 			var data = e.data, ids = this.get("crossAccounts");

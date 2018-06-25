@@ -5746,6 +5746,9 @@
                 self.set("onProcessing", false);
             });
         },
+        goPOS               : function(e){
+            window.location.href = "<?php echo base_url(); ?>wellnez_ktv/pos/#/serving/" + obj.id;
+        },
         onProcessing        : false,
     });
     //Print
@@ -5824,6 +5827,7 @@
                     '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">'+
                     '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
                     '<link href="https://fonts.googleapis.com/css?family=Preahvihear" rel="stylesheet">'+
+                    '<link href="https://fonts.googleapis.com/css?family=Roboto+Slab:300" rel="stylesheet">'+
                     '<link href="https://fonts.googleapis.com/css?family=Roboto+Slab:300" rel="stylesheet">'+
                     '<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Battambang&amp;subset=khmer" media="all">'+
                     '<style type="text/css" media="print">' +

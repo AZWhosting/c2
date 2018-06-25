@@ -71,7 +71,7 @@
 		<!-- 111 -->
 		<div class="col-12 col-md-4">
 			<div class="saleOverview" data-bind="click: loadSale" style="margin-bottom: 15px;">
-				<h2 data-bind="text: lang.lang.sale">Sale Begining Of The Year</h2>
+				<h2 data-bind="">Sale Begining Of The Year</h2>
 				<p data-format="n" data-bind="text: obj.sale"></p>
 				<div class="row">
 					<div class="col">
@@ -265,7 +265,7 @@
 		                      min: sdate"
 		           placeholder="To ..." />
 
-		  	<button class="btnSearch float-left" type="button" data-role="button" data-bind="click: search"><i class="ti-search"></i></button>
+		  	<button style="background: #009efb; color: #fff;" class="btnSearch float-left" type="button" data-role="button" data-bind="click: search"><i class="ti-search"></i></button>
 		</div>
 	</div>
 
@@ -510,7 +510,7 @@
 							<div class="overflow-hidden">
 								<input type="search" placeholder="Number or Name..." data-bind="value: searchText" />
 							</div>
-							<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="ti-search"></i></button>
+							<button style="background: #009efb; color: #fff;" type="button" class="btn btn-default pull-right " data-bind="click: search"><i class="ti-search"></i></button>
 						</div>
 					</div>
 				</div>
@@ -1156,7 +1156,7 @@
 							<div class="overflow-hidden">
 								<input type="search" placeholder="Number or Name..." data-bind="value: searchText" style="padding: 6px;">
 							</div>
-							<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="ti-search"></i></button>
+							<button style="background: #009efb; color: #fff;" type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="ti-search"></i></button>
 						</div>
 						
 					</form>
@@ -1390,7 +1390,7 @@
 					                      min: sdate"
 					           placeholder="To ..." >
 
-					  	<button class="btnSearch" type="button" class="marginBottom" data-role="button" data-bind="click: searchTransaction"><i class="ti-search"></i></button>
+					  	<button style="background: #009efb; color: #fff;" class="btnSearch" type="button" class="marginBottom" data-role="button" data-bind="click: searchTransaction"><i class="ti-search"></i></button>
 					</div>
 				</div>
 				<!-- End -->
@@ -7524,4 +7524,4 @@
 		#=code# - #=country#
 	</span>
 </script>
-<!-- End -->
+<!-- End -->                    

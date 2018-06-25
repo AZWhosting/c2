@@ -313,7 +313,7 @@
 		                      min: sdate"
 		           placeholder="To ..." />
 
-		  	<button class="btnSearch float-left" type="button" data-role="button" data-bind="click: search"><i class="ti-search"></i></button>
+		  	<button style="background: #009efb; color: #fff;" class="btnSearch float-left" type="button" data-role="button" data-bind="click: search"><i class="ti-search"></i></button>
 		</div>
 		<div class="col-md-4"></div>
 	</div>
@@ -448,7 +448,7 @@
 							<div class="overflow-hidden">
 								<input type="search" placeholder="Number or Name..." data-bind="value: searchText">
 							</div>
-							<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="ti-search"></i></button>
+							<button style="background: #009efb; color: #fff;" type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="ti-search"></i></button>
 						</div>
 					</div>
 				</div>
@@ -1089,7 +1089,7 @@
 							<div class="overflow-hidden">
 								<input style="padding: 6px;" type="search" placeholder="Number or Name..." data-bind="value: searchText">
 							</div>
-							<button type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="ti-search"></i></button>
+							<button style="background: #009efb; color: #fff;" type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="ti-search"></i></button>
 						</div>
 						
 					</form>
@@ -1344,7 +1344,7 @@
 					                      min: sdate"
 					           placeholder="To ..." >
 
-					  	<button class="btnSearch" type="button" class="marginBottom" data-role="button" data-bind="click: searchTransaction"><i class="ti-search"></i></button>
+					  	<button style="background: #009efb; color: #fff;" class="btnSearch" type="button" class="marginBottom" data-role="button" data-bind="click: searchTransaction"><i class="ti-search"></i></button>
 					</div>
 				</div>
 				<!-- End -->

@@ -5039,6 +5039,8 @@
                         self.lineDS.filter({ field: "transaction_id", value: id });
                         self.journalLineDS.filter({ field: "transaction_id", value: id });
                         self.attachmentDS.filter({ field: "transaction_id", value: id });
+
+                        self.typeChanges();
                     }
                 });
             }
@@ -5134,13 +5136,13 @@
             this.txnTemplateDS.filter({ field:"type", value:obj.type });
 
             switch(obj.type) {
-                case "Deposit":
-                    this.set("fromToTop", "TO");
-                    this.set("fromToBottom", "FROM");
-                    break;
-                default:
+                case "Withdraw":
                     this.set("fromToTop", "FROM");
                     this.set("fromToBottom", "TO");
+                    break;
+                default:
+                    this.set("fromToTop", "TO");
+                    this.set("fromToBottom", "FROM");
             }
         },
         objSync             : function(){
@@ -5300,12 +5302,12 @@
             //Add Journal
             var objAccountID = kendo.parseInt(obj.account_id);
             if(objAccountID>0){
-                if(obj.type=="Deposit"){
-                    raw = "dr"+objAccountID;
-                    dr = obj.amount;
-                }else{
+                if(obj.type=="Withdraw"){
                     raw = "cr"+objAccountID;
                     cr = obj.amount;
+                }else{
+                    raw = "dr"+objAccountID;
+                    dr = obj.amount;
                 }
 
                 if(entries[raw]===undefined){
@@ -5329,12 +5331,12 @@
 
             $.each(this.lineDS.data(), function(index, value){
                 dr = 0; cr = 0;
-                if(obj.type=="Deposit"){
-                    raw = "cr"+value.account_id;
-                    cr = value.amount;
-                }else{
+                if(obj.type=="Withdraw"){
                     raw = "dr"+value.account_id;
                     dr = value.amount;
+                }else{
+                    raw = "cr"+value.account_id;
+                    cr = value.amount;
                 }
 
                 if(entries[raw]===undefined){

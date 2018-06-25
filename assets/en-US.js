@@ -344,6 +344,7 @@ var	en_US = {
 	"discount_report": "Discount Report",
 	"maintenance_report": "Maintenance Report",
 	"summary_report": "Discount Report",
+	"cashReceipt" : "Cash Receipt",
 	//Supplier,
 	"in_here_you_can_manage_your_supplier" : "In here, you can manage your supplier information, and other related transactions.",
 	"add_supplier" : "Add supplier",

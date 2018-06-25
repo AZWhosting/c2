@@ -434,7 +434,7 @@
 				</div>
 				<div class="row ">
 					<div class="span6 ">
-						<div data-bind="invisible: haveServing" class="example" style="height: 633px; overflow-y: scroll;padding-bottom: 15px;">
+						<div class="example" style="height: 633px; overflow-y: scroll;padding-bottom: 15px;">
 							<div id="formStyle"
 								 data-role="listview"
 								 data-auto-bind="true"
@@ -442,49 +442,7 @@
 				                 data-template="work-list-tmpl"
 				                 data-bind="source: workDS"
 				                 style="overflow: auto;width: 100%;background: none;">
-				            </div>
-						</div>
-						<div data-bind="visible: haveServing" class="example" style="height: 633px; overflow-y: scroll;padding-bottom: 15px;">
-							<div class="demo-section k-content wide span12" style="box-shadow: 2px 0px 12px 0px rgba(68,68,68,1);">
-								<div data-bind="visible: onProcessing" style="border-radius: 0px;margin-top: -15px;margin-left: -15px;display:none;text-align: center;position: absolute;width: 100%; height: 100%;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
-									<i class="fa fa-circle-o-notch fa-spin" style="font-size: 25px;color: #fff;position: absolute; top: 40%;left: 40%">Loading...</i>
-								</div>
-								<div data-bind="invisible: haveItem" class="demo-section k-content wide">
-									<div style="background: #0eac00;overflow: hidden; margin-bottom: 5px;">
-										<p style="float: left;" data-bind="text: lang.lang.category"></p>
-									</div>
-									<div style="clear: both;"
-										id="productListView"
-										data-role="listview"
-										data-template="category-list-view-template"
-										data-auto-bind="true"
-										data-bind="source: categoryDS">
-									</div>
-									<div id="pager" class="k-pager-wrap"
-								    	 data-role="pager"
-								    	 data-auto-bind="true"
-							             data-bind="source: categoryDS">
-							        </div>
-								</div>
-								<div data-bind="visible: haveItem" class="demo-section k-content wide">
-									<div style="background: #0eac00;overflow: hidden; margin-bottom: 5px;">
-										<p style="float: left;" data-bind="text: lang.lang.item"></p>
-										<a  data-bind="click: backCategory" style="float: right;font-size: 10px;" class="glyphicons no-js chevron-left"><i></i>Back</a>
-									</div>
-									<div style="clear: both;"
-										id="productListView"
-										data-role="listview"
-										data-template="item-list-view-template"
-										data-auto-bind="true"
-										data-bind="source: itemsDS">
-									</div>
-									<div id="pager" class="k-pager-wrap"
-								    	 data-role="pager"
-								    	 data-auto-bind="true"
-							             data-bind="source: itemsDS">
-							        </div>
-								</div>
-							</div>			
+				            </div>						
 						</div>
 					</div>
 					<div class="span6">
@@ -548,7 +506,7 @@
 				                 data-bind="source: lineDS" >
 		                 	</div>
 		                 	<div data-bind="visible: haveWork">
-					            <button style="background: #1c3b19; float:left;" class="btn btn-inverse" data-bind="click: showItem"><i class="icon-plus icon-white"></i><span style="float: right; margin-left: 10px;">Add Serving</span></button>
+					            <button style="background: #1c3b19; float:left;" class="btn btn-inverse" data-bind="click: goPOS"><i class="icon-plus icon-white"></i><span style="float: right; margin-left: 10px;">Add Serving</span></button>
 					            <button style="background: darkred;float: left;border: 1px solid darkred;" class="btn btn-inverse" data-bind="click: saveWork"><i class="icon-plus icon-white"></i><span style="float: right; margin-left: 10px;" data-bind="text: lang.lang.save">Add Serving</span></button>
 					        </div>
 						</div>
@@ -643,25 +601,6 @@
 			<p style="text-align: left;"><b>Time:</b> <span style="text-align: center;font-size: 12px;">#: kendo.toString(new Date(maintenance_date), "F")#</span></p>
 			<a style="background: \#1c3b19;  color: \#fff; padding: 5px 15px;" data-bind="click: availableRoom">Available</a>
 		#}#
-	</div>
-</script>
-<script id="category-list-view-template" type="text/x-kendo-template">
-	<div class="product" data-bind="click:searchItemByCategory" style="text-align: center;">
-		
-		<div class="cover-img" >
-			<a class="view-details">
-				<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/no_image.jpg" />
-			</a>
-		</div>
-		<h3>#:name.substring(0, 20)#...</h3>
-		
-	</div>
-</script>
-<script id="item-list-view-template" type="text/x-kendo-template">
-	<div class="product" data-bind="click:addRow" style="text-align: center;">
-		<img src="#= image_url? image_url: 'https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/no_image.jpg'#" />
-		<h3>#:name#</h3>
-		<p>#=kendo.toString(price, locale=="km-KH"?"c0":"c", locale)#</p>
 	</div>
 </script>
 
@@ -858,7 +797,6 @@
 			font-size: 14px;
 			padding: 0;
 			margin: 0;
-			font-family: 'Preahvihear', 'Roboto Slab' !important;
 		}
 	</style>
   	<div style="margin: 0 auto;">

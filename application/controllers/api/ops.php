@@ -14,7 +14,7 @@ class Ops extends REST_Controller {
 		$startQ = false;
 
 		foreach ($dbs as $key => $db)
-		{	
+		{
 			if (!in_array("$db", $companyBlackList)) {
 				$connection = 'use ' . $db;
 				$this->db->query($connection);
@@ -50,13 +50,13 @@ class Ops extends REST_Controller {
 			    // $this->dbforge->add_field("created_at date DEFAULT NULL");
 			    // $this->dbforge->add_field("updated_at date DEFAULT NULL");
 			    // $this->dbforge->create_table('tmp_total_sales', TRUE);
-			    
+
 				//Rename Table 'old_table_name' to 'new_table_name'
 			    // $this->dbforge->rename_table('contacts_custom_fields', 'field_values');
 
 				//DROP TABLE IF EXISTS table_name
 			    // $this->dbforge->drop_table('references');
-			    
+
 			    //Update data
 			    // $this->db->where('type', 'Wellnez_Form');
 			    // $data['results'][] = $this->db->update('transaction_templates', array('transaction_form_id' => 32));
@@ -114,10 +114,10 @@ class Ops extends REST_Controller {
 			 // 	   	)
 				// );
 			 // 	$this->db->insert_batch('transaction_templates', $raw);
-				
+
 
 				//DELETE DATA
-				// $data['results'][] = $this->db->delete('transaction_templates', array('transaction_form_id' => 75, 'user_id' => 12)); 
+				// $data['results'][] = $this->db->delete('transaction_templates', array('transaction_form_id' => 75, 'user_id' => 12));
 
 				// Add new fields
 				// $fields = array(
@@ -153,25 +153,23 @@ class Ops extends REST_Controller {
 				// 	)
 				// );
 				// $data['results'][] = $this->dbforge->add_column("transactions", $fields);
-				
+
 			    // Modify fields
 		 	// 	$fields = array(
 				// 	// "conversion_ratio" => array(
-				// 	// 	"name" 		=> "conversion_ratio",//New Field Name 
+				// 	// 	"name" 		=> "conversion_ratio",//New Field Name
 				// 	// 	"type" 		=> "DECIMAL",
 				// 	// 	"constraint"=> "30,15",
 				// 	// 	"null" 		=> FALSE,
 				// 	// 	"default" 	=> 1
 				// 	// ),
-				// 	"type" => array(
-				// 		"name" 		=> "type",//New Field Name 
+				// 	"phone" => array(
+				// 		"name" 		=> "phone",//New Field Name
 				// 		"type" 		=> "VARCHAR",
-				// 		"constraint"=> "50",
-				// 		"null" 		=> FALSE,
-				// 		"default" 	=> ""
+				// 		"constraint"=> "255"
 				// 	)
 				// );
-				// $data['results'][] = $this->dbforge->modify_column('attachments', $fields);
+				// $data['results'][] = $this->dbforge->modify_column('contacts', $fields);
 
 			 	//Remove column, 'table_name', 'column_to_drop'
 				// $this->dbforge->drop_column('memberships', 'cpd_record_date');
@@ -179,9 +177,9 @@ class Ops extends REST_Controller {
 				//Custom
 				// $dsn = 'mysql://'.$this->db->username.':'.$this->db->password.'@'.$this->db->hostname.'/'.$db;
 				// $DB1 = $this->load->database($dsn, TRUE);
-				// get all of the tables				
+				// get all of the tables
 				// $this->db = $DB1;
-			    
+
 			    // $this->db->query($connection);
 			    // if($this->db->table_exists('plan_items')) {
 			    // 	$field = array(
@@ -194,7 +192,7 @@ class Ops extends REST_Controller {
 			    // 	if($this->dbforge->modify_column('plan_items', $field)) {
 			    // 		$data['results'][] = $db;
 			    // 	}
-			    // } 
+			    // }
 			 	//    $fields = array(
 			    //                     'usage' => array(
 			    //                     	'type' => 'INT',
@@ -208,7 +206,7 @@ class Ops extends REST_Controller {
 
 		$data["total"] = count($data["results"]);
 
-		//Response Data		
+		//Response Data
 		$this->response($data, 200);
 
 	}//End Function
@@ -239,7 +237,7 @@ class Ops extends REST_Controller {
 	// 	$companyList = array("banhji","banhji_mac", "db_banhji", "information_schema","innodb","mysql","performance_schema","tmp");
 	// 	$data = array();
 	// 	foreach ($dbs as $db)
-	// 	{	
+	// 	{
 	// 		if (!in_array("$db", $companyList)) {
 	// 		    $data[] = $db;
 	// 		    $connection = 'use ' . $db;
@@ -256,12 +254,12 @@ class Ops extends REST_Controller {
 	// 		    // $this->dbforge->drop_column('items', 'accumulated_account_id');
 	// 		    // $this->dbforge->drop_column('items', 'depreciation_account_id');
 	// 		}
-		    
+
 	// 	}
 	// }
 
 	// function run_db_banhji_get() {
-	// 	$this->load->dbutil();	
+	// 	$this->load->dbutil();
 	//     $connection = 'use db_banhji';
 	//     $this->db->query($connection);
 
@@ -271,7 +269,7 @@ class Ops extends REST_Controller {
  //        $this->dbforge->modify_column(
  //        	'prefixes', array(
 	// 			'type' => array(
-	// 						'name' 		=> 'type', 
+	// 						'name' 		=> 'type',
 	// 						'type'		=> 'VARCHAR',
 	// 						'constraint'=> '255',
 	// 						'null' 		=> TRUE,
@@ -283,7 +281,7 @@ class Ops extends REST_Controller {
  //    //     $this->dbforge->modify_column(
  //    //     	'transactions', array(
 	// 			// 'journal_type' => array(
-	// 			// 			'name' 		=> 'journal_type', 
+	// 			// 			'name' 		=> 'journal_type',
 	// 			// 			'type'		=> 'VARCHAR',
 	// 			// 			'constraint'=> '255',
 	// 			// 			'null' 		=> TRUE,
@@ -293,7 +291,7 @@ class Ops extends REST_Controller {
  //    //     );
 	// }
 
-	
+
 
 	// function create_get() {
 	// 	$this->load->dbutil();
@@ -302,7 +300,7 @@ class Ops extends REST_Controller {
 	// 	$companyList = array("banhji","banhji_mac", "db_banhji", "information_schema","innodb","mysql","performance_schema","tmp");
 	// 	$data = array();
 	// 	// foreach ($dbs as $db)
-	// 	// {	
+	// 	// {
 	// 		// if (!in_array("$db", $companyList)) {
 	// 		//     $data[] = $db;
 	// 		    $connection = 'use db_1480145014';//. $db;
@@ -313,7 +311,7 @@ class Ops extends REST_Controller {
 	// 		    $this->dbforge->drop_column('items', 'fixed_assets_account_id');
 	// 		    $this->dbforge->drop_column('items', 'accumulated_account_id');
 	// 		    $this->dbforge->drop_column('items', 'depreciation_account_id');
-				
+
 	// 			// $this->dbforge->add_column("account_types", array('order'=> array('type'=> 'SMALLINT')));
 	// 			// $myData = array(
 	// 			// 	array('order' => 13, 'id' => 10),
@@ -342,9 +340,9 @@ class Ops extends REST_Controller {
 	// 			// $this->db->update_batch('account_types', $myData, 'id');
 
 	// 			// $this->db->insert('accounts', $dataInserted);
-	
+
 	// 	// 	}
-		    
+
 	// 	// }
 
 	// 	// $this->response(array('results'=>$data), 200);
@@ -353,7 +351,7 @@ class Ops extends REST_Controller {
 	// function create_get() {
 	// 	$this->load->dbutil();
 	// 	$dbs = $this->dbutil->list_databases();
-	
+
 	// 	$companyList = array("banhji","banhji_mac", "db_banhji", "information_schema","innodb","mysql","performance_schema","tmp");
 	// 	$data = array();
 	// 	foreach ($dbs as $db)
@@ -361,7 +359,7 @@ class Ops extends REST_Controller {
 	// 		if (!in_array("$db", $companyList)) {
 	// 		    $data[] = $db;
 	// 		    $connection = 'use ' . $db;
-	
+
 	// 		 //    $dataInserted = array(
 	// 			//    'account_type_id' => 34,
 	// 			//    'sub_of_id' => 70,
@@ -427,7 +425,7 @@ class Ops extends REST_Controller {
 	// 					"name" => "Intangible Asset"
 	// 				)
  // 				);
-	
+
 	// 			$this->db->query($connection);
 	// 			// $this->db->insert('items', array(
 	// 			// 	"is_pattern" => 1,
@@ -467,13 +465,13 @@ class Ops extends REST_Controller {
 	// 			// );
 	// 			$this->db->update_batch('items', $dataInserted, 'name');
 	// 			// $this->db->insert('accounts', $dataInserted);
-	
+
 	// 		}
-	
+
 	// 	}
-	
+
 	// 	// $this->response(array('results'=>$data), 200);
-	
+
 	// }
 
 	// 			// $myData = array(
@@ -517,8 +515,8 @@ class Ops extends REST_Controller {
 	// 		    	)
 	// 		    );
 
-	// 		    $this->db->update_batch('prefixes', $data, 'abbr'); 
-				
+	// 		    $this->db->update_batch('prefixes', $data, 'abbr');
+
 	// 			// $dataInserted = array(
 	// 			// 	array(
 	// 			// 		"type" => "Commercial_Invoice",
@@ -548,8 +546,8 @@ class Ops extends REST_Controller {
 	// 			// $this->db->insert_batch('prefixes', $dataInserted);
 	// 			// $this->db->where('abbr', "");
 	// 			// $this->db->delete('prefixes');
-	
-		// 	}   
+
+		// 	}
 		// }
 
 	// 	// $this->response(array('results'=>$data), 200);
@@ -563,7 +561,7 @@ class Ops extends REST_Controller {
 	// 	$companyList = array("banhji","banhji_mac", "db_banhji", "information_schema","innodb","mysql","performance_schema","tmp");
 	// 	$data = array();
 	// 	foreach ($dbs as $db)
-	// 	{	
+	// 	{
 	// 		if (!in_array("$db", $companyList)) {
 	// 		    $data[] = $db;
 	// 		    $connection = 'use '.$db;
@@ -572,8 +570,8 @@ class Ops extends REST_Controller {
  //                $this->dbforge->add_column(
  //                	"account_lines", array(//Table Name
 	//                 	'movement'=> array(//New Field Name
-	//                 			'type'=> 'TINYINT', 
-	//                 			'constraint'=> 1, 
+	//                 			'type'=> 'TINYINT',
+	//                 			'constraint'=> 1,
 	//                 			'unsigned'=> TRUE
 	//                 	)
  //                	)
@@ -584,7 +582,7 @@ class Ops extends REST_Controller {
 	// }
 	//End made by Great Mighty Dawine ^_^
 
-	function list_get() {		
+	function list_get() {
 		$this->db->select('table_schema, data_length, index_length');
 		$this->db->from('information_schema.TABLES');
 		$this->db->group_by('table_schema');
@@ -610,4 +608,5 @@ class Ops extends REST_Controller {
 		}
 		$this->response($data, 200);
 	}
+
 }

@@ -39867,12 +39867,12 @@
 </script>
 <script id="trialBalance-dr-tmpl" type="text/x-kendo-tmpl">
 	#if(dr!==0){#
-		<a data-bind="click:goToGeneralLegder">#=kendo.toString(Math.abs(dr), "n", banhji.locale)#</a>
+		<a data-bind="click:goToGeneralLegder">#=kendo.toString(dr, "n2")#</a>
 	#}#
 </script>
 <script id="trialBalance-cr-tmpl" type="text/x-kendo-tmpl">
 	#if(cr!==0){#
-		<a data-bind="click:goToGeneralLegder">#=kendo.toString(Math.abs(cr), "n", banhji.locale)#</a>
+		<a data-bind="click:goToGeneralLegder">#=kendo.toString(cr, "n2")#</a>
 	#}#
 </script>
 <script id="chartOfAccount" type="text/x-kendo-template">
@@ -40587,7 +40587,7 @@
         <td ></td>
     </tr>
     #var total = 0;#
-	#for(var i=0; i<typeLine.length; i++){#
+	#for(var i=0; i < typeLine.length; i++){#
 	    <tr>
 	        <td style="font-weight: bold;">
 	            &nbsp;&nbsp; #:typeLine[i].type#

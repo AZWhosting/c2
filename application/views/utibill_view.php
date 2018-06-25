@@ -15773,11 +15773,11 @@
 										<th style="text-align: right; vertical-align: top;"><span data-bind="text: lang.lang.amount">Amount</span></th>
 										<th style="text-align: right; vertical-align: top;"><span data-bind="text: lang.lang.maintenance">maintenance</span></th>
 										<th style="text-align: right; vertical-align: top;"><span data-bind="text: lang.lang.exemption">exemption</span></th>
-										<th style="text-align: right; vertical-align: top;"><span>Previous Balance</span></th>
+										<th style="text-align: right; vertical-align: top;"><span data-bind="text: lang.lang.balance_last_month">Previous Balance</span></th>
 										</span></th>
-										<th style="text-align: right; vertical-align: top;"><span "text: lang.lang.subtotal">Sub Total </span></th>
-										<th style="text-align: right; vertical-align: top;"><span "text: lang.lang.cashReceipt"> Cash Receipt </span></th>
-										<th style="text-align: right; vertical-align: top;"><span "text: lang.lang.cashReceipt">Total </span></th>
+										<th style="text-align: right; vertical-align: top;"><span data-bind="text: lang.lang.subtotal">Sub Total </span></th>
+										<th style="text-align: right; vertical-align: top;"><span data-bind="text: lang.lang.receipt_amount"> Cash Receipt </span></th>
+										<th style="text-align: right; vertical-align: top;"><span data-bind="text: lang.lang.total">Total </span></th>
 									</tr>
 								</thead>
 			            		<tbody  
@@ -15806,6 +15806,7 @@
 	# subTotal = amount + balance + maintenance + exemption;#
 	# total = (amount + balance + maintenance + exemption) - cash_receipt;#
 	<tr>
+		
 		<td>#=name#</td>
 		<td style="text-align: right;">#=customerActive#</td>
 		<td style="text-align: right;">#=totalUsage#</td>
