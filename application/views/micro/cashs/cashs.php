@@ -2132,246 +2132,236 @@
         <div class="container-fluid">
         	<div class="row marginTop15">
                 <div class="col-md-12">
-                	<div class="card">
-                		<div class="btn-close" onclick="javascript:window.history.back()"><i class="ti-close"></i></div>
-                		<div class="card-body">
+                	<div id="example">
+	                	<div class="card">
+	                		<div class="btn-close" onclick="javascript:window.history.back()"><i class="ti-close"></i></div>
+	                		<div class="card-body">
 
-				        <h2 data-bind="text: lang.lang.journal_entry"></h2>
+					        <h2 data-bind="text: lang.lang.journal_entry"></h2>
 
-						<!-- Upper Part -->
-						<div class="row">
-							<div class="col-md-4">
-								<div class="box-generic">
-									<table class="table table-borderless table-condensed cart_total" >
-										<tr>
-											<td style="width: 25%;"><span data-bind="text: lang.lang.no_"></span></td>
-											<td>
-												<input id="txtNumber" name="txtNumber" class="k-textbox"
-														data-bind="value: obj.number,
-															disabled: obj.is_recurring,
-															events:{change:checkExistingNumber}"
-														required data-required-msg="required"
-														placeholder="eg. ABC00001"/>
-												<div class="coverQrcode">
-													<a class="fa fa-qrcode" data-bind="click: generateNumber" title="Generate Number"><i></i></a>
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td><span data-bind="text: lang.lang.date"></span></td>
-											<td class="right">
-												<input id="issuedDate" name="issuedDate"
-														data-role="datepicker"
-														data-format="dd-MM-yyyy"
-														data-parse-formats="yyyy-MM-dd HH:mm:ss"
-														data-bind="value: obj.issued_date,
-																	events:{ change : setRate }"
-														required data-required-msg="required"/>
-											</td>
-										</tr>
-										<tr>
-											<td><span data-bind="text: lang.lang.type"></span></td>
-											<td>
-												<input id="cbbType" name="cbbType" style="width: 100%" 
-													   data-role="dropdownlist"
-									                   data-value-primitive="true"
-									                   data-text-field="name"
-									                   data-value-field="type"
-									                   data-bind="value: obj.type,
-									                              source: typeList,
-									                              events:{ change: typeChanges }"
-									                   required data-required-msg="required" />
-											</td>
-										</tr>
-										<tr>
-											<td><span data-bind="text: lang.lang.currency"></span></td>
-											<td>
-												<input id="cbbCurrency" name="cbbCurrency"
-												   data-role="combobox"
-								                   data-value-primitive="true"
-								                   data-template="currency-list-tmpl"
-								                   data-text-field="code"
-								                   data-value-field="locale"
-								                   data-bind="value: obj.locale,
-								                   			source: currencyDS,
-								                   			events: {change : setRate}"
-								                   placeholder="Select currency..."
-								                   required data-required-msg="required" style="width: 100%;"/>
-											</td>
-										</tr>
-									</table>
-
-								</div>
-							</div>
-							<div class="col-md-8">
-								<div class="box-generic-noborder">
-									<ul class="nav nav-tabs" role="tablist">
-	                                    <li class="nav-item"> <a class="nav-link active show" data-toggle="tab" href="#functionSetting" role="tab" aria-selected="true"><span><i class="ti-settings"></i></span></a> </li>
-	                                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#functionPaperclip" role="tab" aria-selected="false"><span><i class="icon-paper-clip"></i></span></a></li>
-	                                </ul>
-	                                <div class="tab-content tabcontent-border">
-	                                	<!--Tab Setting -->
-	                                    <div class="tab-pane active show" id="functionSetting" role="tabpanel">
-	                                        <div class="p-10">
-	                                            <div class="row">
-                                            		<div class="col-md-12">
-                                            			<textarea id="memo2" cols="0" rows="4" class="k-textbox"
-							        		data-bind="value: obj.memo2" style="width:100%;"
-							        		placeholder="Please enter transaction purpose here ..."></textarea>
-	                                            	</div>
-                                        		</div>
-                                        		
-	                                        </div>
-	                                    </div>
-	                                    <!-- End -->
-
-	                                    <!--Tab Paperclip -->
-	                                    <div class="tab-pane" id="functionPaperclip" role="tabpanel">
-	                                    	<div class="p-10">
-	                                    		<div class="row">
-	                                    			<div class="col-md-12">
-	                                            		<p><span data-bind="text: lang.lang.file_type"></span>: [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>
-											            <input id="files" name="files"
-										                   type="file"
-										                   data-role="upload"
-										                   data-show-file-list="false"
-										                   data-bind="events: {
-								                   				select: onSelect
-										                   }">
-										               	<div class="table-responsive marginTop">
-												            <table class="table color-table dark-table">
-														        <thead>
-														            <tr>
-														                <th><span data-bind="text: lang.lang.file_name"></span></th>
-														                <th><span data-bind="text: lang.lang.description"></span></th>
-														                <th><span data-bind="text: lang.lang.date"></span></th>
-														                <th style="width: 13%;"></th>
-														            </tr>
-														        </thead>
-														        <tbody data-role="listview"
-														        		data-template="attachment-list-tmpl"
-														        		data-auto-bind="false"
-														        		data-bind="source: attachmentDS"></tbody>
-														    </table>
-														</div>
-	                                            	</div>
-	                                    		</div>
-	                                    	</div>  
-	                                    </div>
-	                                    <!-- End -->
-	                                </div>
-								</div>
-							</div>						
-						</div>
-
-						<div class="row">							
-							<div class="col-md-12 table-responsive">
-							    <div data-role="grid" class="costom-grid table color-table dark-table"
-							    	 data-column-menu="true"
-							    	 data-reorderable="true"
-							    	 data-scrollable="false"
-							    	 data-resizable="true"
-							    	 data-editable="true"
-					                 data-columns="[
-									    {
-									    	title:'NO',
-									    	width: '50px',
-									    	attributes: { style: 'text-align: center;' },
-									        template: function (dataItem) {
-									        	var rowIndex = banhji.journal.lineDS.indexOf(dataItem)+1;
-									        	return '<i class=icon-trash data-bind=click:removeRow></i>' + ' ' + rowIndex;
-									      	}
-									    },
-					                 	{ field: 'account', title: 'ACCOUNT', editor: accountEditor, template: '#=account.name#', width: '170px' },
-			                            { field: 'description', title:'DESCRIPTION', width: '250px' },
-			                            { field: 'reference_no', title:'REFERENCE NO.', width: '150px' },
-			                            {
-										    field: 'dr',
-										    title: 'DR',
-										    format: '{0:n}',
-										    editor: numberTextboxEditor,
-										    width: '150px',
-										    attributes: { style: 'text-align: right;' }
-										},
-										{
-										    field: 'cr',
-										    title: 'CR',
-										    format: '{0:n}',
-										    editor: numberTextboxEditor,
-										    width: '150px',
-										    attributes: { style: 'text-align: right;' }
-										},
-			                            { field: 'contact', title:'NAME', editor: contactEditor, template:'#=contact.name#', hidden: true, width: '200px' },
-			                            { field: 'job', title:'JOB', editor: jobEditor, template:'#=job.name#', hidden: true, width: '200px' },
-			                            {
-					                 		field: 'segments',
-					                 		title: 'SEGMENT',
-					                 		editable: function(){
-					                 			return false;
-					                 		},
-					                 		template: '<button type=button data-bind=click:openWindow>Add/Edit</button>',
-					                 		hidden: true,
-					                 		width: '90px'
-					                 	}
-			                         ]"
-			                         data-auto-bind="false"
-					                 data-bind="source: lineDS" ></div>  
-							</div>
-						</div>	
-
-						
-
-						<!-- Form actions -->
-						<div class="backgroundButtonFooter">
-							<div id="ntf1" data-role="notification"></div>
-
-							<!-- Delete Confirmation -->
-							<div data-role="window"
-				                 data-title="Delete Confirmation"
-				                 data-width="350"
-				                 data-height="200"
-				                 data-iframe="true"
-				                 data-modal="true"
-				                 data-visible="false"
-				                 data-position="{top:'40%',left:'35%'}"
-				                 data-actions="{}"
-				                 data-resizable="false"
-				                 data-bind="visible: showConfirm"
-				                 style="text-align:center;">
-				                <p style="font-size:25px; margin: 15px 0 25px;" class="delete-message" data-bind="text: confirmMessage"></p>
-							    <button style="font-size:14px; border:none; background:#496cad; color:#fff; padding:5px 25px;" data-bind="click:delete">Yes</button>
-							    <button style="font-size:14px; border:none; background:red; color:#fff; padding:5px 25px;" data-bind="click:closeConfirm">No</button>
-				            </div>
-				            <!-- // Delete Confirmation -->
-
+							<!-- Upper Part -->
 							<div class="row">
-								<div class="col-md-4" >
-									<input data-role="dropdownlist"
-						                   data-value-primitive="true"
-						                   data-text-field="name"
-						                   data-value-field="id"
-						                   data-bind="value: obj.transaction_template_id,
-						                              source: txnTemplateDS"
-						                   data-option-label="Select Template..." />
+								<div class="col-md-4">
+									<div class="box-generic">
+										<table class="table table-borderless table-condensed cart_total" >
+											<tr>
+												<td style="width: 25%;"><span data-bind="text: lang.lang.no_"></span></td>
+												<td>
+													<input id="txtNumber" name="txtNumber" class="k-textbox"
+															data-bind="value: obj.number,
+																disabled: obj.is_recurring,
+																events:{change:checkExistingNumber}"
+															required data-required-msg="required"
+															placeholder="eg. ABC00001"/>
+													<div class="coverQrcode">
+														<a class="fa fa-qrcode" data-bind="click: generateNumber" title="Generate Number"><i></i></a>
+													</div>
+												</td>
+											</tr>
+											<tr>
+												<td><span data-bind="text: lang.lang.date"></span></td>
+												<td class="right">
+													<input id="issuedDate" name="issuedDate"
+															data-role="datepicker"
+															data-format="dd-MM-yyyy"
+															data-parse-formats="yyyy-MM-dd HH:mm:ss"
+															data-bind="value: obj.issued_date,
+																		events:{ change : setRate }"
+															required data-required-msg="required"/>
+												</td>
+											</tr>
+											<tr>
+												<td><span data-bind="text: lang.lang.type"></span></td>
+												<td>
+													<input id="cbbType" name="cbbType" style="width: 100%" 
+														   data-role="dropdownlist"
+										                   data-value-primitive="true"
+										                   data-text-field="name"
+										                   data-value-field="id"
+										                   data-bind="value: obj.type,
+										                              source: types,
+										                              events:{ change: typeChanges }"
+										                   required data-required-msg="required" />
+												</td>
+											</tr>
+											<tr>
+												<td><span data-bind="text: lang.lang.currency"></span></td>
+												<td>
+													<input id="cbbCurrency" name="cbbCurrency"
+													   data-role="combobox"
+									                   data-value-primitive="true"
+									                   data-template="currency-list-tmpl"
+									                   data-text-field="code"
+									                   data-value-field="locale"
+									                   data-bind="value: obj.locale,
+									                   			source: currencyDS,
+									                   			events: {change : setRate}"
+									                   placeholder="Select currency..."
+									                   required data-required-msg="required" style="width: 100%;"/>
+												</td>
+											</tr>
+										</table>
 
+									</div>
 								</div>
-								<div class="col-md-8" align="right">
-									<span id="saveCancel" class="btn-btn" onclick="javascript:window.history.back()" data-bind="click: cancel"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
-									<span class="btn-btn" data-bind="click: openConfirm, visible: isEdit"><span data-bind="text: lang.lang.delete"></span></span>
-									<button type="button" class="btn btn-info btn-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-		                        		<span data-bind="text: lang.lang.save_option"></span>
-			                        </button>
-			                        <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 35px, 0px); top: 0px; left: 0px; will-change: transform;">
-			                            <a class="dropdown-item" id="saveNew" data-bind="invisible: isEdit"><span data-bind="text: lang.lang.save_new"></span></a>
-			                            <a class="dropdown-item" id="savePrint"><span data-bind="text: lang.lang.save_print"></span></a>
-			                        </div>
-								  	<span class="btn-btn" id="saveClose"><span data-bind="text: lang.lang.save_close"></span></span>
-								  	<span class="btn-btn" id="saveDraft1" data-bind="invisible: isEdit"><span data-bind="text: lang.lang.save_draft"></span></span>
+								<div class="col-md-8">
+									<div class="box-generic-noborder">
+										<ul class="nav nav-tabs" role="tablist">
+		                                    <li class="nav-item"> <a class="nav-link active show" data-toggle="tab" href="#functionSetting" role="tab" aria-selected="true"><span><i class="ti-settings"></i></span></a> </li>
+		                                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#functionPaperclip" role="tab" aria-selected="false"><span><i class="icon-paper-clip"></i></span></a></li>
+		                                </ul>
+		                                <div class="tab-content tabcontent-border">
+		                                	<!--Tab Setting -->
+		                                    <div class="tab-pane active show" id="functionSetting" role="tabpanel">
+		                                        <div class="p-10">
+		                                            <div class="row">
+	                                            		<div class="col-md-12">
+	                                            			<textarea id="memo2" cols="0" rows="4" class="k-textbox"
+								        		data-bind="value: obj.memo2" style="width:100%;"
+								        		placeholder="Please enter transaction purpose here ..."></textarea>
+		                                            	</div>
+	                                        		</div>
+	                                        		
+		                                        </div>
+		                                    </div>
+		                                    <!-- End -->
+
+		                                    <!--Tab Paperclip -->
+		                                    <div class="tab-pane" id="functionPaperclip" role="tabpanel">
+		                                    	<div class="p-10">
+		                                    		<div class="row">
+		                                    			<div class="col-md-12">
+		                                            		<p><span data-bind="text: lang.lang.file_type"></span>: [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>
+												            <input id="files" name="files"
+											                   type="file"
+											                   data-role="upload"
+											                   data-show-file-list="false"
+											                   data-bind="events: {
+									                   				select: onSelect
+											                   }">
+											               	<div class="table-responsive marginTop">
+													            <table class="table color-table dark-table">
+															        <thead>
+															            <tr>
+															                <th><span data-bind="text: lang.lang.file_name"></span></th>
+															                <th><span data-bind="text: lang.lang.description"></span></th>
+															                <th><span data-bind="text: lang.lang.date"></span></th>
+															                <th style="width: 13%;"></th>
+															            </tr>
+															        </thead>
+															        <tbody data-role="listview"
+															        		data-template="attachment-list-tmpl"
+															        		data-auto-bind="false"
+															        		data-bind="source: attachmentDS"></tbody>
+															    </table>
+															</div>
+		                                            	</div>
+		                                    		</div>
+		                                    	</div>  
+		                                    </div>
+		                                    <!-- End -->
+		                                </div>
+									</div>
+								</div>						
+							</div>
+
+							<div class="row">							
+								<div class="col-md-12 table-responsive">
+								    <div data-role="grid" class="costom-grid table color-table dark-table"
+								    	 data-column-menu="true"
+								    	 data-reorderable="true"
+								    	 data-scrollable="false"
+								    	 data-resizable="true"
+								    	 data-editable="true"
+						                 data-columns="[
+										    {
+										    	title:'NO',
+										    	width: '50px',
+										    	attributes: { style: 'text-align: center;' },
+										        template: function (dataItem) {
+										        	var rowIndex = banhji.journal.lineDS.indexOf(dataItem)+1;
+										        	return '<i class=icon-trash data-bind=click:removeRow></i>' + ' ' + rowIndex;
+										      	}
+										    },
+						                 	{ field: 'account', title: 'ACCOUNT', editor: accountEditor, template: '#=account.name#', width: '170px' },
+				                            { field: 'description', title:'DESCRIPTION', width: '250px' },
+				                            { field: 'reference_no', title:'REFERENCE NO.', width: '150px' },
+				                            {
+											    field: 'dr',
+											    title: 'DR',
+											    format: '{0:n}',
+											    editor: numberTextboxEditor,
+											    width: '150px',
+											    attributes: { style: 'text-align: right;' }
+											},
+											{
+											    field: 'cr',
+											    title: 'CR',
+											    format: '{0:n}',
+											    editor: numberTextboxEditor,
+											    width: '150px',
+											    attributes: { style: 'text-align: right;' }
+											}
+				                         ]"
+				                         data-auto-bind="false"
+						                 data-bind="source: lineDS" ></div>  
+								</div>
+							</div>	
+
+							
+
+							<!-- Form actions -->
+							<div class="backgroundButtonFooter">
+								<div id="ntf1" data-role="notification"></div>
+
+								<!-- Delete Confirmation -->
+								<div data-role="window"
+					                 data-title="Delete Confirmation"
+					                 data-width="350"
+					                 data-height="200"
+					                 data-iframe="true"
+					                 data-modal="true"
+					                 data-visible="false"
+					                 data-position="{top:'40%',left:'35%'}"
+					                 data-actions="{}"
+					                 data-resizable="false"
+					                 data-bind="visible: showConfirm"
+					                 style="text-align:center;">
+					                <p style="font-size:25px; margin: 15px 0 25px;" class="delete-message" data-bind="text: confirmMessage"></p>
+								    <button style="font-size:14px; border:none; background:#496cad; color:#fff; padding:5px 25px;" data-bind="click:delete">Yes</button>
+								    <button style="font-size:14px; border:none; background:red; color:#fff; padding:5px 25px;" data-bind="click:closeConfirm">No</button>
+					            </div>
+					            <!-- // Delete Confirmation -->
+
+								<div class="row">
+									<div class="col-md-4" >
+										<input data-role="dropdownlist"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.transaction_template_id,
+							                              source: txnTemplateDS"
+							                   data-option-label="Select Template..." />
+
+									</div>
+									<div class="col-md-8" align="right">
+										<span id="saveCancel" class="btn-btn" onclick="javascript:window.history.back()" data-bind="click: cancel"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
+										<span class="btn-btn" data-bind="click: openConfirm, visible: isEdit"><span data-bind="text: lang.lang.delete"></span></span>
+										<button type="button" class="btn btn-info btn-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			                        		<span data-bind="text: lang.lang.save_option"></span>
+				                        </button>
+				                        <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 35px, 0px); top: 0px; left: 0px; will-change: transform;">
+				                            <a class="dropdown-item" id="saveNew" data-bind="invisible: isEdit"><span data-bind="text: lang.lang.save_new"></span></a>
+				                            <a class="dropdown-item" id="savePrint"><span data-bind="text: lang.lang.save_print"></span></a>
+				                        </div>
+									  	<span class="btn-btn" id="saveClose"><span data-bind="text: lang.lang.save_close"></span></span>
+									  	<span class="btn-btn" id="saveDraft1" data-bind="invisible: isEdit"><span data-bind="text: lang.lang.save_draft"></span></span>
+									</div>
 								</div>
 							</div>
+							<!-- // Form actions END -->			
+							
 						</div>
-						<!-- // Form actions END -->			
-						
 					</div>
 				</div>
 			</div>
