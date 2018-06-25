@@ -3222,7 +3222,7 @@
 														<input id="cbbType" name="cbbType" style="width: 100%" 
 															   data-role="dropdownlist"
 											                   data-value-primitive="true"
-											                   data-text-field="name"
+											                   data-text-field="type"
 											                   data-value-field="type"
 											                   data-bind="value: obj.type,
 											                              source: typeList,
