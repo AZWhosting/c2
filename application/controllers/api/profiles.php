@@ -409,10 +409,80 @@ class Profiles extends REST_Controller {
 				$user->where('username', $r->username);
 				$user->get();
 				$modules = new Module();
-				if(isset($r->micro) && $r->micro == 'true') {
-					$modules->where('id', 24);
+				$modules->where('is_core', 'true');
+				$modules->get();
+				$fx = new Role(null);
+				$fx->where('type', 'UTB');
+				$fx->get();
+
+				$inst = new Institute();
+				$inst->name = $r->name;
+				$inst->vat_number = $r->vat_number;
+				$inst_year_founded = date('Y');
+				$inst->telephone = $r->telephone;
+				$inst->fiscal_date = $r->fiscal_date; //'01-01';
+				$inst->monetary_id = $r->currency->id;
+				$inst->locale = $r->currency->locale;
+				$inst->report_monetary_id = $r->currency->id;
+				$inst->pimage_id = 1;
+				// $inst->logo = 'https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/default_logo.png';
+				$inst->country_id = $r->country->id;
+				$inst->industry_id = $r->industry;
+				$inst->type_id = $r->type->id;
+				if($inst->save(array($user, $modules->all))) {
+					$user->save(array($modules->all, $fx->all));
+					// fillin dafault data
+					$data[] = array(
+						'id' => $inst->id,
+						'institute' => $inst->name
+					);
 				}
-				$modules->where('is_core', 'true')->get();
+			} else {
+				$this->response(array(
+					'error' => TRUE,
+					'msgCode' => 2000,
+					'msg' => 'Telephone is needed',
+					'results' => array(),
+					'count' => 0
+				),
+				400);
+				break;
+			}
+		}
+		if(count($data) > 0) {
+			$this->response(array(
+				'error' => FALSE,
+				'msgCode' => 2001,
+				'msg' => 'Comany created',
+				'results' => $data,
+				'count' => count($data)
+			),
+			201);
+		} else {
+			$this->response(array(
+				'error' => TRUE,
+				'msgCode' => 2000,
+				'msg' => 'Comany created',
+				'results' => array(),
+				'count' => 0
+			),
+			201);
+		}
+	}
+
+	function micro_post() {
+		$request = json_decode($this->post('models'));
+
+		// todo: add currency base on country selected
+		foreach($request as $r) {
+			// find user
+			if(isset($r->telephone)) {
+				$user = new User();
+				$user->where('username', $r->username);
+				$user->get();
+				$modules = new Module();
+				$modules->where('is_micro', 1);
+				$modules->get();
 				$fx = new Role(null);
 				$fx->where('type', 'UTB');
 				$fx->get();

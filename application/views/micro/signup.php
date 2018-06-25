@@ -882,7 +882,7 @@
               dataType: 'json'
             },
             create: {
-              url: baseUrl + 'api/profiles/company',
+              url: baseUrl + 'api/profiles/micro',
               type: "POST",
               dataType: 'json'
             },
@@ -1367,6 +1367,7 @@
                                     dd.setDate(31);
                                     banhji.companyDS.insert(0, {
                                         name:  banhji.index.get('name'),
+                                        vat_number: null,
                                         currency: banhji.index.get('currency'),
                                         country:  {id: 36}, //banhji.index.get('country'),
                                         industry:  banhji.index.get('industry'),
