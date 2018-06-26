@@ -2838,10 +2838,6 @@
     </strong>
 </script>
 <script id="account-list-tmpl" type="text/x-kendo-tmpl">
-	<span>
-		#=number#
-	</span>
-	-
 	<span>#=name#</span>
 </script>
 <script id="reference-list-tmpl" type="text/x-kendo-tmpl">

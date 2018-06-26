@@ -38,7 +38,7 @@
 								    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#prefixSetting"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.prefix_setting"></span></a> </li>
 							    </ul>
 				                <div class="tab-content" style="float: left; width: 83%; padding: 10px;">
-					                <div class="tab-pane active" id="customerType" role="tabpanel">
+					                <div class="tab-pane" id="customerType" role="tabpanel">
 					                	<div class="row">
 											<div class="col-md-12">
 												<div class="hidden-md-up marginBottom">
@@ -79,7 +79,7 @@
 											</div>
 										</div>	
 					                </div>
-					                <div class="tab-pane" id="paymentMethod" role="tabpanel">
+					                <div class="tab-pane active" id="paymentMethod" role="tabpanel">
 					                	<div class="row">
 											<div class="col-md-12">
 												<div class="hidden-md-up marginBottom">
@@ -240,7 +240,7 @@
 								    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#prefixSetting"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.prefix_setting"></span></a> </li>
 							    </ul>
 				                <div class="tab-content" style="float: left; width: 83%; padding: 10px;">
-					                <div class="tab-pane active" id="customerType" role="tabpanel">
+					                <div class="tab-pane" id="customerType" role="tabpanel">
 					                	<div class="row">
 											<div class="col-md-12">
 												<div class="hidden-md-up marginBottom">
@@ -252,8 +252,8 @@
 													    <input style="height: 35px;" class="col-md-3 marginRight marginBottom" id="appendedInputButtons" type="text" placeholder="input customer type ..." data-bind="value: contactTypeName">
 													    <input style="height: 35px;" class="col-md-3 marginRight marginBottom" id="appendedInputButtons" type="text" placeholder="input abbr ..." data-bind="value: contactTypeAbbr">
 													    <select style="height: 35px;" class="col-md-3 marginRight marginBottom" id="appendedInputButtons" data-bind="value: contactTypeCompany" >
-											                <option value="0"><span data-bind="text: lang.lang.not_a_company"></span></option>
-											                <option value="1"><span data-bind="text: lang.lang.it_is_a_company"></span></option>
+											                <option value="0"><span data-bind="text: lang.lang.not_a_company">Not A Company</span></option>
+											                <option value="1"><span data-bind="text: lang.lang.it_is_a_company">It is a Company</span></option>
 											            </select>
 													    <button class="col-md-2 btn waves-effect waves-light btn-block btn-info  marginBottom" type="button" data-bind="click: addContactType"><i class="icon-plus marginRight"></i> <span data-bind="text: lang.lang.add_type"></span></button>
 													</div>
@@ -281,7 +281,7 @@
 											</div>
 										</div>	
 					                </div>
-					                <div class="tab-pane" id="paymentMethod" role="tabpanel">
+					                <div class="tab-pane active" id="paymentMethod" role="tabpanel">
 					                	<div class="row">
 											<div class="col-md-12">
 												<div class="hidden-md-up marginBottom">
@@ -707,7 +707,7 @@
 								    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#supplierPrefixSetting"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.prefix_setting"></span></a> </li>
 							    </ul>
 				                <div class="tab-content" style="float: left; width: 83%; padding: 10px;">
-					                <div class="tab-pane active" id="supplierType" role="tabpanel">
+					                <div class="tab-pane" id="supplierType" role="tabpanel">
 					                	<div class="row">
 											<div class="col-md-12">
 												<div class="hidden-md-up marginBottom">
@@ -748,7 +748,7 @@
 											</div>
 										</div>	
 					                </div>
-					                <div class="tab-pane" id="supplierCustomForms" role="tabpanel">
+					                <div class="tab-pane active" id="supplierCustomForms" role="tabpanel">
 					                	<div class="row">
 					                		<div class="col-md-12">
 					                			<div class="hidden-md-up marginBottom">

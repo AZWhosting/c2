@@ -5747,7 +5747,7 @@
             });
         },
         goPOS               : function(e){
-            window.location.href = "<?php echo base_url(); ?>wellnez_ktv/pos/#/serving/" + obj.id;
+            window.location.href = "<?php echo base_url(); ?>wellnez_ktv/pos/#/serving/" + this.get("obj").id;
         },
         onProcessing        : false,
     });

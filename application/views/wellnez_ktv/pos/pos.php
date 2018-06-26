@@ -987,3 +987,362 @@
    		</td>
 	</tr>
 </script>
+
+<script id="Serving" type="text/x-kendo-template">
+	<div id="ntf1" data-role="notification"></div>
+	<div class="container">
+		<div class="row pos">
+			<div class="span12" style="overflow: hidden;padding: 0;">
+				<div id="loadImport" style="border-radius: 10px;display:none;text-align: center;position: absolute;width: 100%; height: 100%;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
+					<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 40%;left: 40%">Loading...</i>
+				</div>
+				<div class="row">
+					<div class="span6">
+						<div style="position: relative;overflow: hidden;">
+							<div class="row" style="padding: 0;">
+								<div class="span12">
+									<div class="listWrapper">
+										<div class="row">
+											<div class="span6" style="padding-right: 1px; width: 50%;">
+												<div class="innerAll" style="height: 45px; padding-bottom: 0; padding: 15px 0 0 15px; float: left; width: 100%;">
+													<div class="widget-search separator bottom" style="padding: 0;">
+														<a class="btn btn-default pull-right" data-bind="click: search" style="padding: 3px 10px;"><i class="icon-search"></i></a>
+														<div class="overflow-hidden">
+															<input style="height: 28px; padding: 5px; border: 1px solid #ccc; color: #333;" type="search" placeholder="Number or Name..." data-bind="value: searchText, events:{change: search}">
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="span3" style="padding-top: 15px; padding-left: 0; padding-right: 1px; width: 22%;">
+												<input 
+													data-role="dropdownlist"
+													data-auto-bind="false" 
+													data-value-primitive="true" 
+													data-filter="startswith" 
+													data-text-field="name" 
+													data-value-field="id"
+													data-bind="
+														value: catSelected,
+						                              	source: categoryDS,
+						                              	events: {change: catChange}" 
+						                            data-option-label="Category ..."
+						                            required="" 
+						                            data-required-msg="required" 
+						                            style="width: 100%; border-radius: 0; "
+						                            aria-invalid="true" 
+						                            class="k-invalid" />
+											</div>
+											<div class="span3" style="padding-top: 15px; padding-left: 0;">
+												<input 
+													data-role="dropdownlist"
+													data-auto-bind="false" 
+													data-value-primitive="true" 
+													data-filter="startswith" 
+													data-text-field="name" 
+													data-value-field="id"
+													data-bind="
+														value: groupSelected,
+						                              	source: itemGroupDS,
+						                              	events: {change: groupChange}" 
+						                            data-option-label="Group ..."
+						                            required="" 
+						                            data-required-msg="required" 
+						                            style="width: 100%; border-radius: 0; " 
+						                            aria-invalid="true" 
+						                            class="k-invalid"
+						                        />
+											</div>
+										</div>
+
+									</div>
+										
+									<div  class="demo-section k-content wide span12" style="box-shadow: 2px 0px 12px 0px rgba(68,68,68,1);">
+										<div data-bind="visible: onProcessing" style="border-radius: 0px;margin-top: -15px;margin-left: -15px;display:none;text-align: center;position: absolute;width: 100%; height: 100%;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
+											<i class="fa fa-circle-o-notch fa-spin" style="font-size: 25px;color: #fff;position: absolute; top: 40%;left: 40%">Loading...</i>
+										</div>
+										<div data-bind="invisible: haveItem" class="demo-section k-content wide">
+											<div style="background: #0eac00;overflow: hidden; margin-bottom: 5px;">
+												<p style="float: left;" data-bind="text: lang.lang.category"></p>
+											</div>
+											<div style="clear: both;"
+												id="productListView"
+												data-role="listview"
+												data-template="category-list-view-template"
+												data-auto-bind="true"
+												data-bind="source: categoryDS">
+											</div>
+											<div id="pager" class="k-pager-wrap"
+										    	 data-role="pager"
+										    	 data-auto-bind="true"
+									             data-bind="source: categoryDS">
+									        </div>
+										</div>
+										<div data-bind="visible: haveItem" class="demo-section k-content wide">
+											<div style="background: #0eac00;overflow: hidden; margin-bottom: 5px;">
+												<p style="float: left;" data-bind="text: lang.lang.item"></p>
+												<a  data-bind="click: backCategory" style="float: right;font-size: 10px;" class="glyphicons no-js chevron-left"><i></i>Back</a>
+											</div>
+											<div style="clear: both;"
+												id="productListView"
+												data-role="listview"
+												data-template="item-list-view-template"
+												data-auto-bind="true"
+												data-bind="source: itemsDS">
+											</div>
+											<div id="pager" class="k-pager-wrap"
+										    	 data-role="pager"
+										    	 data-auto-bind="true"
+									             data-bind="source: itemsDS">
+									        </div>
+										</div>
+									</div>
+								</div>
+
+								<div class="span12">
+									<div class="box-generic" style="background: #0eac00; border: none; box-shadow: 2px 0px 12px 0px rgba(68,68,68,1); margin-bottom: 0; border-radius: 0 0 10px 10px;">
+										<div class="row">
+											<div class="span6">
+						                        <input type="text" 
+								                	style="width: 100%; margin-bottom: 5px;" 
+								                	data-role="datetimepicker"
+										           	data-bind="
+										           		value: dateSelected
+										           	" />
+										        <input type="text" 
+								                	style="width: 100%; border: 1px solid #c5c5c5; padding: 3px; height: 30px;" 
+								                	placeholder="Phone Number" 
+								                	disabled
+										           	data-bind="
+										           		value: customerPhone
+										           	" />
+										    </div>
+
+									        <div class="span6" style="padding-left: 0; font-size: 12px;">
+												<table class="table-fixed table-customer table table-bordered table-primary table-striped table-vertical-center">
+											        <thead>
+											            <tr>
+											            	<th style="vertical-align: top;" data-bind="text: lang.lang.no_"></th>
+											            	<th style="vertical-align: top;" data-bind="text: lang.lang.name"></th>
+											            </tr>
+											        </thead>
+											        <tbody data-role="listview" 
+										        		data-template="serving-customer-select-list-tmpl" 
+										        		data-auto-bind="false"
+										        		data-bind="source: customerAR">
+										        	</tbody>
+											    </table>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div> 
+						</div>
+					</div>
+					<div class="span6" style="padding-left: 0;">
+						<div class="span12" style="background: #c4c2d2; margin-bottom: 1px; box-shadow: 2px 0px 12px 0px rgba(68,68,68,1); border-radius: 10px 10px 0 0;">
+							<div class="row" style="margin-top: 15px; ">
+								<div class="span6">
+				                    <div class="box-generic"  style="background: #c4c2d2; margin: 0 !important; padding: 0; border: none;">
+				                    	
+				                        <table class="table table-bordered table-primary table-striped table-vertical-center" style="margin-top: 15px; font-size: 12px;">
+									        <thead>
+									            <tr>
+									            	<th style="vertical-align: top;" data-bind="text: lang.lang.no_"></th>
+									            	<th style="vertical-align: top;" data-bind="text: lang.lang.name"></th>
+									            </tr>
+									        </thead>
+									        <tbody data-role="listview" 
+								        		data-template="serving-room-select-list-tmpl" 
+								        		data-auto-bind="false"
+								        		data-bind="source: roomAR"></tbody>
+									    </table>
+				                    </div>		                
+								</div>
+								<div class="span6" style="padding-left: 0;">
+									<div class="box-generic" style="background: #c4c2d2; padding: 0; border: none; margin-bottom: 0; padding-bottom: 15px;">
+										<div data-bind="visible: emSelect">
+											
+					                    </div>
+					                    <table class="table table-bordered table-primary table-striped table-vertical-center" style="margin-top: 15px; width: 100%; float: left; font-size: 12px;">
+									        <thead>
+									            <tr>
+									            	<th style="vertical-align: top;" data-bind="text: lang.lang.no_"></th>
+									            	<th style="vertical-align: top;" data-bind="text: lang.lang.name"></th>
+									            </tr>
+									        </thead>
+									        <tbody data-role="listview" 
+								        		data-template="serving-employee-list-tmpl" 
+								        		data-auto-bind="false"
+								        		data-bind="source: employeeAR"></tbody>
+									    </table>
+				                    </div>
+								</div>
+							</div>
+						</div>
+
+						<div class="row posProductItems" >
+							<div class="span12" >
+								<div id="posProductList" class="box-generic-noborder" style="min-height: 140px!important; height: 230px; padding-bottom: 0;">
+									<!-- Item List -->
+								    <div data-role="grid" class="costom-grid"
+								    	data-column-menu="true"
+					    	 			data-reorderable="true"
+						    	 		data-scrollable="false"
+						    	 		data-resizable="true"
+						    	 		data-editable="true"
+						                data-columns="[
+										    { 
+										    	title:'NO',
+										    	width: '50px',
+										    	attributes: { style: 'text-align: center;' }, 
+										        template: function (dataItem) {
+										        	var rowIndex = banhji.Serving.lineDS.indexOf(dataItem)+1;
+										        	var re = '';
+										        	if(dataItem.isNew() == true){
+										        		re = '<i class=icon-trash data-bind=click:removeRow></i>';
+										        	}
+										        	return re + ' ' + rowIndex;
+										      	}
+										    },
+						                 	{ 
+						                 		field: 'item', 
+						                 		title: 'SERVICES', 
+						                 		editable: 'false',
+						                 		editor: itemEditor, 
+						                 		template: '#=item.name#', width: '170px' 
+						                 	},
+				                            { 
+				                            	field: 'item_price', 
+				                            	title: 'UOM',
+				                            	editor: measurementEditor, 
+				                            	template: '#=item_price?item_price.measurement:banhji.emptyString#',
+				                            	width: '80px' 
+				                            },
+				                            {
+											    field: 'quantity',
+											    title: 'QTY',
+											    format: '{0:n}',
+											    editor: numberTextboxEditor,
+											    width: '120px',
+											    attributes: { style: 'text-align: right;' }
+											},
+				                            {
+											    field: 'price',
+											    title: 'PRICE',
+											    hidden: true,
+											    format: '{0:n}',
+											    editor: numberTextboxEditor,
+											    width: '120px',
+											    attributes: { style: 'text-align: right;' }
+											},
+				                            { 
+				                            	field: 'amount', 
+				                            	title:'AMOUNT', 
+				                            	format: '{0:n}', 
+				                            	editable: 'false', 
+				                            	attributes: { style: 'text-align: right;' }, width: '120px' 
+				                            },
+				                            { 
+				                            	field: 'tax_item', 
+				                            	title:'TAX',
+				                            	hidden: 'true',
+				                            	editor: taxForSaleEditor,
+				                            	template: '#=tax_item.name#', width: '90px' 
+				                            },
+				                            { 
+				                            	field: 'therapist', 
+				                            	title:'STAFF', 
+				                            	hidden: true,
+				                            	editor: therapistEditor,
+				                            	template: '#= therapistname#'
+				                            }
+				                         ]"
+				                         data-auto-bind="false"
+						                 data-bind="source: lineDS" >
+						            </div>
+								</div>
+							</div>
+						</div>
+
+						<div class="row" style="background: #fff; margin-left: 0; margin-top: 1px; margin-right: 0; padding: 15px 0; box-shadow: 2px 0px 12px 0px rgba(68,68,68,1); border-radius: 0 0 10px 10px;">
+							<div class="span6" style="padding-right: 0;">
+								<div class="posSaleSummary cover-block" style="width: 100%; float:right; padding: 0 15px 0 0;">
+									<table class="table table-condensed table-striped table-white" style="margin: 5px 0 0;">
+										<tbody>
+											<tr>
+												<td class="right" style="width: 60%;"><span data-bind="text: lang.lang.subtotal" style="font-size: 15px; font-weight: 700;"></span></td>
+												<td class="right strong" width="40%"><span data-format="n" data-bind="text: obj.sub_total" style="font-size: 15px; font-weight: 700;"></span></td>
+											</tr>             
+											<tr>
+												<td class="right"><span data-bind="text: lang.lang.total_tax"></span></td>
+												<td class="right "><span data-format="n" data-bind="text: obj.tax"></span></td>
+											</tr>                             
+											<tr>
+												<td class="right"><h4 span data-bind="text: lang.lang.total" style="font-weight: 700;"></h4></td>
+												<td class="right strong"><h4 data-bind="text: total" style="font-weight: 700;"></h4></td>
+											</tr>               
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<div class="span6 botton">
+								<div class="row">
+									<div class="span12 ">
+										<div class="button-service" style="box-shadow: none;" data-bind="click: save">
+											<div class="img">
+												
+											</div>
+											<p class="textBig" data-bind="text: lang.lang.save"> </p>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="span12 ">
+										<div class="button-service" style="border-radius: 0 0 5px 5px;box-shadow: none;background: darkred" data-bind="click: cancel">
+											<div class="img">
+												<i class="fas fa-check-circle"></i>
+											</div>
+											<p class="textBig" data-bind="text: lang.lang.cancel"></p>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div id="ntf1" data-role="notification"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="span12" style="margin-top: 20px;">
+				<p data-bind="text: today"></span>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="serving-contact-list-tmpl" type="text/x-kendo-tmpl">
+	<span>#=abbr##=number#</span>	
+	<span>#=name#</span>	
+</script>
+<script id="serving-employee-list-tmpl" type="text/x-kendo-tmpl">
+	<tr data-uid="#: uid #">
+		<td>
+			#:banhji.Serving.employeeAR.indexOf(data)+1#      
+		</td>
+		<td>#= name#</td>
+	</tr>
+</script>
+<script id="serving-room-select-list-tmpl" type="text/x-kendo-tmpl">
+	<tr data-uid="#: uid #">
+		<td>
+			#:banhji.Serving.roomAR.indexOf(data)+1#      
+		</td>
+		<td>#= name#</td>
+	</tr>
+</script>
+<script id="serving-customer-select-list-tmpl" type="text/x-kendo-tmpl">
+	<tr data-uid="#: uid #">
+		<td>
+			#:banhji.Serving.customerAR.indexOf(data)+1#  
+		</td>
+		<td>#= name#</td>
+	</tr>
+</script>

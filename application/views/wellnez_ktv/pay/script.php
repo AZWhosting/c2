@@ -5156,7 +5156,6 @@
         invClick    : function(e){
             var data = e.data;
             this.set("invobj", null);
-            console.log(data);
             this.set("delInvNumber", data.number);
             this.set("total", data.amount);
             this.set("amountReciept", data.amount);
@@ -5296,7 +5295,11 @@
         },
         returnItem : function(){
             banhji.router.navigate("/return_item/"+this.get("invobj").id);
-        }
+        },
+        goPOS               : function(e){
+            this.invClick(e);
+            window.location.href = "<?php echo base_url(); ?>wellnez_ktv/pos/#/serving/" + this.get("invobj").work_id;
+        },
     });
     banhji.splitBill = kendo.observable({
         roomDS      : dataStore(apiUrl + "spa/room"),

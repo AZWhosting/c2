@@ -17089,10 +17089,16 @@
 								<p data-bind="text: monthOf"></p>
 							</div>
 							<div class="row">
-								<div class="col-xs-12 col-sm-6">
+								<div class="col-xs-12 col-sm-3">
 									<div class="total-sale">
-										<p data-bind="text: lang.lang.number_of_customer">Number of Customer</p>
-										<span data-bind="text: dataSource.total" ></span>
+										<p data-bind="text: lang.lang.number_of_customer">Total Usage</p>
+										<span data-bind="text: countCustomer"></span>
+									</div>
+								</div>
+								<div class="col-xs-12 col-sm-9">
+									<div class="total-sale">
+										<p data-bind="text: lang.lang.total_sale">Total Sale</p>
+										<span data-bind="text: totalAmount"></sapn>
 									</div>
 								</div>
 							</div>
@@ -17105,17 +17111,22 @@
 										<th style="text-align: center"><span data-bind="text:lang.lang.previous">Previous</span></th>
 										<th style="text-align: center"><span data-bind="text:lang.lang.current">Current</span></th>
 										<th style="text-align: center"><span data-bind="text:lang.lang.usage">Usage</span></th>
-										<th style="text-align: right"><span data-bind="text:lang.lang.balance"></span></th>
 										<th style="text-align: right"><span data-bind="text:lang.lang.amount"></span></th>
+										<th style="text-align: right"><span data-bind="text:lang.lang.balance"></span></th>
 										<th style="text-align: right"><span data-bind="text:lang.lang.total"></span></th>
 									</tr>
 								</thead>
 								<tbody data-role="listview"
-											 data-bind="source: dataSource"
-											 data-auto-bind="false"
-											 data-template="totalBalance-temp"
+									 data-bind="source: dataSource"
+									 data-auto-bind="false"
+									 data-template="totalBalance-temp"
 								></tbody>
 							</table>
+							<div id="pager" class="k-pager-wrap"
+						    	 data-role="pager"
+						    	 data-auto-bind="false"
+						    	 style="width: 100%"
+					             data-bind="source: dataSource"></div>
 						</div>
 					</div>
 				</div>
@@ -17124,16 +17135,17 @@
 	</div>
 </script>
 <script id="totalBalance-temp" type="text/x-kendo-template" >
+	#total = amount + amount_remain;#
 	<tr>
-		<td  style="font-weight: bold; color: black;">#=number #</td>
-		<td  style="font-weight: bold; color: black;">#=name #</td>
-		<td style="text-align: center">#=meter_number#</td>
-		<td style="text-align: right">#=previous#</td>
-		<td style="text-align: right">#=current#</td>
-		<td style="text-align: right">#=usage#</td>
-		<td style="text-align: right;">#=kendo.toString(balance, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#</td>
-		<td style="text-align: right;">#=kendo.toString(amount, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#</td>
-		<td style="text-align: right;">#=kendo.toString(total, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#</td>
+		<td  style="font-weight: bold; color: black;">#=contact.number#</td>
+		<td  style="font-weight: bold; color: black;">#=contact.name#</td>
+		<td style="text-align: center">#=meter.meter_number#</td>
+		<td style="text-align: right">#=invoice_lines[0].previous#</td>
+		<td style="text-align: right">#=invoice_lines[0].current#</td>
+		<td style="text-align: right">#=invoice_lines[0].consumption#</td>
+		<td style="text-align: right;">#=kendo.toString(amount, locale=="km-KH"?"c0":"c", locale)#</td>
+		<td style="text-align: right;">#=kendo.toString(amount_remain, locale=="km-KH"?"c0":"c", locale)#</td>
+		<td style="text-align: right;">#=kendo.toString(total, locale=="km-KH"?"c0":"c", locale)#</td>
 	</tr>
 </script>
 <script id="customerDepositReport" type="text/x-kendo-template">

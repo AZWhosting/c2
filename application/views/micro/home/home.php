@@ -46,7 +46,7 @@
                     <div style="float: left; width: 100%">
                         <div class="row">
                             <div class="col-6 col-md-3">
-                                <a href="sales#/">
+                                <a href="<?php echo base_url()?>micro/sales#/">
                                     <div class="functionHome">
                                         <img src="<?php echo base_url()?>assets/micro/sale.png "/>
                                         <p data-bind="text: lang.lang.check_out"></p>
@@ -54,7 +54,7 @@
                                 </a>
                             </div>
                             <div class="col-6 col-md-3">
-                                <a href="purchases#/">
+                                <a href="<?php echo base_url()?>micro/purchases#/">
                                     <div class="functionHome">
                                         <img src="<?php echo base_url()?>assets/micro/purchases.png "/>
                                         <p data-bind="text: lang.lang.purchase"></p>
@@ -63,7 +63,7 @@
                             </div>
 
                             <div class="col-6 col-md-3">
-                                <a href="items#/">
+                                <a href="<?php echo base_url()?>micro/items#/">
                                     <div class="functionHome">
                                         <img src="<?php echo base_url()?>assets/micro/inventory.png"/>
                                         <p data-bind="text: lang.lang.items"></p>
@@ -71,7 +71,7 @@
                                 </a>
                             </div>
                             <div class="col-6 col-md-3">
-                                <a href="cashs#/">
+                                <a href="<?php echo base_url()?>micro/cashs#/">
                                     <div class="functionHome">
                                         <img src="<?php echo base_url()?>assets/micro/cash.png "/>
                                         <p data-bind="text: lang.lang.cash"></p>
@@ -88,7 +88,7 @@
                         <div class="col-md-6">
                             <div class="card" >
                                 <div class="card-body">
-                                    <a href="sales#/sale_summary_by_customer">
+                                    <a href="<?php echo base_url()?>micro/sales#/sale_summary_by_customer">
                                         <div class="saleOverview" >
                                             <h2 data-bind="text: lang.lang.sale"></h2>
                                             <p data-format="n" data-bind="text: obj.sale"></p>
@@ -112,7 +112,7 @@
                         <div class="col-md-6">
                             <div class="card">
                                 <div class="card-body">
-                                    <a href="sales#/customer_balance_summary">
+                                    <a href="<?php echo base_url()?>micro/sales#/customer_balance_summary">
                                         <div class="saleOverview">
                                             <h2 data-bind="text: lang.lang.receivable"></h2>
                                             <p data-format="n" data-bind="text: obj.ar"></p>
@@ -134,7 +134,7 @@
                         <div class="col-md-6">
                             <div class="card">
                                <div class="card-body" >
-                                    <a href="purchases#/purchase_summary_product_services">
+                                    <a href="<?php echo base_url()?>micro/purchases#/purchase_summary_product_services">
                                         <div class="saleOverview" >
                                             <h2 data-bind="text: lang.lang.purchase"></h2>
                                             <p data-format="n" data-bind="text: objVendor.purchase"></p>
@@ -156,7 +156,7 @@
                         <div class="col-md-6">
                             <div class="card">
                                 <div class="card-body">
-                                    <a href="purchases#/suppliers_balance_summary">
+                                    <a href="<?php echo base_url()?>micro/purchases#/suppliers_balance_summary">
                                         <div class="saleOverview" >
                                             <h2 data-bind="text: lang.lang.payables"></h2>
                                             <p data-format="n" data-bind="text: objVendor.ap"></p>

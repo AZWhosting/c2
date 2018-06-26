@@ -245,7 +245,7 @@ var themerPrimaryColor = primaryColor;
 				<div class="span12 menu">
 					<div class="row">
 						<div class="span2">
-							<a href="<?php echo base_url();?>wellnez/" >
+							<a href="<?php echo base_url();?>wellnez_ktv/" >
 				                <img src="<?php echo base_url();?>assets/spa/wellnez-01.png" >
 				            </a>
 				        </div>

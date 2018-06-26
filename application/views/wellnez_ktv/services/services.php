@@ -507,7 +507,6 @@
 		                 	</div>
 		                 	<div data-bind="visible: haveWork">
 					            <button style="background: #1c3b19; float:left;" class="btn btn-inverse" data-bind="click: goPOS"><i class="icon-plus icon-white"></i><span style="float: right; margin-left: 10px;">Add Serving</span></button>
-					            <button style="background: darkred;float: left;border: 1px solid darkred;" class="btn btn-inverse" data-bind="click: saveWork"><i class="icon-plus icon-white"></i><span style="float: right; margin-left: 10px;" data-bind="text: lang.lang.save">Add Serving</span></button>
 					        </div>
 						</div>
 						<div class="example" style="box-shadow: 2px 0px 12px 0px rgba(68,68,68,1); border-radius: 0 0 10px 10px;">
@@ -797,6 +796,7 @@
 			font-size: 14px;
 			padding: 0;
 			margin: 0;
+			font-family: 'Preahvihear', 'Roboto Slab' !important;
 		}
 	</style>
   	<div style="margin: 0 auto;">

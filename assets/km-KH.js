@@ -33,6 +33,7 @@ var	km_KH = {
 	"view_edit_profile_micro" :  "មើល ឬ កែ​ប្រែ​",
 	"pos_setting" : "ការកំណត់ប្រតិបត្តិការលក់",
 	"micro_credit" : "ជំពាក់",
+	"sale_begining_the_year" : "ចំណូលលក់ក្នុងឆ្នាំ",
 	//Main Dustboard
 	"search_contact" :  "ស្វែងរក​ទំនាក់ទំនង",
 	"contact" :  "ទំនាក់ទំនង",
@@ -1384,7 +1385,6 @@ var	km_KH = {
 	"representive": "តំណាង",
 	"expire_date": "ថ្ងៃ​ផុត​កំណត់",
 	"max_con": "អតិបរមា​បណ្ដាញ",
-	"not_a_company": "មិន​មែន​ជា​ក្រុម​ហ៊ុន",
 	"it_is_a_company": "ជា​ក្រុម​ហ៊ុន",
 	"other": "ផ្សេងៗ",
 

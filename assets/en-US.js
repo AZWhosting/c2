@@ -33,6 +33,7 @@ var	en_US = {
 	"view_edit_profile_micro" :  "View/ Edit",
 	"pos_setting" : "POS Setting",
 	"micro_credit" : "Credit",
+	"sale_begining_the_year" : "Sale begining of the year",
 	//Main Dustboard
 	"search_contact" : "Search Contact",
 	"contact" : "Contact",
@@ -161,7 +162,6 @@ var	en_US = {
 	"customer_type" : "Customer Type",
 	"input_customer_type" : "Input Customer Type...",
 	"input_abbr" : "Input Abbr...",
-	"not_a_company" : "Not A Company",
 	"it_is_a_company" : "It Is A Company",
 	"add_type" : "Add Type",
 	"type" : "Type",

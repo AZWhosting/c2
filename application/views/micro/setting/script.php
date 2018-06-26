@@ -5678,13 +5678,15 @@
             var data = e.data;
 
             if(data.item_type_id==1){
-                banhji.router.navigate('/item/0/'+data.id);
+                //banhji.router.navigate('items/item/0/'+data.id);
+                window.location.replace(baseUrl + 'micro/items#/item/0/'+data.id);
             }else if(data.item_type_id==2){
                 banhji.router.navigate('/non_inventory_part/0/'+data.id);
             }else if(data.item_type_id==3){
                 banhji.router.navigate('/fixed_assets/0/'+data.id);
             }else if(data.item_type_id==4){
-                banhji.router.navigate('/item_service/0/'+data.id);
+               // banhji.router.navigate('/item_service/0/'+data.id);
+               window.location.replace(baseUrl + 'micro/items#/item_service/0/'+data.id);
             }else if(data.item_type_id==5){
                 banhji.router.navigate('/txn_item/0/'+data.id);
             }

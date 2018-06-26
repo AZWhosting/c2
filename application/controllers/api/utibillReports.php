@@ -989,9 +989,7 @@ class UtibillReports extends REST_Controller {
 		$this->response($data, 200);
 	}
 
-	//balance List
-
-
+	//balance List	
 	function totalBalance_get() {
 		$filter 	= $this->get("filter");
 		$page 		= $this->get('page');
@@ -999,60 +997,104 @@ class UtibillReports extends REST_Controller {
 		$sort 	 	= $this->get("sort");
 		$data["results"] = [];
 		$data["count"] = 0;
-
-		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-
+		$table = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$data = array();
 		//Sort
 		if(!empty($sort) && isset($sort)){
 			foreach ($sort as $value) {
 				if(isset($value['operator'])){
-					$obj->{$value['operator']}($value["field"], $value["dir"]);
+					$table->{$value['operator']}($value["field"], $value["dir"]);
 				}else{
-					$obj->order_by($value["field"], $value["dir"]);
+					$table->order_by($value["field"], $value["dir"]);
 				}
 			}
 		}
-		
-		//Filter		
+		//Filter
 		if(!empty($filter) && isset($filter)){
 	    	foreach ($filter["filters"] as $value) {
-	    		if(isset($value['operator'])){
-	    			$obj->{$value['operator']}($value['field'], $value['value']);	    		
-	    		} else {
-	    			$obj->where($value['field'], $value['value']);
-	    		}
+	    		if(isset($value["operator"])) {
+					$table->{$value["operator"]}($value["field"], $value["value"]);
+				} else {
+	    			$table->where($value["field"], $value["value"]);
+				}
 			}
 		}
+		// $table->where('status <>', 1);
+		$table->where('deleted', 0);
+		$table->where('journal_type <>', 'journal' );
+		$table->where('type','Utility_Invoice');
+		// $table->limit(2); //For testing speed purpose ai Chouen ery :(
 
 		//Results
+		if($page && $limit){
+			$table->get_paged_iterated($page, $limit);
+			$data["count"] = $table->paged->total_rows;
+		}else{
+			$table->get_iterated();
+			$data["count"] = $table->result_count();
+		}
+		if($table->exists()){
+			foreach($table as $row) {
+				$meter = [];
+				$mtnumber = "";
+				$mtorder = "";
+				$invoiceCount = 1;
+				$mtid = "";
+				$locale = $row->locale;
+				$location = $row->location->get_raw();
+				$invoiceLine = new Winvoice_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$invoiceLine->where('transaction_id', $row->id);
+				$invoiceLine->get();
+				if($invoiceLine->exists()) {
+					foreach($invoiceLine as $line) {
+						if($line->type == "usage"){
+							$meter = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+							$meter->where("id", $line->item_id)->limit(1)->get();
+							if($meter->exists()) {
+								$plan = $meter->plan->get();
+								$l = $plan->currency->get();
+								$locale = $l->locale;
+								$boxname = "";
+								$polename = "";
+								if($meter->box_id != 0){
+									$box = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+									$box->where("id", $meter->box_id)->limit(1)->get();
+									$boxname = $box->name;
+								}
+								if($meter->pole_id != 0){
+									$pol = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+									$pol->where("id", $meter->pole_id)->limit(1)->get();
+									$polename = $pol->name;
+								}
+								$meter = array(
+									'meter_number'   => $meter->number,
+									'meter_order'   => $meter->worder,
+									'meter_multiplier'   => $meter->multiplier,
+									'meter_id'   => $meter->id,
+									'location' => $location->result(),
+									'box' => $boxname,
+									'pole' => $polename,
+									'plan_locale' => $locale,
+									'branch_id' => $meter->branch_id
+								);
+							}
+						}
+					}
+				}
 
-		$obj->include_related("contact", array("abbr", "number", "name"));
-		// $obj->include_related("meter", "number");
-		// $obj->include_related('meter/record', array("usage", "previous", "current"));
-		$obj->where("type", "Utility_Invoice");
-		// $obj->where("is_recurring <>", 1);
-		$obj->where("deleted <>", 1);
-		$obj->where("amount >", 0);
-		$obj->get_iterated();
+				// $items  = $row->winvoice_line->get();
+				$items = new Winvoice_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$items->where("transaction_id", $row->id);
+				$items->get();
 
-		if($obj->exists()){
-			$objList = [];
-			$usage = 0;
-			$amount = 0;
-			$balance = 0;
-			$total = 0;
-			foreach ($obj as $value) {								
-
-				$wi = new Winvoice_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$wi->where('type', 'usage');
-				$wi->where('transaction_id', $value->id)->limit(1)->get();
-				$mr = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$mr->where('id', $wi->meter_record_id)->limit(1)->get();
-
-				//Balance
+				$lines  = [];
+				
+				$usage = 0;
 				$remain = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$remain->where("meter_id", $value->meter_id);
+				$remain->where("meter_id", $row->meter_id);
 				$remain->where("type", "Utility_Invoice");
+				$remain->where("month_of <", $row->month_of);
+				$remain->where("id <>", $row->id);
 				$remain->where("deleted", 0);
 				$remain->where("status <>", 1)->get_iterated();
 				$amountOwed = 0;
@@ -1074,8 +1116,7 @@ class UtibillReports extends REST_Controller {
 							}
 						}
 					}
-					$remf = floatval($rem->amount) + $fineAmount;
-					$total += $remf;
+					$amountOwed += $rem->amount + $fineAmount;
 					if($rem->status == 2) {
 						$qu = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 						$qu->where("type", "Cash_Receipt");
@@ -1085,40 +1126,147 @@ class UtibillReports extends REST_Controller {
 						};
 					}
 				}
-				$amount = $value->amount;
-				$amountOwed = $total - $amount;
-					$data["results"][] = array(
-						"id" 				=> $value->id,
-						"number"			=> $value->contact_abbr."".$value->contact_number,
-						"name"				=> $value->contact_name,
-						"type" 				=> $value->type,
-						"date" 				=> $value->issued_date,
-						"location" 			=> $value->location_name,
-						"meter_number" 		=> $value->number,
-						"previous" 			=> $mr->previous,
-						"current" 			=> $mr->current,
-						"usage" 			=> floatval($wi->quantity),
-						"amount"			=> floatval($amount),
-						"balance"			=> floatval($amountOwed),
-						"total"				=> $total,
-					);
-				// if(isset($objList[$value->meter_id])){
-				// 	$objList[$value->meter_id]["invoice"] 			+= 1;
-				// 	$objList[$value->meter_id]["amount"] 			+= $amount;
-				// 	$objList[$value->meter_id]["usage"]				+= $usage;
-				// }else{
-				// 	$objList[$value->meter_id]["id"] 				= $value->contact_id;
-				// 	$objList[$value->meter_id]["name"] 				= $value->contact_abbr.$value->contact_number." ".$value->contact_name;
-				// 	$objList[$value->meter_id]["invoice"]			= 1;
-				// 	$objList[$value->meter_id]["location"]			= $value->location_name;
-				// 	$objList[$value->meter_id]["amount"]			= $amount;
-				// 	$objList[$value->meter_id]["usage"]				= $usage;
-				// }
+
+				foreach($items as $item) {
+					if($item->type == 'usage') {
+						$record = $item->meter_record->include_related("meter", array("number"))->limit(1)->get();
+
+						$usage = $record->usage;
+						$lines[] = array(
+							'number' => $record->meter_number,
+							'previous' => floatval($record->previous),
+							'current'  => floatval($record->current),
+							'consumption' => floatval($record->usage),
+							'rate' => floatval($item->rate),
+							'amount' => floatval($item->amount),
+							'type' => $item->type,
+							'from_date' => $record->from_date,
+							'to_date' => $record->to_date
+						);
+					}else if($item->type == 'exemption') {
+						$unit = $item->item->limit(1)->get();
+						$usage = $record->usage;
+						$lines[] = array(
+							'number' => $item->description,
+							'previous' => floatval($record->previous),
+							'current'  => floatval($record->current),
+							'consumption' => floatval($record->usage),
+							'rate' => floatval($item->rate),
+							'amount' => floatval($item->amount),
+							'type' => $item->type,
+							'unit' => $unit->unit
+						);
+					}else if($item->type == 'installment') {
+						if($item->amount != 0){
+							$unit = $item->item->limit(1)->get();
+							$usage = $record->usage;
+							$lines[] = array(
+								'number' => "រំលោះ",
+								'previous' => floatval($record->previous),
+								'current'  => floatval($record->current),
+								'consumption' => floatval($record->usage),
+								'rate' => floatval($item->rate),
+								'amount' => floatval($item->amount),
+								'type' => $item->type,
+								'unit' => $unit->unit
+							);
+						}
+					}else if($item->type == 'meter' || $item->type == 'reactive') {
+						$meterdate = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						$meterdate->where("id", $item->meter_record_id)->order_by("id", "desc")->limit(1)->get();
+						$lines[] = array(
+							'number' => $item->description,
+							'previous' => floatval($meterdate->previous),
+							'current'  => floatval($meterdate->current),
+							'consumption' => floatval($meterdate->usage),
+							'rate' => floatval($item->rate),
+							'amount' => floatval($item->amount),
+							'type' => $item->type,
+							'from_date' => $meterdate->from_date,
+							'to_date' => $meterdate->to_date
+						);
+					}else if($item->type == 'total_usage') {
+						$lines[] = array(
+							'number' => $item->description,
+							'price' => floatval($item->price),
+							'current'  => floatval($item->quantity),
+							'consumption' => intval($item->amount),
+							'rate' => floatval($item->meter_record_id),
+							'amount' => intval($item->amount),
+							'type' => $item->type,
+							'unit' => 1
+						);
+					}else{
+						$lines[] = array(
+							'number' => $item->description,
+							'previous' => floatval($item->previous),
+							'current'  => floatval($item->current),
+							'consumption' => floatval($item->quantity),
+							'rate' => 0,
+							'amount' => floatval($item->amount),
+							'type' => $item->type
+						);
+					}
+				}
+				$monthGraph = "";
+				if(empty($meter)){
+					$meter = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$meter->where("id", $row->meter_id)->limit(1)->get();
+					if($meter->exists()) {
+						$plan = $meter->plan->get();
+						$l = $plan->currency->get();
+						$locale = $l->locale;
+						$boxname = "";
+						if($meter->box_id != 0){
+							$box = new Location(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+							$box->where("id", $meter->box_id)->limit(1)->get();
+							$boxname = $box->name;
+						}
+						$meter = array(
+							'meter_number'   => $meter->number,
+							'meter_order'   => $meter->worder,
+							'meter_multipier'   => $meter->multiplier,
+							'meter_id'   => $meter->id,
+							'location' => $location->result(),
+							'box' => $boxname,
+							'plan_locale' => $locale
+						);
+					}
+				}
+				$contact = $row->contact->get();
+				$address = "";
+				if(isset($contact->address) && $contact->address != NULL){
+					$address = $contact->address;
+				}else{
+					$address = "";
+				}
+				$data["results"][] = array(
+					'id' => $row->id,
+					'type' => $row->type,
+					'number' => $row->number,
+					'month_of' => date('m', strtotime($row->month_of)),
+					'status'=> $row->status,
+					'amount'  => floatval($row->amount),
+					'locale' => $locale,
+					'invoiceCount' => $invoiceCount,
+					'consumption' => $usage,
+					'formcolor' => '',
+					// 'minusMonth' => $minusM,
+					'contact' => array(
+						'id' => $row->contact_id,
+						'name' => $contact->name,
+						'phone' => isset($contact->phone) ? $contact->phone : '',
+						'abbr' => $contact->abbr,
+						'number' => $contact->number,
+						'address'=> $address
+					),
+					'amount_remain' => floatval($amountOwed),
+					'meter'=> $meter,
+					'invoice_lines'=> $lines
+				);
+
 			}
-			$data["count"] = count($data["results"]);
-
 		}
-
 		//Response Data
 		$this->response($data, 200);
 	}

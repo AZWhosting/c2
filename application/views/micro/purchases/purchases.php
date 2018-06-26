@@ -6404,10 +6404,6 @@
     </strong>
 </script>
 <script id="account-list-tmpl" type="text/x-kendo-tmpl">
-	<span>
-		#=number#
-	</span>
-	-
 	<span>#=name#</span>
 </script>
 <script id="reference-list-tmpl" type="text/x-kendo-tmpl">
@@ -6497,7 +6493,6 @@
 	<tr data-bind="click: selectedRow">
 		<td>
 			<div class="">
-				<span>#=abbr##=number#</span>
 				<span>#=name#</span>
 			</div>
 		</td>
@@ -6654,4 +6649,4 @@
 		</td>
 	</tr>
 </script>
-<!-- End -->  
+<!-- End -->

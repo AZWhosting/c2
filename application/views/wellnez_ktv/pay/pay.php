@@ -1020,7 +1020,7 @@
 		<td style="padding: 5px !important;">#= number#</td>
 		<td style="padding: 5px !important;">#= room#</td>
 		<td style="text-align: right; padding: 5px !important;">#=kendo.toString(amount, locale=="km-KH"?"c0":"c2", locale)#</td>
-		<td style="text-align: center"><a href="\#/add_items/#= id#">Add Items</a></td>
+		<td style="text-align: center"><a data-bind="click: goPOS">Add Items</a></td>
     </tr>   
 </script>
 <script id="customerDeposit" type="text/x-kendo-template">

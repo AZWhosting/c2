@@ -54,6 +54,7 @@ class Micro_modules extends REST_Controller {
 		$sales = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$sales->select_sum("amount / rate", "total");
 		$sales->where_in("type", array("Cash_Receipt","Cash_Refund","Commercial_Invoice","Vat_Invoice","Invoice","Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale"));
+		$sales->where("issued_date >", $this->startFiscalDate);
 		$sales->where("is_recurring <>", 1);
 		$sales->where("deleted <>", 1);
 		$sales->get();

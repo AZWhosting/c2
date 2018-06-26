@@ -71,7 +71,7 @@
 		<!-- 111 -->
 		<div class="col-12 col-md-4">
 			<div class="saleOverview" data-bind="click: loadSale" style="margin-bottom: 15px;">
-				<h2 data-bind="">Sale Begining Of The Year</h2>
+				<h2 data-bind="text: lang.lang.sale"> <span data-bind="">()</span></h2>
 				<p data-format="n" data-bind="text: obj.sale"></p>
 				<div class="row">
 					<div class="col">
@@ -5097,7 +5097,6 @@
 	<tr data-bind="click: selectedRow">
 		<td>
 			<div class="media-body">
-				<span>#=abbr##=number#</span>
 				<span>#=name#</span>
 			</div>
 		</td>
@@ -7374,7 +7373,6 @@
     </strong>
 </script>
 <script id="contact-list-tmpl" type="text/x-kendo-tmpl">
-	<span>#=abbr##=number#</span>
 	<span>#=name#</span>
 </script>
 <script id="customer-term-header-tmpl" type="text/x-kendo-tmpl">
@@ -7421,10 +7419,6 @@
     </strong>
 </script>
 <script id="account-list-tmpl" type="text/x-kendo-tmpl">
-	<span>
-		#=number#
-	</span>
-	-
 	<span>#=name#</span>
 </script>
 <script id="reference-list-tmpl" type="text/x-kendo-tmpl">
@@ -7524,4 +7518,4 @@
 		#=code# - #=country#
 	</span>
 </script>
-<!-- End -->                    
+<!-- End -->

@@ -23332,7 +23332,7 @@
     banhji.totalBalance = kendo.observable({
         lang: langVM,
         dataSource: dataStore(apiUrl + "utibillReports/totalBalance"),
-              licenseDS: dataStore(apiUrl + "branches"),
+        licenseDS: dataStore(apiUrl + "branches"),
         blocDS: dataStore(apiUrl + "locations"),
         subLocationDS: dataStore(apiUrl + "locations"),
         boxDS: dataStore(apiUrl + "locations"),
@@ -23340,6 +23340,7 @@
         company: banhji.institute,
         blocSelect: null,
         loSelectName: "",
+        displayDate: "",
         monthOf: "",
         monthOfUpload: null,
          exArray: [],
@@ -23513,6 +23514,7 @@
                     });
             }
         },
+        para        : [],
         search: function() {
             var monthOfSearch = this.get("monthOfUpload"),
                 license_id = this.get("licenseSelect"),
@@ -23543,13 +23545,7 @@
                 });
                 this.set("monthOf", monthOf);
                 //this.dataSource.filter(para);
-                    if(license_id){
-                        para.push({
-                            field: "branch_id",
-                            operator: "where_related_meter",
-                            value: license_id
-                        });
-                    }
+                    
 
                     if (box_id) {
                         para.push({
@@ -23557,192 +23553,202 @@
                             operator: "where_related_meter",
                             value: box_id
                         });
-                    } 
-
-                    if (pole_id) {
+                    } else if (pole_id) {
                         para.push({
                             field: "pole_id",
                             operator: "where_related_meter",
                             value: pole_id
                         });
-                    } 
-
-                    if (bloc_id){
+                    } else if (bloc_id){
                         para.push({
                             field: "location_id",
                             operator: "where_related_meter",
                             value: bloc_id
                         });
+                    } else if(license_id){
+                        para.push({
+                            field: "branch_id",
+                            operator: "where_related_meter",
+                            value: license_id
+                        });
                     }
                     this.dataSource.query({
-                        filter: para,
+                        filter:para,
                         page: 1,
-                        pageSize: 100
-                    }).then(function(e) {
-                    // if (e.type == "read") {
-                        var response = self.dataSource.view();
+                        pageSize: 100,
+                    }).then(function(){
+                        var view = self.dataSource.view();
 
-                        self.exArray = [];
+                        var amount = 0;
+                        var countCustomer = 0;
+                        $.each(view, function(index, value){
+                            amount += value.amount + value.amount_remain;
+                            countCustomer += value.countCustomer;
+                        });
 
-                        self.exArray.push({
-                            cells: [{
-                                value: "Total Balance",
-                                bold: true,
-                                fontSize: 20,
-                                textAlign: "center",
-                                colSpan: 9
-                            }]
-                        });
-                        if (self.displayDate) {
-                            self.exArray.push({
-                                cells: [{
-                                    value: self.displayDate,
-                                    textAlign: "center",
-                                    colSpan: 9
-                                }]
-                            });
-                        }
-                        self.exArray.push({
-                            cells: [{
-                                value: "",
-                                colSpan: 9
-                            }]
-                        });
-                        self.exArray.push({
-                            cells: [{
-                                    value: "Code",
-                                    background: "#496cad",
-                                    color: "#ffffff"
-                                },
-                                {
-                                    value: "Customer",
-                                    background: "#496cad",
-                                    color: "#ffffff"
-                                },
-                                {
-                                    value: "Meter Number",
-                                    background: "#496cad",
-                                    color: "#ffffff"
-                                },
-                                {
-                                    value: "Previous",
-                                    background: "#496cad",
-                                    color: "#ffffff"
-                                },
-                                {
-                                    value: "Current",
-                                    background: "#496cad",
-                                    color: "#ffffff"
-                                },
-                                {
-                                    value: "Usage",
-                                    background: "#496cad",
-                                    color: "#ffffff"
-                                },
-                                {
-                                    value: "Balance",
-                                    background: "#496cad",
-                                    color: "#ffffff"
-                                },
-                                 {
-                                    value: "Amount",
-                                    background: "#496cad",
-                                    color: "#ffffff"
-                                },
-                                 {
-                                    value: "Total",
-                                    background: "#496cad",
-                                    color: "#ffffff"
-                                },
-                            ]
-                        });
-                        for (var i = 0; i < response.length; i++) {
-                            self.exArray.push({
-                                cells: [{
-                                        value: response[i].number,
-                                        bold: true,
-                                    },
-                                    {
-                                        value: response[i].name,
-                                        bold: true,
-                                    },
-                                    {
-                                         value: response[i].meter_number,
-                                        bold: true,
-                                    },
-                                    {
-                                         value: response[i].previous,
-                                        bold: true,
-                                    },
-                                    {
-                                         value: response[i].current,
-                                        bold: true,
-                                    },
-                                    {
-                                        value: response[i].usage,
-                                        bold: true,
-                                    },
-                                    {
-                                        value: response[i].balance,
-                                        bold: true,
-                                    },
-                                    {
-                                        value: response[i].amount,
-                                        bold: true,
-                                    },
-                                    {
-                                        value: response[i].total,
-                                        bold: true,
-                                    }
-                                ]
-                            });
-                        }
-                    // }
-                });                  
+                        self.set("totalAmount", kendo.toString(amount, "c2", banhji.locale));
+                        self.set("countCustomer", kendo.toString(countCustomer));
+                    });
+            $.each(para, function(i,v){
+                self.para.push(v);
+            });          
         },
         cancel: function() {
             this.contact.cancelChanges();
             window.history.back();
         },
+        dataSourceEX: dataStore(apiUrl + "utibillReports/totalBalance"),
         ExportExcel: function() {
-            var workbook = new kendo.ooxml.Workbook({
-                sheets: [{
-                    columns: [{
-                            autoWidth: true
-                        },
-                        {
-                            autoWidth: true
-                        },
-                        {
-                            autoWidth: true
-                        },
-                        {
-                            autoWidth: true
-                        },
-                        {
-                            autoWidth: true
-                        },
-                        {
-                            autoWidth: true
-                        },
-                        {
-                            autoWidth: true
-                        },
-                        {
-                            autoWidth: true
-                        },
-                        {
-                            autoWidth: true
-                        },
-                    ],
-                    title: "Total Balance",
-                    rows: this.exArray
-                }]
+            this.exArray = [];
+            this.exArray.push({
+                cells: [
+                    { value: banhji.institute.name, textAlign: "center", colSpan: 9 }
+                ]
             });
-            //save the file as Excel file with extension xlsx
-            kendo.saveAs({
-                dataURI: workbook.toDataURL(),
-                fileName: "totalBalance.xlsx"
+            this.exArray.push({
+                cells: [
+                    { value: "", colSpan: 9 }
+                ]
+            });
+            this.exArray.push({
+                cells: [
+                    { value: this.lang.lang.total_balance_report, textAlign: "center", colSpan: 9 }
+                ]
+            });
+            this.exArray.push({
+                cells: [
+                    { value: this.get("monthOf"), textAlign: "center", colSpan: 9 }
+                ]
+            });
+            this.exArray.push({
+                cells: [
+                    { value: "", colSpan: 9 }
+                ]
+            });
+            this.exArray.push({
+                cells: [
+                    { value: this.lang.lang.code, background: "#496cad", color: "#ffffff" },
+                    { value: this.lang.lang.customer, background: "#496cad", color: "#ffffff" },
+                    { value: this.lang.lang.meter_number, background: "#496cad", color: "#ffffff" },
+                    { value: this.lang.lang.previous, background: "#496cad", color: "#ffffff" },
+                    { value: this.lang.lang.current, background: "#496cad", color: "#ffffff" },
+                    { value: this.lang.lang.usage, background: "#496cad", color: "#ffffff" },
+                    { value: this.lang.lang.amount, background: "#496cad", color: "#ffffff" },
+                    { value: this.lang.lang.balance, background: "#496cad", color: "#ffffff" },
+                    { value: this.lang.lang.total, background: "#496cad", color: "#ffffff" },
+                ]
+            });
+            var monthOfSearch = this.get("monthOfUpload"),
+                license_id = this.get("licenseSelect"),
+                bloc_id = this.get("blocSelect");
+                pole_id = this.get("subLocationSelect");
+                box_id = this.get("boxSelect");
+            var self = this;
+
+            var para = [];
+            var monthPara = [];
+            var monthOf = new Date(monthOfSearch);
+            monthOf.setDate(1);
+            monthOf = kendo.toString(monthOf, "yyyy-MM-dd");
+
+            var monthL = new Date(monthOfSearch);
+            var lastDayOfMonth = new Date(monthL.getFullYear(), monthL.getMonth() + 1, 0);
+            lastDayOfMonth = lastDayOfMonth.getDate();
+
+            monthL.setDate(lastDayOfMonth);
+            monthL = kendo.toString(monthL, "yyyy-MM-dd");
+
+            para.push({
+                field: "month_of >=",
+                value: monthOf
+            }, {
+                field: "month_of <=",
+                value: monthL
+            });
+            this.set("monthOf", monthOf);
+            if (box_id) {
+                para.push({
+                    field: "box_id",
+                    operator: "where_related_meter",
+                    value: box_id
+                });
+            } else if (pole_id) {
+                para.push({
+                    field: "pole_id",
+                    operator: "where_related_meter",
+                    value: pole_id
+                });
+            } else if (bloc_id){
+                para.push({
+                    field: "location_id",
+                    operator: "where_related_meter",
+                    value: bloc_id
+                });
+            } else if(license_id){
+                para.push({
+                    field: "branch_id",
+                    operator: "where_related_meter",
+                    value: license_id
+                });
+            }
+            this.dataSourceEX.query({
+                filter: para,
+                pageSize: -1,
+            }).then(function(e){
+                $.each(self.dataSourceEX.data(), function(i,v){
+                    self.exArray.push({
+                        cells: [
+                            { value: v.contact.number },
+                            { value: v.contact.name },
+                            { value: v.meter.meter_number },
+                            { value: v.invoice_lines[0].previous },
+                            { value: v.invoice_lines[0].current  },
+                            { value: v.invoice_lines[0].consumption  },
+                            { value: v.amount  },
+                            { value: v.amount_remain  },
+                            { value: v.amount + v.amount_remain },
+                        ]
+                    });
+                });
+                var workbook = new kendo.ooxml.Workbook({
+                    sheets: [{
+                        columns: [{
+                                autoWidth: true
+                            },
+                            {
+                                autoWidth: true
+                            },
+                            {
+                                autoWidth: true
+                            },
+                            {
+                                autoWidth: true
+                            },
+                            {
+                                autoWidth: true
+                            },
+                            {
+                                autoWidth: true
+                            },
+                            {
+                                autoWidth: true
+                            },
+                            {
+                                autoWidth: true
+                            },
+                            {
+                                autoWidth: true
+                            },
+                        ],
+                        title: "Total Balance",
+                        rows: self.exArray
+                    }]
+                });
+                //save the file as Excel file with extension xlsx
+                kendo.saveAs({
+                    dataURI: workbook.toDataURL(),
+                    fileName: "totalBalance.xlsx"
+                });
             });
         }
     });

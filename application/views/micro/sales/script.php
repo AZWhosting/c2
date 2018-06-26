@@ -3494,6 +3494,7 @@
         sdate               : "",
         edate               : "",
         obj                 : [],
+        fiscalDate          : banhji.userData.fiscal_date;
         pageLoad            : function(){
             var self = this;
 
