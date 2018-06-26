@@ -50,7 +50,7 @@ class Ops extends REST_Controller {
 			    // $this->dbforge->add_field("created_at date DEFAULT NULL");
 			    // $this->dbforge->add_field("updated_at date DEFAULT NULL");
 			    // $this->dbforge->create_table('tmp_total_sales', TRUE);
-
+			   
 				//Rename Table 'old_table_name' to 'new_table_name'
 			    // $this->dbforge->rename_table('contacts_custom_fields', 'field_values');
 
@@ -127,32 +127,12 @@ class Ops extends REST_Controller {
 				// 	// 	"null" 		=> FALSE,
 				// 	// 	"default" 	=> 0
 				// 	// ),
-				// 	"card_id" => array(
-				// 		"type" 		=> "INT",
-				// 		"constraint"=> 11,
-				// 		"null" 		=> FALSE,
-				// 		"default" 	=> 0
-				// 	),
-				// 	"loyalty_id" => array(
-				// 		"type" 		=> "INT",
-				// 		"constraint"=> 11,
-				// 		"null" 		=> FALSE,
-				// 		"default" 	=> 0
-				// 	),
-				// 	"canceled_by" => array(
-				// 		"type" 		=> "INT",
-				// 		"constraint"=> 11,
-				// 		"null" 		=> FALSE,
-				// 		"default" 	=> 0
-				// 	),
-				// 	"room_id" => array(
-				// 		"type" 		=> "INT",
-				// 		"constraint"=> 11,
-				// 		"null" 		=> FALSE,
-				// 		"default" 	=> 0
+				// 	"end_date" => array(
+				// 		"type" 		=> "DATE",
+				// 		"null" 		=> FALSE
 				// 	)
 				// );
-				// $data['results'][] = $this->dbforge->add_column("transactions", $fields);
+				// $data['results'][] = $this->dbforge->add_column("recurrings", $fields);
 
 			    // Modify fields
 		 	// 	$fields = array(
@@ -163,13 +143,15 @@ class Ops extends REST_Controller {
 				// 	// 	"null" 		=> FALSE,
 				// 	// 	"default" 	=> 1
 				// 	// ),
-				// 	"phone" => array(
-				// 		"name" 		=> "phone",//New Field Name
-				// 		"type" 		=> "VARCHAR",
-				// 		"constraint"=> "255"
+				// 	"deleted" => array(
+				// 		"name" 		=> "deleted",//New Field Name
+				// 		"type" 		=> "TINYINT",
+				// 		"constraint"=> "1",
+				// 		"null" 		=> FALSE,
+				// 		"default" 	=> 0
 				// 	)
 				// );
-				// $data['results'][] = $this->dbforge->modify_column('contacts', $fields);
+				// $data['results'][] = $this->dbforge->modify_column('recurrings', $fields);
 
 			 	//Remove column, 'table_name', 'column_to_drop'
 				// $this->dbforge->drop_column('memberships', 'cpd_record_date');

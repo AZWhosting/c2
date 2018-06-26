@@ -71,7 +71,7 @@
 		<!-- 111 -->
 		<div class="col-12 col-md-4">
 			<div class="saleOverview" data-bind="click: loadSale" style="margin-bottom: 15px;">
-				<h2 data-bind="text: lang.lang.sale"> <span data-bind="">()</span></h2>
+				<h2 ><span data-bind="text: lang.lang.sale"></span> (<span data-bind="text: fiscalDate"></span>)</h2>
 				<p data-format="n" data-bind="text: obj.sale"></p>
 				<div class="row">
 					<div class="col">

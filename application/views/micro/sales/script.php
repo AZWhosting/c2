@@ -3494,7 +3494,7 @@
         sdate               : "",
         edate               : "",
         obj                 : [],
-        fiscalDate          : banhji.userData.fiscal_date;
+        fiscalDate          : kendo.toString(new Date(banhji.userData.institute.fiscal_date),"m"),
         pageLoad            : function(){
             var self = this;
 
@@ -3592,11 +3592,6 @@
             ]);
         },
         loadDraft            : function(){
-            this.txnDS.filter([
-                { field:"type", operator:"where_in", value:["Sale_Order","Customer_Deposit","Cash_Receipt","Cash_Refund","Commercial_Invoice","Vat_Invoice","Invoice","Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale"] },
-                { field:"status", value:4 },
-                { field:"progress", value:"Draft" }
-            ]);
         },
         payInvoice          : function(e){
             var data = e.data;

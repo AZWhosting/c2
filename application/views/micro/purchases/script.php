@@ -3504,6 +3504,7 @@
 		sdate               : "",
 		edate               : "",
 		obj                 : {},
+		fiscalDate          : kendo.toString(new Date(banhji.userData.institute.fiscal_date),"m"),
 		pageLoad            : function(){
 			this.loadData();
 			this.search();

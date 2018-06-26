@@ -5700,7 +5700,7 @@
                 }
             });
         },
-        workDS : dataStore(apiUrl + "wellnez/work"),
+        workDS : dataStore(apiUrl + "spa/work"),
         addInvoice : function(e){
             var self = this;
             if(this.lineDS.data().length > 0){
@@ -5777,14 +5777,14 @@
             this.set("customerPhone", "");
             this.bookDS.data([]);
             this.workDS.data([]);
-            this.itemsDS.query({
-                filter: {
-                    field: "item_type_id",
-                    operator: "where_in",
-                    value: [1, 4]
-                },
-                pageSize: 8,
-            })
+            // this.itemsDS.query({
+            //     filter: {
+            //         field: "item_type_id",
+            //         operator: "where_in",
+            //         value: [1, 4]
+            //     },
+            //     pageSize: 8,
+            // })
         },
         catChange: function(e){
             var para = [];
@@ -7413,7 +7413,7 @@
         },
         cancel        : function(){
             this.clear();
-            window.history.back();
+            // window.history.back();
         },
         delete        : function(){
             var self = this, obj = this.get("obj");

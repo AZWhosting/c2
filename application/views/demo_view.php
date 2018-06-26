@@ -15804,6 +15804,18 @@
 										</td>
 									</tr>
 									<tr>
+										<td>Frequency</td>
+										<td>
+											<input data-role="dropdownlist"
+								                   data-value-primitive="true"
+								                   data-text-field="name"
+								                   data-value-field="id"
+								                   data-bind="value: frequency,
+								                              source: frequencyList"
+								                   data-option-label="Select Frequency..." style="width: 100%;" />
+										</td>
+									</tr>
+									<tr>
 										<td>Form</td>
 										<td>
 											<input data-role="dropdownlist"
@@ -65153,7 +65165,8 @@
   				<li><a href='#/customer_deposit'><span data-bind="text: lang.lang.create_customer_deposit"></span></a></li>
   				<li><a href='#/cash_sale'><span data-bind="text: lang.lang.create_cash_sale"></span></a></li>
   				<li><a href='#/invoice'><span data-bind="text: lang.lang.create_invoice"></span></span></a></li>
-  				<li><a href='#/invoice_batch_membership'><span>Create Batch Invoices</span></a></li>
+  				<li><a href='#/invoice_batch_membership'><span>Create Billing Cycle</span></a></li>
+  				<li><a href='#/invoice_batch'><span>Create Batch Invoices</span></a></li>
   				<li><a href='#/cash_receipt'><span data-bind="text: lang.lang.create_cash_receipt"></span></span></a></li>
   				<li><a href='#/sale_return'><span data-bind="text: lang.lang.create_sale_return"></span></a></li>
   				<li><a href='#/statement'><span data-bind="text: lang.lang.create_statement"></span></a></li>

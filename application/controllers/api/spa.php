@@ -302,19 +302,22 @@ class Spa extends REST_Controller {
 					$i->locale = $txn->locale;
 					$i->movement = 0;
 					$i->save();
-					$emcount = count($item->therapist);
+					echo $emcount = sizeof($item->therapist);
+
 					if($emcount > 0){
 						foreach($item->therapist as $the){
-							$emtxn = new Spa_employee_transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-					   		$emtxn->transaction_id = $txn->id;
-					   		$emtxn->employee_id = $the->id;
-					   		if($emcount > 1){
-					   			$emtxn->status = 2;
-					   		}else{
-					   			$emtxn->status = 1;
-					   		}
-					   		$emtxn->amount = floatval($txn->amount) / intval($emcount);
-					   		$emtxn->save();
+							if(isset($the->id)){
+								$emtxn = new Spa_employee_transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						   		$emtxn->transaction_id = $txn->id;
+						   		$emtxn->employee_id = $the->id;
+						   		if($emcount > 1){
+						   			$emtxn->status = 2;
+						   		}else{
+						   			$emtxn->status = 1;
+						   		}
+						   		$emtxn->amount = floatval($txn->amount) / intval($emcount);
+						   		$emtxn->save();
+						   	}
 						}
 					}
 				}

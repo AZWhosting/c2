@@ -68,7 +68,7 @@
 	<div class="row home" id="reports">
 		<div class="col-12 col-md-4">
 			<div class="saleOverview" data-bind="click: loadPurchase" style="margin-bottom: 15px;">
-				<h2 data-bind="text: lang.lang.purchase"></h2>
+				<h2><span data-bind="text: lang.lang.purchase"></span> (<span data-bind="text: fiscalDate"></span>)</h2>
 				<p data-format="n" data-bind="text: obj.purchase"></p>
 				<div class="row">
 					<div class="col">

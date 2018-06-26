@@ -27252,6 +27252,7 @@
 		paymentMethodDS     : banhji.source.paymentMethodDS,
 		amtDueColor         : banhji.source.amtDueColor,
 		confirmMessage      : banhji.source.confirmMessage,
+		frequencyList       : banhji.source.frequencyList,
 		selectList          : [],
 		obj                 : null,
 		isEdit              : false,
@@ -27263,6 +27264,7 @@
 		total               : 0,
 		amount_due          : 0,
 		membership_type_id  : 0,
+		frequency 			: "",
 		user_id             : banhji.source.user_id,
 		pageLoad            : function(){
 			if(this.dataSource.total()==0){
@@ -27375,10 +27377,20 @@
 		},
 		//Membership
 		membershipTypeChanges : function(){
-			var self = this, membership_type_id = this.get("membership_type_id");
+			var self = this, para = [],
+				membership_type_id = this.get("membership_type_id"),
+				frequency = this.get("frequency");
+
+			if(membership_type_id){
+				para.push({ field:"membership_type_id", operator:"memberships", value:membership_type_id });
+			}
+
+			if(frequency){
+				para.push({ field:"frequency", value:frequency });
+			}
 
 			this.membershipTxnDS.query({
-				filter:{ field:"membership_type_id", operator:"memberships", value:membership_type_id }
+				filter:para
 			}).then(function(){
 				self.generateNumber();
 			});
