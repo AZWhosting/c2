@@ -7510,7 +7510,7 @@
                         transaction_id      : transaction_id,
                         account_id          : arID,
                         contact_id          : obj.contact_id,
-                        description         : obj.memo,
+                        description         : "Wellnez Invoice",
                         reference_no        : obj.reference_no,
                         segments            : obj.segments,
                         dr                  : arAmount,
@@ -7534,7 +7534,7 @@
                             transaction_id      : transaction_id,
                             account_id          : discountAccountId,
                             contact_id          : obj.contact_id,
-                            description         : obj.memo,
+                            description         : "Wellnez Invoice",
                             reference_no        : obj.reference_no,
                             segments            : obj.segments,
                             dr                  : obj.discount,
@@ -7607,6 +7607,7 @@
                         var noti = $("#ntf1").data("kendoNotification");
                         noti.hide();
                         noti.success(self.lang.lang.success_message);
+                        
                         self.addJournal(self.get("obj").transaction_id);
                         $("#loadImport").css("display", "none");
                         // self.cancel();

@@ -128,7 +128,9 @@ class Spa extends REST_Controller {
 									}
 									//Item
 									$item = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-									$item->where("transaction_id", $value->transaction_id)->get_iterated();
+									$item->where("transaction_id", $value->transaction_id);
+									$item->include_related("item", array("item_type_id","abbr","number","name","cost","price","locale","income_account_id","expense_account_id","inventory_account_id","nature"));
+									$item->get_iterated();
 									$itemar = [];
 									//Service Charge
 									$sc = new Spa_service_charge(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
@@ -140,14 +142,79 @@ class Spa extends REST_Controller {
 											$me = new Measurement(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 											$me->where("id", $i->measurement_id)->limit(1)->get();
 											$itemar[] = array(
-												"id" 			=> $i->id,
-												"name" 			=> $i->description,
-												"quantity" 		=> intval($i->quantity),
-												"measurement" 	=> array("id" => $me->id, "name" => $me->name),
-												"price" 		=> floatval($i->price),
-												"amount" 		=> floatval($i->amount),
-												"rate" 			=> floatval($i->rate),
-												"locale" 		=> $i->locale
+												"id" 				=> $i->id,
+												"conversion_ratio" 	=> $i->conversion_ratio,
+												"cost" 				=> $i->cost,
+												"transaction_id" 	=> $i->transaction_id,
+												"item_id" 			=> $i->item_id,
+												"description" 		=> $i->description,
+												"item_price" 		=> $i->item_price,
+												"item" 				=> array(
+													"id" 	=> $i->item_id, 
+													"conversion_ratio" 	=> $i->conversion_ratio,
+													"cost" 				=> $i->cost,
+													"name" 	=> $i->description,
+													"description" 		=> $i->description,
+													"quantity" 			=> $i->quantity,
+													"avarage_cost" 		=> $i->avarage_cost,
+													"contact_id" 		=> $i->contact_id,
+													"quantity" 			=> intval($i->quantity),
+													"measurement" 		=> array(
+														"id" 				=> $me->id, 
+														"measurement" 		=> $me->name,
+														"name" 				=> $me->name,
+														"measurement_id" 	=> $me->id,
+													),
+													"tax_item" 			=> array(
+														"id" 				=> $i->tax_item_id
+													),
+													"price" 			=> floatval($i->price),
+													"item_price" 		=> array(
+														"measurement" 		=> $me->name,
+														"measurement_id" 	=> $me->id,
+													),
+													"amount" 			=> floatval($i->amount),
+													"discount" 			=> $i->discount,
+													"tax" 				=> $i->tax,
+													"rate" 				=> floatval($i->rate),
+													"locale" 			=> $i->locale,
+													"item_type_id" 			=> $i->item_item_type_id,
+													"abbr"					=> $i->item_abbr, 
+													"number" 				=> $i->item_number, 
+													"income_account_id"		=> $i->item_income_account_id, 
+													"expense_account_id" 	=> $i->item_expense_account_id, 
+													"inventory_account_id" 	=> $i->item_inventory_account_id
+												),
+												"contact_id" 		=> $i->contact_id,
+												"measurement_id" 	=> $i->measurement_id,
+												"tax_item_id" 		=> $i->tax_item_id,
+												"assembly_id" 		=> $i->assembly_id,
+												"description" 		=> $i->description,
+												"quantity" 			=> $i->quantity,
+												"avarage_cost" 		=> $i->avarage_cost, 			
+												"quantity" 			=> intval($i->quantity),
+												"measurement" 		=> array(
+													"id" 				=> $me->id, 
+													"measurement" 		=> $me->name,
+													"name" 				=> $me->name,
+													"measurement_id" 	=> $me->id,
+												),
+												"tax_item" 			=> array(
+													"id" 				=> $i->tax_item_id
+												),
+												"price" 			=> floatval($i->price),
+												"item_price" 		=> array(
+													"measurement" 		=> $me->name,
+													"measurement_id" 	=> $me->id,
+												),
+												"amount" 			=> floatval($i->amount),
+												"discount" 			=> $i->discount,
+												"tax" 				=> $i->tax,
+												"rate" 				=> floatval($i->rate),
+												"locale" 			=> $i->locale,
+												"status" 			=> $obj->status,
+												"therapist" 		=> [],
+												"therapistname" 	=> "",
 											);
 											if($sc->exists()){
 												if($i->item_id == $sc->item_id){
@@ -1258,27 +1325,27 @@ class Spa extends REST_Controller {
 				$contact = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				$contact->where("id", $txn->contact_id)->limit(1)->get();
 				//CR
-				$j1 = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$j1->transaction_id = $txn->id;
-				$j1->account_id = $contact->ra_id;
-				$j1->contact_id = $txn->contact_id;
-				$j1->description = "Wellnez Invoice";
-				$j1->dr = 0;
-				$j1->cr = $txn->amount;
-				$j1->rate = $txn->rate;
-				$j1->locale = $txn->locale;
-				$j1->save();
-				//DR
-				$j2 = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$j2->transaction_id = $txn->id;
-				$j2->account_id = $contact->account_id;
-				$j2->contact_id = $txn->contact_id;
-				$j2->description = "Wellnez Invoice";
-				$j2->dr = $txn->amount;
-				$j2->cr = 0;
-				$j2->rate = $txn->rate;
-				$j2->locale = $txn->locale;
-				$j2->save();
+				// $j1 = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				// $j1->transaction_id = $txn->id;
+				// $j1->account_id = $contact->ra_id;
+				// $j1->contact_id = $txn->contact_id;
+				// $j1->description = "Wellnez Invoice";
+				// $j1->dr = 0;
+				// $j1->cr = $txn->amount;
+				// $j1->rate = $txn->rate;
+				// $j1->locale = $txn->locale;
+				// $j1->save();
+				// //DR
+				// $j2 = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				// $j2->transaction_id = $txn->id;
+				// $j2->account_id = $contact->account_id;
+				// $j2->contact_id = $txn->contact_id;
+				// $j2->description = "Wellnez Invoice";
+				// $j2->dr = $txn->amount;
+				// $j2->cr = 0;
+				// $j2->rate = $txn->rate;
+				// $j2->locale = $txn->locale;
+				// $j2->save();
 			}
 			$saleorder->status = 1;
 			$saleorder->save();
