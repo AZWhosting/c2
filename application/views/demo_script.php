@@ -2662,6 +2662,7 @@
 		noteDS              : dataStore(apiUrl + 'notes'),
 		attachmentDS        : dataStore(apiUrl + "attachments"),
 		txnDS               : dataStore(apiUrl + "transactions"),
+		balanceDS           : dataStore(apiUrl + "transactions/balance"),
 		currencyDS          : new kendo.data.DataSource({
 			data: banhji.source.currencyList,
 			filter: { field:"status", value: 1 }
@@ -2956,10 +2957,22 @@
 						}
 					});
 
-					self.set("deposit", kendo.toString(deposit, obj.locale=="km-KH"?"c0":"c", obj.locale));
+					// self.set("deposit", kendo.toString(deposit, obj.locale=="km-KH"?"c0":"c", obj.locale));
 					self.set("outInvoice", kendo.toString(open, "n0"));
 					self.set("overInvoice", kendo.toString(over, "n0"));
-					self.set("balance", kendo.toString(balance, obj.locale=="km-KH"?"c0":"c", obj.locale));
+					// self.set("balance", kendo.toString(balance, obj.locale=="km-KH"?"c0":"c", obj.locale));
+				});
+
+				this.balanceDS.query({
+					filter:[
+						{ field:"contact_id", value:obj.id },
+						{ field:"type", operator:"where_in", value:["Commercial_Invoice", "Vat_Invoice", "Invoice"] }
+					]
+				}).then(function(){
+					var view = self.balanceDS.view();
+
+					self.set("deposit", kendo.toString(view[0].deposit, obj.locale=="km-KH"?"c0":"c", obj.locale));
+					self.set("balance", kendo.toString(view[0].amount, obj.locale=="km-KH"?"c0":"c", obj.locale));					
 				});
 			}
 		},

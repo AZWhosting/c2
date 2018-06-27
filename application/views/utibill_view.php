@@ -16959,9 +16959,6 @@
 		<td style="text-align: right;">#=kendo.toString(total, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#</td>
 	</tr>
 </script>
-
-
-<!--///////////////////////////////////-->
 <script id="totalBalance" type="text/x-kendo-template">
 	<div class="container">
 		<div class="row-fluid">
@@ -19299,41 +19296,19 @@
 									<div class="tab-content">
 								        <div class="tab-pane active" id="tab-1">
 								        	<div class="row">
-												<div class="col-xs-12-3 col-sm-2">
-													<label ><span data-bind="text: lang.lang.license">License</span></label>
-													<input 
-														data-role="dropdownlist" 
-														style="width: 100%;" 
-														data-option-label="License ..." 
-														data-auto-bind="false" 
-														data-value-primitive="true" 
-														data-text-field="name" 
-														data-value-field="id" 
-														data-bind="
-															value: licenseSelect,
-						                  					source: licenseDS,
-						                  					events: {change: licenseChange}">
-						                  		</div>
-												<div class="col-xs-12-3 col-sm-2">
-													<label ><span data-bind="text: lang.lang.start">Start Date</span></label>
-											        <input data-role="datepicker"
-													   class="sdate"
-													   data-format="dd-MM-yyyy"
-											           data-bind="value: sdate,
-											           			  max: edate"
-											           placeholder="From ..." style="width: 100%" >
-												</div>
-												<div class="col-xs-12 col-sm-3">
-													<div class="control-group">
-														<label ><span data-bind="text: lang.lang.end">End</span></label>
-													    <input data-role="datepicker"
-													    	   class="edate"
-													    	   data-format="dd-MM-yyyy"
-													           data-bind="value: edate,
-													                      min: sdate"
-													           placeholder="To ..." style="width: 100%" >
-							                  		</div>
-												</div>
+												<div class="col-xs-12 col-sm-2">
+													<div class="control-group">	
+														<label ><span data-bind="text: lang.lang.month_of">Month Of</span></label>
+											            <input type="text" 
+										                	style="width: 100%;" 
+										                	data-role="datepicker"
+										                	data-format="MM-yyyy"
+										                	data-start="year" 
+											  				data-depth="year"
+										                	placeholder="Moth of ..." 
+												           	data-bind="value: monthOfUpload" />
+													</div>
+												</div>	
 												<div class="col-xs-12-3 col-sm-1">
 													<label ><span data-bind="text: lang.lang.search">search</span></label>	
 												  	<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>							
@@ -19358,7 +19333,7 @@
 					        	<div class="clear" style="float: left;">
 					                	<p style="float: left; text-align: left;  margin-bottom: 0;">អាជ្ញាប័ណ្ណលេខ ៖ <span data-bind="text: number.number"></span></p>
 					                    <p style="float: left;width: 100%; margin-bottom: 0;">ឈ្មោះអ្នកកាន់អាជ្ញាប័ណ្ណ ៖ <span data-bind="text: company.name"></span></p>
-					                    <p style="float: left;width: 100%;">ទិន្នន័យសម្រាប់ខែ ៖ <span data-bind="text: displayDate"></span></p>
+					                    <p style="float: left;width: 100%;">ទិន្នន័យសម្រាប់ខែ ៖ <span data-bind="text: monthOf"></span></p>
 					                </div>
 					        	<div >
 					        		<div class="span12">
@@ -19406,7 +19381,7 @@
 					        	<div class="clear" style="float: left;">
 					            	<p style="float: left; text-align: left; margin-bottom: 0;">អាជ្ញាប័ណ្ណលេខ៖ <span data-bind="text: company.number"></span></p>
 					                <p style="float: left;width: 100%; margin-bottom: 0;">ឈ្មោះអ្នកកាន់អាជ្ញាប័ណ្ណ៖<span data-bind="text: company.name"></span></p>
-					                <p style="float: left;width: 100%">ទិន្នន័យសម្រាប់ខែ៖ <span data-bind="text: displayDate"></span></p>
+					                <p style="float: left;width: 100%">ទិន្នន័យសម្រាប់ខែ៖ <span data-bind="text: monthOf"></span></p>
 					            </div>
 					        	<div >
 					        		<div class="span12">
@@ -19523,7 +19498,7 @@
 					        	<div class="clear" style="float: left;">
 					            	<p style="float: left; text-align: left; margin-bottom: 0;">អាជ្ញាប័ណ្ណលេខ៖ <span data-bind="text: company.number"></span></p>
 					                <p style="float: left;width: 100%; margin-bottom: 0;">ឈ្មោះអ្នកកាន់អាជ្ញាប័ណ្ណ៖<span data-bind="text: company.name"></span></p>
-					                <p style="float: left;width: 100%">ទិន្នន័យសម្រាប់ខែ៖ <span data-bind="text: displayDate"></span></p>
+					                <p style="float: left;width: 100%">ទិន្នន័យសម្រាប់ខែ៖ <span data-bind="text: monthOf"></span></p>
 					            </div>
 					        	<div >
 					        		<div class="span12">

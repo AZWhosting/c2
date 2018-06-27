@@ -23548,8 +23548,6 @@
                 });
                 this.set("monthOf", monthOf);
                 //this.dataSource.filter(para);
-                    
-
                     if (box_id) {
                         para.push({
                             field: "box_id",
@@ -23607,6 +23605,7 @@
         pageGo  : 1,
         totalPage: 0,
         ExportExcel: function() {
+            $("#loadImport").css("display", "block");
             var self = this;
             this.exArray = [];
             this.exArray.push({
@@ -23650,6 +23649,7 @@
             var limit = 100;
             var totalPage = parseInt(this.get("totalRow") / limit) + 1;
             this.set("totalPage", totalPage);
+            this.set("pageGo", 1);
             if(totalPage > 0){
                 this.getDataExcel(1, 100);
             }
@@ -23737,6 +23737,7 @@
                 if(self.get("pageGo") <= self.get("totalPage")){
                     self.getDataExcel(self.get("pageGo"), 100);
                 }else{
+                    $("#loadImport").css("display", "none");
                     var workbook = new kendo.ooxml.Workbook({
                         sheets: [{
                             columns: [{
@@ -26198,6 +26199,7 @@
         blocDS: dataStore(apiUrl + "locations"),
         sortList: banhji.source.sortList,
         sorter: "month",
+        monthOf: "",
         sdate: "",
         edate: "",
         obj: {
@@ -26211,7 +26213,7 @@
         totalAmount: 0,
         exArray: [],
         pageLoad: function() {
-            this.search();
+            this.set("monthOfUpload", "<?php echo date('Y-m-d');?>");
             this.set("haveBloc", false);
         },
         sorterChanges: function() {
@@ -26260,82 +26262,33 @@
             this.set("haveBloc", true);
         },
         search: function() {
-            var self = this,
-                para = [],
-                obj = this.get("obj"),
-                start = this.get("sdate"),
-                end = this.get("edate"),
-                displayDate = "";
-            license = this.get("licenseSelect"),
-                bloc = this.get("blocSelect");
-            this.set("licenseMVCount", '');
-            if (license) {
-                para.push({
-                    field: "branch_id",
-                    value: license.id
-                });
-            }
+            var monthOfSearch = this.get("monthOfUpload");
+            var self = this;
 
-            if (bloc) {
-                para.push({
-                    field: "location_id",
-                    value: bloc.id
-                });
-            }
+            var para = [];
+            var monthPara = [];
+            var monthOf = new Date(monthOfSearch);
+                monthOf.setDate(1);
+                monthOf = kendo.toString(monthOf, "yyyy-MM-dd");
 
-            //Customer
-            if (obj.contactIds.length > 0) {
-                var contactIds = [];
-                $.each(obj.contactIds, function(index, value) {
-                    contactIds.push(value);
-                });
-                para.push({
-                    field: "contact_id",
-                    operator: "where_in",
-                    value: contactIds
-                });
-            }
+                var monthL = new Date(monthOfSearch);
+                var lastDayOfMonth = new Date(monthL.getFullYear(), monthL.getMonth() + 1, 0);
+                lastDayOfMonth = lastDayOfMonth.getDate();
 
-            //Dates
-            if (start && end) {
-                start = new Date(start);
-                end = new Date(end);
-                displayDate = kendo.toString(start, "dd-MM-yyyy") + " - " + kendo.toString(end, "dd-MM-yyyy");
-                end.setDate(end.getDate() + 1);
+                monthL.setDate(lastDayOfMonth);
+                monthL = kendo.toString(monthL, "yyyy-MM-dd");
 
                 para.push({
                     field: "month_of >=",
                     operator : "where_related_transaction",
-                    value: kendo.toString(start, "yyyy-MM-dd")
-                });
-                para.push({
-                    field: "month_of <",
+                    value: monthOf
+                }, {
+                    field: "month_of <=",
                     operator : "where_related_transaction",
-                    value: kendo.toString(end, "yyyy-MM-dd")
+                    value: monthL
                 });
-            } else if (start) {
-                start = new Date(start);
-                displayDate = "On " + kendo.toString(start, "dd-MM-yyyy");
+                this.set("monthOf", monthOf);
 
-                para.push({
-                    field: "month_of",
-                    operator : "where_related_transaction",
-                    value: kendo.toString(start, "yyyy-MM-dd")
-                });
-            } else if (end) {
-                end = new Date(end);
-                displayDate = "As Of " + kendo.toString(end, "dd-MM-yyyy");
-                end.setDate(end.getDate() + 1);
-
-                para.push({
-                    field: "month_of <",
-                    operator : "where_related_transaction",
-                    value: kendo.toString(end, "yyyy-MM-dd")
-                });
-            } else {
-
-            }
-            this.set("displayDate", displayDate);
             this.dataSource.query({
                 filter: para,
             }).then(function() {

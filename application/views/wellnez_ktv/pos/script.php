@@ -5066,11 +5066,7 @@
                 locale              : item.locale,
                 movement            : 0,
                 discount_percentage : 0,
-                item                : { 
-                    id:item.id, 
-                    name:item.name , 
-                    item_type_id: item.item_type_id
-                },
+                item                : item,
                 measurement         : item.measurement,
                 item_price          : { 
                     measurement_id: item.measurement.measurement_id, 
@@ -7287,6 +7283,8 @@
             });
         },
         //Obj
+        transactionDS       : dataStore(apiUrl + "transactions"),
+        invobj              : [],
         loadObj             : function(id){
             var self = this, para = [], referenceIds = [];
 
@@ -7320,6 +7318,19 @@
                 $.each(view[0].room, function(i,v){
                     self.roomAR.push(v);
                 });
+                if(view[0].type == "Invoice"){
+                    self.transactionDS.query({
+                        filter: {field: "id", value: view[0].transaction_id},
+                        pageSize: 1
+                    }).then(function(e){
+                        self.set("invobj", self.transactionDS.data()[0]);
+                        // self.journalLineDS.query({
+                        //     filter: {field: "transaction_id", value: view[0].transaction_id}
+                        // }).then(function(e){
+                            
+                        // });
+                    });
+                }
             });
         },
         addRow        : function(e){
@@ -7346,11 +7357,7 @@
                 locale              : item.locale,
                 movement            : 0,
                 discount_percentage : 0,
-                item                : { 
-                    id:item.id, 
-                    name:item.name , 
-                    item_type_id: item.item_type_id
-                },
+                item                : item,
                 measurement         : item.measurement,
                 item_price          : { 
                     measurement_id: item.measurement.measurement_id, 
@@ -7366,6 +7373,214 @@
             var data = e.data;
             this.lineDS.remove(data);
             this.changes();
+        },
+        //Journal           
+        addJournal          : function(transaction_id){
+            var self = this,
+                obj = this.get("invobj"),
+                contact = obj.contact,
+                raw = "", entries = {};
+
+            //Edit Mode
+            if(obj.isNew()==false){
+                //Delete previous journal
+                $.each(this.journalLineDS.data(), function(index, value){
+                    value.set("deleted", 1);
+                });
+            }
+            
+            //Item lines
+            $.each(this.lineDS.data(), function(index, value){
+                var item = value.item;
+
+                //COGS on Dr
+                if(item.item_type_id==1){
+                    var cogsID = kendo.parseInt(item.expense_account_id);
+                    if(cogsID>0){
+                        raw = "dr"+cogsID;
+                        
+                        var cogsAmount = value.amount;
+                        if(item.item_type_id==1 || item.item_type_id==4){
+                            cogsAmount = (value.quantity*value.conversion_ratio)*value.cost;
+                        }
+
+                        if(entries[raw]===undefined){
+                            entries[raw] = {
+                                transaction_id      : transaction_id,
+                                account_id          : cogsID,
+                                contact_id          : obj.contact_id,
+                                description         : value.description ? value.description : item.name,
+                                reference_no        : "",
+                                segments            : obj.segments,
+                                dr                  : cogsAmount * value.rate,
+                                cr                  : 0,
+                                rate                : value.rate,
+                                locale              : item.locale
+                            };
+                        }else{
+                            entries[raw].dr += cogsAmount;
+                        }
+                    }
+                }
+
+                //Inventory on Cr
+                var inventoryID = kendo.parseInt(item.inventory_account_id);
+                if(inventoryID>0){
+                    raw = "cr"+inventoryID;
+
+                    var inventoryAmount = value.amount;
+                    if(item.item_type_id==1 || item.item_type_id==4){
+                        inventoryAmount = (value.quantity*value.conversion_ratio)*value.cost;
+                    }
+                    
+                    if(entries[raw]===undefined){
+                        entries[raw] = {
+                            transaction_id      : transaction_id,
+                            account_id          : inventoryID,
+                            contact_id          : obj.contact_id,
+                            description         : value.description,
+                            reference_no        : "",
+                            segments            : obj.segments,
+                            dr                  : 0,
+                            cr                  : inventoryAmount * value.rate,
+                            rate                : value.rate,
+                            locale              : item.locale
+                        };
+                    }else{
+                        entries[raw].cr += inventoryAmount;
+                    }
+                }
+
+                //Sale on Cr
+                var incomeID = kendo.parseInt(item.income_account_id);
+                if(incomeID>0){
+                    raw = "cr"+incomeID;
+                    
+                    var saleAmount = value.quantity * value.price;
+                    if(entries[raw]===undefined){
+                        entries[raw] = {
+                            transaction_id      : transaction_id,
+                            account_id          : incomeID,
+                            contact_id          : obj.contact_id,
+                            description         : value.description,
+                            reference_no        : "",
+                            segments            : obj.segments,
+                            dr                  : 0,
+                            cr                  : saleAmount,
+                            rate                : obj.rate,
+                            locale              : obj.locale
+                        };
+                    }else{
+                        entries[raw].cr += saleAmount;
+                    }
+                }
+
+                //Tax on Cr
+                if(value.tax_item_id>0){
+                    var taxItem = value.tax_item,
+                        raw = "cr"+taxItem.account_id;
+
+                    if(entries[raw]===undefined){
+                        entries[raw] = {
+                            transaction_id      : transaction_id,
+                            account_id          : taxItem.account_id,
+                            contact_id          : obj.contact_id,
+                            description         : value.description,
+                            reference_no        : "",
+                            segments            : obj.segments,
+                            dr                  : 0,
+                            cr                  : value.tax,
+                            rate                : obj.rate,
+                            locale              : obj.locale
+                        };
+                    }else{
+                        entries[raw].cr += value.tax;
+                    }
+                }
+            });
+
+            // A/R on Dr
+            var arID = kendo.parseInt(contact.account_id);
+            if(arID>0){
+                raw = "dr"+arID;
+
+                var arAmount = obj.amount - obj.deposit;
+                if(entries[raw]===undefined){
+                    entries[raw] = {
+                        transaction_id      : transaction_id,
+                        account_id          : arID,
+                        contact_id          : obj.contact_id,
+                        description         : obj.memo,
+                        reference_no        : obj.reference_no,
+                        segments            : obj.segments,
+                        dr                  : arAmount,
+                        cr                  : 0,
+                        rate                : obj.rate,
+                        locale              : obj.locale
+                    };
+                }else{
+                    entries[raw].dr += arAmount;
+                }
+            }
+
+            //Discount on Dr            
+            if(obj.discount > 0){
+                var discountAccountId = kendo.parseInt(obj.discount_account_id);
+                if(discountAccountId>0){
+                    raw = "dr"+discountAccountId;
+
+                    if(entries[raw]===undefined){
+                        entries[raw] = {
+                            transaction_id      : transaction_id,
+                            account_id          : discountAccountId,
+                            contact_id          : obj.contact_id,
+                            description         : obj.memo,
+                            reference_no        : obj.reference_no,
+                            segments            : obj.segments,
+                            dr                  : obj.discount,
+                            cr                  : 0,
+                            rate                : obj.rate,
+                            locale              : obj.locale
+                        };
+                    }else{
+                        entries[raw].dr += obj.discount;
+                    }
+                }
+            }
+
+            //Deposit on Dr         
+            if(obj.deposit > 0){
+                var depositAccountId = kendo.parseInt(contact.deposit_account_id);
+                if(depositAccountId>0){
+                    raw = "dr"+depositAccountId;
+
+                    if(entries[raw]===undefined){
+                        entries[raw] = {
+                            transaction_id      : transaction_id,
+                            account_id          : depositAccountId,
+                            contact_id          : obj.contact_id,
+                            description         : "Wellnez Invoice",
+                            reference_no        : obj.reference_no,
+                            segments            : obj.segments,
+                            dr                  : obj.deposit,
+                            cr                  : 0,
+                            rate                : obj.rate,
+                            locale              : obj.locale
+                        };
+                    }else{
+                        entries[raw].dr += obj.deposit;
+                    }
+                }
+            }
+
+            //Add to journal entry
+            if(!jQuery.isEmptyObject(entries)){
+                $.each(entries, function(index, value){
+                    self.journalLineDS.add(value);
+                });
+            }
+
+            this.journalLineDS.sync();
         },
         saveWorkDS          : dataStore(apiUrl + "spa/updatework"),
         save        : function(){
@@ -7392,8 +7607,9 @@
                         var noti = $("#ntf1").data("kendoNotification");
                         noti.hide();
                         noti.success(self.lang.lang.success_message);
+                        self.addJournal(self.get("obj").transaction_id);
                         $("#loadImport").css("display", "none");
-                        self.cancel();
+                        // self.cancel();
                     }
                 });
             }

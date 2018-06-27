@@ -11718,6 +11718,7 @@
                 credit              : 0,
                 check_no            : "",
                 rate                : 1,
+                movement            : 1,
                 locale              : banhji.locale,
                 issued_date         : new Date(),
                 bill_to             : "",
@@ -13484,6 +13485,7 @@
                 remaining           : 0,
                 credit_allowed      : 0,
                 rate                : 1,//Required
+                movement            : 1,
                 locale              : banhji.locale,//Required
                 issued_date         : new Date(),//Required
                 due_date            : duedate,
@@ -14462,6 +14464,7 @@
                                 discount            : 0,
                                 discount_percentage : 0,
                                 rate                : value.rate,
+                                movement            : -1,
                                 locale              : value.locale,
                                 issued_date         : obj.issued_date,
                                 memo                : obj.memo,

@@ -19,7 +19,7 @@ class Ops extends REST_Controller {
 				$connection = 'use ' . $db;
 				$this->db->query($connection);
 
-				// if($db=="db_1505299843"){
+				// if($db=="db_1529478657"){
 				// 	$startQ = true;
 				// }
 
@@ -33,8 +33,6 @@ class Ops extends REST_Controller {
 				// if ($this->db->field_exists('account_id', 'attachments')===FALSE){
 				//    	$data["results"][] = $db;
 				// }
-
-				$data["results"][] = array("db"=>$db, "status"=>$this->db->field_exists('movement', 'transactions'));
 
 			    //Create new table
 			    // $this->dbforge->add_field('id');
@@ -60,8 +58,8 @@ class Ops extends REST_Controller {
 			    // $this->dbforge->drop_table('references');
 
 			    //Update single data
-			    // $this->db->where_in('type', array('Cash_Purchase', 'Credit_Purchase'));
-			    // $data['results'][] = $this->db->update('transactions', array('movement' => 1));
+			    $this->db->where_in('nature_type', array('Invoice','Cash_Sale'));
+			    $data['results'][] = $this->db->update('transactions', array('movement' => 1));
 
 			 	//Update batch data
 			 	// 	$raw = array(
@@ -120,7 +118,7 @@ class Ops extends REST_Controller {
 
 				//DELETE DATA
 				// $data['results'][] = $this->db->delete('transaction_templates', array('transaction_form_id' => 75, 'user_id' => 12));
-
+				
 				// Add new fields
 				// $fields = array(
 				// 	// "tags" => array(
@@ -129,15 +127,15 @@ class Ops extends REST_Controller {
 				// 	// 	"null" 		=> FALSE,
 				// 	// 	"default" 	=> 0
 				// 	// ),
-				// 	"nature_type" => array(
-				// 		"type" 		=> "VARCHAR",
-				// 		"constraint"=> "255",
+				// 	"movement" => array(
+				// 		"type" 		=> "TINYINT",
+				// 		"constraint"=> 1,
 				// 		"null" 		=> FALSE,
-				// 		"default" 	=> ""
+				// 		"default" 	=> 0
 				// 	)
 				// );
-				// $data['results'][] = $this->dbforge->add_column("transactions", $fields);
-
+				// $data['results'][] = array("db"=>$db, "status"=>$this->dbforge->add_column("transactions", $fields));
+				
 			    // Modify fields
 		 		//$fields = array(
 				// 	// "conversion_ratio" => array(
@@ -156,9 +154,9 @@ class Ops extends REST_Controller {
 				// 	)
 				// );
 				// $data['results'][] = $this->dbforge->modify_column('transactions', $fields);
-
-			 	//Remove column, 'table_name', 'column_to_drop'
-				// $this->dbforge->drop_column('memberships', 'cpd_record_date');
+				
+				//Remove column, 'table_name', 'column_to_drop'
+				// $data['results'][] = $this->dbforge->drop_column('transactions', 'movement');
 
 				//Custom
 				// $dsn = 'mysql://'.$this->db->username.':'.$this->db->password.'@'.$this->db->hostname.'/'.$db;

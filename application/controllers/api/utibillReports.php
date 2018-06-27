@@ -3232,7 +3232,7 @@ class UtibillReports extends REST_Controller {
 					"price" 					=> floatval($price),
 					"totalCustomer" 			=> floatval($totalCustomer) + floatval($totalCustomer1),
 					"total10Down" 				=> floatval($total10Down) + floatval($total10DownUsage),
-					"totalUsage10Down" 			=> $totalUsage10Down + $totalUsage10DownUsage,
+					"totalUsage10Down" 			=> floatval($totalUsage10Down) + floatval($totalUsage10DownUsage),
 					"total10Up" 				=> floatval($total10Up) + floatval($total10UpUsage),
 					"totalUsage10Up" 			=> floatval($totalUsage10Up) + floatval($totalUsage10UpUsage),
 					"total50Up" 				=> floatval($total50Up) + floatval($total50UpUsage),
@@ -3270,7 +3270,7 @@ class UtibillReports extends REST_Controller {
 		$data["count"] = 0;
 		$totalUsage = 0;
 
-		$obj = new Winvoice_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$obj = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 		//Sort
 		if(!empty($sort) && isset($sort)){
@@ -3296,7 +3296,7 @@ class UtibillReports extends REST_Controller {
 		
 		//Results
 		$obj->include_related("transaction/contact", array("abbr", "number", "name"));
-		$obj->include_related("transaction/item_line", array("quantity", "cost"));
+		$obj->where_related("transaction", "type", "Cash_Purchase");
 		$obj->where_related("transaction", "sub_type", "Power_Purchase");
 		$obj->get_iterated();
 
@@ -3304,18 +3304,18 @@ class UtibillReports extends REST_Controller {
 			$objList = [];
 			$quantity = 0;
 			foreach ($obj as $value) {	
-				$quantity = $value->transaction_item_line_quantity;		
+				$quantity = $value->quantity;		
 				
 				if(isset($objList[$value->contact_id])){
 					$objList[$value->contact_id]["invoice"] 		+= 1;
 					$objList[$value->contact_id]["quantity"] 		+= $quantity;
-					$objList[$value->contact_id]["cost"]			=  floatval($value->transaction_item_line_cost);
+					$objList[$value->contact_id]["cost"]			=  floatval($value->cost);
 				}else{
 					$objList[$value->contact_id]["id"] 				= $value->transaction_contact_id;
 					$objList[$value->contact_id]["name"] 			= $value->transaction_contact_abbr.$value->transaction_contact_number." ".$value->transaction_contact_name;
 					$objList[$value->contact_id]["invoice"]			= 1;
 					$objList[$value->contact_id]["quantity"] 		= $quantity;
-					$objList[$value->contact_id]["cost"]			= floatval($value->transaction_item_line_cost);
+					$objList[$value->contact_id]["cost"]			= floatval($value->cost);
 				}
 			}
 

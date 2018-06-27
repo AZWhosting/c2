@@ -555,7 +555,9 @@ class Spa extends REST_Controller {
 				}
 				//Item
 				$item = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$item->where("transaction_id", $value->transaction_id)->get_iterated();
+				$item->where("transaction_id", $value->transaction_id);
+				$item->include_related("item", array("item_type_id","abbr","number","name","cost","price","locale","income_account_id","expense_account_id","inventory_account_id","nature"));
+				$item->get_iterated();
 				$itemar = [];
 				//Service Charge
 				$sc = new Spa_service_charge(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
@@ -567,50 +569,55 @@ class Spa extends REST_Controller {
 						$me = new Measurement(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 						$me->where("id", $i->measurement_id)->limit(1)->get();
 						$itemar[] = array(
-							// "id" 			=> $i->id,
-							// "name" 			=> $i->description,
-							// "quantity" 		=> intval($i->quantity),
-							// "measurement" 	=> array("id" => $me->id, "name" => $me->name),
-							// "price" 		=> floatval($i->price),
-							// "amount" 		=> floatval($i->amount),
-							// "rate" 			=> floatval($i->rate),
-							// "locale" 		=> $i->locale,
-							"id" 			=> $i->id,
-							"transaction_id" => $i->transaction_id,
-							"item_id" 		=> $i->item_id,
-							"description" 	=> $i->description,
+							"id" 				=> $i->id,
+							"conversion_ratio" 	=> $i->conversion_ratio,
+							"cost" 				=> $i->cost,
+							"transaction_id" 	=> $i->transaction_id,
+							"item_id" 			=> $i->item_id,
+							"description" 		=> $i->description,
 							"item_price" 		=> $i->item_price,
-							"item" 			=> array("id" => $i->item_id, "name" => $i->description),
-							"contact_id" 	=> $i->contact_id,
-							"measurement_id" => $i->measurement_id,
-							"tax_item_id" 	=> $i->tax_item_id,
-							"assembly_id" 	=> $i->assembly_id,
-							"description" 	=> $i->description,
-							"quantity" 		=> $i->quantity,
-							"avarage_cost" 	=> $i->avarage_cost, 			
-							"quantity" 		=> intval($i->quantity),
-							"measurement" 	=> array(
+							"item" 				=> array(
+								"id" 	=> $i->item_id, 
+								"name" 	=> $i->description
+							),
+							"contact_id" 		=> $i->contact_id,
+							"measurement_id" 	=> $i->measurement_id,
+							"tax_item_id" 		=> $i->tax_item_id,
+							"assembly_id" 		=> $i->assembly_id,
+							"description" 		=> $i->description,
+							"quantity" 			=> $i->quantity,
+							"avarage_cost" 		=> $i->avarage_cost, 			
+							"quantity" 			=> intval($i->quantity),
+							"measurement" 		=> array(
 								"id" 				=> $me->id, 
 								"measurement" 		=> $me->name,
 								"name" 				=> $me->name,
 								"measurement_id" 	=> $me->id,
 							),
-							"tax_item" 		=> array(
+							"tax_item" 			=> array(
 								"id" 				=> $i->tax_item_id
 							),
-							"price" 		=> floatval($i->price),
-							"item_price" 	=> array(
+							"price" 			=> floatval($i->price),
+							"item_price" 		=> array(
 								"measurement" 		=> $me->name,
 								"measurement_id" 	=> $me->id,
 							),
-							"amount" 		=> floatval($i->amount),
-							"discount" 		=> $i->discount,
-							"tax" 			=> $i->tax,
-							"rate" 			=> floatval($i->rate),
-							"locale" 		=> $i->locale,
-							"status" 		=> $obj->status,
-							"therapist" 	=> [],
-							"therapistname" => "",
+							"amount" 			=> floatval($i->amount),
+							"discount" 			=> $i->discount,
+							"tax" 				=> $i->tax,
+							"rate" 				=> floatval($i->rate),
+							"locale" 			=> $i->locale,
+							"status" 			=> $obj->status,
+							"therapist" 		=> [],
+							"therapistname" 	=> "",
+
+							"item_type_id" 			=> $i->item_item_type_id,
+							"abbr"					=> $i->item_abbr, 
+							"number" 				=> $i->item_number, 
+							"name" 					=> $i->item_name,
+							"income_account_id"		=> $i->item_income_account_id, 
+							"expense_account_id" 	=> $i->item_expense_account_id, 
+							"inventory_account_id" 	=> $i->item_inventory_account_id
 						);
 						if($sc->exists()){
 							if($i->item_id == $sc->item_id){
@@ -632,6 +639,8 @@ class Spa extends REST_Controller {
 		 		$data["results"][] = array(
 		 			"id" 			=> $value->id,
 		 			"transaction_id" 	=> intval($value->transaction_id),
+		 			"type" 			=> $tran->type,
+		 			"number" 		=> $tran->number,
 		 			"rate" 			=> floatval($tran->rate),
 		 			"locale" 		=> $tran->locale,
 		 			"sub_total" 	=> floatval($tran->sub_total),
@@ -1280,10 +1289,12 @@ class Spa extends REST_Controller {
 			$work->status = 1;
 			$work->transaction_id = $txn->id;
 			$work->save();
+			$txn->work_id = $work->id;
 			//Room
 			$room = new Spa_work_room(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$room->where("work_id", $work->id)->get();
 			$roomshow = "";
+			$roomcount = 1;
 			foreach($room as $r){
 				$rr = new Spa_room(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				$rr->where("id", $r->room_id)->get();
@@ -1292,7 +1303,11 @@ class Spa extends REST_Controller {
 				$rr->maintenance_date = date('Y-m-d H:i:s', strtotime($value->issued_date));
 				$rr->save();
 				$roomshow .= $rr->name." ";
+				if($roomcount == 1){
+					$txn->room_id = $rr->id;
+				}
 			}
+			$txn->save();
 			//Employee
 			$employee = new Spa_work_employee(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$employee->where("work_id", $work->id)->get();
