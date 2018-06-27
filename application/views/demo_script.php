@@ -60737,6 +60737,7 @@
 								amount              : amount_due,
 								discount            : 0,
 								rate                : value.rate,
+								movement 			: -1,
 								locale              : value.locale,
 								issued_date         : obj.issued_date,
 								memo                : obj.memo,
