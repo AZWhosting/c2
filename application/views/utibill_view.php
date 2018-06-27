@@ -16959,6 +16959,9 @@
 		<td style="text-align: right;">#=kendo.toString(total, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#</td>
 	</tr>
 </script>
+
+
+<!--///////////////////////////////////-->
 <script id="totalBalance" type="text/x-kendo-template">
 	<div class="container">
 		<div class="row-fluid">
@@ -17071,7 +17074,7 @@
 								    	<!-- Filter -->
 								        <div class="tab-pane" id="tab-2">
 											<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" ><i></i> Print</span>
-						        			<span id="excel" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" >
+						        			<span id="excel" class="btn btn-icon btn-default execl" data-bind="visible:haveSearch, click: ExportExcel" >
 							        		<i class="fa fa-file-excel-o"></i>
 							        		Export to Excel
 						        			</span>	

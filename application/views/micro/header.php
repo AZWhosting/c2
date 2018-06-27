@@ -6,7 +6,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 <link rel="icon" type="image/png" href="<?php echo base_url()?>assets/banhji-micro-icon.png" >
-<link href="https://fonts.googleapis.com/css?family=Roboto+Slab:300" rel="stylesheet">
+<!-- <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:300" rel="stylesheet"> -->
+<!-- <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet"> -->
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
 
 <!-- Theme CSS Elegant-->
 <link rel="stylesheet" href="<?php echo base_url()?>assets/micro/style.min.css" >
@@ -305,4 +307,4 @@
                         </ul>
                     </div>
                 </nav>
-            </header>
+            </header>    

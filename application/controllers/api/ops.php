@@ -34,6 +34,8 @@ class Ops extends REST_Controller {
 				//    	$data["results"][] = $db;
 				// }
 
+				$data["results"][] = array("db"=>$db, "status"=>$this->db->field_exists('movement', 'transactions'));
+
 			    //Create new table
 			    // $this->dbforge->add_field('id');
 			    // $this->dbforge->add_field("location_id int(11) NOT NULL DEFAULT '0'");
@@ -57,11 +59,11 @@ class Ops extends REST_Controller {
 				//DROP TABLE IF EXISTS table_name
 			    // $this->dbforge->drop_table('references');
 
-			    //Update data
-			    // $this->db->where('type', 'Wellnez_Form');
-			    // $data['results'][] = $this->db->update('transaction_templates', array('transaction_form_id' => 32));
+			    //Update single data
+			    // $this->db->where_in('type', array('Cash_Purchase', 'Credit_Purchase'));
+			    // $data['results'][] = $this->db->update('transactions', array('movement' => 1));
 
-			 	//Update batch
+			 	//Update batch data
 			 	// 	$raw = array(
 				//    	array(
 				//       	'id' 						=> 1,
@@ -127,15 +129,17 @@ class Ops extends REST_Controller {
 				// 	// 	"null" 		=> FALSE,
 				// 	// 	"default" 	=> 0
 				// 	// ),
-				// 	"end_date" => array(
-				// 		"type" 		=> "DATE",
-				// 		"null" 		=> FALSE
+				// 	"nature_type" => array(
+				// 		"type" 		=> "VARCHAR",
+				// 		"constraint"=> "255",
+				// 		"null" 		=> FALSE,
+				// 		"default" 	=> ""
 				// 	)
 				// );
-				// $data['results'][] = $this->dbforge->add_column("recurrings", $fields);
+				// $data['results'][] = $this->dbforge->add_column("transactions", $fields);
 
 			    // Modify fields
-		 	// 	$fields = array(
+		 		//$fields = array(
 				// 	// "conversion_ratio" => array(
 				// 	// 	"name" 		=> "conversion_ratio",//New Field Name
 				// 	// 	"type" 		=> "DECIMAL",
@@ -143,15 +147,15 @@ class Ops extends REST_Controller {
 				// 	// 	"null" 		=> FALSE,
 				// 	// 	"default" 	=> 1
 				// 	// ),
-				// 	"deleted" => array(
-				// 		"name" 		=> "deleted",//New Field Name
-				// 		"type" 		=> "TINYINT",
-				// 		"constraint"=> "1",
+				// 	"type" => array(
+				// 		"name" 		=> "type",//New Field Name
+				// 		"type" 		=> "VARCHAR",
+				// 		"constraint"=> "255",
 				// 		"null" 		=> FALSE,
-				// 		"default" 	=> 0
+				// 		"default" 	=> ""
 				// 	)
 				// );
-				// $data['results'][] = $this->dbforge->modify_column('recurrings', $fields);
+				// $data['results'][] = $this->dbforge->modify_column('transactions', $fields);
 
 			 	//Remove column, 'table_name', 'column_to_drop'
 				// $this->dbforge->drop_column('memberships', 'cpd_record_date');

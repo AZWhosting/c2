@@ -452,16 +452,16 @@
 						    	 data-reorderable="true"
 						    	 data-scrollable="false"
 						    	 data-resizable="true"
-						    	 data-editable="true"
+						    	 data-editable="false"
 				                 data-columns="[
 								    { 
 								    	title:'NO',
 								    	width: '50px', 
 								    	attributes: { style: 'text-align: center;' },
-								    	editable: 'false', 
+								    	editable: false, 
 								        template: function (dataItem) {
 								        	var rowIndex = banhji.Index.lineDS.indexOf(dataItem)+1;
-								        	return '<i class=icon-trash data-bind=click:removeRow></i>' + ' ' + rowIndex;
+								        	return '' + ' ' + rowIndex;
 								      	}
 								    },
 				                 	{ 

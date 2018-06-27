@@ -5140,11 +5140,13 @@
         },
         printBillDS : dataStore(apiUrl + "spa/printbill"),
         printBill   : function(){
+            $("#loadING").css("display", "block");
             var self = this;
             this.printBillDS.query({
                 filter: {field: "id", value: this.invobj.id},
                 pageSize: 1
             }).then(function(e){
+                $("#loadING").css("display", "none");
                 var v = self.printBillDS.view()[0];
                 banhji.printBill.dataSource = [];
                 banhji.printBill.dataSource.push(v);
@@ -5547,9 +5549,6 @@
                     '<title></title>' +
                     '<link rel="stylesheet" href="<?php echo base_url(); ?>resources/js/kendoui/styles/kendo.bootstrap.min.css">'+
                     '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/bootstrap.css">'+
-                    '<link href="<?php echo base_url(); ?>assets/css/water/water.css" rel="stylesheet" />'+
-                    '<link href="<?php echo base_url(); ?>assets/css/offline/offline.css" rel="stylesheet" />'+
-                    '<link href="<?php echo base_url(); ?>assets/css/water/winvoice-print.css" rel="stylesheet" />'+
                     '<link href="<?php echo base_url(); ?>assets/kendo/styles/kendo.common.min.css" rel="stylesheet" />'+
                     '<link href="<?php echo base_url(); ?>assets/spa/wellnez.css" rel="stylesheet" />'+
                     '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">'+
@@ -5598,7 +5597,7 @@
                             'color:#fff!important;' +
                         '}</style>' +
                     '</head>' + 
-                    '<body><div class="row-fluid" ><div id="invoicecontent" class="k-content">';
+                    '<body><div class="row-fluid" ><div id="invoicecontent" style="background: none!important;color: #000!important;" class="k-content document-body">';
             var htmlEnd =
                     '</div></div></body>' +
                     '</html>';
@@ -5607,7 +5606,7 @@
             doc.close();
             setTimeout(function(){
                 win.print();    
-                // win.close();
+                win.close();
             },1000);
         },
         hideFrameInvoice: function(e) {

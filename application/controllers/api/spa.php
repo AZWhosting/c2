@@ -56,6 +56,7 @@ class Spa extends REST_Controller {
 		 			"maintenance_date" => $rooms->maintenance_date,
 		 			"employee_id" 	=> "",
 					"employee_ar" 	=> "",
+					"number" 		=> "",
 		 		);
 			}else{
 				if($rooms->work_id > 0){
@@ -84,6 +85,7 @@ class Spa extends REST_Controller {
 											$conar[] = array(
 												"id" 	=> $sc->id,
 												"name" 	=> $sc->name,
+												"account_id" => $sc->account_id,
 											);
 											$customer_name .= $sc->name." ";
 										}
@@ -187,6 +189,7 @@ class Spa extends REST_Controller {
 							 			"maintenance_date" => "",
 							 			"employee_id" 	=> $empid,
 							 			"employee_ar" 	=> $empar,
+							 			"number" 		=> $value->number,
 							 		);
 							 	}
 							}
@@ -216,6 +219,7 @@ class Spa extends REST_Controller {
 			 			"maintenance_date" => "",
 			 			"employee_id" 	=> "",
 						"employee_ar" 	=> "",
+						"number" 		=> "",
 			 		);
 				}
 			}

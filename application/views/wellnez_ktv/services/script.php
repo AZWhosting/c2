@@ -5541,6 +5541,136 @@
             }
         },
         printDS             : dataStore(apiUrl + "spa/invoice"),
+        //Journal
+        addJournal      : function(transaction_id){
+            var self = this,
+            obj = this.get("obj"),
+            contact = obj.contact,
+            raw = "", entries = {};
+
+            //Item lines
+            $.each(this.lineDS.data(), function(index, value){
+                var item = value.item;
+
+                //COGS on Dr
+                if(item.item_type_id==1){
+                    var cogsID = kendo.parseInt(item.expense_account_id);
+                    if(cogsID>0){
+                        raw = "dr"+cogsID;
+
+                        var cogsAmount = value.amount;
+                        if(item.item_type_id==1 || item.item_type_id==4){
+                            cogsAmount = (value.quantity*value.conversion_ratio)*value.cost;
+                        }
+
+                        if(entries[raw]===undefined){
+                            entries[raw] = {
+                                transaction_id    : transaction_id,
+                                account_id      : cogsID,
+                                contact_id      : obj.contact_id,
+                                description     : value.description,
+                                reference_no    : "",
+                                segments      : obj.segments,
+                                dr          : cogsAmount * value.rate,
+                                cr          : 0,
+                                rate        : value.rate,
+                                locale        : item.locale
+                            };
+                        }else{
+                            entries[raw].dr += cogsAmount;
+                        }
+                    }
+                }
+
+                //Inventory on Cr
+                var inventoryID = kendo.parseInt(item.inventory_account_id);
+                if(inventoryID>0){
+                    raw = "cr"+inventoryID;
+
+                    var inventoryAmount = value.amount;
+                    if(item.item_type_id==1 || item.item_type_id==4){
+                        inventoryAmount = (value.quantity*value.conversion_ratio)*value.cost;
+                    }
+
+                    if(entries[raw]===undefined){
+                        entries[raw] = {
+                            transaction_id    : transaction_id,
+                            account_id      : inventoryID,
+                            contact_id      : obj.contact_id,
+                            description     : value.description,
+                            reference_no    : "",
+                            segments      : obj.segments,
+                            dr          : 0,
+                            cr          : inventoryAmount * value.rate,
+                            rate        : value.rate,
+                            locale        : item.locale
+                        };
+                    }else{
+                        entries[raw].cr += inventoryAmount;
+                    }
+                }
+
+                //Sale on Cr
+                var incomeID = kendo.parseInt(item.income_account_id);
+                if(incomeID>0){
+                    raw = "cr"+incomeID;
+
+                    var saleAmount = value.quantity * value.price;
+                    if(entries[raw]===undefined){
+                        entries[raw] = {
+                            transaction_id    : transaction_id,
+                            account_id      : incomeID,
+                            contact_id      : obj.contact_id,
+                            description     : value.description,
+                            reference_no    : "",
+                            segments      : obj.segments,
+                            dr          : 0,
+                            cr          : saleAmount,
+                            rate        : obj.rate,
+                            locale        : obj.locale
+                        };
+                    }else{
+                        entries[raw].cr += value.amount;
+                    }
+                }
+            });
+
+            //Obj Account, Cash on Dr
+            // var objAccountID = 7;//Cash account
+            // if(obj.type=="Invoice"){
+            var objAccountID = kendo.parseInt(obj.customer[0].account_id);//AR account
+            // }            
+            if(objAccountID>0){
+                raw = "dr"+objAccountID;
+
+                var objAmount = obj.amount;
+                if(entries[raw]===undefined){
+                    entries[raw] = {
+                        transaction_id  : transaction_id,
+                        account_id      : objAccountID,
+                        contact_id      : obj.customer[0].id,
+                        description     : "",
+                        reference_no    : obj.number,
+                        segments        : [],
+                        dr              : objAmount,
+                        cr              : 0,
+                        rate            : obj.rate,
+                        locale          : obj.locale
+                    };
+                }else{
+                    entries[raw].dr += objAmount;
+                }
+            }
+
+            //Add to journal entry
+            if(!jQuery.isEmptyObject(entries)){
+                $.each(entries, function(index, value){
+                    self.journalLineDS.add(value);
+                });
+            }
+
+            this.journalLineDS.sync();
+        },
         printBill            : function(){
             $("#loadImport").css("display", "block");
             var self = this, obj = this.get("obj");
@@ -5563,6 +5693,7 @@
                     banhji.print.dataSource = [];
                     banhji.print.dataSource.push(data);
                     self.lineDS.data([]);
+                    self.addJournal(data.id);
                     banhji.router.navigate('/print');
                 }
             });
@@ -5804,7 +5935,7 @@
         },
         printGrid       : function(){
             var self = this, Win, pHeight, pWidth, ts;
-            Win = window.open('', '', 'width=800, height=900');
+            Win = window.open('', '', 'width=1048, height=900');
             pHeight = "210mm";
             pWidth = "150mm";
             var gridElement = $('#grid'),
@@ -5819,16 +5950,11 @@
                     '<title></title>' +
                     '<link rel="stylesheet" href="<?php echo base_url(); ?>resources/js/kendoui/styles/kendo.bootstrap.min.css">'+
                     '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/bootstrap.css">'+
-                    '<link href="<?php echo base_url(); ?>assets/css/water/water.css" rel="stylesheet" />'+
-                    '<link href="<?php echo base_url(); ?>assets/css/offline/offline.css" rel="stylesheet" />'+
-                    '<link href="<?php echo base_url(); ?>assets/css/water/winvoice-print.css" rel="stylesheet" />'+
                     '<link href="<?php echo base_url(); ?>assets/kendo/styles/kendo.common.min.css" rel="stylesheet" />'+
                     '<link href="<?php echo base_url(); ?>assets/spa/wellnez.css" rel="stylesheet" />'+
                     '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">'+
                     '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
                     '<link href="https://fonts.googleapis.com/css?family=Preahvihear" rel="stylesheet">'+
-                    '<link href="https://fonts.googleapis.com/css?family=Roboto+Slab:300" rel="stylesheet">'+
-                    '<link href="https://fonts.googleapis.com/css?family=Roboto+Slab:300" rel="stylesheet">'+
                     '<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Battambang&amp;subset=khmer" media="all">'+
                     '<style type="text/css" media="print">' +
                         '@page { size: portrait; margin:0.05cm;' +
@@ -5872,16 +5998,16 @@
                             'color:#fff!important;' +
                         '}</style>' +
                     '</head>' + 
-                    '<body><div class="row-fluid" ><div id="invoicecontent" class="k-content">';
+                    '<body><div class="row-fluid" ><div id="invoicecontent" style="background: none!important;color: #000!important;" class="k-content document-body">';
             var htmlEnd =
                     '</div></div></body>' +
                     '</html>';
-            printableContent = $('#invoicecontent').html();
+            printableContent = $('#invoiceContent').html();
             doc.write(htmlStart + printableContent + htmlEnd);
             doc.close();
             setTimeout(function(){
                 win.print();    
-                // win.close();
+                win.close();
             },1000);
         },
         cancel              : function(){

@@ -312,6 +312,7 @@ class Transactions extends REST_Controller {
 				   	"number" 					=> $value->number,
 				   	"type" 						=> $value->type,
 				   	"sub_type" 					=> $value->sub_type,
+				   	"nature_type" 				=> $value->nature_type,
 				   	"journal_type" 				=> $value->journal_type,
 				   	"sub_total"					=> floatval($value->sub_total),
 				   	"discount" 					=> floatval($value->discount),
@@ -326,6 +327,7 @@ class Transactions extends REST_Controller {
 				   	"additional_cost" 			=> floatval($value->additional_cost),
 				   	"additional_apply" 			=> $value->additional_apply,
 				   	"rate" 						=> floatval($value->rate),
+				   	"movement" 					=> floatval($value->movement),
 				   	"locale" 					=> $value->locale,
 				   	"month_of"					=> $value->month_of,
 				   	"issued_date"				=> $value->issued_date,
@@ -432,6 +434,7 @@ class Transactions extends REST_Controller {
 			$obj->number = $number;
 		   	isset($value->type) 					? $obj->type 						= $value->type : "";
 		   	isset($value->sub_type) 				? $obj->sub_type 					= $value->sub_type : "";
+		   	isset($value->nature_type) 				? $obj->nature_type 				= $value->nature_type : "";
 		   	isset($value->journal_type) 			? $obj->journal_type 				= $value->journal_type : "";
 		   	isset($value->sub_total) 				? $obj->sub_total 					= $value->sub_total : "";
 		   	isset($value->discount) 				? $obj->discount 					= $value->discount : "";
@@ -446,6 +449,7 @@ class Transactions extends REST_Controller {
 		   	isset($value->additional_cost) 			? $obj->additional_cost 			= $value->additional_cost : "";
 		   	isset($value->additional_apply) 		? $obj->additional_apply 			= $value->additional_apply : "";
 		   	isset($value->rate) 					? $obj->rate 						= $value->rate : "";
+		   	isset($value->movement) 				? $obj->movement 					= $value->movement : "";
 		   	isset($value->locale) 					? $obj->locale 						= $value->locale : "";
 		   	isset($value->month_of) 				? $obj->month_of 					= $value->month_of : "";
 		   	isset($value->issued_date) 				? $obj->issued_date 				= $value->issued_date : "";
@@ -554,6 +558,7 @@ class Transactions extends REST_Controller {
 					"number" 					=> $obj->number,
 				   	"type" 						=> $obj->type,
 				   	"sub_type" 					=> $obj->sub_type,
+				   	"nature_type" 				=> $obj->nature_type,
 				   	"journal_type" 				=> $obj->journal_type,
 				   	"sub_total"					=> floatval($obj->sub_total),
 				   	"discount" 					=> floatval($obj->discount),
@@ -568,6 +573,7 @@ class Transactions extends REST_Controller {
 				   	"additional_cost" 			=> floatval($obj->additional_cost),
 				   	"additional_apply" 			=> $obj->additional_apply,
 				   	"rate" 						=> floatval($obj->rate),
+				   	"movement" 					=> $obj->movement,
 				   	"locale" 					=> $obj->locale,
 				   	"month_of"					=> $obj->month_of,
 				   	"issued_date"				=> $obj->issued_date,
@@ -652,8 +658,10 @@ class Transactions extends REST_Controller {
 			isset($value->number) 					? $obj->number 						= $value->number : "";
 		   	isset($value->type) 					? $obj->type 						= $value->type : "";
 		   	isset($value->sub_type) 				? $obj->sub_type 					= $value->sub_type : "";
+		   	isset($value->nature_type) 				? $obj->nature_type 				= $value->nature_type : "";
 		   	isset($value->journal_type) 			? $obj->journal_type 				= $value->journal_type : "";
 		   	isset($value->sub_total) 				? $obj->sub_total 					= $value->sub_total : "";
+		   	isset($value->nature_total) 			? $obj->nature_total 				= $value->nature_total : "";
 		   	isset($value->discount) 				? $obj->discount 					= $value->discount : "";
 		   	isset($value->tax) 						? $obj->tax 						= $value->tax : "";
 		   	isset($value->amount) 					? $obj->amount 						= $value->amount : "";
@@ -666,6 +674,7 @@ class Transactions extends REST_Controller {
 		   	isset($value->additional_cost) 			? $obj->additional_cost 			= $value->additional_cost : "";
 		   	isset($value->additional_apply) 		? $obj->additional_apply 			= $value->additional_apply : "";
 		   	isset($value->rate) 					? $obj->rate 						= $value->rate : "";
+		   	isset($value->movement) 				? $obj->movement 					= $value->movement : "";
 		   	isset($value->locale) 					? $obj->locale 						= $value->locale : "";
 		   	isset($value->month_of) 				? $obj->month_of 					= $value->month_of : "";
 		   	isset($value->issued_date) 				? $obj->issued_date 				= $value->issued_date : "";
@@ -791,6 +800,7 @@ class Transactions extends REST_Controller {
 					"number" 					=> $obj->number,
 				   	"type" 						=> $obj->type,
 				   	"sub_type" 					=> $obj->sub_type,
+				   	"nature_type" 				=> $obj->nature_type,
 				   	"journal_type" 				=> $obj->journal_type,
 				   	"sub_total"					=> floatval($obj->sub_total),
 				   	"discount" 					=> floatval($obj->discount),
@@ -805,6 +815,7 @@ class Transactions extends REST_Controller {
 				   	"additional_cost" 			=> floatval($obj->additional_cost),
 				   	"additional_apply" 			=> $obj->additional_apply,
 				   	"rate" 						=> floatval($obj->rate),
+				   	"movement" 					=> $obj->movement,
 				   	"locale" 					=> $obj->locale,
 				   	"month_of"					=> $obj->month_of,
 				   	"issued_date"				=> $obj->issued_date,

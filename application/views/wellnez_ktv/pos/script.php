@@ -7413,7 +7413,7 @@
         },
         cancel        : function(){
             this.clear();
-            // window.history.back();
+            window.location.href = "<?php echo base_url(); ?>wellnez_ktv/services";
         },
         delete        : function(){
             var self = this, obj = this.get("obj");

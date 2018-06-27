@@ -8004,6 +8004,7 @@
 				user_id             : this.get("user_id"),
 				employee_id         : "",//Sale Rep
 				type                : "Commercial_Cash_Sale",//Required
+				nature_type         : "Cash_Sale",
 				number              : "",
 				sub_total           : 0,
 				discount            : 0,
@@ -8015,6 +8016,7 @@
 				credit              : 0,
 				check_no            : "",
 				rate                : 1,
+				movement 			: 1,
 				locale              : banhji.locale,
 				issued_date         : new Date(),
 				bill_to             : "",
@@ -9774,6 +9776,7 @@
 				user_id             : this.get("user_id"),
 				employee_id         : "",//Sale Rep
 				type                : "Commercial_Invoice",//Required
+				nature_type         : "Invoice",//Required
 				number              : "",
 				sub_total           : 0,
 				discount            : 0,
@@ -9783,6 +9786,7 @@
 				remaining           : 0,
 				credit_allowed      : 0,
 				rate                : 1,//Required
+				movement 			: 1,
 				locale              : banhji.locale,//Required
 				issued_date         : new Date(),//Required
 				due_date            : duedate,
@@ -14077,11 +14081,15 @@
 		},
 		//Return
 		addRowReturn        : function(type){
-			var obj = this.get("obj"), account_id = 0;
+			var obj = this.get("obj"), account_id = 0, movement = 0;
 
 			if(type=="Customer_Deposit" && obj.contact_id>0){
 				var contact = obj.contact;
 				account_id = contact.deposit_account_id;
+			}
+
+			if(type=="Offset_Invoice" && obj.contact_id>0){
+				movement = -1;
 			}
 
 			this.returnDS.insert(0, {
@@ -14094,6 +14102,7 @@
 				type            : type,
 				amount          : 0,
 				rate            : obj.rate,
+				movement 		: movement,
 				locale          : obj.locale,
 				issued_date     : obj.issued_date
 			});
@@ -33989,6 +33998,7 @@
 				job_id              : 0,
 				user_id             : this.get("user_id"),
 				type                : "Cash_Purchase", //Required
+				nature_type         : "Purchase",
 				number              : "",
 				sub_total           : 0,
 				discount            : 0,
@@ -34000,6 +34010,7 @@
 				additional_cost     : 0,
 				additional_apply    : "Equal",
 				rate                : 1,
+				movement 			: 1,
 				locale              : banhji.locale,
 				issued_date         : new Date(),
 				bill_date           : new Date(),
@@ -35617,11 +35628,15 @@
 		},
 		//Return
 		addRowReturn        : function(type){
-			var obj = this.get("obj"), account_id = 0;
+			var obj = this.get("obj"), account_id = 0, movement = 0;
 
 			if(type=="Vendor_Deposit" && obj.contact_id>0){
 				var contact = obj.contact;
 				account_id = contact.deposit_account_id;
+			}
+
+			if(type=="Offset_Bill" && obj.contact_id>0){
+				movement = -1;
 			}
 
 			this.returnDS.insert(0, {
@@ -35634,6 +35649,7 @@
 				type            : type,
 				amount          : 0,
 				rate            : obj.rate,
+				movement 		: movement,
 				locale          : obj.locale,
 				issued_date     : obj.issued_date
 			});
@@ -60290,6 +60306,7 @@
 								discount            : 0,
 								discount_percentage : 0,
 								rate                : value.rate,
+								movement 			: -1,
 								locale              : value.locale,
 								issued_date         : obj.issued_date,
 								memo                : obj.memo,
