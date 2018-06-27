@@ -8960,10 +8960,10 @@
 							</tr>
 							<tr>
 								<td style="vertical-align: top;">
-									<h3><a href="#/sale_order_list" data-bind="text: lang.lang.sale_order_list" style="text-transform: capitalize;"></a></h3>
+									<h3><a href="#/saleOrder_deatil_customer" data-bind="text: lang.lang.sale_order_list" style="text-transform: capitalize;"></a></h3>
 								</td>
 								<td style="vertical-align: top;">
-									<h3><a href="#/saleOrder_detail_by_product" data-bind="text: lang.lang.saleOrder_detail_by_product" style="text-transform: capitalize;"></a></h3>
+									<h3><a href="#/sale_order_by_item" data-bind="text: lang.lang.saleOrder_detail_by_product" style="text-transform: capitalize;"></a></h3>
 								</td>
 							</tr>
 							<tr>
@@ -8977,6 +8977,16 @@
 										Lists individual sale order transactions by date for each product/ service with a period of time.
 									</p>
 								</td>
+
+							</tr>
+							<tr>
+								<td style="vertical-align: top;">
+									<h3><a href="#/sale_order_by_employee"  style="text-transform: capitalize;">Sale Order By Employee</a></h3>
+								</td>
+								
+							</tr>
+							<tr>
+								
 
 							</tr>
 							<tr>
@@ -14063,7 +14073,7 @@
 		</div>
 	</div>
 </script>
-<script id="saleOrder_summary" type="text/x-kendo-template">
+<script id="saleOrderDetailbyCustomer" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background">
 			<div class="container-960">
@@ -14164,7 +14174,7 @@
 					<div id="invFormContent">
 						<div class="block-title">
 							<h3 data-bind="html: company.name"></h3>
-							<h2 data-bind="text: lang.lang.sale_order_list"></h2>
+							<h2>Sale Order Detail by Customer</h2>
 							<p data-bind="text: displayDate"></p>
 						</div>
 
@@ -14228,7 +14238,7 @@
 		</div>
 	</div>
 </script>
-<script id="saleOrder_detail" type="text/x-kendo-template">
+<script id="saleOrderDetailbyItem" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background">
 			<div class="container-960">
@@ -14289,7 +14299,7 @@
 								        <div class="tab-pane" id="tab-2">
 											<table class="table table-condensed">
 												<tr>
-									            	<td style="padding: 8px 0 0 0 !important; ">
+													<td style="padding: 8px 0 0 0 !important;">
 														<span data-bind="text: lang.lang.item"></span>
 														<select data-role="multiselect"
 															   data-value-primitive="true"
@@ -14329,16 +14339,14 @@
 					<div id="invFormContent">
 						<div class="block-title">
 							<h3 data-bind="html: company.name"></h3>
-							<h2>Sale Order Detail</h2>
+							<h2>Sale Order Detail by Item</h2>
 							<p data-bind="text: displayDate"></p>
 						</div>
 
 						<div class="row-fluid">
 							<div class="span5">
 								<div class="total-customer">
-									
-								
-										<p data-bind="text: lang.lang.order"></p>
+										<p data-bind="text: lang.lang.total_product_services"></p>
 										<span data-bind="text: dataSource.total"></span>
 								</div>
 							</div>
@@ -14350,66 +14358,225 @@
 							</div>
 						</div>
 
-						<div class="costom-grid"
-							 data-role="grid"
-							 data-sortable="true"
-	                         data-column-menu="true"
-			                 data-columns="[
-			                 	{ field: 'employee', title:'EMPLOYEE'},
-			                 	{ field: 'item', title:'ITEM' }, 
-                                { field: 'name', title:'NAME' },
-                                { field: 'number', hidden: true, title:'NUMBER' },                                                               
-                                { 
-                                	field: 'issued_date', 
-                                	title:'DATE', 
-                                	template: '#= kendo.toString(new Date(issued_date), \'dd/MM/yyyy\') # ',
-                                	attributes: {
-								      	style: 'text-align: right;',
-
-								    },
-                                },
-                                { field: 'deliveryNote', hidden: true, title:'DELIVERY NOTE' },  
-                                { field: 'invoiceNumber', hidden: true, title:'INVOICE NUMBER' },
-                                { field: 'status', title:'STATUS', 
-									template:function(dataItem){
-										if (dataItem.status == 0){
-											return 'Open'; 
-										}else if (dataItem.status == 1){
-											return 'Used';
-										}else {
-											return 'Paid';
-										}
-									},
-									attributes: {
-								      	style: 'text-align: center;',
-
-								    },
-                                },
-                               
-                                { 
-                                	field: 'quantity', 
-                                	title:'QUANTITY',
-                                	format: '{0:n}', 
-                                	attributes: {
-								      	style: 'text-align: right;'
-								    }
-                                },
-                                { 
-                                	field: 'amount', 
-                                	title:'AMOUNT',
-                                	format: '{0:n}',
-                                	attributes: {
-								      	style: 'text-align: right;'
-								    }
-                                }
-                             ]"
-                             data-auto-bind="false"
-			                 data-bind="source: dataSource"></div>
+						<table class="table table-borderless table-condensed ">
+							<thead>
+								<tr>
+									<th data-bind="text:lang.lang.item"></th>
+									<th style="text-align: left;" data-bind="text: lang.lang.name"></th>
+									<th style="text-align: left;" data-bind="text: lang.lang.date"></th>
+									<th style="text-align: left;" data-bind="text: lang.lang.status"></th>
+									<th style="text-align: right;" data-bind="text: lang.lang.qty"></th>
+									<th data-bind="text: lang.lang.amount"></th>
+								</tr>
+							</thead>
+							<tbody data-role="listview"
+										 data-template="saleOrderDetailbyItem-template"
+										 data-auto-bind="false"
+										 data-bind="source: dataSource"
+							></tbody>
+						</table>
+						<div id="pager" class="k-pager-wrap"
+			            		 data-role="pager"
+						    	 data-auto-bind="false"
+					             data-bind="source: dataSource"></div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+</script>
+<script id="saleOrderDetailbyItem-template" type="text/x-kendo-template">
+	<tr style="font-weight: bold">
+		<td colspan="6">#=name#</td>
+	</tr>
+	#for(var i= 0; i <line.length; i++) {#
+		<tr>
+			<td></td>
+			<td>#=line[i].customer_name#</td>
+			<td style="text-align: left;">#=kendo.toString(new Date(line[i].issued_date),"dd-MM-yyyy")#</td>
+			<td>
+				#if(line[i].status=== 0){#
+					Open
+				#}else if(line[i].status==="1"){#
+				    Used
+        		#}else{#
+					Paid
+        		#}#
+			</td>
+			<td style="text-align: right;">#=kendo.toString(line[i].quantity, "c2")#</td>
+			<td style="text-align: right;">#=kendo.toString(line[i].amount, "c2", banhji.locale)#</td>
+		</tr>
+
+	#}#
+</script>
+<script id="saleOrderDetailbyEmployee" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content saleSummaryCustomer">
+			    	<span class="pull-right glyphicons no-js remove_2"
+						onclick="javascript:window.history.back()"><i></i></span>
+					<br>
+					<br>
+
+					<div class="row-fluid">
+					    <!-- Tabs -->
+						<div class="relativeWrap" data-toggle="source-code">
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+
+								<!-- Tabs Heading -->
+								<div class="widget-head">
+									<ul>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>
+										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.filter"></span></a></li>
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
+									</ul>
+								</div>
+								<!-- // Tabs Heading END -->
+								<div class="widget-body">
+									<div class="tab-content">
+
+								        <!-- Date -->
+								        <div class="tab-pane active" id="tab-1">
+
+											<input data-role="dropdownlist"
+												   class="sorter"
+										           data-value-primitive="true"
+										           data-text-field="text"
+										           data-value-field="value"
+										           data-bind="value: sorter,
+										                      source: sortList,
+										                      events: { change: sorterChanges }" />
+
+											<input data-role="datepicker"
+												   class="sdate"
+												   data-format="dd-MM-yyyy"
+										           data-bind="value: sdate,
+										           			  max: edate"
+										           placeholder="From ..." >
+
+										    <input data-role="datepicker"
+										    	   class="edate"
+										    	   data-format="dd-MM-yyyy"
+										           data-bind="value: edate,
+										                      min: sdate"
+										           placeholder="To ..." >
+
+										  	<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+
+							        	</div>
+
+								    	<!-- Filter -->
+								        <div class="tab-pane" id="tab-2">
+											<table class="table table-condensed">
+												<tr>
+													<td style="padding: 8px 0 0 0 !important;">
+														<span data-bind="text: lang.lang.item"></span>
+														<select data-role="multiselect"
+															   data-value-primitive="true"
+															   data-header-template="item-header-tmpl"
+															   data-item-template="item-list-tmpl"
+															   data-value-field="id"
+															   data-text-field="name"
+															   data-bind="value: obj.itemIds,
+															   			source: itemDS"
+															   data-placeholder="Select Item..."
+															   style="width: 100%" /></select>
+													</td>
+													<td style="padding-top: 31px !important; float: left;">
+										  				<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+													</td>
+												</tr>
+											</table>
+							        	</div>
+							        	<div class="tab-pane" id="tab-3">
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
+								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
+								        		<i class="fa fa-file-pdf-o"></i>
+								        		Print as PDF
+								        	</span> -->
+								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" style="width: 80px;">
+								        		<i class="fa fa-file-excel-o"></i>
+								        		Export to Excel
+								        	</span>
+							        	</div>
+								    </div>
+								</div>
+							</div>
+						</div>
+						<!-- // Tabs END -->
+					</div>
+
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="html: company.name"></h3>
+							<h2>Sale Order Detail by Employee</h2>
+							<p data-bind="text: displayDate"></p>
+						</div>
+
+						<div class="row-fluid">
+							<div class="span5">
+								<div class="total-customer">
+										<p data-bind="text: lang.lang.total_product_services"></p>
+										<span data-bind="text: dataSource.total"></span>
+								</div>
+							</div>
+							<div class="span7">
+								<div class="total-customer">
+									<p data-bind="text: lang.lang.total_sale"></p>
+									<span data-bind="text: total_sale"></span>
+								</div>
+							</div>
+						</div>
+
+						<table class="table table-borderless table-condensed ">
+							<thead>
+								<tr>
+									<th data-bind="text:lang.lang.employee"></th>
+									<th style="text-align: left;" data-bind="text: lang.lang.name"></th>
+									<th style="text-align: left;" data-bind="text: lang.lang.date"></th>
+									<th style="text-align: left;" data-bind="text: lang.lang.status"></th>
+									<th data-bind="text: lang.lang.amount"></th>
+								</tr>
+							</thead>
+							<tbody data-role="listview"
+										 data-template="saleOrderDetailbyEmployee-template"
+										 data-auto-bind="false"
+										 data-bind="source: dataSource"
+							></tbody>
+						</table>
+						<div id="pager" class="k-pager-wrap"
+			            		 data-role="pager"
+						    	 data-auto-bind="false"
+					             data-bind="source: dataSource"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="saleOrderDetailbyEmployee-template" type="text/x-kendo-template">
+	<tr style="font-weight: bold">
+		<td colspan="6">#=name#</td>
+	</tr>
+	#for(var i= 0; i <line.length; i++) {#
+		<tr>
+			<td></td>
+			<td>#=line[i].customer_name#</td>
+			<td style="text-align: left;">#=kendo.toString(new Date(line[i].issued_date),"dd-MM-yyyy")#</td>
+			<td>
+				#if(line[i].status=== 0){#
+					Open
+				#}else if(line[i].status==="1"){#
+				    Used
+        		#}else{#
+					Paid
+        		#}#
+			</td>
+			<td style="text-align: right;">#=kendo.toString(line[i].amount, "c2", banhji.locale)#</td>
+		</tr>
+
+	#}#
 </script>
 
 

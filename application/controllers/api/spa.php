@@ -434,7 +434,7 @@ class Spa extends REST_Controller {
 						$i->measurement_id = $item->measurement->measurement_id;
 						$i->tax_item_id = $item->tax_item->id;
 						$i->assembly_id = $item->assembly_id;
-						$i->description = isset($item->description) ? $item->description : $item->name;
+						$i->description = isset($item->description) ? $item->description : $item->item->name;
 						$i->quantity = $item->quantity;
 						$i->conversion_ratio = 1;
 						$i->cost = $item->cost;

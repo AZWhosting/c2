@@ -2,7 +2,7 @@
 
 require APPPATH.'/libraries/REST_Controller.php';
 
-class Recurrings extends REST_Controller {
+class Billing_cycles extends REST_Controller {
 	public $_database;
 	public $server_host;
 	public $server_user;
@@ -31,7 +31,7 @@ class Recurrings extends REST_Controller {
 		$data["results"] = [];
 		$data["count"] = 0;
 
-		$obj = new Recurring(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$obj = new Billing_cycle(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 		//Sort
 		if(!empty($sort) && isset($sort)){
@@ -100,7 +100,7 @@ class Recurrings extends REST_Controller {
 		
 		$number = "";
 		foreach ($models as $value) {
-			$obj = new Recurring(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$obj = new Billing_cycle(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			isset($value->transaction_id) 	? $obj->transaction_id 	= $value->transaction_id : "";
 			isset($value->user_id) 			? $obj->user_id 		= $value->user_id : "";
 			isset($value->name) 			? $obj->name 			= $value->name : "";
@@ -148,7 +148,7 @@ class Recurrings extends REST_Controller {
 		$data["count"] = 0;
 
 		foreach ($models as $value) {
-			$obj = new Recurring(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$obj = new Billing_cycle(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->get_by_id($value->id);			
 
 			isset($value->transaction_id) 	? $obj->transaction_id 	= $value->transaction_id : "";
@@ -197,7 +197,7 @@ class Recurrings extends REST_Controller {
 		$models = json_decode($this->delete('models'));
 
 		foreach ($models as $key => $value) {
-			$obj = new Recurring(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$obj = new Billing_cycle(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->get_by_id($value->id);
 
 			$data["results"][] = array(
@@ -210,5 +210,5 @@ class Recurrings extends REST_Controller {
 		$this->response($data, 200);
 	}
 }
-/* End of file recurrings.php */
-/* Location: ./application/controllers/api/recurrings.php */
+/* End of file billing_cycles.php */
+/* Location: ./application/controllers/api/billing_cycles.php */

@@ -1633,6 +1633,7 @@ class Accounting_modules extends REST_Controller {
 
 
 		//RETAINED EARNING = Profit Loss + Retained Earning
+		$retainEarningAmount = 0;
 		//PREVIOUSE PROFIT AND LOSS (From Begining to startFiscalDate) Cr - Dr
 		$prevPL = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);				
 		$prevPL->select_sum("(dr - cr) / transactions.rate", "total");
@@ -1643,15 +1644,14 @@ class Accounting_modules extends REST_Controller {
 		$prevPL->where_related("transaction", "deleted <>", 1);		
 		$prevPL->where("deleted <>", 1);
 		$prevPL->get();
+
+		$retainEarningAmount += floatval($prevPL->total);
 		//END PREVIOUSE PROFIT AND LOSS
 
 
 		//RETAINED EARNING (As Of) Cr - Dr
 		$retainEarning = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$retainEarning->select("account_id");
 		$retainEarning->select_sum("(dr - cr) / transactions.rate", "total");
-		$retainEarning->include_related("account", array("number","name"));
-		$retainEarning->include_related("account/account_type", array("name","nature"));
 		$retainEarning->where("account_id", 70);
 		$retainEarning->where_related("transaction", "issued_date <", $asOf);
 		$retainEarning->where_related("transaction", "is_recurring <>", 1);
@@ -1659,19 +1659,20 @@ class Accounting_modules extends REST_Controller {
 		$retainEarning->where("deleted <>", 1);
 		$retainEarning->get();
 		
-		if($retainEarning->account_id!==null){
-			$retainEarningAmount = floatval($prevPL->total) + floatval($retainEarning->total);
+		$retainEarningAmount += floatval($retainEarning->total);
+		//END RETAINED EARNING
 
+		//Equity
+		if($retainEarningAmount>0){
 			$objList[] = array(
-				"id" 			=> $retainEarning->account_id,
-				"number" 		=> $retainEarning->account_number,
-				"name" 			=> $retainEarning->account_name,				
-			   	"type" 			=> $retainEarning->account_account_type_name,
-			   	"nature" 		=> $retainEarning->account_account_type_nature,
+				"id" 			=> 70,
+				"number" 		=> "32500",
+				"name" 			=> "Retained Earnings",				
+			   	"type" 			=> "Equity",
+			   	"nature" 		=> "Cr",
 			   	"amount" 		=> $retainEarningAmount
 			);
 		}
-		//END RETAINED EARNING
 
 		foreach ($objList as $value) {
 			$dr = $value["amount"];

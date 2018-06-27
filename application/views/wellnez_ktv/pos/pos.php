@@ -1278,7 +1278,7 @@
 												<td class="right "><span data-format="n" data-bind="text: obj.tax"></span></td>
 											</tr>                             
 											<tr>
-												<td class="right"><h4 span data-bind="text: lang.lang.total" style="font-weight: 700;"></h4></td>
+												<td class="right"><h4 data-bind="text: lang.lang.total" style="font-weight: 700;"></h4></td>
 												<td class="right strong"><h4 data-bind="text: total" style="font-weight: 700;"></h4></td>
 											</tr>               
 										</tbody>
@@ -1292,7 +1292,7 @@
 											<div class="img">
 												
 											</div>
-											<p class="textBig" data-bind="text: lang.lang.save"> </p>
+											<p style="font-size: 16px;margin-bottom: 0; text-align: center;" class="textBig" data-bind="text: lang.lang.save"> </p>
 										</div>
 									</div>
 								</div>
@@ -1302,7 +1302,7 @@
 											<div class="img">
 												<i class="fas fa-check-circle"></i>
 											</div>
-											<p class="textBig" data-bind="text: lang.lang.cancel"></p>
+											<p style="font-size: 16px;margin-bottom: 0; text-align: center;" class="textBig" data-bind="text: lang.lang.cancel"></p>
 										</div>
 									</div>
 								</div>

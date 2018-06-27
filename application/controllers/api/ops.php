@@ -52,7 +52,7 @@ class Ops extends REST_Controller {
 			    // $this->dbforge->create_table('tmp_total_sales', TRUE);
 			   
 				//Rename Table 'old_table_name' to 'new_table_name'
-			    // $this->dbforge->rename_table('contacts_custom_fields', 'field_values');
+			    // $this->dbforge->rename_table('recurrings', 'billing_cycles');
 
 				//DROP TABLE IF EXISTS table_name
 			    // $this->dbforge->drop_table('references');

@@ -6383,12 +6383,12 @@
                     });
                     h = 0;
                 }
-                this.relationRoom.query({
-                    filter: {field: "room_id", value: this.get("roomSelected")},
-                    pageSize: 1
-                }).then(function(e){
-                    self.queryItemRoom(self.relationRoom.data()[0].item);
-                });
+                // this.relationRoom.query({
+                //     filter: {field: "room_id", value: this.get("roomSelected")},
+                //     pageSize: 1
+                // }).then(function(e){
+                //     self.queryItemRoom(self.relationRoom.data()[0].item);
+                // });
                 this.set("roomSelected", 0);
             }
         },
@@ -7334,7 +7334,7 @@
                 item_id             : item.id,
                 assembly_id         : 0,
                 measurement_id      : 0,
-                description         : "",
+                description         : item.name,
                 quantity            : 1,
                 conversion_ratio    : 0,
                 cost                : 0,
