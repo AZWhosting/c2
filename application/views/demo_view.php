@@ -58914,7 +58914,7 @@
 		<td class="lside">#= description ? description : "" #</td>
 		<td>#= quantity#</td>
 		<td class="rside" width="70">#if(price > 0){# #= kendo.toString(price, "c", locale) # #}#</td>
-		<td class="rside">#= kendo.toString(quantity * price, "c", locale) #</td>
+		<td class="rside">#if(price > 0){# #= kendo.toString(quantity * price, "c", locale) # #}#</td>
 	</tr>
 </script>
 <script id="vatInvoiceKSLM" type="text/x-kendo-template">
@@ -59307,7 +59307,7 @@
 			<td class="lside">#= description ? description : "" #</td>
 			<td>#= quantity#</td>
 			<td class="rside" width="70">#if(price > 0){# #= kendo.toString(price, "c", locale) # #}#</td>
-			<td class="rside">#= kendo.toString(quantity * price, "c", locale) #</td>
+			<td class="rside">#if(price > 0){# #= kendo.toString(quantity * price, "c", locale) # #}#</td>
 		</tr>
 	#}#
 </script>
@@ -59521,7 +59521,7 @@
 		<td class="lside">#= description ? description : "" #</td>
 		<td>#= quantity#</td>
 		<td class="rside" width="70">#if(price > 0){# #= kendo.toString(price, "c", locale) # #}#</td>
-		<td class="rside">#= kendo.toString(quantity * price, "c", locale) #</td>
+		<td class="rside">#if(price > 0){# #= kendo.toString(quantity * price, "c", locale) # #}#</td>
 	</tr>
 </script>
 <script id="invoiceForm-lineDS-template3" type="text/x-kendo-template">
@@ -59532,7 +59532,7 @@
 		<td>#= item_prices.measurement ? item_prices.measurement : "" #</td>
 		<td>#= quantity#</td>
 		<td style="text-align: right; padding-right: 5px;">#= kendo.toString(price, "c", locale) #</td>
-		<td style="text-align: right; padding-right: 5px;">#= kendo.toString(quantity * price, "c", locale) #</td>
+		<td style="text-align: right; padding-right: 5px;">#if(price > 0){# #= kendo.toString(quantity * price, "c", locale) # #}#</td>
 	</tr>
 </script>
 <script id="invoiceForm-lineDS-template4" type="text/x-kendo-template">
@@ -59544,7 +59544,7 @@
 		<td></td>
 		<td>#= quantity#</td>
 		<td style="text-align: right; padding-right: 5px;">#= kendo.toString(price, "c", locale) #</td>
-		<td style="text-align: right; padding-right: 5px;">#= kendo.toString(quantity * price, "c", locale) #</td>
+		<td style="text-align: right; padding-right: 5px;">#if(price > 0){# #= kendo.toString(quantity * price, "c", locale) # #}#</td>
 	</tr>
 </script>
 <script id="invoiceForm-lineDS-template5" type="text/x-kendo-template">
@@ -59566,7 +59566,7 @@
 		<td style="color: \\#000">#= item_prices.measurement ? item_prices.measurement : "" #</td>
 		<td style="color: \\#000">#= quantity#</td>
 		<td class="rside" width="70" style="color: \\#000">#= kendo.toString(price, "c", locale) #</td>
-		<td class="rside" style="background-color: \\#eee;color: \\#000">#= kendo.toString(quantity * price, "c", locale) #</td>
+		<td class="rside" style="background-color: \\#eee;color: \\#000">#if(price > 0){# #= kendo.toString(quantity * price, "c", locale) # #}#</td>
 	</tr>
 </script>
 <script id="invoiceForm-lineDS-template8" type="text/x-kendo-template">
@@ -59575,7 +59575,7 @@
 		<td style="color: \\#000;">#= item_prices.measurement ? item_prices.measurement : "" #</td>
 		<td style="color: \\#000;">#= quantity#</td>
 		<td class="rside" style="color: \\#000;">#= kendo.toString(price, "c", locale) #</td>
-		<td class="rside" style="background-color: \\#eee;color: \\#000;">#= kendo.toString(quantity * price, "c", locale) #</td>
+		<td class="rside" style="background-color: \\#eee;color: \\#000;">#if(price > 0){# #= kendo.toString(quantity * price, "c", locale) # #}#</td>
 	</tr>
 </script>
 <script id="invoiceForm-lineDS-template10" type="text/x-kendo-template">
@@ -59585,7 +59585,7 @@
 		<td style="color:\\#000">#= item_prices.measurement ? item_prices.measurement : "" #</td>
 		<td style="color:\\#000">#= quantity#</td>
 		<td class="rside" width="70" style="color:\\#000">#if(price > 0){##= kendo.toString(price, "c", locale) ##}#</td>
-		<td class="rside" style="background-color: \\#eee;color: \\#000">#= kendo.toString(quantity * price, "c", locale) #</td>
+		<td class="rside" style="background-color: \\#eee;color: \\#000">#if(price > 0){# #= kendo.toString(quantity * price, "c", locale) # #}#</td>
 	</tr>
 </script>
 <script id="invoiceForm-lineDS-template12" type="text/x-kendo-template">
@@ -59594,7 +59594,7 @@
 		<td style="color:\\#000">#= item_prices.measurement ? item_prices.measurement : "" #</td>
 		<td style="color:\\#000">#= quantity#</td>
 		<td class="rside" width="70" style="color:\\#000">#= kendo.toString(price, "c", locale) #</td>
-		<td class="rside" style="background-color: \\#eee;color:\\#000">#= kendo.toString(quantity * price, "c", locale) #</td>
+		<td class="rside" style="background-color: \\#eee;color:\\#000">#if(price > 0){# #= kendo.toString(quantity * price, "c", locale) # #}#</td>
 	</tr>
 </script>
 <script id="invoiceForm-lineDS-template14" type="text/x-kendo-template">
@@ -59613,7 +59613,7 @@
 		<td style="text-align: left; padding-left: 5px;">#: reference_no#</td>
 		<td style="text-align: left; padding-left: 5px;">#: contact.name#</td>
 		<td style="text-align: left; padding-left: 5px;">#= description ? description : "" #</td>
-		<td style="text-align: right; padding-right: 5px;">#= kendo.toString(quantity * price, "c", locale) #</td>
+		<td style="text-align: right; padding-right: 5px;">#if(price > 0){# #= kendo.toString(quantity * price, "c", locale) # #}#</td>
 	</tr>
 </script>
 <script id="payment-voucher-journal-line-template" type="text/x-kendo-template">
