@@ -1733,6 +1733,10 @@ class Sales extends REST_Controller {
 			$objList = [];
 			$today = new DateTime();
 			foreach ($obj as $value) {
+				$employee = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$employee->where("id", $value->employee_id);
+				$employee->get();	
+
 				$amount = (floatval($value->amount) - floatval($value->deposit)) / floatval($value->rate);
 				
 				if($value->status=="2"){
@@ -1769,22 +1773,30 @@ class Sales extends REST_Controller {
 					$current = $amount;
 				}
 
-				if(isset($objList[$value->contact_id])){
-					$objList[$value->contact_id]["current"] += $current;
-					$objList[$value->contact_id]["in30"] 	+= $in30;
-					$objList[$value->contact_id]["in60"] 	+= $in60;
-					$objList[$value->contact_id]["in90"] 	+= $in90;
-					$objList[$value->contact_id]["over90"] 	+= $over90;
-					$objList[$value->contact_id]["total"] 	+= $amount;
+				if(isset($objList[$value->employee_id])){
+					$objList[$value->employee_id]["line"][] = array(
+						"id" 				=> $value->id,
+						"nameCustomer" 		=> $value->contact_abbr.$value->contact_number." ".$value->contact_name,
+						"current" 			=> $current,
+						"in30" 				=> $in30,
+						"in60" 				=> $in60,
+						"in90" 				=> $in90,
+						"over90" 			=> $over90,
+						"total" 			=> $amount,
+					);
 				}else{
-					$objList[$value->contact_id]["id"] 		= $value->contact_id;
-					$objList[$value->contact_id]["name"] 	= $value->contact_abbr.$value->contact_number." ".$value->contact_name;
-					$objList[$value->contact_id]["current"] = $current;
-					$objList[$value->contact_id]["in30"] 	= $in30;
-					$objList[$value->contact_id]["in60"] 	= $in60;
-					$objList[$value->contact_id]["in90"] 	= $in90;
-					$objList[$value->contact_id]["over90"] 	= $over90;
-					$objList[$value->contact_id]["total"] 	= $amount;
+					$objList[$value->employee_id]["id"] 			= $value->employee_id;
+					$objList[$value->employee_id]["name"] 			= $employee->abbr.$employee->number." ".$employee->name;
+					$objList[$value->employee_id]["line"][] 		= array(
+						"id" 				=> $value->id,
+						"nameCustomer" 		=> $value->contact_abbr.$value->contact_number." ".$value->contact_name,
+						"current" 			=> $current,
+						"in30" 				=> $in30,
+						"in60" 				=> $in60,
+						"in90" 				=> $in90,
+						"over90" 			=> $over90,
+						"total" 			=> $amount,
+					);			
 				}
 			}
 

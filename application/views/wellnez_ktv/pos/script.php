@@ -4112,14 +4112,7 @@
         user_id             : banhji.source.user_id,
         sessionDS           : dataStore(apiUrl + "cashier"),
         pageLoad            : function(){
-            // if(id){
-            //     this.set("isEdit", true);
-            //     this.loadObj(id);
-            // }else{              
-            //     if(this.get("isEdit") || this.dataSource.total()==0){
-                    this.addEmpty();
-            //     }
-            // }
+            this.addEmpty();
             var self = this;
             this.sessionDS.query({
                 filter: [
@@ -7318,19 +7311,7 @@
                 $.each(view[0].room, function(i,v){
                     self.roomAR.push(v);
                 });
-                if(view[0].type == "Invoice"){
-                    self.transactionDS.query({
-                        filter: {field: "id", value: view[0].transaction_id},
-                        pageSize: 1
-                    }).then(function(e){
-                        self.set("invobj", self.transactionDS.data()[0]);
-                        // self.journalLineDS.query({
-                        //     filter: {field: "transaction_id", value: view[0].transaction_id}
-                        // }).then(function(e){
-                            
-                        // });
-                    });
-                }
+                
             });
         },
         addRow        : function(e){
@@ -7382,12 +7363,12 @@
                 raw = "", entries = {};
 
             //Edit Mode
-            if(obj.isNew()==false){
-                //Delete previous journal
+            // if(obj.isNew()==false){
+            //     //Delete previous journal
                 $.each(this.journalLineDS.data(), function(index, value){
                     value.set("deleted", 1);
                 });
-            }
+            // }
             
             //Item lines
             $.each(this.lineDS.data(), function(index, value){
@@ -7547,32 +7528,6 @@
                     }
                 }
             }
-
-            //Deposit on Dr         
-            if(obj.deposit > 0){
-                var depositAccountId = kendo.parseInt(contact.deposit_account_id);
-                if(depositAccountId>0){
-                    raw = "dr"+depositAccountId;
-
-                    if(entries[raw]===undefined){
-                        entries[raw] = {
-                            transaction_id      : transaction_id,
-                            account_id          : depositAccountId,
-                            contact_id          : obj.contact_id,
-                            description         : "Wellnez Invoice",
-                            reference_no        : obj.reference_no,
-                            segments            : obj.segments,
-                            dr                  : obj.deposit,
-                            cr                  : 0,
-                            rate                : obj.rate,
-                            locale              : obj.locale
-                        };
-                    }else{
-                        entries[raw].dr += obj.deposit;
-                    }
-                }
-            }
-
             //Add to journal entry
             if(!jQuery.isEmptyObject(entries)){
                 $.each(entries, function(index, value){
@@ -7581,6 +7536,13 @@
             }
 
             this.journalLineDS.sync();
+            this.journalLineDS.bind("requestEnd", function(e){
+                $("#loadImport").css("display", "none");
+                var noti = $("#ntf1").data("kendoNotification");
+                        noti.hide();
+                        noti.success(self.lang.lang.success_message);
+                self.cancel();
+            });
         },
         saveWorkDS          : dataStore(apiUrl + "spa/updatework"),
         save        : function(){
@@ -7604,13 +7566,27 @@
                 this.saveWorkDS.bind("requestEnd", function(e){
                     var type = e.type;
                     if (type !== 'read') {
-                        var noti = $("#ntf1").data("kendoNotification");
-                        noti.hide();
-                        noti.success(self.lang.lang.success_message);
                         
-                        self.addJournal(self.get("obj").transaction_id);
-                        $("#loadImport").css("display", "none");
-                        // self.cancel();
+                        if(obj.type == "Invoice"){
+                            self.transactionDS.query({
+                                filter: {field: "id", value: obj.transaction_id},
+                                pageSize: 1
+                            }).then(function(e){
+                                self.set("invobj", self.transactionDS.data()[0]);
+                                
+                                self.journalLineDS.query({
+                                    filter: {field: "transaction_id", value: obj.transaction_id}
+                                }).then(function(e){
+                                    self.addJournal(obj.transaction_id);
+                                });
+                            });
+                        }else{
+                            var noti = $("#ntf1").data("kendoNotification");
+                            noti.hide();
+                            noti.success(self.lang.lang.success_message);
+                            self.cancel();
+                            $("#loadImport").css("display", "none");
+                        }
                     }
                 });
             }

@@ -17092,7 +17092,7 @@
 								<div class="col-xs-12 col-sm-3">
 									<div class="total-sale">
 										<p data-bind="text: lang.lang.number_of_customer">Total Usage</p>
-										<span data-bind="text: countCustomer"></span>
+										<span data-bind="text: dataSource.total"></span>
 									</div>
 								</div>
 								<div class="col-xs-12 col-sm-9">
@@ -18563,7 +18563,7 @@
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date">Date</span></a></li>	
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="tetx: lang.lang.date">Date</span></a></li>	
 										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.filter">Filter</span></a></li>
 										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab" ><i></i><span data-bind="text: lang.lang.print_export">Print/Export</span></a></li>
 									</ul>
@@ -19935,7 +19935,7 @@
   				<li><a href='#/offline'><span >Offline</span></a></li>
   			</ul>
 	  	</li>
-	  	<li><a href="#/reports" style="color: #fff">REPORTS</a></li>
+	  	<li ><a href="#/reports" style="color: #fff" >REPORTS</a></li>
 	  	<li style="width: 47px"><a style="width: 47px;" href='#/setting' class='glyphicons settings'><i class="text-t"></i></a></li>
 	</ul>
 </script>

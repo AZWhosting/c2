@@ -537,7 +537,10 @@
 								</div>
 								<div class="span6 botton" style="padding-left: 0;">
 									<div class="">
-										<div class=" ">
+										<div class="">
+											<div style="padding: 5px 0;margin-bottom: 5px;background: #ccc;color: green;border-radius: 5px;">
+												<span>Time In: </span><span data-bind="text: timeIn"></span> | <span>Now : </span><span id="time-part"></span>
+											</div>
 											<div class="button-service" data-bind="click: printBill">
 												<div class="img">
 													<img src="<?php echo base_url();?>assets/spa/icon/pay-green.png" >
@@ -586,10 +589,10 @@
 			<p style="text-align: left;"><b>Item Name:</b> <span style="text-align: center;font-size: 12px;">--</span></p>
 			<p style="text-align: left;"><b>Amount:</b> <span style="text-align: center;font-size: 12px;">#=kendo.toString(tt, locale=="km-KH"?"c0":"c2", locale)#</span></p>
 		#}else{#
-			#$.each(item, function(i,v){#
-				<p style="text-align: left;"><b>Item Name:</b> <span style="text-align: center;font-size: 12px;">#: v.name#</span></p>
-				<p style="text-align: left;"><b>Amount:</b> <span style="text-align: center;font-size: 12px;">#=kendo.toString(v.amount, v.locale=="km-KH"?"c0":"c2", v.locale)#</span></p>
-			#})#
+			#if(status == 'Serving'){#
+				<p style="text-align: left;"><b>Item Name:</b> <span style="text-align: center;font-size: 12px;">#: item[0].name#</span></p>
+				<p style="text-align: left;"><b>Amount:</b> <span style="text-align: center;font-size: 12px;">#=kendo.toString(item[0].amount, item[0].locale=="km-KH"?"c0":"c2", item[0].locale)#</span></p>
+			#}#
 		#}#
 		<p style="text-align: left;"><b>Status:</b> <span style="text-align: center;font-size: 12px;">#: status#</span></p>
 		#if(status == 'Available'){#
@@ -599,6 +602,20 @@
 		#}else if(status == 'Maintenance'){#
 			<p style="text-align: left;"><b>Time:</b> <span style="text-align: center;font-size: 12px;">#: kendo.toString(new Date(maintenance_date), "F")#</span></p>
 			<a style="background: \#1c3b19;  color: \#fff; padding: 5px 15px;" data-bind="click: availableRoom">Available</a>
+		#}else if(status == 'Serving'){#
+			<input data-role="dropdownlist"
+                   data-auto-bind="false"
+                   data-value-primitive="true"
+                   data-text-field="name"
+                   data-value-field="id"
+                   data-option-label="Change Room..."
+                   data-bind="value: changeRoom,
+                      source: roomDS,
+                      events: {
+                        change: roomChange,
+                      }"
+                   style="width: 100%;"
+            />
 		#}#
 	</div>
 </script>

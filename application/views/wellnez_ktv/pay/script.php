@@ -5098,7 +5098,7 @@
         },
         billTxnDS   : dataStore(apiUrl + "spa/paybill"),
         payBill     : function(id){
-            $("#loadImport").css("display", "none");
+            $("#loadING").css("display", "block");
             var self = this;
             var obj = this.get("invobj");
             this.billTxnDS.data([]);
@@ -5121,7 +5121,7 @@
                     var noti = $("#ntf1").data("kendoNotification");
                     noti.hide();
                     noti.success(self.lang.lang.success_message);
-                    $("#loadImport").css("display", "none");
+                    $("#loadING").css("display", "none");
                     self.invoiceDS.query({});
                     self.set("total", 0);
                     self.set("amountReciept", 0);

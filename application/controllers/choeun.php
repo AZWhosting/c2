@@ -30,10 +30,13 @@ class Choeun extends CI_Controller {
 	 //    echo $d->format('Y-m-d');
 		// $date = strtotime('2012-05-01 -1 months');
 		// echo $date;
-		$now = date("Y-m-d H:i:s");
-		echo $now;
-		$new_time = date("Y-m-d H:i:s", strtotime('+5 hours',strtotime($now)));
-		echo $new_time;
+		// $now = date("Y-m-d H:i:s");
+		// echo $now;
+		// $new_time = date("Y-m-d H:i:s", strtotime('+5 hours',strtotime($now)));
+		// echo $new_time;
+		$this->load->view("wellnez/header");
+		$this->load->view("choeun");
+		$this->load->view("wellnez/footer");
 	}
 }
 

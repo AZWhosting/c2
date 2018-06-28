@@ -11645,9 +11645,9 @@
 	<br>
 </script>
 <script id="saleDetailByEmployee-template" type="text/x-kendo-template">
-	<tr style="font-weight: bold">
+	<td></td>
+		<tr style="font-weight: bold">
 		<td>#=name#</td>
-		<td></td>
 		<td></td>
 		<td></td>
 		<td></td>
@@ -12263,6 +12263,7 @@
 						<table class="table table-borderless table-condensed ">
 							<thead>
 								<tr>
+									<th data-bind="text: lang.lang.employee"></th>
 									<th data-bind="text: lang.lang.name"></th>
 									<th style="text-align: right;" data-bind="text: lang.lang.current"></th>
 									<th style="text-align: right;"><span>1-30</span></th>
@@ -12289,15 +12290,23 @@
 	</div>
 </script>
 <script id="receivableAgingSummary-template" type="text/x-kendo-template" >
-	<tr>
-		<td>#=name#</td>
-		<td style="text-align: right;">#=kendo.toString(current, "c2", banhji.locale)#</td>
-		<td style="text-align: right;">#=kendo.toString(in30, "c2", banhji.locale)#</td>
-		<td style="text-align: right;">#=kendo.toString(in60, "c2", banhji.locale)#</td>
-		<td style="text-align: right;">#=kendo.toString(in90, "c2", banhji.locale)#</td>
-		<td style="text-align: right;">#=kendo.toString(over90, "c2", banhji.locale)#</td>
-		<td style="text-align: right;">#=kendo.toString(total, "c2", banhji.locale)#</td>
+	<tr style="font-weight: bold">
+		<td colspan="8">#=name#</td>
 	</tr>
+	#var totalAmount = 0;#
+	#for(var i= 0; i <line.length; i++) {#
+		<tr>
+			<td></td>
+			<td>#=line[i].nameCustomer#</td>
+			<td style="text-align: right;">#=kendo.toString(line[i].current, "c2", banhji.locale)#</td>
+			<td style="text-align: right;">#=kendo.toString(line[i].in30, "c2", banhji.locale)#</td>
+			<td style="text-align: right;">#=kendo.toString(line[i].in60, "c2", banhji.locale)#</td>
+			<td style="text-align: right;">#=kendo.toString(line[i].in90, "c2", banhji.locale)#</td>
+			<td style="text-align: right;">#=kendo.toString(line[i].over90, "c2", banhji.locale)#</td>
+			<td style="text-align: right;">#=kendo.toString(line[i].total, "c2", banhji.locale)#</td>
+		</tr>
+
+	#}#
 </script>
 <script id="receivableAgingDetail" type="text/x-kendo-template">
 	<div id="slide-form">

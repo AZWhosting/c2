@@ -3888,6 +3888,13 @@
                     window.location.href = "<?php echo base_url(); ?>wellnez/session";
                 }
             })
+            var interval = setInterval(function() {
+                var momentNow = moment();
+                $('#date-part').html(momentNow.format('YYYY MMMM DD') + ' '
+                                    + momentNow.format('dddd')
+                                     .substring(0,3).toUpperCase());
+                $('#time-part').html(momentNow.format('H:mm:ss'));
+            }, 100);
         },
         loadData            : function(){
             this.setRate();
@@ -5227,11 +5234,9 @@
         selectRow: function(e){
             var self = this;
             this.lineDS.data([]);
-            console.log(e.data);
             if(e.data.status == "Available"){
                 this.set("haveWork", false);
             }else{
-                console.log(e.data.item);
                 $.each(e.data.item, function(i,v){
                     self.lineDS.add(v);
                 });
@@ -5241,9 +5246,14 @@
                 // });
                 this.set("obj", e.data);
                 this.set("total", kendo.toString(e.data.amount, "c", e.data.locale));
-                this.set("haveWork", true);
+                if(e.data.status != "Maintenance"){
+                    this.set("haveWork", true);
+                }
+                var time = new Date(e.data.dateshow);
+                this.set("timeIn", time.getHours() + ":" + time.getMinutes());
             }
         },
+        timeIn              : "",
         saveWork            : function(){
             var obj = this.get("obj");
             if(this.lineDS.hasChanges() == true){
@@ -5487,7 +5497,6 @@
                     });
                     banhji.print.dataSource = [];
                     banhji.print.dataSource.push(data);
-                    self.lineDS.data([]);
                     banhji.router.navigate('/print');
                 }
             });
@@ -5675,6 +5684,72 @@
             window.location.href = "<?php echo base_url(); ?>wellnez_ktv/pos/#/serving/" + this.get("obj").id;
         },
         onProcessing        : false,
+        roomDS              : new kendo.data.DataSource({
+            transport: {
+                read: {
+                    url: apiUrl + "spa/room",
+                    type: "GET",
+                    headers: banhji.header,
+                    dataType: 'json'
+                },
+                parameterMap: function(options, operation) {
+                    if (operation === 'read') {
+                        return {
+                            page: options.page,
+                            limit: options.pageSize,
+                            filter: options.filter,
+                            sort: options.sort
+                        };
+                    } else {
+                        return {
+                            models: kendo.stringify(options.models)
+                        };
+                    }
+                }
+            },
+            schema: {
+                model: {
+                    id: 'id'
+                },
+                data: 'results',
+                total: 'count'
+            },
+            filter: [
+                {
+                    field: "status",
+                    value: 1
+                }
+            ],
+            sort: {
+                field: "id",
+                dir: "asc"
+            },
+            batch: true,
+            serverFiltering: true,
+            serverSorting: true,
+            serverPaging: true,
+            page: 1,
+            pageSize: 100
+        }),
+        changeRoomDS        : dataStore(apiUrl + "spa/changeroom"),
+        roomChange          : function(e){
+            if(this.get("obj").room[0].id != e.data.changeRoom){
+                if(confirm('Are you sure for changing room?')){
+                    var obj = this.get("obj");
+                    var self = this;
+                    this.changeRoomDS.data([]);
+                    this.changeRoomDS.add({
+                        work_id             : obj.id,
+                        current_room_id     : obj.room[0].id,
+                        change_room_id      : e.data.changeRoom,
+                    });
+                    this.changeRoomDS.sync();
+                    this.changeRoomDS.bind("requestEnd", function(e){
+                        self.workDS.query({});
+                    });
+                }
+            }
+        }
     });
     //Print
     banhji.print = kendo.observable({
@@ -5808,6 +5883,8 @@
             this.dataSource.splice(0, this.dataSource.length);
             banhji.router.navigate('/');
             banhji.Index.workDS.query({});
+            banhji.Index.lineDS.data([]);
+            banhji.Index.set("haveWork", false);
         }
     });
     /* views and layout */

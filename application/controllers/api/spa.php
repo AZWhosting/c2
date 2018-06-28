@@ -143,55 +143,57 @@ class Spa extends REST_Controller {
 											$me->where("id", $i->measurement_id)->limit(1)->get();
 											$itemar[] = array(
 												"id" 				=> $i->id,
-												"conversion_ratio" 	=> $i->conversion_ratio,
-												"cost" 				=> $i->cost,
-												"transaction_id" 	=> $i->transaction_id,
-												"item_id" 			=> $i->item_id,
+												"conversion_ratio" 	=> floatval($i->conversion_ratio),
+												"cost" 				=> floatval($i->cost),
+												"transaction_id" 	=> intval($i->transaction_id),
+												"item_id" 			=> intval($i->item_id),
 												"description" 		=> $i->description,
-												"item_price" 		=> $i->item_price,
+												"name" 				=> $i->description,
+												"item_price" 		=> floatval($i->item_price),
 												"item" 				=> array(
-													"id" 	=> $i->item_id, 
-													"conversion_ratio" 	=> $i->conversion_ratio,
-													"cost" 				=> $i->cost,
+													"id" 	=> intval($i->item_id), 
+													"conversion_ratio" 	=> floatval($i->conversion_ratio),
+													"cost" 				=> floatval($i->cost),
 													"name" 	=> $i->description,
 													"description" 		=> $i->description,
-													"quantity" 			=> $i->quantity,
-													"avarage_cost" 		=> $i->avarage_cost,
-													"contact_id" 		=> $i->contact_id,
+													"quantity" 			=> intval($i->quantity),
+													"avarage_cost" 		=> floatval($i->avarage_cost),
+													"contact_id" 		=> intval($i->contact_id),
 													"quantity" 			=> intval($i->quantity),
 													"measurement" 		=> array(
-														"id" 				=> $me->id, 
+														"id" 				=> intval($me->id), 
 														"measurement" 		=> $me->name,
 														"name" 				=> $me->name,
-														"measurement_id" 	=> $me->id,
+														"measurement_id" 	=> intval($me->id),
 													),
 													"tax_item" 			=> array(
-														"id" 				=> $i->tax_item_id
+														"id" 				=> intval($i->tax_item_id)
 													),
 													"price" 			=> floatval($i->price),
 													"item_price" 		=> array(
 														"measurement" 		=> $me->name,
-														"measurement_id" 	=> $me->id,
+														"measurement_id" 	=> intval($me->id),
 													),
 													"amount" 			=> floatval($i->amount),
-													"discount" 			=> $i->discount,
+													"discount" 			=> floatval($i->discount),
 													"tax" 				=> $i->tax,
 													"rate" 				=> floatval($i->rate),
 													"locale" 			=> $i->locale,
-													"item_type_id" 			=> $i->item_item_type_id,
+													"item_type_id" 			=> intval($i->item_item_type_id),
 													"abbr"					=> $i->item_abbr, 
 													"number" 				=> $i->item_number, 
-													"income_account_id"		=> $i->item_income_account_id, 
-													"expense_account_id" 	=> $i->item_expense_account_id, 
-													"inventory_account_id" 	=> $i->item_inventory_account_id
+													"income_account_id"		=> intval($i->item_income_account_id), 
+													"expense_account_id" 	=> intval($i->item_expense_account_id), 
+													"inventory_account_id" 	=> intval($i->item_inventory_account_id)
 												),
-												"contact_id" 		=> $i->contact_id,
+												"item_type_id" 		=> intval($i->item_item_type_id),
+												"contact_id" 		=> intval($i->contact_id),
 												"measurement_id" 	=> $i->measurement_id,
 												"tax_item_id" 		=> $i->tax_item_id,
-												"assembly_id" 		=> $i->assembly_id,
+												"assembly_id" 		=> intval($i->assembly_id),
 												"description" 		=> $i->description,
-												"quantity" 			=> $i->quantity,
-												"avarage_cost" 		=> $i->avarage_cost, 			
+												"quantity" 			=> intval($i->quantity),
+												"avarage_cost" 		=> floatval($i->avarage_cost), 			
 												"quantity" 			=> intval($i->quantity),
 												"measurement" 		=> array(
 													"id" 				=> $me->id, 
@@ -644,8 +646,17 @@ class Spa extends REST_Controller {
 							"description" 		=> $i->description,
 							"item_price" 		=> $i->item_price,
 							"item" 				=> array(
-								"id" 	=> $i->item_id, 
-								"name" 	=> $i->description
+								"id" 	=> intval($i->item_id), 
+								"name" 	=> $i->description,
+								"rate" 				=> floatval($i->rate),
+								"locale" 			=> $i->locale,
+								"item_type_id" 			=> intval($i->item_item_type_id),
+								"abbr"					=> $i->item_abbr, 
+								"number" 				=> $i->item_number, 
+								"name" 					=> $i->item_name,
+								"income_account_id"		=> intval($i->item_income_account_id), 
+								"expense_account_id" 	=> intval($i->item_expense_account_id), 
+								"inventory_account_id" 	=> intval($i->item_inventory_account_id)
 							),
 							"contact_id" 		=> $i->contact_id,
 							"measurement_id" 	=> $i->measurement_id,
@@ -2094,6 +2105,39 @@ class Spa extends REST_Controller {
 		}
 		$data["count"] = count($data["results"]);
 		$this->response($data, 201);	
+	}
+	function changeroom_post(){
+		$models = json_decode($this->post('models'));
+		$data["results"] = [];
+		$data["count"] = 0;
+		foreach ($models as $value) {
+			$obj = new Spa_work_room(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$obj->where("room_id", $value->current_room_id);
+			$obj->where("work_id", $value->work_id)->limit(1)->get();
+	   		if($obj->exists()){
+	   			$obj->work_id = $value->work_id;
+	   			$obj->room_id = $value->change_room_id;
+	   			$obj->save();
+	   			//old room
+	   			$room = new Spa_room(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$room->where("id", $value->current_room_id)->limit(1)->get();
+				$room->status = 0;
+				$room->work_id = 0;
+				$room->maintenance_date = date('Y-m-d H:i:s');
+				$room->save();
+				//new room
+				$nroom = new Spa_room(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$nroom->where("id", $value->change_room_id)->limit(1)->get();
+				$nroom->work_id = $value->work_id;
+				$nroom->transaction_id = $value->transaction_id;
+				$nroom->save();
+			   	$data["results"][] = array(
+			   		"id" 			=> $obj->id
+			   	);
+		    }
+		}
+		$data["count"] = count($data["results"]);
+		$this->response($data, 201);
 	}
 	function room_put() {
 		$models = json_decode($this->put('models'));
