@@ -23,6 +23,16 @@ class Ops extends REST_Controller {
 				// 	$startQ = true;
 				// }
 
+				// $fields = $this->db->list_fields('transactions');
+				// foreach ($fields as $field)
+				// {
+				//    	if(isset($field=="movement")){
+				//    		$data["results"][] = $db;
+				//    	}
+				// }
+
+				
+
 				// $counter = $this->db->count_all('transactions');
 				// $data["results"][] = array( "db" => $db, "rows" => $counter );
 
@@ -58,8 +68,8 @@ class Ops extends REST_Controller {
 			    // $this->dbforge->drop_table('references');
 
 			    //Update single data
-			    $this->db->where_in('nature_type', array('Invoice','Cash_Sale'));
-			    $data['results'][] = $this->db->update('transactions', array('movement' => 1));
+			    // $this->db->where_in('nature_type', array('Invoice','Cash_Sale'));
+			    // $data['results'][] = $this->db->update('transactions', array('movement' => 1));
 
 			 	//Update batch data
 			 	// 	$raw = array(
@@ -127,14 +137,14 @@ class Ops extends REST_Controller {
 				// 	// 	"null" 		=> FALSE,
 				// 	// 	"default" 	=> 0
 				// 	// ),
-				// 	"movement" => array(
+				// 	"deleted_by" => array(
 				// 		"type" 		=> "TINYINT",
 				// 		"constraint"=> 1,
 				// 		"null" 		=> FALSE,
 				// 		"default" 	=> 0
 				// 	)
 				// );
-				// $data['results'][] = array("db"=>$db, "status"=>$this->dbforge->add_column("transactions", $fields));
+				// $data['results'][] = $this->dbforge->add_column("transactions", $fields);
 				
 			    // Modify fields
 		 		//$fields = array(

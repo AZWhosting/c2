@@ -3866,7 +3866,9 @@
         segmentitem_id      : "",
         user_id             : banhji.source.user_id,
         sessionDS           : dataStore(apiUrl + "cashier"),
+        currencyDS: dataStore(apiUrl + "utibills/currency"),
         pageLoad            : function(id){
+            this.currencyDS.read();
             if(id){
                 this.set("isEdit", true);
                 this.loadObj(id);
@@ -5251,6 +5253,12 @@
                 }
                 var time = new Date(e.data.dateshow);
                 this.set("timeIn", time.getHours() + ":" + time.getMinutes());
+                this.roomDS.query({
+                    filter: [
+                        {field: "status", value: 1},
+                        {field: "id <>", value: this.get("obj").room[0].id}
+                    ]
+                });
             }
         },
         timeIn              : "",

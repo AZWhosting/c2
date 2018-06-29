@@ -5277,7 +5277,8 @@
                     if(confirm('សូមធ្វើការបញ្ជាក់!')){
                         self.delDB.data([]);
                         self.delDB.add({
-                            txnid   : self.get("invobj").id
+                            txnid   : self.get("invobj").id,
+                            deleted_by: v[0].id,
                         });
                         self.delDB.sync();
                         self.delDB.bind("requestEnd", function(e){
@@ -5504,7 +5505,7 @@
                         value: d.number,
                         type: "code128",
                         width: 350,
-                        height: 40,
+                        height: 80,
                         text: {
                             visible: false
                         }
@@ -5514,7 +5515,7 @@
                         value: d.number,
                         type: "code128",
                         width: 350,
-                        height: 40,
+                        height: 80,
                         text: {
                             visible: false
                         }
@@ -5524,7 +5525,7 @@
                         value: d.number,
                         type: "code128",
                         width: 450,
-                        height: 40,
+                        height: 80,
                         text: {
                             visible: false
                         }

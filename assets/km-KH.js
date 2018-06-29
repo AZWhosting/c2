@@ -1596,4 +1596,7 @@ var	km_KH = {
 	"employee_to_item_location" : "កំណត់បុគ្គលិកតាមឃ្លាំង",
 	"variants" : "ប្រភេទលក្ខណ:សន្និធិ",
 	"admin_module" : "ទំព័រគ្រប់គ្រង",
+	"time_in" : "ម៉ោងចូល",
+	"time_out" : "ម៉ោងចេញ",
+	"room" : "បន្ទប់",
 }

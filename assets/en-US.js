@@ -1622,4 +1622,7 @@ var	en_US = {
 	"employee_to_item_location" : "Employee To Item Location",
 	"variants" : "Variants",
 	"admin_module" : "Admin Module",
+	"time_in" : "Time In",
+	"time_out" : "Time Out",
+	"room" : "Room",
 }

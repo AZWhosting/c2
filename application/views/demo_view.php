@@ -8960,7 +8960,7 @@
 							</tr>
 							<tr>
 								<td style="vertical-align: top;">
-									<h3><a href="#/saleOrder_deatil_customer" data-bind="text: lang.lang.sale_order_list" style="text-transform: capitalize;"></a></h3>
+									<h3><a href="#/sale_order_list" data-bind="text: lang.lang.sale_order_list" style="text-transform: capitalize;"></a></h3>
 								</td>
 								<td style="vertical-align: top;">
 									<h3><a href="#/sale_order_by_item" data-bind="text: lang.lang.saleOrder_detail_by_product" style="text-transform: capitalize;"></a></h3>
@@ -8981,7 +8981,7 @@
 							</tr>
 							<tr>
 								<td style="vertical-align: top;">
-									<h3><a href="#/sale_order_by_employee"  style="text-transform: capitalize;">Sale Order By Employee</a></h3>
+									<h3><a href="#/sale_order_by_employee"  style="text-transform: capitalize;">Sale Order By Employee/Customer</a></h3>
 								</td>
 								
 							</tr>
@@ -11556,7 +11556,7 @@
 											<table class="table table-condensed">
 												<tr>
 									            	<td style="padding: 8px 0 0 0 !important; ">
-														<span data-bind="text: lang.lang.customers"></span>
+														<span>Sale Rep.</span>
 														<select data-role="multiselect"
 															   data-value-primitive="true"
 															   data-header-template="contact-header-tmpl"
@@ -11564,8 +11564,8 @@
 															   data-value-field="id"
 															   data-text-field="name"
 															   data-bind="value: obj.contactIds,
-															   			source: contactDS"
-															   data-placeholder="Select Customer.."
+															   			source: employeeDS"
+															   data-placeholder="Select Sale Rep.."
 															   style="width: 100%" /></select>
 													</td>
 													<td style="padding-top: 31px !important; float: left;">
@@ -11600,42 +11600,43 @@
 							<p data-bind="text: displayDate"></p>
 						</div>
 
-						<div class="row-fluid">
-							<div class="span3">
-								<div class="total-customer">
-									<p data-bind="text: lang.lang.number_of_customer"></p>
-									<span data-bind="text: dataSource.total"></span>
-								</div>
-
-							</div>
-							<div class="span9">
-								<div class="total-sale">
-									<p data-bind="text: lang.lang.amount"></p>
-									<span data-bind="text: totalAmount"></sapn>
-								</div>
-							</div>
-						</div>
-
-						<table class="table table-borderless table-condensed ">
-							<thead>
-								<tr>
-									<th data-bind="text: lang.lang.type"><span></span></th>
-									<th data-bind="text: lang.lang.name"><span></span></th>
-									<th data-bind="text: lang.lang.date"><span></span></th>
-									<th style="text-align: right;" data-bind="text: lang.lang.reference"><span></span></th>
-									<th data-bind="text: lang.lang.amount"><span></span></th>
-								</tr>
-							</thead>
-							<tbody data-role="listview"
-									data-template="saleDetailByEmployee-template"
-									data-auto-bind="false"
-									data-bind="source: dataSource">
-							</tbody>
-						</table>
-						<div id="pager" class="k-pager-wrap"
-			            		 data-role="pager"
-						    	 data-auto-bind="false"
-					             data-bind="source: dataSource"></div>
+						<div data-role="grid" class="costom-grid"
+					    	 data-column-menu="true"
+					    	 data-groupable="true"
+					    	 data-pageable="true"
+					    	 data-reorderable="true"
+					    	 data-scrollable="false"
+					    	 data-resizable="true"
+			                 data-columns="[
+			                 	{ 
+			                 		field: 'contacts', 
+			                 		title: 'CUSTOMER',
+			                 		groupFooterTemplate: 'TOTAL:' 
+			                 	},
+	                            { field: 'employees', title:'SALE REP.' },
+	                            { field: 'issued_date', title:'DATE', template: '#=kendo.toString(new Date(issued_date), banhji.dateFormat)#' },
+	                            { 
+	                            	field: 'number', 
+	                            	title:'NUMBER',
+	                            	template: kendo.template($('#saleOrderDetailbyEmployee-number-template').html())
+	                            },
+	                            { 
+	                            	field: 'status', 
+	                            	title:'STATUS', 
+	                            	template: kendo.template($('#saleOrderDetailbyEmployee-status-template').html()) 
+	                            },
+	                            { 
+	                            	field: 'amount', 
+	                            	title:'AMOUNT', 
+	                            	format: '{0:n}', 
+	                            	attributes: { style: 'text-align: right;' },
+	                            	footerAttributes: { style: 'text-align: right;' },
+	                            	aggregates: ['sum'], 
+	                            	groupFooterTemplate: '#=kendo.toString(sum, banhji.numberFormat)#' 
+	                            }                            
+	                         ]"
+	                         data-auto-bind="false"
+			                 data-bind="source: dataSource" ></div>
 					</div>
 				</div>
 			</div>
@@ -14480,16 +14481,15 @@
 											<table class="table table-condensed">
 												<tr>
 													<td style="padding: 8px 0 0 0 !important;">
-														<span data-bind="text: lang.lang.item"></span>
+														<span>Sale Rep.</span>
 														<select data-role="multiselect"
 															   data-value-primitive="true"
-															   data-header-template="item-header-tmpl"
-															   data-item-template="item-list-tmpl"
+															   data-item-template="contact-list-tmpl"
 															   data-value-field="id"
 															   data-text-field="name"
-															   data-bind="value: obj.itemIds,
-															   			source: itemDS"
-															   data-placeholder="Select Item..."
+															   data-bind="value: obj.employeeIds,
+															   			source: employeeDS"
+															   data-placeholder="Select Sale Rep..."
 															   style="width: 100%" /></select>
 													</td>
 													<td style="padding-top: 31px !important; float: left;">
@@ -14519,50 +14519,65 @@
 					<div id="invFormContent">
 						<div class="block-title">
 							<h3 data-bind="html: company.name"></h3>
-							<h2>Sale Order Detail by Employee</h2>
+							<h2>Sale Order Detail By Employee/Customer</h2>
 							<p data-bind="text: displayDate"></p>
 						</div>
 
-						<div class="row-fluid">
-							<div class="span5">
-								<div class="total-customer">
-										<p data-bind="text: lang.lang.total_product_services"></p>
-										<span data-bind="text: dataSource.total"></span>
-								</div>
-							</div>
-							<div class="span7">
-								<div class="total-customer">
-									<p data-bind="text: lang.lang.total_sale"></p>
-									<span data-bind="text: total_sale"></span>
-								</div>
-							</div>
-						</div>
+						<div data-role="grid" class="costom-grid"
+					    	 data-column-menu="true"
+					    	 data-groupable="true"
+					    	 data-pageable="true"
+					    	 data-reorderable="true"
+					    	 data-scrollable="false"
+					    	 data-resizable="true"
+			                 data-columns="[
+			                 	{ 
+			                 		field: 'contacts', 
+			                 		title: 'CUSTOMER',
+			                 		groupFooterTemplate: 'TOTAL:' 
+			                 	},
+	                            { field: 'employees', title:'SALE REP.' },
+	                            { field: 'issued_date', title:'DATE', template: '#=kendo.toString(new Date(issued_date), banhji.dateFormat)#' },
+	                            { 
+	                            	field: 'number', 
+	                            	title:'NUMBER',
+	                            	template: kendo.template($('#saleOrderDetailbyEmployee-number-template').html())
+	                            },
+	                            { 
+	                            	field: 'status', 
+	                            	title:'STATUS', 
+	                            	template: kendo.template($('#saleOrderDetailbyEmployee-status-template').html()) 
+	                            },
+	                            { 
+	                            	field: 'amount', 
+	                            	title:'AMOUNT', 
+	                            	format: '{0:n}', 
+	                            	attributes: { style: 'text-align: right;' },
+	                            	footerAttributes: { style: 'text-align: right;' },
+	                            	aggregates: ['sum'], 
+	                            	groupFooterTemplate: '#=kendo.toString(sum, banhji.numberFormat)#' 
+	                            }                            
+	                         ]"
+	                         data-auto-bind="false"
+			                 data-bind="source: dataSource" ></div>
 
-						<table class="table table-borderless table-condensed ">
-							<thead>
-								<tr>
-									<th data-bind="text:lang.lang.employee"></th>
-									<th style="text-align: left;" data-bind="text: lang.lang.name"></th>
-									<th style="text-align: left;" data-bind="text: lang.lang.date"></th>
-									<th style="text-align: left;" data-bind="text: lang.lang.status"></th>
-									<th data-bind="text: lang.lang.amount"></th>
-								</tr>
-							</thead>
-							<tbody data-role="listview"
-										 data-template="saleOrderDetailbyEmployee-template"
-										 data-auto-bind="false"
-										 data-bind="source: dataSource"
-							></tbody>
-						</table>
-						<div id="pager" class="k-pager-wrap"
-			            		 data-role="pager"
-						    	 data-auto-bind="false"
-					             data-bind="source: dataSource"></div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+</script>
+<script id="saleOrderDetailbyEmployee-number-template" type="text/x-kendo-template">
+	<a href="\#/#=type.toLowerCase()#/#=id#"><i></i> #=number#</a>
+</script>
+<script id="saleOrderDetailbyEmployee-status-template" type="text/x-kendo-template">
+	#if(status==0){#
+		OPEN
+	#}else if(status==1){#
+		USED
+	#}else{#
+
+	#}#
 </script>
 <script id="saleOrderDetailbyEmployee-template" type="text/x-kendo-template">
 	<tr style="font-weight: bold">

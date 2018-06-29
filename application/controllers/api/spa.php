@@ -1805,6 +1805,8 @@ class Spa extends REST_Controller {
 			   		"cashier_name" 	=> $cashier_name,
 			   		"room_number" 	=> $roomshow,
 			   		"employee_name" => $employee_name,
+			   		"check_in" 		=> $work->start_date,
+			   		"check_out" 	=> $work->end_date,
 			   	);
 		 	}
 		}
@@ -3452,6 +3454,7 @@ class Spa extends REST_Controller {
 			foreach ($obj as $value) {
 				$data["results"][] = array(
 		 			"id" 			=> $value->id,
+		 			"name" 			=> $value->name,
 		 		);
 		 	}
 		}
@@ -3466,6 +3469,7 @@ class Spa extends REST_Controller {
 			$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->where("id", $value->txnid)->limit(1)->get();
 			$obj->deleted = 1;
+			$obj->canceled_by = $value->deleted_by;
 	   		if($obj->save()){
 			   	$data["results"][] = array(
 			   		"id" 			=> $obj->id,
@@ -3768,6 +3772,95 @@ class Spa extends REST_Controller {
 			 		$data["results"][] = array(
 						"id" 			=> $value->id,
 						"amount" 		=> floatval($value->amount),
+					);
+			 	}
+		 	}
+		}
+		//Response Data		
+		$this->response($data, 200);
+	}
+	function sale_detail_by_room_get(){
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
+		$data["count"] = 0;
+		$is_pattern = 0;
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
+			}
+		}
+		//Filter
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value["operator"])) {
+					$obj->{$value["operator"]}($value["field"], $value["value"]);
+				} else {
+	    			$obj->where($value["field"], $value["value"]);
+				}
+			}
+		}
+		$obj->where("type", "Invoice");
+		//Results
+		if($page && $limit){
+			$obj->get_paged_iterated($page, $limit);
+			$data["count"] = $obj->paged->total_rows;
+		}else{
+			$obj->get_iterated();
+			$data["count"] = $obj->result_count();
+		}
+		if($obj->exists()){
+			$objList = [];
+			foreach ($obj as $value) {
+				if($value->work_id > 0){
+					$reference = "";
+					$reference_id = 0;
+					if($value->deleted == 1){
+						$dn = new Spa_admin_password(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						$dn->where("id", $value->canceled_by)->limit(1)->get();
+						if($dn->exists()){
+							$reference = $dn->name;
+							$reference_id = $dn->id;
+						}
+					}elseif($value->status == 1){
+						$cashre = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						$cashre->where("reference_id", $value->id)->limit(1)->get();
+						if($cashre->exists()){
+							$reference = $cashre->number;
+							$reference_id = $cashre->id;
+						}
+					}
+			 		//room
+			 		$swr = new Spa_room(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			 		$swr->where("id", $value->room_id)->limit(1)->get();
+			 		//Contact
+			 		$con = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			 		$con->where("id", $value->contact_id)->limit(1)->get();
+			 		//work
+			 		$work = new Spa_work(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			 		$work->where("id", $value->work_id)->limit(1)->get();
+			 		$data["results"][] = array(
+						"id" 			=> $value->id,
+						"number" 		=> $value->number,
+						"amount" 		=> floatval($value->amount),
+						"room" 			=> $swr->name,
+						"time_in" 		=> $work->start_date,
+						"time_out" 		=> isset($work->end_date) ? $work->end_date : "",
+						"contact" 		=> $con->name,
+						"locale" 		=> $value->locale,
+						"rate" 			=> $value->rate,
+						"status" 		=> $value->status,
+						"deleted" 		=> $value->deleted == 1 ? $value->deleted : 0,
+						"reference" 	=> $reference,
+						"reference_id" 	=> $reference_id,
 					);
 			 	}
 		 	}

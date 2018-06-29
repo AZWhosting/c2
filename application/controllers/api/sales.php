@@ -1018,54 +1018,64 @@ class Sales extends REST_Controller {
 			}
 		}
 
-		//Results
-		// $obj->include_related("contact", array("abbr", "number", "name"));		
-		$obj->where_in("type", array("Commercial_Invoice","Vat_Invoice","Invoice", "Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale"));
+		$obj->select("id,type,number,issued_date,rate,status,amount,employee_id,contact_id");
+		$obj->include_related("contact", array("abbr", "number", "name"));
+		$obj->where_in("nature_type", array("Invoice","Cash_Sale"));
 		$obj->where("is_recurring <>", 1);
 		$obj->where("deleted <>", 1);
-		$obj->where("employee_id <>", 0);
 		$obj->order_by("issued_date", "asc");
-		$obj->get_iterated();
+		
+		//Results
+		if($page && $limit){
+			$obj->get_paged_iterated($page, $limit);
+			$data["count"] = $obj->paged->total_rows;
+		}else{
+			$obj->get_iterated();
+			$data["count"] = $obj->result_count();
+		}
 		
 		if($obj->exists()){
 			$objList = [];
-			foreach ($obj as $value) {	
-				if($value->employee_id>0){
-					$employee = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-					$employee->where("id", $value->employee_id);
-					$employee->get();							
-					$amount = (floatval($value->amount) - floatval($value->deposit)) / floatval($value->rate);
-					
-					if(isset($objList[$employee->employee_id])){
-						$objList[$value->employee_id]["line"][] = array(
-							"id" 				=> $value->id,
-							"type" 				=> $value->type,
-							"customer"			=> $value->contact_name,
-							"number" 			=> $value->number,
-							"issued_date" 		=> $value->issued_date,
-							"rate" 				=> $value->rate,
-							"amount" 			=> $amount
-						);
-					}else{
-						$objList[$value->employee_id]["id"] 		= $value->employee_id;
-						$objList[$value->employee_id]["name"] 		= $employee->abbr.$employee->number." ".$employee->name;
-						$objList[$value->employee_id]["line"][]		= array(
-							"id" 				=> $value->id,
-							"type" 				=> $value->type,
-							"customer"			=> $value->contact_name,
-							"number" 			=> $value->number,
-							"issued_date" 		=> $value->issued_date,
-							"rate" 				=> $value->rate,
-							"amount" 			=> $amount
-						);
-					}
+			foreach ($obj as $value) {
+				if(isset($objList[$value->employee_id])){
+					$objList[$value->employee_id]["line"][]	= array(
+						"id" 			=> $value->id,
+						"contact_id" 	=> $value->contact_id,
+						"employee_id" 	=> $value->employee_id,
+						"number" 		=> $value->number,
+						"type" 			=> $value->type,
+						"issued_date" 	=> $value->issued_date,
+						"status" 		=> $value->status,
+						"amount" 		=> floatval($value->amount) / floatval($value->rate),
+						"contacts" 		=> $value->contact_abbr . $value->contact_number ."-". $value->contact_name,
+						"employees" 	=> $objList[$value->employee_id]["employees"]
+					);
+				}else{
+					$employees = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$employees->select("abbr,number,name");
+					$employees->get_by_id($value->employee_id);
+
+					$objList[$value->employee_id]["employees"] = $employees->abbr . $employees->number ."-". $employees->name;
+					$objList[$value->employee_id]["line"][]	= array(
+						"id" 			=> $value->id,
+						"contact_id" 	=> $value->contact_id,
+						"employee_id" 	=> $value->employee_id,
+						"number" 		=> $value->number,
+						"type" 			=> $value->type,
+						"issued_date" 	=> $value->issued_date,
+						"status" 		=> $value->status,
+						"amount" 		=> floatval($value->amount) / floatval($value->rate),
+						"contacts" 		=> $value->contact_abbr . $value->contact_number ."-". $value->contact_name,
+						"employees" 	=> $employees->abbr . $employees->number ."-". $employees->name
+					);
 				}
 			}
 
 			foreach ($objList as $value) {
-				$data["results"][] = $value;
+				foreach ($value["line"] as $val) {
+					$data["results"][] = $val;
+				}
 			}
-			$data["count"] = count($data["results"]);
 		}
 
 		//Response Data
@@ -2973,7 +2983,7 @@ class Sales extends REST_Controller {
 		$data["results"] = [];
 		$data["count"] = 0;
 
-		$obj = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 		//Sort
 		if(!empty($sort) && isset($sort)){
@@ -2998,54 +3008,64 @@ class Sales extends REST_Controller {
 		}
 
 		//Results
-		$obj->include_related("item", array("abbr", "number", "name", "measurement_id", "id"));
-		$obj->where_related("item", "item_type_id", array(1,4));
-		$obj->include_related("measurement", array("name"));
-		$obj->include_related("transaction", array("type","number","issued_date","amount","deposit","rate", "id", "status", "employee_id"));
-		$obj->where_related("transaction", "type", "Sale_Order");
-		$obj->where_related("transaction", "is_recurring <>", 1);
-		$obj->where_related("transaction", "deleted <>", 1);
-		$obj->include_related('transaction/contact', array("abbr", "number", "name"));
-		$obj->order_by_related("transaction", "issued_date", "asc");
-		$obj->get_iterated();
-		$data["count"] = $obj->result_count();
+		$obj->select("id,type,number,issued_date,rate,status,amount,employee_id,contact_id");
+		$obj->include_related("contact", array("abbr", "number", "name"));
+		$obj->where("type", "Sale_Order");
+		$obj->where("is_recurring <>", 1);
+		$obj->where("deleted <>", 1);		
+		$obj->order_by("issued_date", "asc");
+		
+		//Results
+		if($page && $limit){
+			$obj->get_paged_iterated($page, $limit);
+			$data["count"] = $obj->paged->total_rows;
+		}else{
+			$obj->get_iterated();
+			$data["count"] = $obj->result_count();
+		}
 		
 		if($obj->exists()){
 			$objList = [];
-			foreach ($obj as $value) {			
-				$employee = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$employee->where("id", $value->employee_id);
-				$employee->get();	
-
-				$amount = floatval($value->amount) / floatval($value->rate);
-				
-				if(isset($objList[$value->transaction_employee_id])){
-					$objList[$value->id]["line"][] = array(
-						"id" 				=> $value->id,
-						"customer_name" 	=> $value->transaction_contact_name,
-						"issued_date" 		=> $value->transaction_issued_date,
-						"status" 			=> $value->transaction_status,
-						"quantity"			=> $value->quantity,
-						"amount" 			=> $amount
+			foreach ($obj as $value) {
+				if(isset($objList[$value->employee_id])){
+					$objList[$value->employee_id]["line"][]	= array(
+						"id" 			=> $value->id,
+						"contact_id" 	=> $value->contact_id,
+						"employee_id" 	=> $value->employee_id,
+						"number" 		=> $value->number,
+						"type" 			=> $value->type,
+						"issued_date" 	=> $value->issued_date,
+						"status" 		=> $value->status,
+						"amount" 		=> floatval($value->amount) / floatval($value->rate),
+						"contacts" 		=> $value->contact_abbr . $value->contact_number ."-". $value->contact_name,
+						"employees" 	=> $objList[$value->employee_id]["employees"]
 					);
 				}else{
-					$objList[$value->transaction_employee_id]["id"] 	= $value->transaction_employee_id;
-					$objList[$value->transaction_employee_id]["name"] 	= $employee->abbr.$employee->number." ".$employee->name;
-					$objList[$value->transaction_employee_id]["line"][]	= array(
-						"id" 				=> $value->id,
-						"customer_name" 	=> $value->transaction_contact_name,
-						"issued_date" 		=> $value->transaction_issued_date,
-						"status" 			=> $value->transaction_status,
-						"quantity"			=> $value->quantity,
-						"amount" 			=> $amount
+					$employees = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$employees->select("abbr,number,name");
+					$employees->get_by_id($value->employee_id);
+
+					$objList[$value->employee_id]["employees"] = $employees->abbr . $employees->number ."-". $employees->name;
+					$objList[$value->employee_id]["line"][]	= array(
+						"id" 			=> $value->id,
+						"contact_id" 	=> $value->contact_id,
+						"employee_id" 	=> $value->employee_id,
+						"number" 		=> $value->number,
+						"type" 			=> $value->type,
+						"issued_date" 	=> $value->issued_date,
+						"status" 		=> $value->status,
+						"amount" 		=> floatval($value->amount) / floatval($value->rate),
+						"contacts" 		=> $value->contact_abbr . $value->contact_number ."-". $value->contact_name,
+						"employees" 	=> $employees->abbr . $employees->number ."-". $employees->name
 					);
 				}
 			}
 
 			foreach ($objList as $value) {
-				$data["results"][] = $value;
+				foreach ($value["line"] as $val) {
+					$data["results"][] = $val;
+				}
 			}
-			$data["count"] = count($data["results"]);
 		}
 
 		//Response Data

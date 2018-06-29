@@ -347,6 +347,9 @@
 																	<td class="span4">
 																		<h3 ><a href="#/sale_summary_by_room" data-bind="text: lang.lang.sale_summary_by_room" style="text-transform: capitalize;"></a></h3>
 																	</td>
+																	<td class="span4">
+																		<h3 ><a href="#/sale_detail_by_room" style="text-transform: capitalize;">Sale Detail by Room</a></h3>
+																	</td>
 																</tr>
 															</table>
 														</div>
@@ -2539,6 +2542,192 @@
 		</div>
 	</div>
 </script>
+<script id="saleDetailByRoom" type="text/x-kendo-template">
+	<div class="container">
+		<div class="row addCusto">
+			<div class="span12">
+				<div class="example k-content saleSummaryCustomer" >
+			    	<span class="glyphicons no-js remove_2 pull-right"
+						onclick="javascript:window.history.back()"><i></i>
+					</span>
+
+					<div class="row-fluid">
+					    <!-- Tabs -->
+						<div class="relativeWrap" data-toggle="source-code" style="margin-top: 30px;" >
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+
+								<!-- Tabs Heading -->
+								<div class="widget-head">
+									<ul>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>
+										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.filter"></span></a></li>
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
+									</ul>
+								</div>
+								<!-- // Tabs Heading END -->
+								<div class="widget-body">
+									<div class="tab-content">
+
+								        <!-- Date -->
+								        <div class="tab-pane active" id="tab-1">
+
+											<input data-role="dropdownlist"
+												   class="sorter"
+										           data-value-primitive="true"
+										           data-text-field="text"
+										           data-value-field="value"
+										           data-bind="value: sorter,
+										                      source: sortList,
+										                      events: { change: sorterChanges }" />
+
+											<input data-role="datepicker"
+												   class="sdate"
+												   data-format="dd-MM-yyyy"
+										           data-bind="value: sdate,
+										           			  max: edate"
+										           placeholder="From ..." >
+
+										    <input data-role="datepicker"
+										    	   class="edate"
+										    	   data-format="dd-MM-yyyy"
+										           data-bind="value: edate,
+										                      min: sdate"
+										           placeholder="To ..." >
+
+										  	<input data-role="dropdownlist"
+												   class="sorter"
+										           data-value-primitive="true"
+										           data-text-field="name"
+										           data-value-field="id"
+										            data-option-label="Select Room.."
+										           data-bind="value: roomSelect,
+										                      source: roomDS" />
+										    <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+							        	</div>
+
+								    	<!-- Filter -->
+								        <div class="tab-pane" id="tab-2">
+											<table class="table table-condensed">
+												<tr>
+									            	<td style="padding: 8px 0 0 0 !important; ">
+														<span data-bind="text: lang.lang.customers"></span>
+														<select data-role="multiselect"
+															   data-value-primitive="true"
+															   data-item-template="room-list-tmpl"
+															   data-value-field="id"
+															   data-text-field="name"
+															   data-bind="value: obj.roomIds,
+															   			source: roomDS"
+															   data-placeholder="Select Room.."
+															   style="width: 100%" /></select>
+													</td>
+													<td style="padding-top: 31px !important; float: left;">
+										  				<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+													</td>
+												</tr>
+											</table>
+							        	</div>
+								        <div class="tab-pane" id="tab-3">
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
+								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
+								        		<i class="fa fa-file-pdf-o"></i>
+								        		Print as PDF
+								        	</span> -->
+								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" style="width: 80px;">
+								        		<i class="fa fa-file-excel-o"></i>
+								        		Export to Excel
+								        	</span>
+							        	</div>
+								    </div>
+								</div>
+							</div>
+						</div>
+						<!-- // Tabs END -->
+					</div>
+					<div class="row-fluid">
+						<div id="invFormContent">
+							<div class="block-title">
+								<h3 data-bind="html: company.name"></h3>
+								<h2 data-bind="text: lang.lang.sale_detail_by_customer"></h2>
+								<p data-bind="text: displayDate"></p>
+							</div>
+
+							<div class="row">
+								<div class="span3">
+									<div class="total-customer">
+										<p data-bind="text: lang.lang.number_of_invoice"></p>
+										<span data-bind="text: dataSource.total"></span>
+									</div>
+
+								</div>
+								<div class="span9">
+									<div class="total-sale">
+										<p data-bind="text: lang.lang.amount"></p>
+										<span data-bind="text: totalAmount"></sapn>
+									</div>
+								</div>
+							</div>
+							<style>
+								.saleSummaryCustomer .table.table-borderless.table-condensed tr td {
+									background: none;
+								}
+							</style>
+							<div class="row-fluid">
+								<table class="table table-borderless table-condensed ">
+									<thead>
+										<tr>
+											<th data-bind="text: lang.lang.no_"><span></span></th>
+											<th data-bind="text: lang.lang.customer"><span></span></th>
+											<th data-bind="text: lang.lang.time_in"><span></span></th>
+											<th data-bind="text: lang.lang.time_out"><span></span></th>
+											<th data-bind="text: lang.lang.room"><span></span></th>
+											<th data-bind="text: lang.lang.number"><span></span></th>
+											<th data-bind="text: lang.lang.amount"><span></span></th>
+											<th data-bind="text: lang.lang.status"><span></span></th>
+											<th data-bind="text: lang.lang.reference"><span></span></th>
+										</tr>
+									</thead>
+									<tbody data-role="listview"
+											data-template="saleDetailByRoom-template"
+											data-auto-bind="false"
+											data-bind="source: dataSource">
+									</tbody>
+								</table>
+								<div id="pager" class="k-pager-wrap"
+					            		 data-role="pager"
+								    	 data-auto-bind="false"
+							             data-bind="source: dataSource"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="saleDetailByRoom-template" type="text/x-kendo-template">
+	<tr style="font-weight: bold; background: #if(deleted == 1){# palevioletred #}else if(status == 0){# \#ccc #}else{# none #}#">
+		<td>#= banhji.saleDetailByRoom.dataSource.indexOf(data) + 1 #</td>
+		<td>#= contact#</td>
+		<td>#= kendo.toString(new Date(time_in), "g")#</td>
+		<td>#= kendo.toString(new Date(time_out), "g")#</td>
+		<td>#= room#</td>
+		<td>#= number#</td>
+		<td style="text-align: right;">#= kendo.toString(amount, "c", locale)#</td>
+		<td style="text-align: center">
+			#if(deleted == 1){#
+				Deleted
+			#}else{#
+				#if(status == 1){#
+					Paid
+				#}else{#
+					Not yet paid
+				#}#
+			#}#
+		</td>
+		<td>#= reference#</td>
+	</tr>
+</script>
 <!-- Template -->
 <script id="contact-header-tmpl" type="text/x-kendo-tmpl">
     <strong>
@@ -2547,6 +2736,10 @@
 </script>
 <script id="contact-list-tmpl" type="text/x-kendo-tmpl">
 	<span>#=abbr##=number#</span>
+	<span>#=name#</span>
+</script>
+<script id="room-list-tmpl" type="text/x-kendo-tmpl">
+	<span></span>
 	<span>#=name#</span>
 </script>
 <script id="item-header-tmpl" type="text/x-kendo-tmpl">

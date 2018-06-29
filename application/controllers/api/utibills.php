@@ -2048,9 +2048,9 @@ class Utibills extends REST_Controller {
 			    }
 			    // Save Records
 			    $record = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			    $record->where('meter_id', $value->meter_id);
-			    $record->where('previous', $value->previous);
-			    $record->where('current', $value->current);
+			    $record->where('meter_id', intval($value->meter_id));
+			    $record->where('previous', intval($value->previous));
+			    $record->where('current', intval($value->current));
 			    $record->limit(1)->get();
 			    if($record->exists()){
 			    	$record->get_by_id($record->id);
@@ -2069,14 +2069,14 @@ class Utibills extends REST_Controller {
 			    $record->invoiced = 1;
 			    if($value->memo == 1){
 			    	$updatemeter = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			    	$updatemeter->where("id", $value->meter_id);
+			    	$updatemeter->where("id", intval($value->meter_id));
 			    	if($updatemeter->exists()){
 			    		$updatemeter->status = 2;
 			    		$updatemeter->save();
 			    	}
 			    }elseif($value->memo == 2){
 			    	$updatemeter = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			    	$updatemeter->where("id", $value->meter_id);
+			    	$updatemeter->where("id", intval($value->meter_id));
 			    	if($updatemeter->exists()){
 			    		$updatemeter->status = 0;
 			    		$updatemeter->save();
@@ -2109,7 +2109,7 @@ class Utibills extends REST_Controller {
 		   			$line->transaction_id 	= $txn->id;
 		   			//get meter record for field meter_record_id
 		   			$meterrecord = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		   			$meterrecord->where("meter_id", $value->meter_id)->order_by("id", "desc")->limit(1)->get();
+		   			$meterrecord->where("meter_id", intval($value->meter_id))->order_by("id", "desc")->limit(1)->get();
 		   			$line->meter_record_id 	= $meterrecord->id;
 
 		   			$line->description 		= isset($value->description) ? $value->description : "Utility Invoice";
@@ -2200,7 +2200,7 @@ class Utibills extends REST_Controller {
 			}
 		}
 		$obj->where("activated", 1);
-		$obj->where("status", 1);
+		$obj->where("status <>", 2);
 		$obj->order_by("worder", "asc");
 		//Results
 		if($page && $limit){

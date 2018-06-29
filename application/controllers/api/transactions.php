@@ -106,6 +106,8 @@ class Transactions extends REST_Controller {
 	    				$obj->like($value['field'], $value['value'], 'after');
 	    			}else if($value['operator']=="contains"){
 	    				$obj->like($value['field'], $value['value'], 'both');
+	    			}else if($value['operator']=="eq"){
+	    				$obj->where($value["field"], $value["value"]);
 	    			}else{
 						$obj->{$value['operator']}($value['field'], $value['value']);
 	    			}

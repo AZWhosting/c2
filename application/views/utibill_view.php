@@ -7781,6 +7781,16 @@
 				</div>
 			</div>
 			<div class="span5">
+				#var from_date = '', to_date = '', previous = 0, current = 0, consumption = 0;#
+				#$.each(invoice_lines, function(i,v){
+					if(v.type == 'usage'){
+						from_date = v.from_date;
+						to_date = v.to_date;
+						previous = v.previous;
+						current = v.current;
+						consumption = v.consumption;
+					}
+				})#
 				<table >
 					<tr>
 						<td width="140" style><p>លេខ​វិក្កយ​បត្រ</p></td>
@@ -7796,11 +7806,11 @@
 					</tr>
 					<tr>
 						<td style><p>គិត​ចាប់​ពី​ថ្ងៃ​ទី</p></td>
-						<td><p>#=kendo.toString(new Date(invoice_lines[0].from_date), "dd-MMMM-yyyy", "km-KH")#</p></td>
+						<td><p>#=kendo.toString(new Date(from_date), "dd-MMMM-yyyy", "km-KH")#</p></td>
 					</tr>
 					<tr>
 						<td style><p>ដល់​ថ្ងៃ​ទី</p></td>
-						<td><p>#=kendo.toString(new Date(invoice_lines[0].to_date), "dd-MMMM-yyyy", "km-KH")#</p></td>
+						<td><p>#=kendo.toString(new Date(to_date), "dd-MMMM-yyyy", "km-KH")#</p></td>
 					</tr>
 				</table>		
 			</div>
@@ -7828,14 +7838,14 @@
 				</tr>
 				<tr>
 					<td>#: meter.location[0].abbr# - #: meter.meter_number#</td>
-					<td align="center"><strong>#: invoice_lines[0].previous#</strong></td>
-					<td align="center"><strong>#: invoice_lines[0].current#</strong></td>
-					<td align="center"><strong>#: invoice_lines[0].consumption#</strong></td>
+					<td align="center"><strong>#: previous#</strong></td>
+					<td align="center"><strong>#: current#</strong></td>
+					<td align="center"><strong>#: consumption#</strong></td>
 					<td></td>
 					<td></td>
 				</tr>
-				#for(var j=1; j< invoice_lines.length; j++) {#
-					#if(invoice_lines[j].amount != 0) {#
+				#for(var j=0; j< invoice_lines.length; j++) {#
+					#if(invoice_lines[j].amount != 0 && invoice_lines[j].type != 'usage') {#
 						#if(invoice_lines[j].type == "tariff"){#
 							#var amountTariff = invoice_lines[j].amount;#
 							#var amountTariffMoney = invoice_lines[j].amount * invoice_lines[0].consumption;#

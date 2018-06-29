@@ -232,7 +232,9 @@ class Readings extends REST_Controller {
 				$obj->invoiced = 0;
 				$obj->save();
 
-				$line = $obj->winvoice_line->get();
+				// $line = $obj->winvoice_line->get();
+				$line = new Winvoice_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$line->where("meter_record_id", $obj->id)->order_by("id", "desc")->limit(1)->get();
 
 				$transaction = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
