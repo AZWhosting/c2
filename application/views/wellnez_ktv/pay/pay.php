@@ -1662,7 +1662,6 @@
 	            	<table cellpadding="0" cellspacing="0" border="1" class="span12" style="width: 100%; margin-bottom: 20px;">
 	                	<thead style="">
 	                        <tr class="main-color" style="height: 45px;background: \#203864!important;">
-	                            <th style="text-align: center;width: 8%;color: \#fff!important;background: \#203864!important;">ល.រ<br />N<sup>0</sup></th>
 	                            <th style="text-align: center;color: \#fff!important;background: \#203864!important;">បរិយាយ​មុខ​ទំនិញ<br />Description</th>
 	                            <th style="text-align: center;color: \#fff!important;background: \#203864!important;">បរិមាណ<br />Quantity</th>
 	                            <th style="text-align: center;color: \#fff!important;background: \#203864!important;">ថ្លៃឯកតា​<br />Unit Price</th>
@@ -1673,7 +1672,6 @@
 						<tbody style="margin-top: 2px" id="formListView">
 							#$.each(items, function(i,v){#
 								<tr>
-									<td align="center">#: i+ 1#</td>
 									<td>#: v.item.name#</td>
 									<td align="center"><strong>#: v.quantity #</strong></td>
 									<td align="center"><strong>#: v.measurement.measurement#</strong></td>
@@ -1683,18 +1681,12 @@
 							#})#
 						</tbody>
 	                    <tfoot>
-	                    	<tr>
-								<td style="height:40px!important;"></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-							</tr>
-							<tr>
-								<td colspan="5" style="padding-right: 10px;text-align: right;">សរុប (បូកបញ្ចូលទាំងអាករ) GRAND TOTAL (VAT INCLUSIVE)</td>
-								<td style="border: 1px solid;text-align: right"><strong>#= kendo.toString(amount, locale=="km-KH"?"c0":"c", locale)#</strong></td>
-							</tr>
+							#$.each(banhji.Index.currencyDS.data(), function(i,v){#
+								<tr>
+									<td colspan="4" style="padding-right: 10px;text-align: right;">សរុបជា #= v.code#</td>
+									<td style="border: 1px solid;text-align: right"><strong>#= kendo.toString(amount / v.rate, v.locale=="km-KH"?"c0":"c", v.locale)#</strong></td>
+								</tr>
+							#})#
 							#if(banhji.printBill.amountperson > 0){#
 								<tr>
 									<td colspan="5" style="padding-right: 10px;text-align: right;">ទឹកប្រាក់ត្រូវបង់</td>

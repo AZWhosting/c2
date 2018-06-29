@@ -50240,6 +50240,10 @@
 						                 data-bind="source: lineDS">
                     </tbody>
                     <tfoot>
+                    	<tr>
+                        	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">សរុបរង Sub Total</td>
+                            <td style="text-align: right; padding-right: 5px;" data-bind="text: obj.sub_total"></td>
+                        </tr>
                         <tr>
                         	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">បញ្ចុះតម្លៃ Discount</td>
                             <td style="text-align: right; padding-right: 5px;" data-bind="text: obj.discount"></td>
@@ -53159,8 +53163,12 @@
                     </tbody>
                     <tfoot>
                         <tr>
-                        	<td colspan="2" rowspan="4" style="text-align: left;padding-left: 10px;" data-bind="html: obj.note">
+                        	<td colspan="2" rowspan="5" style="text-align: left;padding-left: 10px;" data-bind="html: obj.note">
                         	</td>
+                        	<td colspan="2" style="text-align:right;padding:5px;font-weight: bold;">សរុបរង Sub Total</td>
+                            <td class="rside" data-bind="text: obj.sub_total"></td>
+                        </tr>
+                        <tr>
                         	<td colspan="2" style="text-align:right;padding:5px;font-weight: bold;">បញ្ចុះតម្លៃ Discount</td>
                             <td class="rside" data-bind="text: obj.discount"></td>
                         </tr>
