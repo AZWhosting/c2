@@ -56857,6 +56857,14 @@
 						</tr>
 					</tbody>
                     <tfoot>
+                    	<tr>
+                        	<td colspan="5" style="text-align:right;padding-right:10px;font-weight:bold;">សរុប​រង Sub Total </td>
+                            <td style="font-size: 16px;background: \\#333; color: \\#fff;" class="rside" data-bind="text: obj.sub_total"></td>
+                        </tr>
+                        <tr>
+                        	<td colspan="5" style="text-align:right;padding-right:10px;font-weight:bold;">បញ្ចុះតម្លៃ Discount</td>
+                            <td style="font-size: 16px;background: \\#333; color: \\#fff;" class="rside" data-bind="text: obj.discount"></td>
+                        </tr>
                         <tr>
                         	<td colspan="5" style="text-align:right;padding-right:10px;font-weight:bold;">សរុប​ (បូកបញ្ជូលទាំងអាករ) GRAND TOTAL (VAT INCLUSIVE) </td>
                             <td style="font-size: 16px;background: \\#333; color: \\#fff;" class="rside" data-bind="text: obj.amount"></td>

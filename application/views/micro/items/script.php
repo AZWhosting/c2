@@ -3565,6 +3565,7 @@
         categoryDS          : new kendo.data.DataSource({
             data: banhji.source.categoryList,
             filter:[
+                { field:"item_type_id", operator:"neq", value: 2 },
                 { field:"item_type_id", operator:"neq", value: 3 },
                 { field:"item_type_id", operator:"neq", value: 5 }
             ]

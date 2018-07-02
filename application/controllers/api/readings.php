@@ -338,7 +338,7 @@ class Readings extends REST_Controller {
 
 		//Get Result
 		$obj->where('activated', 1);
-		$obj->where('status <>', 2);
+		$obj->where_in('status', array(1, 3));
 		//Results
 		$obj->order_by("worder", "asc");
 		if($page && $limit){
