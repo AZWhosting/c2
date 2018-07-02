@@ -22469,6 +22469,7 @@
 		save 		: function() {}
 	});
 
+	// DO NOT REPLACE THIS CODE IS MODIFIED
 	// SOURCE #############################################################################################
 	banhji.source = kendo.observable({
         lang                        : langVM,
@@ -22505,6 +22506,7 @@
             },
             filter:[
                 { field:"parent_id", operator:"where_related_contact_type", value:1 },//Customer
+                { field:"assignee_id", operator:"by_user_id", value:banhji.userData.id },
                 { field:"status", value:1 }
             ],
             sort:[
@@ -22863,6 +22865,7 @@
         duplicateMeasurementMessage : "Sorry, you can not use the same measurement.",
         duplicateSelectedItemMessage: "You already selected this item.",
         noChangeInvoicePaidMessage  : "Sorry, you can not change the amount of paid invoice.",
+        employee 					: [],
         test : function () {
             var a = "foo 12.34 bar 56 baz 78.90";
             var numbers = a.match(/\d+/g).map(Number);
@@ -22886,6 +22889,18 @@
             this.loadMeasurements();
 
             this.loadContactTypes();
+            this.loadEmployeeByUser();
+        },
+        loadEmployeeByUser 			: function(){
+        	var self = this;
+
+        	this.employeeUserDS.query({
+        		filter:{ field:"user_id", value: banhji.userData.id }
+        	}).then(function(){
+        		var view = self.employeeUserDS.view();
+
+        		self.set("employee", view[0]);
+        	});
         },
         checkAccessModule           : function(moduleName){
             banhji.accessMod.query({
@@ -23697,25 +23712,26 @@
 			this.summaryDS.query({
 			  	filter: [
 			  		{ field:"contact_id", value: obj.id },
-			  		{ field:"type", operator:"where_in", value: ["Quote","Sale_Order"] },
-			  		{ field:"status", value: 0 }
+			  		{ field:"employee_id", value: banhji.source.get("employee").id },
+			  		{ field:"status", value: 0 },
+			  		{ field:"type", operator:"where_in", value: ["Sale_Order","Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale"] }
 			  	],
 			  	sort: { field: "issued_date", dir: "desc" },
 			  	page: 1,
 			  	pageSize: 1000
 			}).then(function(){
 				var view = self.summaryDS.view(),
-				quote = 0, so = 0;
+				sale = 0, so = 0;
 
 				$.each(view, function(index, value){
-					if(value.type=="Quote"){
-						quote++;
-					}else{
+					if(value.type=="Sale_Order"){
 						so++;
+					}else{
+						sale++;
 					}									
 				});
 				
-				self.set("quote", kendo.toString(quote, "n0"));
+				self.set("sale", kendo.toString(sale, "n0"));
 				self.set("so", kendo.toString(so, "n0"));
 			});
 		},
@@ -24503,12 +24519,12 @@
             });
 	    },   
 		//Contact
-		setContact 			: function(contact){
+		setContact      	: function(contact){
 			var obj = this.get("obj");
-
-		    obj.set("contact", contact);
-		    this.contactChanges();
-	    },
+			
+			obj.set("contact", contact);
+			this.contactChanges();
+		},
 		contactChanges 		: function(){
 			var self = this, obj = this.get("obj");
 
@@ -27009,7 +27025,7 @@
 				reference_id	 		: "",
 				account_id 				: "",
 				employee_id 			: banhji.source.get("employee").id,
-				user_id 				: this.get("uer_id"),
+				user_id 				: this.get("user_id"),
 			   	type					: "Customer_Deposit", //required
 			   	number 					: "",
 			   	amount					: 0,
@@ -28347,7 +28363,7 @@
 				discount_account_id : 0,
 				job_id 				: 0,
 				user_id 			: this.get("user_id"),
-				employee_id			: "",//Sale Rep
+				employee_id			: banhji.source.get("employee").id,//Sale Rep
 			   	type				: "Commercial_Cash_Sale",//Required
 			   	nature_type 		: "Cash_Sale",
 			   	number 				: "",

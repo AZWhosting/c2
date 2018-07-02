@@ -54,7 +54,7 @@ class Micro_modules extends REST_Controller {
 		$sales = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$sales->select_sum("amount / rate", "total");
 		$sales->where_in("type", array("Cash_Receipt","Cash_Refund","Commercial_Invoice","Vat_Invoice","Invoice","Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale"));
-		$sales->where("issued_date >", $this->startFiscalDate);
+		$sales->where("issued_date >=", $this->startFiscalDate);
 		$sales->where("is_recurring <>", 1);
 		$sales->where("deleted <>", 1);
 		$sales->get();
@@ -62,14 +62,17 @@ class Micro_modules extends REST_Controller {
 		//Customer count
 		$customerCounts = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$customerCounts->where_in("type", array("Commercial_Invoice","Vat_Invoice","Invoice","Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale"));		
+		$customerCounts->where("issued_date >=", $this->startFiscalDate);
 		$customerCounts->where("is_recurring <>", 1);
 		$customerCounts->where("deleted <>", 1);
 		$customerCounts->group_by("contact_id");
-		$customerCount = $customerCounts->count();
+		$customerCounts->get_iterated();
+		$customerCount = $customerCounts->result_count();
 
 		//Sale product count
 		$productCounts = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);			
 		$productCounts->where_in_related("transaction", "type", array("Commercial_Invoice","Vat_Invoice","Invoice","Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale"));
+		$productCounts->where("issued_date >=", $this->startFiscalDate);
 		$productCounts->where_related("transaction", "is_recurring <>", 1);
 		$productCounts->where_related("transaction", "deleted <>", 1);
 		$productCounts->where("item_id >", 0);
@@ -250,15 +253,15 @@ class Micro_modules extends REST_Controller {
 
 		//Vendor count
 		$vendorCounts = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$vendorCounts->where_in("type", array("Cash_Purchase","Credit_Purchase"));
+		$vendorCounts->select("contact_id");
+		$vendorCounts->where_in("nature_type", "Purchase");
 		$vendorCounts->where_in("status", array(0,1,2));
 		$vendorCounts->where("issued_date >=", $this->startFiscalDate);
 		$vendorCounts->where("is_recurring <>", 1);
 		$vendorCounts->where("deleted <>", 1);
-		// $vendorCounts->group_by("contact_id");
-		$vendorCount = 0;//$vendorCounts->count();
-		$vendorCounts->order_by("contact_id", "asc");
-		$data["xxx"] = $vendorCounts->get_raw()->result();
+		$vendorCounts->group_by("contact_id");
+		$vendorCounts->get_iterated();
+		$vendorCount = $vendorCounts->result_count();
 
 		//Purchase product count
 		$productCounts = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);			
@@ -274,7 +277,7 @@ class Micro_modules extends REST_Controller {
 		//Payable
 		$payables = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$payables->select_sum("amount / rate", "total");
-		$payables->where_in("type", array("Cash_Purchase","Credit_Purchase"));		
+		$payables->where("type", "Credit_Purchase");		
 		$payables->where_in("status", array(0,2));
 		$payables->where("is_recurring <>", 1);
 		$payables->where("deleted <>", 1);

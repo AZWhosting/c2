@@ -3592,6 +3592,11 @@
             ]);
         },
         loadDraft            : function(){
+            this.txnDS.filter([
+                { field:"type", operator:"where_in", value:["Sale_Order","Customer_Deposit","Quote","Commercial_Invoice","Vat_Invoice","Invoice","Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale"] },
+                { field:"status", value:4 },
+                { field:"progress", value:"Draft" }
+            ]);
         },
         payInvoice          : function(e){
             var data = e.data;
@@ -3600,7 +3605,7 @@
                 banhji.router.navigate('/cash_receipt');
                 banhji.cashReceipt.loadInvoice(data.id);
             }
-        },
+        }
     });
     banhji.checkOut = kendo.observable({
         lang                : langVM,
