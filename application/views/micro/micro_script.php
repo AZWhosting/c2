@@ -3555,7 +3555,7 @@
             serverSorting: true,
             serverPaging: true,
             page:1,
-            pageSize: 50
+            pageSize: 100
         }),
         dataSource          : dataStore(apiUrl + "inventory_modules/center"),
         transactionDS       : dataStore(apiUrl + "items/movement"),
@@ -8034,4 +8034,4 @@
         banhji.router.start();
         banhji.source.pageLoad();
     });
-</script> 
+</script>

@@ -2626,7 +2626,7 @@
     	<td>#=kendo.toString(new Date(transaction_issued_date), "dd-MM-yyyy")#</td>
     	<td>#=transaction_type#</td>
         <td align="center">
-			<a href="../micro/sales\#/#=transaction_type.toLowerCase()#/#=id#">#=transaction_number#</a>
+			<a href="\#/#=transaction_type.toLowerCase()#/#=id#">#=transaction_number#</a>
         </td>
     	<td align="center">#=kendo.toString(quantity * movement, "n0")#</td>
     	<td align="right">

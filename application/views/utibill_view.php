@@ -2610,7 +2610,7 @@
 						 data-bind="source: contactDS"
 						 data-row-template="waterCenter-customer-list-tmpl"
 						 data-columns="[{title: 'Properties'}]"
-						 data-selectable=true
+						 data-selectable="true"
 						 data-height="475"
 						 data-scrollable="{virtual: true}"></div>
 				</div>	
@@ -2983,8 +2983,12 @@
 										     data-bind="source: readingVM.dataSource"></div>
 
 					        	</div>
-						        <div class="tab-pane" id="tab-4">
+						        <div class="tab-pane" id="tab-4" style="position: relative;">
 						        	<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="click: payAllInstallment"><i></i> <span data-bind="text: lang.lang.pay_installment"></span></span>
+
+						        	<div style="position: absolute; left: 0; top: 0;width: 100%;height: 100%; background: rgba(255, 255, 255, .7);">
+
+						        	</div>
 
 						        	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 								        <thead>
@@ -3225,7 +3229,7 @@
 		</td>
 		<td>#=kendo.toString(schedule[i].amount, banhji.locale=="km-KH"?"c0":"c", banhji.locale)#</td>
 		<td>
-			# schedule[i].invoiced=="0" ? 'Paid': 'Open'# 
+			#= schedule[i].invoiced=="1" ? 'Paid': 'Open'# 
 		</td>
 	</tr>
 	#}#

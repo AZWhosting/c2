@@ -243,6 +243,7 @@ class Micro_modules extends REST_Controller {
 		$purchases = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$purchases->select_sum("amount / rate", "total");
 		$purchases->where_in("type", array("Cash_Purchase","Credit_Purchase"));
+		$purchases->where("issued_date >=", $this->startFiscalDate);
 		$purchases->where("is_recurring <>", 1);
 		$purchases->where("deleted <>", 1);
 		$purchases->get();
@@ -250,14 +251,19 @@ class Micro_modules extends REST_Controller {
 		//Vendor count
 		$vendorCounts = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$vendorCounts->where_in("type", array("Cash_Purchase","Credit_Purchase"));
+		$vendorCounts->where_in("status", array(0,1,2));
+		$vendorCounts->where("issued_date >=", $this->startFiscalDate);
 		$vendorCounts->where("is_recurring <>", 1);
 		$vendorCounts->where("deleted <>", 1);
-		$vendorCounts->group_by("contact_id");
-		$vendorCount = $vendorCounts->count();
+		// $vendorCounts->group_by("contact_id");
+		$vendorCount = 0;//$vendorCounts->count();
+		$vendorCounts->order_by("contact_id", "asc");
+		$data["xxx"] = $vendorCounts->get_raw()->result();
 
 		//Purchase product count
 		$productCounts = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);			
 		$productCounts->where_in_related("transaction", "type", array("Cash_Purchase","Credit_Purchase"));
+		$productCounts->where("issued_date >=", $this->startFiscalDate);
 		$productCounts->where_related("transaction", "is_recurring <>", 1);
 		$productCounts->where_related("transaction", "deleted <>", 1);
 		$productCounts->where("item_id >", 0);
@@ -274,7 +280,7 @@ class Micro_modules extends REST_Controller {
 		$payables->where("deleted <>", 1);
 		$payables->get();
 
-		//Receiveable count
+		//Payable count
 		$payableCounts = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$payableCounts->where("type", "Credit_Purchase");
 		$payableCounts->where_in("status", array(0,2));
@@ -282,7 +288,7 @@ class Micro_modules extends REST_Controller {
 		$payableCounts->where("deleted <>", 1);
 		$payableCount = $payableCounts->count();
 		
-		//Receiveable overdue count
+		//Payable overdue count
 		$payableOverdueCounts = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 		$payableOverdueCounts->where("type", "Credit_Purchase");
 		$payableOverdueCounts->where("due_date <", $today);
@@ -311,6 +317,89 @@ class Micro_modules extends REST_Controller {
 			"payable_overdue_count" => $payableOverdueCount,
 
 			"draft_count" 		=> $draftCount,
+		);
+
+		//Response Data
+		$this->response($data, 200);
+	}
+	function purchases_center_snapshot_get() {
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
+		$data["count"] = 0;
+		$today = date("Y-m-d");
+
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$purchaseOrders = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$openBillCounts = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$overdueCounts = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		
+		//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
+			}
+		}
+		
+		//Filter		
+		if(!empty($filter['filters']) && isset($filter['filters'])){
+	    	foreach ($filter['filters'] as $value) {
+	    		if(isset($value['operator'])) {
+					$obj->{$value['operator']}($value['field'], $value['value']);
+					$purchaseOrders->{$value['operator']}($value['field'], $value['value']);
+					$openBillCounts->{$value['operator']}($value['field'], $value['value']);
+					$overdueCounts->{$value['operator']}($value['field'], $value['value']);
+				} else {
+					$obj->where($value["field"], $value["value"]);
+					$purchaseOrders->where($value["field"], $value["value"]);
+					$openBillCounts->where($value["field"], $value["value"]);
+					$overdueCounts->where($value["field"], $value["value"]);
+				}
+			}
+		}
+
+		//Balance
+		$obj->select_sum("amount / rate", "total");
+		$obj->where("type", "Credit_Purchase");
+		$obj->where_in("status", [0,2]);
+		$obj->where("is_recurring <>", 1);
+		$obj->where("deleted <>", 1);
+		$obj->get();
+
+		//PO count
+		$purchaseOrders->where("type", "Purchase_Order");
+		$purchaseOrders->where("status", 0);
+		$purchaseOrders->where("is_recurring <>", 1);
+		$purchaseOrders->where("deleted <>", 1);
+		$purchaseOrderCount = $purchaseOrders->count();
+
+		//Open Bill count
+		$openBillCounts->where("type", "Credit_Purchase");
+		$openBillCounts->where_in("status", [0,2]);
+		$openBillCounts->where("is_recurring <>", 1);
+		$openBillCounts->where("deleted <>", 1);
+		$openBillCount = $openBillCounts->count();
+
+		//Overdue count
+		$overdueCounts->where("type", "Credit_Purchase");
+		$overdueCounts->where_in("status", [0,2]);
+		$overdueCounts->where("due_date <", $today);
+		$overdueCounts->where("is_recurring <>", 1);
+		$overdueCounts->where("deleted <>", 1);
+		$overdueCount = $overdueCounts->count();
+				
+		$data["results"][] = array(
+			"id" 				=> 0,
+			"balance" 			=> floatval($obj->total),
+			"po_count"			=> $purchaseOrderCount,
+			"open_bill_count" 	=> $openBillCount,
+			"overdue_count" 	=> $overdueCount
 		);
 
 		//Response Data

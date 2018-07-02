@@ -29298,11 +29298,14 @@
         },
         loadInstallment: function() {
             var objMeter = this.get("objMeter");
-
+            var self = this;
             if (objMeter && this.installmentVM.dataSource.total() == 0) {
-                this.installmentVM.dataSource.filter({
-                    field: 'meter_id',
-                    value: objMeter.id
+                this.installmentVM.dataSource.query({ 
+                    filter: { field: 'meter_id', value: objMeter.id}
+                }).then(function(e){
+                    if(self.installmentVM.dataSource.data().length > 1){
+                        
+                    }
                 });
             }
         },

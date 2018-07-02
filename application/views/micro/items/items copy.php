@@ -2,29 +2,7 @@
 <div id="wrapperApplication" class="wrapper"></div>
 <script type="text/x-kendo-template" id="layout">
 	<!-- <div id="menu" class="menu"></div> -->
-	<!-- <div id="content"></div> -->
-
-	<div class="page-wrapper ">
-        <div class="container-fluid">
-        	<div class="row marginTop15 sale">
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-body" >
-                        	
-                        	<div id="tapMenu"></div>
-			                
-			                <div class="tab-content">	
-				                <div class="tab-pane active" role="tabpanel">
-				                	<div id="content"></div>
-				                </div>
-				            </div>
-
-			            </div>
-			        </div>
-	            </div>
-	        </div>
-        </div>
-    </div>
+	<div id="content"></div>
 </script>
 <script type="text/x-kendo-template" id="blank-tmpl">
 </script>
@@ -38,45 +16,28 @@
     	</a>
     </li>	
 </script>
-
 <!-- ***************************
 *	Sale Section      	  *
 **************************** -->
-<script id="index" type="text/x-kendo-template">
-	<div class="row home" id="reports">
-		<div class="col-md-4">
-			<div class="saleOverview" style="min-height: 143px;">
-				<h2 data-bind="text: lang.lang.inventory_value"></h2>
-				<p data-format="n" data-bind="text: obj.inventory_value"></p>
-			</div>
-		</div>
-		<div class="col-md-4">
-			<div class="saleOverview" style="min-height: 143px;">
-				<h2 data-bind="text: lang.lang.gross_profit_margin"></h2>
-				<p data-format="n0" data-bind="text: obj.gross_profit_margin"></p>
-			</div>
-		</div>
-		<div class="col-md-4">
-			<div class="saleOverview">
-				<div class="col">
-					<h2 data-bind="text: lang.lang.turnover_days"></h2>
-					<p data-format="n" data-bind="text: obj.inventory_turnover_day"></p>
-				</div>
-				<div class="col btn-group float-right">
-	                <button style="width: 100%;" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-bind="text: lang.lang.reports">
-	                </button>
-	                <div class="dropdown-menu">
-	                    <a class="dropdown-item" href="#/inventory_position_summary" data-bind="text: lang.lang.inventory_position_summary"></a>
-	                    <a class="dropdown-item" href="#/inventory_position_detail" data-bind="text: lang.lang.inventory_position_detail"></a>
-	                    <a class="dropdown-item" href="sales#/sale_detail_by_customer" data-bind="text: lang.lang.sale_detail_by_customer"></a>
-	                    <a class="dropdown-item" href="sales#/sale_detail_by_product" data-bind="text: lang.lang.sale_detail_by_product_services"></a>
-	                    <a class="dropdown-item" href="purchases#/list_bills_paid" data-bind="text: lang.lang.list_of_invoices_to_be_collected"></a>
-	                    <a class="dropdown-item" href="purchases#/bill_payment_list" data-bind="text: lang.lang.bill_payment_list"></a>
-	                </div>
+<script id="Index" type="text/x-kendo-template">
+	<div class="page-wrapper ">
+        <div class="container-fluid">
+        	<div class="row marginTop15 sale">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body" >
+                        	<div id="indexMenu"></div>
+			                <div class="tab-content">	
+				                <div class="tab-pane active" role="tabpanel">
+				                	<div id="indexContent"></div>
+				                </div>
+				            </div>
+			            </div>
+			        </div>
 	            </div>
-			</div>
-		</div>
-	</div>
+	        </div>
+        </div>
+    </div>
 </script>
 
 
@@ -2626,10 +2587,10 @@
     	<td>#=kendo.toString(new Date(transaction_issued_date), "dd-MM-yyyy")#</td>
     	<td>#=transaction_type#</td>
         <td align="center">
-			<a href="../micro/sales\#/#=transaction_type.toLowerCase()#/#=id#">#=transaction_number#</a>
+			<a href="\#/#=transaction_type.toLowerCase()#/#=id#">#=transaction_number#</a>
         </td>
     	<td align="center">#=kendo.toString(quantity * movement, "n0")#</td>
-    	<td align="right">
+    	<td align="right">asdsasdasde1aqsdsazzswdfsxaz≈cfvghj
     		#if(cost>0){#
     			#=kendo.toString((cost+additional_cost)/rate, "c", locale)#
     		#}#

@@ -21418,9 +21418,9 @@
 			kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "customerBalanceDetail.xlsx"});
 		}
 	});
-	banhji.receivableAgingSummary =  kendo.observable({
+	banhji.receivableAgingSummarybyEmployee =  kendo.observable({
 		lang                : langVM,
-		dataSource          : dataStore(apiUrl + "sales/aging_summary"),
+		dataSource          : dataStore(apiUrl + "sales/aging_summary_by_employee"),
 		contactDS           : banhji.source.customerDS,
 		obj                 : null,
 		company             : banhji.institute,
@@ -21613,6 +21613,201 @@
 			kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "receivableAgingSummary.xlsx"});
 		}
 	});
+	banhji.receivableAgingSummary =  kendo.observable({
+        lang                : langVM,
+        dataSource          : dataStore(apiUrl + "sales/aging_summary"),
+        contactDS           : banhji.source.customerDS,
+        obj                 : null,
+        company             : banhji.institute,
+        as_of               : new Date(),
+        displayDate         : "",
+        totalBalance        : 0,
+        exArray             : [],
+        pageLoad            : function(){
+            this.search();
+        },
+        search              : function(){
+            var self = this, para = [],
+                as_of = this.get("as_of"),
+                displayDate = "";
+
+            if(as_of){
+                as_of = new Date(as_of);
+                var displayDate = "As Of " + kendo.toString(as_of, "dd-MM-yyyy");
+                this.set("displayDate", displayDate);
+                as_of.setDate(as_of.getDate()+1);
+
+                para.push({ field:"issued_date <", value:kendo.toString(as_of, "yyyy-MM-dd") });
+            }
+
+            this.dataSource.query({
+                filter:para
+            }).then(function(){
+                var view = self.dataSource.view();
+
+                var balance = 0;
+                $.each(view, function(index, value){
+                    balance += value.total;
+                });
+
+                self.set("totalBalance", kendo.toString(balance, "c2", banhji.locale));
+            });
+                        this.dataSource.bind("requestEnd", function(e){
+                if(e.type=="read"){
+                    var response = e.response;
+                    self.exArray = [];
+
+                    self.exArray.push({
+                        cells: [
+                            { value: self.company.name, textAlign: "center", colSpan: 7}
+                        ]
+                    });
+                    self.exArray.push({
+                        cells: [
+                            { value: "Receivable Aging Summary",bold: true, fontSize: 20, textAlign: "center", colSpan: 7}
+                        ]
+                    });
+                    if(self.displayDate){
+                        self.exArray.push({
+                            cells: [
+                                { value: self.displayDate, textAlign: "center", colSpan: 7}
+                            ]
+                        });
+                    };
+                    self.exArray.push({
+                        cells: [
+                            { value: "", colSpan: 7}
+                        ]
+                    });
+                    self.exArray.push({
+                        cells: [
+                            { value: "Name", background: "#496cad", color: "#ffffff" },
+                            { value: "Current", background: "#496cad", color: "#ffffff" },
+                            { value: "1-30", background: "#496cad", color: "#ffffff" },
+                            { value: "31-60", background: "#496cad", color: "#ffffff" },
+                            { value: "61-90", background: "#496cad", color: "#ffffff" },
+                            { value: "Over 90", background: "#496cad", color: "#ffffff" },
+                            { value: "Total", background: "#496cad", color: "#ffffff" },
+                        ]
+                    });
+                    for (var i = 0; i < response.results.length; i++){
+                            self.exArray.push({
+                                cells: [
+                                    { value: response.results[i].name },
+                                    { value: response.results[i].current },
+                                    { value: response.results[i].in30 },
+                                    { value: response.results[i].in60 },
+                                    { value: response.results[i].in90 },
+                                    { value: response.results[i].over90 },
+                                    { value: kendo.parseFloat(response.results[i].total)},
+                                ]
+                            });
+                        self.exArray.push({
+                            cells: [
+                                { value: "", colSpan: 7 }
+                            ]
+                        });
+                    }
+                }
+            });
+        },
+        printGrid           : function() {
+            var gridElement = $('#grid'),
+                printableContent = '',
+                win = window.open('', '', 'width=990, height=900'),
+                doc = win.document.open();
+            var htmlStart =
+                    '<!DOCTYPE html>' +
+                    '<html>' +
+                    '<head>' +
+                    '<meta charset="utf-8" />' +
+                    '<title></title>' +
+                    '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
+                    '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
+                    '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/responsive.css">' +
+                    '<link href="<?php echo base_url(); ?>assets/invoice/invoice.css" rel="stylesheet" />'+
+                    '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
+                    '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
+                    '<style>' +
+                    'html { font: 11pt sans-serif; }' +
+                    '.k-grid { border-top-width: 0; }' +
+                    '.k-grid, .k-grid-content { height: auto !important; }' +
+                    '.k-grid-content { overflow: visible !important; }' +
+                    'div.k-grid table { table-layout: auto; width: 100% !important; }' +
+                    '.k-grid .k-grid-header th { border-top: 1px solid; }' +
+                    '.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
+                    '</style><style type="text/css" media="print"> @page { size: portrait; margin:1mm; }'+
+                        '.inv1 .main-color {' +
+
+                            '-webkit-print-color-adjust:exact; ' +
+                        '} ' +
+                        '.table.table-borderless.table-condensed  tr th { background-color: #1E4E78!important;' +
+                        '-webkit-print-color-adjust:exact; color:#fff!important;}' +
+                        '.table.table-borderless.table-condensed  tr th * { color: #fff!important; -webkit-print-color-adjust:exact;}' +
+                        '.inv1 .light-blue-td { ' +
+                            'background-color: #c6d9f1!important;' +
+                            'text-align: left;' +
+                            'padding-left: 5px;' +
+                            '-webkit-print-color-adjust:exact; ' +
+                        '}' +
+                        '.saleSummaryCustomer .table.table-borderless.table-condensed tr td { ' +
+                            'background-color: #F2F2F2!important; -webkit-print-color-adjust:exact;' +
+                        '}'+
+                        '.saleSummaryCustomer .table.table-borderless.table-condensed tr:nth-child(2n+1) td { ' +
+                            ' background-color: #fff!important; -webkit-print-color-adjust:exact;' +
+                        '}' +
+                        '.journal_block1>.span2 *, .journal_block1>.span5 * {color: #fff!important;}' +
+                        '.journal_block1>.span2:first-child { ' +
+                            'background-color: #bbbbbb!important; -webkit-print-color-adjust:exact;' +
+                        '}' +
+                        '.journal_block1>.span5:last-child {' +
+                            'background-color: #496cad!important; color: #fff!important; -webkit-print-color-adjust:exact; ' +
+                        '}' +
+                        '.journal_block1>.span5 {' +
+                            'background-color: #5cc7dd!important; color: #fff!important; -webkit-print-color-adjust:exact;' +
+                        '}' +
+                        '.saleSummaryCustomer .table.table-borderless.table-condensed tfoot .bg-total td {' +
+                            'background-color: #1C2633!important;' +
+                            'color: #fff!important; ' +
+                            '-webkit-print-color-adjust:exact;' +
+                        '}' +
+                        '</style>' +
+                    '</head>' +
+                    '<body><div class="saleSummaryCustomer" style="padding: 0 10px;">';
+            var htmlEnd =
+                    '</div></body>' +
+                    '</html>';
+
+            printableContent = $('#invFormContent').html();
+            doc.write(htmlStart + printableContent + htmlEnd);
+            doc.close();
+            setTimeout(function(){
+                win.print();
+                win.close();
+            },2000);
+        },
+        ExportExcel         : function(){
+            var workbook = new kendo.ooxml.Workbook({
+              sheets: [
+                {
+                  columns: [
+                    { autoWidth: true },
+                    { autoWidth: true },
+                    { autoWidth: true },
+                    { autoWidth: true },
+                    { autoWidth: true },
+                    { autoWidth: true },
+                    { autoWidth: true }
+                  ],
+                  title: "Receivable Aging Summary",
+                  rows: this.exArray
+                }
+              ]
+            });
+            //save the file as Excel file with extension xlsx
+            kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "receivableAgingSummary.xlsx"});
+        }
+    });
 	banhji.receivableAgingDetail =  kendo.observable({
 		lang                : langVM,
 		dataSource          : dataStore(apiUrl + "sales/aging_detail"),
@@ -69081,6 +69276,7 @@
 		saleProductDetailByEmployee: new kendo.Layout("#saleProductDetailByEmployee", {model: banhji.saleProductDetailByEmployee}),
 		customerBalanceSummary : new kendo.Layout("#customerBalanceSummary", {model: banhji.customerBalanceSummary}),
 		customerBalanceDetail : new kendo.Layout("#customerBalanceDetail", {model: banhji.customerBalanceDetail}),
+		receivableAgingSummarybyEmployee : new kendo.Layout("#receivableAgingSummarybyEmployee", {model: banhji.receivableAgingSummarybyEmployee}),
 		receivableAgingSummary : new kendo.Layout("#receivableAgingSummary", {model: banhji.receivableAgingSummary}),
 		receivableAgingDetail : new kendo.Layout("#receivableAgingDetail", {model: banhji.receivableAgingDetail}),
 		collectInvoice : new kendo.Layout("#collectInvoice", {model: banhji.collectInvoice}),
@@ -71223,21 +71419,36 @@
 			vm.pageLoad();
 		}
 	});
-	banhji.router.route("/receivable_aging_summary", function(){
+	banhji.router.route("/receivable_aging_summary_employee", function(){
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
 		}else{
-			banhji.view.layout.showIn("#content", banhji.view.receivableAgingSummary);
+			banhji.view.layout.showIn("#content", banhji.view.receivableAgingSummarybyEmployee);
 
-			var vm = banhji.receivableAgingSummary;
-			banhji.userManagement.addMultiTask("Receivable Aging Summary","receivable_aging_summary",null);
+			var vm = banhji.receivableAgingSummarybyEmployee;
+			banhji.userManagement.addMultiTask("Receivable Aging Summary","receivable_aging_summary_employee",null);
 
-			if(banhji.pageLoaded["receivable_aging_summary"]==undefined){
-				banhji.pageLoaded["receivable_aging_summary"] = true;
+			if(banhji.pageLoaded["receivable_aging_summary_employee"]==undefined){
+				banhji.pageLoaded["receivable_aging_summary_employee"] = true;
 			}
 			vm.pageLoad();
 		}
 	});
+	banhji.router.route("/receivable_aging_summary", function(){
+        if(!banhji.userManagement.getLogin()){
+            banhji.router.navigate('/manage');
+        }else{
+            banhji.view.layout.showIn("#content", banhji.view.receivableAgingSummary);
+
+            var vm = banhji.receivableAgingSummary;
+            banhji.userManagement.addMultiTask("Receivable Aging Summary","receivable_aging_summary",null);
+
+            if(banhji.pageLoaded["receivable_aging_summary"]==undefined){
+                banhji.pageLoaded["receivable_aging_summary"] = true;
+            }
+            vm.pageLoad();
+        }
+    });
 	banhji.router.route("/receivable_aging_detail", function(){
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');

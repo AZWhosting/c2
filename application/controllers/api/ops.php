@@ -68,8 +68,8 @@ class Ops extends REST_Controller {
 			    // $this->dbforge->drop_table('references');
 
 			    //Update single data
-			    // $this->db->where_in('nature_type', array('Invoice','Cash_Sale'));
-			    // $data['results'][] = $this->db->update('transactions', array('movement' => 1));
+			    // $this->db->where_in('type', array('Cash_Purchase','Credit_Purchase'));
+			    // $data['results'][] = $this->db->update('transactions', array('nature_type' => "Purchase"));
 
 			 	//Update batch data
 			 	// 	$raw = array(

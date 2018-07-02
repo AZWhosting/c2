@@ -1281,7 +1281,7 @@
 									<div class="coverIcon"><i class="ti-server"></i></div>
 									<div class="txt">
 										<span  data-bind="text: lang.lang.balance"></span>
-										<span data-bind="text: balance"></span>
+										<span data-format="n" data-bind="text: snapshot.balance"></span>
 									</div>
 								</div>
 							</div>
@@ -1290,7 +1290,7 @@
 									<div class="coverIcon"><i class=" ti-briefcase"></i></div>
 									<div class="txt">
 										<span data-bind="text: lang.lang.po"></span>
-										<span style="font-size: 25px;" data-bind="text: po" ></span>
+										<span style="font-size: 25px;" data-format="n" data-bind="text: snapshot.po_count" ></span>
 									</div>
 								</div>
 							</div>
@@ -1300,8 +1300,8 @@
 								<div class="blockOpenInvoice" data-bind="click: loadBalance" style="height: 108px;">
 									<div class="coverIcon"><i class="icon-info"></i></div>
 									<div class="txt">
-										<span style="font-size: 25px;" data-bind="text: outInvoice"></span>
-										<span  data-bind="text: lang.lang.open_invoice"></span>
+										<span style="font-size: 25px;" data-format="n" data-bind="text: snapshot.open_bill_count"></span>
+										<span>Open Bill</span>
 									</div>
 								</div>
 							</div>
@@ -1309,7 +1309,7 @@
 								<div class="blockOverDue" data-bind="click: loadOverInvoice" style="height: 108px;">
 									<div class="coverIcon"><i class="ti-alarm-clock"></i></div>
 									<div class="txt" >
-										<span style="font-size: 25px;" data-bind="text: overInvoice"></span>
+										<span style="font-size: 25px;" data-format="n" data-bind="text: snapshot.overdue_count"></span>
 										<span data-bind="text: lang.lang.over_due"></span>
 									</div>
 								</div>
@@ -2517,6 +2517,7 @@
 									<div class="box-generic-noborder">
 										<ul class="nav nav-tabs" role="tablist">
 		                                    <li class="nav-item"> <a class="nav-link active show" data-toggle="tab" href="#functionSetting" role="tab" aria-selected="true"><span><i class="ti-settings"></i></span></a> </li>		                                    
+		                                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#functionReference" role="tab" aria-selected="false"><span><i class="icon-link"></i></span></a></li>
 		                                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#functionPaperclip" role="tab" aria-selected="false"><span><i class="icon-paper-clip"></i></span></a></li>
 		                                </ul>
 		                                <div class="tab-content tabcontent-border">
@@ -2583,7 +2584,37 @@
 		                                        </div>
 		                                    </div>
 		                                    <!-- End -->
-		                                    
+
+		                                    <!-- References -->
+									        <div class="tab-pane" id="functionReference" role="tabpanel">
+									            <table style="margin-bottom: 0;" class="table table-borderless table-condensed cart_total">
+										            <tr>
+														<td style="vertical-align: top;">
+										            		<span data-bind="text: lang.lang.reference"></span>
+										            	</td>
+										            	<td>
+										            		<input data-role="dropdownlist"
+										            			   data-item-template="reference-list-tmpl"
+												                   data-auto-bind="false"
+												                   data-value-primitive="true"
+												                   data-filter="startswith"
+												                   data-text-field="number"
+												                   data-value-field="id"
+												                   data-bind="value: reference_id,
+												                              source: referenceDS,
+												                              events: { change: referenceChanges }"
+												                   data-option-label="Add Reference..."
+												                   style="width: 100%;" />
+												            <br>
+												            <table class="table table-bordered">
+														        <tbody data-template="invoice-reference-template"
+														        		data-bind="source: obj.references"></tbody>
+														    </table>
+														</td>
+													</tr>
+									            </table>
+									        </div>
+									        <!-- // References END -->		                                    
 
 		                                    <!--Tab Paperclip -->
 		                                    <div class="tab-pane" id="functionPaperclip" role="tabpanel">
@@ -2897,6 +2928,21 @@
 			</div>
 		</div>
 	</div>
+</script>
+<script id="invoice-reference-template" type="text/x-kendo-tmpl">
+	<tr>
+		<td>
+			<i class="icon-trash" data-bind="events: { click: referenceRemoveRow }"></i>
+			#=number#
+		</td>
+		<td align="right">
+			#if(type=="GDN"){#
+				#=kendo.toString(kendo.parseFloat(amount), "n2")#
+			#}else{#
+				#=kendo.toString(kendo.parseFloat(amount), "c2", locale)#
+			#}#
+		</td>
+    </tr>
 </script>
 <script id="purchase-additional-cost-template" type="text/x-kendo-tmpl">
 	<tr data-uid="#: uid #" data-bind="click: windowEdit">
@@ -6561,7 +6607,7 @@
 			#if(type=="Vendor_Deposit" && amount<0){#
 				<a data-bind="click: goReference">#=number#</a>
 			#}else{#
-				<a >#=number#</a>
+				<a href="\#/#=type.toLowerCase()#/#=id#">#=number#</a>
 			#}#
         </td>
     	<td class="right">

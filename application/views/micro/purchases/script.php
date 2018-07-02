@@ -4024,19 +4024,21 @@
 	banhji.purchaseCenter = kendo.observable({
 		lang                : langVM,
 		transactionDS       : dataStore(apiUrl + 'transactions'),
-		contactDS           : banhji.source.supplierDS,
+		snapshotDS 		    : dataStore(apiUrl + 'micro_modules/purchases_center_snapshot'),		
+		noteDS              : dataStore(apiUrl + 'notes'),
+		attachmentDS        : dataStore(apiUrl + "attachments"),
+		txnDS               : dataStore(apiUrl + "transactions"),
 		contactTypeDS       : new kendo.data.DataSource({
 			data: banhji.source.contactTypeList,
 			filter: { field:"parent_id", value: 2 }//Supplier
 		}),
-		noteDS              : dataStore(apiUrl + 'notes'),
-		attachmentDS        : dataStore(apiUrl + "attachments"),
-		txnDS               : dataStore(apiUrl + "transactions"),
+		contactDS           : banhji.source.supplierDS,
 		sortList            : banhji.source.sortList,
 		sorter              : "all",
 		sdate               : "",
 		edate               : "",
 		obj                 : null,
+		snapshot			: [],
 		note                : "",
 		searchText          : "",
 		contact_type_id     : null,
@@ -4257,36 +4259,12 @@
 			var self = this, obj = this.get("obj");
 
 			if(obj!==null){
-				this.txnDS.query({
-					filter: [
-						{ field:"contact_id", value: obj.id },
-						{ field:"type", operator:"where_in", value: ["Credit_Purchase", "Purchase_Order"] },
-						{ field:"status", operator:"where_in", value: [0,2] }
-					],
-					sort: { field: "issued_date", dir: "desc" },
-					page: 1,
-					pageSize: 1000
+				this.snapshotDS.query({
+					filter: { field:"contact_id", value: obj.id }
 				}).then(function(){
-					var view = self.txnDS.view(),
-					balance = 0, open = 0, over = 0, po = 0, today = new Date();
+					var view = self.snapshotDS.view();
 
-					$.each(view, function(index, value){
-						if(value.type=="Purchase_Order"){
-							po++;
-						}else{
-							balance += kendo.parseFloat(value.amount) - (kendo.parseFloat(value.deposit) + value.amount_paid);
-							open++;
-
-							if(new Date(value.due_date)<today){
-								over++;
-							}
-						}
-					});
-
-					self.set("balance", kendo.toString(balance, "c", obj.locale));
-					self.set("po", kendo.toString(po, "n0"));
-					self.set("openInvoice", kendo.toString(open, "n0"));
-					self.set("overInvoice", kendo.toString(over, "n0"));
+					self.set("snapshot", view[0]);
 				});
 			}
 		},
@@ -4629,7 +4607,7 @@
 			},
 			sort: { field:"number", dir:"asc" }
 		}),
-		taxItemDS       : new kendo.data.DataSource({
+		taxItemDS       		: new kendo.data.DataSource({
 			data: banhji.source.taxList,
 			sort: [
 				{ field: "tax_type_id", dir: "asc" },
@@ -4676,29 +4654,6 @@
 				obj = this.contactPersonDS.getByUid(d.uid);
 
 				this.contactPersonDS.remove(obj);
-			}
-		},
-		//Map
-		loadMap                 : function(){
-			var obj = this.get("obj"), lat = kendo.parseFloat(obj.latitute),
-			lng = kendo.parseFloat(obj.longtitute);
-
-			if(lat && lng){
-				var myLatLng = {lat:lat, lng:lng};
-				var mapOptions = {
-					zoom: 17,
-					center: myLatLng,
-					mapTypeControl: false,
-					zoomControl: false,
-					scaleControl: false,
-					streetViewControl: false
-				};
-				var map = new google.maps.Map(document.getElementById('map'),mapOptions);
-				var marker = new google.maps.Marker({
-					position: myLatLng,
-					map: map,
-					title: obj.number
-				});
 			}
 		},
 		copyBillTo              : function(){
@@ -5057,7 +5012,7 @@
 				pageSize: 1
 			}).then(function(data){
 				var view = self.patternDS.view(),
-				type = self.contactTypeDS.get(view[0].contact_type_id);
+					type = banhji.source.contactTypeDS.get(view[0].contact_type_id);
 
 				if(view.length>0){
 					obj.set("country_id", view[0].country_id);
@@ -9110,7 +9065,7 @@
 				obj.set("account_id", 0);
 
 				var dropdownlist = $("#ddlAccount").data("kendoDropDownList");
-				dropdownlist.select(1);
+				dropdownlist.select(7);
 				dropdownlist.trigger("change");
 			}else{
 				this.set("isCash", false);
@@ -9151,6 +9106,7 @@
 				job_id              : 0,
 				user_id             : this.get("user_id"),
 				type                : "Cash_Purchase", //Required
+				nature_type 		: "Purchase",
 				number              : "",
 				sub_total           : 0,
 				discount            : 0,

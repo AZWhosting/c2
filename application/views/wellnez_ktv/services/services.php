@@ -892,13 +892,13 @@
 							#$.each(banhji.Index.currencyDS.data(), function(i,v){#
 								<tr>
 									<td colspan="2" style="padding-right: 10px;text-align: right;">សរុបជា #= v.code#</td>
-									<td style="border: 1px solid;text-align: right;background: \#000!important;"><strong style="color: \#fff;font-size: 22px;">#= kendo.toString(amount / v.rate, v.locale=="km-KH"?"c0":"c", v.locale)#</strong></td>
+									<td style="border: 1px solid;text-align: right;"><strong style="font-size: 22px;">#= kendo.toString(amount / v.rate, v.locale=="km-KH"?"c0":"c", v.locale)#</strong></td>
 								</tr>
 							#})#
-							#if(banhji.print.amountperson > 0){#
+							#if(banhji.printBill.amountperson > 0){#
 								<tr>
 									<td colspan="2" style="padding-right: 10px;text-align: right;">ទឹកប្រាក់ត្រូវបង់</td>
-									<td style="border: 1px solid;text-align: right;background: \#000!important;"><strong style="color: \#fff;font-size: 22px;">#= kendo.toString(banhji.print.amountperson, locale=="km-KH"?"c0":"c", locale)#</strong></td>
+									<td style="border: 1px solid;text-align: right;background: \#000!important;"><strong style="color: \#fff;font-size: 22px;">#= kendo.toString(banhji.printBill.amountperson, locale=="km-KH"?"c0":"c", locale)#</strong></td>
 								</tr>
 							#}#
 	                    </tfoot>

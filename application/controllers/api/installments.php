@@ -62,18 +62,25 @@ class Installments extends REST_Controller {
 		if($obj->result_count()>0){
 			foreach ($obj as $value) {
 				$schedule = $value->installment_schedule->select('id, date, amount, invoiced')->get_raw();
+				$scl = $value->installment_schedule->get();
+				$notyetpay = 0;
+				foreach ($scl as $sc) {
+					if(intval($sc->invoiced) == 0){
+						$notyetpay += floatval($sc->amount);
+					}
+				}
 				//Results
-
 				$data["results"][] = array(
 					"id" 				=> $value->id,
 					"biller_id"			=> $value->biller_id,
 					"percentage"        => $value->percentage,
 					"start_month"		=> $value->start_month,
 					"amount"			=> floatval($value->amount),
-					"period"			=> $value->period,
+					"period"			=> intval($value->period),
 					"payment_number" 	=> $value->payment_number,
 					"paid_in_full"		=> $value->paid_in_full,
-					"schedule" 			=> $schedule->result()
+					"schedule" 			=> $schedule->result(),
+					"amount_to_pay" 	=> $notyetpay,
 				);
 			}
 		}

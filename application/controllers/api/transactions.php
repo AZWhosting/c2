@@ -395,6 +395,9 @@ class Transactions extends REST_Controller {
 		$models = json_decode($this->post('models'));
 		$data["results"] = [];
 		$data["count"] = 0;
+		$purchaseList = array("Cash_Purchase","Credit_Purchase");
+		$cashSaleList = array("Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale");
+		$invoiceList = array("Commercial_Invoice","Vat_Invoice","Invoice");
 		
 		$number = "";
 		foreach ($models as $value) {
@@ -495,6 +498,26 @@ class Transactions extends REST_Controller {
 		   	isset($value->total_batch) 				? $obj->total_batch 				= $value->total_batch : "";
 		   	
 		   	$related = [];
+
+		   	//Type
+		   	if(isset($value->nature_type)){
+		   		if($value->nature_type==""){
+		   			//Purchase
+		   			if(in_array($value->type, $purchaseList)){
+		   				$obj->nature_type = "Purchase";
+		   			}
+
+		   			//Cash Sale
+		   			if(in_array($value->type, $cashSaleList)){
+		   				$obj->nature_type = "Cash_Sale";
+		   			}
+
+		   			//Invoice
+		   			if(in_array($value->type, $invoiceList)){
+		   				$obj->nature_type = "Invoice";
+		   			}
+		   		}
+		   	}
 
 		   	//References
    			if(isset($value->references)){
