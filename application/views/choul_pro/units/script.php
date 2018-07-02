@@ -3481,8 +3481,8 @@
         goTransactions      : function(){
             banhji.router.navigate('/transactions');
         },
-        goMenuCustomers        : function(){
-            banhji.router.navigate('/customers');
+        goMenuUnitCenter        : function(){
+            banhji.router.navigate('/unit_center');
         },
     });
     banhji.reports = kendo.observable({
@@ -6421,7 +6421,7 @@
         }
     });
 
-    banhji.customers = kendo.observable({
+    banhji.unitCenter = kendo.observable({
         lang                : langVM,
         transactionDS       : dataStore(apiUrl + 'transactions'),
         noteDS              : dataStore(apiUrl + 'notes'),
@@ -6435,10 +6435,10 @@
             data: banhji.source.contactTypeList,
             filter: { field:"parent_id", value: 1 }//Customer
         }),
-        contactDS           : new kendo.data.DataSource({
+        unitDS           : new kendo.data.DataSource({
             transport: {
                 read    : {
-                    url: apiUrl + "contacts",
+                    url: apiUrl + "choulr/lease_unit",
                     type: "GET",
                     headers: banhji.header,
                     dataType: 'json'
@@ -6463,8 +6463,8 @@
                 data: 'results',
                 total: 'count'
             },
-            filter:{ field:"parent_id", operator:"where_related_contact_type", value:1 },
-            sort:{ field:"number", dir:"asc" },
+            filter:{  },
+            sort:{ field:"id", dir:"desc" },
             batch: true,
             serverFiltering: true,
             serverSorting: true,
@@ -18286,7 +18286,7 @@
         reports: new kendo.View("#reports", {model: banhji.reports}),
         checkOut: new kendo.View("#checkOut", {model: banhji.checkOut}),
         transactions: new kendo.View("#transactions", {model: banhji.transactions}),
-        customers: new kendo.View("#customers", {model: banhji.customers}),
+        unitCenter: new kendo.View("#unitCenter", {model: banhji.unitCenter}),
         printBill: new kendo.Layout("#printBill", {
             model: banhji.printBill
         })
@@ -18400,24 +18400,18 @@
             vm.pageLoad();
         }
     });
-    banhji.router.route('/customers', function() {
+    banhji.router.route('/unit_center', function() {
         
         banhji.view.layout.showIn('#content', banhji.view.Index);
         banhji.view.Index.showIn('#indexMenu', banhji.view.tapMenu);
-        banhji.view.Index.showIn('#indexContent', banhji.view.customers);
+        banhji.view.Index.showIn('#indexContent', banhji.view.unitCenter);
 
-        if(banhji.pageLoaded["customers"]==undefined){
-            banhji.pageLoaded["customers"] = true;
-            
-            // banhji.source.supplierDS.filter({
-            //     field: "parent_id",
-            //     operator: "where_related_contact_type",
-            //     value: 2
-            // });
+        if(banhji.pageLoaded["unit_center"]==undefined){
+            banhji.pageLoaded["unit_center"] = true;
         }        
 
         //load MVVM
-        banhji.customers.pageLoad();
+        banhji.unitCenter.pageLoad();
     });
 
     // Add Cutomer

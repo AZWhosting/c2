@@ -29,16 +29,7 @@
                         	<div id="indexMenu">
                         		<div class="hidden-sm-down" style="position: absolute; right: 20px; top: 20px;">
                         			<div class="btn-group float-right">
-						                <a href="#/unit">
-						                	<button style="font-size: 17px; " type="button" class="btn btn-info ">Add Unit
-							                </button>
-							            </a>
-						                <!-- <div class="dropdown-menu">
-						                    <a class="dropdown-item" href="#/quote"><span data-bind="text: lang.lang.create_quotation"></span></a>
-						                    <a class="dropdown-item" href="#/invoice"><span data-bind="text: lang.lang.create_invoice"></span></a>
-						                    <a class="dropdown-item" href="#/cash_sale"><span data-bind="text: lang.lang.create_cash_sale"></span></a>
-						                    <a class="dropdown-item" href="#/cash_receipt"><span data-bind="text: lang.lang.create_cash_receipt"></span></a>
-						                </div> -->
+						                
 						            </div>
                         		</div>
                         	</div>
@@ -59,9 +50,21 @@
 <!-- Menu -->
 <script id="tapMenu" type="text/x-kendo-template">
 	<ul class="nav nav-tabs customtab" role="tablist" >
-		<li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#/" data-bind="click: goCheckOut"><span class="hidden-sm-up"><i class="ti-layout-accordion-list"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.check_out"></span></a> </li>
-		<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#/reports" data-bind="click: goReports"><span class="hidden-sm-up"><i class="ti-layout-grid2-thumb"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.reports"></span></a> </li>
-	    <li class="nav-item hidden-sm-down"> <a class="nav-link" data-toggle="tab" href="#/customers" data-bind="click: goMenuCustomers"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.center"></span></a> </li>
+		<li class="nav-item"> 
+			<a class="nav-link active" data-toggle="tab" href="#/" data-bind="click: goCheckOut"><span class="hidden-sm-up"><i class="ti-layout-accordion-list"></i></span> 
+				<span class="hidden-xs-down" data-bind="text: lang.lang.check_out"></span>
+			</a> 
+		</li>
+		<li class="nav-item"> 
+			<a class="nav-link" data-toggle="tab" href="#/reports" data-bind="click: goReports"><span class="hidden-sm-up"><i class="ti-layout-grid2-thumb"></i></span> 
+				<span class="hidden-xs-down" data-bind="text: lang.lang.reports"></span>
+			</a> 
+		</li>
+	    <li class="nav-item hidden-sm-down"> 
+	    	<a class="nav-link" data-toggle="tab" href="#/unitCenter" data-bind="click: goMenuUnitCenter"><span class="hidden-sm-up"><i class="ti-user"></i></span> 
+	    		<span style="text-transform: capitalize" class="hidden-xs-down" data-bind="text: lang.lang.center"></span>
+	    	</a> 
+	    </li>
     </ul>
 </script>
 <!-- End -->
@@ -1594,8 +1597,8 @@
 	</div>
 </script>
 
-<!-- Add Customer -->
-<script id="customer" type="text/x-kendo-template">
+<!-- Unit Center -->
+<script id="unitCenter" type="text/x-kendo-template">
 	<div class="page-wrapper ">
         <div class="container-fluid">
         	<div id="example">

@@ -31,19 +31,24 @@
                         <div class="card-body" >
                         	<h2 style="margin-bottom: 20px;">Property Setting</h2>
                         	<div class="vtabs" style="width: 100%;">
-	                        	<ul class="nav nav-tabs tabs-vertical" role="tablist" style="width: 17%; float: left;">
-								    <li class="nav-item"> 
-								    	<a class="nav-link active" data-toggle="tab" href="#property-tab"><span class="hidden-sm-up"><i class="ti-user"></i></span> 
-								    		<span class="hidden-xs-down">Property</span>
-								    	</a> 
-								    </li>
-								    <li class="nav-item"> 
-								    	<a class="nav-link" data-toggle="tab" href="#area-tab"><span class="hidden-sm-up"><i class="ti-user"></i></span> 
-								    		<span class="hidden-xs-down">Area</span>
-								    	</a> 
-								    </li>
-							    </ul>
-				                <div class="tab-content" style="float: left; width: 83%; padding: 10px;">
+                        		<div class="col-md-12">
+		                        	<ul class="nav nav-tabs tabs-vertical" role="tablist" style="width: 15%; float: left;">
+									    <li class="nav-item"> 
+									    	<a class="nav-link active" data-toggle="tab" href="#property-tab"><span class="hidden-sm-up"><i class="ti-user"></i></span> 
+									    		<span class="hidden-xs-down">Property</span>
+									    	</a> 
+									    </li>	
+								    </ul>
+								    <ul class="nav nav-tabs tabs-vertical" role="tablist" style="width: 15%; float: left;">
+								    	<li class="nav-item" style="float:rar"> 
+									    	<a class="nav-link" data-toggle="tab" href="#area-tab"><span class="hidden-sm-up"><i class="ti-user"></i></span> 
+									    		<span class="hidden-xs-down">Area</span>
+									    	</a> 
+									    </li>
+									</ul>
+								</div>
+
+				                <div class="tab-content" style="float: left; width: 100%; padding: 10px;">
 					                <div class="tab-pane active" id="property-tab" role="tabpanel">
 					                	<div class="row">
 											<div class="col-md-12">
@@ -699,7 +704,7 @@
 								    	</a> 
 								    </li>
 							    </ul>
-				                <div class="tab-content" style="float: left; width: 83%; padding: 10px;">
+				                <div class="tab-content" style="float: left; width: 100%; padding: 10px;">
 					                <div class="tab-pane active" id="unit-type-tab" role="tabpanel">
 					                	<div class="row">
 											<div class="col-md-12">

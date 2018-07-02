@@ -1,0 +1,13 @@
+
+
+
+
+.tabs-vertical li .nav-link.active,
+.tabs-vertical li .nav-link:hover,
+.tabs-vertical li .nav-link.active:focus {
+	background: #0eac00 !important;
+    border: 0px;
+    color: #fff;
+
+}
+.nav ,.nav-tabs tabs-vertical

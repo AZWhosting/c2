@@ -1445,6 +1445,9 @@ class Spa extends REST_Controller {
 		   		"cashier_name" 	=> $cashier_name,
 		   		"room_number" 	=> $roomshow,
 		   		"employee_name" => $employee_name,
+		   		"check_in" 		=> $work->start_date,
+				"check_out" 	=> $work->end_date,
+				"amountperson" 	=> 0,
 		   	);
 		}
 		$data["count"] = count($data["results"]);

@@ -38,27 +38,19 @@ class Choul_pro extends CI_Controller {
 		$this->load->view("choul_pro/footer");
 	}
 
-	public function purchases() {	
+	public function contracts() {	
 		$this->load->view("choul_pro/header");
 		$this->load->view("choul_pro/sidebar");
-		$this->load->view("choul_pro/purchases/purchases");
-		$this->load->view("choul_pro/purchases/script");
+		$this->load->view("choul_pro/contracts/contracts");
+		$this->load->view("choul_pro/contracts/script");
 		$this->load->view("choul_pro/footer");
 	}
 
-	public function items() {	
+	public function reciept() {	
 		$this->load->view("choul_pro/header");
 		$this->load->view("choul_pro/sidebar");
-		$this->load->view("choul_pro/items/items");
-		$this->load->view("choul_pro/items/script");
-		$this->load->view("choul_pro/footer");
-	}
-
-	public function cashs() {	
-		$this->load->view("choul_pro/header");
-		$this->load->view("choul_pro/sidebar");
-		$this->load->view("choul_pro/cashs/cashs");
-		$this->load->view("choul_pro/cashs/script");
+		$this->load->view("choul_pro/reciept/reciept");
+		$this->load->view("choul_pro/reciept/script");
 		$this->load->view("choul_pro/footer");
 	}
 
@@ -67,14 +59,6 @@ class Choul_pro extends CI_Controller {
 		$this->load->view("choul_pro/sidebar");
 		$this->load->view("choul_pro/setting/setting");
 		$this->load->view("choul_pro/setting/script");
-		$this->load->view("choul_pro/footer");
-	}
-
-	public function guide() {	
-		$this->load->view("choul_pro/header");
-		$this->load->view("choul_pro/sidebar");
-		$this->load->view("choul_pro/guide/guide");
-		$this->load->view("choul_pro/guide/script");
 		$this->load->view("choul_pro/footer");
 	}
 	

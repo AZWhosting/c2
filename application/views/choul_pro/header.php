@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-<link rel="icon" type="image/png" href="<?php echo base_url()?>assets/banhji-micro-icon.png" >
+<link rel="icon" type="image/png" href="<?php echo base_url()?>assets/choul_pro/img/choulr-favicon.png" >
 <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
 
 <!-- Theme CSS Elegant-->
@@ -28,6 +28,9 @@
 <script src="<?php echo base_url()?>assets/micro/d3.min.js"></script>
 <script src="<?php echo base_url()?>assets/micro/c3.min.js"></script>
 <script src="<?php echo base_url()?>assets/micro/jquery.toast.js"></script>
+<!-- choul pro css-->
+<link rel="stylesheet" href="<?php echo base_url()?>assets/choul_pro/css/choul_pro.css" >
+
     
 <!-- End -->
 
@@ -106,10 +109,10 @@
                     <div class="navbar-header">
                         <a class="navbar-brand" href="<?php echo base_url();?>micro/home">
                             <b>                                
-                                <img src="<?php echo base_url()?>assets/micro/banhji-micro-new.png" style="height: 36px;" alt="homepage" class="dark-logo" />
+                                <img src="<?php echo base_url()?>assets/choul_pro/img/choulr-logo.png" style="height: 36px;" alt="homepage" class="dark-logo" />
                             </b>
                             <span>                             
-                                <img src="<?php echo base_url()?>assets/micro/banhji-micro-new1.png" style="height: 36px;" alt="homepage" class="dark-logo" />
+                                 <img src="<?php echo base_url()?>assets/choul_pro/img/choulr-logo-text.png" style="height: 36px;" alt="homepage" class="dark-logo" />
                             </span>
                             </a>
                     </div>
