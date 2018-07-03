@@ -519,9 +519,9 @@
 							<span class="btn-btn" style="background: red;width: 50%;float: left;text-align: center;padding: 10px 0;cursor: pointer;" data-bind="visible: btnActive, click: payBill" >
 								<span data-bind="text: lang.lang.pay"></span>
 							</span>
-							<span class="btn-btn" style="background: green;width: 50%;float: left;text-align: center;padding: 10px 0;cursor: pointer;" data-bind="visible: btnActive, click: returnItem" >
+							<!-- <span class="btn-btn" style="background: green;width: 50%;float: left;text-align: center;padding: 10px 0;cursor: pointer;" data-bind="visible: btnActive, click: returnItem" >
 								<span>Return Item</span>
-							</span>
+							</span> -->
 						</div>
 						<div class="box-generic bg-action-button" data-bind="visible: btnActive">
 							<div id="ntf1" data-role="notification"></div>
@@ -1231,15 +1231,80 @@
 				    <div class="tabsbar tabsbar-1">
 				        <ul class="row-fluid row-merge">
 				            <li class="span2 glyphicons nameplate_alt active">
-				            	<a href="#tab1" data-toggle="tab"><i></i> <span>Item</span></a>
+				            	<a href="#tab1" data-toggle="tab"><i></i> <span>Return Item</span></a>
 				            </li>
 				        </ul>
 				    </div>
 				    <div class="tab-content">
 				        <div class="tab-pane active" id="tab1" style="overflow: hidden;position: relative;">
 			            	<div class="span12">
+			            		<p style="color: #203864; margin-left: 15px;">Invoice Number: <span style="font-weight: bold" data-bind="text: obj.number"></span></p>
 			            		<div class="rows">
-				            		<div class="span4">
+			            			<div data-role="grid" class="costom-grid"
+								    	 data-column-menu="false"
+								    	 data-reorderable="true"
+								    	 data-scrollable="false"
+								    	 data-resizable="true"
+								    	 data-editable="true"
+						                 data-columns="[
+										    {
+										    	title:'NO',
+										    	width: '50px',
+										    	editable: 'false',
+										    	attributes: { style: 'text-align: center;' },
+										        template: function (dataItem) {
+										        	var rowIndex = banhji.returnItem.lineDS.indexOf(dataItem)+1;
+										        	return ' ' + rowIndex;
+										      	}
+										    },
+						                 	{ 
+						                 		field: 'item', 
+						                 		title: 'PRODUCTS/SERVICES', 
+						                 		editor: itemEditor, 
+						                 		editable: 'false',
+						                 		template: '#=item.name#', width: '170px' 
+						                 	},
+				                            {
+											    field: 'quantity',
+											    title: 'QTY',
+											    format: '{0:n}',
+											    editor: numberTextboxEditor,
+											    width: '120px',
+											    template: function(dataItem){
+											    	return dataItem.quantity;
+											    	banhji.returnItem.checkChange();
+											    },
+											    attributes: { style: 'text-align: right;' }
+											},
+				                            {
+				                            	field: 'item_price',
+				                            	title: 'UOM',
+				                            	editable: false,
+				                            	editor: measurementEditor,
+				                            	template: '#=item_price?item_price.measurement:banhji.emptyString#',
+				                            	width: '80px'
+				                            },
+				                            {
+											    field: 'price',
+											    title: 'PRICE',
+											    editable: 'false',
+											    format: '{0:n}',
+											    editor: numberTextboxEditor,
+											    width: '120px',
+											    attributes: { style: 'text-align: right;' }
+											},
+				                            { 
+				                            	field: 'amount', 
+				                            	title:'AMOUNT', 
+				                            	format: '{0:n}', 
+				                            	editable: 'false', 
+				                            	attributes: { style: 'text-align: right;' }, width: '120px' 
+				                            }
+				                         ]"
+				                         data-auto-bind="false"
+						                 data-bind="source: lineDS" >
+						            </div>
+				            		<!-- <div class="span4">
 				            			<table class="table table-bordered table-primary table-striped table-vertical-center" style="margin-top: 0px; color: #333;">
 									        <thead>
 									            <tr>
@@ -1271,7 +1336,7 @@
 								        		data-bind="source: itemsUpdateDS">
 								        	</tbody>
 									    </table>
-				            		</div>
+				            		</div> -->
 				           		</div>
 			            		<div class="box-generic bg-action-button" style="margin-top: 15px;">
 									<div class="row">
@@ -1613,6 +1678,10 @@
 			font-size: 20px;
 			padding: 0;
 			margin: 0;
+			font-family: 'Battambang', Arial!important;
+		}
+		.inv1 tfoot td, .inv1 tbody td {
+			border-bottom: 1px solid \#000!important;
 		}
 	</style>
   	<div style="margin: 0 auto;">
@@ -1622,15 +1691,15 @@
 	        		<div style="text-align: center; margin: 0 auto; width:100% ;">
 	        			<img style="text-align: center; width: 150px; margin-bottom: 10px;" src="#= banhji.institute.logo.url#" />
 	            	</div>
-	            	<p style="text-align: center; margin-bottom: 5px;font-size :25px;font-weight: bold;">#= banhji.institute.name #</p>
+	            	<p style="text-align: center; margin-bottom: 5px;font-size :25px;font-weight: bold;font-family: 'Preahvihear', 'Roboto Slab' !important">#= banhji.institute.name #</p>
 	            	<p style="text-align: center; margin-bottom: 5px;font-weight: bold;">Tel: #= banhji.institute.telephone#</p>
-	            	<p style="border-top: 2px solid \#000;border-bottom: 2px solid \#000; text-align: center;margin-bottom: 5px;padding: 10px 0;background: \#fff;color: \#000;margin-top: 10px;"><span style="font-size: 20px; font-weight: 700;">វិក្កយបត្រ</span> / <span style="font-size: 20px; font-weight: 700;">Invoice</span></p>
+	            	<p style="border-top: 2px solid \#000;border-bottom: 2px solid \#000; text-align: center;margin-bottom: 5px;padding: 10px 0;background: \#fff;color: \#000;margin-top: 10px;"><span style="font-size: 20px; font-weight: 700;font-family: 'Preahvihear', 'Roboto Slab' !important">វិក្កយបត្រ</span> / <span style="font-size: 20px; font-weight: 700;font-family: 'Preahvihear', 'Roboto Slab' !important">Invoice</span></p>
 	        	</div>
 	            <div class="clear mid-header" style="padding-bottom: 10px;">
 	                <table style="width: 100%; ">
 	                	<tr>
 	                		<td style="width: 55%; padding: 0;">
-	                			<span>វិក្កយបត្រ</span>
+	                			<span >វិក្កយបត្រ</span>
 	                			/
 	                			<span>Invoice No</span>
 	                		</td>
@@ -1663,17 +1732,17 @@
 	                </table>
 	            </div>
 	        	<div class="clear">
-	            	<table cellpadding="0" cellspacing="0" border="1" class="span12" style="width: 100%; margin-bottom: 20px;">
+	            	<table cellpadding="0" cellspacing="0" border="0" class="span12" style="width: 100%; margin-bottom: 20px;">
 	                	<thead style="">
 	                        <tr class="main-color" style="height: 45px;background: \#203864!important;">
-	                            <th style="padding: 10px 0;font-size: 16px; text-align: center;color: \#000!important;background: \#fff!important;border: 1px solid \#000!important;">បរិយាយ​មុខ​ទំនិញ<br />Description</th>
-	                            <th style="padding: 10px 0;font-size: 16px; text-align: center;color: \#000!important;background: \#fff!important;border: 1px solid \#000!important;">បរិមាណ<br />Quantity</th>
-	                            <th style="padding: 10px 0;font-size: 16px; text-align: center;width: 30%;color: \#000!important;background: \#fff!important;border: 1px solid \#000!important;">ថ្លៃ​ទំនិញ<br />Amount</th>
+	                            <th style="padding: 5px 0;font-size: 16px; text-align: center;color: \#000!important;background: \#fff!important;border-top: 2px solid \#000!important;border-bottom: 2px solid \#000!important;">បរិយាយ​មុខ​ទំនិញ<br />Description</th>
+	                            <th style="padding: 5px 0;font-size: 16px; text-align: center;color: \#000!important;background: \#fff!important;border-top: 2px solid \#000!important;border-bottom: 2px solid \#000!important;">បរិមាណ<br />Quantity</th>
+	                            <th style="padding: 5px 0;font-size: 16px; text-align: center;width: 30%;color: \#000!important;background: \#fff!important;border-top: 2px solid \#000!important;border-bottom: 2px solid \#000!important;">ថ្លៃ​ទំនិញ<br />Amount</th>
 	                        </tr>
 	                    </thead>
 						<tbody style="margin-top: 2px" id="formListView">
 							#$.each(items, function(i,v){#
-								<tr>
+								<tr style="">
 									<td>#: v.item.name#</td>
 									<td align="center"><strong>#: v.quantity # #: v.measurement.measurement#</strong></td>
 									<td align="right"><strong style="font-size: 22px;">#= kendo.toString(v.amount, v.locale=="km-KH"?"c0":"c", v.locale)#</strong></td>
@@ -1681,24 +1750,24 @@
 							#})#
 						</tbody>
 	                    <tfoot>
-	                    	<tr>
+	                    	<tr style="">
 								<td colspan="2" style="padding-right: 10px;text-align: right;">សរុបរង / Sub Total</td>
-								<td style="border: 1px solid;text-align: right"><strong style="font-size: 22px;">#= kendo.toString(sub_total, locale=="km-KH"?"c0":"c", locale)#</strong></td>
+								<td style="text-align: right"><strong style="font-size: 22px;">#= kendo.toString(sub_total, locale=="km-KH"?"c0":"c", locale)#</strong></td>
 							</tr>
-							<tr>
+							<tr style="">
 								<td colspan="2" style="padding-right: 10px;text-align: right;">បញ្ចុះតម្លៃ / Discount</td>
-								<td style="border: 1px solid;text-align: right"><strong style="font-size: 22px;">#= kendo.toString(discount, locale=="km-KH"?"c0":"c", locale)#</strong></td>
-							</tr>
+								<td style="text-align: right"><strong style="font-size: 22px;">#= kendo.toString(discount, locale=="km-KH"?"c0":"c", locale)#</strong></td>
+							</tr >
 							#$.each(banhji.Index.currencyDS.data(), function(i,v){#
-								<tr>
+								<tr style="">
 									<td colspan="2" style="padding-right: 10px;text-align: right;">សរុបជា #= v.code#</td>
-									<td style="border: 1px solid;text-align: right;"><strong style="font-size: 22px;">#= kendo.toString(amount / v.rate, v.locale=="km-KH"?"c0":"c", v.locale)#</strong></td>
+									<td style="text-align: right;"><strong style="font-size: 22px;">#= kendo.toString(amount / v.rate, v.locale=="km-KH"?"c0":"c", v.locale)#</strong></td>
 								</tr>
 							#})#
 							#if(banhji.printBill.amountperson > 0){#
-								<tr>
+								<tr style="">
 									<td colspan="2" style="padding-right: 10px;text-align: right;">ទឹកប្រាក់ត្រូវបង់</td>
-									<td style="border: 1px solid;text-align: right;background: \#000!important;"><strong style="color: \#fff;font-size: 22px;">#= kendo.toString(banhji.printBill.amountperson, locale=="km-KH"?"c0":"c", locale)#</strong></td>
+									<td style="text-align: right;background: \#000!important;"><strong style="color: \#fff;font-size: 22px;">#= kendo.toString(banhji.printBill.amountperson, locale=="km-KH"?"c0":"c", locale)#</strong></td>
 								</tr>
 							#}#
 	                    </tfoot>

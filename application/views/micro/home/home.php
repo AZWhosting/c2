@@ -43,6 +43,47 @@
                             </div>
                         </div>
                     </div>
+                    <!-- <div style="float: left; width: 100%">
+                        <div class="row">
+                            <div class="col-6 col-md-3">
+                                <a href="<?php echo base_url()?>micro/sales#/">
+                                    <div class="functionHome">
+                                        <img src="<?php echo base_url()?>assets/micro/sale.png "/>
+                                        <p data-bind="text: lang.lang.check_out"></p>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <a href="<?php echo base_url()?>micro/purchases#/">
+                                    <div class="functionHome">
+                                        <img src="<?php echo base_url()?>assets/micro/purchases.png "/>
+                                        <p data-bind="text: lang.lang.purchase"></p>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <div class="col-6 col-md-3">
+                                <a href="<?php echo base_url()?>micro/items#/">
+                                    <div class="functionHome">
+                                        <img src="<?php echo base_url()?>assets/micro/inventory.png"/>
+                                        <p data-bind="text: lang.lang.items"></p>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <a href="<?php echo base_url()?>micro/cashs#/">
+                                    <div class="functionHome">
+                                        <img src="<?php echo base_url()?>assets/micro/cash.png "/>
+                                        <p data-bind="text: lang.lang.cash"></p>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div> -->
+                       
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-6">
                     <div style="float: left; width: 100%">
                         <div class="row">
                             <div class="col-6 col-md-3">
@@ -80,11 +121,7 @@
                             </div>
                         </div>
                     </div>
-                       
-                </div>
-
-                <div class="col-12 col-md-6 col-lg-6">
-                    <div class="row">
+                    <!-- <div class="row">
                         <div class="col-md-6">
                             <div class="card" >
                                 <div class="card-body">
@@ -175,13 +212,106 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
 
             </div>
+
+            <div class="row home">
+                <div class="col-12 col-md-3">
+                    <div class="card" >
+                        <div class="card-body">
+                            <a href="<?php echo base_url()?>micro/sales#/sale_summary_by_customer">
+                                <div class="saleOverview" >
+                                    <h2 data-bind="text: lang.lang.sale"></h2>
+                                    <p data-format="n" data-bind="text: obj.sale"></p>
+                                    <div class="row">
+                                        <div class="col">
+                                            <span data-bind="text: obj.sale_customer"></span> <br/>
+                                            <span data-bind="text: lang.lang.customer"></span>
+                                        </div>
+                                        <div class="col">
+                                            <span data-bind="text: obj.sale_product"></span><br/>
+                                            <span data-bind="text: lang.lang.product"></span>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-12 col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <a href="<?php echo base_url()?>micro/sales#/customer_balance_summary">
+                                <div class="saleOverview">
+                                    <h2 data-bind="text: lang.lang.receivable"></h2>
+                                    <p data-format="n" data-bind="text: obj.ar"></p>
+                                    <div class="row">
+                                        <div class="col">
+                                            <span data-bind="text: obj.ar_open"></span>
+                                            <span data-bind="text: lang.lang.open"></span>
+                                        </div>
+                                        <div class="col">
+                                            <span data-bind="text: obj.ar_overdue"></span>
+                                            <span data-bind="text: lang.lang.overdue"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-3">
+                    <div class="card">
+                       <div class="card-body" >
+                            <a href="<?php echo base_url()?>micro/purchases#/purchase_summary_product_services">
+                                <div class="saleOverview" >
+                                    <h2 data-bind="text: lang.lang.purchase"></h2>
+                                    <p data-format="n" data-bind="text: objVendor.purchase"></p>
+                                    <div class="row">
+                                        <div class="col">
+                                            <span data-bind="text: objVendor.purchase_supplier"></span>
+                                            <span data-bind="text: lang.lang.supplier"></span>
+                                        </div>
+                                        <div class="col">
+                                            <span data-bind="text: objVendor.purchase_product"></span>
+                                            <span data-bind="text: lang.lang.product"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <a href="<?php echo base_url()?>micro/purchases#/suppliers_balance_summary">
+                                <div class="saleOverview" >
+                                    <h2 data-bind="text: lang.lang.payables"></h2>
+                                    <p data-format="n" data-bind="text: objVendor.ap"></p>
+                                    <div class="row">
+                                        <div class="col">
+                                            <span data-bind="text: objVendor.ap_open"></span>
+                                            <span data-bind="text: lang.lang.open"></span>
+                                        </div>
+                                        <div class="col">
+                                            <span  data-bind="text: objVendor.ap_overdue"></span>
+                                            <span data-bind="text: lang.lang.overdue"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
             
-            <div class="row home-footer hidden-sm-down">
-                <!-- Column -->
+           <!--  <div class="row home-footer hidden-sm-down">
+                
                 <div class="col">
                     <div class="card card-body">
                         <div class="top5" >
@@ -201,8 +331,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- Column -->
-                <!-- Column -->
+               
                 <div class="col">
                     <div class="card card-body">
                         <div class="top5" >
@@ -222,8 +351,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- Column -->
-                <!-- Column -->
+                
                 <div class="col">
                     <div class="card card-body">
                         <div class="top5" >
@@ -243,8 +371,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- Column -->
-                <!-- Column -->
+                
                 <div class="col">
                     <div class="card card-body">
                         <table class="table color-table dark-table">
@@ -262,8 +389,8 @@
                         </table>
                     </div>
                 </div>
-                <!-- Column -->
-            </div>
+                
+            </div> -->
 
         </div>
     </div>

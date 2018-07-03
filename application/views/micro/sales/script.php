@@ -3862,6 +3862,8 @@
         sessionDS           : dataStore(apiUrl + "cashier"),
         haveItems           : false,
         parkSaleDS          : dataStore(apiUrl + "transactions"),
+        parkSaleLineDS      : dataStore(apiUrl + "item_lines"),
+        currencyDS          : dataStore(apiUrl + "utibills/currency"),
         currencyDS          : dataStore(apiUrl + "utibills/currency"),
         numberParkSale      : 0,
         pageLoad            : function(){
@@ -3964,53 +3966,6 @@
         },
         closeBarcodeWindow  : function(){
             this.set("barcodeVisible", false);
-        },
-        insertItem          : function(data){
-            var self = this, 
-                obj = this.get("obj"),
-                rate = obj.rate / banhji.source.getRate(data.locale, new Date(obj.issued_date));
-
-            //Get cost
-            this.wacDS.query({
-                filter:[
-                    { field:"item_id", value: data.id },
-                    { field:"issued_date <=", operator:"where_related_transaction", value: kendo.toString(new Date(obj.issued_date),"yyyy-MM-dd  HH:mm:ss") }
-                ]
-            }).then(function(){
-                var wac = self.wacDS.view();
-                
-                var item_price = { 
-                    measurement_id  : data.measurement_id,
-                    price           : kendo.parseFloat(data.price),
-                    conversion_ratio: 1, 
-                    measurement     : data.measurement.name 
-                };
-
-                self.lineDS.insert(0, {
-                    transaction_id      : obj.id,
-                    tax_item_id         : 0,
-                    item_id             : data.id,
-                    assembly_id         : 0,
-                    measurement_id      : data.measurement_id,
-                    description         : data.sale_description,
-                    quantity            : 1,
-                    conversion_ratio    : 1,
-                    cost                : wac[0].cost * rate,
-                    price               : data.price,
-                    amount              : data.price,
-                    discount            : 0,
-                    discount_percentage : 0,
-                    tax                 : 0,
-                    rate                : rate,
-                    locale              : data.locale,
-                    movement            : -1,
-                    reference_no        : "",
-
-                    item                : data,
-                    item_price          : item_price,
-                    tax_item            : { id:"", name:"" }
-                });
-            });
         },
         //Deposit
         loadDeposit         : function(){
@@ -4140,10 +4095,10 @@
             row.set("locale", item.locale);
 
             //Item base price
-            var item_price = { 
+            var item_price = {
                 measurement_id  : item.measurement_id,
                 price           : kendo.parseFloat(item.price),
-                conversion_ratio: 1, 
+                conversion_ratio: 1,
                 measurement     : item.measurement.name
             };
             row.set("item_price", item_price);
@@ -4219,11 +4174,11 @@
                 row.set("rate", rate);
                 row.set("locale", item.locale);
 
-                var measurement = { 
+                var measurement = {
                     measurement_id  : item.measurement_id,
                     price           : kendo.parseFloat(item.price * rate),
-                    conversion_ratio: 1, 
-                    measurement     : item.measurement.name 
+                    conversion_ratio: 1,
+                    measurement     : item.measurement.name
                 };
                 row.set("measurement", measurement);
 
@@ -4233,7 +4188,7 @@
                     var view = self.assemblyDS.view();
 
                     $.each(view, function(index, value){
-                        var itemAssembly = value.item, 
+                        var itemAssembly = value.item,
                             itemAssemblyRate = obj.rate / banhji.source.getRate(itemAssembly.locale, new Date(obj.issued_date));
 
                         self.assemblyLineDS.add({
@@ -4265,7 +4220,7 @@
         invAmount: 0,
         invAccountID : 0,
         invLocale: banhji.institute.locale,
-        changes       : function(){
+        changes             : function(){
             var self = this, obj = this.get("obj"),
                 total = 0, subTotal = 0, discount =0, tax = 0, remaining = 0, amount_due = 0, itemIds = [];
 
@@ -4280,8 +4235,8 @@
                 }
 
                 //Tax by line
-                if(value.tax_item.id>0){
-                    var taxAmount = amt * parseFloat(value.tax_item.rate);
+                if(value.tax_item_id>0){
+                    var taxAmount = amt * value.tax_item.rate;
                     tax += taxAmount;
                     value.set("tax", taxAmount);
                 }else{
@@ -4293,37 +4248,32 @@
                 if(value.item_id>0){
                     itemIds.push(value.item_id);
                 }
-                var name = "";
-                
-                if(value.therapist.length > 0){
-                    $.each(value.therapist, function(j,k){
-                        name = name + k.name + ",";
-                        var h = 0;
-                        $.each(self.employeeAR, function(l,m){
-                            if(k.id == m.id){
-                                h = 1;
-                            }
-                        });
-                        if(h != 1){
-                            self.employeeAR.push({
-                                id: k.id,
-                                name: k.name
-                            });
-                            h = 0;
-                        }
-                    })
-                }
-                self.lineDS.data()[index].set("therapistname", name);
             });
 
             //Total
             total = (subTotal + tax) - discount;
 
-            //Warning over credit allowed
-            if(obj.credit_allowed>0 && total>obj.credit_allowed){
-                this.set("amtDueColor", "Gold");
-            }else{
-                this.set("amtDueColor", banhji.source.amtDueColor);
+            //Apply Deposit
+            if(obj.deposit>0){
+                if(obj.deposit <= this.get("total_deposit")){
+                    if(obj.deposit <= total){
+                        remaining = total - obj.deposit;
+                    }else{
+                        obj.set("deposit", total);
+                    }
+                }else{
+                    obj.set("deposit", 0);
+                    alert("Over deposit to apply!");
+                }
+
+                //Status
+                if(remaining==0){
+                    obj.set("status", 1);
+                }else if(remaining==total){
+                    obj.set("status", 0);
+                }else{
+                    obj.set("status", 2);
+                }
             }
 
             amount_due = total - obj.deposit;
@@ -4336,12 +4286,6 @@
 
             this.set("total", kendo.toString(total, "c", obj.locale));
             this.set("amount_due", kendo.toString(amount_due, "c", obj.locale));
-            
-            
-            this.set("invTax", tax);
-            this.set("invDiscount", discount);
-            this.set("invSubTotal", subTotal);
-            this.set("invAmount", total);
 
             //Remove Assembly Item List
             var raw = this.assemblyLineDS.data();
@@ -4353,7 +4297,13 @@
                     this.assemblyLineDS.remove(item);
                 }
             }
-            this.setDefaultReceiptCurrency(total);
+
+            //Check invoice paid
+            if(obj.status=="1" && this.lineDS.hasChanges()){
+                this.lineDS.cancelChanges();
+
+                $("#ntf1").data("kendoNotification").warning(banhji.source.noChangeInvoicePaidMessage);
+            }
         },
         lineDSChanges       : function(arg){
             var self = banhji.checkOut;
@@ -4371,7 +4321,7 @@
                         self.addItem(dataRow.uid);
                     }
 
-                    self.addExtraRow(dataRow.uid);
+                    // self.addExtraRow(dataRow.uid);
                 }else if(arg.field=="quantity" || arg.field=="price" || arg.field=="discount"){
                     self.changes();
                 }else if(arg.field=="item_price"){
@@ -4387,12 +4337,10 @@
                     dataRow.set("discount", percentageAmount);
                 }else if(arg.field=="tax_item"){
                     var dataRow = arg.items[0];
-                    
+
                     dataRow.set("tax_item_id", dataRow.tax_item.id);
                     dataRow.set("tax", 0);
 
-                    self.changes();
-                }else{
                     self.changes();
                 }
             }
@@ -4547,8 +4495,8 @@
 
                     self.set("obj", view[0]);
                     self.set("total", kendo.toString(view[0].amount, "c2", view[0].locale));
-                    self.set("amount_due", kendo.toString(view[0].amount - view[0].deposit, "c2", view[0].locale));                 
-                    self.setStatus();
+                    self.set("amount_due", kendo.toString(view[0].amount - view[0].deposit, "c2", view[0].locale));
+                    
                     self.loadDeposit();
 
                     self.lineDS.query({
@@ -4652,38 +4600,72 @@
             this.set('haveParkSale', false);
             this.makeChoice();
         },
-        addRow        : function(e){
-            var obj = this.get("obj");
-            var item = e.data;
-            var self = this;
-            var rate = banhji.source.getRate(item.locale, this.get("dateSelected"));
-            var price = item.price / rate;
-            this.lineDS.add({
-                transaction_id      : obj.id,
-                tax_item_id         : "",
-                item_id             : item.id,
-                assembly_id         : 0,
-                measurement_id      : 0,
-                description         : "",
-                quantity            : 1,
-                conversion_ratio    : 0,
-                cost                : 0,
-                price               : price,
-                amount              : price,
-                avarage_cost        : 0,
-                discount            : 0,
-                rate                : rate,
-                locale              : item.locale,
-                movement            : 0,
-                discount_percentage : 0,
-                item                : item,
-                measurement         : item.measurement,
-                item_price          : item.measurement,
-                tax_item            : { id:"", name:"" },
-                therapist           : { id: "", name: ""},
-                therapistname       : "",
+        addRow              : function(e){
+            var self = this, 
+                obj = this.get("obj"), 
+                item = e.data,
+                rate = banhji.source.getRate(item.locale, this.get("dateSelected")),
+                price = item.price / rate,
+                notExist = true;
+
+            //Check exist item            
+            $.each(this.lineDS.data(), function(index, value){
+                if(value.item_id==item.id){
+                    notExist = false;
+
+                    value.set("quantity", value.quantity+1);
+
+                    self.changes();
+
+                    return false;
+                }
             });
-            this.changes();
+
+            if(notExist){
+                //Get cost
+                this.wacDS.query({
+                    filter:[
+                        { field:"item_id", value: item.id },
+                        { field:"issued_date <=", operator:"where_related_transaction", value: kendo.toString(new Date(obj.issued_date),"yyyy-MM-dd  HH:mm:ss") }
+                    ]
+                }).then(function(){
+                    var wac = self.wacDS.view();
+
+                    self.lineDS.add({
+                        transaction_id      : obj.id,
+                        tax_item_id         : "",
+                        item_id             : item.id,
+                        assembly_id         : 0,
+                        measurement_id      : 0,
+                        description         : "",
+                        quantity            : 1,
+                        conversion_ratio    : 1,
+                        cost                : wac[0].cost * rate,
+                        price               : price,
+                        amount              : price,
+                        avarage_cost        : 0,
+                        discount            : 0,
+                        rate                : rate,
+                        locale              : item.locale,
+                        movement            : -1,
+                        discount_percentage : 0,
+                        item                : item,
+                        measurement         : item.measurement,
+                        item_price          : item.measurement,
+                        tax_item            : { id:"", name:"" },
+                        therapist           : { id: "", name: ""},
+                        therapistname       : "",
+                    });
+
+                    self.changes();
+                });
+            }
+        },
+        addRowFromPS        : function(e){
+            var data = e.data;
+
+            this.loadObj(data.id);
+            this.parkSaleClose();
         },
         addExtraRow         : function(uid){
             var row = this.lineDS.getByUid(uid),
@@ -4729,7 +4711,7 @@
             return result;
         },
         //Journal
-        addJournal      : function(transaction_id){
+        addJournal          : function(transaction_id){
             var self = this,
             obj = this.get("obj"),
             contact = obj.contact,
@@ -4748,28 +4730,28 @@
                 var item = value.item;
 
                 //COGS on Dr
-                if(item.item_type_id==1){
+                if(item.item_type_id=="1"){
                     var cogsID = kendo.parseInt(item.expense_account_id);
                     if(cogsID>0){
                         raw = "dr"+cogsID;
 
                         var cogsAmount = value.amount;
-                        if(item.item_type_id==1 || item.item_type_id==4){
+                        if(item.item_type_id=="1" || item.item_type_id=="4"){
                             cogsAmount = (value.quantity*value.conversion_ratio)*value.cost;
                         }
 
                         if(entries[raw]===undefined){
                             entries[raw] = {
-                                transaction_id    : transaction_id,
+                                transaction_id  : transaction_id,
                                 account_id      : cogsID,
                                 contact_id      : obj.contact_id,
                                 description     : value.description,
                                 reference_no    : "",
-                                segments      : obj.segments,
-                                dr          : cogsAmount * value.rate,
-                                cr          : 0,
-                                rate        : value.rate,
-                                locale        : item.locale
+                                segments        : obj.segments,
+                                dr              : cogsAmount * value.rate,
+                                cr              : 0,
+                                rate            : value.rate,
+                                locale          : item.locale
                             };
                         }else{
                             entries[raw].dr += cogsAmount;
@@ -4783,22 +4765,22 @@
                     raw = "cr"+inventoryID;
 
                     var inventoryAmount = value.amount;
-                    if(item.item_type_id==1 || item.item_type_id==4){
+                    if(item.item_type_id=="1" || item.item_type_id=="4"){
                         inventoryAmount = (value.quantity*value.conversion_ratio)*value.cost;
                     }
 
                     if(entries[raw]===undefined){
                         entries[raw] = {
-                            transaction_id    : transaction_id,
+                            transaction_id  : transaction_id,
                             account_id      : inventoryID,
                             contact_id      : obj.contact_id,
                             description     : value.description,
                             reference_no    : "",
-                            segments      : obj.segments,
-                            dr          : 0,
-                            cr          : inventoryAmount * value.rate,
-                            rate        : value.rate,
-                            locale        : item.locale
+                            segments        : obj.segments,
+                            dr              : 0,
+                            cr              : inventoryAmount * value.rate,
+                            rate            : value.rate,
+                            locale          : item.locale
                         };
                     }else{
                         entries[raw].cr += inventoryAmount;
@@ -4813,16 +4795,16 @@
                     var saleAmount = value.quantity * value.price;
                     if(entries[raw]===undefined){
                         entries[raw] = {
-                            transaction_id    : transaction_id,
+                            transaction_id  : transaction_id,
                             account_id      : incomeID,
                             contact_id      : obj.contact_id,
                             description     : value.description,
                             reference_no    : "",
-                            segments      : obj.segments,
-                            dr          : 0,
-                            cr          : saleAmount,
-                            rate        : obj.rate,
-                            locale        : obj.locale
+                            segments        : obj.segments,
+                            dr              : 0,
+                            cr              : saleAmount,
+                            rate            : obj.rate,
+                            locale          : obj.locale
                         };
                     }else{
                         entries[raw].cr += value.amount;
@@ -4836,16 +4818,16 @@
 
                     if(entries[raw]===undefined){
                         entries[raw] = {
-                            transaction_id    : transaction_id,
+                            transaction_id  : transaction_id,
                             account_id      : taxItem.account_id,
                             contact_id      : obj.contact_id,
                             description     : value.description,
                             reference_no    : "",
-                            segments      : obj.segments,
-                            dr          : 0,
-                            cr          : value.tax,
-                            rate        : obj.rate,
-                            locale        : obj.locale
+                            segments        : obj.segments,
+                            dr              : 0,
+                            cr              : value.tax,
+                            rate            : obj.rate,
+                            locale          : obj.locale
                         };
                     }else{
                         entries[raw].cr += taxAmt;
@@ -5002,13 +4984,13 @@
 
             this.journalLineDS.sync();
         },
-        removeRow       : function(e){
+        removeRow           : function(e){
             var data = e.data;
             this.lineDS.remove(data);
             this.changes();
         },
         //Deposit
-        addDeposit      : function(id){
+        addDeposit          : function(id){
             var obj = this.get("obj");
 
             this.depositDS.data([]);
@@ -5026,7 +5008,7 @@
                 });
             }
         },
-        saveDeposit     : function(id){
+        saveDeposit         : function(id){
             var obj = this.get("obj");
 
             if(this.get("isEdit")){
@@ -5140,74 +5122,6 @@
             var dialog = $("#dialog").getKendoWindow();
             dialog.open();
             dialog.center();
-        },
-        save                : function(){
-            var self = this, obj = this.get("obj");
-
-            obj.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
-            obj.set("due_date", kendo.toString(new Date(obj.due_date), "yyyy-MM-dd"));
-
-
-            if(obj.credit_limit>0 && obj.amount>obj.credit_allowed){
-                alert("Over credit allowed!");
-            }
-
-            this.removeEmptyRow();
-
-
-            if(this.get("saveDraft")){
-                obj.set("status", 4); //In progress
-                obj.set("progress", "Draft");
-                obj.set("is_journal", 0);//No Journal
-            }
-
-            //Edit Mode
-            if(obj.isNew()==false){
-                //Use draft
-                if(obj.status==4){
-                    obj.set("status", 0);//Open
-                    obj.set("progress", "");
-                    obj.set("is_journal", 1);//Add Journal
-                }
-            } 
-
-            //Save Obj
-            this.objSync()
-            .then(function(data){ //Success
-                if(self.get("isEdit")==false){
-                    //Item line
-                    $.each(self.lineDS.data(), function(index, value){
-                        value.set("transaction_id", data[0].id);
-                    });
-
-                    //Assembly Item line
-                    $.each(self.assemblyLineDS.data(), function(index, value){
-                        value.set("transaction_id", data[0].id);
-                    });
-                } 
-
-                self.lineDS.sync();
-                self.assemblyLineDS.sync();
-
-                return data;
-            }, function(reason) { //Error
-                $("#ntf1").data("kendoNotification").error(reason);
-            }).then(function(result){
-                $("#ntf1").data("kendoNotification").success(banhji.source.successMessage);
-                if(self.get("saveDraft") || self.get("saveClose")){
-                    self.set("saveDraft", false);
-                    self.set("saveClose", false);
-                    self.cancel();
-                }else if(self.get("savePrint")){
-                    self.set("savePrint", false);
-                    self.clear();
-                    if(result[0].transaction_template_id>0){
-                        banhji.router.navigate("/invoice_form/"+result[0].id);
-                    }
-                }else{
-                    self.addEmpty();
-                }
-            });
         },
         clear               : function(){
             this.dataSource.cancelChanges();
@@ -6024,13 +5938,13 @@
                 });
                 return data;
             }, function(reason) { //Error
-                $("#ntf1").data("kendoNotification").error(reason);
+                // $("#ntf1").data("kendoNotification").error(reason);
             }).then(function(result){
                 if(status != 3){
                     banhji.router.navigate("/print_bill/"+self.dataSource.data()[0].id);
                 }
                 self.addEmpty();
-                $("#ntf1").data("kendoNotification").success(banhji.source.successMessage);
+                // $("#ntf1").data("kendoNotification").success(banhji.source.successMessage);
             });
         },
         saveInvoice         : function(){
@@ -6039,7 +5953,7 @@
             obj.set("type", "Invoice");
             obj.set("payment_term_id", 5);
             obj.set("transaction_template_id", 3);
-            obj.set("account_id", "");
+            // obj.set("account_id", "");
             this.receipCurrencyDS.data([]);
             this.receipChangeDS.data([]);
             obj.set("number", "");
@@ -6061,7 +5975,7 @@
         parkSaleShow        : function(e){
             this.set('haveParkSale', true);
         },   
-        parkSaleClose       : function(e){
+        parkSaleClose       : function(){
             this.set('haveParkSale', false);
         },
         payClick            : function(e){

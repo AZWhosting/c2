@@ -452,7 +452,7 @@
 					             		attributes: { style: 'text-align: center;'}
 					             	},
 					             	{ 
-					             		field: 'name', 
+					             		field: 'contact.name', 
 					             		title : 'NAME', 
 					             		filterable: false 
 					             	},
@@ -482,7 +482,7 @@
 					                },
 					                { 
 					                	title: 'ACTIONS',
-					                	template: kendo.template($('#transactions-action-tmpl').html()),
+					                	template: '<button data-bind=click:addRowFromPS>USE</button>',
 					                	attributes: { style: 'text-align: center;'}
 					                }
 					             ]"
@@ -575,32 +575,6 @@
 							<!-- <div id="date-part"></div> -->
 							Time: <span id='time-part'></span>
 						</div>
-						<!-- <input 
-							data-role="dropdownlist"
-							data-template="contact-list-tmpl" 
-							data-auto-bind="false" 
-							data-value-primitive="true" 
-							data-filter="startswith" 
-							data-text-field="name" 
-							data-value-field="id"
-							data-option-label="Select Customer..."
-							data-bind="
-								value: customerSelected,
-                              	source: contactDS,
-                              	events: {change: addCustomer}"
-                            style="width: 100%; float: left;margin-right: 2%; margin-bottom: 5px;" 
-                            aria-invalid="true" 
-                            class="k-invalid marginBottom"
-                        />
-                        <div class="table-responsive">
-							<table class="table color-table dark-table">
-						        <tbody data-role="listview" 
-					        		data-template="customer-select-list-tmpl" 
-					        		data-auto-bind="false"
-					        		data-bind="source: customerAR">
-					        	</tbody>
-						    </table>
-		                </div> -->
                     </div>
 					<div class="col checkOut-button">
 						<a style="padding: 9px 15px; box-shadow: 2px 0px 12px 0px rgba(68,68,68,1); border-radius: 5px;" class="custom btn waves-effect waves-light btn-block btn-info" data-bind="click: parkSaleShow">
@@ -632,7 +606,7 @@
 				                 	{ 
 				                 		field: 'item', 
 				                 		title: 'PRODUCTS/SERVICES', 
-				                 		editor: false, 
+				                 		editor: itemEditor, 
 				                 		template: '#=item.name#', width: '170px' 
 				                 	},
 		                            {

@@ -2983,11 +2983,32 @@
 										     data-bind="source: readingVM.dataSource"></div>
 
 					        	</div>
-						        <div class="tab-pane" id="tab-4" style="position: relative;">
-						        	<span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="click: payAllInstallment"><i></i> <span data-bind="text: lang.lang.pay_installment"></span></span>
+						        <div class="tab-pane" id="tab-4" style="position: relative;overflow: hidden;min-height: 150px;">
+						        	<!-- <span id="saveNew" class="btn btn-icon btn-primary glyphicons ok_2" data-bind="visible: haveFullInsBtn, click: payAllInstallment"><i></i> <span data-bind="text: lang.lang.pay_installment"></span></span> -->
 
-						        	<div style="position: absolute; left: 0; top: 0;width: 100%;height: 100%; background: rgba(255, 255, 255, .7);">
-
+						        	<div data-bind="visible: havePaidIns" style="position: absolute; left: 0; top: 0;width: 100%;height: 100%; background: rgba(255, 255, 255, .7);z-index: 1;">
+						        		<div style="background: #fff;margin: 0 auto;padding: 10px;border: 5px solid #ccc;width: 50%;margin-top: 20px;">
+						        			<div style="clear: both; overflow: hidden;position: relative;text-align: right;">
+						        				<span class="glyphicons no-js remove_2" style="padding: 12px;" data-bind="click: closePaidIns"><i></i></span>
+						        			</div>
+						        			<div style="clear: both; overflow: hidden;position: relative;">
+						        				<p style="float: left;"><span data-bind="text: lang.lang.paid"></span> : <span data-bind="text: insAmountPaid"></span></p>
+						        				<p style="float: right;"><span data-bind="text: lang.lang.amount"></span> : <span data-bind="text: insFullAmount"></span></p>
+						        			</div>
+						        			<div style="clear: both; overflow: hidden;position: relative;">
+						        				<p style="float: left;margin: 0; padding: 5.5px;background: #ccc;width: 30%;" data-bind="text: lang.lang.deposit"></p>
+						        				<input 
+							        				type="number" 
+							        				class="k-input k-textbox" 
+							        				placeholder="" 
+							        				style="width:70%;border:1px solid #ccc; float:left;" 
+							        				data-bind="value: insDeposit"/>
+							        		</div>
+						        			<div style="clear: both; width: 100%;overflow: hidden;">
+						        				<p style="float: left;margin: 0;margin-top: 10px;"><span data-bind="text: lang.lang.amount_to_pay"></span> : <span style="font-weight: bold;" data-bind="text: insAmountToPay"></span></p>
+						        				<a href="" style="background: #21abf6;padding: 15px 30px;line-height: 0px;color: #fff;font-weight: bold;margin-top: 10px;float: right;" data-bind="click: savePaidIns, text: lang.lang.save"></a>
+						        			</div>
+						        		</div>
 						        	</div>
 
 						        	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
@@ -3000,7 +3021,7 @@
 								        </thead>
 								        <tbody 
 							        		data-role="listview"
-							        		data-auto-bind=false 
+							        		data-auto-bind="false" 
 							        		data-bind="source: installmentVM.dataSource" 
 							        		data-template="waterCenter-installment-list-template">
 								        </tbody>

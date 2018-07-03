@@ -3868,6 +3868,7 @@ class Utibills extends REST_Controller {
 			if($obj->save()){
 				//Return ballance from old meter
 				if($value->change_meter_id > 0){
+					//convert balance to new meter
 					$balancetxn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 					$balancetxn->where("meter_id", $value->change_meter_id);
 					$idarray = array(0,2);
@@ -3875,11 +3876,19 @@ class Utibills extends REST_Controller {
 					if($balancetxn->exists()){
 						$balancetxn->update_all('meter_id', $obj->id);
 					}
+					//Void old meter
 					$oldmet = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 					$oldmet->where("id", $value->change_meter_id)->limit(1)->get();
 					if($oldmet->exists()){
 						$oldmet->status = 0;
 						$oldmet->save();
+					}
+					//Installment
+					$ins = new Installment(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$ins->where("meter_id", $value->change_meter_id)->limit(1)->get();
+					if($ins->exists()){
+						$ins->meter_id = $obj->id;
+						$ins->save();
 					}
 				}
 				//Add Transaction
@@ -5351,6 +5360,229 @@ class Utibills extends REST_Controller {
 		}
 		//Response Data
 		$this->response($data, 200);
+	}
+	//Pay Installemnt
+	function payinstallment_post() {
+		$models = json_decode($this->post('models'));
+		$data = array();
+		foreach ($models as $value) {
+			$ins = new Installemnt(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$ins->where("meter_id", $value->meter_id)->limit(1)->get();
+			if($ins->exists()){
+				if($value->deposit > 0){
+					$this->deposit($value->deposit, $value->contact_id, $value->user_id);
+				}
+
+			}
+			$ins->paid_in_full = 1;
+			$ins->save();
+			$meter = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$meter->where("id", $value->meter_id)->limit(1)->get();
+
+			$issueddate = new Date();
+			$number = $this->_generate_number('Utility_Invoice', $value->issued_date);
+			$month_of = "";
+			$m = isset($issueddate) ? $issueddate : "";
+			$d = new DateTime($m);
+		    $d->modify('first day of this month');
+		    $month_of = $d->format('Y-m-d');
+
+			$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			// $obj->company_id 		= $value->company_id;
+			$obj->location_id 		= isset($value->location_id) ? $meter->location_id : 0;
+			$obj->contact_id 		= isset($value->contact_id) ? $value->contact_id : "";
+			$obj->payment_term_id	= isset($value->contact->payment_term_id) ? $value->payment_term_id : 0;
+			$obj->payment_method_id = isset($value->contact->payment_method_id) ? $value->payment_method_id : 0;
+			$obj->reference_id 		= isset($value->reference_id) ? $value->reference_id:0;
+			$obj->account_id 		= isset($value->contact->account_id) ? $value->contact->account_id : "";
+			$obj->biller_id 		= isset($value->biller_id) ? $value->biller_id : "";
+		   	$obj->number 			= isset($number) ? $number : "";
+		   	$obj->type 				= isset($value->type) ? $value->type : "";
+		   	$obj->amount 			= isset($value->amount) ? $value->amount : "";
+		   	$obj->rate 				= isset($value->rate) ? $value->rate : "";
+		   	$obj->locale 			= isset($value->locale) ? $value->locale : "";
+		   	$obj->month_of 			= $month_of;
+		   	$obj->issued_date 		= isset($value->issued_date) ? $value->issued_date : "";
+		   	$obj->bill_date 		= isset($value->bill_date) ? $value->bill_date : "";
+		   	$obj->due_date 			= date('Y-m-d', strtotime($value->due_date));
+		   	$obj->is_journal 		= 1;
+		   	$obj->meter_id 			= isset($value->meter_id) ? $value->meter_id: "";
+		   	$obj->status 			= 0;
+		   	$obj->sub_total 		= isset($value->amount) ? $value->amount : "";
+		   	$obj->pole_id 			= isset($value->pole_id) ? $value->pole_id : 0;
+		   	$obj->box_id 			= isset($value->box_id) ? $value->box_id : 0;
+		   	$obj->user_id 			= isset($value->biller_id) ? $value->biller_id : 0;
+		   	$obj->sync 				= 1;
+	   		if($obj->save()){
+	   			//Temp total
+	   			$totalsale = new Tmp_total_sale(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	   			$totalsale->where("location_id", $obj->location_id);
+	   			$totalsale->where("month_of", $month_of)->limit(1)->get();
+	   			if($totalsale->exists()){
+	   				$totalsale->amount += floatval($obj->amount);
+	   				$totalsale->ending_ballance += floatval($obj->amount);
+	   			}else{
+	   				$totalsale->location_id = $obj->location_id;
+	   				$totalsale->month_of = $month_of;
+	   				$totalsale->amount += floatval($obj->amount);
+	   				$totalsale->ending_ballance += floatval($obj->amount);
+	   			}
+
+	   			//Jounal
+	   			$journal = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	   			$journal->transaction_id 	= $obj->id;
+	   			$journal->account_id 		= $value->contact->account_id;
+	   			$journal->contact_id 		= $value->contact->id;
+	   			$journal->dr  		 		= $obj->amount;
+	   			$journal->description 		= "Utility Invoice";
+	   			$journal->cr 		 		= 0.00;
+	   			$journal->rate 		 		= $obj->rate;
+	   			$journal->locale 	 		= $obj->locale;
+	   			$journal->save();
+	   			$journal2 = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	   			$journal2->transaction_id 	= $obj->id;
+	   			$journal2->account_id 		= $value->contact->ra_id;
+	   			$journal2->contact_id 		= $value->contact->id;
+	   			$journal2->dr 		  		= 0.00;
+	   			$journal2->cr 		  		= $obj->amount;
+	   			$journal2->description 		= "Utility Invoice";
+	   			$journal2->rate 	  		= $obj->rate;
+	   			$journal2->locale 	  		= $obj->locale;
+	   			$journal2->save();
+	   			$invoice_lines = [];
+		   		foreach ($value->invoice_lines as $row) {
+		   			//Update Record
+		   			if(isset($row->type) && $row->type == 'usage') {
+		   				$record = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		   				$record->where('id', $row->meter_record_id)->get();
+		   				$record->invoiced = 1;
+		   				$record->save();
+		   			}
+		   			//Update Record of reactive
+		   			if(isset($row->type) && $row->type == 'reactive'){
+		   				$rerecord = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		   				$rerecord->where('id', $row->item_id)->get();
+		   				$rerecord->invoiced = 1;
+		   				$rerecord->save();
+		   			}
+		   			//Update Record Type Meter
+		   			if(isset($row->type) && $row->type == 'meter'){
+		   				$mrecord = new Meter_record(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		   				$mrecord->where('id', $row->meter_record_id)->get();
+		   				$mrecord->invoiced = 1;
+		   				$mrecord->save();
+		   			}
+		   			$line = new Winvoice_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		   			$line->transaction_id 	= $obj->id;
+		   			$line->meter_record_id 	= isset($row->meter_record_id) ? $row->meter_record_id : "";
+		   			$line->description 		= isset($row->description) ? $row->description : "Utility Invoice";
+		   			$line->quantity 		= isset($row->quantity) ? $row->quantity: 0;
+		   			$line->price 			= isset($row->price) ? $row->price : "";
+		   			$line->amount 			= isset($row->amount) ? $row->amount : "";
+		   			$line->rate 			= isset($row->rate) ? $row->rate : "";
+		   			$line->locale 			= isset($row->locale) ? $row->locale : "";
+		   			$line->has_vat 			= isset($row->has_vat) ? $row->has_vat : "";
+		   			$line->type 			= isset($row->type)?$row->type:"";
+		   			$line->item_id 			= isset($row->item_id)?$row->item_id:"";
+		   			//Total Sale
+		   			if($row->type == 'maintenance') {
+		   				$totalsale->maintenance += floatval($row->amount);
+		   			}elseif($row->type == 'exemption'){
+		   				$totalsale->exemption += floatval($row->amount);
+		   			}elseif($row->type == 'usage'){
+		   				$totalsale->usage += intval($row->quantity);
+		   			}
+		   			if($row->type == 'installment') {
+		   				//Update Installment Schedule Invoice = 1
+						$updateInstallSchedule = new Installment_schedule(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						$updateInstallSchedule->where('id', $row->item_id)->limit(1)->get();
+						$updateInstallSchedule->invoiced = 1;
+						$updateInstallSchedule->sync = 2;
+						$updateInstallSchedule->save();
+						//Total Sale
+						$totalsale->installment += floatval($updateInstallSchedule->amount);
+		   			}
+		   			//to do: add to accouting line
+		   			$updateInstallSchedule = isset($updateInstallSchedule) ? $updateInstallSchedule : "";
+		   			if($line->save()){
+		   				$invoice_lines[] = array(
+		   					"id" 				=> $line->id,
+		   					"invoice_id"		=> $line->invoice_id,
+				   			"item_id"			=> $line->item_id,
+				   			"measurement_id" 	=> isset($line->measurement_id)?$line->measurement_id:0,
+				   			"meter_record_id" 	=> $line->meter_record_id,
+				   			"description" 		=> $line->description,
+				   			"quantity"			=> $line->quantity,
+				   			"price" 			=> floatval($line->price),
+				   			"amount" 			=> floatval($line->amount),
+				   			"rate"				=> floatval($line->rate),
+				   			"locale" 			=> $line->locale,
+				   			"has_vat" 			=> $line->has_vat=="true"?true:false,
+				   			"type" 				=> $line->type,
+				   			"installment" 		=> $updateInstallSchedule
+		   				);
+		   			}
+		   		}
+			   	$data["results"][] = array(
+			   		"id" 				=> $obj->id,
+			   	);
+		    }		
+		}
+		$count = count($data);
+		if($count > 0) {
+			$this->response(array("results" => $data), 201);
+		} else {
+			$this->response(array("results" => array()), 401);
+		}			
+	}
+	public function deposit($amount, $contact, $userid){
+		$con = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$con->where("id", $contact)->limit(1)->get();
+		if($con->exists()){
+			$txn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$txn->contact_id = $contact;
+			$txn->payment_term_id = 5;
+			$txn->transaction_template_id = 7;
+			$txn->account_id = 55;
+			$txn->user_id = $userid;
+			$issueddate = new Date();
+			$txn->number = $this->_generate_number("Customer_Deposit", $issueddate);
+			$txn->type = 'Customer_Deposit';
+			$txn->status = 0;
+			$txn->amount = $amount;
+			$txn->rate = 1;
+			$txn->locale = $con->locale;
+			$txn->issued_date = $issueddate;
+			$txn->start_date = $issueddate;
+			$txn->frequency = 'Daily';
+			$txn->month_option = 'Day';
+			$txn->interval = 1;
+			$txn->day = 1;
+			$txn->is_journal = 1;
+			if($txn->save()){
+				$j1 = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$j1->transaction_id = $txn->id;
+				$j1->account_id = 7;
+				$j1->contact_id = $txn->contact_id;
+				$j1->dr = $txn->amount;
+				$j1->cr = 0;
+				$j1->description = 'UtiBill Deposit';
+				$j1->rate = $txn->rate;
+				$j1->locale = $txn->locale;
+				$j1->save();
+
+				$j2 = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$j2->transaction_id = $txn->id;
+				$j2->account_id = 55;
+				$j1->contact_id = $txn->contact_id;
+				$j2->cr = $txn->amount;
+				$j2->dr = 0;
+				$j2->description = 'UtiBill Deposit';
+				$j2->rate = $txn->rate;
+				$j2->locale = $txn->locale;
+				$j2->save();
+			}
+		}
 	}
 }
 /* End of file meters.php */

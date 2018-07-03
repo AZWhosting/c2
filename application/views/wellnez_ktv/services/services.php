@@ -813,6 +813,10 @@
 			font-size: 20px;
 			padding: 0;
 			margin: 0;
+			font-family: 'Battambang', Arial!important;
+		}
+		.inv1 tfoot td, .inv1 tbody td {
+			border-bottom: 1px solid \#000!important;
 		}
 	</style>
   	<div style="margin: 0 auto;">
@@ -822,15 +826,15 @@
 	        		<div style="text-align: center; margin: 0 auto; width:100% ;">
 	        			<img style="text-align: center; width: 150px; margin-bottom: 10px;" src="#= banhji.institute.logo.url#" />
 	            	</div>
-	            	<p style="text-align: center; margin-bottom: 5px;font-size :25px;font-weight: bold;">#= banhji.institute.name #</p>
+	            	<p style="text-align: center; margin-bottom: 5px;font-size :25px;font-weight: bold;font-family: 'Preahvihear', 'Roboto Slab' !important">#= banhji.institute.name #</p>
 	            	<p style="text-align: center; margin-bottom: 5px;font-weight: bold;">Tel: #= banhji.institute.telephone#</p>
-	            	<p style="border-top: 2px solid \#000;border-bottom: 2px solid \#000; text-align: center;margin-bottom: 5px;padding: 10px 0;background: \#fff;color: \#000;margin-top: 10px;"><span style="font-size: 20px; font-weight: 700;">វិក្កយបត្រ</span> / <span style="font-size: 20px; font-weight: 700;">Invoice</span></p>
+	            	<p style="border-top: 2px solid \#000;border-bottom: 2px solid \#000; text-align: center;margin-bottom: 5px;padding: 10px 0;background: \#fff;color: \#000;margin-top: 10px;"><span style="font-size: 20px; font-weight: 700;font-family: 'Preahvihear', 'Roboto Slab' !important">វិក្កយបត្រ</span> / <span style="font-size: 20px; font-weight: 700;font-family: 'Preahvihear', 'Roboto Slab' !important">Invoice</span></p>
 	        	</div>
 	            <div class="clear mid-header" style="padding-bottom: 10px;">
 	                <table style="width: 100%; ">
 	                	<tr>
 	                		<td style="width: 55%; padding: 0;">
-	                			<span>វិក្កយបត្រ</span>
+	                			<span >វិក្កយបត្រ</span>
 	                			/
 	                			<span>Invoice No</span>
 	                		</td>
@@ -863,17 +867,17 @@
 	                </table>
 	            </div>
 	        	<div class="clear">
-	            	<table cellpadding="0" cellspacing="0" border="1" class="span12" style="width: 100%; margin-bottom: 20px;">
+	            	<table cellpadding="0" cellspacing="0" border="0" class="span12" style="width: 100%; margin-bottom: 20px;">
 	                	<thead style="">
 	                        <tr class="main-color" style="height: 45px;background: \#203864!important;">
-	                            <th style="padding: 10px 0;font-size: 16px; text-align: center;color: \#000!important;background: \#fff!important;border: 1px solid \#000!important;">បរិយាយ​មុខ​ទំនិញ<br />Description</th>
-	                            <th style="padding: 10px 0;font-size: 16px; text-align: center;color: \#000!important;background: \#fff!important;border: 1px solid \#000!important;">បរិមាណ<br />Quantity</th>
-	                            <th style="padding: 10px 0;font-size: 16px; text-align: center;width: 30%;color: \#000!important;background: \#fff!important;border: 1px solid \#000!important;">ថ្លៃ​ទំនិញ<br />Amount</th>
+	                            <th style="padding: 5px 0;font-size: 16px; text-align: center;color: \#000!important;background: \#fff!important;border-top: 2px solid \#000!important;border-bottom: 2px solid \#000!important;">បរិយាយ​មុខ​ទំនិញ<br />Description</th>
+	                            <th style="padding: 5px 0;font-size: 16px; text-align: center;color: \#000!important;background: \#fff!important;border-top: 2px solid \#000!important;border-bottom: 2px solid \#000!important;">បរិមាណ<br />Quantity</th>
+	                            <th style="padding: 5px 0;font-size: 16px; text-align: center;width: 30%;color: \#000!important;background: \#fff!important;border-top: 2px solid \#000!important;border-bottom: 2px solid \#000!important;">ថ្លៃ​ទំនិញ<br />Amount</th>
 	                        </tr>
 	                    </thead>
 						<tbody style="margin-top: 2px" id="formListView">
 							#$.each(items, function(i,v){#
-								<tr>
+								<tr style="">
 									<td>#: v.item.name#</td>
 									<td align="center"><strong>#: v.quantity # #: v.measurement.measurement#</strong></td>
 									<td align="right"><strong style="font-size: 22px;">#= kendo.toString(v.amount, v.locale=="km-KH"?"c0":"c", v.locale)#</strong></td>
@@ -881,24 +885,24 @@
 							#})#
 						</tbody>
 	                    <tfoot>
-	                    	<tr>
+	                    	<tr style="">
 								<td colspan="2" style="padding-right: 10px;text-align: right;">សរុបរង / Sub Total</td>
-								<td style="border: 1px solid;text-align: right"><strong style="font-size: 22px;">#= kendo.toString(sub_total, locale=="km-KH"?"c0":"c", locale)#</strong></td>
+								<td style="text-align: right"><strong style="font-size: 22px;">#= kendo.toString(sub_total, locale=="km-KH"?"c0":"c", locale)#</strong></td>
 							</tr>
-							<tr>
+							<tr style="">
 								<td colspan="2" style="padding-right: 10px;text-align: right;">បញ្ចុះតម្លៃ / Discount</td>
-								<td style="border: 1px solid;text-align: right"><strong style="font-size: 22px;">#= kendo.toString(discount, locale=="km-KH"?"c0":"c", locale)#</strong></td>
-							</tr>
+								<td style="text-align: right"><strong style="font-size: 22px;">#= kendo.toString(discount, locale=="km-KH"?"c0":"c", locale)#</strong></td>
+							</tr >
 							#$.each(banhji.Index.currencyDS.data(), function(i,v){#
-								<tr>
+								<tr style="">
 									<td colspan="2" style="padding-right: 10px;text-align: right;">សរុបជា #= v.code#</td>
-									<td style="border: 1px solid;text-align: right;"><strong style="font-size: 22px;">#= kendo.toString(amount / v.rate, v.locale=="km-KH"?"c0":"c", v.locale)#</strong></td>
+									<td style="text-align: right;"><strong style="font-size: 22px;">#= kendo.toString(amount / v.rate, v.locale=="km-KH"?"c0":"c", v.locale)#</strong></td>
 								</tr>
 							#})#
-							#if(banhji.printBill.amountperson > 0){#
-								<tr>
+							#if(banhji.print.amountperson > 0){#
+								<tr style="">
 									<td colspan="2" style="padding-right: 10px;text-align: right;">ទឹកប្រាក់ត្រូវបង់</td>
-									<td style="border: 1px solid;text-align: right;background: \#000!important;"><strong style="color: \#fff;font-size: 22px;">#= kendo.toString(banhji.printBill.amountperson, locale=="km-KH"?"c0":"c", locale)#</strong></td>
+									<td style="text-align: right;background: \#000!important;"><strong style="color: \#fff;font-size: 22px;">#= kendo.toString(banhji.print.amountperson, locale=="km-KH"?"c0":"c", locale)#</strong></td>
 								</tr>
 							#}#
 	                    </tfoot>

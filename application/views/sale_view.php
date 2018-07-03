@@ -4,8 +4,12 @@
 		    
 		}
 	}*/
+	html.no-touch.sticky-top:not(.animations-gpu) #content {
+	    padding-top: 45px !important;
+	    overflow: inherit;
+	}
 	.home .bg-green{
-		background: #0eac00;
+		background: #203864;
 		width: 100%;
 		text-align: center;
 		position: relative;
@@ -222,20 +226,24 @@
 	<div class="menu-hidden sidebar-hidden-phone menu-left hidden-print">
 		<div class="navbar main navbar-fixed-top" id="main-menu">
 			<ul class="topnav">
-				<li><a href="#" data-bind="click: checkRole"><img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/banhji-logo.png" style="height: 40px;"></a></li>
+				<li><a href="#" data-bind="click: checkRole"><img src="<?php echo base_url();?>assets/update/banhji-blank.png" style="height: 35px;"></a></li>
 			</ul>
-			<form class="navbar-form pull-left">				
-			  	<input type="text" class="span2 search-query" placeholder="Search" id="search-placeholder" 
-			  			data-bind="value: searchText" 
-			  			style="background-color: #555555; color: #ffffff; border-color: #333333; height: 22px;">
+			<form class="navbar-form pull-left">
+			  	<input type="text" class="span2 search-query" placeholder="Search" id="search-placeholder"
+			  			data-bind="value: searchText"
+			  			style="background-color: #fff; color: #333; border-color: #333333; height: 22px; border-radius: 2px; width: 250px !important;">
 			  	<button type="submit" class="btn btn-inverse" data-bind="click: search"><i class="icon-search"></i></button>
 			</form>
 			<ul class="topnav" id="secondary-menu">
 			</ul> 
 			<ul class="topnav pull-right">
+				<li >
+			  		<a onclick="fullScreen(); return false;" class="fullscreen " href="#" role="button" aria-haspopup="true" aria-expanded="false"> <i class="icon-fullscreen"></i></a>
+		  			<a onclick="exitFullScreen(); return false;" class="exitfullscreen " style="display: none;"  href="#" role="button" aria-haspopup="true" aria-expanded="false"> <i class="icon-resize-small"></i></a>
+			  	</li>
 				<li role="presentation" class="dropdown">
 			  		<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"> <i class="icon-th-list"></i></a>
-		  			<ul class="dropdown-menu ul-multiTaskList" data-template="multiTaskList-row-template" data-bind="source: multiTaskList">  				  				
+		  			<ul class="dropdown-menu ul-multiTaskList" data-template="multiTaskList-row-template" data-bind="source: multiTaskList">
 		  			</ul>
 			  	</li>
 				<li role="presentation" class="dropdown">
@@ -252,6 +260,37 @@
 		</div>
 	</div>
 </script>
+<script type="text/javascript">
+	
+    function fullScreen(){
+        var docElm = document.documentElement;
+        if (docElm.requestFullscreen) {
+            docElm.requestFullscreen();
+        }
+        else if (docElm.mozRequestFullScreen) {
+            docElm.mozRequestFullScreen();
+        }
+        else if (docElm.webkitRequestFullScreen) {
+            docElm.webkitRequestFullScreen();
+        }
+        $('.exitfullscreen').show();
+        $('.fullscreen').hide();
+    }
+    function exitFullScreen(){
+        var docElm = document.documentElement;
+        if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.webkitExitFullscreen) {
+                document.webkitExitFullscreen();
+            } else if (document.mozCancelFullScreen) {
+                document.mozCancelFullScreen();
+            } else if (document.msExitFullscreen) {
+                document.msExitFullscreen();
+            }
+        $('.exitfullscreen').hide();
+        $('.fullscreen').show();
+    }
+</script>
 <script id="multiTaskList-row-template" type="text/x-kendo-template">
     <li>
     	<a href="\#/#=url#">
@@ -267,14 +306,14 @@
 	
 	<!-- <a href="#/sale_center"><h1>WELCOME</h1></a> -->
 	<div class="container" >
-		<div class="row home" style="padding-top: 100px !important;">
+		<div class="row home" >
 			<div class="span12">
 				<div class="row">
 					<div class="span6 nopadding-right">
 						<a href="#/sale_center">
 							<div class="bg-green height250 top-left" style="background: #fff; color: #0eac00; box-shadow: none; box-shadow: 2px 0px 12px 0px rgba(68,68,68,1);">
 								<div class="img">
-									<img src="<?php echo base_url();?>assets/spa/icon/pos-green.png" >
+									<img src="<?php echo base_url();?>assets/spa/sale-01.png" >
 								</div>
 								<p class="textBig">Sale Module</p>
 							</div>
@@ -41411,4 +41450,4 @@
 		    createCookie(name,"");
 		}
 	});
-</script>
+</script>                                           

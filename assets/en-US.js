@@ -35,6 +35,8 @@ var	en_US = {
 	"micro_credit" : "Credit",
 	"sale_begining_the_year" : "Sale begining of the year",
 	"create_batch_invoice" : "Create Batch Invoice",
+	"cash_report" : "Reports",
+	"cash_center" : "Cash Center",
 	//Main Dustboard
 	"search_contact" : "Search Contact",
 	"contact" : "Contact",
@@ -324,7 +326,9 @@ var	en_US = {
 	"customer_balance_detail" : "Customer Balance Detail",
 	"lists_individual_unpaid_invoices_for_each_customer" : "Lists individual unpaid invoices for each customer",
 	"receivable_aging_summary" : "Receivable Aging Summary",
+	"receivable_aging_summary_byEmloyee" : "Receivable Aging Summary by Employee",
 	"lists_all_unpaid_invoices1" : "Lists all unpaid invoices for the current period, 30, 60, 90, and more than 90 days, grouped by individual customers.",
+	"lists_all_unpaid_invoices2" : "Lists all unpaid invoices for the current period, 30, 60, 90, and more than 90 days, grouped by employee.",
 	"average_aging" : "Average Aging",
 	"over_90" : "Over 90",
 	"receivable_aging_detail" : "Receivable Aging Detail",

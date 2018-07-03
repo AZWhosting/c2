@@ -2,7 +2,7 @@
     <div class="d-flex no-block nav-text-box align-items-center">
         <span><img src="<?php echo base_url()?>assets/update/banhji-blank.png" style="height: 39px;" alt="elegant admin template"></span>
         <a class="nav-lock waves-effect waves-dark ml-auto hidden-md-down" href="javascript:void(0)"><i class="mdi mdi-toggle-switch"></i></a>
-        <a class="nav-toggler waves-effect waves-dark ml-auto hidden-sm-up" href="javascript:void(0)"><i class="ti-menu ti-close"></i></a>
+        <a class="nav-toggler waves-effect waves-dark ml-auto hidden-sm-up" href="javascript:void(0)"><i class="ti-menu ti-close" style="color: #fff; font-weight: 700; font-size: 20px;"></i></a>
     </div>
     <!-- Sidebar scroll-->
     <div class="scroll-sidebar">

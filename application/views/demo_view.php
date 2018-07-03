@@ -14577,6 +14577,11 @@
 
 	#}#
 </script>
+<!-- #############################################
+##################################################
+#	Sale Order by Employee			     		 #
+##################################################
+############################################## -->
 <script id="saleOrderDetailbyEmployee" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background">
@@ -14714,7 +14719,25 @@
 	                            	footerAttributes: { style: 'text-align: right;' },
 	                            	aggregates: ['sum'], 
 	                            	groupFooterTemplate: '#=kendo.toString(sum, banhji.numberFormat)#' 
-	                            }                            
+	                            },
+	                            { 
+	                            	field: 'invoice', 
+	                            	title:'INVOICE',
+	                            	hidden: true,
+	                            	template: kendo.template($('#saleOrderDetailbyEmployee-invoice-template').html())
+	                            },
+	                            { 
+	                            	field: 'delivery_note', 
+	                            	hidden: true,
+	                            	title:'Delivery Note',
+	                            	template: kendo.template($('#saleOrderDetailbyEmployee-deliveryNote-template').html())
+	                            },
+	                            { 
+	                            	field: 'cash_receipt',
+	                            	hidden: true, 
+	                            	title:'Cash Receipt',
+	                            	template: kendo.template($('#saleOrderDetailbyEmployee-cash_receipt-template').html())
+	                            },                            
 	                         ]"
 	                         data-auto-bind="false"
 			                 data-bind="source: dataSource" ></div>
@@ -14760,7 +14783,21 @@
 
 	#}#
 </script>
-<script id="saleOrderByStatus" type="text/x-kendo-template">
+<script id="saleOrderDetailbyEmployee-deliveryNote-template" type="text/x-kendo-template">
+	<a href="\#/#=type.toLowerCase()#/#=id#"><i></i> #=delivery_note#</a>
+</script>
+<script id="saleOrderDetailbyEmployee-invoice-template" type="text/x-kendo-template">
+	<a href="\#/#=type.toLowerCase()#/#=id#"><i></i> #=invoice#</a>
+</script>
+<script id="saleOrderDetailbyEmployee-cash_receipt-template" type="text/x-kendo-template">
+	<a href="\#/#=type.toLowerCase()#/#=id#"><i></i> #=cash_receipt#</a>
+</script>
+<!-- #############################################
+##################################################
+#	End Sale Order		     		 #
+##################################################
+############################################## -->
+<script id="saleOrderDetailbyItem2" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background">
 			<div class="container-960">
@@ -14873,21 +14910,29 @@
 					    	 data-resizable="true"
 			                 data-columns="[
 			                 	{ 
-			                 		field: 'contacts', 
-			                 		title: 'CUSTOMER',
+			                 		field: 'item', 
+			                 		title: 'ITEM',
 			                 		groupFooterTemplate: 'TOTAL:' 
 			                 	},
+			                 	{ field: 'customer', title:'CUSTOMER' },
 	                            { field: 'employees', title:'SALE REP.' },
 	                            { field: 'issued_date', title:'DATE', template: '#=kendo.toString(new Date(issued_date), banhji.dateFormat)#' },
 	                            { 
 	                            	field: 'number', 
 	                            	title:'NUMBER',
-	                            	template: kendo.template($('#saleOrderByStatus-number-template').html())
+	                            	template: kendo.template($('#saleOrderDetailbyEmployee-number-template').html())
 	                            },
 	                            { 
-	                            	field: 'status', 
-	                            	title:'STATUS', 
-	                            	template: kendo.template($('#saleOrderByStatus-status-template').html()) 
+	                            	field: 'qty', 
+	                            	title:'QTY',
+	                            	hidden: true,
+	                            	template: kendo.template($('#saleOrderDetailbyEmployee-invoice-template').html())
+	                            },
+	                            { 
+	                            	field: 'price', 
+	                            	hidden: true,
+	                            	title:'PRICE',
+	                            	template: kendo.template($('#saleOrderDetailbyEmployee-deliveryNote-template').html())
 	                            },
 	                            { 
 	                            	field: 'amount', 
@@ -14897,7 +14942,7 @@
 	                            	footerAttributes: { style: 'text-align: right;' },
 	                            	aggregates: ['sum'], 
 	                            	groupFooterTemplate: '#=kendo.toString(sum, banhji.numberFormat)#' 
-	                            }                            
+	                            },	                                                     
 	                         ]"
 	                         data-auto-bind="false"
 			                 data-bind="source: dataSource" ></div>
@@ -14908,20 +14953,6 @@
 		</div>
 	</div>
 </script>
-<script id="saleOrderByStatus-number-template" type="text/x-kendo-template">
-	<a href="\#/#=type.toLowerCase()#/#=id#"><i></i> #=number#</a>
-</script>
-<script id="saleOrderByStatus-status-template" type="text/x-kendo-template">
-	#if(status==0){#
-		OPEN
-	#}else if(status==1){#
-		USED
-	#}else{#
-
-	#}#
-</script>
-
-
 
 
 

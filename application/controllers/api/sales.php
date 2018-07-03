@@ -3135,7 +3135,22 @@ class Sales extends REST_Controller {
 		
 		if($obj->exists()){
 			$objList = [];
+			$delivery_note  = "";
+			$cash_receipt  = "";
+			$invoice  = "";
 			foreach ($obj as $value) {
+
+				$ref = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$ref->where("reference_id", $value->id);
+				$ref->get();
+				if($ref->type == "GDN"){
+					$delivery_note = $ref->number;
+				}else if ($ref->type == "Cash_Receipt"){
+					$cash_receipt = $ref->number;
+				}else{
+					$invoice = $ref->number == null ? "": $ref->number;
+				}
+
 				if(isset($objList[$value->employee_id])){
 					$objList[$value->employee_id]["line"][]	= array(
 						"id" 			=> $value->id,
@@ -3145,6 +3160,9 @@ class Sales extends REST_Controller {
 						"type" 			=> $value->type,
 						"issued_date" 	=> $value->issued_date,
 						"status" 		=> $value->status,
+						"delivery_note" => $delivery_note,
+						"cash_receipt"  => $cash_receipt,
+						"invoice"		=> $invoice,
 						"amount" 		=> floatval($value->amount) / floatval($value->rate),
 						"contacts" 		=> $value->contact_abbr . $value->contact_number ."-". $value->contact_name,
 						"employees" 	=> $objList[$value->employee_id]["employees"]
@@ -3163,9 +3181,124 @@ class Sales extends REST_Controller {
 						"type" 			=> $value->type,
 						"issued_date" 	=> $value->issued_date,
 						"status" 		=> $value->status,
+						"delivery_note" => $delivery_note,
+						"cash_receipt"  => $cash_receipt,
+						"invoice"		=> $invoice,
 						"amount" 		=> floatval($value->amount) / floatval($value->rate),
 						"contacts" 		=> $value->contact_abbr . $value->contact_number ."-". $value->contact_name,
 						"employees" 	=> $employees->abbr . $employees->number ."-". $employees->name
+					);
+				}
+			}
+
+			foreach ($objList as $value) {
+				foreach ($value["line"] as $val) {
+					$data["results"][] = $val;
+				}
+			}
+		}
+
+		//Response Data
+		$this->response($data, 200);
+	}
+
+	function saleOrder_detail_status_get() {
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
+		$data["count"] = 0;
+
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
+			}
+		}
+		
+		//Filter		
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value['operator'])){
+	    			$obj->{$value['operator']}($value['field'], $value['value']);	    		
+	    		} else {
+	    			$obj->where($value['field'], $value['value']);
+	    		}
+			}
+		}
+
+		//Results
+		$obj->select("id,type,number,issued_date,rate,status,amount,employee_id,contact_id");
+		$obj->include_related("contact", array("abbr", "number", "name"));
+		$obj->where("type", "Sale_Order");
+		$obj->where("is_recurring <>", 1);
+		$obj->where("deleted <>", 1);		
+		$obj->order_by("issued_date", "asc");
+		
+		//Results
+		if($page && $limit){
+			$obj->get_paged_iterated($page, $limit);
+			$data["count"] = $obj->paged->total_rows;
+		}else{
+			$obj->get_iterated();
+			$data["count"] = $obj->result_count();
+		}
+		
+		if($obj->exists()){
+			$objList = [];
+			$delivery_note  = "";
+			$cash_receipt  = "";
+			$invoice  = "";
+
+			foreach ($obj as $value) {
+
+				$ref = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$ref->where("reference_id", $value->id);
+				$ref->get();
+				if($ref->type == "GDN"){
+					$delivery_note = $ref->number;
+				}else if ($ref->type == "Cash_Receipt"){
+					$cash_receipt = $ref->number;
+				}else{
+					$invoice = $ref->number;
+				}
+
+				if(isset($objList[$value->contact_id])){
+					$objList[$value->contact_id]["line"][]	= array(
+						"id" 			=> $value->id,
+						"contact_id" 	=> $value->contact_id,
+						"number" 		=> $value->number,
+						"type" 			=> $value->type,
+						"delivery_note" => $delivery_note,
+						"cash_receipt"  => $cash_receipt,
+						"invoice"		=> $invoice,
+						"issued_date" 	=> $value->issued_date,
+						"status" 		=> $value->status,
+						"amount" 		=> floatval($value->amount) / floatval($value->rate),
+						"contact" 		=> $objList[$value->contact_id]["contact_id"]
+					);
+				}else{
+
+					$objList[$value->contact_id]["contact"] = $value->contact_abbr . $value->contact_number ."-". $value->contact_name;
+					$objList[$value->contact_id]["line"][]	= array(
+						"id" 			=> $value->id,
+						"contact_id" 	=> $value->contact_id,
+						"number" 		=> $value->number,
+						"type" 			=> $value->type,
+						"delivery_note" => $delivery_note,
+						"cash_receipt"  => $cash_receipt,
+						"invoice"		=> $invoice,
+						"issued_date" 	=> $value->issued_date,
+						"status" 		=> $value->status,
+						"amount" 		=> floatval($value->amount) / floatval($value->rate),
+						"contacts" 		=> $value->contact_abbr . $value->contact_number ."-". $value->contact_name,
 					);
 				}
 			}

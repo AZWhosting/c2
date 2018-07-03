@@ -184,7 +184,7 @@ var themerPrimaryColor = primaryColor;
 	//mail('loat.choeun@gmail.com', 'test', 'test', 'test');
 ?>
 	
-	<a class="aWelcome" href="#firstPopUp" data-toggle="modal"></a>
+	<!-- <a class="aWelcome" href="#firstPopUp" data-toggle="modal"></a> -->
 	<div class="modal fade popRightBlog" id="firstPopUp">
 		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 		<div class="span12 welcome">
@@ -231,7 +231,7 @@ var themerPrimaryColor = primaryColor;
 		</div>
 	</div>
 
-	<a class="aCustomer" href="#customerPopUp" data-toggle="modal"></a>
+	<!-- <a class="aCustomer" href="#customerPopUp" data-toggle="modal"></a> -->
 	<div class="modal fade popRightBlog" id="customerPopUp">
 		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 		<div class="span12 welcome">
@@ -270,7 +270,7 @@ var themerPrimaryColor = primaryColor;
 		</div>
 	</div>
 
-	<a class="aSupplier" href="#supplierPopUp" data-toggle="modal"></a>
+	<!-- <a class="aSupplier" href="#supplierPopUp" data-toggle="modal"></a> -->
 	<div class="modal fade popRightBlog" id="supplierPopUp">
 		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 		<div class="span12 welcome">
@@ -309,7 +309,7 @@ var themerPrimaryColor = primaryColor;
 		</div>
 	</div>
 
-	<a class="aInventory" href="#inventoryPopUp" data-toggle="modal"></a>
+	<!-- <a class="aInventory" href="#inventoryPopUp" data-toggle="modal"></a> -->
 	<div class="modal fade popRightBlog" id="inventoryPopUp">
 		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 		<div class="span12 welcome">
@@ -351,7 +351,7 @@ var themerPrimaryColor = primaryColor;
 		</div>
 	</div>
 
-	<a class="aAccount" href="#accountPopUp" data-toggle="modal"></a>
+	<!-- <a class="aAccount" href="#accountPopUp" data-toggle="modal"></a> -->
 	<div class="modal fade popRightBlog" id="accountPopUp">
 		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 		<div class="span12 welcome">

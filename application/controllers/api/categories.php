@@ -102,11 +102,26 @@ class Categories extends REST_Controller {
 						
 			if($obj->save()){
 				//Add pattern
+				$defaultPatterns = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$defaultPatterns->where("item_type_id", $obj->item_type_id);
+				$defaultPatterns->where("is_pattern", 1);
+				$defaultPatterns->limit(1);
+				$defaultPatterns->get();
+
 				$patterns = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				$patterns->item_type_id  = $obj->item_type_id;
                 $patterns->category_id   = $obj->id;
                 $patterns->is_pattern    = 1;
                 $patterns->status        = 1;
+
+                if($defaultPatterns->exists()){
+					$patterns->income_account_id 		= $defaultPatterns->income_account_id;
+				   	$patterns->expense_account_id		= $defaultPatterns->expense_account_id;
+				   	$patterns->inventory_account_id		= $defaultPatterns->inventory_account_id;
+
+				   	$patterns->locale					= $defaultPatterns->locale;
+				}
+
                 $patterns->save();
 
                 //Update pattern_id to category

@@ -5833,6 +5833,7 @@
                     '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
                     '<link href="https://fonts.googleapis.com/css?family=Preahvihear" rel="stylesheet">'+
                     '<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Battambang&amp;subset=khmer" media="all">'+
+                    '<link href="https://fonts.googleapis.com/css?family=Roboto+Slab:300" rel="stylesheet">' + 
                     '<style type="text/css" media="print">' +
                         '@page { size: portrait; margin:0.05cm;' +
                             
@@ -5879,7 +5880,7 @@
             var htmlEnd =
                     '</div></div></body>' +
                     '</html>';
-            printableContent = $('#invoicecontent').html();
+            printableContent = $('#invoiceContent').html();
             doc.write(htmlStart + printableContent + htmlEnd);
             doc.close();
             setTimeout(function(){

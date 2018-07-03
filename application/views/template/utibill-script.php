@@ -29296,6 +29296,11 @@
                 }
             }
         },
+        insAmountPaid: 0,
+        insFullAmount: 0,
+        insAmountToPay: 0,
+        amountPaidIns: 0,
+        haveFullInsBtn: false,
         loadInstallment: function() {
             var objMeter = this.get("objMeter");
             var self = this;
@@ -29303,10 +29308,39 @@
                 this.installmentVM.dataSource.query({ 
                     filter: { field: 'meter_id', value: objMeter.id}
                 }).then(function(e){
-                    if(self.installmentVM.dataSource.data().length > 1){
-                        
+                    if(self.installmentVM.dataSource.data().length > 0){
+                        var data = self.installmentVM.dataSource.data()[0];
+                        if(data.amount - data.amount_to_pay > 0){
+                            self.set("haveFullInsBtn", true);
+                        }
+                        self.set("insAmountPaid", kendo.toString(data.amount - data.amount_to_pay, banhji.locale == "km-KH" ? "c0" : "c2", banhji.locale));
+                        self.set("insFullAmount", kendo.toString(data.amount, banhji.locale == "km-KH" ? "c0" : "c2", banhji.locale));
+                        self.set("insAmountToPay", kendo.toString(data.amount_to_pay, banhji.locale == "km-KH" ? "c0" : "c2", banhji.locale));
+                        self.set("amountPaidIns", data.amount_to_pay);
                     }
                 });
+            }
+        },
+        insDeposit: 0,
+        havePaidIns: false,
+        payAllInstallment: function(){
+            this.set("havePaidIns", true);
+        },
+        closePaidIns: function(){
+            this.set("havePaidIns", false);
+        },
+        payInsDS    : dataStore(apiUrl + "utibills/payinstallment"),
+        savePaidIns:function(e){
+            this.payInsDS.data([]);
+            if(confirm('Are you sure to clear Installment!')){
+                var self = this;
+                this.payInsDS.add({
+                    meter_id: this.get("objMeter").id,
+                    deposit: this.get("insDeposit"),
+                    amount_paid: this.get("amountPaidIns"),
+                    contact_id: this.get("obj").id,
+                    user_id: banhji.userData.id,
+                })
             }
         },
         propertyID: 0,
@@ -29351,6 +29385,7 @@
             this.set("obj", data.contact);
             banhji.meter.contact = data.contact;
             this.loadData();
+            this.closePaidIns();
         },
         miniMonthofS: "<?php echo date('Y-m-d'); ?>",
         onSelectedMeter: function(e) {
