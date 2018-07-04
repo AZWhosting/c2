@@ -1629,4 +1629,6 @@ var	en_US = {
 	"time_in" : "Time In",
 	"time_out" : "Time Out",
 	"room" : "Room",
+	"installment_report": "Installment",
+	"installment_list": "Installment List",
 }

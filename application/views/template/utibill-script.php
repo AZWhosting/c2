@@ -23780,7 +23780,6 @@
                 }
             });
         },
-
     });
     banhji.agingDetail = kendo.observable({
         lang: langVM,
@@ -26909,6 +26908,235 @@
             this.property.dataSource.cancelChanges();
             banhji.router.navigate("/");
         }
+    });
+    banhji.installmentReport = kendo.observable({
+        lang: langVM,
+        dataSource: dataStore(apiUrl + "utibills/installment_report"),
+        licenseDS: dataStore(apiUrl + "branches"),
+        blocDS: dataStore(apiUrl + "locations"),
+        subLocationDS: dataStore(apiUrl + "locations"),
+        boxDS: dataStore(apiUrl + "locations"),
+        search: function() {
+            var monthOfSearch = this.get("monthOfUpload"),
+                license_id = this.get("licenseSelect"),
+                bloc_id = this.get("blocSelect");
+                pole_id = this.get("subLocationSelect");
+                box_id = this.get("boxSelect");
+            var self = this;
+            this.set("totalRow", 0);
+            this.set("haveSearch", false);
+            var para = [];
+            if (box_id) {
+                para.push({
+                    field: "box_id",
+                    value: box_id
+                });
+            } else if (pole_id) {
+                para.push({
+                    field: "pole_id",
+                    value: pole_id
+                });
+            } else if (bloc_id){
+                para.push({
+                    field: "location_id",
+                    value: bloc_id
+                });
+            } else if(license_id){
+                para.push({
+                    field: "branch_id",
+                    value: license_id
+                });
+            }
+            this.dataSource.query({
+                filter:para,
+                page: 1,
+                pageSize: 100,
+            }).then(function(e){
+                var view = self.dataSource.view();
+                if(view.length > 0){
+                    // self.set("totalRow", self.dataSource.total());
+                    // var amount = 0;
+                    // var countCustomer = 0;
+                    // $.each(view, function(index, value){
+                    //     amount += value.amount + value.amount_remain;
+                    //     countCustomer += value.countCustomer;
+                    // });
+
+                    // self.set("totalAmount", kendo.toString(amount, "c2", banhji.locale));
+                    // self.set("countCustomer", kendo.toString(countCustomer));
+                    // self.set("haveSearch", true);
+                }
+            });
+        },
+        cancel: function(e) {
+            this.contact.dataSource.data([]);
+            window.history.back();
+        },
+        printGrid: function() {
+            var gridElement = $('#grid'),
+                printableContent = '',
+                win = window.open('', '', 'width=990, height=900'),
+                doc = win.document.open();
+            var htmlStart =
+                '<!DOCTYPE html>' +
+                '<html>' +
+                '<head>' +
+                '<meta charset="utf-8" />' +
+                '<title></title>' +
+                '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />' +
+                '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
+                '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/responsive.css">' +
+                '<link href="<?php echo base_url(); ?>assets/invoice/invoice.css" rel="stylesheet" />' +
+                '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
+                '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
+                '<style>' +
+                'html { font: 11pt sans-serif; }' +
+                '.k-grid { border-top-width: 0; }' +
+                '.k-grid, .k-grid-content { height: auto !important; }' +
+                '.k-grid-content { overflow: visible !important; }' +
+                'div.k-grid table { table-layout: auto; width: 100% !important; }' +
+                '.k-grid .k-grid-header th { border-top: 1px solid; }' +
+                '.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
+                '</style><style type="text/css" media="print"> @page { size: portrait; margin:1mm; }' +
+                '.inv1 .main-color {' +
+
+                '-webkit-print-color-adjust:exact; ' +
+                '} ' +
+                '.table.table-borderless.table-condensed  tr th { background-color: #1E4E78!important;' +
+                '-webkit-print-color-adjust:exact; color:#fff!important;}' +
+                '.table.table-borderless.table-condensed  tr th * { color: #fff!important; -webkit-print-color-adjust:exact;}' +
+                '.inv1 .light-blue-td { ' +
+                'background-color: #c6d9f1!important;' +
+                'text-align: left;' +
+                'padding-left: 5px;' +
+                '-webkit-print-color-adjust:exact; ' +
+                '}' +
+                '.saleSummaryCustomer .table.table-borderless.table-condensed tr td { ' +
+                'background-color: #F2F2F2!important; -webkit-print-color-adjust:exact;' +
+                '}' +
+                '.saleSummaryCustomer .table.table-borderless.table-condensed tr:nth-child(2n+1) td { ' +
+                ' background-color: #fff!important; -webkit-print-color-adjust:exact;' +
+                '}' +
+                '.journal_block1>.span2 *, .journal_block1>.span5 * {color: #fff!important;}' +
+                '.journal_block1>.span2:first-child { ' +
+                'background-color: #bbbbbb!important; -webkit-print-color-adjust:exact;' +
+                '}' +
+                '.journal_block1>.span5:last-child {' +
+                'background-color: #496cad!important; color: #fff!important; -webkit-print-color-adjust:exact; ' +
+                '}' +
+                '.journal_block1>.span5 {' +
+                'background-color: #5cc7dd!important; color: #fff!important; -webkit-print-color-adjust:exact;' +
+                '}' +
+                '.saleSummaryCustomer .table.table-borderless.table-condensed tfoot .bg-total td {' +
+                'background-color: #1C2633!important;' +
+                'color: #fff!important; ' +
+                '-webkit-print-color-adjust:exact;' +
+                '}' +
+                '</style>' +
+                '</head>' +
+                '<body><div class="saleSummaryCustomer" style="padding: 0 10px;">';
+            var htmlEnd =
+                '</div></body>' +
+                '</html>';
+
+            printableContent = $('#invFormContent').html();
+            doc.write(htmlStart + printableContent + htmlEnd);
+            doc.close();
+            setTimeout(function() {
+                win.print();
+                win.close();
+            }, 2000);
+        },
+        licenseChange: function(e) {
+            var self = this;
+            this.blocDS.data([]);
+            this.set("locationSelect", "");
+            this.set("haveLicense", false)
+            this.subLocationDS.data([]);
+            this.boxDS.data([]);
+            this.set("boxSelect", "");
+            this.set("haveLocation", false);
+            this.set("haveSubLocation", false);
+            this.blocDS.filter([{
+                    field: "branch_id",
+                    value: this.get("licenseSelect")
+                },
+                {
+                    field: "main_bloc",
+                    value: 0
+                },
+                {
+                    field: "main_pole",
+                    value: 0
+                }
+            ]);
+            this.set("haveLicense", true);
+            this.set("liSelectName", e.sender.span[0].innerText);
+        }, 
+        onLocationChange: function(e) {
+            var self = this;
+            this.subLocationDS.data([]);
+            this.boxDS.data([]);
+            this.set("boxSelect", "");
+            this.set("haveSubLocation", false);
+            if (this.get("blocSelect")) {
+                this.subLocationDS.query({
+                        filter: [{
+                                field: "branch_id",
+                                value: this.get("licenseSelect")
+                            },
+                            {
+                                field: "main_bloc",
+                                value: this.get("blocSelect")
+                            },
+                            {
+                                field: "main_pole",
+                                value: 0
+                            }
+                        ],
+                        page: 1
+                    })
+                    .then(function(e) {
+                        if (self.subLocationDS.data().length > 0) {
+                            self.set("haveLocation", true);
+                        } else {
+                            self.set("haveLocation", false);
+                            self.set("subLocationSelect", "");
+                            self.subLocationDS.data([]);
+                        }
+                    });
+            }
+            this.set("loSelectName", e.sender.span[0].innerText);
+        },
+        onSubLocationChange: function(e) {
+            var self = this;
+            if (this.get("subLocationSelect")) {
+                this.boxDS.query({
+                        filter: [{
+                                field: "branch_id",
+                                value: this.get("licenseSelect")
+                            },
+                            {
+                                field: "main_bloc",
+                                value: this.get("blocSelect")
+                            },
+                            {
+                                field: "main_pole",
+                                value: this.get("subLocationSelect")
+                            }
+                        ]
+                    })
+                    .then(function(e) {
+                        if (self.boxDS.data().length > 0) {
+                            self.set("haveSubLocation", true);
+                        } else {
+                            self.set("haveSubLocation", false);
+                            self.set("boxSelect", "");
+                            self.boxDS.data([]);
+                        }
+                    });
+            }
+        },
     });
     //Backup Block//
     banhji.Backup = kendo.observable({
@@ -30970,6 +31198,7 @@
         }),
         //
         itemAssembly: new kendo.Layout("#itemAssembly", {model: banhji.itemAssembly}),
+        installmentReport: new kendo.Layout("#installmentReport", {model: banhji.installmentReport}),
     };
     /* views and layout */
     banhji.router = new kendo.Router({
@@ -32377,6 +32606,10 @@
     });
     banhji.router.route("/choeun", function() {
         banhji.view.layout.showIn("#content", banhji.view.choeun);
+    });
+
+    banhji.router.route("/installment", function() {
+        banhji.view.layout.showIn("#content", banhji.view.installmentReport);
     });
     checkRoleMG = function(){
         var role = banhji.userData.role;

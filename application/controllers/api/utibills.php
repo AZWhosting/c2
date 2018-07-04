@@ -5584,6 +5584,86 @@ class Utibills extends REST_Controller {
 			}
 		}
 	}
+
+	//
+	function installment_report_get() {
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
+		$data["count"] = 0;
+		$is_recurring = 0;
+
+		$obj = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
+			}
+		}
+
+		//Filter
+		if(!empty($filter["filters"]) && isset($filter["filters"])){
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value['operator'])) {
+					$obj->{$value['operator']}($value['field'], $value['value']);
+				} else {
+	    			$obj->where($value["field"], $value["value"]);
+				}
+			}
+		}
+		//Results
+		if($page && $limit){
+			$obj->get_paged_iterated($page, $limit);
+		}else{
+			$obj->get_iterated();
+		}
+
+		if($obj->exists()){
+			foreach ($obj as $value) {
+				$con = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$con->where("id", $value->contact_id)->limit(1)->get();
+				$ins = new Installment(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$ins->where("meter_id", $value->id)->limit(1)->get();
+				if($ins->exists()){
+					$ins_sch = new Installment_schedule(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$ins_sch->where("installment_id", $ins->id)->get();
+					$monthpaid = 0;
+					$apm = 0;
+					$i = 1;
+					foreach($ins_sch as $sch){
+						if($sch->invoiced == 1){
+							$monthpaid += 1;
+						}
+						if($i == 1){
+							$apm = $sch->amount;
+						}
+						$i++;
+					}
+					$data["results"][] = array(
+						"id" 				=> $value->id,
+						"customer" 			=> $con->name,
+						"meter_number" 		=> $value->number,
+						"month_to_pay" 		=> intval($ins->period),
+						"month_paid"		=> intval($monthpaid),
+						"amount_paid_month"	=> floatval($apm),
+						"amount_paid"		=> floatval($apm * $monthpaid),
+						"amount"			=> floatval($ins->amount),
+					);
+					$data["count"] += 1;
+				}
+			}
+		}
+
+		//Response Data
+		$this->response($data, 200);
+	}
 }
 /* End of file meters.php */
 /* Location: ./application/controllers/api/utibills.php */
