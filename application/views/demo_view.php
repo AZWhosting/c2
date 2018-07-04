@@ -7117,9 +7117,7 @@
 							<tr>
 								<td>Amount</td>
 								<td>
-									<input data-role="numerictextbox"
-										data-spinners="false"
-										data-format="n"
+									<input type="number" class="k-textbox"
 										data-min="0"
 										data-bind="value: returnObj.amount,
 													events:{change: returnChanges}"
@@ -7176,7 +7174,7 @@
 											<span data-bind="text: lang.lang.remaining" style="font-size: 15px; font-weight: 700;"></span>
 										</td>
 										<td class="right">
-											<span id="remaining" name="remaining" data-format="n" data-bind="text: obj.remaining" style="font-size: 15px; font-weight: 700;"></span>
+											<span id="remaining" name="remaining" data-bind="text: obj.remaining" style="font-size: 15px; font-weight: 700;"></span>
 										</td>
 									</tr>
 								</tbody>

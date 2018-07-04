@@ -23,15 +23,19 @@ class Ops extends REST_Controller {
 				// 	$startQ = true;
 				// }
 
+				//Check field exist
+				// $existField = "";
 				// $fields = $this->db->list_fields('transactions');
 				// foreach ($fields as $field)
-				// {
-				//    	if(isset($field=="movement")){
-				//    		$data["results"][] = $db;
-				//    	}
+				// {					
+				//    	if($field=="movement"){
+				//    		$existField = $field;
+
+				//    		break;
+				//    	}				   	
 				// }
 
-				
+				// $data["$db"] = $existField;
 
 				// $counter = $this->db->count_all('transactions');
 				// $data["results"][] = array( "db" => $db, "rows" => $counter );
@@ -68,8 +72,8 @@ class Ops extends REST_Controller {
 			    // $this->dbforge->drop_table('references');
 
 			    //Update single data
-			    // $this->db->where_in('type', array('Cash_Purchase','Credit_Purchase'));
-			    // $data['results'][] = $this->db->update('transactions', array('nature_type' => "Purchase"));
+			    // $this->db->where_in('type', array("Offset_Bill"));
+			    // $data['results'][] = $this->db->update('transactions', array('nature_type' => 'Offset_Bill', 'movement' => -1));
 
 			 	//Update batch data
 			 	// 	$raw = array(

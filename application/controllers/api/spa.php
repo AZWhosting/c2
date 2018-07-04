@@ -2119,6 +2119,7 @@ class Spa extends REST_Controller {
 			$obj = new Spa_work_room(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->where("room_id", $value->current_room_id);
 			$obj->where("work_id", $value->work_id)->limit(1)->get();
+			
 	   		if($obj->exists()){
 	   			$obj->work_id = $value->work_id;
 	   			$obj->room_id = $value->change_room_id;
@@ -2134,7 +2135,7 @@ class Spa extends REST_Controller {
 				$nroom = new Spa_room(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 				$nroom->where("id", $value->change_room_id)->limit(1)->get();
 				$nroom->work_id = $value->work_id;
-				$nroom->transaction_id = $value->transaction_id;
+				$nroom->status = 1;
 				$nroom->save();
 			   	$data["results"][] = array(
 			   		"id" 			=> $obj->id

@@ -5880,7 +5880,7 @@
             var htmlEnd =
                     '</div></div></body>' +
                     '</html>';
-            printableContent = $('#invoiceContent').html();
+            printableContent = $('#invoicecontent').html();
             doc.write(htmlStart + printableContent + htmlEnd);
             doc.close();
             setTimeout(function(){

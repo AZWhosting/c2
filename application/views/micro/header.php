@@ -193,7 +193,14 @@
                                                     <li><a href="<?php echo base_url();?>micro/purchases#/purchase"><span data-bind="text: lang.lang.make_purchase"></span></a></li>
                                                     <li><a href="<?php echo base_url();?>micro/purchases#/cash_payment"><span data-bind="text: lang.lang.make_cash_payment"></span></a></li>
                                                     <li><a href="<?php echo base_url();?>micro/purchases#/payment_refund"><span data-bind="text: lang.lang.payment_refund"></span></a></li>
-                                                    <li><a href="<?php echo base_url();?>items#/item_adjustment"><span data-bind="text: lang.lang.item_adjustment"></span></a></li>
+                                                </ul>
+                                            </div>
+                                             <div >
+                                                <p><span data-bind="text: lang.lang.products_services"></span></p>
+                                                <ul>
+                                                    <li><a href="<?php echo base_url();?>micro/items#/item"><span data-bind="text: lang.lang.add_inventory_for_sale"></span></a></li>
+                                                    <li><a href="<?php echo base_url();?>micro/items#/item_service"><span data-bind="text: lang.lang.add_services"></span></a></li>
+                                                    <li><a href="<?php echo base_url();?>micro/items#/item_adjustment"><span data-bind="text: lang.lang.item_adjustment"></span></a></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -305,4 +312,4 @@
                         </ul>
                     </div>
                 </nav>
-            </header>                                                                                                                                                                                                
+            </header>                                                                                                                                                                                                   

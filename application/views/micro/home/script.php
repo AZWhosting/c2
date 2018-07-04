@@ -2636,6 +2636,7 @@
         inventoryDS     : dataStore(apiUrl + "inventory_modules/dashboard"),
         vendorDS        : dataStore(apiUrl + "vendor_modules/dashboard"),
         graphDS         : dataStore(apiUrl + "customer_modules/monthly_sale"),
+        cashDS          : dataStore(apiUrl + "micro_modules/cash_general_ledger"),
         obj             : {},
         companyInf          : function() {
             var company = JSON.parse(localStorage.getItem('userData/user'));
@@ -2709,6 +2710,32 @@
 
                 self.set("objVendor", view[0]);
             });
+            this.cashDS.query({});
+            this.cashDS.bind("requestEnd", function(e){
+                self.set("checkin", e.response.cash_in);
+                self.set("checkout", e.response.cash_out);
+                self.set("cashbalance", e.response.cash_balance);
+            });
+        },
+        checkin: 0,
+        checkout: 0,
+        cashbalance: 0,
+        loadCashIn          : function(){
+            this.set("cash_in", true);
+            this.search();
+        },
+        loadCashOut          : function(){
+            this.set("cash_out", true);
+            this.search();
+        },
+        loadCashBalance          : function(){
+            this.set("sorter", "all");
+            this.sorterChanges();
+
+            this.dataSource.filter([
+                { field:"account_type_id", operator:"where_related_account", value: 10 },
+                { field:"balance_forward", operator:"cash_balance", value: true }
+            ]);
         }
     });
     /* views and layout */
@@ -2790,4 +2817,4 @@
         banhji.router.start();
         banhji.source.pageLoad();
     });
-</script>
+</script>  

@@ -502,6 +502,36 @@ class Transactions extends REST_Controller {
 		   	//Type
 		   	if(isset($value->nature_type)){
 		   		if($value->nature_type==""){
+
+		   			switch ($value->type) {
+					    case "Cash_Receipt":
+					        $obj->nature_type = "Cash_Receipt";
+		   					$obj->movement = -1;
+					        break;
+					    case "Cash_Payment":
+					        $obj->nature_type = "Cash_Payment";
+		   					$obj->movement = -1;
+					        break;
+					    case "Sale_Return":
+					        $obj->nature_type = "Sale_Return";
+		   					$obj->movement = -1;
+					        break;
+					    case "Cash_Refund":
+					        $obj->nature_type = "Cash_Refund";
+		   					$obj->movement = -1;
+					        break;
+					    case "Purchase_Return":
+					        $obj->nature_type = "Purchase_Return";
+		   					$obj->movement = -1;
+					        break;
+					    case "Payment_Refund":
+					        $obj->nature_type = "Payment_Refund";
+		   					$obj->movement = -1;
+					        break;
+					    default:
+					        //Default here...
+					}
+
 		   			//Purchase
 		   			if(in_array($value->type, $purchaseList)){
 		   				$obj->nature_type = "Purchase";
@@ -510,11 +540,13 @@ class Transactions extends REST_Controller {
 		   			//Cash Sale
 		   			if(in_array($value->type, $cashSaleList)){
 		   				$obj->nature_type = "Cash_Sale";
+		   				$obj->movement = 1;
 		   			}
 
 		   			//Invoice
 		   			if(in_array($value->type, $invoiceList)){
 		   				$obj->nature_type = "Invoice";
+		   				$obj->movement = 1;
 		   			}
 		   		}
 		   	}
@@ -1553,13 +1585,21 @@ class Transactions extends REST_Controller {
 		$obj->where("deleted <>", 1);
 		$obj->order_by("issued_date", "asc");
 		$obj->order_by("number", "asc");
-		$obj->get_iterated();
+		
+		//Results
+		if($page && $limit){
+			$obj->get_paged_iterated($page, $limit);
+			$data["count"] = $obj->paged->total_rows;
+		}else{
+			$obj->get_iterated();
+			$data["count"] = $obj->result_count();
+		}
 
 		if($obj->exists()){
 			$balance = 0;
 			foreach ($obj as $key => $value) {
 				//Balance Brought Forward
-				if($key==0){					
+				if($key==0){
 					$bf->select("locale");
 					$bf->select_sum("(amount - deposit) / rate", "total");
 					$bf->where("issued_date <", $value->issued_date);
@@ -1591,7 +1631,7 @@ class Transactions extends REST_Controller {
 
 							$receipt = floatval($receipts->total);
 						}
-						$data["xxx"] = $receipt;
+						
 						$balance += floatval($bf->total) - $receipt;
 						$bfDate = date('Y-m-d', strtotime('-1 day', strtotime($value->issued_date)));
 
@@ -1620,8 +1660,6 @@ class Transactions extends REST_Controller {
 					$references->select("number");
 					$references->get_by_id($value->reference_id);
 					array_push($reference, array("number"=>$references->number));
-				}else{
-					$reference = $value->transaction->get_raw()->result();
 				}
 
 				$amount = (floatval($value->amount) - floatval($value->deposit));

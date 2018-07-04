@@ -816,7 +816,7 @@
 			font-family: 'Battambang', Arial!important;
 		}
 		.inv1 tfoot td, .inv1 tbody td {
-			border-bottom: 1px solid \#000!important;
+			
 		}
 	</style>
   	<div style="margin: 0 auto;">
@@ -860,7 +860,7 @@
 	                		<td style="text-align: right; padding: 0; ">#= kendo.toString(new Date(check_out), "g")#</td>
         				</tr>
         				<tr>
-        					<td style="padding: 0;">លេខបន្ទប់ (Room No.) :</td>
+        					<td style="padding: 0;">លេខបន្ទប់ / Room No.</td>
         					<td style="padding: 0;">:</td>
         					<td style="text-align: right; padding: 0; ">#: room_number#</td>
         				</tr>
@@ -878,30 +878,30 @@
 						<tbody style="margin-top: 2px" id="formListView">
 							#$.each(items, function(i,v){#
 								<tr style="">
-									<td>#: v.item.name#</td>
-									<td align="center"><strong>#: v.quantity # #: v.measurement.measurement#</strong></td>
-									<td align="right"><strong style="font-size: 22px;">#= kendo.toString(v.amount, v.locale=="km-KH"?"c0":"c", v.locale)#</strong></td>
+									<td style="border-bottom: 1px solid \#000!important;">#: v.item.name#</td>
+									<td style="border-bottom: 1px solid \#000!important;" align="center"><strong>#: v.quantity # #: v.measurement.measurement#</strong></td>
+									<td style="border-bottom: 1px solid \#000!important;" align="right"><strong style="font-size: 22px;">#= kendo.toString(v.amount, v.locale=="km-KH"?"c0":"c", v.locale)#</strong></td>
 								</tr>
 							#})#
 						</tbody>
 	                    <tfoot>
 	                    	<tr style="">
-								<td colspan="2" style="padding-right: 10px;text-align: right;">សរុបរង / Sub Total</td>
+								<td colspan="2" style="padding-right: 10px;text-align: right;">សរុបរង / Sub Total :</td>
 								<td style="text-align: right"><strong style="font-size: 22px;">#= kendo.toString(sub_total, locale=="km-KH"?"c0":"c", locale)#</strong></td>
 							</tr>
 							<tr style="">
-								<td colspan="2" style="padding-right: 10px;text-align: right;">បញ្ចុះតម្លៃ / Discount</td>
+								<td colspan="2" style="padding-right: 10px;text-align: right;">បញ្ចុះតម្លៃ / Discount :</td>
 								<td style="text-align: right"><strong style="font-size: 22px;">#= kendo.toString(discount, locale=="km-KH"?"c0":"c", locale)#</strong></td>
 							</tr >
 							#$.each(banhji.Index.currencyDS.data(), function(i,v){#
 								<tr style="">
-									<td colspan="2" style="padding-right: 10px;text-align: right;">សរុបជា #= v.code#</td>
+									<td colspan="2" style="padding-right: 10px;text-align: right;">សរុបជា #= v.code# :</td>
 									<td style="text-align: right;"><strong style="font-size: 22px;">#= kendo.toString(amount / v.rate, v.locale=="km-KH"?"c0":"c", v.locale)#</strong></td>
 								</tr>
 							#})#
 							#if(banhji.print.amountperson > 0){#
 								<tr style="">
-									<td colspan="2" style="padding-right: 10px;text-align: right;">ទឹកប្រាក់ត្រូវបង់</td>
+									<td colspan="2" style="padding-right: 10px;text-align: right;">ទឹកប្រាក់ត្រូវបង់ :</td>
 									<td style="text-align: right;background: \#000!important;"><strong style="color: \#fff;font-size: 22px;">#= kendo.toString(banhji.print.amountperson, locale=="km-KH"?"c0":"c", locale)#</strong></td>
 								</tr>
 							#}#

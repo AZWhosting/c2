@@ -3467,7 +3467,9 @@
         }
     });
     //-----------------------------------------
-    
+    banhji.Index = kendo.observable({
+        lang     : langVM
+    });
     banhji.tapMenu =  kendo.observable({
         lang                : langVM,
         // goReports          : function(){
@@ -3555,7 +3557,7 @@
             serverSorting: true,
             serverPaging: true,
             page:1,
-            pageSize: 50
+            pageSize: 100
         }),
         dataSource          : dataStore(apiUrl + "inventory_modules/center"),
         transactionDS       : dataStore(apiUrl + "items/movement"),
@@ -7223,7 +7225,7 @@
         total                   : 0,
         exArray                 : [],
         pageLoad                : function(){
-            this.search();
+            // this.search();
             this.set("haveGroup", false);
         },
         catagoryChange      : function(){
@@ -7544,7 +7546,7 @@
         }),
         blank: new kendo.View('<div></div>'),
         index: new kendo.Layout("#index", {
-            model: banhji.reports
+            model: banhji.index
         }),
         menu: new kendo.Layout('#menu-tmpl', {
             model: banhji.userManagement
@@ -7553,7 +7555,10 @@
             model: banhji.searchAdvanced
         }),
         //------------------------------------
-        
+        Index: new kendo.Layout("#Index", {
+            model: banhji.Index
+        }),
+
         // Function
         item: new kendo.Layout("#item", {model: banhji.item}),
         itemService: new kendo.Layout("#itemService", {model: banhji.itemService}),
@@ -7622,10 +7627,50 @@
     banhji.router.route('/', function() {
         var blank = new kendo.View('#blank-tmpl');
 
-        banhji.view.layout.showIn('#tapMenu', banhji.view.tapMenu);
-        banhji.view.layout.showIn('#content', banhji.view.items);  
+        banhji.view.layout.showIn('#content', banhji.view.Index);
+        banhji.view.Index.showIn('#indexMenu', banhji.view.tapMenu);
+        banhji.view.Index.showIn('#indexContent', banhji.view.items);
 
         banhji.items.pageLoad();        
+    });
+    banhji.router.route('/check_out', function() {
+        
+        banhji.view.layout.showIn('#content', banhji.view.Index);
+        banhji.view.Index.showIn('#indexMenu', banhji.view.tapMenu);
+        banhji.view.Index.showIn('#indexContent', banhji.view.checkOut);
+
+        //load MVVM
+        //banhji.checkOut.pageLoad();
+    });
+    banhji.router.route('/transactions', function() {
+        
+        banhji.view.layout.showIn('#content', banhji.view.Index);
+        banhji.view.Index.showIn('#indexMenu', banhji.view.tapMenu);
+        banhji.view.Index.showIn('#indexContent', banhji.view.transactions);
+
+        //load MVVM
+        //banhji.transactions.pageLoad();
+    });
+    banhji.router.route('/reports', function() {
+        
+        banhji.view.layout.showIn('#content', banhji.view.Index);
+        banhji.view.Index.showIn('#indexMenu', banhji.view.tapMenu);
+        banhji.view.Index.showIn('#indexContent', banhji.view.reports);
+
+        // if(banhji.pageLoaded["customers"]==undefined){
+        //     banhji.pageLoaded["customers"] = true;
+            
+        //     banhji.source.supplierDS.filter({
+        //         field: "parent_id",
+        //         operator: "where_related_contact_type",
+        //         value: 2
+        //     });
+        // }
+
+        
+
+        //load MVVM
+        banhji.reports.pageLoad();
     });
 
     // Function
@@ -7997,8 +8042,9 @@
         if(!banhji.userManagement.getLogin()){
             banhji.router.navigate('/manage');
         }else{
-            banhji.view.layout.showIn('#tapMenu', banhji.view.tapMenu);
-            banhji.view.layout.showIn('#content', banhji.view.inventoryPositionSummary);
+            banhji.view.layout.showIn('#content', banhji.view.Index);
+            banhji.view.Index.showIn('#indexMenu', banhji.view.tapMenu);
+            banhji.view.Index.showIn('#indexContent', banhji.view.inventoryPositionSummary);
 
             var vm = banhji.inventoryPositionSummary;
             banhji.userManagement.addMultiTask("Inventory Position Summary","inventory_position_summary",null);
@@ -8013,8 +8059,10 @@
         if(!banhji.userManagement.getLogin()){
             banhji.router.navigate('/manage');
         }else{
-            banhji.view.layout.showIn('#tapMenu', banhji.view.tapMenu);
-            banhji.view.layout.showIn('#content', banhji.view.inventoryPositionDetail);
+            
+            banhji.view.layout.showIn('#content', banhji.view.Index);
+            banhji.view.Index.showIn('#indexMenu', banhji.view.tapMenu);
+            banhji.view.Index.showIn("#indexContent", banhji.view.inventoryPositionDetail);
 
             var vm = banhji.inventoryPositionDetail;
             banhji.userManagement.addMultiTask("Inventory Position Detail","inventory_position_detail",null);

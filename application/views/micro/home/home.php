@@ -29,7 +29,7 @@
         <div class="container-fluid">
             <div class="row marginTop15 home">
                 <div class="col-12 col-md-6 col-lg-6">
-                    <div class=" board-chart hidden-sm-down" style="margin-bottom: 19px;">
+                    <div class=" board-chart hidden-sm-down" style="margin-bottom: 19px; box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important; border-radius: 3px;">
                         <div class="row ">
                             <div class="col-3 col-md-3" >
                                 <div class="marginBottom" style=" height: 117px; text-align: center;">
@@ -88,7 +88,7 @@
                         <div class="row">
                             <div class="col-6 col-md-3">
                                 <a href="<?php echo base_url()?>micro/sales#/">
-                                    <div class="functionHome">
+                                    <div class="functionHome" style="padding: 18px; box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important; border-radius: 3px;">
                                         <img src="<?php echo base_url()?>assets/micro/sale.png "/>
                                         <p data-bind="text: lang.lang.check_out"></p>
                                     </div>
@@ -96,7 +96,7 @@
                             </div>
                             <div class="col-6 col-md-3">
                                 <a href="<?php echo base_url()?>micro/purchases#/">
-                                    <div class="functionHome">
+                                    <div class="functionHome" style="padding: 18px; box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important; border-radius: 3px;">
                                         <img src="<?php echo base_url()?>assets/micro/purchases.png "/>
                                         <p data-bind="text: lang.lang.purchase"></p>
                                     </div>
@@ -105,7 +105,7 @@
 
                             <div class="col-6 col-md-3">
                                 <a href="<?php echo base_url()?>micro/items#/">
-                                    <div class="functionHome">
+                                    <div class="functionHome" style="padding: 18px; box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important; border-radius: 3px;">
                                         <img src="<?php echo base_url()?>assets/micro/inventory.png"/>
                                         <p data-bind="text: lang.lang.items"></p>
                                     </div>
@@ -113,7 +113,7 @@
                             </div>
                             <div class="col-6 col-md-3">
                                 <a href="<?php echo base_url()?>micro/cashs#/">
-                                    <div class="functionHome">
+                                    <div class="functionHome" style="padding: 18px; box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important; border-radius: 3px;">
                                         <img src="<?php echo base_url()?>assets/micro/cash.png "/>
                                         <p data-bind="text: lang.lang.cash"></p>
                                     </div>
@@ -222,7 +222,7 @@
                     <div class="card" >
                         <div class="card-body">
                             <a href="<?php echo base_url()?>micro/sales#/sale_summary_by_customer">
-                                <div class="saleOverview" >
+                                <div class="saleOverview" style="box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important; border-radius: 3px; padding: 10px 0;">
                                     <h2 data-bind="text: lang.lang.sale"></h2>
                                     <p data-format="n" data-bind="text: obj.sale"></p>
                                     <div class="row">
@@ -246,7 +246,7 @@
                     <div class="card">
                         <div class="card-body">
                             <a href="<?php echo base_url()?>micro/sales#/customer_balance_summary">
-                                <div class="saleOverview">
+                                <div class="saleOverview" style="box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important; border-radius: 3px; padding: 10px 0;">
                                     <h2 data-bind="text: lang.lang.receivable"></h2>
                                     <p data-format="n" data-bind="text: obj.ar"></p>
                                     <div class="row">
@@ -268,7 +268,7 @@
                     <div class="card">
                        <div class="card-body" >
                             <a href="<?php echo base_url()?>micro/purchases#/purchase_summary_product_services">
-                                <div class="saleOverview" >
+                                <div class="saleOverview" style="box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important; border-radius: 3px; padding: 10px 0;">
                                     <h2 data-bind="text: lang.lang.purchase"></h2>
                                     <p data-format="n" data-bind="text: objVendor.purchase"></p>
                                     <div class="row">
@@ -290,7 +290,7 @@
                     <div class="card">
                         <div class="card-body">
                             <a href="<?php echo base_url()?>micro/purchases#/suppliers_balance_summary">
-                                <div class="saleOverview" >
+                                <div class="saleOverview" style="box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important; border-radius: 3px; padding: 10px 0;">
                                     <h2 data-bind="text: lang.lang.payables"></h2>
                                     <p data-format="n" data-bind="text: objVendor.ap"></p>
                                     <div class="row">
@@ -309,6 +309,81 @@
                     </div>
                 </div>
             </div>
+
+            
+
+            <div class="row home">
+                <div class="col-12 col-md-6 col-lg-6">
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <div class="saleOverview" data-bind="click: loadCashIn" style="margin-bottom: 15px; background: #2ca01c; box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important; border-radius: 3px; padding:8px 0">
+                                <h2 style=" color: #99de8f; font-size: 17px;"  data-bind="text: lang.lang.cash_in">Cash In</h2>
+                                <p style="margin-bottom: 0;color: #fff; font-size: 17px;" data-format="n0" data-bind="text: checkin"></p>
+                            </div>
+                            <!-- <div class="report" >
+                                <div class="col-md-12">
+                                    <h3 style="border-bottom: none; padding-bottom: 0;"><a href="#/cash_movement" data-bind="text: lang.lang.cash_movement" ></a></h3>
+                                </div>
+                            </div> -->
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="saleOverview" data-bind="click: loadCashOut" style="margin-bottom: 15px; background: #2ca01c; box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important; border-radius: 3px; padding: 8px 0">
+                                <h2 style=" color: #99de8f; font-size: 17px;"  data-bind="text: lang.lang.cash_out">Cash Out</h2>
+                                <p style="margin-bottom: 0;color: #fff; font-size: 17px;" data-format="n0" data-bind="text: checkout"></p>
+                            </div>
+                            <!-- <div class="report" >
+                                <div class="col-md-12">
+                                    <h3 style="border-bottom: none; padding-bottom: 0;"><a href="#/cash_movement" data-bind="text: lang.lang.cash_movement" ></a></h3>
+                                </div>
+                            </div> -->                                                          
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <div class="saleOverview" data-bind="click: loadCashBalance" style="margin-bottom: 15px; background: #2ca01c; box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important; border-radius: 3px; padding: 8px 0">
+                                <h2 style=" color: #99de8f; font-size: 17px;" data-bind="text: lang.lang.cash_balance">Cash Balance</h2>
+                                <p style="margin-bottom: 0; color: #fff; font-size: 17px;" data-format="n0" data-bind="text: cashbalance"></p>
+                            </div>
+                        </div>
+
+                        <!-- <div class="col-12 col-md-6">
+                            <div class="saleOverview" data-bind="click: loadCashBalance" style="margin-bottom: 15px; background: #0a4402; box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important; border-radius: 3px; padding: 8px 0">
+                                <h2 style=" color: #99de8f; font-size: 17px;" data-bind="text: lang.lang.cash_balance">Cash Balance</h2>
+                                <p style="margin-bottom: 0; color: #fff; font-size: 17px;" data-format="n0" data-bind="text: cashbalance"></p>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+                <!-- <div class="col-12 col-md-6 col-lg-6">
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <div class="card" >
+                                <div class="card-body">
+                                    <a href="<?php echo base_url()?>micro/sales#/sale_summary_by_customer">
+                                        <div class="saleOverview" style="min-height: 150px; box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important; border-radius: 3px; padding: 10px 0;">
+                                            
+                                        </div>
+                                    </a>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <a href="<?php echo base_url()?>micro/sales#/customer_balance_summary">
+                                        <div class="saleOverview" style="min-height: 150px; box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important; border-radius: 3px; padding: 10px 0;">
+                                            
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+
+            
             
            <!--  <div class="row home-footer hidden-sm-down">
                 
@@ -428,4 +503,4 @@
         </td>
     </tr>
 </script>
-<!-- End -->                         
+<!-- End -->                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 

@@ -13864,6 +13864,7 @@
 				job_id              : 0,
 				user_id             : this.get("user_id"),
 				type                : "Sale_Return", //Require
+				nature_type 		: "Sale_Return",
 				number              : "",
 				sub_total           : 0,
 				discount            : 0,
@@ -13874,6 +13875,7 @@
 				amount_paid         : 0,
 				credit_allowed      : 0,
 				rate                : 1,
+				movement 			: -1,
 				locale              : banhji.locale,
 				issued_date         : new Date(),
 				bill_to             : "",
@@ -15154,6 +15156,7 @@
 				job_id              : 0,
 				user_id             : this.get("user_id"),
 				type                : "Cash_Refund", //Require
+				nature_type 		: "Cash_Refund",
 				number              : "",
 				sub_total           : 0,
 				discount            : 0,
@@ -15164,6 +15167,7 @@
 				amount_paid         : 0,
 				credit_allowed      : 0,
 				rate                : 1,
+				movement 			: -1,
 				locale              : banhji.locale,
 				issued_date         : new Date(),
 				bill_to             : "",
@@ -15998,129 +16002,129 @@
 					page: 1,
 					pageSize : 50,
 				}).then(function(){
-					var view = self.dataSource.view();
+					// var view = self.dataSource.view();
 
-					var amount = 0, total = 0;
-					$.each(view, function(index, value){
-						amount += value.amount;
-						total += value.total;
-					});
+					// var amount = 0, total = 0;
+					// $.each(view, function(index, value){
+					// 	amount += value.amount;
+					// 	total += value.total;
+					// });
 
-					self.set("totalAmount", kendo.toString(amount, "c2", banhji.locale));
-					self.set("totalDue", kendo.toString(total, "c2", banhji.locale));
+					// self.set("totalAmount", kendo.toString(amount, "c2", banhji.locale));
+					// self.set("totalDue", kendo.toString(total, "c2", banhji.locale));
 				});
-				this.dataSource.bind("requestEnd", function(e){
-				if(e.type=="read"){
-					var response = e.response;
-					var amount = 0, total = 0;
-					self.exArray = [];
+				// this.dataSource.bind("requestEnd", function(e){
+				// 	if(e.type=="read"){
+				// 		var response = e.response;
+				// 		var amount = 0, total = 0;
+				// 		self.exArray = [];
 
-					self.exArray.push({
-						cells: [
-							{ value: self.company.name, textAlign: "center", colSpan: 7 }
-						]
-					});
-					self.exArray.push({
-						cells: [
-							{ value: "Statement",bold: true, fontSize: 20, textAlign: "center", colSpan: 7 }
-						]
-					});
-					if(self.displayDate){
-						self.exArray.push({
-							cells: [
-								{ value: self.displayDate, textAlign: "center", colSpan: 7}
-							]
-						});
-					};
-					self.exArray.push({
-						cells: [
-							{ value: "", colSpan: 7}
-						]
-					});
-					self.exArray.push({
-						cells: [
-							{ value: "Number",bold: true, textAlign: "left", colSpan: 2 },
-							{ value: self.obj.abbr + self.obj.number,bold: true,  colSpan: 5},
-						]
-					});
-					self.exArray.push({
-						cells: [
-							{ value: "Name",bold: true, textAlign: "left", colSpan: 2 },
-							{ value: self.obj.name,bold: true,  colSpan: 5},
-						]
-					});
-					self.exArray.push({
-						cells: [
-							{ value: "Billed Address",bold: true, textAlign: "left", colSpan: 2 },
-							{ value: self.obj.address,bold: true,  colSpan: 5},
-						]
-					});
-					self.exArray.push({
-						cells: [
-							{ value: "Phone",bold: true, textAlign: "left", colSpan: 2 },
-							{ value: self.obj.phone,bold: true,  colSpan: 5},
-						]
-					});
-					self.exArray.push({
-						cells: [
-							{ value: "", colSpan: 7}
-						]
-					});
-					self.exArray.push({
-						cells: [
-							{ value: "Date", background: "#496cad", color: "#ffffff" },
-							{ value: "Type", background: "#496cad", color: "#ffffff" },
-							{ value: "Reference", background: "#496cad", color: "#ffffff" },
-							{ value: "Transaction", background: "#496cad", color: "#ffffff" },
-							{ value: "Status", background: "#496cad", color: "#ffffff" },
-							{ value: "Amount", background: "#496cad", color: "#ffffff" },
-							{ value: "Balance", background: "#496cad", color: "#ffffff" },
-						]
-					});
-					for (var i = 0; i < response.results.length; i++){
-							var reference = "", ref = response.results[i];
-							if (ref.type == "Commercial_Invoice" || ref.type == "Vat_Invoice" || ref.type == "Invoice"){
-								if(ref.status== 0 || ref.status== 2){
-									var date = new Date(), dueDates = new Date(ref.due_date).getTime(),overDue, toDay = new Date(date).getTime();
-									if(dueDates < toDay) {
-										status = "Over Due "+Math.floor((toDay - dueDates)/(1000*60*60*24))+"days";
-									} else {
-										status = Math.floor((dueDates - toDay)/(1000*60*60*24))+"days to pay";
-									}
-								} else if(ref.status== 1){
-									status = "Paid";
-								} else if (ref.status== 3){
-									status = "Returned";
-								}
-							}
-							for (var e=0; e<ref.reference_no.length; e++){
-								reference += kendo.toString(ref.reference_no[e].number) + ', ';
-							}
-							amount += ref.amount;
-							total += ref.total;
-							self.exArray.push({
-								cells: [
-									{ value: kendo.toString(new Date(ref.issued_date), "d/M/yyyy" )},
-									{ value: ref.type },
-									{ value: reference},
-									{ value: ref.number },
-									{ value: status },
-									{ value: ref.amount },
-									{ value: ref.balance },
-								]
-							});
-					}
-					self.exArray.push({
-						cells: [
-							{ value: "Total",bold: true, textAlign: "left", colSpan: 5 },
-							{ value: total,bold: true,  colSpan: 1 },
-							{ value: amount,bold: true,  colSpan: 1 },
-						]
-					});
-				}
-			});
+				// 		self.exArray.push({
+				// 			cells: [
+				// 				{ value: self.company.name, textAlign: "center", colSpan: 7 }
+				// 			]
+				// 		});
+				// 		self.exArray.push({
+				// 			cells: [
+				// 				{ value: "Statement",bold: true, fontSize: 20, textAlign: "center", colSpan: 7 }
+				// 			]
+				// 		});
+				// 		if(self.displayDate){
+				// 			self.exArray.push({
+				// 				cells: [
+				// 					{ value: self.displayDate, textAlign: "center", colSpan: 7}
+				// 				]
+				// 			});
+				// 		};
+				// 		self.exArray.push({
+				// 			cells: [
+				// 				{ value: "", colSpan: 7}
+				// 			]
+				// 		});
+				// 		self.exArray.push({
+				// 			cells: [
+				// 				{ value: "Number",bold: true, textAlign: "left", colSpan: 2 },
+				// 				{ value: self.obj.abbr + self.obj.number,bold: true,  colSpan: 5},
+				// 			]
+				// 		});
+				// 		self.exArray.push({
+				// 			cells: [
+				// 				{ value: "Name",bold: true, textAlign: "left", colSpan: 2 },
+				// 				{ value: self.obj.name,bold: true,  colSpan: 5},
+				// 			]
+				// 		});
+				// 		self.exArray.push({
+				// 			cells: [
+				// 				{ value: "Billed Address",bold: true, textAlign: "left", colSpan: 2 },
+				// 				{ value: self.obj.address,bold: true,  colSpan: 5},
+				// 			]
+				// 		});
+				// 		self.exArray.push({
+				// 			cells: [
+				// 				{ value: "Phone",bold: true, textAlign: "left", colSpan: 2 },
+				// 				{ value: self.obj.phone,bold: true,  colSpan: 5},
+				// 			]
+				// 		});
+				// 		self.exArray.push({
+				// 			cells: [
+				// 				{ value: "", colSpan: 7}
+				// 			]
+				// 		});
+				// 		self.exArray.push({
+				// 			cells: [
+				// 				{ value: "Date", background: "#496cad", color: "#ffffff" },
+				// 				{ value: "Type", background: "#496cad", color: "#ffffff" },
+				// 				{ value: "Reference", background: "#496cad", color: "#ffffff" },
+				// 				{ value: "Transaction", background: "#496cad", color: "#ffffff" },
+				// 				{ value: "Status", background: "#496cad", color: "#ffffff" },
+				// 				{ value: "Amount", background: "#496cad", color: "#ffffff" },
+				// 				{ value: "Balance", background: "#496cad", color: "#ffffff" },
+				// 			]
+				// 		});
+				// 		for (var i = 0; i < response.results.length; i++){
+				// 				var reference = "", ref = response.results[i];
+				// 				if (ref.type == "Commercial_Invoice" || ref.type == "Vat_Invoice" || ref.type == "Invoice"){
+				// 					if(ref.status== 0 || ref.status== 2){
+				// 						var date = new Date(), dueDates = new Date(ref.due_date).getTime(),overDue, toDay = new Date(date).getTime();
+				// 						if(dueDates < toDay) {
+				// 							status = "Over Due "+Math.floor((toDay - dueDates)/(1000*60*60*24))+"days";
+				// 						} else {
+				// 							status = Math.floor((dueDates - toDay)/(1000*60*60*24))+"days to pay";
+				// 						}
+				// 					} else if(ref.status== 1){
+				// 						status = "Paid";
+				// 					} else if (ref.status== 3){
+				// 						status = "Returned";
+				// 					}
+				// 				}
+				// 				for (var e=0; e<ref.reference_no.length; e++){
+				// 					reference += kendo.toString(ref.reference_no[e].number) + ', ';
+				// 				}
+				// 				amount += ref.amount;
+				// 				total += ref.total;
+				// 				self.exArray.push({
+				// 					cells: [
+				// 						{ value: kendo.toString(new Date(ref.issued_date), "d/M/yyyy" )},
+				// 						{ value: ref.type },
+				// 						{ value: reference},
+				// 						{ value: ref.number },
+				// 						{ value: status },
+				// 						{ value: ref.amount },
+				// 						{ value: ref.balance },
+				// 					]
+				// 				});
+				// 		}
+				// 		self.exArray.push({
+				// 			cells: [
+				// 				{ value: "Total",bold: true, textAlign: "left", colSpan: 5 },
+				// 				{ value: total,bold: true,  colSpan: 1 },
+				// 				{ value: amount,bold: true,  colSpan: 1 },
+				// 			]
+				// 		});
+				// 	}
+				// });
 		},
-		setContact      : function(contact){
+		setContact      	: function(contact){
 			this.set("obj", contact);
 			this.search();
 		},
@@ -16235,7 +16239,7 @@
 			//save the file as Excel file with extension xlsx
 			kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "statement.xlsx"});
 		},
-		savePDF: function() {
+		savePDF 			: function() {
 			var self = this,
 				Win, pHeight, pWidth, ts;
 			if (this.txnFormID == "45") {
@@ -36029,6 +36033,7 @@
 				job_id              : 0,
 				user_id             : this.get("user_id"),
 				type                : "Purchase_Return", //Require
+				nature_type 		: "Purchase_Return",
 				number              : "",
 				sub_total           : 0,
 				discount            : 0,
@@ -36038,6 +36043,7 @@
 				amount_paid         : 0,
 				remaining           : 0,
 				rate                : 1,
+				movement 			: -1,
 				locale              : banhji.locale,
 				issued_date         : new Date(),
 				bill_to             : "",
@@ -37118,6 +37124,7 @@
 				job_id              : 0,
 				user_id             : this.get("user_id"),
 				type                : "Payment_Refund", //Require
+				nature_type 		: "Payment_Refund",
 				number              : "",
 				sub_total           : 0,
 				discount            : 0,
@@ -37127,6 +37134,7 @@
 				amount_paid         : 0,
 				remaining           : 0,
 				rate                : 1,
+				movement 			: -1,
 				locale              : banhji.locale,
 				issued_date         : new Date(),
 				bill_to             : "",
