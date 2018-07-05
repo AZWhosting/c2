@@ -2200,7 +2200,7 @@ class Utibills extends REST_Controller {
 			}
 		}
 		$obj->where("activated", 1);
-		$obj->where("status <>", 2);
+		$obj->where_in("status", array(1, 3));
 		$obj->order_by("worder", "asc");
 		//Results
 		if($page && $limit){

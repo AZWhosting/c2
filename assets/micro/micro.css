@@ -258,9 +258,9 @@ a {
     background-color: #009efb;
     border-color: #009efb;
 }
-.table-responsive .k-icon.k-i-filter{
+/*.table-responsive .k-icon.k-i-filter{
 	color: #fff;
-}
+}*/
 .table-responsive .k-grid-filter.k-state-active {
     background-color: #009efb;
 }
@@ -274,6 +274,9 @@ a {
 /*End*/
 
 /*Customize Kendo*/
+.k-grid-header{
+	padding-right: 0 !important;
+}
 .k-grid td {
      border-width: 0;
 }
@@ -1195,6 +1198,30 @@ a.fa.fa-qrcode:before{
 .video-wrapper a:hover .btnplay {
     background-color: rgba(237, 28, 36, 0.9);
 }
+
+.grid .table.color-table.dark-table thead th {
+    background-color: #fff !important;
+    color: #333 !important;
+    text-align: center;
+    text-transform: uppercase;
+    vertical-align: top;
+    font-weight: 700;
+    padding: 10px;
+    border-top: 2px solid #1F4774;
+    border-bottom: 3px solid #1F4774 !important;
+}
+.k-grid-content .k-auto-scrollable .k-grid table{
+	border-bottom: 3px solid #1F4774 !important;
+	margin-bottom: 12px !important;
+}
+.table.color-table.dark-table .k-grid-content.k-auto-scrollable{
+	border-bottom: 3px solid #1F4774 !important;
+	margin-bottom: 10px;
+}
+/*.k-grid-header-wrap .k-auto-scrollable table{
+	border-bottom: none !important;
+	margin-bottom: 0 !important;
+}*/
 /*Serface*/
 @media (min-width: 1600px) {
 	.product{
@@ -1281,6 +1308,9 @@ and (orientation : portrait) {
 }  
 
 @media (max-width: 768px){
+	.width_33{
+		width: 33.3333%;
+	}
 	.board-chart{
 		min-height: 160px;
 	    padding: 15px 15px 0;
@@ -1363,4 +1393,4 @@ and (orientation : portrait) {
 	.video-wrapper{
 		margin-bottom: 15px;
 	}
-}                       
+}                                             

@@ -36,6 +36,8 @@ var	km_KH = {
 	"sale_begining_the_year" : "ចំណូលលក់ក្នុងឆ្នាំ",
 	"cash_report" : "របាយការណ៍សាច់ប្រាក់",
 	"cash_center" : "ការ​គ្រប់​គ្រង់​សាច់​ប្រាក់",
+	"done" : "រួចរាល់",
+	"return" : "បង្វិល",
 	//Main Dustboard
 	"search_contact" :  "ស្វែងរក​ទំនាក់ទំនង",
 	"contact" :  "ទំនាក់ទំនង",
@@ -1204,7 +1206,7 @@ var	km_KH = {
 	"no_transaction": "ចំនួន​ប្រតិបត្តិការ",
 	"receivable_balance": "តុល្យភាព​បំណុល",
 	"over": "លើស​ពី",
-	"days_to_pay": "ចំនួន​ថ្ងៃ​ត្រូវ​បង់",
+	"days_to_pay": "ថ្ងៃ​ត្រូវ​បង់",
 	"invoice_number": "លេខ​វិក្កយបត្រ",
 	"invoice_amount": "ចំនួន​ក្នុង​វិក្កយបត្រ",
 	"receipt_date": "ថ្ងៃ​ទទួល​ប្រាក់",

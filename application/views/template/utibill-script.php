@@ -11197,6 +11197,9 @@
                     if (v.exemption[0].line.unit == 'usage') {
                         //rUsage = Usage - AmountEx;
                         tUsage = Usage - AmountEx;
+                        if(tUsage < 0){
+                            tUsage = 0;
+                        }
                     } else {
                         exT = v.exemption[0].line.unit;
                         exA = AmountEx;
@@ -23723,9 +23726,9 @@
                                 { value: v.contact.number },
                                 { value: v.contact.name },
                                 { value: v.meter.meter_number },
-                                { value: v.invoice_lines[0].previous },
-                                { value: v.invoice_lines[0].current  },
-                                { value: v.invoice_lines[0].consumption  },
+                                { value: v.invoice_lines[1].previous },
+                                { value: v.invoice_lines[1].current  },
+                                { value: v.invoice_lines[1].consumption  },
                                 { value: v.amount  },
                                 { value: v.amount_remain  },
                                 { value: v.amount + v.amount_remain },

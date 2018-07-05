@@ -6680,9 +6680,11 @@
 				employee_id             : "",
 				user_id                 : this.get("uer_id"),
 				type                    : "Customer_Deposit", //required
+				nature_type             : "Customer_Deposit",
 				number                  : "",
 				amount                  : 0,
 				rate                    : 1,
+				movement 				: 1,
 				locale                  : banhji.locale,
 				issued_date             : new Date(),
 				memo                    : "",
@@ -15907,6 +15909,8 @@
 			{ "text": "Open Invoices", "value": "open" }
 		],
 		status              : "open",
+		total_due 			: 0,
+		overdue 			: 0,
 		exArray             : [],
 		exArrayA            : [],
 		pageLoad            : function(){
@@ -15960,7 +15964,7 @@
 				start = this.get("sdate"),
 				end = this.get("edate"),
 				displayDate = "",
-				typeList = ["Commercial_Invoice", "Vat_Invoice", "Invoice", "Commercial_Cash_Sale", "Vat_Cash_Sale", "Cash_Sale", "Deposit", "Cash_Receipt", "Sale_Return", "Cash_Refund"];
+				typeList = ["Invoice","Cash_Sale","Cash_Receipt","Customer_Deposit","Sale_Return","Cash_Refund","Offset_Invoice"];
 
 			this.set("haveEX", false);
 
@@ -15969,11 +15973,11 @@
 
 				if(status=="open"){
 					para.push({ field:"status", operator:"where_in", value: [0,2] });
-					para.push({ field:"type",  operator:"where_in", value: ["Commercial_Invoice", "Vat_Invoice", "Invoice"] });
+					para.push({ field:"nature_type", value: "Invoice" });
 				}else{
-					para.push({ field:"type",  operator:"where_in", value: typeList });
+					para.push({ field:"nature_type", operator:"where_in", value: typeList });
 				}
-			}
+
 				//Dates
 				if(start && end){
 					start = new Date(start);
@@ -16013,116 +16017,118 @@
 					// self.set("totalAmount", kendo.toString(amount, "c2", banhji.locale));
 					// self.set("totalDue", kendo.toString(total, "c2", banhji.locale));
 				});
-				// this.dataSource.bind("requestEnd", function(e){
-				// 	if(e.type=="read"){
-				// 		var response = e.response;
-				// 		var amount = 0, total = 0;
-				// 		self.exArray = [];
+				this.dataSource.bind("requestEnd", function(e){
+					if(e.type=="read"){
+						var response = e.response;
+						var amount = 0, total = 0;
+						self.exArray = [];
 
-				// 		self.exArray.push({
-				// 			cells: [
-				// 				{ value: self.company.name, textAlign: "center", colSpan: 7 }
-				// 			]
-				// 		});
-				// 		self.exArray.push({
-				// 			cells: [
-				// 				{ value: "Statement",bold: true, fontSize: 20, textAlign: "center", colSpan: 7 }
-				// 			]
-				// 		});
-				// 		if(self.displayDate){
-				// 			self.exArray.push({
-				// 				cells: [
-				// 					{ value: self.displayDate, textAlign: "center", colSpan: 7}
-				// 				]
-				// 			});
-				// 		};
-				// 		self.exArray.push({
-				// 			cells: [
-				// 				{ value: "", colSpan: 7}
-				// 			]
-				// 		});
-				// 		self.exArray.push({
-				// 			cells: [
-				// 				{ value: "Number",bold: true, textAlign: "left", colSpan: 2 },
-				// 				{ value: self.obj.abbr + self.obj.number,bold: true,  colSpan: 5},
-				// 			]
-				// 		});
-				// 		self.exArray.push({
-				// 			cells: [
-				// 				{ value: "Name",bold: true, textAlign: "left", colSpan: 2 },
-				// 				{ value: self.obj.name,bold: true,  colSpan: 5},
-				// 			]
-				// 		});
-				// 		self.exArray.push({
-				// 			cells: [
-				// 				{ value: "Billed Address",bold: true, textAlign: "left", colSpan: 2 },
-				// 				{ value: self.obj.address,bold: true,  colSpan: 5},
-				// 			]
-				// 		});
-				// 		self.exArray.push({
-				// 			cells: [
-				// 				{ value: "Phone",bold: true, textAlign: "left", colSpan: 2 },
-				// 				{ value: self.obj.phone,bold: true,  colSpan: 5},
-				// 			]
-				// 		});
-				// 		self.exArray.push({
-				// 			cells: [
-				// 				{ value: "", colSpan: 7}
-				// 			]
-				// 		});
-				// 		self.exArray.push({
-				// 			cells: [
-				// 				{ value: "Date", background: "#496cad", color: "#ffffff" },
-				// 				{ value: "Type", background: "#496cad", color: "#ffffff" },
-				// 				{ value: "Reference", background: "#496cad", color: "#ffffff" },
-				// 				{ value: "Transaction", background: "#496cad", color: "#ffffff" },
-				// 				{ value: "Status", background: "#496cad", color: "#ffffff" },
-				// 				{ value: "Amount", background: "#496cad", color: "#ffffff" },
-				// 				{ value: "Balance", background: "#496cad", color: "#ffffff" },
-				// 			]
-				// 		});
-				// 		for (var i = 0; i < response.results.length; i++){
-				// 				var reference = "", ref = response.results[i];
-				// 				if (ref.type == "Commercial_Invoice" || ref.type == "Vat_Invoice" || ref.type == "Invoice"){
-				// 					if(ref.status== 0 || ref.status== 2){
-				// 						var date = new Date(), dueDates = new Date(ref.due_date).getTime(),overDue, toDay = new Date(date).getTime();
-				// 						if(dueDates < toDay) {
-				// 							status = "Over Due "+Math.floor((toDay - dueDates)/(1000*60*60*24))+"days";
-				// 						} else {
-				// 							status = Math.floor((dueDates - toDay)/(1000*60*60*24))+"days to pay";
-				// 						}
-				// 					} else if(ref.status== 1){
-				// 						status = "Paid";
-				// 					} else if (ref.status== 3){
-				// 						status = "Returned";
-				// 					}
-				// 				}
-				// 				for (var e=0; e<ref.reference_no.length; e++){
-				// 					reference += kendo.toString(ref.reference_no[e].number) + ', ';
-				// 				}
-				// 				amount += ref.amount;
-				// 				total += ref.total;
-				// 				self.exArray.push({
-				// 					cells: [
-				// 						{ value: kendo.toString(new Date(ref.issued_date), "d/M/yyyy" )},
-				// 						{ value: ref.type },
-				// 						{ value: reference},
-				// 						{ value: ref.number },
-				// 						{ value: status },
-				// 						{ value: ref.amount },
-				// 						{ value: ref.balance },
-				// 					]
-				// 				});
-				// 		}
-				// 		self.exArray.push({
-				// 			cells: [
-				// 				{ value: "Total",bold: true, textAlign: "left", colSpan: 5 },
-				// 				{ value: total,bold: true,  colSpan: 1 },
-				// 				{ value: amount,bold: true,  colSpan: 1 },
-				// 			]
-				// 		});
-				// 	}
-				// });
+						self.set("total_due", response.total_due);
+						self.set("overdue", response.overdue);
+
+						self.exArray.push({
+							cells: [
+								{ value: self.company.name, textAlign: "center", colSpan: 7 }
+							]
+						});
+						self.exArray.push({
+							cells: [
+								{ value: "Statement",bold: true, fontSize: 20, textAlign: "center", colSpan: 7 }
+							]
+						});
+						if(self.displayDate){
+							self.exArray.push({
+								cells: [
+									{ value: self.displayDate, textAlign: "center", colSpan: 7}
+								]
+							});
+						};
+						self.exArray.push({
+							cells: [
+								{ value: "", colSpan: 7}
+							]
+						});
+						self.exArray.push({
+							cells: [
+								{ value: "Number",bold: true, textAlign: "left", colSpan: 2 },
+								{ value: self.obj.abbr + self.obj.number,bold: true,  colSpan: 5},
+							]
+						});
+						self.exArray.push({
+							cells: [
+								{ value: "Name",bold: true, textAlign: "left", colSpan: 2 },
+								{ value: self.obj.name,bold: true,  colSpan: 5},
+							]
+						});
+						self.exArray.push({
+							cells: [
+								{ value: "Billed Address",bold: true, textAlign: "left", colSpan: 2 },
+								{ value: self.obj.address,bold: true,  colSpan: 5},
+							]
+						});
+						self.exArray.push({
+							cells: [
+								{ value: "Phone",bold: true, textAlign: "left", colSpan: 2 },
+								{ value: self.obj.phone,bold: true,  colSpan: 5},
+							]
+						});
+						self.exArray.push({
+							cells: [
+								{ value: "", colSpan: 7}
+							]
+						});
+						self.exArray.push({
+							cells: [
+								{ value: "Date", background: "#496cad", color: "#ffffff" },
+								{ value: "Type", background: "#496cad", color: "#ffffff" },
+								{ value: "Reference", background: "#496cad", color: "#ffffff" },
+								{ value: "Transaction", background: "#496cad", color: "#ffffff" },
+								{ value: "Status", background: "#496cad", color: "#ffffff" },
+								{ value: "Amount", background: "#496cad", color: "#ffffff" }
+							]
+						});
+						for (var i = 0; i < response.results.length; i++){
+								var reference = "", ref = response.results[i];
+								if (ref.type == "Commercial_Invoice" || ref.type == "Vat_Invoice" || ref.type == "Invoice"){
+									if(ref.status== 0 || ref.status== 2){
+										var date = new Date(), dueDates = new Date(ref.due_date).getTime(),overDue, toDay = new Date(date).getTime();
+										if(dueDates < toDay) {
+											status = "Over Due "+Math.floor((toDay - dueDates)/(1000*60*60*24))+"days";
+										} else {
+											status = Math.floor((dueDates - toDay)/(1000*60*60*24))+"days to pay";
+										}
+									} else if(ref.status== 1){
+										status = "Paid";
+									} else if (ref.status== 3){
+										status = "Returned";
+									}
+								}
+								// for (var e=0; e<ref.reference_no.length; e++){
+								// 	reference += kendo.toString(ref.reference_no[e].number) + ', ';
+								// }
+								amount += ref.amount;
+								total += ref.total;
+								self.exArray.push({
+									cells: [
+										{ value: kendo.toString(new Date(ref.issued_date), "d/M/yyyy" )},
+										{ value: ref.type },
+										{ value: ref.reference_no},
+										{ value: ref.number },
+										{ value: status },
+										{ value: ref.amount }
+									]
+								});
+						}
+						self.exArray.push({
+							cells: [
+								{ value: "Total",bold: true, textAlign: "left", colSpan: 5 },
+								{ value: total,bold: true,  colSpan: 1 },
+								{ value: amount,bold: true,  colSpan: 1 },
+							]
+						});
+					}
+				});
+			}
 		},
 		setContact      	: function(contact){
 			this.set("obj", contact);
@@ -16423,7 +16429,7 @@
 					//win.close();
 				}, 2000);
 			}
-		},
+		}
 	});
 	banhji.statementDetail =  kendo.observable({
 		lang                : langVM,
@@ -32923,9 +32929,11 @@
 				user_id             : this.get("user_id"),
 				reference_id        : "",
 				type                : "Vendor_Deposit", //required
+				nature_type         : "Vendor_Deposit",
 				number              : "",
 				amount              : 0,
 				rate                : 1,
+				movement 			: 1,
 				locale              : banhji.locale,
 				issued_date         : new Date(),
 				memo                : "",
@@ -48921,24 +48929,24 @@
 
 					self.exArray.push({
 						cells: [
-							{ value: self.institute.name, textAlign: "center", colSpan: 8}
+							{ value: self.institute.name, textAlign: "center", colSpan: 9}
 						]
 					});
 					self.exArray.push({
 						cells: [
-							{ value: "Inventory Position Detail",bold: true, fontSize: 20, textAlign: "center", colSpan: 8}
+							{ value: "Inventory Position Detail",bold: true, fontSize: 20, textAlign: "center", colSpan: 9}
 						]
 					});
 					if(self.displayDate){
 						self.exArray.push({
 							cells: [
-								{ value: self.displayDate, textAlign: "center", colSpan: 8}
+								{ value: self.displayDate, textAlign: "center", colSpan: 9}
 							]
 						});
 					}
 					self.exArray.push({
 						cells: [
-							{ value: "", colSpan: 8}
+							{ value: "", colSpan: 9}
 						]
 					});
 					self.exArray.push({
@@ -48950,7 +48958,8 @@
 							{ value: "Cost", background: "#496cad", color: "#ffffff" },
 							{ value: "Price", background: "#496cad", color: "#ffffff" },
 							{ value: "On Hand", background: "#496cad", color: "#ffffff" },
-							{ value: "Balance", background: "#496cad", color: "#ffffff" }
+							{ value: "AVG Cost", background: "#496cad", color: "#ffffff" },
+							{ value: "Inventory Value", background: "#496cad", color: "#ffffff" }
 						]
 					});
 					for (var i = 0; i < response.results.length; i++){
@@ -48963,7 +48972,8 @@
 								{ value: "" },
 								{ value: "" },
 								{ value: "" },
-								{ value: response.results[i].qoh_forward, bold: true, },
+								{ value: "" },
+								{ value: response.results[i].quantity_forward, bold: true, },
 								{ value: response.results[i].balance_forward, bold: true, }
 							]
 
@@ -48979,29 +48989,12 @@
 									{ value: response.results[i].line[j].quantity },
 									{ value: response.results[i].line[j].cost},
 									{ value: response.results[i].line[j].price},
-									{ value: qty},
-									{ value: balance},
+									{ value: response.results[i].line[j].on_hand},
+									{ value: response.results[i].line[j].cost_avg},
+									{ value: response.results[i].line[j].amount},
 								]
 							});
 						}
-
-						self.exArray.push({
-						cells: [
-							{ value: "TOTAL", bold: true,fontSize: 16 },
-							{ value: "" },
-							{ value: "" },
-							{ value: "" },
-							{ value: "" },
-							{ value: "" },
-							{ value: "" },
-							{ value: balance, bold: true, fontSize: 16 },
-						]
-						});
-						self.exArray.push({
-							cells: [
-								{ value: "", colSpan: 7 }
-							]
-						});
 					}
 				}
 			});
@@ -71326,8 +71319,9 @@
 					banhji.pageLoaded["statement"] = true;
 
 					vm.sorterChanges();
+					vm.getLogo();
 				}
-				banhji.statement.getLogo();
+				
 				vm.pageLoad();
 		//  } else {
 		//      window.location.replace(baseUrl + "admin");

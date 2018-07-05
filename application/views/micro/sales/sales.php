@@ -270,33 +270,54 @@
 	</div>
 
 	<div  class="row ">
-        <div class="col-md-12 marginTop table-responsive grid" >
+        <div class="col-md-12 marginTop  grid" >
         	<div data-role="grid" class="table color-table dark-table"
 	             data-pageable="true"
 	             data-filterable="true"
+	             data-scrollable="true"
 	             data-columns="[
-	             	{ field: 'issued_date', title : 'DATE', template:'#=kendo.toString(new Date(issued_date), banhji.dateFormat)#', filterable: false, attributes: { style: 'text-align: center;'}},
-	             	{ field: 'name', title : 'NAME', filterable: false },
-	             	{ field: 'type', title : 'TYPE', filterable: { multi: true, search: true} },				                 
-	                { field: 'number', title: 'REFERENCE', 
-	                	template: '<a href=\'sales\\#/#=type.toLowerCase()#/#=id#\'>#=number#</a>', filterable: false, attributes: { style: 'text-align: left;'} },
-	                { field: 'amount', title: 'AMOUNT', format: '{0:n}', filterable: false, attributes: { style: 'text-align: right; padding-right: 30px;'} },
+	             	{ field: 'issued_date', title : langVM.lang.date, template:'#=kendo.toString(new Date(issued_date), banhji.dateFormat)#', filterable: false, attributes: { style: 'text-align: center;' , class: 'width_33'} , headerAttributes: { class: 'width_33'} },
+	             	{ field: 'name', title : langVM.lang.name , filterable: false ,  attributes: { class: 'hidden-sm-down'} , headerAttributes: { class: 'hidden-sm-down'} },
+	             	{ field: 'type', title : langVM.lang.type, filterable: { multi: true, search: true},  attributes: { class: 'width_33'} , headerAttributes: { class: 'width_33'} },				                 
+	                { field: 'number', title: langVM.lang.reference, 
+	                	template: '<a href=\'sales\\#/#=type.toLowerCase()#/#=id#\'>#=number#</a>', filterable: false, attributes: { style: 'text-align: left;', class: 'hidden-sm-down'} , headerAttributes: { class: 'hidden-sm-down'} },
+	                { field: 'amount', title: langVM.lang.amount, format: '{0:n}', filterable: false, attributes: { style: 'text-align: right; ' , class: 'width_33'} , headerAttributes: { class: 'width_33'} },
 	                { 
-	                	title: 'STATUS', 
+	                	title: langVM.lang.status, 
 	                	template: kendo.template($('#transactions-status-tmpl').html()),
-	                	attributes: { style: 'text-align: center;'}              	
+	                	attributes: { style: 'text-align: center;' , class: 'hidden-sm-down'} , headerAttributes: { class: 'hidden-sm-down'}     	
 	                },
 	                { 
-	                	title: 'ACTIONS',
+	                	title: langVM.lang.action,
 	                	template: kendo.template($('#transactions-action-tmpl').html()),
-	                	attributes: { style: 'text-align: center;'}
+	                	attributes: { style: 'text-align: center;' , class: 'hidden-sm-down'} , headerAttributes: { class: 'hidden-sm-down'}
 	                }
 	             ]"
 	             data-auto-bind="false"
 	             data-bind="source: txnDS"></div>
         </div>
+        <!-- <div class="reportTable home-footer table-responsive" style="width: 97%; margin: 0 auto;">
+        	<table class="table color-table dark-table" style="width: 100%; height: auto; ">
+                <thead>
+                    <tr>
+						<th style="background-color: #343a40 !important; -webkit-print-color-adjust: exact; color: #fff !important; text-align: center; text-transform: uppercase; vertical-align: top; font-weight: 400; padding: 10px;" data-bind="text: lang.lang.type"></th>
+						<th style="background-color: #343a40 !important; -webkit-print-color-adjust: exact; color: #fff !important; text-align: center; text-transform: uppercase; vertical-align: top; font-weight: 400; padding: 10px;" data-bind="text: lang.lang.date"></th>
+						<th style="background-color: #343a40 !important; -webkit-print-color-adjust: exact; color: #fff !important; text-align: center; text-transform: uppercase; vertical-align: top; font-weight: 400; padding: 10px;" data-bind="text: lang.lang.reference"></th>
+						<th style="background-color: #343a40 !important; -webkit-print-color-adjust: exact; color: #fff !important; text-align: center; text-transform: uppercase; vertical-align: top; font-weight: 400; padding: 10px;" data-bind="text: lang.lang.amount"></th>
+						<th style="background-color: #343a40 !important; -webkit-print-color-adjust: exact; color: #fff !important; text-align: center; text-transform: uppercase; vertical-align: top; font-weight: 400; padding: 10px;" data-bind="text: lang.lang.status"></th>
+						<th style="background-color: #343a40 !important; -webkit-print-color-adjust: exact; color: #fff !important; text-align: center; text-transform: uppercase; vertical-align: top; font-weight: 400; padding: 10px;" data-bind="text: lang.lang.action"></th>
+					</tr>
+                </thead>
+                <tbody  data-role="listview"
+        				data-auto-bind="false"
+		                data-template="customerTransactionList-template"
+		                data-bind="source: dataSource" >
+		        </tbody>
+        	</table>
+        </div> -->
     </div>
 </script>
+
 <script id="checkOut" type="text/x-kendo-template">	
 	<div class="row" id="checkOut" style="position: relative;">
 		<div id="havepay" style="width: 100%; height: 100%;display: none;position: absolute;background: rgba(255,255,255,.9);z-index: 9;">
@@ -1037,20 +1058,21 @@
         </div>
 	</div>
 </script>
+<!-- #=progress# -->
 <script id="transactions-status-tmpl" type="text/x-kendo-tmpl">
 	#if(status=="4") {#
-		#=progress#
+		<span data-bind="text: lang.lang.draft"></span>
 	#}#
 
 	#if(type=="Quote"){#
 		#if(status=="0"){#
-			Open
+			<span data-bind="text: lang.lang.open"></span>
 		#}#
 	#}else if(type=="Sale_Order"){#
 		#if(status=="0"){#
-			Open
+			<span data-bind="text: lang.lang.open"></span>
 		#}else{#
-			Done
+			<span data-bind="text: lang.lang.done"></span>
 		#}#
 	#}else if(type=="GDN"){#
 		Delivered
@@ -1058,14 +1080,14 @@
 		#if(status=="0" || status=="2") {#
 			# var date = new Date(), dueDate = new Date(due_date).getTime(), toDay = new Date(date).getTime(); #
 			#if(dueDate < toDay) {#
-				Over Due #:Math.floor((toDay - dueDate)/(1000*60*60*24))# days
+				Over Due #:Math.floor((toDay - dueDate)/(1000*60*60*24))# <span data-bind="text: lang.lang.days"></span>
 			#} else {#
-				#:Math.floor((dueDate - toDay)/(1000*60*60*24))# days to pay
+				#:Math.floor((dueDate - toDay)/(1000*60*60*24))# <span data-bind="text: lang.lang.days_to_pay"></span>
 			#}#
 		#} else if(status=="1") {#
-			Paid
+			<span data-bind="text: lang.lang.paid"></span>
 		#} else if(status=="3") {#
-			Returned
+			<span data-bind="text: lang.lang.return"></span>
 		#}#
 	#}#
 </script>
@@ -1077,7 +1099,7 @@
 	#}#
 
 	#if(status=="4") {#
-		<a href="\#/#=type.toLowerCase()#/#=id#"><button class="k-button btn-info">Use</button></a>
+		<a href="\#/#=type.toLowerCase()#/#=id#"><button class="k-button btn-info"><span data-bind="text: lang.lang.use"></span></button></a>
 	#}#
 </script>
 <script id="customerTransactionList-template" type="text/x-kendo-template">
@@ -7492,4 +7514,4 @@
 		#=code# - #=country#
 	</span>
 </script>
-<!-- End -->
+<!-- End -->                                                                       

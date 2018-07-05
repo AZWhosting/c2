@@ -17177,9 +17177,9 @@
 		<td  style="font-weight: bold; color: black;">#=contact.number#</td>
 		<td  style="font-weight: bold; color: black;">#=contact.name#</td>
 		<td style="text-align: center">#=meter.meter_number#</td>
-		<td style="text-align: right">#=invoice_lines[0].previous#</td>
-		<td style="text-align: right">#=invoice_lines[0].current#</td>
-		<td style="text-align: right">#=invoice_lines[0].consumption#</td>
+		<td style="text-align: right">#=invoice_lines[1].previous#</td>
+		<td style="text-align: right">#=invoice_lines[1].current#</td>
+		<td style="text-align: right">#=invoice_lines[1].consumption#</td>
 		<td style="text-align: right;">#=kendo.toString(amount, locale=="km-KH"?"c0":"c", locale)#</td>
 		<td style="text-align: right;">#=kendo.toString(amount_remain, locale=="km-KH"?"c0":"c", locale)#</td>
 		<td style="text-align: right;">#=kendo.toString(total, locale=="km-KH"?"c0":"c", locale)#</td>

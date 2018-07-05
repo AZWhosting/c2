@@ -3493,116 +3493,116 @@ class Spa extends REST_Controller {
 		$data["results"] = [];
 		$data["count"] = 0;
 		foreach ($models as $value) {
-			$obj = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$obj->where("id", $value->id)->limit(1)->get();
-			$item = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$item->where("id", $obj->item_id)->limit(1)->get();
-			//Txn
-			$oldtxn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$oldtxn->where("id", $value->transaction_id)->limit(1)->get();
-			$txn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-			$txn->contact_id = $oldtxn->contact_id;
-			$txn->transaction_template_id = 20;
-			$txn->user_id = $value->user_id;
-			$number = $this->_generate_number("Sale_Return", $oldtxn->issued_date);
-			$txn->number = $number;
-			$txn->type = 'Sale_Return';
-			$amount = floatval($value->quantity) * floatval($value->price);
-			$txn->sub_total = $amount;
-			$txn->amount = $amount;
-			$txn->rate = $oldtxn->rate;
-			$txn->locale = $oldtxn->locale;
-			$isdate = date('Y-m-d H:i:s');
-			$txn->issued_date = $isdate;
-			$txn->start_date = $isdate;
-			$txn->intval = 1;
-			$txn->day = 1;
-			$txn->is_journal = 1;
-			if($txn->save()){
-				//CR
-				$j1 = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$j1->transaction_id = $txn->id;
-				$j1->account_id = 74;
-				$j1->contact_id = $txn->contact_id;
-				$j1->description = "QTY Item Wellnez";
-				$j1->dr = 0;
-				$j1->cr = $value->quantity;
-				$j1->rate = $txn->rate;
-				$j1->locale = $txn->locale;
-				$j1->save();
-				//DR
-				$j2 = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$j2->transaction_id = $txn->id;
-				$j2->account_id = 14;
-				$j2->contact_id = $txn->contact_id;
-				$j2->description = "QTY Item Wellnez";
-				$j2->dr = $value->quantity;
-				$j2->cr = 0;
-				$j2->rate = $txn->rate;
-				$j2->locale = $txn->locale;
-				$j2->save();
-				//CR
-				$j3 = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$j3->transaction_id = $txn->id;
-				$j3->account_id = 71;
-				$j3->contact_id = $txn->contact_id;
-				$j3->description = "Amount Item Wellnez";
-				$j3->dr = 0;
-				$j3->cr = $txn->amount;
-				$j3->rate = $txn->rate;
-				$j3->locale = $txn->locale;
-				$j3->save();
-				//DR
-				$j4 = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$j4->transaction_id = $txn->id;
-				$j4->account_id = 10;
-				$j4->contact_id = $txn->contact_id;
-				$j4->description = "Amount Item Wellnez";
-				$j4->dr = $txn->amount;
-				$j4->cr = 0;
-				$j4->rate = $txn->rate;
-				$j4->locale = $txn->locale;
-				$j4->save();
+			// $obj = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			// $obj->where("id", $value->id)->limit(1)->get();
+			// $item = new Item(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			// $item->where("id", $obj->item_id)->limit(1)->get();
+			// //Txn
+			// $oldtxn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			// $oldtxn->where("id", $value->transaction_id)->limit(1)->get();
+			// $txn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			// $txn->contact_id = $oldtxn->contact_id;
+			// $txn->transaction_template_id = 20;
+			// $txn->user_id = $value->user_id;
+			// $number = $this->_generate_number("Sale_Return", $oldtxn->issued_date);
+			// $txn->number = $number;
+			// $txn->type = 'Sale_Return';
+			// $amount = floatval($value->quantity) * floatval($value->price);
+			// $txn->sub_total = $amount;
+			// $txn->amount = $amount;
+			// $txn->rate = $oldtxn->rate;
+			// $txn->locale = $oldtxn->locale;
+			// $isdate = date('Y-m-d H:i:s');
+			// $txn->issued_date = $isdate;
+			// $txn->start_date = $isdate;
+			// $txn->intval = 1;
+			// $txn->day = 1;
+			// $txn->is_journal = 1;
+			// if($txn->save()){
+			// 	//CR
+			// 	$j1 = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			// 	$j1->transaction_id = $txn->id;
+			// 	$j1->account_id = 74;
+			// 	$j1->contact_id = $txn->contact_id;
+			// 	$j1->description = "QTY Item Wellnez";
+			// 	$j1->dr = 0;
+			// 	$j1->cr = $value->quantity;
+			// 	$j1->rate = $txn->rate;
+			// 	$j1->locale = $txn->locale;
+			// 	$j1->save();
+			// 	//DR
+			// 	$j2 = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			// 	$j2->transaction_id = $txn->id;
+			// 	$j2->account_id = 14;
+			// 	$j2->contact_id = $txn->contact_id;
+			// 	$j2->description = "QTY Item Wellnez";
+			// 	$j2->dr = $value->quantity;
+			// 	$j2->cr = 0;
+			// 	$j2->rate = $txn->rate;
+			// 	$j2->locale = $txn->locale;
+			// 	$j2->save();
+			// 	//CR
+			// 	$j3 = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			// 	$j3->transaction_id = $txn->id;
+			// 	$j3->account_id = 71;
+			// 	$j3->contact_id = $txn->contact_id;
+			// 	$j3->description = "Amount Item Wellnez";
+			// 	$j3->dr = 0;
+			// 	$j3->cr = $txn->amount;
+			// 	$j3->rate = $txn->rate;
+			// 	$j3->locale = $txn->locale;
+			// 	$j3->save();
+			// 	//DR
+			// 	$j4 = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			// 	$j4->transaction_id = $txn->id;
+			// 	$j4->account_id = 10;
+			// 	$j4->contact_id = $txn->contact_id;
+			// 	$j4->description = "Amount Item Wellnez";
+			// 	$j4->dr = $txn->amount;
+			// 	$j4->cr = 0;
+			// 	$j4->rate = $txn->rate;
+			// 	$j4->locale = $txn->locale;
+			// 	$j4->save();
 
-				//Save Item
-				$i = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$i->transaction_id = $txn->id;
-				$i->measurement_id = $item->measurement_id;
-				$i->item_id = $item->id;
-				$i->description = $obj->description;
-				$i->quantity = $value->quantity;
-				$i->conversion_ratio = $obj->conversion_ratio;
-				$i->cost = $obj->cost;
-				$i->price = $value->price;
-				$i->amount = $amount;
-				$i->movement = 1;
-				$i->rate = $txn->rate;
-				$i->locale = $txn->locale;
-				$i->save();
+			// 	//Save Item
+			// 	$i = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			// 	$i->transaction_id = $txn->id;
+			// 	$i->measurement_id = $item->measurement_id;
+			// 	$i->item_id = $item->id;
+			// 	$i->description = $obj->description;
+			// 	$i->quantity = $value->quantity;
+			// 	$i->conversion_ratio = $obj->conversion_ratio;
+			// 	$i->cost = $obj->cost;
+			// 	$i->price = $value->price;
+			// 	$i->amount = $amount;
+			// 	$i->movement = 1;
+			// 	$i->rate = $txn->rate;
+			// 	$i->locale = $txn->locale;
+			// 	$i->save();
 
-				//Offset Inv
-				$txn1 = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$txn1->contact_id = $oldtxn->contact_id;
-				$txn1->transaction_template_id = 20;
-				$txn1->user_id = $value->user_id;
-				$number = $this->_generate_number("Offset_Invoice", $oldtxn->issued_date);
-				$txn1->number = $number;
-				$txn1->type = 'Offset_Invoice';
-				$amount = floatval($value->quantity) * floatval($value->price);
-				$txn1->sub_total = $amount;
-				$txn1->amount = $amount;
-				$txn1->rate = $oldtxn->rate;
-				$txn1->locale = $oldtxn->locale;
-				$isdate = date('Y-m-d H:i:s');
-				$txn1->issued_date = $isdate;
-				$txn1->is_journal = 0;
-				$txn1->reference_id = $value->transaction_id;
-				$txn1->return_id = $txn->id;
-				$txn1->save();
-				$data["results"][] = array(
-			   		"id" 			=> $txn->id,
-			   	);
-			}
+			// 	//Offset Inv
+			// 	$txn1 = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			// 	$txn1->contact_id = $oldtxn->contact_id;
+			// 	$txn1->transaction_template_id = 20;
+			// 	$txn1->user_id = $value->user_id;
+			// 	$number = $this->_generate_number("Offset_Invoice", $oldtxn->issued_date);
+			// 	$txn1->number = $number;
+			// 	$txn1->type = 'Offset_Invoice';
+			// 	$amount = floatval($value->quantity) * floatval($value->price);
+			// 	$txn1->sub_total = $amount;
+			// 	$txn1->amount = $amount;
+			// 	$txn1->rate = $oldtxn->rate;
+			// 	$txn1->locale = $oldtxn->locale;
+			// 	$isdate = date('Y-m-d H:i:s');
+			// 	$txn1->issued_date = $isdate;
+			// 	$txn1->is_journal = 0;
+			// 	$txn1->reference_id = $value->transaction_id;
+			// 	$txn1->return_id = $txn->id;
+			// 	$txn1->save();
+			// 	$data["results"][] = array(
+			//    		"id" 			=> $txn->id,
+			//    	);
+			// }
 		}
 		$data["count"] = count($data["results"]);
 		$this->response($data, 201);
@@ -3725,6 +3725,29 @@ class Spa extends REST_Controller {
 		}
 		$data["count"] = count($data["results"]);
 		$this->response($data, 201);
+	}
+	public function puchase($amount, $contact_id){
+		$txn = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$txn->contact_id = $oldtxn->contact_id;
+		$txn->transaction_template_id = 20;
+		$txn->user_id = $value->user_id;
+		$number = $this->_generate_number("Sale_Return", $oldtxn->issued_date);
+		$txn->number = $number;
+		$txn->type = 'Sale_Return';
+		$amount = floatval($value->quantity) * floatval($value->price);
+		$txn->sub_total = $amount;
+		$txn->amount = $amount;
+		$txn->rate = $oldtxn->rate;
+		$txn->locale = $oldtxn->locale;
+		$isdate = date('Y-m-d H:i:s');
+		$txn->issued_date = $isdate;
+		$txn->start_date = $isdate;
+		$txn->intval = 1;
+		$txn->day = 1;
+		$txn->is_journal = 1;
+		if($txn->save()){
+
+		}
 	}
 	//Report
 	function sale_summary_by_room_get(){

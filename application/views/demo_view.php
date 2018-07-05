@@ -7779,7 +7779,7 @@
 					</div>
 
 					<br><br>
-					<div id="invFormContent1">
+					<div id="invFormContent">
 						<div class="block-title">
 							<h3 data-bind="text: company.name"></h3>
 							<h2 data-bind="text: lang.lang.statement"></h2>
@@ -7821,7 +7821,7 @@
 							<div class="span6">
 								<div class="total-sale">
 									<p data-bind="text: lang.lang.total_due">Total Due</p>
-									<span data-bind="text: totalDue"></sapn>
+									<span data-format="n" data-bind="text: total_due"></sapn>
 								</div>
 							</div>
 						</div>
@@ -7830,242 +7830,59 @@
 						</div>
 						<div class="span6">
 								<div class="total-sale">
-									<p data-bind="text: lang.lang.amount_due">Amount Due</p>
-									<span data-bind="text: totalAmount"></sapn>
+									<p>Overdue</p>
+									<span data-format="n" data-bind="text: overdue"></sapn>
 								</div>
 						</div>
-						<table class="table table-borderless table-condensed">
-							<thead>
-								<tr>
-									<th><span style="color: #fff!important;" data-bind="text: lang.lang.date"></span></th>
-									<th><span style="color: #fff!important;" data-bind="text: lang.lang.type"></span></th>
-									<!-- <th><span style="color: #fff!important;" data-bind="text: lang.lang.job"></span></th> -->
-									<th><span style="color: #fff!important;" data-bind="text: lang.lang.reference_no"></span></th>
-									<th><span style="color: #fff!important;" data-bind="text: lang.lang.transaction"></span></th>
-									<th><span style="color: #fff!important;" data-bind="text: lang.lang.status"></span></th>
-									<th><span style="color: #fff!important;" data-bind="text: lang.lang.amount"></span></th>
-									<th><span style="color: #fff!important;" data-bind="text: lang.lang.balance"></span></th>
-								</tr>
-							</thead>
-							<tbody data-role="listview"
-								data-auto-bind="false"
-								data-bind="source: dataSource"
-								data-template="statement-row-template"
-							></tbody>
-						</table>
-
-						<!-- <table class="table-statement">
-							<thead>
-								<tr>
-									<th class="center" style="text-align: center"><span data-bind="text: lang.lang.current"></span></th>
-									<th class="center" style="text-align: center">30</th>
-									<th class="center" style="text-align: center">60</th>
-									<th class="center" style="text-align: center">90</th>
-									<th class="center" style="text-align: center">> 90</th>
-									<th class="center" style="text-align: center"><span data-bind="text: lang.lang.amount_due"></span></th>
-								</tr>
-							</thead>
-							<tbody data-role="listview"
-								data-auto-bind="false"
-								data-bind="source: agingDS"
-								data-template="statement-aging-row-template"
-							></tbody>
-						</table> -->
-					</div>
-					<div id="invFormContent" style="display: none">
-						<div class="row-fluid">
-							<div class="span5">
-								<div class="accounCetner-textedit">
-					            	<table width="100%">
-					            		<tr>
-											<div class="" style=" height: 117px; text-align: left;">
-												<img style="width: auto; height: auto; max-width: 100%; max-height: 100%; height: 100px;" data-bind="attr: { src: companyLogo.url, alt: companyName, title: companyName }" />
-											</div>
-											<h4 data-bind="text: company.name"></h4>
-										</tr>
-										</br>
-										<tr>
-											<td><span data-bind="text: lang.lang.number"></span></td>
-											<td>
-												<span class="strong" data-bind="text: obj.abbr"></span>
-												<span class="strong" data-bind="text: obj.number"></span>
-											</td>
-										</tr>
-										<tr>
-											<td><span data-bind="text: lang.lang.name"></span></td>
-											<td>
-												<span data-bind="text: obj.name"></span>
-											</td>
-										</tr>
-										<tr>
-											<td><span data-bind="text: lang.lang.billed_address"></span></td>
-											<td>
-												<span data-bind="text: obj.address"></span>
-											</td>
-										</tr>								
-										<tr>
-											<td><span data-bind="text: lang.lang.phone"></span></td>
-											<td>
-												<span data-bind="text: obj.phone"></span>
-											</td>
-										</tr>
-									</table>													
-								</div>
-							</div>
-							<div class="span5">
-								<div class="accounCetner-textedit">
-					            	<table width="100%">
-										<tr>
-											
-											<td >
-												<span data-bind="text: company.address"></span>
-											</td>
-										</tr>
-										<tr>
-											
-											<td>
-												<span data-bind="text: company.email"span>
-											</td>
-										</tr>								
-										<tr>
-											
-											<td>
-												<span data-bind="text: company.telephone"></span>
-											</td>
-										</tr>
-										<tr>
-											<td style=" height: 55px">
-												
-											</td>
-										</tr>
-										<tr>
-											<td><h4 style=" color: black" data-bind="text: lang.lang.total_due"></h4></td>
-											<td>
-												<h4 style="color: black" data-bind="text: totalAmount"></h4>
-											</td>
-										</tr>
-										<tr>
-											<td style=" height: 10px">
-												
-											</td>
-										</tr>
-										<tr>
-											<td><h4 style="color: black" data-bind="text: lang.lang.amount_due"></h4></td>
-											<td style="color: black" >
-												<h4  data-bind="text: totalDue"></h4>
-											</td>
-										</tr>
-									</table>													
-								</div>
-							</div>
-							<div class="span2">
-							</div>
-						</div>
-						<div class="row-fluid">
-							<div class="span3">
-								
-							</div>
-							<div class="span4">
-							<div style="text-align: center">
-								<h3 data-bind="text: lang.lang.statement" ></h3>
-							</div>
-							<div class="span5">
-							</div>
-						</div>
-							</br>
-						<table class="table table-borderless table-condensed">
-							<thead>
-								<tr>
-									<th data-bind="text: lang.lang.date"><span></span></th>
-									<th data-bind="text: lang.lang.type"><span></span></th>
-									<th data-bind="text: lang.lang.reference_no"><span></span></th>
-									<th data-bind="text: lang.lang.transaction"><span></span></th>
-									<th data-bind="text: lang.lang.status"><span></span></th>
-									<th data-bind="text: lang.lang.amount"><span></span></th>
-									<th data-bind="text: lang.lang.balance"><span></span></th>
-								</tr>
-							</thead>
-							<tbody data-role="listview"
-								data-auto-bind="false"
-								data-bind="source: dataSource"
-								data-template="statement-row-template"
-							></tbody>
-						</table>
-
-						<!-- <table class="table-statement">
-							<thead>
-								<tr>
-									<th class="center" style="text-align: center"><span data-bind="text: lang.lang.current"></span></th>
-									<th class="center" style="text-align: center">30</th>
-									<th class="center" style="text-align: center">60</th>
-									<th class="center" style="text-align: center">90</th>
-									<th class="center" style="text-align: center">> 90</th>
-									<th class="center" style="text-align: center"><span data-bind="text: lang.lang.amount_due"></span></th>
-								</tr>
-							</thead>
-							<tbody data-role="listview"
-								data-auto-bind="false"
-								data-bind="source: agingDS"
-								data-template="statement-aging-row-template"
-							></tbody>
-						</table> -->
-						<br style="line-height:5px">
-						</br>
-					</br>
-					</br>
-
-				</div>	
-
-			</div>
-			<div class="row-fluid" id="endSide" style="display: none">
-				</br>
-					</br>
-				<div class="span1"></div>				
-				<div class="span3">
-					<p style="font-weight: bold; border-top: 0.5px solid black !important; color: black; width:" >Authorized by:</p>
-					<p ></p>
+						<div data-role="grid" class="costom-grid"
+					    	 data-column-menu="true"
+					    	 data-reorderable="true"
+					    	 data-pageable="true"
+			                 data-columns="[
+			                 	{ field: 'issued_date', title: 'DATE' },
+	                            { field: 'type', title:'TYPE' },
+	                            { field: 'reference_no', title:'REFERENCE NO.' },
+	                            { field: 'number', title:'NUMBER' },
+	                            { 
+	                            	field: 'status', 
+	                            	title: 'STATUS',
+	                            	template: kendo.template($('#statement-status-template').html()) 
+	                            },
+	                            { 
+	                            	field: 'amount', 
+	                            	title:'AMOUNT', 
+	                            	format: '{0:n}', 
+	                            	attributes: { style: 'text-align: right;' }, 
+	                            	width: '120px' 
+	                            }
+	                         ]"
+	                         data-auto-bind="false"
+			                 data-bind="source: dataSource" ></div>
+					</div>					
 				</div>
-				<div class="span1"></div>
-				<div class="span3">
-					<p style="font-weight: bold; border-top: 0.5px solid black !important; color: black; width:" >Received by:</p>
-					<p ></p>
-				</div>
-				<div class="span1"></div>
-				
-				<div class="span3">
-					<p style="font-weight: bold; border-top: 0.5px solid black !important; color: black; width:" >Paid by:</p>
-					<p ></p>
-				</div>
-		</div>	
+			</div>			
 		</div>
 	</div>
 </script>
-<script id="statement-row-template" type="text/x-kendo-template" >
-	<tr>
-		<td>#=kendo.toString(new Date(issued_date), "dd-MM-yyyy")#</td>
-		<td>#=type#</td>
-		<!-- <td>#=job#</td> -->
-		<td>#for(var i=0; i < reference_no.length; i++){# #=reference_no[i].number#, #}#</td>
-		<td>#=number#</td>
-		<td>
-			#if(type=="Commercial_Invoice" || type=="Vat_Invoice" || type=="Invoice"){#
-        		#if(status=="0" || status=="2") {#
-        			# var date = new Date(), dueDate = new Date(due_date).getTime(), toDay = new Date(date).getTime(); #
-					#if(dueDate < toDay) {#
-						Over Due #:Math.floor((toDay - dueDate)/(1000*60*60*24))# days
-					#} else {#
-						#:Math.floor((dueDate - toDay)/(1000*60*60*24))# days to pay
-					#}#
-				#} else if(status=="1") {#
-					Paid
-				#} else if(status=="3") {#
-					Returned
-				#}#        	
-        	#}#
-		</td>		
-		<td align="right">#=kendo.toString(amount, "c", locale)#</td>
-		<td align="right">#=kendo.toString(balance, "c", locale)#</td>
-	</tr>
+<script id="statement-status-template" type="text/x-kendo-template" >
+	#if(status=="4") {#
+		#=progress#
+	#}#
+
+	#if(type=="Commercial_Invoice" || type=="Vat_Invoice" || type=="Invoice"){#
+		#if(status=="0" || status=="2") {#
+			# var date = new Date(), dueDate = new Date(due_date).getTime(), toDay = new Date(date).getTime(); #
+			#if(dueDate < toDay) {#
+				Over Due #:Math.floor((toDay - dueDate)/(1000*60*60*24))# days
+			#} else {#
+				#:Math.floor((dueDate - toDay)/(1000*60*60*24))# days to pay
+			#}#
+		#} else if(status=="1") {#
+			Paid
+		#} else if(status=="3") {#
+			Returned
+		#}#
+	#}#
 </script>
 <script id="statement-aging-row-template" type="text/x-kendo-template" >
 	<tr>

@@ -37,6 +37,8 @@ var	en_US = {
 	"create_batch_invoice" : "Create Batch Invoice",
 	"cash_report" : "Reports",
 	"cash_center" : "Cash Center",
+	"done" : "Done",
+	"return" : "Return",
 	//Main Dustboard
 	"search_contact" : "Search Contact",
 	"contact" : "Contact",

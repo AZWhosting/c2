@@ -3084,6 +3084,7 @@ class UtibillReports extends REST_Controller {
 		$totalCustomer = 0;
 		$price = 0;
 		$totalUsage1 = 0;
+		$cost50Up = 0;
 		$totalCustomer1 = 0;
 		$totalUsageSubsidy = 0;
 		$homeTotal10down = 0;

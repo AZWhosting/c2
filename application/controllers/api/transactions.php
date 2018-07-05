@@ -499,7 +499,7 @@ class Transactions extends REST_Controller {
 		   	
 		   	$related = [];
 
-		   	//Type
+		   	//Nature Type and Movement
 		   	if(isset($value->nature_type)){
 		   		if($value->nature_type==""){
 
@@ -520,12 +520,20 @@ class Transactions extends REST_Controller {
 					        $obj->nature_type = "Cash_Refund";
 		   					$obj->movement = -1;
 					        break;
+					    case "Offset_Invoice":
+					        $obj->nature_type = "Offset_Invoice";
+		   					$obj->movement = -1;
+					        break;
 					    case "Purchase_Return":
 					        $obj->nature_type = "Purchase_Return";
 		   					$obj->movement = -1;
 					        break;
 					    case "Payment_Refund":
 					        $obj->nature_type = "Payment_Refund";
+		   					$obj->movement = -1;
+					        break;
+					    case "Offset_Bill":
+					        $obj->nature_type = "Offset_Bill";
 		   					$obj->movement = -1;
 					        break;
 					    default:
@@ -1545,10 +1553,11 @@ class Transactions extends REST_Controller {
 		$sort 	 	= $this->get("sort");
 		$data["results"] = [];
 		$data["count"] = 0;
+		$today = date("Y-m-d");
 		
 		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$bf = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$bfReceipts = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$totalDues = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$overdues = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 		//Sort
 		if(!empty($sort) && isset($sort)){
@@ -1565,17 +1574,13 @@ class Transactions extends REST_Controller {
 		if(!empty($filter["filters"]) && isset($filter["filters"])){
 	    	foreach ($filter["filters"] as $value) {
 	    		if(isset($value['operator'])) {
-	    			if($value["field"]=="type"){
-						$bf->{$value['operator']}($value['field'], $value['value']);
-						$bfReceipts->{$value['operator']}($value['field'], $value['value']);
-					}
-
 					$obj->{$value['operator']}($value['field'], $value['value']);
 				} else {
-					if($value["field"]=="contact_id"){
-						$bf->where($value["field"], $value["value"]);
-						$bfReceipts->where($value["field"], $value["value"]);
+					if($value['field']=="contact_id"){
+						$totalDues->where($value["field"], $value["value"]);
+						$overdues->where($value["field"], $value["value"]);
 					}
+
 					$obj->where($value["field"], $value["value"]);
 				}
 			}
@@ -1595,90 +1600,70 @@ class Transactions extends REST_Controller {
 			$data["count"] = $obj->result_count();
 		}
 
+		//Total Due
+		$totalDues->select_sum("((amount - deposit) * movement) / rate", "total");
+		$totalDues->where_in("nature_type", array("Invoice","Cash_Receipt","Sale_Return","Cash_Refund","Offset_Invoice"));
+		$totalDues->where("is_recurring <>", 1);
+		$totalDues->where("deleted <>", 1);
+		$totalDues->get();
+		$data["total_due"] = floatval($totalDues->total);
+
+		//Overdue
+		$overdues->select_sum("((amount - deposit) * movement) / rate", "total");
+		$overdues->where_in("nature_type", array("Invoice","Cash_Receipt","Sale_Return","Cash_Refund","Offset_Invoice"));
+		$overdues->where_in("status", [0,2]);
+		$overdues->where("due_date <", $today);
+		$overdues->where("is_recurring <>", 1);
+		$overdues->where("deleted <>", 1);
+		$overdues->get();
+		$data["overdue"] = floatval($overdues->total);
+
 		if($obj->exists()){
-			$balance = 0;
 			foreach ($obj as $key => $value) {
-				//Balance Brought Forward
-				if($key==0){
-					$bf->select("locale");
-					$bf->select_sum("(amount - deposit) / rate", "total");
-					$bf->where("issued_date <", $value->issued_date);
-					$bf->where("is_recurring <>", 1);
-					$bf->where("deleted <>", 1);
-					$bf->get();
+				//Balance Forward
+				if($key==0 && $page==1){
+					$balanceForwards = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$balanceForwards->select_sum("((amount - deposit) * movement) / rate", "total");
+					$balanceForwards->where_in("nature_type", array("Invoice","Cash_Receipt","Sale_Return","Cash_Refund","Offset_Invoice"));
+					$balanceForwards->where("contact_id", $value->contact_id);
+					$balanceForwards->where("issued_date <", $value->issued_date);
+					$balanceForwards->where("is_recurring <>", 1);
+					$balanceForwards->where("deleted <>", 1);
+					$balanceForwards->get();
 
-					if($bf->exists()){
-						//BF Receipts
-						$bfReceipts->select("id");
-						$bfReceipts->where("issued_date <", $value->issued_date);
-						$bfReceipts->where("is_recurring <>", 1);
-						$bfReceipts->where("deleted <>", 1);
-						$bfReceipts->get();
-
-						$ids = [];
-						foreach ($bfReceipts as $value) {
-							array_push($ids, $value->id);
-						}
-						$receipt = 0;
-						if(count($ids)>0){
-							$receipts = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-							$receipts->select_sum("amount", "total");
-							$receipts->where_in("reference_id", $ids);
-							$receipts->where("type", "Cash_Receipt");
-							$receipts->where("is_recurring <>", 1);
-							$receipts->where("deleted <>", 1);
-							$receipts->get();
-
-							$receipt = floatval($receipts->total);
-						}
-						
-						$balance += floatval($bf->total) - $receipt;
-						$bfDate = date('Y-m-d', strtotime('-1 day', strtotime($value->issued_date)));
-
+					$balanceForward = floatval($balanceForwards->total);
+					if($balanceForward!=0){
 						$data["results"][] = array(
 							"id" 				=> 0,
-							"issued_date"		=> $bfDate,
+							"issued_date"		=> "",
 							"due_date"			=> "",
 							"type" 				=> "Balance Forward",
-							"job" 				=> "",
 						   	"reference_no" 		=> "",
 						   	"number" 			=> "",
 						   	"status" 			=> "",
-						   	"amount" 			=> $balance,
-						   	"total"				=> 0,
-						   	"balance" 			=> $balance,
-						   	"rate" 				=> 1,
-						   	"locale" 			=> $bf->locale
+						   	"amount" 			=> $balanceForward
 						);
 					}
 				}
 
-				//Single Reference
-				$reference = [];
+				//Reference
+				$reference = "";
 				if($value->reference_id>0){
 					$references = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 					$references->select("number");
 					$references->get_by_id($value->reference_id);
-					array_push($reference, array("number"=>$references->number));
+					$reference = $references->number;
 				}
-
-				$amount = (floatval($value->amount) - floatval($value->deposit));
-				$balance += $amount;
 
 				$data["results"][] = array(
 					"id" 				=> $value->id,
 					"issued_date"		=> $value->issued_date,
 					"due_date"			=> $value->due_date,
 					"type" 				=> $value->type,
-					"job" 				=> "",
 				   	"reference_no" 		=> $reference,
 				   	"number" 			=> $value->number,
 				   	"status" 			=> intval($value->status),
-				   	"amount" 			=> $amount,
-				   	"total"				=> floatval($value->amount),
-				   	"balance" 			=> $balance,
-				   	"rate" 				=> $value->rate,
-				   	"locale" 			=> $value->locale
+				   	"amount" 			=> ((floatval($value->amount) - floatval($value->deposit)) * intval($value->movement)) / floatval($value->rate)
 				);
 			}
 		}

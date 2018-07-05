@@ -1238,73 +1238,9 @@
 				    <div class="tab-content">
 				        <div class="tab-pane active" id="tab1" style="overflow: hidden;position: relative;">
 			            	<div class="span12">
-			            		<p style="color: #203864; margin-left: 15px;">Invoice Number: <span style="font-weight: bold" data-bind="text: obj.number"></span></p>
 			            		<div class="rows">
-			            			<!-- <div data-role="grid" class="costom-grid"
-								    	 data-column-menu="false"
-								    	 data-reorderable="true"
-								    	 data-scrollable="false"
-								    	 data-resizable="true"
-								    	 data-editable="true"
-						                 data-columns="[
-										    {
-										    	title:'NO',
-										    	width: '50px',
-										    	editable: 'false',
-										    	attributes: { style: 'text-align: center;' },
-										        template: function (dataItem) {
-										        	var rowIndex = banhji.returnItem.lineDS.indexOf(dataItem)+1;
-										        	return ' ' + rowIndex;
-										      	}
-										    },
-						                 	{ 
-						                 		field: 'item', 
-						                 		title: 'PRODUCTS/SERVICES', 
-						                 		editor: itemEditor, 
-						                 		editable: 'false',
-						                 		template: '#=item.name#', width: '170px' 
-						                 	},
-				                            {
-											    field: 'quantity',
-											    title: 'QTY',
-											    format: '{0:n}',
-											    editor: numberTextboxEditor,
-											    width: '120px',
-											    template: function(dataItem){
-											    	return dataItem.quantity;
-											    	banhji.returnItem.checkChange();
-											    },
-											    attributes: { style: 'text-align: right;' }
-											},
-				                            {
-				                            	field: 'item_price',
-				                            	title: 'UOM',
-				                            	editable: false,
-				                            	editor: measurementEditor,
-				                            	template: '#=item_price?item_price.measurement:banhji.emptyString#',
-				                            	width: '80px'
-				                            },
-				                            {
-											    field: 'price',
-											    title: 'PRICE',
-											    editable: 'false',
-											    format: '{0:n}',
-											    editor: numberTextboxEditor,
-											    width: '120px',
-											    attributes: { style: 'text-align: right;' }
-											},
-				                            { 
-				                            	field: 'amount', 
-				                            	title:'AMOUNT', 
-				                            	format: '{0:n}', 
-				                            	editable: 'false', 
-				                            	attributes: { style: 'text-align: right;' }, width: '120px' 
-				                            }
-				                         ]"
-				                         data-auto-bind="false"
-						                 data-bind="source: lineDS" >
-						            </div> -->
 				            		<div class="span6">
+				            			<p style="color: #203864; margin-left: 15px;">Invoice Number: <span style="font-weight: bold" data-bind="text: obj.number"></span></p>
 				            			<table class="table table-bordered table-primary table-striped table-vertical-center" style="margin-top: 0px; color: #333;">
 									        <thead>
 									            <tr>
@@ -1322,16 +1258,20 @@
 									    </table>
 				            		</div>
 				            		<div class="span6">
+				            			<p style="color: #203864; margin-left: 15px;">Items Return.</p>
+
 				            			<table class="table table-bordered table-primary table-striped table-vertical-center" style="margin-top: 0px; color: #333;">
 									        <thead>
 									            <tr>
 									            	<th style="vertical-align: top; background: #1c3b19;" data-bind="text: lang.lang.name"></th>
 									            	<th style="vertical-align: top; background: #1c3b19;" >QTY</th>
+									            	<th style="vertical-align: top; background: #1c3b19;" data-bind="text: lang.lang.amount"></th>
 									            </tr>
 									        </thead>
 									        <tbody data-role="listview" 
 								        		data-template="item-update-list-template" 
 								        		data-auto-bind="true"
+								        		id="returnitemds"
 								        		data-selectable="true"
 								        		data-bind="source: itemsUpdateDS">
 								        	</tbody>
@@ -1367,6 +1307,7 @@
 		<td style="padding: 5px !important;">
 			<input type="number" data-bind="value: quantity,events: {change: qtyChange}" />
 		</td>
+		<td style="text-align: right; padding: 5px !important;">#=kendo.toString(quantity * price, locale=="km-KH"?"c0":"c2", locale)#</td>
     </tr>   
 </script>
 <!--Add Itesm-->

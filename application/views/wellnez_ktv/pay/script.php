@@ -5463,10 +5463,21 @@
 		lang            : langVM,
 		dataSource      : dataStore(apiUrl + "spa/cashreceipt"),
 		itemsDS         : dataStore(apiUrl + "item_lines"),
+		purchaseDS 		: dataStore(apiUrl + "spa/purchase"),
+		depositDS 		: dataStore(apiUrl + "spa/deposit"),
+		txnDS 			: dataStore(apiUrl + "transactions"),
 		txnID           : 0,
+		obj 			: null,
 		pageLoad        : function(id){
 			if(id){
 				var self = this;
+				this.txnDS.query({
+					filter: {field: "id", value: id},
+					pageSize: 1
+				}).then(function(e){
+					var v = self.txnDS.view();
+					self.set("obj", v[0]);
+				});
 				this.set("txnID", id);
 				this.itemsDS.query({
 					filter: {field: "transaction_id", value: id},
@@ -5489,6 +5500,7 @@
 				});
 			}else{
 				this.set("correctInput", false);
+				
 			}
 			if(h == 0){
 				this.itemsUpdateDS.add({
@@ -5516,6 +5528,8 @@
 							self.set("correctInput", false);
 						}else{
 							self.set("correctInput", true);
+							var list = $("#returnitemds").data("kendoListView");
+            				list.refresh();
 						}
 					}
 				});
