@@ -27133,6 +27133,7 @@
 		recurringDS             : dataStore(apiUrl + "transactions"),
 		recurringLineDS         : dataStore(apiUrl + "item_lines"),
 		membershipTypeDS        : dataStore(apiUrl + "membership_types"),
+		defaultMembershipTypeDS : dataStore(apiUrl + "membership_types"),
 		fieldValueDS            : dataStore(apiUrl + "field_values"),
 		fieldValueRecurringDS   : dataStore(apiUrl + "field_values"),
 		itemDS                  : dataStore(apiUrl + "items"),
@@ -27820,6 +27821,8 @@
 		},
 		//Recurring
 		addRecurring            : function(){
+			var self = this;
+			
 			this.transactionDS.data([]);
 			this.lineDS.data([]);
 
@@ -27873,10 +27876,21 @@
 			var obj = this.transactionDS.at(0);
 			this.set("objRecurring", obj);
 
-			//Default rows
-			for (var i = 0; i < banhji.source.defaultLines; i++) {
-				this.addRow();
-			}
+			//Load default membership
+			this.defaultMembershipTypeDS.query({
+				filter: [],
+				page: 1,
+				pageSize: 1
+			}).then(function(){
+				var view = self.defaultMembershipTypeDS.view();
+
+				self.loadRecurring(view[0].membership_id);
+			});				
+
+			// //Default rows
+			// for (var i = 0; i < banhji.source.defaultLines; i++) {
+			// 	this.addRow();
+			// }
 		},
 		loadRecurring           : function(id){
 			var self = this;
