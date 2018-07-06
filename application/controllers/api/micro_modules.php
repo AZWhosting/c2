@@ -90,16 +90,18 @@ class Micro_modules extends REST_Controller {
 		$receivables->get();
 
 		//Receiveable count
-		$receivableCounts = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$receivableCounts->where_in("type", array("Commercial_Invoice","Vat_Invoice","Invoice"));
-		$receivableCounts->where_in("status", array(0,2));
-		$receivableCounts->where("is_recurring <>", 1);
-		$receivableCounts->where("deleted <>", 1);
-		$receivableCount = $receivableCounts->count();
+		$receivableCustomerCounts = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$receivableCustomerCounts->where("nature_type", "Invoice");
+		$receivableCustomerCounts->where_in("status", array(0,2));		
+		$receivableCustomerCounts->where("is_recurring <>", 1);
+		$receivableCustomerCounts->where("deleted <>", 1);
+		$receivableCustomerCounts->group_by("contact_id");
+		$receivableCustomerCounts->get();
+		$receivableCustomerCount = $receivableCustomerCounts->result_count();
 		
 		//Receiveable overdue count
 		$receivableOverdueCounts = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-		$receivableOverdueCounts->where_in("type", array("Commercial_Invoice","Vat_Invoice","Invoice"));
+		$receivableOverdueCounts->where("nature_type", "Invoice");
 		$receivableOverdueCounts->where("due_date <", $today);
 		$receivableOverdueCounts->where_in("status", array(0,2));
 		$receivableOverdueCounts->where("is_recurring <>", 1);
@@ -116,16 +118,16 @@ class Micro_modules extends REST_Controller {
 		$draftCount = $draftCounts->count();
 				
 		$data["results"][] = array(
-			"id" 				=> 0,
-			"sale" 				=> floatval($sales->total),
-			"customer_count"	=> $customerCount,
-			"product_count" 	=> $productCount,
+			"id" 						=> 0,
+			"sale" 						=> floatval($sales->total),
+			"customer_count"			=> $customerCount,
+			"product_count" 			=> $productCount,
 
-			"receivable" 		=> floatval($receivables->total),
-			"receivable_count"	=> $receivableCount,
+			"receivable" 				=> floatval($receivables->total),
+			"receivable_customer_count"	=> $receivableCustomerCount,
 			"receivable_overdue_count" 	=> $receivableOverdueCount,
 
-			"draft_count" 		=> $draftCount,
+			"draft_count" 				=> $draftCount,
 		);
 
 		//Response Data

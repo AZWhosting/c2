@@ -39,6 +39,13 @@ var	en_US = {
 	"cash_center" : "Cash Center",
 	"done" : "Done",
 	"return" : "Return",
+	"sale_from_the_beginning_of_the_year" : "Sale in Fiscal Year",
+	"received" : "Received",
+	"num_customer" : "N. Customer",
+	"suppiler_report" : "Supplier Reports",
+	"purchase_from_the_beginning_of_the_year" : "Purchase in Fiscal Year",
+	"number_supplier" : "N. Supplier ",
+	"n_o" : "N.0",
 	//Main Dustboard
 	"search_contact" : "Search Contact",
 	"contact" : "Contact",

@@ -28,13 +28,26 @@
                         	<div id="indexMenu">
                         		<div class="hidden-sm-down" style="position: absolute; right: 20px; top: 20px;">
                         			<div class="btn-group float-right">
-						                <button style="font-size: 17px; " type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-bind="text: lang.lang.new_transaction">
+						                <button style="font-size: 17px; background: #0F2C72; border-color: #0F2C72;" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-bind="text: lang.lang.new_transaction">
 						                </button>
 						                <div class="dropdown-menu">
 						                    <a class="dropdown-item" href="purchases#/purchase"><span data-bind="text: lang.lang.make_purchase"></span></a>
 						                    <a class="dropdown-item" href="purchases#/purchase_order"><span data-bind="text: lang.lang.make_purchase_order"></span></a>
 						                    <a class="dropdown-item" href="purchases#/vendor_deposit"><span data-bind="text: lang.lang.make_vendor_deposit"></span></a>
 						                    <a class="dropdown-item" href="purchases#/cash_payment"><span data-bind="text: lang.lang.make_cash_payment"></span></a>
+						                </div>
+						            </div>
+
+						            <div class="btn-group float-right" style="margin-right: 15px;">
+						                <button style="font-size: 17px; background: #0F2C72; border-color: #0F2C72;" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-bind="text: lang.lang.suppiler_report">
+						                </button>
+						                <div class="dropdown-menu">
+						                    <a class="dropdown-item" href="#/purchase_summary_product_services" data-bind="text: lang.lang.purchase_summary_by_product_services"></a>
+						                    <a class="dropdown-item" href="#/purchase_detail_product_services" data-bind="text: lang.lang.purchase_detail_by_product_services"></a>
+						                    <a class="dropdown-item" href="#/suppliers_balance_summary" data-bind="text: lang.lang.suppliers_balance_summary"></a>
+						                    <a class="dropdown-item" href="#/payables_aging_summary" data-bind="text: lang.lang.payables_aging_summary"></a>
+						                    <a class="dropdown-item" href="#/list_bills_paid" data-bind="text: lang.lang.list_of_invoices_to_be_collected"></a>
+						                    <a class="dropdown-item" href="#/bill_payment_list" data-bind="text: lang.lang.bill_payment_list"></a>
 						                </div>
 						            </div>
                         		</div>
@@ -66,7 +79,45 @@
 <!-- Menu -->
 <script id="reports" type="text/x-kendo-template">
 	<div class="row home" id="reports">
-		<div class="col-12 col-md-4">
+		<div class="col-12 col-md-6 col-lg-4" style="padding-right: 0;">
+			<div class="saleOverview" data-bind="click: loadPurchase" style="padding: 15px; margin-bottom: 15px; background: #0F2C72; box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important;">
+				<h2 style="color: #fff; text-align: left;" ><span style="color: #fff; " data-bind="text: lang.lang.purchase_from_the_beginning_of_the_year"></span></h2>
+				<p style="color: #fff; margin-bottom: 0; text-align: right" data-format="n" data-bind="text: obj.purchase"></p>
+				
+			</div>
+		</div>
+		<div class="col-12 col-md-6 col-lg-3" style="padding: 0;">
+			<div class="saleOverview" data-bind="click: loadPayable" style="padding: 15px; margin-bottom: 15px; background: #FCCB23; box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important;">
+				<h2 style=" text-align: left;" data-bind="text: lang.lang.payables"></h2>
+				<p style="color: #fff; margin-bottom: 0; text-align: right" data-format="n0" data-bind="text: obj.payable"></p>				
+			</div>
+		</div>
+		<div class="col-12 col-lg-5" >
+			<div class="row">
+				<div class="col-12 col-md-4 col-lg-4" style="padding: 0;">
+					<div class="saleOverview" style="margin-bottom: 15px; background:  #C8070E ; box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important;">
+						<h2 style="color: #fff; " data-bind="text: lang.lang.overdue"></h2>
+						<p style="color: #fff; margin-bottom: 0;" data-format="n0" data-bind="text: obj.payable_overdue_count"></p>						
+					</div>
+				</div>
+				<div class="col-12 col-md-4 col-lg-4" style="padding: 0;">
+					<div class="saleOverview" style="margin-bottom: 15px; background:  #FBEADE ; box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important;">
+						<h2 style="color: #333; " data-bind="text: lang.lang.number_supplier"></h2>
+						<p style="color: #333; margin-bottom: 0;" data-format="n0" data-bind="">test</p>						
+					</div>
+				</div>
+				<div class="col-12 col-md-4 col-lg-4" style="padding-left: 0;">
+					<div class="saleOverview" data-bind="click: loadDraft" style="margin-bottom: 15px; background:  #EBEFF3 ; box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important;">
+						<h2 style="color: #333; " data-bind="text: lang.lang.draft"></h2>
+						<p style="color: #333; margin-bottom: 0;" data-format="n0" data-bind="text: obj.draft_count"></p>						
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+		<!-- <div class="col-12 col-md-4">
 			<div class="saleOverview" data-bind="click: loadPurchase" style="margin-bottom: 15px;">
 				<h2><span data-bind="text: lang.lang.purchase"></span> (<span data-bind="text: fiscalDate"></span>)</h2>
 				<p data-format="n" data-bind="text: obj.purchase"></p>
@@ -83,8 +134,8 @@
 				<div class="mask"></div>
 			</div>
 
-			<!-- Report -->
-            <!-- <div class="report ">
+			
+            <div class="report ">
 				<div class="col-md-12">
 					<h3 class="marginBottom"><a href="#/purchase_summary_product_services" data-bind="text: lang.lang.purchase_summary_by_product_services" ></a></h3>
 					
@@ -93,10 +144,10 @@
 					<h3 style="border-bottom: none; padding-bottom: 0;"><a href="#/purchase_detail_product_services" data-bind="text: lang.lang.purchase_detail_by_product_services" ></a></h3>
 					
 				</div>						    					
-			</div> -->
+			</div>
 
-			<!-- Top 4 -->
-			<!-- <div class="top5 home-footer">
+			
+			<div class="top5 home-footer">
                 <table class="table color-table dark-table">
                     <thead>
                         <tr>
@@ -110,8 +161,8 @@
                          data-template="top-contact-template"
                          data-bind="source: obj.top_supplier"></tbody>
                 </table>
-            </div> -->
-		</div>
+            </div>
+		</div> -->
 		<!-- <div class="col-12 col-md-4"> -->
 			<!-- <div class="saleOverview"  style="margin-bottom: 15px;">
 				<h2 data-bind="text: lang.lang.purchase_order"></h2>
@@ -157,7 +208,7 @@
                 </table>
             </div> -->
 		<!-- </div> -->
-		<div class="col-12 col-md-4">
+		<!-- <div class="col-12 col-md-4">
 			<div class="saleOverview" data-bind="click: loadPayable" style="margin-bottom: 15px;">
 				<h2 data-bind="text: lang.lang.payables"></h2>
 				<p data-format="n" data-bind="text: obj.payable"></p>
@@ -173,8 +224,8 @@
 				</div>
 			</div>
 
-			<!-- Report -->
-			<!-- <div class="report" >
+			
+			<div class="report" >
 				<div class="col-md-12">
 					<h3 class="marginBottom"><a href="#/list_bills_paid" data-bind="text: lang.lang.list_of_invoices_to_be_collected"></a></h3>
 				</div>
@@ -182,10 +233,10 @@
 					<h3 style="border-bottom: none; padding-bottom: 0;"><a href="#/bill_payment_list" data-bind="text: lang.lang.bill_payment_list"></a></h3>
 					
 				</div>
-			</div> -->
+			</div>
 
-			<!-- Top 4 -->
-			<!-- <div class="top5 home-footer">
+			
+			<div class="top5 home-footer">
                 <table class="table color-table dark-table">
                     <thead>
                         <tr>
@@ -199,8 +250,8 @@
                          data-template="top-product-template"
                          data-bind="source: obj.top_cash_payment"></tbody>
                 </table>
-            </div> -->
-		</div>
+            </div>
+		</div> -->
 		<!-- 333 -->
 		<!-- <div class="col-12 col-md-4">
 			<div class="saleOverview" style="margin-bottom: 15px;">
@@ -239,7 +290,7 @@
                 </table>
             </div> -->
 		<!-- </div> -->
-		<div class="col-12 col-md-4">
+		<!-- <div class="col-12 col-md-4">
 			<div class="saleOverview" style="margin-bottom: 15px;">
 				<div class="row">
 					
@@ -270,7 +321,7 @@
 		        </div>
 			</div>
 
-			<!-- <div class="top5 home-footer">
+			<div class="top5 home-footer">
                 <table class="table color-table dark-table">
                     <thead>
                         <tr>
@@ -284,8 +335,8 @@
                          data-template="top-product-template"
                          data-bind="source: obj.top_cash_receipt"></tbody>
                 </table>
-            </div> -->
-		</div>
+            </div>
+		</div> -->
 	</div>
 
 	<div class="row">
@@ -325,20 +376,20 @@
 	             data-auto-bind="false"
 	             data-filterable="true"
 	             data-columns="[
-	                { field: 'issued_date' , title : 'DATE', template:'#=kendo.toString(new Date(issued_date), banhji.dateFormat)#', filterable: false, attributes: { style: 'text-align: center;'} },
-	                { field: 'name' , title : 'NAME', filterable: false },
-	                { field: 'type' , title : 'TYPE', filterable: { multi: true, search: true} },
-	                { field: 'number' , title: 'REFERENCE', filterable: false, attributes: { style: 'text-align: left;'}, template: '<a href=\'purchases\\#/#=type.toLowerCase()#/#=id#\'>#=number#</a>' },
-	                { field: 'amount' , title: 'AMOUNT', filterable: false, format: '{0:n}' , attributes: { style: 'text-align: right; padding-right: 30px;'} },
+	                { field: 'issued_date' , title : langVM.lang.date, template:'#=kendo.toString(new Date(issued_date), banhji.dateFormat)#', filterable: false, attributes: { style: 'text-align: center;' , class: 'width_33'} , headerAttributes: { class: 'width_33'} },
+	                { field: 'name' , title : langVM.lang.name, filterable: false ,  attributes: { class: 'hidden-sm-down'} , headerAttributes: { class: 'hidden-sm-down'} },
+	                { field: 'type' , title : langVM.lang.type, filterable: { multi: true, search: true},  attributes: { class: 'width_33'} , headerAttributes: { class: 'width_33'} },
+	                { field: 'number' , title: langVM.lang.reference, filterable: false, attributes: { style: 'text-align: left;', class: 'hidden-sm-down underline'} , headerAttributes: { class: 'hidden-sm-down'} },
+	                { field: 'amount' , title: langVM.lang.amount, filterable: false, format: '{0:n}' , attributes: { style: 'text-align: right; ' , class: 'width_33'} , headerAttributes: { class: 'width_33'} },
 	                { 
-	                	title: 'STATUS', 
+	                	title: langVM.lang.status, 
 	                	template: kendo.template($('#transactions-status-tmpl').html()),
-	                	attributes: { style: 'text-align: center;'}
+	                	attributes: { style: 'text-align: center;' , class: 'hidden-sm-down'} , headerAttributes: { class: 'hidden-sm-down'}
 	                },
 	                { 
-	                	title: 'ACTIONS',
+	                	title: langVM.lang.action,
 	                	template: kendo.template($('#transactions-action-tmpl').html()),
-	                	attributes: { style: 'text-align: center;'}
+	                	attributes: { style: 'text-align: center;' , class: 'hidden-sm-down'} , headerAttributes: { class: 'hidden-sm-down'}
 	                }
 	                 
 	             ]"
@@ -438,7 +489,7 @@
 					<div class="col-12 col-md-12 col-lg-6">
 						<div class="widget-search marginBottom">
 							<div class="overflow-hidden" style="width: 100%;">
-								<input type="search" placeholder="Barcode..." data-bind="value: barcode, events: {change: barcodeChange}" style="width: 100%;">
+								<input type="search" placeholder="Barcode..." data-bind="value: barcode, events: {change: searchByBarcode}" style="width: 100%;">
 							</div>
 							
 						</div>
@@ -490,12 +541,12 @@
 									data-role="listview"
 									data-template="item-list-view-template"
 									data-auto-bind="true"
-									data-bind="source: itemsDS">
+									data-bind="source: itemDS">
 								</div>
 								<div id="pager" class="k-pager-wrap"
 							    	 data-role="pager"
 							    	 data-auto-bind="true"
-						             data-bind="source: itemsDS">
+						             data-bind="source: itemDS">
 						        </div>
 							</div>
 						</div>
@@ -561,7 +612,7 @@
 				</div>
 				<div class="row">
 					<div class="col-md-12 ">
-						<div id="posProductList" class="box-generic-noborder table-responsive marginBottom" style="min-height: 140px!important; height: 230px; padding-bottom: 0;">
+						<div id="posProductList" class="grid box-generic-noborder table-responsive marginBottom" style="min-height: 140px!important; height: 230px; padding-bottom: 0;">
 							<!-- Item List -->
 						     <div data-role="grid" class="costom-grid table color-table dark-table"
 						    	 data-column-menu="true"
@@ -571,9 +622,9 @@
 						    	 data-editable="true"
 				                 data-columns="[
 								    {
-								    	title:'NO.',
-								    	width: '50px',
-								    	attributes: { style: 'text-align: center;' },
+								    	title: langVM.lang.n_o,
+								    	attributes: { style: 'text-align: center;', class: 'hidden-sm-down' },
+								    	headerAttributes: { class: 'hidden-sm-down'},
 								        template: function (dataItem) {
 								        	var rowIndex = banhji.purchaseDashBoard.lineDS.indexOf(dataItem)+1;
 								        	return '<i class=icon-trash data-bind=click:removeRow></i>' + ' ' + rowIndex;
@@ -581,33 +632,35 @@
 								    },
 				                 	{ 
 				                 		field: 'item', 
-				                 		title: 'PRODUCTS/SERVICES', 
-				                 		template: '#=item.name#', 
-				                 		width: '170px',
-				                 		editable: 'false', 
+				                 		title: langVM.lang.item, 
+				                 		template: '#=item.name#',
+				                 		editor: itemPurchaseEditor,
+				                 		attributes: { class: 'width_33' },
+				                 		headerAttributes: { class: 'width_33' }
 				                 	},
 		                            {
 									    field: 'quantity',
-									    title: 'QTY',
+									    title: langVM.lang.qty,
 									    format: '{0:n}',
 									    editor: numberTextboxEditor,
-									    width: '120px',
-									    attributes: { style: 'text-align: right;' }
+									    attributes: { style: 'text-align: right;', class: 'width_33' },
+									    headerAttributes: { class: 'width_33' }
 									},
 		                            {
 		                            	field: 'item_price',
-		                            	title: 'UOM',
+		                            	title: langVM.lang.uom,
+		                            	attributes: { class: 'hidden-sm-down' },
+								    	headerAttributes: { class: 'hidden-sm-down'},
 		                            	editor: measurementEditor,
-		                            	template: '#=item_price?item_price.measurement:banhji.emptyString#',
-		                            	width: '80px'
+		                            	template: '#=item_price?item_price.measurement:banhji.emptyString#'
 		                            },
 		                            {
 									    field: 'cost',
-									    title: 'COST',
+									    title: langVM.lang.cost,
 									    format: '{0:n}',
 									    editor: numberTextboxEditor,
-									    width: '120px',
-									    attributes: { style: 'text-align: right;' }
+									    attributes: { style: 'text-align: right;', class: 'width_33' },
+									    headerAttributes: { class: 'width_33' }
 									},
 									{
 									    field: 'discount',
@@ -615,8 +668,8 @@
 									    hidden: true,
 									    format: '{0:n}',
 									    editor: numberTextboxEditor,
-									    width: '120px',
-									    attributes: { style: 'text-align: right;' }
+									    attributes: { style: 'text-align: right;', class: 'hidden-sm-down' },
+								    	headerAttributes: { class: 'hidden-sm-down'},
 									},
 									{
 									    field: 'discount_percentage',
@@ -624,29 +677,34 @@
 									    hidden: true,
 									    format: '{0:p}',
 									    editor: discountEditor,
-									    width: '120px',
-									    attributes: { style: 'text-align: right;' }
+									    attributes: { style: 'text-align: right;', class: 'hidden-sm-down' },
+								    	headerAttributes: { class: 'hidden-sm-down'},
 									},
 		                            { 
 		                            	field: 'amount', 
-		                            	title:'AMOUNT', 
+		                            	title: langVM.lang.amount, 
 		                            	format: '{0:n}', 
 		                            	editable: 'false', 
-		                            	attributes: { style: 'text-align: right;' }, width: '120px' },
+		                            	attributes: { style: 'text-align: right; width: 120px' , class: 'hidden-sm-down'},
+		                            	headerAttributes: { class: 'hidden-sm-down'},
+		                            },
 		                            { 
 		                            	field: 'tax_item', 
-		                            	title:'TAX', 
+		                            	title: langVM.lang.tax, 
 		                            	hidden: true,
 		                            	editor: taxForSaleEditor, 
 		                            	template: '#=tax_item.name#', 
-		                            	width: '120px' 
+		                            	attributes: { class: 'hidden-sm-down' },
+								    	headerAttributes: { class: 'hidden-sm-down'}, 
 		                            },
 		                            { 
 		                            	field: 'wht_account', 
 		                            	title: 'WHT ACCOUNT', 
 		                            	hidden: true, 
 		                            	editor: whtAccountEditor, 
-		                            	template: '#=wht_account.name#', width: '120px' 
+		                            	template: '#=wht_account.name#',
+		                            	attributes: { class: 'hidden-sm-down' },
+								    	headerAttributes: { class: 'hidden-sm-down'},
 		                            },
 		                            { 
 		                            	field: 'additional_cost', 
@@ -654,20 +712,23 @@
 		                            	format: '{0:n}', 
 		                            	hidden: true, 
 		                            	editable: 'false', 
-		                            	attributes: { style: 'text-align: right;' }, 
-		                            	width: '120px' 
+		                            	attributes: { style: 'text-align: right;', class: 'hidden-sm-down' },
+		                            	headerAttributes: { class: 'hidden-sm-down'},
 		                            },
 		                            { 
 		                            	field: 'additional_applied', 
 		                            	title:'APPLY ADD.COST', 
 		                            	hidden: true, 
 		                            	editor: applyAdditionalCostEditor, 
-		                            	width: '120px' 
+		                            	attributes: { class: 'hidden-sm-down' },
+								    	headerAttributes: { class: 'hidden-sm-down'}, 
 		                            },
 		                            { 
 		                            	field: 'reference_no', 
 		                            	title:'REFERENCE NO.', 
-		                            	hidden: true, width: '120px' 
+		                            	hidden: true,
+		                            	attributes: { class: 'hidden-sm-down' },
+								    	headerAttributes: { class: 'hidden-sm-down'},
 		                            }
 		                         ]"
 		                         data-auto-bind="false"
@@ -675,6 +736,11 @@
 				            </div>
 						</div>
 
+						<div class="row">
+							<div class="col">
+								<button class="btn waves-effect waves-light btn-block btn-info btnPlus marginRight" data-bind="click: addRow"><i class="ti-plus"></i></button>
+							</div>
+						</div>
 						<div class="row">
 							<div class="col-12 col-md-12 col-lg-6">
 								<table class="table color-table dark-table">
@@ -735,7 +801,8 @@
 										</tr> -->
 									</tbody>
 								</table>
-							</div> 
+							</div>
+							 
 							<div class="col-12 col-md-12 col-lg-6 checkOut-button">
 								<!-- <div class="row">
 									<div class="col" >
@@ -798,10 +865,11 @@
 							<div id="ntf1" data-role="notification" style="display: none;"></div>
 							<div class="row">
 								<div class="col" align="right">
-									<span  class="btn-btn" data-bind="click: addEmpty"><i></i> <span data-bind="text: lang.lang.cancel">Cancel </span></span>
-									<span class="btn-btn" data-bind="click: openConfirm, visible: isEdit" style="display: none;"><span data-bind="text: lang.lang.delete">Delete</span></span>
+									<span  class="btn-btn" data-bind="click: cancel"><i></i> <span data-bind="text: lang.lang.cancel">Cancel </span></span>
+									<span class="btn-btn" id="saveClose" data-bind="click: saveNew2"><span data-bind="text: lang.lang.save_close">Save Close</span></span>
+									<!-- <span class="btn-btn" data-bind="click: openConfirm, visible: isEdit" style="display: none;"><span data-bind="text: lang.lang.delete">Delete</span></span>
 									<span class="btn-btn" data-bind="click: saveNew2" id="saveNew" data-bind="invisible: isEdit"><span data-bind="text: lang.lang.save_new">Save and New</span></span>
-			                        <span class="btn-btn" data-bind="click: savePrint2" id="savePrint"><span data-bind="text: lang.lang.save_print">Save and Print</span></span>
+			                        <span class="btn-btn" data-bind="click: savePrint2" id="savePrint"><span data-bind="text: lang.lang.save_print">Save and Print</span></span> -->
 									<!-- <button type="button" class="btn btn-info btn-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 		                        		<span data-bind="text: lang.lang.save_option">Save Options</span>
 			                        </button>
@@ -970,7 +1038,7 @@
 	</div>
 </script>
 <script id="item-list-view-template" type="text/x-kendo-template">
-	<div class="product" data-bind="click:addRow" style="text-align: center;">
+	<div class="product" data-bind="click:addRowSelectedItem" style="text-align: center;">
 		<!-- <a class="view-details">		
 			<div style="height:130px;">
 				<img src="#= image_url? image_url: 'https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/no_image.jpg'#" />
@@ -998,45 +1066,45 @@
 
 <script id="transactions-status-tmpl" type="text/x-kendo-tmpl">
 	#if(status=="4") {#
-		#=progress#
+		<span data-bind="text: lang.lang.draft"></span>
 	#}#
 
 	#if(type=="Credit_Purchase"){#
 		#if(status=="0" || status=="2") {#
 			# var date = new Date(), dueDate = new Date(due_date).getTime(), toDay = new Date(date).getTime(); #
 			#if(dueDate < toDay) {#
-				Over Due #:Math.floor((toDay - dueDate)/(1000*60*60*24))# days
+				<span data-bind="text: lang.lang.over_due"></span> #:Math.floor((toDay - dueDate)/(1000*60*60*24))# <span data-bind="text: lang.lang.days"></span>
 			#} else {#
-				#:Math.floor((dueDate - toDay)/(1000*60*60*24))# days to pay
+				#:Math.floor((dueDate - toDay)/(1000*60*60*24))# <span data-bind="text: lang.lang.days_to_pay"></span>
 			#}#
 		#} else if(status=="1") {#
-			Paid
+			<span data-bind="text: lang.lang.paid"></span>
 		#} else if(status=="3") {#
-			Returned
+			<span data-bind="text: lang.lang.return"></span>
 		#}#
 	#}else if(type=="Purchase_Order"){#
 		#if(status=="0"){#
-			Open
+			<span data-bind="text: lang.lang.open"></span>
 		#}else if(status=="1"){#
-			Done
+			<span data-bind="text: lang.lang.done"></span>
 		#}#
 	#}else if(type=="GRN"){#
 		#if(status=="0"){#
-			Open
+			<span data-bind="text: lang.lang.open"></span>
 		#}else if(status=="1"){#
-			Received
+			<span data-bind="text: lang.lang.received"></span>
 		#}#
 	#}#
 </script>
 <script id="transactions-action-tmpl" type="text/x-kendo-tmpl">
 	#if(type=="Credit_Purchase"){#
 		#if(status=="0" || status=="2") {#
-			<a data-bind="click: payBill"><button class="k-button btn-info">Pay Bill</button></a>
+			<a data-bind="click: payBill"><button class="k-button btn-info"><span data-bind="text: lang.lang.pay_bill"></span></button></a>
 		#}#
 	#}#
 
 	#if(status=="4") {#
-		<a href="\#/#=type.toLowerCase()#/#=id#"><button>Use</button></a>
+		<a href="\#/#=type.toLowerCase()#/#=id#"><button class="k-button btn-info"><span data-bind="text: lang.lang.use"></span></button></a>
 	#}#
 </script>
 <script id="supplierTransaction-temp-old" type="text/x-kendo-template">
@@ -1277,16 +1345,16 @@
 					<div class="col-md-6">
 						<div class="row">
 							<div class="col-md-6">
-								<div class="blockBalance" data-bind="click: loadBalance" style="height: 108px;">
+								<div class="blockBalance" data-bind="click: loadBalance" style="height: 108px; background: #FFCA00; box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important;">
 									<div class="coverIcon"><i class="ti-server"></i></div>
 									<div class="txt">
-										<span  data-bind="text: lang.lang.balance"></span>
+										<span style="color: #333;" data-bind="text: lang.lang.balance"></span>
 										<span data-format="n" data-bind="text: snapshot.balance"></span>
 									</div>
 								</div>
 							</div>
 							<div class="col-md-6">
-								<div class="blockDeposit" data-bind="click: loadPO" style="height: 108px;">
+								<div class="blockDeposit" data-bind="click: loadPO" style="height: 108px; background: #424242; box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important;">
 									<div class="coverIcon"><i class=" ti-briefcase"></i></div>
 									<div class="txt">
 										<span data-bind="text: lang.lang.po"></span>
@@ -1297,16 +1365,16 @@
 						</div>
 						<div class="row">
 							<div class="col-md-6">
-								<div class="blockOpenInvoice" data-bind="click: loadBalance" style="height: 108px;">
+								<div class="blockOpenInvoice" data-bind="click: loadBalance" style="height: 108px; background: #FAD5BB; box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important;">
 									<div class="coverIcon"><i class="icon-info"></i></div>
 									<div class="txt">
-										<span style="font-size: 25px;" data-format="n" data-bind="text: snapshot.open_bill_count"></span>
-										<span>Open Bill</span>
+										<span style="font-size: 25px; color: #333;" data-format="n" data-bind="text: snapshot.open_bill_count"></span>
+										<span style="color: #333;"><span data-bind="text: lang.lang.open_invoice"></span></span>
 									</div>
 								</div>
 							</div>
 							<div class="col-md-6">
-								<div class="blockOverDue" data-bind="click: loadOverInvoice" style="height: 108px;">
+								<div class="blockOverDue" data-bind="click: loadOverInvoice" style="height: 108px; background: #CE1C00; box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important;">
 									<div class="coverIcon"><i class="ti-alarm-clock"></i></div>
 									<div class="txt" >
 										<span style="font-size: 25px;" data-format="n" data-bind="text: snapshot.overdue_count"></span>
@@ -1352,15 +1420,15 @@
 				<!-- Block Table -->
 				<div class="row">
 					<div class="col-md-12 table-responsive">
-						<table class="table color-table dark-table">
+						<table class="table color-table dark-table" style="border-bottom: 3px solid #1F4774;">
 					        <thead>
 					            <tr>
-					                <th data-bind="text: lang.lang.date"></th>
-									<th data-bind="text: lang.lang.type"></th>
-									<th data-bind="text: lang.lang.reference_no"></th>
-									<th data-bind="text: lang.lang.amount"></th>
-									<th data-bind="text: lang.lang.status"></th>
-									<th data-bind="text: lang.lang.action"></th>
+					                <th style="border-top: 2px solid #1F4774; border-bottom: 3px solid #1F4774; background-color: #fff !important; color: #333 !important; " data-bind="text: lang.lang.date"></th>
+									<th style="border-top: 2px solid #1F4774; border-bottom: 3px solid #1F4774; background-color: #fff !important; color: #333 !important; " data-bind="text: lang.lang.type"></th>
+									<th style="border-top: 2px solid #1F4774; border-bottom: 3px solid #1F4774; background-color: #fff !important; color: #333 !important; " data-bind="text: lang.lang.reference_no"></th>
+									<th style="border-top: 2px solid #1F4774; border-bottom: 3px solid #1F4774; background-color: #fff !important; color: #333 !important; " data-bind="text: lang.lang.amount"></th>
+									<th style="border-top: 2px solid #1F4774; border-bottom: 3px solid #1F4774; background-color: #fff !important; color: #333 !important; " data-bind="text: lang.lang.status"></th>
+									<th style="border-top: 2px solid #1F4774; border-bottom: 3px solid #1F4774; background-color: #fff !important; color: #333 !important; " data-bind="text: lang.lang.action"></th>
 					            </tr>
 					        </thead>
 					        <tbody data-role="listview"
@@ -6601,16 +6669,16 @@
 </script>
 <script id="vendorCenter-transaction-tmpl" type="text/x-kendo-tmpl">
     <tr>
-    	<td>#=kendo.toString(new Date(issued_date), "dd-MM-yyyy")#</td>
-    	<td>#=type#</td>
-        <td>
+    	<td style="border-bottom: 1px solid \#1F4774;">#=kendo.toString(new Date(issued_date), "dd-MM-yyyy")#</td>
+    	<td style="border-bottom: 1px solid \#1F4774;">#=type#</td>
+        <td style="border-bottom: 1px solid \#1F4774;">
 			#if(type=="Vendor_Deposit" && amount<0){#
-				<a data-bind="click: goReference">#=number#</a>
+				<a class="underline" data-bind="click: goReference">#=number#</a>
 			#}else{#
-				<a href="\#/#=type.toLowerCase()#/#=id#">#=number#</a>
+				<a class="underline" href="\#/#=type.toLowerCase()#/#=id#">#=number#</a>
 			#}#
         </td>
-    	<td class="right">
+    	<td style="border-bottom: 1px solid \#1F4774; text-align: right;">
     		#if(type=="GRN"){#
     			#=kendo.toString(amount, "n0")#
     		#}else if(type=="Cash_Purchase" || type=="Credit_Purchase"){#
@@ -6620,48 +6688,48 @@
     		#}#
     	</td>
     	<!-- Status -->
-    	<td align="center">
+    	<td style="border-bottom: 1px solid \#1F4774; text-align: center;">
     		#if(status=="4") {#
-    			#=progress#
+    			<span data-bind="text: lang.lang.draft"></span>
     		#}#
 
         	#if(type=="Credit_Purchase"){#
         		#if(status=="0" || status=="2") {#
         			# var date = new Date(), dueDate = new Date(due_date).getTime(), toDay = new Date(date).getTime(); #
 					#if(dueDate < toDay) {#
-						Over Due #:Math.floor((toDay - dueDate)/(1000*60*60*24))# days
+						 <span data-bind="text: lang.lang.over_due"></span> #:Math.floor((toDay - dueDate)/(1000*60*60*24))#  <span data-bind="text: lang.lang.days"></span>
 					#} else {#
-						#:Math.floor((dueDate - toDay)/(1000*60*60*24))# days to pay
+						#:Math.floor((dueDate - toDay)/(1000*60*60*24))# <span data-bind="text: lang.lang.days_to_pay"></span> 
 					#}#
 				#} else if(status=="1") {#
-					Paid
+					 <span data-bind="text: lang.lang.paid"></span>
 				#} else if(status=="3") {#
-					Returned
+					 <span data-bind="text: lang.lang.return"></span>
 				#}#
         	#}else if(type=="Purchase_Order"){#
         		#if(status=="0"){#
-        			Open
+        			 <span data-bind="text: lang.lang.open"></span>
         		#}else if(status=="1"){#
-        			Done
+        			 <span data-bind="text: lang.lang.done"></span>
         		#}#
         	#}else if(type=="GRN"){#
         		#if(status=="0"){#
-        			Open
+        			 <span data-bind="text: lang.lang.open"></span>
         		#}else if(status=="1"){#
-        			Received
+        			 <span data-bind="text: lang.lang.received"></span>
         		#}#
         	#}#
 		</td>
     	<!-- Actions -->
-    	<td align="center">
+    	<td style="border-bottom: 1px solid \#1F4774; text-align: center;">
     		#if(type=="Credit_Purchase"){#
     			#if(status=="0" || status=="2") {#
-        			<a data-bind="click: payBill"><i></i> Pay Bill</a>
+        			<a class="k-button btn-info" data-bind="click: payBill"><i></i><span data-bind="text: lang.lang.pay_bill"></span></a>
         		#}#
         	#}#
 
         	#if(status=="4") {#
-				<a ><i></i> Use</a>
+				<a class="k-button btn-info"><i></i> <span data-bind="text: lang.lang.use"></span></a>
     		#}#
 		</td>
     </tr>
@@ -6695,4 +6763,4 @@
 		</td>
 	</tr>
 </script>
-<!-- End -->
+<!-- End -->                                                                                                                                                                                                                                                                            

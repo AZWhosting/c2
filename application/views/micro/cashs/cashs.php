@@ -2515,27 +2515,20 @@
 	                		<div class="btn-close" onclick="javascript:window.history.back()"><i class="ti-close"></i></div>
 	                		<div class="card-body">
 
-							    <h2 data-bind="text: lang.lang.account"></h2>
+							    <h2 data-bind="text: lang.lang.cash_account"></h2>
 							    <div class="row">
 							    	<div class="col-md-6">
 										<!-- Group -->
 										<div class="control-group">
-											<label for="ddlType"><span data-bind="text: lang.lang.account_type"></span><span style="color:red">*</span></label>
-											<input id="ddlType" name="ddlType"
-												   data-role="dropdownlist"
-								                   data-value-primitive="true"
-								                   data-text-field="name"
-								                   data-value-field="id"
-								                   data-bind="value: obj.account_type_id,
-								                   			  disabled: obj.is_system,
-								                              source: accountTypeDS,
-								                              events:{change:typeChanges}"
-								                   data-option-label="Select Type..."
-								                   required data-required-msg="required" style="width: 100%;" />
+											<label for="txtName"><span data-bind="text: lang.lang.account_name"></span><span style="color:red">*</span></label>
+											<input id="txtName" name="txtName"
+													class="k-textbox"
+													data-bind="value: obj.name"
+													required data-required-msg="required" style="width: 100%;">
 										</div>
 										<!-- // Group END -->
 									</div>
-							    	<div class="col-md-5" style="padding: 0 5px 0 15px;width: 46%;">
+							    	<div class="col-md-6" style="padding: 0 5px 0 15px;width: 46%;">
 										<!-- Group -->
 										<div class="control-group">
 											<label for="txtNumber"><span data-bind="text: lang.lang.account_code"></span><span style="color:red">*</span></label>
@@ -2549,31 +2542,6 @@
 									</div>
 									<div class="col-md-1" style="padding-left: 0;width: 25px;float: left;">
 										<a class="glyphicons no-js qrcode" data-bind="click: generateNumber" title="Generate Number" style="float: left; margin: 26px 0 0 0 ;"><i></i></a>
-									</div>
-							    </div>
-
-							    <div class="row">
-							    	<div class="col-md-6">
-										<!-- Group -->
-										<div class="control-group">
-											<label for="txtName"><span data-bind="text: lang.lang.account_name"></span><span style="color:red">*</span></label>
-											<input id="txtName" name="txtName"
-													class="k-textbox"
-													data-bind="value: obj.name"
-													required data-required-msg="required" style="width: 100%;">
-										</div>
-										<!-- // Group END -->
-									</div>
-							    	<div class="col-md-6">
-										<!-- Group -->
-										<div class="control-group">
-											<label for="txtNonLocalName"><span data-bind="text: lang.lang.non_local_name"></span></label>
-											<input id="txtNonLocalName" name="txtNonLocalName"
-													class="k-textbox"
-													data-bind="value: obj.name_2"
-													style="width: 100%;">
-										</div>
-										<!-- // Group END -->
 									</div>
 							    </div>
 
@@ -2601,6 +2569,22 @@
 							    	<div class="col-md-6">
 										<!-- Group -->
 										<div class="control-group">
+											<label for="txtNonLocalName"><span data-bind="text: lang.lang.non_local_name"></span></label>
+											<input id="txtNonLocalName" name="txtNonLocalName"
+													class="k-textbox"
+													data-bind="value: obj.name_2"
+													style="width: 100%;">
+										</div>
+										<!-- // Group END -->
+									</div>
+							    </div>
+
+							    <br>
+
+							    <div class="row">
+									<div class="col-md-3">
+										<!-- Group -->
+										<div class="control-group">
 											<label for="ddlStatus"><span data-bind="text: lang.lang.status"></span><span style="color:red">*</span></label>
 											<input id="ddlStatus" name="ddlStatus"
 												   data-role="dropdownlist"
@@ -2615,10 +2599,7 @@
 										</div>
 										<!-- // Group END -->
 									</div>
-							    </div>
-
-							    <div class="row">
-							    	<div class="col-md-6">
+									<div class="col-md-3">
 										<!-- Group -->
 										<div class="control-group">
 											<label><input type="checkbox" data-bind="checked: obj.is_taxable" /> <span data-bind="text: lang.lang.taxable"></span></label>
@@ -2668,7 +2649,7 @@
 
 							    
 							    <!-- Form actions -->
-								<div class="backgroundButtonFooter">
+								<div class="backgroundButtonFooter" style="margin-top:10px;">
 									<div id="ntf1" data-role="notification"></div>
 
 									<!-- Delete Confirmation -->

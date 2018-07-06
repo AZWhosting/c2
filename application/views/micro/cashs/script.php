@@ -3621,45 +3621,7 @@
     });
     banhji.accountingCenter = kendo.observable({
         lang                : langVM,
-        // dataSource          : dataStore(apiUrl + "accounts"),
-        dataSource          : new kendo.data.DataSource({
-            transport: {
-                read: {
-                    url: apiUrl + 'accounts',
-                    type: "GET",
-                    headers: {
-                        "Entity": getDB(),
-                        "User": banhji.userManagement.getLogin() === null ? '' : banhji.userManagement.getLogin().id
-                    },
-                    dataType: 'json'
-                },
-                parameterMap: function(options, operation) {
-                    if (operation === 'read') {
-                        return {
-                            limit: options.pageSize,
-                            page: options.page,
-                            filter: options.filter
-                        };
-                    } else {
-                        return {
-                            models: kendo.stringify(options.models)
-                        };
-                    }
-                }
-            },
-            schema: {
-                model: {
-                    id: 'id'
-                },
-                data: 'results',
-                total: 'count'
-            },
-            filter: { "field":"account_type_id", value:10 },
-            serverFiltering: true,
-            serverPaging: true,
-            page: 1,
-            pageSize: 100
-        }),
+        dataSource          : dataStore(apiUrl + "accounts"),
         accountTypeDS       : banhji.source.accountTypeDS,
         summaryDS           : dataStore(apiUrl + 'centers/accounting_summary'),
         transactionDS       : dataStore(apiUrl + 'centers/accounting_txn'),
@@ -3676,9 +3638,7 @@
         typeName            : "",
         nature              : "",
         user_id             : banhji.source.user_id,
-        pageLoad            : function(id){
-            this.search();
-
+        pageLoad            : function(id){            
             if(id){
                 this.loadObj(id);
             }
@@ -3687,6 +3647,8 @@
                 this.dataSource.fetch();
                 this.loadSummary();
                 this.searchTransaction();
+            }else{
+                this.search();
             }
         },
         //Upload
@@ -3908,9 +3870,9 @@
         },
         search              : function(){
             var self = this,
-            para = [],
-            account_type_id = this.get("account_type_id"),
-            txtSearch = this.get("searchText");
+                para = [],
+                account_type_id = this.get("account_type_id"),
+                txtSearch = this.get("searchText");
 
             if(txtSearch){
                 para.push(
@@ -3924,6 +3886,7 @@
             }
 
             para.push({ field:"status", value:1 });
+            para.push({ field:"account_type_id", value:10 });
 
             this.dataSource.query({
                 filter:para,
@@ -4028,7 +3991,8 @@
             filter: { field:"status", value: 1 }
         }),
         subAccountDS            : new kendo.data.DataSource({
-            data: banhji.source.accountList
+            data: banhji.source.accountList,
+            filter: { field:"account_type_id", value: 10 }
         }),
         statusList              : banhji.source.statusList,
         confirmMessage          : banhji.source.confirmMessage,
@@ -4143,7 +4107,7 @@
             this.set("notDuplicateNumber", true);
 
             this.dataSource.insert(0, {
-                account_type_id         : 0,
+                account_type_id         : 10,
                 sub_of_id               : 0,
                 number                  : "",
                 name                    : "",
@@ -9109,20 +9073,12 @@
         banhji.view.Index.showIn('#indexMenu', banhji.view.tapMenu);
         banhji.view.Index.showIn('#indexContent', banhji.view.cashs);
 
-        // if(banhji.pageLoaded["customers"]==undefined){
-        //     banhji.pageLoaded["customers"] = true;
-            
-        //     banhji.source.supplierDS.filter({
-        //         field: "parent_id",
-        //         operator: "where_related_contact_type",
-        //         value: 2
-        //     });
-        // }
+        var vm = banhji.accountingCenter;
+        if(banhji.pageLoaded["cashs"]==undefined){
+            banhji.pageLoaded["cashs"] = true;
+        }
 
-        
-
-        //load MVVM
-        banhji.accountingCenter.pageLoad();
+        vm.pageLoad();
     });
 
     banhji.router.route("/account(/:id)", function(id){

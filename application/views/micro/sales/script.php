@@ -4600,6 +4600,33 @@
             this.set('haveParkSale', false);
             this.makeChoice();
         },
+        addRowLine          : function(){
+            var obj = this.get("obj");
+
+            this.lineDS.add({
+                transaction_id      : obj.id,
+                tax_item_id         : 0,
+                item_id             : 0,
+                assembly_id         : 0,
+                measurement_id      : 0,
+                description         : "",
+                quantity            : 1,
+                conversion_ratio    : 1,
+                cost                : 0,
+                price               : 0,
+                amount              : 0,
+                discount            : 0,
+                discount_percentage : 0,
+                tax                 : 0,
+                rate                : obj.rate,
+                locale              : obj.locale,
+                movement            : -1,
+                reference_no        : "",
+                item                : { id:"", name:"" },
+                item_price          : { measurement_id:"", measurement:"" },
+                tax_item            : { id:"", name:"" }
+            });
+        },
         addRow              : function(e){
             var self = this, 
                 obj = this.get("obj"), 
@@ -19658,4 +19685,4 @@
         banhji.router.start();
         banhji.source.pageLoad();
     });
-</script>                                                                                                                                                                                                                                                                                                                                               
+</script>

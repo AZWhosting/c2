@@ -38,6 +38,13 @@ var	km_KH = {
 	"cash_center" : "ការ​គ្រប់​គ្រង់​សាច់​ប្រាក់",
 	"done" : "រួចរាល់",
 	"return" : "បង្វិល",
+	"received" : "ទូទាត់រួច",
+	"sale_from_the_beginning_of_the_year" : "ចំណូលលក់តាំងពីដើមឆ្នាំ",
+	"num_customer" : "ចំនួន​អតិ.ជំពាក់",
+	"suppiler_report" : "របាយការណ៍អ្នកផ្គត់ផ្គង់",
+	"purchase_from_the_beginning_of_the_year" : "ទិញពីដើមឆ្នាំ",
+	"number_supplier" : "ចំនួន​អ្នកផ្គត់ផ្គង់",
+	"n_o" : "លេខ​រៀង",
 	//Main Dustboard
 	"search_contact" :  "ស្វែងរក​ទំនាក់ទំនង",
 	"contact" :  "ទំនាក់ទំនង",

@@ -9931,7 +9931,7 @@
 		numberDS                    : dataStore(apiUrl + "transactions/number"),
 		depositDS                   : dataStore(apiUrl + "transactions"),
 		journalLineDS               : dataStore(apiUrl + "journal_lines"),
-		itemDS                      : dataStore(apiUrl + "items"),
+		// itemDS                      : dataStore(apiUrl + "items"),
 		accountDS                   : new kendo.data.DataSource({
 			data: banhji.source.accountList
 		}),
@@ -10029,16 +10029,24 @@
 		search              : function(){
 			var self = this, para = [],
 				obj = this.get("obj"),
+				searchText = this.get("searchText"),
 				category_id = this.get("category_id"),
 				item_group_id = this.get("item_group_id");
 
 			if(item_group_id>0){
-				para.push({ field:"number", value:item_group_id });
+				para.push({ field:"item_group_id", value:item_group_id });
 			}else{
 				if(category_id>0){
 					para.push({ field:"category_id", value:category_id });
 				}
 			}
+
+			if(searchText!==""){
+				para.push({ field:"number", operator:"like", value:searchText });
+				para.push({ field:"name", operator:"or_like", value:searchText });
+			}
+
+			para.push({ field:"item_type_id", operator:"where_in", value:[1,4] });
 
 			this.itemDS.query({
 				filter: para,
@@ -10046,6 +10054,7 @@
 				pageSize: 10
 			});
 
+			this.set("searchText", "");
 			this.set("category_id", 0);
 			this.set("item_group_id", 0);
 		},
@@ -10055,8 +10064,11 @@
 				barcode = this.get("barcode");
 
 			if(barcode!==""){
+				para.push({ field:"item_type_id", operator:"where_in", value:[1,4] });
+				para.push({ field: "barcode", value: barcode });
+
 				this.itemDS.query({
-					filter: { field: "barcode", value: barcode },
+					filter: para,
 					page:1,
 					pageSize: 1
 				}).then(function(){
@@ -10288,17 +10300,16 @@
 
 			});
 		},
-		addRow              : function(e){
+		addRow          	: function(){
 			var obj = this.get("obj");
-			var item = e.data;
-			
+
 			this.lineDS.add({
 				transaction_id      : obj.id,
 				tax_item_id         : "",
 				wht_account_id      : "",
 				item_id             : "",
-				measurement_id      : item.measurement.measurement_id,
-				description         : item.name,
+				measurement_id      : 0,
+				description         : "",
 				quantity            : 1,
 				conversion_ratio    : 1,
 				cost                : 0,
@@ -10310,13 +10321,59 @@
 				additional_applied  : false,
 				movement            : 1,
 				reference_no        : "",
-				item_id             : item.id,
+
 				discount_percentage : 0,
-				item                : item,
-				item_price          : item.measurement,
+				item                : { id:"", name:"" },
+				item_price          : { measurement_id:"", measurement:"" },
 				tax_item            : { id:"", name:"" },
 				wht_account         : { id:"", name:"" }
 			});
+		},
+		addRowSelectedItem  : function(e){
+			var self = this,
+				obj = this.get("obj"),
+				item = e.data,
+				notExist = true;
+
+			//Check exist item            
+            $.each(this.lineDS.data(), function(index, value){
+                if(value.item_id==item.id){
+                    notExist = false;
+
+                    value.set("quantity", value.quantity+1);
+
+                    self.changes();
+
+                    return false;
+                }
+            });
+
+            if(notExist){			
+				this.lineDS.add({
+					transaction_id      : obj.id,
+					tax_item_id         : "",
+					wht_account_id      : "",
+					item_id             : item.id,
+					measurement_id      : item.measurement.measurement_id,
+					description         : item.name,
+					quantity            : 1,
+					conversion_ratio    : 1,
+					cost                : 0,
+					amount              : 0,
+					discount            : 0,
+					rate                : obj.rate,
+					locale              : obj.locale,
+					additional_cost     : 0,
+					additional_applied  : false,
+					movement            : 1,
+					reference_no        : "",
+					discount_percentage : 0,
+					item                : item,
+					item_price          : item.measurement,
+					tax_item            : { id:"", name:"" },
+					wht_account         : { id:"", name:"" }
+				});
+			}
 		},
 		addExtraRow         : function(uid){
 			var row = this.lineDS.getByUid(uid),
@@ -10345,7 +10402,7 @@
 				}
 			}
 		},
-		itemLineDSChanges       : function(arg){
+		itemLineDSChanges   : function(arg){
 			var self = banhji.purchaseDashBoard;
 
 			if(arg.field){
@@ -10359,7 +10416,7 @@
 						self.addItem(dataRow.uid);
 					}
 
-					self.addExtraRow(dataRow.uid);
+					// self.addExtraRow(dataRow.uid);
 				}else if(arg.field=="quantity" || arg.field=="cost" || arg.field=="discount" || arg.field=="additional_applied"){
 					self.changes();
 				}else if(arg.field=="item_price"){
@@ -10389,7 +10446,7 @@
 			}
 		},
 		//Number
-		checkExistingNumber     : function(){
+		checkExistingNumber : function(){
 			var self = this, para = [],
 			obj = this.get("obj");
 
@@ -10689,6 +10746,7 @@
 				job_id              : 0,
 				user_id             : this.get("user_id"),
 				type                : "Cash_Purchase", //Required
+				nature_type 		: "Purchase",
 				number              : "",
 				sub_total           : 0,
 				discount            : 0,
@@ -10700,6 +10758,7 @@
 				additional_cost     : 0,
 				additional_apply    : "Equal",
 				rate                : 1,
+				movement 			: 1,
 				locale              : banhji.locale,
 				issued_date         : new Date(),
 				bill_date           : new Date(),
@@ -11068,7 +11127,7 @@
 			this.journalLineDS.sync();
 		},
 		//POP
-		itemsDS             : new kendo.data.DataSource({
+		itemDS             : new kendo.data.DataSource({
 			transport: {
 				read: {
 					url: apiUrl + "items",
@@ -11120,13 +11179,13 @@
 			var data = e.data;
 			var self = this;
 			$("#loading").css("display", "block");
-			this.itemsDS.query({
+			this.itemDS.query({
 				filter: {field: "category_id", value: data.id},
 				page: 1,
 				pageSize: 8,
 			}).then(function(e){
 				$("#loading").css("display", "none");
-				if(self.itemsDS.data().length > 0){
+				if(self.itemDS.data().length > 0){
 					self.set("haveItems", true);
 				}else{
 					alert('មិនមានទិន្ន័យ (No Data)!');
