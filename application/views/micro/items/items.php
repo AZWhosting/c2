@@ -339,7 +339,7 @@
 					<div class="col-md-6">
 						<div class="row">
 	                        <div class="col-md-12">
-								<div class="saleOverview" style="margin-bottom: 20px; padding-top: 50px; padding-bottom: 47px;">
+								<div class="saleOverview" style="background: #FFCA00; margin-bottom: 20px; padding-top: 50px; padding-bottom: 47px; box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important;">
 		                            <p style="font-size: 35px;">
 		                            	<span data-format="n" data-bind="text: raw.amount"></span>
 										<span data-bind="text: raw.currency_code"></span>
@@ -363,7 +363,7 @@
 	                    </div>
                     	<div class="row">
 							<div class="col-md-6">
-								<div class="blockOpenInvoice" data-bind="click: loadBalance" style="height: 119px;">
+								<div class="blockOpenInvoice" data-bind="click: loadBalance" style="height: 119px; background: #424242; box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important;">
 									<div class="coverIcon"><i class="icon-info"></i></div>
 									<div class="txt">
 										<span data-format="n0" data-bind="text: raw.quantity"></span>
@@ -373,7 +373,7 @@
 								</div>
 							</div>
 							<div class="col-md-6">
-								<div class="blockOverDue" data-bind="click: loadOverInvoice" style="height: 119px;">
+								<div class="blockOverDue" data-bind="click: loadOverInvoice" style="height: 119px; background: #FAD5BB; box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important;">
 									<div class="coverIcon"><i class="ti-alarm-clock"></i></div>
 									<div class="txt" >
 										<span data-bind="text: raw.txn"></span>
@@ -419,15 +419,15 @@
 				<!-- Block Table -->
 				<div class="row">
 					<div class="col-md-12 table-responsive">
-						<table class="table color-table dark-table">
+						<table class="table color-table dark-table" style="border-bottom: 3px solid #1F4774;">
 					        <thead>
 					            <tr>
-					                <th><span data-bind="text: lang.lang.date"></span></th>
-									<th><span data-bind="text: lang.lang.type2"></span></th>
-									<th style="text-align: center;" ><span data-bind="text: lang.lang.reference_no"></span></th>
-									<th style="text-align: center;" ><span data-bind="text: lang.lang.qty"></span></th>
-									<th style="text-align: right;" ><span data-bind="text: lang.lang.cost"></span></th>
-									<th style="text-align: right;" ><span data-bind="text: lang.lang.price"></span></th>
+					                <th style="border-top: 2px solid #1F4774; border-bottom: 3px solid #1F4774; background-color: #fff !important; color: #333 !important; "><span data-bind="text: lang.lang.date"></span></th>
+									<th style="border-top: 2px solid #1F4774; border-bottom: 3px solid #1F4774; background-color: #fff !important; color: #333 !important; "><span data-bind="text: lang.lang.type2"></span></th>
+									<th style="text-align: center; border-top: 2px solid #1F4774; border-bottom: 3px solid #1F4774; background-color: #fff !important; color: #333 !important;" ><span data-bind="text: lang.lang.reference_no"></span></th>
+									<th style="text-align: center; border-top: 2px solid #1F4774; border-bottom: 3px solid #1F4774; background-color: #fff !important; color: #333 !important;" ><span data-bind="text: lang.lang.qty"></span></th>
+									<th style="text-align: right; border-top: 2px solid #1F4774; border-bottom: 3px solid #1F4774; background-color: #fff !important; color: #333 !important;" ><span data-bind="text: lang.lang.cost"></span></th>
+									<th style="text-align: right; border-top: 2px solid #1F4774; border-bottom: 3px solid #1F4774; background-color: #fff !important; color: #333 !important;" ><span data-bind="text: lang.lang.price"></span></th>
 					            </tr>
 					        </thead>
 					        <tbody data-role="listview"
@@ -2584,18 +2584,18 @@
 </script>
 <script id="itemCenter-transaction-tmpl" type="text/x-kendo-tmpl">
     <tr>
-    	<td>#=kendo.toString(new Date(transaction_issued_date), "dd-MM-yyyy")#</td>
-    	<td>#=transaction_type#</td>
-        <td align="center">
-			<a href="\#/#=transaction_type.toLowerCase()#/#=id#">#=transaction_number#</a>
+    	<td style="text-align: center; border-bottom: 1px solid \#1F4774;">#=kendo.toString(new Date(transaction_issued_date), "dd-MM-yyyy")#</td>
+    	<td style="text-align: center; border-bottom: 1px solid \#1F4774;">#=transaction_type#</td>
+        <td style="text-align: center; border-bottom: 1px solid \#1F4774;" align="center">
+			<a class="underline" href="\#/#=transaction_type.toLowerCase()#/#=id#">#=transaction_number#</a>
         </td>
-    	<td align="center">#=kendo.toString(quantity * movement, "n0")#</td>
-    	<td align="right">asdsasdasde1aqsdsazzswdfsxaz≈cfvghj
+    	<td style="text-align: center; border-bottom: 1px solid \#1F4774; text-align: center">#=kendo.toString(quantity * movement, "n0")#</td>
+    	<td style="text-align: center; border-bottom: 1px solid \#1F4774; text-align: right">
     		#if(cost>0){#
     			#=kendo.toString((cost+additional_cost)/rate, "c", locale)#
     		#}#
     	</td>
-    	<td align="right">
+    	<td style="text-align: center; border-bottom: 1px solid \#1F4774; text-align: right">
     		#if(price>0){#
     			#=kendo.toString(price/rate, "c", locale)#
     		#}#
@@ -2838,4 +2838,4 @@
 		#=code# - #=country#
 	</span>
 </script>
-<!-- End -->
+<!-- End -->                                     

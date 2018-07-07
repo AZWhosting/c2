@@ -518,49 +518,58 @@
 					             data-columns="[
 					             	{ 
 					             		field: 'issued_date', 
-					             		title : 'DATE', 
+					             		title : langVM.lang.date, 
 					             		template:'#=kendo.toString(new Date(issued_date), banhji.dateFormat)#', 
 					             		filterable: false, 
-					             		attributes: { style: 'text-align: center;'}
+					             		attributes: { style: 'text-align: center;', class: 'hidden-sm-down'},
+					             		headerAttributes: { class: 'hidden-sm-down'}
 					             	},
 					             	{ 
 					             		field: 'contact.name', 
-					             		title : 'NAME', 
-					             		filterable: false 
+					             		title : langVM.lang.name, 
+					             		filterable: false,
+					             		attributes: { class: 'width_33' },
+				                 		headerAttributes: { class: 'width_33' }
 					             	},
 					             	{ 
 					             		field: 'type', 
-					             		title : 'TYPE', 
-					             		filterable: { multi: true, search: true} 
+					             		title : langVM.lang.type, 
+					             		filterable: { multi: true, search: true},
+					             		attributes: { class: 'width_33' },
+				                 		headerAttributes: { class: 'width_33' }
 					             	},				                 
 					                { 
 					                	field: 'number', 
-					                	title: 'REFERENCE', 
+					                	title: langVM.lang.reference, 
 					                	template: '<a href=\'sales\\#/#=type.toLowerCase()#/#=id#\'>#=number#</a>', 
 					                	filterable: false, 
-					                	attributes: { style: 'text-align: left;'} 
+					                	attributes: { style: 'text-align: left;', class: 'underline hidden-sm-down'},
+					                	headerAttributes: { class: 'hidden-sm-down'}
 					                },
 					                { 
 					                	field: 'amount', 
-					                	title: 'AMOUNT', 
+					                	title: langVM.lang.amount, 
 					                	format: '{0:n}', 
 					                	filterable: false, 
-					                	attributes: { style: 'text-align: right; padding-right: 30px;'} 
+					                	attributes: { style: 'text-align: right; padding-right: 30px;', class: 'width_33'},
+					                	headerAttributes: { class: 'width_33' }
 					                },
 					                { 
-					                	title: 'STATUS', 
+					                	title: langVM.lang.status, 
 					                	template: kendo.template($('#transactions-status-tmpl').html()),
-					                	attributes: { style: 'text-align: center;'}              	
+					                	attributes: { style: 'text-align: center;' , class: 'hidden-sm-down'},
+					                	headerAttributes: { class: 'hidden-sm-down'}             	
 					                },
 					                { 
-					                	title: 'ACTIONS',
-					                	template: '<button data-bind=click:addRowFromPS>USE</button>',
-					                	attributes: { style: 'text-align: center;'}
+					                	title: langVM.lang.action,					                	
+					                	template: '<button data-bind=click:addRowFromPS;>USE</button>',
+					                	attributes: { style: 'text-align: center;', class: 'hidden-sm-down'},
+								    	headerAttributes: { class: 'hidden-sm-down'}
 					                }
 					             ]"
 					             data-auto-bind="false"
 					             data-bind="source: parkSaleDS">
-					        </div>
+					        </div> <!-- template: '<button data-bind=click:addRowFromPS;>USE</button>', -->
 				        </div>
 					</div>
 				</div>
@@ -692,19 +701,20 @@
 									},
 		                            {
 		                            	field: 'item_price',
-		                            	title: 'UOM',
+		                            	title: langVM.lang.uom,
 		                            	editor: measurementEditor,
 		                            	template: '#=item_price?item_price.measurement:banhji.emptyString#',
-		                            	width: '80px'
+		                            	attributes: { class: 'hidden-sm-down' },
+								    	headerAttributes: { class: 'hidden-sm-down'}
 		                            },
 		                            {
 									    field: 'price',
-									    title: 'PRICE',
+									    title: langVM.lang.price,
 									    format: '{0:n}',
 									    editor: numberTextboxEditor,
-									    width: '120px',
 									    hidden: true,
-									    attributes: { style: 'text-align: right;' }
+									    attributes: { style: 'text-align: right;', class: 'hidden-sm-down' },
+									    headerAttributes: { class: 'hidden-sm-down'}
 									},
 									{
 									    field: 'discount',
@@ -712,8 +722,8 @@
 									    hidden: true,
 									    format: '{0:n}',
 									    editor: numberTextboxEditor,
-									    width: '120px',
-									    attributes: { style: 'text-align: right;' }
+									    attributes: { style: 'text-align: right;' , class: 'hidden-sm-down' },
+									    headerAttributes: { class: 'hidden-sm-down'}
 									},
 									{
 									    field: 'discount_percentage',
@@ -721,21 +731,25 @@
 									    hidden: true,
 									    format: '{0:p}',
 									    editor: discountEditor,
-									    width: '120px',
-									    attributes: { style: 'text-align: right;' }
+									    attributes: { style: 'text-align: right;' , class: 'hidden-sm-down'},
+									    headerAttributes: { class: 'hidden-sm-down'}
 									},
 		                            { 
 		                            	field: 'amount', 
-		                            	title:'AMOUNT', 
+		                            	title: langVM.lang.amount, 
 		                            	format: '{0:n}', 
 		                            	editable: 'false', 
-		                            	attributes: { style: 'text-align: right;' }, width: '120px' },
+		                            	attributes: { style: 'text-align: right;', class: 'width_33' },
+		                            	headerAttributes: { class: 'width_33' }
+		                            },
 		                            { 
 		                            	field: 'tax_item', 
-		                            	title:'TAX', 
+		                            	title: langVM.lang.tax, 
 		                            	hidden: true,
 		                            	editor: taxForSaleEditor, 
-		                            	template: '#=tax_item.name#', width: '90px' 
+		                            	template: '#=tax_item.name#',
+		                            	attributes: { style: 'text-align: right;' , class: 'hidden-sm-down'},
+									    headerAttributes: { class: 'hidden-sm-down'}
 		                            }
 		                         ]"
 		                         data-auto-bind="false"
@@ -1132,12 +1146,12 @@
 			<span data-bind="text: lang.lang.done"></span>
 		#}#
 	#}else if(type=="GDN"){#
-		Delivered
+		<span data-bind="text: lang.lang.delivered"></span>
 	#}else if(type=="Commercial_Invoice" || type=="Vat_Invoice" || type=="Invoice"){#
 		#if(status=="0" || status=="2") {#
 			# var date = new Date(), dueDate = new Date(due_date).getTime(), toDay = new Date(date).getTime(); #
 			#if(dueDate < toDay) {#
-				Over Due #:Math.floor((toDay - dueDate)/(1000*60*60*24))# <span data-bind="text: lang.lang.days"></span>
+				<span data-bind="text: lang.lang.over_due"></span> #:Math.floor((toDay - dueDate)/(1000*60*60*24))# <span data-bind="text: lang.lang.days"></span>
 			#} else {#
 				#:Math.floor((dueDate - toDay)/(1000*60*60*24))# <span data-bind="text: lang.lang.days_to_pay"></span>
 			#}#
@@ -1151,12 +1165,12 @@
 <script id="transactions-action-tmpl" type="text/x-kendo-tmpl">
 	#if(type=="Commercial_Invoice" || type=="Vat_Invoice" || type=="Invoice"){#
 		#if(status=="0" || status=="2") {#
-			<button class="k-button btn-info" data-bind="click: payInvoice"><i></i> <span data-bind="text: lang.lang.receive_payment"></span></button>
+			<button class="k-button btn-info" data-bind="click: payInvoice"><i></i> <span  data-bind="text: lang.lang.receive_payment"></span></button>
 		#}#
 	#}#
 
 	#if(status=="4") {#
-		<a href="\#/#=type.toLowerCase()#/#=id#"><button class="k-button btn-info"><span data-bind="text: lang.lang.use"></span></button></a>
+		<a href="\#/#=type.toLowerCase()#/#=id#"><button class="k-button btn-info"><span  data-bind="text: lang.lang.use"></span></button></a>
 	#}#
 </script>
 <script id="customerTransactionList-template" type="text/x-kendo-template">
@@ -7571,4 +7585,4 @@
 		#=code# - #=country#
 	</span>
 </script>
-<!-- End -->
+<!-- End --> 

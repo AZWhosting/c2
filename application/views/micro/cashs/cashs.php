@@ -55,9 +55,9 @@
 	
 	<div class="row home" id="reports" >
     	<div class="col-md-4">
-			<div class="saleOverview" data-bind="click: loadCashIn" style="margin-bottom: 15px;">
-				<h2 data-bind="text: lang.lang.cash_in">Cash In</h2>
-				<p style="margin-bottom: 0;" data-format="n0" data-bind="text: obj.cash_in"></p>
+			<div class="saleOverview" data-bind="click: loadCashIn" style="margin-bottom: 15px; background: #0F2C72; box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important;">
+				<h2 style="color: #fff;" data-bind="text: lang.lang.cash_in">Cash In</h2>
+				<p style="margin-bottom: 0; color: #fff" data-format="n0" data-bind="text: obj.cash_in"></p>
 			</div>
 			<!-- <div class="report" >
 				<div class="col-md-12">
@@ -66,7 +66,7 @@
 			</div> -->
 		</div>
 		<div class="col-md-4">
-			<div class="saleOverview" data-bind="click: loadCashOut" style="margin-bottom: 15px;">
+			<div class="saleOverview" data-bind="click: loadCashOut" style="margin-bottom: 15px; background: #FCCB23; box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important;">
 				<h2 data-bind="text: lang.lang.cash_out">Cash Out</h2>
 				<p style="margin-bottom: 0;" data-format="n0" data-bind="text: obj.cash_out"></p>
 			</div>
@@ -77,9 +77,9 @@
 			</div> -->									                        
 		</div>
 		<div class="col-md-4">
-			<div class="saleOverview" data-bind="click: loadCashBalance" style="margin-bottom: 15px;">
-				<h2 data-bind="text: lang.lang.cash_balance">Cash Balance</h2>
-				<p style="margin-bottom: 0;" data-format="n0" data-bind="text: obj.cash_balance"></p>
+			<div class="saleOverview" data-bind="click: loadCashBalance" style="margin-bottom: 15px; background: #C8070E; box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important;">
+				<h2 style="color: #fff;" data-bind="text: lang.lang.cash_balance">Cash Balance</h2>
+				<p style="margin-bottom: 0; color: #fff" data-format="n0" data-bind="text: obj.cash_balance"></p>
 			</div>
 			<!-- <div class="report" >
 				<div class="col-md-12">
@@ -155,39 +155,83 @@
                  data-columns="[
                     { 
                     	field: 'issued_date', 
-                    	title:'DATE',
-                    	width: 100,
-                    	template: '#=kendo.toString(new Date(issued_date), banhji.dateFormat)#' 
+                    	title: langVM.lang.date,
+                    	template: '#=kendo.toString(new Date(issued_date), banhji.dateFormat)#',
+                    	attributes: {
+					      	style: 'text-align: center;',
+					      	class: 'hidden-sm-down'
+					    },
+					    headerAttributes: {
+					    	class: 'hidden-sm-down'
+					    }
                     },
                     { 
                     	field: 'number', 
-                    	title:'NUMBER',
+                    	title: langVM.lang.number,
                     	attributes: {
-					      	style: 'text-align: center;'
-					    }, 
-                    	width: 120
-                    },
-                    { field: 'type', title:'TYPE', width: 125 },
-                    { field: 'contact', title:'NAME' },
-                    { field: 'memo', title:'DESCRIPTION' },
-                    { field: 'account_name', title:'ACCOUNT' },			                                
-                    { 
-                    	field: 'amount', 
-                    	title:'AMOUNT',
-                    	format: '{0:n}',
-                    	attributes: {
-					      	style: 'text-align: right;'
+					      	style: 'text-align: center;',
+					      	class: 'hidden-sm-down'
 					    },
 					    headerAttributes: {
-					      	'class': 'table-header-cell',
-					      	style: 'text-align: right; font-size: 14px'
+					    	class: 'hidden-sm-down'
+					    }
+                    },
+                    { 
+                    	field: 'type', 
+                    	title: langVM.lang.type,
+                    	attributes: {
+                    		class: 'hidden-sm-down'
+                    	},
+                    	headerAttributes: {
+                    		class: 'hidden-sm-down'
+                    	}
+                    },
+                    { 
+                    	field: 'contact', 
+                    	title: langVM.lang.name,
+                    	attributes: {
+                    		class: 'width_33'
+                    	},
+                    	headerAttributes: {
+                    		class: 'width_33'
+                    	}
+                    },
+                    { 
+                    	field: 'memo', 
+                    	title: langVM.lang.description,
+                    	attributes: {
+                    		class: 'hidden-sm-down'
+                    	},
+                    	headerAttributes: {
+                    		class: 'hidden-sm-down'
+                    	}
+                    },
+                    { 
+                    	field: 'account_name', 
+                    	title: langVM.lang.account, 
+                    	attributes: { 
+                    		style: 'text-align: center;',
+                    		class: 'width_33'
+                    	},
+                    	headerAttributes: {
+                    		class: 'width_33'
+                    	}
+                    },			                                
+                    { 
+                    	field: 'amount', 
+                    	title: langVM.lang.amount,
+                    	format: '{0:n}',
+                    	attributes: {
+                    		style: 'text-align: right',
+                    		class: 'width_33'
 					    },
-					    width: 200
+					    headerAttributes: {
+					    	class: 'width_33'
+					    }
                     }
                  ]"
                  data-auto-bind="false"
-                 data-bind="source: dataSource"
-                 style="width: 100%;"></div>
+                 data-bind="source: dataSource"></div>
         </div>
     </div>
 	            
@@ -664,7 +708,7 @@
 					<div class="col-md-6 marginBottom">
 						<input class="customerName" type="text" name="" data-bind="value: obj.name" disabled="disabled" style="background: #fff;" />
 						<a style="margin-bottom: 15px;" class="btn waves-effect waves-light btn-block btn-info btnViewEditCustomer" data-bind="click: goEdit"><i style="color: #fff;" class="ti-pencil-alt marginRight"></i><span style="color: #fff;" data-bind="text: lang.lang.edit"></span></a>
-						<div class="saleOverview" style="margin-bottom: 8px; padding: 25px 0;">
+						<div class="saleOverview" style="margin-bottom: 8px; padding: 25px 0; background: #0F2C72; box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important;">
                             <p data-bind="click: loadTransaction">
                             	<span data-format="n" data-bind="text: lang.lang.balance_as_of_today"></span><br/>
 								<span data-bind="text: balance"></span>
@@ -794,13 +838,13 @@
 		                   				select: onSelect
 				                   }">
 				                <div class="table-responsive">
-					                <table class="table color-table dark-table">
+					                <table class="table color-table dark-table" style="border-bottom: 3px solid #1F4774;">
 								        <thead>
 								            <tr>
-								                <th data-bind="text: lang.lang.file_name"></th>
-								                <th data-bind="text: lang.lang.description"></th>
-								                <th data-bind="text: lang.lang.date"></th>
-								                <th data-bind="text: lang.lang.action"></th>
+								                <th style="border-top: 2px solid #1F4774; border-bottom: 3px solid #1F4774; background-color: #fff !important; color: #333 !important; " data-bind="text: lang.lang.file_name"></th>
+								                <th style="border-top: 2px solid #1F4774; border-bottom: 3px solid #1F4774; background-color: #fff !important; color: #333 !important; " data-bind="text: lang.lang.description"></th>
+								                <th style="border-top: 2px solid #1F4774; border-bottom: 3px solid #1F4774; background-color: #fff !important; color: #333 !important; " data-bind="text: lang.lang.date"></th>
+								                <th style="border-top: 2px solid #1F4774; border-bottom: 3px solid #1F4774; background-color: #fff !important; color: #333 !important; " data-bind="text: lang.lang.action"></th>
 								            </tr>
 								        </thead>
 								        <tbody data-role="listview"
@@ -894,16 +938,16 @@
 				<!-- Block Table -->
 				<div class="row">
 					<div class="col-md-12 table-responsive">
-						<table class="table color-table dark-table">
+						<table class="table color-table dark-table" style="border-bottom: 3px solid #1F4774;">
 					        <thead>
 					            <tr>
-					                <th data-bind="text: lang.lang.date"></th>
-									<th data-bind="text: lang.lang.type"></th>
-									<th data-bind="text: lang.lang.reference_no"></th>
-									<th data-bind="text: lang.lang.description"></th>
-									<th data-bind="text: lang.lang.dr"></th>
-									<th data-bind="text: lang.lang.cr"></th>
-									<th></th>
+					                <th style="border-top: 2px solid #1F4774; border-bottom: 3px solid #1F4774; background-color: #fff !important; color: #333 !important; " data-bind="text: lang.lang.date"></th>
+									<th style="border-top: 2px solid #1F4774; border-bottom: 3px solid #1F4774; background-color: #fff !important; color: #333 !important; " data-bind="text: lang.lang.type"></th>
+									<th style="border-top: 2px solid #1F4774; border-bottom: 3px solid #1F4774; background-color: #fff !important; color: #333 !important; " data-bind="text: lang.lang.reference_no"></th>
+									<th style="border-top: 2px solid #1F4774; border-bottom: 3px solid #1F4774; background-color: #fff !important; color: #333 !important; " data-bind="text: lang.lang.description"></th>
+									<th style="border-top: 2px solid #1F4774; border-bottom: 3px solid #1F4774; background-color: #fff !important; color: #333 !important; " data-bind="text: lang.lang.dr"></th>
+									<th style="border-top: 2px solid #1F4774; border-bottom: 3px solid #1F4774; background-color: #fff !important; color: #333 !important; " data-bind="text: lang.lang.cr"></th>
+									<th style="border-top: 2px solid #1F4774; border-bottom: 3px solid #1F4774; background-color: #fff !important; color: #333 !important; "></th>
 					            </tr>
 					        </thead>
 					        <tbody data-role="listview"
@@ -3127,29 +3171,29 @@
 </script>
 <script id="accountingCenter-transaction-tmpl" type="text/x-kendo-tmpl">
     <tr>
-    	<td>#=kendo.toString(new Date(issued_date), "dd-MM-yyyy")#</td>
-    	<td>
+    	<td style="text-align: center; border-bottom: 1px solid \#1F4774;">#=kendo.toString(new Date(issued_date), "dd-MM-yyyy")#</td>
+    	<td style="text-align: center; border-bottom: 1px solid \#1F4774;">
         	#if(dr==0 && cr==0){#
         		#=type#
         	#}else{#
 	        	<a href="\#/#=type.toLowerCase()#/#=transaction_id#"><i></i> #=type#</a>
 			#}#
         </td>
-        <td>
+        <td style="text-align: center; border-bottom: 1px solid \#1F4774;">
         	#if(dr==0 && cr==0){#
         		#=number#
         	#}else{#
-	        	<a href="\#/#=type.toLowerCase()#/#=transaction_id#"><i></i> #=number#</a>
+	        	<a class="underline" href="\#/#=type.toLowerCase()#/#=transaction_id#"><i></i> #=number#</a>
 			#}#
         </td>
-        <td>#=description#</td>
-    	<td class="right">
+        <td style="text-align: center; border-bottom: 1px solid \#1F4774;">#=description#</td>
+    	<td style="text-align: center; border-bottom: 1px solid \#1F4774; text-align: right;">
     		#=kendo.toString(dr, locale=="km-KH"?"c0":"c", locale)#
     	</td>
-    	<td class="right">
+    	<td style="text-align: center; border-bottom: 1px solid \#1F4774; text-align: right;">
     		#=kendo.toString(cr, locale=="km-KH"?"c0":"c", locale)#
     	</td>
-    	<td align="center">
+    	<td style="text-align: center; border-bottom: 1px solid \#1F4774; text-align: center;" >
 			#if(type==="Commercial_Invoice" || type==="Vat_Invoice" || type==="Invoice"){#
 				<a href="\#/invoice/#=id#"><i></i> Pay</a>
         	#}#
@@ -3411,4 +3455,4 @@
 		#=code# - #=country#
 	</span>
 </script>
-<!-- End -->
+<!-- End -->                                                                      

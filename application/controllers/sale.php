@@ -13,7 +13,11 @@ class Sale extends MY_Controller {
 		/*
 		 *set up title and keywords (if not the default in custom.php config file will be set) 
 		 */
-		$this->_render("sale_view");	
+		// $this->_render("sale_view");
+		$this->load->view("template/demo-header");
+		$this->load->view("sale_view");
+		$this->load->view("sale_script");
+		$this->load->view("template/demo-footer");	
 	}
 
 }

@@ -69697,7 +69697,7 @@
 		inventoryMovementDetail: new kendo.Layout("#inventoryMovementDetail", {model: banhji.inventorySale}),
 		inventorySaleByItem: new kendo.Layout("#inventorySaleByItem", {model: banhji.inventorySaleByItem}),
 		inventoryList: new kendo.Layout("#inventoryList", {model: banhji.inventoryList}),
-		 itemList: new kendo.Layout("#itemList", {model: banhji.itemList}),
+		itemList: new kendo.Layout("#itemList", {model: banhji.itemList}),
 		inventoryPurchaseByVendorSummary: new kendo.Layout("#inventoryPurchaseByVendorSummary", {model: banhji.inventoryPurchaseByVendorSummary}),
 		inventoryPurchaseByVendorDetail: new kendo.Layout("#inventoryPurchaseByVendorDetail", {model: banhji.inventoryPurchaseByVendorDetail}),
 		gdnReport: new kendo.Layout("#gdnReport", {model: banhji.gdnReport}),

@@ -22,6 +22,65 @@ class Sales extends REST_Controller {
 			
 		}
 	}
+
+	//SALE CENTER SNAPSHOT
+	function center_snapshot_get() {
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
+		$data["count"] = 0;
+
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$saleOrderCounts = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				if(isset($value["operator"])){
+					$obj->{$value["operator"]}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
+			}
+		}
+		
+		//Filter
+		if(!empty($filter["filters"]) && isset($filter["filters"])){
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value["operator"])){
+	    			$obj->{$value["operator"]}($value['field'], $value['value']);
+	    			$saleOrderCounts->{$value["operator"]}($value['field'], $value['value']);
+	    		} else {
+	    			$obj->where($value['field'], $value['value']);
+	    			$saleOrderCounts->where($value['field'], $value['value']);
+	    		}
+			}
+		}
+
+		//Sale count
+		$obj->where("nature_type", "Cash_Sale");
+		$obj->where("is_recurring <>", 1);
+		$obj->where("deleted <>", 1);
+		$saleCount = $obj->count();
+
+		//Sale Order count
+		$saleOrderCounts->where("type", "Sale_Order");
+		$saleOrderCounts->where("status", 0);
+		$saleOrderCounts->where("is_recurring <>", 1);
+		$saleOrderCounts->where("deleted <>", 1);
+		$saleOrderCount = $saleOrderCounts->count();		
+				
+		$data["results"][] = array(
+			"id" 				=> 0,
+			"sale_count" 		=> $saleCount,
+			"sale_order_count" 	=> $saleOrderCount
+		);
+
+		//Response Data
+		$this->response($data, 200);
+	}
 	
 	//BY DAWINE #############################################################################
 	//CUSTOMER TRANSACTION LIST
