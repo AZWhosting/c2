@@ -376,7 +376,7 @@
 				<div class="listWrapper" style="border: 10px solid #ccc;">
 					<div class="btn-close" style="z-index: 9999;" data-bind="click: closePay"><i class="ti-close"></i></div>
 					<div class="row">
-						<div class="col">
+						<div class="col-12 col-md-4 col-lg-4 hidden-sm-down">
 							<p style="font-size:18px;margin-top: 15px;" data-bind="text: lang.lang.summary"></p>
 						    <table class="table color-table dark-table marginBottom">
 								<tbody>
@@ -401,16 +401,16 @@
 								</tbody>
 							</table>				
 						</div>
-						<div class="col">
+						<div class="col ">
 							<div class="row" data-bind="visible: haveMakeChoice">
-								<div class="col">
-	            					<a class="cashmodule module-active" data-bind="click: cashClick" style="margin-top: 59px;text-align: center;  width: 100%; float: left; border: 1px solid #d5d5d5; padding: 52px 0; cursor: pointer;">
+								<div class="col-12 col-md-6 ">
+	            					<a class="cashmodule module-active" data-bind="click: cashClick" style="text-align: center;  width: 100%; float: left; border: 1px solid #d5d5d5; padding: 52px 0; cursor: pointer;">
 	            						<i style="font-size: 28px;" class="ti-wallet"></i><br>
 	            						<span data-bind="text: lang.lang.cash_receipt">សាច់ប្រាក់</span>
 	            					</a>
 	            				</div>
-	            				<div class="col">
-	            					<a class="creditmodule" data-bind="click: clickInvoice" style="margin-top: 59px;text-align: center;  width: 100%; float: left; border: 1px solid #d5d5d5; padding: 52px 0; cursor: pointer;">
+	            				<div class="col-12 col-md-6">
+	            					<a class="creditmodule" data-bind="click: clickInvoice" style="text-align: center;  width: 100%; float: left; border: 1px solid #d5d5d5; padding: 52px 0; cursor: pointer;">
 	            						<i style="font-size: 28px;" class=" ti-receipt"></i><br>
 	            						<span data-bind="text: lang.lang.micro_credit">Credit</span>
 	            					</a>
@@ -535,8 +535,8 @@
 					             		field: 'type', 
 					             		title : langVM.lang.type, 
 					             		filterable: { multi: true, search: true},
-					             		attributes: { class: 'width_33' },
-				                 		headerAttributes: { class: 'width_33' }
+					             		attributes: { class: 'width_33 hidden-sm-down',  },
+				                 		headerAttributes: { class: 'width_33 hidden-sm-down' }
 					             	},				                 
 					                { 
 					                	field: 'number', 

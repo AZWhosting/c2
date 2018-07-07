@@ -1225,6 +1225,10 @@ a.fa.fa-qrcode:before{
 	border-bottom: none !important;
 	margin-bottom: 0 !important;
 }*/
+.creditmodule,
+.cashmodule.module-active{
+	margin-top: 59px;
+}
 /*Serface*/
 @media (min-width: 1600px) {
 	.product{
@@ -1395,5 +1399,12 @@ and (orientation : portrait) {
 	}
 	.video-wrapper{
 		margin-bottom: 15px;
+	}
+	.creditmodule,
+	.cashmodule.module-active{
+		margin-top: 0px;
+	}
+	.creditmodule{
+		margin-top: 10px;
 	}
 }                                             
