@@ -3381,6 +3381,107 @@ class Sales extends REST_Controller {
 		$data["results"] = [];
 		$data["count"] = 0;
 
+		$obj = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
+			}
+		}
+		
+		//Filter		
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value['operator'])){
+	    			$obj->{$value['operator']}($value['field'], $value['value']);	    		
+	    		} else {
+	    			$obj->where($value['field'], $value['value']);
+	    		}
+			}
+		}
+
+		//Results
+		
+		$obj->include_related("transaction/contact", array("abbr", "number", "name"));
+		$obj->where_related("item", "item_type_id", array(1,4));
+		$obj->include_related("item", array("number", "name"));
+		$obj->where_related("transaction", "type", "Sale_Order");
+		$obj->include_related("transaction", array("status", "number", "employee_id", "issued_date", "type"));
+		$obj->where_related("transaction", "is_recurring <>", 1);
+		$obj->where_related("transaction", "deleted <>", 1);		
+		$obj->order_by_related("transaction", "issued_date", "asc");
+		$obj->get_iterated();
+		
+		if($obj->exists()){
+			$objList = [];
+
+
+			foreach ($obj as $value) {
+
+				
+
+				if(isset($objList[$value->transaction_employee_id])){
+					$objList[$value->transaction_employee_id]["line"][]	= array(
+						"id" 			=> $value->id,
+						"contact_id" 	=> $value->transaction_contact_id,
+						"customer"		=> $value->transaction_contact_name,	
+						"number" 		=> $value->transaction_number,
+						"type" 			=> $value->transaction_type,
+						"item"			=> $value->item_name,
+						"issued_date" 	=> $value->transaction_issued_date,
+						"status" 		=> $value->transaction_status,
+						"qty"			=> $value->quantity,
+						"price"			=> floatval($value->price),
+						"amount" 		=> $value->quantity * floatval($value->price),
+						"employee" 		=> $objList[$value->transaction_employee_id]["employee"],
+					);
+				}else{
+					$employees = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$employees->select("abbr,number,name");
+					$employees->get_by_id($value->transaction_employee_id);
+
+					$objList[$value->transaction_employee_id]["employee"] =$employees->abbr . $employees->number ."-". $employees->name;
+					$objList[$value->transaction_employee_id]["line"][]	= array(
+						"id" 			=> $value->id,
+						"contact_id" 	=> $value->transaction_contact_id,
+						"number" 		=> $value->transaction_number,
+						"customer"		=> $value->transaction_contact_name,
+						"type" 			=> $value->transaction_type,
+						"issued_date" 	=> $value->transaction_issued_date,
+						"item"			=> $value->item_name,
+						"status" 		=> $value->transaction_status,
+						"qty"			=> $value->quantity,
+						"price"			=> floatval($value->price),
+						"amount" 		=> $value->quantity * floatval($value->price),
+						"employee" 		=> $objList[$value->transaction_employee_id]["employee"]
+					);
+				}
+			}
+
+			foreach ($objList as $value) {
+				foreach ($value["line"] as $val) {
+					$data["results"][] = $val;
+				}
+			}
+		}
+
+		//Response Data
+		$this->response($data, 200);
+	}
+
+	function invoice_status_get() {
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
+		$data["count"] = 0;
+
 		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 		//Sort
@@ -3406,59 +3507,59 @@ class Sales extends REST_Controller {
 		}
 
 		//Results
-		$obj->select("id,type,number,issued_date,rate,status,amount,employee_id,contact_id");
+		
 		$obj->include_related("contact", array("abbr", "number", "name"));
-		$obj->include_related("item", array("number", "name"));
-		$obj->include_related("item/item_line", array("quantity", "price`"));
-		$obj->where("type", "Sale_Order");
+		$obj->where_in("type", array("Commercial_Invoice","Vat_Invoice","Invoice"));
 		$obj->where("is_recurring <>", 1);
 		$obj->where("deleted <>", 1);		
 		$obj->order_by("issued_date", "asc");
-		
-		//Results
-		if($page && $limit){
-			$obj->get_paged_iterated($page, $limit);
-			$data["count"] = $obj->paged->total_rows;
-		}else{
-			$obj->get_iterated();
-			$data["count"] = $obj->result_count();
-		}
+		$obj->get_iterated();
 		
 		if($obj->exists()){
 			$objList = [];
-			$delivery_note  = "";
-			$cash_receipt  = "";
-			$invoice  = "";
+			$delivery_note = "";
+			$receiptNumber = "";
 
 			foreach ($obj as $value) {
+				$ref = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$ref->where("reference_id", $value->id);
+				$ref->get();
+				if($ref->type == "GDN"){
+					$delivery_note = $ref->number == null ? "": $ref->number;
+				}else{
+					$receiptNumber = $ref->number == null ? "": $ref->number;
+				}
+
+
+				
 
 				if(isset($objList[$value->contact_id])){
 					$objList[$value->contact_id]["line"][]	= array(
-						"id" 			=> $value->id,
-						"contact_id" 	=> $value->contact_id,
+						"id" 			=> $value->id,						
 						"number" 		=> $value->number,
 						"type" 			=> $value->type,
+						"status" 		=> $value->status,
 						"issued_date" 	=> $value->issued_date,
 						"status" 		=> $value->status,
-						"qty"			=> $value->item_item_line_quantity,
-						"price"			=> $value->item_item_line_price,
-						"amount" 		=> floatval($value->amount) / floatval($value->rate),
-						"contact" 		=> $objList[$value->contact_id]["contact_id"]
+						"amount"		=> floatval($value->amount),
+						"delivery_note" => $delivery_note,
+						"receiptNumber" => $receiptNumber,
+						"customer" 		=> $objList[$value->contact_id]["customer"],
 					);
 				}else{
-
-					$objList[$value->contact_id]["contact"] = $value->contact_abbr . $value->contact_number ."-". $value->contact_name;
+					
+					$objList[$value->contact_id]["customer"] =$value->contact_abbr . $value->contact_number ."-". $value->contact_name;
 					$objList[$value->contact_id]["line"][]	= array(
-						"id" 			=> $value->id,
-						"contact_id" 	=> $value->contact_id,
+						"id" 			=> $value->id,						
 						"number" 		=> $value->number,
 						"type" 			=> $value->type,
+						"status" 		=> $value->status,
 						"issued_date" 	=> $value->issued_date,
 						"status" 		=> $value->status,
-						"qty"			=> $value->item_item_line_quantity,
-						"price"			=> $value->item_item_line_price,
-						"amount" 		=> floatval($value->amount) / floatval($value->rate),
-						"contacts" 		=> $value->contact_abbr . $value->contact_number ."-". $value->contact_name,
+						"amount"		=> floatval($value->amount),
+						"delivery_note" => $delivery_note,
+						"receiptNumber" => $receiptNumber,
+						"customer" 		=> $objList[$value->contact_id]["customer"]
 					);
 				}
 			}
@@ -3473,7 +3574,6 @@ class Sales extends REST_Controller {
 		//Response Data
 		$this->response($data, 200);
 	}
-
 
 	//BY HEANG #############################################################################
 	function detail_customer_get() {
