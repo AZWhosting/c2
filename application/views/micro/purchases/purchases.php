@@ -103,7 +103,7 @@
 				<div class="col-12 col-md-4 col-lg-4" style="padding: 0;">
 					<div class="saleOverview" style="margin-bottom: 15px; background:  #FBEADE ; box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important;">
 						<h2 style="color: #333; " data-bind="text: lang.lang.number_supplier"></h2>
-						<p style="color: #333; margin-bottom: 0;" data-format="n0" data-bind="">test</p>						
+						<p style="color: #333; margin-bottom: 0;" data-format="n0" data-bind="text: obj.vendor_count"></p>						
 					</div>
 				</div>
 				<div class="col-12 col-md-4 col-lg-4" style="padding-left: 0;">
@@ -6763,4 +6763,4 @@
 		</td>
 	</tr>
 </script>
-<!-- End -->                                                                                                                                                                                                                                                                            
+<!-- End -->
