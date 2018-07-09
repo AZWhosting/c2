@@ -46,6 +46,9 @@ var	en_US = {
 	"purchase_from_the_beginning_of_the_year" : "Purchase in Fiscal Year",
 	"number_supplier" : "N. Supplier ",
 	"n_o" : "N.0",
+	"micro_trolop" : "back",
+	"cashier_name" : "Cashier Name :",
+	"time" : "Time :",
 	//Main Dustboard
 	"search_contact" : "Search Contact",
 	"contact" : "Contact",

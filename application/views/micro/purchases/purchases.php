@@ -379,7 +379,7 @@
 	                { field: 'issued_date' , title : langVM.lang.date, template:'#=kendo.toString(new Date(issued_date), banhji.dateFormat)#', filterable: false, attributes: { style: 'text-align: center;' , class: 'width_33'} , headerAttributes: { class: 'width_33'} },
 	                { field: 'name' , title : langVM.lang.name, filterable: false ,  attributes: { class: 'hidden-sm-down'} , headerAttributes: { class: 'hidden-sm-down'} },
 	                { field: 'type' , title : langVM.lang.type, filterable: { multi: true, search: true},  attributes: { class: 'width_33'} , headerAttributes: { class: 'width_33'} },
-	                { field: 'number' , title: langVM.lang.reference, filterable: false, attributes: { style: 'text-align: left;', class: 'hidden-sm-down underline'} , headerAttributes: { class: 'hidden-sm-down'} },
+	                { field: 'number' , title: langVM.lang.reference,template: '<a href=\'purchases\\#/#=type.toLowerCase()#/#=id#\'>#=number#</a>', filterable: false, attributes: { style: 'text-align: left;', class: 'hidden-sm-down underline'} , headerAttributes: { class: 'hidden-sm-down'} },
 	                { field: 'amount' , title: langVM.lang.amount, filterable: false, format: '{0:n}' , attributes: { style: 'text-align: right; ' , class: 'width_33'} , headerAttributes: { class: 'width_33'} },
 	                { 
 	                	title: langVM.lang.status, 
@@ -511,7 +511,7 @@
 					        </div>
 					    </div>
 						<div data-bind="invisible: haveItems" class="demo-section k-content wide span12">
-							<p style="color: #fff; margin-bottom: 5px; float: left; width: 100%;" >Category</p>
+							<p style="color: #fff; margin-bottom: 5px; float: left; width: 100%;" data-bind="text: lang.lang.category">Category</p>
 							<div class="demo-section k-content wide">
 								<div 
 									id="productListView"
@@ -529,10 +529,10 @@
 						</div>
 						<div data-bind="visible: haveItems" class="demo-section k-content wide span12">
 							<p style="color: #fff; margin-bottom: 5px; float: left; width: 100%;" >
-								<span style="float: left; width: 50%;">Items</span>
+								<span style="float: left; width: 50%;" data-bind="text: lang.lang.item">Items</span>
 								<span class="textAlignRight" data-bind="click: backCategory" style="float: right; width: 50%; cursor: pointer;">
 									<i class=" ti-control-backward"></i>
-									back
+									<span data-bind="text: lang.lang.micro_trolop">back</span>
 								</span>
 							</p>
 							<div class="demo-section k-content wide">
@@ -568,7 +568,7 @@
 														disabled: obj.is_recurring,
 														events:{change:checkExistingNumber}"
 											required data-required-msg="required"
-											placeholder="eg. ABC00001" style="width: 90%;"/>
+											placeholder="eg. ABC00001" style="width: 89%;"/>
 									<div class="coverQrcode" style="width: 7%;">
 										<a  class="fa fa-qrcode" data-bind="click: generateNumber" title="Generate Number"><i></i></a>
 									</div>

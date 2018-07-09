@@ -1225,8 +1225,7 @@ a.fa.fa-qrcode:before{
 	border-bottom: none !important;
 	margin-bottom: 0 !important;
 }*/
-.creditmodule,
-.cashmodule.module-active{
+.sale-creditmodule{
 	margin-top: 59px;
 }
 /*Serface*/
@@ -1400,11 +1399,13 @@ and (orientation : portrait) {
 	.video-wrapper{
 		margin-bottom: 15px;
 	}
-	.creditmodule,
-	.cashmodule.module-active{
-		margin-top: 0px;
+	.cashmodule.module-active.sale-creditmodule{
+		margin-top: 30px;
 	}
-	.creditmodule{
+	.sale-creditmodule{
 		margin-top: 10px;
 	}
-}                                             
+	.topPhone{
+		margin-top: 10px;
+	}
+}                                                                                    

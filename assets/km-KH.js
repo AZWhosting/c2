@@ -45,6 +45,9 @@ var	km_KH = {
 	"purchase_from_the_beginning_of_the_year" : "ទិញពីដើមឆ្នាំ",
 	"number_supplier" : "ចំនួន​អ្នកផ្គត់ផ្គង់",
 	"n_o" : "លេខ​រៀង",
+	"micro_trolop" : "ត្រឡប់",
+	"cashier_name" : "ឈ្មោះអ្នកគិតប្រាក់ :",
+	"time" : "ម៉ោង :",
 	//Main Dustboard
 	"search_contact" :  "ស្វែងរក​ទំនាក់ទំនង",
 	"contact" :  "ទំនាក់ទំនង",
