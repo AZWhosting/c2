@@ -661,6 +661,14 @@
 								            			<span class="btn btn-block btn-inverse" data-bind="click: goCashSale"><span><span data-bind="text: lang.lang.cash_sale"></span></span>								            											            			
 								            		</td>
 								            	</tr>
+								            	<tr>
+								            		<td width="50%">
+								            			<a href="#/internal_usage" class="btn btn-block btn-inverse">INTERNAL USAGE</a>
+								            		</td>
+								            		<td width="50%">
+								            		
+								            		</td>
+								            	</tr>
 							            	</table>
 							            </div>
 							            <!-- // Transactions Tab content END -->							           					            
@@ -21504,6 +21512,7 @@
   				<li><a href='#/sale_order'><span data-bind="text: lang.lang.create_sale_order"></span></a></li>
   				<li><a href='#/cash_sale'><span data-bind="text: lang.lang.create_cash_sale"></span></a></li>
   				<li><a href='#/customer_deposit'><span data-bind="text: lang.lang.create_customer_deposit"></span></a></li>
+  				<li><a href='#/internal_usage'>Internal Usage</a></li>
   				<li> <span class="li-line"></span></li>
   				<li><a href='#/sale_recurring'>Recurring</a></li>
   				<!-- <li><a href='#/imports'><span ></span>Imports</a></li> -->
