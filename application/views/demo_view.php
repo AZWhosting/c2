@@ -5081,17 +5081,14 @@
 							        <!-- Proforma -->
 							        <div class="tab-pane" id="tab8-8">
 							        	<table class="table borderless">
-							            	<tr>
-							            		<td>Revenue Recognition</td>
+							        		<tr>
+							            		<td>Start Date</td>
 							            		<td>
-							            			<input data-role="dropdownlist"
-										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
-										                   data-bind="value: obj.frequency,
-										                              source: frequencyList,
-										                              events: { change: frequencyChanges }"
-										                   style="width: 100%;" />
+							            			<input data-role="datepicker"
+															data-format="dd-MM-yyyy"
+															data-parse-formats="yyyy-MM-dd"
+															data-bind="value: obj.start_date"
+															style="width: 100%; " />
 							            		</td>
 							            	</tr>
 							            	<tr>
@@ -5106,6 +5103,19 @@
 									                <label data-bind="text: obj.frequency"></label>
 							            		</td>
 							            	</tr>
+							            	<tr>
+							            		<td>Revenue Recognition</td>
+							            		<td>
+							            			<input data-role="dropdownlist"
+										                   data-value-primitive="true"
+										                   data-text-field="name"
+										                   data-value-field="id"
+										                   data-bind="value: obj.frequency,
+										                              source: frequencyList,
+										                              events: { change: frequencyChanges }"
+										                   style="width: 100%;" />
+							            		</td>
+							            	</tr>							            	
 							            </table>
 							        </div>
 							        <!-- // Proforma END -->
@@ -54011,8 +54021,10 @@
         	<div class="span12 clear mid-header">
         		<div class="span7" style="margin-right: 15px;">
         			<b style="font-size: 14px;line-height: 24px;">ព័ត៌មានអតិថិជន CUSTOMER INFO</b><br><br>
-        			<p>ឈ្មោះ Name: <span data-bind="text: obj.contact.name"></span></p><br>
-        			<p>អាស័យដ្ឋាន Address: <span data-bind="text: obj.contact.address"></span>
+        			<p>ឈ្មោះ Name: <span data-bind="text: obj.contact.name"></span></p>
+        			<p>អាស័យដ្ឋាន Address: <span data-bind="text: contactDS.data()[0].address"></span>
+        			</p>
+        			<p>លេខទូរស័ព្ទ Phone: <span data-bind="text: contactDS.data()[0].phone"></span>
         			</p>
         		</div>
         		<div class="span4" style="float:right;">

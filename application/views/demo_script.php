@@ -1890,6 +1890,7 @@
 			{ id: 'Daily', name: 'Day' },
 			{ id: 'Weekly', name: 'Week' },
 			{ id: 'Monthly', name: 'Month' },
+			{ id: 'Quarterly', name: 'Quarterly' },
 			{ id: 'Annually', name: 'Annual' }
 		],
 		monthOptionList             : [
@@ -8812,6 +8813,7 @@
 		segmentDS           : dataStore(apiUrl + "segments"),
 		segItemDS           : dataStore(apiUrl + "segments/item"),
 		segmentItemDS       : dataStore(apiUrl + "segments/item"),
+		billingCyleDS       : dataStore(apiUrl + "billing_cycles"),
 		typeList            : new kendo.data.DataSource({
 			data: banhji.source.prefixList,
 			filter:{
@@ -8820,7 +8822,7 @@
 					{ field: "type", value: "Commercial_Invoice" },
 					{ field: "type", value: "Vat_Invoice" },
 					{ field: "type", value: "Invoice" },
-					{ field: "type", value: "Proforma_Invoice" }
+					// { field: "type", value: "Proforma_Invoice" }
 				]
 			}
 		}),
@@ -9576,6 +9578,13 @@
 		},
 		typeChanges         : function(){
 			var obj = this.get("obj");
+
+			//Proforma
+			if(obj.type=="Proforma_Invoice"){
+				this.set("isProforma", true);
+			}else{
+				this.set("isProforma", false);
+			}
 
 			$.each(this.txnTemplateDS.data(), function(index, value){
 				if(value.type==obj.type){
@@ -10449,7 +10458,20 @@
 
 			obj.references.splice(index, 1);
 		},
-		//Recurring
+		//Billing cycle
+		addBillingCycle 	: function(){
+			var obj = this.get("obj");
+
+			this.billingCyleDS.add({
+				start_date      : new Date(),
+				end_date 		: new Date(),
+				type 			: "Proforma_Invoice",
+				frequency       : "Daily",
+				interval        : 1,
+				status        	: 0
+			});
+		},
+		//Recurring		
 		loadRecurring       : function(id){
 			var self = this;
 
