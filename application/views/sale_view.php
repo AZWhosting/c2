@@ -386,12 +386,12 @@
 			<div class="span12">
 				<div class="row paddingTopBottom">
 					<a href="rrd/#/internal_usage">
-						<div class="span6 nopadding-right">
+						<div class="span5 nopadding-right">
 							<div class="bg-green height250">
 								<div class="img">
 									<img src="<?php echo base_url();?>assets/sales/production.png" >
 								</div>
-								<p class="textBig" data-bind="text: lang.lang.production_function">Production Fuction</p>
+								<p style="padding: 65px 35px 0 30px;" class="textBig" data-bind="text: lang.lang.production_function">Production Fuction</p>
 							</div>
 						</div>
 					</a>
@@ -405,7 +405,7 @@
 							</div>
 						</div>
 					</a> -->
-					<div class="span6" >
+					<div class="span5" >
 						<div class="row">						
 							<div class="span6 paddingLeftRigth">
 								<a href="rrd/#/sale_order_by_item">
@@ -418,9 +418,9 @@
 								</a>
 							</div>							
 							
-							<div class="span6 nopadding-left">
+							<div class="span6 paddingLeftRigth ">
 								<a href="rrd/#/inventory_position_summary">
-									<div class="bg-green height250 bottom-rigth">
+									<div class="bg-green height250 ">
 										<div class="img" style="padding-top: 10%;">
 											<img src="<?php echo base_url();?>assets/sales/invertory-position-report.png" >
 										</div>
@@ -429,6 +429,16 @@
 								</a>
 							</div>						
 						</div>
+					</div>
+					<div class="span2 nopadding-left">
+						<a href="<?php echo base_url();?>rrd" target="_blank">
+							<div class="bg-green height250 bottom-rigth">
+								<div class="img" style="padding-top: 10%; padding-left: 26%;">
+									<img style="width: 55%;" src="<?php echo base_url();?>assets/update/banhji-blank.png" >
+								</div>
+								<p class="textSmall" data-bind="text: lang.lang.back_to_banhji">Inventory Position Report</p>
+							</div>
+						</a>
 					</div>
 				</div>
 			</div>
@@ -6769,7 +6779,7 @@
 									<h3><a href="#/sale_order_by_item" data-bind="text: lang.lang.saleOrder_detail_by_product" style="text-transform: capitalize;"></a></h3>
 								</td>
 								<td style="vertical-align: top;">
-									<h3><a href="#/sale_order_by_employee"  style="text-transform: capitalize;">Sale Order By Employee/Customer</a></h3>
+									<h3><a href="#/sale_order_by_employee"  style="text-transform: capitalize;" data-bind="text: lang.lang.sale_order_by_employee_customer">Sale Order By Employee/Customer</a></h3>
 								</td>
 							</tr>
 							<tr>
@@ -9537,7 +9547,7 @@
 					<div id="invFormContent">
 						<div class="block-title">
 							<h3 data-bind="html: company.name"></h3>
-							<h2>Sale Detail by Employee</h2>
+							<h2 data-bind="text: lang.lang.sale_detail_by_employee">Sale Detail by Employee</h2>
 							<p data-bind="text: displayDate"></p>
 						</div>
 
@@ -12171,175 +12181,6 @@
 		</div>
 	</div>
 </script>
-<script id="saleOrderDetailbyEmployee" type="text/x-kendo-template">
-	<div id="slide-form">
-		<div class="customer-background">
-			<div class="container-960">
-				<div id="example" class="k-content saleSummaryCustomer">
-			    	<span class="pull-right glyphicons no-js remove_2"
-						onclick="javascript:window.history.back()"><i></i></span>
-					<br>
-					<br>
-
-					<div class="row-fluid">
-					    <!-- Tabs -->
-						<div class="relativeWrap" data-toggle="source-code">
-							<div class="widget widget-tabs widget-tabs-gray report-tab">
-
-								<!-- Tabs Heading -->
-								<div class="widget-head">
-									<ul>
-										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>
-										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.filter"></span></a></li>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
-									</ul>
-								</div>
-								<!-- // Tabs Heading END -->
-								<div class="widget-body">
-									<div class="tab-content">
-
-								        <!-- Date -->
-								        <div class="tab-pane active" id="tab-1">
-
-											<input data-role="dropdownlist"
-												   class="sorter"
-										           data-value-primitive="true"
-										           data-text-field="text"
-										           data-value-field="value"
-										           data-bind="value: sorter,
-										                      source: sortList,
-										                      events: { change: sorterChanges }" />
-
-											<input data-role="datepicker"
-												   class="sdate"
-												   data-format="dd-MM-yyyy"
-										           data-bind="value: sdate,
-										           			  max: edate"
-										           placeholder="From ..." >
-
-										    <input data-role="datepicker"
-										    	   class="edate"
-										    	   data-format="dd-MM-yyyy"
-										           data-bind="value: edate,
-										                      min: sdate"
-										           placeholder="To ..." >
-
-										  	<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-
-							        	</div>
-
-								    	<!-- Filter -->
-								        <div class="tab-pane" id="tab-2">
-											<table class="table table-condensed">
-												<tr>
-													<td style="padding: 8px 0 0 0 !important;">
-														<span data-bind="text: lang.lang.item"></span>
-														<select data-role="multiselect"
-															   data-value-primitive="true"
-															   data-header-template="item-header-tmpl"
-															   data-item-template="item-list-tmpl"
-															   data-value-field="id"
-															   data-text-field="name"
-															   data-bind="value: obj.itemIds,
-															   			source: itemDS"
-															   data-placeholder="Select Item..."
-															   style="width: 100%" /></select>
-													</td>
-													<td style="padding-top: 31px !important; float: left;">
-										  				<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
-													</td>
-												</tr>
-											</table>
-							        	</div>
-							        	<div class="tab-pane" id="tab-3">
-								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
-								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
-								        		<i class="fa fa-file-pdf-o"></i>
-								        		Print as PDF
-								        	</span> -->
-								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" style="width: 80px;">
-								        		<i class="fa fa-file-excel-o"></i>
-								        		Export to Excel
-								        	</span>
-							        	</div>
-								    </div>
-								</div>
-							</div>
-						</div>
-						<!-- // Tabs END -->
-					</div>
-
-					<div id="invFormContent">
-						<div class="block-title">
-							<h3 data-bind="html: company.name"></h3>
-							<h2>Sale Order Detail by Employee</h2>
-							<p data-bind="text: displayDate"></p>
-						</div>
-
-						<div class="row-fluid">
-							<div class="span5">
-								<div class="total-customer">
-										<p data-bind="text: lang.lang.total_product_services"></p>
-										<span data-bind="text: dataSource.total"></span>
-								</div>
-							</div>
-							<div class="span7">
-								<div class="total-customer">
-									<p data-bind="text: lang.lang.total_sale"></p>
-									<span data-bind="text: total_sale"></span>
-								</div>
-							</div>
-						</div>
-
-						<table class="table table-borderless table-condensed ">
-							<thead>
-								<tr>
-									<th data-bind="text:lang.lang.employee"></th>
-									<th style="text-align: left;" data-bind="text: lang.lang.name"></th>
-									<th style="text-align: left;" data-bind="text: lang.lang.date"></th>
-									<th style="text-align: left;" data-bind="text: lang.lang.status"></th>
-									<th data-bind="text: lang.lang.amount"></th>
-								</tr>
-							</thead>
-							<tbody data-role="listview"
-										 data-template="saleOrderDetailbyEmployee-template"
-										 data-auto-bind="false"
-										 data-bind="source: dataSource"
-							></tbody>
-						</table>
-						<div id="pager" class="k-pager-wrap"
-			            		 data-role="pager"
-						    	 data-auto-bind="false"
-					             data-bind="source: dataSource"></div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</script>
-<script id="saleOrderDetailbyEmployee-template" type="text/x-kendo-template">
-	<tr style="font-weight: bold">
-		<td colspan="6">#=name#</td>
-	</tr>
-	#for(var i= 0; i <line.length; i++) {#
-		<tr>
-			<td></td>
-			<td>#=line[i].customer_name#</td>
-			<td style="text-align: left;">#=kendo.toString(new Date(line[i].issued_date),"dd-MM-yyyy")#</td>
-			<td>
-				#if(line[i].status=== 0){#
-					Open
-				#}else if(line[i].status==="1"){#
-				    Used
-        		#}else{#
-					Paid
-        		#}#
-			</td>
-			<td style="text-align: right;">#=kendo.toString(line[i].amount, "c2", banhji.locale)#</td>
-		</tr>
-
-	#}#
-</script>
 <script id="saleOrderDetailbyItem" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background">
@@ -12492,8 +12333,215 @@
 		</div>
 	</div>
 </script>
+<script id="saleOrderDetailbyEmployee" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content saleSummaryCustomer">
+			    	<span class="pull-right glyphicons no-js remove_2"
+						onclick="javascript:window.history.back()"><i></i></span>
+					<br>
+					<br>
+
+					<div class="row-fluid">
+					    <!-- Tabs -->
+						<div class="relativeWrap" data-toggle="source-code">
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+
+								<!-- Tabs Heading -->
+								<div class="widget-head">
+									<ul>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>
+										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.filter"></span></a></li>
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
+									</ul>
+								</div>
+								<!-- // Tabs Heading END -->
+								<div class="widget-body">
+									<div class="tab-content">
+
+								        <!-- Date -->
+								        <div class="tab-pane active" id="tab-1">
+
+											<input data-role="dropdownlist"
+												   class="sorter"
+										           data-value-primitive="true"
+										           data-text-field="text"
+										           data-value-field="value"
+										           data-bind="value: sorter,
+										                      source: sortList,
+										                      events: { change: sorterChanges }" />
+
+											<input data-role="datepicker"
+												   class="sdate"
+												   data-format="dd-MM-yyyy"
+										           data-bind="value: sdate,
+										           			  max: edate"
+										           placeholder="From ..." >
+
+										    <input data-role="datepicker"
+										    	   class="edate"
+										    	   data-format="dd-MM-yyyy"
+										           data-bind="value: edate,
+										                      min: sdate"
+										           placeholder="To ..." >
+
+										  	<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+
+							        	</div>
+
+								    	<!-- Filter -->
+								        <div class="tab-pane" id="tab-2">
+											<table class="table table-condensed">
+												<tr>
+													<td style="padding: 8px 0 0 0 !important;">
+														<span>Sale Rep.</span>
+														<select data-role="multiselect"
+															   data-value-primitive="true"
+															   data-item-template="contact-list-tmpl"
+															   data-value-field="id"
+															   data-text-field="name"
+															   data-bind="value: obj.employeeIds,
+															   			source: employeeDS"
+															   data-placeholder="Select Sale Rep..."
+															   style="width: 100%" /></select>
+													</td>
+													<td style="padding-top: 31px !important; float: left;">
+										  				<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+													</td>
+												</tr>
+											</table>
+							        	</div>
+							        	<div class="tab-pane" id="tab-3">
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
+								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
+								        		<i class="fa fa-file-pdf-o"></i>
+								        		Print as PDF
+								        	</span> -->
+								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" style="width: 80px;">
+								        		<i class="fa fa-file-excel-o"></i>
+								        		Export to Excel
+								        	</span>
+							        	</div>
+								    </div>
+								</div>
+							</div>
+						</div>
+						<!-- // Tabs END -->
+					</div>
+
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="html: company.name"></h3>
+							<h2 data-bind="text: lang.lang.sale_order_by_employee_customer">Sale Order Detail By Employee/Customer</h2>
+							<p data-bind="text: displayDate"></p>
+						</div>
+
+						<div data-role="grid" class="costom-grid"
+					    	 data-column-menu="true"
+					    	 data-groupable="true"
+					    	 data-pageable="true"
+					    	 data-reorderable="true"
+					    	 data-scrollable="false"
+					    	 data-resizable="true"
+			                 data-columns="[
+			                 	{ 
+			                 		field: 'contacts', 
+			                 		title: 'CUSTOMER',
+			                 		groupFooterTemplate: 'TOTAL:' 
+			                 	},
+	                            { field: 'employees', title:'SALE REP.' },
+	                            { field: 'issued_date', title:'DATE', template: '#=kendo.toString(new Date(issued_date), banhji.dateFormat)#' },
+	                            { 
+	                            	field: 'number', 
+	                            	title:'NUMBER',
+	                            	template: kendo.template($('#saleOrderDetailbyEmployee-number-template').html())
+	                            },
+	                            { 
+	                            	field: 'status', 
+	                            	title:'STATUS', 
+	                            	template: kendo.template($('#saleOrderDetailbyEmployee-status-template').html()) 
+	                            },
+	                            { 
+	                            	field: 'amount', 
+	                            	title:'AMOUNT', 
+	                            	format: '{0:n}', 
+	                            	attributes: { style: 'text-align: right;' },
+	                            	footerAttributes: { style: 'text-align: right;' },
+	                            	aggregates: ['sum'], 
+	                            	groupFooterTemplate: '#=kendo.toString(sum, banhji.numberFormat)#' 
+	                            },
+	                            { 
+	                            	field: 'invoice', 
+	                            	title:'INVOICE',
+	                            	hidden: true,
+	                            	template: kendo.template($('#saleOrderDetailbyEmployee-invoice-template').html())
+	                            },
+	                            { 
+	                            	field: 'delivery_note', 
+	                            	hidden: true,
+	                            	title:'Delivery Note',
+	                            	template: kendo.template($('#saleOrderDetailbyEmployee-deliveryNote-template').html())
+	                            },
+	                            { 
+	                            	field: 'cash_receipt',
+	                            	hidden: true, 
+	                            	title:'Cash Receipt',
+	                            	template: kendo.template($('#saleOrderDetailbyEmployee-cash_receipt-template').html())
+	                            },                            
+	                         ]"
+	                         data-auto-bind="false"
+			                 data-bind="source: dataSource" ></div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
 <script id="saleOrderDetailbyEmployee-number-template" type="text/x-kendo-template">
 	<a href="\#/#=type.toLowerCase()#/#=id#"><i></i> #=number#</a>
+</script>
+<script id="saleOrderDetailbyEmployee-status-template" type="text/x-kendo-template">
+	#if(status==0){#
+		OPEN
+	#}else if(status==1){#
+		USED
+	#}else{#
+
+	#}#
+</script>
+<script id="saleOrderDetailbyEmployee-template" type="text/x-kendo-template">
+	<tr style="font-weight: bold">
+		<td colspan="6">#=name#</td>
+	</tr>
+	#for(var i= 0; i <line.length; i++) {#
+		<tr>
+			<td></td>
+			<td>#=line[i].customer_name#</td>
+			<td style="text-align: left;">#=kendo.toString(new Date(line[i].issued_date),"dd-MM-yyyy")#</td>
+			<td>
+				#if(line[i].status=== 0){#
+					Open
+				#}else if(line[i].status==="1"){#
+				    Used
+        		#}else{#
+					Paid
+        		#}#
+			</td>
+			<td style="text-align: right;">#=kendo.toString(line[i].amount, "c2", banhji.locale)#</td>
+		</tr>
+
+	#}#
+</script>
+<script id="saleOrderDetailbyEmployee-deliveryNote-template" type="text/x-kendo-template">
+	<a href="\#/#=type.toLowerCase()#/#=id#"><i></i> #=delivery_note#</a>
+</script>
+<script id="saleOrderDetailbyEmployee-invoice-template" type="text/x-kendo-template">
+	<a href="\#/#=type.toLowerCase()#/#=id#"><i></i> #=invoice#</a>
+</script>
+<script id="saleOrderDetailbyEmployee-cash_receipt-template" type="text/x-kendo-template">
+	<a href="\#/#=type.toLowerCase()#/#=id#"><i></i> #=cash_receipt#</a>
 </script>
 
 <script id="receivableAgingSummarybyEmployee" type="text/x-kendo-template">
@@ -12592,7 +12640,7 @@
 							<div class="span9">
 								<div class="total-customer">
 									<p data-bind="text: lang.lang.total_customer_balance"></p>
-									<span data-bind="text: totalBalance"></span>
+									<span data-bind="text: total"></span>
 								</div>
 							</div>
 						</div>

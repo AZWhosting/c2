@@ -1107,7 +1107,7 @@ var	km_KH = {
 	"customer_name" : "ឈ្មោះ​អតិថិជន",
 	"c_sale_order" : "បញ្ជា​លក់",
 	"number_customer" : "ចំនួន​អតិថិជន",
-	"total_customer_balance" : "សមតុល្យ​សាច់​ប្រាក់​អតិថិជន",
+	"total_customer_balance" : "សមតុល្យ​អតិថិជនជំពាក់",
 	"account_receivable_balance" : "សមតុល្យ​គណនី​ជំពាក់​អតិថិជន",
 	"s_current" : "នា​ពេល​បច្ចុប្បន្ន",
 	"s_aging" : "អាយុកាល",
@@ -1624,4 +1624,6 @@ var	km_KH = {
 	"sale_center" : "ផ្នែកលក់",
 	"production_function": "ផលិតកម្ម",
 	"product_to_be_produced" : "ផលិតផលត្រូវផលិត",
+	"sale_order_by_employee_customer" : "របាយការណ៍បញ្ជាលក់លម្អិតតាម អតិថិជន",
+	"back_to_banhji" : "ត្រឡប់ទៅកាន់ទំព័រគណនេយ្យបញ្ជី",
 }

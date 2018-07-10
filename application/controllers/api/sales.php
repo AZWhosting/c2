@@ -1800,6 +1800,7 @@ class Sales extends REST_Controller {
 		
 		if($obj->exists()){
 			$objList = [];
+			$total = 0;
 			$today = new DateTime();
 			foreach ($obj as $value) {
 				$employee = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
@@ -1825,6 +1826,7 @@ class Sales extends REST_Controller {
 				$in60 = 0;
 				$in90 = 0;
 				$over90 = 0;
+
 
 				$dueDate = new DateTime($value->due_date);
 				$days = $dueDate->diff($today)->format("%a");
@@ -1867,12 +1869,15 @@ class Sales extends REST_Controller {
 						"total" 			=> $amount,
 					);			
 				}
+				$total += $amount;
 			}
+			
 
 			foreach ($objList as $value) {
 				$data["results"][] = $value;
 			}
 			$data["count"] = count($data["results"]);
+			$data['total'] = $total;
 		}
 
 		//Response Data

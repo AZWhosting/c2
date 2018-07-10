@@ -1649,4 +1649,6 @@ var	en_US = {
 	"sale_center" : "Sale Center",
 	"production_function": "Production Function",
 	"product_to_be_produced" : "Product to be Produced",
+	"sale_order_by_employee_customer" : "Sale Order By Employee/Customer",
+	"back_to_banhji" : "Back to BanhJi",
 }
