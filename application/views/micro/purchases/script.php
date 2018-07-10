@@ -4162,7 +4162,7 @@
 						|| value.extension.toLowerCase() === ".gif"
 						|| value.extension.toLowerCase() === ".pdf"){
 
-						var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ value.name;
+						var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001);
 
 						self.attachmentDS.add({
 							user_id         : self.get("user_id"),
@@ -4780,7 +4780,7 @@
 					this.attachmentDS.remove(att);
 				}
 
-				var key = 'ITEM_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ files.name;
+				var key = 'ITEM_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001);
 
 				this.attachmentDS.add({
 					user_id         : this.get("user_id"),
@@ -5223,7 +5223,7 @@
 					|| value.extension.toLowerCase() === ".gif"
 					|| value.extension.toLowerCase() === ".pdf"){
 
-					var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ value.name;
+					var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001);
 
 					self.attachmentDS.add({
 						user_id         : self.get("user_id"),
@@ -6244,7 +6244,7 @@
 					|| value.extension.toLowerCase() === ".gif"
 					|| value.extension.toLowerCase() === ".pdf"){
 
-					var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ value.name;
+					var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001);
 
 					self.attachmentDS.add({
 						user_id         : self.get("user_id"),
@@ -7171,7 +7171,7 @@
 					|| value.extension.toLowerCase() === ".gif"
 					|| value.extension.toLowerCase() === ".pdf"){
 
-					var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ value.name;
+					var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001);
 
 					self.attachmentDS.add({
 						user_id         : self.get("user_id"),
@@ -8093,7 +8093,7 @@
 					|| value.extension.toLowerCase() === ".gif"
 					|| value.extension.toLowerCase() === ".pdf"){
 
-					var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ value.name;
+					var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001);
 
 					self.attachmentDS.add({
 						user_id         : self.get("user_id"),
@@ -11404,7 +11404,7 @@
 					|| value.extension.toLowerCase() === ".gif"
 					|| value.extension.toLowerCase() === ".pdf"){
 
-					var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ value.name;
+					var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001);
 
 					self.attachmentDS.add({
 						user_id         : self.get("user_id"),
@@ -12489,7 +12489,7 @@
 					|| value.extension.toLowerCase() === ".gif"
 					|| value.extension.toLowerCase() === ".pdf"){
 
-					var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001) +'_'+ value.name;
+					var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001);
 
 					self.attachmentDS.add({
 						user_id         : self.get("user_id"),
