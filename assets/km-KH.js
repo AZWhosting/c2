@@ -1624,6 +1624,6 @@ var	km_KH = {
 	"sale_center" : "ផ្នែកលក់",
 	"production_function": "ផលិតកម្ម",
 	"product_to_be_produced" : "ផលិតផលត្រូវផលិត",
-	"sale_order_by_employee_customer" : "របាយការណ៍បញ្ជាលក់លម្អិតតាម អតិថិជន",
+	"sale_order_by_employee_customer" : "របាយការណ៍បញ្ជាលក់សរុបតាម បុគ្គលិក ឫអតិថិជន",
 	"back_to_banhji" : "ត្រឡប់ទៅកាន់ទំព័រគណនេយ្យបញ្ជី",
 }
