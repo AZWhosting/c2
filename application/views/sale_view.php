@@ -5,7 +5,7 @@
 		}
 	}*/
 	html.no-touch.sticky-top:not(.animations-gpu) #content {
-	    padding-top: 45px !important;
+	    padding-top: 65px !important;
 	    overflow: inherit;
 	}
 	.home .bg-green{
@@ -14,6 +14,10 @@
 		text-align: center;
 		position: relative;
 		box-shadow: 2px 0px 12px 0px rgba(68,68,68,1);
+	}
+	body,
+	#content{
+		background: none;
 	}
 	.height250{
 		height: 200px;
@@ -211,7 +215,7 @@
 	    bottom: 20px;
 	    text-align: center;
 	    margin: 0 auto;
-	    width: 78%;
+	    width: 100%;
 	}
 </style>
 <div id="wrapperApplication" class="container-fluid"></div>
@@ -246,16 +250,38 @@
 		  			<ul class="dropdown-menu ul-multiTaskList" data-template="multiTaskList-row-template" data-bind="source: multiTaskList">
 		  			</ul>
 			  	</li>
-				<li role="presentation" class="dropdown">
+				<!-- <li role="presentation" class="dropdown">
 			  		<a style="color: #fff;" class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">[<span data-bind="text: getUsername"></span>]</a>
-		  			<ul class="dropdown-menu">  				  				
+		  			<ul class="dropdown-menu">
 		  				<li><a href="#" data-bind="click: lang.changeToKh">ភាសាខ្មែរ</a></li>
     					<li><a href="#" data-bind="click: lang.changeToEn">English</a></li>
 						<li class="divider"></li>
-					<!-- 	<li><a href="<?php echo base_url(); ?>admin">Setting</a></li> -->
+						<li><a href="<?php echo base_url(); ?>admin">Setting</a></li>
 						<li><a href="#/manage" data-bind="click: logout"><i class="icon-power-off"></i> Logout</a></li> 				
 		  			</ul>
-			  	</li>				
+			  	</li> -->
+			  	<li role="presentation" class="dropdown">
+			  		<a style="color: #fff;" class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">[<span data-bind="text: getUsername"></span>]</a>
+		  			<ul class="dropdown-menu">
+		  				<li><a href="<?php echo base_url(); ?>admin" class="" ><i class="icon-cog"></i> <span data-bind="text: lang.lang.admin_module">Admin Module</span></a></li>
+		  				<li class="divider"></li>
+		  				<li>
+	                    	<a href="#" data-bind="click: lang.changeToKh">
+	                    		<img style="width: 20px;" class="kh-flag" src="https://lipis.github.io/flag-icon-css/flags/4x3/kh.svg">
+	                    		<span>ភាសាខ្មែរ</span>
+	                    	</a>
+	                    </li>
+    					<li>
+    						<a href="#" data-bind="click: lang.changeToEn">
+    							<img style="width: 20px;" class="en-flag" src="https://lipis.github.io/flag-icon-css/flags/4x3/gb.svg">
+    							<span>English</span>
+    						</a>
+    					</li>
+						<li class="divider"></li>
+					<!-- 	<li><a href="<?php echo base_url(); ?>admin">Setting</a></li> -->
+						<li><a href="#/manage" data-bind="click: logout" ><i class="icon-power-off"></i> <span data-bind="text: lang.lang.logout">Logout</span></a></li>
+		  			</ul>
+			  	</li>			
 			</ul>
 		</div>
 	</div>
@@ -315,11 +341,11 @@
 								<div class="img">
 									<img src="<?php echo base_url();?>assets/spa/sale-01.png" >
 								</div>
-								<p class="textBig">Sale Module</p>
+								<p data-bind="text: lang.lang.sale_center" style="color: #203864;" class="textBig">Sale Center</p>
 							</div>
 						</a>
 					</div>
-					<div class="span6" >
+					<!-- <div class="span6" >
 						<div class="row">						
 							<div class="span6 paddingLeftRigth">
 								<a href="rrd/#/item_center">
@@ -343,23 +369,33 @@
 								</a>
 							</div>						
 						</div>
-					</div>
+					</div> -->
+					<a href="#/customer_report_center">
+						<div class="span6 paddingLeft">
+							<div class="bg-green height250 top-rigth " >
+								<div class="img">
+									<img src="<?php echo base_url();?>assets/sales/sale-management-report.png">
+								</div>
+								<p data-bind="text: lang.lang.sale_managment_reports" style="color: #fff; width: 280px;" class="textBig">Sale Management Reports</p>
+							</div>
+						</div>
+					</a>
 				</div>
 			</div>
 
 			<div class="span12">
 				<div class="row paddingTopBottom">
-					<a href="admin#employeelist">
+					<a href="rrd/#/internal_usage">
 						<div class="span6 nopadding-right">
 							<div class="bg-green height250">
 								<div class="img">
-									<img src="<?php echo base_url();?>assets/spa/icon/serving.png" >
+									<img src="<?php echo base_url();?>assets/sales/production.png" >
 								</div>
-								<p class="textBig">Employee</p>
+								<p class="textBig" data-bind="text: lang.lang.production_function">Production Fuction</p>
 							</div>
 						</div>
 					</a>
-					<a href="#/customer_report_center">
+					<!-- <a href="#/customer_report_center">
 						<div class="span6 paddingLeft">
 							<div class="bg-green height250 bottom-rigth" >
 								<div class="img">
@@ -368,7 +404,32 @@
 								<p class="textBig">Sale Management Reports</p>
 							</div>
 						</div>
-					</a>
+					</a> -->
+					<div class="span6" >
+						<div class="row">						
+							<div class="span6 paddingLeftRigth">
+								<a href="rrd/#/sale_order_by_item">
+									<div class="bg-green height250">
+										<div class="img" style="padding-top: 10%;">
+											<img src="<?php echo base_url();?>assets/sales/product-to-be-produced.png" >
+										</div>
+										<p class="textSmall" data-bind="text: lang.lang.product_to_be_produced">Product to be produced</p>
+									</div>
+								</a>
+							</div>							
+							
+							<div class="span6 nopadding-left">
+								<a href="rrd/#/inventory_position_summary">
+									<div class="bg-green height250 bottom-rigth">
+										<div class="img" style="padding-top: 10%;">
+											<img src="<?php echo base_url();?>assets/sales/invertory-position-report.png" >
+										</div>
+										<p class="textSmall" data-bind="text: lang.lang.inventory_position_summary">Inventory Position Report</p>
+									</div>
+								</a>
+							</div>						
+						</div>
+					</div>
 				</div>
 			</div>
 
@@ -417,13 +478,15 @@
 				<p data-bind="text: today"></span>
 			</div>
 		</div>
+
+		<div class="row home">
+			<div class="fixed-bottom">
+				<p>&copy; <?php echo date('Y'); ?><span data-bind="text: lang.lang.all_rights_reserved"></span></p>
+			</div>	
+		</div>
 	</div>
 	
-	<div class="row-fluid">
-		<div class="fixed-bottom">
-			<p>&copy; <?php echo date('Y'); ?><span data-bind="text: lang.lang.all_rights_reserved"></span></p>
-		</div>	
-	</div>		
+			
 </script>
 <!-- ADVANCE SEARCH -->
 <script id="searchAdvanced" type="text/x-kendo-template">
@@ -6685,8 +6748,8 @@
 		<div class="row-fluid customer-report-center">
 			<span class="pull-right glyphicons no-js remove_2" onclick="javascript:window.history.back()"><i></i></span>
 			<br>
-			<div class="span7">
-				<div class="row-fluid sale-report" style="margin-bottom: 20px; padding: 10px 15px;; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
+			<div class="span12">
+				<div class="row-fluid sale-report" style="margin-bottom: 20px; padding: 10px 15px;; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1; margin-top: 17px;">
 					<h2 data-bind="text: lang.lang.sale_managment_reports" style="text-transform: uppercase;"></h2>
 					<p data-bind="text: lang.lang.the_following_reports_provide">
 						The following reports provide summary and detailed reports in
@@ -6695,6 +6758,51 @@
 					<div class="row-fluid">
 						<table class="table table-borderless table-condensed">
 							<tr>
+								<!-- <td style="vertical-align: top;">
+									<h3 ><a href="#/sale_summary_by_customer" data-bind="text: lang.lang.sale_summary_by_customer" style="text-transform: capitalize;"></a></h3>
+								</td>
+								<td style="vertical-align: top;">
+									<h3><a href="#/sale_detail_by_customer" data-bind="text: lang.lang.sale_detail_by_customer" style="text-transform: capitalize;"></a></h3>
+								</td> -->
+
+								<td style="vertical-align: top;">
+									<h3><a href="#/sale_order_by_item" data-bind="text: lang.lang.saleOrder_detail_by_product" style="text-transform: capitalize;"></a></h3>
+								</td>
+								<td style="vertical-align: top;">
+									<h3><a href="#/sale_order_by_employee"  style="text-transform: capitalize;">Sale Order By Employee/Customer</a></h3>
+								</td>
+							</tr>
+							<tr>
+								<td style="vertical-align: top;">
+									<p style="padding-right: 25px;" data-bind="text: lang.lang.salesOrder_summary_summarize">
+										Lists individual sale order transactions by date for each product/ service with a period of time.
+									</p>
+								</td>
+								<td style="vertical-align: top;">
+								</td>
+							</tr>
+							<tr>
+								<td style="vertical-align: top;">
+									<h3><a href="#/receivable_aging_summary_employee" data-bind="text: lang.lang.receivable_aging_summary_byEmloyee">Receivable Aging Summary by Employee</a></h3>
+								</td>
+								<td style="vertical-align: top;">
+									<h3><a href="#/sale_detail_by_employee" data-bind="text: lang.lang.sale_detail_by_employee" style="text-transform: capitalize;"></a></h3>
+								</td>
+							</tr>
+							<tr>
+								<td style="vertical-align: top;">
+									<p style="padding-right: 25px;" data-bind="text: lang.lang.lists_all_unpaid_invoices2">
+										Lists all unpaid invoices for the current period, 30, 60, 90,
+										and more than 90 days, grouped by Employee.
+									</p>
+								</td>
+								<td style="vertical-align: top;">
+									<p style="padding-right: 25px;" data-bind="text: lang.lang.sale_detail_by_employee_summarize">
+									Lists individual sale transactions by date for each employee with a period of time.
+									</p>
+								</td>
+							</tr>
+							<!-- <tr>
 								<td style="vertical-align: top;">
 									<h3 ><a href="#/sale_summary_by_customer" data-bind="text: lang.lang.sale_summary_by_customer" style="text-transform: capitalize;"></a></h3>
 								</td>
@@ -6759,9 +6867,9 @@
 							</tr>
 
 							<tr>
-								<!-- <td>
+								<td>
 									<h3><a href="#/sale_detail_by_customer" data-bind="text: lang.lang.sale_detail_by_customer" style="text-transform: capitalize;"></a></h3>
-								</td> -->
+								</td>
 								<td style="vertical-align: top;">
 									<h3><a href="#/customer_transaction_list" data-bind="text: lang.lang.customer_transaction_list" style="text-transform: capitalize;"></a></h3>
 								</td>
@@ -6910,12 +7018,12 @@
 									</p>
 								</td>
 
-							</tr>
+							</tr> -->
 						</table>
 					</div>
 				</div>
 
-				<div class="row-fluid recevable-report" style="margin-bottom: 20px; padding: 10px 15px;; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
+				<!-- <div class="row-fluid recevable-report" style="margin-bottom: 20px; padding: 10px 15px;; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
 
 					<h2 data-bind="text: lang.lang.receivable_management_reports"></h2>
 
@@ -7013,9 +7121,9 @@
 
 						</table>
 					</div>
-				</div>
+				</div> -->
 			</div>
-			<div class="span5">
+			<!-- <div class="span5">
 				<div class="report-chart" style="margin-bottom: 20px; padding: 15px; margin-top: 10px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
 					<div class="widget-body alert alert-primary sale-overview">
 						<h2 data-bind="text: lang.lang.sale_overview">SALE OVERVIEW</h2>
@@ -7040,7 +7148,7 @@
 							</tr>
 						</table>
 					</div>
-					<!-- Graph -->
+					
 					<div class="home-chart">
 						<div data-role="chart"
 			                 data-legend="{ position: 'top' }"
@@ -7057,7 +7165,7 @@
 			                 data-auto-bind="false"
 			                 data-bind="source: graphDS"
 			                 style="height: 250px;" ></div>
-		            <!-- End Graph -->
+		           
 		            </div>
 				</div>
 				<div class="report-chart" style="padding: 15px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
@@ -7090,7 +7198,7 @@
 						</table>
 					</div>
 				</div>
-			</div>
+			</div> -->
 		</div>
 	</script>
 </script>
@@ -12383,6 +12491,159 @@
 			</div>
 		</div>
 	</div>
+</script>
+<script id="saleOrderDetailbyEmployee-number-template" type="text/x-kendo-template">
+	<a href="\#/#=type.toLowerCase()#/#=id#"><i></i> #=number#</a>
+</script>
+
+<script id="receivableAgingSummarybyEmployee" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content saleSummaryCustomer">
+			    	<span class="pull-right glyphicons no-js remove_2"
+						onclick="javascript:window.history.back()"><i></i></span>
+					<br>
+					<br>
+
+					<div class="row-fluid">
+					    <!-- Tabs -->
+						<div class="relativeWrap" data-toggle="source-code">
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+
+								<!-- Tabs Heading -->
+								<div class="widget-head">
+									<ul>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>
+										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.filter"></span></a></li>
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
+									</ul>
+								</div>
+								<!-- // Tabs Heading END -->
+								<div class="widget-body">
+									<div class="tab-content">
+
+								        <!-- //Date -->
+								        <div class="tab-pane active" id="tab-1">
+									        <span data-bind="text: lang.lang.as_of"></span>:
+									        <input data-role="datepicker"
+													data-format="dd-MM-yyyy"
+													data-parse-formats="yyyy-MM-dd"
+													data-bind="value: as_of" />
+
+								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+
+							        	</div>
+								    	<!-- Filter -->
+								        <div class="tab-pane" id="tab-2">
+											<table class="table table-condensed">
+												<tr>
+									            	<td style="padding: 8px 0 0 0 !important; ">
+														<span data-bind="text: lang.lang.customers"></span>
+														<select data-role="multiselect"
+															   data-value-primitive="true"
+															   data-header-template="contact-header-tmpl"
+															   data-item-template="contact-list-tmpl"
+															   data-value-field="id"
+															   data-text-field="name"
+															   data-bind="value: obj.customers,
+															   			source: contactDS"
+															   data-placeholder="Select Customer.."
+															   style="width: 100%" /></select>
+													</td>
+													<td style="padding-top: 31px !important; float: left;">
+										  				<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+													</td>
+												</tr>
+											</table>
+							        	</div>
+							        	<!--PRINT/EXPORT  -->
+								        <div class="tab-pane" id="tab-3">
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
+								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
+								        		<i class="fa fa-file-pdf-o"></i>
+								        		Print as PDF
+								        	</span> -->
+								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" style="width: 80px;">
+								        		<i class="fa fa-file-excel-o"></i>
+								        		Export to Excel
+								        	</span>
+							        	</div>
+								    </div>
+								</div>
+							</div>
+						</div>
+						<!-- // Tabs END -->
+					</div>
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="html: company.name"></h3>
+							<h2 data-bind="text: lang.lang.receivable_aging_summary_byEmloyee"></h2>
+							<p data-bind="text: displayDate"></p>
+						</div>
+
+						<div class="row">
+							<div class="span3" style="padding-right: 0;">
+								<div class="total-customer">
+									<p data-bind="text: lang.lang.number_of_customer"></p>
+									<span data-format="n0" data-bind="text: dataSource.total"></span>
+								</div>
+							</div>
+							<div class="span9">
+								<div class="total-customer">
+									<p data-bind="text: lang.lang.total_customer_balance"></p>
+									<span data-bind="text: totalBalance"></span>
+								</div>
+							</div>
+						</div>
+
+						<table class="table table-borderless table-condensed ">
+							<thead>
+								<tr>
+									<th data-bind="text: lang.lang.employee"></th>
+									<th data-bind="text: lang.lang.name"></th>
+									<th style="text-align: right;" data-bind="text: lang.lang.current"></th>
+									<th style="text-align: right;"><span>1-30</span></th>
+									<th style="text-align: right;"><span>31-60</span></th>
+									<th style="text-align: right;"><span>61-90</span></th>
+									<th style="text-align: right;"><span data-bind="text: lang.lang.over"></span> 90</th>
+									<th style="text-align: right;" data-bind="text: lang.lang.total"></th>
+								</tr>
+							</thead>
+							<tbody data-role="listview"
+									data-auto-bind="false"
+								 	data-bind="source: dataSource"
+								 	data-template="receivableAgingSummarybyEmployee-template"
+							></tbody>
+						</table>
+						<div id="pager" class="k-pager-wrap"
+			            		 data-role="pager"
+						    	 data-auto-bind="false"
+					             data-bind="source: dataSource"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="receivableAgingSummarybyEmployee-template" type="text/x-kendo-template" >
+	<tr style="font-weight: bold">
+		<td colspan="8">#=name#</td>
+	</tr>
+	#var totalAmount = 0;#
+	#for(var i= 0; i <line.length; i++) {#
+		<tr>
+			<td></td>
+			<td>#=line[i].nameCustomer#</td>
+			<td style="text-align: right;">#=kendo.toString(line[i].current, "c2", banhji.locale)#</td>
+			<td style="text-align: right;">#=kendo.toString(line[i].in30, "c2", banhji.locale)#</td>
+			<td style="text-align: right;">#=kendo.toString(line[i].in60, "c2", banhji.locale)#</td>
+			<td style="text-align: right;">#=kendo.toString(line[i].in90, "c2", banhji.locale)#</td>
+			<td style="text-align: right;">#=kendo.toString(line[i].over90, "c2", banhji.locale)#</td>
+			<td style="text-align: right;">#=kendo.toString(line[i].total, "c2", banhji.locale)#</td>
+		</tr>
+
+	#}#
 </script>
 <!--Invoice Form-->
 <script id="invoiceForm" type="text/x-kendo-template">
@@ -22716,4 +22977,4 @@
 <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/js/libs/localforage.min.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jszip/2.4.0/jszip.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.js"></script>  

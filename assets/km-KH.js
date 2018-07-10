@@ -1618,4 +1618,10 @@ var	km_KH = {
 	"room" : "បន្ទប់",
 	"installment_report": "របាយការណ៍រំលោះ",
 	"installment_list": "បញ្ជីរំលោះ",
+
+
+	//Sale Module
+	"sale_center" : "ផ្នែកលក់",
+	"production_function": "ផលិតកម្ម",
+	"product_to_be_produced" : "ផលិតផលត្រូវផលិត",
 }

@@ -286,7 +286,7 @@ var	en_US = {
 	"credit" : "CREDIT",
 	"current" : "Current",
 	//Customer Modual,Report,
-	"sale_managment_reports" : "SALE MANAGMENT REPORTS",
+	"sale_managment_reports" : "Sale Managment Reports",
 	"the_following_reports_provide" : "The following reports provide summary and detailed reports in different ways to help analyze your revenue performance.",
 	"sale_summary_by_customer" : "Sale Summary By Customer",
 	"summarizes_total_sales" : "Summarizes total sales for each customer within a period of time so you can see which ones generate the most revenue for you.",
@@ -1643,4 +1643,10 @@ var	en_US = {
 	"room" : "Room",
 	"installment_report": "Installment",
 	"installment_list": "Installment List",
+
+
+	//Sale Module
+	"sale_center" : "Sale Center",
+	"production_function": "Production Function",
+	"product_to_be_produced" : "Product to be Produced",
 }

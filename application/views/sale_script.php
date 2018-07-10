@@ -20852,313 +20852,313 @@
 		}
 	});
 	banhji.saleOrderDetailbyCustomer =  kendo.observable({
-				lang                : langVM,
-				dataSource          : dataStore(apiUrl + "sales/saleOrder_summary"),
-				itemDS              : new kendo.data.DataSource({
-						transport: {
-								read    : {
-										url: apiUrl + "items",
-										type: "GET",
-										headers: banhji.header,
-										dataType: 'json'
-								},
-								parameterMap: function(options, operation) {
-										if(operation === 'read') {
-												return {
-														page: options.page,
-														limit: options.pageSize,
-														filter: options.filter,
-														sort: options.sort
-												};
-										} else {
-												return {models: kendo.stringify(options.models)};
-										}
+		lang                : langVM,
+		dataSource          : dataStore(apiUrl + "sales/saleOrder_summary"),
+		itemDS              : new kendo.data.DataSource({
+				transport: {
+						read    : {
+								url: apiUrl + "items",
+								type: "GET",
+								headers: banhji.header,
+								dataType: 'json'
+						},
+						parameterMap: function(options, operation) {
+								if(operation === 'read') {
+										return {
+												page: options.page,
+												limit: options.pageSize,
+												filter: options.filter,
+												sort: options.sort
+										};
+								} else {
+										return {models: kendo.stringify(options.models)};
 								}
-						},
-						schema  : {
-								model: {
-										id: 'id'
-								},
-								data: 'results',
-								total: 'count'
-						},
-						filter:[
-								{ field: "is_catalog <>", value: 1 },
-								{ field: "is_assembly <>", value: 1 },
-								{ field: "item_type_id", operator:"where_in", value: [1,4] }
-						],
-						sort:[
-								{ field:"item_type_id", dir:"asc" },
-								{ field:"number", dir:"asc" }
-						],
-						serverFiltering: true,
-						serverSorting: true,
-						serverPaging: true,
-						page:1,
-						pageSize: 100
-				}),
-				sortList            : banhji.source.sortList,
-				sorter              : "month",
-				sdate               : "",
-				edate               : "",
-				obj                 : { itemIds: [] },
-				company             : banhji.institute,
-				displayDate         : "",
-				avg_sale            : 0,
-				total_sale          : 0,
-				exArray             : [],
-				pageLoad            : function(){
-						this.search();
-				},
-				sorterChanges       : function(){
-						var today = new Date(),
-						sdate = "",
-						edate = "",
-						sorter = this.get("sorter");
-
-						switch(sorter){
-								case "today":
-										this.set("sdate", today);
-										this.set("edate", "");
-
-										break;
-								case "week":
-										var first = today.getDate() - today.getDay(),
-										last = first + 6;
-
-										this.set("sdate", new Date(today.setDate(first)));
-										this.set("edate", new Date(today.setDate(last)));
-
-										break;
-								case "month":
-										this.set("sdate", new Date(today.getFullYear(), today.getMonth(), 1));
-										this.set("edate", new Date(today.getFullYear(), today.getMonth() + 1, 0));
-
-										break;
-								case "year":
-										this.set("sdate", new Date(today.getFullYear(), 0, 1));
-										this.set("edate", new Date(today.getFullYear(), 11, 31));
-
-										break;
-								default:
-										this.set("sdate", "");
-										this.set("edate", "");
 						}
 				},
-				search              : function(){
-						var self = this, para = [],
-								obj = this.get("obj"),
-								start = this.get("sdate"),
-								end = this.get("edate"),
-								displayDate = "";
+				schema  : {
+						model: {
+								id: 'id'
+						},
+						data: 'results',
+						total: 'count'
+				},
+				filter:[
+						{ field: "is_catalog <>", value: 1 },
+						{ field: "is_assembly <>", value: 1 },
+						{ field: "item_type_id", operator:"where_in", value: [1,4] }
+				],
+				sort:[
+						{ field:"item_type_id", dir:"asc" },
+						{ field:"number", dir:"asc" }
+				],
+				serverFiltering: true,
+				serverSorting: true,
+				serverPaging: true,
+				page:1,
+				pageSize: 100
+		}),
+		sortList            : banhji.source.sortList,
+		sorter              : "month",
+		sdate               : "",
+		edate               : "",
+		obj                 : { itemIds: [] },
+		company             : banhji.institute,
+		displayDate         : "",
+		avg_sale            : 0,
+		total_sale          : 0,
+		exArray             : [],
+		pageLoad            : function(){
+				this.search();
+		},
+		sorterChanges       : function(){
+				var today = new Date(),
+				sdate = "",
+				edate = "",
+				sorter = this.get("sorter");
 
-						//Customer
-						if(obj.itemIds.length>0){
-								var itemIds = [];
-								$.each(obj.itemIds, function(index, value){
-										itemIds.push(value);
-								});
-								para.push({ field:"item_id", operator:"where_in", value:itemIds });
-						}
+				switch(sorter){
+						case "today":
+								this.set("sdate", today);
+								this.set("edate", "");
 
-						//Dates
-						if(start && end){
-								start = new Date(start);
-								end = new Date(end);
-								displayDate = "From " + kendo.toString(start, "dd-MM-yyyy") + " To " + kendo.toString(end, "dd-MM-yyyy");
-								end.setDate(end.getDate()+1);
+								break;
+						case "week":
+								var first = today.getDate() - today.getDay(),
+								last = first + 6;
 
-								para.push({ field:"issued_date >=", operator:"where_related_transaction", value: kendo.toString(start, "yyyy-MM-dd") });
-								para.push({ field:"issued_date <", operator:"where_related_transaction", value: kendo.toString(end, "yyyy-MM-dd") });
-						}else if(start){
-								start = new Date(start);
-								displayDate = "On " + kendo.toString(start, "dd-MM-yyyy");
+								this.set("sdate", new Date(today.setDate(first)));
+								this.set("edate", new Date(today.setDate(last)));
 
-								para.push({ field:"issued_date", operator:"where_related_transaction", value: kendo.toString(start, "yyyy-MM-dd") });
-						}else if(end){
-								end = new Date(end);
-								displayDate = "As Of " + kendo.toString(end, "dd-MM-yyyy");
-								end.setDate(end.getDate()+1);
+								break;
+						case "month":
+								this.set("sdate", new Date(today.getFullYear(), today.getMonth(), 1));
+								this.set("edate", new Date(today.getFullYear(), today.getMonth() + 1, 0));
 
-								para.push({ field:"issued_date <", operator:"where_related_transaction", value: kendo.toString(end, "yyyy-MM-dd") });
-						}else{
+								break;
+						case "year":
+								this.set("sdate", new Date(today.getFullYear(), 0, 1));
+								this.set("edate", new Date(today.getFullYear(), 11, 31));
 
-						}
-						this.set("displayDate", displayDate);
+								break;
+						default:
+								this.set("sdate", "");
+								this.set("edate", "");
+				}
+		},
+		search              : function(){
+				var self = this, para = [],
+						obj = this.get("obj"),
+						start = this.get("sdate"),
+						end = this.get("edate"),
+						displayDate = "";
 
-						this.dataSource.query({
-								filter:para,
-								page: 1,
-								pageSize : 20,
-						}).then(function(){
-								var view = self.dataSource.view();
-
-								var txnCount = 0, amount = 0;
-								$.each(view, function(index, value){
-										txnCount += value.txn_count;
-										amount += value.amount;
-								});
-
-								var avgSale = 0;
-								if(txnCount>0){
-										avgSale = amount/txnCount;
-								}
-
-								self.set("avg_sale", kendo.toString(avgSale, "c2", banhji.locale));
-								self.set("total_sale", kendo.toString(amount, "c2", banhji.locale));
+				//Customer
+				if(obj.itemIds.length>0){
+						var itemIds = [];
+						$.each(obj.itemIds, function(index, value){
+								itemIds.push(value);
 						});
-						this.dataSource.bind("requestEnd", function(e){
-								if(e.type=="read"){
-										var response = e.response;
-										self.exArray = [];
+						para.push({ field:"item_id", operator:"where_in", value:itemIds });
+				}
 
+				//Dates
+				if(start && end){
+						start = new Date(start);
+						end = new Date(end);
+						displayDate = "From " + kendo.toString(start, "dd-MM-yyyy") + " To " + kendo.toString(end, "dd-MM-yyyy");
+						end.setDate(end.getDate()+1);
+
+						para.push({ field:"issued_date >=", operator:"where_related_transaction", value: kendo.toString(start, "yyyy-MM-dd") });
+						para.push({ field:"issued_date <", operator:"where_related_transaction", value: kendo.toString(end, "yyyy-MM-dd") });
+				}else if(start){
+						start = new Date(start);
+						displayDate = "On " + kendo.toString(start, "dd-MM-yyyy");
+
+						para.push({ field:"issued_date", operator:"where_related_transaction", value: kendo.toString(start, "yyyy-MM-dd") });
+				}else if(end){
+						end = new Date(end);
+						displayDate = "As Of " + kendo.toString(end, "dd-MM-yyyy");
+						end.setDate(end.getDate()+1);
+
+						para.push({ field:"issued_date <", operator:"where_related_transaction", value: kendo.toString(end, "yyyy-MM-dd") });
+				}else{
+
+				}
+				this.set("displayDate", displayDate);
+
+				this.dataSource.query({
+						filter:para,
+						page: 1,
+						pageSize : 20,
+				}).then(function(){
+						var view = self.dataSource.view();
+
+						var txnCount = 0, amount = 0;
+						$.each(view, function(index, value){
+								txnCount += value.txn_count;
+								amount += value.amount;
+						});
+
+						var avgSale = 0;
+						if(txnCount>0){
+								avgSale = amount/txnCount;
+						}
+
+						self.set("avg_sale", kendo.toString(avgSale, "c2", banhji.locale));
+						self.set("total_sale", kendo.toString(amount, "c2", banhji.locale));
+				});
+				this.dataSource.bind("requestEnd", function(e){
+						if(e.type=="read"){
+								var response = e.response;
+								self.exArray = [];
+
+								self.exArray.push({
+										cells: [
+												{ value: self.company.name, textAlign: "center", colSpan: 6 }
+										]
+								});
+								self.exArray.push({
+										cells: [
+												{ value: "Sale Summary by Product/Service",bold: true, fontSize: 20, textAlign: "center", colSpan: 6 }
+										]
+								});
+								if(self.displayDate){
 										self.exArray.push({
 												cells: [
-														{ value: self.company.name, textAlign: "center", colSpan: 6 }
+														{ value: self.displayDate, textAlign: "center", colSpan: 6 }
 												]
 										});
-										self.exArray.push({
-												cells: [
-														{ value: "Sale Summary by Product/Service",bold: true, fontSize: 20, textAlign: "center", colSpan: 6 }
-												]
-										});
-										if(self.displayDate){
+								};
+								self.exArray.push({
+										cells: [
+												{ value: "", colSpan: 6 }
+										]
+								});
+								self.exArray.push({
+										cells: [
+												{ value: "Item", background: "#496cad", color: "#ffffff" },
+												{ value: "QTY", background: "#496cad", color: "#ffffff" },
+												{ value: "Amount", background: "#496cad", color: "#ffffff" },
+												{ value: "AVG Price", background: "#496cad", color: "#ffffff" },
+												{ value: "AVG Cost", background: "#496cad", color: "#ffffff" },
+												{ value: "Gross Profit Margin", background: "#496cad", color: "#ffffff" },
+										]
+								});
+								for (var i = 0; i < response.results.length; i++){
 												self.exArray.push({
 														cells: [
-																{ value: self.displayDate, textAlign: "center", colSpan: 6 }
+																{ value: response.results[i].name },
+																{ value: kendo.parseFloat(response.results[i].quantity)},
+																{ value: kendo.parseFloat(response.results[i].amount)},
+																{ value: kendo.parseFloat(response.results[i].avg_price)},
+																{ value: kendo.parseFloat(response.results[i].avg_cost)},
+																{ value: kendo.parseFloat(response.results[i].gpm)},
 														]
 												});
-										};
 										self.exArray.push({
 												cells: [
 														{ value: "", colSpan: 6 }
 												]
 										});
-										self.exArray.push({
-												cells: [
-														{ value: "Item", background: "#496cad", color: "#ffffff" },
-														{ value: "QTY", background: "#496cad", color: "#ffffff" },
-														{ value: "Amount", background: "#496cad", color: "#ffffff" },
-														{ value: "AVG Price", background: "#496cad", color: "#ffffff" },
-														{ value: "AVG Cost", background: "#496cad", color: "#ffffff" },
-														{ value: "Gross Profit Margin", background: "#496cad", color: "#ffffff" },
-												]
-										});
-										for (var i = 0; i < response.results.length; i++){
-														self.exArray.push({
-																cells: [
-																		{ value: response.results[i].name },
-																		{ value: kendo.parseFloat(response.results[i].quantity)},
-																		{ value: kendo.parseFloat(response.results[i].amount)},
-																		{ value: kendo.parseFloat(response.results[i].avg_price)},
-																		{ value: kendo.parseFloat(response.results[i].avg_cost)},
-																		{ value: kendo.parseFloat(response.results[i].gpm)},
-																]
-														});
-												self.exArray.push({
-														cells: [
-																{ value: "", colSpan: 6 }
-														]
-												});
-										}
 								}
-						});
-				},
-				printGrid           : function() {
-						var gridElement = $('#grid'),
-								printableContent = '',
-								win = window.open('', '', 'width=990, height=900'),
-								doc = win.document.open();
-						var htmlStart =
-										'<!DOCTYPE html>' +
-										'<html>' +
-										'<head>' +
-										'<meta charset="utf-8" />' +
-										'<title></title>' +
-										'<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
-										'<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
-										'<link rel="stylesheet" href="<?php echo base_url(); ?>assets/responsive.css">' +
-										'<link href="<?php echo base_url(); ?>assets/invoice/invoice.css" rel="stylesheet" />'+
-										'<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
-										'<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
-										'<style>' +
-										'html { font: 11pt sans-serif; }' +
-										'.k-grid { border-top-width: 0; }' +
-										'.k-grid, .k-grid-content { height: auto !important; }' +
-										'.k-grid-content { overflow: visible !important; }' +
-										'div.k-grid table { table-layout: auto; width: 100% !important; }' +
-										'.k-grid .k-grid-header th { border-top: 1px solid; }' +
-										'.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
-										'</style><style type="text/css" media="print"> @page { size: portrait; margin:1mm; }'+
-												'.inv1 .main-color {' +
+						}
+				});
+		},
+		printGrid           : function() {
+				var gridElement = $('#grid'),
+						printableContent = '',
+						win = window.open('', '', 'width=990, height=900'),
+						doc = win.document.open();
+				var htmlStart =
+								'<!DOCTYPE html>' +
+								'<html>' +
+								'<head>' +
+								'<meta charset="utf-8" />' +
+								'<title></title>' +
+								'<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
+								'<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
+								'<link rel="stylesheet" href="<?php echo base_url(); ?>assets/responsive.css">' +
+								'<link href="<?php echo base_url(); ?>assets/invoice/invoice.css" rel="stylesheet" />'+
+								'<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
+								'<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
+								'<style>' +
+								'html { font: 11pt sans-serif; }' +
+								'.k-grid { border-top-width: 0; }' +
+								'.k-grid, .k-grid-content { height: auto !important; }' +
+								'.k-grid-content { overflow: visible !important; }' +
+								'div.k-grid table { table-layout: auto; width: 100% !important; }' +
+								'.k-grid .k-grid-header th { border-top: 1px solid; }' +
+								'.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
+								'</style><style type="text/css" media="print"> @page { size: portrait; margin:1mm; }'+
+										'.inv1 .main-color {' +
 
-														'-webkit-print-color-adjust:exact; ' +
-												'} ' +
-												'.table.table-borderless.table-condensed  tr th { background-color: #1E4E78!important;' +
-												'-webkit-print-color-adjust:exact; color:#fff!important;}' +
-												'.table.table-borderless.table-condensed  tr th * { color: #fff!important; -webkit-print-color-adjust:exact;}' +
-												'.inv1 .light-blue-td { ' +
-														'background-color: #c6d9f1!important;' +
-														'text-align: left;' +
-														'padding-left: 5px;' +
-														'-webkit-print-color-adjust:exact; ' +
-												'}' +
-												'.saleSummaryCustomer .table.table-borderless.table-condensed tr td { ' +
-														'background-color: #F2F2F2!important; -webkit-print-color-adjust:exact;' +
-												'}'+
-												'.saleSummaryCustomer .table.table-borderless.table-condensed tr:nth-child(2n+1) td { ' +
-														' background-color: #fff!important; -webkit-print-color-adjust:exact;' +
-												'}' +
-												'.journal_block1>.span2 *, .journal_block1>.span5 * {color: #fff!important;}' +
-												'.journal_block1>.span2:first-child { ' +
-														'background-color: #bbbbbb!important; -webkit-print-color-adjust:exact;' +
-												'}' +
-												'.journal_block1>.span5:last-child {' +
-														'background-color: #496cad!important; color: #fff!important; -webkit-print-color-adjust:exact; ' +
-												'}' +
-												'.journal_block1>.span5 {' +
-														'background-color: #5cc7dd!important; color: #fff!important; -webkit-print-color-adjust:exact;' +
-												'}' +
-												'.saleSummaryCustomer .table.table-borderless.table-condensed tfoot .bg-total td {' +
-														'background-color: #1C2633!important;' +
-														'color: #fff!important; ' +
-														'-webkit-print-color-adjust:exact;' +
-												'}' +
-												'</style>' +
-										'</head>' +
-										'<body><div class="saleSummaryCustomer" style="padding: 0 10px;">';
-						var htmlEnd =
-										'</div></body>' +
-										'</html>';
+												'-webkit-print-color-adjust:exact; ' +
+										'} ' +
+										'.table.table-borderless.table-condensed  tr th { background-color: #1E4E78!important;' +
+										'-webkit-print-color-adjust:exact; color:#fff!important;}' +
+										'.table.table-borderless.table-condensed  tr th * { color: #fff!important; -webkit-print-color-adjust:exact;}' +
+										'.inv1 .light-blue-td { ' +
+												'background-color: #c6d9f1!important;' +
+												'text-align: left;' +
+												'padding-left: 5px;' +
+												'-webkit-print-color-adjust:exact; ' +
+										'}' +
+										'.saleSummaryCustomer .table.table-borderless.table-condensed tr td { ' +
+												'background-color: #F2F2F2!important; -webkit-print-color-adjust:exact;' +
+										'}'+
+										'.saleSummaryCustomer .table.table-borderless.table-condensed tr:nth-child(2n+1) td { ' +
+												' background-color: #fff!important; -webkit-print-color-adjust:exact;' +
+										'}' +
+										'.journal_block1>.span2 *, .journal_block1>.span5 * {color: #fff!important;}' +
+										'.journal_block1>.span2:first-child { ' +
+												'background-color: #bbbbbb!important; -webkit-print-color-adjust:exact;' +
+										'}' +
+										'.journal_block1>.span5:last-child {' +
+												'background-color: #496cad!important; color: #fff!important; -webkit-print-color-adjust:exact; ' +
+										'}' +
+										'.journal_block1>.span5 {' +
+												'background-color: #5cc7dd!important; color: #fff!important; -webkit-print-color-adjust:exact;' +
+										'}' +
+										'.saleSummaryCustomer .table.table-borderless.table-condensed tfoot .bg-total td {' +
+												'background-color: #1C2633!important;' +
+												'color: #fff!important; ' +
+												'-webkit-print-color-adjust:exact;' +
+										'}' +
+										'</style>' +
+								'</head>' +
+								'<body><div class="saleSummaryCustomer" style="padding: 0 10px;">';
+				var htmlEnd =
+								'</div></body>' +
+								'</html>';
 
-						printableContent = $('#invFormContent').html();
-						doc.write(htmlStart + printableContent + htmlEnd);
-						doc.close();
-						setTimeout(function(){
-								win.print();
-								win.close();
-						},2000);
-				},
-				ExportExcel         : function(){
-						var workbook = new kendo.ooxml.Workbook({
-							sheets: [
-								{
-									columns: [
-										{ autoWidth: true },
-										{ autoWidth: true },
-										{ autoWidth: true },
-										{ autoWidth: true },
-										{ autoWidth: true },
-										{ autoWidth: true }
-									],
-									title: "Sale Summary Product",
-									rows: this.exArray
-								}
-							]
-						});
-						//save the file as Excel file with extension xlsx
-						kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "saleSummaryProduct.xlsx"});
-				}
+				printableContent = $('#invFormContent').html();
+				doc.write(htmlStart + printableContent + htmlEnd);
+				doc.close();
+				setTimeout(function(){
+						win.print();
+						win.close();
+				},2000);
+		},
+		ExportExcel         : function(){
+				var workbook = new kendo.ooxml.Workbook({
+					sheets: [
+						{
+							columns: [
+								{ autoWidth: true },
+								{ autoWidth: true },
+								{ autoWidth: true },
+								{ autoWidth: true },
+								{ autoWidth: true },
+								{ autoWidth: true }
+							],
+							title: "Sale Summary Product",
+							rows: this.exArray
+						}
+					]
+				});
+				//save the file as Excel file with extension xlsx
+				kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "saleSummaryProduct.xlsx"});
+		}
 	});
 	banhji.saleOrderDetailbyItem =  kendo.observable({
         lang                : langVM,
@@ -21515,314 +21515,509 @@
         }
     });
 	banhji.saleOrderDetailbyEmployee =  kendo.observable({
-			lang                : langVM,
-			dataSource          : dataStore(apiUrl + "sales/saleOrder_detail_employee"),
-			contactDS           : banhji.source.customerDS,
-			sortList            : banhji.source.sortList,
-			itemDS              : new kendo.data.DataSource({
-					transport: {
-							read    : {
-									url: apiUrl + "items",
-									type: "GET",
-									headers: banhji.header,
-									dataType: 'json'
-							},
-							parameterMap: function(options, operation) {
-									if(operation === 'read') {
-											return {
-													page: options.page,
-													limit: options.pageSize,
-													filter: options.filter,
-													sort: options.sort
-											};
-									} else {
-											return {models: kendo.stringify(options.models)};
-									}
-							}
-					},
-					schema  : {
-							model: {
-									id: 'id'
-							},
-							data: 'results',
-							total: 'count'
-					},
-					filter:[
-							{ field: "is_catalog <>", value: 1 },
-							{ field: "is_assembly <>", value: 1 },
-							{ field: "item_type_id", operator:"where_in", value: [1,4] }
-					],
-					sort:[
-							{ field:"item_type_id", dir:"asc" },
-							{ field:"number", dir:"asc" }
-					],
-					serverFiltering: true,
-					serverSorting: true,
-					serverPaging: true,
-					page:1,
-					pageSize: 100
-			}),
-			sorter              : "month",
-			sdate               : "",
-			edate               : "",
-			obj                 : { itemIds: [] },
-			company             : banhji.institute,
-			displayDate         : "",
-			totalAmount         : 0,
-			exArray             : [],
-			pageLoad            : function(){
-					this.search();
-			},
-			sorterChanges       : function(){
-					var today = new Date(),
-					sdate = "",
-					edate = "",
-					sorter = this.get("sorter");
+		lang                : langVM,
+		dataSource          : dataStore(apiUrl + "sales/saleOrder_detail_employee"),
+		contactDS           : banhji.source.customerDS,
+		sortList            : banhji.source.sortList,
+		itemDS              : new kendo.data.DataSource({
+				transport: {
+						read    : {
+								url: apiUrl + "items",
+								type: "GET",
+								headers: banhji.header,
+								dataType: 'json'
+						},
+						parameterMap: function(options, operation) {
+								if(operation === 'read') {
+										return {
+												page: options.page,
+												limit: options.pageSize,
+												filter: options.filter,
+												sort: options.sort
+										};
+								} else {
+										return {models: kendo.stringify(options.models)};
+								}
+						}
+				},
+				schema  : {
+						model: {
+								id: 'id'
+						},
+						data: 'results',
+						total: 'count'
+				},
+				filter:[
+						{ field: "is_catalog <>", value: 1 },
+						{ field: "is_assembly <>", value: 1 },
+						{ field: "item_type_id", operator:"where_in", value: [1,4] }
+				],
+				sort:[
+						{ field:"item_type_id", dir:"asc" },
+						{ field:"number", dir:"asc" }
+				],
+				serverFiltering: true,
+				serverSorting: true,
+				serverPaging: true,
+				page:1,
+				pageSize: 100
+		}),
+		sorter              : "month",
+		sdate               : "",
+		edate               : "",
+		obj                 : { itemIds: [] },
+		company             : banhji.institute,
+		displayDate         : "",
+		totalAmount         : 0,
+		exArray             : [],
+		pageLoad            : function(){
+				this.search();
+		},
+		sorterChanges       : function(){
+				var today = new Date(),
+				sdate = "",
+				edate = "",
+				sorter = this.get("sorter");
 
-					switch(sorter){
-							case "today":
-									this.set("sdate", today);
-									this.set("edate", "");
+				switch(sorter){
+						case "today":
+								this.set("sdate", today);
+								this.set("edate", "");
 
-									break;
-							case "week":
-									var first = today.getDate() - today.getDay(),
-									last = first + 6;
+								break;
+						case "week":
+								var first = today.getDate() - today.getDay(),
+								last = first + 6;
 
-									this.set("sdate", new Date(today.setDate(first)));
-									this.set("edate", new Date(today.setDate(last)));
+								this.set("sdate", new Date(today.setDate(first)));
+								this.set("edate", new Date(today.setDate(last)));
 
-									break;
-							case "month":
-									this.set("sdate", new Date(today.getFullYear(), today.getMonth(), 1));
-									this.set("edate", new Date(today.getFullYear(), today.getMonth() + 1, 0));
+								break;
+						case "month":
+								this.set("sdate", new Date(today.getFullYear(), today.getMonth(), 1));
+								this.set("edate", new Date(today.getFullYear(), today.getMonth() + 1, 0));
 
-									break;
-							case "year":
-									this.set("sdate", new Date(today.getFullYear(), 0, 1));
-									this.set("edate", new Date(today.getFullYear(), 11, 31));
+								break;
+						case "year":
+								this.set("sdate", new Date(today.getFullYear(), 0, 1));
+								this.set("edate", new Date(today.getFullYear(), 11, 31));
 
-									break;
-							default:
-									this.set("sdate", "");
-									this.set("edate", "");
-					}
-			},
-			search              : function(){
-					var self = this, para = [],
-							obj = this.get("obj"),
-							start = this.get("sdate"),
-							end = this.get("edate"),
-							displayDate = "";
+								break;
+						default:
+								this.set("sdate", "");
+								this.set("edate", "");
+				}
+		},
+		search              : function(){
+				var self = this, para = [],
+						obj = this.get("obj"),
+						start = this.get("sdate"),
+						end = this.get("edate"),
+						displayDate = "";
 
-				 //Customer
-					if(obj.itemIds.length>0){
-							var itemIds = [];
-							$.each(obj.itemIds, function(index, value){
-									itemIds.push(value);
-							});
-							para.push({ field:"item_id", operator:"where_in", value:itemIds });
-					}
+			 //Customer
+				if(obj.itemIds.length>0){
+						var itemIds = [];
+						$.each(obj.itemIds, function(index, value){
+								itemIds.push(value);
+						});
+						para.push({ field:"item_id", operator:"where_in", value:itemIds });
+				}
 
-					//Dates
-					if(start && end){
-							start = new Date(start);
-							end = new Date(end);
-							displayDate = "From " + kendo.toString(start, "dd-MM-yyyy") + " To " + kendo.toString(end, "dd-MM-yyyy");
-							end.setDate(end.getDate()+1);
+				//Dates
+				if(start && end){
+						start = new Date(start);
+						end = new Date(end);
+						displayDate = "From " + kendo.toString(start, "dd-MM-yyyy") + " To " + kendo.toString(end, "dd-MM-yyyy");
+						end.setDate(end.getDate()+1);
 
-							para.push({ field:"issued_date >=", value: kendo.toString(start, "yyyy-MM-dd") });
-							para.push({ field:"issued_date <", value: kendo.toString(end, "yyyy-MM-dd") });
-					}else if(start){
-							start = new Date(start);
-							displayDate = "On " + kendo.toString(start, "dd-MM-yyyy");
+						para.push({ field:"issued_date >=", value: kendo.toString(start, "yyyy-MM-dd") });
+						para.push({ field:"issued_date <", value: kendo.toString(end, "yyyy-MM-dd") });
+				}else if(start){
+						start = new Date(start);
+						displayDate = "On " + kendo.toString(start, "dd-MM-yyyy");
 
-							para.push({ field:"issued_date", value: kendo.toString(start, "yyyy-MM-dd") });
-					}else if(end){
-							end = new Date(end);
-							displayDate = "As Of " + kendo.toString(end, "dd-MM-yyyy");
-							end.setDate(end.getDate()+1);
+						para.push({ field:"issued_date", value: kendo.toString(start, "yyyy-MM-dd") });
+				}else if(end){
+						end = new Date(end);
+						displayDate = "As Of " + kendo.toString(end, "dd-MM-yyyy");
+						end.setDate(end.getDate()+1);
 
-							para.push({ field:"issued_date <", value: kendo.toString(end, "yyyy-MM-dd") });
-					}else{
+						para.push({ field:"issued_date <", value: kendo.toString(end, "yyyy-MM-dd") });
+				}else{
 
-					}
-					this.set("displayDate", displayDate);
+				}
+				this.set("displayDate", displayDate);
 
-					this.dataSource.query({
-							filter:para,
-							page: 1,
-							pageSize: 100
-					}).then(function(){
-							var view = self.dataSource.view();
+				this.dataSource.query({
+						filter:para,
+						page: 1,
+						pageSize: 100
+				}).then(function(){
+						var view = self.dataSource.view();
 
-							var amount = 0;
-							$.each(view, function(index, value){
-									$.each(value.line, function(ind, val){
-											amount += val.amount;
-									});
-							});
+						var amount = 0;
+						$.each(view, function(index, value){
+								$.each(value.line, function(ind, val){
+										amount += val.amount;
+								});
+						});
 
-							self.set("totalAmount", kendo.toString(amount, "c2", banhji.locale));
-					});
-					this.dataSource.bind("requestEnd", function(e){
-							if(e.type=="read"){
-									var response = e.response, balanceCal = 0, balance= 0;
-									self.exArray = [];
+						self.set("totalAmount", kendo.toString(amount, "c2", banhji.locale));
+				});
+				this.dataSource.bind("requestEnd", function(e){
+						if(e.type=="read"){
+								var response = e.response, balanceCal = 0, balance= 0;
+								self.exArray = [];
 
-									self.exArray.push({
-											cells: [
-													{ value: self.company.name, textAlign: "center", colSpan: 4}
-											]
-									});
-									self.exArray.push({
-											cells: [
-													{ value: "Sale Detail by Customer",bold: true, fontSize: 20, textAlign: "center", colSpan: 4 }
-											]
-									});
-									if(self.displayDate){
-											self.exArray.push({
-													cells: [
-															{ value: self.displayDate, textAlign: "center", colSpan: 4 }
-													]
-											});
-									}
-									self.exArray.push({
-											cells: [
-													{ value: "", colSpan: 4 }
-											]
-									});
-									self.exArray.push({
-											cells: [
-													{ value: "Type", background: "#496cad", color: "#ffffff" },
-													{ value: "Date", background: "#496cad", color: "#ffffff" },
-													{ value: "Reference", background: "#496cad", color: "#ffffff" },
-													{ value: "Amount", background: "#496cad", color: "#ffffff" },
-											]
-									});
-									for (var i = 0; i < response.results.length; i++){
-											self.exArray.push({
-													cells: [
-															{ value: response.results[i].name, bold: true, },
-															{ value: "" },
-															{ value: "" },
-															{ value: "" },
-													]
+								self.exArray.push({
+										cells: [
+												{ value: self.company.name, textAlign: "center", colSpan: 4}
+										]
+								});
+								self.exArray.push({
+										cells: [
+												{ value: "Sale Detail by Customer",bold: true, fontSize: 20, textAlign: "center", colSpan: 4 }
+										]
+								});
+								if(self.displayDate){
+										self.exArray.push({
+												cells: [
+														{ value: self.displayDate, textAlign: "center", colSpan: 4 }
+												]
+										});
+								}
+								self.exArray.push({
+										cells: [
+												{ value: "", colSpan: 4 }
+										]
+								});
+								self.exArray.push({
+										cells: [
+												{ value: "Type", background: "#496cad", color: "#ffffff" },
+												{ value: "Date", background: "#496cad", color: "#ffffff" },
+												{ value: "Reference", background: "#496cad", color: "#ffffff" },
+												{ value: "Amount", background: "#496cad", color: "#ffffff" },
+										]
+								});
+								for (var i = 0; i < response.results.length; i++){
+										self.exArray.push({
+												cells: [
+														{ value: response.results[i].name, bold: true, },
+														{ value: "" },
+														{ value: "" },
+														{ value: "" },
+												]
 
-											});
-											for(var j = 0; j < response.results[i].line.length; j++){
-													balance += response.results[i].line[j].amount;
-													self.exArray.push({
-															cells: [
-																	{ value: response.results[i].line[j].type },
-																	{ value: response.results[i].line[j].issued_date },
-																	{ value: response.results[i].line[j].number},
-																	{ value: response.results[i].line[j].amount },
-															]
-													});
-											}
-											self.exArray.push({
-													cells: [
-															{ value: "", colSpan: 4 }
-													]
-											});
-									}
-							}
-					});
-			},
-			printGrid           : function() {
-					var gridElement = $('#grid'),
-							printableContent = '',
-							win = window.open('', '', 'width=990, height=900'),
-							doc = win.document.open();
-					var htmlStart =
-									'<!DOCTYPE html>' +
-									'<html>' +
-									'<head>' +
-									'<meta charset="utf-8" />' +
-									'<title></title>' +
-									'<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
-									'<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
-									'<link rel="stylesheet" href="<?php echo base_url(); ?>assets/responsive.css">' +
-									'<link href="<?php echo base_url(); ?>assets/invoice/invoice.css" rel="stylesheet" />'+
-									'<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
-									'<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
-									'<style>' +
-									'html { font: 11pt sans-serif; }' +
-									'.k-grid { border-top-width: 0; }' +
-									'.k-grid, .k-grid-content { height: auto !important; }' +
-									'.k-grid-content { overflow: visible !important; }' +
-									'div.k-grid table { table-layout: auto; width: 100% !important; }' +
-									'.k-grid .k-grid-header th { border-top: 1px solid; }' +
-									'.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
-									'</style><style type="text/css" media="print"> @page { size: portrait; margin:1mm; }'+
-											'.inv1 .main-color {' +
+										});
+										for(var j = 0; j < response.results[i].line.length; j++){
+												balance += response.results[i].line[j].amount;
+												self.exArray.push({
+														cells: [
+																{ value: response.results[i].line[j].type },
+																{ value: response.results[i].line[j].issued_date },
+																{ value: response.results[i].line[j].number},
+																{ value: response.results[i].line[j].amount },
+														]
+												});
+										}
+										self.exArray.push({
+												cells: [
+														{ value: "", colSpan: 4 }
+												]
+										});
+								}
+						}
+				});
+		},
+		printGrid           : function() {
+				var gridElement = $('#grid'),
+						printableContent = '',
+						win = window.open('', '', 'width=990, height=900'),
+						doc = win.document.open();
+				var htmlStart =
+								'<!DOCTYPE html>' +
+								'<html>' +
+								'<head>' +
+								'<meta charset="utf-8" />' +
+								'<title></title>' +
+								'<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
+								'<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
+								'<link rel="stylesheet" href="<?php echo base_url(); ?>assets/responsive.css">' +
+								'<link href="<?php echo base_url(); ?>assets/invoice/invoice.css" rel="stylesheet" />'+
+								'<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
+								'<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
+								'<style>' +
+								'html { font: 11pt sans-serif; }' +
+								'.k-grid { border-top-width: 0; }' +
+								'.k-grid, .k-grid-content { height: auto !important; }' +
+								'.k-grid-content { overflow: visible !important; }' +
+								'div.k-grid table { table-layout: auto; width: 100% !important; }' +
+								'.k-grid .k-grid-header th { border-top: 1px solid; }' +
+								'.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
+								'</style><style type="text/css" media="print"> @page { size: portrait; margin:1mm; }'+
+										'.inv1 .main-color {' +
 
-													'-webkit-print-color-adjust:exact; ' +
-											'} ' +
-											'.table.table-borderless.table-condensed  tr th { background-color: #1E4E78!important;' +
-											'-webkit-print-color-adjust:exact; color:#fff!important;}' +
-											'.table.table-borderless.table-condensed  tr th * { color: #fff!important; -webkit-print-color-adjust:exact;}' +
-											'.inv1 .light-blue-td { ' +
-													'background-color: #c6d9f1!important;' +
-													'text-align: left;' +
-													'padding-left: 5px;' +
-													'-webkit-print-color-adjust:exact; ' +
-											'}' +
-											'.saleSummaryCustomer .table.table-borderless.table-condensed tr td { ' +
-													'background-color: #F2F2F2!important; -webkit-print-color-adjust:exact;' +
-											'}'+
-											'.saleSummaryCustomer .table.table-borderless.table-condensed tr:nth-child(2n+1) td { ' +
-													' background-color: #fff!important; -webkit-print-color-adjust:exact;' +
-											'}' +
-											'.journal_block1>.span2 *, .journal_block1>.span5 * {color: #fff!important;}' +
-											'.journal_block1>.span2:first-child { ' +
-													'background-color: #bbbbbb!important; -webkit-print-color-adjust:exact;' +
-											'}' +
-											'.journal_block1>.span5:last-child {' +
-													'background-color: #496cad!important; color: #fff!important; -webkit-print-color-adjust:exact; ' +
-											'}' +
-											'.journal_block1>.span5 {' +
-													'background-color: #5cc7dd!important; color: #fff!important; -webkit-print-color-adjust:exact;' +
-											'}' +
-											'.saleSummaryCustomer .table.table-borderless.table-condensed tfoot .bg-total td {' +
-													'background-color: #1C2633!important;' +
-													'color: #fff!important; ' +
-													'-webkit-print-color-adjust:exact;' +
-											'}' +
-											'</style>' +
-									'</head>' +
-									'<body><div class="saleSummaryCustomer" style="padding: 0 10px;">';
-					var htmlEnd =
-									'</div></body>' +
-									'</html>';
+												'-webkit-print-color-adjust:exact; ' +
+										'} ' +
+										'.table.table-borderless.table-condensed  tr th { background-color: #1E4E78!important;' +
+										'-webkit-print-color-adjust:exact; color:#fff!important;}' +
+										'.table.table-borderless.table-condensed  tr th * { color: #fff!important; -webkit-print-color-adjust:exact;}' +
+										'.inv1 .light-blue-td { ' +
+												'background-color: #c6d9f1!important;' +
+												'text-align: left;' +
+												'padding-left: 5px;' +
+												'-webkit-print-color-adjust:exact; ' +
+										'}' +
+										'.saleSummaryCustomer .table.table-borderless.table-condensed tr td { ' +
+												'background-color: #F2F2F2!important; -webkit-print-color-adjust:exact;' +
+										'}'+
+										'.saleSummaryCustomer .table.table-borderless.table-condensed tr:nth-child(2n+1) td { ' +
+												' background-color: #fff!important; -webkit-print-color-adjust:exact;' +
+										'}' +
+										'.journal_block1>.span2 *, .journal_block1>.span5 * {color: #fff!important;}' +
+										'.journal_block1>.span2:first-child { ' +
+												'background-color: #bbbbbb!important; -webkit-print-color-adjust:exact;' +
+										'}' +
+										'.journal_block1>.span5:last-child {' +
+												'background-color: #496cad!important; color: #fff!important; -webkit-print-color-adjust:exact; ' +
+										'}' +
+										'.journal_block1>.span5 {' +
+												'background-color: #5cc7dd!important; color: #fff!important; -webkit-print-color-adjust:exact;' +
+										'}' +
+										'.saleSummaryCustomer .table.table-borderless.table-condensed tfoot .bg-total td {' +
+												'background-color: #1C2633!important;' +
+												'color: #fff!important; ' +
+												'-webkit-print-color-adjust:exact;' +
+										'}' +
+										'</style>' +
+								'</head>' +
+								'<body><div class="saleSummaryCustomer" style="padding: 0 10px;">';
+				var htmlEnd =
+								'</div></body>' +
+								'</html>';
 
-					printableContent = $('#invFormContent').html();
-					doc.write(htmlStart + printableContent + htmlEnd);
-					doc.close();
-					setTimeout(function(){
-							win.print();
-							win.close();
-					},2000);
-			},
-			ExportExcel         : function(){
-					var workbook = new kendo.ooxml.Workbook({
-						sheets: [
-							{
-								columns: [
-									{ autoWidth: true },
-									{ autoWidth: true },
-									{ autoWidth: true },
-									{ autoWidth: true },
-								],
-								title: "Sale Detail by Customer",
-								rows: this.exArray
-							}
+				printableContent = $('#invFormContent').html();
+				doc.write(htmlStart + printableContent + htmlEnd);
+				doc.close();
+				setTimeout(function(){
+						win.print();
+						win.close();
+				},2000);
+		},
+		ExportExcel         : function(){
+				var workbook = new kendo.ooxml.Workbook({
+					sheets: [
+						{
+							columns: [
+								{ autoWidth: true },
+								{ autoWidth: true },
+								{ autoWidth: true },
+								{ autoWidth: true },
+							],
+							title: "Sale Detail by Customer",
+							rows: this.exArray
+						}
+					]
+				});
+				//save the file as Excel file with extension xlsx
+				kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "saleDetailCustomer.xlsx"});
+		}
+	});
+	banhji.receivableAgingSummarybyEmployee =  kendo.observable({
+		lang                : langVM,
+		dataSource          : dataStore(apiUrl + "sales/aging_summary_by_employee"),
+		contactDS           : banhji.source.customerDS,
+		obj                 : null,
+		company             : banhji.institute,
+		as_of               : new Date(),
+		displayDate         : "",
+		totalBalance        : 0,
+		exArray             : [],
+		pageLoad            : function(){
+			this.search();
+		},
+		search              : function(){
+			var self = this, para = [],
+				as_of = this.get("as_of"),
+				displayDate = "";
+
+			if(as_of){
+				as_of = new Date(as_of);
+				var displayDate = "As Of " + kendo.toString(as_of, "dd-MM-yyyy");
+				this.set("displayDate", displayDate);
+				as_of.setDate(as_of.getDate()+1);
+
+				para.push({ field:"issued_date <", value:kendo.toString(as_of, "yyyy-MM-dd") });
+			}
+
+			this.dataSource.query({
+				filter:para
+			}).then(function(){
+				var view = self.dataSource.view();
+
+				var balance = 0;
+				$.each(view, function(index, value){
+					balance += value.total;
+				});
+
+				self.set("totalBalance", kendo.toString(balance, "c2", banhji.locale));
+			});
+			this.dataSource.bind("requestEnd", function(e){
+				if(e.type=="read"){
+					var response = e.response;
+					self.exArray = [];
+
+					self.exArray.push({
+						cells: [
+							{ value: self.company.name, textAlign: "center", colSpan: 7}
 						]
 					});
-					//save the file as Excel file with extension xlsx
-					kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "saleDetailCustomer.xlsx"});
-			}
+					self.exArray.push({
+						cells: [
+							{ value: "Receivable Aging Summary",bold: true, fontSize: 20, textAlign: "center", colSpan: 7}
+						]
+					});
+					if(self.displayDate){
+						self.exArray.push({
+							cells: [
+								{ value: self.displayDate, textAlign: "center", colSpan: 7}
+							]
+						});
+					};
+					self.exArray.push({
+						cells: [
+							{ value: "", colSpan: 7}
+						]
+					});
+					self.exArray.push({
+						cells: [
+							{ value: "Name", background: "#496cad", color: "#ffffff" },
+							{ value: "Current", background: "#496cad", color: "#ffffff" },
+							{ value: "1-30", background: "#496cad", color: "#ffffff" },
+							{ value: "31-60", background: "#496cad", color: "#ffffff" },
+							{ value: "61-90", background: "#496cad", color: "#ffffff" },
+							{ value: "Over 90", background: "#496cad", color: "#ffffff" },
+							{ value: "Total", background: "#496cad", color: "#ffffff" },
+						]
+					});
+					for (var i = 0; i < response.results.length; i++){
+							self.exArray.push({
+								cells: [
+									{ value: response.results[i].name },
+									{ value: response.results[i].current },
+									{ value: response.results[i].in30 },
+									{ value: response.results[i].in60 },
+									{ value: response.results[i].in90 },
+									{ value: response.results[i].over90 },
+									{ value: kendo.parseFloat(response.results[i].total)},
+								]
+							});
+						self.exArray.push({
+							cells: [
+								{ value: "", colSpan: 7 }
+							]
+						});
+					}
+				}
+			});
+		},
+		printGrid           : function() {
+			var gridElement = $('#grid'),
+				printableContent = '',
+				win = window.open('', '', 'width=990, height=900'),
+				doc = win.document.open();
+			var htmlStart =
+					'<!DOCTYPE html>' +
+					'<html>' +
+					'<head>' +
+					'<meta charset="utf-8" />' +
+					'<title></title>' +
+					'<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
+					'<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
+					'<link rel="stylesheet" href="<?php echo base_url(); ?>assets/responsive.css">' +
+					'<link href="<?php echo base_url(); ?>assets/invoice/invoice.css" rel="stylesheet" />'+
+					'<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
+					'<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
+					'<style>' +
+					'html { font: 11pt sans-serif; }' +
+					'.k-grid { border-top-width: 0; }' +
+					'.k-grid, .k-grid-content { height: auto !important; }' +
+					'.k-grid-content { overflow: visible !important; }' +
+					'div.k-grid table { table-layout: auto; width: 100% !important; }' +
+					'.k-grid .k-grid-header th { border-top: 1px solid; }' +
+					'.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
+					'</style><style type="text/css" media="print"> @page { size: portrait; margin:1mm; }'+
+						'.inv1 .main-color {' +
+
+							'-webkit-print-color-adjust:exact; ' +
+						'} ' +
+						'.table.table-borderless.table-condensed  tr th { background-color: #1E4E78!important;' +
+						'-webkit-print-color-adjust:exact; color:#fff!important;}' +
+						'.table.table-borderless.table-condensed  tr th * { color: #fff!important; -webkit-print-color-adjust:exact;}' +
+						'.inv1 .light-blue-td { ' +
+							'background-color: #c6d9f1!important;' +
+							'text-align: left;' +
+							'padding-left: 5px;' +
+							'-webkit-print-color-adjust:exact; ' +
+						'}' +
+						'.saleSummaryCustomer .table.table-borderless.table-condensed tr td { ' +
+							'background-color: #F2F2F2!important; -webkit-print-color-adjust:exact;' +
+						'}'+
+						'.saleSummaryCustomer .table.table-borderless.table-condensed tr:nth-child(2n+1) td { ' +
+							' background-color: #fff!important; -webkit-print-color-adjust:exact;' +
+						'}' +
+						'.journal_block1>.span2 *, .journal_block1>.span5 * {color: #fff!important;}' +
+						'.journal_block1>.span2:first-child { ' +
+							'background-color: #bbbbbb!important; -webkit-print-color-adjust:exact;' +
+						'}' +
+						'.journal_block1>.span5:last-child {' +
+							'background-color: #496cad!important; color: #fff!important; -webkit-print-color-adjust:exact; ' +
+						'}' +
+						'.journal_block1>.span5 {' +
+							'background-color: #5cc7dd!important; color: #fff!important; -webkit-print-color-adjust:exact;' +
+						'}' +
+						'.saleSummaryCustomer .table.table-borderless.table-condensed tfoot .bg-total td {' +
+							'background-color: #1C2633!important;' +
+							'color: #fff!important; ' +
+							'-webkit-print-color-adjust:exact;' +
+						'}' +
+						'</style>' +
+					'</head>' +
+					'<body><div class="saleSummaryCustomer" style="padding: 0 10px;">';
+			var htmlEnd =
+					'</div></body>' +
+					'</html>';
+
+			printableContent = $('#invFormContent').html();
+			doc.write(htmlStart + printableContent + htmlEnd);
+			doc.close();
+			setTimeout(function(){
+				win.print();
+				win.close();
+			},2000);
+		},
+		ExportExcel         : function(){
+			var workbook = new kendo.ooxml.Workbook({
+			  sheets: [
+				{
+				  columns: [
+					{ autoWidth: true },
+					{ autoWidth: true },
+					{ autoWidth: true },
+					{ autoWidth: true },
+					{ autoWidth: true },
+					{ autoWidth: true },
+					{ autoWidth: true }
+				  ],
+				  title: "Receivable Aging Summary",
+				  rows: this.exArray
+				}
+			  ]
+			});
+			//save the file as Excel file with extension xlsx
+			kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "receivableAgingSummary.xlsx"});
+		}
 	});
 	//
 	banhji.invoiceForm =  kendo.observable({
@@ -22364,8 +22559,10 @@
 		saleOrderList : new kendo.Layout("#saleOrderList", {model: banhji.saleOrderList}),
 		saleOrderByJobEngagment : new kendo.Layout("#saleOrderByJobEngagment", {model: banhji.saleOrderByJobEngagment}),
 		saleOrderDetailbyCustomer: new kendo.Layout("#saleOrderDetailbyCustomer", {model: banhji.saleOrderDetailbyCustomer}),
-				saleOrderDetailbyItem: new kendo.Layout("#saleOrderDetailbyItem", {model: banhji.saleOrderDetailbyItem}),
-				saleOrderDetailbyEmployee: new kendo.Layout("#saleOrderDetailbyEmployee", {model: banhji.saleOrderDetailbyEmployee}),
+		saleOrderDetailbyItem: new kendo.Layout("#saleOrderDetailbyItem", {model: banhji.saleOrderDetailbyItem}),
+		saleOrderDetailbyEmployee: new kendo.Layout("#saleOrderDetailbyEmployee", {model: banhji.saleOrderDetailbyEmployee}),
+		receivableAgingSummarybyEmployee : new kendo.Layout("#receivableAgingSummarybyEmployee", {model: banhji.receivableAgingSummarybyEmployee}),
+
 
 		customerReportCenter: new kendo.Layout("#customerReportCenter", {model: banhji.customerReportCenter}),
 		recieptNoteRicemill: new kendo.Layout("#recieptNoteRicemill", {model: banhji.invoiceForm}),
@@ -24478,6 +24675,21 @@
 				banhji.pageLoaded["draft_list"] = true;
 
 				vm.sorterChanges();
+			}
+			vm.pageLoad();
+		}
+	});
+	banhji.router.route("/receivable_aging_summary_employee", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.receivableAgingSummarybyEmployee);
+
+			var vm = banhji.receivableAgingSummarybyEmployee;
+			banhji.userManagement.addMultiTask("Receivable Aging Summary","receivable_aging_summary_employee",null);
+
+			if(banhji.pageLoaded["receivable_aging_summary_employee"]==undefined){
+				banhji.pageLoaded["receivable_aging_summary_employee"] = true;
 			}
 			vm.pageLoad();
 		}
