@@ -1917,10 +1917,10 @@
 
 								            		<input data-role="dropdownlist"									                   
 										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
+										                   data-text-field="text"
+										                   data-value-field="value"
 										                   data-bind="value: obj.frequency,
-										                              source: frequencyList,
+										                              source: dateUnitList,
 										                              events: { change: frequencyChanges }"
 										                   style="width: 45%;" />
 								            	</td>
@@ -2521,10 +2521,10 @@
 
 								            		<input data-role="dropdownlist"									                   
 										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
+										                   data-text-field="text"
+										                   data-value-field="value"
 										                   data-bind="value: obj.frequency,
-										                              source: frequencyList,
+										                              source: dateUnitList,
 										                              events: { change: frequencyChanges }"
 										                   style="width: 45%;" />
 								            	</td>
@@ -3058,10 +3058,10 @@
 
 								            		<input data-role="dropdownlist"									                   
 										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
+										                   data-text-field="text"
+										                   data-value-field="value"
 										                   data-bind="value: obj.frequency,
-										                              source: frequencyList,
+										                              source: dateUnitList,
 										                              events: { change: frequencyChanges }"
 										                   style="width: 45%;" />
 								            	</td>
@@ -3714,10 +3714,10 @@
 
 								            		<input data-role="dropdownlist"									                   
 										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
+										                   data-text-field="text"
+										                   data-value-field="value"
 										                   data-bind="value: obj.frequency,
-										                              source: frequencyList,
+										                              source: dateUnitList,
 										                              events: { change: frequencyChanges }"
 										                   style="width: 45%;" />
 								            	</td>
@@ -4514,10 +4514,10 @@
 
 								            		<input data-role="dropdownlist"
 										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
+										                   data-text-field="text"
+										                   data-value-field="value"
 										                   data-bind="value: obj.frequency,
-										                              source: frequencyList,
+										                              source: dateUnitList,
 										                              events: { change: frequencyChanges }"
 										                   style="width: 45%;" />
 								            	</td>
@@ -4582,10 +4582,10 @@
 							            		<td>
 							            			<input data-role="dropdownlist"
 										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
+										                   data-text-field="text"
+										                   data-value-field="value"
 										                   data-bind="value: obj.frequency,
-										                              source: frequencyList,
+										                              source: dateUnitList,
 										                              events: { change: frequencyChanges }"
 										                   style="width: 100%;" />
 							            		</td>
@@ -5216,10 +5216,10 @@
 
 								            		<input data-role="dropdownlist"
 										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
+										                   data-text-field="text"
+										                   data-value-field="value"
 										                   data-bind="value: obj.frequency,
-										                              source: frequencyList,
+										                              source: dateUnitList,
 										                              events: { change: frequencyChanges }"
 										                   style="width: 45%;" />
 								            	</td>
@@ -9507,7 +9507,7 @@
 											<table class="table table-condensed">
 												<tr>
 									            	<td style="padding: 8px 0 0 0 !important; ">
-														<span data-bind="text: lang.lang.customers"></span>
+														<span>Sale Rep.</span>
 														<select data-role="multiselect"
 															   data-value-primitive="true"
 															   data-header-template="contact-header-tmpl"
@@ -9515,8 +9515,8 @@
 															   data-value-field="id"
 															   data-text-field="name"
 															   data-bind="value: obj.contactIds,
-															   			source: contactDS"
-															   data-placeholder="Select Customer.."
+															   			source: employeeDS"
+															   data-placeholder="Select Sale Rep.."
 															   style="width: 100%" /></select>
 													</td>
 													<td style="padding-top: 31px !important; float: left;">
@@ -9542,6 +9542,192 @@
 							</div>
 						</div>
 						<!-- // Tabs END -->
+					</div>
+
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="html: company.name"></h3>
+							<h2 data-bind="text: lang.lang.sale_detail_by_employee">Sale Detail by Employee</h2>
+							<p data-bind="text: displayDate"></p>
+						</div>
+
+						<div data-role="grid" class="costom-grid"
+					    	 data-column-menu="true"
+					    	 data-groupable="true"
+					    	 data-pageable="true"
+					    	 data-reorderable="true"
+					    	 data-scrollable="false"
+					    	 data-resizable="true"
+			                 data-columns="[
+			                 	{ 
+			                 		field: 'contacts', 
+			                 		title: 'CUSTOMER',
+			                 		groupFooterTemplate: 'TOTAL:' 
+			                 	},
+	                            { field: 'employees', title:'SALE REP.' },
+	                            { field: 'issued_date', title:'DATE', template: '#=kendo.toString(new Date(issued_date), banhji.dateFormat)#' },
+	                            { 
+	                            	field: 'number', 
+	                            	title:'NUMBER',
+	                            	template: kendo.template($('#saleOrderDetailbyEmployee-number-template').html())
+	                            },
+	                            { 
+	                            	field: 'status', 
+	                            	title:'STATUS', 
+	                            	template: kendo.template($('#saleOrderDetailbyEmployee-status-template').html()) 
+	                            },
+	                            { 
+	                            	field: 'amount', 
+	                            	title:'AMOUNT', 
+	                            	format: '{0:n}', 
+	                            	attributes: { style: 'text-align: right;' },
+	                            	footerAttributes: { style: 'text-align: right;' },
+	                            	aggregates: ['sum'], 
+	                            	groupFooterTemplate: '#=kendo.toString(sum, banhji.numberFormat)#' 
+	                            }                            
+	                         ]"
+	                         data-auto-bind="false"
+			                 data-bind="source: dataSource" ></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<br>
+	<br>
+</script>
+<script id="saleDetailByEmployee-template" type="text/x-kendo-template">
+	<td></td>
+		<tr style="font-weight: bold">
+		<td>#=name#</td>
+		<td></td>
+		<td></td>
+		<td></td>
+	</tr>
+	# var amount = 0;#
+	#for(var i= 0; i <line.length; i++) {#
+		# amount += line[i].amount;#
+		<tr>
+			<td style="padding-left: 20px !important;">
+				#=line[i].type#
+			</td>
+			<td style="padding-left: 20px !important;">
+				#=line[i].customer#
+			</td>
+			<td>#=kendo.toString(new Date(line[i].issued_date), "dd-MM-yyyy")#</td>
+			<td style="text-align: right;">
+				<a href="\#/#=line[i].type.toLowerCase()#/#=line[i].id#">#=line[i].number#</a>
+			</td>
+			<td style="text-align: right;">#=kendo.toString(line[i].amount, "c2", banhji.locale)#</td>
+		</tr>
+	#}#
+	<tr>
+    	<td style="font-weight: bold; color: black;" data-bind="text: lang.lang.print_export"></td>
+    	<td></td>
+    	<td></td>
+    	<td></td>
+    	<td class="right" style="font-weight: bold; border-top: 1px solid black !important; color: black;">
+    		#=kendo.toString(amount, "c2", banhji.locale)#
+    	</td>
+    </tr>
+    <tr>
+    	<td colspan="4">&nbsp;</td>
+    </tr>
+</script>
+<!-- <script id="saleDetailByEmployee" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content saleSummaryCustomer">
+			    	<span class="pull-right glyphicons no-js remove_2"
+						onclick="javascript:window.history.back()"><i></i></span>
+					<br>
+					<br>
+
+					<div class="row-fluid">
+					    
+						<div class="relativeWrap" data-toggle="source-code">
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+
+								
+								<div class="widget-head">
+									<ul>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>
+										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.filter"></span></a></li>
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
+									</ul>
+								</div>
+								
+								<div class="widget-body">
+									<div class="tab-content">
+
+								        
+								        <div class="tab-pane active" id="tab-1">
+
+											<input data-role="dropdownlist"
+												   class="sorter"
+										           data-value-primitive="true"
+										           data-text-field="text"
+										           data-value-field="value"
+										           data-bind="value: sorter,
+										                      source: sortList,
+										                      events: { change: sorterChanges }" />
+
+											<input data-role="datepicker"
+												   class="sdate"
+												   data-format="dd-MM-yyyy"
+										           data-bind="value: sdate,
+										           			  max: edate"
+										           placeholder="From ..." >
+
+										    <input data-role="datepicker"
+										    	   class="edate"
+										    	   data-format="dd-MM-yyyy"
+										           data-bind="value: edate,
+										                      min: sdate"
+										           placeholder="To ..." >
+
+										  	<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+
+							        	</div>
+
+								    	
+								        <div class="tab-pane" id="tab-2">
+											<table class="table table-condensed">
+												<tr>
+									            	<td style="padding: 8px 0 0 0 !important; ">
+														<span data-bind="text: lang.lang.customers"></span>
+														<select data-role="multiselect"
+															   data-value-primitive="true"
+															   data-header-template="contact-header-tmpl"
+															   data-item-template="contact-list-tmpl"
+															   data-value-field="id"
+															   data-text-field="name"
+															   data-bind="value: obj.contactIds,
+															   			source: contactDS"
+															   data-placeholder="Select Customer.."
+															   style="width: 100%" /></select>
+													</td>
+													<td style="padding-top: 31px !important; float: left;">
+										  				<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+													</td>
+												</tr>
+											</table>
+							        	</div>
+							        								        								        
+								        <div class="tab-pane" id="tab-3">
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
+								        	
+								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" style="width: 80px;">
+								        		<i class="fa fa-file-excel-o"></i>
+								        		Export to Excel
+								        	</span>
+							        	</div>
+								    </div>
+								</div>
+							</div>
+						</div>
+						
 					</div>
 
 					<div id="invFormContent">
@@ -9632,7 +9818,7 @@
     <tr>
     	<td colspan="4">&nbsp;</td>
     </tr>
-</script>
+</script> -->
 <script id="saleProductDetailByEmployee" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background">

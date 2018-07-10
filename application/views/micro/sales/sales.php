@@ -572,7 +572,7 @@
 					                },
 					                { 
 					                	title: langVM.lang.action,					                	
-					                	template: '<button data-bind=click:addRowFromPS;>USE</button>',
+					                	template: '<button data-bind=click:addRowFromPS>USE</button>',
 					                	attributes: { style: 'text-align: center;', class: 'hidden-sm-down'},
 								    	headerAttributes: { class: 'hidden-sm-down'}
 					                }
@@ -7595,4 +7595,4 @@
 		#=code# - #=country#
 	</span>
 </script>
-<!-- End --> 
+<!-- End -->

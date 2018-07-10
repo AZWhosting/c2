@@ -2986,11 +2986,19 @@
         //Prefixes
         prefixList                  : [],
         prefixDS                    : dataStore(apiUrl + "prefixes"),
+        dateUnitList               : [
+            { text: 'Day', value: 'Day' },
+            { text: 'Week', value: 'Week' },
+            { text: 'Month', value: 'Month' },
+            { text: 'Quarter', value: 'Quarter' },
+            { text: 'Annual', value: 'Annual' }
+        ],
         frequencyList               : [
-            { id: 'Daily', name: 'Day' },
-            { id: 'Weekly', name: 'Week' },
-            { id: 'Monthly', name: 'Month' },
-            { id: 'Annually', name: 'Annual' }
+            { id: 'Daily', name: 'Daily' },
+            { id: 'Weekly', name: 'Weekly' },
+            { id: 'Monthly', name: 'Monthly' },
+            { id: 'Quarterly', name: 'Quarterly' },
+            { id: 'Annually', name: 'Annually' }
         ],
         monthOptionList             : [
             { id: 'Day', name: 'Day' },
@@ -4725,7 +4733,7 @@
             {id: 'Transfer', name: 'Transfer'}
         ],
         confirmMessage      : banhji.source.confirmMessage,
-        frequencyList       : banhji.source.frequencyList,
+        dateUnitList       : banhji.source.dateUnitList,
         monthOptionList     : banhji.source.monthOptionList,
         monthList           : banhji.source.monthList,
         weekDayList         : banhji.source.weekDayList,
@@ -5501,7 +5509,7 @@
         }),
         amtDueColor         : banhji.source.amtDueColor,
         confirmMessage      : banhji.source.confirmMessage,
-        frequencyList       : banhji.source.frequencyList,
+        dateUnitList       : banhji.source.dateUnitList,
         monthOptionList     : banhji.source.monthOptionList,
         monthList           : banhji.source.monthList,
         weekDayList         : banhji.source.weekDayList,
@@ -6236,7 +6244,7 @@
         attachmentDS        : dataStore(apiUrl + "attachments"),
         amtDueColor         : banhji.source.amtDueColor,
         confirmMessage      : banhji.source.confirmMessage,
-        frequencyList       : banhji.source.frequencyList,
+        dateUnitList       : banhji.source.dateUnitList,
         monthOptionList     : banhji.source.monthOptionList,
         monthList           : banhji.source.monthList,
         weekDayList         : banhji.source.weekDayList,
@@ -7190,7 +7198,7 @@
         jobDS               : banhji.source.jobList,
         accountDS           : banhji.source.accountList,
         confirmMessage      : banhji.source.confirmMessage,
-        frequencyList       : banhji.source.frequencyList,
+        dateUnitList       : banhji.source.dateUnitList,
         monthOptionList     : banhji.source.monthOptionList,
         monthList           : banhji.source.monthList,
         weekDayList         : banhji.source.weekDayList,

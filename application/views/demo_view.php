@@ -2242,10 +2242,10 @@
 
 								            		<input data-role="dropdownlist"
 										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
+										                   data-text-field="text"
+										                   data-value-field="value"
 										                   data-bind="value: obj.frequency,
-										                              source: frequencyList,
+										                              source: dateUnitList,
 										                              events: { change: frequencyChanges }"
 										                   style="width: 45%;" />
 								            	</td>
@@ -2921,10 +2921,10 @@
 
 								            		<input data-role="dropdownlist"
 										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
+										                   data-text-field="text"
+										                   data-value-field="value"
 										                   data-bind="value: obj.frequency,
-										                              source: frequencyList,
+										                              source: dateUnitList,
 										                              events: { change: frequencyChanges }"
 										                   style="width: 45%;" />
 								            	</td>
@@ -3561,10 +3561,10 @@
 
 								            		<input data-role="dropdownlist"
 										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
+										                   data-text-field="text"
+										                   data-value-field="value"
 										                   data-bind="value: obj.frequency,
-										                              source: frequencyList,
+										                              source: dateUnitList,
 										                              events: { change: frequencyChanges }"
 										                   style="width: 45%;" />
 								            	</td>
@@ -4218,10 +4218,10 @@
 
 								            		<input data-role="dropdownlist"
 										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
+										                   data-text-field="text"
+										                   data-value-field="value"
 										                   data-bind="value: obj.frequency,
-										                              source: frequencyList,
+										                              source: dateUnitList,
 										                              events: { change: frequencyChanges }"
 										                   style="width: 45%;" />
 								            	</td>
@@ -5018,10 +5018,10 @@
 
 								            		<input data-role="dropdownlist"
 										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
+										                   data-text-field="text"
+										                   data-value-field="value"
 										                   data-bind="value: obj.frequency,
-										                              source: frequencyList,
+										                              source: dateUnitList,
 										                              events: { change: frequencyChanges }"
 										                   style="width: 45%;" />
 								            	</td>
@@ -5108,10 +5108,10 @@
 							            		<td>
 							            			<input data-role="dropdownlist"
 										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
+										                   data-text-field="text"
+										                   data-value-field="value"
 										                   data-bind="value: obj.frequency,
-										                              source: frequencyList,
+										                              source: dateUnitList,
 										                              events: { change: frequencyChanges }"
 										                   style="width: 100%;" />
 							            		</td>
@@ -6456,10 +6456,10 @@
 
 								            		<input data-role="dropdownlist"
 										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
+										                   data-text-field="text"
+										                   data-value-field="value"
 										                   data-bind="value: obj.frequency,
-										                              source: frequencyList,
+										                              source: dateUnitList,
 										                              events: { change: frequencyChanges }"
 										                   style="width: 45%;" />
 								            	</td>
@@ -14396,6 +14396,7 @@
 	                            { 
 	                            	field: 'qty', 
 	                            	title:'QTY',
+	                            	
 	                            },
 	                            { 
 	                            	field: 'price', 
@@ -15668,10 +15669,10 @@
 
 									            		<input data-role="dropdownlist"
 											                   data-value-primitive="true"
-											                   data-text-field="name"
-											                   data-value-field="id"
+											                   data-text-field="text"
+										                   	   data-value-field="value"
 											                   data-bind="value: objRecurring.frequency,
-											                              source: frequencyList,
+											                              source: dateUnitList,
 											                              events: { change: frequencyChanges }"
 											                   style="width: 45%;" />
 									            	</td>
@@ -16205,10 +16206,10 @@
 										<td>
 											<input data-role="dropdownlist"
 								                   data-value-primitive="true"
-								                   data-text-field="name"
-								                   data-value-field="id"
+								                   data-text-field="text"
+										           data-value-field="value"
 								                   data-bind="value: frequency,
-								                              source: frequencyList"
+								                              source: dateUnitList"
 								                   data-option-label="Select Frequency..." style="width: 100%;" />
 										</td>
 									</tr>
@@ -18491,10 +18492,10 @@
 
 								            		<input data-role="dropdownlist"
 										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
+										                   data-text-field="text"
+										                   data-value-field="value"
 										                   data-bind="value: obj.frequency,
-										                              source: frequencyList,
+										                              source: dateUnitList,
 										                              events: { change: frequencyChanges }"
 										                   style="width: 45%;" />
 								            	</td>
@@ -19125,10 +19126,10 @@
 
 							            		<input data-role="dropdownlist"
 									                   data-value-primitive="true"
-									                   data-text-field="name"
-									                   data-value-field="id"
+									                   data-text-field="text"
+										               data-value-field="value"
 									                   data-bind="value: obj.frequency,
-									                              source: frequencyList,
+									                              source: dateUnitList,
 									                              events: { change: frequencyChanges }"
 									                   style="width: 45%;" />
 							            	</td>
@@ -19659,10 +19660,10 @@
 
 								            		<input data-role="dropdownlist"
 										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
+										                   data-text-field="text"
+										                   data-value-field="value"
 										                   data-bind="value: obj.frequency,
-										                              source: frequencyList,
+										                              source: dateUnitList,
 										                              events: { change: frequencyChanges }"
 										                   style="width: 45%;" />
 								            	</td>
@@ -20325,10 +20326,10 @@
 
 								            		<input data-role="dropdownlist"
 										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
+										                   data-text-field="text"
+										                   data-value-field="value"
 										                   data-bind="value: obj.frequency,
-										                              source: frequencyList,
+										                              source: dateUnitList,
 										                              events: { change: frequencyChanges }"
 										                   style="width: 45%;" />
 								            	</td>
@@ -29395,10 +29396,10 @@
 
 								            		<input data-role="dropdownlist"
 										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
+										                   data-text-field="text"
+										                   data-value-field="value"
 										                   data-bind="value: obj.frequency,
-										                              source: frequencyList,
+										                              source: dateUnitList,
 										                              events: { change: frequencyChanges }"
 										                   style="width: 45%;" />
 								            	</td>
@@ -30048,10 +30049,10 @@
 
 								            		<input data-role="dropdownlist"
 										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
+										                   data-text-field="text"
+										                   data-value-field="value"
 										                   data-bind="value: obj.frequency,
-										                              source: frequencyList,
+										                              source: dateUnitList,
 										                              events: { change: frequencyChanges }"
 										                   style="width: 45%;" />
 								            	</td>
@@ -30524,10 +30525,10 @@
 
 								            		<input data-role="dropdownlist"
 										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
+										                   data-text-field="text"
+										                   data-value-field="value"
 										                   data-bind="value: obj.frequency,
-										                              source: frequencyList,
+										                              source: dateUnitList,
 										                              events: { change: frequencyChanges }"
 										                   style="width: 45%;" />
 								            	</td>
@@ -35918,10 +35919,10 @@
 
 								            		<input data-role="dropdownlist"
 										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
+										                   data-text-field="text"
+										                   data-value-field="value"
 										                   data-bind="value: obj.frequency,
-										                              source: frequencyList,
+										                              source: dateUnitList,
 										                              events: { change: frequencyChanges }"
 										                   style="width: 45%;" />
 								            	</td>
@@ -36376,10 +36377,10 @@
 
 								            		<input data-role="dropdownlist"
 										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
+										                   data-text-field="text"
+										                   data-value-field="value"
 										                   data-bind="value: obj.frequency,
-										                              source: frequencyList,
+										                              source: dateUnitList,
 										                              events: { change: frequencyChanges }"
 										                   style="width: 45%;" />
 								            	</td>
@@ -36965,10 +36966,10 @@
 
 							            		<input data-role="dropdownlist"
 									                   data-value-primitive="true"
-									                   data-text-field="name"
-									                   data-value-field="id"
+									                   data-text-field="text"
+										               data-value-field="value"
 									                   data-bind="value: obj.frequency,
-									                              source: frequencyList,
+									                              source: dateUnitList,
 									                              events: { change: frequencyChanges }"
 									                   style="width: 45%;" />
 							            	</td>
@@ -37506,10 +37507,10 @@
 
 								            		<input data-role="dropdownlist"
 										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
+										                   data-text-field="text"
+										                   data-value-field="value"
 										                   data-bind="value: obj.frequency,
-										                              source: frequencyList,
+										                              source: dateUnitList,
 										                              events: { change: frequencyChanges }"
 										                   style="width: 45%;" />
 								            	</td>
@@ -49453,10 +49454,10 @@
 
 								            		<input data-role="dropdownlist"
 										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
+										                   data-text-field="text"
+										                   data-value-field="value"
 										                   data-bind="value: obj.frequency,
-										                              source: frequencyList,
+										                              source: dateUnitList,
 										                              events: { change: frequencyChanges }"
 										                   style="width: 45%;" />
 								            	</td>
@@ -60626,10 +60627,10 @@
 
 							            		<input data-role="dropdownlist"
 									                   data-value-primitive="true"
-									                   data-text-field="name"
-									                   data-value-field="id"
+									                   data-text-field="text"
+										               data-value-field="value"
 									                   data-bind="value: obj.frequency,
-									                              source: frequencyList,
+									                              source: dateUnitList,
 									                              events: { change: frequencyChanges }"
 									                   style="width: 45%;" />
 							            	</td>
@@ -61058,10 +61059,10 @@
 
 								            		<input data-role="dropdownlist"
 										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
+										                   data-text-field="text"
+										                   data-value-field="value"
 										                   data-bind="value: obj.frequency,
-										                              source: frequencyList,
+										                              source: dateUnitList,
 										                              events: { change: frequencyChanges }"
 										                   style="width: 45%;" />
 								            	</td>

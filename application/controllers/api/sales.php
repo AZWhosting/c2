@@ -3440,7 +3440,7 @@ class Sales extends REST_Controller {
 						"item"			=> $value->item_name,
 						"issued_date" 	=> $value->transaction_issued_date,
 						"status" 		=> $value->transaction_status,
-						"qty"			=> $value->quantity,
+						"qty"			=> floatval ($value->quantity),
 						"price"			=> floatval($value->price),
 						"amount" 		=> $value->quantity * floatval($value->price),
 						"employee" 		=> $objList[$value->transaction_employee_id]["employee"],
@@ -3460,7 +3460,7 @@ class Sales extends REST_Controller {
 						"issued_date" 	=> $value->transaction_issued_date,
 						"item"			=> $value->item_name,
 						"status" 		=> $value->transaction_status,
-						"qty"			=> $value->quantity,
+						"qty"			=> floatval ($value->quantity),
 						"price"			=> floatval($value->price),
 						"amount" 		=> $value->quantity * floatval($value->price),
 						"employee" 		=> $objList[$value->transaction_employee_id]["employee"]

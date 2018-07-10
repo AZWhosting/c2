@@ -15840,7 +15840,7 @@
 	
 	
 	# balance = old_ballance +old_amount + old_maintenance + old_exemption - old_cash_receipt;#
-	# subTotal = amount + balance + maintenance + exemption;#
+	# subTotal = amount + balance + maintenance - exemption;#
 	# total = (amount + balance + maintenance + exemption) - cash_receipt;#
 	<tr>
 		

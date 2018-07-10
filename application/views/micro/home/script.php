@@ -2146,11 +2146,19 @@
         //Prefixes
         prefixList                  : [],
         prefixDS                    : dataStore(apiUrl + "prefixes"),
+        dateUnitList               : [
+            { text: 'Day', value: 'Day' },
+            { text: 'Week', value: 'Week' },
+            { text: 'Month', value: 'Month' },
+            { text: 'Quarter', value: 'Quarter' },
+            { text: 'Annual', value: 'Annual' }
+        ],
         frequencyList               : [
-            { id: 'Daily', name: 'Day' },
-            { id: 'Weekly', name: 'Week' },
-            { id: 'Monthly', name: 'Month' },
-            { id: 'Annually', name: 'Annual' }
+            { id: 'Daily', name: 'Daily' },
+            { id: 'Weekly', name: 'Weekly' },
+            { id: 'Monthly', name: 'Monthly' },
+            { id: 'Quarterly', name: 'Quarterly' },
+            { id: 'Annually', name: 'Annually' }
         ],
         monthOptionList             : [
             { id: 'Day', name: 'Day' },
