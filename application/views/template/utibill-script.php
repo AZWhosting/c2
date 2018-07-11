@@ -20135,45 +20135,45 @@
                             },
                         ]
                     });
-                    for (var i = 0; i < response.results.length; i++) {
-                        balance = response.results[i].old_ballance + response.results[i].old_amount + response.results[i].old_maintenance + response.results[i].old_exemption - response.results[i].old_cash_receipt;
-                        subTotal = response.results[i].amount + response.results[i].balance + response.results[i].maintenance + response.results[i].exemption;
-                        total = (response.results[i].amount + response.results[i].balance + response.results[i].maintenance + response.results[i].exemption) - response.results[i].cash_receipt;
-                        self.exArray.push({
-                            cells: [{
-                                    value: response.results[i].name
-                                },
-                                {
-                                    value: response.results[i].customerActive
-                                },
-                                {
-                                    value: response.results[i].totalUsage
-                                },
-                                {
-                                    value: response.results[i].amount
-                                },
-                                {
-                                    value: response.results[i].maintenance
-                                },
-                                {
-                                    value: response.results[i].exemption
-                                },
-                                {
-                                    value: balance
-                                },
-                                {
-                                    value: subTotal
-                                },
-                                {
-                                    value: response.results[i].cash_receipt
-                                },
-                                {
-                                    value: total
-                                },
-                            ]
-                        });
+                    // for (var i = 0; i < response.results.length; i++) {
+                    //     balance = response.results[i].old_ballance + response.results[i].old_amount + response.results[i].old_maintenance + response.results[i].old_exemption - response.results[i].old_cash_receipt;
+                    //     subTotal = response.results[i].amount + response.results[i].balance + response.results[i].maintenance + response.results[i].exemption;
+                    //     total = (response.results[i].amount + response.results[i].balance + response.results[i].maintenance + response.results[i].exemption) - response.results[i].cash_receipt;
+                    //     self.exArray.push({
+                    //         cells: [{
+                    //                 value: response.results[i].name
+                    //             },
+                    //             {
+                    //                 value: response.results[i].customerActive
+                    //             },
+                    //             {
+                    //                 value: response.results[i].totalUsage
+                    //             },
+                    //             {
+                    //                 value: response.results[i].amount
+                    //             },
+                    //             {
+                    //                 value: response.results[i].maintenance
+                    //             },
+                    //             {
+                    //                 value: response.results[i].exemption
+                    //             },
+                    //             {
+                    //                 value: balance
+                    //             },
+                    //             {
+                    //                 value: subTotal
+                    //             },
+                    //             {
+                    //                 value: response.results[i].cash_receipt
+                    //             },
+                    //             {
+                    //                 value: total
+                    //             },
+                    //         ]
+                    //     });
                         
-                    }
+                    // }
 
                 }
 
@@ -20277,7 +20277,7 @@
             var para = [];
             var monthPara = [];
             var monthOf = new Date(monthOfSearch);
-                monthOf.setDate(1);
+                 monthOf.setDate(+35);
                 monthOf = kendo.toString(monthOf, "yyyy-MM-dd");
 
                 var monthL = new Date(monthOfSearch);
@@ -20428,6 +20428,45 @@
             }, 2000);
         },
         ExportExcel: function() {
+            var self = this;
+            $.each(this.dataSource.data(), function(i,v){
+                var balance = v.old_ballance + v.old_amount + v.old_maintenance + v.old_exemption - v.old_cash_receipt;
+                var subTotal = v.amount + balance + v.maintenance + v.exemption;
+                var total = subTotal - v.cash_receipt;
+                    self.exArray.push({
+                        cells: [{
+                                value: v.name
+                            },
+                            {
+                                value: v.customerActive
+                            },
+                            {
+                                value: v.totalUsage
+                            },
+                            {
+                                value: v.amount
+                            },
+                            {
+                                value: v.maintenance
+                            },
+                            {
+                                value: v.exemption
+                            },
+                            {
+                                value: balance
+                            },
+                            {
+                                value: subTotal
+                            },
+                            {
+                                value: v.cash_receipt
+                            },
+                            {
+                                value: total
+                            },
+                        ]
+                    });
+            });
             var workbook = new kendo.ooxml.Workbook({
                 sheets: [{
                     columns: [{
