@@ -12104,10 +12104,10 @@
 							        	<!--PRINT/EXPORT  -->
 								        <div class="tab-pane" id="tab-3">
 								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
-								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
+								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
 								        		<i class="fa fa-file-pdf-o"></i>
 								        		Print as PDF
-								        	</span> -->
+								        	</span>
 								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" style="width: 80px;">
 								        		<i class="fa fa-file-excel-o"></i>
 								        		Export to Excel
@@ -12119,6 +12119,7 @@
 						</div>
 						<!-- // Tabs END -->
 					</div>
+
 					<div id="invFormContent">
 						<div class="block-title">
 							<h3 data-bind="html: company.name"></h3>
@@ -12126,68 +12127,70 @@
 							<p data-bind="text: displayDate"></p>
 						</div>
 
-						<div class="row">
-							<div class="span3" style="padding-right: 0;">
-								<div class="total-customer">
-									<p data-bind="text: lang.lang.number_of_customer"></p>
-									<span data-format="n0" data-bind="text: dataSource.total"></span>
-								</div>
-							</div>
-							<div class="span9">
-								<div class="total-customer">
-									<p data-bind="text: lang.lang.total_customer_balance"></p>
-									<span data-bind="text: totalBalance"></span>
-								</div>
-							</div>
-						</div>
+						<div data-role="grid" class="costom-grid"
+					    	 data-column-menu="true"
+					    	 data-groupable="true"
+					    	 data-pageable="true"
+					    	 data-reorderable="true"
+					    	 data-scrollable="false"
+					    	 data-resizable="true"
+			                 data-columns="[
+			                 	{ 
+			                 		field: 'employees', 
+			                 		title: 'EMPLOYEE',
+			                 		groupFooterTemplate: 'TOTAL:' 
+			                 	},
+	                            { field: 'nameCustomer', title:'CUSTOMER' },
+	                            { 
+	                            	field: 'current', 
+	                            	title:'CURRENT', 
+	                            	format: '{0:n}', 
+	                            	attributes: { style: 'text-align: right;' },
+	                            },
+	                            { 
+	                            	field: 'in30', 
+	                            	title:'1-30', 
+	                            	format: '{0:n}', 
+	                            	attributes: { style: 'text-align: right;' },
+	                            },
+	                            { 
+	                            	field: 'in60', 
+	                            	title:'31-60', 
+	                            	format: '{0:n}',  
+	                            	attributes: { style: 'text-align: right;' },
+	                            },
+	                            { 
+	                            	field: 'in90', 
+	                            	title:'61-90', 
+	                            	format: '{0:n}',  
+	                            	attributes: { style: 'text-align: right;' },
+	                            },
+	                            { 
+	                            	field: 'over90', 
+	                            	title:'90', 
+	                            	format: '{0:n}', 
+	                            	attributes: { style: 'text-align: right;' },
+	                            },
+	                            { 
+	                            	field: 'total', 
+	                            	title:'TOTAL', 
+	                            	format: '{0:n}',  
+	                            	format: '{0:n}', 
+	                            	attributes: { style: 'text-align: right;' },
+	                            	footerAttributes: { style: 'text-align: right;' },
+	                            	aggregates: ['sum'], 
+	                            	groupFooterTemplate: '#=kendo.toString(sum, banhji.numberFormat)#'
+	                            },
+	                                             
+	                         ]"
+	                         data-auto-bind="false"
+			                 data-bind="source: dataSource" ></div>
 
-						<table class="table table-borderless table-condensed ">
-							<thead>
-								<tr>
-									<th data-bind="text: lang.lang.employee"></th>
-									<th data-bind="text: lang.lang.name"></th>
-									<th style="text-align: right;" data-bind="text: lang.lang.current"></th>
-									<th style="text-align: right;"><span>1-30</span></th>
-									<th style="text-align: right;"><span>31-60</span></th>
-									<th style="text-align: right;"><span>61-90</span></th>
-									<th style="text-align: right;"><span data-bind="text: lang.lang.over"></span> 90</th>
-									<th style="text-align: right;" data-bind="text: lang.lang.total"></th>
-								</tr>
-							</thead>
-							<tbody data-role="listview"
-									data-auto-bind="false"
-								 	data-bind="source: dataSource"
-								 	data-template="receivableAgingSummarybyEmployee-template"
-							></tbody>
-						</table>
-						<div id="pager" class="k-pager-wrap"
-			            		 data-role="pager"
-						    	 data-auto-bind="false"
-					             data-bind="source: dataSource"></div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-</script>
-<script id="receivableAgingSummarybyEmployee-template" type="text/x-kendo-template" >
-	<tr style="font-weight: bold">
-		<td colspan="8">#=name#</td>
-	</tr>
-	#var totalAmount = 0;#
-	#for(var i= 0; i <line.length; i++) {#
-		<tr>
-			<td></td>
-			<td>#=line[i].nameCustomer#</td>
-			<td style="text-align: right;">#=kendo.toString(line[i].current, "c2", banhji.locale)#</td>
-			<td style="text-align: right;">#=kendo.toString(line[i].in30, "c2", banhji.locale)#</td>
-			<td style="text-align: right;">#=kendo.toString(line[i].in60, "c2", banhji.locale)#</td>
-			<td style="text-align: right;">#=kendo.toString(line[i].in90, "c2", banhji.locale)#</td>
-			<td style="text-align: right;">#=kendo.toString(line[i].over90, "c2", banhji.locale)#</td>
-			<td style="text-align: right;">#=kendo.toString(line[i].total, "c2", banhji.locale)#</td>
-		</tr>
-
-	#}#
 </script>
 <script id="receivableAgingSummary" type="text/x-kendo-template">
 	<div id="slide-form">
@@ -14396,7 +14399,11 @@
 	                            { 
 	                            	field: 'qty', 
 	                            	title:'QTY',
-	                            	
+	                            	format: '{0:n}', 
+	                            	attributes: { style: 'text-align: right;' },
+	                            	footerAttributes: { style: 'text-align: right;' },
+	                            	aggregates: ['sum'], 
+	                            	groupFooterTemplate: '#=kendo.toString(sum, banhji.numberFormat)#'
 	                            },
 	                            { 
 	                            	field: 'price', 
@@ -22561,7 +22568,7 @@
 									<h3><a href="#/open_purchase_order" data-bind="text: lang.lang.open_purchase_order"></a></h3>
 								</td>
 								<td style="vertical-align: top;">
-									<h3><a href="#/draft_list" data-bind="text: lang.lang.draft_list" style="text-transform: capitalize;">Draft List</a></h3>
+									<h3><a href="#/purchase_order_byItem" style="text-transform: capitalize;">Purchase Order by Item</a></h3>
 								</td>
 							</tr>
 
@@ -22570,9 +22577,26 @@
 									<p data-bind="text: lang.lang.lists_all_the_open_purchase_order_grouped_by_suppliers"></p>
 								</td>
 								<td style="vertical-align: top;">
+									<p data-bind="text: lang.lang.lists_all_the_open_purchase_order_grouped_by_suppliers"></p>
+								</td>
+							</tr>
+							<tr>
+								<td style="vertical-align: top;">
+									<h3><a href="#/draft_list" data-bind="text: lang.lang.draft_list" style="text-transform: capitalize;">Draft List</a></h3>
+								</td>
+								<td style="vertical-align: top;">
+									
+								</td>
+							</tr>
+
+							<tr>
+								<td style="vertical-align: top;">
 									<p  data-bind="text: lang.lang.cash_sale_detail_product_summarize">
 										Lists individual cash sale transactions by date for each product/service within a period of time.
 									</p>
+								</td>
+								<td style="vertical-align: top;">
+									
 								</td>
 							</tr>
 						</table>
@@ -25052,6 +25076,158 @@
 	<tr>
     	<td colspan="6">&nbsp;</td>
     </tr>
+</script>
+<script id="purchaseOrderbyItem" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content saleSummaryCustomer">
+			    	<span class="pull-right glyphicons no-js remove_2"
+						onclick="javascript:window.history.back()"><i></i></span>
+					<br>
+					<br>
+
+					<div class="row-fluid">
+					    <!-- Tabs -->
+						<div class="relativeWrap" data-toggle="source-code">
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+
+								<!-- Tabs Heading -->
+								<div class="widget-head">
+									<ul>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>
+										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.filter"></span></a></li>
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
+									</ul>
+								</div>
+								<!-- // Tabs Heading END -->
+								<div class="widget-body">
+									<div class="tab-content">
+
+								        <!-- Date -->
+								        <div class="tab-pane active" id="tab-1">
+
+											<input data-role="dropdownlist"
+												   class="sorter"
+										           data-value-primitive="true"
+										           data-text-field="text"
+										           data-value-field="value"
+										           data-bind="value: sorter,
+										                      source: sortList,
+										                      events: { change: sorterChanges }" />
+
+											<input data-role="datepicker"
+												   class="sdate"
+												   data-format="dd-MM-yyyy"
+										           data-bind="value: sdate,
+										           			  max: edate"
+										           placeholder="From ..." >
+
+										    <input data-role="datepicker"
+										    	   class="edate"
+										    	   data-format="dd-MM-yyyy"
+										           data-bind="value: edate,
+										                      min: sdate"
+										           placeholder="To ..." >
+
+										  	<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+
+							        	</div>
+
+								    	<!-- Filter -->
+								        <div class="tab-pane" id="tab-2">
+											<table class="table table-condensed">
+												<tr>
+													<td style="padding: 8px 0 0 0 !important;">
+														<span>Sale Rep.</span>
+														<select data-role="multiselect"
+															   data-value-primitive="true"
+															   data-item-template="contact-list-tmpl"
+															   data-value-field="id"
+															   data-text-field="name"
+															   data-bind="value: obj.employeeIds,
+															   			source: employeeDS"
+															   data-placeholder="Select Sale Rep..."
+															   style="width: 100%" /></select>
+													</td>
+													<td style="padding-top: 31px !important; float: left;">
+										  				<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+													</td>
+												</tr>
+											</table>
+							        	</div>
+							        	<div class="tab-pane" id="tab-3">
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
+								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
+								        		<i class="fa fa-file-pdf-o"></i>
+								        		Print as PDF
+								        	</span> -->
+								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" style="width: 80px;">
+								        		<i class="fa fa-file-excel-o"></i>
+								        		Export to Excel
+								        	</span>
+							        	</div>
+								    </div>
+								</div>
+							</div>
+						</div>
+						<!-- // Tabs END -->
+					</div>
+
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="html: company.name"></h3>
+							<h2>Purchase Order Detail By Item</h2>
+							<p data-bind="text: displayDate"></p>
+						</div>
+
+						<div data-role="grid" class="costom-grid"
+					    	 data-column-menu="true"
+					    	 data-groupable="true"
+					    	 data-pageable="true"
+					    	 data-reorderable="true"
+					    	 data-scrollable="false"
+					    	 data-resizable="true"
+			                 data-columns="[
+			                 	{ 
+			                 		field: 'item', 
+			                 		title: 'ITEM',
+			                 		groupFooterTemplate: 'TOTAL:' 
+			                 	},
+			                 	{ field: 'customer', title:'CUSTOMER' },
+	                            { field: 'employees', title:'SALE REP.' },
+	                            { field: 'issued_date', title:'DATE', template: '#=kendo.toString(new Date(issued_date), banhji.dateFormat)#' },
+	                            { 
+	                            	field: 'number', 
+	                            	title:'NUMBER',
+	                            	template: kendo.template($('#saleOrderDetailbyEmployee-number-template').html())
+	                            },
+	                            { 
+	                            	field: 'qty', 
+	                            	title:'QTY',
+	                            },
+	                            { 
+	                            	field: 'price', 
+	                            	title:'PRICE',
+	                            },
+	                            { 
+	                            	field: 'amount', 
+	                            	title:'AMOUNT', 
+	                            	format: '{0:n}', 
+	                            	attributes: { style: 'text-align: right;' },
+	                            	footerAttributes: { style: 'text-align: right;' },
+	                            	aggregates: ['sum'], 
+	                            	groupFooterTemplate: '#=kendo.toString(sum, banhji.numberFormat)#' 
+	                            },	                                                     
+	                         ]"
+	                         data-auto-bind="false"
+			                 data-bind="source: dataSource" ></div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </script>
 
 <script id="productServiceList" type="text/x-kendo-template">

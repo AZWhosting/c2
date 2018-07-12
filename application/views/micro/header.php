@@ -201,6 +201,7 @@
                                                     <li><a href="<?php echo base_url();?>micro/items#/item"><span data-bind="text: lang.lang.add_inventory_for_sale"></span></a></li>
                                                     <li><a href="<?php echo base_url();?>micro/items#/item_service"><span data-bind="text: lang.lang.add_services"></span></a></li>
                                                     <li><a href="<?php echo base_url();?>micro/items#/item_adjustment"><span data-bind="text: lang.lang.item_adjustment"></span></a></li>
+                                                    <li><a href="<?php echo base_url();?>micro/items#/internal_usage"><span data-bind="text: lang.lang.internal_usage"></span></a></li>
                                                 </ul>
                                             </div>
                                         </div>

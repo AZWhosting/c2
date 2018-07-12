@@ -1886,12 +1886,19 @@
 		//Prefixes
 		prefixList                  : [],
 		prefixDS                    : dataStore(apiUrl + "prefixes"),
+		dateUnitList               : [
+			{ text: 'Day', value: 'Day' },
+			{ text: 'Week', value: 'Week' },
+			{ text: 'Month', value: 'Month' },
+			{ text: 'Quarter', value: 'Quarter' },
+			{ text: 'Annual', value: 'Annual' }
+		],
 		frequencyList               : [
-			{ id: 'Daily', name: 'Day' },
-			{ id: 'Weekly', name: 'Week' },
-			{ id: 'Monthly', name: 'Month' },
-			{ id: 'Quarterly', name: 'Quarterly' },
-			{ id: 'Annually', name: 'Annual' }
+			{ text: 'Day', value: 'Day' },
+			{ text: 'Week', value: 'Week' },
+			{ text: 'Month', value: 'Month' },
+			{ text: 'Quarterly', value: 'Quarterly' },
+			{ text: 'Annual', value: 'Annual' }
 		],
 		monthOptionList             : [
 			{ id: 'Day', name: 'Day' },
@@ -2640,7 +2647,7 @@
 	banhji.customerDashboard = kendo.observable({
 		lang                : langVM,
 		dataSource          : dataStore(apiUrl + "customer_modules/dashboard"),
-		graphDS             : dataStore(apiUrl + "customer_modules/monthly_sale"),
+		graphDS             : dataStore(apiUrl + "customer_modules/Month_sale"),
 		obj                 : {},
 		pageLoad            : function(){
 			var self = this;
@@ -3851,7 +3858,7 @@
 		statusObj           : banhji.source.statusObj,
 		amtDueColor         : banhji.source.amtDueColor,
 		confirmMessage      : banhji.source.confirmMessage,
-		frequencyList       : banhji.source.frequencyList,
+		dateUnitList       : banhji.source.dateUnitList,
 		monthOptionList     : banhji.source.monthOptionList,
 		monthList           : banhji.source.monthList,
 		weekDayList         : banhji.source.weekDayList,
@@ -4608,7 +4615,7 @@
 				//Recurring
 				recurring_name      : "",
 				start_date          : new Date(),
-				frequency           : "Daily",
+				frequency           : "Day",
 				month_option        : "Day",
 				interval            : 1,
 				day                 : 1,
@@ -4919,28 +4926,28 @@
 			var obj = this.get("obj");
 
 			switch(obj.frequency) {
-				case "Daily":
+				case "Day":
 					this.set("showMonthOption", false);
 					this.set("showMonth", false);
 					this.set("showWeek", false);
 					this.set("showDay", false);
 
 					break;
-				case "Weekly":
+				case "Week":
 					this.set("showMonthOption", false);
 					this.set("showMonth", false);
 					this.set("showWeek", true);
 					this.set("showDay", false);
 
 					break;
-				case "Monthly":
+				case "Month":
 					this.set("showMonthOption", true);
 					this.set("showMonth", false);
 					this.set("showWeek", false);
 					this.set("showDay", true);
 
 					break;
-				case "Annually":
+				case "Annual":
 					this.set("showMonthOption", false);
 					this.set("showMonth", true);
 					this.set("showWeek", false);
@@ -5058,7 +5065,7 @@
 		statusObj           : banhji.source.statusObj,
 		amtDueColor         : banhji.source.amtDueColor,
 		confirmMessage      : banhji.source.confirmMessage,
-		frequencyList       : banhji.source.frequencyList,
+		dateUnitList       : banhji.source.dateUnitList,
 		monthOptionList     : banhji.source.monthOptionList,
 		monthList           : banhji.source.monthList,
 		weekDayList         : banhji.source.weekDayList,
@@ -5831,7 +5838,7 @@
 				//Recurring
 				recurring_name      : "",
 				start_date          : new Date(),
-				frequency           : "Daily",
+				frequency           : "Day",
 				month_option        : "Day",
 				interval            : 1,
 				day                 : 1,
@@ -6238,28 +6245,28 @@
 			var obj = this.get("obj");
 
 			switch(obj.frequency) {
-				case "Daily":
+				case "Day":
 					this.set("showMonthOption", false);
 					this.set("showMonth", false);
 					this.set("showWeek", false);
 					this.set("showDay", false);
 
 					break;
-				case "Weekly":
+				case "Week":
 					this.set("showMonthOption", false);
 					this.set("showMonth", false);
 					this.set("showWeek", true);
 					this.set("showDay", false);
 
 					break;
-				case "Monthly":
+				case "Month":
 					this.set("showMonthOption", true);
 					this.set("showMonth", false);
 					this.set("showWeek", false);
 					this.set("showDay", true);
 
 					break;
-				case "Annually":
+				case "Annual":
 					this.set("showMonthOption", false);
 					this.set("showMonth", true);
 					this.set("showWeek", false);
@@ -6360,7 +6367,7 @@
 		contactDS           : banhji.source.customerDS,
 		amtDueColor         : banhji.source.amtDueColor,
 		confirmMessage      : banhji.source.confirmMessage,
-		frequencyList       : banhji.source.frequencyList,
+		dateUnitList       : banhji.source.dateUnitList,
 		monthList           : banhji.source.monthList,
 		monthOptionList     : banhji.source.monthOptionList,
 		weekDayList         : banhji.source.weekDayList,
@@ -6695,7 +6702,7 @@
 				//Recurring
 				recurring_name          : "",
 				start_date              : new Date(),
-				frequency               : "Daily",
+				frequency               : "Day",
 				month_option            : "Day",
 				interval                : 1,
 				day                     : 1,
@@ -7027,28 +7034,28 @@
 			var obj = this.get("obj");
 
 			switch(obj.frequency) {
-				case "Daily":
+				case "Day":
 					this.set("showMonthOption", false);
 					this.set("showMonth", false);
 					this.set("showWeek", false);
 					this.set("showDay", false);
 
 					break;
-				case "Weekly":
+				case "Week":
 					this.set("showMonthOption", false);
 					this.set("showMonth", false);
 					this.set("showWeek", true);
 					this.set("showDay", false);
 
 					break;
-				case "Monthly":
+				case "Month":
 					this.set("showMonthOption", true);
 					this.set("showMonth", false);
 					this.set("showWeek", false);
 					this.set("showDay", true);
 
 					break;
-				case "Annually":
+				case "Annual":
 					this.set("showMonthOption", false);
 					this.set("showMonth", true);
 					this.set("showWeek", false);
@@ -7163,7 +7170,7 @@
 		paymentMethodDS     : banhji.source.paymentMethodDS,
 		amtDueColor         : banhji.source.amtDueColor,
 		confirmMessage      : banhji.source.confirmMessage,
-		frequencyList       : banhji.source.frequencyList,
+		dateUnitList       : banhji.source.dateUnitList,
 		monthOptionList     : banhji.source.monthOptionList,
 		monthList           : banhji.source.monthList,
 		weekDayList         : banhji.source.weekDayList,
@@ -8045,7 +8052,7 @@
 				//Recurring
 				recurring_name      : "",
 				start_date          : new Date(),
-				frequency           : "Daily",
+				frequency           : "Day",
 				month_option        : "Day",
 				interval            : 1,
 				day                 : 1,
@@ -8729,28 +8736,28 @@
 			var obj = this.get("obj");
 
 			switch(obj.frequency) {
-				case "Daily":
+				case "Day":
 					this.set("showMonthOption", false);
 					this.set("showMonth", false);
 					this.set("showWeek", false);
 					this.set("showDay", false);
 
 					break;
-				case "Weekly":
+				case "Week":
 					this.set("showMonthOption", false);
 					this.set("showMonth", false);
 					this.set("showWeek", true);
 					this.set("showDay", false);
 
 					break;
-				case "Monthly":
+				case "Month":
 					this.set("showMonthOption", true);
 					this.set("showMonth", false);
 					this.set("showWeek", false);
 					this.set("showDay", true);
 
 					break;
-				case "Annually":
+				case "Annual":
 					this.set("showMonthOption", false);
 					this.set("showMonth", true);
 					this.set("showWeek", false);
@@ -8822,7 +8829,7 @@
 					{ field: "type", value: "Commercial_Invoice" },
 					{ field: "type", value: "Vat_Invoice" },
 					{ field: "type", value: "Invoice" },
-					// { field: "type", value: "Proforma_Invoice" }
+					{ field: "type", value: "Proforma_Invoice" }
 				]
 			}
 		}),
@@ -8862,7 +8869,7 @@
 		paymentMethodDS     : banhji.source.paymentMethodDS,
 		amtDueColor         : banhji.source.amtDueColor,
 		confirmMessage      : banhji.source.confirmMessage,
-		frequencyList       : banhji.source.frequencyList,
+		dateUnitList       : banhji.source.dateUnitList,
 		monthOptionList     : banhji.source.monthOptionList,
 		monthList           : banhji.source.monthList,
 		weekDayList         : banhji.source.weekDayList,
@@ -9830,7 +9837,7 @@
 				//Recurring
 				recurring_name      : "",
 				start_date          : new Date(),
-				frequency           : "Daily",
+				frequency           : "Day",
 				month_option        : "Day",
 				interval            : 1,
 				day                 : 1,
@@ -10465,7 +10472,7 @@
 				start_date      : new Date(),
 				end_date 		: new Date(),
 				type 			: "Proforma_Invoice",
-				frequency       : "Daily",
+				frequency       : "Day",
 				interval        : 1,
 				status        	: 0
 			});
@@ -10542,28 +10549,28 @@
 			var obj = this.get("obj");
 
 			switch(obj.frequency) {
-				case "Daily":
+				case "Day":
 					this.set("showMonthOption", false);
 					this.set("showMonth", false);
 					this.set("showWeek", false);
 					this.set("showDay", false);
 
 					break;
-				case "Weekly":
+				case "Week":
 					this.set("showMonthOption", false);
 					this.set("showMonth", false);
 					this.set("showWeek", true);
 					this.set("showDay", false);
 
 					break;
-				case "Monthly":
+				case "Month":
 					this.set("showMonthOption", true);
 					this.set("showMonth", false);
 					this.set("showWeek", false);
 					this.set("showDay", true);
 
 					break;
-				case "Annually":
+				case "Annual":
 					this.set("showMonthOption", false);
 					this.set("showMonth", true);
 					this.set("showWeek", false);
@@ -10675,7 +10682,7 @@
 		paymentMethodDS     : banhji.source.paymentMethodDS,
 		amtDueColor         : banhji.source.amtDueColor,
 		confirmMessage      : banhji.source.confirmMessage,
-		frequencyList       : banhji.source.frequencyList,
+		dateUnitList       : banhji.source.dateUnitList,
 		monthOptionList     : banhji.source.monthOptionList,
 		monthList           : banhji.source.monthList,
 		weekDayList         : banhji.source.weekDayList,
@@ -10790,7 +10797,7 @@
 				//Recurring
 				recurring_name      : "",
 				start_date          : new Date(),
-				frequency           : "Daily",
+				frequency           : "Day",
 				month_option        : "Day",
 				interval            : 1,
 				day                 : 1,
@@ -11738,28 +11745,28 @@
 			var obj = this.get("obj");
 
 			switch(obj.frequency) {
-				case "Daily":
+				case "Day":
 					this.set("showMonthOption", false);
 					this.set("showMonth", false);
 					this.set("showWeek", false);
 					this.set("showDay", false);
 
 					break;
-				case "Weekly":
+				case "Week":
 					this.set("showMonthOption", false);
 					this.set("showMonth", false);
 					this.set("showWeek", true);
 					this.set("showDay", false);
 
 					break;
-				case "Monthly":
+				case "Month":
 					this.set("showMonthOption", true);
 					this.set("showMonth", false);
 					this.set("showWeek", false);
 					this.set("showDay", true);
 
 					break;
-				case "Annually":
+				case "Annual":
 					this.set("showMonthOption", false);
 					this.set("showMonth", true);
 					this.set("showWeek", false);
@@ -12159,7 +12166,7 @@
 		statusObj           : banhji.source.statusObj,
 		amtDueColor         : banhji.source.amtDueColor,
 		confirmMessage      : banhji.source.confirmMessage,
-		frequencyList       : banhji.source.frequencyList,
+		dateUnitList       : banhji.source.dateUnitList,
 		monthOptionList     : banhji.source.monthOptionList,
 		monthList           : banhji.source.monthList,
 		weekDayList         : banhji.source.weekDayList,
@@ -12718,7 +12725,7 @@
 				//Recurring
 				recurring_name      : "",
 				start_date          : new Date(),
-				frequency           : "Daily",
+				frequency           : "Day",
 				month_option        : "Day",
 				interval            : 1,
 				day                 : 1,
@@ -13091,28 +13098,28 @@
 			var obj = this.get("obj");
 
 			switch(obj.frequency) {
-				case "Daily":
+				case "Day":
 					this.set("showMonthOption", false);
 					this.set("showMonth", false);
 					this.set("showWeek", false);
 					this.set("showDay", false);
 
 					break;
-				case "Weekly":
+				case "Week":
 					this.set("showMonthOption", false);
 					this.set("showMonth", false);
 					this.set("showWeek", true);
 					this.set("showDay", false);
 
 					break;
-				case "Monthly":
+				case "Month":
 					this.set("showMonthOption", true);
 					this.set("showMonth", false);
 					this.set("showWeek", false);
 					this.set("showDay", true);
 
 					break;
-				case "Annually":
+				case "Annual":
 					this.set("showMonthOption", false);
 					this.set("showMonth", true);
 					this.set("showWeek", false);
@@ -13921,7 +13928,7 @@
 				//Recurring
 				recurring_name      : "",
 				start_date          : new Date(),
-				frequency           : "Daily",
+				frequency           : "Day",
 				month_option        : "Day",
 				interval            : 1,
 				day                 : 1,
@@ -15213,7 +15220,7 @@
 				//Recurring
 				recurring_name      : "",
 				start_date          : new Date(),
-				frequency           : "Daily",
+				frequency           : "Day",
 				month_option        : "Day",
 				interval            : 1,
 				day                 : 1,
@@ -15831,7 +15838,7 @@
 	banhji.customerReportCenter = kendo.observable({
 		lang                : langVM,
 		dataSource          : dataStore(apiUrl + "customer_modules/dashboard"),
-		graphDS             : dataStore(apiUrl + "customer_modules/monthly_sale"),
+		graphDS             : dataStore(apiUrl + "customer_modules/Month_sale"),
 		obj                 : {},
 		pageLoad            : function(){
 			this.loadData();
@@ -21460,200 +21467,362 @@
 		}
 	});
 	banhji.receivableAgingSummarybyEmployee =  kendo.observable({
-		lang                : langVM,
-		dataSource          : dataStore(apiUrl + "sales/aging_summary_by_employee"),
-		contactDS           : banhji.source.customerDS,
-		obj                 : null,
-		company             : banhji.institute,
-		as_of               : new Date(),
-		displayDate         : "",
-		totalBalance        : 0,
-		exArray             : [],
-		pageLoad            : function(){
-			this.search();
-		},
-		search              : function(){
-			var self = this, para = [],
-				as_of = this.get("as_of"),
-				displayDate = "";
-
-			if(as_of){
-				as_of = new Date(as_of);
-				var displayDate = "As Of " + kendo.toString(as_of, "dd-MM-yyyy");
-				this.set("displayDate", displayDate);
-				as_of.setDate(as_of.getDate()+1);
-
-				para.push({ field:"issued_date <", value:kendo.toString(as_of, "yyyy-MM-dd") });
-			}
-
-			this.dataSource.query({
-				filter:para
-			}).then(function(){
-				var view = self.dataSource.view();
-
-				var balance = 0;
-				$.each(view, function(index, value){
-					balance += value.total;
-				});
-
-				self.set("totalBalance", kendo.toString(balance, "c2", banhji.locale));
-			});
-			this.dataSource.bind("requestEnd", function(e){
-				if(e.type=="read"){
-					var response = e.response;
-					self.exArray = [];
-
-					self.exArray.push({
-						cells: [
-							{ value: self.company.name, textAlign: "center", colSpan: 7}
-						]
-					});
-					self.exArray.push({
-						cells: [
-							{ value: "Receivable Aging Summary",bold: true, fontSize: 20, textAlign: "center", colSpan: 7}
-						]
-					});
-					if(self.displayDate){
-						self.exArray.push({
-							cells: [
-								{ value: self.displayDate, textAlign: "center", colSpan: 7}
-							]
-						});
-					};
-					self.exArray.push({
-						cells: [
-							{ value: "", colSpan: 7}
-						]
-					});
-					self.exArray.push({
-						cells: [
-							{ value: "Name", background: "#496cad", color: "#ffffff" },
-							{ value: "Current", background: "#496cad", color: "#ffffff" },
-							{ value: "1-30", background: "#496cad", color: "#ffffff" },
-							{ value: "31-60", background: "#496cad", color: "#ffffff" },
-							{ value: "61-90", background: "#496cad", color: "#ffffff" },
-							{ value: "Over 90", background: "#496cad", color: "#ffffff" },
-							{ value: "Total", background: "#496cad", color: "#ffffff" },
-						]
-					});
-					for (var i = 0; i < response.results.length; i++){
-							self.exArray.push({
-								cells: [
-									{ value: response.results[i].name },
-									{ value: response.results[i].current },
-									{ value: response.results[i].in30 },
-									{ value: response.results[i].in60 },
-									{ value: response.results[i].in90 },
-									{ value: response.results[i].over90 },
-									{ value: kendo.parseFloat(response.results[i].total)},
-								]
-							});
-						self.exArray.push({
-							cells: [
-								{ value: "", colSpan: 7 }
-							]
-						});
+        lang                : langVM,
+        dataSource          : new kendo.data.DataSource({
+        	transport: {
+				read    : {
+					url: apiUrl + "sales/aging_summary_by_employee",
+					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				},
+				parameterMap: function(options, operation) {
+					if(operation === 'read') {
+						return {
+							page: options.page,
+							limit: options.pageSize,
+							filter: options.filter,
+							sort: options.sort
+						};
+					} else {
+						return {models: kendo.stringify(options.models)};
 					}
 				}
-			});
-		},
-		printGrid           : function() {
-			var gridElement = $('#grid'),
-				printableContent = '',
-				win = window.open('', '', 'width=990, height=900'),
-				doc = win.document.open();
-			var htmlStart =
-					'<!DOCTYPE html>' +
-					'<html>' +
-					'<head>' +
-					'<meta charset="utf-8" />' +
-					'<title></title>' +
-					'<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
-					'<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
-					'<link rel="stylesheet" href="<?php echo base_url(); ?>assets/responsive.css">' +
-					'<link href="<?php echo base_url(); ?>assets/invoice/invoice.css" rel="stylesheet" />'+
-					'<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
-					'<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
-					'<style>' +
-					'html { font: 11pt sans-serif; }' +
-					'.k-grid { border-top-width: 0; }' +
-					'.k-grid, .k-grid-content { height: auto !important; }' +
-					'.k-grid-content { overflow: visible !important; }' +
-					'div.k-grid table { table-layout: auto; width: 100% !important; }' +
-					'.k-grid .k-grid-header th { border-top: 1px solid; }' +
-					'.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
-					'</style><style type="text/css" media="print"> @page { size: portrait; margin:1mm; }'+
-						'.inv1 .main-color {' +
+			},
+			schema  : {
+				model: {
+					id: 'id'
+				},
+				data: 'results',
+				total: 'count'
+			},
+			group: {
+	            field: "employees", aggregates: [
+	                { field: "amount", aggregate: "sum" },
+	                { field: "qty", aggregate: "sum"}
+	            ]
+           	},
+            aggregate: [ { field: "total", aggregate: "sum" },
+              	{ field: "amount", aggregate: "sum" },
+              	 { field: "qty", aggregate: "sum"}
+            ],
+			serverFiltering: true,
+			serverSorting: true,
+			serverPaging: true,
+			page: 1,
+			pageSize: 100
+		}),
+        contactDS           : banhji.source.customerDS,
+        employeeDS          : banhji.source.employeeDS,
+        sortList            : banhji.source.sortList,
+        itemDS              : new kendo.data.DataSource({
+            transport: {
+                read    : {
+                    url: apiUrl + "items",
+                    type: "GET",
+                    headers: banhji.header,
+                    dataType: 'json'
+                },
+                parameterMap: function(options, operation) {
+                    if(operation === 'read') {
+                        return {
+                            page: options.page,
+                            limit: options.pageSize,
+                            filter: options.filter,
+                            sort: options.sort
+                        };
+                    } else {
+                        return {models: kendo.stringify(options.models)};
+                    }
+                }
+            },
+            schema  : {
+                model: {
+                    id: 'id'
+                },
+                data: 'results',
+                total: 'count'
+            },
+            filter:[
+                { field: "is_catalog <>", value: 1 },
+                { field: "is_assembly <>", value: 1 },
+                { field: "item_type_id", operator:"where_in", value: [1,4] }
+            ],
+            sort:[
+                { field:"item_type_id", dir:"asc" },
+                { field:"number", dir:"asc" }
+            ],
+            serverFiltering: true,
+            serverSorting: true,
+            serverPaging: true,
+            page:1,
+            pageSize: 100
+        }),
+        sorter              : "month",
+        sdate               : "",
+        edate               : "",
+        as_of               : new Date(),
+        obj                 : { employeeIds: [] },
+        company             : banhji.institute,
+        displayDate         : "",
+        totalAmount         : 0,
+        exArray             : [],
+        pageLoad            : function(){
+            this.search();
+        },
+        sorterChanges       : function(){
+            var today = new Date(),
+            sdate = "",
+            edate = "",
+            sorter = this.get("sorter");
 
-							'-webkit-print-color-adjust:exact; ' +
-						'} ' +
-						'.table.table-borderless.table-condensed  tr th { background-color: #1E4E78!important;' +
-						'-webkit-print-color-adjust:exact; color:#fff!important;}' +
-						'.table.table-borderless.table-condensed  tr th * { color: #fff!important; -webkit-print-color-adjust:exact;}' +
-						'.inv1 .light-blue-td { ' +
-							'background-color: #c6d9f1!important;' +
-							'text-align: left;' +
-							'padding-left: 5px;' +
-							'-webkit-print-color-adjust:exact; ' +
-						'}' +
-						'.saleSummaryCustomer .table.table-borderless.table-condensed tr td { ' +
-							'background-color: #F2F2F2!important; -webkit-print-color-adjust:exact;' +
-						'}'+
-						'.saleSummaryCustomer .table.table-borderless.table-condensed tr:nth-child(2n+1) td { ' +
-							' background-color: #fff!important; -webkit-print-color-adjust:exact;' +
-						'}' +
-						'.journal_block1>.span2 *, .journal_block1>.span5 * {color: #fff!important;}' +
-						'.journal_block1>.span2:first-child { ' +
-							'background-color: #bbbbbb!important; -webkit-print-color-adjust:exact;' +
-						'}' +
-						'.journal_block1>.span5:last-child {' +
-							'background-color: #496cad!important; color: #fff!important; -webkit-print-color-adjust:exact; ' +
-						'}' +
-						'.journal_block1>.span5 {' +
-							'background-color: #5cc7dd!important; color: #fff!important; -webkit-print-color-adjust:exact;' +
-						'}' +
-						'.saleSummaryCustomer .table.table-borderless.table-condensed tfoot .bg-total td {' +
-							'background-color: #1C2633!important;' +
-							'color: #fff!important; ' +
-							'-webkit-print-color-adjust:exact;' +
-						'}' +
-						'</style>' +
-					'</head>' +
-					'<body><div class="saleSummaryCustomer" style="padding: 0 10px;">';
-			var htmlEnd =
-					'</div></body>' +
-					'</html>';
+            switch(sorter){
+                case "today":
+                    this.set("sdate", today);
+                    this.set("edate", "");
 
-			printableContent = $('#invFormContent').html();
-			doc.write(htmlStart + printableContent + htmlEnd);
-			doc.close();
-			setTimeout(function(){
-				win.print();
-				win.close();
-			},2000);
-		},
-		ExportExcel         : function(){
-			var workbook = new kendo.ooxml.Workbook({
-			  sheets: [
-				{
-				  columns: [
-					{ autoWidth: true },
-					{ autoWidth: true },
-					{ autoWidth: true },
-					{ autoWidth: true },
-					{ autoWidth: true },
-					{ autoWidth: true },
-					{ autoWidth: true }
-				  ],
-				  title: "Receivable Aging Summary",
-				  rows: this.exArray
-				}
-			  ]
-			});
-			//save the file as Excel file with extension xlsx
-			kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "receivableAgingSummary.xlsx"});
-		}
-	});
+                    break;
+                case "week":
+                    var first = today.getDate() - today.getDay(),
+                    last = first + 6;
+
+                    this.set("sdate", new Date(today.setDate(first)));
+                    this.set("edate", new Date(today.setDate(last)));
+
+                    break;
+                case "month":
+                    this.set("sdate", new Date(today.getFullYear(), today.getMonth(), 1));
+                    this.set("edate", new Date(today.getFullYear(), today.getMonth() + 1, 0));
+
+                    break;
+                case "year":
+                    this.set("sdate", new Date(today.getFullYear(), 0, 1));
+                    this.set("edate", new Date(today.getFullYear(), 11, 31));
+
+                    break;
+                default:
+                    this.set("sdate", "");
+                    this.set("edate", "");
+            }
+        },
+        search              : function(){
+            var self = this, para = [],
+                obj = this.get("obj"),
+                start = this.get("sdate"),
+                end = this.get("edate"),
+                displayDate = "";
+
+           //Sale Rep
+            if(obj.employeeIds.length>0){
+                var employeeIds = [];
+                $.each(obj.employeeIds, function(index, value){
+                    employeeIds.push(value);
+                });
+                para.push({ field:"employee_id", operator:"where_in", value:employeeIds });
+            }
+
+            //Dates
+            if(start && end){
+                start = new Date(start);
+                end = new Date(end);
+                displayDate = "From " + kendo.toString(start, "dd-MM-yyyy") + " To " + kendo.toString(end, "dd-MM-yyyy");
+                end.setDate(end.getDate()+1);
+
+                para.push({ field:"issued_date >=", value: kendo.toString(start, "yyyy-MM-dd") });
+                para.push({ field:"issued_date <", value: kendo.toString(end, "yyyy-MM-dd") });
+            }else if(start){
+                start = new Date(start);
+                displayDate = "On " + kendo.toString(start, "dd-MM-yyyy");
+
+                para.push({ field:"issued_date", value: kendo.toString(start, "yyyy-MM-dd") });
+            }else if(end){
+                end = new Date(end);
+                displayDate = "As Of " + kendo.toString(end, "dd-MM-yyyy");
+                end.setDate(end.getDate()+1);
+
+                para.push({ field:"issued_date <", value: kendo.toString(end, "yyyy-MM-dd") });
+            }else{
+
+            }
+            this.set("displayDate", displayDate);
+
+            this.dataSource.filter(para);
+
+            // this.dataSource.query({
+            //     filter:para,
+            //     page: 1,
+            //     pageSize: 100
+            // }).then(function(){
+            //     var view = self.dataSource.view();
+
+            //     // var amount = 0;
+            //     // $.each(view, function(index, value){
+            //     //     $.each(value.line, function(ind, val){
+            //     //         amount += val.amount;
+            //     //     });
+            //     // });
+
+            //     // self.set("totalAmount", kendo.toString(amount, "c2", banhji.locale));
+            // });
+            // this.dataSource.bind("requestEnd", function(e){
+            //     if(e.type=="read"){
+            //         var response = e.response, balanceCal = 0, balance= 0;
+            //         self.exArray = [];
+
+            //         self.exArray.push({
+            //             cells: [
+            //                 { value: self.company.name, textAlign: "center", colSpan: 4}
+            //             ]
+            //         });
+            //         self.exArray.push({
+            //             cells: [
+            //                 { value: "Sale Detail by Customer",bold: true, fontSize: 20, textAlign: "center", colSpan: 4 }
+            //             ]
+            //         });
+            //         if(self.displayDate){
+            //             self.exArray.push({
+            //                 cells: [
+            //                     { value: self.displayDate, textAlign: "center", colSpan: 4 }
+            //                 ]
+            //             });
+            //         }
+            //         self.exArray.push({
+            //             cells: [
+            //                 { value: "", colSpan: 4 }
+            //             ]
+            //         });
+            //         self.exArray.push({
+            //             cells: [
+            //                 { value: "Type", background: "#496cad", color: "#ffffff" },
+            //                 { value: "Date", background: "#496cad", color: "#ffffff" },
+            //                 { value: "Reference", background: "#496cad", color: "#ffffff" },
+            //                 { value: "Amount", background: "#496cad", color: "#ffffff" },
+            //             ]
+            //         });
+            //         for (var i = 0; i < response.results.length; i++){
+            //             self.exArray.push({
+            //                 cells: [
+            //                     { value: response.results[i].name, bold: true, },
+            //                     { value: "" },
+            //                     { value: "" },
+            //                     { value: "" },
+            //                 ]
+
+            //             });
+            //             for(var j = 0; j < response.results[i].line.length; j++){
+            //                 balance += response.results[i].line[j].amount;
+            //                 self.exArray.push({
+            //                     cells: [
+            //                         { value: response.results[i].line[j].type },
+            //                         { value: response.results[i].line[j].issued_date },
+            //                         { value: response.results[i].line[j].number},
+            //                         { value: response.results[i].line[j].amount },
+            //                     ]
+            //                 });
+            //             }
+            //             self.exArray.push({
+            //                 cells: [
+            //                     { value: "", colSpan: 4 }
+            //                 ]
+            //             });
+            //         }
+            //     }
+            // });
+        },
+        printGrid           : function() {
+            var gridElement = $('#grid'),
+                printableContent = '',
+                win = window.open('', '', 'width=990, height=900'),
+                doc = win.document.open();
+            var htmlStart =
+                    '<!DOCTYPE html>' +
+                    '<html>' +
+                    '<head>' +
+                    '<meta charset="utf-8" />' +
+                    '<title></title>' +
+                    '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
+                    '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
+                    '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/responsive.css">' +
+                    '<link href="<?php echo base_url(); ?>assets/invoice/invoice.css" rel="stylesheet" />'+
+                    '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
+                    '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
+                    '<style>' +
+                    'html { font: 11pt sans-serif; }' +
+                    '.k-grid { border-top-width: 0; }' +
+                    '.k-grid, .k-grid-content { height: auto !important; }' +
+                    '.k-grid-content { overflow: visible !important; }' +
+                    'div.k-grid table { table-layout: auto; width: 100% !important; }' +
+                    '.k-grid .k-grid-header th { border-top: 1px solid; }' +
+                    '.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
+                    '</style><style type="text/css" media="print"> @page { size: portrait; margin:1mm; }'+
+                        '.inv1 .main-color {' +
+
+                            '-webkit-print-color-adjust:exact; ' +
+                        '} ' +
+                        '.table.table-borderless.table-condensed  tr th { background-color: #1E4E78!important;' +
+                        '-webkit-print-color-adjust:exact; color:#fff!important;}' +
+                        '.table.table-borderless.table-condensed  tr th * { color: #fff!important; -webkit-print-color-adjust:exact;}' +
+                        '.inv1 .light-blue-td { ' +
+                            'background-color: #c6d9f1!important;' +
+                            'text-align: left;' +
+                            'padding-left: 5px;' +
+                            '-webkit-print-color-adjust:exact; ' +
+                        '}' +
+                        '.saleSummaryCustomer .table.table-borderless.table-condensed tr td { ' +
+                            'background-color: #F2F2F2!important; -webkit-print-color-adjust:exact;' +
+                        '}'+
+                        '.saleSummaryCustomer .table.table-borderless.table-condensed tr:nth-child(2n+1) td { ' +
+                            ' background-color: #fff!important; -webkit-print-color-adjust:exact;' +
+                        '}' +
+                        '.journal_block1>.span2 *, .journal_block1>.span5 * {color: #fff!important;}' +
+                        '.journal_block1>.span2:first-child { ' +
+                            'background-color: #bbbbbb!important; -webkit-print-color-adjust:exact;' +
+                        '}' +
+                        '.journal_block1>.span5:last-child {' +
+                            'background-color: #496cad!important; color: #fff!important; -webkit-print-color-adjust:exact; ' +
+                        '}' +
+                        '.journal_block1>.span5 {' +
+                            'background-color: #5cc7dd!important; color: #fff!important; -webkit-print-color-adjust:exact;' +
+                        '}' +
+                        '.saleSummaryCustomer .table.table-borderless.table-condensed tfoot .bg-total td {' +
+                            'background-color: #1C2633!important;' +
+                            'color: #fff!important; ' +
+                            '-webkit-print-color-adjust:exact;' +
+                        '}' +
+                        '</style>' +
+                    '</head>' +
+                    '<body><div class="saleSummaryCustomer" style="padding: 0 10px;">';
+            var htmlEnd =
+                    '</div></body>' +
+                    '</html>';
+
+            printableContent = $('#invFormContent').html();
+            doc.write(htmlStart + printableContent + htmlEnd);
+            doc.close();
+            setTimeout(function(){
+                win.print();
+                win.close();
+            },2000);
+        },
+        ExportExcel         : function(){
+            var workbook = new kendo.ooxml.Workbook({
+              sheets: [
+                {
+                  columns: [
+                    { autoWidth: true },
+                    { autoWidth: true },
+                    { autoWidth: true },
+                    { autoWidth: true },
+                  ],
+                  title: "Sale Detail by Customer",
+                  rows: this.exArray
+                }
+              ]
+            });
+            //save the file as Excel file with extension xlsx
+            kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "saleDetailCustomer.xlsx"});
+        }
+    });
 	banhji.receivableAgingSummary =  kendo.observable({
         lang                : langVM,
         dataSource          : dataStore(apiUrl + "sales/aging_summary"),
@@ -25497,12 +25666,14 @@
 				total: 'count'
 			},
 			group: {
-	            field: "employee", aggregates: [
-	                { field: "amount", aggregate: "sum" }
+	            field: "employees", aggregates: [
+	                { field: "amount", aggregate: "sum" },
+	                { field: "qty", aggregate: "sum"}
 	            ]
            	},
             aggregate: [ { field: "amount", aggregate: "sum" },
-              	{ field: "amount", aggregate: "sum" }
+              	{ field: "amount", aggregate: "sum" },
+              	 { field: "qty", aggregate: "sum"}
             ],
 			serverFiltering: true,
 			serverSorting: true,
@@ -26895,7 +27066,7 @@
 	banhji.membershipDashboard = kendo.observable({
 		lang                : langVM,
 		dataSource          : dataStore(apiUrl + "customer_modules/dashboard"),
-		graphDS             : dataStore(apiUrl + "customer_modules/monthly_sale"),
+		graphDS             : dataStore(apiUrl + "customer_modules/Month_sale"),
 		obj                 : {},
 		pageLoad            : function(){
 			var self = this;
@@ -27574,7 +27745,7 @@
 		statusList              : banhji.source.statusList,
 		applicationStatusList   : banhji.source.applicationStatusList,
 		confirmMessage          : banhji.source.confirmMessage,
-		frequencyList           : banhji.source.frequencyList,
+		dateUnitList           : banhji.source.dateUnitList,
 		monthOptionList         : banhji.source.monthOptionList,
 		monthList               : banhji.source.monthList,
 		weekDayList             : banhji.source.weekDayList,
@@ -28292,7 +28463,7 @@
 				//Recurring
 				recurring_name      : "Subcription Recurring",
 				start_date          : new Date(),
-				frequency           : "Daily",
+				frequency           : "Day",
 				month_option        : "Day",
 				interval            : 1,
 				day                 : 1,
@@ -28410,28 +28581,28 @@
 			var obj = this.get("objRecurring");
 
 			switch(obj.frequency) {
-				case "Daily":
+				case "Day":
 					this.set("showMonthOption", false);
 					this.set("showMonth", false);
 					this.set("showWeek", false);
 					this.set("showDay", false);
 
 					break;
-				case "Weekly":
+				case "Week":
 					this.set("showMonthOption", false);
 					this.set("showMonth", false);
 					this.set("showWeek", true);
 					this.set("showDay", false);
 
 					break;
-				case "Monthly":
+				case "Month":
 					this.set("showMonthOption", true);
 					this.set("showMonth", false);
 					this.set("showWeek", false);
 					this.set("showDay", true);
 
 					break;
-				case "Annually":
+				case "Annual":
 					this.set("showMonthOption", false);
 					this.set("showMonth", true);
 					this.set("showWeek", false);
@@ -28676,7 +28847,7 @@
 		paymentMethodDS     : banhji.source.paymentMethodDS,
 		amtDueColor         : banhji.source.amtDueColor,
 		confirmMessage      : banhji.source.confirmMessage,
-		frequencyList       : banhji.source.frequencyList,
+		dateUnitList       : banhji.source.dateUnitList,
 		selectList          : [],
 		obj                 : null,
 		isEdit              : false,
@@ -28786,7 +28957,7 @@
 				//Recurring
 				recurring_name      : "",
 				start_date          : new Date(),
-				frequency           : "Daily",
+				frequency           : "Day",
 				month_option        : "Day",
 				interval            : 1,
 				day                 : 1,
@@ -29953,7 +30124,7 @@
 	banhji.vendorDashboard = kendo.observable({
 		lang                : langVM,
 		dataSource          : dataStore(apiUrl + "vendor_modules/dashboard"),
-		graphDS             : dataStore(apiUrl + "vendor_modules/monthly_purchase"),
+		graphDS             : dataStore(apiUrl + "vendor_modules/Month_purchase"),
 		obj                 : {},
 		pageLoad            : function(){
 			this.loadData();
@@ -31076,7 +31247,7 @@
 		statusObj           : banhji.source.statusObj,
 		amtDueColor         : banhji.source.amtDueColor,
 		confirmMessage      : banhji.source.confirmMessage,
-		frequencyList       : banhji.source.frequencyList,
+		dateUnitList       : banhji.source.dateUnitList,
 		monthOptionList     : banhji.source.monthOptionList,
 		monthList           : banhji.source.monthList,
 		weekDayList         : banhji.source.weekDayList,
@@ -31701,7 +31872,7 @@
 				//Recurring
 				recurring_name      : "",
 				start_date          : new Date(),
-				frequency           : "Daily",
+				frequency           : "Day",
 				month_option        : "Day",
 				interval            : 1,
 				day                 : 1,
@@ -32007,28 +32178,28 @@
 			var obj = this.get("obj");
 
 			switch(obj.frequency) {
-				case "Daily":
+				case "Day":
 					this.set("showMonthOption", false);
 					this.set("showMonth", false);
 					this.set("showWeek", false);
 					this.set("showDay", false);
 
 					break;
-				case "Weekly":
+				case "Week":
 					this.set("showMonthOption", false);
 					this.set("showMonth", false);
 					this.set("showWeek", true);
 					this.set("showDay", false);
 
 					break;
-				case "Monthly":
+				case "Month":
 					this.set("showMonthOption", true);
 					this.set("showMonth", false);
 					this.set("showWeek", false);
 					this.set("showDay", true);
 
 					break;
-				case "Annually":
+				case "Annual":
 					this.set("showMonthOption", false);
 					this.set("showMonth", true);
 					this.set("showWeek", false);
@@ -32100,7 +32271,7 @@
 		statusObj           : banhji.source.statusObj,
 		amtDueColor         : banhji.source.amtDueColor,
 		confirmMessage      : banhji.source.confirmMessage,
-		frequencyList       : banhji.source.frequencyList,
+		dateUnitList       : banhji.source.dateUnitList,
 		monthOptionList     : banhji.source.monthOptionList,
 		monthList           : banhji.source.monthList,
 		weekDayList         : banhji.source.weekDayList,
@@ -32627,7 +32798,7 @@
 				//Recurring
 				recurring_name      : "",
 				start_date          : new Date(),
-				frequency           : "Daily",
+				frequency           : "Day",
 				month_option        : "Day",
 				interval            : 1,
 				day                 : 1,
@@ -33001,28 +33172,28 @@
 			var obj = this.get("obj");
 
 			switch(obj.frequency) {
-				case "Daily":
+				case "Day":
 					this.set("showMonthOption", false);
 					this.set("showMonth", false);
 					this.set("showWeek", false);
 					this.set("showDay", false);
 
 					break;
-				case "Weekly":
+				case "Week":
 					this.set("showMonthOption", false);
 					this.set("showMonth", false);
 					this.set("showWeek", true);
 					this.set("showDay", false);
 
 					break;
-				case "Monthly":
+				case "Month":
 					this.set("showMonthOption", true);
 					this.set("showMonth", false);
 					this.set("showWeek", false);
 					this.set("showDay", true);
 
 					break;
-				case "Annually":
+				case "Annual":
 					this.set("showMonthOption", false);
 					this.set("showMonth", true);
 					this.set("showWeek", false);
@@ -33119,7 +33290,7 @@
 		contactDS           : banhji.source.supplierDS,
 		amtDueColor         : banhji.source.amtDueColor,
 		confirmMessage      : banhji.source.confirmMessage,
-		frequencyList       : banhji.source.frequencyList,
+		dateUnitList       : banhji.source.dateUnitList,
 		monthList           : banhji.source.monthList,
 		monthOptionList     : banhji.source.monthOptionList,
 		weekDayList         : banhji.source.weekDayList,
@@ -33385,7 +33556,7 @@
 				//Recurring
 				recurring_name      : "",
 				start_date          : new Date(),
-				frequency           : "Daily",
+				frequency           : "Day",
 				month_option        : "Day",
 				interval            : 1,
 				day                 : 1,
@@ -33784,28 +33955,28 @@
 			var obj = this.get("obj");
 
 			switch(obj.frequency) {
-				case "Daily":
+				case "Day":
 					this.set("showMonthOption", false);
 					this.set("showMonth", false);
 					this.set("showWeek", false);
 					this.set("showDay", false);
 
 					break;
-				case "Weekly":
+				case "Week":
 					this.set("showMonthOption", false);
 					this.set("showMonth", false);
 					this.set("showWeek", true);
 					this.set("showDay", false);
 
 					break;
-				case "Monthly":
+				case "Month":
 					this.set("showMonthOption", true);
 					this.set("showMonth", false);
 					this.set("showWeek", false);
 					this.set("showDay", true);
 
 					break;
-				case "Annually":
+				case "Annual":
 					this.set("showMonthOption", false);
 					this.set("showMonth", true);
 					this.set("showWeek", false);
@@ -33939,7 +34110,7 @@
 		statusObj                   : banhji.source.statusObj,
 		amtDueColor                 : banhji.source.amtDueColor,
 		confirmMessage              : banhji.source.confirmMessage,
-		frequencyList               : banhji.source.frequencyList,
+		dateUnitList               : banhji.source.dateUnitList,
 		monthOptionList             : banhji.source.monthOptionList,
 		monthList                   : banhji.source.monthList,
 		weekDayList                 : banhji.source.weekDayList,
@@ -34401,7 +34572,7 @@
 				//Recurring
 				recurring_name      : "",
 				start_date          : new Date(),
-				frequency           : "Daily",
+				frequency           : "Day",
 				month_option        : "Day",
 				interval            : 1,
 				day                 : 1,
@@ -35133,7 +35304,7 @@
 				//Recurring
 				recurring_name      : "",
 				start_date          : new Date(),
-				frequency           : "Daily",
+				frequency           : "Day",
 				month_option        : "Day",
 				interval            : 1,
 				day                 : 1,
@@ -35859,28 +36030,28 @@
 			var obj = this.get("obj");
 
 			switch(obj.frequency) {
-				case "Daily":
+				case "Day":
 					this.set("showMonthOption", false);
 					this.set("showMonth", false);
 					this.set("showWeek", false);
 					this.set("showDay", false);
 
 					break;
-				case "Weekly":
+				case "Week":
 					this.set("showMonthOption", false);
 					this.set("showMonth", false);
 					this.set("showWeek", true);
 					this.set("showDay", false);
 
 					break;
-				case "Monthly":
+				case "Month":
 					this.set("showMonthOption", true);
 					this.set("showMonth", false);
 					this.set("showWeek", false);
 					this.set("showDay", true);
 
 					break;
-				case "Annually":
+				case "Annual":
 					this.set("showMonthOption", false);
 					this.set("showMonth", true);
 					this.set("showWeek", false);
@@ -36506,7 +36677,7 @@
 				//Recurring
 				recurring_name      : "",
 				start_date          : new Date(),
-				frequency           : "Daily",
+				frequency           : "Day",
 				month_option        : "Day",
 				interval            : 1,
 				day                 : 1,
@@ -37597,7 +37768,7 @@
 				//Recurring
 				recurring_name      : "",
 				start_date          : new Date(),
-				frequency           : "Daily",
+				frequency           : "Day",
 				month_option        : "Day",
 				interval            : 1,
 				day                 : 1,
@@ -38115,7 +38286,7 @@
 	banhji.vendorReportCenter = kendo.observable({
 		lang                : langVM,
 		dataSource          : dataStore(apiUrl + "vendor_modules/dashboard"),
-		graphDS             : dataStore(apiUrl + "vendor_modules/monthly_purchase"),
+		graphDS             : dataStore(apiUrl + "vendor_modules/Month_purchase"),
 		obj                 : {},
 		pageLoad            : function(){
 			this.loadData();
@@ -41368,6 +41539,360 @@
 		   //          end.min(start.value());
 		}
 	});
+	banhji.purchaseOrderbyItem =  kendo.observable({
+        lang                : langVM,
+        dataSource          : new kendo.data.DataSource({
+        	transport: {
+				read    : {
+					url: apiUrl + "sales/purchaseOrder_ByItem",
+					type: "GET",
+					headers: banhji.header,
+					dataType: 'json'
+				},
+				parameterMap: function(options, operation) {
+					if(operation === 'read') {
+						return {
+							page: options.page,
+							limit: options.pageSize,
+							filter: options.filter,
+							sort: options.sort
+						};
+					} else {
+						return {models: kendo.stringify(options.models)};
+					}
+				}
+			},
+			schema  : {
+				model: {
+					id: 'id'
+				},
+				data: 'results',
+				total: 'count'
+			},
+			group: {
+	            field: "employee", aggregates: [
+	                { field: "amount", aggregate: "sum" }
+	            ]
+           	},
+            aggregate: [ { field: "amount", aggregate: "sum" },
+              	{ field: "amount", aggregate: "sum" }
+            ],
+			serverFiltering: true,
+			serverSorting: true,
+			serverPaging: true,
+			page: 1,
+			pageSize: 100
+		}),
+        contactDS           : banhji.source.customerDS,
+        employeeDS          : banhji.source.employeeDS,
+        sortList            : banhji.source.sortList,
+        itemDS              : new kendo.data.DataSource({
+            transport: {
+                read    : {
+                    url: apiUrl + "items",
+                    type: "GET",
+                    headers: banhji.header,
+                    dataType: 'json'
+                },
+                parameterMap: function(options, operation) {
+                    if(operation === 'read') {
+                        return {
+                            page: options.page,
+                            limit: options.pageSize,
+                            filter: options.filter,
+                            sort: options.sort
+                        };
+                    } else {
+                        return {models: kendo.stringify(options.models)};
+                    }
+                }
+            },
+            schema  : {
+                model: {
+                    id: 'id'
+                },
+                data: 'results',
+                total: 'count'
+            },
+            filter:[
+                { field: "is_catalog <>", value: 1 },
+                { field: "is_assembly <>", value: 1 },
+                { field: "item_type_id", operator:"where_in", value: [1,4] }
+            ],
+            sort:[
+                { field:"item_type_id", dir:"asc" },
+                { field:"number", dir:"asc" }
+            ],
+            serverFiltering: true,
+            serverSorting: true,
+            serverPaging: true,
+            page:1,
+            pageSize: 100
+        }),
+        sorter              : "month",
+        sdate               : "",
+        edate               : "",
+        obj                 : { employeeIds: [] },
+        company             : banhji.institute,
+        displayDate         : "",
+        totalAmount         : 0,
+        exArray             : [],
+        pageLoad            : function(){
+            this.search();
+        },
+        sorterChanges       : function(){
+            var today = new Date(),
+            sdate = "",
+            edate = "",
+            sorter = this.get("sorter");
+
+            switch(sorter){
+                case "today":
+                    this.set("sdate", today);
+                    this.set("edate", "");
+
+                    break;
+                case "week":
+                    var first = today.getDate() - today.getDay(),
+                    last = first + 6;
+
+                    this.set("sdate", new Date(today.setDate(first)));
+                    this.set("edate", new Date(today.setDate(last)));
+
+                    break;
+                case "month":
+                    this.set("sdate", new Date(today.getFullYear(), today.getMonth(), 1));
+                    this.set("edate", new Date(today.getFullYear(), today.getMonth() + 1, 0));
+
+                    break;
+                case "year":
+                    this.set("sdate", new Date(today.getFullYear(), 0, 1));
+                    this.set("edate", new Date(today.getFullYear(), 11, 31));
+
+                    break;
+                default:
+                    this.set("sdate", "");
+                    this.set("edate", "");
+            }
+        },
+        search              : function(){
+            var self = this, para = [],
+                obj = this.get("obj"),
+                start = this.get("sdate"),
+                end = this.get("edate"),
+                displayDate = "";
+
+           //Sale Rep
+            if(obj.employeeIds.length>0){
+                var employeeIds = [];
+                $.each(obj.employeeIds, function(index, value){
+                    employeeIds.push(value);
+                });
+                para.push({ field:"employee_id", operator:"where_in", value:employeeIds });
+            }
+
+            //Dates
+            if(start && end){
+                start = new Date(start);
+                end = new Date(end);
+                displayDate = "From " + kendo.toString(start, "dd-MM-yyyy") + " To " + kendo.toString(end, "dd-MM-yyyy");
+                end.setDate(end.getDate()+1);
+
+                para.push({ field:"issued_date >=", value: kendo.toString(start, "yyyy-MM-dd") });
+                para.push({ field:"issued_date <", value: kendo.toString(end, "yyyy-MM-dd") });
+            }else if(start){
+                start = new Date(start);
+                displayDate = "On " + kendo.toString(start, "dd-MM-yyyy");
+
+                para.push({ field:"issued_date", value: kendo.toString(start, "yyyy-MM-dd") });
+            }else if(end){
+                end = new Date(end);
+                displayDate = "As Of " + kendo.toString(end, "dd-MM-yyyy");
+                end.setDate(end.getDate()+1);
+
+                para.push({ field:"issued_date <", value: kendo.toString(end, "yyyy-MM-dd") });
+            }else{
+
+            }
+            this.set("displayDate", displayDate);
+
+            this.dataSource.filter(para);
+
+            // this.dataSource.query({
+            //     filter:para,
+            //     page: 1,
+            //     pageSize: 100
+            // }).then(function(){
+            //     var view = self.dataSource.view();
+
+            //     // var amount = 0;
+            //     // $.each(view, function(index, value){
+            //     //     $.each(value.line, function(ind, val){
+            //     //         amount += val.amount;
+            //     //     });
+            //     // });
+
+            //     // self.set("totalAmount", kendo.toString(amount, "c2", banhji.locale));
+            // });
+            // this.dataSource.bind("requestEnd", function(e){
+            //     if(e.type=="read"){
+            //         var response = e.response, balanceCal = 0, balance= 0;
+            //         self.exArray = [];
+
+            //         self.exArray.push({
+            //             cells: [
+            //                 { value: self.company.name, textAlign: "center", colSpan: 4}
+            //             ]
+            //         });
+            //         self.exArray.push({
+            //             cells: [
+            //                 { value: "Sale Detail by Customer",bold: true, fontSize: 20, textAlign: "center", colSpan: 4 }
+            //             ]
+            //         });
+            //         if(self.displayDate){
+            //             self.exArray.push({
+            //                 cells: [
+            //                     { value: self.displayDate, textAlign: "center", colSpan: 4 }
+            //                 ]
+            //             });
+            //         }
+            //         self.exArray.push({
+            //             cells: [
+            //                 { value: "", colSpan: 4 }
+            //             ]
+            //         });
+            //         self.exArray.push({
+            //             cells: [
+            //                 { value: "Type", background: "#496cad", color: "#ffffff" },
+            //                 { value: "Date", background: "#496cad", color: "#ffffff" },
+            //                 { value: "Reference", background: "#496cad", color: "#ffffff" },
+            //                 { value: "Amount", background: "#496cad", color: "#ffffff" },
+            //             ]
+            //         });
+            //         for (var i = 0; i < response.results.length; i++){
+            //             self.exArray.push({
+            //                 cells: [
+            //                     { value: response.results[i].name, bold: true, },
+            //                     { value: "" },
+            //                     { value: "" },
+            //                     { value: "" },
+            //                 ]
+
+            //             });
+            //             for(var j = 0; j < response.results[i].line.length; j++){
+            //                 balance += response.results[i].line[j].amount;
+            //                 self.exArray.push({
+            //                     cells: [
+            //                         { value: response.results[i].line[j].type },
+            //                         { value: response.results[i].line[j].issued_date },
+            //                         { value: response.results[i].line[j].number},
+            //                         { value: response.results[i].line[j].amount },
+            //                     ]
+            //                 });
+            //             }
+            //             self.exArray.push({
+            //                 cells: [
+            //                     { value: "", colSpan: 4 }
+            //                 ]
+            //             });
+            //         }
+            //     }
+            // });
+        },
+        printGrid           : function() {
+            var gridElement = $('#grid'),
+                printableContent = '',
+                win = window.open('', '', 'width=990, height=900'),
+                doc = win.document.open();
+            var htmlStart =
+                    '<!DOCTYPE html>' +
+                    '<html>' +
+                    '<head>' +
+                    '<meta charset="utf-8" />' +
+                    '<title></title>' +
+                    '<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
+                    '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
+                    '<link rel="stylesheet" href="<?php echo base_url(); ?>assets/responsive.css">' +
+                    '<link href="<?php echo base_url(); ?>assets/invoice/invoice.css" rel="stylesheet" />'+
+                    '<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
+                    '<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
+                    '<style>' +
+                    'html { font: 11pt sans-serif; }' +
+                    '.k-grid { border-top-width: 0; }' +
+                    '.k-grid, .k-grid-content { height: auto !important; }' +
+                    '.k-grid-content { overflow: visible !important; }' +
+                    'div.k-grid table { table-layout: auto; width: 100% !important; }' +
+                    '.k-grid .k-grid-header th { border-top: 1px solid; }' +
+                    '.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
+                    '</style><style type="text/css" media="print"> @page { size: portrait; margin:1mm; }'+
+                        '.inv1 .main-color {' +
+
+                            '-webkit-print-color-adjust:exact; ' +
+                        '} ' +
+                        '.table.table-borderless.table-condensed  tr th { background-color: #1E4E78!important;' +
+                        '-webkit-print-color-adjust:exact; color:#fff!important;}' +
+                        '.table.table-borderless.table-condensed  tr th * { color: #fff!important; -webkit-print-color-adjust:exact;}' +
+                        '.inv1 .light-blue-td { ' +
+                            'background-color: #c6d9f1!important;' +
+                            'text-align: left;' +
+                            'padding-left: 5px;' +
+                            '-webkit-print-color-adjust:exact; ' +
+                        '}' +
+                        '.saleSummaryCustomer .table.table-borderless.table-condensed tr td { ' +
+                            'background-color: #F2F2F2!important; -webkit-print-color-adjust:exact;' +
+                        '}'+
+                        '.saleSummaryCustomer .table.table-borderless.table-condensed tr:nth-child(2n+1) td { ' +
+                            ' background-color: #fff!important; -webkit-print-color-adjust:exact;' +
+                        '}' +
+                        '.journal_block1>.span2 *, .journal_block1>.span5 * {color: #fff!important;}' +
+                        '.journal_block1>.span2:first-child { ' +
+                            'background-color: #bbbbbb!important; -webkit-print-color-adjust:exact;' +
+                        '}' +
+                        '.journal_block1>.span5:last-child {' +
+                            'background-color: #496cad!important; color: #fff!important; -webkit-print-color-adjust:exact; ' +
+                        '}' +
+                        '.journal_block1>.span5 {' +
+                            'background-color: #5cc7dd!important; color: #fff!important; -webkit-print-color-adjust:exact;' +
+                        '}' +
+                        '.saleSummaryCustomer .table.table-borderless.table-condensed tfoot .bg-total td {' +
+                            'background-color: #1C2633!important;' +
+                            'color: #fff!important; ' +
+                            '-webkit-print-color-adjust:exact;' +
+                        '}' +
+                        '</style>' +
+                    '</head>' +
+                    '<body><div class="saleSummaryCustomer" style="padding: 0 10px;">';
+            var htmlEnd =
+                    '</div></body>' +
+                    '</html>';
+
+            printableContent = $('#invFormContent').html();
+            doc.write(htmlStart + printableContent + htmlEnd);
+            doc.close();
+            setTimeout(function(){
+                win.print();
+                win.close();
+            },2000);
+        },
+        ExportExcel         : function(){
+            var workbook = new kendo.ooxml.Workbook({
+              sheets: [
+                {
+                  columns: [
+                    { autoWidth: true },
+                    { autoWidth: true },
+                    { autoWidth: true },
+                    { autoWidth: true },
+                  ],
+                  title: "Sale Detail by Customer",
+                  rows: this.exArray
+                }
+              ]
+            });
+            //save the file as Excel file with extension xlsx
+            kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "saleDetailCustomer.xlsx"});
+        }
+    });
 	// VENDOR SETTINGS
 	banhji.vendorSetting =  kendo.observable({
 		lang                : langVM,
@@ -41546,7 +42071,7 @@
 		topCustomerDS       : dataStore(apiUrl + "customer_modules/top_customer"),
 		topARDS             : dataStore(apiUrl + "customer_modules/top_ar"),
 		topProductDS        : dataStore(apiUrl + "inventory_modules/top_sale_product"),
-		graphDS             : dataStore(apiUrl + 'customer_modules/monthly_sale'),
+		graphDS             : dataStore(apiUrl + 'customer_modules/Month_sale'),
 		sale                : 0,
 		sale_customer       : 0,
 		sale_product        : 0,
@@ -42299,7 +42824,7 @@
 	banhji.itemDashBoard = kendo.observable({
 		lang                : langVM,
 		dataSource          : dataStore(apiUrl + "inventory_modules/dashboard"),
-		graphDS             : dataStore(apiUrl + "inventory_modules/monthly_item_purchase_sale"),
+		graphDS             : dataStore(apiUrl + "inventory_modules/Month_item_purchase_sale"),
 		obj                 : {},
 		pageLoad            : function(){
 			this.loadData();
@@ -45233,7 +45758,7 @@
 		statusObj           : banhji.source.statusObj,
 		amtDueColor         : banhji.source.amtDueColor,
 		confirmMessage      : banhji.source.confirmMessage,
-		frequencyList       : banhji.source.frequencyList,
+		dateUnitList       : banhji.source.dateUnitList,
 		monthOptionList     : banhji.source.monthOptionList,
 		monthList           : banhji.source.monthList,
 		weekDayList         : banhji.source.weekDayList,
@@ -45769,7 +46294,7 @@
 				//Recurring
 				recurring_name      : "",
 				start_date          : new Date(),
-				frequency           : "Daily",
+				frequency           : "Day",
 				month_option        : "Day",
 				interval            : 1,
 				day                 : 1,
@@ -46279,28 +46804,28 @@
 			var obj = this.get("obj");
 
 			switch(obj.frequency) {
-				case "Daily":
+				case "Day":
 					this.set("showMonthOption", false);
 					this.set("showMonth", false);
 					this.set("showWeek", false);
 					this.set("showDay", false);
 
 					break;
-				case "Weekly":
+				case "Week":
 					this.set("showMonthOption", false);
 					this.set("showMonth", false);
 					this.set("showWeek", true);
 					this.set("showDay", false);
 
 					break;
-				case "Monthly":
+				case "Month":
 					this.set("showMonthOption", true);
 					this.set("showMonth", false);
 					this.set("showWeek", false);
 					this.set("showDay", true);
 
 					break;
-				case "Annually":
+				case "Annual":
 					this.set("showMonthOption", false);
 					this.set("showMonth", true);
 					this.set("showWeek", false);
@@ -46377,7 +46902,7 @@
 		}),
 		itemGroupDS             : banhji.source.itemGroupDS,
 		confirmMessage          : banhji.source.confirmMessage,
-		frequencyList           : banhji.source.frequencyList,
+		dateUnitList           : banhji.source.dateUnitList,
 		monthOptionList         : banhji.source.monthOptionList,
 		monthList               : banhji.source.monthList,
 		weekDayList             : banhji.source.weekDayList,
@@ -46799,7 +47324,7 @@
 				//Recurring
 				recurring_name          : "",
 				start_date              : new Date(),
-				frequency               : "Daily",
+				frequency               : "Day",
 				month_option            : "Day",
 				interval                : 1,
 				day                     : 1,
@@ -47129,28 +47654,28 @@
 			var obj = this.get("obj");
 
 			switch(obj.frequency) {
-				case "Daily":
+				case "Day":
 					this.set("showMonthOption", false);
 					this.set("showMonth", false);
 					this.set("showWeek", false);
 					this.set("showDay", false);
 
 					break;
-				case "Weekly":
+				case "Week":
 					this.set("showMonthOption", false);
 					this.set("showMonth", false);
 					this.set("showWeek", true);
 					this.set("showDay", false);
 
 					break;
-				case "Monthly":
+				case "Month":
 					this.set("showMonthOption", true);
 					this.set("showMonth", false);
 					this.set("showWeek", false);
 					this.set("showDay", true);
 
 					break;
-				case "Annually":
+				case "Annual":
 					this.set("showMonthOption", false);
 					this.set("showMonth", true);
 					this.set("showWeek", false);
@@ -47238,7 +47763,7 @@
 		}),
 		amtDueColor             : banhji.source.amtDueColor,
 		confirmMessage          : banhji.source.confirmMessage,
-		frequencyList           : banhji.source.frequencyList,
+		dateUnitList           : banhji.source.dateUnitList,
 		monthOptionList         : banhji.source.monthOptionList,
 		monthList               : banhji.source.monthList,
 		weekDayList             : banhji.source.weekDayList,
@@ -48030,7 +48555,7 @@
 				//Recurring
 				recurring_name      : "",
 				start_date          : new Date(),
-				frequency           : "Daily",
+				frequency           : "Day",
 				month_option        : "Day",
 				interval            : 1,
 				day                 : 1,
@@ -48441,28 +48966,28 @@
 			var obj = this.get("obj");
 
 			switch(obj.frequency) {
-				case "Daily":
+				case "Day":
 					this.set("showMonthOption", false);
 					this.set("showMonth", false);
 					this.set("showWeek", false);
 					this.set("showDay", false);
 
 					break;
-				case "Weekly":
+				case "Week":
 					this.set("showMonthOption", false);
 					this.set("showMonth", false);
 					this.set("showWeek", true);
 					this.set("showDay", false);
 
 					break;
-				case "Monthly":
+				case "Month":
 					this.set("showMonthOption", true);
 					this.set("showMonth", false);
 					this.set("showWeek", false);
 					this.set("showDay", true);
 
 					break;
-				case "Annually":
+				case "Annual":
 					this.set("showMonthOption", false);
 					this.set("showMonth", true);
 					this.set("showWeek", false);
@@ -48554,7 +49079,7 @@
 	banhji.itemReportCenter = kendo.observable({
 		lang                : langVM,
 		dataSource          : dataStore(apiUrl + "inventory_modules/dashboard"),
-		graphDS             : dataStore(apiUrl + "inventory_modules/monthly_item_purchase_sale"),
+		graphDS             : dataStore(apiUrl + "inventory_modules/Month_item_purchase_sale"),
 		obj                 : {},
 		pageLoad            : function(){
 			this.loadData();
@@ -52250,7 +52775,7 @@
 		jobDS               : banhji.source.jobList,
 		accountDS           : banhji.source.accountList,
 		confirmMessage      : banhji.source.confirmMessage,
-		frequencyList       : banhji.source.frequencyList,
+		dateUnitList       : banhji.source.dateUnitList,
 		monthOptionList     : banhji.source.monthOptionList,
 		monthList           : banhji.source.monthList,
 		weekDayList         : banhji.source.weekDayList,
@@ -52558,7 +53083,7 @@
 				//Recuring
 				recurring_name      : "",
 				start_date          : new Date(),
-				frequency           : "Daily",
+				frequency           : "Day",
 				month_option        : "Day",
 				interval            : 1,
 				day                 : 1,
@@ -52924,28 +53449,28 @@
 			var obj = this.get("obj");
 
 			switch(obj.frequency) {
-				case "Daily":
+				case "Day":
 					this.set("showMonthOption", false);
 					this.set("showMonth", false);
 					this.set("showWeek", false);
 					this.set("showDay", false);
 
 					break;
-				case "Weekly":
+				case "Week":
 					this.set("showMonthOption", false);
 					this.set("showMonth", false);
 					this.set("showWeek", true);
 					this.set("showDay", false);
 
 					break;
-				case "Monthly":
+				case "Month":
 					this.set("showMonthOption", true);
 					this.set("showMonth", false);
 					this.set("showWeek", false);
 					this.set("showDay", true);
 
 					break;
-				case "Annually":
+				case "Annual":
 					this.set("showMonthOption", false);
 					this.set("showMonth", true);
 					this.set("showWeek", false);
@@ -53031,7 +53556,7 @@
 			{id: 'Transfer', name: 'Transfer'}
 		],
 		confirmMessage      : banhji.source.confirmMessage,
-		frequencyList       : banhji.source.frequencyList,
+		dateUnitList       : banhji.source.dateUnitList,
 		monthOptionList     : banhji.source.monthOptionList,
 		monthList           : banhji.source.monthList,
 		weekDayList         : banhji.source.weekDayList,
@@ -53346,7 +53871,7 @@
 				//Recurring
 				recurring_name      : "",
 				start_date          : new Date(),
-				frequency           : "Daily",
+				frequency           : "Day",
 				month_option        : "Day",
 				interval            : 1,
 				day                 : 1,
@@ -53692,28 +54217,28 @@
 			var obj = this.get("obj");
 
 			switch(obj.frequency) {
-				case "Daily":
+				case "Day":
 					this.set("showMonthOption", false);
 					this.set("showMonth", false);
 					this.set("showWeek", false);
 					this.set("showDay", false);
 
 					break;
-				case "Weekly":
+				case "Week":
 					this.set("showMonthOption", false);
 					this.set("showMonth", false);
 					this.set("showWeek", true);
 					this.set("showDay", false);
 
 					break;
-				case "Monthly":
+				case "Month":
 					this.set("showMonthOption", true);
 					this.set("showMonth", false);
 					this.set("showWeek", false);
 					this.set("showDay", true);
 
 					break;
-				case "Annually":
+				case "Annual":
 					this.set("showMonthOption", false);
 					this.set("showMonth", true);
 					this.set("showWeek", false);
@@ -53810,7 +54335,7 @@
 		}),
 		amtDueColor         : banhji.source.amtDueColor,
 		confirmMessage      : banhji.source.confirmMessage,
-		frequencyList       : banhji.source.frequencyList,
+		dateUnitList       : banhji.source.dateUnitList,
 		monthOptionList     : banhji.source.monthOptionList,
 		monthList           : banhji.source.monthList,
 		weekDayList         : banhji.source.weekDayList,
@@ -54112,7 +54637,7 @@
 				//Recurring
 				recurring_name      : "",
 				start_date          : new Date(),
-				frequency           : "Daily",
+				frequency           : "Day",
 				month_option        : "Day",
 				interval            : 1,
 				day                 : 1,
@@ -54401,28 +54926,28 @@
 			var obj = this.get("obj");
 
 			switch(obj.frequency) {
-				case "Daily":
+				case "Day":
 					this.set("showMonthOption", false);
 					this.set("showMonth", false);
 					this.set("showWeek", false);
 					this.set("showDay", false);
 
 					break;
-				case "Weekly":
+				case "Week":
 					this.set("showMonthOption", false);
 					this.set("showMonth", false);
 					this.set("showWeek", true);
 					this.set("showDay", false);
 
 					break;
-				case "Monthly":
+				case "Month":
 					this.set("showMonthOption", true);
 					this.set("showMonth", false);
 					this.set("showWeek", false);
 					this.set("showDay", true);
 
 					break;
-				case "Annually":
+				case "Annual":
 					this.set("showMonthOption", false);
 					this.set("showMonth", true);
 					this.set("showWeek", false);
@@ -54547,7 +55072,7 @@
 		attachmentDS        : dataStore(apiUrl + "attachments"),
 		amtDueColor         : banhji.source.amtDueColor,
 		confirmMessage      : banhji.source.confirmMessage,
-		frequencyList       : banhji.source.frequencyList,
+		dateUnitList       : banhji.source.dateUnitList,
 		monthOptionList     : banhji.source.monthOptionList,
 		monthList           : banhji.source.monthList,
 		weekDayList         : banhji.source.weekDayList,
@@ -54993,7 +55518,7 @@
 				//Recurring
 				recurring_name      : "",
 				start_date          : new Date(),
-				frequency           : "Daily",
+				frequency           : "Day",
 				month_option        : "Day",
 				interval            : 1,
 				day                 : 1,
@@ -55530,28 +56055,28 @@
 			var obj = this.get("obj");
 
 			switch(obj.frequency) {
-				case "Daily":
+				case "Day":
 					this.set("showMonthOption", false);
 					this.set("showMonth", false);
 					this.set("showWeek", false);
 					this.set("showDay", false);
 
 					break;
-				case "Weekly":
+				case "Week":
 					this.set("showMonthOption", false);
 					this.set("showMonth", false);
 					this.set("showWeek", true);
 					this.set("showDay", false);
 
 					break;
-				case "Monthly":
+				case "Month":
 					this.set("showMonthOption", true);
 					this.set("showMonth", false);
 					this.set("showWeek", false);
 					this.set("showDay", true);
 
 					break;
-				case "Annually":
+				case "Annual":
 					this.set("showMonthOption", false);
 					this.set("showMonth", true);
 					this.set("showWeek", false);
@@ -61413,7 +61938,7 @@
 								//Recurring
 								recurring_name      : "",
 								start_date          : new Date(),
-								frequency           : "Daily",
+								frequency           : "Day",
 								month_option        : "Day",
 								interval            : 1,
 								day                 : 1,
@@ -61845,7 +62370,7 @@
 								//Recurring
 								recurring_name      : "",
 								start_date          : new Date(),
-								frequency           : "Daily",
+								frequency           : "Day",
 								month_option        : "Day",
 								interval            : 1,
 								day                 : 1,
@@ -63998,7 +64523,7 @@
 		statusObj           : banhji.source.statusObj,
 		amtDueColor         : banhji.source.amtDueColor,
 		confirmMessage      : banhji.source.confirmMessage,
-		frequencyList       : banhji.source.frequencyList,
+		dateUnitList       : banhji.source.dateUnitList,
 		monthOptionList     : banhji.source.monthOptionList,
 		monthList           : banhji.source.monthList,
 		weekDayList         : banhji.source.weekDayList,
@@ -64734,7 +65259,7 @@
 				//Recurring
 				recurring_name      : "",
 				start_date          : new Date(),
-				frequency           : "Daily",
+				frequency           : "Day",
 				month_option        : "Day",
 				interval            : 1,
 				day                 : 1,
@@ -65132,28 +65657,28 @@
 			var obj = this.get("obj");
 
 			switch(obj.frequency) {
-				case "Daily":
+				case "Day":
 					this.set("showMonthOption", false);
 					this.set("showMonth", false);
 					this.set("showWeek", false);
 					this.set("showDay", false);
 
 					break;
-				case "Weekly":
+				case "Week":
 					this.set("showMonthOption", false);
 					this.set("showMonth", false);
 					this.set("showWeek", true);
 					this.set("showDay", false);
 
 					break;
-				case "Monthly":
+				case "Month":
 					this.set("showMonthOption", true);
 					this.set("showMonth", false);
 					this.set("showWeek", false);
 					this.set("showDay", true);
 
 					break;
-				case "Annually":
+				case "Annual":
 					this.set("showMonthOption", false);
 					this.set("showMonth", true);
 					this.set("showWeek", false);
@@ -65510,7 +66035,7 @@
 		topCustomerDS       : dataStore(apiUrl + "customer_modules/top_customer"),
 		topARDS             : dataStore(apiUrl + "customer_modules/top_ar"),
 		topProductDS        : dataStore(apiUrl + "inventory_modules/top_sale_product"),
-		graphDS             : dataStore(apiUrl + "customer_modules/monthly_sale"),
+		graphDS             : dataStore(apiUrl + "customer_modules/Month_sale"),
 		windowVisible       : false,
 		window1Visible      : false,
 		windowItemVisible   : false,
@@ -65677,7 +66202,7 @@
 		statusObj           : banhji.source.statusObj,
 		amtDueColor         : banhji.source.amtDueColor,
 		confirmMessage      : banhji.source.confirmMessage,
-		frequencyList       : banhji.source.frequencyList,
+		dateUnitList       : banhji.source.dateUnitList,
 		monthOptionList     : banhji.source.monthOptionList,
 		monthList           : banhji.source.monthList,
 		weekDayList         : banhji.source.weekDayList,
@@ -66128,7 +66653,7 @@
 				//Recurring
 				recurring_name      : "",
 				start_date          : new Date(),
-				frequency           : "Daily",
+				frequency           : "Day",
 				month_option        : "Day",
 				interval            : 1,
 				day                 : 1,
@@ -66464,28 +66989,28 @@
 			var obj = this.get("obj");
 
 			switch(obj.frequency) {
-				case "Daily":
+				case "Day":
 					this.set("showMonthOption", false);
 					this.set("showMonth", false);
 					this.set("showWeek", false);
 					this.set("showDay", false);
 
 					break;
-				case "Weekly":
+				case "Week":
 					this.set("showMonthOption", false);
 					this.set("showMonth", false);
 					this.set("showWeek", true);
 					this.set("showDay", false);
 
 					break;
-				case "Monthly":
+				case "Month":
 					this.set("showMonthOption", true);
 					this.set("showMonth", false);
 					this.set("showWeek", false);
 					this.set("showDay", true);
 
 					break;
-				case "Annually":
+				case "Annual":
 					this.set("showMonthOption", false);
 					this.set("showMonth", true);
 					this.set("showWeek", false);
@@ -66566,7 +67091,7 @@
 		}),
 		amtDueColor             : banhji.source.amtDueColor,
 		confirmMessage          : banhji.source.confirmMessage,
-		frequencyList           : banhji.source.frequencyList,
+		dateUnitList           : banhji.source.dateUnitList,
 		monthOptionList         : banhji.source.monthOptionList,
 		monthList               : banhji.source.monthList,
 		weekDayList             : banhji.source.weekDayList,
@@ -67371,7 +67896,7 @@
 				//Recurring
 				recurring_name      : "",
 				start_date          : new Date(),
-				frequency           : "Daily",
+				frequency           : "Day",
 				month_option        : "Day",
 				interval            : 1,
 				day                 : 1,
@@ -67782,28 +68307,28 @@
 			var obj = this.get("obj");
 
 			switch(obj.frequency) {
-				case "Daily":
+				case "Day":
 					this.set("showMonthOption", false);
 					this.set("showMonth", false);
 					this.set("showWeek", false);
 					this.set("showDay", false);
 
 					break;
-				case "Weekly":
+				case "Week":
 					this.set("showMonthOption", false);
 					this.set("showMonth", false);
 					this.set("showWeek", true);
 					this.set("showDay", false);
 
 					break;
-				case "Monthly":
+				case "Month":
 					this.set("showMonthOption", true);
 					this.set("showMonth", false);
 					this.set("showWeek", false);
 					this.set("showDay", true);
 
 					break;
-				case "Annually":
+				case "Annual":
 					this.set("showMonthOption", false);
 					this.set("showMonth", true);
 					this.set("showWeek", false);
@@ -68250,7 +68775,7 @@
 		topCustomerDS       : dataStore(apiUrl + "customer_modules/top_customer"),
 		topARDS             : dataStore(apiUrl + "customer_modules/top_ar"),
 		topProductDS        : dataStore(apiUrl + "inventory_modules/top_sale_product"),
-		graphDS             : dataStore(apiUrl + "customer_modules/monthly_sale"),
+		graphDS             : dataStore(apiUrl + "customer_modules/Month_sale"),
 		windowVisible       : false,
 		window1Visible      : false,
 		windowItemVisible   : false,
@@ -69253,7 +69778,7 @@
 									//Recurring
 									recurring_name          : "",
 									start_date              : new Date(),
-									frequency               : "Daily",
+									frequency               : "Day",
 									month_option            : "Day",
 									interval                : 1,
 									day                     : 1,
@@ -69474,7 +69999,7 @@
 									//Recurring
 									recurring_name          : "",
 									start_date              : new Date(),
-									frequency               : "Daily",
+									frequency               : "Day",
 									month_option            : "Day",
 									interval                : 1,
 									day                     : 1,
@@ -69935,6 +70460,7 @@
 		payablesAgingDetail: new kendo.Layout("#payablesAgingDetail", {model: banhji.payablesAgingDetail}),
 		listBillsPaid: new kendo.Layout("#listBillsPaid", {model: banhji.listBillsPaid}),
 		billPaymentList: new kendo.Layout("#billPaymentList", {model: banhji.billPaymentList}),
+		purchaseOrderbyItem: new kendo.Layout("#purchaseOrderbyItem", {model: banhji.purchaseOrderbyItem}),
 		productServiceList: new kendo.Layout("#productServiceList", {model: banhji.vendorSale}),
 		supplierList: new kendo.Layout("#supplierList", {model: banhji.supplierList}),
 		vendorRecurring: new kendo.Layout("#vendorRecurring", {model: banhji.vendorRecurring}),
@@ -74231,6 +74757,24 @@
 			}
 		}
 	});
+	banhji.router.route("/purchase_order_byItem", function(){
+        if(!banhji.userManagement.getLogin()){
+            banhji.router.navigate('/manage');
+        }else{
+            banhji.view.layout.showIn("#content", banhji.view.purchaseOrderbyItem);
+
+            var vm = banhji.purchaseOrderbyItem;
+            banhji.userManagement.addMultiTask("Sale Detail By Customer","purchase_order_byItem",null);
+
+            if(banhji.pageLoaded["purchase_order_byItem"]==undefined){
+                banhji.pageLoaded["purchase_order_byItem"] = true;
+
+                vm.sorterChanges();
+            }
+
+            vm.pageLoad();
+        }
+    });
 	// VENDOR SETTINGS
 	banhji.router.route("/vendor_setting", function(){
 		banhji.accessMod.query({

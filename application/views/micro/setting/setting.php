@@ -948,8 +948,8 @@
 									<li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#itemCategory"><span class="hidden-sm-up"><i class="ti-layout-grid2-thumb"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.category"></span></a> </li>
 								    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#itemGroup"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.group"></span></a> </li>								    
 								    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#itemUom"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.uom"></span></a> </li>
-								    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#itemPrefixSetting"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.prefix_setting"></span></a> </li>
-								    
+								    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#itemBrand"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.brand"></span></a> </li>
+								    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#itemPrefixSetting"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.prefix_setting"></span></a> </li>						    
 								    
 							    </ul>
 				                <div class="tab-content" style="float: left; width: 83%; padding: 10px;">
@@ -1085,6 +1085,43 @@
 											   	</div>
 											</div>
 										</div>
+					                </div>
+					                <div class="tab-pane" id="itemBrand" role="tabpanel">
+					                	<div class="row">
+											<div class="col-md-12">
+												<div class="hidden-md-up marginBottom">
+													<h3 data-bind="text: lang.lang.brand"></h2>
+												</div>
+
+												<div class="row">
+													<div class="col-md-12">
+													    <input style="height: 35px;" class="col-md-3 marginRight marginBottom" id="appendedInputButtons" type="text" placeholder="Code..." data-bind="value: brand_code">
+													    <input style="height: 35px;" class="col-md-3 marginRight marginBottom" id="appendedInputButtons" type="text" placeholder="New Brand..." data-bind="value: brand_name">
+													    <input class="col-md-3 marginRight marginBottom" id="appendedInputButtons" type="text" placeholder="abbr..." data-bind="value: brand_abbr">
+													    <button style="width: 173px;" class="btn waves-effect waves-light btn-block btn-info  marginBottom" type="button" data-bind="click: addBrand"><i class="icon-plus marginRight"></i> <span data-bind="text: lang.lang.add_brand"></span></button>
+													</div>
+												</div>
+
+												<div class="row">
+													<div class="col-md-12  table-responsive">
+												    	<table class="table color-table dark-table">
+												    		<thead>
+	            												<tr>
+										            				<th data-bind="text: lang.lang.code"></th>
+										            				<th data-bind="text: lang.lang.name"></th>
+										            				<th data-bind="text: lang.lang.abbr"></th>
+										            				<th></th>
+										            			</tr>
+										            		</thead>
+										            		<tbody data-role="listview"
+										            			data-edit-template="itemSetting-edit-brand-template"
+												                data-template="itemSetting-brand-template"
+												                data-bind="source: brandDS"></tbody>
+												    	</table>
+													</div>
+											   	</div>
+											</div>
+										</div>	
 					                </div>
 					                <div class="tab-pane" id="itemPrefixSetting" role="tabpanel">
 					                	<div class="row">

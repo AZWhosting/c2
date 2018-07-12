@@ -2173,7 +2173,609 @@
 		</div>
 	</div>
 </script>
+<script id="internalUsage" type="text/x-kendo-template">
+	<div class="page-wrapper ">
+        <div id="example" class="container-fluid">
+        	<div class="row marginTop15">
+                <div class="col-md-12">
+                	<div class="card">
+                		<div class="btn-close" onclick="javascript:window.history.back()"><i class="ti-close"></i></div>
+                		<div class="card-body">
 
+					        <h2 data-bind="text: lang.lang.internal_usage"></h2>						    
+
+							<!-- Upper Part -->
+							<div class="row">
+								<div class="span4">
+									<div class="box-generic well" style="height: 150px;">
+										<table class="table table-borderless table-condensed cart_total">
+											<tr>
+												<td style="width: 50px;"><span data-bind="text: lang.lang.no_"></span></td>
+												<td>
+													<input id="txtNumber" name="txtNumber" class="k-textbox"
+															data-bind="value: obj.number,
+																		disabled: obj.is_recurring,
+																		events:{change:checkExistingNumber}"
+															required data-required-msg="required"
+															placeholder="eg. ABC00001" style="width: 83%; float: left; margin-right: 5px;" />
+													<div style="padding-left: 0; width: 25px; float: left;">
+														<a class="glyphicons no-js qrcode" data-bind="click: generateNumber" title="Generate Number" style="float: left; margin: 2px 0 0 0 ;"><i></i></a>
+													</div>
+												</td>
+											</tr>
+											<tr>
+												<td><span data-bind="text: lang.lang.date"></span></td>
+												<td class="right">
+													<input id="issuedDate" name="issuedDate"
+															data-role="datepicker"
+															data-format="dd-MM-yyyy"
+															data-parse-formats="yyyy-MM-dd HH:mm:ss"
+															data-bind="value: obj.issued_date,
+																		events:{ change : setRate }"
+															required data-required-msg="required"
+															style="width:100%;" />
+												</td>
+											</tr>
+										</table>
+
+										<div class="strong" style="background: #eee;  border: 1px solid #ddd; width: 100%; padding: 10px;" align="center"
+											data-bind="style: { backgroundColor: amtDueColor}">
+											<div align="left"><span data-bind="text: lang.lang.total_usage"></span></div>
+											<h2 data-bind="text: total" align="right"></h2>
+										</div>
+
+									</div>
+								</div>
+
+								<div class="span8">
+									<div class="box-generic-noborder" style="min-height: 234px !important">
+
+									    <!-- Tabs Heading -->
+									    <div class="tabsbar tabsbar-2">
+									        <ul class="row-fluid row-merge">
+									        	<li class="span1 glyphicons circle_info active"><a href="#tab-1" data-toggle="tab"><i></i> </a>
+									            </li>
+									            <li class="span1 glyphicons adress_book"><a href="#tab-2" data-toggle="tab"><i></i> </a>
+									            </li>
+									            <li class="span1 glyphicons paperclip"><a href="#tab-3" data-toggle="tab"><i></i></a>
+									            </li>
+									            <li class="span1 glyphicons history"><a href="#tab-4" data-toggle="tab"><i></i></a>
+									            </li>
+									            <!-- <li class="span1 glyphicons show_liness"><a href="#tab3-4" data-toggle="tab"><i></i></a></li>	 -->
+									        </ul>
+									    </div>
+									    <!-- // Tabs Heading END -->
+
+									    <div class="tab-content">
+
+									    	<!-- Options Tab content -->
+									        <div class="tab-pane active" id="tab-1">
+									           	<table style="margin-bottom: 0;" class="table table-borderless table-condensed cart_total">
+													<tr>
+														<td><span data-bind="text: lang.lang.segments"></span></td>
+														<td>
+															<select data-role="multiselect"
+																   data-value-primitive="true"
+																   data-header-template="segment-header-tmpl"
+																   data-item-template="segment-list-tmpl"
+																   data-value-field="id"
+																   data-text-field="code"
+																   data-bind="value: obj.segments,
+																   			source: segmentItemDS,
+																   			events:{ change: segmentChanges }"
+																   data-placeholder="Add Segment.."
+																   style="width: 100%" /></select>
+														</td>
+													</tr>
+													<tr>
+														<td><span data-bind="text: lang.lang.job"></span></td>
+														<td>
+															<input id="ddlJob" name="ddlJob"
+																   data-role="dropdownlist"
+																   data-header-template="job-header-tmpl"
+																   data-template="job-list-tmpl"
+																   data-auto-bind="false"
+												                   data-value-primitive="true"
+												                   data-text-field="name"
+												                   data-value-field="id"
+												                   data-bind="value: obj.job_id,
+												                   			source: jobDS"
+												                   data-option-label="Select job..."
+												                   style="width: 100%" />
+														</td>
+													</tr>
+									            </table>
+									        </div>
+									        <!-- // Options Tab content END -->
+
+									        <!-- Address Tab content -->
+									        <div class="tab-pane" id="tab-2">
+									        	<span data-bind="text: lang.lang.from"></span>
+												<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.bill_to" placeholder="Billing to ..."></textarea>
+
+												<span data-bind="text: lang.lang.to"></span>
+												<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.ship_to" placeholder="Shipping to ..."></textarea>
+
+									        </div>
+									        <!-- // Address Tab content END -->
+
+									        <!-- Attach Tab content -->
+									        <div class="tab-pane" id="tab-3">
+									         	<p><span data-bind="text: lang.lang.file_type"></span> [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>
+
+									            <input id="files" name="files"
+								                   type="file"
+								                   data-role="upload"
+								                   data-show-file-list="false"
+								                   data-bind="events: {
+						                   				select: onSelect
+								                   }">
+
+									            <table class="table table-bordered">
+											        <thead>
+											            <tr>
+											                <th data-bind="text: lang.lang.file_name"></th>
+											                <th data-bind="text: lang.lang.description"></th>
+											                <th data-bind="text: lang.lang.date"></th>
+											                <th style="width: 13%;"></th>
+											            </tr>
+											        </thead>
+											        <tbody data-role="listview"
+											        		data-template="attachment-list-tmpl"
+											        		data-auto-bind="false"
+											        		data-bind="source: attachmentDS"></tbody>
+											    </table>
+
+									        </div>
+									        <!-- // Attach Tab content END -->
+
+									        <!-- Recuring Tab content -->
+									        <div class="tab-pane" id="tab-4">
+
+									            <table style="width: 100%" class="table borderless">
+									            	<tr align="right">
+									            		<td style="border-top: 0;">
+									            			<span data-bind="text: lang.lang.name"></span>
+									            		</td>
+									            		<td style="border-top: 0;">
+									            			<input id="txtRecurringName" name="txtRecurringName"
+									            					class="k-textbox"
+									            					data-bind="value: obj.recurring_name"
+									            					placeholder="Recurring name.."
+									            					style="width: 43%; " />
+
+									            			<span data-bind="text: lang.lang.start"></span>
+
+											                <input data-role="datepicker"
+																	data-format="dd-MM-yyyy"
+																	data-parse-formats="yyyy-MM-dd"
+																	data-bind="value: obj.start_date"
+																	style="width: 40%; " />
+									            		</td>
+									            	</tr>
+									            	<tr align="right">
+									            		<td style="border-top: 0;">
+										            		<span data-bind="text: lang.lang.every"></span>
+										            	</td>
+									            		<td style="border-top: 0;">
+										            		<input data-role="numerictextbox"
+											                   data-format="n0"
+											                   data-min="0"
+											                   data-bind="value: obj.interval"
+											                   style="width: 45%; " />
+
+										            		<input data-role="dropdownlist"
+												                   data-value-primitive="true"
+												                   data-text-field="text"
+												                   data-value-field="value"
+												                   data-bind="value: obj.frequency,
+												                              source: dateUnitList,
+												                              events: { change: frequencyChanges }"
+												                   style="width: 45%;" />
+										            	</td>
+									            	</tr>
+										            <tr align="right">
+										            	<td style="border-top: 0;">
+										            		<span data-bind="text: lang.lang.on"></span>
+										            	</td>
+										            	<td style="border-top: 0;">
+
+										            		<input data-role="dropdownlist"
+												                   data-value-primitive="true"
+												                   data-text-field="name"
+												                   data-value-field="id"
+												                   data-bind="value: obj.month,
+												                   			  visible: showMonth,
+												                              source: monthList"
+												                   style="width: 45%;" />
+
+										            		<input data-role="dropdownlist"
+												                   data-value-primitive="true"
+												                   data-text-field="name"
+												                   data-value-field="id"
+												                   data-bind="value: obj.month_option,
+												                   			  visible: showMonthOption,
+												                              source: monthOptionList,
+												                              events: { change: monthOptionChanges }"
+												                   style="width: 45%;" />
+
+										            		<input data-role="dropdownlist"
+												                   data-value-primitive="true"
+												                   data-text-field="name"
+												                   data-value-field="id"
+												                   data-bind="value: obj.week,
+												                   			  visible: showWeek,
+												                              source: weekDayList"
+												                   style="width: 45%;" />
+
+										            		<input data-role="dropdownlist"
+												                   data-value-primitive="true"
+												                   data-text-field="name"
+												                   data-value-field="id"
+												                   data-bind="value: obj.day,
+												                   			  visible: showDay,
+												                              source: dayList"
+												                   style="width: 45%;" />
+
+										            	</td>
+										            </tr>
+									            </table>
+
+									            <span id="saveRecurring" class="btn btn-icon btn-default glyphicons history" style="float: right; margin-top: -12px;"><i></i> <span data-bind="text: lang.lang.save_recurring"></span></span>
+
+									        </div>
+									        <!-- // Recuring Tab content END -->
+
+									        <div class="tab-pane saleSummaryCustomer" id="tab3-4">
+												<table class="table table-borderless table-condensed">
+											        <thead>
+											            <tr>
+											                <th>NUMBER</th>
+											                <th>ACCOUNT</th>
+											                <th class="right">DEBITS (Dr)</th>
+											                <th class="right">CREDITS (Cr)</th>
+											            </tr>
+											        </thead>
+											        <tbody>
+											        	<tr>
+											        		<td>1</td>
+											        		<td>2</td>
+											        		<td class="right">3</td>
+											        		<td class="right">4</td>
+											        	</tr>
+											        	<tr>
+											        		<td>1</td>
+											        		<td>2</td>
+											        		<td class="right">3</td>
+											        		<td class="right">4</td>
+											        	</tr>
+											        </tbody>
+											    </table>
+											</div>
+
+									    </div>
+									</div>
+							    </div>
+							</div>
+
+							<!-- Middle Part -->
+							<div class="row">
+								<div class="box-generic-noborder">
+
+								    <!-- Tabs Heading -->
+								    <div class="tabsbar tabsbar-2">
+								        <ul class="row-fluid row-merge">
+								        	<li class="span3 active" style="width: 135px;"><a href="#tab-FROM" data-toggle="tab">FROM</a>
+								            </li>
+								            <li class="span3 " style="width: 135px !important;"><a href="#tab-TO" data-toggle="tab">TO</a>
+								            </li>
+								        </ul>
+								    </div>
+								    <!-- // Tabs Heading END -->
+
+								    <div class="tab-content">
+
+								    	<!-- FROM -->
+								        <div class="tab-pane active" id="tab-FROM">
+
+								        	<!-- From Item Line -->
+											<div id="grid" data-role="grid" class="costom-grid"
+										    	 data-column-menu="true"
+										    	 data-reorderable="true"
+										    	 data-scrollable="false"
+										    	 data-resizable="true"
+										    	 data-editable="true"
+								                 data-columns="[
+												    {
+												    	title:'NO.',
+												    	width: '50px',
+												    	attributes: { style: 'text-align: center;' },
+												        template: function (dataItem) {
+												        	var rowIndex = banhji.internalUsage.lineDS.indexOf(dataItem)+1;
+												        	return '<i class=icon-trash data-bind=click:removeRow></i>' + ' ' + rowIndex;
+												      	}
+												    },
+								                 	{ field: 'item', title: 'PRODUCTS/SERVICES', editor: itemEditor, template: '#=item.name#', width: '170px' },
+						                            { field: 'description', title:'DESCRIPTION', width: '250px' },
+						                            {
+													    field: 'quantity',
+													    title: 'QTY',
+													    format: '{0:n}',
+													    editor: numberTextboxEditor,
+													    width: '120px',
+													    attributes: { style: 'text-align: right;' }
+													},
+						                            {
+						                            	field: 'measurement',
+						                            	title: 'UOM',
+						                            	editor: measurementEditor,
+						                            	template: '#=measurement?measurement.measurement:banhji.emptyString#',
+						                            	width: '80px'
+						                            },
+						                            {
+													    field: 'cost',
+													    title: 'COST',
+													    format: '{0:n}',
+													    editable: 'false',
+													    editor: numberTextboxEditor,
+													    width: '120px',
+													    attributes: { style: 'text-align: right;' }
+													},
+													{ field: 'amount', title:'AMOUNT', format: '{0:n}', editable: 'false', attributes: { style: 'text-align: right;' }, width: '120px' }
+						                         ]"
+						                         data-auto-bind="false"
+								                 data-bind="source: lineDS" ></div>
+
+											<button class="btn btn-inverse" data-bind="click: addRow"><i class="icon-plus icon-white"></i></button>
+
+											<br><br>
+
+								        	<!-- From Account Line -->
+											<div data-role="grid" class="costom-grid"
+										    	 data-column-menu="true"
+										    	 data-reorderable="true"
+										    	 data-scrollable="false"
+										    	 data-resizable="true"
+										    	 data-editable="true"
+								                 data-columns="[
+												    {
+												    	title:'NO.',
+												    	width: '50px',
+												    	attributes: { style: 'text-align: center;' },
+												        template: function (dataItem) {
+												        	var rowIndex = banhji.internalUsage.accountLineDS.indexOf(dataItem)+1;
+												        	return '<i class=icon-trash data-bind=click:removeRowAccount></i>' + ' ' + rowIndex;
+												      	}
+												    },
+								                 	{ field: 'account', title: 'ACCOUNT', editor: accountEditor, template: '#=account.name#', width: '300px' },
+						                            { field: 'description', title:'DESCRIPTION', width: '300px' },
+						                            {
+													    field: 'amount',
+													    title: 'AMOUNT',
+													    format: '{0:n}',
+													    editor: numberTextboxEditor,
+													    width: '150px',
+													    attributes: { style: 'text-align: right;' }
+													}
+						                         ]"
+						                         data-auto-bind="false"
+								                 data-bind="source: accountLineDS" ></div>
+
+											<button class="btn btn-inverse" data-bind="click: addRowAccount"><i class="icon-plus icon-white"></i></button>
+
+								        </div>
+								        <!-- // Item Line & Account Line END -->
+
+								        <!-- TO -->
+								        <div class="tab-pane" id="tab-TO">
+
+											<div class="row-fluid">
+
+												<!-- To Item Line -->
+												<div id="grid" data-role="grid" class="costom-grid"
+											    	 data-column-menu="true"
+											    	 data-reorderable="true"
+											    	 data-scrollable="false"
+											    	 data-resizable="true"
+											    	 data-editable="true"
+									                 data-columns="[
+													    {
+													    	title:'NO.',
+													    	width: '50px',
+													    	attributes: { style: 'text-align: center;' },
+													        template: function (dataItem) {
+													        	var rowIndex = banhji.internalUsage.toItemLineDS.indexOf(dataItem)+1;
+													        	return '<i class=icon-trash data-bind=click:removeRowTo></i>' + ' ' + rowIndex;
+													      	}
+													    },
+									                 	{ field: 'item', title: 'PRODUCTS/SERVICES', editor: itemEditor, template: '#=item.name#', width: '170px' },
+							                            { field: 'description', title:'DESCRIPTION', width: '250px' },
+							                            {
+														    field: 'quantity',
+														    title: 'QTY',
+														    format: '{0:n}',
+														    editor: numberTextboxEditor,
+														    width: '120px',
+														    attributes: { style: 'text-align: right;' }
+														},
+							                            {
+							                            	field: 'measurement',
+							                            	title: 'UOM',
+							                            	editor: measurementEditor,
+							                            	template: '#=measurement?measurement.measurement:banhji.emptyString#',
+							                            	width: '80px'
+							                            },
+							                            {
+														    field: 'cost',
+														    title: 'COST',
+														    format: '{0:n}',
+														    editor: numberTextboxEditor,
+														    width: '120px',
+														    attributes: { style: 'text-align: right;' }
+														},
+														{ field: 'amount', title:'AMOUNT', format: '{0:n}', editable: 'false', attributes: { style: 'text-align: right;' }, width: '120px' }
+							                         ]"
+							                         data-auto-bind="false"
+									                 data-bind="source: toItemLineDS" ></div>
+
+											    <button class="btn btn-inverse" data-bind="click: addRowTo"><i class="icon-plus icon-white"></i></button>
+
+												<br><br>
+
+												<!-- To Account Line -->
+												<div data-role="grid" class="costom-grid"
+											    	 data-column-menu="true"
+											    	 data-reorderable="true"
+											    	 data-scrollable="false"
+											    	 data-resizable="true"
+											    	 data-editable="true"
+									                 data-columns="[
+													    {
+													    	title:'NO.',
+													    	width: '50px',
+													    	attributes: { style: 'text-align: center;' },
+													        template: function (dataItem) {
+													        	var rowIndex = banhji.internalUsage.toAccountLineDS.indexOf(dataItem)+1;
+													        	return '<i class=icon-trash data-bind=click:removeRowAccountTo></i>' + ' ' + rowIndex;
+													      	}
+													    },
+									                 	{ field: 'account', title: 'ACCOUNT', editor: toAccountEditor, template: '#=account.name#', width: '300px' },
+							                            { field: 'description', title:'DESCRIPTION', width: '300px' },
+							                            {
+														    field: 'amount',
+														    title: 'AMOUNT',
+														    format: '{0:n}',
+														    editor: numberTextboxEditor,
+														    width: '150px',
+														    attributes: { style: 'text-align: right;' }
+														}
+							                         ]"
+							                         data-auto-bind="false"
+									                 data-bind="source: toAccountLineDS" ></div>
+
+											    <button class="btn btn-inverse" data-bind="click: addRowAccountTo"><i class="icon-plus icon-white"></i></button>
+
+											</div>
+
+								        </div>
+
+								    </div>
+								</div>
+
+
+								<!-- Bottom part -->
+					            <div class="row-fluid">
+
+									<!-- Column -->
+									<div class="span6 hidden-print">
+
+										<!-- Add New Item -->
+										<ul class="topnav addNew">
+											<li role="presentation" class="dropdown ">
+										  		<a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+										  			<span data-bind="text: lang.lang.add_new_item"></span>
+							    					<span class="caret"></span>
+										  		</a>
+									  			<ul class="dropdown-menu addNewItem">
+									  				<li><a href='#/item'><span data-bind="text: lang.lang.add_inventory_for_sale"></span></a></li>
+									  				<li><a href='#/non_inventory_part'><span data-bind="text: lang.lang.add_noninventory_for_sale"></span></a></li>
+									  				<li><a href='#/item_service'><span data-bind="text: lang.lang.add_services"></span></a></li>
+									  				<li><a href='#/txn_item'><span data-bind="text: lang.lang.add_transaction_item"></span></a></li>
+									  			</ul>
+										  	</li>
+										</ul>
+										<!--End Add New Item -->
+								  		<a href="#/account" class="btn" style="background: #203864; color: #fff; width: 137px;">
+								  			<span data-bind="text: lang.lang.add_account"></span>
+								  		</a>
+
+									</div>
+									<!-- Column END -->
+
+									<!-- Column -->
+									<div class="span6">
+										<table class="table table-borderless table-condensed cart_total">
+											<tbody>
+												<tr>
+													<td class="right"><span >Total From:</span></td>
+													<td class="right strong"><span data-bind="text: totalFrom"></span></td>
+													<td class="right"><span >Total To:</span></td>
+													<td class="right strong"><span data-bind="text: totalTo"></span></td>
+												</tr>
+												<tr>
+													<td class="right"><span>Different:</span></td>
+													<td class="right strong"><span data-bind="text: different"></span></td>
+													<td class="right"></td>
+													<td class="right strong"></td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+									<!-- // Column END -->
+
+								</div>
+							</div>
+
+							<!-- Form actions -->
+							<div class="box-generic bg-action-button">
+								<div id="ntf1" data-role="notification"></div>
+
+								<!-- Delete Confirmation -->
+								<div data-role="window"
+					                 data-title="Delete Confirmation"
+					                 data-width="350"
+					                 data-height="200"
+					                 data-iframe="true"
+					                 data-modal="true"
+					                 data-visible="false"
+					                 data-position="{top:'40%',left:'35%'}"
+					                 data-actions="{}"
+					                 data-resizable="false"
+					                 data-bind="visible: showConfirm"
+					                 style="text-align:center;">
+					                <p style="font-size:25px; margin: 15px 0 25px;" class="delete-message" data-bind="text: confirmMessage"></p>
+								    <button style="font-size:14px; border:none; background:#496cad; color:#fff; padding:5px 25px;" data-bind="click:delete">Yes</button>
+								    <button style="font-size:14px; border:none; background:red; color:#fff; padding:5px 25px;" data-bind="click:closeConfirm">No</button>
+					            </div>
+					            <!-- // Delete Confirmation -->
+
+								<div class="row">
+									<div class="span4" style="padding-left: 15px;">
+										<input data-role="dropdownlist"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: obj.transaction_template_id,
+							                              source: txnTemplateDS"
+							                   data-option-label="Select Template..." />
+
+									</div>
+									<div class="span8" align="right">
+										<span class="btn-btn" onclick="javascript:window.history.back()" data-bind="click: cancel"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
+										<span class="btn-btn" data-bind="click: openConfirm, visible: isEdit"><span data-bind="text: lang.lang.delete"></span></span>
+										<span role='presentation' class='dropdown btn-btn' style="padding: 0 0 0 15px; float: right; height: 32px; line-height: 30px;">
+									  		<a style="color: #fff; padding: 0;" class='dropdown-toggle glyphicons' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'>
+									  			<span data-bind="text: lang.lang.save_option"></span>
+									  			<span class="small-btn"><i class='caret '></i></span>
+									  		</a>
+									  		<ul class='dropdown-menu'>
+								  				<li id="saveNew" data-bind="invisible: isEdit"><span data-bind="text: lang.lang.save_new"></span></li>
+								  				<li id="savePrint"><span data-bind="text: lang.lang.save_print"></span></li>
+								  			</ul>
+									  	</span>
+									  	<span class="btn-btn" id="saveClose"><span data-bind="text: lang.lang.save_close"></span></span>
+									  	<span class="btn-btn" id="saveDraft1" data-bind="invisible: isEdit"><span data-bind="text: lang.lang.save_draft"></span></span>
+									</div>
+								</div>
+							</div>
+							<!-- // Form actions END -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
 
 
 
