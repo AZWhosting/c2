@@ -2598,7 +2598,8 @@ class Spa extends REST_Controller {
 		   	$obj->month_of = $value->issued_date;
 		   	isset($value->issued_date) 				? $obj->issued_date 				= $value->issued_date : "";
 		   	$obj->reference_no = $txn->number;
-
+		   	$obj->room_id = $txn->room_id;
+		   	$obj->work_id = $txn->work_id;
 		   	isset($value->status) 					? $obj->status 						= $value->status : 0;
 		   	$obj->is_journal = 1;
 		   	$contact = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
@@ -2713,8 +2714,45 @@ class Spa extends REST_Controller {
 		   				}
 	   				}
 	   			}
+	   			$room = new Spa_room(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+	   			$room->where("id", $obj->room_id)->limit(1)->get();
+	   			//Item
+				$items = [];
+				$item = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$item->where("transaction_id", $txn->id)->get();
+				if($item->exists()){
+					foreach($item as $it){
+						$me = new Measurement(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+						$me->where("id", $it->measurement_id)->limit(1)->get();
+						$items[] = array(
+							"item" 			=> array(
+								"name" 			=> $it->description,
+							),
+							"measurement" 	=> array(
+								"measurement" => $me->name
+							),
+							"price" 		=> floatval($it->price),
+							"locale" 		=> $it->locale,
+							"quantity" 		=> intval($it->quantity),
+							"amount" 		=> floatval($it->amount),
+						); 
+					}
+				}
 			   	$data["results"][] = array(
-			   		"id" => $obj->id
+			   		"id" 			=> $obj->id,
+			   		"number" 		=> $obj->number,
+			   		"issued_date" 	=> $obj->issued_date,
+			   		"check_in" 		=> $work->start_date,
+			   		"check_out" 	=> $work->end_date,
+			   		"room_number" 	=> $room->name,
+			   		"sub_total" 	=> floatval($obj->sub_total),
+			   		"discount" 		=> floatval($obj->discount),
+			   		"amount" 		=> floatval($obj->amount),
+			   		"locale" 		=> $txn->locale,
+			   		"rate" 			=> floatval($txn->rate),
+			   		"items" 		=> $items,
+			   		"receipt_note" 	=> $value->receipt_note,
+			   		"change_note" 	=> $value->change_note,
 			   	);
 		    }
 		}

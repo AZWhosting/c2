@@ -240,6 +240,7 @@ class Item_lines extends REST_Controller {
 				   	"additional_applied"=> $value->additional_applied==1?true : false,
 				   	"inventory_quantity"=> floatval($value->inventory_quantity),
 				   	"inventory_value" 	=> floatval($value->inventory_value),
+				   	"inventory_adjust_value"=> floatval($value->inventory_adjust_value),
 				   	"rate"				=> floatval($value->rate),
 				   	"locale" 			=> $value->locale,
 				   	"movement" 			=> $value->movement,
@@ -542,7 +543,7 @@ class Item_lines extends REST_Controller {
 		   	isset($value->additional_applied)	? $obj->additional_applied  = $value->additional_applied : "";
 		   	isset($value->movement)				? $obj->movement 			= $value->movement : "";
 		   	isset($value->required_date)		? $obj->required_date 		= $value->required_date : "";
-		   	isset($value->reference_no) 		? $obj->reference_no 			= $value->reference_no : "";
+		   	isset($value->reference_no) 		? $obj->reference_no 		= $value->reference_no : "";
 		   	isset($value->deleted) 				? $obj->deleted 			= $value->deleted : "";
 
 		   	//Item
@@ -700,7 +701,8 @@ class Item_lines extends REST_Controller {
 		   	isset($value->locale)			? $obj->locale 				= $value->locale : "";
 		   	isset($value->additional_cost)	? $obj->additional_cost  	= $value->additional_cost : "";
 		   	isset($value->inventory_quantity)	? $obj->inventory_quantity  	= $value->inventory_quantity : "";
-		   	isset($value->inventory_value)	? $obj->inventory_value  		= $value->inventory_value : "";
+		   	isset($value->inventory_value)	? $obj->inventory_value  	= $value->inventory_value : "";
+		   	isset($value->inventory_adjust_value)	? $obj->inventory_adjust_value  	= $value->inventory_adjust_value : "";
 		   	isset($value->movement)			? $obj->movement 			= $value->movement : "";
 		   	isset($value->required_date)	? $obj->required_date 		= $value->required_date : "";
 		   	isset($value->reference_no) 	? $obj->reference_no 			= $value->reference_no : "";
@@ -845,6 +847,7 @@ class Item_lines extends REST_Controller {
 				   	"additional_applied"=> $obj->additional_applied,
 				   	"inventory_quantity"=> floatval($obj->inventory_quantity),
 				   	"inventory_value" 	=> floatval($obj->inventory_value),
+				   	"inventory_adjust_value" => floatval($obj->inventory_adjust_value),
 				   	"rate"				=> floatval($obj->rate),
 				   	"locale" 			=> $obj->locale,
 				   	"movement" 			=> $obj->movement,

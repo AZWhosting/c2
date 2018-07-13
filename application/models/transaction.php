@@ -69,6 +69,10 @@ class Transaction extends DataMapper {
         ),
         'transaction' => array(
             'other_field' => 'related_transaction'
+        ),
+        'billing_cycle' => array(
+            'class' => 'billing_cycle',
+            'other_field' => 'transaction'
         )
 	);
 

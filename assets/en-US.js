@@ -344,6 +344,7 @@ var	en_US = {
 	"average_aging" : "Average Aging",
 	"over_90" : "Over 90",
 	"receivable_aging_detail" : "Receivable Aging Detail",
+	"receivable_aging_detail_employee" : "Receivable Aging Detail by Employee",
 	"lists_individual_unpaid_invoices_grouped_by_customer" : "Lists individual unpaid invoices, grouped by customer. This includes due date, outstanding days (aging days), and amount.",
 	"list_of_invoices_to_be_collected" : "List of invoices to be collected",
 	"lists_all_unpaid_invoices_grouped_by_due_today_and_overdue" : "Lists all unpaid invoices, grouped by Due today and Overdue.",

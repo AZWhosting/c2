@@ -9,7 +9,7 @@ class Sales extends REST_Controller {
 	public $server_user;
 	public $server_pwd;
 	//CONSTRUCTOR
-	function __construct() {
+		function __construct() {
 		parent::__construct();
 		$institute = new Institute();
 		$institute->where('id', $this->input->get_request_header('Institute'))->get();
@@ -2068,6 +2068,108 @@ class Sales extends REST_Controller {
 					$objList[$value->contact_id]["line"][] 			= array(
 						"id" 				=> $value->id,
 						"type" 				=> $value->type,
+						"number" 			=> $value->number,
+						"issued_date" 		=> $value->issued_date,
+						"due_date" 			=> $value->due_date,
+						"memo" 				=> $value->memo,
+						"status"			=> $value->status,
+						"rate" 				=> $value->rate,
+						"amount" 			=> $amount
+					);			
+				}
+			}
+
+			foreach ($objList as $value) {
+				$data["results"][] = $value;
+			}
+			$data["count"] = count($data["results"]);
+		}
+
+		//Response Data
+		$this->response($data, 200);
+	}
+	function aging_detail_employee_get() {
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
+		$data["count"] = 0;
+
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
+			}
+		}
+		
+		//Filter		
+		if(!empty($filter) && isset($filter)){
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value['operator'])){
+	    			$obj->{$value['operator']}($value['field'], $value['value']);	    		
+	    		} else {
+	    			$obj->where($value['field'], $value['value']);
+	    		}
+			}
+		}
+
+		//Results
+		$obj->include_related("contact", array("abbr", "number", "name"));
+		$obj->where_in("type", array("Commercial_Invoice","Vat_Invoice","Invoice"));
+		$obj->where_in("status", array(0,2));
+		$obj->where("is_recurring <>", 1);
+		$obj->where("deleted <>", 1);
+		$obj->order_by("issued_date", "asc");
+		$obj->get_iterated();
+		
+		if($obj->exists()){
+			$objList = [];
+			foreach ($obj as $value) {
+				$amount = (floatval($value->amount) - floatval($value->deposit)) / floatval($value->rate);
+				
+				if($value->status=="2"){
+					$paid = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$paid->select_sum("amount");
+					$paid->select_sum("discount");
+					$paid->where("reference_id", $value->id);
+					$paid->where_in("type", array("Cash_Receipt", "Offset_Invoice"));
+					$paid->where("is_recurring <>",1);
+					$paid->where("deleted <>",1);
+					$paid->get();
+					$amount -= floatval($paid->amount) + floatval($paid->discount);
+				}
+
+				$employee = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$employee->where("id", $value->employee_id);
+				$employee->get();
+
+				if(isset($objList[$value->employee_id])){
+					$objList[$value->employee_id]["line"][] = array(
+						"id" 				=> $value->id,
+						"type" 				=> $value->type,
+						"customer"			=> $value->contact_name,
+						"number" 			=> $value->number,
+						"issued_date" 		=> $value->issued_date,
+						"due_date" 			=> $value->due_date,
+						"memo" 				=> $value->memo,
+						"status"			=> $value->status,
+						"rate" 				=> $value->rate,
+						"amount" 			=> $amount
+					);
+				}else{
+					$objList[$value->employee_id]["id"] 				= $value->employee_id;
+					$objList[$value->employee_id]["name"] 			= $employee->abbr.$employee->number." ".$employee->name;
+					$objList[$value->employee_id]["line"][] 			= array(
+						"id" 				=> $value->id,
+						"type" 				=> $value->type,
+						"customer"			=> $value->contact_name,
 						"number" 			=> $value->number,
 						"issued_date" 		=> $value->issued_date,
 						"due_date" 			=> $value->due_date,

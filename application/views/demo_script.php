@@ -1886,19 +1886,18 @@
 		//Prefixes
 		prefixList                  : [],
 		prefixDS                    : dataStore(apiUrl + "prefixes"),
-		dateUnitList               : [
+		dateUnitList                : [
 			{ text: 'Day', value: 'Day' },
 			{ text: 'Week', value: 'Week' },
 			{ text: 'Month', value: 'Month' },
-			{ text: 'Quarter', value: 'Quarter' },
 			{ text: 'Annual', value: 'Annual' }
 		],
 		frequencyList               : [
-			{ text: 'Day', value: 'Day' },
-			{ text: 'Week', value: 'Week' },
-			{ text: 'Month', value: 'Month' },
+			{ text: 'Daily', value: 'Daily' },
+			{ text: 'Weekly', value: 'Weekly' },
+			{ text: 'Monthly', value: 'Monthly' },
 			{ text: 'Quarterly', value: 'Quarterly' },
-			{ text: 'Annual', value: 'Annual' }
+			{ text: 'Annually', value: 'Annually' }
 		],
 		monthOptionList             : [
 			{ id: 'Day', name: 'Day' },
@@ -8869,7 +8868,8 @@
 		paymentMethodDS     : banhji.source.paymentMethodDS,
 		amtDueColor         : banhji.source.amtDueColor,
 		confirmMessage      : banhji.source.confirmMessage,
-		dateUnitList       : banhji.source.dateUnitList,
+		dateUnitList        : banhji.source.dateUnitList,
+		frequencyList       : banhji.source.frequencyList,
 		monthOptionList     : banhji.source.monthOptionList,
 		monthList           : banhji.source.monthList,
 		weekDayList         : banhji.source.weekDayList,
@@ -9775,6 +9775,21 @@
 					});
 
 					self.loadReference();
+
+					//Billing Cycle
+					self.billingCyleDS.query({
+						filter: { field:"transaction_id", value: id }
+					}).then(function(){
+						var viewBC = self.billingCyleDS.view();
+
+						if(viewBC.length>0){
+							self.set("isProforma", true);
+							self.set("objBC", viewBC[0]);
+						}else{
+							self.set("isProforma", false);
+							self.addBillingCycle();
+						}
+					});
 				});
 			}
 		},
@@ -9788,6 +9803,7 @@
 			this.referenceDS.data([]);
 
 			this.set("isEdit", false);
+			this.set("isProforma", false);
 			this.set("obj", null);
 			this.set("total_deposit", 0);
 			this.set("total", 0);
@@ -9852,6 +9868,7 @@
 			this.set("obj", obj);
 			this.setRate();
 			this.generateNumber();
+			this.addBillingCycle();
 
 			//Default rows
 			for (var i = 0; i < banhji.source.defaultLines; i++) {
@@ -9962,6 +9979,7 @@
 				this.set("saveRecurring", false);
 
 				obj.set("number", "");
+				obj.set("is_journal", 0);//No Journal
 				obj.set("is_recurring", 1);
 			}
 
@@ -9993,6 +10011,17 @@
 					$.each(self.attachmentDS.data(), function(index, value){
 						value.set("transaction_id", data[0].id);
 					});
+
+					//Proforma
+					if(obj.type=="Proforma_Invoice"){
+						var objBC = self.get("objBC");
+						objBC.set("transaction_id", data[0].id);
+					}
+				}
+
+				//Proforma
+				if(obj.type=="Proforma_Invoice"){
+					self.billingCyleDS.sync();
 				}
 
 				//Journal
@@ -10036,6 +10065,7 @@
 			this.segmentItemDS.cancelChanges();
 			this.attachmentDS.cancelChanges();
 			this.referenceDS.cancelChanges();
+			this.billingCyleDS.cancelChanges();
 
 			this.dataSource.data([]);
 			this.lineDS.data([]);
@@ -10043,6 +10073,7 @@
 			this.segmentItemDS.data([]);
 			this.attachmentDS.data([]);
 			this.referenceDS.data([]);
+			this.billingCyleDS.data([]);
 
 			banhji.userManagement.removeMultiTask("invoice");
 		},
@@ -10468,17 +10499,20 @@
 		},
 		//Billing cycle
 		addBillingCycle 	: function(){
+			var obj = this.get("obj");
+
 			this.billingCyleDS.add({
+				transaction_id 	: obj.id,
 				start_date      : new Date(),
-				end_date 		: new Date(),
 				type 			: "Proforma_Invoice",
-				frequency       : "Day",
+				frequency       : "Monthly",
+				date_unit       : "Month",
 				interval        : 1,
-				status        	: 0
+				status        	: 1
 			});
 
-			var obj = this.billingCyleDS.at(0);
-			this.set("objBC", obj);
+			var objBC = this.billingCyleDS.at(0);
+			this.set("objBC", objBC);
 		},
 		//Recurring		
 		loadRecurring       : function(id){
@@ -22248,6 +22282,239 @@
 			});
 			//save the file as Excel file with extension xlsx
 			kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "receivableAgingDetail.xlsx"});
+		}
+	});
+	banhji.receivableAgingDetailbyEmployee =  kendo.observable({
+		lang                : langVM,
+		dataSource          : dataStore(apiUrl + "sales/aging_detail_employee"),
+		contactDS           : banhji.source.customerDS,
+		obj                 : { employeeIds: [] },
+		company             : banhji.institute,
+		as_of               : new Date(),
+		employeeDS          : banhji.source.employeeDS,
+		displayDate         : "",
+		totalBalance        : 0,
+		exArray             : [],
+		pageLoad            : function(){
+			this.search();
+		},
+		search              : function(){
+			var self = this, para = [],
+				obj = this.get("obj"),
+				as_of = this.get("as_of"),
+				displayDate = "";
+
+			//Sale Rep
+            if(obj.employeeIds.length>0){
+                var employeeIds = [];
+                $.each(obj.employeeIds, function(index, value){
+                    employeeIds.push(value);
+                });
+                para.push({ field:"employee_id", operator:"where_in", value:employeeIds });
+            }
+
+			if(as_of){
+				as_of = new Date(as_of);
+				var displayDate = "As Of " + kendo.toString(as_of, "dd-MM-yyyy");
+				this.set("displayDate", displayDate);
+				as_of.setDate(as_of.getDate()+1);
+
+				para.push({ field:"issued_date <", value:kendo.toString(as_of, "yyyy-MM-dd") });
+			}
+
+			this.dataSource.query({
+				filter:para,
+				sort:[
+					{ field:"issued_date", dir:"asc" },
+					{ field:"number", operator:"order_by_related_contact", dir:"asc" }
+				]
+			}).then(function(){
+				var view = self.dataSource.view();
+
+				var balance = 0;
+				$.each(view, function(index, value){
+					$.each(value.line, function(ind, val){
+						balance += val.amount;
+					});
+				});
+
+				self.set("totalBalance", kendo.toString(balance, "c2", banhji.locale));
+			});
+			this.dataSource.bind("requestEnd", function(e){
+				if(e.type=="read"){
+					var response = e.response, balanceCal = 0, balance= 0;
+					self.exArray = [];
+
+					self.exArray.push({
+						cells: [
+							{ value: self.company.name, textAlign: "center", colSpan: 7}
+						]
+					});
+					self.exArray.push({
+						cells: [
+							{ value: "Receivable Aging Detail Employee",bold: true, fontSize: 20, textAlign: "center", colSpan: 7 }
+						]
+					});
+					if(self.displayDate){
+						self.exArray.push({
+							cells: [
+								{ value: self.displayDate, textAlign: "center", colSpan: 7 }
+							]
+						});
+					}
+					self.exArray.push({
+						cells: [
+							{ value: "", colSpan: 7 }
+						]
+					});
+					self.exArray.push({
+						cells: [
+							{ value: "Type", background: "#496cad", color: "#ffffff" },
+							{ value: "Invoice Date", background: "#496cad", color: "#ffffff" },
+							{ value: "Due Date", background: "#496cad", color: "#ffffff" },
+							{ value: "Reference", background: "#496cad", color: "#ffffff" },
+							{ value: "Status", background: "#496cad", color: "#ffffff" },
+							{ value: "Amount", background: "#496cad", color: "#ffffff" },
+							{ value: "Balance", background: "#496cad", color: "#ffffff" },
+						]
+					});
+					for (var i = 0; i < response.results.length; i++){
+						self.exArray.push({
+							cells: [
+								{ value: response.results[i].name, bold: true, },
+								{ value: "" },
+								{ value: "" },
+								{ value: "" },
+								{ value: "" },
+								{ value: "" },
+								{ value: "" },
+							]
+
+						});
+						for(var j = 0; j < response.results[i].line.length; j++){
+							var date = new Date(), dueDates = new Date(response.results[i].line[j].due_date).getTime(),overDue, toDay = new Date(date).getTime();
+							if(dueDates < toDay) {
+								overDue = "Over Due "+Math.floor((toDay - dueDates)/(1000*60*60*24))+"days";
+							} else {
+								overDue = Math.floor((dueDates - toDay)/(1000*60*60*24))+"days to pay";
+							}
+							balance =+ response.results[i].line[j].amount ;
+							self.exArray.push({
+								cells: [
+									{ value: response.results[i].line[j].customer },
+									{ value: response.results[i].line[j].issued_date },
+									{ value: response.results[i].line[j].due_date},
+									{ value: response.results[i].line[j].number },
+									{ value: overDue},
+									{ value: response.results[i].line[j].amount },
+									{ value: balance},
+								]
+							});
+						}
+						self.exArray.push({
+							cells: [
+								{ value: "", colSpan: 7}
+							]
+						});
+					}
+				}
+			});
+		},
+		printGrid           : function() {
+			var gridElement = $('#grid'),
+				printableContent = '',
+				win = window.open('', '', 'width=990, height=900'),
+				doc = win.document.open();
+			var htmlStart =
+					'<!DOCTYPE html>' +
+					'<html>' +
+					'<head>' +
+					'<meta charset="utf-8" />' +
+					'<title></title>' +
+					'<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
+					'<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
+					'<link rel="stylesheet" href="<?php echo base_url(); ?>assets/responsive.css">' +
+					'<link href="<?php echo base_url(); ?>assets/invoice/invoice.css" rel="stylesheet" />'+
+					'<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
+					'<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
+					'<style>' +
+					'html { font: 11pt sans-serif; }' +
+					'.k-grid { border-top-width: 0; }' +
+					'.k-grid, .k-grid-content { height: auto !important; }' +
+					'.k-grid-content { overflow: visible !important; }' +
+					'div.k-grid table { table-layout: auto; width: 100% !important; }' +
+					'.k-grid .k-grid-header th { border-top: 1px solid; }' +
+					'.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
+					'</style><style type="text/css" media="print"> @page { size: portrait; margin:1mm; }'+
+						'.inv1 .main-color {' +
+
+							'-webkit-print-color-adjust:exact; ' +
+						'} ' +
+						'.table.table-borderless.table-condensed  tr th { background-color: #1E4E78!important;' +
+						'-webkit-print-color-adjust:exact; color:#fff!important;}' +
+						'.table.table-borderless.table-condensed  tr th * { color: #fff!important; -webkit-print-color-adjust:exact;}' +
+						'.inv1 .light-blue-td { ' +
+							'background-color: #c6d9f1!important;' +
+							'text-align: left;' +
+							'padding-left: 5px;' +
+							'-webkit-print-color-adjust:exact; ' +
+						'}' +
+						'.saleSummaryCustomer .table.table-borderless.table-condensed tr td { ' +
+							'background-color: #F2F2F2!important; -webkit-print-color-adjust:exact;' +
+						'}'+
+						'.saleSummaryCustomer .table.table-borderless.table-condensed tr:nth-child(2n+1) td { ' +
+							' background-color: #fff!important; -webkit-print-color-adjust:exact;' +
+						'}' +
+						'.journal_block1>.span2 *, .journal_block1>.span5 * {color: #fff!important;}' +
+						'.journal_block1>.span2:first-child { ' +
+							'background-color: #bbbbbb!important; -webkit-print-color-adjust:exact;' +
+						'}' +
+						'.journal_block1>.span5:last-child {' +
+							'background-color: #496cad!important; color: #fff!important; -webkit-print-color-adjust:exact; ' +
+						'}' +
+						'.journal_block1>.span5 {' +
+							'background-color: #5cc7dd!important; color: #fff!important; -webkit-print-color-adjust:exact;' +
+						'}' +
+						'.saleSummaryCustomer .table.table-borderless.table-condensed tfoot .bg-total td {' +
+							'background-color: #1C2633!important;' +
+							'color: #fff!important; ' +
+							'-webkit-print-color-adjust:exact;' +
+						'}' +
+						'</style>' +
+					'</head>' +
+					'<body><div class="saleSummaryCustomer" style="padding: 0 10px;">';
+			var htmlEnd =
+					'</div></body>' +
+					'</html>';
+
+			printableContent = $('#invFormContent').html();
+			doc.write(htmlStart + printableContent + htmlEnd);
+			doc.close();
+			setTimeout(function(){
+				win.print();
+				win.close();
+			},2000);
+		},
+		ExportExcel         : function(){
+			var workbook = new kendo.ooxml.Workbook({
+			  sheets: [
+				{
+				  columns: [
+					{ autoWidth: true },
+					{ autoWidth: true },
+					{ autoWidth: true },
+					{ autoWidth: true },
+					{ autoWidth: true },
+					{ autoWidth: true },
+					{ autoWidth: true }
+				  ],
+				  title: "Receivable Aging Detail Employee",
+				  rows: this.exArray
+				}
+			  ]
+			});
+			//save the file as Excel file with extension xlsx
+			kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "receivableAgingDetailEmployee.xlsx"});
 		}
 	});
 	banhji.collectInvoice =  kendo.observable({
@@ -50385,7 +50652,7 @@
 			  printableContent = '',
 			  win = window.open('', '', 'width=900, height=700'),
 			  doc = win.document.open();
-		  var htmlStart =
+		var htmlStart =
 				  '<!DOCTYPE html>' +
 				  '<html>' +
 				  '<head>' +
@@ -61889,7 +62156,7 @@
 			}
 
 			if(para.length>0){
-				para.push({ field:"type", operator:"where_in", value:["Commercial_Invoice", "Vat_Invoice", "Invoice"] });
+				para.push({ field:"type", operator:"where_in", value:["Commercial_Invoice", "Vat_Invoice", "Invoice", "Proforma_Invoice"] });
 				para.push({ field:"status", operator:"where_in", value:[0,2] });
 
 				if(this.dataSource.total()>0){
@@ -62162,6 +62429,39 @@
 					//Save New
 					self.addEmpty();
 				}
+			});
+		},
+		addProformaJournal  : function(){
+			var self = this, obj = this.get("obj");
+
+			// A. At the issue of proforma
+
+			// B. If proforma is paid before recogition
+			//Cash on Dr
+			this.journalLineDS.add({
+				transaction_id      : value.id,
+				account_id          : obj.account_id,
+				contact_id          : value.contact_id,
+				description         : "",
+				reference_no        : "",
+				segments            : obj.segments,
+				dr                  : value.amount,
+				cr                  : 0,
+				rate                : value.rate,
+				locale              : value.locale
+			});
+			//Deposit on Cr
+			self.journalLineDS.add({
+				transaction_id      : value.id,
+				account_id          : contact.account_id,
+				contact_id          : value.contact_id,
+				description         : "",
+				reference_no        : "",
+				segments            : obj.segments,
+				dr                  : 0,
+				cr                  : value.amount,
+				rate                : value.rate,
+				locale              : value.locale
 			});
 		},
 		cancel              : function(){
@@ -70607,6 +70907,7 @@
 		receivableAgingSummarybyEmployee : new kendo.Layout("#receivableAgingSummarybyEmployee", {model: banhji.receivableAgingSummarybyEmployee}),
 		receivableAgingSummary : new kendo.Layout("#receivableAgingSummary", {model: banhji.receivableAgingSummary}),
 		receivableAgingDetail : new kendo.Layout("#receivableAgingDetail", {model: banhji.receivableAgingDetail}),
+		receivableAgingDetailbyEmployee : new kendo.Layout("#receivableAgingDetailbyEmployee", {model: banhji.receivableAgingDetailbyEmployee}),
 		collectInvoice : new kendo.Layout("#collectInvoice", {model: banhji.collectInvoice}),
 		collectionReport : new kendo.Layout("#collectionReport", {model: banhji.collectionReport}),
 		invoiceList : new kendo.Layout("#invoiceList", {model: banhji.invoiceList}),
@@ -72001,6 +72302,99 @@
 		//  }
 		// });
 	});
+	banhji.router.route("/proforma_invoice(/:id)", function(id){
+		banhji.view.layout.showIn("#content", banhji.view.invoice);
+		kendo.fx($("#slide-form")).slideIn("down").play();
+
+		var vm = banhji.invoice;
+		banhji.userManagement.addMultiTask("Invoice","invoice",vm);
+
+		if(banhji.pageLoaded["proforma_invoice"]==undefined){
+			banhji.pageLoaded["proforma_invoice"] = true;
+
+			vm.lineDS.bind("change", vm.lineDSChanges);
+
+			var validator = $("#example").kendoValidator({
+				rules: {
+					customRule1: function(input) {
+						if (input.is("[name=txtRecurringName]") && vm.recurring_validate) {
+							vm.set("recurring_validate", false);
+							return $.trim(input.val()) !== "";
+						}
+						return true;
+					},
+					customRule2: function(input){
+						if (input.is("[name=txtNumber]")) {
+							return vm.get("notDuplicateNumber");
+						}
+						return true;
+					}
+				},
+				messages: {
+					customRule1: banhji.source.requiredMessage,
+					customRule2: banhji.source.duplicateNumber
+				}
+			}).data("kendoValidator");
+
+			$("#saveDraft1").click(function(e){
+				e.preventDefault();
+
+				if(validator.validate() && vm.validating()){
+					vm.set("saveDraft", true);
+					vm.save();
+				}else{
+					$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				}
+			});
+
+			$("#saveNew").click(function(e){
+				e.preventDefault();
+
+				if(validator.validate() && vm.validating()){
+					vm.save();
+				}else{
+					$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				}
+			});
+
+			$("#saveClose").click(function(e){
+				e.preventDefault();
+
+				if(validator.validate() && vm.validating()){
+					vm.set("saveClose", true);
+					vm.save();
+				}else{
+					$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				}
+			});
+
+			$("#savePrint").click(function(e){
+				e.preventDefault();
+
+				if(validator.validate() && vm.validating()){
+					vm.set("savePrint", true);
+					vm.save();
+				}else{
+					$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				}
+			});
+
+			$("#saveRecurring").click(function(e){
+				e.preventDefault();
+
+				vm.set("recurring_validate", true);
+
+				if(validator.validate() && vm.validating()){
+					vm.set("saveRecurring", true);
+					vm.save();
+				}else{
+					$("#ntf1").data("kendoNotification").error(banhji.source.errorMessage);
+				}
+			});
+		}
+
+		vm.pageLoad(id);
+	});
 	banhji.router.route("/gdn(/:id)", function(id){
 		if(!banhji.userManagement.getLogin()){
 			banhji.router.navigate('/manage');
@@ -72789,6 +73183,21 @@
 
 			if(banhji.pageLoaded["receivable_aging_detail"]==undefined){
 				banhji.pageLoaded["receivable_aging_detail"] = true;
+			}
+			vm.pageLoad();
+		}
+	});
+	banhji.router.route("/receivable_aging_detail_by_employee", function(){
+		if(!banhji.userManagement.getLogin()){
+			banhji.router.navigate('/manage');
+		}else{
+			banhji.view.layout.showIn("#content", banhji.view.receivableAgingDetailbyEmployee);
+
+			var vm = banhji.receivableAgingDetailbyEmployee;
+			banhji.userManagement.addMultiTask("Receivable Aging Detail","receivable_aging_detail_by_employee",null);
+
+			if(banhji.pageLoaded["receivable_aging_detail_by_employee"]==undefined){
+				banhji.pageLoaded["receivable_aging_detail_by_employee"] = true;
 			}
 			vm.pageLoad();
 		}

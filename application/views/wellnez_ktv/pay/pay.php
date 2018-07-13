@@ -1445,7 +1445,7 @@
 	<div class="container">
 		<div class="row-fluid">
 			<div class="background">
-				<div class="row-fluid">
+				<div class="row-fluid" style="overflow: hidden;position: relative;padding-bottom: 40px;">
 					<div id="loadING" style="display:none;text-align: center;position: absolute;top: 0; left: 0;width: 100%; height: 100%;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
 						<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 45%;left: 45%">Loading</i>
 					</div>
@@ -1609,6 +1609,7 @@
         </div>
     </div>
 </script>
+<!-- Form POS -->
 <script id="invoiceFormPOS" type="text/x-kendo-tmpl">
 	<style>
 		.inv1 td {
@@ -1720,6 +1721,151 @@
 	                	<span id="footwnumber#= id#"></span>
 	                </div>
 	            </div>
+	        </div>
+	    </div>
+	</div>
+</script>
+<script id="receiptFormPOS" type="text/x-kendo-tmpl">
+	<style>
+		.inv1 td {
+			padding: 5px;
+		}
+		.inv1 * {
+			-webkit-print-color-adjust:exact; 
+			font-size: 20px;
+			padding: 0;
+			margin: 0;
+			font-family: 'Battambang', Arial!important;
+		}
+		.inv1 tfoot td, .inv1 tbody td {
+			
+		}
+	</style>
+  	<div style="margin: 0 auto;">
+		<div class="inv1" style="width: 500px;margin: 0 auto;">
+	        <div class="content">
+	        	<div style="overflow: hidden;padding:10px 0;">
+	        		<div style="text-align: center; margin: 0 auto; width:100% ;">
+	        			<img style="text-align: center; width: 150px; margin-bottom: 10px;" src="#= banhji.institute.logo.url#" />
+	            	</div>
+	            	<p style="text-align: center; margin-bottom: 5px;font-size :25px;font-weight: bold;font-family: 'Preahvihear', 'Roboto Slab' !important">#= banhji.institute.name #</p>
+	            	<p style="text-align: center; margin-bottom: 5px;font-weight: bold;">Tel: #= banhji.institute.telephone#</p>
+	            	<p style="border-top: 2px solid \#000;border-bottom: 2px solid \#000; text-align: center;margin-bottom: 5px;padding: 10px 0;background: \#fff;color: \#000;margin-top: 10px;"><span style="font-size: 20px; font-weight: 700;font-family: 'Preahvihear', 'Roboto Slab' !important">បង្កាន់ដៃបង់ប្រាក់</span> / <span style="font-size: 20px; font-weight: 700;font-family: 'Preahvihear', 'Roboto Slab' !important">Receipt</span></p>
+	        	</div>
+	            <div class="clear mid-header" style="padding-bottom: 10px;">
+	                <table style="width: 100%; ">
+	                	<tr>
+	                		<td style="width: 55%; padding: 0;">
+	                			<span >បង្កាន់ដៃបង់ប្រាក់</span>
+	                			/
+	                			<span>Receipt</span>
+	                		</td>
+	                		<td style="padding: 0;">:</td>
+	                		<td style="text-align: right; padding: 0;"><b>#= number#</b></td>
+	                	</tr>
+	                	<tr>
+	                		<td style="padding: 0;">
+	                			<span>ម៉ោងចូល</span>
+	                			/
+	                			<span>Check In</span>
+	                		</td>
+	                		<td style="padding: 0;">:</td>
+	                		<td style="text-align: right; padding: 0; ">#= kendo.toString(new Date(check_in), "g")#</td>
+	                	</tr>
+	                	<tr>
+        					<td style="padding: 0;">
+	                			<span>ម៉ោងចេញ</span>
+	                			/
+	                			<span>Check Out</span>
+	                		</td>
+	                		<td style="padding: 0;">:</td>
+	                		<td style="text-align: right; padding: 0; ">#= kendo.toString(new Date(check_out), "g")#</td>
+        				</tr>
+        				<tr>
+        					<td style="padding: 0;">លេខបន្ទប់ / Room No.</td>
+        					<td style="padding: 0;">:</td>
+        					<td style="text-align: right; padding: 0; ">#: room_number#</td>
+        				</tr>
+	                </table>
+	            </div>
+	        	<div class="clear">
+	            	<table cellpadding="0" cellspacing="0" border="0" class="span12" style="width: 100%; margin-bottom: 20px;border-bottom: 3px dotted \#000!important;">
+	                	<thead style="">
+	                        <tr class="main-color" style="height: 45px;background: \#203864!important;">
+	                            <th style="padding: 5px 0;font-size: 16px; text-align: center;color: \#000!important;background: \#fff!important;border-top: 2px solid \#000!important;border-bottom: 2px solid \#000!important;">បរិយាយ​មុខ​ទំនិញ<br />Description</th>
+	                            <th style="padding: 5px 0;font-size: 16px; text-align: center;color: \#000!important;background: \#fff!important;border-top: 2px solid \#000!important;border-bottom: 2px solid \#000!important;">បរិមាណ<br />Quantity</th>
+	                            <th style="padding: 5px 0;font-size: 16px; text-align: center;width: 30%;color: \#000!important;background: \#fff!important;border-top: 2px solid \#000!important;border-bottom: 2px solid \#000!important;">ថ្លៃ​ទំនិញ<br />Amount</th>
+	                        </tr>
+	                    </thead>
+						<tbody style="margin-top: 2px" id="formListView">
+							#$.each(items, function(i,v){#
+								<tr style="">
+									<td style="border-bottom: 1px solid \#000!important;">#: v.item.name#</td>
+									<td style="border-bottom: 1px solid \#000!important;" align="center"><strong>#: v.quantity # #: v.measurement.measurement#</strong></td>
+									<td style="border-bottom: 1px solid \#000!important;" align="right"><strong style="font-size: 22px;">#= kendo.toString(v.amount, v.locale=="km-KH"?"c0":"c", v.locale)#</strong></td>
+								</tr>
+							#})#
+						</tbody>
+	                    <tfoot>
+	                    	<tr style="">
+								<td colspan="2" style="padding-right: 10px;text-align: right;">សរុបរង / Sub Total :</td>
+								<td style="text-align: right"><strong style="font-size: 22px;">#= kendo.toString(sub_total, locale=="km-KH"?"c0":"c", locale)#</strong></td>
+							</tr>
+							<tr style="">
+								<td colspan="2" style="padding-right: 10px;text-align: right;">បញ្ចុះតម្លៃ / Discount :</td>
+								<td style="text-align: right"><strong style="font-size: 22px;">#= kendo.toString(discount, locale=="km-KH"?"c0":"c", locale)#</strong></td>
+							</tr >
+							#$.each(banhji.Index.currencyDS.data(), function(i,v){#
+								<tr style="">
+									<td colspan="2" style="padding-right: 10px;text-align: right;">សរុបជា #= v.code# :</td>
+									<td style="text-align: right;"><strong style="font-size: 22px;">#= kendo.toString(amount / v.rate, v.locale=="km-KH"?"c0":"c", v.locale)#</strong></td>
+								</tr>
+							#})#
+	                    </tfoot>
+	                </table>
+	            </div>
+	            #if(receipt_note.length > 0){#
+		            <div class="clear mid-header" style="padding-bottom: 10px;">
+		                <table style="width: 100%; ">
+		                	#$.each(receipt_note, function(i,v){#
+		                		#if(v.amount > 0){#
+				                	<tr>
+				                		<td style="width: 55%; padding: 0;">
+				                			<span >ប្រាក់ទទួលជា</span> <span>#= v.currency#</span>
+				                		</td>
+				                		<td style="padding: 0;">:</td>
+				                		<td style="text-align: right; padding: 0;"><b>#= kendo.toString(v.amount, v.locale == 'km-KH' ? 'c0': 'c2', v.locale)#</b></td>
+				                	</tr>
+				                #}#
+			                #})#
+		                </table>
+		            </div>
+		        #}#
+	            #if(change_note.length > 0){#
+		            <div class="clear mid-header" style="padding-bottom: 10px;">
+		                <table style="width: 100%; ">
+		                	#$.each(change_note, function(i,v){#
+		                		#if(v.amount > 0){#
+				                	<tr>
+				                		<td style="width: 55%; padding: 0;">
+				                			<span >ប្រាក់អាប់ជា</span> <span>#= v.currency#</span>
+				                		</td>
+				                		<td style="padding: 0;">:</td>
+				                		<td style="text-align: right; padding: 0;"><b>#= kendo.toString(v.amount, v.locale == 'km-KH' ? 'c0': 'c2', v.locale)#</b></td>
+				                	</tr>
+				                #}#
+			                #})#
+		                </table>
+		            </div>
+		        #}#
+		        <div class="clear">
+		        	<p style="text-align: center; font-size: 16px; margin-top: 8px; margin-bottom: 5px;">
+	                	សូមអរគុណ សូមអញ្ជើញមកម្តងទៀត ! <br><i style="font-size: 15px;">Thanks, Please come again!</i>
+	                </p>
+	                <div style="text-align: center; width: 90%; margin: 0 auto;">
+	                	<span id="footwnumber#= id#"></span>
+	                </div>
+		        </div>
 	        </div>
 	    </div>
 	</div>

@@ -141,14 +141,14 @@ class Ops extends REST_Controller {
 				// 	// 	"null" 		=> FALSE,
 				// 	// 	"default" 	=> 0
 				// 	// ),
-				// 	"deleted_by" => array(
-				// 		"type" 		=> "TINYINT",
-				// 		"constraint"=> 1,
+				// 	"date_unit" => array(
+				// 		"type" 		=> "VARCHAR",
+				// 		"constraint"=> 255,
 				// 		"null" 		=> FALSE,
-				// 		"default" 	=> 0
+				// 		"default" 	=> ""
 				// 	)
 				// );
-				// $data['results'][] = $this->dbforge->add_column("transactions", $fields);
+				// $data['results'][] = $this->dbforge->add_column("billing_cycles", $fields);
 				
 			    // Modify fields
 		 		//$fields = array(

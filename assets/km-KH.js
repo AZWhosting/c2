@@ -344,6 +344,7 @@ var	km_KH = {
 	"average_aging" :  "Average Aging",
 	"over_90" :  "លើស90ថ្ងៃ",
 	"receivable_aging_detail" :  "របាយការណ៍អាយុកាលលម្អិតរបស់អតិថិជនជំពាក់",
+	"receivable_aging_detail_employee" : "របាយការណ៍អាយុកាលលម្អិតរបស់អតិថិជនជំពាក់តាមបុគ្គលិក",
 	"lists_individual_unpaid_invoices_grouped_by_customer" :  "តារាង​ជំពាក់​របស់​អតិថិជន​និមួយៗ វា​រួម​បញ្ចូល​ថ្ងៃ​កំណត់​ជំពាក់​",
 	"list_of_invoices_to_be_collected" :  "បញ្ជីវិក្កយបត្រដែលត្រូវទូទាត់",
 	"lists_all_unpaid_invoices_grouped_by_due_today_and_overdue" :  "តារាង​វិក្កយបត្រ​ជំពាក់​រាយតាមថ្ងៃកំណត់និងថ្ងៃផុតកំណត់​",

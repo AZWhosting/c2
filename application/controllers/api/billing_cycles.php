@@ -79,6 +79,7 @@ class Billing_cycles extends REST_Controller {
 				   	"frequency"			=> $value->frequency,
 					"month_option"		=> $value->month_option,
 					"interval" 			=> $value->interval,
+					"date_unit" 		=> $value->date_unit,
 					"day" 				=> $value->day,
 					"week" 				=> $value->week,
 					"month" 			=> $value->month,
@@ -110,13 +111,14 @@ class Billing_cycles extends REST_Controller {
 		   	isset($value->frequency) 		? $obj->frequency 		= $value->frequency : "";
 		   	isset($value->month_option) 	? $obj->month_option 	= $value->month_option : "";
 		   	isset($value->interval) 		? $obj->interval 		= $value->interval : "";
+		   	isset($value->date_unit) 		? $obj->date_unit 		= $value->date_unit : "";
 		   	isset($value->day) 				? $obj->day 			= $value->day : "";
 		   	isset($value->week) 			? $obj->week 			= $value->week : "";
 		   	isset($value->month) 			? $obj->month 			= $value->month : "";
 		   	isset($value->status) 			? $obj->status 			= $value->status : "";
 		   	isset($value->deleted) 			? $obj->deleted 		= $value->deleted : "";
 		   	
-	   		if($obj->save($related)){
+	   		if($obj->save()){
 			   	$data["results"][] = array(
 			   		"id" 				=> $obj->id,
 					"transaction_id"	=> $obj->transaction_id,
@@ -128,6 +130,7 @@ class Billing_cycles extends REST_Controller {
 				   	"frequency"			=> $obj->frequency,
 					"month_option"		=> $obj->month_option,
 					"interval" 			=> $obj->interval,
+					"date_unit" 		=> $obj->date_unit,
 					"day" 				=> $obj->day,
 					"week" 				=> $obj->week,
 					"month" 			=> $obj->month,
@@ -160,13 +163,14 @@ class Billing_cycles extends REST_Controller {
 		   	isset($value->frequency) 		? $obj->frequency 		= $value->frequency : "";
 		   	isset($value->month_option) 	? $obj->month_option 	= $value->month_option : "";
 		   	isset($value->interval) 		? $obj->interval 		= $value->interval : "";
+		   	isset($value->date_unit) 		? $obj->date_unit 		= $value->date_unit : "";
 		   	isset($value->day) 				? $obj->day 			= $value->day : "";
 		   	isset($value->week) 			? $obj->week 			= $value->week : "";
 		   	isset($value->month) 			? $obj->month 			= $value->month : "";
 		   	isset($value->status) 			? $obj->status 			= $value->status : "";
 		   	isset($value->deleted) 			? $obj->deleted 		= $value->deleted : "";
 
-			if($obj->save($related)){
+			if($obj->save()){
 				//Results
 				$data["results"][] = array(
 					"id" 				=> $obj->id,
@@ -179,6 +183,7 @@ class Billing_cycles extends REST_Controller {
 				   	"frequency"			=> $obj->frequency,
 					"month_option"		=> $obj->month_option,
 					"interval" 			=> $obj->interval,
+					"date_unit" 		=> $obj->date_unit,
 					"day" 				=> $obj->day,
 					"week" 				=> $obj->week,
 					"month" 			=> $obj->month,

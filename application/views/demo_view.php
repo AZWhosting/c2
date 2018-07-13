@@ -590,7 +590,8 @@
                  { 'field': 'locale' },
                  { 'field': 'movement' },
                  { 'field': 'inventory_quantity', 'title': 'On Hand', 'editor': numberTextboxEditor },
-                 { 'field': 'inventory_value', 'title': 'Inv.Value', 'editor': numberTextboxEditor },
+                 { 'field': 'inventory_value', 'title': 'InvVal', 'editor': numberTextboxEditor },
+                 { 'field': 'inventory_adjust_value', 'title': 'InvAdj', 'editor': numberTextboxEditor },
                  { 'field': 'deleted' }
              ]"
              data-bind="source: itemLineDS"></div>
@@ -5087,7 +5088,7 @@
 							            			<input data-role="datepicker"
 															data-format="dd-MM-yyyy"
 															data-parse-formats="yyyy-MM-dd"
-															data-bind="value: obj.start_date"
+															data-bind="value: objBC.start_date"
 															style="width: 100%; " />
 							            		</td>
 							            	</tr>
@@ -5097,10 +5098,16 @@
 							            			<input data-role="numerictextbox"
 									                   data-format="n0"
 									                   data-min="0"
-									                   data-bind="value: obj.interval"
-									                   style="width: 50%; " />
+									                   data-bind="value: objBC.interval"
+									                   style="width: 49%; " />
 
-									                <label data-bind="text: obj.frequency"></label>
+									                <input data-role="dropdownlist"
+										                   data-value-primitive="true"
+										                   data-text-field="text"
+										                   data-value-field="value"
+										                   data-bind="value: objBC.date_unit,
+										                              source: dateUnitList"
+										                   style="width: 50%;" />
 							            		</td>
 							            	</tr>
 							            	<tr>
@@ -5110,9 +5117,8 @@
 										                   data-value-primitive="true"
 										                   data-text-field="text"
 										                   data-value-field="value"
-										                   data-bind="value: obj.frequency,
-										                              source: dateUnitList,
-										                              events: { change: frequencyChanges }"
+										                   data-bind="value: objBC.frequency,
+										                              source: frequencyList"
 										                   style="width: 100%;" />
 							            		</td>
 							            	</tr>							            	
@@ -8992,61 +8998,79 @@
 									<h3><a href="#/receivable_aging_summary" data-bind="text: lang.lang.receivable_aging_summary">Receivable Aging Summary</a></h3>
 								</td>
 								<td style="vertical-align: top;">
+									<h3><a href="#/receivable_aging_detail_by_employee" data-bind="text: lang.lang.receivable_aging_detail_employee">Receivable Aging Detail by Employee</a></h3>
+								</td>
+							</tr>
+							<tr>
+								<td style="vertical-align: top;">
+									<p style="padding-right: 25px;" data-bind="text: lang.lang.lists_all_unpaid_invoices1">
+										Lists all unpaid invoices for the current period, 30, 60, 90,
+										and more than 90 days, grouped by individual customers.
+									</p>
+								</td>
+								<td style="vertical-align: top;">
+									<p data-bind="text: lang.lang.lists_individual_unpaid_invoices_grouped_by_customer">
+										Lists individual unpaid invoices, grouped by customer. This includes due date,
+										outstanding days (aging days), and amount.
+									</p>
+								</td>
+							</tr>
+							<tr>
+								<td style="vertical-align: top;">
 									<h3><a href="#/invoice_status_list" >List Invoice Status</a></h3>
 								</td>
-							</tr>
-							<tr>
-								<td style="vertical-align: top;">
-									<p style="padding-right: 25px;" data-bind="text: lang.lang.lists_all_unpaid_invoices1">
-										Lists all unpaid invoices for the current period, 30, 60, 90,
-										and more than 90 days, grouped by individual customers.
-									</p>
-								</td>
-								<td style="vertical-align: top;">
-									<p style="padding-right: 25px;" data-bind="text: lang.lang.lists_all_unpaid_invoices1">
-										Lists all unpaid invoices for the current period, 30, 60, 90,
-										and more than 90 days, grouped by individual customers.
-									</p>
-								</td>
-							</tr>
-							<tr>
 								<td style="vertical-align: top;">
 									<h3><a href="#/collect_invoice" data-bind="text: lang.lang.list_of_invoices_to_be_collected"></a></h3>
 								</td>
-								<td style="vertical-align: top;">
-									<h3><a href="#/collection_report" data-bind="text: lang.lang.collection_report"></a></h3>
-								</td>
 							</tr>
 							<tr>
 								<td style="vertical-align: top;">
+									<p style="padding-right: 25px;" data-bind="text: lang.lang.lists_all_unpaid_invoices1">
+										Lists all unpaid invoices for the current period, 30, 60, 90,
+										and more than 90 days, grouped by individual customers.
+									</p>
+								</td>
+								<td style="vertical-align: top;">									
 									<p style="padding-right: 25px;" data-bind="text: lang.lang.lists_all_unpaid_invoices_grouped_by_due_today_and_overdue">
 										Lists all unpaid invoices, grouped by Due today and Overdue.
 									</p>
-								</td>
-								<td style="vertical-align: top;">
-									<p data-bind="text: lang.lang.lists_of_collected_invoices_for_the_select_period_of_time_group_by_method_of_payment"></p>
-									
 								</td>
 							</tr>
 
 							<tr>
 								<td style="vertical-align: top;">
-									<h3><a href="#/invoice_list" data-bind="text: lang.lang.invoice_list"></a></h3>
+									<h3><a href="#/collection_report" data-bind="text: lang.lang.collection_report"></a></h3>
 								</td>
 								<td style="vertical-align: top;">
-									<h3><a href="#/customer_list" data-bind="text: lang.lang.customer_list"></a></h3>
+									<h3><a href="#/invoice_list" data-bind="text: lang.lang.invoice_list"></a></h3>
 								</td>
 							</tr>
 							<tr>
 								<td style="vertical-align: top;">
+									<p data-bind="text: lang.lang.lists_of_collected_invoices_for_the_select_period_of_time_group_by_method_of_payment"></p>
+								</td>
+								<td style="vertical-align: top;" data-bind="text: lang.lang.list_of_all_active_customers">
 									<p style="padding-right: 25px;"  data-bind="text: lang.lang.shows_a_chronological_list_of_all_your_invoices_for_a_selected_date_range">
 										Shows a chronological list of all your invoices for a selected date range.
 									</p>
 								</td>
-								<td style="vertical-align: top;" data-bind="text: lang.lang.list_of_all_active_customers">
+							</tr>
+							<tr>
+								<td style="vertical-align: top;">
+									<h3><a href="#/customer_list" data-bind="text: lang.lang.customer_list"></a></h3>
+								</td>
+								<td style="vertical-align: top;">
+									
+								</td>
+							</tr>
+							<tr>
+								<td style="vertical-align: top;">
 									<p>
 										List of all active customers
 									</p>
+								</td>
+								<td style="vertical-align: top;" >
+									
 								</td>
 							</tr>
 
@@ -12472,6 +12496,185 @@
 	<tr>
 		<td style="padding-left: 20px !important;">
 			<a href="\#/#=line[i].type.toLowerCase()#/#=line[i].id#"><i></i> #=line[i].type#</a>
+		</td>
+		<td>#=kendo.toString(new Date(line[i].issued_date), "dd-MM-yyyy")#</td>
+		<td>#=kendo.toString(new Date(line[i].due_date), "dd-MM-yyyy")#</td>
+		<td><a href="\#/#=line[i].type.toLowerCase()#/#=line[i].id#"><i></i> #=line[i].number#</a></td>
+		<td style="text-align: right;">
+    		#if(line[i].type==="Cash_Receipt"){#
+				PMT
+			#}else if(line[i].type==="Sale_Return"){#
+				Returned
+        	#}else{#
+        		#if(line[i].status==="0" || line[i].status==="2") {#
+					# var date = new Date(), dueDates = new Date(line[i].due_date).getTime(), toDay = new Date(date).getTime(); #
+					#if(dueDates < toDay) {#
+						Over Due #:Math.floor((toDay - dueDates)/(1000*60*60*24))# days
+					#} else {#
+						#:Math.floor((dueDates - toDay)/(1000*60*60*24))# days to pay
+					#}#
+				#}else{#
+					Paid
+				#}#
+        	#}#
+		</td>
+		<td style="text-align: right;">
+			#=kendo.toString(line[i].amount, "c2", banhji.locale)#
+		</td>
+		<td style="text-align: right;">
+			#=kendo.toString(totalBalance, "c2", banhji.locale)#
+		</td>
+	</tr>
+    #}#
+    <tr>
+    	<td colspan="6" style="font-weight: bold; color: black;"><span data-bind="text: lang.lang.total"></span></td>
+    	<td class="right" style="font-weight: bold; border-top: 1px solid black !important; color: black;">
+    		#=kendo.toString(totalBalance, "c2", banhji.locale)#
+    	</td>
+    </tr>
+    <tr>
+    	<td colspan="7">&nbsp;</td>
+    </tr>
+</script>
+<script id="receivableAgingDetailbyEmployee" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content saleSummaryCustomer">
+			    	<span class="pull-right glyphicons no-js remove_2"
+						onclick="javascript:window.history.back()"><i></i></span>
+					<br>
+					<br>
+
+					<div class="row-fluid">
+					    <!-- Tabs -->
+						<div class="relativeWrap" data-toggle="source-code">
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+
+								<!-- Tabs Heading -->
+								<div class="widget-head">
+									<ul>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>
+										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.filter"></span></a></li>
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
+									</ul>
+								</div>
+								<!-- // Tabs Heading END -->
+								<div class="widget-body">
+									<div class="tab-content">
+
+								        <!-- //Date -->
+								        <div class="tab-pane active" id="tab-1">
+									        <span data-bind="text: lang.lang.as_of"></span>:
+									        <input data-role="datepicker"
+													data-format="dd-MM-yyyy"
+													data-parse-formats="yyyy-MM-dd"
+													data-bind="value: as_of" />
+
+								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+
+							        	</div>
+
+								    	<!-- Filters -->
+								        <div class="tab-pane" id="tab-2">
+											<table class="table table-condensed">
+												<tr>
+									            	<td style="padding: 8px 0 0 0 !important; ">
+														<span data-bind="text: lang.lang.sale_rep"></span>
+														<select data-role="multiselect"
+															   data-value-primitive="true"
+															   data-item-template="contact-list-tmpl"
+															   data-value-field="id"
+															   data-text-field="name"
+															   data-bind="value: obj.employeeIds,
+															   			source: employeeDS"
+															   data-placeholder="Select Sale Rep..."
+															   style="width: 100%" /></select>
+													</td>
+													<td style="padding-top: 31px !important; float: left;">
+										  				<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+													</td>
+												</tr>
+											</table>
+							        	</div>
+							        	<!--PRINT/EXPORT  -->
+								        <div class="tab-pane" id="tab-3">
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
+								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
+								        		<i class="fa fa-file-pdf-o"></i>
+								        		Print as PDF
+								        	</span> -->
+								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" style="width: 80px;">
+								        		<i class="fa fa-file-excel-o"></i>
+								        		Export to Excel
+								        	</span>
+							        	</div>
+								    </div>
+								</div>
+							</div>
+						</div>
+						<!-- // Tabs END -->
+					</div>
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="html: company.name"></h3>
+							<h2 data-bind="text: lang.lang.receivable_aging_detail_employee"></h2>
+							<p data-bind="text: displayDate"></p>
+						</div>
+
+						<div class="row">
+							<div class="span3" style="padding-right: 0;">
+								<div class="total-customer">
+									<p data-bind="text: lang.lang.number_of_employee"></p>
+									<span data-format="n0" data-bind="text: dataSource.total"></span>
+								</div>
+							</div>
+							<div class="span9">
+								<div class="total-customer">
+									<p data-bind="text: lang.lang.total_customer_balance"></p>
+									<span data-bind="text: totalBalance"></span>
+								</div>
+							</div>
+						</div>
+
+						<table class="table table-borderless table-condensed ">
+							<thead>
+								<tr>
+									<th data-bind="text: lang.lang.customer"><span>Type</span></th>
+									<th data-bind="text: lang.lang.invoice_date"><span>Invoice Date</span></th>
+									<th data-bind="text: lang.lang.due_date"><span>Due Date</span></th>
+									<th data-bind="text: lang.lang.reference"><span>Reference</span></th>
+									<th style="text-align: center;" data-bind="text: lang.lang.status"><span>Status</span></th>
+									<th style="text-align: right;" data-bind="text: lang.lang.amount"><span>Amount</span></th>
+									<th style="text-align: right;" data-bind="text: lang.lang.balance"><span>Balance</span></th>
+								</tr>
+							</thead>
+							<tbody data-role="listview"
+								 data-auto-bind="false"
+								 data-bind="source: dataSource"
+								 data-template="receivableAgingDetailbyEmployee-template"
+							></tbody>
+						</table>
+						<div id="pager" class="k-pager-wrap"
+			            		 data-role="pager"
+						    	 data-auto-bind="false"
+					             data-bind="source: dataSource"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="receivableAgingDetailbyEmployee-template" type="text/x-kendo-tmpl">
+	<tr>
+		<td colspan="7" style="font-weight: bold; color: black;">#: name #</td>
+	</tr>
+	#var totalBalance = 0;#
+	#for(var i = 0; i < line.length; i++){#
+	#totalBalance += line[i].amount;#
+	<tr>
+		<td style="padding-left: 20px !important;">
+			#=line[i].customer#
 		</td>
 		<td>#=kendo.toString(new Date(line[i].issued_date), "dd-MM-yyyy")#</td>
 		<td>#=kendo.toString(new Date(line[i].due_date), "dd-MM-yyyy")#</td>

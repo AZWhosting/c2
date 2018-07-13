@@ -5187,6 +5187,11 @@
 					self.set("invobj", []);
 					self.receipChangeDS.data([]);
 					self.receipCurrencyDS.data([]);
+					var v = e.response.results[0];
+					banhji.printBill.set("isReceipt", true);
+					banhji.printBill.dataSource = [];
+					banhji.printBill.dataSource.push(v);
+					banhji.router.navigate("/print_bill");
 				}
 			});
 		},
@@ -5206,6 +5211,7 @@
 			}).then(function(e){
 				$("#loadING").css("display", "none");
 				var v = self.printBillDS.view()[0];
+				banhji.printBill.set("isReceipt", false);
 				banhji.printBill.dataSource = [];
 				banhji.printBill.dataSource.push(v);
 				banhji.router.navigate("/print_bill");
@@ -5553,18 +5559,42 @@
 		lang: langVM,
 		dataSource: [],
 		amountperson: 0,
+		isReceipt: false,
+		txnTemplateDS: dataStore(apiUrl + "transaction_templates"),
 		company: banhji.institute,
 		pageLoad: function() {
 			if (this.dataSource.length <= 0) {
 				banhji.router.navigate('/');
 			}
 			var self = this;
-			var TempForm = $("#invoiceFormPOS").html();
-			$("#invoiceContent").kendoListView({
-				dataSource: this.dataSource,
-				template: kendo.template(TempForm)
+			var TempForm = '';
+			$("#loadING").css("display","block");
+			this.txnTemplateDS.query({
+				filter: {field: "moduls", value: "wellnez_mg"},
+				pageSize: 1,
+			}).then(function(e){
+				var v = self.txnTemplateDS.data()[0].transaction_form_id;
+				if(v == 81){
+					if(self.get("isReceipt") == true){
+						TempForm = $("#receiptFormPOS").html();
+					}else{
+						console.log('a');
+						TempForm = $("#invoiceFormPOS").html();
+					}
+				}else{
+					if(self.get("isReceipt") == true){
+						TempForm = $("#receiptForm").html();
+					}else{
+						TempForm = $("#invoiceForm").html();
+					}
+				}
+				$("#invoiceContent").kendoListView({
+					dataSource: self.dataSource,
+					template: kendo.template(TempForm)
+				});
+				$("#loadING").css("display","none");
+				self.barcod("do");
 			});
-			this.barcod("do");
 		},
 		barcod: function(re) {
 			var view = this.dataSource;
