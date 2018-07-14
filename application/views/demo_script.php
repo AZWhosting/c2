@@ -2646,7 +2646,7 @@
 	banhji.customerDashboard = kendo.observable({
 		lang                : langVM,
 		dataSource          : dataStore(apiUrl + "customer_modules/dashboard"),
-		graphDS             : dataStore(apiUrl + "customer_modules/Month_sale"),
+		graphDS             : dataStore(apiUrl + "customer_modules/monthly_sale"),
 		obj                 : {},
 		pageLoad            : function(){
 			var self = this;
@@ -62176,6 +62176,11 @@
 						$.each(view, function(index, value){
 							var amount_due = value.amount - (value.amount_paid + value.deposit);
 
+							var isProforma = false;
+							if(value.type=="Proforma_Invoice"){
+								isProforma = true;
+							}
+
 							self.dataSource.add({
 								transaction_template_id : 0,
 								contact_id          : value.contact_id,
@@ -62213,7 +62218,8 @@
 								month               : 0,
 								is_recurring        : 0,
 								reference           : [value],
-								contact             : value.contact
+								contact             : value.contact,
+								isProforma 			: isProforma
 							});
 						});
 						self.applyTerm();
@@ -62451,6 +62457,90 @@
 				locale              : value.locale
 			});
 			//Deposit on Cr
+			self.journalLineDS.add({
+				transaction_id      : value.id,
+				account_id          : contact.account_id,
+				contact_id          : value.contact_id,
+				description         : "",
+				reference_no        : "",
+				segments            : obj.segments,
+				dr                  : 0,
+				cr                  : value.amount,
+				rate                : value.rate,
+				locale              : value.locale
+			});
+
+			//When recognized revenue
+			//Deposit/AR on Dr
+			this.journalLineDS.add({
+				transaction_id      : value.id,
+				account_id          : obj.account_id,
+				contact_id          : value.contact_id,
+				description         : "",
+				reference_no        : "",
+				segments            : obj.segments,
+				dr                  : value.amount,
+				cr                  : 0,
+				rate                : value.rate,
+				locale              : value.locale
+			});
+			//Revenue on Cr
+			self.journalLineDS.add({
+				transaction_id      : value.id,
+				account_id          : contact.account_id,
+				contact_id          : value.contact_id,
+				description         : "",
+				reference_no        : "",
+				segments            : obj.segments,
+				dr                  : 0,
+				cr                  : value.amount,
+				rate                : value.rate,
+				locale              : value.locale
+			});
+
+			// C. No deposit
+			//AR on Dr
+			this.journalLineDS.add({
+				transaction_id      : value.id,
+				account_id          : obj.account_id,
+				contact_id          : value.contact_id,
+				description         : "",
+				reference_no        : "",
+				segments            : obj.segments,
+				dr                  : value.amount,
+				cr                  : 0,
+				rate                : value.rate,
+				locale              : value.locale
+			});
+			//Revenue on Cr
+			self.journalLineDS.add({
+				transaction_id      : value.id,
+				account_id          : contact.account_id,
+				contact_id          : value.contact_id,
+				description         : "",
+				reference_no        : "",
+				segments            : obj.segments,
+				dr                  : 0,
+				cr                  : value.amount,
+				rate                : value.rate,
+				locale              : value.locale
+			});
+
+			// D. Quaterly Recognition
+			//AR on Dr
+			this.journalLineDS.add({
+				transaction_id      : value.id,
+				account_id          : obj.account_id,
+				contact_id          : value.contact_id,
+				description         : "",
+				reference_no        : "",
+				segments            : obj.segments,
+				dr                  : value.amount,
+				cr                  : 0,
+				rate                : value.rate,
+				locale              : value.locale
+			});
+			//Revenue on Cr
 			self.journalLineDS.add({
 				transaction_id      : value.id,
 				account_id          : contact.account_id,
