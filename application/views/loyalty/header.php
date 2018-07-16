@@ -5,7 +5,7 @@
 <!--[if gt IE 8]> <html class="animations ie gt-ie8 fluid top-full menuh-top sticky-top"> <![endif]-->
 <!--[if !IE]><!--><html class="animations fluid top-full menuh-top sticky-top"><!-- <![endif]-->
 <head>
-<title>Wellnez | Online Spa Management System</title>
+<title>Loyalty | Loyalty Program</title>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
@@ -272,8 +272,22 @@ var themerPrimaryColor = primaryColor;
 									</form>
 				        		</div>
 				        		<div class="span6 logout">
-				        			<span>Hello [<span id="userCut"></span>] |
-				        			<a href="" >Logout</a></span>
+				        			<div class="row logout">
+										<div class="container" style="text-align: right; width: 100%;">
+											<div style="text-align: left;float: left;">
+												<a href="#" onclick="langVM.changeToKh()">
+									        		<span>ភាសាខ្មែរ</span>
+									        	</a> | 
+												<a href="#" onclick="langVM.changeToEn()">
+													<span>English</span>
+												</a>
+											</div>
+											<div style="text-align: right;float: right;">
+												<span>Hello [<span id="userCut"></span>] |
+												<a href="<?php echo base_url(); ?>login" >Logout</a></span>
+											</div>
+										</div>
+									</div>
 				        		</div>
 				        	</div>
 				        </div>

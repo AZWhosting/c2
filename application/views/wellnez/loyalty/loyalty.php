@@ -390,9 +390,22 @@
 		font-size: 20px;
 	}
 </style>
-<!-- ***************************
-*	Water Section      	  *
-**************************** -->
+<script id="Index" type="text/x-kendo-template">
+	<div class="container">
+		<div class="row customerCenter" style="width: 900px; margin: 0 auto;">
+			<div class="span5" style="margin-right: 20px;cursor: pointer; padding: 20px 0;background: darkgreen;text-align: center;border-radius: 20px;border: 1px solid #ccc;">
+				<img style="width: 40%;" src="<?php echo base_url(); ?>assets/spa/icon/loyalty.png" />
+				<p>គ្រប់គ្រងកាត</p>
+				<p>Manage Cards</p>
+			</div>
+			<div class="span5" style="cursor: pointer; padding: 20px 0;background: darkgreen;text-align: center;border-radius: 20px;border: 1px solid #ccc;">
+				<img style="width: 40%;" src="<?php echo base_url(); ?>assets/spa/icon/loyalty.png" />
+				<p>គ្រប់គ្រង Loyalty</p>
+				<p>Loyalty Programs</p>
+			</div>
+		</div>
+	</div>	
+</script>
 <script id="loyaltyCenter" type="text/x-kendo-template">
 	<div class="container">
 		<div class="row customerCenter">

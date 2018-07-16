@@ -2184,8 +2184,8 @@
 
 					        <h2 data-bind="text: lang.lang.internal_usage"></h2>						    
 
-							<!-- Upper Part -->
-							<div class="row">
+							
+							<!-- <div class="row">
 								<div class="span4">
 									<div class="box-generic well" style="height: 150px;">
 										<table class="table table-borderless table-condensed cart_total">
@@ -2230,7 +2230,7 @@
 								<div class="span8">
 									<div class="box-generic-noborder" style="min-height: 234px !important">
 
-									    <!-- Tabs Heading -->
+									    
 									    <div class="tabsbar tabsbar-2">
 									        <ul class="row-fluid row-merge">
 									        	<li class="span1 glyphicons circle_info active"><a href="#tab-1" data-toggle="tab"><i></i> </a>
@@ -2241,14 +2241,12 @@
 									            </li>
 									            <li class="span1 glyphicons history"><a href="#tab-4" data-toggle="tab"><i></i></a>
 									            </li>
-									            <!-- <li class="span1 glyphicons show_liness"><a href="#tab3-4" data-toggle="tab"><i></i></a></li>	 -->
+									            <li class="span1 glyphicons show_liness"><a href="#tab3-4" data-toggle="tab"><i></i></a></li>
 									        </ul>
 									    </div>
-									    <!-- // Tabs Heading END -->
 
 									    <div class="tab-content">
 
-									    	<!-- Options Tab content -->
 									        <div class="tab-pane active" id="tab-1">
 									           	<table style="margin-bottom: 0;" class="table table-borderless table-condensed cart_total">
 													<tr>
@@ -2286,9 +2284,6 @@
 													</tr>
 									            </table>
 									        </div>
-									        <!-- // Options Tab content END -->
-
-									        <!-- Address Tab content -->
 									        <div class="tab-pane" id="tab-2">
 									        	<span data-bind="text: lang.lang.from"></span>
 												<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.bill_to" placeholder="Billing to ..."></textarea>
@@ -2297,9 +2292,6 @@
 												<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.ship_to" placeholder="Shipping to ..."></textarea>
 
 									        </div>
-									        <!-- // Address Tab content END -->
-
-									        <!-- Attach Tab content -->
 									        <div class="tab-pane" id="tab-3">
 									         	<p><span data-bind="text: lang.lang.file_type"></span> [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>
 
@@ -2327,9 +2319,6 @@
 											    </table>
 
 									        </div>
-									        <!-- // Attach Tab content END -->
-
-									        <!-- Recuring Tab content -->
 									        <div class="tab-pane" id="tab-4">
 
 									            <table style="width: 100%" class="table borderless">
@@ -2424,7 +2413,6 @@
 									            <span id="saveRecurring" class="btn btn-icon btn-default glyphicons history" style="float: right; margin-top: -12px;"><i></i> <span data-bind="text: lang.lang.save_recurring"></span></span>
 
 									        </div>
-									        <!-- // Recuring Tab content END -->
 
 									        <div class="tab-pane saleSummaryCustomer" id="tab3-4">
 												<table class="table table-borderless table-condensed">
@@ -2457,12 +2445,9 @@
 									</div>
 							    </div>
 							</div>
-
-							<!-- Middle Part -->
+							
 							<div class="row">
-								<div class="box-generic-noborder">
-
-								    <!-- Tabs Heading -->
+								<div class="box-generic-noborder">								    
 								    <div class="tabsbar tabsbar-2">
 								        <ul class="row-fluid row-merge">
 								        	<li class="span3 active" style="width: 135px;"><a href="#tab-FROM" data-toggle="tab">FROM</a>
@@ -2471,14 +2456,9 @@
 								            </li>
 								        </ul>
 								    </div>
-								    <!-- // Tabs Heading END -->
-
+								    
 								    <div class="tab-content">
-
-								    	<!-- FROM -->
-								        <div class="tab-pane active" id="tab-FROM">
-
-								        	<!-- From Item Line -->
+								        <div class="tab-pane active" id="tab-FROM">								        	
 											<div id="grid" data-role="grid" class="costom-grid"
 										    	 data-column-menu="true"
 										    	 data-reorderable="true"
@@ -2530,7 +2510,6 @@
 
 											<br><br>
 
-								        	<!-- From Account Line -->
 											<div data-role="grid" class="costom-grid"
 										    	 data-column-menu="true"
 										    	 data-reorderable="true"
@@ -2564,14 +2543,11 @@
 											<button class="btn btn-inverse" data-bind="click: addRowAccount"><i class="icon-plus icon-white"></i></button>
 
 								        </div>
-								        <!-- // Item Line & Account Line END -->
-
-								        <!-- TO -->
+								      
 								        <div class="tab-pane" id="tab-TO">
 
 											<div class="row-fluid">
 
-												<!-- To Item Line -->
 												<div id="grid" data-role="grid" class="costom-grid"
 											    	 data-column-menu="true"
 											    	 data-reorderable="true"
@@ -2622,7 +2598,7 @@
 
 												<br><br>
 
-												<!-- To Account Line -->
+											
 												<div data-role="grid" class="costom-grid"
 											    	 data-column-menu="true"
 											    	 data-reorderable="true"
@@ -2662,14 +2638,8 @@
 								    </div>
 								</div>
 
-
-								<!-- Bottom part -->
 					            <div class="row-fluid">
-
-									<!-- Column -->
 									<div class="span6 hidden-print">
-
-										<!-- Add New Item -->
 										<ul class="topnav addNew">
 											<li role="presentation" class="dropdown ">
 										  		<a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
@@ -2684,15 +2654,12 @@
 									  			</ul>
 										  	</li>
 										</ul>
-										<!--End Add New Item -->
 								  		<a href="#/account" class="btn" style="background: #203864; color: #fff; width: 137px;">
 								  			<span data-bind="text: lang.lang.add_account"></span>
 								  		</a>
 
 									</div>
-									<!-- Column END -->
 
-									<!-- Column -->
 									<div class="span6">
 										<table class="table table-borderless table-condensed cart_total">
 											<tbody>
@@ -2711,16 +2678,13 @@
 											</tbody>
 										</table>
 									</div>
-									<!-- // Column END -->
 
 								</div>
 							</div>
 
-							<!-- Form actions -->
 							<div class="box-generic bg-action-button">
 								<div id="ntf1" data-role="notification"></div>
 
-								<!-- Delete Confirmation -->
 								<div data-role="window"
 					                 data-title="Delete Confirmation"
 					                 data-width="350"
@@ -2737,7 +2701,6 @@
 								    <button style="font-size:14px; border:none; background:#496cad; color:#fff; padding:5px 25px;" data-bind="click:delete">Yes</button>
 								    <button style="font-size:14px; border:none; background:red; color:#fff; padding:5px 25px;" data-bind="click:closeConfirm">No</button>
 					            </div>
-					            <!-- // Delete Confirmation -->
 
 								<div class="row">
 									<div class="span4" style="padding-left: 15px;">
@@ -2767,8 +2730,399 @@
 									  	<span class="btn-btn" id="saveDraft1" data-bind="invisible: isEdit"><span data-bind="text: lang.lang.save_draft"></span></span>
 									</div>
 								</div>
+							</div> -->
+
+							<div class="row" id="checkOut">
+								<div class="col-12 col-md-6">
+									<div class="listWrapper">
+										<div class="row">
+            								<div class="col-md-6" style="min-height: 76px;">
+						            			<div class="row">
+						            				<div class="col">
+						            					<a class="cashmodule module-active" data-bind="click: cashClick" style="text-align: center;  width: 100%; float: left; border: 1px solid #d5d5d5; padding: 5px; cursor: pointer;">
+						            						<span data-bind="">FROM</span>
+						            					</a>
+						            				</div>
+						            				<div class="col">
+						            					<a class="creditmodule" data-bind="click: creditClick" style="text-align: center;  width: 100%; float: left; border: 1px solid #d5d5d5; padding: 5px; cursor: pointer;">
+						            						<span data-bind="">TO</span>
+						            					</a>
+						            				</div>
+						            			</div>
+						            			<!-- <input type="radio" value="Cash_Purchase" class="k-radio"
+						        					name="payOption" id="payOption1"
+						        					data-bind="checked: obj.type,
+						        								events:{ change: typeChanges }">
+						        				<label class="k-radio-label" for="payOption1"><span data-bind="text: lang.lang.cash"></span></label>
+
+						        				<input type="radio" value="Credit_Purchase" class="k-radio"
+								            		name="payOption" id="payOption2"
+								            		data-bind="checked: obj.type,
+								            					events:{ change: typeChanges }">
+								            	<label class="k-radio-label" for="payOption2"><span data-bind="text: lang.lang.credit"></span></label> -->
+								            	
+								            	
+								            	<!-- <p class="marginBottom" data-bind="text: lang.lang.account"></p>
+								            	<input class="marginBottom" id="ddlAccount" name="ddlAccount"
+													data-role="dropdownlist"
+						              				data-header-template="account-header-tmpl"
+						              				data-template="account-list-tmpl"
+						              				data-value-primitive="true"
+													data-text-field="name"
+						              				data-value-field="id"
+						              				data-bind="value: obj.account_id,
+						              							source: accountDS"
+						              				data-option-label="Select Account..."
+						              				required data-required-msg="required"
+						              				style="width: 100%" /> -->
+						                	</div>
+
+						                	<div class="col-md-6" >
+						                		<div data-bind="invisible: isCash">
+						                    		<span class="marginBottom" data-bind="text: lang.lang.no_" style="width: 25%; float:left;"></span>
+								            		<input id="txtNumber" name="txtNumber" class="k-textbox marginBottom" 
+													data-bind="value: obj.number,
+																disabled: obj.is_recurring,
+																events:{change:checkExistingNumber}"
+													required data-required-msg="required"
+													placeholder="eg. ABC00001" style="width: 75%; float:left;"/>
+												</div>
+												<span class="marginBottom" data-bind="text: lang.lang.date" style="width: 25%; float:left;"></span>
+								            	<input id="issuedDate" name="issuedDate"
+													data-role="datepicker"
+													data-format="dd-MM-yyyy"
+													data-parse-formats="yyyy-MM-dd HH:mm:ss"
+													data-bind="value: obj.issued_date,
+																events:{ change : setRate }"
+													required data-required-msg="required"
+						              				style="width: 75%; float:left;" />
+
+												<!-- <p class="marginBottom" data-bind="text: lang.lang.bill_date"></p>
+							            		<input id="txtBillDate" name="txtBillDate" class="pull-right marginBottom"
+							            				data-role="datepicker"
+														data-format="dd-MM-yyyy"
+														data-parse-formats="yyyy-MM-dd"
+														data-bind="value: obj.bill_date" style="width: 100%;"/> -->
+											</div>
+
+										</div>
+										<div class="row">
+											<div class="col-12 col-md-12 col-lg-6">
+												<div class="widget-search marginBottom">
+													<div class="overflow-hidden" style="width: 100%;">
+														<input type="search" placeholder="Barcode..." data-bind="value: barcode, events: {change: barcodeChange}" style="width: 100%;" />
+													</div>
+													
+												</div>
+											</div>
+											<div class="col-12 col-md-12 col-lg-6">
+												<div class="widget-search marginBottom">
+													<div class="overflow-hidden">
+														<input type="search" placeholder="Number or Name..." data-bind="value: searchText" />
+													</div>
+													<button style="background: #009efb; color: #fff;" type="button" class="btn btn-default pull-right " data-bind="click: search"><i class="ti-search"></i></button>
+												</div>
+											</div>
+										</div>
+										<!-- <div class="row hidden-sm-down">
+											<div class="col-md-12" style="position: relative;overflow: hidden;">
+												<div id="loading" class="preloader" style="display: none;position: absolute;background: rgba(255,255,255,.6);">
+											        <div class="loader">
+											            <div class="loader__figure"></div>
+											        </div>
+											    </div>
+												<div data-bind="invisible: haveItems" class="demo-section k-content wide span12">
+													<p style="color: #fff; margin-bottom: 5px; float: left; width: 100%;" data-bind="text: lang.lang.category">Category</p>
+													<div class="demo-section k-content wide">
+														<div 
+															id="productListView"
+															data-role="listview"
+															data-template="category-list-view-template"
+															data-auto-bind="true"
+															data-bind="source: categoryDS">
+														</div>
+														<div id="pager" class="k-pager-wrap"
+													    	 data-role="pager"
+													    	 data-auto-bind="true"
+												             data-bind="source: categoryDS">
+												        </div>
+													</div>
+												</div>
+												<div data-bind="visible: haveItems" class="demo-section k-content wide span12">
+													<p style="color: #fff; margin-bottom: 5px; float: left; width: 100%;" >
+														<span style="float: left; width: 50%;" data-bind="text: lang.lang.item">Items</span>
+														<span class="textAlignRight" data-bind="click: backCategory" style="float: right; width: 50%; cursor: pointer;">
+															<i class=" ti-control-backward"></i>
+															<span data-bind="text: lang.lang.micro_trolop">back</span>
+														</span>
+													</p>
+													<div class="demo-section k-content wide">
+														<div 
+															id="productListView"
+															data-role="listview"
+															data-template="item-list-view-template"
+															data-auto-bind="true"
+															data-bind="source: itemsDS">
+														</div>
+														<div id="pager" class="k-pager-wrap"
+													    	 data-role="pager"
+													    	 data-auto-bind="true"
+												             data-bind="source: itemsDS">
+												        </div>
+													</div>
+												</div>
+											</div>
+										</div> -->
+									</div>
+								</div>
+								<div class="col-12 col-md-6">
+									<div class="listWrapper marginBottom" style="height: auto;">
+										<h4>វត្ថុធាតុដើម</h4>
+										<div class="row">
+											<div class="col-md-12 table-responsive">
+												<div id="posProductList" class="grid box-generic-noborder table-responsive marginBottom" style="min-height: 140px!important; height: 230px; padding-bottom: 0;">
+													<!-- Item List -->
+												    <div data-role="grid" class="costom-grid table color-table dark-table"
+												    	 data-column-menu="true"
+												    	 data-reorderable="true"
+												    	 data-scrollable="false"
+												    	 data-resizable="true"
+												    	 data-editable="true"
+										                 data-columns="[
+														    {
+														    	title: langVM.lang.n_o,
+														    	attributes: { style: 'text-align: center;', class: 'hidden-sm-down' },
+														    	headerAttributes: { class: 'hidden-sm-down'},
+														        template: function (dataItem) {
+														        	var rowIndex = banhji.checkOut.lineDS.indexOf(dataItem)+1;
+														        	return '<i class=icon-trash data-bind=click:removeRow></i>' + ' ' + rowIndex;
+														      	}
+														    },
+										                 	{ 
+										                 		field: 'item',
+										                 		title: langVM.lang.item, 
+										                 		editor: itemEditor, 
+										                 		template: '#=item.name#',
+										                 		attributes: { class: 'width_33' },
+										                 		headerAttributes: { class: 'width_33' }
+										                 	},
+								                            {
+															    field: 'quantity',
+															    title: langVM.lang.qty,
+															    format: '{0:n}',
+															    editor: numberTextboxEditor,
+															    attributes: { style: 'text-align: right;', class: 'width_33' },
+															    headerAttributes: { class: 'width_33' }
+															},
+								                            {
+								                            	field: 'item_price',
+								                            	title: langVM.lang.uom,
+								                            	editor: measurementEditor,
+								                            	template: '#=item_price?item_price.measurement:banhji.emptyString#',
+								                            	attributes: { class: 'hidden-sm-down' },
+														    	headerAttributes: { class: 'hidden-sm-down'}
+								                            },
+								                            {
+															    field: 'price',
+															    title: langVM.lang.price,
+															    format: '{0:n}',
+															    editor: numberTextboxEditor,
+															    hidden: true,
+															    attributes: { style: 'text-align: right;', class: 'hidden-sm-down' },
+															    headerAttributes: { class: 'hidden-sm-down'}
+															},
+															{
+															    field: 'discount',
+															    title: 'DISCOUNT VALUE',
+															    hidden: true,
+															    format: '{0:n}',
+															    editor: numberTextboxEditor,
+															    attributes: { style: 'text-align: right;' , class: 'hidden-sm-down' },
+															    headerAttributes: { class: 'hidden-sm-down'}
+															},
+															{
+															    field: 'discount_percentage',
+															    title: 'DISCOUNT %',
+															    hidden: true,
+															    format: '{0:p}',
+															    editor: discountEditor,
+															    attributes: { style: 'text-align: right;' , class: 'hidden-sm-down'},
+															    headerAttributes: { class: 'hidden-sm-down'}
+															},
+								                            { 
+								                            	field: 'amount', 
+								                            	title: langVM.lang.amount, 
+								                            	format: '{0:n}', 
+								                            	editable: 'false', 
+								                            	attributes: { style: 'text-align: right;', class: 'width_33' },
+								                            	headerAttributes: { class: 'width_33' }
+								                            },
+								                            { 
+								                            	field: 'tax_item', 
+								                            	title: langVM.lang.tax, 
+								                            	hidden: true,
+								                            	editor: taxForSaleEditor, 
+								                            	template: '#=tax_item.name#',
+								                            	attributes: { style: 'text-align: right;' , class: 'hidden-sm-down'},
+															    headerAttributes: { class: 'hidden-sm-down'}
+								                            }
+								                         ]"
+								                         data-auto-bind="false"
+										                 data-bind="source: lineDS" >
+										            </div>
+												</div>												
+											</div>
+										</div>
+
+										<h4>ផលិតផលសម្រាច</h4>
+										<div class="row">
+											<div class="col-md-12 table-responsive">
+												<div id="posProductList" class="grid box-generic-noborder table-responsive marginBottom" style="min-height: 140px!important; height: 230px; padding-bottom: 0;">
+													<!-- Item List -->
+												    <div data-role="grid" class="costom-grid table color-table dark-table"
+												    	 data-column-menu="true"
+												    	 data-reorderable="true"
+												    	 data-scrollable="false"
+												    	 data-resizable="true"
+												    	 data-editable="true"
+										                 data-columns="[
+														    {
+														    	title: langVM.lang.n_o,
+														    	attributes: { style: 'text-align: center;', class: 'hidden-sm-down' },
+														    	headerAttributes: { class: 'hidden-sm-down'},
+														        template: function (dataItem) {
+														        	var rowIndex = banhji.checkOut.lineDS.indexOf(dataItem)+1;
+														        	return '<i class=icon-trash data-bind=click:removeRow></i>' + ' ' + rowIndex;
+														      	}
+														    },
+										                 	{ 
+										                 		field: 'item',
+										                 		title: langVM.lang.item, 
+										                 		editor: itemEditor, 
+										                 		template: '#=item.name#',
+										                 		attributes: { class: 'width_33' },
+										                 		headerAttributes: { class: 'width_33' }
+										                 	},
+								                            {
+															    field: 'quantity',
+															    title: langVM.lang.qty,
+															    format: '{0:n}',
+															    editor: numberTextboxEditor,
+															    attributes: { style: 'text-align: right;', class: 'width_33' },
+															    headerAttributes: { class: 'width_33' }
+															},
+								                            {
+								                            	field: 'item_price',
+								                            	title: langVM.lang.uom,
+								                            	editor: measurementEditor,
+								                            	template: '#=item_price?item_price.measurement:banhji.emptyString#',
+								                            	attributes: { class: 'hidden-sm-down' },
+														    	headerAttributes: { class: 'hidden-sm-down'}
+								                            },
+								                            {
+															    field: 'price',
+															    title: langVM.lang.price,
+															    format: '{0:n}',
+															    editor: numberTextboxEditor,
+															    hidden: true,
+															    attributes: { style: 'text-align: right;', class: 'hidden-sm-down' },
+															    headerAttributes: { class: 'hidden-sm-down'}
+															},
+															{
+															    field: 'discount',
+															    title: 'DISCOUNT VALUE',
+															    hidden: true,
+															    format: '{0:n}',
+															    editor: numberTextboxEditor,
+															    attributes: { style: 'text-align: right;' , class: 'hidden-sm-down' },
+															    headerAttributes: { class: 'hidden-sm-down'}
+															},
+															{
+															    field: 'discount_percentage',
+															    title: 'DISCOUNT %',
+															    hidden: true,
+															    format: '{0:p}',
+															    editor: discountEditor,
+															    attributes: { style: 'text-align: right;' , class: 'hidden-sm-down'},
+															    headerAttributes: { class: 'hidden-sm-down'}
+															},
+								                            { 
+								                            	field: 'amount', 
+								                            	title: langVM.lang.amount, 
+								                            	format: '{0:n}', 
+								                            	editable: 'false', 
+								                            	attributes: { style: 'text-align: right;', class: 'width_33' },
+								                            	headerAttributes: { class: 'width_33' }
+								                            },
+								                            { 
+								                            	field: 'tax_item', 
+								                            	title: langVM.lang.tax, 
+								                            	hidden: true,
+								                            	editor: taxForSaleEditor, 
+								                            	template: '#=tax_item.name#',
+								                            	attributes: { style: 'text-align: right;' , class: 'hidden-sm-down'},
+															    headerAttributes: { class: 'hidden-sm-down'}
+								                            }
+								                         ]"
+								                         data-auto-bind="false"
+										                 data-bind="source: lineDS" >
+										            </div>
+												</div>												
+											</div>
+										</div>
+
+										<div class="row">
+											<div class="col-12 col-md-12 col-lg-6">
+												<table class="table color-table dark-table">
+													<tbody>
+														<tr>
+															<td class="textAlignRight" style="width: 50%"><span data-bind="" style="font-size: 15px; font-weight: 700;">Total From:</span></td>
+															<td class="textAlignRight"><span data-format="n" data-bind="text: totalFrom" style="font-size: 15px; font-weight: 700;"></span></td>
+														</tr>
+														<tr>
+															<td class="textAlignRight"><span data-bind="">Different:</span></td>
+															<td class="textAlignRight"><span data-format="n" data-bind="text: different"></span></td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+											 
+											<div class="col-12 col-md-12 col-lg-6 checkOut-button">
+												<table class="table color-table dark-table">
+													<tbody>										
+														<tr>
+															<td class="textAlignRight" style="width: 50%"><h4 data-bind="" style="font-weight: 700;">Total To:</h4></td>
+															<td class="textAlignRight"><h4 data-bind="text: totalTo" style="font-weight: 700;"></h4></td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</div>
+
+
+										<div class="backgroundButtonFooter">
+											<div id="ntf1" data-role="notification" style="display: none;"></div>
+											<div class="row">
+												<div class="col" align="right">
+													<span  class="btn-btn" data-bind="click: cancel"><i></i> <span data-bind="text: lang.lang.cancel">Cancel </span></span>
+													<span class="btn-btn" id="saveClose" data-bind="click: saveNew2"><span data-bind="text: lang.lang.save_close">Save Close</span></span>
+													<!-- <span class="btn-btn" data-bind="click: openConfirm, visible: isEdit" style="display: none;"><span data-bind="text: lang.lang.delete">Delete</span></span>
+													<span class="btn-btn" data-bind="click: saveNew2" id="saveNew" data-bind="invisible: isEdit"><span data-bind="text: lang.lang.save_new">Save and New</span></span>
+							                        <span class="btn-btn" data-bind="click: savePrint2" id="savePrint"><span data-bind="text: lang.lang.save_print">Save and Print</span></span> -->
+													<!-- <button type="button" class="btn btn-info btn-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						                        		<span data-bind="text: lang.lang.save_option">Save Options</span>
+							                        </button>
+							                        <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 35px, 0px); top: 0px; left: 0px; will-change: transform;">
+							                            <a class="dropdown-item" data-bind="click: saveNew2" id="saveNew" data-bind="invisible: isEdit"><span data-bind="text: lang.lang.save_new">Save and New</span></a>
+							                            <a class="dropdown-item" data-bind="click: savePrint2" id="savePrint"><span data-bind="text: lang.lang.save_print">Save and Print</span></a>
+							                        </div> -->
+												  	<!-- <span class="btn-btn" id="saveClose"><span data-bind="text: lang.lang.save_close">Save Close </span></span> -->
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
 							</div>
-							<!-- // Form actions END -->
 						</div>
 					</div>
 				</div>

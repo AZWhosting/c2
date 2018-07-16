@@ -381,7 +381,8 @@ class Transactions extends REST_Controller {
 				   	"driver" 					=> $driver,
 				   	"reference" 				=> $reference,
 				   	"references" 				=> $value->transaction->get_raw()->result(),
-				   	"offset_invoice" 			=> $offsetInvoice
+				   	"offset_invoice" 			=> $offsetInvoice,
+				   	"billing_cycles" 			=> $value->billing_cycle->get_raw()->result()
 				);
 			}
 		}

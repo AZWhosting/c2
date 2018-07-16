@@ -16049,7 +16049,7 @@
 						                            { field: 'reference_no', title:'REFERENCE NO.', hidden: true, width: '120px' }
 						                         ]"
 						                         data-auto-bind="false"
-								                 data-bind="source: lineDS" nnnnnnnnnnnnnnnnnnnnn></div>
+								                 data-bind="source: lineDS"></div>
 
 							                <button class="btn btn-inverse" data-bind="click: addRow"><i class="icon-plus icon-white"></i></button>
 						        		</div>
@@ -33937,11 +33937,27 @@
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab" data-bind="click: printGrid"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
 									</ul>
 								</div>
 							</div>
 						</div>
+						<div class="widget-body">
+									<div class="tab-content">
+							        	<!-- PRINT/EXPORT  -->
+								        <div class="tab-pane active" id="tab-3">
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
+								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
+								        		<i class="fa fa-file-pdf-o"></i>
+								        		Print as PDF
+								        	</span> -->
+								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" style="width: 80px;">
+								        		<i class="fa fa-file-excel-o"></i>
+								        		Export to Excel
+								        	</span>
+							        	</div>
+								    </div>
+								</div>
 						<!-- // Tabs END -->
 					</div>
 					<br>

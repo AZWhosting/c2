@@ -15,6 +15,12 @@
                         <span class="hide-menu" data-bind="text: lang.lang.home"></span>
                     </a>
                 </li>
+                 <li>
+                    <a class="waves-effect waves-dark" href="<?php echo base_url(); ?>micro/check_out" aria-expanded="false">
+                        <i class=" ti-view-list-alt"></i>
+                        <span class="hide-menu" data-bind="text: lang.lang.check_out"></span>
+                    </a>
+                </li>
                 <li>
                     <a class="waves-effect waves-dark" href="<?php echo base_url(); ?>micro/sales" aria-expanded="false">
                         <i class="ti-receipt"></i>
@@ -35,7 +41,7 @@
                 </li>
                 <li>
                     <a class="waves-effect waves-dark" href="<?php echo base_url(); ?>micro/cashs" aria-expanded="false">
-                        <i class="fa fa-dollar"></i>
+                        <i class="ti-wallet"></i>
                         <span class="hide-menu" data-bind="text: lang.lang.cash"></span>
                     </a>
                 </li>
@@ -52,13 +58,13 @@
                         <li><a href="<?php echo base_url(); ?>micro/setting#/item_setting" ><i class="ti-layout-grid2"></i><span data-bind="text: lang.lang.inventory_setting"></span></a></li>
                     </ul>
                 </li>
-                <li class="dropdown-divider"></li> 
+                <!-- <li class="dropdown-divider"></li> 
                 <li>
                     <a class="waves-effect waves-dark app-icon" href="<?php echo base_url(); ?>app" aria-expanded="false">
                         <span class="hide-menu" data-bind="text: lang.lang.app_center"></span>
                         <img style="width: 20px; float: right; margin-right: 6px;" src="<?php echo base_url(); ?>assets/micro/app.ico">
                     </a>
-                </li>
+                </li> -->
                 <!-- <li>
                     <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
                         <i class="ti-bookmark-alt"></i>

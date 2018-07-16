@@ -628,7 +628,7 @@ var	km_KH = {
 	"received note" : "ប័ណ្ណ​ទទួល​ទំនិញ",
 	"delivery_note" : "ប័ណ្ណ ដឹក​ទំនិញ",
 	"adjustment" : "កែ​តម្រូវ សន្និធិ",
-	"internal_usage" : "ប្រើប្រាស់​ផ្ទៃ​ក្នុង",
+	"internal_usage" : "ផលិតកម្ម",
 	"app_internal_usage" : "ផលិត",
 	"build_assembly" : "បណ្ដុំ សន្និធិ",
 	"catalog" : "កាតាឡុក",

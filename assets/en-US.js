@@ -632,7 +632,7 @@ var	en_US = {
 	"received note" : "Received Note",
 	"c_delivery_note" : "DELIVERY NOTE",
 	"adjustment" : "Adjustment",
-	"internal_usage" : "Internal Usage",
+	"internal_usage" : "Production",
 	"app_internal_usage" : "Internal Usage",
 	"build_assembly" : "Build Assembly",
 	"catalog" : "Catalog ",

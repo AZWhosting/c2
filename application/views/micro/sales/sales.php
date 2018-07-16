@@ -70,8 +70,8 @@
 <!-- Menu -->
 <script id="tapMenu" type="text/x-kendo-template">
 	<ul class="nav nav-tabs customtab" role="tablist" >
-		<li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#/" data-bind="click: goCheckOut"><span class="hidden-sm-up"><i class="ti-layout-accordion-list"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.check_out"></span></a> </li>
-		<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#/reports" data-bind="click: goReports"><span class="hidden-sm-up"><i class="ti-layout-grid2-thumb"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.reports"></span></a> </li>	    
+		<!-- <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#/" data-bind="click: goCheckOut"><span class="hidden-sm-up"><i class="ti-layout-accordion-list"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.check_out"></span></a> </li> -->
+		<li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#/reports" data-bind="click: goReports"><span class="hidden-sm-up"><i class="ti-layout-grid2-thumb"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.reports"></span></a> </li>	    
 	    <!-- <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#/transactions" data-bind="click: goTransactions"><span class="hidden-sm-up"><i class="ti-layout-accordion-list"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.sale_transactions"></span></a> </li> -->
 	    <li class="nav-item hidden-sm-down"> <a class="nav-link" data-toggle="tab" href="#/customers" data-bind="click: goMenuCustomers"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.customers"></span></a> </li>
     </ul>
@@ -371,7 +371,7 @@
 
 <script id="checkOut" type="text/x-kendo-template">	
 	<div class="row" id="checkOut" style="position: relative;">
-		<div id="havepay" style="width: 100%; height: 100%;display: none;position: absolute;background: rgba(255,255,255,.9);z-index: 9;">
+		<div id="havepay" style="width: 100%; height: 100%; display: none; position: absolute; : rgba(255,255,255,.9);z-index: 9;">
 	        <div class="col-12 col-md-9" style="margin: 0 auto;float: none;margin-top: 20px;">
 				<div class="listWrapper" style="border: 10px solid #ccc;">
 					<div class="btn-close" style="z-index: 9999;" data-bind="click: closePay"><i class="ti-close"></i></div>
@@ -7444,7 +7444,7 @@
 <!-- End -->
 
 <!-- Template Report-->
-<script id="contact-header-tmpl" type="text/x-kendo-tmpl">
+<!-- <script id="contact-header-tmpl" type="text/x-kendo-tmpl">
     <strong>
     	<a href="\#/customer">+ Add New Customer</a></li>
     </strong>
@@ -7594,5 +7594,5 @@
 	<span>
 		#=code# - #=country#
 	</span>
-</script>
+</script> -->
 <!-- End -->

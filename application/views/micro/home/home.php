@@ -470,37 +470,3 @@
         </div>
     </div>
 </script>
-
-
-<!-- Template -->
-<script id="top-product-template" type="text/x-kendo-tmpl">
-    <tr>
-        <td>
-            <span>
-                #if(name.length>15){#
-                    #=name.substring(0, 10)#...
-                #}else{#
-                    #=name#
-                #}#
-            </span>
-            <span class="pull-right">#:kendo.toString(kendo.parseInt(total), banhji.locale=="km-KH"?"c0":"c2", banhji.locale)#</span>
-        </td>
-    </tr>
-</script>
-<script id="top-contact-template" type="text/x-kendo-tmpl">
-    <tr data-uid="#: uid #">
-        <td>
-            <span>
-                #if(name){#
-                    #if(name.length>15){#
-                        #=name.substring(0, 10)#...
-                    #}else{#
-                        #=name#
-                    #}#
-                #}#
-            </span>
-            <span class="pull-right">#=kendo.toString(kendo.parseFloat(total), banhji.locale=="km-KH"?"c0":"c2", banhji.locale)#</span>
-        </td>
-    </tr>
-</script>
-<!-- End -->

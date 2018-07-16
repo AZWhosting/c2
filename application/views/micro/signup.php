@@ -1328,7 +1328,6 @@
                 var self = this;
                 if(this.err == null){
                     $("#signupBtn").val("Signing up...");
-                    ga('send', 'event', 'signup', `this.get('email')`, 'Micro');
                     // create user
                     var attributeList = [];
                     this.comChange();
@@ -1379,6 +1378,7 @@
                                     });
                                     banhji.companyDS.sync();
                                     banhji.companyDS.bind('requestEnd', function(e){
+                                        ga('send', 'event', 'microSignUp', `${banhji.index.get('email')}`, 'Micro');
                                         banhji.index.set('email', null);
                                         banhji.index.set('password', null);
                                         banhji.index.set('cPassword', null);

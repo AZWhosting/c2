@@ -15872,7 +15872,7 @@
 	banhji.customerReportCenter = kendo.observable({
 		lang                : langVM,
 		dataSource          : dataStore(apiUrl + "customer_modules/dashboard"),
-		graphDS             : dataStore(apiUrl + "customer_modules/Month_sale"),
+		graphDS             : dataStore(apiUrl + "customer_modules/monthly_sale"),
 		obj                 : {},
 		pageLoad            : function(){
 			this.loadData();
@@ -27333,7 +27333,7 @@
 	banhji.membershipDashboard = kendo.observable({
 		lang                : langVM,
 		dataSource          : dataStore(apiUrl + "customer_modules/dashboard"),
-		graphDS             : dataStore(apiUrl + "customer_modules/Month_sale"),
+		graphDS             : dataStore(apiUrl + "customer_modules/monthly_sale"),
 		obj                 : {},
 		pageLoad            : function(){
 			var self = this;
@@ -28529,20 +28529,20 @@
 				self.set("obj", view[0]);
 
 				self.fieldValueDS.filter([
-					{ "field":"type", value: "memberships" },
-					{ "field":"reference_id", value: view[0].id }
+					{ field:"type", value: "memberships" },
+					{ field:"reference_id", value: view[0].id }
 				]);
 
 				self.attachmentDS.filter([
-					{ "field":"type", value: "memberships" },
-					{ "field":"reference_id", value: view[0].id }
+					{ field:"type", value: "memberships" },
+					{ field:"reference_id", value: view[0].id }
 				]);
 
 				self.recurringDS.query({
 					filter: [
-						{ "field":"is_recurring", value: 1 },
-						{ "field":"reference_id", value: view[0].id },
-						{ "field":"contact_id", value: view[0].contact_id }
+						{ field:"is_recurring", value: 1 },
+						{ field:"reference_id", value: view[0].id },
+						{ field:"contact_id", value: view[0].contact_id }
 					],
 					page: 1,
 					pageSize: 1
@@ -28551,7 +28551,7 @@
 
 					self.set("objRecurring", view1[0]);
 
-					self.lineDS.filter({ "field":"transaction_id", value: view1[0].id });
+					self.lineDS.filter({ field:"transaction_id", value: view1[0].id });
 				});
 			});
 		},
@@ -28589,7 +28589,8 @@
 			return dfd;
 		},
 		save                    : function(){
-			var self = this, obj = this.get("obj"), objRecurring = this.get("objRecurring");
+			var self = this, obj = this.get("obj"), 
+				objRecurring = this.get("objRecurring");
 
 			if(obj.membership_date!==""){
 				obj.set("membership_date", kendo.toString(new Date(obj.membership_date), "yyyy-MM-dd"));
@@ -28653,11 +28654,9 @@
 		},
 		clear                   : function(){
 			this.dataSource.cancelChanges();
-			this.lineDS.cancelChanges();
 			this.fieldValueDS.cancelChanges();
 
 			this.dataSource.data([]);
-			this.lineDS.data([]);
 			this.fieldValueDS.data([]);
 
 			this.set("isEdit", false);
@@ -28736,7 +28735,9 @@
 				day                 : 1,
 				week                : 0,
 				month               : 0,
-				is_recurring        : 1
+				is_recurring        : 1,
+
+				contact 			: banhji.membershipCenter.get("obj")
 			});
 
 			var obj = this.transactionDS.at(0);
@@ -28770,78 +28771,80 @@
 				pageSize: 100
 			}).then(function(){
 				var view = self.recurringDS.view(),
-				obj = self.get("objRecurring");
+					obj = self.get("objRecurring");
 
-				obj.set("contact", view[0].contact);
-				obj.set("contact_id", view[0].contact.id);
-				obj.set("recurring_id", id);
-				obj.set("payment_term_id", view[0].payment_term_id);
-				obj.set("payment_method_id", view[0].payment_method_id);
-				obj.set("employee_id", view[0].employee_id);//Sale Rep
-				obj.set("job_id", view[0].job_id);
-				obj.set("segments", view[0].segments);
-				obj.set("locale", view[0].locale);
-				obj.set("memo", view[0].memo);
-				obj.set("note", view[0].note);
-				obj.set("bill_to", view[0].bill_to);
-				obj.set("ship_to", view[0].ship_to);
+				if(view.length>0){
+					obj.set("contact", view[0].contact);
+					obj.set("contact_id", view[0].contact_id);
+					obj.set("recurring_id", id);
+					obj.set("payment_term_id", view[0].payment_term_id);
+					obj.set("payment_method_id", view[0].payment_method_id);
+					obj.set("employee_id", view[0].employee_id);//Sale Rep
+					obj.set("job_id", view[0].job_id);
+					obj.set("segments", view[0].segments);
+					obj.set("locale", view[0].locale);
+					obj.set("memo", view[0].memo);
+					obj.set("note", view[0].note);
+					obj.set("bill_to", view[0].bill_to);
+					obj.set("ship_to", view[0].ship_to);
 
-				//Item lines
-				self.recurringLineDS.query({
-					filter:[
-						{ field: "transaction_id", value: view[0].id },
-						{ field: "assembly_id", value: 0 }
-					]
-				}).then(function(){
-					var view1 = self.recurringLineDS.view();
-					self.lineDS.data([]);
+					//Item lines
+					self.recurringLineDS.query({
+						filter:[
+							{ field: "transaction_id", value: view[0].id },
+							{ field: "assembly_id", value: 0 }
+						]
+					}).then(function(){
+						var view1 = self.recurringLineDS.view();
+						self.lineDS.data([]);
 
-					$.each(view1, function(index, value){
-						self.lineDS.add({
-							transaction_id      : 0,
-							tax_item_id         : value.tax_item_id,
-							item_id             : value.item_id,
-							measurement_id      : value.measurement_id,
-							description         : value.description,
-							quantity            : value.quantity,
-							price               : value.price,
-							amount              : value.amount,
-							discount            : value.discount,
-							rate                : value.rate,
-							locale              : value.locale,
-							movement            : -1,
+						$.each(view1, function(index, value){
+							self.lineDS.add({
+								transaction_id      : 0,
+								tax_item_id         : value.tax_item_id,
+								item_id             : value.item_id,
+								measurement_id      : value.measurement_id,
+								description         : value.description,
+								quantity            : value.quantity,
+								price               : value.price,
+								amount              : value.amount,
+								discount            : value.discount,
+								rate                : value.rate,
+								locale              : value.locale,
+								movement            : -1,
 
-							item                : value.item,
-							item_price          : value.item_price,
-							tax_item            : value.tax_item
+								item                : value.item,
+								item_price          : value.item_price,
+								tax_item            : value.tax_item
+							});
 						});
+
+						self.changes();
 					});
 
-					self.changes();
-				});
+					//Field value
+					self.fieldValueRecurringDS.query({
+						filter:[
+							{ "field":"type", value: "memberships" },
+							{ "field":"reference_id", value: id }
+						]
+					}).then(function(){
+						var view1 = self.fieldValueRecurringDS.view();
+						self.fieldValueDS.data([]);
 
-				//Field value
-				self.fieldValueRecurringDS.query({
-					filter:[
-						{ "field":"type", value: "memberships" },
-						{ "field":"reference_id", value: id }
-					]
-				}).then(function(){
-					var view1 = self.fieldValueRecurringDS.view();
-					self.fieldValueDS.data([]);
-
-					$.each(view1, function(index, value){
-						self.fieldValueDS.add({
-							reference_id    : view[0].id,
-							custom_field_id : value.custom_field_id,
-							field_value     : value.field_value,
-							type            : "memberships",
-							custom_fields   : value.custom_fields
+						$.each(view1, function(index, value){
+							self.fieldValueDS.add({
+								reference_id    : view[0].id,
+								custom_field_id : value.custom_field_id,
+								field_value     : value.field_value,
+								type            : "memberships",
+								custom_fields   : value.custom_fields
+							});
 						});
-					});
 
-					self.changes();
-				});
+						self.changes();
+					});
+				}
 			});
 		},
 		frequencyChanges        : function(){
@@ -29088,7 +29091,8 @@
 				filters: [
 					{ field: "type", value: "Commercial_Invoice" },
 					{ field: "type", value: "Vat_Invoice" },
-					{ field: "type", value: "Invoice" }
+					{ field: "type", value: "Invoice" },
+					{ field: "type", value: "Proforma_Invoice" }
 				]
 			}
 		}),
@@ -42338,7 +42342,7 @@
 		topCustomerDS       : dataStore(apiUrl + "customer_modules/top_customer"),
 		topARDS             : dataStore(apiUrl + "customer_modules/top_ar"),
 		topProductDS        : dataStore(apiUrl + "inventory_modules/top_sale_product"),
-		graphDS             : dataStore(apiUrl + 'customer_modules/Month_sale'),
+		graphDS             : dataStore(apiUrl + 'customer_modules/monthly_sale'),
 		sale                : 0,
 		sale_customer       : 0,
 		sale_product        : 0,
@@ -62143,6 +62147,10 @@
 				invoice_id = this.get("invoice_id"),
 				contact_id = this.get("contact_id");
 
+			//Clear
+			self.dataSource.data([]);
+			self.dataSource.cancelChanges();
+
 			if(contact_id>0){
 				para.push({ field:"contact_id", value: contact_id });
 			}
@@ -62335,6 +62343,9 @@
 		save                : function(){
 			var self = this, obj = this.get("obj");
 
+			//Proforma
+			// this.addProformaJournal();
+
 			//Edit Mode
 			if(this.get("isEdit")){
 				obj.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
@@ -62408,6 +62419,10 @@
 						rate                : value.rate,
 						locale              : value.locale
 					});
+
+					$.each(this.journalLineDS.data(), function(ind, val){
+						val.set("transaction_id", value.id);
+					});
 				});
 
 				self.journalLineDS.sync();
@@ -62440,118 +62455,122 @@
 		addProformaJournal  : function(){
 			var self = this, obj = this.get("obj");
 
-			// A. At the issue of proforma
+			$.each(this.dataSource.data(), function(index, value){
+				if(value.type=="Proforma_Invoice"){
+					// A. At the issue of proforma
 
-			// B. If proforma is paid before recogition
-			//Cash on Dr
-			this.journalLineDS.add({
-				transaction_id      : value.id,
-				account_id          : obj.account_id,
-				contact_id          : value.contact_id,
-				description         : "",
-				reference_no        : "",
-				segments            : obj.segments,
-				dr                  : value.amount,
-				cr                  : 0,
-				rate                : value.rate,
-				locale              : value.locale
-			});
-			//Deposit on Cr
-			self.journalLineDS.add({
-				transaction_id      : value.id,
-				account_id          : contact.account_id,
-				contact_id          : value.contact_id,
-				description         : "",
-				reference_no        : "",
-				segments            : obj.segments,
-				dr                  : 0,
-				cr                  : value.amount,
-				rate                : value.rate,
-				locale              : value.locale
-			});
+					// B. If proforma is paid before recogition
+					//Cash on Dr
+					this.journalLineDS.add({
+						transaction_id      : value.id,
+						account_id          : obj.account_id,
+						contact_id          : value.contact_id,
+						description         : "",
+						reference_no        : "",
+						segments            : obj.segments,
+						dr                  : value.amount,
+						cr                  : 0,
+						rate                : value.rate,
+						locale              : value.locale
+					});
+					//Deposit on Cr
+					self.journalLineDS.add({
+						transaction_id      : value.id,
+						account_id          : contact.account_id,
+						contact_id          : value.contact_id,
+						description         : "",
+						reference_no        : "",
+						segments            : obj.segments,
+						dr                  : 0,
+						cr                  : value.amount,
+						rate                : value.rate,
+						locale              : value.locale
+					});
 
-			//When recognized revenue
-			//Deposit/AR on Dr
-			this.journalLineDS.add({
-				transaction_id      : value.id,
-				account_id          : obj.account_id,
-				contact_id          : value.contact_id,
-				description         : "",
-				reference_no        : "",
-				segments            : obj.segments,
-				dr                  : value.amount,
-				cr                  : 0,
-				rate                : value.rate,
-				locale              : value.locale
-			});
-			//Revenue on Cr
-			self.journalLineDS.add({
-				transaction_id      : value.id,
-				account_id          : contact.account_id,
-				contact_id          : value.contact_id,
-				description         : "",
-				reference_no        : "",
-				segments            : obj.segments,
-				dr                  : 0,
-				cr                  : value.amount,
-				rate                : value.rate,
-				locale              : value.locale
-			});
+					//When recognized revenue
+					//Deposit/AR on Dr
+					this.journalLineDS.add({
+						transaction_id      : value.id,
+						account_id          : obj.account_id,
+						contact_id          : value.contact_id,
+						description         : "",
+						reference_no        : "",
+						segments            : obj.segments,
+						dr                  : value.amount,
+						cr                  : 0,
+						rate                : value.rate,
+						locale              : value.locale
+					});
+					//Revenue on Cr
+					self.journalLineDS.add({
+						transaction_id      : value.id,
+						account_id          : contact.account_id,
+						contact_id          : value.contact_id,
+						description         : "",
+						reference_no        : "",
+						segments            : obj.segments,
+						dr                  : 0,
+						cr                  : value.amount,
+						rate                : value.rate,
+						locale              : value.locale
+					});
 
-			// C. No deposit
-			//AR on Dr
-			this.journalLineDS.add({
-				transaction_id      : value.id,
-				account_id          : obj.account_id,
-				contact_id          : value.contact_id,
-				description         : "",
-				reference_no        : "",
-				segments            : obj.segments,
-				dr                  : value.amount,
-				cr                  : 0,
-				rate                : value.rate,
-				locale              : value.locale
-			});
-			//Revenue on Cr
-			self.journalLineDS.add({
-				transaction_id      : value.id,
-				account_id          : contact.account_id,
-				contact_id          : value.contact_id,
-				description         : "",
-				reference_no        : "",
-				segments            : obj.segments,
-				dr                  : 0,
-				cr                  : value.amount,
-				rate                : value.rate,
-				locale              : value.locale
-			});
+					// C. No deposit
+					//AR on Dr
+					this.journalLineDS.add({
+						transaction_id      : value.id,
+						account_id          : obj.account_id,
+						contact_id          : value.contact_id,
+						description         : "",
+						reference_no        : "",
+						segments            : obj.segments,
+						dr                  : value.amount,
+						cr                  : 0,
+						rate                : value.rate,
+						locale              : value.locale
+					});
+					//Revenue on Cr
+					self.journalLineDS.add({
+						transaction_id      : value.id,
+						account_id          : contact.account_id,
+						contact_id          : value.contact_id,
+						description         : "",
+						reference_no        : "",
+						segments            : obj.segments,
+						dr                  : 0,
+						cr                  : value.amount,
+						rate                : value.rate,
+						locale              : value.locale
+					});
 
-			// D. Quaterly Recognition
-			//AR on Dr
-			this.journalLineDS.add({
-				transaction_id      : value.id,
-				account_id          : obj.account_id,
-				contact_id          : value.contact_id,
-				description         : "",
-				reference_no        : "",
-				segments            : obj.segments,
-				dr                  : value.amount,
-				cr                  : 0,
-				rate                : value.rate,
-				locale              : value.locale
-			});
-			//Revenue on Cr
-			self.journalLineDS.add({
-				transaction_id      : value.id,
-				account_id          : contact.account_id,
-				contact_id          : value.contact_id,
-				description         : "",
-				reference_no        : "",
-				segments            : obj.segments,
-				dr                  : 0,
-				cr                  : value.amount,
-				rate                : value.rate,
-				locale              : value.locale
+					// D. Quaterly Recognition
+					//AR on Dr
+					this.journalLineDS.add({
+						transaction_id      : value.id,
+						account_id          : obj.account_id,
+						contact_id          : value.contact_id,
+						description         : "",
+						reference_no        : "",
+						segments            : obj.segments,
+						dr                  : value.amount,
+						cr                  : 0,
+						rate                : value.rate,
+						locale              : value.locale
+					});
+					//Revenue on Cr
+					self.journalLineDS.add({
+						transaction_id      : value.id,
+						account_id          : contact.account_id,
+						contact_id          : value.contact_id,
+						description         : "",
+						reference_no        : "",
+						segments            : obj.segments,
+						dr                  : 0,
+						cr                  : value.amount,
+						rate                : value.rate,
+						locale              : value.locale
+					});
+				}
 			});
 		},
 		cancel              : function(){
@@ -66425,7 +66444,7 @@
 		topCustomerDS       : dataStore(apiUrl + "customer_modules/top_customer"),
 		topARDS             : dataStore(apiUrl + "customer_modules/top_ar"),
 		topProductDS        : dataStore(apiUrl + "inventory_modules/top_sale_product"),
-		graphDS             : dataStore(apiUrl + "customer_modules/Month_sale"),
+		graphDS             : dataStore(apiUrl + "customer_modules/monthly_sale"),
 		windowVisible       : false,
 		window1Visible      : false,
 		windowItemVisible   : false,
@@ -69165,7 +69184,7 @@
 		topCustomerDS       : dataStore(apiUrl + "customer_modules/top_customer"),
 		topARDS             : dataStore(apiUrl + "customer_modules/top_ar"),
 		topProductDS        : dataStore(apiUrl + "inventory_modules/top_sale_product"),
-		graphDS             : dataStore(apiUrl + "customer_modules/Month_sale"),
+		graphDS             : dataStore(apiUrl + "customer_modules/monthly_sale"),
 		windowVisible       : false,
 		window1Visible      : false,
 		windowItemVisible   : false,

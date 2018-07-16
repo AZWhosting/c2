@@ -532,13 +532,28 @@
 		padding: 8px;
 		border: 1px solid #d6d7d8;
 	}
-
-
 </style>
-<!-- ***************************
-*	Water Section      	  *
-**************************** -->
 <script id="Index" type="text/x-kendo-template">
+	<div class="container">
+		<div style="width: 100%;position: fixed;height: 100%; background: rgba(255,255,255,.6);top: 0;left: 0;">
+			<div class="row customerCenter" style="width: 820px;margin: 0;position: absolute;top: 50%;left: 50%; -ms-transform: translate(-50%, -50%);transform: translate(-50%, -50%);">
+				<a data-bind="click: cancel" style="    font-size: 30px;position: absolute;top: -140px;right: 0;font-family: Arial;color: #fff;border: 1px solid #fff;padding: 0 12px;border-radius: 30px;">X</a>
+				<a href="#/card_center" class="span6" style="cursor: pointer; padding: 20px 0;background: darkgreen;text-align: center;border-radius: 20px;border: 1px solid #ccc;color: #fff;">
+					<img style="width: 40%;" src="<?php echo base_url(); ?>assets/spa/icon/loyalty.png" />
+					<p>គ្រប់គ្រងកាត</p>
+					<p>Manage Cards</p>
+				</a>
+				<a href="#/loyalty_center" class="span6" style="cursor: pointer; padding: 20px 0;background: gray;text-align: center;border-radius: 20px;border: 1px solid #ccc;color: #fff;">
+					<img style="width: 40%;" src="<?php echo base_url(); ?>assets/spa/icon/loyalty.png" />
+					<p>គ្រប់គ្រង Loyalty</p>
+					<p>Loyalty Programs</p>
+				</a>
+			</div>
+		</div>
+	</div>	
+</script>
+<!-- Loyalty -->
+<script id="Loyalty" type="text/x-kendo-template">
 	<div id="ntf1" data-role="notification"></div>
 	<div class="container">
 		<div class="row loyalty">
@@ -734,8 +749,7 @@
 																		            	</div>
 																            		</div>
 																            	</div>
-																        	</div>																	        
-																	        
+																        	</div>	
 																	    </div>
 																	</div>
 																</div>
@@ -745,13 +759,10 @@
 												</div>
 											</div>
 										</div>
-
 						        	</div>
-							        
 							        <div class="tab-pane " id="tab2">
 						            	<h3>Choose how your customers will redeem their rewards.</h3>
 						            	<p>Select one of the options below to determine how your customers will redeem stars for rewards.</p>
-
 						            	<div class="row">
 											<div class="span12">
 												<div class="box-generic" style="border: none;">
@@ -777,7 +788,6 @@
 												            </li>
 												        </ul>
 												    </div>
-
 												    <div class="tab-content">
 												        <div class="tab-pane active" id="tab3-1">
 											            	<div style="margin-top: 20px; float: left;width: 100%; text-align: left;">
@@ -807,11 +817,9 @@
 										                            aria-invalid="true" 
 										                            class="k-invalid"
 										                        />
-											            	
 											            		<p style="margin-top: 10px; float: left;">Set the number of stars required to earn a reward.</p>
 											            	</div>
 											        	</div>
-												        
 												        <div class="tab-pane" id="tab3-2">
 												        	<div class="row">
 																<div class="span12">
@@ -843,7 +851,6 @@
 																            					<td>
 																            						<input 
 																										data-role="dropdownlist"
-																										data-template="contact-list-tmpl" 
 																										data-auto-bind="false" 
 																										data-value-primitive="true" 
 																										data-filter="startswith" 
@@ -855,7 +862,7 @@
 																			                            aria-invalid="true" 
 																			                            class="k-invalid"
 																			                        />
-																            					</td>																            					
+																            					</td>				
 																            				</tr>
 																            			</table>
 																            		</div>
@@ -873,7 +880,6 @@
 																            					<td>
 																            						<input 
 																										data-role="dropdownlist"
-																										data-template="contact-list-tmpl" 
 																										data-auto-bind="false" 
 																										data-value-primitive="true" 
 																										data-filter="startswith" 
@@ -907,7 +913,6 @@
 														            	
 													            			<input 
 																				data-role="dropdownlist"
-																				data-template="contact-list-tmpl" 
 																				data-auto-bind="false" 
 																				data-value-primitive="true" 
 																				data-filter="startswith" 
@@ -919,7 +924,6 @@
 													                            aria-invalid="true" 
 													                            class="k-invalid"
 													                        />
-														            	
 														            		<p style="margin-top: 10px; float: left;">Set the number of stars required to earn a reward.</p>
 														            	</div>
 																	</div>
@@ -945,7 +949,6 @@
 																	            </li>
 																	        </ul>
 																	    </div>
-
 																	    <div class="tab-content">
 																	        <div class="tab-pane active" id="tab5-1">
 																            	<div class="row">
@@ -957,8 +960,7 @@
 																            				<tr>
 																            					<td>
 																            						<input 
-																										data-role="dropdownlist"
-																										data-template="contact-list-tmpl" 
+																										data-role="dropdownlist" 
 																										data-auto-bind="false" 
 																										data-value-primitive="true" 
 																										data-filter="startswith" 
@@ -987,8 +989,7 @@
 																            				<tr>
 																            					<td>
 																            						<input 
-																										data-role="dropdownlist"
-																										data-template="contact-list-tmpl" 
+																										data-role="dropdownlist" 
 																										data-auto-bind="false" 
 																										data-value-primitive="true" 
 																										data-filter="startswith" 
@@ -1009,10 +1010,8 @@
 
 																	    <div style="margin-top: 20px; float: left;width: 100%; text-align: left;">														            		
 														            		<span style="padding: 2px 75px 2px 20px; background: #ddd; line-height: 34px; border-width: 1px 1px 1px 1px; border-style: solid; border-color: #ccc; font-weight: 700; float: left;">Expiration</span>
-														            	
 													            			<input 
 																				data-role="dropdownlist"
-																				data-template="contact-list-tmpl" 
 																				data-auto-bind="false" 
 																				data-value-primitive="true" 
 																				data-filter="startswith" 
@@ -1067,4 +1066,310 @@
 			</div>
 		</div>
 	</div>
+</script>
+
+<!-- Card -->
+<script id="cardCenter" type="text/x-kendo-template">
+	<style type="text/css">
+		span.k-dropdown, span.k-datepicker {
+			height: 29px!important;
+			padding: 5px!important;
+		}
+		.k-picker-wrap .k-input {
+			width: 98%!important;
+			height: 23px!important;
+		}
+		span.k-datepicker {
+
+		}
+	</style>
+	<div class="container">
+		<div class="row customerCenter" style="background: #fff;border-radius: 10px; overflow: hidden;padding: 20px 0;position: relative;">
+			<div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 100%;background: rgba(142, 159, 167, 0.8);z-index: 9999;border-radius: 10px;">
+				<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 40%;left: 40%"></i>
+			</div>
+			<div class="span3">
+				<div class="listWrapper">
+					<a href="#/card" data-bind="visible: haveRight" class="addLoyalty">Add Card</a>
+					<div class="innerAll" style="width: 100%; float: left; background: #1c3b19;">
+						<form autocomplete="off" class="form-inline" style="margin-bottom: 0;">
+							<div class="widget-search separator bottom">
+								<button style="height: 34px;" type="button" class="btn btn-default pull-right" data-bind="click: search"><i class="icon-search"></i></button>
+								<div class="overflow-hidden">
+									<input type="search" style="color: #000;" placeholder="Number" data-bind="value: searchText">
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="results">
+						<span data-bind="text: cardDS.total"></span>
+						<span data-bind="text: lang.lang.found_search"></span>
+					</div>
+					<div class="table table-condensed " style="height: 580px;"
+						 data-role="grid"
+						 data-bind="source: cardDS"
+						 data-row-template="card-list-tmpl"
+						 data-columns="[{title: 'Cards'}]"
+						 data-selectable="true"
+						 data-height="600"
+						 data-scrollable="{virtual: true}">
+					</div>
+				</div>
+			</div>
+			<div class="span9" style="padding-left: 0">
+				<div class="detailsWrapper">
+					<div class="row" style="padding: 0 15px; margin-bottom: 15px;">
+						<div class="btn-close" style="z-index: 9999;position: relative;float: right;color: #000;font-size: 20px;font-family: Arial;font-weight: bold;padding: 5px 12px; background: #ccc;border-radius: 30px;border: 1px solid #1c3b19;" data-bind="click: cancel">X</div>
+					</div>
+					<div class="row">
+						<div class="span6" style="padding-left: 0;">
+							<div class="widget widget-4 widget-tabs-icons-only margin-bottom-none">
+							    <div class="widget-body">
+							        <div class="tab-content">
+							            <div id="tab2-4" class="tab-pane box-generic active" style="float: left; margin-bottom: 10px;">
+							            	<div class="row-fluid">
+						            			<div class="span12" style="padding: 0;">
+								            		<div class="accounCetner-textedit" style="min-height: 145px;">
+										            	<table width="100%" style="font-size: 12px; color: #333;">
+										            		<tr>
+																<td><span>Name</span></td>
+																<td>
+																	<span class="strong" data-bind="text: obj.abbr"></span>
+																	<span class="strong" data-bind="text: obj.name"></span>
+																</td>
+															</tr>
+															<tr>
+																<td width="40%"><span data-bind="text: lang.lang.number"></span></td>
+																<td width="60%">
+																	<span class="strong" data-bind="text: obj.number"></span>
+																</td>
+															</tr>
+															<tr>
+																<td><span data-bind="text: lang.lang.status"></span></td>
+																<td>
+																	<span data-bind="text: obj.status"></span>
+																</td>
+															</tr>
+															<tr>
+																<td><span>Belong to:</span></td>
+																<td>
+																	<span class="strong" data-bind="text: obj.contact_name"></span>
+																</td>
+															</tr>
+														</table>
+													</div>
+													<span class="btn btn-primary btn-icon glyphicons edit pull-right" data-bind="click: activateCard, visible: cardNotActivate"><i></i><span>Activate</span></span>
+													<div data-role="window"
+										                data-title="Activate Card"
+										                data-width="450"
+										                data-actions="{}"
+										                data-height="440"
+										                data-position="{top: '30%', left: '37%'}"
+										                data-bind="visible: activateShow">
+						            					<div class="row" style="width: 105%; float: left;">
+															<div class="col-md-11" style="margin-left: 6px;">
+																<div class="row">
+																	<div class="col-md-5">
+																		<label>Card Number</label>
+																		<input type="text" style="width: 100%; border: 1px solid #c5c5c5; padding: 3px; height: 30px;" placeholder="" data-bind="value: acobj.number">
+																	</div>
+																	<div class="col-md-5">
+																		<label>Serial</label>
+																		<input type="text" style="width: 100%; border: 1px solid #c5c5c5; padding: 3px; height: 30px;" placeholder="" data-bind="value: acobj.serial">
+																	</div>
+																</div>
+																<div data-bind="invisible: haveCard">
+																	<span style="float: left!important; margin-left: 21px; margin-top: 15px; color: #fff;" class="btn btn-primary btn-icon glyphicons edit pull-right" data-bind="click: searchCard"><i></i><span>Search</span></span>
+												        			<span class="btn btn-primary btn-icon glyphicons circle_remove pull-right" data-bind="click: cancelActivate" style="background: red; border: 1px solid red; float: left !important; margin-top: 15px; margin-left: 12px; color: #fff;"><i></i><span>Cancel</span></span>
+																</div>
+																<div data-bind="visible: haveCard">
+																	<div class="row">
+																		<div class="col-md-11">
+																			<label>Name</label>
+																				<input type="text" style="width: 98%; border: 1px solid #c5c5c5; padding: 3px; height: 30px;" placeholder="" data-bind="value: acobj.name">
+																		</div>
+																	</div>
+																	<div class="row">
+																		<div class="col-md-5">
+																			<label>Gender</label>
+																			<input 
+																				type="text" 
+																				data-role="dropdownlist"
+										                                        data-bind="source: genderAR, 
+										                                       			 value: acobj.gender"
+										                                        data-text-field="name "
+										                                        data-value-field="id"
+										                                        data-value-primitive="true"
+																				style="width: 100%; border: 1px solid #c5c5c5; padding: 3px; height: 30px;" placeholder="">
+																		</div>
+																		<div class="col-md-5">
+																			<label>DOB</label>
+																			<input type="text" 
+																				data-role="datepicker" 
+											                                    data-bind="value: acobj.dob"
+											                                    data-format="dd-MM-yyyy"
+											                                    data-parse-formats="yyyy-MM-dd"
+																				style="width: 100%; border: 1px solid #c5c5c5; padding: 3px; height: 30px;" placeholder="">
+																		</div>
+																	</div>
+																	<div class="row">
+																		<div class="col-md-11">
+																			<label>Phone</label>
+																				<input type="text" style="width: 98%; border: 1px solid #c5c5c5; padding: 3px; height: 30px;" placeholder="" data-bind="value: acobj.phone">
+																		</div>
+																		<div class="col-md-11">
+																			<label>Nationality</label>
+																				<input type="text" style="width: 98%; border: 1px solid #c5c5c5; padding: 3px; height: 30px;" placeholder="" data-bind="value: acobj.nationality">
+																		</div>
+																		<div class="col-md-11">
+																			<label>Registered</label>
+																			<input type="text" 
+																				data-role="datepicker" 
+				                                      							data-bind="value: acobj.registered_date"
+				                                      							data-format="dd-MM-yyyy"
+				                                      							data-parse-formats="yyyy-MM-dd"
+																				style="width: 98%; border: 1px solid #c5c5c5; padding: 3px; height: 30px;" placeholder="" data-bind="">
+																		</div>
+																	</div>
+																	<span style="float: left!important; margin-left: 21px; margin-top: 15px; color: #fff;" class="btn btn-primary btn-icon glyphicons edit pull-right" data-bind="click: activateNow"><i></i><span>Activate</span></span>
+												        			<span class="btn btn-primary btn-icon glyphicons circle_remove pull-right" data-bind="click: cancelActivate" style="background: red; border: 1px solid red; float: left !important; margin-top: 15px; margin-left: 12px; color: #fff;"><i></i><span>Cancel</span></span>
+																</div>
+															</div>
+														</div>
+										            </div>
+												</div>
+											</div>
+							            </div>
+							        </div>
+							    </div>
+							</div>
+						</div>
+						<div class="span6" style="padding-left: : 0px;">
+							<div class="row">
+								<div class="span6" style="padding: 0">
+									<div class="widget-stats widget-stats-primary widget-stats-5" style="cursor: pointer; background: #0eac00; margin-left: 0; margin-bottom: 1px;">
+										<span class="glyphicons coins"><i></i></span>
+										<span class="txt" style="padding-right: 18px;">Total Sales<span data-bind="text: balance" style="font-size:medium;"></span></span>
+										<div class="clearfix"></div>
+									</div>
+								</div>
+								<div class="span6" style="padding-left: 0;">
+									<div class="widget-stats widget-stats-inverse widget-stats-5" style="cursor: pointer; margin-left: 1px; background: #1c3b19;">
+										<span class="glyphicons briefcase"><i></i></span>
+										<span class="txt">Last Visit<span data-bind="text: lastVisit" style="font-size:medium;"></span></span>
+										<div class="clearfix"></div>
+									</div>
+								</div>
+							</div>
+							
+							<div class="row">
+								<div class="span6" style="padding: 0">
+									<div class="widget-stats widget-stats-info widget-stats-5" data-bind="click: loadBalance" style="cursor: pointer; background: #bbbbbb; margin-left: 0; margin-bottom: 15px;">
+										<span class="glyphicons circle_exclamation_mark"><i></i></span>
+										<span class="txt"><span data-bind="text: outInvoice"></span> Earn Points</span>
+										<div class="clearfix"></div>
+									</div>
+								</div>
+								<div class="span6" style="padding-left: 0;">
+									<div class="widget-stats widget-stats-default widget-stats-5" data-bind="click: loadOverInvoice" style="cursor: pointer; margin-left: 1px; background: #424242;"> 
+										<span class="glyphicons turtle"><i></i></span>
+										<span class="txt"><span data-bind="text: overInvoice"></span>Paid Points</span>
+										<div class="clearfix"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="box-generic" style="padding: 0; margin-left: 0; width: 100%; padding-bottom: 15px;">
+					    <div class="tabsbar tabsbar-1">
+					        <ul class="row-fluid row-merge">
+					            <li class="span2 active">
+					            	<a href="#tab1" data-toggle="tab"><span >Loyalty</span></a>
+					            </li>            
+					        </ul>
+					    </div>
+					    <div class="tab-content">
+					        <div class="tab-pane active" id="tab1">
+					        	<span data-bind="visible: haveRight, click: addLoyalty" style="float: right!important;width: 130px;margin-right: 18px;" class="btn btn-primary btn-icon glyphicons edit pull-right"><i></i><span>Add Loyalty</span></span>
+					        	<div data-role="window"
+					                data-title="Add Loyalty"
+					                data-width="400"
+					                data-actions="{}"
+					                data-height="150"
+					                data-position="{top: '30%', left: '37%'}"
+					                data-bind="visible: loyaltyShow">
+					                <span style="float: left; padding: 10px 54px 10px 20px; background: #ddd; border-width: 1px 0 0 1px;   border-style: solid; border-color: #ccc; font-weight: 700">Loyalty</span>
+	            					<input data-role="dropdownlist"
+						                data-auto-bind="true"
+						                data-value-primitive="true"
+						                data-text-field="name"
+						                data-value-field="id"
+						                data-bind="
+						                	value: loyalty_selected,
+						                    source: loyaltyDS,
+						                "
+						                style="float: left; height: 41px; padding: 8px; border-width: 1px 1px 0 1px; border-style: solid; border-color: #ccc; color: #333; margin-left: -4px; width: 54.8%;" 
+						            />
+							        <span style="float: left!important;margin-top: 10px;" class="btn btn-primary btn-icon glyphicons edit pull-right" data-bind="click: addLoyaltyNow"><i></i><span>Add</span></span>
+							        <span class="btn btn-primary btn-icon glyphicons circle_remove pull-right" data-bind="click: cancelAddLoyalty" style="float:left!important;margin-top: 10px;background: red;border: 1px solid red;"><i></i><span>Cancel</span></span>
+					            </div>
+				            	<div class="span12">
+				            		<div>
+										<table class="table table-bordered table-striped table-white">
+											<thead>
+												<tr>
+													<th><span>No.</span></th>
+													<th><span>Name</span></th>
+													<th><span>Base</span></th>
+													<th><span>Rewards</span></th>
+													<th><span>Expiration</span></th>
+													<th><span>Status</span></th>
+												</tr>
+											</thead>
+											<tbody data-role="listview"
+						            				data-auto-bind="false"
+									                data-template="card-loyalty-list-tmpl"
+									                data-bind="source: cardLoyaltyDS" >
+									        </tbody>
+						            	</table>
+									</div>
+				            	</div>
+				        	</div>
+					    </div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>	
+</script>
+<script id="card-list-tmpl" type="text/x-kendo-tmpl">
+	<tr data-bind="click: selectedRow">
+		<td>
+			<div class="media-body strong">
+				<span>#= number#</span><a data-bind="visible: haveRight" style="float: right;" href="\#/card/#=id#">Edit</a>
+			</div>
+		</td>
+	</tr>
+</script>
+<script id="card-loyalty-list-tmpl" type="text/x-kendo-tmpl">
+	<tr>
+		<td>
+			#= banhji.cardCenter.cardLoyaltyDS.indexOf(data)+1#
+		</td>
+		<td>
+			#=name#
+		</td>
+		<td>
+			#= base#
+		</td>
+		<td>
+			#= reward#
+		</td>
+		<td>
+			#= expire#
+		</td>
+		<td>
+			#= status#
+		</td>
+	</tr>
 </script>
