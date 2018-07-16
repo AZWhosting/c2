@@ -1777,6 +1777,8 @@
 		//Contact Type
 		contactTypeList             : [],
 		contactTypeDS               : dataStore(apiUrl + "contacts/type"),
+		//Membership
+		membershipTypeDS    		: dataStore(apiUrl + "membership_types"),
 		//Job
 		jobList                     : [],
 		jobDS                       : dataStore(apiUrl + "jobs"),
@@ -27997,8 +27999,7 @@
 		transactionDS           : dataStore(apiUrl + "transactions"),
 		lineDS                  : dataStore(apiUrl + "item_lines"),
 		recurringDS             : dataStore(apiUrl + "transactions"),
-		recurringLineDS         : dataStore(apiUrl + "item_lines"),
-		membershipTypeDS        : dataStore(apiUrl + "membership_types"),
+		recurringLineDS         : dataStore(apiUrl + "item_lines"),		
 		defaultMembershipTypeDS : dataStore(apiUrl + "membership_types"),
 		fieldValueDS            : dataStore(apiUrl + "field_values"),
 		fieldValueRecurringDS   : dataStore(apiUrl + "field_values"),
@@ -28007,6 +28008,7 @@
 		assemblyDS              : dataStore(apiUrl + "item_assemblies"),
 		assemblyLineDS          : dataStore(apiUrl + "item_lines"),
 		attachmentDS            : dataStore(apiUrl + "attachments"),
+		membershipTypeDS        : banhji.source.membershipTypeDS,
 		paymentTermDS           : banhji.source.paymentTermDS,
 		paymentMethodDS         : banhji.source.paymentMethodDS,
 		statusList              : banhji.source.statusList,
@@ -30221,7 +30223,7 @@
 		txnTemplateDS       : dataStore(apiUrl + "transaction_templates"),
 		customFieldDS       : dataStore(apiUrl + "custom_fields"),
 		membershipDS        : dataStore(apiUrl + "memberships"),
-		membershipTypeDS    : dataStore(apiUrl + "membership_types"),
+		membershipTypeDS    : banhji.source.membershipTypeDS,
 		contactTypeName     : "",
 		contactTypeAbbr     : "",
 		contactTypeCompany  : 0,
