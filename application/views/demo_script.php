@@ -28543,8 +28543,7 @@
 				self.recurringDS.query({
 					filter: [
 						{ field:"is_recurring", value: 1 },
-						{ field:"reference_id", value: view[0].id },
-						{ field:"contact_id", value: view[0].contact_id }
+						{ field:"reference_id", value: view[0].id }
 					],
 					page: 1,
 					pageSize: 1
@@ -28789,6 +28788,7 @@
 					obj.set("note", view[0].note);
 					obj.set("bill_to", view[0].bill_to);
 					obj.set("ship_to", view[0].ship_to);
+					obj.set("recurring_name", view[0].recurring_name);
 
 					//Item lines
 					self.recurringLineDS.query({
