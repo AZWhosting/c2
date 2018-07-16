@@ -3,7 +3,19 @@
 require APPPATH.'/libraries/REST_Controller.php';
 
 class Ops extends REST_Controller {
-
+	public function validateTable($tableName, $db){
+		$dsn = 'mysql://'.$this->db->username.':'.$this->db->password.'@'.$this->db->hostname.'/'.$db;
+		$DB1 = $this->load->database($dsn, TRUE);
+		$this->db = $DB1;
+		$k = 0;
+		$result = $this->db->list_tables();
+        foreach( $result as $row ) {
+            if( $row == $tableName ){
+            	$k = 1;
+            }    
+        }
+        return $k;
+    }
 	function runs_get() {
 		$this->load->dbutil();
 		$this->load->dbforge();
@@ -135,20 +147,30 @@ class Ops extends REST_Controller {
 				
 				// Add new fields
 				// $fields = array(
-				// 	// "tags" => array(
-				// 	// 	"type" 		=> "DECIMAL",
-				// 	// 	"constraint"=> "30,15",
-				// 	// 	"null" 		=> FALSE,
-				// 	// 	"default" 	=> 0
-				// 	// ),
-				// 	"date_unit" => array(
-				// 		"type" 		=> "VARCHAR",
-				// 		"constraint"=> 255,
+				// 	"transaction_id" => array(
+				// 		"type" 		=> "INT",
+				// 		"constraint"=> 11,
 				// 		"null" 		=> FALSE,
-				// 		"default" 	=> ""
-				// 	)
+				// 		"default" 	=> 0
+				// 	),
+				// 	// "date_unit" => array(
+				// 	// 	"type" 		=> "VARCHAR",
+				// 	// 	"constraint"=> 255,
+				// 	// 	"null" 		=> FALSE,
+				// 	// 	"default" 	=> ""
+				// 	// )
 				// );
-				// $data['results'][] = $this->dbforge->add_column("billing_cycles", $fields);
+				// // if (var_dump($this->db->table_exists('cashier_currencies'))){
+				// // 	echo $db;
+				// // }
+				//Check Feild Table on db
+				// if($this->validateTable('cashier_currencies', $db) == 1){
+				// 	$data['results'][] = $this->dbforge->add_column("cashier_currencies", $fields);
+				// }
+				// echo $this->db->table_exists('cashier_currencies');
+				// {
+				// 	$data['results'][] = $this->dbforge->add_column("cashier_currencies", $fields);
+				// }
 				
 			    // Modify fields
 		 		//$fields = array(
