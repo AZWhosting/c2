@@ -62150,7 +62150,7 @@
 				contact_id = this.get("contact_id");
 
 			//Clear
-			self.dataSource.data([]);
+			// self.dataSource.data([]);
 			self.dataSource.cancelChanges();
 
 			if(contact_id>0){
