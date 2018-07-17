@@ -62422,7 +62422,7 @@
 						locale              : value.locale
 					});
 
-					$.each(this.journalLineDS.data(), function(ind, val){
+					$.each(self.journalLineDS.data(), function(ind, val){
 						val.set("transaction_id", value.id);
 					});
 				});
