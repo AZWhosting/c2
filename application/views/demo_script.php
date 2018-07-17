@@ -62151,7 +62151,7 @@
 
 			//Clear
 			// self.dataSource.data([]);
-			self.dataSource.cancelChanges();
+			// self.dataSource.cancelChanges();
 
 			if(contact_id>0){
 				para.push({ field:"contact_id", value: contact_id });
