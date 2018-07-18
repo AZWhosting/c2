@@ -6,15 +6,3134 @@
     banhji.tapMenu =  kendo.observable({
         lang                : langVM,
         goReports          : function(){
-            banhji.router.navigate('/');
+            banhji.router.navigate('/reports');
         },
         goTransactions      : function(){
-            banhji.router.navigate('/transactions');
+            banhji.router.navigate('/');
         },
         goMenuCashs        : function(){
-            banhji.router.navigate('/cashs');
+            banhji.router.navigate('/cash_center');
         },
     });
+    banhji.transactions = kendo.observable({
+        lang     : langVM,
+        pageLoad            : function(){
+        }
+    });
+    banhji.cashTransactionsMenu =  kendo.observable({
+        lang                : langVM,
+        goMenuCashReceipt      : function(e){
+            banhji.router.navigate('/');
+            $(".l-m-active").removeClass("l-m-active");
+            $("#"+e.currentTarget.id).addClass("l-m-active");
+        },
+        goMenuCashPayment        : function(e){
+            banhji.router.navigate('/cash_payment');
+            $(".l-m-active").removeClass("l-m-active");
+            $("#"+e.currentTarget.id).addClass("l-m-active");
+        },
+        goMenuCashWithdrawal : function(e){
+            banhji.router.navigate('/cash_withdrawal');
+            $(".l-m-active").removeClass("l-m-active");
+            $("#"+e.currentTarget.id).addClass("l-m-active");
+        },
+        goMenuCashDeposit : function(e){
+            banhji.router.navigate('/cash_deposit');
+            $(".l-m-active").removeClass("l-m-active");
+            $("#"+e.currentTarget.id).addClass("l-m-active");
+        },
+        goMenuCashTransfer : function(e){
+            banhji.router.navigate('/cash_transfer');
+            $(".l-m-active").removeClass("l-m-active");
+            $("#"+e.currentTarget.id).addClass("l-m-active");
+        },
+        goMenuPaymentRefund : function(e){
+            banhji.router.navigate('/payment_refund');
+            $(".l-m-active").removeClass("l-m-active");
+            $("#"+e.currentTarget.id).addClass("l-m-active");
+        },
+        goMenuCashRefund : function(e){
+            banhji.router.navigate('/cash_refund');
+            $(".l-m-active").removeClass("l-m-active");
+            $("#"+e.currentTarget.id).addClass("l-m-active");
+        },
+        goMenuCustomerDeposit : function(e){
+            banhji.router.navigate('/customer_deposit');
+            $(".l-m-active").removeClass("l-m-active");
+            $("#"+e.currentTarget.id).addClass("l-m-active");
+        },
+        goMenuVendorDeposit : function(e){
+            banhji.router.navigate('/vendor_deposit');
+            $(".l-m-active").removeClass("l-m-active");
+            $("#"+e.currentTarget.id).addClass("l-m-active");
+        },
+        goMenuCashTransactionExpense : function(e){
+            banhji.router.navigate('/cash_transaction_expense');
+            $(".l-m-active").removeClass("l-m-active");
+            $("#"+e.currentTarget.id).addClass("l-m-active");
+        },
+    });
+    banhji.cashReceipt =  kendo.observable({
+        lang                : langVM,
+        dataSource          : dataStore(apiUrl + "transactions"),
+        txnDS               : dataStore(apiUrl + "transactions"),
+        journalLineDS       : dataStore(apiUrl + "journal_lines"),
+        txnTemplateDS       : new kendo.data.DataSource({
+            data: banhji.source.txnTemplateList,
+            filter:{ field: "type", value: "Cash_Receipt" }
+        }),
+        segmentItemDS       : new kendo.data.DataSource({
+            data: banhji.source.segmentItemList,
+            sort: [
+                { field: "segment_id", dir: "asc" },
+                { field: "code", dir: "asc" }
+            ]
+        }),
+        contactDS           : banhji.source.customerDS,
+        accountDS           : new kendo.data.DataSource({
+            data: banhji.source.accountList,
+            filter:{ field:"account_type_id", value: 10 },
+            sort: { field:"number", dir:"asc" }
+        }),
+        paymentTermDS       : banhji.source.paymentTermDS,
+        paymentMethodDS     : banhji.source.paymentMethodDS,
+        amtDueColor         : banhji.source.amtDueColor,
+        showCheckNo         : false,
+        showReceiptNo       : false,
+        obj                 : null,
+        isEdit              : false,
+        saveClose           : false,
+        savePrint           : false,
+        searchText          : "",
+        contact_id          : "",
+        invoice_id          : 0,
+        total               : 0,
+        total_received      : 0,
+        deleteVisible       : false,
+        user_id             : banhji.source.user_id,
+        pageLoad            : function(id){
+            if(id){
+                this.set("isEdit", true);
+                this.loadObj(id);
+            }else{
+                if(this.get("isEdit") || this.dataSource.total()==0){
+                    this.addEmpty();
+                }
+            }
+        },
+        loadInvoice         : function(id){
+            this.set("invoice_id", id);
+            this.search();
+        },
+        //Contact
+        loadContact         : function(id){
+            this.set("contact_id", id);
+            this.search();
+        },
+        contactChanges      : function(){
+            this.search();
+        },
+        getContactName      : function(id){
+            var raw = banhji.source.customerDS.get(id);
+            if(raw){
+                return raw.name;
+            }else{
+                return "";
+            }
+        },
+        //Payment Method
+        issuedDateChanges   : function(){
+            this.applyTerm();
+            this.setRate();
+        },
+        applyTerm           : function(){
+            var self = this, obj = this.get("obj"),
+            today = new Date();
+
+            $.each(this.dataSource.data(), function(index, value){
+                var term = self.paymentTermDS.get(value.payment_term_id),
+                termDate = new Date(value.reference[0].issued_date),
+                discountPeriod = 0;
+
+                if(term){
+                    discountPeriod = kendo.parseInt(term.discount_period);
+                }
+
+                termDate.setDate(termDate.getDate() + discountPeriod);
+
+                if(today<=termDate){
+                    if(value.reference[0].amount_paid==0){
+                        var amount = value.reference[0].amount * term.discount_percentage;
+                        value.set("discount", amount);
+                        value.set("amount", value.reference[0].amount - amount);
+                    }
+                }
+            });
+        },
+        //Currency Rate
+        setRate             : function(){
+            var obj = this.get("obj");
+
+            $.each(this.dataSource.data(), function(index, value){
+                var rate = banhji.source.getRate(value.locale, new Date(obj.issued_date));
+
+                value.set("rate", rate);
+            });
+
+            this.changes();
+        },
+        //Segments
+        segmentChanges      : function(e) {
+            var dataArr = this.get("obj").segments,
+            lastIndex = dataArr.length - 1,
+            last = this.segmentItemDS.get(dataArr[lastIndex]);
+
+            if(dataArr.length > 1) {
+                for(var i = 0; i < dataArr.length - 1; i++) {
+                    var current_index = dataArr[i],
+                    current = this.segmentItemDS.get(current_index);
+
+                    if(current.segment_id === last.segment_id) {
+                        dataArr.splice(lastIndex, 1);
+                        break;
+                    }
+                }
+            }
+        },
+        //Search
+        search              : function(){
+            var self = this,
+                para = [],
+                obj = this.get("obj"),
+                searchText = this.get("searchText"),
+                invoice_id = this.get("invoice_id"),
+                contact_id = this.get("contact_id");
+
+            if(contact_id>0){
+                para.push({ field:"contact_id", value: contact_id });
+            }
+
+            if(invoice_id>0){
+                para.push({ field:"id", value: invoice_id });
+            }
+
+            if(searchText!==""){
+                para.push({ field:"number", value: searchText });
+            }
+
+            if(para.length>0){
+                para.push({ field:"type", operator:"where_in", value:["Commercial_Invoice", "Vat_Invoice", "Invoice"] });
+                para.push({ field:"status", operator:"where_in", value:[0,2] });
+
+                if(this.dataSource.total()>0){
+                    var idList = [];
+                    $.each(this.dataSource.data(), function(index, value){
+                        idList.push(value.reference_id);
+                    });
+                    para.push({ field:"id", operator:"where_not_in", value:idList });
+                }
+
+                this.txnDS.query({
+                    filter: para,
+                    page: 1,
+                    pageSize: 100
+                }).then(function(){
+                    var view = self.txnDS.view();
+
+                    if(view.length>0){
+                        $.each(view, function(index, value){
+                            var amount_due = value.amount - (value.amount_paid + value.deposit);
+
+                            self.dataSource.add({
+                                transaction_template_id : 0,
+                                contact_id          : value.contact_id,
+                                account_id          : obj.account_id,
+                                payment_term_id     : value.payment_term_id,
+                                payment_method_id   : obj.payment_method_id,
+                                reference_id        : value.id,
+                                user_id             : self.get("user_id"),
+                                check_no            : value.check_no,
+                                reference_no        : value.number,
+                                number              : "",
+                                type                : "Cash_Receipt",
+                                sub_total           : amount_due,
+                                amount              : amount_due,
+                                discount            : 0,
+                                discount_percentage : 0,
+                                rate                : value.rate,
+                                movement            : -1,
+                                locale              : value.locale,
+                                issued_date         : obj.issued_date,
+                                memo                : obj.memo,
+                                memo2               : obj.memo2,
+                                status              : 0,
+                                segments            : obj.segments,
+                                is_journal          : 1,
+                                //Recurring
+                                recurring_name      : "",
+                                start_date          : new Date(),
+                                frequency           : "Daily",
+                                month_option        : "Day",
+                                interval            : 1,
+                                day                 : 1,
+                                week                : 0,
+                                month               : 0,
+                                is_recurring        : 0,
+                                reference           : [value],
+                                contact             : value.contact
+                            });
+                        });
+                        self.applyTerm();
+                        self.setRate();
+                    }
+
+                    self.set("searchText", "");
+                    self.set("contact_id", "");
+                    self.set("invoice_id", 0);
+                });
+            }
+        },
+        //Obj
+        loadObj             : function(id){
+            var self = this;
+
+            this.dataSource.query({
+                filter: { field:"id", value: id },
+                page: 1,
+                pageSize: 100
+            }).then(function(){
+                var view = self.dataSource.view();
+
+                self.set("obj", view[0]);
+                self.set("total", kendo.toString(view[0].amount, "c", view[0].locale));
+                self.set("total_received", kendo.toString(view[0].amount, "c", view[0].locale));
+
+                self.journalLineDS.filter({ field: "transaction_id", value: id });
+            });
+        },
+        changes             : function(){
+            var self = this, obj = this.get("obj"),
+            total = 0, sub_total = 0, discount = 0, total_received = 0, remaining = 0;
+
+            $.each(this.dataSource.data(), function(index, value) {
+                var amt = kendo.parseFloat(value.sub_total) - kendo.parseFloat(value.discount);
+                if(kendo.parseFloat(value.amount)>amt){
+                    value.set("amount", amt);
+                }
+
+                sub_total += kendo.parseFloat(value.sub_total) / value.rate;
+                discount += kendo.parseFloat(value.discount) / value.rate;
+                total_received += kendo.parseFloat(value.amount) / value.rate;
+            });
+
+            total = sub_total - discount;
+            remaining = total - total_received;
+
+            obj.set("sub_total", sub_total);
+            obj.set("discount", discount);
+            this.set("total", kendo.toString(total, "c2", banhji.locale));
+            this.set("total_received", kendo.toString(total_received, "c2", banhji.locale));
+            obj.set("remaining", remaining);
+        },
+        removeRow           : function(e){
+            this.dataSource.remove(e.data);
+            this.changes();
+        },
+        dataSourceChanges   : function(arg){
+            var self = banhji.cashReceipt;
+
+            if(arg.field){
+                if(arg.field=="amount" || arg.field=="discount"){
+                    self.changes();
+                }else if(arg.field=="discount_percentage"){
+                    var dataRow = arg.items[0],
+                        percentageAmount = dataRow.sub_total * dataRow.discount_percentage;
+
+                    dataRow.set("discount", percentageAmount);
+                }
+            }
+        },
+        addEmpty            : function(){
+            this.clear();
+
+            this.set("isEdit", false);
+            this.set("obj", null);
+            this.set("total", 0);
+            this.set("total_received", 0);
+
+            this.set("obj", {
+                transaction_template_id: 6,
+                account_id          : 7,
+                payment_method_id   : 1,
+                rate                : 1,
+                sub_total           : 0,
+                discount            : 0,
+                remaining           : 0,
+                locale              : banhji.locale,
+                issued_date         : new Date(),
+                memo                : "",
+                memo2               : "",
+                segments            : []
+            });
+
+            this.dataSource.data([]);
+            this.txnDS.data([]);
+            this.journalLineDS.data([]);
+        },
+        objSync             : function(){
+            var dfd = $.Deferred();
+
+            this.dataSource.sync();
+            this.dataSource.bind("requestEnd", function(e){
+                if(e.response){
+                    dfd.resolve(e.response.results);
+                }
+            });
+            this.dataSource.bind("error", function(e){
+                dfd.reject(e.errorThrown);
+            });
+
+            return dfd;
+        },
+        save                : function(){
+            var self = this, obj = this.get("obj");
+
+            //Edit Mode
+            if(this.get("isEdit")){
+                obj.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
+
+                //Delete Previouse Journal
+                $.each(this.journalLineDS.data(), function(index, value){
+                    value.set("deleted", 1);
+                });
+            }else{
+                //Add brand new transaction
+                $.each(this.dataSource.data(), function(index, value){
+                    value.set("transaction_template_id", obj.transaction_template_id);
+                    value.set("account_id", obj.account_id);
+                    value.set("payment_method_id", obj.payment_method_id);
+                    value.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
+                    value.set("memo", obj.memo);
+                    value.set("memo2", obj.memo2);
+                    value.set("segments", obj.segments);
+                });
+            }
+
+            //Obj
+            this.objSync()
+            .then(function(data){
+                var ids = [];
+                //Save journals
+                $.each(data, function(index, value){
+                    var contact = value.contact;
+                    ids.push(value.reference_id);
+
+                    //Cash on Dr
+                    self.journalLineDS.add({
+                        transaction_id      : value.id,
+                        account_id          : obj.account_id,
+                        contact_id          : value.contact_id,
+                        description         : "",
+                        reference_no        : "",
+                        segments            : obj.segments,
+                        dr                  : value.amount,
+                        cr                  : 0,
+                        rate                : value.rate,
+                        locale              : value.locale
+                    });
+
+                    if(value.discount>0){
+                        //Discount on Dr
+                        self.journalLineDS.add({
+                            transaction_id      : value.id,
+                            account_id          : contact.settlement_discount_id,
+                            contact_id          : value.contact_id,
+                            description         : "",
+                            reference_no        : "",
+                            segments            : obj.segments,
+                            dr                  : value.discount,
+                            cr                  : 0,
+                            rate                : value.rate,
+                            locale              : value.locale
+                        });
+                    }
+
+                    //AR on Cr
+                    self.journalLineDS.add({
+                        transaction_id      : value.id,
+                        account_id          : contact.account_id,
+                        contact_id          : value.contact_id,
+                        description         : "",
+                        reference_no        : "",
+                        segments            : obj.segments,
+                        dr                  : 0,
+                        cr                  : kendo.parseFloat(value.amount) + kendo.parseFloat(value.discount),
+                        rate                : value.rate,
+                        locale              : value.locale
+                    });
+                });
+
+                self.journalLineDS.sync();
+                self.updateTxnStatus(ids);
+
+                return data;
+            }, function(reason) { //Error
+                $("#ntf1").data("kendoNotification").error(reason);
+            }).then(function(result){
+                $("#ntf1").data("kendoNotification").success(banhji.source.successMessage);
+                
+                if(self.get("saveClose")){
+                    //Save Close
+                    banhji.router.navigate("/");
+                    self.set("saveClose", false);
+                    self.addEmpty();
+                    // self.clear();
+                    
+                }else if(self.get("savePrint")){
+                    //Save Print
+                    self.set("savePrint", false);
+                    self.addEmpty();
+                    // self.clear();
+                    
+                    if(result[0].transaction_template_id>0){
+                        banhji.router.navigate("/invoice_form/"+result[0].id);
+                    }
+                }else{
+                    //Save New
+                    self.addEmpty();
+                }
+            });
+        },
+        clear               : function(){
+            this.dataSource.cancelChanges();
+            this.txnDS.cancelChanges();
+            this.journalLineDS.cancelChanges();
+
+            this.dataSource.data([]);
+            this.txnDS.data([]);
+            this.journalLineDS.data([]);
+        },
+        cancel              : function(){
+            this.dataSource.cancelChanges();
+            this.dataSource.data([]);
+
+            banhji.userManagement.removeMultiTask("cash_receipt");
+        },
+        updateTxnStatus     : function(ids){
+            var self = this;
+
+            if(ids.length>0){
+                this.txnDS.query({
+                    filter:{ field:"id", operator:"where_in", value:ids }
+                }).then(function(){
+                    var view = self.txnDS.view();
+
+                    $.each(view, function(index, value){
+                        var total = kendo.parseFloat(value.amount) - kendo.parseFloat(value.deposit);
+
+                        if(value.amount_paid == 0){
+                            value.set("status", 0);
+                        }else if(value.amount_paid >= total){
+                            value.set("status", 1);
+                        }else{
+                            value.set("status", 2);
+                        }
+                    });
+
+                    self.txnDS.sync();
+                });
+            }
+        }
+    });
+    banhji.cashPayment =  kendo.observable({
+        lang                : langVM,
+        dataSource          : dataStore(apiUrl + "transactions"),
+        txnDS               : dataStore(apiUrl + "transactions"),
+        journalLineDS       : dataStore(apiUrl + "journal_lines"),
+        txnTemplateDS       : new kendo.data.DataSource({
+            data: banhji.source.txnTemplateList,
+            filter:{ field: "type", value: "Cash_Payment" }
+        }),
+        segmentItemDS       : new kendo.data.DataSource({
+            data: banhji.source.segmentItemList,
+            sort: [
+                { field: "segment_id", dir: "asc" },
+                { field: "code", dir: "asc" }
+            ]
+        }),
+        contactDS           : banhji.source.supplierDS,
+        accountDS           : new kendo.data.DataSource({
+            data: banhji.source.accountList,
+            filter:{ field:"account_type_id", value: 10 },
+            sort: { field:"number", dir:"asc" }
+        }),
+        paymentTermDS       : banhji.source.paymentTermDS,
+        paymentMethodDS     : banhji.source.paymentMethodDS,
+        amtDueColor         : banhji.source.amtDueColor,
+        showCheckNo         : false,
+        showReceiptNo       : false,
+        obj                 : null,
+        isEdit              : false,
+        saveClose           : false,
+        savePrint           : false,
+        searchText          : "",
+        contact_id          : "",
+        invoice_id          : 0,
+        total               : 0,
+        total_received      : 0,
+        original_total      : 0,
+        deleteVisible       : false,
+        user_id             : banhji.source.user_id,
+        pageLoad            : function(id){
+            if(id){
+                this.set("isEdit", true);
+                this.loadObj(id);
+            }else{
+                if(this.get("isEdit") || this.dataSource.total()==0){
+                    this.addEmpty();
+                }
+            }
+        },
+        //Contact
+        loadContact         : function(id){
+            this.set("contact_id", id);
+            this.search();
+        },
+        contactChanges      : function(){
+            this.search();
+        },
+        getContactName      : function(id){
+            var raw = banhji.source.customerDS.get(id);
+            if(raw){
+                return raw.name;
+            }else{
+                return "";
+            }
+        },
+        //Payment Term
+        issuedDateChanges   : function(){
+            this.applyTerm();
+            this.setRate();
+        },
+        applyTerm           : function(){
+            var self = this, obj = this.get("obj"),
+            today = new Date();
+
+            $.each(this.dataSource.data(), function(index, value){
+                var term = self.paymentTermDS.get(value.payment_term_id),
+                termDate = new Date(value.reference[0].issued_date),
+                discountPeriod = 0;
+
+                if(term){
+                    discountPeriod = kendo.parseInt(term.discount_period);
+                }
+
+                termDate.setDate(termDate.getDate() + discountPeriod);
+
+                if(today<=termDate){
+                    if(value.reference[0].amount_paid==0){
+                        var amount = value.reference[0].amount * term.discount_percentage;
+                        value.set("discount", amount);
+                        value.set("amount", value.reference[0].amount - amount);
+                    }
+                }
+            });
+        },
+        //Currency Rate
+        setRate             : function(){
+            var obj = this.get("obj");
+
+            $.each(this.dataSource.data(), function(index, value){
+                var rate = banhji.source.getRate(value.locale, new Date(obj.issued_date));
+
+                value.set("rate", rate);
+            });
+
+            this.changes();
+        },
+        //Search
+        search              : function(){
+            var self = this,
+            para = [],
+            obj = this.get("obj"),
+            searchText = this.get("searchText"),
+            invoice_id = this.get("invoice_id"),
+            contact_id = this.get("contact_id");
+
+            if(contact_id>0){
+                para.push({ field:"contact_id", value: contact_id });
+            }
+
+            if(invoice_id>0){
+                para.push({ field:"id", value: invoice_id });
+            }
+
+            if(searchText!==""){
+                para.push({ field:"number", value: searchText });
+            }
+
+            if(para.length>0){
+                para.push({ field:"type", value:"Credit_Purchase" });
+                para.push({ field:"status", operator:"where_in", value:[0,2] });
+
+                if(this.dataSource.total()>0){
+                    var idList = [];
+                    $.each(this.dataSource.data(), function(index, value){
+                        idList.push(value.reference_id);
+                    });
+                    para.push({ field:"id", operator:"where_not_in", value:idList });
+                }
+
+                this.txnDS.query({
+                    filter: para,
+                    page: 1,
+                    pageSize: 100
+                }).then(function(){
+                    var view = self.txnDS.view();
+
+                    if(view.length>0){
+                        $.each(view, function(index, value){
+                            var amount_due = value.amount - (value.amount_paid + value.deposit);
+
+                            self.dataSource.add({
+                                transaction_template_id : 0,
+                                contact_id          : value.contact_id,
+                                account_id          : obj.account_id,
+                                payment_term_id     : value.payment_term_id,
+                                payment_method_id   : obj.payment_method_id,
+                                reference_id        : value.id,
+                                user_id             : self.get("user_id"),
+                                check_no            : value.check_no,
+                                reference_no        : value.number,
+                                type                : "Cash_Payment",
+                                sub_total           : amount_due,
+                                amount              : amount_due,
+                                discount            : 0,
+                                rate                : value.rate,
+                                movement            : -1,
+                                locale              : value.locale,
+                                issued_date         : obj.issued_date,
+                                memo                : obj.memo,
+                                memo2               : obj.memo2,
+                                status              : 0,
+                                segments            : obj.segments,
+                                is_journal          : 1,
+                                //Recurring
+                                recurring_name      : "",
+                                start_date          : new Date(),
+                                frequency           : "Daily",
+                                month_option        : "Day",
+                                interval            : 1,
+                                day                 : 1,
+                                week                : 0,
+                                month               : 0,
+                                is_recurring        : 0,
+
+                                reference           : [value],
+                                contact             : value.contact
+                            });
+                        });
+                        self.applyTerm();
+                        self.setRate();
+                    }
+
+                    self.set("searchText", "");
+                    self.set("contact_id", "");
+                    self.set("invoice_id", 0);
+                });
+            }
+        },
+        segmentChanges      : function(e) {
+            var dataArr = this.get("obj").segments,
+            lastIndex = dataArr.length - 1,
+            last = this.segmentItemDS.get(dataArr[lastIndex]);
+
+            if(dataArr.length > 1) {
+                for(var i = 0; i < dataArr.length - 1; i++) {
+                    var current_index = dataArr[i],
+                    current = this.segmentItemDS.get(current_index);
+
+                    if(current.segment_id === last.segment_id) {
+                        dataArr.splice(lastIndex, 1);
+                        break;
+                    }
+                }
+            }
+        },
+        //Obj
+        loadObj             : function(id){
+            var self = this;
+
+            this.dataSource.query({
+                filter: { field:"id", value: id },
+                page: 1,
+                pageSize: 100
+            }).then(function(){
+                var view = self.dataSource.view();
+
+                self.set("obj", view[0]);
+                self.set("total", kendo.toString(view[0].amount, "c", view[0].locale));
+                self.set("total_received", kendo.toString(view[0].amount, "c", view[0].locale));
+
+                self.journalLineDS.filter({ field: "transaction_id", value: id });
+            });
+        },
+        loadInvoice         : function(id){
+            this.set("invoice_id", id);
+            this.search();
+        },
+        dataSourceChanges   : function(arg){
+            var self = banhji.cashPayment;
+
+            if(arg.field){
+                if(arg.field=="amount" || arg.field=="discount"){
+                    self.changes();
+                }else if(arg.field=="discount_percentage"){
+                    var dataRow = arg.items[0],
+                        percentageAmount = dataRow.sub_total * dataRow.discount_percentage;
+
+                    dataRow.set("discount", percentageAmount);
+                }
+            }
+        },
+        changes             : function(){
+            var self = this, obj = this.get("obj"),
+            total = 0, sub_total = 0, discount = 0, total_received = 0, remaining = 0;
+
+            $.each(this.dataSource.data(), function(index, value) {
+                var amt = kendo.parseFloat(value.sub_total) - kendo.parseFloat(value.discount);
+                if(kendo.parseFloat(value.amount)>amt){
+                    value.set("amount", amt);
+                }
+
+                sub_total += kendo.parseFloat(value.sub_total) / value.rate;
+                discount += kendo.parseFloat(value.discount) / value.rate;
+                total_received += kendo.parseFloat(value.amount) / value.rate;
+            });
+
+            total = sub_total - discount;
+            remaining = total - total_received;
+
+            obj.set("sub_total", sub_total);
+            obj.set("discount", discount);
+            this.set("total", kendo.toString(total, "c2", banhji.locale));
+            this.set("total_received", kendo.toString(total_received, "c2", banhji.locale));
+            obj.set("remaining", remaining);
+        },
+        removeRow           : function(e){
+            var data = e.data;
+            this.dataSource.remove(data);
+            this.changes();
+        },
+        addEmpty            : function(){
+            this.dataSource.data([]);
+            this.txnDS.data([]);
+            this.journalLineDS.data([]);
+
+            this.set("isEdit", false);
+            this.set("obj", null);
+            this.set("total", 0);
+            this.set("total_received", 0);
+
+            this.set("obj", {
+                transaction_template_id : 12,
+                account_id          : 7,
+                payment_method_id   : 1,
+                rate                : 1,
+                sub_total           : 0,
+                discount            : 0,
+                remaining           : 0,
+                locale              : banhji.locale,
+                issued_date         : new Date(),
+                memo                : "",
+                memo2               : "",
+                segments            : []
+            });
+        },
+        objSync             : function(){
+            var dfd = $.Deferred();
+
+            this.dataSource.sync();
+            this.dataSource.bind("requestEnd", function(e){
+                if(e.response){
+                    dfd.resolve(e.response.results);
+                }
+            });
+            this.dataSource.bind("error", function(e){
+                dfd.reject(e.errorThrown);
+            });
+
+            return dfd;
+        },
+        save                : function(){
+            var self = this, obj = this.get("obj");
+
+            if(this.get("isEdit")){
+                obj.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
+
+                //Delete Previouse Journal
+                $.each(this.journalLineDS.data(), function(index, value){
+                    value.set("deleted", 1);
+                });
+            }else{
+                //Add brand new transaction
+                $.each(this.dataSource.data(), function(index, value){
+                    value.set("transaction_template_id", obj.transaction_template_id);
+                    value.set("account_id", obj.account_id);
+                    value.set("payment_method_id", obj.payment_method_id);
+                    value.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
+                    value.set("memo", obj.memo);
+                    value.set("memo2", obj.memo2);
+                    value.set("segments", obj.segments);
+                });
+            }
+
+            this.objSync()
+            .then(function(data){
+                var ids = [];
+                //Save journals
+                $.each(data, function(index, value){
+                    var contact = value.contact,
+                    ref = self.dataSource.at(index);
+                    ids.push(value.reference_id);
+
+                    //AP on Dr
+                    self.journalLineDS.add({
+                        transaction_id      : value.id,
+                        account_id          : ref.reference[0].account_id,
+                        contact_id          : value.contact_id,
+                        description         : "",
+                        reference_no        : "",
+                        segments            : obj.segments,
+                        dr                  : kendo.parseFloat(value.amount) + kendo.parseFloat(value.discount),
+                        cr                  : 0,
+                        rate                : value.rate,
+                        locale              : value.locale
+                    });
+
+                    //Cash on Cr
+                    self.journalLineDS.add({
+                        transaction_id      : value.id,
+                        account_id          : obj.account_id,
+                        contact_id          : value.contact_id,
+                        description         : "",
+                        reference_no        : "",
+                        segments            : obj.segments,
+                        dr                  : 0,
+                        cr                  : value.amount,
+                        rate                : value.rate,
+                        locale              : value.locale
+                    });
+
+                    if(value.discount>0){
+                        //Discount on Cr
+                        self.journalLineDS.add({
+                            transaction_id      : value.id,
+                            account_id          : contact.settlement_discount_id,
+                            contact_id          : value.contact_id,
+                            description         : "",
+                            reference_no        : "",
+                            segments            : obj.segments,
+                            dr                  : 0,
+                            cr                  : value.discount,
+                            rate                : value.rate,
+                            locale              : value.locale
+                        });
+                    }
+                });
+
+                self.journalLineDS.sync();
+                self.updateTxnStatus(ids);
+
+                return data;
+            }, function(reason) { //Error
+                $("#ntf1").data("kendoNotification").error(reason);
+            }).then(function(result){
+                $("#ntf1").data("kendoNotification").success(banhji.source.successMessage);
+
+                if(self.get("saveClose")){
+                    //Save Close
+                    self.set("saveClose", false);
+                    self.cancel();
+                    window.history.back();
+                }else if(self.get("savePrint")){
+                    //Save Print
+                    self.set("savePrint", false);
+                    self.cancel();
+                    if(result[0].transaction_template_id>0){
+                        banhji.router.navigate("/invoice_form/"+result[0].id);
+                    }
+                }else{
+                    //Save New
+                    self.addEmpty();
+                }
+            });
+        },
+        cancel              : function(){
+            this.dataSource.cancelChanges();
+
+            banhji.userManagement.removeMultiTask("cash_payment");
+        },
+        updateTxnStatus     : function(ids){
+            var self = this;
+
+            if(ids.length>0){
+                this.txnDS.query({
+                    filter:{ field:"id", operator:"where_in", value:ids }
+                }).then(function(){
+                    var view = self.txnDS.view();
+
+                    $.each(view, function(index, value){
+                        if(value.amount_paid == 0){
+                            value.set("status", 0);
+                        }else if(value.amount_paid >= value.amount){
+                            value.set("status", 1);
+                        }else{
+                            value.set("status", 2);
+                        }
+                    });
+
+                    self.txnDS.sync();
+                });
+            }
+        }
+    });
+    banhji.paymentRefund =  kendo.observable({
+        lang                : langVM,
+        dataSource          : dataStore(apiUrl + "transactions"),
+        referenceDS         : dataStore(apiUrl + "transactions"),
+        returnDS            : dataStore(apiUrl + "transactions"),
+        txnDS               : dataStore(apiUrl + "transactions"),
+        numberDS            : dataStore(apiUrl + "transactions/number"),
+        lineDS              : dataStore(apiUrl + "item_lines"),
+        assemblyLineDS      : dataStore(apiUrl + "item_lines"),
+        journalLineDS       : dataStore(apiUrl + "journal_lines"),
+        assemblyDS          : dataStore(apiUrl + "item_prices"),
+        attachmentDS        : dataStore(apiUrl + "attachments"),
+        jobDS               : new kendo.data.DataSource({
+            data: banhji.source.jobList,
+            sort: { field: "name", dir: "asc" }
+        }),
+        segmentItemDS       : new kendo.data.DataSource({
+            data: banhji.source.segmentItemList,
+            sort: [
+                { field: "segment_id", dir: "asc" },
+                { field: "code", dir: "asc" }
+            ]
+        }),
+        taxItemDS           : new kendo.data.DataSource({
+            data: banhji.source.taxList,
+            filter:{
+                logic: "or",
+                filters: [
+                    { field: "tax_type_id", value: 1 },//Supplier Tax
+                    { field: "tax_type_id", value: 2 },
+                    { field: "tax_type_id", value: 3 },
+                    { field: "tax_type_id", value: 9 }
+                ]
+            },
+            sort: [
+                { field: "tax_type_id", dir: "asc" },
+                { field: "name", dir: "asc" }
+            ]
+        }),
+        txnTemplateDS       : new kendo.data.DataSource({
+            data: banhji.source.txnTemplateList,
+            filter:{ field: "type", value: "Payment_Refund" }
+        }),
+        itemDS              : new kendo.data.DataSource({
+            transport: {
+                read    : {
+                    url: apiUrl + "items",
+                    type: "GET",
+                    headers: banhji.header,
+                    dataType: 'json'
+                },
+                parameterMap: function(options, operation) {
+                    if(operation === 'read') {
+                        return {
+                            page: options.page,
+                            limit: options.pageSize,
+                            filter: options.filter,
+                            sort: options.sort
+                        };
+                    } else {
+                        return {models: kendo.stringify(options.models)};
+                    }
+                }
+            },
+            schema  : {
+                model: {
+                    id: 'id'
+                },
+                data: 'results',
+                total: 'count'
+            },
+            filter:{ field: "item_type_id <>", value: 3 },
+            sort:[
+                { field:"item_type_id", dir:"asc" },
+                { field:"number", dir:"asc" }
+            ],
+            serverFiltering: true,
+            serverSorting: true,
+            serverPaging: true,
+            page:1,
+            pageSize: 100
+        }),
+        accountDS           : new kendo.data.DataSource({
+            data: banhji.source.accountList,
+            filter:{ field:"account_type_id", value: 10 },
+            sort: { field:"number", dir:"asc" }
+        }),
+        contactDS           : banhji.source.supplierDS,
+        amtDueColor         : banhji.source.amtDueColor,
+        obj                 : null,
+        isEdit              : false,
+        saveClose           : false,
+        savePrint           : false,
+        notDuplicateNumber  : true,
+        total               : 0,
+        total_deposit       : 0,
+        user_id             : banhji.source.user_id,
+        pageLoad            : function(id){
+            if(id){
+                this.set("isEdit", true);
+                this.loadObj(id);
+            }else{
+                if(this.get("isEdit") || this.dataSource.total()==0){
+                    this.addEmpty();
+                }
+            }
+        },
+        //Upload
+        onSelect            : function(e){
+            // Array with information about the uploaded files
+            var self = this,
+            files = e.files,
+            obj = this.get("obj");
+
+            // Check the extension of each file and abort the upload if it is not .jpg
+            $.each(files, function(index, value){
+                if (value.extension.toLowerCase() === ".jpg"
+                    || value.extension.toLowerCase() === ".jpeg"
+                    || value.extension.toLowerCase() === ".tiff"
+                    || value.extension.toLowerCase() === ".png"
+                    || value.extension.toLowerCase() === ".gif"
+                    || value.extension.toLowerCase() === ".pdf"){
+
+                    var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001);
+
+                    self.attachmentDS.add({
+                        user_id         : self.get("user_id"),
+                        transaction_id  : obj.id,
+                        type            : "Transaction",
+                        name            : value.name,
+                        description     : "",
+                        key             : key,
+                        url             : banhji.s3 + key,
+                        size            : value.size,
+                        created_at      : new Date(),
+
+                        file            : value.rawFile
+                    });
+                }else{
+                    alert("This type of file is not allowed to attach.");
+                }
+            });
+        },
+        onRemove            : function(e){
+            // Array with information about the uploaded files
+            var self = this, files = e.files;
+            $.each(this.attachmentDS.data(), function(index, value){
+                if(value.name==files[0].name){
+                    self.attachmentDS.remove(value);
+
+                    return false;
+                }
+            });
+        },
+        removeFile          : function(e){
+            var data = e.data;
+
+            if (confirm("Are you sure, you want to delete it?")) {
+                this.attachmentDS.remove(data);
+            }
+        },
+        uploadFile          : function(){
+            var self = this;
+
+            $.each(this.attachmentDS.data(), function(index, value){
+                if(!value.id){
+                    var params = {
+                        Body: value.file,
+                        Key: value.key
+                    };
+                    bucket.upload(params, function (err, data) {
+                        // console.log(err, data);
+                        // var url = data.Location;
+                    });
+                }
+            });
+
+            this.attachmentDS.sync();
+            var saved = false;
+            this.attachmentDS.bind("requestEnd", function(e){
+                if(e.type=="destroy"){
+                    if(saved==false){
+                        saved = true;
+
+                        var response = e.response.results;
+                        $.each(response, function(index, value){
+                            var paramz = {
+                                //Bucket: 'STRING_VALUE', /* required */
+                                Delete: { /* required */
+                                    Objects: [ /* required */
+                                        {
+                                            Key: value.data.key /* required */
+                                        }
+                                      /* more items */
+                                    ]
+                                }
+                            };
+                            bucket.deleteObjects(paramz, function(err, data) {
+                                //console.log(err, data);
+                            });
+                        });
+                    }
+                }
+            });
+
+            //Clear upload files
+            $(".k-upload-files").remove();
+        },
+        //Deposit
+        loadDeposit         : function(){
+            var self = this, obj = this.get("obj");
+
+            if(obj.contact_id>0){
+                this.txnDS.query({
+                    filter:[
+                        { field:"amount", operator:"select_sum", value:"amount" },
+                        { field:"contact_id", value: obj.contact_id },
+                        { field:"type", value: "Vendor_Deposit" }
+                    ]
+                }).then(function(){
+                    var view = self.txnDS.view();
+
+                    self.set("total_deposit", view[0].amount + obj.deposit);
+                });
+            }
+        },
+        //Contact
+        setContact          : function(contact){
+            var obj = this.get("obj");
+
+            obj.set("contact", contact);
+            this.contactChanges();
+        },
+        contactChanges      : function(){
+            var self = this, obj = this.get("obj");
+
+            if(obj.contact){
+                var contact = obj.contact;
+
+                obj.set("contact_id", contact.id);
+                obj.set("locale", contact.locale);
+                obj.set("bill_to", contact.bill_to);
+                obj.set("ship_to", contact.ship_to);
+
+                this.setRate();
+                this.loadDeposit();
+                this.loadReference();
+            }
+
+            this.changes();
+        },
+        //Currency Rate
+        setRate             : function(){
+            var obj = this.get("obj"),
+            rate = banhji.source.getRate(obj.locale, new Date(obj.issued_date));
+
+            obj.set("rate", rate);
+
+            $.each(this.lineDS.data(), function(index, value){
+                var itemRate = rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));
+
+                value.set("rate", itemRate);
+            });
+        },
+        //Segment
+        segmentChanges      : function(e) {
+            var dataArr = this.get("obj").segments,
+            lastIndex = dataArr.length - 1,
+            last = this.segmentItemDS.get(dataArr[lastIndex]);
+
+            if(dataArr.length > 1) {
+                for(var i = 0; i < dataArr.length - 1; i++) {
+                    var current_index = dataArr[i],
+                    current = this.segmentItemDS.get(current_index);
+
+                    if(current.segment_id === last.segment_id) {
+                        dataArr.splice(lastIndex, 1);
+                        break;
+                    }
+                }
+            }
+        },
+        //Item
+        itemChanges         : function(e){
+            var self = this, data = e.data, obj = this.get("obj");
+
+            if(data.item_id>0){
+                var item = this.itemDS.get(data.item_id);
+
+                if(item.is_catalog=="1"){
+                    this.lineDS.remove(data);
+
+                    $.each(item.catalogs, function(ind, val){
+                        var catalogItem = self.itemDS.get(val);
+
+                        if(catalogItem){
+                            var rate = obj.rate / banhji.source.getRate(catalogItem.locale, new Date(obj.issued_date)),
+                                itemPrices = banhji.source.getPriceList(catalogItem.id);
+
+                            self.lineDS.add({
+                                transaction_id      : obj.id,
+                                tax_item_id         : 0,
+                                item_id             : catalogItem.id,
+                                measurement_id      : itemPrices.length>0 ? itemPrices[0].measurement_id : catalogItem.measurement_id,
+                                description         : catalogItem.purchase_description,
+                                quantity            : 1,
+                                conversion_ratio    : itemPrices.length>0 ? itemPrices[0].conversion_ratio : 1,
+                                cost                : catalogItem.cost * rate,
+                                amount              : 0,
+                                discount            : 0,
+                                rate                : rate,
+                                locale              : catalogItem.locale,
+                                movement            : -1,
+
+                                item_prices         : itemPrices
+                            });
+                        }
+                    });
+
+                    this.changes();
+                }else{
+                    var rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date)),
+                        itemPrices = banhji.source.getPriceList(data.item_id);
+
+                    data.set("item_prices", itemPrices);
+                    data.set("measurement_id", itemPrices.length>0 ? itemPrices[0].measurement_id : item.measurement_id);
+                    data.set("description", item.purchase_description);
+                    data.set("quantity", 1);
+                    data.set("conversion_ratio", itemPrices.length>0 ? itemPrices[0].conversion_ratio : 1);
+                    data.set("cost", item.cost * rate);
+                    data.set("rate", rate);
+                    data.set("locale", item.locale);
+
+                    this.changes();
+                }
+            }else{
+                data.set("item_id", "");
+            }
+        },
+        measurementChanges  : function(e){
+            var data = e.data, obj = this.get("obj");
+
+            if(data.measurement_id>0){
+                $.each(data.item_prices, function(index, value){
+                    if(value.measurement_id==data.measurement_id){
+
+                        data.set("conversion_ratio", value.conversion_ratio);
+
+                        return false;
+                    }
+                });
+
+                this.changes();
+            }
+        },
+        //Number
+        checkExistingNumber : function(){
+            var self = this, para = [],
+            obj = this.get("obj");
+
+            if(obj.number!==""){
+
+                if(obj.isNew()==false){
+                    para.push({ field:"id", operator:"where_not_in", value: [obj.id] });
+                }
+
+                para.push({ field:"number", value: obj.number });
+                para.push({ field:"type", value: obj.type });
+
+                this.txnDS.query({
+                    filter: para,
+                    page: 1,
+                    pageSize: 1
+                }).then(function(e){
+                    var view = self.txnDS.view();
+
+                    if(view.length>0){
+                        self.set("notDuplicateNumber", false);
+                    }else{
+                        self.set("notDuplicateNumber", true);
+                    }
+                });
+            }
+        },
+        generateNumber      : function(){
+            var self = this, obj = this.get("obj"),
+                issueDate = new Date(obj.issued_date),
+                startDate = new Date(obj.issued_date),
+                endDate = new Date(obj.issued_date);
+
+            this.set("notDuplicateNumber", true);
+
+            startDate.setDate(1);
+            startDate.setMonth(0);//Set to January
+            endDate.setDate(31);
+            endDate.setMonth(11);//Set to November
+
+            this.numberDS.query({
+                filter:[
+                    { field:"type", value:obj.type },
+                    { field:"issued_date >=", value:kendo.toString(startDate, "yyyy-MM-dd") },
+                    { field:"issued_date <=", value:kendo.toString(endDate, "yyyy-MM-dd") }
+                ]
+            }).then(function(){
+                var view = self.numberDS.view(),
+                number = 0, str = "";
+
+                if(view.length>0){
+                    number = view[0].number.match(/\d+/g).map(Number);
+                }
+
+                number++;
+                str = banhji.source.getPrefixAbbr(obj.type) + kendo.toString(issueDate, "yy") + kendo.toString(issueDate, "MM") + kendo.toString(number, "00000");
+
+                obj.set("number", str);
+            });
+        },
+        //Obj
+        loadObj             : function(id){
+            var self = this, para = [];
+
+            para.push({ field:"id", value: id });
+
+            this.dataSource.query({
+                filter: para
+            }).then(function(e){
+                var view = self.dataSource.view();
+
+                self.set("obj", view[0]);
+                self.set("total", kendo.toString(view[0].amount, "c", view[0].locale));
+
+                self.loadLines(id);
+                self.assemblyLineDS.filter([
+                    { field: "transaction_id", value: id },
+                    { field: "assembly_id >", value: 0 }
+                ]);
+                self.journalLineDS.filter({ field: "transaction_id", value: id });
+                self.attachmentDS.filter({ field: "transaction_id", value: id });
+                self.referenceDS.filter([
+                    { field: "contact_id", value: view[0].contact_id },
+                    { field: "amount >", value: 0 },
+                    { field: "type", value:"Vendor_Deposit" }
+                ]);
+
+                self.returnDS.query({
+                    filter:{ field: "return_id", value: id }
+                }).then(function(){
+                    var reInvoice = self.returnDS.view();
+
+                    $.each(reInvoice, function(index, value){
+                        value.set("amount", Math.abs(value.amount));
+                    });
+                });
+
+                self.loadDeposit();
+            });
+        },
+        loadLines           : function(id){
+            var self = this;
+
+            self.lineDS.query({
+                filter: [
+                    { field: "transaction_id", value: id },
+                    { field: "assembly_id", value: 0 }
+                ],
+            }).then(function(){
+                var view = self.lineDS.view();
+
+                $.each(view, function(index, value){
+                    value.set("item_prices", banhji.source.getPriceList(value.item_id));
+                });
+            });
+        },
+        changes             : function(){
+            var self = this, obj = this.get("obj"),
+            subTotal = 0, tax = 0, returnAmount = 0, itemIds = [];
+
+            $.each(this.lineDS.data(), function(index, value) {
+                var amt = value.quantity * value.cost;
+
+                //Tax by line
+                if(value.tax_item_id>0){
+                    var taxItem = self.taxItemDS.get(value.tax_item_id);
+                    tax += amt * taxItem.rate;
+                }
+
+                value.set("amount", amt);
+                subTotal += amt;
+
+                if(value.item_id>0){
+                    itemIds.push(value.item_id);
+                }
+            });
+
+            //Return
+            $.each(this.returnDS.data(), function(index, value) {
+                if(value.amount>value.sub_total){
+                    value.set("amount", value.sub_total);
+                }
+                returnAmount += value.amount;
+            });
+
+            total = subTotal + tax + returnAmount;
+
+            obj.set("sub_total", subTotal);
+            obj.set("tax", tax);
+            obj.set("deposit", returnAmount);
+            obj.set("amount", total);
+
+            this.set("total", kendo.toString(total, "c", obj.locale));
+
+            //Remove Assembly Item List
+            var raw = this.assemblyLineDS.data();
+            var item, i;
+            for(i=raw.length-1; i>=0; i--){
+                item = raw[i];
+
+                if (jQuery.inArray(kendo.parseInt(item.assembly_id), itemIds)==-1) {
+                    this.assemblyLineDS.remove(item);
+                }
+            }
+        },
+        addEmpty            : function(){
+            this.dataSource.data([]);
+            this.lineDS.data([]);
+            this.assemblyLineDS.data([]);
+            this.journalLineDS.data([]);
+            this.returnDS.data([]);
+            this.referenceDS.data([]);
+
+            this.set("isEdit", false);
+            this.set("obj", null);
+            this.set("total", 0);
+
+            this.dataSource.insert(0, {
+                contact_id          : "",
+                reference_id        : "",
+                recurring_id        : "",
+                job_id              : 0,
+                user_id             : this.get("user_id"),
+                type                : "Payment_Refund", //Require
+                number              : "",
+                sub_total           : 0,
+                discount            : 0,
+                tax                 : 0,
+                amount              : 0,
+                deposit             : 0,
+                amount_paid         : 0,
+                remaining           : 0,
+                rate                : 1,
+                locale              : banhji.locale,
+                issued_date         : new Date(),
+                bill_to             : "",
+                ship_to             : "",
+                memo                : "",
+                memo2               : "",
+                status              : 0,
+                segments            : [],
+                is_journal          : 1,
+                //Recurring
+                recurring_name      : "",
+                start_date          : new Date(),
+                frequency           : "Daily",
+                month_option        : "Day",
+                interval            : 1,
+                day                 : 1,
+                week                : 0,
+                month               : 0,
+                is_recurring        : 0,
+
+                contact             : { id:0, name:"" }
+            });
+
+            var obj = this.dataSource.at(0);
+            this.set("obj", obj);
+
+            this.setRate();
+            this.addRow();
+            this.generateNumber();
+        },
+        addRow              : function(){
+            var obj = this.get("obj");
+
+            this.lineDS.add({
+                transaction_id      : obj.id,
+                tax_item_id         : "",
+                item_id             : "",
+                measurement_id      : 0,
+                description         : "",
+                quantity            : 1,
+                conversion_ratio            : 1,
+                cost                : 0,
+                amount              : 0,
+                discount            : 0,
+                fine                : 0,
+                rate                : obj.rate,
+                locale              : obj.locale,
+                movement            : -1,
+                reference_no        : "",
+
+                item_prices         : []
+            });
+        },
+        removeRow           : function(e){
+            var data = e.data;
+
+            //Remove Assembly Item List
+            if(data.item_id>0){
+                var raw = this.assemblyLineDS.data();
+
+                var item, i;
+                for(i=raw.length-1; i>=0; i--){
+                    item = raw[i];
+                    if (item.assembly_id==data.item_id){
+                        this.assemblyLineDS.remove(item);
+                    }
+
+                }
+            }
+
+            this.lineDS.remove(data);
+            this.changes();
+        },
+        objSync             : function(){
+            var dfd = $.Deferred();
+
+            this.dataSource.sync();
+            this.dataSource.bind("requestEnd", function(e){
+                if(e.response){
+                    dfd.resolve(e.response.results);
+                }
+            });
+            this.dataSource.bind("error", function(e){
+                dfd.reject(e.errorThrown);
+            });
+
+            return dfd;
+        },
+        save                : function(){
+            var self = this, obj = this.get("obj");
+            obj.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
+
+            //Mode
+            if(obj.isNew()==false){
+                //Journal
+                $.each(this.journalLineDS.data(), function(index, value){
+                    value.set("deleted", 1);
+                });
+
+                this.addJournal(obj.id);
+            }
+
+            //Save Obj
+            this.objSync()
+            .then(function(data){ //Success
+                if(self.get("isEdit")==false){
+                    //Item line
+                    $.each(self.lineDS.data(), function(index, value){
+                        value.set("transaction_id", data[0].id);
+                    });
+
+                    //Assembly Item line
+                    $.each(self.assemblyLineDS.data(), function(index, value){
+                        value.set("transaction_id", data[0].id);
+                    });
+
+                    //Attachment
+                    $.each(self.attachmentDS.data(), function(index, value){
+                        value.set("transaction_id", data[0].id);
+                    });
+
+                    //Journal
+                    self.addJournal(data[0].id);
+                }
+
+                self.lineDS.sync();
+                self.assemblyLineDS.sync();
+                self.uploadFile();
+
+                //Return
+                var ids = [];
+                $.each(self.returnDS.data(), function(index, value){
+                    if(value.reference_id>0){
+                        ids.push(value.reference_id);
+                    }
+                    value.set("return_id", data[0].id);
+                    value.set("amount", value.amount*-1);
+                    value.set("issued_date", kendo.toString(new Date(data[0].issued_date), "s"));
+                });
+                self.returnDS.sync();
+                self.updateTxnStatus(ids);
+
+                return data;
+            }, function(reason) { //Error
+                $("#ntf1").data("kendoNotification").error(reason);
+            }).then(function(result){
+                $("#ntf1").data("kendoNotification").success(banhji.source.successMessage);
+
+                if(self.get("saveClose")){
+                    //Save Close
+                    self.set("saveClose", false);
+                    self.cancel();
+                    window.history.back();
+                }else if(self.get("savePrint")){
+                    //Save Print
+                    self.set("savePrint", false);
+                    self.cancel();
+                    if(result[0].transaction_template_id>0){
+                        banhji.router.navigate("/invoice_form/"+result[0].id);
+                    }
+                }else{
+                    //Save New
+                    self.addEmpty();
+                }
+            });
+        },
+        cancel              : function(){
+            this.dataSource.cancelChanges();
+            this.lineDS.cancelChanges();
+            this.returnDS.cancelChanges();
+            this.assemblyLineDS.cancelChanges();
+            this.attachmentDS.cancelChanges();
+
+            this.dataSource.data([]);
+            this.lineDS.data([]);
+            this.returnDS.data([]);
+            this.assemblyLineDS.data([]);
+            this.attachmentDS.data([]);
+
+            banhji.userManagement.removeMultiTask("payment_refund");
+        },
+        validating          : function(){
+            var result = true, obj = this.get("obj"),
+            total_deposit = this.get("total_deposit");
+
+            if(obj.deposit>total_deposit){
+                $("#ntf1").data("kendoNotification").error("Over deposit amount to refund!");
+
+                result = false;
+            }
+
+            if(this.lineDS.total()==0 && this.returnDS.total()==0){
+                $("#ntf1").data("kendoNotification").error("Please select an item or deposit.");
+
+                result = false;
+            }
+
+            return result;
+        },
+        updateTxnStatus     : function(ids){
+            var self = this;
+
+            if(ids.length>0){
+                this.txnDS.query({
+                    filter:{ field:"id", operator:"where_in", value:ids }
+                }).then(function(){
+                    var view = self.txnDS.view();
+
+                    $.each(view, function(index, value){
+                        value.set("status", 3);//Status 3 = refund
+                    });
+
+                    self.txnDS.sync();
+                });
+            }
+        },
+        //Return
+        addRowReturn        : function(){
+            var obj = this.get("obj"), account_id = 0;
+
+            if(obj.contact_id>0){
+                var contact = obj.contact;
+                account_id = contact.deposit_account_id;
+            }
+
+            this.returnDS.add({
+                return_id       : obj.id,
+                account_id      : account_id,
+                contact_id      : obj.contact_id,
+                reference_id    : "",
+                reference_no    : "",
+                number          : "",
+                type            : "Vendor_Deposit",
+                amount          : 0,
+                rate            : obj.rate,
+                locale          : obj.locale,
+                issued_date     : obj.issued_date
+            });
+        },
+        removeRowReturn     : function(e){
+            var data = e.data;
+
+            this.returnDS.remove(data);
+            this.changes();
+        },
+        loadReference       : function(){
+            var obj = this.get("obj");
+
+            if(obj.contact_id>0){
+                this.referenceDS.filter([
+                    { field: "contact_id", value: obj.contact_id },
+                    { field: "amount >", value: 0 },
+                    { field: "status <>", value: 3 },
+                    { field: "type", value:"Vendor_Deposit" }
+                ]);
+            }
+        },
+        referenceChanges    : function(e){
+            var data = e.data;
+
+            if(data.reference_id>0){
+                var txn = this.referenceDS.get(data.reference_id);
+
+                data.set("account_id", txn.account_id);
+                data.set("reference_no", txn.number);
+                data.set("sub_total", txn.amount);
+                data.set("amount", txn.amount);
+            }else{
+                data.set("account_id", 0);
+                data.set("reference_no", "");
+                data.set("sub_total", 0);
+                data.set("amount", 0);
+            }
+
+            this.changes();
+        },
+        //Journal
+        addJournal          : function(transaction_id){
+            var self = this,
+                obj = this.get("obj"),
+                contact = obj.contact,
+                raw = "", entries = {};
+
+            //Cash on Dr
+            var cashID = kendo.parseInt(obj.account_id);
+            if(cashID>0){
+                raw = "dr"+cashID;
+
+                if(entries[raw]===undefined){
+                    entries[raw] = {
+                        transaction_id      : transaction_id,
+                        account_id          : cashID,
+                        contact_id          : obj.contact_id,
+                        description         : obj.memo,
+                        reference_no        : "",
+                        segments            : obj.segments,
+                        dr                  : obj.amount,
+                        cr                  : 0,
+                        rate                : obj.rate,
+                        locale              : obj.locale
+                    };
+                }else{
+                    entries[raw].dr += obj.amount;
+                }
+            }
+
+            //Item lines
+            $.each(this.lineDS.data(), function(index, value){
+                var item = self.itemDS.get(value.item_id);
+
+                //Service on Cr
+                if(item.item_type_id==4){
+                    var serviceID = kendo.parseInt(item.expense_account_id);
+                    if(serviceID>0){
+                        raw = "cr"+serviceID;
+
+                        var serviceAmount = value.amount;
+                        if(item.item_type_id==1 || item.item_type_id==4){
+                            serviceAmount = value.quantity * value.conversion_ratio * value.cost;
+                        }
+
+                        if(entries[raw]===undefined){
+                            entries[raw] = {
+                                transaction_id      : transaction_id,
+                                account_id          : serviceID,
+                                contact_id          : obj.contact_id,
+                                description         : value.description,
+                                reference_no        : "",
+                                segments            : obj.segments,
+                                dr                  : 0,
+                                cr                  : serviceAmount,
+                                rate                : value.rate,
+                                locale              : item.locale
+                            };
+                        }else{
+                            entries[raw].cr += serviceAmount;
+                        }
+                    }
+                }
+
+                //Inventory on Cr
+                var inventoryID = kendo.parseInt(item.inventory_account_id);
+                if(inventoryID>0){
+                    raw = "cr"+inventoryID;
+
+                    var inventoryAmount = value.amount;
+                    if(item.item_type_id==1 || item.item_type_id==4){
+                        inventoryAmount = value.quantity * value.conversion_ratio * value.cost;
+                    }
+
+                    if(entries[raw]===undefined){
+                        entries[raw] = {
+                            transaction_id      : transaction_id,
+                            account_id          : inventoryID,
+                            contact_id          : obj.contact_id,
+                            description         : value.description,
+                            reference_no        : "",
+                            segments            : obj.segments,
+                            dr                  : 0,
+                            cr                  : inventoryAmount,
+                            rate                : value.rate,
+                            locale              : item.locale
+                        };
+                    }else{
+                        entries[raw].cr += inventoryAmount;
+                    }
+                }
+
+                //Tax on Cr
+                if(value.tax_item_id>0){
+                    var taxItem = self.taxItemDS.get(value.tax_item_id),
+                        raw = "cr"+taxItem.account_id,
+                        taxAmt = value.amount * taxItem.rate;
+
+                    if(entries[raw]===undefined){
+                        entries[raw] = {
+                            transaction_id      : transaction_id,
+                            account_id          : taxItem.account_id,
+                            contact_id          : obj.contact_id,
+                            description         : value.description,
+                            reference_no        : "",
+                            segments            : obj.segments,
+                            dr                  : 0,
+                            cr                  : taxAmt,
+                            rate                : obj.rate,
+                            locale              : obj.locale
+                        };
+                    }else{
+                        entries[raw].cr += taxAmt;
+                    }
+                }
+            });
+
+            //Return Lines
+            $.each(this.returnDS.data(), function(index, value){
+                //Deposit on Cr
+                var depositID = kendo.parseInt(value.account_id);
+                if(depositID>0){
+                    raw = "cr"+depositID;
+
+                    if(entries[raw]===undefined){
+                        entries[raw] = {
+                            transaction_id      : transaction_id,
+                            account_id          : depositID,
+                            contact_id          : obj.contact_id,
+                            description         : value.description,
+                            reference_no        : value.reference_no,
+                            segments            : value.segments,
+                            dr                  : 0,
+                            cr                  : value.amount,
+                            rate                : value.rate,
+                            locale              : value.locale
+                        };
+                    }else{
+                        entries[raw].cr += value.amount;
+                    }
+                }
+            });
+
+            //Add to journal entry
+            if(!jQuery.isEmptyObject(entries)){
+                $.each(entries, function(index, value){
+                    self.journalLineDS.add(value);
+                });
+            }
+
+            this.journalLineDS.sync();
+        }
+    });
+    banhji.cashRefund =  kendo.observable({
+        lang                : langVM,
+        dataSource          : dataStore(apiUrl + "transactions"),
+        referenceDS         : dataStore(apiUrl + "transactions"),
+        returnDS            : dataStore(apiUrl + "transactions"),
+        txnDS               : dataStore(apiUrl + "transactions"),
+        numberDS            : dataStore(apiUrl + "transactions/number"),
+        lineDS              : dataStore(apiUrl + "item_lines"),
+        assemblyLineDS      : dataStore(apiUrl + "item_lines"),
+        journalLineDS       : dataStore(apiUrl + "journal_lines"),
+        assemblyDS          : dataStore(apiUrl + "item_prices"),
+        attachmentDS        : dataStore(apiUrl + "attachments"),
+        wacDS               : dataStore(apiUrl + "items/weighted_average_costing"),
+        jobDS               : new kendo.data.DataSource({
+            data: banhji.source.jobList,
+            sort: { field: "name", dir: "asc" }
+        }),
+        segmentItemDS       : new kendo.data.DataSource({
+            data: banhji.source.segmentItemList,
+            sort: [
+                { field: "segment_id", dir: "asc" },
+                { field: "code", dir: "asc" }
+            ]
+        }),
+        taxItemDS           : new kendo.data.DataSource({
+            data: banhji.source.taxList,
+            filter:{
+                logic: "or",
+                filters: [
+                    { field: "tax_type_id", value: 3 },//Customer Tax
+                    { field: "tax_type_id", value: 9 }
+                ]
+            },
+            sort: [
+                { field: "tax_type_id", dir: "asc" },
+                { field: "name", dir: "asc" }
+            ]
+        }),
+        txnTemplateDS       : new kendo.data.DataSource({
+            data: banhji.source.txnTemplateList,
+            filter:{ field: "type", value: "Cash_Refund" }
+        }),
+        accountDS           : new kendo.data.DataSource({
+            data: banhji.source.accountList,
+            filter:{ field:"account_type_id", value: 10 },
+            sort: { field:"number", dir:"asc" }
+        }),
+        contactDS           : banhji.source.customerDS,
+        amtDueColor         : banhji.source.amtDueColor,
+        obj                 : null,
+        isEdit              : false,
+        saveClose           : false,
+        savePrint           : false,
+        notDuplicateNumber  : true,
+        total               : 0,
+        total_deposit       : 0,
+        user_id             : banhji.source.user_id,
+        pageLoad            : function(id){
+            if(id){
+                this.set("isEdit", true);
+                this.loadObj(id);
+            }else{
+                if(this.get("isEdit") || this.dataSource.total()==0){
+                    this.addEmpty();
+                }
+            }
+        },
+        //Upload
+        onSelect            : function(e){
+            // Array with information about the uploaded files
+            var self = this,
+            files = e.files,
+            obj = this.get("obj");
+
+            // Check the extension of each file and abort the upload if it is not .jpg
+            $.each(files, function(index, value){
+                if (value.extension.toLowerCase() === ".jpg"
+                    || value.extension.toLowerCase() === ".jpeg"
+                    || value.extension.toLowerCase() === ".tiff"
+                    || value.extension.toLowerCase() === ".png"
+                    || value.extension.toLowerCase() === ".gif"
+                    || value.extension.toLowerCase() === ".pdf"){
+
+                    var key = 'ATTACH_' + banhji.institute.id + "_" + Math.floor(Math.random() * 100000000000000001);
+
+                    self.attachmentDS.add({
+                        user_id         : self.get("user_id"),
+                        transaction_id  : obj.id,
+                        type            : "Transaction",
+                        name            : value.name,
+                        description     : "",
+                        key             : key,
+                        url             : banhji.s3 + key,
+                        size            : value.size,
+                        created_at      : new Date(),
+
+                        file            : value.rawFile
+                    });
+                }else{
+                    alert("This type of file is not allowed to attach.");
+                }
+            });
+        },
+        onRemove            : function(e){
+            // Array with information about the uploaded files
+            var self = this, files = e.files;
+            $.each(this.attachmentDS.data(), function(index, value){
+                if(value.name==files[0].name){
+                    self.attachmentDS.remove(value);
+
+                    return false;
+                }
+            });
+        },
+        removeFile          : function(e){
+            var data = e.data;
+
+            if (confirm("Are you sure, you want to delete it?")) {
+                this.attachmentDS.remove(data);
+            }
+        },
+        uploadFile          : function(){
+            var self = this;
+
+            $.each(this.attachmentDS.data(), function(index, value){
+                if(!value.id){
+                    var params = {
+                        Body: value.file,
+                        Key: value.key
+                    };
+                    bucket.upload(params, function (err, data) {
+                        // console.log(err, data);
+                        // var url = data.Location;
+                    });
+                }
+            });
+
+            this.attachmentDS.sync();
+            var saved = false;
+            this.attachmentDS.bind("requestEnd", function(e){
+                if(e.type=="destroy"){
+                    if(saved==false){
+                        saved = true;
+
+                        var response = e.response.results;
+                        $.each(response, function(index, value){
+                            var paramz = {
+                                //Bucket: 'STRING_VALUE', /* required */
+                                Delete: { /* required */
+                                    Objects: [ /* required */
+                                        {
+                                            Key: value.data.key /* required */
+                                        }
+                                      /* more items */
+                                    ]
+                                }
+                            };
+                            bucket.deleteObjects(paramz, function(err, data) {
+                                //console.log(err, data);
+                            });
+                        });
+                    }
+                }
+            });
+
+            //Clear upload files
+            $(".k-upload-files").remove();
+        },
+        //Deposit
+        loadDeposit         : function(){
+            var self = this, obj = this.get("obj");
+
+            if(obj.contact_id>0){
+                this.txnDS.query({
+                    filter:[
+                        { field:"amount", operator:"select_sum", value:"amount" },
+                        { field:"contact_id", value: obj.contact_id },
+                        { field:"type", value: "Customer_Deposit" }
+                    ]
+                }).then(function(){
+                    var view = self.txnDS.view();
+
+                    self.set("total_deposit", view[0].amount + obj.deposit);
+                });
+            }
+        },
+        //Contact
+        setContact          : function(contact){
+            var obj = this.get("obj");
+
+            obj.set("contact", contact);
+            this.contactChanges();
+        },
+        contactChanges      : function(){
+            var self = this, obj = this.get("obj");
+
+            if(obj.contact){
+                var contact = obj.contact;
+
+                obj.set("contact_id", contact.id);
+                obj.set("locale", contact.locale);
+                obj.set("bill_to", contact.bill_to);
+                obj.set("ship_to", contact.ship_to);
+
+                this.setRate();
+                this.loadDeposit();
+                this.loadReference();
+                this.jobDS.filter({ field:"contact_id", value: contact.id });
+            }
+
+            this.changes();
+        },
+        //Currency Rate
+        setRate             : function(){
+            var obj = this.get("obj"),
+            rate = banhji.source.getRate(obj.locale, new Date(obj.issued_date));
+
+            obj.set("rate", rate);
+
+            $.each(this.lineDS.data(), function(index, value){
+                var itemRate = rate / banhji.source.getRate(value.locale, new Date(obj.issued_date));
+                value.set("rate", itemRate);
+            });
+        },
+        //Segment
+        segmentChanges      : function(e) {
+            var dataArr = this.get("obj").segments,
+            lastIndex = dataArr.length - 1,
+            last = this.segmentItemDS.get(dataArr[lastIndex]);
+
+            if(dataArr.length > 1) {
+                for(var i = 0; i < dataArr.length - 1; i++) {
+                    var current_index = dataArr[i],
+                    current = this.segmentItemDS.get(current_index);
+
+                    if(current.segment_id === last.segment_id) {
+                        dataArr.splice(lastIndex, 1);
+                        break;
+                    }
+                }
+            }
+        },
+        //Item
+        addRow              : function(){
+            var obj = this.get("obj");
+            this.lineDS.add({
+                transaction_id      : obj.id,
+                tax_item_id         : "",
+                item_id             : "",
+                assembly_id         : 0,
+                measurement_id      : 0,
+                description         : "",
+                quantity            : 1,
+                conversion_ratio    : 0,
+                price               : 0,
+                amount              : 0,
+                discount            : 0,
+                rate                : obj.rate,
+                locale              : obj.locale,
+                movement            : 1,
+                reference_no        : "",
+
+                item                : { id:"", name:"" },
+                measurement         : { measurement_id:"", measurement:"" },
+                tax_item            : { id:"", name:"" }
+            });
+        },
+        addExtraRow         : function(uid){
+            var row = this.lineDS.getByUid(uid),
+                index = this.lineDS.indexOf(row);
+
+            if(index==this.lineDS.total()-1){
+                this.addRow();
+            }
+        },
+        removeEmptyRow      : function(){
+            var raw = this.lineDS.data();
+            var item, i;
+            for(i=raw.length-1; i>=0; i--){
+                item = raw[i];
+
+                if (item.item_id==0) {
+                    this.lineDS.remove(item);
+                }
+            }
+        },
+        removeRow           : function(e){
+            var data = e.data;
+
+            //Remove Assembly Item List
+            if(data.item_id>0){
+                var raw = this.assemblyLineDS.data();
+
+                var item, i;
+                for(i=raw.length-1; i>=0; i--){
+                    item = raw[i];
+                    if (item.assembly_id==data.item_id){
+                        this.assemblyLineDS.remove(item);
+                    }
+
+                }
+            }
+
+            this.lineDS.remove(data);
+            this.changes();
+        },
+        addItem             : function(uid){
+            var self = this,
+                row = this.lineDS.getByUid(uid),
+                obj = this.get("obj"),
+                item = row.item,
+                rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
+
+            row.set("item_id", item.id);
+            row.set("description", item.sale_description);
+            // row.set("cost", item.cost * rate);
+            row.set("rate", rate);
+            row.set("locale", item.locale);
+
+            //Get cost
+            this.wacDS.query({
+                filter:[
+                    { field:"item_id", value: item.id },
+                    { field:"issued_date <=", operator:"where_related_transaction", value: kendo.toString(new Date(obj.issued_date),"yyyy-MM-dd  HH:mm:ss") }
+                ]
+            }).then(function(){
+                var wac = self.wacDS.view();
+                row.set("cost", wac[0].cost * rate);
+            });
+
+            //Get first price
+            this.assemblyDS.query({
+                filter:[
+                    { field:"item_id", value:item.id },
+                    { field:"assembly_id", value:0 }
+                ],
+                page: 1,
+                pageSize: 1
+            }).then(function(){
+                var view = self.assemblyDS.view();
+
+                if(view.length>0){
+                    var measurement = {
+                        measurement_id  : view[0].measurement_id,
+                        price           : kendo.parseFloat(view[0].price),
+                        conversion_ratio: view[0].conversion_ratio,
+                        measurement     : view[0].measurement
+                    };
+                    row.set("measurement", measurement);
+                }
+            });
+        },
+        addItemCatalog      : function(uid){
+            var self = this,
+                row = this.lineDS.getByUid(uid),
+                obj = this.get("obj"),
+                item = row.item;
+
+            this.lineDS.remove(row);
+
+            $.each(item.catalogs, function(index, value){
+                var catalogItem = banhji.source.itemDS.get(value);
+
+                if(catalogItem){
+                    var rate = obj.rate / banhji.source.getRate(catalogItem.locale, new Date(obj.issued_date));
+
+                    self.lineDS.add({
+                        transaction_id      : obj.id,
+                        tax_item_id         : 0,
+                        item_id             : catalogItem.id,
+                        measurement_id      : 0,
+                        description         : catalogItem.sale_description,
+                        quantity            : 1,
+                        conversion_ratio    : 1,
+                        cost                : catalogItem.cost * rate,
+                        price               : 0,
+                        amount              : 0,
+                        discount            : 0,
+                        rate                : rate,
+                        locale              : catalogItem.locale,
+                        movement            : -1,
+
+                        discount_percentage : 0,
+                        item                : catalogItem,
+                        measurement         : { measurement_id:"", measurement:"" },
+                        tax_item            : { id:"", name:"" }
+                    });
+                }
+            });
+        },
+        addItemAssembly     : function(uid){
+            var self = this,
+                row = this.lineDS.getByUid(uid),
+                obj = this.get("obj"),
+                item = row.item,
+                rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
+
+            var notExist = true;
+            $.each(this.assemblyLineDS.data(), function(index, value){
+                if(value.assembly_id==item.id){
+                    notExist = false;
+
+                    return false;
+                }
+            });
+
+            if(notExist){
+                row.set("item_id", item.id);
+                row.set("measurement_id", item.measurement_id);
+                row.set("description", item.sale_description);
+                row.set("conversion_ratio", 1);
+                row.set("cost", item.cost * rate);
+                row.set("price", item.price * rate);
+                row.set("rate", rate);
+                row.set("locale", item.locale);
+
+                this.assemblyDS.query({
+                    filter:{ field:"assembly_id", value:row.item_id }
+                }).then(function(){
+                    var view = self.assemblyDS.view();
+
+                    $.each(view, function(index, value){
+                        var itemAssembly = banhji.source.itemDS.get(value.item_id),
+                            itemAssemblyRate = obj.rate / banhji.source.getRate(itemAssembly.locale, new Date(obj.issued_date));
+
+                        self.assemblyLineDS.add({
+                            transaction_id      : obj.id,
+                            item_id             : value.item_id,
+                            assembly_id         : value.assembly_id,
+                            measurement_id      : value.measurement_id,
+                            description         : itemAssembly.sale_description,
+                            quantity            : value.quantity,
+                            conversion_ratio    : value.conversion_ratio,
+                            cost                : itemAssembly.cost * rate,
+                            price               : value.price * itemAssemblyRate,
+                            amount              : value.price * itemAssemblyRate,
+                            rate                : itemAssemblyRate,
+                            locale              : value.locale,
+                            movement            : -1,
+
+                            item                : itemAssembly
+                        });
+                    });
+                });
+            }else{
+                alert("Duplicate Item Assembly!");
+                row.set("item_id", 0);
+                row.set("item", { id:"", name:"" });
+            }
+        },
+        lineDSChanges       : function(arg){
+            var self = banhji.cashRefund;
+
+            if(arg.field){
+                if(arg.field=="item"){
+                    var dataRow = arg.items[0],
+                        item = dataRow.item;
+
+                    if(item.is_catalog=="1"){
+                        self.addItemCatalog(dataRow.uid);
+                    }else if(item.is_assembly=="1"){
+                        self.addItemAssembly(dataRow.uid);
+                    }else{
+                        self.addItem(dataRow.uid);
+                    }
+
+                    self.addExtraRow(dataRow.uid);
+                }else if(arg.field=="quantity" || arg.field=="price"){
+                    self.changes();
+                }else if(arg.field=="measurement"){
+                    var dataRow = arg.items[0];
+
+                    dataRow.set("measurement_id", dataRow.measurement.measurement_id);
+                    dataRow.set("price", dataRow.measurement.price * dataRow.rate);
+                    dataRow.set("conversion_ratio", dataRow.measurement.conversion_ratio);
+                }else if(arg.field=="tax_item"){
+                    var dataRow = arg.items[0];
+
+                    dataRow.set("tax_item_id", dataRow.tax_item.id);
+                    dataRow.set("tax", 0);
+
+                    self.changes();
+                }
+            }
+        },
+        //Number
+        checkExistingNumber : function(){
+            var self = this, para = [],
+            obj = this.get("obj");
+
+            if(obj.number!==""){
+
+                if(obj.isNew()==false){
+                    para.push({ field:"id", operator:"where_not_in", value: [obj.id] });
+                }
+
+                para.push({ field:"number", value: obj.number });
+                para.push({ field:"type", value: obj.type });
+
+                this.txnDS.query({
+                    filter: para,
+                    page: 1,
+                    pageSize: 1
+                }).then(function(e){
+                    var view = self.txnDS.view();
+
+                    if(view.length>0){
+                        self.set("notDuplicateNumber", false);
+                    }else{
+                        self.set("notDuplicateNumber", true);
+                    }
+                });
+            }
+        },
+        generateNumber      : function(){
+            var self = this, obj = this.get("obj"),
+                issueDate = new Date(obj.issued_date),
+                startDate = new Date(obj.issued_date),
+                endDate = new Date(obj.issued_date);
+
+            this.set("notDuplicateNumber", true);
+
+            startDate.setDate(1);
+            startDate.setMonth(0);//Set to January
+            endDate.setDate(31);
+            endDate.setMonth(11);//Set to November
+
+            this.numberDS.query({
+                filter:[
+                    { field:"type", value:obj.type },
+                    { field:"issued_date >=", value:kendo.toString(startDate, "yyyy-MM-dd") },
+                    { field:"issued_date <=", value:kendo.toString(endDate, "yyyy-MM-dd") }
+                ]
+            }).then(function(){
+                var view = self.numberDS.view(),
+                number = 0, str = "";
+
+                if(view.length>0){
+                    number = view[0].number.match(/\d+/g).map(Number);
+                }
+
+                number++;
+                str = banhji.source.getPrefixAbbr(obj.type) + kendo.toString(issueDate, "yy") + kendo.toString(issueDate, "MM") + kendo.toString(number, "00000");
+
+                obj.set("number", str);
+            });
+        },
+        //Obj
+        loadObj             : function(id){
+            var self = this, para = [];
+
+            para.push({ field:"id", value: id });
+
+            this.dataSource.query({
+                filter: para
+            }).then(function(e){
+                var view = self.dataSource.view();
+
+                self.set("obj", view[0]);
+                self.set("total", kendo.toString(view[0].amount, "c", view[0].locale));
+
+                self.lineDS.query({
+                    filter: [
+                        { field: "transaction_id", value: id },
+                        { field: "assembly_id", value: 0 }
+                    ],
+                });
+
+                self.assemblyLineDS.query({
+                    filter:[
+                        { field: "transaction_id", value: id },
+                        { field: "assembly_id >", value: 0 }
+                    ]
+                });
+
+                self.journalLineDS.query({
+                    filter:{ field: "transaction_id", value: id }
+                });
+
+                self.referenceDS.query({
+                    filter:[
+                        { field: "contact_id", value: view[0].contact_id },
+                        { field: "amount >", value: 0 },
+                        { field: "type", value:"Customer_Deposit" }
+                    ]
+                });
+
+                self.returnDS.query({
+                    filter:{ field: "return_id", value: id }
+                }).then(function(){
+                    var reInvoice = self.returnDS.view();
+
+                    $.each(reInvoice, function(index, value){
+                        value.set("amount", Math.abs(value.amount));
+                    });
+                });
+
+                self.attachmentDS.filter({ field: "transaction_id", value: id });
+                self.loadDeposit();
+            });
+        },
+        changes             : function(){
+            var self = this, obj = this.get("obj"),
+            subTotal = 0, tax = 0, returnAmount = 0, itemIds = [];
+
+            $.each(this.lineDS.data(), function(index, value) {
+                var amt = value.quantity * value.price;
+
+                //Tax by line
+                if(value.tax_item_id>0){
+                    var taxItem = value.tax_item;
+                    tax += amt * taxItem.rate;
+                }
+
+                value.set("amount", amt);
+                subTotal += amt;
+
+                if(value.item_id>0){
+                    itemIds.push(value.item_id);
+                }
+            });
+
+            //Return
+            $.each(this.returnDS.data(), function(index, value) {
+                if(value.amount>value.sub_total){
+                    value.set("amount", value.sub_total);
+                }
+                returnAmount += value.amount;
+            });
+
+            total = subTotal + tax + returnAmount;
+
+            obj.set("sub_total", subTotal);
+            obj.set("tax", tax);
+            obj.set("deposit", returnAmount);
+            obj.set("amount", total);
+
+            this.set("total", kendo.toString(total, "c", obj.locale));
+
+            //Remove Assembly Item List
+            var raw = this.assemblyLineDS.data();
+            var item, i;
+            for(i=raw.length-1; i>=0; i--){
+                item = raw[i];
+
+                if (jQuery.inArray(kendo.parseInt(item.assembly_id), itemIds)==-1) {
+                    this.assemblyLineDS.remove(item);
+                }
+            }
+        },
+        addEmpty            : function(){
+            this.dataSource.data([]);
+            this.lineDS.data([]);
+            this.assemblyLineDS.data([]);
+            this.journalLineDS.data([]);
+            this.attachmentDS.data([]);
+            this.returnDS.data([]);
+            this.referenceDS.data([]);
+
+            this.set("isEdit", false);
+            this.set("obj", null);
+            this.set("total", 0);
+
+            this.dataSource.insert(0, {
+                contact_id          : "",
+                reference_id        : "",
+                recurring_id        : "",
+                job_id              : 0,
+                user_id             : this.get("user_id"),
+                type                : "Cash_Refund", //Require
+                number              : "",
+                sub_total           : 0,
+                discount            : 0,
+                tax                 : 0,
+                amount              : 0,
+                deposit             : 0,
+                remaining           : 0,
+                amount_paid         : 0,
+                credit_allowed      : 0,
+                rate                : 1,
+                locale              : banhji.locale,
+                issued_date         : new Date(),
+                bill_to             : "",
+                ship_to             : "",
+                memo                : "",
+                memo2               : "",
+                status              : 0,
+                segments            : [],
+                is_journal          : 1,
+                //Recurring
+                recurring_name      : "",
+                start_date          : new Date(),
+                frequency           : "Daily",
+                month_option        : "Day",
+                interval            : 1,
+                day                 : 1,
+                week                : 0,
+                month               : 0,
+                is_recurring        : 0,
+
+                contact             : { id:0, name:"" }
+            });
+
+            var obj = this.dataSource.at(0);
+            this.set("obj", obj);
+            this.setRate();
+            this.generateNumber();
+
+            //Default rows
+            for (var i = 0; i < banhji.source.defaultLines; i++) {
+                this.addRow();
+            }
+        },
+        objSync             : function(){
+            var dfd = $.Deferred();
+
+            this.dataSource.sync();
+            this.dataSource.bind("requestEnd", function(e){
+                if(e.response){
+                    dfd.resolve(e.response.results);
+                }
+            });
+            this.dataSource.bind("error", function(e){
+                dfd.reject(e.errorThrown);
+            });
+
+            return dfd;
+        },
+        save                : function(){
+            var self = this, obj = this.get("obj");
+            obj.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
+
+            //Save Obj
+            this.objSync()
+            .then(function(data){ //Success
+                if(self.get("isEdit")==false){
+                    //Item line
+                    $.each(self.lineDS.data(), function(index, value){
+                        value.set("transaction_id", data[0].id);
+                    });
+
+                    //Assembly Item line
+                    $.each(self.assemblyLineDS.data(), function(index, value){
+                        value.set("transaction_id", data[0].id);
+                    });
+
+                    //Attachment
+                    $.each(self.attachmentDS.data(), function(index, value){
+                        value.set("transaction_id", data[0].id);
+                    });
+                }
+
+                //Journal
+                if(data[0].is_recurring==0 && data[0].is_journal==1){
+                    self.addJournal(data[0].id);
+                }
+
+                self.lineDS.sync();
+                self.assemblyLineDS.sync();
+                self.uploadFile();
+
+                //Return
+                var ids = [];
+                $.each(self.returnDS.data(), function(index, value){
+                    if(value.reference_id>0){
+                        ids.push(value.reference_id);
+                    }
+                    value.set("return_id", data[0].id);
+                    value.set("amount", value.amount*-1);
+                    value.set("issued_date", kendo.toString(new Date(data[0].issued_date), "s"));
+                });
+                self.returnDS.sync();
+                self.updateTxnStatus(ids);
+
+                return data;
+            }, function(reason) { //Error
+                $("#ntf1").data("kendoNotification").error(reason);
+            }).then(function(result){
+                $("#ntf1").data("kendoNotification").success(banhji.source.successMessage);
+
+                if(self.get("saveClose")){
+                    //Save Close
+                    self.set("saveClose", false);
+                    self.cancel();
+                    window.history.back();
+                }else if(self.get("savePrint")){
+                    //Save Print
+                    self.set("savePrint", false);
+                    self.cancel();
+                    if(result[0].transaction_template_id>0){
+                        banhji.router.navigate("/invoice_form/"+result[0].id);
+                    }
+                }else{
+                    //Save New
+                    self.addEmpty();
+                }
+            });
+        },
+        cancel              : function(){
+            this.dataSource.cancelChanges();
+            this.lineDS.cancelChanges();
+            this.returnDS.cancelChanges();
+            this.assemblyLineDS.cancelChanges();
+            this.attachmentDS.cancelChanges();
+
+            this.dataSource.data([]);
+            this.lineDS.data([]);
+            this.returnDS.data([]);
+            this.assemblyLineDS.data([]);
+            this.attachmentDS.data([]);
+
+            banhji.userManagement.removeMultiTask("cash_refund");
+        },
+        validating          : function(){
+            var result = true, obj = this.get("obj"),
+            total_deposit = this.get("total_deposit");
+
+            if(obj.deposit>total_deposit){
+                $("#ntf1").data("kendoNotification").error("Over deposit amount to refund!");
+
+                result = false;
+            }
+
+            if(this.lineDS.total()==0 && this.returnDS.total()==0){
+                $("#ntf1").data("kendoNotification").error("Please select an item or deposit.");
+
+                result = false;
+            }
+
+            return result;
+        },
+        updateTxnStatus     : function(ids){
+            var self = this;
+
+            if(ids.length>0){
+                this.txnDS.query({
+                    filter:{ field:"id", operator:"where_in", value:ids }
+                }).then(function(){
+                    var view = self.txnDS.view();
+
+                    $.each(view, function(index, value){
+                        value.set("status", 3);//Status 3 = refund
+                    });
+
+                    self.txnDS.sync();
+                });
+            }
+        },
+        //Return
+        addRowReturn        : function(){
+            var obj = this.get("obj"), account_id = 0;
+
+            if(obj.contact_id>0){
+                var contact = obj.contact;
+                account_id = contact.deposit_account_id;
+            }
+
+            this.returnDS.add({
+                return_id       : obj.id,
+                account_id      : account_id,
+                contact_id      : obj.contact_id,
+                reference_id    : "",
+                reference_no    : "",
+                number          : "",
+                type            : "Customer_Deposit",
+                amount          : 0,
+                rate            : obj.rate,
+                locale          : obj.locale,
+                issued_date     : obj.issued_date
+            });
+        },
+        removeRowReturn     : function(e){
+            var data = e.data;
+
+            this.returnDS.remove(data);
+            this.changes();
+        },
+        loadReference       : function(){
+            var obj = this.get("obj");
+
+            if(obj.contact_id>0){
+                this.referenceDS.filter([
+                    { field: "contact_id", value: obj.contact_id },
+                    { field: "amount >", value: 0 },
+                    { field: "status <>", value: 3 },
+                    { field: "type", value:"Customer_Deposit" }
+                ]);
+            }
+        },
+        referenceChanges    : function(e){
+            var data = e.data;
+
+            if(data.reference_id>0){
+                var txn = this.referenceDS.get(data.reference_id);
+
+                data.set("account_id", txn.account_id);
+                data.set("reference_no", txn.number);
+                data.set("sub_total", txn.amount);
+                data.set("amount", txn.amount);
+            }else{
+                data.set("account_id", 0);
+                data.set("reference_no", "");
+                data.set("sub_total", 0);
+                data.set("amount", 0);
+            }
+
+            this.changes();
+        },
+        //Journal
+        addJournal          : function(transaction_id){
+            var self = this,
+                obj = this.get("obj"),
+                contact = obj.contact,
+                raw = "", entries = {};
+
+            //Edit Mode
+            if(obj.isNew()==false){
+                //Delete previous journal
+                $.each(this.journalLineDS.data(), function(index, value){
+                    value.set("deleted", 1);
+                });
+            }
+
+            //Item lines
+            $.each(this.lineDS.data(), function(index, value){
+                var item = value.item,
+                    itemRate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
+
+                //COGS on Cr
+                var cogsID = kendo.parseInt(item.expense_account_id);
+                if(cogsID>0){
+                    raw = "cr"+cogsID;
+
+                    var cogsAmount = value.amount;
+                    if(item.item_type_id==1 || item.item_type_id==4){
+                        cogsAmount = (value.quantity*value.conversion_ratio)*value.cost;
+                    }
+
+                    if(entries[raw]===undefined){
+                        entries[raw] = {
+                            transaction_id      : transaction_id,
+                            account_id          : cogsID,
+                            contact_id          : obj.contact_id,
+                            description         : value.description,
+                            reference_no        : "",
+                            segments            : obj.segments,
+                            dr                  : 0,
+                            cr                  : cogsAmount * itemRate,
+                            rate                : itemRate,
+                            locale              : item.locale
+                        };
+                    }else{
+                        entries[raw].cr += cogsAmount;
+                    }
+                }
+
+                //Inventory on Dr
+                var inventoryID = kendo.parseInt(item.inventory_account_id);
+                if(inventoryID>0){
+                    raw = "dr"+inventoryID;
+
+                    var inventoryAmount = value.amount;
+                    if(item.item_type_id==1 || item.item_type_id==4){
+                        inventoryAmount = (value.quantity*value.conversion_ratio)*value.cost;
+                    }
+
+                    if(entries[raw]===undefined){
+                        entries[raw] = {
+                            transaction_id      : transaction_id,
+                            account_id          : inventoryID,
+                            contact_id          : obj.contact_id,
+                            description         : value.description,
+                            reference_no        : "",
+                            segments            : obj.segments,
+                            dr                  : inventoryAmount * itemRate,
+                            cr                  : 0,
+                            rate                : itemRate,
+                            locale              : item.locale
+                        };
+                    }else{
+                        entries[raw].dr += inventoryAmount;
+                    }
+                }
+
+                //Sale on Dr
+                var incomeID = kendo.parseInt(item.income_account_id);
+                if(incomeID>0){
+                    raw = "dr"+incomeID;
+
+                    var saleAmount = value.quantity * value.price;
+                    if(entries[raw]===undefined){
+                        entries[raw] = {
+                            transaction_id      : transaction_id,
+                            account_id          : incomeID,
+                            contact_id          : obj.contact_id,
+                            description         : value.description,
+                            reference_no        : "",
+                            segments            : obj.segments,
+                            dr                  : saleAmount,
+                            cr                  : 0,
+                            rate                : obj.rate,
+                            locale              : obj.locale
+                        };
+                    }else{
+                        entries[raw].dr += value.amount;
+                    }
+                }
+
+                //Tax on Dr
+                if(value.tax_item_id>0){
+                    var taxItem = value.tax_item,
+                        raw = "dr"+taxItem.account_id,
+                        taxAmt = value.amount * taxItem.rate;
+
+                    if(entries[raw]===undefined){
+                        entries[raw] = {
+                            transaction_id      : transaction_id,
+                            account_id          : taxItem.account_id,
+                            contact_id          : obj.contact_id,
+                            description         : value.description,
+                            reference_no        : "",
+                            segments            : obj.segments,
+                            dr                  : taxAmt,
+                            cr                  : 0,
+                            rate                : obj.rate,
+                            locale              : obj.locale
+                        };
+                    }else{
+                        entries[raw].dr += taxAmt;
+                    }
+                }
+            });
+
+            //Assembly Item
+            $.each(this.assemblyLineDS.data(), function(index, value){
+                var item = value.item,
+                    itemRate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
+
+                //COGS on Cr
+                var cogsID = kendo.parseInt(item.expense_account_id);
+                if(cogsID>0){
+                    raw = "cr"+cogsID;
+
+                    var cogsAmount = value.amount;
+                    if(item.item_type_id==1 || item.item_type_id==4){
+                        inventoryAmount = (value.quantity*value.conversion_ratio)*value.cost;
+                    }
+
+                    if(entries[raw]===undefined){
+                        entries[raw] = {
+                            transaction_id      : transaction_id,
+                            account_id          : cogsID,
+                            contact_id          : obj.contact_id,
+                            description         : value.description,
+                            reference_no        : "",
+                            segments            : obj.segments,
+                            dr                  : 0,
+                            cr                  : cogsAmount * itemRate,
+                            rate                : itemRate,
+                            locale              : item.locale
+                        };
+                    }else{
+                        entries[raw].cr += cogsAmount;
+                    }
+                }
+
+                //Inventory on Dr
+                var inventoryID = kendo.parseInt(item.inventory_account_id);
+                if(inventoryID>0){
+                    raw = "dr"+inventoryID;
+
+                    var inventoryAmount = value.amount;
+                    if(item.item_type_id==1 || item.item_type_id==4){
+                        inventoryAmount = (value.quantity*value.conversion_ratio)*value.cost;
+                    }
+
+                    if(entries[raw]===undefined){
+                        entries[raw] = {
+                            transaction_id      : transaction_id,
+                            account_id          : inventoryID,
+                            contact_id          : obj.contact_id,
+                            description         : value.description,
+                            reference_no        : "",
+                            segments            : obj.segments,
+                            dr                  : inventoryAmount * itemRate,
+                            cr                  : 0,
+                            rate                : itemRate,
+                            locale              : item.locale
+                        };
+                    }else{
+                        entries[raw].dr += inventoryAmount;
+                    }
+                }
+            });
+
+            //Return Lines
+            $.each(this.returnDS.data(), function(index, value){
+                //Deposit on Dr
+                var depositID = kendo.parseInt(value.account_id);
+                if(depositID>0){
+                    raw = "dr"+depositID;
+
+                    if(entries[raw]===undefined){
+                        entries[raw] = {
+                            transaction_id      : transaction_id,
+                            account_id          : depositID,
+                            contact_id          : obj.contact_id,
+                            description         : value.description,
+                            reference_no        : "",
+                            segments            : obj.segments,
+                            dr                  : value.amount,
+                            cr                  : 0,
+                            rate                : value.rate,
+                            locale              : value.locale
+                        };
+                    }else{
+                        entries[raw].dr += value.amount;
+                    }
+                }
+            });
+
+            //Cash on Cr
+            var cashID = kendo.parseInt(obj.account_id);
+            if(cashID>0){
+                raw = "cr"+cashID;
+
+                if(entries[raw]===undefined){
+                    entries[raw] = {
+                        transaction_id      : transaction_id,
+                        account_id          : cashID,
+                        contact_id          : obj.contact_id,
+                        description         : obj.memo,
+                        reference_no        : "",
+                        segments            : obj.segments,
+                        dr                  : 0,
+                        cr                  : obj.amount,
+                        rate                : obj.rate,
+                        locale              : obj.locale
+                    };
+                }else{
+                    entries[raw].cr += obj.amount;
+                }
+            }
+
+            //Add to journal entry
+            if(!jQuery.isEmptyObject(entries)){
+                $.each(entries, function(index, value){
+                    self.journalLineDS.add(value);
+                });
+            }
+
+            this.journalLineDS.sync();
+        }
+    });
+
+
+
     banhji.reports = kendo.observable({
         lang                : langVM,
         dataSource          : dataStore(apiUrl + "micro_modules/cash_general_ledger"),
@@ -158,6 +3277,7 @@
         summaryDS           : dataStore(apiUrl + 'centers/accounting_summary'),
         transactionDS       : dataStore(apiUrl + 'centers/accounting_txn'),
         attachmentDS        : dataStore(apiUrl + "attachments"),
+        cashgLDS          : dataStore(apiUrl + "micro_modules/cash_general_ledger"),
         sortList            : banhji.source.sortList,
         sorter              : "all",
         sdate               : "",
@@ -170,7 +3290,7 @@
         typeName            : "",
         nature              : "",
         user_id             : banhji.source.user_id,
-        pageLoad            : function(id){            
+        pageLoad            : function(id){
             if(id){
                 this.loadObj(id);
             }
@@ -413,6 +3533,22 @@
                 );
             }
 
+            //Cash In
+            if(this.get("cash_in")){
+                this.set("cash_in", false);
+
+                para.push({ field:"dr >", value: 0 });
+                para.push({ field:"cr", value: 0 });
+            }
+
+            //Cash Out
+            if(this.get("cash_out")){
+                this.set("cash_out", false);
+
+                para.push({ field:"dr", value: 0 });
+                para.push({ field:"cr >", value: 0 });
+            }
+
             if(account_type_id){
                 para.push({ field:"account_type_id", value:account_type_id });
             }
@@ -509,7 +3645,15 @@
             }
 
             return isSub;
-        }
+        },
+        loadCashIn          : function(){
+            this.set("cash_in", true);
+            this.search();
+        },
+        loadCashOut          : function(){
+            this.set("cash_out", true);
+            this.search();
+        },
     });
 
     banhji.account =  kendo.observable({
@@ -1257,7 +4401,7 @@
             {id: 'Transfer', name: 'Transfer'}
         ],
         confirmMessage      : banhji.source.confirmMessage,
-        dateUnitList       : banhji.source.dateUnitList,
+        dateUnitList        : banhji.source.dateUnitList,
         monthOptionList     : banhji.source.monthOptionList,
         monthList           : banhji.source.monthList,
         weekDayList         : banhji.source.weekDayList,
@@ -5478,9 +8622,7 @@
             //save the file as Excel file with extension xlsx
             kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "GeneralLedger.xlsx"});
         }
-    });
-
-    
+    });    
 
     
     /* views and layout */
@@ -5522,12 +8664,25 @@
         billPaymentList: new kendo.Layout("#billPaymentList", {model: banhji.billPaymentList}),
 
 
-
         // Menu
         tapMenu: new kendo.View("#tapMenu", {model: banhji.tapMenu}),
         reports: new kendo.View("#reports", {model: banhji.reports}),
         transactions: new kendo.View("#transactions", {model: banhji.transactions}),
-        cashs: new kendo.View("#cashs", {model: banhji.accountingCenter}),
+        cashs: new kendo.View("#cashCenter", {model: banhji.accountingCenter}),
+
+
+        //Menu Cash Transaction
+        cashTransactionsMenu: new kendo.View("#cashTransactionsMenu", {model: banhji.cashTransactionsMenu}),
+        cashReceipt: new kendo.View("#cashReceipt", {model: banhji.cashReceipt}),
+        cashPayment: new kendo.View("#cashPayment", {model: banhji.cashPayment}),
+        cashWithdrawal: new kendo.View("#cashWithdrawal", {model: banhji.cashWithdrawal}),
+        cashDeposit: new kendo.View("#cashDeposit", {model: banhji.cashDeposit}),
+        cashTransfer: new kendo.View("#cashTransfer", {model: banhji.cashTransfer}),
+        paymentRefund: new kendo.View("#paymentRefund", {model: banhji.paymentRefund}),
+        cashRefund: new kendo.View("#cashRefund", {model: banhji.cashRefund}),
+        customerDeposit: new kendo.View("#customerDeposit", {model: banhji.customerDeposit}),
+        vendorDeposit: new kendo.View("#vendorDeposit", {model: banhji.vendorDeposit}),
+        cashTransactionExpense: new kendo.View("#cashTransactionExpense", {model: banhji.cashTransactionExpense}),
     };
     /* views and layout */
     banhji.router = new kendo.Router({
@@ -5579,27 +8734,182 @@
 
         banhji.view.layout.showIn('#content', banhji.view.Index);
         banhji.view.Index.showIn('#indexMenu', banhji.view.tapMenu);
-        banhji.view.Index.showIn('#indexContent', banhji.view.reports);
+        banhji.view.Index.showIn('#indexContent', banhji.view.transactions);
+        banhji.view.Index.showIn('#cashTransactionsMenu', banhji.view.cashTransactionsMenu);
+        banhji.view.Index.showIn('#cashTransactionContent', banhji.view.cashReceipt);
 
-        var vm = banhji.reports;
+        var vm = banhji.cashReceipt;
         if(banhji.pageLoaded["index"]==undefined){
             banhji.pageLoaded["index"] = true;
 
-            vm.sorterChanges();
+            //vm.sorterChanges();
         }
 
         vm.pageLoad();        
     });
-    banhji.router.route('/transactions', function() {
+    banhji.router.route('/cash_payment', function() {
         
         banhji.view.layout.showIn('#content', banhji.view.Index);
         banhji.view.Index.showIn('#indexMenu', banhji.view.tapMenu);
         banhji.view.Index.showIn('#indexContent', banhji.view.transactions);
+        banhji.view.Index.showIn('#cashTransactionsMenu', banhji.view.cashTransactionsMenu);
+        banhji.view.Index.showIn('#cashTransactionContent', banhji.view.cashPayment);
+
+        var vm = banhji.cashPayment;
+        if(banhji.pageLoaded["index"]==undefined){
+            banhji.pageLoaded["index"] = true;
+
+            //vm.sorterChanges();
+        }
+        vm.pageLoad();  
+    });
+    banhji.router.route('/cash_withdrawal', function() {
+        
+        banhji.view.layout.showIn('#content', banhji.view.Index);
+        banhji.view.Index.showIn('#indexMenu', banhji.view.tapMenu);
+        banhji.view.Index.showIn('#indexContent', banhji.view.transactions);
+        banhji.view.Index.showIn('#cashTransactionsMenu', banhji.view.cashTransactionsMenu);
+        banhji.view.Index.showIn('#cashTransactionContent', banhji.view.cashWithdrawal);
+
+        var vm = banhji.cashWithdrawal;
+        if(banhji.pageLoaded["index"]==undefined){
+            banhji.pageLoaded["index"] = true;
+
+            //vm.sorterChanges();
+        }
+        //vm.pageLoad();  
+    });
+    banhji.router.route('/cash_deposit', function() {
+        
+        banhji.view.layout.showIn('#content', banhji.view.Index);
+        banhji.view.Index.showIn('#indexMenu', banhji.view.tapMenu);
+        banhji.view.Index.showIn('#indexContent', banhji.view.transactions);
+        banhji.view.Index.showIn('#cashTransactionsMenu', banhji.view.cashTransactionsMenu);
+        banhji.view.Index.showIn('#cashTransactionContent', banhji.view.cashDeposit);
+
+        var vm = banhji.cashDeposit;
+        if(banhji.pageLoaded["index"]==undefined){
+            banhji.pageLoaded["index"] = true;
+
+            //vm.sorterChanges();
+        }
+        //vm.pageLoad();  
+    });
+    banhji.router.route('/cash_transfer', function() {
+        
+        banhji.view.layout.showIn('#content', banhji.view.Index);
+        banhji.view.Index.showIn('#indexMenu', banhji.view.tapMenu);
+        banhji.view.Index.showIn('#indexContent', banhji.view.transactions);
+        banhji.view.Index.showIn('#cashTransactionsMenu', banhji.view.cashTransactionsMenu);
+        banhji.view.Index.showIn('#cashTransactionContent', banhji.view.cashTransfer);
+
+        var vm = banhji.cashTransfer;
+        if(banhji.pageLoaded["index"]==undefined){
+            banhji.pageLoaded["index"] = true;
+
+            //vm.sorterChanges();
+        }
+        //vm.pageLoad();  
+    });
+    banhji.router.route('/payment_refund', function() {
+        
+        banhji.view.layout.showIn('#content', banhji.view.Index);
+        banhji.view.Index.showIn('#indexMenu', banhji.view.tapMenu);
+        banhji.view.Index.showIn('#indexContent', banhji.view.transactions);
+        banhji.view.Index.showIn('#cashTransactionsMenu', banhji.view.cashTransactionsMenu);
+        banhji.view.Index.showIn('#cashTransactionContent', banhji.view.paymentRefund);
+
+        var vm = banhji.paymentRefund;
+        if(banhji.pageLoaded["index"]==undefined){
+            banhji.pageLoaded["index"] = true;
+
+            //vm.sorterChanges();
+        }
+        vm.pageLoad();  
+    });
+    banhji.router.route('/cash_refund', function() {
+        
+        banhji.view.layout.showIn('#content', banhji.view.Index);
+        banhji.view.Index.showIn('#indexMenu', banhji.view.tapMenu);
+        banhji.view.Index.showIn('#indexContent', banhji.view.transactions);
+        
+        banhji.view.Index.showIn('#cashTransactionsMenu', banhji.view.cashTransactionsMenu);
+        banhji.view.Index.showIn('#cashTransactionContent', banhji.view.cashRefund);
+
+        var vm = banhji.cashRefund;
+        if(banhji.pageLoaded["index"]==undefined){
+            banhji.pageLoaded["index"] = true;
+
+            //vm.sorterChanges();
+        }
+        vm.pageLoad();  
+    });
+    banhji.router.route('/customer_deposit', function() {
+        
+        banhji.view.layout.showIn('#content', banhji.view.Index);
+        banhji.view.Index.showIn('#indexMenu', banhji.view.tapMenu);
+        banhji.view.Index.showIn('#indexContent', banhji.view.transactions);
+        banhji.view.Index.showIn('#cashTransactionsMenu', banhji.view.cashTransactionsMenu);
+        banhji.view.Index.showIn('#cashTransactionContent', banhji.view.customerDeposit);
+
+        var vm = banhji.customerDeposit;
+        if(banhji.pageLoaded["index"]==undefined){
+            banhji.pageLoaded["index"] = true;
+
+            //vm.sorterChanges();
+        }
+        //vm.pageLoad();  
+    });
+    banhji.router.route('/vendor_deposit', function() {
+        
+        banhji.view.layout.showIn('#content', banhji.view.Index);
+        banhji.view.Index.showIn('#indexMenu', banhji.view.tapMenu);
+        banhji.view.Index.showIn('#indexContent', banhji.view.transactions);
+        banhji.view.Index.showIn('#cashTransactionsMenu', banhji.view.cashTransactionsMenu);
+        banhji.view.Index.showIn('#cashTransactionContent', banhji.view.vendorDeposit);
+
+        var vm = banhji.vendorDeposit;
+        if(banhji.pageLoaded["index"]==undefined){
+            banhji.pageLoaded["index"] = true;
+
+            //vm.sorterChanges();
+        }
+        //vm.pageLoad();  
+    });
+    banhji.router.route('/cash_transaction_expense', function() {
+        
+        banhji.view.layout.showIn('#content', banhji.view.Index);
+        banhji.view.Index.showIn('#indexMenu', banhji.view.tapMenu);
+        banhji.view.Index.showIn('#indexContent', banhji.view.transactions);
+        banhji.view.Index.showIn('#cashTransactionsMenu', banhji.view.cashTransactionsMenu);
+        banhji.view.Index.showIn('#cashTransactionContent', banhji.view.cashTransactionExpense);
+
+        var vm = banhji.cashTransactionExpense;
+        if(banhji.pageLoaded["index"]==undefined){
+            banhji.pageLoaded["index"] = true;
+
+            //vm.sorterChanges();
+        }
+        //vm.pageLoad();  
+    });
+
+    banhji.router.route('/reports', function() {
+        
+        banhji.view.layout.showIn('#content', banhji.view.Index);
+        banhji.view.Index.showIn('#indexMenu', banhji.view.tapMenu);
+        banhji.view.Index.showIn('#indexContent', banhji.view.reports);
 
         //load MVVM
         //banhji.transactions.pageLoad();
+
+        var vm = banhji.reports;
+        if(banhji.pageLoaded["cashs"]==undefined){
+            banhji.pageLoaded["cashs"] = true;
+        }
+
+        vm.pageLoad();
     });
-    banhji.router.route('/cashs', function() {
+    banhji.router.route('/cash_center', function() {
         
         banhji.view.layout.showIn('#content', banhji.view.Index);
         banhji.view.Index.showIn('#indexMenu', banhji.view.tapMenu);
@@ -5684,8 +8994,9 @@
         if(!banhji.userManagement.getLogin()){
             banhji.router.navigate('/manage');
         }else{
-            banhji.view.layout.showIn("#content", banhji.view.cashTransaction);
-            kendo.fx($("#slide-form")).slideIn("down").play();
+            banhji.view.layout.showIn('#content', banhji.view.Index);
+            banhji.view.Index.showIn('#indexMenu', banhji.view.tapMenu);
+            banhji.view.Index.showIn('#indexContent', banhji.view.cashTransaction);
 
             var vm = banhji.cashTransaction;
             banhji.userManagement.addMultiTask("Cash Transaction","cash_transaction",vm);

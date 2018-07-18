@@ -2740,12 +2740,14 @@
 						            			<div class="row">
 						            				<div class="col">
 						            					<a class="cashmodule module-active" data-bind="click: cashClick" style="text-align: center;  width: 100%; float: left; border: 1px solid #d5d5d5; padding: 5px; cursor: pointer;">
-						            						<span data-bind="">FROM</span>
+						            						<i style="font-size: 28px;" class=" ti-shopping-cart-full"></i><br>
+						            						<span data-bind="text: lang.lang.raw_material">Raw Material</span>
 						            					</a>
 						            				</div>
 						            				<div class="col">
 						            					<a class="creditmodule" data-bind="click: creditClick" style="text-align: center;  width: 100%; float: left; border: 1px solid #d5d5d5; padding: 5px; cursor: pointer;">
-						            						<span data-bind="">TO</span>
+						            						<i style="font-size: 28px;" class="ti-layout-grid2"></i><br>
+						            						<span data-bind="text: lang.lang.finished_goods">Finished Goods</span>
 						            					</a>
 						            				</div>
 						            			</div>
@@ -2877,7 +2879,7 @@
 								</div>
 								<div class="col-12 col-md-6">
 									<div class="listWrapper marginBottom" style="height: auto;">
-										<h4>វត្ថុធាតុដើម</h4>
+										<h4 data-bind="text: lang.lang.raw_material">វត្ថុធាតុដើម</h4>
 										<div class="row">
 											<div class="col-md-12 table-responsive">
 												<div id="posProductList" class="grid box-generic-noborder table-responsive marginBottom" style="min-height: 140px!important; height: 230px; padding-bottom: 0;">
@@ -2974,7 +2976,7 @@
 											</div>
 										</div>
 
-										<h4>ផលិតផលសម្រាច</h4>
+										<h4 data-bind="text: lang.lang.finished_goods">ផលិតផលសម្រាច</h4>
 										<div class="row">
 											<div class="col-md-12 table-responsive">
 												<div id="posProductList" class="grid box-generic-noborder table-responsive marginBottom" style="min-height: 140px!important; height: 230px; padding-bottom: 0;">
@@ -3794,4 +3796,4 @@
 		#=code# - #=country#
 	</span>
 </script>
-<!-- End -->                                     
+<!-- End -->

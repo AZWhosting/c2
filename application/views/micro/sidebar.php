@@ -15,12 +15,12 @@
                         <span class="hide-menu" data-bind="text: lang.lang.home"></span>
                     </a>
                 </li>
-                 <li>
+                <!-- <li>
                     <a class="waves-effect waves-dark" href="<?php echo base_url(); ?>micro/check_out" aria-expanded="false">
                         <i class=" ti-view-list-alt"></i>
                         <span class="hide-menu" data-bind="text: lang.lang.check_out"></span>
                     </a>
-                </li>
+                </li> -->
                 <li>
                     <a class="waves-effect waves-dark" href="<?php echo base_url(); ?>micro/sales" aria-expanded="false">
                         <i class="ti-receipt"></i>

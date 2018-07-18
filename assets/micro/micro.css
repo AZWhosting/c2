@@ -17,6 +17,18 @@ h1, h2, h3, h4, h5, h6 {
 /*p, table tr td span{
 	font-family: 'Battambang', 'Open Sans' !important;
 }*/
+#m1,
+#m2,
+#m3,
+#m4,
+#m5,
+#m6,
+#m7,
+#m8,
+#m9,
+#m10{
+	background: #fff;
+}
 #main-wrapper {
     width: 100%;
      overflow: visible; 
@@ -273,6 +285,17 @@ a {
 .grid .table.color-table.dark-table tbody td{
 	border: none;
 	border-bottom: 1px solid #1F4774;
+}
+/*.dropdown-menu.show{
+	left: -34px !important;
+}*/
+
+.l-m-active{
+	background: #009efb !important;
+}
+.l-m-active i,
+.l-m-active span{
+	color: #fff;
 }
 /*End*/
 

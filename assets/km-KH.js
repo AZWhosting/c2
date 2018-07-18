@@ -48,6 +48,18 @@ var	km_KH = {
 	"micro_trolop" : "ត្រឡប់",
 	"cashier_name" : "ឈ្មោះអ្នកគិតប្រាក់ :",
 	"time" : "ម៉ោង :",
+	"raw_material" : "វត្ថុធាតុដើម",
+	"finished_goods" : "ផលិតផលសំរេច",
+	"cash_withdrawal" : "ការដកសាច់ប្រាក់",
+	"cash_deposit" : "ការកក់សាច់ប្រាក់",
+	"cash_transfer" : "ការផ្ទេរសាច់ប្រាក់",
+
+	//MemberSHip
+	"management" : "ការគ្រប់គ្រង",
+	"engagement" : "ការចូលរួម",
+	"billing" : "ការចេញវិក្កយបត្រ",
+
+
 	//Main Dustboard
 	"search_contact" :  "ស្វែងរក​ទំនាក់ទំនង",
 	"contact" :  "ទំនាក់ទំនង",

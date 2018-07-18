@@ -124,6 +124,13 @@
 				{ field:"status", operator:"where_in", value:[0,2] }
 			]);
 		},
+		loadOverdue         : function(){
+            this.txnDS.filter([
+                { field:"type", value:"Credit_Purchase" },
+                { field:"status", operator:"where_in", value:[0,2] },
+                { field:"due_date <", value:kendo.toString(new Date(), "yyyy-MM-dd") }
+            ]);
+        },
 		loadDraft            : function(){
 			this.txnDS.filter([
 				{ field:"type", operator:"where_in", value:["Purchase_Order","Vendor_Deposit","Cash_Payment","Payment_Refund","Cash_Purchase","Credit_Purchase"] },
@@ -6764,7 +6771,7 @@
 				rate = obj.rate / banhji.source.getRate(item.locale, new Date(obj.issued_date));
 
 			row.set("item_id", item.id);
-			row.set("description", item.sale_description);
+			row.set("description", item.purchase_description);
 			row.set("rate", rate);
 			row.set("locale", item.locale);
 
@@ -6878,7 +6885,7 @@
 					wht_account_id      : "",
 					item_id             : item.id,
 					measurement_id      : item.measurement.measurement_id,
-					description         : item.name,
+					description         : item.purchase_description,
 					quantity            : 1,
 					conversion_ratio    : 1,
 					cost                : 0,

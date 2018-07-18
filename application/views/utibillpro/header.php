@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <!--[if lt IE 7]> <html class="ie lt-ie9 lt-ie8 lt-ie7 fluid top-full menuh-top sticky-top"> <![endif]-->
 <!--[if IE 7]>    <html class="ie lt-ie9 lt-ie8 fluid top-full menuh-top sticky-top"> <![endif]-->
 <!--[if IE 8]>    <html class="ie lt-ie9 fluid top-full menuh-top sticky-top"> <![endif]-->
@@ -446,6 +446,8 @@ var themerPrimaryColor = primaryColor;
 	  			</ul>
 		  	</li>
 		  	<li ><a href="#/reports" style="color: #fff" >REPORTS</a></li>
-		  	<li style="width: 47px"><a style="width: 47px;" href='#/setting' class='glyphicons settings'><i class="text-t"></i></a></li>
+		  	<li style="width: 47px">
+		  		<a style="width: 47px;" href='<?php echo base_url(); ?>utibillpro/setting' class='glyphicons settings'><i class="text-t"></i></a>
+		  	</li>
 		</ul>
 	</script>

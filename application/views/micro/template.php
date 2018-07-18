@@ -502,3 +502,164 @@
     </span>
 </script> -->
 <!-- End -->
+
+<script id="vendorCenter-vendor-list-tmpl" type="text/x-kendo-tmpl">
+    <tr data-bind="click: selectedRow">
+        <td>
+            <div class="">
+                <span>#=name#</span>
+            </div>
+        </td>
+    </tr>
+</script>
+<script id="vendor-type-header-tmpl" type="text/x-kendo-tmpl">
+    <strong>
+        <a href="\#/vendor_setting">+ Add New Supplier Type</a>
+    </strong>
+</script>
+<script id="vendor-header-tmpl" type="text/x-kendo-tmpl">
+    <strong>
+        <a href="\#/vendor">+ Add New Supplier</a>
+    </strong>
+</script>
+<script id="vendor-payment-method-header-tmpl" type="text/x-kendo-tmpl">
+    <strong>
+        <a href="\#/vendor_setting">+ Add New Payment Method</a>
+    </strong>
+</script>
+<script id="vendor-payment-term-header-tmpl" type="text/x-kendo-tmpl">
+    <strong>
+        <a href="\#/vendor_setting">+ Add New Payment Term</a>
+    </strong>
+</script>
+<script id="vendorCenter-note-tmpl" type="text/x-kendo-template">
+    <tr>
+        <td>
+            <blockquote>
+                <small class="author">
+                    <span class="strong">#=creator#</span> :
+                    <cite>#=kendo.toString(new Date(noted_date), "g")#</cite>
+                </small>
+                <p>#=note#</p>
+            </blockquote>
+        </td>
+    </tr>
+</script>
+<script id="attachment-list-tmpl" type="text/x-kendo-tmpl">
+    <tr>
+        <td>
+            <input id="txtName-#:uid#" name="txtName-#:uid#"
+                    type="text" class="k-textbox"
+                    data-bind="value: name" />
+        </td>
+        <td>
+            <input id="txtDescription-#:uid#" name="txtDescription-#:uid#"
+                    type="text" class="k-textbox"
+                    data-bind="value: description"
+                    style="width: 100%; margin-bottom: 0;" />
+        </td>
+        <td>#=kendo.toString(created_at, "dd-MM-yyyy")#</td>
+        <td>
+            #if(id){#
+                <a href="#=url#" target="_blank" class="btn-action glyphicons download btn-default"><i></i></a>
+            #}#
+            <span class="btn-action glyphicons remove_2 btn-danger" data-bind="click: removeFile"><i></i></span>
+        </td>
+    </tr>
+</script>
+<script id="vendorCenter-transaction-tmpl" type="text/x-kendo-tmpl">
+    <tr>
+        <td style="border-bottom: 1px solid \#1F4774;">#=kendo.toString(new Date(issued_date), "dd-MM-yyyy")#</td>
+        <td style="border-bottom: 1px solid \#1F4774;">#=type#</td>
+        <td style="border-bottom: 1px solid \#1F4774;">
+            #if(type=="Vendor_Deposit" && amount<0){#
+                <a class="underline" data-bind="click: goReference">#=number#</a>
+            #}else{#
+                <a class="underline" href="\#/#=type.toLowerCase()#/#=id#">#=number#</a>
+            #}#
+        </td>
+        <td style="border-bottom: 1px solid \#1F4774; text-align: right;">
+            #if(type=="GRN"){#
+                #=kendo.toString(amount, "n0")#
+            #}else if(type=="Cash_Purchase" || type=="Credit_Purchase"){#
+                #=kendo.toString(amount-deposit, locale=="km-KH"?"c0":"c", locale)#
+            #}else{#
+                #=kendo.toString(amount, locale=="km-KH"?"c0":"c", locale)#
+            #}#
+        </td>
+        <!-- Status -->
+        <td style="border-bottom: 1px solid \#1F4774; text-align: center;">
+            #if(status=="4") {#
+                <span data-bind="text: lang.lang.draft"></span>
+            #}#
+
+            #if(type=="Credit_Purchase"){#
+                #if(status=="0" || status=="2") {#
+                    # var date = new Date(), dueDate = new Date(due_date).getTime(), toDay = new Date(date).getTime(); #
+                    #if(dueDate < toDay) {#
+                         <span data-bind="text: lang.lang.over_due"></span> #:Math.floor((toDay - dueDate)/(1000*60*60*24))#  <span data-bind="text: lang.lang.days"></span>
+                    #} else {#
+                        #:Math.floor((dueDate - toDay)/(1000*60*60*24))# <span data-bind="text: lang.lang.days_to_pay"></span> 
+                    #}#
+                #} else if(status=="1") {#
+                     <span data-bind="text: lang.lang.paid"></span>
+                #} else if(status=="3") {#
+                     <span data-bind="text: lang.lang.return"></span>
+                #}#
+            #}else if(type=="Purchase_Order"){#
+                #if(status=="0"){#
+                     <span data-bind="text: lang.lang.open"></span>
+                #}else if(status=="1"){#
+                     <span data-bind="text: lang.lang.done"></span>
+                #}#
+            #}else if(type=="GRN"){#
+                #if(status=="0"){#
+                     <span data-bind="text: lang.lang.open"></span>
+                #}else if(status=="1"){#
+                     <span data-bind="text: lang.lang.received"></span>
+                #}#
+            #}#
+        </td>
+        <!-- Actions -->
+        <td style="border-bottom: 1px solid \#1F4774; text-align: center;">
+            #if(type=="Credit_Purchase"){#
+                #if(status=="0" || status=="2") {#
+                    <a class="k-button btn-info" data-bind="click: payBill"><i></i><span data-bind="text: lang.lang.pay_bill"></span></a>
+                #}#
+            #}#
+
+            #if(status=="4") {#
+                <a class="k-button btn-info"><i></i> <span data-bind="text: lang.lang.use"></span></a>
+            #}#
+        </td>
+    </tr>
+</script>
+<script id="tax-header-tmpl" type="text/x-kendo-tmpl">
+    <strong>
+        <a href="/c2/rrd\#/tax">+ Add New Tax</a>
+    </strong>
+</script>
+<script id="vendor-contact-person-row-tmpl" type="text/x-kendo-tmpl">
+    <tr>
+        <td>
+            <input id="name" name="name"
+                    type="text" class="k-textbox"
+                    data-bind="value: name"
+                    placeholder="eg: Mr. John"
+                    required="required" validationMessage="required" style="width: 190px;" />
+            <span data-for="name" class="k-invalid-msg"></span>
+        </td>
+        <td>
+            <input type="text" class="k-textbox" data-bind="value: department" placeholder="eg: Accounting" style="width: 190px;" />
+        </td>
+        <td>
+            <input type="text" class="k-textbox" data-bind="value: phone" placeholder="eg: 012 333 444" style="width: 190px;" />
+        </td>
+        <td>
+            <input type="text" class="k-textbox" data-bind="value: email" placeholder="eg: john@email.com" style="width: 190px;" />
+        </td>
+        <td align="center">
+            <span class="glyphicons no-js delete" data-bind="click: deleteContactPerson"><i></i></span>
+        </td>
+    </tr>
+</script>

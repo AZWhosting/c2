@@ -13255,7 +13255,7 @@
 								<div class="widget-body">
 									<div class="tab-content">
 							        <!-- PRINT/EXPORT  -->
-								        <div class="tab-pane" id="tab-3">
+								        <div class="tab-pane active" id="tab-3">
 								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
 								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
 								        		<i class="fa fa-file-pdf-o"></i>
@@ -13295,9 +13295,10 @@
 							></tbody>
 						</table>
 						<div id="pager" class="k-pager-wrap"
-			            		 data-role="pager"
+						    	 data-role="pager"
 						    	 data-auto-bind="false"
-					             data-bind="source: contact"></div>
+						    	 style="width: 100%"
+					             data-bind="source: dataSource"></div>
 					</div>
 				</div>
 			</div>
@@ -15031,10 +15032,10 @@
 <script id="membershipDashboard" type="text/x-kendo-template">
 	<div class="row-fluid">
 
-		<!-- Left Side -->
+		
 		<div class="span4">
 
-			<!-- Logo of the page -->
+			
 			<table width="100%" cellpadding="10">
 				<tr>
 			        <td>
@@ -15043,7 +15044,7 @@
 			        		<span data-bind="text: lang.lang.in_here"></span>
 			        	</p>
 
-			        	<!-- <p style="width: 100%; float: left; margin-top: 8px; margin-bottom: 15px;">
+			        	<p style="width: 100%; float: left; margin-top: 8px; margin-bottom: 15px;">
 				        	<span style="position: relative; height: 35px; line-height: 35px; padding-right: 15px; float: left; display: block; ">
 								<a style="color: #203864; font-weight: 600; margin-top: 4px; line-height: 17px; background: #fff; padding: 8px 32px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;" href="#/customer_recurring">
 									<span class="badge fix badge-primary" style="color: #fff;  position: absolute; top: -13px; background: #203864; right: 5px; width: 25px; height: 25px; font-size: 15px; line-height: 25px;">0</span>
@@ -15056,7 +15057,7 @@
 									This Module's Guide
 								</a>
 							</span>
-						</p> -->
+						</p>
 
 						<div class="cover-block" style="box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
 				        	<div class="supplier-icon">
@@ -15124,12 +15125,12 @@
 						</td>
 					</tr>
 					<tr>
-						<!-- <td style="vertical-align:top;" class="center">
+						<td style="vertical-align:top;" class="center">
 							<a href="#/gdn">
 								<img title="Add Delivery Note" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/delivery_note.png"  height="200" />
 								<span data-bind="text: lang.lang.delivery_note" style="margin-top: 7px; display: inline-block; text-transform: uppercase;"></span>
 							</a>
-						</td> -->
+						</td>
 						<td class="center">
 							<a href="#/sale_return">
 								<img title="Add Sale Return" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/sale_return.png"  height="200" />
@@ -15148,23 +15149,23 @@
 
 		</div>
 
-		<!-- Right Side -->
+		
 		<div class="span8">
 
-			<!-- Summary -->
+			
 			<div class="row-fluid">
 
-				<!-- Column -->
+				
 				<div class="span4">
 
-					<!-- Widget -->
+					
 					<div class="widget widget-3 customer-border">
 
-						<!-- Widget heading -->
+						
 						<div class="widget-head">
 							<h4 class="heading"><span class="glyphicons coins"><i></i></span><span style="color: #203864; font-weight: 600; font-style: normal;" data-bind="text: lang.lang.sale"></span></h4>
 						</div>
-						<!-- // Widget heading END -->
+						
 
 						<a href="#/sale_summary_by_customer"><div class="widget-body alert alert-primary" style="min-height: 148px; background: white; color: #203864; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
 
@@ -15189,26 +15190,25 @@
 								</tr>
 							</table>
 						</div></a>
-						<!-- // Widget footer END -->
+						
 
 					</div>
-					<!-- // Widget END -->
+					
 
 				</div>
-				<!-- // Column END -->
+				
 
-				<!-- Column -->
+				
 				<div class="span4">
 
-					<!-- Widget -->
+					
 					<a href="#/sale_order_list"><div class="widget widget-3 customer-border">
 
-						<!-- Widget heading -->
+						
 						<div class="widget-head">
 							<h4 class="heading"><span class="glyphicons cart_in"><i></i></span><span style="color: #203864; font-weight: 600; font-style: normal;" data-bind="text: lang.lang.sale_order"></span></h4>
 						</div>
-						<!-- // Widget heading END -->
-
+						
 						<div class="widget-body alert-info " style="min-height: 148px; background: white; color: #203864; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
 
 							<div align="center" class="text-large strong medai-font" data-format="n0" data-bind="text: obj.so"></div>
@@ -15227,25 +15227,25 @@
 								</tr>
 							</table>
 						</div></a>
-						<!-- // Widget footer END -->
+						
 
 					</div>
-					<!-- // Widget END -->
+					
 
 				</div>
-				<!-- // Column END -->
+				
 
-				<!-- Column -->
+				
 				<div class="span4">
 
-					<!-- Widget -->
+					
 					<div class="widget widget-3 customer-border">
 
-						<!-- Widget heading -->
+						
 						<div class="widget-head">
 							<h4 class="heading"><span class="glyphicons credit_card"><i></i></span><span style="color: #203864; font-weight: 600; font-style: normal;" data-bind="text: lang.lang.receivable"></span></h4>
 						</div>
-						<!-- // Widget heading END -->
+						
 
 						<a href="#/customer_balance_summary"><div class="widget-body alert-info" style="min-height: 148px; background: white; color: #203864; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
 
@@ -15270,17 +15270,17 @@
 								</tr>
 							</table>
 						</div></a>
-						<!-- // Widget footer END -->
+						
 
 					</div>
-					<!-- // Widget END -->
+					
 
 				</div>
-				<!-- // Column END -->
+				
 
 			</div>
 
-			<!-- Top 5 -->
+			
 			<div class="row-fluid">
 				<div class="span4">
 					<table class="table table-bordered table-primary table-striped table-vertical-center" style="font-size: 12px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
@@ -15323,7 +15323,7 @@
 				</div>
 			</div>
 
-			<!-- Graph -->
+			
 			<div class="home-chart">
 				<div data-role="chart"
 	                 data-legend="{ position: 'top' }"
@@ -15340,11 +15340,59 @@
 	                 data-auto-bind="false"
 	                 data-bind="source: graphDS"
 	                 style="height: 250px;" ></div>
-            <!-- End Graph -->
+            
             </div>
 		</div>
 
 	</div>
+
+	<!-- <div class="row">
+		<div class="span12">
+			<div class="board-chart" style="margin-bottom: 19px; box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19); border-radius: 3px;">
+				<div class="span3"><h2 data-bind="text: lang.lang.management"></h2></div>
+				<div class="span5">
+					<div role='presentation' class='dropdown'>
+				  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><span data-bind="text: lang.lang.reports"></span><span class='caret'></span></a>
+			  			<ul class='dropdown-menu'>
+			  				<li><a href='#/membership_reports'><span data-bind="">Membership Reports</span></a></li>			  				
+			  			</ul>
+				  	</div>
+				  	<div role='presentation' class='dropdown'>
+				  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><span data-bind="">Transaction</span><span class='caret'></span></a>
+			  			<ul class='dropdown-menu'>
+			  				<li><a href='#/membership_reports'><span data-bind="">Add Membership</span></a></li>
+			  				<li><a href='#/membership_reports'><span data-bind="">Add Customer</span></a></li>			  				
+			  			</ul>
+				  	</div>
+				</div>
+				<div class="row-fluid">
+					<div class="span4" style="padding-left: 15px; background: #0077c5; ">
+						<div style=" padding: 10px 0; text-align: center; color: #fff;">
+                            <h2 style="color: #fff !important; " data-bind="text: lang.lang.sale">Sale</h2>
+                            <p data-format="n" data-bind="">1,000,000,086,950,300.00</p>
+                            <div class="row">
+                                <div class="span6">
+                                    <span data-bind="">82</span> <br>
+                                    <span data-bind="text: lang.lang.customer">Customer</span>
+                                </div>
+                                <div class="span6">
+                                    <span data-bind="">18</span><br>
+                                    <span data-bind="text: lang.lang.product">Product</span>
+                                </div>
+                                
+                            </div>
+                        </div>
+					</div>
+					<div class="span4" style="padding-left: 15px;">
+						Pei Charts
+					</div>
+					<div class="span4" style="padding-left: 15px;">
+						Line Charts
+					</div>
+				</div>
+			</div>
+		</div>
+	</div> -->
 </script>
 <script id="membershipCenter" type="text/x-kendo-template">
 	<div class="widget widget-heading-simple widget-body-gray widget-employees">
@@ -65989,7 +66037,10 @@
 <script id="membershipMenu" type="text/x-kendo-template">
 	<ul class="topnav">
 	  	<li><a href='#/memberships' class='glyphicons show_big_thumbnails'><i></i></a></li>
-	  	<li><a href='#/membership_center'><span data-bind="text: lang.lang.center" style="color: #fff;"></span></a></li>
+	  	<li><a href="#/management" style="color: #fff;"><span data-bind="text: lang.lang.management">Management</span></a></li>
+	  	<li><a href="#/engagement" style="color: #fff;"><span data-bind="text: lang.lang.engagement">Engagement</span></a></li>
+	  	<li><a href="#/billing" style="color: #fff;"><span data-bind="text: lang.lang.billing">Billing</span></a></li>
+	  	<!-- <li><a href='#/membership_center'><span data-bind="text: lang.lang.center" style="color: #fff;"></span></a></li>
 	  	<li role='presentation' class='dropdown'>
 	  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><i class="text-t"></i> <span class='caret'></span></a>
   			<ul class='dropdown-menu'>
@@ -66017,7 +66068,7 @@
   				<li><a href='#/imports'><span data-bind="text: lang.lang.imports">Imports</span></a></li>
   			</ul>
 	  	</li>
-	  	<li><a href="#/customer_report_center" style="color: #fff;">Reports</a></li>
+	  	<li><a href="#/customer_report_center" style="color: #fff;">Reports</a></li> -->
 	  	<li><a href='#/membership_setting' class='glyphicons settings'><i></i></a></li>
 	</ul>
 </script>

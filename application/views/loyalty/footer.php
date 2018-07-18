@@ -1,169 +1,201 @@
-<script>
-    // Google Font
-    WebFontConfig = {
-        google: {
-            families: ['Battambang::khmer']
-        }
-    };
-    (function() {
-        var wf = document.createElement('script');
-        wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
-            '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
-        wf.type = 'text/javascript';
-        wf.async = 'true';
-        var s = document.getElementsByTagName('script')[0];
-        s.parentNode.insertBefore(wf, s);
-    })();
-
-    </script>
-    <script type="text/javascript">
-        function createCookie(name,value,days) {
-            if (days) {
-                var date = new Date();
-                date.setTime(date.getTime()+(days*24*60*60*1000000000000000));
-                var expires = "; expires="+date.toGMTString();
-            }
-            else var expires = "";
-            document.cookie = name+"="+value+expires+"; path=/";
-        }
-        function readCookie(name) {
-            var nameEQ = name + "=";
-            var ca = document.cookie.split(';');
-            for(var i=0;i < ca.length;i++) {
-                var c = ca[i];
-                while (c.charAt(0)==' ') c = c.substring(1,c.length);
-                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
-            }
-            return null;
-        }
-        function eraseCookie(name) {
-            createCookie(name,"");
-        }
-        jQuery(function(){
-            var x = banhji.userData.username;
-            $("#userCut").text(x); 
-            var quickfitText=function(reset) {
-                var quickFitClass="text-large";             //Base class of elements to adapt
-                var quickFitGroupClass="quickfitGroup";     //Elements in a group will all have the same size
-                var quickFitIndependantClass="quickfitIndependant"; //Elements with this class won't be taken for quickfitGroup (they will be independant)
-                var quickFitSetClass="text-large";          //Elements with size set will get this class
-                var quickFitFontSizeData="quickfit-font-size";
-                //Set the font-size property of your element to the MINIMUM size you want for your content
-                
-                if(reset)
-                { jQuery("."+quickFitSetClass).removeClass(quickFitSetClass); }
-
-                //The magic happens here
-                var setMaxTextSize=function(jElement) {
-                    //Get and set the font size into data for reuse upon resize
-                    var fontSize=parseInt(jElement.data(quickFitFontSizeData)) || parseInt(jElement.css("font-size"));
-                    jElement.data(quickFitFontSizeData,fontSize);
-                
-                    //Gradually increase font size unti the element gets a big increase in height (ie line break)
-                    var i=0;
-                    var previousHeight;
-                    do
-                    {
-                        previousHeight=jElement.height();
-                        jElement.css("font-size",""+(++fontSize)+"px");
-                    }
-                    while(i++<300 && jElement.height()-previousHeight<fontSize/2)
-
-                    //Finally, go back before the increase in height and set the element as resized by adding quickFitSetClass
-                    fontSize-=1;
-                    jElement.addClass(quickFitSetClass).css("font-size",""+fontSize+"px");
-
-                    return fontSize;
-                };
-                jQuery("."+quickFitClass).each(function() {
-                    var jThis=$(this);
-
-                    if(!jThis.hasClass(quickFitSetClass))
-                    {
-                        var jFitGroup=jThis.closest("."+quickFitGroupClass);
-                        if(!jThis.hasClass(quickFitIndependantClass) && jFitGroup.length>0)
-                        {
-                            //We are in a group, set the max fit size for all
-                            var minFontSize=1000;
-                            jFitGroup.find("."+quickFitClass+":not(."+quickFitIndependantClass+")").each(function(i,item) {
-                                minFontSize=Math.min(minFontSize,setMaxTextSize($(item)));
-                            }).css("font-size",""+minFontSize+"px");
-                        }
-                        else
-                        { setMaxTextSize(jThis); }
-                    }
-                });
-            };
-            quickfitText(); //Run once...
-            jQuery(window).on("resize orientationchange",function() { quickfitText(true); });
-        });
-        $(document).ready(function(e) {
-            $("#feedBackSend").click(function(){
-                var MSG = $("#feedbackMsg").val();
-                var CurrentURL = $(location).attr('href');
-                var UserName = banhji.userData.username;
-                var d = new Date();
-                var strDate = d.getFullYear() + "/" + (d.getMonth()+1) + "/" + d.getDate();
-                $.ajax({  
-                    type: 'POST',
-                    url: '<?php echo base_url(); ?>api/feedbacks', 
-                    data: { msg: MSG, cURL: CurrentURL, uName: UserName, datesend: strDate },
-                    success: function(response) {
-                        alert(response.message);
-                        $("#feedbackMsg").val("");
-                        $(".cloze").click();
-                    }
-                });
-            });
-            $("#referralSend").click(function(){
-                var name1 = $("#refferalName1").val();
-                var email1 = $("#refferalEmail1").val();
-                var name2 = $("#refferalName2").val();
-                var email2 = $("#refferalEmail2").val();
-                var name3 = $("#refferalName3").val();
-                var email3 = $("#refferalEmail3").val();
-                var name4 = $("#refferalName4").val();
-                var email4 = $("#refferalEmail4").val();
-                var name5 = $("#refferalName5").val();
-                var email5 = $("#refferalEmail5").val();
-                var UserName = banhji.userData.username;
-                var d = new Date();
-                var strDate = d.getFullYear() + "/" + (d.getMonth()+1) + "/" + d.getDate();
-                $.ajax({  
-                    type: 'POST',
-                    url: '<?php echo base_url(); ?>api/referrals',
-                    data: { uName: UserName, datesend: strDate, rName1: name1, rName2: name2, rName3: name3, rName4: name4, rName5: name5, rMail1: email1, rMail2: email2, rMail3: email3, rMail4: email4, rMail5: email5 },
-                    success: function(response) {
-                        alert(response.message);
-                        //$("#feedbackMsg").val("");
-                        $(".cloze").click();
-                    }
-                });
-            });
-
-            //eraseCookie("isshow");
-            var isshow = readCookie("isshow");
-            
-            if (isshow != 1) {
-                createCookie("isshow", 1);
-                $(".aWelcome").click();  
-            }
-
-            $(".cover-welcome-four-blog a").click(function(){
-                $(".close").click();
-            });
-        });
-    </script>
-
+            <footer class="footer" style="margin-left: 0;">
+                &copy; <?php echo date('Y'); ?> BanhJi PTE. Ltd. All rights reserved.
+            </footer>
+        </div>
+    </div>
+    <script src="<?php echo base_url()?>assets/micro/bootstrap.min.js"></script>
     <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-109087721-1"></script>
+    <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=UA-109087721-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-109087721-1');
+    </script> -->
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-109087721-2"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
 
-      gtag('config', 'UA-109087721-1');
+      gtag('config', 'UA-109087721-2');
     </script>
 
+    <!-- Script MVVM User -->
+    <script >
+        var baseUrl = "<?php echo base_url()?>";
+        banhji.accessMod = new kendo.data.DataSource({
+          transport: {
+            read  : {
+              url: baseUrl + 'api/users/access',
+              type: "GET",
+              dataType: 'json'
+            },
+            parameterMap: function(options, operation) {
+              if(operation === 'read') {
+                return {
+                  limit: options.pageSize,
+                  page: options.page,
+                  filter: options.filter
+                };
+              } else {
+                return {models: kendo.stringify(options.models)};
+              }
+            }
+          },
+          schema  : {
+            model: {
+              id: 'id'
+            },
+            data: 'results',
+            total: 'count'
+          },
+          batch: true,
+          serverFiltering: true,
+          serverPaging: true,
+          pageSize: 1
+        });
+        banhji.accessMod.query({
+            filter: {field: 'username', value: JSON.parse(localStorage.getItem('userData/user')).username}
+        }).then(function(e){
+            var allowed = false;
+            if(banhji.accessMod.data().length > 0) {
+                for(var i = 0; i < banhji.accessMod.data().length; i++) {
+                    if("micro" == banhji.accessMod.data()[i].name.toLowerCase()) {
+                        allowed = true;
+                        break;
+                    }
+                }
+            }
+            if(allowed === false) {
+                window.location.replace(baseUrl + "admin");
+            }
+        });
+        var viewModel = kendo.observable({
+            lang        : langVM,
+            userDS          : new kendo.data.DataSource({
+                transport: {
+                    read: {
+                        url: baseUrl + 'api/users',
+                        type: "GET",
+                        dataType: 'json'
+                    },
+                    create: {
+                        url: baseUrl + 'api/users',
+                        type: "POST",
+                        dataType: 'json'
+                    },
+                    destroy: {
+                        url: baseUrl + 'api/users',
+                        type: "DELETE",
+                        dataType: 'json'
+                    },
+                    update: {
+                        url: baseUrl + 'api/users',
+                        type: "PUT",
+                        dataType: 'json'
+                    },
+                    parameterMap: function(options, operation) {
+                        if (operation === 'read') {
+                            return {
+                                limit: options.take,
+                                page: options.page,
+                                filter: options.filter
+                            };
+                        } else {
+                            return {
+                                models: kendo.stringify(options.models)
+                            };
+                        }
+                    }
+                },
+                schema: {
+                    model: {
+                        id: 'id'
+                    },
+                    data: 'results',
+                    total: 'count'
+                },
+                batch: true,
+                serverFiltering: true,
+                serverPaging: true,
+                filter: {
+                    field: 'id',
+                    operator:"where",
+                    value: JSON.parse(localStorage.getItem('userData/user')).id
+                },
+                pageSize: 50
+            }),
+            logout          : function(e) {
+                e.preventDefault();
+                var userData = {
+                    Username : userPool.getCurrentUser().username,
+                    Pool : userPool
+                };
+                var cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser(userData);
+                if(cognitoUser != null) {
+                    cognitoUser.signOut();
+                    localforage.removeItem('user').then(function() {
+                        // Run this code once the key has been removed.
+                        console.log('Key is cleared!');
+                    }).catch(function(err) {
+                        // This code runs if there were any errors
+                        console.log(err);
+                    });
+                    window.location.replace("<?php echo base_url(); ?>micro/login");
+                } else {
+                    console.log('No user');
+                }
+            }
+        });
+
+        kendo.bind($("#examplee"), viewModel);
+
+        viewModel.userDS.read();
+    </script>
+
+    <!-- Facebook -->
+    <script>
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId: '387834344756149',
+                xfbml: true,
+                version: 'v2.7'
+            });
+            FB.AppEvents.logPageView();
+        };
+
+        (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {
+                return;
+            }
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+
+    <script>
+        // Google Font
+        WebFontConfig = {
+            google: {
+                families: ['Battambang::khmer']
+            }
+        };
+        (function() {
+            var wf = document.createElement('script');
+            wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+                '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+            wf.type = 'text/javascript';
+            wf.async = 'true';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(wf, s);
+        })();
+    </script>
 </body>
 </html>

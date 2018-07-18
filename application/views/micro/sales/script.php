@@ -6,7 +6,7 @@
     banhji.tapMenu =  kendo.observable({
         lang     : langVM,
         goReports          : function(){
-            banhji.router.navigate('/');
+            banhji.router.navigate('/reports');
         },
         goCheckOut         : function(){
             banhji.router.navigate('/');
@@ -118,10 +118,17 @@
                 { field:"type", operator:"where_in", value:["Commercial_Invoice","Vat_Invoice","Invoice","Commercial_Cash_Sale","Vat_Cash_Sale","Cash_Sale"] }
             );
         },
-        loadReceiveable            : function(){
+        loadReceiveable     : function(){
             this.txnDS.filter([
                 { field:"type", operator:"where_in", value:["Commercial_Invoice","Vat_Invoice","Invoice"] },
                 { field:"status", operator:"where_in", value:[0,2] }
+            ]);
+        },
+        loadOverdue         : function(){
+            this.txnDS.filter([
+                { field:"type", operator:"where_in", value:["Commercial_Invoice","Vat_Invoice","Invoice"] },
+                { field:"status", operator:"where_in", value:[0,2] },
+                { field:"due_date <", value:kendo.toString(new Date(), "yyyy-MM-dd") }
             ]);
         },
         loadDraft            : function(){
@@ -396,7 +403,6 @@
         haveItems           : false,
         parkSaleDS          : dataStore(apiUrl + "transactions"),
         parkSaleLineDS      : dataStore(apiUrl + "item_lines"),
-        currencyDS          : dataStore(apiUrl + "utibills/currency"),
         currencyDS          : dataStore(apiUrl + "utibills/currency"),
         numberParkSale      : 0,
         pageLoad            : function(){
@@ -831,6 +837,7 @@
                 }
             }
 
+            this.setDefaultReceiptCurrency(total);
             //Check invoice paid
             if(obj.status=="1" && this.lineDS.hasChanges()){
                 this.lineDS.cancelChanges();
@@ -1167,7 +1174,7 @@
                 rate = banhji.source.getRate(item.locale, this.get("dateSelected")),
                 price = item.price / rate,
                 notExist = true;
-
+            $("#loading").css("display", "block");
             //Check exist item            
             $.each(this.lineDS.data(), function(index, value){
                 if(value.item_id==item.id){
@@ -1197,7 +1204,7 @@
                         item_id             : item.id,
                         assembly_id         : 0,
                         measurement_id      : 0,
-                        description         : "",
+                        description         : item.sale_description,
                         quantity            : 1,
                         conversion_ratio    : 1,
                         cost                : wac[0].cost * rate,
@@ -1218,6 +1225,7 @@
                     });
 
                     self.changes();
+                    $("#loading").css("display", "none");
                 });
             }
         },
@@ -2275,7 +2283,7 @@
             });
         },
         checkChange: function(e) {
-            var data = e.data;
+            var data = this.get('obj');
             var self = this;
             var obj = this.get("obj");
             var currencyReceipt = 0;
@@ -2287,19 +2295,19 @@
                 currencyReceipt += amountAfterRate;
             });
             //Check wrong input
-            if(currencyReceipt < obj.sub_total){
+            if(currencyReceipt < obj.amount){
                 alert(this.lang.lang.error_input);
                 $.each(this.receipCurrencyDS.data(), function(i,v){
                     if(i == 0){
-                        self.receipCurrencyDS.data()[i].set("amount", obj.sub_total);
+                        self.receipCurrencyDS.data()[i].set("amount", obj.amount);
                     }else{
                         self.receipCurrencyDS.data()[i].set("amount", 0);
                     }
                 });
                 this.set("haveChangeMoney", false);
-            }else if(currencyReceipt > obj.sub_total){
+            }else if(currencyReceipt > obj.amount){
                 this.set("haveChangeMoney", true);
-                var ramount = currencyReceipt - obj.sub_total;
+                var ramount = currencyReceipt - obj.amount;
                 this.setDefaultChangeCurrency(ramount);
             }else{
                 this.set("haveChangeMoney", false);
@@ -2343,7 +2351,6 @@
         setDefaultReceiptCurrency: function(firstReceipt) {
             var self = this,
                 FR = 0;
-
             this.receipCurrencyDS.data([]);
             this.set("haveChangeMoney", false);
             this.receipChangeDS.data([]);
@@ -14821,16 +14828,15 @@
 
         banhji.view.layout.showIn('#content', banhji.view.Index);
         banhji.view.Index.showIn('#indexMenu', banhji.view.tapMenu);
-        //banhji.view.Index.showIn('#indexContent', banhji.view.checkOut);
-         banhji.view.Index.showIn('#indexContent', banhji.view.reports);
+        banhji.view.Index.showIn('#indexContent', banhji.view.checkOut);
+        //banhji.view.Index.showIn('#indexContent', banhji.view.reports);
 
-        //var vm = banhji.checkOut;
-         var vm = banhji.reports;
+         var vm = banhji.checkOut;
         if(banhji.pageLoaded["index"]==undefined){
             banhji.pageLoaded["index"] = true;
             
-            //vm.lineDS.bind("change", vm.lineDSChanges);
-        }        
+            vm.lineDS.bind("change", vm.lineDSChanges);
+        }         
         
         vm.pageLoad();        
     });

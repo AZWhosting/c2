@@ -70,8 +70,8 @@
 <!-- Menu -->
 <script id="tapMenu" type="text/x-kendo-template">
 	<ul class="nav nav-tabs customtab" role="tablist" >
-		<!-- <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#/" data-bind="click: goCheckOut"><span class="hidden-sm-up"><i class="ti-layout-accordion-list"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.check_out"></span></a> </li> -->
-		<li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#/reports" data-bind="click: goReports"><span class="hidden-sm-up"><i class="ti-layout-grid2-thumb"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.reports"></span></a> </li>	    
+		<li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#/check_out" data-bind="click: goCheckOut"><span class="hidden-sm-up"><i class="ti-layout-accordion-list"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.check_out"></span></a> </li>
+		<li class="nav-item"> <a class="nav-link " data-toggle="tab" href="#/reports" data-bind="click: goReports"><span class="hidden-sm-up"><i class="ti-layout-grid2-thumb"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.reports"></span></a> </li>	    
 	    <!-- <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#/transactions" data-bind="click: goTransactions"><span class="hidden-sm-up"><i class="ti-layout-accordion-list"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.sale_transactions"></span></a> </li> -->
 	    <li class="nav-item hidden-sm-down"> <a class="nav-link" data-toggle="tab" href="#/customers" data-bind="click: goMenuCustomers"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down" data-bind="text: lang.lang.customers"></span></a> </li>
     </ul>
@@ -97,7 +97,7 @@
 		<div class="col-12 col-lg-5" >
 			<div class="row">
 				<div class="col-12 col-md-4 col-lg-4" style="padding: 0;">
-					<div class="saleOverview" style="margin-bottom: 15px; background:  #C8070E ; box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important;">
+					<div class="saleOverview" data-bind="click: loadOverdue" style="margin-bottom: 15px; background:  #C8070E ; box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important;">
 						<h2 style="color: #fff; " data-bind="text: lang.lang.overdue"></h2>
 						<p style="color: #fff; margin-bottom: 0;" data-format="n0" data-bind="text: obj.receivable_overdue_count"></p>						
 					</div>
@@ -116,8 +116,6 @@
 				</div>
 			</div>
 		</div>
-
-
 
 		<!-- 111 -->
 		<!-- <div class="col-12 col-md-4">
@@ -444,28 +442,32 @@
 							        	</tbody>
 								    </table>
 				                </div> -->
-				                <div class="col-12 col-md-6 col-lg-6">
-					                <button 
-					                	style="font-size: 17px; background: darkgreen; padding: 15px 0;border-radius: 5px;" 
-					                	type="button" 
-					                	class="btn btn-info col-12 topPhone" 
-					                	data-toggle="dropdown" 
-					                	aria-haspopup="true" 
-					                	aria-expanded="false" 
-					                	data-bind="text: lang.lang.invoice, click: saveInvoice">
-					                </button>
-					            </div>
-					            <div class="col-12 col-md-6 col-lg-6">
-					                <button 
-					                	style="font-size: 17px; background: darkgreen; padding: 15px 0;border-radius: 5px;background: #2b2f3a;" 
-					                	type="button"  
-					                	class="btn btn-info col-12 topPhone" 
-					                	data-toggle="dropdown" 
-					                	aria-haspopup="true" 
-					                	aria-expanded="false" 
-					                	data-bind="text: lang.lang.cancel, click: makeChoice">
-					                </button>
-					            </div>
+				                <div class="col-md-12">
+									<div class="row marginTop">
+						                <div class="col-12 col-md-6 col-lg-6">
+							                <button 
+							                	style="font-size: 17px; background: darkgreen; padding: 15px 0;border-radius: 5px;" 
+							                	type="button" 
+							                	class="btn btn-info col-12 topPhone" 
+							                	data-toggle="dropdown" 
+							                	aria-haspopup="true" 
+							                	aria-expanded="false" 
+							                	data-bind="text: lang.lang.invoice, click: saveInvoice">
+							                </button>
+							            </div>
+							            <div class="col-12 col-md-6 col-lg-6">
+							                <button 
+							                	style="font-size: 17px; background: darkgreen; padding: 15px 0;border-radius: 5px;background: #2b2f3a;" 
+							                	type="button"  
+							                	class="btn btn-info col-12 topPhone" 
+							                	data-toggle="dropdown" 
+							                	aria-haspopup="true" 
+							                	aria-expanded="false" 
+							                	data-bind="text: lang.lang.cancel, click: makeChoice">
+							                </button>
+							            </div>
+							        </div>
+							    </div>
 	            			</div>
 	            			<div class="row" data-bind="visible: haveCash">
 	            				<p style="width: 100%; text-align: center; font-size: 18px; margin-top: 15px;" data-bind="text: lang.lang.amount_to_pay"></p>
@@ -477,6 +479,7 @@
 					        		data-auto-bind="false"
 					        		data-bind="source: receipCurrencyDS">
 					        	</div>
+					        	<br>
 					        	<div data-bind="visible: haveChangeMoney">
 									<p data-bind="text: lang.lang.amount_change" style="width: 100%;text-align: center;font-size: 18px;margin-top: 20px;margin-bottom: 8px;"></p>
 							        <div 
@@ -488,28 +491,32 @@
 						        		data-bind="source: receipChangeDS">
 						        	</div>
 								</div>
-								<div class="col-12 col-md-6 col-lg-6">
-		            				<button 
-					                	style="border: none; font-size: 17px; background: darkgreen; padding: 15px 0; border-radius: 5px; " 
-					                	type="button" 
-					                	class="btn btn-info col-12" 
-					                	data-toggle="dropdown" 
-					                	aria-haspopup="true" 
-					                	aria-expanded="false" 
-					                	data-bind="text: lang.lang.cash_receipt, click: saveCashSale">
-					                </button>
-					            </div>
-					            <div class="col-12 col-md-6 col-lg-6">
-					                <button 
-					                	style="border: none; font-size: 17px; background: darkgreen; padding: 15px 0;border-radius: 5px; background: #2b2f3a;" 
-					                	type="button" 
-					                	class="btn btn-info col-12 topPhone" 
-					                	data-toggle="dropdown" 
-					                	aria-haspopup="true" 
-					                	aria-expanded="false" 
-					                	data-bind="text: lang.lang.cancel, click: makeChoice">
-					                </button>
-					            </div>
+								<div class="col-md-12">
+									<div class="row marginTop">
+										<div class="col-12 col-md-6 col-lg-6">
+				            				<button 
+							                	style="border: none; font-size: 17px; background: darkgreen; padding: 15px 0; border-radius: 5px; " 
+							                	type="button" 
+							                	class="btn btn-info col-12" 
+							                	data-toggle="dropdown" 
+							                	aria-haspopup="true" 
+							                	aria-expanded="false" 
+							                	data-bind="text: lang.lang.cash_receipt, click: saveCashSale">
+							                </button>
+							            </div>
+							            <div class="col-12 col-md-6 col-lg-6">
+							                <button 
+							                	style="border: none; font-size: 17px; background: darkgreen; padding: 15px 0;border-radius: 5px; background: #2b2f3a;" 
+							                	type="button" 
+							                	class="btn btn-info col-12 topPhone" 
+							                	data-toggle="dropdown" 
+							                	aria-haspopup="true" 
+							                	aria-expanded="false" 
+							                	data-bind="text: lang.lang.cancel, click: makeChoice">
+							                </button>
+							            </div>
+							        </div>
+						        </div>
 	            			</div>
 						</div>
 					</div>
@@ -585,6 +592,7 @@
 				</div>
 			</div>
 	    </div>
+	    
 		<div class="col-12 col-md-6">
 			<div class="listWrapper">
 				<div class="row">
@@ -4723,7 +4731,7 @@
 	                		<div class="btn-close" onclick="javascript:window.history.back()"><i class="ti-close"></i></div>
 	                		<div class="card-body">
 
-			        			<h2 data-bind="text: lang.lang.cash_refund"></h2>				    
+			        			<h2 data-bind="text: lang.lang.cash_refund"></h2>
 
 								<!-- Upper Part -->
 								<div class="row">

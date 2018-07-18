@@ -24255,74 +24255,74 @@
 		status                  : null,
 		exArray             : [],
 		pageLoad                : function(){
-			this.search();
+			// this.search();
 		},
-		search                  : function(){
-			// var para = [],
-			// status = this.get("status"),
-			// contact_type_id = this.get("contact_type_id");
+		// search                  : function(){
+		// 	// var para = [],
+		// 	// status = this.get("status"),
+		// 	// contact_type_id = this.get("contact_type_id");
 
-			// if(status!==null){
-			//  para.push({ field:"status", value: status });
-			// }
+		// 	// if(status!==null){
+		// 	//  para.push({ field:"status", value: status });
+		// 	// }
 
-			// if(contact_type_id){
-			//  para.push({ field:"contact_type_id", value: contact_type_id });
-			// }
+		// 	// if(contact_type_id){
+		// 	//  para.push({ field:"contact_type_id", value: contact_type_id });
+		// 	// }
 
-			// this.dataSource.filter(para);
-			// this.dataSource.query({
-		//              filter:para
-		//          });
+		// 	// this.dataSource.filter(para);
+		// 	// this.dataSource.query({
+		// //              filter:para
+		// //          });
 
-			// this.set("status", null);
-			// this.set("contact_type_id", null);
-			this.dataSource.bind("requestEnd", function(e){
-				if(e.type=="read"){
-					var response = e.response;
-					self.exArray = [];
+		// 	// this.set("status", null);
+		// 	// this.set("contact_type_id", null);
+		// 	this.dataSource.bind("requestEnd", function(e){
+		// 		if(e.type=="read"){
+		// 			var response = e.response;
+		// 			self.exArray = [];
 
-					self.exArray.push({
-						cells: [
-							{ value: "Customer List",bold: true, fontSize: 20, textAlign: "center", colSpan: 6 }
-						]
-					});
-					self.exArray.push({
-						cells: [
-							{ value: "", colSpan: 6 }
-						]
-					});
-					self.exArray.push({
-						cells: [
-							{ value: "CusttomerID", background: "#496cad", color: "#ffffff" },
-							{ value: "Customer Name", background: "#496cad", color: "#ffffff" },
-							{ value: "Type", background: "#496cad", color: "#ffffff" },
-							{ value: "Address", background: "#496cad", color: "#ffffff" },
-							{ value: "Phone", background: "#496cad", color: "#ffffff" },
-							{ value: "Email", background: "#496cad", color: "#ffffff" },
-						]
-					});
-					for (var i = 0; i < response.results.length; i++){
-							self.exArray.push({
-								cells: [
-									{ value: response.results[i].number},
-									{ value: response.results[i].name },
-									{ value: response.results[i].contact_type },
-									{ value: response.results[i].address },
-									{ value: response.results[i].phone },
-									{ value: response.results[i].email },
+		// 			self.exArray.push({
+		// 				cells: [
+		// 					{ value: "Customer List",bold: true, fontSize: 20, textAlign: "center", colSpan: 6 }
+		// 				]
+		// 			});
+		// 			self.exArray.push({
+		// 				cells: [
+		// 					{ value: "", colSpan: 6 }
+		// 				]
+		// 			});
+		// 			self.exArray.push({
+		// 				cells: [
+		// 					{ value: "CusttomerID", background: "#496cad", color: "#ffffff" },
+		// 					{ value: "Customer Name", background: "#496cad", color: "#ffffff" },
+		// 					{ value: "Type", background: "#496cad", color: "#ffffff" },
+		// 					{ value: "Address", background: "#496cad", color: "#ffffff" },
+		// 					{ value: "Phone", background: "#496cad", color: "#ffffff" },
+		// 					{ value: "Email", background: "#496cad", color: "#ffffff" },
+		// 				]
+		// 			});
+		// 			for (var i = 0; i < response.results.length; i++){
+		// 					self.exArray.push({
+		// 						cells: [
+		// 							{ value: response.results[i].number},
+		// 							{ value: response.results[i].name },
+		// 							{ value: response.results[i].contact_type },
+		// 							{ value: response.results[i].address },
+		// 							{ value: response.results[i].phone },
+		// 							{ value: response.results[i].email },
 
-								]
-							});
-						self.exArray.push({
-							cells: [
-								{ value: "", colSpan: 6 }
-							]
-						});
-					}
-				}
-			});
-		},
+		// 						]
+		// 					});
+		// 				self.exArray.push({
+		// 					cells: [
+		// 						{ value: "", colSpan: 6 }
+		// 					]
+		// 				});
+		// 			}
+		// 		}
+		// 	});
+		// },
 		printGrid           : function() {
 			var gridElement = $('#grid'),
 				printableContent = '',
@@ -24398,26 +24398,117 @@
 				win.close();
 			},2000);
 		},
-		ExportExcel         : function(){
-			var workbook = new kendo.ooxml.Workbook({
-			  sheets: [
-				{
-				  columns: [
-					{ autoWidth: true },
-					{ autoWidth: true },
-					{ autoWidth: true },
-					{ autoWidth: true },
-					{ autoWidth: true },
-					{ autoWidth: true }
-				  ],
-				  title: "Cusotmer List",
-				  rows: this.exArray
-				}
-			  ]
-			});
-			//save the file as Excel file with extension xlsx
-			kendo.saveAs({dataURI: workbook.toDataURL(), fileName: "customerList.xlsx"});
-		}
+		dataSourceEX: dataStore(apiUrl + "sales/customer"),
+        pageGo  : 1,
+        totalPage: 0,
+        para        : [],
+        totalRow    : 0,
+		ExportExcel: function() {
+            $("#loadImport").css("display", "block");
+            var self = this;
+            this.exArray = [];
+            this.exArray.push({
+                cells: [
+                    { value: banhji.institute.name, textAlign: "center", colSpan: 6 }
+                ]
+            });
+            this.exArray.push({
+                cells: [
+                    { value: "", colSpan: 6 }
+                ]
+            });
+            this.exArray.push({
+                cells: [
+                    { value: this.lang.lang.customer_list, textAlign: "center", colSpan: 6 }
+                ]
+            });
+            this.exArray.push({
+                cells: [
+                    { value: "", colSpan: 6 }
+                ]
+            });
+            this.exArray.push({
+                cells: [
+                    { value: this.lang.lang.code, background: "#496cad", color: "#ffffff" },
+                    { value: this.lang.lang.customer, background: "#496cad", color: "#ffffff" },
+                    { value: this.lang.lang.type, background: "#496cad", color: "#ffffff" },
+                    { value: this.lang.lang.address, background: "#496cad", color: "#ffffff" },
+                    { value: this.lang.lang.phone, background: "#496cad", color: "#ffffff" },
+                    { value: this.lang.lang.email, background: "#496cad", color: "#ffffff" },
+                ]
+            });
+            var limit = 100;
+            var totalPage = parseInt(this.get("totalRow") / limit) + 1;
+            this.set("totalPage", totalPage);
+            this.set("pageGo", 1);
+            if(totalPage > 0){
+                this.getDataExcel(1, 10000);
+            }
+        },
+        getDataExcel        : function(page, limit){
+            //query
+            var self = this;
+
+            var para = [];
+            ///
+            this.dataSourceEX.data([]);
+            this.dataSourceEX.query({
+                filter: para,
+                page: page,
+                pageSize: limit,
+            }).then(function(e){
+                if(self.dataSourceEX.data().length > 0){
+                    $.each(self.dataSourceEX.data(), function(i,v){
+                        self.exArray.push({
+                            cells: [
+                                { value: v.abbr+v.number},
+                                { value: v.name },
+                                { value: v.contact_type },
+                                { value: v.address },
+                                { value: v.phone},
+                                { value: v.email},
+                            ]
+                        });
+                    });
+                }
+                self.set("pageGo", self.get("pageGo") + 1);
+                if(self.get("pageGo") <= self.get("totalPage")){
+                    self.getDataExcel(self.get("pageGo"), 100);
+                }else{
+                    $("#loadImport").css("display", "none");
+                    var workbook = new kendo.ooxml.Workbook({
+                        sheets: [{
+                            columns: [{
+                                    autoWidth: true
+                                },
+                                {
+                                    autoWidth: true
+                                },
+                                {
+                                    autoWidth: true
+                                },
+                                {
+                                    autoWidth: true
+                                },
+                                {
+                                    autoWidth: true
+                                },
+                                {
+                                    autoWidth: true
+                                },
+                            ],
+                            title: "customerList",
+                            rows: self.exArray
+                        }]
+                    });
+                    //save the file as Excel file with extension xlsx
+                    kendo.saveAs({
+                        dataURI: workbook.toDataURL(),
+                        fileName: "customerList.xlsx"
+                    });
+                }
+            });
+        },
 	});
 	// CUSTOMER SETTINGS
 	banhji.customerSetting =  kendo.observable({
@@ -58549,6 +58640,7 @@
 							{ value: "" }
 						]
 					});
+					var is = 1;
 					for(var j = 0; j < data.asset[i].typeLine.length; j++){
 						self.exArray.push({
 							cells: [
@@ -58565,8 +58657,12 @@
 									{ value: "" }
 								]
 							});
-
-							totalCurrent += kendo.parseFloat(data.asset[i].typeLine[j].line[k].amount);
+							if(is == 1){
+								totalCurrent += kendo.parseFloat(data.asset[i].typeLine[j].line[k].amount);
+							}else{
+								is = 1;
+								totalCurrent -= kendo.parseFloat(data.asset[i].typeLine[j].line[k].amount);
+							}
 							totalAll += kendo.parseFloat(data.asset[i].typeLine[j].line[k].amount);
 							totalAsCu += kendo.parseFloat(data.asset[i].typeLine[j].line[k].amount);
 							totalBlock += kendo.parseFloat(data.asset[i].typeLine[j].line[k].amount);
@@ -58586,12 +58682,13 @@
 								{ value: "" }
 							]
 						});
+						is++;
 					}
 					self.exArray.push({
 						cells: [
 							{ value: "Total " + data.asset[i].name, bold: true, italic: true },
 							{ value: "" },
-							{ value: totalCurrent , bold: true, borderTop: { color: "#000000", size: 1 } }
+							{ value: totalCurrent, bold: true, borderTop: { color: "#000000", size: 1 } }
 						]
 					});
 					totalCurrent = 0;

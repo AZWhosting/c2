@@ -1,21 +1,50 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]> <html class="ie lt-ie9 lt-ie8 lt-ie7 fluid top-full menuh-top sticky-top"> <![endif]-->
-<!--[if IE 7]>    <html class="ie lt-ie9 lt-ie8 fluid top-full menuh-top sticky-top"> <![endif]-->
-<!--[if IE 8]>    <html class="ie lt-ie9 fluid top-full menuh-top sticky-top"> <![endif]-->
-<!--[if gt IE 8]> <html class="animations ie gt-ie8 fluid top-full menuh-top sticky-top"> <![endif]-->
-<!--[if !IE]><!--><html class="animations fluid top-full menuh-top sticky-top"><!-- <![endif]-->
 <head>
-<title>Loyalty | Loyalty Program</title>
+
+<title>BanhJi Loyalty</title>
 <meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
-<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE" />
-<meta name="description" content="" />
-<meta name="keywords" content="" />
-<meta name="author" content="" />
-<link href="https://fonts.googleapis.com/css?family=Roboto+Slab:300" rel="stylesheet">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<link rel="icon" type="image/png" href="<?php echo base_url()?>assets/banhji-micro-icon.png" >
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+
+<!-- Theme CSS Elegant-->
+<link rel="stylesheet" href="<?php echo base_url()?>assets/micro/style.min.css" >
+<link rel="stylesheet" href="<?php echo base_url()?>assets/micro/morris.css" >
+<link rel="stylesheet" href="<?php echo base_url()?>assets/micro/jquery.toast.css" >
+<link rel="stylesheet" href="<?php echo base_url()?>assets/micro/c3.min.css">
+<link rel="stylesheet" href="<?php echo base_url()?>assets/micro/micro.css">
+<link rel="stylesheet" href="<?php echo base_url()?>assets/micro/icon-page.css">
+
+<script src="<?php echo base_url()?>assets/micro/jquery-3.2.1.min.js"></script>
+<script src="<?php echo base_url()?>assets/micro/popper.min.js"></script>
+<script src="<?php echo base_url()?>assets/micro/perfect-scrollbar.jquery.min.js"></script>
+<script src="<?php echo base_url()?>assets/micro/waves.js"></script>
+<script src="<?php echo base_url()?>assets/micro/sidebarmenu.js"></script>
+<script src="<?php echo base_url()?>assets/micro/custom.min.js"></script>
+<script src="<?php echo base_url()?>assets/micro/raphael-min.js"></script>
+<script src="<?php echo base_url()?>assets/micro/morris.min.js"></script>
+<script src="<?php echo base_url()?>assets/micro/jquery.sparkline.min.js"></script>
+<script src="<?php echo base_url()?>assets/micro/d3.min.js"></script>
+<script src="<?php echo base_url()?>assets/micro/c3.min.js"></script>
+<script src="<?php echo base_url()?>assets/micro/jquery.toast.js"></script>
+    
+<!-- End -->
+
+<!-- cognito -->
+<script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/jsbn.js"></script>
+<script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/jsbn2.js"></script>
+<script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/sjcl.js"></script>
+<script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/moment.js"></script>
+<!-- For Cognito -->
+<!--Core Cognito -->
+<script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/aws-cognito-sdk.min.js"></script>
+<script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/amazon-cognito-identity.min.js"></script>
+<script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/aws-sdk.min.js"></script>
+<script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/cred.js"></script>
+<!--Core Cognito -->
+
 
 <!-- CSS Kendo By DAWINE -->
 <!-- <link rel="stylesheet" href="<?php echo base_url()?>assets/kendo/examples/content/shared/styles/examples-offline.css" /> -->
@@ -32,114 +61,9 @@
 <link rel="stylesheet" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/js/kendoui/styles/kendo.dataviz.bootstrap.min.css">
 
 
-
-
-<!-- Bootstrap -->
-<!--<link rel="stylesheet" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/common/bootstrap/css/responsive.css"-->
-<link rel="stylesheet" href="<?php echo base_url()?>assets/bootstrap.css" >
-
-<!-- Main Theme Stylesheet :: CSS -->
-<!--<link href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/common/theme/css/style-default-menus-dark.css?1374506511" rel="stylesheet" type="text/css" />
-<link href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/common/theme/skins/css/blue-gray.css" rel="stylesheet" type="text/css" />-->
-<link rel="stylesheet" href="<?php echo base_url()?>assets/style-default-menus-dark.css" >
-<link rel="stylesheet" href="<?php echo base_url()?>assets/blue-gray.css" >
-<link href='https://fonts.googleapis.com/css?family=Content:400,700' rel='stylesheet' type='text/css'>
-<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css?family=Preahvihear" rel="stylesheet"> 
-
-<!-- Glyphicons Font Icons -->
-<link href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/common/theme/fonts/glyphicons/css/glyphicons.css" rel="stylesheet" />
-
-<link rel="stylesheet" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/common/theme/fonts/font-awesome/css/font-awesome.min.css">
-<link rel="stylesheet" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/common/theme/fonts/font-awesome/css/font-awesome.css">
-<!--[if IE 7]><link rel="stylesheet" href="../../../../../common/theme/fonts/font-awesome/css/font-awesome-ie7.min.css"><![endif]-->
-
-<!-- Uniform Pretty Checkboxes -->
-<link href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/common/theme/scripts/plugins/forms/pixelmatrix-uniform/css/uniform.default.css" rel="stylesheet" />
-
-<!-- PrettyPhoto -->
-<link href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/common/theme/scripts/plugins/gallery/prettyphoto/css/prettyPhoto.css" rel="stylesheet" />
-
-
-
-<script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/js/libs/modernizr-2.6.1-respond-1.1.0.min.js"></script>
-<script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/js/libs/jquery-1.8.2.min.js"></script>
-<script>window.jQuery || document.write('https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/js/libs/jquery-1.8.2.min.js"><\/script>')</script>
-<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-<!--[if lt IE 9]>
-  
-<![endif]-->
-
-<!--[if IE]><!--><script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/common/theme/scripts/plugins/other/excanvas/excanvas.js"></script><!--<![endif]-->
-<!--[if lt IE 8]><script src="../../../../../common/theme/scripts/plugins/other/json2.js"></script><![endif]-->
-
-<!-- Bootstrap Extended -->
-<link href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/common/bootstrap/extend/jasny-fileupload/css/fileupload.css" rel="stylesheet">
-<link href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/common/bootstrap/extend/bootstrap-wysihtml5/css/bootstrap-wysihtml5-0.0.2.css" rel="stylesheet">
-<link href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/common/bootstrap/extend/bootstrap-select/bootstrap-select.css" rel="stylesheet" />
-<link href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/common/bootstrap/extend/bootstrap-toggle-buttons/static/stylesheets/bootstrap-toggle-buttons.css" rel="stylesheet" />
-
-<!-- JQueryUI -->
-<link href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/common/theme/scripts/plugins/system/jquery-ui/css/smoothness/jquery-ui-1.9.2.custom.min.css" rel="stylesheet" />
-
-<!-- Notyfy Notifications Plugin -->
-<link href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/common/theme/scripts/plugins/notifications/notyfy/jquery.notyfy.css" rel="stylesheet" />
-<link href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/common/theme/scripts/plugins/notifications/notyfy/themes/default.css" rel="stylesheet" />
-
-<!-- Gritter Notifications Plugin -->
-<link href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/common/theme/scripts/plugins/notifications/Gritter/css/jquery.gritter.css" rel="stylesheet" />
-
-<!-- Google Code Prettify Plugin -->
-<link href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/common/theme/scripts/plugins/other/google-code-prettify/prettify.css" rel="stylesheet" />
-
-<!-- Pageguide Guided Tour Plugin -->
-<!--[if gt IE 8]><!--><link media="screen" href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/common/theme/scripts/plugins/other/pageguide/css/pageguide.css" rel="stylesheet" /><!--<![endif]-->
-
-<!-- Bootstrap Image Gallery -->
-<link href="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/common/bootstrap/extend/bootstrap-image-gallery/css/bootstrap-image-gallery.min.css" rel="stylesheet" />
-
-<!-- Customize CSS-->
-<link rel="stylesheet" href="<?php echo base_url()?>assets/spa/wellnez.css" >
-
-<!-- jcarousel-->
-<script src="<?php echo base_url()?>assets/app_center/jquery.js" ></script>
-<script src="<?php echo base_url()?>assets/app_center/jquery.jcarousel.min.js" ></script>
-<script src="<?php echo base_url()?>assets/app_center/jcarousel.responsive.js" ></script>
-
-<script src="<?php echo base_url()?>assets/bootstrap.min.js"></script>
-
-<!-- Global -->
-<script>
-//<![CDATA[
-var basePath = '',
-	commonPath = "https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/common/";
-
-// colors
-var primaryColor = '#5dd9c8',
-	dangerColor = '#b55151',
-	successColor = '#609450',
-	warningColor = '#ab7a4b',
-	inverseColor = '#45484d';
-
-var themerPrimaryColor = primaryColor;
-//]]>
-</script>
-<!-- cognito -->
-<script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/jsbn.js"></script>
-<script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/jsbn2.js"></script>
-<script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/sjcl.js"></script>
-<script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/moment.js"></script>
-<!-- For Cognito -->
-<!--Core Cognito -->
-<script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/aws-cognito-sdk.min.js"></script>
-<script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/amazon-cognito-identity.min.js"></script>
-<script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/aws-sdk.min.js"></script>
-<script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/resources/cred.js"></script>
-<!--Core Cognito -->
-
 <!-- Kedo JS by DAWINE -->
 <!-- <script src="<?php echo base_url()?>assets/kendo/js/jszip.min.js"></script> -->
-<script src="<?php echo base_url()?>assets/kendo/js/jquery.min.js"></script>
+<!-- <script src="<?php echo base_url()?>assets/kendo/js/jquery.min.js"></script> -->
 <script src="<?php echo base_url()?>assets/kendo/js/kendo.all.min.js"></script>
 <script src="<?php echo base_url()?>assets/kendo/examples/content/shared/js/console.js"></script>
 
@@ -168,131 +92,139 @@ var themerPrimaryColor = primaryColor;
 	});
 </script>
 <!--start kendo localization in Khmer-->
-
-<!-- Le fav and touch icons -->
-<link rel="shortcut icon" href="<?php echo base_url();?>assets/update/banhji.jpg">
-
-<style >
-	.document-body {
-		background: radial-gradient(grey, black);
-		width: 100%;
-		height: auto;
-		color: #fff;
-		font-family: 'Preahvihear', 'Roboto Slab' !important;
-	}
-	#content{
-		background: transparent;
-	}
-	.wrapper{
-		width: 100%;
-		float: left;
-	}
-	.menu{
-		height: 80px;
-		float: left;
-		margin-top: 10px;
-	}
-	.menu img{
-		width: 90%;
-	}
-	.icon-search:before {
-	    content: "\f002";
-	    color: #333;
-	}
-	.menu .span9{
-		margin-top: 10px;
-	}
-	.menu .span6{
-		text-align: left;
-	}
-	.search-menu .search-query{
-		color: #333;
-	    border: none;
-	    height: 35px;
-	    padding: 8px;
-	    width: 269px;
-	    display: inline;
-	    line-height: 80px;
-	    background-color: #fff;
-	    border-radius: 3px 0 0 3px;
-	}
-	.search-menu button{
-		margin-left: -4px;
-	    background: #fff; 
-	    padding: 8px 14px;
-	    border: none;
-	    height: 35px;
-	    margin-top: -3px;
-	    border-radius: 0 3px 3px 0;
-	    cursor: pointer;
-	}
-	.btn-inverse:hover, .btn-inverse:focus{
-		background: #fff;
-		color: #fff;
-	}
-	.menu .span6.logout{
-		text-align: right;
-		margin-top: 10px;
-	}
-	.menu .span6.logout a{
-		color: #fff;
-	}
-	.menu .span6.logout a:hover{
-		text-decoration: underline;
-	}
-	
-</style>
 </head>
+<body class="skin-default-dark fixed-layout" >
+	<div class="preloader">
+        <div class="loader">
+            <div class="loader__figure"></div>
+        </div>
+    </div>
+    <div id="main-wrapper">
+        <div id="examplee">
+            <header class="topbar">
+                <nav class="navbar top-navbar navbar-expand-md navbar-dark">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="<?php echo base_url();?>micro/home">
+                            <b>                                
+                                <img src="<?php echo base_url()?>assets/micro/banhji-micro-new.png" style="height: 36px;" alt="homepage" class="dark-logo" />
+                            </b>
+                            <span>                             
+                                <img src="<?php echo base_url()?>assets/micro/banhji-micro-new1.png" style="height: 36px;" alt="homepage" class="dark-logo" />
+                            </span>
+                            </a>
+                    </div>
 
-<body class="document-body ">
-	<div class="wrapper">
-		<div class="container ">
-			<div class="row">
-				<div class="span12 menu">
-					<div class="row">
-						<div class="span2">
-							<a href="<?php echo base_url();?>wellnez/home" >
-				                <img src="<?php echo base_url();?>assets/spa/wellnez-01.png" >
-				            </a>
-				        </div>
-				        <div class="span9">
-				        	<div class="row">
-				        		<div class="span6" >
-				        			 <form class="search-menu" >
-									  	<input type="text" 
-									  			class="search-query" 
-									  			placeholder="Search" 
-									  			id="search-placeholder" 
-									  			data-bind="value: searchText" }">
-									  	<button  type="submit" 
-									  			class="btn btn-inverse" 
-									  			data-bind="click: search">
-									  				<i class="icon-search"></i>
-									  	</button>
-									</form>
-				        		</div>
-				        		<div class="span6 logout">
-				        			<div class="row logout">
-										<div class="container" style="text-align: right; width: 100%;">
-											<div style="text-align: left;float: left;">
-												<a href="#" onclick="langVM.changeToKh()">
-									        		<span>ភាសាខ្មែរ</span>
-									        	</a> | 
-												<a href="#" onclick="langVM.changeToEn()">
-													<span>English</span>
-												</a>
-											</div>
-											<div style="text-align: right;float: right;">
-												<span>Hello [<span id="userCut"></span>] |
-												<a href="<?php echo base_url(); ?>login" >Logout</a></span>
-											</div>
-										</div>
-									</div>
-				        		</div>
-				        	</div>
-				        </div>
-				    </div>
-		        </div>
-		    </div>
-		</div>
-	</div>         
+                    <div class="navbar-collapse">
+
+                        <ul class="navbar-nav mr-auto">
+                            <!-- This is  -->
+                            <li class="nav-item hidden-sm-up"> <a class="nav-link nav-toggler waves-effect waves-light" href="javascript:void(0)"><i class="ti-menu"></i></a></li>
+                        </ul>
+                        <ul class="navbar-nav my-lg-0" id="companyDash">
+                            <li class="nav-item dropdown hidden-sm-down">
+                                <a onclick="fullScreen(); return false;" class="fullscreen nav-link dropdown-toggle text-muted waves-effect waves-dark" href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icon-size-fullscreen"></i></a>
+                                <a onclick="exitFullScreen(); return false;" class="exitfullscreen nav-link dropdown-toggle text-muted waves-effect waves-dark" href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icon-size-actual"></i></a>
+                            </li>
+                           	<script type="text/javascript">
+                                $('.exitfullscreen').hide();
+                                function fullScreen(){
+                                    var docElm = document.documentElement;
+                                    if (docElm.requestFullscreen) {
+                                        docElm.requestFullscreen();
+                                    }
+                                    else if (docElm.mozRequestFullScreen) {
+                                        docElm.mozRequestFullScreen();
+                                    }
+                                    else if (docElm.webkitRequestFullScreen) {
+                                        docElm.webkitRequestFullScreen();
+                                    }
+                                    $('.exitfullscreen').show();
+                                    $('.fullscreen').hide();
+                                }
+                                function exitFullScreen(){
+                                    var docElm = document.documentElement;
+                                    if (document.exitFullscreen) {
+                                            document.exitFullscreen();
+                                        } else if (document.webkitExitFullscreen) {
+                                            document.webkitExitFullscreen();
+                                        } else if (document.mozCancelFullScreen) {
+                                            document.mozCancelFullScreen();
+                                        } else if (document.msExitFullscreen) {
+                                            document.msExitFullscreen();
+                                        }
+                                    $('.exitfullscreen').hide();
+                                    $('.fullscreen').show();
+                                }
+                            </script>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="ti-plus"></i></a>
+                                <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY menuTransaction" style="width: auto;">
+                                    <span class="with-arrow"><span class="bg-primary"></span></span>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div>
+                                                <p><span>Quick Start</span></p>
+                                                <ul>
+                                                    <li><a href="<?php echo base_url();?>loyalty/card#/card"><span>Add Card</span></a></li>
+                                                    <li><a href="<?php echo base_url();?>loyalty/loyalty#/loyalty"><span>Add Loyalty</span></a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <img src="<?php echo base_url()?>assets/micro/logo-banhjiNew.png" alt="user" class="img-circle" width="30">
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY ul-multiTaskList" data-template="multiTaskList-row-template" data-bind="source: multiTaskList">
+                                    <span class="with-arrow"><span class="bg-primary"></span></span>
+                                    
+                                    <a class="dropdown-item" target="_blank" href="<?php echo base_url();?>rrd">Back to BanhJi</a>
+                                </div>
+                            </li>
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-comments-o"></i></a>
+                                <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
+                                    <span class="with-arrow"><span class="bg-primary"></span></span>
+                                    <div style="text-align: center; padding: 10px 10px 0;">
+                                        <p style="font-size: 14px;">Call us by<br><span style="font-weight: bold;font-size: 16px">+855 10 413 777</span><br>Mon-Fri<br>09:00 - 18:00</p>
+                                        <div class="fb-messengermessageus"
+                                          messenger_app_id="1301847836514973"
+                                          page_id="862386433857166"
+                                          color="blue"
+                                          width="180"
+                                          size="standard" ></div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="nav-item right-side-toggle" >
+                                <a class="nav-link  waves-effect waves-light" href="javascript:void(0)">
+                                    <img data-bind="attr: {src: userDS.data()[0].profile_photo.url}" alt="user" class="img-circle" width="30">
+                                </a>                            
+                            </li>
+
+                            <div class="right-sidebar">
+                                <div class="slimscrollright">
+                                    <div class="d-flex no-block align-items-center p-15 bg-primary text-white m-b-10">                  
+                                        <i class="ti-close right-side-toggle"></i>
+                                        <div class=""><img data-bind="attr: {src: userDS.data()[0].profile_photo.url}" alt="user" class="img-circle" width="60"></div>
+                                        <div class="m-l-10">
+                                            <h4 class="m-b-0"><span data-bind="text: userDS.data()[0].last_name"></span>&nbsp;
+                                            <span data-bind="text: userDS.data()[0].first_name"></span></h4>
+                                            <p class=" m-b-0"><span data-bind="text: userDS.data()[0].username"></span></p>
+                                        </div>
+                                    </div>
+                                    <a class="dropdown-item" href="<?php echo base_url()?>admin#"><i class="ti-settings m-r-5 m-l-5 " ></i><span class="marginLeft" data-bind="text: lang.lang.my_account_setting"></span></a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item menuLang" href="javascript:void(0)" onclick="langVM.changeToKh()"><i class="flag-icon flag-icon-kh  m-r-5 m-l-5"></i> ភាសាខ្មែរ</a>
+                                    <a class=" dropdown-item menuLang" href="javascript:void(0)" onclick="langVM.changeToEn()"><i class="flag-icon flag-icon-us  m-r-5 m-l-5"></i> English</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#/manage" data-bind="click: logout"><i class="fa fa-power-off m-r-5 m-l-5"></i><span data-bind="text: lang.lang.logout"></span></a>
+                                </div>
+                            </div>
+                        </ul>
+                    </div>
+                </nav>
+            </header>

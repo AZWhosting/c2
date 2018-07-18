@@ -9,7 +9,7 @@ class Sales extends REST_Controller {
 	public $server_user;
 	public $server_pwd;
 	//CONSTRUCTOR
-		function __construct() {
+	function __construct() {
 		parent::__construct();
 		$institute = new Institute();
 		$institute->where('id', $this->input->get_request_header('Institute'))->get();
@@ -2695,8 +2695,8 @@ class Sales extends REST_Controller {
 		
 		$obj->where("is_pattern", $is_pattern);
 		$obj->where("deleted <>", 1);
-		$obj->where_related("contact_type", "parent_id", 1);
-		$obj->include_related("contact_type", "name");		
+		$obj->include_related("contact_type", "name");	
+
 
 		//Results
 		$obj->get_paged_iterated($page, $limit);
@@ -2704,6 +2704,8 @@ class Sales extends REST_Controller {
 		
 		if($obj->result_count()>0){
 			foreach ($obj as $value) {
+
+
 		 		$data["results"][] = array(
 		 			"id" 						=> $value->id,		 			
 					"branch_id" 				=> $value->branch_id,
@@ -2731,15 +2733,15 @@ class Sales extends REST_Controller {
 					"credit_limit" 				=> $value->credit_limit,
 					"locale" 					=> $value->locale,					
 					"id_number" 				=> $value->id_number,
-					"phone" 					=> $value->phone,
-					"email" 					=> $value->email,
+					"phone" 					=> $value->phone == null ? "": $value->phone,
+					"email" 					=> $value->email == null ? "": $value->email,
 					"website" 					=> $value->website,					
 					"job" 						=> $value->job,
 					"vat_no" 					=> $value->vat_no,
 					"family_member"				=> $value->family_member,
 					"city" 						=> $value->city,
 					"post_code" 				=> $value->post_code,
-					"address" 					=> $value->address,
+					"address" 					=> $value->address == null ? "": $value->address,
 					"bill_to" 					=> $value->bill_to,
 					"ship_to" 					=> $value->ship_to,
 					"memo" 						=> $value->memo,

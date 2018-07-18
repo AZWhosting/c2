@@ -180,9 +180,9 @@ class Micro_modules extends REST_Controller {
 		    			$obj->{$value["operator"]}($value['field'], $value['value']);
 		    		}
 	    		} else {
-	    			if(isset($value["field"])){
+	    			// if(isset($value["field"])){
 		    			$obj->where($value['field'], $value['value']);
-		    		}
+		    		// }
 	    		}
 			}
 		}
@@ -211,7 +211,7 @@ class Micro_modules extends REST_Controller {
 		}
 		
 		if($obj->exists()){
-			foreach ($obj as $value) {								
+			foreach ($obj as $value) {
 				$amount = (floatval($value->amount) - floatval($value->deposit)) / floatval($value->rate);
 				
 				$data["results"][] = array(

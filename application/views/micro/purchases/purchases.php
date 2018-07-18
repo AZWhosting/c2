@@ -95,7 +95,7 @@
 		<div class="col-12 col-lg-5" >
 			<div class="row">
 				<div class="col-12 col-md-4 col-lg-4" style="padding: 0;">
-					<div class="saleOverview" style="margin-bottom: 15px; background:  #C8070E ; box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important;">
+					<div class="saleOverview" data-bind="click: loadOverdue" style="margin-bottom: 15px; background:  #C8070E ; box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important;">
 						<h2 style="color: #fff; " data-bind="text: lang.lang.overdue"></h2>
 						<p style="color: #fff; margin-bottom: 0;" data-format="n0" data-bind="text: obj.payable_overdue_count"></p>						
 					</div>
@@ -6603,7 +6603,7 @@
 </script>
 
 
-<script id="vendorCenter-vendor-list-tmpl" type="text/x-kendo-tmpl">
+<!-- <script id="vendorCenter-vendor-list-tmpl" type="text/x-kendo-tmpl">
 	<tr data-bind="click: selectedRow">
 		<td>
 			<div class="">
@@ -6687,7 +6687,7 @@
     			#=kendo.toString(amount, locale=="km-KH"?"c0":"c", locale)#
     		#}#
     	</td>
-    	<!-- Status -->
+    	
     	<td style="border-bottom: 1px solid \#1F4774; text-align: center;">
     		#if(status=="4") {#
     			<span data-bind="text: lang.lang.draft"></span>
@@ -6720,7 +6720,8 @@
         		#}#
         	#}#
 		</td>
-    	<!-- Actions -->
+    	
+    	
     	<td style="border-bottom: 1px solid \#1F4774; text-align: center;">
     		#if(type=="Credit_Purchase"){#
     			#if(status=="0" || status=="2") {#
@@ -6762,5 +6763,5 @@
 			<span class="glyphicons no-js delete" data-bind="click: deleteContactPerson"><i></i></span>
 		</td>
 	</tr>
-</script>
+</script> -->
 <!-- End -->
