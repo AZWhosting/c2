@@ -113,12 +113,13 @@ class Membership_types extends REST_Controller {
                 $recurrings->payment_method_id   = 0;
                 $recurrings->reference_id     	 = $memberships->id;
                 $recurrings->type                = "Invoice";//Required
+                $recurrings->sub_type            = "Memberships";
                 $recurrings->number              = "";
                 $recurrings->rate                = 1;//Required
                 $recurrings->status              = 0;
                 $recurrings->recurring_name      = "Subcription Recurring";
                 // $recurrings->start_date          = new Date();
-                $recurrings->frequency           = "Daily";
+                $recurrings->frequency           = "Day";
                 $recurrings->month_option        = "Day";
                 $recurrings->interval            = 1;
                 $recurrings->day                 = 1;

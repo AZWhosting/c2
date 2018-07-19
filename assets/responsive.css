@@ -180,7 +180,7 @@ div.k-window{
 .table-bordered tr  th{
       text-transform: uppercase !important;
 }
-.k-draghandle.k-state-selected:hover, .k-ghost-splitbar-horizontal, .k-ghost-splitbar-vertical, .k-list>.k-state-highlight, .k-list>.k-state-selected, .k-marquee-color, .k-panel>.k-state-selected, .k-scheduler .k-scheduler-toolbar .k-state-selected, .k-scheduler .k-today.k-state-selected, .k-state-selected, .k-state-selected:link, .k-state-selected:visited{
+.k-draghandle.k-state-selected:hover, .k-ghost-splitbar-horizontal, .k-ghost-splitbar-vertical, .k-list>.k-state-highlight, .k-list>.k-state-selected, .k-marquee-color, .k-panel>.k-state-selected, .k-scheduler .k-scheduler-toolbar .k-state-selected, .k-scheduler .k-today.k-state-selected, .k-state-selected:link, .k-state-selected:visited{
   background-color: #21abf6 !important;
   border-color: #21abf6 !important;
 }

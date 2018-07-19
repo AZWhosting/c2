@@ -16084,16 +16084,7 @@
 						        		</div>
 						        		<div class="span12">
 						        			Message:
-						        			<textarea data-role="editor"
-						                      data-tools="['bold',
-						                                   'italic',
-						                                   'underline',
-						                                   'strikethrough',
-						                                   'justifyLeft',
-						                                   'justifyCenter',
-						                                   'justifyRight',
-						                                   'justifyFull']"
-						                      data-bind="value: objRecurring.memo" style="height: 90px; margin-bottom: 15px;"></textarea>
+						        			<textarea data-bind="value: objRecurring.memo" style="width: 100%; height: 90px; margin-bottom: 15px;"></textarea>
 					        			</div>
 						        	</div>
 
@@ -50788,9 +50779,9 @@
 			        <h2 style="padding:0 15px;" data-bind="text: lang.lang.custom_forms"></h2>
 				    <br>
 				    <div class="row" style="margin-left:0;">
-						<div class="span4">
+						<div class="span4" style="background: #eee; padding: 20px 0;border: 1px solid #ccc;margin-bottom: 20px;">
 							<div class="span12" style="margin-bottom: 10px;">
-								<input type="text" id="formName" name="Form Name" class="k-textbox" placeholder="Form Name" required validationMessage="" data-bind="value: obj.name" style="width: 100%;" />
+								<input type="text" id="formName" name="Form Name" class="k-textbox" placeholder="Form Name" validationMessage="" data-bind="value: obj.name" style="width: 100%;border: 1px solid #ccc;padding: 5px;" />
 							</div>
 							<div class="span12">
 								<select class="span12 selectType"
@@ -50800,7 +50791,7 @@
 									data-value-field="id"
 									data-bind="value: obj.type,
 										source: selectTypeList,
-										events:{change: onChange}" >
+										events:{change: onTypeChange}" >
 								</select>
 								<select class="span12 selectType"
 									data-role="dropdownlist"
@@ -50812,7 +50803,7 @@
 										events:{change: groupChange}" >
 								</select>
 							</div>
-							<div class="span12">
+							<div class="span12" data-bind="visible: haveForm">
 								<h2 class="btn btn-block btn-primary" style="color: #fff !important;" >Form Style</h2>
 								<div class="row formstyle">
 									<div id="formStyle"
@@ -50828,7 +50819,17 @@
 								<h2 class="btn btn-block btn-primary" style="color: #fff !important;">Form Color</h2>
 								<div class="colorPalatte span12">
 									<div class="" style="margin-top: 15px;">
-										<div data-selectable="true" data-bind="value: obj.color, events: { change : colorCC }" data-tile-size='{ width: 60, height: 35 }' data-role="colorpalette" data-columns="6" data-palette='[ "#ffffff", "#000000", "#eeece1", "#1f497d", "#4f81bd", "#c0504d", "#9bbb59", "#dbeef3", "#8064a2", "#f79646", "#f2f2f2", "#7f7f7f", "#ddd9c3", "#c6d9f0", "#dbe5f1", "#f2dcdb", "#ebf1dd", "#e5e0ec"]'></div>
+										<div 
+											data-selectable="true" 
+											data-bind="
+												value: obj.color, 
+												events: { change : colorCC }
+											" 
+											data-tile-size='{ width: 60, height: 35 }' 
+											data-role="colorpalette" 
+											data-columns="6" 
+											data-palette='[ "#ffffff", "#000000", "#eeece1", "#1f497d", "#4f81bd", "#c0504d", "#9bbb59", "#dbeef3", "#8064a2", "#f79646", "#f2f2f2", "#7f7f7f", "#ddd9c3", "#c6d9f0", "#dbe5f1", "#f2dcdb", "#ebf1dd", "#e5e0ec"]'>
+										</div>
                                 	</div>
                                 </div>
 							</div>
@@ -50844,8 +50845,12 @@
 
 							</div>
 							<div class="span9" align="right">
-								<span class="btn btn-icon btn-primary glyphicons ok_2" data-bind="click: save" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save"></span></span>
-								<span class="btn btn-icon btn-success glyphicons power" data-bind="click: cancel" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.cancel"></span></span> 
+								<span class="btn btn-icon btn-primary glyphicons ok_2" data-bind="click: save" style="width: auto; color: #fff; border-radius: 3px;">
+									<i></i> <span data-bind="text: lang.lang.save"></span>
+								</span>
+								<span class="btn btn-icon btn-success glyphicons power" data-bind="click: cancel" style="width: auto; color: #fff; border-radius: 3px;background: darkred;border: 1px solid darkred;">
+									<i></i> <span data-bind="text: lang.lang.cancel"></span>
+								</span> 
 							</div>
 						</div>
 					</div>

@@ -395,7 +395,7 @@
                         <i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
                     </div>
                     <div id="example" class="k-content">
-                        <h2 data-bind="text: lang.lang.reading">Reading</h2>
+                        <h2 data-bind="text: lang.lang.reading">Attendance by Finger Print</h2>
                         <div class="hidden-print pull-right">
                             <span class="glyphicons no-js remove_2" 
                                 data-bind="click: cancel"><i></i></span>
@@ -405,7 +405,7 @@
                             <div class="widget widget-tabs widget-tabs-double-2 widget-tabs-gray">
                                 <div class="widget-head" style="background: #203864 !important; color: #fff;">
                                     <ul style="padding-left: 0px;">
-                                        <li class="active" style="width: 210px;"><a style="text-transform: capitalize;" href="#tabDownload" data-toggle="tab"><span style="line-height: 23px;"><span>Upload your file</span></b></span></a></li>
+                                        <li class="active" style="width: 210px;"><a style="text-transform: capitalize;" href="#tabDownload" data-toggle="tab"><span style="line-height: 23px;"><span>Upload your Excel file</span></b></span></a></li>
                                     </ul>
                                 </div>
                                 <div class="widget-body">

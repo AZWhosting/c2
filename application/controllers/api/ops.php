@@ -173,7 +173,7 @@ class Ops extends REST_Controller {
 				// }
 				
 			    // Modify fields
-		 		//$fields = array(
+		 		//  $fields = array(
 				// 	// "conversion_ratio" => array(
 				// 	// 	"name" 		=> "conversion_ratio",//New Field Name
 				// 	// 	"type" 		=> "DECIMAL",
@@ -181,8 +181,8 @@ class Ops extends REST_Controller {
 				// 	// 	"null" 		=> FALSE,
 				// 	// 	"default" 	=> 1
 				// 	// ),
-				// 	"type" => array(
-				// 		"name" 		=> "type",//New Field Name
+				// 	"frequency" => array(
+				// 		"name" 		=> "frequency",//New Field Name
 				// 		"type" 		=> "VARCHAR",
 				// 		"constraint"=> "255",
 				// 		"null" 		=> FALSE,

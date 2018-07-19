@@ -20,25 +20,75 @@
 			<ul class="topnav" id="secondary-menu">
 			</ul>
 			<ul class="topnav pull-right">
+				<li >
+			  		<a onclick="fullScreen(); return false;" class="fullscreen " href="#" role="button" aria-haspopup="true" aria-expanded="false"> <i class="icon-fullscreen"></i></a>
+		  			<a onclick="exitFullScreen(); return false;" class="exitfullscreen " style="display: none;"  href="#" role="button" aria-haspopup="true" aria-expanded="false"> <i class="icon-resize-small"></i></a>
+			  	</li>
+
 				<li role="presentation" class="dropdown">
 			  		<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"> <i class="icon-th-list"></i></a>
 		  			<ul class="dropdown-menu ul-multiTaskList" data-template="multiTaskList-row-template" data-bind="source: multiTaskList">
 		  			</ul>
 			  	</li>
+			  	
 				<li role="presentation" class="dropdown">
 			  		<a style="color: #fff;" class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">[<span data-bind="text: getUsername"></span>]</a>
 		  			<ul class="dropdown-menu">
-		  				<li><a href="#" data-bind="click: lang.changeToKh">ភាសាខ្មែរ</a></li>
-    					<li><a href="#" data-bind="click: lang.changeToEn">English</a></li>
+		  				<li><a href="<?php echo base_url(); ?>admin" class="" ><i class="icon-cog"></i> <span data-bind="text: lang.lang.admin_module">Admin Module</span></a></li>
+		  				<li class="divider"></li>
+		  				<li>
+	                    	<a href="#" data-bind="click: lang.changeToKh">
+	                    		<img style="width: 20px;" class="kh-flag" src="https://lipis.github.io/flag-icon-css/flags/4x3/kh.svg">
+	                    		<span>ភាសាខ្មែរ</span>
+	                    	</a>
+	                    </li>
+    					<li>
+    						<a href="#" data-bind="click: lang.changeToEn">
+    							<img style="width: 20px;" class="en-flag" src="https://lipis.github.io/flag-icon-css/flags/4x3/gb.svg">
+    							<span>English</span>
+    						</a>
+    					</li>
 						<li class="divider"></li>
 					<!-- 	<li><a href="<?php echo base_url(); ?>admin">Setting</a></li> -->
-						<li><a href="#/manage" data-bind="click: logout"><i class="icon-power-off"></i> Logout</a></li>
+						<li><a href="#/manage" data-bind="click: logout" ><i class="icon-power-off"></i> <span data-bind="text: lang.lang.logout">Logout</span></a></li>
 		  			</ul>
 			  	</li>
 			</ul>
 		</div>
 	</div>
 </script>
+<script type="text/javascript">
+	
+    function fullScreen(){
+        var docElm = document.documentElement;
+        if (docElm.requestFullscreen) {
+            docElm.requestFullscreen();
+        }
+        else if (docElm.mozRequestFullScreen) {
+            docElm.mozRequestFullScreen();
+        }
+        else if (docElm.webkitRequestFullScreen) {
+            docElm.webkitRequestFullScreen();
+        }
+        $('.exitfullscreen').show();
+        $('.fullscreen').hide();
+    }
+    function exitFullScreen(){
+        var docElm = document.documentElement;
+        if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.webkitExitFullscreen) {
+                document.webkitExitFullscreen();
+            } else if (document.mozCancelFullScreen) {
+                document.mozCancelFullScreen();
+            } else if (document.msExitFullscreen) {
+                document.msExitFullscreen();
+            }
+        $('.exitfullscreen').hide();
+        $('.fullscreen').show();
+    }
+</script>
+
 <script id="multiTaskList-row-template" type="text/x-kendo-template">
     <li>
     	<a href="\#/#=url#">
@@ -100,18 +150,18 @@
 							</a>
 							<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><h5 data-bind="text: lang.lang.tax" style="margin-top: 5px; display: inline-block;" style="margin-top: 5px; display: inline-block;"></h5></span>
 						</li>
-						<li style="text-align:center;">
+						<!-- <li style="text-align:center;">
 							<a href="<?php echo base_url(); ?>admin">
 								<img title="Admin Module" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/setting.jpg" alt="Admin">
 								<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><h5 data-bind="text: lang.lang.settings" style="margin-top: 5px; display: inline-block;" style="margin-top: 5px; display: inline-block;"></h5></span>
 							</a>
-						</li>
-						<!-- <li style="text-align:center;">
+						</li> -->
+						<li style="text-align:center;">
 							<a href="<?php echo base_url(); ?>app">
 								<img title="App Center" src="<?php echo base_url(); ?>assets/app_center/app_center.jpg" alt="App Center">
 								<span style="margin-top: 5px; font-size: 14px; font-weight: bold; color: #000000"><h5 data-bind="text: lang.lang.app_center" style="margin-top: 5px; display: inline-block;" style="margin-top: 5px; display: inline-block;"></h5></span>
 							</a>
-						</li>	 -->
+						</li>	
 					</ul>
 				</div>
 			</div>
@@ -540,7 +590,8 @@
                  { 'field': 'locale' },
                  { 'field': 'movement' },
                  { 'field': 'inventory_quantity', 'title': 'On Hand', 'editor': numberTextboxEditor },
-                 { 'field': 'inventory_value', 'title': 'Inv.Value', 'editor': numberTextboxEditor },
+                 { 'field': 'inventory_value', 'title': 'InvVal', 'editor': numberTextboxEditor },
+                 { 'field': 'inventory_adjust_value', 'title': 'InvAdj', 'editor': numberTextboxEditor },
                  { 'field': 'deleted' }
              ]"
              data-bind="source: itemLineDS"></div>
@@ -2192,10 +2243,10 @@
 
 								            		<input data-role="dropdownlist"
 										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
+										                   data-text-field="text"
+										                   data-value-field="value"
 										                   data-bind="value: obj.frequency,
-										                              source: frequencyList,
+										                              source: dateUnitList,
 										                              events: { change: frequencyChanges }"
 										                   style="width: 45%;" />
 								            	</td>
@@ -2568,7 +2619,7 @@
 																disabled: obj.is_recurring,
 																events:{change:checkExistingNumber}"
 													required data-required-msg="required"
-													placeholder="eg. ABC00001" style="width: 83%; float: left; margin-right: 5px;"" />
+													placeholder="eg. ABC00001" style="width: 83%; float: left; margin-right: 5px;" />
 											<div style="padding-left: 0; width: 25px; float: left;">
 												<a class="glyphicons no-js qrcode" data-bind="click: generateNumber" title="Generate Number" style="float: left; margin: 2px 0 0 0 ;"><i></i></a>
 											</div>
@@ -2871,10 +2922,10 @@
 
 								            		<input data-role="dropdownlist"
 										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
+										                   data-text-field="text"
+										                   data-value-field="value"
 										                   data-bind="value: obj.frequency,
-										                              source: frequencyList,
+										                              source: dateUnitList,
 										                              events: { change: frequencyChanges }"
 										                   style="width: 45%;" />
 								            	</td>
@@ -3511,10 +3562,10 @@
 
 								            		<input data-role="dropdownlist"
 										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
+										                   data-text-field="text"
+										                   data-value-field="value"
 										                   data-bind="value: obj.frequency,
-										                              source: frequencyList,
+										                              source: dateUnitList,
 										                              events: { change: frequencyChanges }"
 										                   style="width: 45%;" />
 								            	</td>
@@ -4168,10 +4219,10 @@
 
 								            		<input data-role="dropdownlist"
 										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
+										                   data-text-field="text"
+										                   data-value-field="value"
 										                   data-bind="value: obj.frequency,
-										                              source: frequencyList,
+										                              source: dateUnitList,
 										                              events: { change: frequencyChanges }"
 										                   style="width: 45%;" />
 								            	</td>
@@ -4593,7 +4644,7 @@
 														disabled: obj.is_recurring,
 														events:{change:checkExistingNumber}"
 													required data-required-msg="required"
-													placeholder="eg. ABC00001" style="width: 83%; float: left; margin-right: 5px;"" />
+													placeholder="eg. ABC00001" style="width: 83%; float: left; margin-right: 5px;" />
 											<div style="padding-left: 0; width: 25px; float: left;">
 												<a class="glyphicons no-js qrcode" data-bind="click: generateNumber" title="Generate Number" style="float: left; margin: 2px 0 0 0 ;"><i></i></a>
 											</div>
@@ -4663,19 +4714,21 @@
 							    <!-- Tabs Heading -->
 							    <div class="tabsbar tabsbar-2">
 							        <ul class="row-fluid row-merge">
-							        	<li class="span1 glyphicons cogwheels active"><a href="#tab1-7" data-toggle="tab"><i></i></a>
+							        	<li class="span1 glyphicons cogwheels active"><a href="#tab1-8" data-toggle="tab"><i></i></a>
 							            </li>
-							            <li class="span1 glyphicons adress_book"><a href="#tab2-7" data-toggle="tab"><i></i></a>
+							            <li class="span1 glyphicons adress_book"><a href="#tab2-8" data-toggle="tab"><i></i></a>
 							            </li>
-							            <li class="span1 glyphicons circle_info"><a href="#tab3-7" data-toggle="tab"><i></i></a>
+							            <li class="span1 glyphicons circle_info"><a href="#tab3-8" data-toggle="tab"><i></i></a>
 							            </li>
-							            <li class="span1 glyphicons link"><a href="#tab4-7" data-toggle="tab"><i></i></a>
+							            <li class="span1 glyphicons link"><a href="#tab4-8" data-toggle="tab"><i></i></a>
 							            </li>
-							            <li class="span1 glyphicons sort"><a href="#tab5-7" data-toggle="tab"><i></i></a>
+							            <li class="span1 glyphicons sort"><a href="#tab5-8" data-toggle="tab"><i></i></a>
 							            </li>
-							            <li class="span1 glyphicons paperclip"><a href="#tab6-7" data-toggle="tab"><i></i></a>
+							            <li class="span1 glyphicons paperclip"><a href="#tab6-8" data-toggle="tab"><i></i></a>
 							            </li>
-							            <li class="span1 glyphicons history"><a href="#tab7-7" data-toggle="tab"><i></i></a>
+							            <li class="span1 glyphicons history"><a href="#tab7-8" data-toggle="tab"><i></i></a>
+							            </li>
+							            <li class="span1 glyphicons alarm" data-bind="visible: isProforma"><a href="#tab8-8" data-toggle="tab"><i></i></a>
 							            </li>
 							        </ul>
 							    </div>
@@ -4684,7 +4737,7 @@
 							    <div class="tab-content">
 
 							    	<!-- Options -->
-							        <div class="tab-pane active" id="tab1-7">
+							        <div class="tab-pane active" id="tab1-8">
 							            <table style="margin-bottom: 0;" class="table table-borderless table-condensed cart_total">
 											<tr>
 												<td>
@@ -4761,7 +4814,7 @@
 							        <!-- // Options END -->
 
 							        <!-- Address -->
-							        <div class="tab-pane" id="tab2-7">
+							        <div class="tab-pane" id="tab2-8">
 							        	<span data-bind="text: lang.lang.billing_address"></span>
 										<textarea cols="0" rows="2" class="k-textbox" style="width:100%" data-bind="value: obj.bill_to" placeholder="Billing to ..."></textarea>
 
@@ -4772,7 +4825,7 @@
 							        <!-- // Address END -->
 
 							        <!-- Info -->
-							        <div class="tab-pane" id="tab3-7">
+							        <div class="tab-pane" id="tab3-8">
 
 										<table class="table table-borderless table-condensed cart_total">
 								            <tr>
@@ -4817,7 +4870,7 @@
 							        <!-- // Info END -->
 
 							        <!-- References -->
-							        <div class="tab-pane" id="tab4-7">
+							        <div class="tab-pane" id="tab4-8">
 							            <table style="margin-bottom: 0;" class="table table-borderless table-condensed cart_total">
 								            <tr>
 												<td style="vertical-align: top;">
@@ -4848,7 +4901,7 @@
 							        <!-- // References END -->
 
 							        <!-- Segment -->
-							        <div class="tab-pane" id="tab5-7">
+							        <div class="tab-pane" id="tab5-8">
 
 							        	<input id="cbbSegment" name="cbbSegment"
 							        		   data-role="combobox"
@@ -4900,7 +4953,7 @@
 							        <!-- // Segment END -->
 
 							        <!-- Attach -->
-							        <div class="tab-pane" id="tab6-7">
+							        <div class="tab-pane" id="tab6-8">
 
 							        	<p><span data-bind="text: lang.lang.file_type"></span>: [PDF, JPG, JPEG, TIFF, PNG, GIF]</p>
 							            <input id="files" name="files"
@@ -4930,7 +4983,7 @@
 							        <!-- // Attach END -->
 
 							        <!-- Recuring -->
-							        <div class="tab-pane" id="tab7-7">
+							        <div class="tab-pane" id="tab7-8">
 
 							            <table style="width: 100%" class="table borderless">
 							            	<tr align="right">
@@ -4966,10 +5019,10 @@
 
 								            		<input data-role="dropdownlist"
 										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
+										                   data-text-field="text"
+										                   data-value-field="value"
 										                   data-bind="value: obj.frequency,
-										                              source: frequencyList,
+										                              source: dateUnitList,
 										                              events: { change: frequencyChanges }"
 										                   style="width: 45%;" />
 								            	</td>
@@ -5025,6 +5078,53 @@
 
 							        </div>
 							        <!-- // Recuring END -->
+
+							        <!-- Proforma -->
+							        <div class="tab-pane" id="tab8-8">
+							        	<table class="table borderless">
+							        		<tr>
+							            		<td>Start Date</td>
+							            		<td>
+							            			<input data-role="datepicker"
+															data-format="dd-MM-yyyy"
+															data-parse-formats="yyyy-MM-dd"
+															data-bind="value: objBC.start_date"
+															style="width: 100%; " />
+							            		</td>
+							            	</tr>
+							            	<tr>
+							            		<td>Total Amount is for</td>
+							            		<td>
+							            			<input data-role="numerictextbox"
+									                   data-format="n0"
+									                   data-min="0"
+									                   data-bind="value: objBC.interval"
+									                   style="width: 49%; " />
+
+									                <input data-role="dropdownlist"
+										                   data-value-primitive="true"
+										                   data-text-field="text"
+										                   data-value-field="value"
+										                   data-bind="value: objBC.date_unit,
+										                              source: dateUnitList"
+										                   style="width: 50%;" />
+							            		</td>
+							            	</tr>
+							            	<tr>
+							            		<td>Revenue Recognition</td>
+							            		<td>
+							            			<input data-role="dropdownlist"
+										                   data-value-primitive="true"
+										                   data-text-field="text"
+										                   data-value-field="value"
+										                   data-bind="value: objBC.frequency,
+										                              source: frequencyList"
+										                   style="width: 100%;" />
+							            		</td>
+							            	</tr>							            	
+							            </table>
+							        </div>
+							        <!-- // Proforma END -->
 
 							    </div>
 							</div>
@@ -6362,10 +6462,10 @@
 
 								            		<input data-role="dropdownlist"
 										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
+										                   data-text-field="text"
+										                   data-value-field="value"
 										                   data-bind="value: obj.frequency,
-										                              source: frequencyList,
+										                              source: dateUnitList,
 										                              events: { change: frequencyChanges }"
 										                   style="width: 45%;" />
 								            	</td>
@@ -7067,9 +7167,7 @@
 							<tr>
 								<td>Amount</td>
 								<td>
-									<input data-role="numerictextbox"
-										data-spinners="false"
-										data-format="n"
+									<input type="number" class="k-textbox"
 										data-min="0"
 										data-bind="value: returnObj.amount,
 													events:{change: returnChanges}"
@@ -7126,7 +7224,7 @@
 											<span data-bind="text: lang.lang.remaining" style="font-size: 15px; font-weight: 700;"></span>
 										</td>
 										<td class="right">
-											<span id="remaining" name="remaining" data-format="n" data-bind="text: obj.remaining" style="font-size: 15px; font-weight: 700;"></span>
+											<span id="remaining" name="remaining" data-bind="text: obj.remaining" style="font-size: 15px; font-weight: 700;"></span>
 										</td>
 									</tr>
 								</tbody>
@@ -7731,7 +7829,7 @@
 					</div>
 
 					<br><br>
-					<div id="invFormContent1">
+					<div id="invFormContent">
 						<div class="block-title">
 							<h3 data-bind="text: company.name"></h3>
 							<h2 data-bind="text: lang.lang.statement"></h2>
@@ -7773,7 +7871,7 @@
 							<div class="span6">
 								<div class="total-sale">
 									<p data-bind="text: lang.lang.total_due">Total Due</p>
-									<span data-bind="text: totalDue"></sapn>
+									<span data-format="n" data-bind="text: total_due"></sapn>
 								</div>
 							</div>
 						</div>
@@ -7782,242 +7880,59 @@
 						</div>
 						<div class="span6">
 								<div class="total-sale">
-									<p data-bind="text: lang.lang.amount_due">Amount Due</p>
-									<span data-bind="text: totalAmount"></sapn>
+									<p>Overdue</p>
+									<span data-format="n" data-bind="text: overdue"></sapn>
 								</div>
 						</div>
-						<table class="table table-borderless table-condensed">
-							<thead>
-								<tr>
-									<th><span style="color: #fff!important;" data-bind="text: lang.lang.date"></span></th>
-									<th><span style="color: #fff!important;" data-bind="text: lang.lang.type"></span></th>
-									<!-- <th><span style="color: #fff!important;" data-bind="text: lang.lang.job"></span></th> -->
-									<th><span style="color: #fff!important;" data-bind="text: lang.lang.reference_no"></span></th>
-									<th><span style="color: #fff!important;" data-bind="text: lang.lang.transaction"></span></th>
-									<th><span style="color: #fff!important;" data-bind="text: lang.lang.status"></span></th>
-									<th><span style="color: #fff!important;" data-bind="text: lang.lang.amount"></span></th>
-									<th><span style="color: #fff!important;" data-bind="text: lang.lang.balance"></span></th>
-								</tr>
-							</thead>
-							<tbody data-role="listview"
-								data-auto-bind="false"
-								data-bind="source: dataSource"
-								data-template="statement-row-template"
-							></tbody>
-						</table>
-
-						<!-- <table class="table-statement">
-							<thead>
-								<tr>
-									<th class="center" style="text-align: center"><span data-bind="text: lang.lang.current"></span></th>
-									<th class="center" style="text-align: center">30</th>
-									<th class="center" style="text-align: center">60</th>
-									<th class="center" style="text-align: center">90</th>
-									<th class="center" style="text-align: center">> 90</th>
-									<th class="center" style="text-align: center"><span data-bind="text: lang.lang.amount_due"></span></th>
-								</tr>
-							</thead>
-							<tbody data-role="listview"
-								data-auto-bind="false"
-								data-bind="source: agingDS"
-								data-template="statement-aging-row-template"
-							></tbody>
-						</table> -->
-					</div>
-					<div id="invFormContent" style="display: none">
-						<div class="row-fluid">
-							<div class="span5">
-								<div class="accounCetner-textedit">
-					            	<table width="100%">
-					            		<tr>
-											<div class="" style=" height: 117px; text-align: left;">
-												<img style="width: auto; height: auto; max-width: 100%; max-height: 100%; height: 100px;" data-bind="attr: { src: companyLogo.url, alt: companyName, title: companyName }" />
-											</div>
-											<h4 data-bind="text: company.name"></h4>
-										</tr>
-										</br>
-										<tr>
-											<td><span data-bind="text: lang.lang.number"></span></td>
-											<td>
-												<span class="strong" data-bind="text: obj.abbr"></span>
-												<span class="strong" data-bind="text: obj.number"></span>
-											</td>
-										</tr>
-										<tr>
-											<td><span data-bind="text: lang.lang.name"></span></td>
-											<td>
-												<span data-bind="text: obj.name"></span>
-											</td>
-										</tr>
-										<tr>
-											<td><span data-bind="text: lang.lang.billed_address"></span></td>
-											<td>
-												<span data-bind="text: obj.address"></span>
-											</td>
-										</tr>								
-										<tr>
-											<td><span data-bind="text: lang.lang.phone"></span></td>
-											<td>
-												<span data-bind="text: obj.phone"></span>
-											</td>
-										</tr>
-									</table>													
-								</div>
-							</div>
-							<div class="span5">
-								<div class="accounCetner-textedit">
-					            	<table width="100%">
-										<tr>
-											
-											<td >
-												<span data-bind="text: company.address"></span>
-											</td>
-										</tr>
-										<tr>
-											
-											<td>
-												<span data-bind="text: company.email"span>
-											</td>
-										</tr>								
-										<tr>
-											
-											<td>
-												<span data-bind="text: company.telephone"></span>
-											</td>
-										</tr>
-										<tr>
-											<td style=" height: 55px">
-												
-											</td>
-										</tr>
-										<tr>
-											<td><h4 style=" color: black" data-bind="text: lang.lang.total_due"></h4></td>
-											<td>
-												<h4 style="color: black" data-bind="text: totalAmount"></h4>
-											</td>
-										</tr>
-										<tr>
-											<td style=" height: 10px">
-												
-											</td>
-										</tr>
-										<tr>
-											<td><h4 style="color: black" data-bind="text: lang.lang.amount_due"></h4></td>
-											<td style="color: black" >
-												<h4  data-bind="text: totalDue"></h4>
-											</td>
-										</tr>
-									</table>													
-								</div>
-							</div>
-							<div class="span2">
-							</div>
-						</div>
-						<div class="row-fluid">
-							<div class="span3">
-								
-							</div>
-							<div class="span4">
-							<div style="text-align: center">
-								<h3 data-bind="text: lang.lang.statement" ></h3>
-							</div>
-							<div class="span5">
-							</div>
-						</div>
-							</br>
-						<table class="table table-borderless table-condensed">
-							<thead>
-								<tr>
-									<th data-bind="text: lang.lang.date"><span></span></th>
-									<th data-bind="text: lang.lang.type"><span></span></th>
-									<th data-bind="text: lang.lang.reference_no"><span></span></th>
-									<th data-bind="text: lang.lang.transaction"><span></span></th>
-									<th data-bind="text: lang.lang.status"><span></span></th>
-									<th data-bind="text: lang.lang.amount"><span></span></th>
-									<th data-bind="text: lang.lang.balance"><span></span></th>
-								</tr>
-							</thead>
-							<tbody data-role="listview"
-								data-auto-bind="false"
-								data-bind="source: dataSource"
-								data-template="statement-row-template"
-							></tbody>
-						</table>
-
-						<!-- <table class="table-statement">
-							<thead>
-								<tr>
-									<th class="center" style="text-align: center"><span data-bind="text: lang.lang.current"></span></th>
-									<th class="center" style="text-align: center">30</th>
-									<th class="center" style="text-align: center">60</th>
-									<th class="center" style="text-align: center">90</th>
-									<th class="center" style="text-align: center">> 90</th>
-									<th class="center" style="text-align: center"><span data-bind="text: lang.lang.amount_due"></span></th>
-								</tr>
-							</thead>
-							<tbody data-role="listview"
-								data-auto-bind="false"
-								data-bind="source: agingDS"
-								data-template="statement-aging-row-template"
-							></tbody>
-						</table> -->
-						<br style="line-height:5px">
-						</br>
-					</br>
-					</br>
-
-				</div>	
-
-			</div>
-			<div class="row-fluid" id="endSide" style="display: none">
-				</br>
-					</br>
-				<div class="span1"></div>				
-				<div class="span3">
-					<p style="font-weight: bold; border-top: 0.5px solid black !important; color: black; width:" >Authorized by:</p>
-					<p ></p>
+						<div data-role="grid" class="costom-grid"
+					    	 data-column-menu="true"
+					    	 data-reorderable="true"
+					    	 data-pageable="true"
+			                 data-columns="[
+			                 	{ field: 'issued_date', title: 'DATE' },
+	                            { field: 'type', title:'TYPE' },
+	                            { field: 'reference_no', title:'REFERENCE NO.' },
+	                            { field: 'number', title:'NUMBER' },
+	                            { 
+	                            	field: 'status', 
+	                            	title: 'STATUS',
+	                            	template: kendo.template($('#statement-status-template').html()) 
+	                            },
+	                            { 
+	                            	field: 'amount', 
+	                            	title:'AMOUNT', 
+	                            	format: '{0:n}', 
+	                            	attributes: { style: 'text-align: right;' }, 
+	                            	width: '120px' 
+	                            }
+	                         ]"
+	                         data-auto-bind="false"
+			                 data-bind="source: dataSource" ></div>
+					</div>					
 				</div>
-				<div class="span1"></div>
-				<div class="span3">
-					<p style="font-weight: bold; border-top: 0.5px solid black !important; color: black; width:" >Received by:</p>
-					<p ></p>
-				</div>
-				<div class="span1"></div>
-				
-				<div class="span3">
-					<p style="font-weight: bold; border-top: 0.5px solid black !important; color: black; width:" >Paid by:</p>
-					<p ></p>
-				</div>
-		</div>	
+			</div>			
 		</div>
 	</div>
 </script>
-<script id="statement-row-template" type="text/x-kendo-template" >
-	<tr>
-		<td>#=kendo.toString(new Date(issued_date), "dd-MM-yyyy")#</td>
-		<td>#=type#</td>
-		<!-- <td>#=job#</td> -->
-		<td>#for(var i=0; i < reference_no.length; i++){# #=reference_no[i].number#, #}#</td>
-		<td>#=number#</td>
-		<td>
-			#if(type=="Commercial_Invoice" || type=="Vat_Invoice" || type=="Invoice"){#
-        		#if(status=="0" || status=="2") {#
-        			# var date = new Date(), dueDate = new Date(due_date).getTime(), toDay = new Date(date).getTime(); #
-					#if(dueDate < toDay) {#
-						Over Due #:Math.floor((toDay - dueDate)/(1000*60*60*24))# days
-					#} else {#
-						#:Math.floor((dueDate - toDay)/(1000*60*60*24))# days to pay
-					#}#
-				#} else if(status=="1") {#
-					Paid
-				#} else if(status=="3") {#
-					Returned
-				#}#        	
-        	#}#
-		</td>		
-		<td align="right">#=kendo.toString(amount, "c", locale)#</td>
-		<td align="right">#=kendo.toString(balance, "c", locale)#</td>
-	</tr>
+<script id="statement-status-template" type="text/x-kendo-template" >
+	#if(status=="4") {#
+		#=progress#
+	#}#
+
+	#if(type=="Commercial_Invoice" || type=="Vat_Invoice" || type=="Invoice"){#
+		#if(status=="0" || status=="2") {#
+			# var date = new Date(), dueDate = new Date(due_date).getTime(), toDay = new Date(date).getTime(); #
+			#if(dueDate < toDay) {#
+				Over Due #:Math.floor((toDay - dueDate)/(1000*60*60*24))# days
+			#} else {#
+				#:Math.floor((dueDate - toDay)/(1000*60*60*24))# days to pay
+			#}#
+		#} else if(status=="1") {#
+			Paid
+		#} else if(status=="3") {#
+			Returned
+		#}#
+	#}#
 </script>
 <script id="statement-aging-row-template" type="text/x-kendo-template" >
 	<tr>
@@ -8376,23 +8291,19 @@
 	    <!-- Tabs Heading -->
 	    <div class="widget-head span3">
 	        <ul>
-	            <li class="active"><a href="#tab1-7" class="glyphicons parents" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.customer_type"></span></span></a>
+	            <li class="active"><a href="#tab1-5" class="glyphicons parents" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.customer_type"></span></span></a>
 	            </li>
-	            <li><a href="#/customer_group" class="glyphicons group"><i></i><span class="strong">CUSTOMER GROUP</span></a>
+	            <li><a href="#/customer_group" class="glyphicons group"><i></i><span class="strong"><span data-bind="text: lang.lang.customer_group"></span></span></a>
 	            </li>
-	            <li><a href="#/customer_assignee" class="glyphicons nameplate"><i></i><span class="strong">SALE REP. ASSIGMENT</span></a>
+	            <li><a href="#/customer_assignee" class="glyphicons nameplate"><i></i><span class="strong"><span data-bind="text: lang.lang.sale_rep_assignments">SALE REP. ASSEGMENT</span></span></a>
 	            </li>
-	            <li><a href="#tab2-7" class="glyphicons credit_card" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.payment_method"></span></span></a>
+	            <li><a href="#tab2-5" class="glyphicons credit_card" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.payment_method"></span></span></a>
 	            </li>
-	            <li><a href="#tab3-7" class="glyphicons clock" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.payment_terms"></span></span></a>
+	            <li><a href="#tab3-5" class="glyphicons clock" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.payment_terms"></span></span></a>
 	            </li>
-	            <li><a href="#tab4-7" class="glyphicons list" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.custom_forms"></span></span></a>
+	            <li><a href="#tab4-5" class="glyphicons list" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.custom_forms"></span></span></a>
 	            </li>
-	            <li><a href="#tab5-7" class="glyphicons building" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.prefix_setting"></span></span></a>
-	            </li>
-	            <li><a href="#tab6-7" class="glyphicons more_items" data-toggle="tab"><i></i><span class="strong">Custom Field</span></a>
-	            </li>
-	            <li><a href="#tab7-7" class="glyphicons vcard" data-toggle="tab"><i></i><span class="strong">Membership Type</span></a>
+	            <li><a href="#tab5-5" class="glyphicons building" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.prefix_setting"></span></span></a>
 	            </li>
 	        </ul>
 	    </div>
@@ -8402,7 +8313,7 @@
 	        <div class="tab-content">
 
 	            <!-- CUSTOMER TYPE -->
-	            <div class="tab-pane active" id="tab1-7">
+	            <div class="tab-pane active" id="tab1-5">
 	            	<div class="input-append">
 					    <input class="span4" id="appendedInputButtons" type="text" placeholder="input customer type ..." data-bind="value: contactTypeName">
 					    <input class="span4" id="appendedInputButtons" type="text" placeholder="input abbr ..." data-bind="value: contactTypeAbbr">
@@ -8431,7 +8342,7 @@
 	            <!-- // CUSTOMER TYPE END -->
 
 	            <!-- PAYMENT METHOD -->
-	            <div class="tab-pane" id="tab2-7">
+	            <div class="tab-pane" id="tab2-5">
 	            	<div class="input-append">
 					    <input class="span12" id="appendedInputButtons" type="text" placeholder="name ..." data-bind="value: paymentMethodName">
 					    <button class="btn btn-default" type="button" data-bind="click: addPaymentMethod"><i class="icon-plus"></i> <span data-bind="text: lang.lang.add_method"></span></button>
@@ -8452,7 +8363,7 @@
 	            <!-- // PAYMENT METHOD END -->
 
 	            <!-- PAYMENT TERM -->
-	            <div class="tab-pane" id="tab3-7">
+	            <div class="tab-pane" id="tab3-5">
             		<div class="input-append">
 					    <input class="span3" id="appendedInputButtons" type="text" placeholder="name ..." data-bind="value: paymentTermName">
 					    <input class="span3" id="appendedInputButtons" type="text" placeholder="net due ..." data-bind="value: paymentTermNetDue">
@@ -8479,7 +8390,7 @@
 	            <!-- // PAYMENT TERM END -->
 
 	            <!-- Tab Invocice Custom content -->
-	            <div class="tab-pane" id="tab4-7">
+	            <div class="tab-pane" id="tab4-5">
 
 	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 	            		<thead>
@@ -8503,7 +8414,7 @@
 	            <!-- // Tab Invoice Custom content END -->
 
 	            <!-- Tab Prefix content -->
-	            <div class="tab-pane" id="tab5-7">
+	            <div class="tab-pane" id="tab5-5">
 	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 	            		<thead>
 	            			<tr class="widget-head">
@@ -8522,36 +8433,6 @@
 
 	            </div>
 	            <!-- // Tab Prefix content END -->
-
-	            <!-- Tab Custom Field content -->
-	            <div class="tab-pane" id="tab6-7">
-	            	<div data-role="grid"
-		                 data-editable="true"
-		                 data-toolbar="['create', 'save', 'cancel']"
-		                 data-columns="[
-		                                { 'field': 'name', title:'Field Name','width': 270 },
-		                                { 'field': 'description', title:'Description' },
-		                                { command: 'destroy', title: '&nbsp;', width: '100px' }
-		                 ]"
-		                 data-bind="source: customFieldDS"
-		                 style="height: 200px"></div>
-	            </div>
-	            <!-- // Tab Custom Field content END -->
-
-	            <!-- Tab Membership type content -->
-	            <div class="tab-pane" id="tab7-7">
-	            	<div data-role="grid"
-		                 data-editable="true"
-		                 data-toolbar="['create', 'save', 'cancel']"
-		                 data-columns="[
-		                                { 'field': 'name', title:'Field Name','width': 270 },
-		                                { 'field': 'description', title:'Description' },
-		                                { command: 'destroy', title: '&nbsp;', width: '100px' }
-		                 ]"
-		                 data-bind="source: membershipTypeDS"
-		                 style="height: 200px"></div>
-	            </div>
-	            <!-- // Tab Membership type content END -->
 
 	        </div>
 	    </div>
@@ -8947,7 +8828,7 @@
 									<h3><a href="#/sale_order_list" data-bind="text: lang.lang.sale_order_list" style="text-transform: capitalize;"></a></h3>
 								</td>
 								<td style="vertical-align: top;">
-									<h3><a href="#/saleOrder_detail_by_product" data-bind="text: lang.lang.saleOrder_detail_by_product" style="text-transform: capitalize;"></a></h3>
+									<h3><a href="#/sale_order_by_item" data-bind="text: lang.lang.saleOrder_detail_by_product" style="text-transform: capitalize;"></a></h3>
 								</td>
 							</tr>
 							<tr>
@@ -8961,6 +8842,16 @@
 										Lists individual sale order transactions by date for each product/ service with a period of time.
 									</p>
 								</td>
+
+							</tr>
+							<tr>
+								<td style="vertical-align: top;">
+									<h3><a href="#/sale_order_by_employee"  style="text-transform: capitalize;">Sale Order By Employee/Customer</a></h3>
+								</td>
+								
+							</tr>
+							<tr>
+								
 
 							</tr>
 							<tr>
@@ -9082,10 +8973,32 @@
 							</tr>
 							<tr>
 								<td style="vertical-align: top;">
-									<h3><a href="#/receivable_aging_summary" data-bind="text: lang.lang.receivable_aging_summary">Receivable Aging Summary</a></h3>
+									<h3><a href="#/receivable_aging_summary_employee" data-bind="text: lang.lang.receivable_aging_summary_byEmloyee">Receivable Aging Summary by Employee</a></h3>
 								</td>
 								<td style="vertical-align: top;">
 									<h3><a href="#/receivable_aging_detail" data-bind="text: lang.lang.receivable_aging_detail">Receivable Aging Detail</a></h3>
+								</td>
+							</tr>
+							<tr>
+								<td style="vertical-align: top;">
+									<p style="padding-right: 25px;" data-bind="text: lang.lang.lists_all_unpaid_invoices2">
+										Lists all unpaid invoices for the current period, 30, 60, 90,
+										and more than 90 days, grouped by Employee.
+									</p>
+								</td>
+								<td style="vertical-align: top;">
+									<p data-bind="text: lang.lang.lists_individual_unpaid_invoices_grouped_by_customer">
+										Lists individual unpaid invoices, grouped by customer. This includes due date,
+										outstanding days (aging days), and amount.
+									</p>
+								</td>
+							</tr>
+							<tr>
+								<td style="vertical-align: top;">
+									<h3><a href="#/receivable_aging_summary" data-bind="text: lang.lang.receivable_aging_summary">Receivable Aging Summary</a></h3>
+								</td>
+								<td style="vertical-align: top;">
+									<h3><a href="#/receivable_aging_detail_by_employee" data-bind="text: lang.lang.receivable_aging_detail_employee">Receivable Aging Detail by Employee</a></h3>
 								</td>
 							</tr>
 							<tr>
@@ -9102,45 +9015,62 @@
 									</p>
 								</td>
 							</tr>
-
 							<tr>
 								<td style="vertical-align: top;">
-									<h3><a href="#/collect_invoice" data-bind="text: lang.lang.list_of_invoices_to_be_collected"></a></h3>
+									<h3><a href="#/invoice_status_list" >List Invoice Status</a></h3>
 								</td>
 								<td style="vertical-align: top;">
-									<h3><a href="#/collection_report" data-bind="text: lang.lang.collection_report"></a></h3>
+									<h3><a href="#/collect_invoice" data-bind="text: lang.lang.list_of_invoices_to_be_collected"></a></h3>
 								</td>
 							</tr>
 							<tr>
 								<td style="vertical-align: top;">
+									<p style="padding-right: 25px;" data-bind="text: lang.lang.lists_all_unpaid_invoices1">
+										Lists all unpaid invoices for the current period, 30, 60, 90,
+										and more than 90 days, grouped by individual customers.
+									</p>
+								</td>
+								<td style="vertical-align: top;">									
 									<p style="padding-right: 25px;" data-bind="text: lang.lang.lists_all_unpaid_invoices_grouped_by_due_today_and_overdue">
 										Lists all unpaid invoices, grouped by Due today and Overdue.
 									</p>
 								</td>
-								<td style="vertical-align: top;">
-									<p data-bind="text: lang.lang.lists_of_collected_invoices_for_the_select_period_of_time_group_by_method_of_payment"></p>
-									
-								</td>
 							</tr>
 
 							<tr>
 								<td style="vertical-align: top;">
-									<h3><a href="#/invoice_list" data-bind="text: lang.lang.invoice_list"></a></h3>
+									<h3><a href="#/collection_report" data-bind="text: lang.lang.collection_report"></a></h3>
 								</td>
 								<td style="vertical-align: top;">
-									<h3><a href="#/customer_list" data-bind="text: lang.lang.customer_list"></a></h3>
+									<h3><a href="#/invoice_list" data-bind="text: lang.lang.invoice_list"></a></h3>
 								</td>
 							</tr>
 							<tr>
 								<td style="vertical-align: top;">
+									<p data-bind="text: lang.lang.lists_of_collected_invoices_for_the_select_period_of_time_group_by_method_of_payment"></p>
+								</td>
+								<td style="vertical-align: top;" data-bind="text: lang.lang.list_of_all_active_customers">
 									<p style="padding-right: 25px;"  data-bind="text: lang.lang.shows_a_chronological_list_of_all_your_invoices_for_a_selected_date_range">
 										Shows a chronological list of all your invoices for a selected date range.
 									</p>
 								</td>
-								<td style="vertical-align: top;" data-bind="text: lang.lang.list_of_all_active_customers">
+							</tr>
+							<tr>
+								<td style="vertical-align: top;">
+									<h3><a href="#/customer_list" data-bind="text: lang.lang.customer_list"></a></h3>
+								</td>
+								<td style="vertical-align: top;">
+									
+								</td>
+							</tr>
+							<tr>
+								<td style="vertical-align: top;">
 									<p>
 										List of all active customers
 									</p>
+								</td>
+								<td style="vertical-align: top;" >
+									
 								</td>
 							</tr>
 
@@ -9547,7 +9477,7 @@
 			<td style="text-align: left;">
 				<a href="\#/#=line[i].type.toLowerCase()#/#=line[i].id#">#=line[i].number#</a>
 			</td>
-			<td style="text-align: right;">#=line[i].memo#</td>
+			<td style="text-align: left;">#=line[i].memo#</td>
 			<td style="text-align: right;">#=kendo.toString(line[i].amount, "c2", banhji.locale)#</td>
 		</tr>
 	#}#
@@ -9855,27 +9785,35 @@
 							</div>
 						</div>
 
-						<table class="table table-borderless table-condensed ">
-							<thead>
-								<tr>
-									<th style="text-transform: uppercase;" data-bind="text: lang.lang.item"></th>
-									<th style="text-align: right;" data-bind="text: lang.lang.qty"></th>
-									<th style="text-align: right; text-transform: uppercase;" data-bind="text: lang.lang.amount"></th>
-									<th style="text-align: right; text-transform: uppercase;" data-bind="text: lang.lang.avg_price"></th>
-									<th style="text-align: right; text-transform: uppercase;" data-bind="text: lang.lang.avg_cost"></th>
-									<th style="text-align: right; text-transform: uppercase;" data-bind="text: lang.lang.gross_profit_margin"></th>
-								</tr>
-							</thead>
-							<tbody data-role="listview"
-										 data-template="saleSummaryByProduct-template"
-										 data-auto-bind="false"
-										 data-bind="source: dataSource"
-							></tbody>
-						</table>
-						<div id="pager" class="k-pager-wrap"
-			            		 data-role="pager"
-						    	 data-auto-bind="false"
-					             data-bind="source: dataSource"></div>
+						<div class="costom-grid"
+							 data-role="grid"
+							 data-sortable="true"
+	                         data-column-menu="true"
+			                 data-columns="[
+                                { field: 'number', title:'NUMBER', hidden: true, width: 150 },
+                                { field: 'name', title:'NAME' },
+                                { 
+                                	field: 'quantity', 
+                                	title:'QUANTITY',
+                                	format: '{0:n}', 
+                                	attributes: {
+								      	style: 'text-align: right;'
+								    },
+								    width: 150
+                                },
+                                { field: 'measurement', title:'UOM', width: 150 },
+                                { 
+                                	field: 'amount', 
+                                	title:'AMOUNT',
+                                	format: '{0:n}',
+                                	attributes: {
+								      	style: 'text-align: right;'
+								    },
+								    width: 200 
+                                }
+                             ]"
+                             data-auto-bind="false"
+			                 data-bind="source: dataSource"></div>
 					</div>
 				</div>
 			</div>
@@ -10070,7 +10008,7 @@
 
 	#}#
 	<tr>
-    	<td colspan="4" style="font-weight: bold; color: black;"><span data-bind="text: lang.lang.total"></span>Total #: name #</td>
+    	<td colspan="4" style="font-weight: bold; color: black;"><span data-bind="text: lang.lang.total"></span>#: name #</td>
     	<td class="right" style="font-weight: bold; border-top: 1px solid black !important; color: black;">
     		#=kendo.toString(totalQty, "n")#
     	</td>
@@ -11522,7 +11460,7 @@
 											<table class="table table-condensed">
 												<tr>
 									            	<td style="padding: 8px 0 0 0 !important; ">
-														<span data-bind="text: lang.lang.customers"></span>
+														<span>Sale Rep.</span>
 														<select data-role="multiselect"
 															   data-value-primitive="true"
 															   data-header-template="contact-header-tmpl"
@@ -11530,8 +11468,8 @@
 															   data-value-field="id"
 															   data-text-field="name"
 															   data-bind="value: obj.contactIds,
-															   			source: contactDS"
-															   data-placeholder="Select Customer.."
+															   			source: employeeDS"
+															   data-placeholder="Select Sale Rep.."
 															   style="width: 100%" /></select>
 													</td>
 													<td style="padding-top: 31px !important; float: left;">
@@ -11566,42 +11504,43 @@
 							<p data-bind="text: displayDate"></p>
 						</div>
 
-						<div class="row-fluid">
-							<div class="span3">
-								<div class="total-customer">
-									<p data-bind="text: lang.lang.number_of_customer"></p>
-									<span data-bind="text: dataSource.total"></span>
-								</div>
-
-							</div>
-							<div class="span9">
-								<div class="total-sale">
-									<p data-bind="text: lang.lang.amount"></p>
-									<span data-bind="text: totalAmount"></sapn>
-								</div>
-							</div>
-						</div>
-
-						<table class="table table-borderless table-condensed ">
-							<thead>
-								<tr>
-									<th data-bind="text: lang.lang.type"><span></span></th>
-									<th data-bind="text: lang.lang.name"><span></span></th>
-									<th data-bind="text: lang.lang.date"><span></span></th>
-									<th style="text-align: right;" data-bind="text: lang.lang.reference"><span></span></th>
-									<th data-bind="text: lang.lang.amount"><span></span></th>
-								</tr>
-							</thead>
-							<tbody data-role="listview"
-									data-template="saleDetailByEmployee-template"
-									data-auto-bind="false"
-									data-bind="source: dataSource">
-							</tbody>
-						</table>
-						<div id="pager" class="k-pager-wrap"
-			            		 data-role="pager"
-						    	 data-auto-bind="false"
-					             data-bind="source: dataSource"></div>
+						<div data-role="grid" class="costom-grid"
+					    	 data-column-menu="true"
+					    	 data-groupable="true"
+					    	 data-pageable="true"
+					    	 data-reorderable="true"
+					    	 data-scrollable="false"
+					    	 data-resizable="true"
+			                 data-columns="[
+			                 	{ 
+			                 		field: 'contacts', 
+			                 		title: 'CUSTOMER',
+			                 		groupFooterTemplate: 'TOTAL:' 
+			                 	},
+	                            { field: 'employees', title:'SALE REP.' },
+	                            { field: 'issued_date', title:'DATE', template: '#=kendo.toString(new Date(issued_date), banhji.dateFormat)#' },
+	                            { 
+	                            	field: 'number', 
+	                            	title:'NUMBER',
+	                            	template: kendo.template($('#saleOrderDetailbyEmployee-number-template').html())
+	                            },
+	                            { 
+	                            	field: 'status', 
+	                            	title:'STATUS', 
+	                            	template: kendo.template($('#saleOrderDetailbyEmployee-status-template').html()) 
+	                            },
+	                            { 
+	                            	field: 'amount', 
+	                            	title:'AMOUNT', 
+	                            	format: '{0:n}', 
+	                            	attributes: { style: 'text-align: right;' },
+	                            	footerAttributes: { style: 'text-align: right;' },
+	                            	aggregates: ['sum'], 
+	                            	groupFooterTemplate: '#=kendo.toString(sum, banhji.numberFormat)#' 
+	                            }                            
+	                         ]"
+	                         data-auto-bind="false"
+			                 data-bind="source: dataSource" ></div>
 					</div>
 				</div>
 			</div>
@@ -11611,9 +11550,9 @@
 	<br>
 </script>
 <script id="saleDetailByEmployee-template" type="text/x-kendo-template">
-	<tr style="font-weight: bold">
+	<td></td>
+		<tr style="font-weight: bold">
 		<td>#=name#</td>
-		<td></td>
 		<td></td>
 		<td></td>
 		<td></td>
@@ -12125,6 +12064,158 @@
     	<td colspan="4">&nbsp;</td>
     </tr>
 </script>
+<script id="receivableAgingSummarybyEmployee" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content saleSummaryCustomer">
+			    	<span class="pull-right glyphicons no-js remove_2"
+						onclick="javascript:window.history.back()"><i></i></span>
+					<br>
+					<br>
+
+					<div class="row-fluid">
+					    <!-- Tabs -->
+						<div class="relativeWrap" data-toggle="source-code">
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+
+								<!-- Tabs Heading -->
+								<div class="widget-head">
+									<ul>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>
+										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.filter"></span></a></li>
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
+									</ul>
+								</div>
+								<!-- // Tabs Heading END -->
+								<div class="widget-body">
+									<div class="tab-content">
+
+								        <!-- //Date -->
+								        <div class="tab-pane active" id="tab-1">
+									        <span data-bind="text: lang.lang.as_of"></span>:
+									        <input data-role="datepicker"
+													data-format="dd-MM-yyyy"
+													data-parse-formats="yyyy-MM-dd"
+													data-bind="value: as_of" />
+
+								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+
+							        	</div>
+								    	<!-- Filter -->
+								        <div class="tab-pane" id="tab-2">
+											<table class="table table-condensed">
+												<tr>
+									            	<td style="padding: 8px 0 0 0 !important; ">
+														<span data-bind="text: lang.lang.customers"></span>
+														<select data-role="multiselect"
+															   data-value-primitive="true"
+															   data-header-template="contact-header-tmpl"
+															   data-item-template="contact-list-tmpl"
+															   data-value-field="id"
+															   data-text-field="name"
+															   data-bind="value: obj.customers,
+															   			source: contactDS"
+															   data-placeholder="Select Customer.."
+															   style="width: 100%" /></select>
+													</td>
+													<td style="padding-top: 31px !important; float: left;">
+										  				<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+													</td>
+												</tr>
+											</table>
+							        	</div>
+							        	<!--PRINT/EXPORT  -->
+								        <div class="tab-pane" id="tab-3">
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
+								        	<span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
+								        		<i class="fa fa-file-pdf-o"></i>
+								        		Print as PDF
+								        	</span>
+								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" style="width: 80px;">
+								        		<i class="fa fa-file-excel-o"></i>
+								        		Export to Excel
+								        	</span>
+							        	</div>
+								    </div>
+								</div>
+							</div>
+						</div>
+						<!-- // Tabs END -->
+					</div>
+
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="html: company.name"></h3>
+							<h2 data-bind="text: lang.lang.receivable_aging_summary_byEmloyee"></h2>
+							<p data-bind="text: displayDate"></p>
+						</div>
+
+						<div data-role="grid" class="costom-grid"
+					    	 data-column-menu="true"
+					    	 data-groupable="true"
+					    	 data-pageable="true"
+					    	 data-reorderable="true"
+					    	 data-scrollable="false"
+					    	 data-resizable="true"
+			                 data-columns="[
+			                 	{ 
+			                 		field: 'employees', 
+			                 		title: 'EMPLOYEE',
+			                 		groupFooterTemplate: 'TOTAL:' 
+			                 	},
+	                            { field: 'nameCustomer', title:'CUSTOMER' },
+	                            { 
+	                            	field: 'current', 
+	                            	title:'CURRENT', 
+	                            	format: '{0:n}', 
+	                            	attributes: { style: 'text-align: right;' },
+	                            },
+	                            { 
+	                            	field: 'in30', 
+	                            	title:'1-30', 
+	                            	format: '{0:n}', 
+	                            	attributes: { style: 'text-align: right;' },
+	                            },
+	                            { 
+	                            	field: 'in60', 
+	                            	title:'31-60', 
+	                            	format: '{0:n}',  
+	                            	attributes: { style: 'text-align: right;' },
+	                            },
+	                            { 
+	                            	field: 'in90', 
+	                            	title:'61-90', 
+	                            	format: '{0:n}',  
+	                            	attributes: { style: 'text-align: right;' },
+	                            },
+	                            { 
+	                            	field: 'over90', 
+	                            	title:'90', 
+	                            	format: '{0:n}', 
+	                            	attributes: { style: 'text-align: right;' },
+	                            },
+	                            { 
+	                            	field: 'total', 
+	                            	title:'TOTAL', 
+	                            	format: '{0:n}',  
+	                            	format: '{0:n}', 
+	                            	attributes: { style: 'text-align: right;' },
+	                            	footerAttributes: { style: 'text-align: right;' },
+	                            	aggregates: ['sum'], 
+	                            	groupFooterTemplate: '#=kendo.toString(sum, banhji.numberFormat)#'
+	                            },
+	                                             
+	                         ]"
+	                         data-auto-bind="false"
+			                 data-bind="source: dataSource" ></div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
 <script id="receivableAgingSummary" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background">
@@ -12405,6 +12496,185 @@
 	<tr>
 		<td style="padding-left: 20px !important;">
 			<a href="\#/#=line[i].type.toLowerCase()#/#=line[i].id#"><i></i> #=line[i].type#</a>
+		</td>
+		<td>#=kendo.toString(new Date(line[i].issued_date), "dd-MM-yyyy")#</td>
+		<td>#=kendo.toString(new Date(line[i].due_date), "dd-MM-yyyy")#</td>
+		<td><a href="\#/#=line[i].type.toLowerCase()#/#=line[i].id#"><i></i> #=line[i].number#</a></td>
+		<td style="text-align: right;">
+    		#if(line[i].type==="Cash_Receipt"){#
+				PMT
+			#}else if(line[i].type==="Sale_Return"){#
+				Returned
+        	#}else{#
+        		#if(line[i].status==="0" || line[i].status==="2") {#
+					# var date = new Date(), dueDates = new Date(line[i].due_date).getTime(), toDay = new Date(date).getTime(); #
+					#if(dueDates < toDay) {#
+						Over Due #:Math.floor((toDay - dueDates)/(1000*60*60*24))# days
+					#} else {#
+						#:Math.floor((dueDates - toDay)/(1000*60*60*24))# days to pay
+					#}#
+				#}else{#
+					Paid
+				#}#
+        	#}#
+		</td>
+		<td style="text-align: right;">
+			#=kendo.toString(line[i].amount, "c2", banhji.locale)#
+		</td>
+		<td style="text-align: right;">
+			#=kendo.toString(totalBalance, "c2", banhji.locale)#
+		</td>
+	</tr>
+    #}#
+    <tr>
+    	<td colspan="6" style="font-weight: bold; color: black;"><span data-bind="text: lang.lang.total"></span></td>
+    	<td class="right" style="font-weight: bold; border-top: 1px solid black !important; color: black;">
+    		#=kendo.toString(totalBalance, "c2", banhji.locale)#
+    	</td>
+    </tr>
+    <tr>
+    	<td colspan="7">&nbsp;</td>
+    </tr>
+</script>
+<script id="receivableAgingDetailbyEmployee" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content saleSummaryCustomer">
+			    	<span class="pull-right glyphicons no-js remove_2"
+						onclick="javascript:window.history.back()"><i></i></span>
+					<br>
+					<br>
+
+					<div class="row-fluid">
+					    <!-- Tabs -->
+						<div class="relativeWrap" data-toggle="source-code">
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+
+								<!-- Tabs Heading -->
+								<div class="widget-head">
+									<ul>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>
+										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.filter"></span></a></li>
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
+									</ul>
+								</div>
+								<!-- // Tabs Heading END -->
+								<div class="widget-body">
+									<div class="tab-content">
+
+								        <!-- //Date -->
+								        <div class="tab-pane active" id="tab-1">
+									        <span data-bind="text: lang.lang.as_of"></span>:
+									        <input data-role="datepicker"
+													data-format="dd-MM-yyyy"
+													data-parse-formats="yyyy-MM-dd"
+													data-bind="value: as_of" />
+
+								            <button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+
+							        	</div>
+
+								    	<!-- Filters -->
+								        <div class="tab-pane" id="tab-2">
+											<table class="table table-condensed">
+												<tr>
+									            	<td style="padding: 8px 0 0 0 !important; ">
+														<span data-bind="text: lang.lang.sale_rep"></span>
+														<select data-role="multiselect"
+															   data-value-primitive="true"
+															   data-item-template="contact-list-tmpl"
+															   data-value-field="id"
+															   data-text-field="name"
+															   data-bind="value: obj.employeeIds,
+															   			source: employeeDS"
+															   data-placeholder="Select Sale Rep..."
+															   style="width: 100%" /></select>
+													</td>
+													<td style="padding-top: 31px !important; float: left;">
+										  				<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+													</td>
+												</tr>
+											</table>
+							        	</div>
+							        	<!--PRINT/EXPORT  -->
+								        <div class="tab-pane" id="tab-3">
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
+								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
+								        		<i class="fa fa-file-pdf-o"></i>
+								        		Print as PDF
+								        	</span> -->
+								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" style="width: 80px;">
+								        		<i class="fa fa-file-excel-o"></i>
+								        		Export to Excel
+								        	</span>
+							        	</div>
+								    </div>
+								</div>
+							</div>
+						</div>
+						<!-- // Tabs END -->
+					</div>
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="html: company.name"></h3>
+							<h2 data-bind="text: lang.lang.receivable_aging_detail_employee"></h2>
+							<p data-bind="text: displayDate"></p>
+						</div>
+
+						<div class="row">
+							<div class="span3" style="padding-right: 0;">
+								<div class="total-customer">
+									<p data-bind="text: lang.lang.number_of_employee"></p>
+									<span data-format="n0" data-bind="text: dataSource.total"></span>
+								</div>
+							</div>
+							<div class="span9">
+								<div class="total-customer">
+									<p data-bind="text: lang.lang.total_customer_balance"></p>
+									<span data-bind="text: totalBalance"></span>
+								</div>
+							</div>
+						</div>
+
+						<table class="table table-borderless table-condensed ">
+							<thead>
+								<tr>
+									<th data-bind="text: lang.lang.customer"><span>Type</span></th>
+									<th data-bind="text: lang.lang.invoice_date"><span>Invoice Date</span></th>
+									<th data-bind="text: lang.lang.due_date"><span>Due Date</span></th>
+									<th data-bind="text: lang.lang.reference"><span>Reference</span></th>
+									<th style="text-align: center;" data-bind="text: lang.lang.status"><span>Status</span></th>
+									<th style="text-align: right;" data-bind="text: lang.lang.amount"><span>Amount</span></th>
+									<th style="text-align: right;" data-bind="text: lang.lang.balance"><span>Balance</span></th>
+								</tr>
+							</thead>
+							<tbody data-role="listview"
+								 data-auto-bind="false"
+								 data-bind="source: dataSource"
+								 data-template="receivableAgingDetailbyEmployee-template"
+							></tbody>
+						</table>
+						<div id="pager" class="k-pager-wrap"
+			            		 data-role="pager"
+						    	 data-auto-bind="false"
+					             data-bind="source: dataSource"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="receivableAgingDetailbyEmployee-template" type="text/x-kendo-tmpl">
+	<tr>
+		<td colspan="7" style="font-weight: bold; color: black;">#: name #</td>
+	</tr>
+	#var totalBalance = 0;#
+	#for(var i = 0; i < line.length; i++){#
+	#totalBalance += line[i].amount;#
+	<tr>
+		<td style="padding-left: 20px !important;">
+			#=line[i].customer#
 		</td>
 		<td>#=kendo.toString(new Date(line[i].issued_date), "dd-MM-yyyy")#</td>
 		<td>#=kendo.toString(new Date(line[i].due_date), "dd-MM-yyyy")#</td>
@@ -12985,7 +13255,7 @@
 								<div class="widget-body">
 									<div class="tab-content">
 							        <!-- PRINT/EXPORT  -->
-								        <div class="tab-pane" id="tab-3">
+								        <div class="tab-pane active" id="tab-3">
 								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
 								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
 								        		<i class="fa fa-file-pdf-o"></i>
@@ -13025,9 +13295,10 @@
 							></tbody>
 						</table>
 						<div id="pager" class="k-pager-wrap"
-			            		 data-role="pager"
+						    	 data-role="pager"
 						    	 data-auto-bind="false"
-					             data-bind="source: contact"></div>
+						    	 style="width: 100%"
+					             data-bind="source: dataSource"></div>
 					</div>
 				</div>
 			</div>
@@ -14039,7 +14310,717 @@
 		</div>
 	</div>
 </script>
+<script id="saleOrderDetailbyCustomer" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content saleSummaryCustomer">
+			    	<span class="pull-right glyphicons no-js remove_2"
+						onclick="javascript:window.history.back()"><i></i></span>
+					<br>
+					<br>
 
+					<div class="row-fluid">
+					    <!-- Tabs -->
+						<div class="relativeWrap" data-toggle="source-code">
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+
+								<!-- Tabs Heading -->
+								<div class="widget-head">
+									<ul>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>
+										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.filter"></span></a></li>
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
+									</ul>
+								</div>
+								<!-- // Tabs Heading END -->
+								<div class="widget-body">
+									<div class="tab-content">
+
+								        <!-- Date -->
+								        <div class="tab-pane active" id="tab-1">
+
+											<input data-role="dropdownlist"
+												   class="sorter"
+										           data-value-primitive="true"
+										           data-text-field="text"
+										           data-value-field="value"
+										           data-bind="value: sorter,
+										                      source: sortList,
+										                      events: { change: sorterChanges }" />
+
+											<input data-role="datepicker"
+												   class="sdate"
+												   data-format="dd-MM-yyyy"
+										           data-bind="value: sdate,
+										           			  max: edate"
+										           placeholder="From ..." >
+
+										    <input data-role="datepicker"
+										    	   class="edate"
+										    	   data-format="dd-MM-yyyy"
+										           data-bind="value: edate,
+										                      min: sdate"
+										           placeholder="To ..." >
+
+										  	<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+
+							        	</div>
+
+								    	<!-- Filter -->
+								        <div class="tab-pane" id="tab-2">
+											<table class="table table-condensed">
+												<tr>
+									            	<td style="padding: 8px 0 0 0 !important; ">
+														<span data-bind="text: lang.lang.item"></span>
+														<select data-role="multiselect"
+															   data-value-primitive="true"
+															   data-header-template="item-header-tmpl"
+															   data-item-template="item-list-tmpl"
+															   data-value-field="id"
+															   data-text-field="name"
+															   data-bind="value: obj.itemIds,
+															   			source: itemDS"
+															   data-placeholder="Select Item..."
+															   style="width: 100%" /></select>
+													</td>
+													<td style="padding-top: 31px !important; float: left;">
+										  				<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+													</td>
+												</tr>
+											</table>
+							        	</div>
+							        	<div class="tab-pane" id="tab-3">
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
+								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
+								        		<i class="fa fa-file-pdf-o"></i>
+								        		Print as PDF
+								        	</span> -->
+								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" style="width: 80px;">
+								        		<i class="fa fa-file-excel-o"></i>
+								        		Export to Excel
+								        	</span>
+							        	</div>
+								    </div>
+								</div>
+							</div>
+						</div>
+						<!-- // Tabs END -->
+					</div>
+
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="html: company.name"></h3>
+							<h2>Sale Order Detail by Customer</h2>
+							<p data-bind="text: displayDate"></p>
+						</div>
+
+						<div class="row-fluid">
+							<div class="span5">
+								<div class="total-customer">
+									
+								
+										<p data-bind="text: lang.lang.order"></p>
+										<span data-bind="text: dataSource.total"></span>
+								</div>
+							</div>
+							<div class="span7">
+								<div class="total-customer">
+									<p data-bind="text: lang.lang.total_sale"></p>
+									<span data-bind="text: total_sale"></span>
+								</div>
+							</div>
+						</div>
+
+						<div class="costom-grid"
+							 data-role="grid"
+							 data-sortable="true"
+	                         data-column-menu="true"
+			                 data-columns="[
+                                { field: 'name', title:'NAME',  width: 200 },
+                                { field: 'number', title:'NUMBER' },
+                                { field: 'item', title:'ITEM',  width: 200  },                                
+                                { 
+                                	field: 'issued_date', 
+                                	title:'DATE', 
+                                	template: '#= kendo.toString(new Date(issued_date), \'dd/MM/yyyy\') # ',
+                                	attributes: {
+								      	style: 'text-align: right;'
+								    },
+                                },
+                                { 
+                                	field: 'quantity', 
+                                	title:'QUANTITY',
+                                	format: '{0:n}', 
+                                	attributes: {
+								      	style: 'text-align: right;'
+								    },
+								    width: 120
+                                },
+                                { 
+                                	field: 'amount', 
+                                	title:'AMOUNT',
+                                	format: '{0:n}',
+                                	attributes: {
+								      	style: 'text-align: right;'
+								    },
+								    width: 200 
+                                }
+                             ]"
+                             data-auto-bind="false"
+			                 data-bind="source: dataSource"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="saleOrderDetailbyItem" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content saleSummaryCustomer">
+			    	<span class="pull-right glyphicons no-js remove_2"
+						onclick="javascript:window.history.back()"><i></i></span>
+					<br>
+					<br>
+
+					<div class="row-fluid">
+					    <!-- Tabs -->
+						<div class="relativeWrap" data-toggle="source-code">
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+
+								<!-- Tabs Heading -->
+								<div class="widget-head">
+									<ul>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>
+										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.filter"></span></a></li>
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
+									</ul>
+								</div>
+								<!-- // Tabs Heading END -->
+								<div class="widget-body">
+									<div class="tab-content">
+
+								        <!-- Date -->
+								        <div class="tab-pane active" id="tab-1">
+
+											<input data-role="dropdownlist"
+												   class="sorter"
+										           data-value-primitive="true"
+										           data-text-field="text"
+										           data-value-field="value"
+										           data-bind="value: sorter,
+										                      source: sortList,
+										                      events: { change: sorterChanges }" />
+
+											<input data-role="datepicker"
+												   class="sdate"
+												   data-format="dd-MM-yyyy"
+										           data-bind="value: sdate,
+										           			  max: edate"
+										           placeholder="From ..." >
+
+										    <input data-role="datepicker"
+										    	   class="edate"
+										    	   data-format="dd-MM-yyyy"
+										           data-bind="value: edate,
+										                      min: sdate"
+										           placeholder="To ..." >
+
+										  	<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+
+							        	</div>
+
+								    	<!-- Filter -->
+								        <div class="tab-pane" id="tab-2">
+											<table class="table table-condensed">
+												<tr>
+													<td style="padding: 8px 0 0 0 !important;">
+														<span>Sale Rep.</span>
+														<select data-role="multiselect"
+															   data-value-primitive="true"
+															   data-item-template="contact-list-tmpl"
+															   data-value-field="id"
+															   data-text-field="name"
+															   data-bind="value: obj.employeeIds,
+															   			source: employeeDS"
+															   data-placeholder="Select Sale Rep..."
+															   style="width: 100%" /></select>
+													</td>
+													<td style="padding-top: 31px !important; float: left;">
+										  				<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+													</td>
+												</tr>
+											</table>
+							        	</div>
+							        	<div class="tab-pane" id="tab-3">
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
+								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
+								        		<i class="fa fa-file-pdf-o"></i>
+								        		Print as PDF
+								        	</span> -->
+								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" style="width: 80px;">
+								        		<i class="fa fa-file-excel-o"></i>
+								        		Export to Excel
+								        	</span>
+							        	</div>
+								    </div>
+								</div>
+							</div>
+						</div>
+						<!-- // Tabs END -->
+					</div>
+
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="html: company.name"></h3>
+							<h2>Sale Order Detail By Item</h2>
+							<p data-bind="text: displayDate"></p>
+						</div>
+
+						<div data-role="grid" class="costom-grid"
+					    	 data-column-menu="true"
+					    	 data-groupable="true"
+					    	 data-pageable="true"
+					    	 data-reorderable="true"
+					    	 data-scrollable="false"
+					    	 data-resizable="true"
+			                 data-columns="[
+			                 	{ 
+			                 		field: 'item', 
+			                 		title: 'ITEM',
+			                 		groupFooterTemplate: 'TOTAL:' 
+			                 	},
+			                 	{ field: 'customer', title:'CUSTOMER' },
+	                            { field: 'employees', title:'SALE REP.' },
+	                            { field: 'issued_date', title:'DATE', template: '#=kendo.toString(new Date(issued_date), banhji.dateFormat)#' },
+	                            { 
+	                            	field: 'number', 
+	                            	title:'NUMBER',
+	                            	template: kendo.template($('#saleOrderDetailbyEmployee-number-template').html())
+	                            },
+	                            { 
+	                            	field: 'qty', 
+	                            	title:'QTY',
+	                            	format: '{0:n}', 
+	                            	attributes: { style: 'text-align: right;' },
+	                            	footerAttributes: { style: 'text-align: right;' },
+	                            	aggregates: ['sum'], 
+	                            	groupFooterTemplate: '#=kendo.toString(sum, banhji.numberFormat)#'
+	                            },
+	                            { 
+	                            	field: 'price', 
+	                            	title:'PRICE',
+	                            },
+	                            { 
+	                            	field: 'amount', 
+	                            	title:'AMOUNT', 
+	                            	format: '{0:n}', 
+	                            	attributes: { style: 'text-align: right;' },
+	                            	footerAttributes: { style: 'text-align: right;' },
+	                            	aggregates: ['sum'], 
+	                            	groupFooterTemplate: '#=kendo.toString(sum, banhji.numberFormat)#' 
+	                            },	                                                     
+	                         ]"
+	                         data-auto-bind="false"
+			                 data-bind="source: dataSource" ></div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="invoiceListStatus" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content saleSummaryCustomer">
+			    	<span class="pull-right glyphicons no-js remove_2"
+						onclick="javascript:window.history.back()"><i></i></span>
+					<br>
+					<br>
+
+					<div class="row-fluid">
+					    <!-- Tabs -->
+						<div class="relativeWrap" data-toggle="source-code">
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+
+								<!-- Tabs Heading -->
+								<div class="widget-head">
+									<ul>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>
+										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.filter"></span></a></li>
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
+									</ul>
+								</div>
+								<!-- // Tabs Heading END -->
+								<div class="widget-body">
+									<div class="tab-content">
+
+								        <!-- Date -->
+								        <div class="tab-pane active" id="tab-1">
+
+											<input data-role="dropdownlist"
+												   class="sorter"
+										           data-value-primitive="true"
+										           data-text-field="text"
+										           data-value-field="value"
+										           data-bind="value: sorter,
+										                      source: sortList,
+										                      events: { change: sorterChanges }" />
+
+											<input data-role="datepicker"
+												   class="sdate"
+												   data-format="dd-MM-yyyy"
+										           data-bind="value: sdate,
+										           			  max: edate"
+										           placeholder="From ..." >
+
+										    <input data-role="datepicker"
+										    	   class="edate"
+										    	   data-format="dd-MM-yyyy"
+										           data-bind="value: edate,
+										                      min: sdate"
+										           placeholder="To ..." >
+
+										  	<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+
+							        	</div>
+
+								    	<!-- Filter -->
+								        <div class="tab-pane" id="tab-2">
+											<table class="table table-condensed">
+												<tr>
+													<td style="padding: 8px 0 0 0 !important;">
+														<span>Sale Rep.</span>
+														<select data-role="multiselect"
+															   data-value-primitive="true"
+															   data-item-template="contact-list-tmpl"
+															   data-value-field="id"
+															   data-text-field="name"
+															   data-bind="value: obj.employeeIds,
+															   			source: employeeDS"
+															   data-placeholder="Select Sale Rep..."
+															   style="width: 100%" /></select>
+													</td>
+													<td style="padding-top: 31px !important; float: left;">
+										  				<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+													</td>
+												</tr>
+											</table>
+							        	</div>
+							        	<div class="tab-pane" id="tab-3">
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
+								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
+								        		<i class="fa fa-file-pdf-o"></i>
+								        		Print as PDF
+								        	</span> -->
+								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" style="width: 80px;">
+								        		<i class="fa fa-file-excel-o"></i>
+								        		Export to Excel
+								        	</span>
+							        	</div>
+								    </div>
+								</div>
+							</div>
+						</div>
+						<!-- // Tabs END -->
+					</div>
+
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="html: company.name"></h3>
+							<h2>Invoice List</h2>
+							<p data-bind="text: displayDate"></p>
+						</div>
+
+						<div data-role="grid" class="costom-grid"
+					    	 data-column-menu="true"
+					    	 data-groupable="true"
+					    	 data-pageable="true"
+					    	 data-reorderable="true"
+					    	 data-scrollable="false"
+					    	 data-resizable="true"
+			                 data-columns="[
+			                 	{ 
+			                 		field: 'customer', 
+			                 		title: 'CUSTOMER',
+			                 		groupFooterTemplate: 'TOTAL:' 
+			                 	},
+			                 	{ 
+	                            	field: 'number', 
+	                            	title:'NUMBER',
+	                            	template: kendo.template($('#saleOrderDetailbyEmployee-number-template').html())
+	                            },
+	                            { field: 'issued_date', title:'DATE', template: '#=kendo.toString(new Date(issued_date), banhji.dateFormat)#' },
+	                            
+	                            { 
+	                            	field: 'status', 
+	                            	title:'STATUS', 
+	                            	template: kendo.template($('#invoiceListStatus-status-template').html()) 
+	                            },                            
+	                            { 
+	                            	field: 'amount', 
+	                            	title:'AMOUNT', 
+	                            	format: '{0:n}', 
+	                            	attributes: { style: 'text-align: right;' },
+	                            	footerAttributes: { style: 'text-align: right;' },
+	                            	aggregates: ['sum'], 
+	                            	groupFooterTemplate: '#=kendo.toString(sum, banhji.numberFormat)#' 
+	                            },
+	                            { 
+	                            	field: 'receiptNumber', 
+	                            	title:'RECEIPT',
+	                            },
+	                            { 
+	                            	field: 'delivery_note', 
+	                            	title:'DELIVERY NOTE',
+	                            },	                                                     
+	                         ]"
+	                         data-auto-bind="false"
+			                 data-bind="source: dataSource" ></div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="invoiceListStatus-status-template" type="text/x-kendo-template">
+	#if(status==0){#
+		OPEN
+	#}else if(status==1){#
+		PAID
+	#}else if(status==2){#
+		PARTIALY PAID
+	#}else if(status==3){#
+		VOID
+	#}else{#
+		DRAFT
+	#}#
+</script>
+<!-- #############################################
+##################################################
+#	Sale Order by Employee			     		 #
+##################################################
+############################################## -->
+<script id="saleOrderDetailbyEmployee" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content saleSummaryCustomer">
+			    	<span class="pull-right glyphicons no-js remove_2"
+						onclick="javascript:window.history.back()"><i></i></span>
+					<br>
+					<br>
+
+					<div class="row-fluid">
+					    <!-- Tabs -->
+						<div class="relativeWrap" data-toggle="source-code">
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+
+								<!-- Tabs Heading -->
+								<div class="widget-head">
+									<ul>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>
+										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.filter"></span></a></li>
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
+									</ul>
+								</div>
+								<!-- // Tabs Heading END -->
+								<div class="widget-body">
+									<div class="tab-content">
+
+								        <!-- Date -->
+								        <div class="tab-pane active" id="tab-1">
+
+											<input data-role="dropdownlist"
+												   class="sorter"
+										           data-value-primitive="true"
+										           data-text-field="text"
+										           data-value-field="value"
+										           data-bind="value: sorter,
+										                      source: sortList,
+										                      events: { change: sorterChanges }" />
+
+											<input data-role="datepicker"
+												   class="sdate"
+												   data-format="dd-MM-yyyy"
+										           data-bind="value: sdate,
+										           			  max: edate"
+										           placeholder="From ..." >
+
+										    <input data-role="datepicker"
+										    	   class="edate"
+										    	   data-format="dd-MM-yyyy"
+										           data-bind="value: edate,
+										                      min: sdate"
+										           placeholder="To ..." >
+
+										  	<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+
+							        	</div>
+
+								    	<!-- Filter -->
+								        <div class="tab-pane" id="tab-2">
+											<table class="table table-condensed">
+												<tr>
+													<td style="padding: 8px 0 0 0 !important;">
+														<span>Sale Rep.</span>
+														<select data-role="multiselect"
+															   data-value-primitive="true"
+															   data-item-template="contact-list-tmpl"
+															   data-value-field="id"
+															   data-text-field="name"
+															   data-bind="value: obj.employeeIds,
+															   			source: employeeDS"
+															   data-placeholder="Select Sale Rep..."
+															   style="width: 100%" /></select>
+													</td>
+													<td style="padding-top: 31px !important; float: left;">
+										  				<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+													</td>
+												</tr>
+											</table>
+							        	</div>
+							        	<div class="tab-pane" id="tab-3">
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
+								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
+								        		<i class="fa fa-file-pdf-o"></i>
+								        		Print as PDF
+								        	</span> -->
+								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" style="width: 80px;">
+								        		<i class="fa fa-file-excel-o"></i>
+								        		Export to Excel
+								        	</span>
+							        	</div>
+								    </div>
+								</div>
+							</div>
+						</div>
+						<!-- // Tabs END -->
+					</div>
+
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="html: company.name"></h3>
+							<h2>Sale Order Detail By Employee/Customer</h2>
+							<p data-bind="text: displayDate"></p>
+						</div>
+
+						<div data-role="grid" class="costom-grid"
+					    	 data-column-menu="true"
+					    	 data-groupable="true"
+					    	 data-pageable="true"
+					    	 data-reorderable="true"
+					    	 data-scrollable="false"
+					    	 data-resizable="true"
+			                 data-columns="[
+			                 	{ 
+			                 		field: 'contacts', 
+			                 		title: 'CUSTOMER',
+			                 		groupFooterTemplate: 'TOTAL:' 
+			                 	},
+	                            { field: 'employees', title:'SALE REP.' },
+	                            { field: 'issued_date', title:'DATE', template: '#=kendo.toString(new Date(issued_date), banhji.dateFormat)#' },
+	                            { 
+	                            	field: 'number', 
+	                            	title:'NUMBER',
+	                            	template: kendo.template($('#saleOrderDetailbyEmployee-number-template').html())
+	                            },
+	                            { 
+	                            	field: 'status', 
+	                            	title:'STATUS', 
+	                            	template: kendo.template($('#saleOrderDetailbyEmployee-status-template').html()) 
+	                            },
+	                            { 
+	                            	field: 'amount', 
+	                            	title:'AMOUNT', 
+	                            	format: '{0:n}', 
+	                            	attributes: { style: 'text-align: right;' },
+	                            	footerAttributes: { style: 'text-align: right;' },
+	                            	aggregates: ['sum'], 
+	                            	groupFooterTemplate: '#=kendo.toString(sum, banhji.numberFormat)#' 
+	                            },
+	                            { 
+	                            	field: 'invoice', 
+	                            	title:'INVOICE',
+	                            	hidden: true,
+	                            	template: kendo.template($('#saleOrderDetailbyEmployee-invoice-template').html())
+	                            },
+	                            { 
+	                            	field: 'delivery_note', 
+	                            	hidden: true,
+	                            	title:'Delivery Note',
+	                            	template: kendo.template($('#saleOrderDetailbyEmployee-deliveryNote-template').html())
+	                            },
+	                            { 
+	                            	field: 'cash_receipt',
+	                            	hidden: true, 
+	                            	title:'Cash Receipt',
+	                            	template: kendo.template($('#saleOrderDetailbyEmployee-cash_receipt-template').html())
+	                            },                            
+	                         ]"
+	                         data-auto-bind="false"
+			                 data-bind="source: dataSource" ></div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="saleOrderDetailbyEmployee-number-template" type="text/x-kendo-template">
+	<a href="\#/#=type.toLowerCase()#/#=id#"><i></i> #=number#</a>
+</script>
+<script id="saleOrderDetailbyEmployee-status-template" type="text/x-kendo-template">
+	#if(status==0){#
+		OPEN
+	#}else if(status==1){#
+		USED
+	#}else{#
+
+	#}#
+</script>
+<script id="saleOrderDetailbyEmployee-template" type="text/x-kendo-template">
+	<tr style="font-weight: bold">
+		<td colspan="6">#=name#</td>
+	</tr>
+	#for(var i= 0; i <line.length; i++) {#
+		<tr>
+			<td></td>
+			<td>#=line[i].customer_name#</td>
+			<td style="text-align: left;">#=kendo.toString(new Date(line[i].issued_date),"dd-MM-yyyy")#</td>
+			<td>
+				#if(line[i].status=== 0){#
+					Open
+				#}else if(line[i].status==="1"){#
+				    Used
+        		#}else{#
+					Paid
+        		#}#
+			</td>
+			<td style="text-align: right;">#=kendo.toString(line[i].amount, "c2", banhji.locale)#</td>
+		</tr>
+
+	#}#
+</script>
+<script id="saleOrderDetailbyEmployee-deliveryNote-template" type="text/x-kendo-template">
+	<a href="\#/#=type.toLowerCase()#/#=id#"><i></i> #=delivery_note#</a>
+</script>
+<script id="saleOrderDetailbyEmployee-invoice-template" type="text/x-kendo-template">
+	<a href="\#/#=type.toLowerCase()#/#=id#"><i></i> #=invoice#</a>
+</script>
+<script id="saleOrderDetailbyEmployee-cash_receipt-template" type="text/x-kendo-template">
+	<a href="\#/#=type.toLowerCase()#/#=id#"><i></i> #=cash_receipt#</a>
+</script>
+<!-- #############################################
+##################################################
+#	End Sale Order		     		 #
+##################################################
+############################################## -->
 
 
 
@@ -14050,11 +15031,7 @@
 ############################################## -->
 <script id="membershipDashboard" type="text/x-kendo-template">
 	<div class="row-fluid">
-
-		<!-- Left Side -->
 		<div class="span4">
-
-			<!-- Logo of the page -->
 			<table width="100%" cellpadding="10">
 				<tr>
 			        <td>
@@ -14063,7 +15040,7 @@
 			        		<span data-bind="text: lang.lang.in_here"></span>
 			        	</p>
 
-			        	<!-- <p style="width: 100%; float: left; margin-top: 8px; margin-bottom: 15px;">
+			        	<p style="width: 100%; float: left; margin-top: 8px; margin-bottom: 15px;">
 				        	<span style="position: relative; height: 35px; line-height: 35px; padding-right: 15px; float: left; display: block; ">
 								<a style="color: #203864; font-weight: 600; margin-top: 4px; line-height: 17px; background: #fff; padding: 8px 32px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;" href="#/customer_recurring">
 									<span class="badge fix badge-primary" style="color: #fff;  position: absolute; top: -13px; background: #203864; right: 5px; width: 25px; height: 25px; font-size: 15px; line-height: 25px;">0</span>
@@ -14076,7 +15053,7 @@
 									This Module's Guide
 								</a>
 							</span>
-						</p> -->
+						</p>
 
 						<div class="cover-block" style="box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
 				        	<div class="supplier-icon">
@@ -14144,12 +15121,12 @@
 						</td>
 					</tr>
 					<tr>
-						<!-- <td style="vertical-align:top;" class="center">
+						<td style="vertical-align:top;" class="center">
 							<a href="#/gdn">
 								<img title="Add Delivery Note" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/delivery_note.png"  height="200" />
 								<span data-bind="text: lang.lang.delivery_note" style="margin-top: 7px; display: inline-block; text-transform: uppercase;"></span>
 							</a>
-						</td> -->
+						</td>
 						<td class="center">
 							<a href="#/sale_return">
 								<img title="Add Sale Return" src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/function_logo/sale_return.png"  height="200" />
@@ -14166,26 +15143,14 @@
 				</table>
 			</div>
 
-		</div>
-
-		<!-- Right Side -->
+		</div>		
 		<div class="span8">
-
-			<!-- Summary -->
-			<div class="row-fluid">
-
-				<!-- Column -->
-				<div class="span4">
-
-					<!-- Widget -->
-					<div class="widget widget-3 customer-border">
-
-						<!-- Widget heading -->
+			<div class="row-fluid">				
+				<div class="span4">					
+					<div class="widget widget-3 customer-border">						
 						<div class="widget-head">
 							<h4 class="heading"><span class="glyphicons coins"><i></i></span><span style="color: #203864; font-weight: 600; font-style: normal;" data-bind="text: lang.lang.sale"></span></h4>
 						</div>
-						<!-- // Widget heading END -->
-
 						<a href="#/sale_summary_by_customer"><div class="widget-body alert alert-primary" style="min-height: 148px; background: white; color: #203864; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
 
 							<div align="center" class="text-large strong medai-font" data-format="n" data-bind="text: obj.sale"></div>
@@ -14208,27 +15173,16 @@
 									</td>
 								</tr>
 							</table>
-						</div></a>
-						<!-- // Widget footer END -->
+						</div></a>			
 
 					</div>
-					<!-- // Widget END -->
-
 				</div>
-				<!-- // Column END -->
-
-				<!-- Column -->
-				<div class="span4">
-
-					<!-- Widget -->
-					<a href="#/sale_order_list"><div class="widget widget-3 customer-border">
-
-						<!-- Widget heading -->
+				<div class="span4">				
+					<a href="#/sale_order_list"><div class="widget widget-3 customer-border">						
 						<div class="widget-head">
 							<h4 class="heading"><span class="glyphicons cart_in"><i></i></span><span style="color: #203864; font-weight: 600; font-style: normal;" data-bind="text: lang.lang.sale_order"></span></h4>
 						</div>
-						<!-- // Widget heading END -->
-
+						
 						<div class="widget-body alert-info " style="min-height: 148px; background: white; color: #203864; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
 
 							<div align="center" class="text-large strong medai-font" data-format="n0" data-bind="text: obj.so"></div>
@@ -14247,25 +15201,25 @@
 								</tr>
 							</table>
 						</div></a>
-						<!-- // Widget footer END -->
+						
 
 					</div>
-					<!-- // Widget END -->
+					
 
 				</div>
-				<!-- // Column END -->
+				
 
-				<!-- Column -->
+				
 				<div class="span4">
 
-					<!-- Widget -->
+					
 					<div class="widget widget-3 customer-border">
 
-						<!-- Widget heading -->
+						
 						<div class="widget-head">
 							<h4 class="heading"><span class="glyphicons credit_card"><i></i></span><span style="color: #203864; font-weight: 600; font-style: normal;" data-bind="text: lang.lang.receivable"></span></h4>
 						</div>
-						<!-- // Widget heading END -->
+						
 
 						<a href="#/customer_balance_summary"><div class="widget-body alert-info" style="min-height: 148px; background: white; color: #203864; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
 
@@ -14290,17 +15244,17 @@
 								</tr>
 							</table>
 						</div></a>
-						<!-- // Widget footer END -->
+						
 
 					</div>
-					<!-- // Widget END -->
+					
 
 				</div>
-				<!-- // Column END -->
+				
 
 			</div>
 
-			<!-- Top 5 -->
+			
 			<div class="row-fluid">
 				<div class="span4">
 					<table class="table table-bordered table-primary table-striped table-vertical-center" style="font-size: 12px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
@@ -14343,7 +15297,7 @@
 				</div>
 			</div>
 
-			<!-- Graph -->
+			
 			<div class="home-chart">
 				<div data-role="chart"
 	                 data-legend="{ position: 'top' }"
@@ -14360,11 +15314,151 @@
 	                 data-auto-bind="false"
 	                 data-bind="source: graphDS"
 	                 style="height: 250px;" ></div>
-            <!-- End Graph -->
+            
             </div>
 		</div>
-
 	</div>
+
+	<!-- <div class="row">
+		<div class="span12">
+			<div class="board-chart" style="margin-bottom: 19px; box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19); border-radius: 3px;">
+				<div class="row" style="margin-bottom: 15px;" >
+					<div class="span3"><h2 data-bind="text: lang.lang.management"></h2></div>
+					<div class="span5 hidden-sm"></div>
+					<div class="span2">
+						<div role='presentation' class='dropdown ' style="background: #0F2C72;">
+					  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><span style="color: #fff; font-size: 16px;" data-bind="text: lang.lang.reports"></span><span style="margin-left: 15px; color: #fff;" class='caret'></span></a>
+				  			<ul class='dropdown-menu' style="left: -15px !important; top: 31px !important; min-width: 180px;">
+				  				<li><a href='#/membership_reports'><span data-bind="">Membership Reports</span></a></li>			  				
+				  			</ul>
+					  	</div>
+					</div>
+					<div class="span2">
+					  	<div role='presentation' class='dropdown' style="background: #0F2C72;">
+					  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><span style="color: #fff; font-size: 16px;" data-bind="text: lang.lang.transaction">Transaction</span><span style="margin-left: 15px; color: #fff;" class='caret'></span></a>
+				  			<ul class='dropdown-menu' style="left: 5px !important; top: 31px !important;">
+				  				<li><a href='#/membership'><span data-bind="text: lang.lang.add_member">Add Membership</span></a></li>
+				  				<li><a href='#/customer'><span data-bind="text: lang.lang.add_customer">Add Customer</span></a></li>			  				
+				  			</ul>
+					  	</div>
+					</div>
+				</div>
+				<div class="row-fluid">
+					<div class="span4" style="padding-left: 15px; background: #0077c5; ">
+						<div style=" padding: 10px 0; text-align: center; color: #fff;">
+                            <h2 style="color: #fff !important; " data-bind="text: lang.lang.total_member">Sale</h2>
+                            <p data-format="n" data-bind="">Test</p>
+                            <div class="row">
+                                <div class="span6">
+                                    <span data-bind="">Test</span> <br>
+                                    <span data-bind="text: lang.lang.new">New</span>
+                                </div>
+                                <div class="span6">
+                                    <span data-bind="">Test</span><br>
+                                    <span data-bind="text: lang.lang.renew">Product</span>
+                                </div>
+                                
+                            </div>
+                        </div>
+					</div>
+					<div class="span4" style="padding-left: 15px;">
+						Pei Charts
+					</div>
+					<div class="span4" style="padding-left: 15px;">
+						Line Charts
+					</div>
+				</div>
+			</div>
+		</div>
+	</div> -->
+
+	<!-- <div class="row">
+		<div class="span12">
+			<div class="board-chart" style="margin-top: 0; margin-bottom: 19px; box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19); border-radius: 3px;">
+				<div class="row" style="margin-bottom: 15px;" >
+					<div class="span3"><h2 data-bind="text: lang.lang.billing"></h2></div>
+					<div class="span5 hidden-sm"></div>
+					<div class="span2">
+						<div role='presentation' class='dropdown ' style="background: #0F2C72;">
+					  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><span style="color: #fff; font-size: 16px;" data-bind="text: lang.lang.reports"></span><span style="margin-left: 15px; color: #fff;" class='caret'></span></a>
+				  			<ul class='dropdown-menu' style="left: 5px !important; top: 31px !important;">
+				  				<li><a href='#/membership_reports'><span data-bind="">Billing Cycle (Filter)</span></a></li>
+				  			</ul>
+					  	</div>
+					</div>
+					<div class="span2">
+					  	<div role='presentation' class='dropdown' style="background: #0F2C72;">
+					  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><span style="color: #fff; font-size: 16px;" data-bind="text: lang.lang.transaction">Transaction</span><span style="margin-left: 15px; color: #fff;" class='caret'></span></a>
+				  			<ul class='dropdown-menu' style="left: -14px !important; top: 31px !important; min-width: 180px;">
+				  				<li><a href='#/invoice'><span data-bind="text: lang.lang.create_invoice"></span></a></li>
+				  				<li><a href='#/cash_sale'><span data-bind="text: lang.lang.create_cash_sale"></span></a></li>
+				  				<li><a href='#/cash_receipt'><span data-bind="text: lang.lang.create_cash_receipt"></span></a></li>
+				  				<li><a href='#/invoice_batch'><span data-bind="text: lang.lang.create_batch_invoice"></span></a></li>
+				  			</ul>
+					  	</div>
+					</div>
+				</div>
+				<div class="row-fluid">
+					<div class="span4" style="padding-left: 15px; background: #0077c5; ">
+						<div style=" padding: 20px 0; text-align: center; color: #fff;">
+                            <h2 style="color: #fff !important; " data-bind="text: lang.lang.amount_to_received"></h2>
+                            <p data-format="n" data-bind="">test</p>
+                            <div class="row">
+                                <div class="span4">
+                                    <span data-bind="">test</span> <br>
+                                    <span data-bind="text: lang.lang.open">Customer</span>
+                                </div>
+                                <div class="span4">
+                                    <span data-bind="">test</span><br>
+                                    <span data-bind="">msh</span>
+                                </div>
+                                 <div class="span4">
+                                    <span data-bind="">test</span><br>
+                                    <span data-bind="text: lang.lang.over_due"></span>
+                                </div>
+                                
+                            </div>
+                        </div>
+					</div>
+					<div class="span4" style="padding-left: 15px;">
+						<div class="span12" style="padding-left: 15px; background: #0077c5; ">
+							<div style=" padding: 8px 0; text-align: center; color: #fff;">
+								<span class="badge fix badge-primary" style="color: #fff;  position: absolute; top: -13px; background: #203864; right: 5px; width: 25px; height: 25px; font-size: 15px; line-height: 25px;">0</span>
+	                            <p style="color: #fff !important; font-size: 17px; " data-bind="text: lang.lang.to_bill"></p>
+	                            <p style="margin-bottom: 0;" data-format="n" data-bind="">test</p>
+	                        </div>
+						</div>
+						<div class="span12" style="padding-left: 15px; background: #0077c5; margin-top: 10px;">
+							<div style=" padding: 8px 0; text-align: center; color: #fff;">
+	                            <p style="color: #fff !important; font-size: 17px;" data-bind="">Revenue Reccgmin</p>
+	                            <p style="margin-bottom: 0;" data-format="n" data-bind="">test</p>
+	                        </div>
+						</div>
+					</div>
+					<div class="span4" style="padding-left: 0px;">
+						<div class="span4" style="padding-left: 15px; background: #0077c5; margin-right: 10px; width: 31%;">
+							<div style=" padding: 8px 0; text-align: center; color: #fff;">								
+	                            <p style="color: #fff !important; font-size: 17px; " data-bind="text: lang.lang.to_bill"></p>
+	                            <p style="margin-bottom: 0;" data-format="n" data-bind="">test</p>
+	                        </div>
+						</div>
+						<div class="span4" style="padding-left: 15px; background: #0077c5; margin-right: 10px; width: 31%;">
+							<div style=" padding: 8px 0; text-align: center; color: #fff;">
+	                            <p style="color: #fff !important; font-size: 17px; " data-bind="text: lang.lang.to_bill"></p>
+	                            <p style="margin-bottom: 0;" data-format="n" data-bind="">test</p>
+	                        </div>
+						</div>
+						<div class="span4" style="padding-left: 15px; background: #0077c5; width: 31%;">
+							<div style=" padding: 8px 0; text-align: center; color: #fff;">
+	                            <p style="color: #fff !important; font-size: 17px; " data-bind="text: lang.lang.to_bill"></p>
+	                            <p style="margin-bottom: 0;" data-format="n" data-bind="">test</p>
+	                        </div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div> -->
 </script>
 <script id="membershipCenter" type="text/x-kendo-template">
 	<div class="widget widget-heading-simple widget-body-gray widget-employees">
@@ -14775,7 +15869,8 @@
 								                   data-value-field="id"
 								                   data-bind="value: obj.membership_type_id,
 								                   			  disabled: obj.is_pattern,
-								                              source: membershipTypeDS"
+								                              source: membershipTypeDS,
+								                              events:{ change:membershipTypeChanges }"
 								                   data-option-label="(--- Select ---)"
 								                   required data-required-msg="required" style="width: 100%;" />
 									</div>
@@ -14898,10 +15993,10 @@
 
 									            		<input data-role="dropdownlist"
 											                   data-value-primitive="true"
-											                   data-text-field="name"
-											                   data-value-field="id"
+											                   data-text-field="text"
+										                   	   data-value-field="value"
 											                   data-bind="value: objRecurring.frequency,
-											                              source: frequencyList,
+											                              source: dateUnitList,
 											                              events: { change: frequencyChanges }"
 											                   style="width: 45%;" />
 									            	</td>
@@ -15068,7 +16163,7 @@
 						                            { field: 'reference_no', title:'REFERENCE NO.', hidden: true, width: '120px' }
 						                         ]"
 						                         data-auto-bind="false"
-								                 data-bind="source: lineDS" nnnnnnnnnnnnnnnnnnnnn></div>
+								                 data-bind="source: lineDS"></div>
 
 							                <button class="btn btn-inverse" data-bind="click: addRow"><i class="icon-plus icon-white"></i></button>
 						        		</div>
@@ -15368,7 +16463,7 @@
 			    	<span class="glyphicons no-js remove_2 pull-right"
 							data-bind="click: cancel"><i></i></span>
 
-			        <h2>Batch Invoices</h2>
+			        <h2>Billing Cycle</h2>
 
 				    <br>
 
@@ -15428,6 +16523,18 @@
 								                              events:{change: membershipTypeChanges}"
 								                   data-option-label="Select Membership..."
 								                   required data-required-msg="required" style="width: 100%;" />
+										</td>
+									</tr>
+									<tr>
+										<td>Frequency</td>
+										<td>
+											<input data-role="dropdownlist"
+								                   data-value-primitive="true"
+								                   data-text-field="text"
+										           data-value-field="value"
+								                   data-bind="value: frequency,
+								                              source: dateUnitList"
+								                   data-option-label="Select Frequency..." style="width: 100%;" />
 										</td>
 									</tr>
 									<tr>
@@ -15634,7 +16741,7 @@
 	<span class="pull-right glyphicons no-js remove_2"
 			onclick="javascript:window.history.back()"><i></i></span>
 
-	<h2 data-bind="text: lang.lang.general_customer_setting"></h2>
+	<h2>Membership Setting</h2>
 
 	<br>
 
@@ -15647,19 +16754,17 @@
 	            </li>
 	            <li><a href="#/customer_group" class="glyphicons group"><i></i><span class="strong">CUSTOMER GROUP</span></a>
 	            </li>
-	            <li><a href="#/customer_assignee" class="glyphicons nameplate"><i></i><span class="strong">SALE REP. ASSIGMENT</span></a>
+	            <li><a href="#tab2-7" class="glyphicons vcard" data-toggle="tab"><i></i><span class="strong">MEMBERSHIP TYPE</span></a>
 	            </li>
-	            <li><a href="#tab2-7" class="glyphicons credit_card" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.payment_method"></span></span></a>
+	            <li><a href="#tab3-7" class="glyphicons more_items" data-toggle="tab"><i></i><span class="strong">CUSTOM FIELD</span></a>
 	            </li>
-	            <li><a href="#tab3-7" class="glyphicons clock" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.payment_terms"></span></span></a>
+	            <li><a href="#tab4-7" class="glyphicons credit_card" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.payment_method"></span></span></a>
 	            </li>
-	            <li><a href="#tab4-7" class="glyphicons list" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.custom_forms"></span></span></a>
+	            <li><a href="#tab5-7" class="glyphicons clock" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.payment_terms"></span></span></a>
 	            </li>
-	            <li><a href="#tab5-7" class="glyphicons building" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.prefix_setting"></span></span></a>
+	            <li><a href="#tab6-7" class="glyphicons list" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.custom_forms"></span></span></a>
 	            </li>
-	            <li><a href="#tab6-7" class="glyphicons more_items" data-toggle="tab"><i></i><span class="strong">Custom Field</span></a>
-	            </li>
-	            <li><a href="#tab7-7" class="glyphicons vcard" data-toggle="tab"><i></i><span class="strong">Membership Type</span></a>
+	            <li><a href="#tab7-7" class="glyphicons building" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.prefix_setting"></span></span></a>
 	            </li>
 	        </ul>
 	    </div>
@@ -15669,7 +16774,7 @@
 	        <div class="tab-content">
 
 	            <!-- CUSTOMER TYPE -->
-	            <div class="tab-pane" id="tab1-7">
+	            <div class="tab-pane active" id="tab1-7">
 	            	<div class="input-append">
 					    <input class="span4" id="appendedInputButtons" type="text" placeholder="input customer type ..." data-bind="value: contactTypeName">
 					    <input class="span4" id="appendedInputButtons" type="text" placeholder="input abbr ..." data-bind="value: contactTypeAbbr">
@@ -15697,8 +16802,46 @@
 	            </div>
 	            <!-- // CUSTOMER TYPE END -->
 
-	            <!-- PAYMENT METHOD -->
+	            <!-- Tab Membership type content -->
 	            <div class="tab-pane" id="tab2-7">
+	            	<button class="btn btn-inverse" data-bind="click: addNewMembershipType"><i class="icon-plus icon-white"></i> Add New Membership</button>
+
+	            	<div data-role="grid"
+		                 data-editable="true"
+		                 data-toolbar="['save', 'cancel']"
+		                 data-columns="[
+                            { field: 'name', title:'Name','width': 270 },
+                            { field: 'description', title:'Description' },
+                            { 
+                            	field: 'membership_id', 
+                            	title: '&nbsp;',
+                            	editable: 'false',
+                            	template: kendo.template($('#membershipSetting-membershipType-template').html()), 
+                            	width: '100px' 
+                            },
+                            { command: 'destroy', title: '&nbsp;', width: '100px' }
+		                 ]"
+		                 data-bind="source: membershipTypeDS"></div>
+	            </div>
+	            <!-- // Tab Membership type content END -->
+
+	            <!-- Tab Custom Field content -->
+	            <div class="tab-pane" id="tab3-7">
+	            	<div data-role="grid"
+		                 data-editable="true"
+		                 data-toolbar="['create', 'save', 'cancel']"
+		                 data-columns="[
+                            { 'field': 'name', title:'Field Name','width': 270 },
+                            { 'field': 'description', title:'Description' },
+                            { command: 'destroy', title: '&nbsp;', width: '100px' }
+		                 ]"
+		                 data-bind="source: customFieldDS"
+		                 style="height: 200px"></div>
+	            </div>
+	            <!-- // Tab Custom Field content END -->	            
+
+	            <!-- PAYMENT METHOD -->
+	            <div class="tab-pane" id="tab4-7">
 	            	<div class="input-append">
 					    <input class="span12" id="appendedInputButtons" type="text" placeholder="name ..." data-bind="value: paymentMethodName">
 					    <button class="btn btn-default" type="button" data-bind="click: addPaymentMethod"><i class="icon-plus"></i> <span data-bind="text: lang.lang.add_method"></span></button>
@@ -15719,7 +16862,7 @@
 	            <!-- // PAYMENT METHOD END -->
 
 	            <!-- PAYMENT TERM -->
-	            <div class="tab-pane" id="tab3-7">
+	            <div class="tab-pane" id="tab5-7">
             		<div class="input-append">
 					    <input class="span3" id="appendedInputButtons" type="text" placeholder="name ..." data-bind="value: paymentTermName">
 					    <input class="span3" id="appendedInputButtons" type="text" placeholder="net due ..." data-bind="value: paymentTermNetDue">
@@ -15746,7 +16889,7 @@
 	            <!-- // PAYMENT TERM END -->
 
 	            <!-- Tab Invocice Custom content -->
-	            <div class="tab-pane" id="tab4-7">
+	            <div class="tab-pane" id="tab6-7">
 
 	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 	            		<thead>
@@ -15770,7 +16913,7 @@
 	            <!-- // Tab Invoice Custom content END -->
 
 	            <!-- Tab Prefix content -->
-	            <div class="tab-pane" id="tab5-7">
+	            <div class="tab-pane" id="tab7-7">
 	            	<table class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
 	            		<thead>
 	            			<tr class="widget-head">
@@ -15789,39 +16932,6 @@
 
 	            </div>
 	            <!-- // Tab Prefix content END -->
-
-	            <!-- Tab Custom Field content -->
-	            <div class="tab-pane" id="tab6-7">
-	            	<div data-role="grid"
-		                 data-editable="true"
-		                 data-toolbar="['create', 'save', 'cancel']"
-		                 data-columns="[
-                            { 'field': 'name', title:'Field Name','width': 270 },
-                            { 'field': 'description', title:'Description' },
-                            { command: 'destroy', title: '&nbsp;', width: '100px' }
-		                 ]"
-		                 data-bind="source: customFieldDS"
-		                 style="height: 200px"></div>
-	            </div>
-	            <!-- // Tab Custom Field content END -->
-
-	            <!-- Tab Membership type content -->
-	            <div class="tab-pane active" id="tab7-7">
-	            	<button class="btn btn-inverse" data-bind="click: addNewMembershipType"><i class="icon-plus icon-white"></i> Add New Membership</button>
-
-	            	<div data-role="grid"
-		                 data-editable="true"
-		                 data-toolbar="['save', 'cancel']"
-		                 data-columns="[
-                            { field: 'name', title:'Name','width': 270 },
-                            { field: 'description', title:'Description' },
-                            { field: 'membership_id', title: '&nbsp;', template: kendo.template($('#membershipSetting-membershipType-template').html()), width: '100px' },
-                            { command: 'destroy', title: '&nbsp;', width: '100px' }
-		                 ]"
-		                 data-bind="source: membershipTypeDS"
-		                 style="height: 200px"></div>
-	            </div>
-	            <!-- // Tab Membership type content END -->
 
 	        </div>
 	    </div>
@@ -17481,7 +18591,7 @@
 																disabled: obj.is_recurring,
 																events:{change:checkExistingNumber}"
 													required data-required-msg="required"
-													placeholder="eg. ABC00001" style="width: 83%; float: left; margin-right: 5px;"" />
+													placeholder="eg. ABC00001" style="width: 83%; float: left; margin-right: 5px;" />
 											<div style="padding-left: 0; width: 25px; float: left;">
 												<a class="glyphicons no-js qrcode" data-bind="click: generateNumber" title="Generate Number" style="float: left; margin: 2px 0 0 0 ;"><i></i></a>
 											</div>
@@ -17706,10 +18816,10 @@
 
 								            		<input data-role="dropdownlist"
 										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
+										                   data-text-field="text"
+										                   data-value-field="value"
 										                   data-bind="value: obj.frequency,
-										                              source: frequencyList,
+										                              source: dateUnitList,
 										                              events: { change: frequencyChanges }"
 										                   style="width: 45%;" />
 								            	</td>
@@ -18340,10 +19450,10 @@
 
 							            		<input data-role="dropdownlist"
 									                   data-value-primitive="true"
-									                   data-text-field="name"
-									                   data-value-field="id"
+									                   data-text-field="text"
+										               data-value-field="value"
 									                   data-bind="value: obj.frequency,
-									                              source: frequencyList,
+									                              source: dateUnitList,
 									                              events: { change: frequencyChanges }"
 									                   style="width: 45%;" />
 							            	</td>
@@ -18874,10 +19984,10 @@
 
 								            		<input data-role="dropdownlist"
 										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
+										                   data-text-field="text"
+										                   data-value-field="value"
 										                   data-bind="value: obj.frequency,
-										                              source: frequencyList,
+										                              source: dateUnitList,
 										                              events: { change: frequencyChanges }"
 										                   style="width: 45%;" />
 								            	</td>
@@ -19166,7 +20276,7 @@
 																disabled: obj.is_recurring,
 																events:{change:checkExistingNumber}"
 													required data-required-msg="required"
-													placeholder="eg. ABC00001" style="width: 83%; float: left; margin-right: 5px;"" />
+													placeholder="eg. ABC00001" style="width: 83%; float: left; margin-right: 5px;" />
 											<div style="padding-left: 0; width: 25px; float: left;">
 												<a class="glyphicons no-js qrcode" data-bind="click: generateNumber" title="Generate Number" style="float: left; margin: 2px 0 0 0 ;"><i></i></a>
 											</div>
@@ -19540,10 +20650,10 @@
 
 								            		<input data-role="dropdownlist"
 										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
+										                   data-text-field="text"
+										                   data-value-field="value"
 										                   data-bind="value: obj.frequency,
-										                              source: frequencyList,
+										                              source: dateUnitList,
 										                              events: { change: frequencyChanges }"
 										                   style="width: 45%;" />
 								            	</td>
@@ -19605,237 +20715,240 @@
 					    </div>
 					</div>
 
-					<!-- Window -->
-				    <div data-role="window"
-		                 data-title="Additional Cost"
-		                 data-width="650"
-		                 data-actions="{}"
-		                 data-position="{top: '150px', left: '30%'}"
-		                 data-height="355"
-		                 data-bind="visible: windowVisible">
+					<!-- All Windows -->
+					<div id="allWindows">
+						<!-- Window -->
+					    <div data-role="window"
+			                 data-title="Additional Cost"
+			                 data-width="650"
+			                 data-actions="{}"
+			                 data-position="{top: '150px', left: '30%'}"
+			                 data-height="355"
+			                 data-bind="visible: windowVisible">
 
-						<table class="table table-bordered table-primary table-striped table-vertical-center">
-							<tr>
-            					<td colspan="2">
-			            			<input type="radio" value="Cash_Purchase" class="k-radio"
-			            					name="additCostOption" id="additCostOption1"
-			            					data-bind="checked: additCostObj.type,
-			            								events:{ change: additCostTypeChanges }">
-			            			<label class="k-radio-label" for="additCostOption1"><span data-bind="text: lang.lang.cash"></span></label>
+							<table class="table table-bordered table-primary table-striped table-vertical-center">
+								<tr>
+	            					<td colspan="2">
+				            			<input type="radio" value="Cash_Purchase" class="k-radio"
+				            					name="additCostOption" id="additCostOption1"
+				            					data-bind="checked: additCostObj.type,
+				            								events:{ change: additCostTypeChanges }">
+				            			<label class="k-radio-label" for="additCostOption1"><span data-bind="text: lang.lang.cash"></span></label>
 
-						            <input type="radio" value="Credit_Purchase" class="k-radio"
-						            		name="additCostOption" id="additCostOption2"
-						            		data-bind="checked: additCostObj.type,
-						            					events:{ change: additCostTypeChanges }">
-						            <label class="k-radio-label" for="additCostOption2"><span data-bind="text: lang.lang.credit"></span></label>
-				            	</td>
-								<td data-bind="invisible: isAdditCostCash">Due Date</td>
-								<td data-bind="invisible: isAdditCostCash">
-									<input data-role="datepicker"
-											data-format="dd-MM-yyyy"
-											data-parse-formats="yyyy-MM-dd"
-											data-bind="value: additCostObj.due_date"
-											style="width:100%;" />
-								</td>
-							</tr>
-							<tr>
-								<td>Supplier</td>
-								<td>
-									<input id="cbbContact" name="cbbContact"
-										   data-role="dropdownlist"
-										   data-header-template="vendor-header-tmpl"
-						                   data-template="contact-list-tmpl"
-						                   data-auto-bind="false"
-						                   data-value-primitive="false"
-						                   data-filter="startswith"
-						                   data-text-field="name"
-						                   data-value-field="id"
-						                   data-bind="value: additCostObj.contact,
-						                              source: additionalContactDS,
-						                              events: {change: additCostContactChanges}"
-						                   data-option-label="Select Supplier..."
-						                   style="width: 100%;" />
-								</td>
-								<td>Bill Date</td>
-								<td>
-									<input data-role="datepicker"
-											data-format="dd-MM-yyyy"
-											data-parse-formats="yyyy-MM-dd"
-											data-bind="value: additCostObj.issued_date,
-														events: { change: additCostSetRate }"
-											style="width:100%;" />
-								</td>
-							</tr>
-							<tr>
-								<td>Account</td>
-								<td>
-									<input data-role="dropdownlist"
-											data-header-template="account-header-tmpl"
-						      				data-template="account-list-tmpl"
-											data-value-primitive="true"
-											data-text-field="name"
-						      				data-value-field="id"
-						      				data-bind="value: additCostObj.account_id,
-						      							source: additionalCostAccountDS"
-						      				data-option-label="Select Account..."
-						      				style="width: 100%" />
-								</td>
-								<td>Number</td>
-								<td>
-									<input type="text" class="k-textbox"
-											data-bind="value: additCostObj.number"
-											style="width: 100%; margin-bottom: 0;" />
-								</td>
-							</tr>
-							<tr>
-								<td>Memo</td>
-								<td>
-									<input type="text" class="k-textbox"
-											data-bind="value: additCostObj.memo"
-											style="width: 100%; margin-bottom: 0;" />
-								</td>
-								<td>Reference No.</td>
-								<td>
-									<input type="text" class="k-textbox"
-											data-bind="value: additCostObj.reference_no"
-											style="width: 100%; margin-bottom: 0;" />
-								</td>
-							</tr>
-							<tr>
-								<td>Amount</td>
-								<td>
-									<input data-role="numerictextbox"
-											data-spinners="false"
-											data-format="n"
-											data-min="0"
-											data-bind="value: additCostObj.sub_total, events: {change : changes}"
-											required data-required-msg="required" style="width: 70%;" />
-									&nbsp;
-									<span data-bind="text: additCostCurrency"></span>
-								</td>
-								<td>Tax</td>
-								<td>
-									<input data-role="combobox"
-										   data-header-template="tax-header-tmpl"
-										   data-value-primitive="true"
-						                   data-text-field="name"
-						                   data-value-field="id"
-						                   data-bind="value: additCostObj.tax_item_id,
-						                   			  source: taxItemDS,
-						                   			  events:{ change: changes }"
-						                   style="width: 100%" />
-								</td>
-						    </tr>
-						    <tr>
-						    	<td colspan="2"></td>
-						    	<td>WHT Account</td>
-						    	<td>
-									<input id="cbbWHTAccount" name="cbbWHTAccount"
-										   data-role="combobox"
-						                   data-template="account-list-tmpl"
-						                   data-value-primitive="true"
-						                   data-autoWidth="true"
-						                   data-text-field="name"
-						                   data-value-field="id"
-						                   data-bind="value: additCostObj.wht_account_id,
-						                              source: whtAccountDS"
-						                   data-placeholder="Add WHT Account.."
-						                   style="width: 100%" />
-								</td>
-							</tr>
-						</table>
+							            <input type="radio" value="Credit_Purchase" class="k-radio"
+							            		name="additCostOption" id="additCostOption2"
+							            		data-bind="checked: additCostObj.type,
+							            					events:{ change: additCostTypeChanges }">
+							            <label class="k-radio-label" for="additCostOption2"><span data-bind="text: lang.lang.credit"></span></label>
+					            	</td>
+									<td data-bind="invisible: isAdditCostCash">Due Date</td>
+									<td data-bind="invisible: isAdditCostCash">
+										<input data-role="datepicker"
+												data-format="dd-MM-yyyy"
+												data-parse-formats="yyyy-MM-dd"
+												data-bind="value: additCostObj.due_date"
+												style="width:100%;" />
+									</td>
+								</tr>
+								<tr>
+									<td>Supplier</td>
+									<td>
+										<input id="cbbContact" name="cbbContact"
+											   data-role="dropdownlist"
+											   data-header-template="vendor-header-tmpl"
+							                   data-template="contact-list-tmpl"
+							                   data-auto-bind="false"
+							                   data-value-primitive="false"
+							                   data-filter="startswith"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: additCostObj.contact,
+							                              source: additionalContactDS,
+							                              events: {change: additCostContactChanges}"
+							                   data-option-label="Select Supplier..."
+							                   style="width: 100%;" />
+									</td>
+									<td>Bill Date</td>
+									<td>
+										<input data-role="datepicker"
+												data-format="dd-MM-yyyy"
+												data-parse-formats="yyyy-MM-dd"
+												data-bind="value: additCostObj.issued_date,
+															events: { change: additCostSetRate }"
+												style="width:100%;" />
+									</td>
+								</tr>
+								<tr>
+									<td>Account</td>
+									<td>
+										<input data-role="dropdownlist"
+												data-header-template="account-header-tmpl"
+							      				data-template="account-list-tmpl"
+												data-value-primitive="true"
+												data-text-field="name"
+							      				data-value-field="id"
+							      				data-bind="value: additCostObj.account_id,
+							      							source: additionalCostAccountDS"
+							      				data-option-label="Select Account..."
+							      				style="width: 100%" />
+									</td>
+									<td>Number</td>
+									<td>
+										<input type="text" class="k-textbox"
+												data-bind="value: additCostObj.number"
+												style="width: 100%; margin-bottom: 0;" />
+									</td>
+								</tr>
+								<tr>
+									<td>Memo</td>
+									<td>
+										<input type="text" class="k-textbox"
+												data-bind="value: additCostObj.memo"
+												style="width: 100%; margin-bottom: 0;" />
+									</td>
+									<td>Reference No.</td>
+									<td>
+										<input type="text" class="k-textbox"
+												data-bind="value: additCostObj.reference_no"
+												style="width: 100%; margin-bottom: 0;" />
+									</td>
+								</tr>
+								<tr>
+									<td>Amount</td>
+									<td>
+										<input data-role="numerictextbox"
+												data-spinners="false"
+												data-format="n"
+												data-min="0"
+												data-bind="value: additCostObj.sub_total, events: {change : changes}"
+												required data-required-msg="required" style="width: 70%;" />
+										&nbsp;
+										<span data-bind="text: additCostCurrency"></span>
+									</td>
+									<td>Tax</td>
+									<td>
+										<input data-role="combobox"
+											   data-header-template="tax-header-tmpl"
+											   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: additCostObj.tax_item_id,
+							                   			  source: taxItemDS,
+							                   			  events:{ change: changes }"
+							                   style="width: 100%" />
+									</td>
+							    </tr>
+							    <tr>
+							    	<td colspan="2"></td>
+							    	<td>WHT Account</td>
+							    	<td>
+										<input id="cbbWHTAccount" name="cbbWHTAccount"
+											   data-role="combobox"
+							                   data-template="account-list-tmpl"
+							                   data-value-primitive="true"
+							                   data-autoWidth="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: additCostObj.wht_account_id,
+							                              source: whtAccountDS"
+							                   data-placeholder="Add WHT Account.."
+							                   style="width: 100%" />
+									</td>
+								</tr>
+							</table>
 
-						<br>
+							<br>
 
-						<div align="center">
-							<span class="btn btn-icon btn-success glyphicons power" data-bind="click: windowSave" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_close"></span></span>
-							<span class="btn btn-icon btn-danger glyphicons remove_2" data-bind="click: windowDiscard" style="width: 80px;"><i></i> Discard</span>
-						</div>
-					</div>
-
-					<!-- Window Barcode -->
-					<div data-role="window"
-		                 data-title="Barcode"
-		                 data-width="600"
-		                 data-height="400"
-		                 data-iframe="true"
-		                 data-modal="true"
-		                 data-visible="false"
-		                 data-position="{top:'30%',left:'30%'}"
-		                 data-actions="{}"
-		                 data-resizable="false"
-		                 data-bind="visible: barcodeVisible"
-		                 style="text-align:center;">
-
-		                <table style="margin-bottom: 0;" class="table table-borderless table-condensed cart_total">
-			        		<tr>
-			        			<td>
-			        				<input type="text" class="k-textbox"
-			        						data-bind="value: barcode,
-			        									events: {change: searchByBarcode}"
-			        						placeholder="Scan barcode ..." style="width: 100%;" />
-			        			</td>
-			        			<td>
-			        				<input id="ddlCategory" id="ddlCategory"
-									   data-role="dropdownlist"
-									   data-option-label="Select Category..."
-									   data-header-template="item-category-header-tmpl"
-					                   data-value-primitive="true"
-					                   data-text-field="name"
-					                   data-value-field="id"
-					                   data-bind="value: category_id,
-					                              source: categoryDS,
-					                              events: {change: search}"
-					                   style="width: 100%;" />
-			        			</td>
-			        			<td>
-			        				<input id="ddlItemGroup" id="ddlItemGroup"
-									   data-role="dropdownlist"
-									   data-header-template="item-group-header-tmpl"
-									   data-option-label="Select Group..."
-									   data-cascade-from="ddlCategory"
-									   data-cascade-from-field="category_id"
-					                   data-value-primitive="true"
-					                   data-text-field="name"
-					                   data-value-field="id"
-					                   data-bind="value: item_group_id,
-					                              source: itemGroupDS,
-					                              events: {change: search}"
-					                   style="width: 100%;" />
-			        			</td>
-			        		</tr>
-			        	</table>
-
-			        	<div data-role="grid"
-			                 data-auto-bind="false"
-			                 data-columns='[
-                                { field: "number", title: "NUMBER", template:"#=abbr##=number#" },
-                                { field: "name", title: "NAME" },
-                                { field: "category", title: "CATEGORY" },
-                                { title: "", template:"<button class=k-button data-bind=click:addSearchItem style=min-width:30px><i class=icon-plus></i></button>", width:"50px" }
-                             ]'
-			                 data-bind="source: itemDS"
-			                 style="height: 212px;"></div>
-
-			            <div id="pager" class="k-pager-wrap"
-				             data-role="pager"
-				             data-auto-bind="false"
-							 data-bind="source: itemDS"></div>
-						<br>
-
-						<div class="box-generic bg-action-button">
-							<div class="row">
-								<div class="span10">
-
-								</div>
-								<div class="span2" align="right">
-									<span class="btn-btn" data-bind="click: closeBarcodeWindow"><i></i> <span data-bind="text: lang.lang.close"></span></span>
-								</div>
+							<div align="center">
+								<span class="btn btn-icon btn-success glyphicons power" data-bind="click: windowSave" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save_close"></span></span>
+								<span class="btn btn-icon btn-danger glyphicons remove_2" data-bind="click: windowDiscard" style="width: 80px;"><i></i> Discard</span>
 							</div>
 						</div>
 
-		            </div>
-		            <!-- // End Window Barcode -->
+						<!-- Window Barcode -->
+						<div data-role="window"
+			                 data-title="Barcode"
+			                 data-width="600"
+			                 data-height="400"
+			                 data-iframe="true"
+			                 data-modal="true"
+			                 data-visible="false"
+			                 data-position="{top:'30%',left:'30%'}"
+			                 data-actions="{}"
+			                 data-resizable="false"
+			                 data-bind="visible: barcodeVisible"
+			                 style="text-align:center;">
+
+			                <table style="margin-bottom: 0;" class="table table-borderless table-condensed cart_total">
+				        		<tr>
+				        			<td>
+				        				<input type="text" class="k-textbox"
+				        						data-bind="value: barcode,
+				        									events: {change: searchByBarcode}"
+				        						placeholder="Scan barcode ..." style="width: 100%;" />
+				        			</td>
+				        			<td>
+				        				<input id="ddlCategory" id="ddlCategory"
+										   data-role="dropdownlist"
+										   data-option-label="Select Category..."
+										   data-header-template="item-category-header-tmpl"
+						                   data-value-primitive="true"
+						                   data-text-field="name"
+						                   data-value-field="id"
+						                   data-bind="value: category_id,
+						                              source: categoryDS,
+						                              events: {change: search}"
+						                   style="width: 100%;" />
+				        			</td>
+				        			<td>
+				        				<input id="ddlItemGroup" id="ddlItemGroup"
+										   data-role="dropdownlist"
+										   data-header-template="item-group-header-tmpl"
+										   data-option-label="Select Group..."
+										   data-cascade-from="ddlCategory"
+										   data-cascade-from-field="category_id"
+						                   data-value-primitive="true"
+						                   data-text-field="name"
+						                   data-value-field="id"
+						                   data-bind="value: item_group_id,
+						                              source: itemGroupDS,
+						                              events: {change: search}"
+						                   style="width: 100%;" />
+				        			</td>
+				        		</tr>
+				        	</table>
+
+				        	<div data-role="grid"
+				                 data-auto-bind="false"
+				                 data-columns='[
+	                                { field: "number", title: "NUMBER", template:"#=abbr##=number#" },
+	                                { field: "name", title: "NAME" },
+	                                { field: "category", title: "CATEGORY" },
+	                                { title: "", template:"<button class=k-button data-bind=click:addSearchItem style=min-width:30px><i class=icon-plus></i></button>", width:"50px" }
+	                             ]'
+				                 data-bind="source: itemDS"
+				                 style="height: 212px;"></div>
+
+				            <div id="pager" class="k-pager-wrap"
+					             data-role="pager"
+					             data-auto-bind="false"
+								 data-bind="source: itemDS"></div>
+							<br>
+
+							<div class="box-generic bg-action-button">
+								<div class="row">
+									<div class="span10">
+
+									</div>
+									<div class="span2" align="right">
+										<span class="btn-btn" data-bind="click: closeBarcodeWindow"><i></i> <span data-bind="text: lang.lang.close"></span></span>
+									</div>
+								</div>
+							</div>
+
+			            </div>
+			            <!-- // End Window Barcode -->
+		        	</div>
 
 					<!-- Middle Part -->
 					<div class="row-fluid">
@@ -19922,7 +21035,7 @@
 				                            { field: 'tax_item', title:'TAX', editor: taxForSaleEditor, template: '#=tax_item.name#', width: '120px' },
 				                            { field: 'wht_account', title: 'WHT ACCOUNT', hidden: true, editor: whtAccountEditor, template: '#=wht_account.name#', width: '120px' },
 				                            { field: 'additional_cost', title:'ADD.COST', format: '{0:n}', hidden: true, editable: 'false', attributes: { style: 'text-align: right;' }, width: '120px' },
-				                            { field: 'additional_applied', title:'APPLY ADD.COST', hidden: true, editor: customBoolEditor, width: '120px' },
+				                            { field: 'additional_applied', title:'APPLY ADD.COST', hidden: true, editor: applyAdditionalCostEditor, width: '120px' },
 				                            { field: 'reference_no', title:'REFERENCE NO.', hidden: true, width: '120px' }
 				                         ]"
 				                         data-auto-bind="false"
@@ -21772,7 +22885,7 @@
 									<h3><a href="#/open_purchase_order" data-bind="text: lang.lang.open_purchase_order"></a></h3>
 								</td>
 								<td style="vertical-align: top;">
-									<h3><a href="#/draft_list" data-bind="text: lang.lang.draft_list" style="text-transform: capitalize;">Draft List</a></h3>
+									<h3><a href="#/purchase_order_byItem" style="text-transform: capitalize;">Purchase Order by Item</a></h3>
 								</td>
 							</tr>
 
@@ -21781,9 +22894,26 @@
 									<p data-bind="text: lang.lang.lists_all_the_open_purchase_order_grouped_by_suppliers"></p>
 								</td>
 								<td style="vertical-align: top;">
+									<p data-bind="text: lang.lang.lists_all_the_open_purchase_order_grouped_by_suppliers"></p>
+								</td>
+							</tr>
+							<tr>
+								<td style="vertical-align: top;">
+									<h3><a href="#/draft_list" data-bind="text: lang.lang.draft_list" style="text-transform: capitalize;">Draft List</a></h3>
+								</td>
+								<td style="vertical-align: top;">
+									
+								</td>
+							</tr>
+
+							<tr>
+								<td style="vertical-align: top;">
 									<p  data-bind="text: lang.lang.cash_sale_detail_product_summarize">
 										Lists individual cash sale transactions by date for each product/service within a period of time.
 									</p>
+								</td>
+								<td style="vertical-align: top;">
+									
 								</td>
 							</tr>
 						</table>
@@ -24263,6 +25393,158 @@
 	<tr>
     	<td colspan="6">&nbsp;</td>
     </tr>
+</script>
+<script id="purchaseOrderbyItem" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content saleSummaryCustomer">
+			    	<span class="pull-right glyphicons no-js remove_2"
+						onclick="javascript:window.history.back()"><i></i></span>
+					<br>
+					<br>
+
+					<div class="row-fluid">
+					    <!-- Tabs -->
+						<div class="relativeWrap" data-toggle="source-code">
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+
+								<!-- Tabs Heading -->
+								<div class="widget-head">
+									<ul>
+										<li class="active"><a class="glyphicons calendar" href="#tab-1" data-toggle="tab"><i></i><span data-bind="text: lang.lang.date"></span></a></li>
+										<li><a class="glyphicons filter" href="#tab-2" data-toggle="tab"><i></i><span data-bind="text: lang.lang.filter"></span></a></li>
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
+									</ul>
+								</div>
+								<!-- // Tabs Heading END -->
+								<div class="widget-body">
+									<div class="tab-content">
+
+								        <!-- Date -->
+								        <div class="tab-pane active" id="tab-1">
+
+											<input data-role="dropdownlist"
+												   class="sorter"
+										           data-value-primitive="true"
+										           data-text-field="text"
+										           data-value-field="value"
+										           data-bind="value: sorter,
+										                      source: sortList,
+										                      events: { change: sorterChanges }" />
+
+											<input data-role="datepicker"
+												   class="sdate"
+												   data-format="dd-MM-yyyy"
+										           data-bind="value: sdate,
+										           			  max: edate"
+										           placeholder="From ..." >
+
+										    <input data-role="datepicker"
+										    	   class="edate"
+										    	   data-format="dd-MM-yyyy"
+										           data-bind="value: edate,
+										                      min: sdate"
+										           placeholder="To ..." >
+
+										  	<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+
+							        	</div>
+
+								    	<!-- Filter -->
+								        <div class="tab-pane" id="tab-2">
+											<table class="table table-condensed">
+												<tr>
+													<td style="padding: 8px 0 0 0 !important;">
+														<span>Sale Rep.</span>
+														<select data-role="multiselect"
+															   data-value-primitive="true"
+															   data-item-template="contact-list-tmpl"
+															   data-value-field="id"
+															   data-text-field="name"
+															   data-bind="value: obj.employeeIds,
+															   			source: employeeDS"
+															   data-placeholder="Select Sale Rep..."
+															   style="width: 100%" /></select>
+													</td>
+													<td style="padding-top: 31px !important; float: left;">
+										  				<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+													</td>
+												</tr>
+											</table>
+							        	</div>
+							        	<div class="tab-pane" id="tab-3">
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
+								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
+								        		<i class="fa fa-file-pdf-o"></i>
+								        		Print as PDF
+								        	</span> -->
+								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" style="width: 80px;">
+								        		<i class="fa fa-file-excel-o"></i>
+								        		Export to Excel
+								        	</span>
+							        	</div>
+								    </div>
+								</div>
+							</div>
+						</div>
+						<!-- // Tabs END -->
+					</div>
+
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="html: company.name"></h3>
+							<h2>Purchase Order Detail By Item</h2>
+							<p data-bind="text: displayDate"></p>
+						</div>
+
+						<div data-role="grid" class="costom-grid"
+					    	 data-column-menu="true"
+					    	 data-groupable="true"
+					    	 data-pageable="true"
+					    	 data-reorderable="true"
+					    	 data-scrollable="false"
+					    	 data-resizable="true"
+			                 data-columns="[
+			                 	{ 
+			                 		field: 'item', 
+			                 		title: 'ITEM',
+			                 		groupFooterTemplate: 'TOTAL:' 
+			                 	},
+			                 	{ field: 'customer', title:'CUSTOMER' },
+	                            { field: 'employees', title:'SALE REP.' },
+	                            { field: 'issued_date', title:'DATE', template: '#=kendo.toString(new Date(issued_date), banhji.dateFormat)#' },
+	                            { 
+	                            	field: 'number', 
+	                            	title:'NUMBER',
+	                            	template: kendo.template($('#saleOrderDetailbyEmployee-number-template').html())
+	                            },
+	                            { 
+	                            	field: 'qty', 
+	                            	title:'QTY',
+	                            },
+	                            { 
+	                            	field: 'price', 
+	                            	title:'PRICE',
+	                            },
+	                            { 
+	                            	field: 'amount', 
+	                            	title:'AMOUNT', 
+	                            	format: '{0:n}', 
+	                            	attributes: { style: 'text-align: right;' },
+	                            	footerAttributes: { style: 'text-align: right;' },
+	                            	aggregates: ['sum'], 
+	                            	groupFooterTemplate: '#=kendo.toString(sum, banhji.numberFormat)#' 
+	                            },	                                                     
+	                         ]"
+	                         data-auto-bind="false"
+			                 data-bind="source: dataSource" ></div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </script>
 
 <script id="productServiceList" type="text/x-kendo-template">
@@ -28607,10 +29889,10 @@
 
 								            		<input data-role="dropdownlist"
 										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
+										                   data-text-field="text"
+										                   data-value-field="value"
 										                   data-bind="value: obj.frequency,
-										                              source: frequencyList,
+										                              source: dateUnitList,
 										                              events: { change: frequencyChanges }"
 										                   style="width: 45%;" />
 								            	</td>
@@ -29260,10 +30542,10 @@
 
 								            		<input data-role="dropdownlist"
 										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
+										                   data-text-field="text"
+										                   data-value-field="value"
 										                   data-bind="value: obj.frequency,
-										                              source: frequencyList,
+										                              source: dateUnitList,
 										                              events: { change: frequencyChanges }"
 										                   style="width: 45%;" />
 								            	</td>
@@ -29736,10 +31018,10 @@
 
 								            		<input data-role="dropdownlist"
 										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
+										                   data-text-field="text"
+										                   data-value-field="value"
 										                   data-bind="value: obj.frequency,
-										                              source: frequencyList,
+										                              source: dateUnitList,
 										                              events: { change: frequencyChanges }"
 										                   style="width: 45%;" />
 								            	</td>
@@ -30214,7 +31496,7 @@
 	            </li>
 	            <li><a href="#tab-2" class="glyphicons tag" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.group"></span></span></a>
 	            </li>
-	            <li><a href="#tab-3" class="glyphicons ruller" data-toggle="tab"><i></i><span class="strong">UOM Category</span></a>
+	            <li><a href="#tab-3" class="glyphicons ruller" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.uom_category"></span></span></a>
 	            </li>
 	            <li><a href="#tab-4" class="glyphicons ruller" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.uom"></span></span></a>
 	            </li>
@@ -30222,11 +31504,11 @@
 	            </li>
 	            <li><a href="#tab-6" class="glyphicons building" data-toggle="tab"><i></i><span class="strong"><span data-bind="text: lang.lang.prefix_setting"></span></span></a>
 	            </li>
-	            <li><a href="#/variants" class="glyphicons sampler"><i></i><span class="strong">Variants</span></a>
+	            <li><a href="#/variants" class="glyphicons sampler"><i></i><span class="strong"><span data-bind="text: lang.lang.variants">Variants</span></span></a>
 	            </li>
-	            <li><a href="#/warehouses" class="glyphicons google_maps"><i></i><span class="strong">Location</span></a>
+	            <li><a href="#/warehouses" class="glyphicons google_maps"><i></i><span class="strong"><span data-bind="text: lang.lang.warehouse_location">Location</span></span></a>
 	            </li>
-	            <li><a href="#/employee_item_location" class="glyphicons magic"><i></i><span class="strong">Employee To Item Location</span></a>
+	            <li><a href="#/employee_item_location" class="glyphicons magic"><i></i><span class="strong"><span data-bind="text: lang.lang.employee_to_item_location">Employee To Item Location</span></span></a>
 	            </li>
 	        </ul>
 	    </div>
@@ -31343,10 +32625,10 @@
 							</tr>
 							<tr>
 								<td width="55%">
-									<h3><a href="#/gdn_report">Good Delivery Note Report</a></h3>
+									<h3><a href="#/gdn_report" data-bind="text: lang.lang.goods_delivery_note_report">Good Delivery Note Report</a></h3>
 								</td>
 								<td >
-
+									<h3><a href="#/item_list" data-bind="text: lang.lang.item_list">Item List</a></h3>
 								</td>
 							</tr>
 						</table>
@@ -31473,7 +32755,7 @@
 			<div class="span5">
 				<div class="report-chart" style="margin-bottom: 20px; padding: 15px; margin-top: 10px; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
 					<div class="widget-body alert alert-primary sale-overview">
-						<h2>Inventory Value</h2>
+						<h2 data-bind="text: lang.lang.inventory_value">Inventory Value</h2>
 						<div align="center" class="text-large strong" data-bind="text: obj.inventory_value"></div>
 						<table width="100%">
 							<tr align="center">
@@ -31517,12 +32799,14 @@
 	<div id="slide-form">
 		<div class="customer-background">
 			<div class="container-960">
-				<div id="example" class="k-content saleSummaryCustomer">
+				<div id="example" style="position: relative;overflow: hidden;" class="k-content saleSummaryCustomer">
 			    	<span class="pull-right glyphicons no-js remove_2"
 						onclick="javascript:window.history.back()"><i></i></span>
 					<br>
 					<br>
-
+					<div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 100%;margin-top: -15px;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
+						<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
+					</div>
 					<div class="row-fluid">
 					    <!-- Tabs -->
 						<div class="relativeWrap" data-toggle="source-code">
@@ -32749,6 +34033,85 @@
 			</div>
 		</div>
 	</div>
+</script>
+<script id="itemList" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content saleSummaryCustomer">
+			    	<span class="pull-right glyphicons no-js remove_2"
+						onclick="javascript:window.history.back()"><i></i></span>
+					<br>
+					<br>
+					<div class="row-fluid">
+					    <!-- Tabs -->
+						<div class="relativeWrap" data-toggle="source-code">
+							<div class="widget widget-tabs widget-tabs-gray report-tab">
+
+								<!-- Tabs Heading -->
+								<div class="widget-head">
+									<ul>
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+						<div class="widget-body">
+									<div class="tab-content">
+							        	<!-- PRINT/EXPORT  -->
+								        <div class="tab-pane active" id="tab-3">
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
+								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
+								        		<i class="fa fa-file-pdf-o"></i>
+								        		Print as PDF
+								        	</span> -->
+								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" style="width: 80px;">
+								        		<i class="fa fa-file-excel-o"></i>
+								        		Export to Excel
+								        	</span>
+							        	</div>
+								    </div>
+								</div>
+						<!-- // Tabs END -->
+					</div>
+					<br>
+					<div id="invFormContent">
+						<div class="block-title">
+							<h3 data-bind="html: institute.name"></h3>
+							<h2 data-bind="text: lang.lang.items"></h2>
+						</div>
+						<table class="table table-borderless table-condensed ">
+							<thead>
+								<tr>
+									<th><span data-bind="text: lang.lang.abbr"></span></th>
+									<th><span data-bind="text: lang.lang.item"></span></th>
+									<th><span data-bind="text: lang.lang.category"></span></th>
+									<th style="text-align: left;"><span data-bind="text: lang.lang.description"></span></th>
+								</tr>
+							</thead>
+							<tbody data-role="listview"
+										 data-bind="source: dataSource"
+										 data-template="itemList-temp"
+							></tbody>
+							
+						</table>
+						<div id="pager" class="k-pager-wrap"
+			            		 data-role="pager"
+						    	 data-auto-bind="false"
+					             data-bind="source: dataSource"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="itemList-temp" type="text/x-kendo-template" >
+	<tr>
+		<td>#=abbr+number#</td>
+		<td>#=name#</td>
+		<td>#=category#</td>
+		<td>#=descriptionSale#</td>
+	</tr>
 </script>
 <script id="inventorySaleByItem" type="text/x-kendo-template">
 	<div class="container-fluid">
@@ -35065,10 +36428,10 @@
 
 								            		<input data-role="dropdownlist"
 										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
+										                   data-text-field="text"
+										                   data-value-field="value"
 										                   data-bind="value: obj.frequency,
-										                              source: frequencyList,
+										                              source: dateUnitList,
 										                              events: { change: frequencyChanges }"
 										                   style="width: 45%;" />
 								            	</td>
@@ -35523,10 +36886,10 @@
 
 								            		<input data-role="dropdownlist"
 										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
+										                   data-text-field="text"
+										                   data-value-field="value"
 										                   data-bind="value: obj.frequency,
-										                              source: frequencyList,
+										                              source: dateUnitList,
 										                              events: { change: frequencyChanges }"
 										                   style="width: 45%;" />
 								            	</td>
@@ -36112,10 +37475,10 @@
 
 							            		<input data-role="dropdownlist"
 									                   data-value-primitive="true"
-									                   data-text-field="name"
-									                   data-value-field="id"
+									                   data-text-field="text"
+										               data-value-field="value"
 									                   data-bind="value: obj.frequency,
-									                              source: frequencyList,
+									                              source: dateUnitList,
 									                              events: { change: frequencyChanges }"
 									                   style="width: 45%;" />
 							            	</td>
@@ -36653,10 +38016,10 @@
 
 								            		<input data-role="dropdownlist"
 										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
+										                   data-text-field="text"
+										                   data-value-field="value"
 										                   data-bind="value: obj.frequency,
-										                              source: frequencyList,
+										                              source: dateUnitList,
 										                              events: { change: frequencyChanges }"
 										                   style="width: 45%;" />
 								            	</td>
@@ -38593,12 +39956,15 @@
 					        		data-template="journalReport-template"
 					        		data-bind="source: dataSource"></tbody>
 					    </table>
+
+					    <div id="pager" class="k-pager-wrap"
+					    	 data-role="pager"
+					    	 data-auto-bind="false"
+				             data-bind="source: dataSource">
+				        </div>
+
 					</div>
-		            <div id="pager" class="k-pager-wrap"
-				    	 data-role="pager"
-				    	 data-auto-bind="false"
-			             data-bind="source: dataSource">
-			        </div>
+		            
 				</div>
 			</div>
 		</div>
@@ -38912,8 +40278,16 @@
 										                      min: sdate"
 										           placeholder="To ..." >
 
-										  	<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+										    <input data-role="dropdownlist"
+								                   data-value-primitive="true"
+								                   data-text-field="name"
+								                   data-value-field="id"
+								                   data-bind="value: account_type_id,
+								                              source: accountTypeDS,
+								                              events:{ change: typeChanges }"
+								                   data-option-label="--- All Types ---" />
 
+										  	<button type="button" data-bind="click: search"><i class="icon-search"></i></button>
 							        	</div>
 
 							        	<!-- Filter -->
@@ -38936,7 +40310,7 @@
 									              				style="width: 100%" />
 													</td>
 													<td style="padding-top: 31px !important; float: left;">
-										  				<button type="button" data-role="button" data-bind="click: search"><i class="icon-search"></i></button>
+										  				<button type="button" data-bind="click: search"><i class="icon-search"></i></button>
 													</td>
 												</tr>
 												<tr>
@@ -39001,8 +40375,8 @@
 							<tbody data-auto-bind="false"
 					        		data-template="generalLedger-template"
 					        		data-bind="source: dataSource"></tbody>
-					       	<tfoot data-template="generalLedger-footer-template" data-bind="source: this"></tfoot>
 						</table>
+						
 					</div>
 				</div>
 			</div>
@@ -39020,7 +40394,7 @@
 	#var totalDr = 0;#
 	#var totalCr = 0;#
 	#for(var i=0; i < line.length; i++){#
-	#balance += line[i].amount;#
+	#balance += (line[i].dr + line[i].cr);#
 	#totalDr += line[i].dr;#
 	#totalCr += line[i].cr;#
 	<tr>
@@ -39040,10 +40414,14 @@
 			#=line[i].contact#
 		</td>
 		<td class="right" style="color: black;">
-			#=kendo.toString(line[i].dr, "n2")#
+			#if(line[i].dr!==0){#
+				#=kendo.toString(Math.abs(line[i].dr), "n2")#
+			#}#
 		</td>
 		<td class="right" style="color: black;">
-			#=kendo.toString(line[i].cr, "n2")#
+			#if(line[i].cr!==0){#
+				#=kendo.toString(Math.abs(line[i].cr), "n2")#
+			#}#
 		</td>
 		<td class="right" style="color: black;">
 			#=kendo.toString(balance, "n2")#
@@ -39054,10 +40432,14 @@
     <tr>
     	<td colspan="5" style="font-weight: bold; color: black;"><span data-bind="text: lang.lang.total" style="text-transform: capitalize;"></span><span>#: name #</span></td>
     	<td class="right" style="font-weight: bold; border-top: 1px solid black !important; color: black;">
-    		#=kendo.toString(totalDr, "n2")#
+    		#if(totalDr!==0){#
+    			#=kendo.toString(Math.abs(totalDr), "n2")#
+    		#}#
     	</td>
     	<td class="right" style="font-weight: bold; border-top: 1px solid black !important; color: black;">
-    		#=kendo.toString(totalCr, "n2")#
+    		#if(totalCr!==0){#
+    			#=kendo.toString(Math.abs(totalCr), "n2")#
+    		#}#
     	</td>
     	<td class="right" style="font-weight: bold; border-top: 1px solid black !important; color: black;">
     		#=kendo.toString(balance, "n2")#
@@ -39074,10 +40456,10 @@
             TOTAL
         </td>
         <td align="right">
-           <h3 data-format="n2" data-bind="text: totalDr()"></h3>
+           <h3 data-format="n2" data-bind="text: totalDr"></h3>
         </td>
         <td align="right">
-            <h3 data-format="n2" data-bind="text: totalCr()"></h3>
+            <h3 data-format="n2" data-bind="text: totalCr"></h3>
         </td>
         <td></td>
     </tr>
@@ -39646,7 +41028,7 @@
 
 								    	<!-- //GENERAL INFO -->
 								        <div class="tab-pane active" id="tab-1">
-									        <span style="text-transform: capitalize;" data-bind="text: lang.lang.as_of"></span>As of:
+									        <span style="text-transform: capitalize;" data-bind="text: lang.lang.as_of"></span>:
 									        <input data-role="datepicker"
 													data-format="dd-MM-yyyy"
 													data-parse-formats="yyyy-MM-dd"
@@ -39698,63 +41080,67 @@
 							</div>
 						</div>
 
-						<table class="table table-borderless table-condensed">
-							<thead>
-					            <tr>
-					                <th data-bind="text: lang.lang.code" style="text-transform: uppercase;">CODE</th>
-					                <th data-bind="text: lang.lang.name" style="text-transform: uppercase;">NAME</th>
-					                <th data-bind="text: lang.lang.type" style="text-transform: uppercase;">TYPE</th>
-					                <th class="right" data-bind="text: lang.lang.debit" style="text-transform: uppercase;">DEBIT</th>
-					                <th class="right" data-bind="text: lang.lang.credit" style="text-transform: uppercase;">CREDIT</th>
-					            </tr>
-					        </thead>
-					        <tbody data-template="trialBalance-template"
-					        		data-auto-bind="false"
-					        		data-bind="source: dataSource"></tbody>
-					        <tfoot data-template="trialBalance-footer-template"
-					        		data-bind="source: this"></tfoot>
-						</table>
+						<div class="costom-grid"
+							 data-role="grid"
+							 data-groupable="true"
+							 data-sortable="true"
+	                         data-column-menu="true"
+			                 data-columns="[
+                                { 
+                                	field: 'number', 
+                                	title:'NUMBER',
+                                	attributes: {
+								      	style: 'text-align: center;'
+								    }, 
+                                	width: 100 
+                                },
+                                { field: 'name', title:'NAME' },
+                                { field: 'type', title:'TYPE', width: 200 },
+                                { 
+                                	field: 'dr', 
+                                	title:'DR',
+                                	template: kendo.template($('#trialBalance-dr-tmpl').html()),
+                                	attributes: {
+								      	style: 'text-align: right;'
+								    },
+								    headerAttributes: {
+								      	'class': 'table-header-cell',
+								      	style: 'text-align: right; font-size: 14px'
+								    },
+								    width: 200
+                                },
+                                { 
+                                	field: 'cr', 
+                                	title:'CR',
+                                	template: kendo.template($('#trialBalance-cr-tmpl').html()),
+                                	attributes: {
+								      	style: 'text-align: right;'
+								    },
+								    headerAttributes: {
+								      	'class': 'table-header-cell',
+								      	style: 'text-align: right; font-size: 14px'
+								    },
+								    width: 200
+                                }
+                             ]"
+                             data-auto-bind="false"
+			                 data-bind="source: dataSource"></div>
+
 					</div>
 		        </div>
 			</div>
 		</div>
 	</div>
 </script>
-<script id="trialBalance-template" type="text/x-kendo-tmpl">
-	<tr>
-		<td style="color: black;">
-			#=number#
-		</td>
-		<td style="color: black;">
-			#=name#
-		</td>
-		<td style="color: black;">
-			#=type#
-		</td>
-		<td class="right" style="color: black;">
-			#if(dr!==0){#
-				#=kendo.toString(dr, "c", banhji.locale)#
-			#}#
-		</td>
-		<td class="right" style="color: black;">
-			#if(cr!==0){#
-				#=kendo.toString(cr, "c", banhji.locale)#
-			#}#
-		</td>
-    </tr>
+<script id="trialBalance-dr-tmpl" type="text/x-kendo-tmpl">
+	#if(dr!==0){#
+		<a data-bind="click:goToGeneralLegder">#=kendo.toString(dr, "n2")#</a>
+	#}#
 </script>
-<script id="trialBalance-footer-template" type="text/x-kendo-template">
-    <tr class="bg-total">
-        <td data-bind="text: lang.lang.total" style="text-transform: uppercase;">TOTAL:</td>
-        <td></td>
-        <td></td>
-        <td class="right">
-            #: totalDr() #
-        </td>
-        <td class="right">
-            #: totalCr() #
-        </td>
-    </tr>
+<script id="trialBalance-cr-tmpl" type="text/x-kendo-tmpl">
+	#if(cr!==0){#
+		<a data-bind="click:goToGeneralLegder">#=kendo.toString(cr, "n2")#</a>
+	#}#
 </script>
 <script id="chartOfAccount" type="text/x-kendo-template">
 	<div id="slide-form">
@@ -39926,7 +41312,7 @@
 				&nbsp;&nbsp; #=line[i].number# - #=line[i].name#
 			</td>
 			<td class="right" style="color: black;">
-				#=kendo.toString(line[i].amount, "c", banhji.locale)#
+				#=kendo.toString(line[i].amount, "n")#
 			</td>
 			<td style="width:15%;" ></td>
 	    </tr>
@@ -39935,13 +41321,13 @@
 	    	<td style="font-weight: bold; color: black;">Total #: type #</td>
 	    	<td></td>
 	    	<td class="right" style="font-weight: bold; border-top: 1px solid black !important; color: black;">
-	    		#=kendo.toString(total, "c", banhji.locale)#
+	    		#=kendo.toString(total, "n")#
 	    	</td>
 	    </tr>
 	#}else{#
 		<tr>
 			<td colspan="2" style="font-weight: bold; color: black;">#: name #</td>
-			<td class="right" style="font-weight: bold; color: black;">#: kendo.toString(amount, "c", banhji.locale) #</td>
+			<td class="right" style="font-weight: bold; color: black;">#: kendo.toString(amount, "n") #</td>
 		</tr>
 	#}#
 </script>
@@ -40051,7 +41437,7 @@
 		#if(revenue[i].name!==""){#
 			<tr>
 				<td colspan="3" style="color: black;">
-					#=revenue[i].name#
+					#=revenue[i].number# - #=revenue[i].name#
 				</td>
 		    </tr>
 
@@ -40060,7 +41446,7 @@
 				#totalRevenue += line[j].amount;#
 				<tr>
 					<td style="color: black;">
-						&nbsp;&nbsp; #=line[j].name#
+						&nbsp;&nbsp; #=line[j].number# - #=line[j].name#
 					</td>
 					<td class="right" style="color: black;">
 						#=kendo.toString(line[j].amount, "c2", banhji.locale)#
@@ -40078,7 +41464,7 @@
 				#totalRevenue += line[j].amount;#
 				<tr>
 					<td style="color: black;">
-						#=line[j].name#
+						#=line[j].number# - #=line[j].name#
 					</td>
 					<td class="right" style="color: black;">
 						#=kendo.toString(line[j].amount, "c2", banhji.locale)#
@@ -40104,7 +41490,7 @@
 		#if(expense[i].name!==""){#
 			<tr>
 				<td colspan="3" style="color: black;">
-					#=expense[i].name#
+					#=expense[i].number# - #=expense[i].name#
 				</td>
 		    </tr>
 
@@ -40113,7 +41499,7 @@
 				#totalExpense += line[j].amount;#
 				<tr>
 					<td style="color: black;">
-						&nbsp;&nbsp; #=line[j].name#
+						&nbsp;&nbsp; #=line[j].number# - #=line[j].name#
 					</td>
 					<td class="right" style="color: black;">
 						#=kendo.toString(line[j].amount, "c2", banhji.locale)#
@@ -40131,7 +41517,7 @@
 				#totalExpense += line[j].amount;#
 				<tr>
 					<td style="color: black;">
-						#=line[j].name#
+						#=line[j].number# - #=line[j].name#
 					</td>
 					<td class="right" style="color: black;">
 						#=kendo.toString(line[j].amount, "c2", banhji.locale)#
@@ -40380,13 +41766,13 @@
 							<tbody data-role="listview"
 								data-template="statementFinancialPosition-template"
 								data-auto-bind="false"
-								data-bind="source: dataSource"></tbody>
+								data-bind="source: obj.asset"></tbody>
 							<tfoot>
 								<tr>
 									<td style="font-weight: bold; font-size: large; background: #1E4E78; color: #fff;">TOTAL ASSETS</td>
 									<td style="background: #1E4E78;" width="15%"></td>
 									<td width="15%" style="font-weight: bold; font-size: large; color: #fff; background: #1E4E78;" align="right">
-										<span data-bind="text: totalAsset"></span>
+										<span data-format="n" data-bind="text: totalAsset"></span>
 									</td>
 								</tr>
 							</tfoot>
@@ -40405,13 +41791,13 @@
 							<tbody data-role="listview"
 								data-template="statementFinancialPosition-template"
 								data-auto-bind="false"
-								data-bind="source: liabilityDS"></tbody>
+								data-bind="source: obj.liability"></tbody>
 							<tfoot>
 								<tr>
 									<td style="font-weight: bold; font-size: large;">TOTAL LIABILITIES</td>
 									<td width="15%"></td>
 									<td width="15%" style="font-weight: bold; font-size: large;" align="right">
-										<span data-bind="text: totalLiability"></span>
+										<span data-format="n" data-bind="text: totalLiability"></span>
 									</td>
 								</tr>
 							</tfoot>
@@ -40430,13 +41816,13 @@
 							<tbody data-role="listview"
 								data-template="statementFinancialPosition-template"
 								data-auto-bind="false"
-								data-bind="source: equityDS"></tbody>
+								data-bind="source: obj.equity"></tbody>
 							<tfoot>
 								<tr>
 									<td style="font-weight: bold; font-size: large;">TOTAL EQUITY</td>
 									<td width="15%"></td>
 									<td width="15%" style="font-weight: bold; font-size: large;" align="right">
-										<span data-bind="text: totalEquity"></span>
+										<span data-format="n" data-bind="text: totalEquity"></span>
 									</td>
 								</tr>
 							</tfoot>
@@ -40468,7 +41854,7 @@
         <td ></td>
     </tr>
     #var total = 0;#
-	#for(var i=0; i<typeLine.length; i++){#
+	#for(var i=0; i < typeLine.length; i++){#
 	    <tr>
 	        <td style="font-weight: bold;">
 	            &nbsp;&nbsp; #:typeLine[i].type#
@@ -40477,17 +41863,17 @@
 	        <td ></td>
 	    </tr>
 	    #var totalType = 0;#
-		#for(var j=0; j<typeLine[i].line.length; j++){#
-			#total += typeLine[i].line[j].amount;#
+		#for(var j = 0; j < typeLine[i].line.length; j++){#
+			#total += typeLine[i].line[j].amount * typeLine[i].line[j].multiplier;#
 			#totalType += typeLine[i].line[j].amount;#
 		    <tr>
 		        <td>
 		        	&nbsp;&nbsp;&nbsp;&nbsp; #: typeLine[i].line[j].number # #: typeLine[i].line[j].name #
 		        </td>
 		        <td align="right">
-		            &nbsp;&nbsp;&nbsp;&nbsp; #: kendo.toString(typeLine[i].line[j].amount, "c", banhji.locale) #
+		            &nbsp;&nbsp;&nbsp;&nbsp; <a data-bind="click: goToGeneralLegder">#: kendo.toString(typeLine[i].line[j].amount, "n") #</a>
 		        </td>
-		        <td ></td>
+		        <td></td>
 		    </tr>
 		#}#
 		<tr>
@@ -40495,7 +41881,7 @@
 	            &nbsp;&nbsp; Total #:typeLine[i].type#
 	        </td>
 	        <td style="font-weight: bold; border-top: 1px solid black !important;" align="right">
-	            #=kendo.toString(totalType, "c", banhji.locale)#
+	            #= kendo.toString(totalType, "n") #
 	        </td>
 	        <td ></td>
 	    </tr>
@@ -40509,7 +41895,7 @@
         </td>
         <td></td>
         <td style="font-weight: bold; border-top: 1px solid black !important;" align="right">
-            #=kendo.toString(total, "c", banhji.locale)#
+            #= kendo.toString(total, "n") #
         </td>
     </tr>
 </script>
@@ -42332,13 +43718,39 @@
 												</tr>
 												<tr>
 													<td class="span4">
+														<h3><a href="#/sale_order_by_item" data-bind="text: lang.lang.saleOrder_detail_by_product" style="text-transform: capitalize;"></a></h3>
+													</td>
+													<td class="span4">
+														<h3><a href="#/sale_order_by_employee"  style="text-transform: capitalize;">Sale Order By Employee/Customer</a></h3>
+													</td>
+													<td class="span4">
+														<h3><a href="#/draft_list" data-bind="text: lang.lang.draft_list" style="text-transform: capitalize;"></a></h3>
+													</td>
+												</tr>
+												<tr>
+													<td class="span4">
+														<p style="padding-right: 25px;" data-bind="text: lang.lang.salesOrder_summary_summarize">
+															Lists individual sale order transactions by date for each product/ service with a period of time.
+														</p>
+													</td>
+													<td class="span4">
+														
+													</td>
+													<td class="span4">
+														<p style="padding-right: 25px;" data-bind="text: lang.lang.draft_list_summarize">
+															Lists individual draft transactions by date for each customer within a period of time.
+														</p>
+													</td>
+												</tr>
+												<tr>
+													<td class="span4">
 														<h3><a href="#/cashSale_summary_by_product" data-bind="text: lang.lang.cashSale_summary_by_product" style="text-transform: capitalize;"></a></h3>
 													</td>
 													<td class="span4">
 														<h3><a href="#/cashSale_detail_by_product" data-bind="text: lang.lang.cashSale_detail_by_product" style="text-transform: capitalize;"></a></h3>
 													</td>
 													<td class="span4">
-														<h3><a href="#/draft_list" data-bind="text: lang.lang.draft_list" style="text-transform: capitalize;"></a></h3>
+														
 													</td>
 												</tr>
 												<tr>
@@ -42353,9 +43765,7 @@
 														</p>
 													</td>
 													<td class="span4">
-														<p style="padding-right: 25px;" data-bind="text: lang.lang.draft_list_summarize">
-															Lists individual draft transactions by date for each customer within a period of time.
-														</p>
+														
 													</td>
 												</tr>
 												</tr>
@@ -42455,7 +43865,7 @@
 														<h3><a href="#/receivable_aging_detail" data-bind="text: lang.lang.receivable_aging_detail"></a></h3>
 													</td>
 													<td class="span4" >
-														<h3><a href="#/invoice_list" data-bind="text: lang.lang.invoice_list"></a></h3>
+														<h3><a href="#/receivable_aging_summary_employee" data-bind="text: lang.lang.receivable_aging_summary_byEmloyee">Receivable Aging Summary by Employee</a></h3>
 													</td>
 												</tr>
 												<tr>
@@ -42468,21 +43878,29 @@
 														<p style="padding-right: 25px;" data-bind="text: lang.lang.lists_individual_unpaid_invoices_grouped_by_customer">Lists individual unpaid invoices, grouped by customer. This includes due date, outstanding days (aging days), and amount.</p>
 													</td>
 													<td class="span4" >
-														<p data-bind="text: lang.lang.shows_a_chronological_list_of_all_your_invoices_for_a_selected_date_range">
-															Shows a chronological list of all your invoices for a selected date range.
+														<p style="padding-right: 25px;" data-bind="text: 		lang.lang.lists_all_unpaid_invoices2">
+															Lists all unpaid invoices for the current period, 30, 60, 90,
+															and more than 90 days, grouped by Employee.
 														</p>
 													</td>
 												</tr>
 												<tr>
+													<td class="span4">
+														<h3><a href="#/invoice_list" data-bind="text: lang.lang.invoice_list"></a></h3>
+													</td>
 													<td class="span4">
 														<h3><a href="#/collect_invoice" data-bind="text: lang.lang.list_of_invoices_to_be_collected"></a></h3>
 													</td>
 													<td class="span4">
 														<h3><a href="#/collection_report" data-bind="text: lang.lang.collection_report"></a></h3>
 													</td>
-													<td class="span4"></td>
 												</tr>
 												<tr>
+													<td class="span4">
+														<p data-bind="text: lang.lang.shows_a_chronological_list_of_all_your_invoices_for_a_selected_date_range">
+															Shows a chronological list of all your invoices for a selected date range.
+														</p>
+													</td>
 													<td class="span4">
 														<p data-bind="text: lang.lang.lists_all_unpaid_invoices_grouped_by_due_today_and_overdue">
 															Lists individual unpaid invoices for each customer
@@ -42492,8 +43910,6 @@
 														<p style="padding-right: 25px;" data-bind="text: lang.lang.lists_of_collected_invoices_for_the_select_period_of_time_group_by_method_of_payment">
 															Lists of collected invoices for the select period of time, group by method of payment.
 														</p>
-													</td>
-													<td class="span4">
 													</td>
 												</tr>
 
@@ -48547,10 +49963,10 @@
 
 								            		<input data-role="dropdownlist"
 										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
+										                   data-text-field="text"
+										                   data-value-field="value"
 										                   data-bind="value: obj.frequency,
-										                              source: frequencyList,
+										                              source: dateUnitList,
 										                              events: { change: frequencyChanges }"
 										                   style="width: 45%;" />
 								            	</td>
@@ -49373,6 +50789,9 @@
 				    <br>
 				    <div class="row" style="margin-left:0;">
 						<div class="span4">
+							<div class="span12" style="margin-bottom: 10px;">
+								<input type="text" id="formName" name="Form Name" class="k-textbox" placeholder="Form Name" required validationMessage="" data-bind="value: obj.name" style="width: 100%;" />
+							</div>
 							<div class="span12">
 								<select class="span12 selectType"
 									data-role="dropdownlist"
@@ -49380,11 +50799,18 @@
 									data-text-field="name"
 									data-value-field="id"
 									data-bind="value: obj.type,
-												source: selectTypeList,
-												events:{change: onChange}" ></select>
-							</div>
-							<div class="span12" style="margin-bottom: 10px;">
-								<input type="text" id="formName" name="Form Name" class="k-textbox" placeholder="Form Name" required validationMessage="" data-bind="value: obj.name" style="width: 100%;" />
+										source: selectTypeList,
+										events:{change: onChange}" >
+								</select>
+								<select class="span12 selectType"
+									data-role="dropdownlist"
+									data-value-primitive="true"
+									data-text-field="name"
+									data-value-field="id"
+									data-bind="value: obj.group,
+										source: groupAR,
+										events:{change: groupChange}" >
+								</select>
 							</div>
 							<div class="span12">
 								<h2 class="btn btn-block btn-primary" style="color: #fff !important;" >Form Style</h2>
@@ -49406,18 +50832,8 @@
                                 	</div>
                                 </div>
 							</div>
-							<div class="span12" style="margin-left:0; margin-top: 10px;padding-bottom: 30px;">
-								<h2 class="btn btn-block btn-primary" style="color: #fff !important;">Form Appearance</h2>
-								<div class="colorPalatte span12">
-									<div class="" style="margin-top: 15px;">
-										<input type="text" id="formtitle" name="Form Title" class="k-textbox" placeholder="Form Title" required validationMessage="" data-bind="value: obj.title" style="width: 100%;" />
-										<textarea data-bind="value: obj.note, text: obj.note" placeholder="Note" class="span12" style="min-height: 100px;margin-top: 15px;padding-left: 10px; resize: none;"></textarea>
-                                	</div>
-                                </div>
-							</div>
 						</div>
 						<div class="span8" id="invFormContent" style="padding-left:0;padding-right: 0;width: 63%;border:1px solid #eee;margin-bottom:20px;">
-
 						</div>
 					</div>
 					<!-- Form actions -->
@@ -49428,10 +50844,8 @@
 
 							</div>
 							<div class="span9" align="right">
-								<span class="btn-btn" id="saveClose" data-bind="click: save"><span data-bind="text: lang.lang.save"></span></span>
-							  	<span class="btn-btn" id="saveDraft" data-bind="click: cancel"><span data-bind="text: lang.lang.close"></span></span><!--
 								<span class="btn btn-icon btn-primary glyphicons ok_2" data-bind="click: save" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save"></span></span>
-								<span class="btn btn-icon btn-success glyphicons power" data-bind="click: cancel" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.close"></span></span> -->
+								<span class="btn btn-icon btn-success glyphicons power" data-bind="click: cancel" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.cancel"></span></span> 
 							</div>
 						</div>
 					</div>
@@ -49585,6 +50999,10 @@
 						                 data-bind="source: lineDS">
                     </tbody>
                     <tfoot>
+                    	<tr>
+                        	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">សរុបរង Sub Total</td>
+                            <td style="text-align: right; padding-right: 5px;" data-bind="text: obj.sub_total"></td>
+                        </tr>
                         <tr>
                         	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">បញ្ចុះតម្លៃ Discount</td>
                             <td style="text-align: right; padding-right: 5px;" data-bind="text: obj.discount"></td>
@@ -50881,8 +52299,8 @@
         	<div class="span12 clear mid-header" style="background:none;">
         		<div class="span3" style="margin-right: 15px;">
         			<b>Customer Information</b><br><br>
-        			<p><span data-bind="text: obj.contact[0].name"></span><br>
-        			<b>Address: </b> <span data-bind="text: obj.contact[0].address"></span>
+        			<p><span data-bind="text: obj.contact.name"></span><br>
+        			<b>Address: </b> <span data-bind="text: obj.contact.address"></span>
         			</p>
         		</div>
         		<div class="span6" style="float:right;">
@@ -52194,8 +53612,8 @@
         	<div class="span12 clear mid-header" style="background:none;">
         		<div class="span3" style="margin-right: 15px;">
         			<b>Customer Information</b><br><br>
-        			<p><span data-bind="text: obj.contact[0].name"></span><br>
-        			<b>Address: </b> <span data-bind="text: obj.contact[0].address"></span>
+        			<p><span data-bind="text: obj.contact.name"></span><br>
+        			<b>Address: </b> <span data-bind="text: obj.contact.address"></span>
         			</p>
         		</div>
         		<div class="span6" style="float:right;">
@@ -52504,8 +53922,12 @@
                     </tbody>
                     <tfoot>
                         <tr>
-                        	<td colspan="2" rowspan="4" style="text-align: left;padding-left: 10px;" data-bind="html: obj.note">
+                        	<td colspan="2" rowspan="5" style="text-align: left;padding-left: 10px;" data-bind="html: obj.note">
                         	</td>
+                        	<td colspan="2" style="text-align:right;padding:5px;font-weight: bold;">សរុបរង Sub Total</td>
+                            <td class="rside" data-bind="text: obj.sub_total"></td>
+                        </tr>
+                        <tr>
                         	<td colspan="2" style="text-align:right;padding:5px;font-weight: bold;">បញ្ចុះតម្លៃ Discount</td>
                             <td class="rside" data-bind="text: obj.discount"></td>
                         </tr>
@@ -52567,8 +53989,8 @@
                     <div class="clear">
                         <div class="left dotted-ruler" style="width: 62%;">
                         	<p style="font-weight:bold">
-                        		<span data-bind="text: obj.contact[0].name"></span><br>
-                        		<span data-bind="text: obj.contact[0].address"></span>
+                        		<span data-bind="text: obj.contact.name"></span><br>
+                        		<span data-bind="text: obj.contact.address"></span>
                         	</p>
                         </div>
                     </div>
@@ -52577,7 +53999,7 @@
                     		<p>ទូរស័ព្ទ​លេខ HP:</p>
                         </div-->
                         <div class="left dotted-ruler" style="width: 78%;">
-                        	<p style="font-weight:bold" data-bind="text: obj.contact[0].phone"></p>
+                        	<p style="font-weight:bold" data-bind="text: obj.contact.phone"></p>
                         </div>
                     </div>
                 </div>
@@ -53107,8 +54529,10 @@
         	<div class="span12 clear mid-header">
         		<div class="span7" style="margin-right: 15px;">
         			<b style="font-size: 14px;line-height: 24px;">ព័ត៌មានអតិថិជន CUSTOMER INFO</b><br><br>
-        			<p><span data-bind="text: obj.contact[0].name"></span><br>
-        			<span data-bind="text: obj.contact[0].address"></span>
+        			<p>ឈ្មោះ Name: <span data-bind="text: obj.contact.name"></span></p>
+        			<p>អាស័យដ្ឋាន Address: <span data-bind="text: contactDS.data()[0].address"></span>
+        			</p>
+        			<p>លេខទូរស័ព្ទ Phone: <span data-bind="text: contactDS.data()[0].phone"></span>
         			</p>
         		</div>
         		<div class="span4" style="float:right;">
@@ -53121,10 +54545,10 @@
         	<table class="span12" rules="rows">
         		<thead>
         			<tr class="main-color ten">
-        				<th width="90" style="text-align: center;">លេខកូដ<br>CODE</th>
+        				<th width="120" style="text-align: center;">លេខកូដ<br>CODE</th>
         				<th class="lside" style="text-align: center;">ពិពណ៌នា<br>ITEM DESCRIPTION</th>
-        				<th style="text-align: center;">ឯកតា<br>UM</th>
-        				<th style="text-align: center;">ចំនួន<br>QTY</th>
+        				<th width="90" style="text-align: center;">ឯកតា<br>UM</th>
+        				<th width="90" style="text-align: center;">ចំនួន<br>QTY</th>
         				<!-- <th class="rside">កំណត់សំគាល់<br>REMARK</th> -->
         			</tr>
         		</thead>
@@ -53196,8 +54620,8 @@
         		</div>
         		<div class="span7">
         			<b style="font-size: 14px;line-height: 24px;">ព័ត៌មានអតិថិជន CUSTOMER INFO</b><br><br>
-        			<p><span data-bind="text: obj.contact[0].name"></span><br>
-        			<span data-bind="text: obj.contact[0].address"></span>
+        			<p><span data-bind="text: obj.contact.name"></span><br>
+        			<span data-bind="text: obj.contact.address"></span>
         			</p>
         		</div>
         	</div>
@@ -53278,8 +54702,8 @@
         		</div>
         		<div class="span7">
         			<b style="font-size: 14px;line-height: 24px;">ព័ត៌មានអតិថិជន CUSTOMER INFO</b><br><br>
-        			<p><span data-bind="text: obj.contact[0].name"></span><br>
-        			<span data-bind="text: obj.contact[0].address"></span>
+        			<p><span data-bind="text: obj.contact.name"></span><br>
+        			<span data-bind="text: obj.contact.address"></span>
         			</p>
         		</div>
         	</div>
@@ -53460,8 +54884,8 @@
         	<div class="span12 clear mid-header">
         		<div class="span7" style="margin-right: 15px;">
         			<b style="font-size: 14px;line-height: 24px;">ព័ត៌មានអ្នកផ្គត់ផ្គង់ SUPPLIER INFO</b><br><br>
-        			<p><span data-bind="text: obj.contact[0].name"></span><br>
-        			<span data-bind="text: obj.contact[0].address"></span>
+        			<p><span data-bind="text: obj.contact.name"></span><br>
+        			<span data-bind="text: obj.contact.address"></span>
         			</p>
         		</div>
         		<div class="span4" style="float:right;">
@@ -53560,8 +54984,8 @@
         		</div>
         		<div class="span7">
         			<b style="font-size: 14px;line-height: 24px;">ព័ត៌មានអ្នកផ្គត់ផ្គង់ SUPPLIER INFO</b><br><br>
-        			<p><span data-bind="text: obj.contact[0].name"></span><br>
-        			<span data-bind="text: obj.contact[0].address"></span>
+        			<p><span data-bind="text: obj.contact.name"></span><br>
+        			<span data-bind="text: obj.contact.address"></span>
         			</p>
         		</div>
         	</div>
@@ -53653,8 +55077,8 @@
         		</div>
         		<div class="span7">
         			<b style="font-size: 14px;line-height: 24px;">ព័ត៌មានអ្នកផ្គត់ផ្គង់ SUPPLIER INFO</b><br><br>
-        			<p><span data-bind="text: obj.contact[0].name"></span><br>
-        			<span data-bind="text: obj.contact[0].address"></span>
+        			<p><span data-bind="text: obj.contact.name"></span><br>
+        			<span data-bind="text: obj.contact.address"></span>
         			</p>
         		</div>
         	</div>
@@ -53832,8 +55256,8 @@
         	<div class="span12 clear mid-header">
         		<div class="span7" style="margin-right: 15px;">
         			<b style="font-size: 14px;line-height: 24px;">ព័ត៌មានអ្នកផ្គត់ផ្គង SUPPLIER INFO</b><br><br>
-        			<p><span data-bind="text: obj.contact[0].name"></span><br>
-        			<span data-bind="text: obj.contact[0].address"></span>
+        			<p><span data-bind="text: obj.contact.name"></span><br>
+        			<span data-bind="text: obj.contact.address"></span>
         			</p>
         		</div>
         		<div class="span4" style="float:right;">
@@ -53907,8 +55331,8 @@
         		</div>
         		<div class="span7">
         			<b style="font-size: 14px;line-height: 24px;">ព័ត៌មានអ្នកផ្គត់ផ្គង SUPPLIER INFO</b><br><br>
-        			<p><span data-bind="text: obj.contact[0].name"></span><br>
-        			<span data-bind="text: obj.contact[0].address"></span>
+        			<p><span data-bind="text: obj.contact.name"></span><br>
+        			<span data-bind="text: obj.contact.address"></span>
         			</p>
         		</div>
         	</div>
@@ -53976,8 +55400,8 @@
         		</div>
         		<div class="span7">
         			<b style="font-size: 14px;line-height: 24px;">ព័ត៌មានអ្នកផ្គត់ផ្គង SUPPLIER INFO</b><br><br>
-        			<p><span data-bind="text: obj.contact[0].name"></span><br>
-        			<span data-bind="text: obj.contact[0].address"></span>
+        			<p><span data-bind="text: obj.contact.name"></span><br>
+        			<span data-bind="text: obj.contact.address"></span>
         			</p>
         		</div>
         	</div>
@@ -54098,6 +55522,466 @@
         	</div>
         </div>
     </div>
+</script>
+<script id="defaultSaleReturn" type="text/x-kendo-template">
+	<div class="inv1">
+        <div class="content">
+        	<div class="advoucher-header">
+				<div class="head" style="width: 100%;">
+		        	<div class="logo" style="width: 15%;">
+		            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
+		            </div>
+		            <div class="cover-name-company" style="width: 70%!important;float: left;margin-left: 15px;">
+		            	<h2 ></h2>
+		            	<h3 style="float: none; text-align: center;font-size: 25px;line-height: 37px!important;" data-bind="text: company.name"></h3>
+		                <div class="clear" style="float: none;">
+		                	<p style="font-size: 14px!important;float: none; text-align: center;">អាស័យ​ដ្ឋាន Address: <span data-bind="text: company.address"></span></p>
+		                    <p style="font-size: 14px!important;float: none;width: 100%;text-align: center;">ទូរស័ព្ទលេខ HP <span data-bind="text: company.telephone"></span> | Email: <span data-bind="text: company.email"></span></p>
+		                </div>
+		            </div>
+		        </div>
+				<div class="title" style="">
+					<h2 class="kh">ប័ណ្ណបង្វិលទំនិញ / ចំណាយ</h2>
+					<h2 class="en">Sale Return</h2>
+				</div>
+			</div>
+            <div class="clear mid-header" style="margin-top: 20px;padding: 10px;background: #dce6f2;padding-bottom: 10px;">
+            	<div class="cover-customer">
+                	<h5>ព័ត៌មានអតិថិជន​ CUSTOMER INFO:</h5>
+                    <div class="clear">
+                        <div class="left dotted-ruler" style="width: 62%;">
+                        	<p style="font-size: 12px; line-height: 20px;">ឈ្មោះ Name : <span data-bind="text: contactDS.data()[0].name"></span><br>
+		        			អាស័យ​ដ្ឋាន Address : <span data-bind="text: contactDS.data()[0].address"></span><br>
+		        			លេខទូរស័ព្ទ Tel : <span data-bind="text: contactDS.data()[0].phone"></span>
+		        			</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="cover-inv-number">
+                	<div class="clear">
+                    	<div class="left">
+                    		<p>លេខ No. :</p>
+                        </div>
+                        <div class="left dotted-ruler" style="width: 42%;">
+                        	<p style="font-weight:bold" data-bind="text: obj.number"></p>
+                        </div>
+                    </div>
+                    <div class="clear">
+                    	<div class="left">
+                    		<p>កាល​បរិច្ឆេទ Date:</p>
+                        </div>
+                        <div class="left dotted-ruler" style="width: 57%;">
+                        	<p style="font-weight:bold" data-bind="text: obj.issued_date"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        	<div class="clear">
+            	<table cellpadding="0" cellspacing="0" border="1" class="span12">
+                	<thead>
+                        <tr class="main-color" style="height: 45px;" data-bind="style: {backgroundColor: obj.color}">
+                            <th style="text-align: center;width: 10%;">ល.រ<br />N<sup>0</sup></th>
+                            <th style="text-align: center;">បរិយាយ​មុខ​ទំនិញ<br />Description</th>
+                            <th style="text-align: center;">បរិមាណ<br />Quantity</th>
+                            <th style="text-align: center;">ថ្លៃឯកតា​<br />Unit Price</th>
+                            <th style="text-align: center;width: 16%;">ថ្លៃ​ទំនិញ<br />Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody style="margin-top: 2px" 
+                    	id="formListView" 
+                    	data-role="listview"
+						data-auto-bind="false"
+						data-template="invoiceForm-lineDS-template"
+						data-bind="source: lineDS">
+                    </tbody>
+                </table>
+            </div>
+            <div class="clear" data-bind="visible: haveAccount" style="margin-top: 20px;">
+            	<table cellpadding="0" cellspacing="0" border="1" class="span12">
+                	<thead>
+                        <tr class="main-color" style="height: 45px;" data-bind="style: {backgroundColor: obj.color}">
+                            <th style="text-align: center;width: 10%;">ល.រ<br />N<sup>0</sup></th>
+                            <th style="text-align: center;">គណនី<br />Account</th>
+                            <th style="text-align: center;width: 16%;">តម្លៃ<br />Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody style="margin-top: 2px" 
+                    	id="formListView" 
+                    	data-role="listview"
+						data-auto-bind="false"
+						data-template="account-lineDS-template"
+						data-bind="source: accountLineDS">
+                    </tbody>
+                </table>
+            </div>
+            <div class="clear" style="margin-top: 20px;">
+            	<table cellpadding="0" cellspacing="0" border="1" class="span12">
+                    <tfoot>
+                        <tr>
+                        	<td colspan="2" style="text-align:right;padding:5px;font-weight: bold;">សរុប Total</td>
+                            <td class="rside" style="width: 16%;" data-bind="text: obj.amount"></td>
+                        </tr>
+                        <tr>
+                        	<td colspan="2" style="text-align:right;padding:5px;font-weight: bold;">សរុបពីវក្កយបត្រ៖ <span data-bind="text: offsetnumber"></span></td>
+                            <td class="rside" data-bind="text: offsetamount"></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        <div class="foot">
+        	<div class="cover-signature">
+            	<div class="singature" style="float:left">
+                	<p>ហត្ថលេខា និងឈ្មោះ​អ្នក​ទិញ<br />Customer's Signature & Name</p>
+                </div>
+                <div class="singature" style="float:right">
+                	<p>ហត្ថលេខា និងឈ្មោះ​អ្នកលក់<br />Seller's Signature & Name</p>
+                </div>
+            </div>
+            <h6 style="padding-left: 35px;">សម្គាល់៖ <span>ច្បាប់​ដើម​សម្រាប់​អ្នក​ទិញ ច្បាប់​ចម្លង​សម្រាប់​អ្នក​លក់</span><br /><span style="font-size: 10px"><strong>Note:</strong> Original invoice for customer, copied invoice for seller</span></h6>
+        </div>
+    </div>
+</script>
+<script id="defaultCashRefund" type="text/x-kendo-template">
+	<div class="inv1">
+        <div class="content">
+        	<div class="advoucher-header">
+				<div class="head" style="width: 100%;">
+		        	<div class="logo" style="width: 15%;">
+		            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
+		            </div>
+		            <div class="cover-name-company" style="width: 70%!important;float: left;margin-left: 15px;">
+		            	<h2 ></h2>
+		            	<h3 style="float: none; text-align: center;font-size: 25px;line-height: 37px!important;" data-bind="text: company.name"></h3>
+		                <div class="clear" style="float: none;">
+		                	<p style="font-size: 14px!important;float: none; text-align: center;">អាស័យ​ដ្ឋាន Address: <span data-bind="text: company.address"></span></p>
+		                    <p style="font-size: 14px!important;float: none;width: 100%;text-align: center;">ទូរស័ព្ទលេខ HP <span data-bind="text: company.telephone"></span> | Email: <span data-bind="text: company.email"></span></p>
+		                </div>
+		            </div>
+		        </div>
+				<div class="title" style="">
+					<h2 class="kh">ប័ណ្ណបង្វិលសាច់ប្រាក់</h2>
+					<h2 class="en">Cash Refund</h2>
+				</div>
+			</div>
+            <div class="clear mid-header" style="margin-top: 20px;padding: 10px;background: #dce6f2;padding-bottom: 10px;">
+            	<div class="cover-customer">
+                	<h5>ព័ត៌មានអតិថិជន​ CUSTOMER INFO:</h5>
+                    <div class="clear">
+                        <div class="left dotted-ruler" style="width: 62%;">
+                        	<p style="font-size: 12px; line-height: 20px;">ឈ្មោះ Name : <span data-bind="text: contactDS.data()[0].name"></span><br>
+		        			អាស័យ​ដ្ឋាន Address : <span data-bind="text: contactDS.data()[0].address"></span><br>
+		        			លេខទូរស័ព្ទ Tel : <span data-bind="text: contactDS.data()[0].phone"></span>
+		        			</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="cover-inv-number">
+                	<div class="clear">
+                    	<div class="left">
+                    		<p>លេខ No. :</p>
+                        </div>
+                        <div class="left dotted-ruler" style="width: 42%;">
+                        	<p style="font-weight:bold" data-bind="text: obj.number"></p>
+                        </div>
+                    </div>
+                    <div class="clear">
+                    	<div class="left">
+                    		<p>កាល​បរិច្ឆេទ Date:</p>
+                        </div>
+                        <div class="left dotted-ruler" style="width: 57%;">
+                        	<p style="font-weight:bold" data-bind="text: obj.issued_date"></p>
+                        </div>
+                    </div>
+                    <div class="clear">
+                    	<div class="left">
+                    		<p>គណនី Cash Account:</p>
+                        </div>
+                        <div class="left dotted-ruler" style="width: 57%;">
+                        	<p style="font-weight:bold" data-bind="text: accountDS.name"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        	<div class="clear">
+            	<table cellpadding="0" cellspacing="0" border="1" class="span12">
+                	<thead>
+                        <tr class="main-color" style="height: 45px;" data-bind="style: {backgroundColor: obj.color}">
+                            <th style="text-align: center;width: 10%;">ល.រ<br />N<sup>0</sup></th>
+                            <th style="text-align: center;">បរិយាយ​មុខ​ទំនិញ<br />Description</th>
+                            <th style="text-align: center;">បរិមាណ<br />Quantity</th>
+                            <th style="text-align: center;">ថ្លៃឯកតា​<br />Unit Price</th>
+                            <th style="text-align: center;width: 16%;">ថ្លៃ​ទំនិញ<br />Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody style="margin-top: 2px" 
+                    	id="formListView" 
+                    	data-role="listview"
+						data-auto-bind="false"
+						data-template="invoiceForm-lineDS-template"
+						data-bind="source: lineDS">
+                    </tbody>
+                </table>
+            </div>
+            <div class="clear" style="margin-top: 20px;">
+            	<table cellpadding="0" cellspacing="0" border="1" class="span12">
+                    <tfoot>
+                    	<tr>
+                        	<td colspan="2" style="text-align:right;padding:5px;font-weight: bold;">ប្រាក់កក់៖ <span data-bind="text: depositnumber"></span></td>
+                            <td class="rside" data-bind="text: obj.deposit"></td>
+                        </tr>
+                        <tr>
+                        	<td colspan="2" style="text-align:right;padding:5px;font-weight: bold;">សរុប Total</td>
+                            <td class="rside" style="width: 16%;" data-bind="text: obj.amount"></td>
+                        </tr>
+                        
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        <div class="foot">
+        	<div class="cover-signature">
+            	<div class="singature" style="float:left">
+                	<p>ហត្ថលេខា និងឈ្មោះ​អ្នក​ទិញ<br />Customer's Signature & Name</p>
+                </div>
+                <div class="singature" style="float:right">
+                	<p>ហត្ថលេខា និងឈ្មោះ​អ្នកលក់<br />Seller's Signature & Name</p>
+                </div>
+            </div>
+            <h6 style="padding-left: 35px;">សម្គាល់៖ <span>ច្បាប់​ដើម​សម្រាប់​អ្នក​ទិញ ច្បាប់​ចម្លង​សម្រាប់​អ្នក​លក់</span><br /><span style="font-size: 10px"><strong>Note:</strong> Original invoice for customer, copied invoice for seller</span></h6>
+        </div>
+    </div>
+</script>
+<script id="defaultPurchase" type="text/x-kendo-template">
+	<div class="inv1">
+        <div class="content">
+        	<div class="advoucher-header">
+				<div class="head" style="width: 100%;">
+		        	<div class="logo" style="width: 15%;">
+		            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
+		            </div>
+		            <div class="cover-name-company" style="width: 70%!important;float: left;margin-left: 15px;">
+		            	<h2 ></h2>
+		            	<h3 style="float: none; text-align: center;font-size: 25px;line-height: 37px!important;" data-bind="text: company.name"></h3>
+		                <div class="clear" style="float: none;">
+		                	<p style="font-size: 14px!important;float: none; text-align: center;">អាស័យ​ដ្ឋាន Address: <span data-bind="text: company.address"></span></p>
+		                    <p style="font-size: 14px!important;float: none;width: 100%;text-align: center;">ទូរស័ព្ទលេខ HP <span data-bind="text: company.telephone"></span> | Email: <span data-bind="text: company.email"></span></p>
+		                </div>
+		            </div>
+		        </div>
+				<div class="title" style="">
+					<h2 class="kh" style="font-size: 20px; line-height: 35px!important;">សក្ខីប័ត្រអ្នកផ្គត់ផ្គង់</h2>
+					<h2 class="en" style="font-size: 16px;">Account Payable Voucher</h2>
+				</div>
+			</div>
+            <div class="clear mid-header" style="margin-top: 20px;padding: 10px;background: #dce6f2;padding-bottom: 10px;">
+            	<div class="cover-customer">
+                	<h5>អ្នកផ្គត់ផ្គង់:</h5>
+                    <div class="clear">
+                        <div class="left dotted-ruler" style="width: 62%;">
+                        	<p style="font-size: 12px; line-height: 20px;">ឈ្មោះ Name : <span data-bind="text: contactDS.data()[0].name"></span><br>
+		        			អាស័យ​ដ្ឋាន Address : <span data-bind="text: contactDS.data()[0].address"></span><br>
+		        			លេខទូរស័ព្ទ Tel : <span data-bind="text: contactDS.data()[0].phone"></span>
+		        			</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="cover-inv-number">
+                	<div class="clear">
+                    	<div class="left">
+                    		<p>លេខ No. :</p>
+                        </div>
+                        <div class="left dotted-ruler" style="width: 42%;">
+                        	<p style="font-weight:bold" data-bind="text: obj.number"></p>
+                        </div>
+                    </div>
+                    <div class="clear">
+                    	<div class="left">
+                    		<p>កាល​បរិច្ឆេទ Date:</p>
+                        </div>
+                        <div class="left dotted-ruler" style="width: 57%;">
+                        	<p style="font-weight:bold" data-bind="text: obj.issued_date"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        	<div class="clear">
+            	<table cellpadding="0" cellspacing="0" border="1" class="span12">
+                	<thead>
+                        <tr class="main-color" style="height: 45px;" data-bind="style: {backgroundColor: obj.color}">
+                            <th style="text-align: center;width: 10%;">ល.រ<br />N<sup>0</sup></th>
+                            <th style="text-align: center;">បរិយាយ​មុខ​ទំនិញ<br />Description</th>
+                            <th style="text-align: center;">បរិមាណ<br />Quantity</th>
+                            <th style="text-align: center;">ថ្លៃឯកតា​<br />Unit Price</th>
+                            <th style="text-align: center;width: 16%;">ថ្លៃ​ទំនិញ<br />Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody style="margin-top: 2px" 
+                    	id="formListView" 
+                    	data-role="listview"
+						data-auto-bind="false"
+						data-template="invoiceForm-lineDS-template"
+						data-bind="source: lineDS">
+                    </tbody>
+                </table>
+            </div>
+            <div class="clear" data-bind="visible: haveAccount" style="margin-top: 20px;">
+            	<table cellpadding="0" cellspacing="0" border="1" class="span12">
+                	<thead>
+                        <tr class="main-color" style="height: 45px;" data-bind="style: {backgroundColor: obj.color}">
+                            <th style="text-align: center;width: 10%;">ល.រ<br />N<sup>0</sup></th>
+                            <th style="text-align: center;">គណនី<br />Account</th>
+                            <th style="text-align: center;width: 16%;">តម្លៃ<br />Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody style="margin-top: 2px" 
+                    	id="formListView" 
+                    	data-role="listview"
+						data-auto-bind="false"
+						data-template="account-lineDS-template"
+						data-bind="source: accountLineDS">
+                    </tbody>
+                </table>
+            </div>
+            <div class="clear" style="margin-top: 20px;">
+            	<table cellpadding="0" cellspacing="0" border="1" class="span12">
+                    <tfoot>
+                        <tr>
+                        	<td colspan="2" style="text-align:right;padding:5px;font-weight: bold;">សរុប Total</td>
+                            <td class="rside" style="width: 16%;" data-bind="text: obj.amount"></td>
+                        </tr>
+                        <tr>
+                        	<td colspan="2" style="text-align:right;padding:5px;font-weight: bold;">សរុបពីវក្កយបត្រ៖ <span data-bind="text: offsetnumber"></span></td>
+                            <td class="rside" data-bind="text: offsetamount"></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        <div class="foot">
+        	<div style="margin-top: 60px;overflow:hidden;">
+				<div class="span4" style="text-align: center;">
+					<div style="padding: 10px 5px;">រៀបចំដោយ <br> PREPARED BY</div>
+					<div style="padding-top: 60px;border-bottom: 1px solid #000;width: 90%;margin: 0 auto;"></div>
+				</div>
+				<div class="span4" style="text-align: center;">
+					<div style="padding: 10px 5px;">ត្រួតពិនិត្យដោយ <br> REVIEWED BY</div>
+					<div style="padding-top: 60px;border-bottom: 1px solid #000;width: 90%;margin: 0 auto;"></div>
+				</div>
+				<div class="span4" style="text-align: center;">
+					<div style="padding: 10px 5px;">សំរេចដោយ <br> APPROVED BY</div>
+					<div style="padding-top: 60px;border-bottom: 1px solid #000;width: 90%;margin: 0 auto;"></div>
+				</div>
+			</div>
+        	<!-- <div class="cover-signature">
+            	<div class="singature" style="float:left">
+                	<p>ហត្ថលេខា និងឈ្មោះ​អ្នក​ទិញ<br />Customer's Signature & Name</p>
+                </div>
+                <div class="singature" style="float:right">
+                	<p>ហត្ថលេខា និងឈ្មោះ​អ្នកលក់<br />Seller's Signature & Name</p>
+                </div>
+            </div>
+            <h6 style="padding-left: 35px;">សម្គាល់៖ <span>ច្បាប់​ដើម​សម្រាប់​អ្នក​ទិញ ច្បាប់​ចម្លង​សម្រាប់​អ្នក​លក់</span><br /><span style="font-size: 10px"><strong>Note:</strong> Original invoice for customer, copied invoice for seller</span></h6> -->
+        </div>
+    </div>
+</script>
+<script id="invoiceHaveBalance" type="text/x-kendo-template">
+	<div class="inv1">
+        <div class="content">
+        	<div style="overflow: hidden;padding:10px 0;">
+        		<h1>វិក្កយបត្រ</h1>
+            	<h2 data-bind="text: obj.title"></h2>
+        	</div>
+            <div class="clear mid-header" style="padding: 10px;background: #dce6f2;padding-bottom: 10px;">
+            	<div class="cover-customer">
+                	<h5>ព័ត៌មានអតិថិជន​ CUSTOMER INFO:</h5>
+                    <div class="clear">
+                        <div class="left dotted-ruler" style="width: 62%;">
+                        	<p style="font-size: 12px; line-height: 20px;">ឈ្មោះ Name : <span data-bind="text: contactDS.data()[0].name"></span><br>
+		        			អាស័យ​ដ្ឋាន Address : <span data-bind="text: contactDS.data()[0].address"></span><br>
+		        			លេខទូរស័ព្ទ Tel : <span data-bind="text: contactDS.data()[0].phone"></span>
+		        			</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="cover-inv-number">
+                	<div class="clear">
+                    	<div class="left">
+                    		<p>លេខ No. :</p>
+                        </div>
+                        <div class="left dotted-ruler" style="width: 42%;">
+                        	<p style="font-weight:bold" data-bind="text: obj.number"></p>
+                        </div>
+                    </div>
+                    <div class="clear">
+                    	<div class="left">
+                    		<p>កាល​បរិច្ឆេទ Date:</p>
+                        </div>
+                        <div class="left dotted-ruler" style="width: 57%;">
+                        	<p style="font-weight:bold" data-bind="text: obj.issued_date"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        	<div class="clear">
+            	<table cellpadding="0" cellspacing="0" border="1" class="span12">
+                	<thead>
+                        <tr class="main-color" style="height: 45px;" data-bind="style: {backgroundColor: obj.color}">
+                            <th style="text-align: center;">ល.រ<br />N<sup>0</sup></th>
+                            <th style="text-align: center;">បរិយាយ​មុខ​ទំនិញ<br />Description</th>
+                            <th style="text-align: center;">បរិមាណ<br />Quantity</th>
+                            <th style="text-align: center;">ថ្លៃឯកតា​<br />Unit Price</th>
+                            <th style="text-align: center;">ថ្លៃ​ទំនិញ<br />Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody style="margin-top: 2px" id="formListView" data-role="listview"
+						data-auto-bind="false"
+						data-template="invoiceForm-lineDS-template"
+						                 data-bind="source: lineDS">
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                        	<td colspan="2" rowspan="4" style="text-align: left;padding-left: 10px;" data-bind="html: obj.note">
+                        	</td>
+                        	<td colspan="2" style="text-align:right;padding:5px;font-weight: bold;">បញ្ចុះតម្លៃ Discount</td>
+                            <td class="rside" data-bind="text: obj.discount"></td>
+                        </tr>
+                        <tr>
+                        	<td colspan="2" style="text-align:right;padding:5px;font-weight: bold;">សរុប Total</td>
+                            <td class="rside" data-bind="text: obj.amount"></td>
+                        </tr>
+                        <tr>
+                        	<td colspan="2" style="text-align:right;padding:5px;font-weight: bold;">ខ្វះពីមុន Old Remain</td>
+                            <td class="rside" data-bind="text: old_remain"></td>
+                        </tr>
+                        <tr>
+                        	<td colspan="2" style="text-align:right;padding:5px;font-weight: bold;">ជំពាក់សរុប Owed</td>
+                            <td class="rside" data-bind="text: amount_owed"></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        <div class="foot">
+        	<div class="cover-signature">
+            	<div class="singature" style="float:left">
+                	<p>ហត្ថលេខា និងឈ្មោះ​អ្នក​ទិញ<br />Customer's Signature & Name</p>
+                </div>
+                <div class="singature" style="float:right">
+                	<p>ហត្ថលេខា និងឈ្មោះ​អ្នកលក់<br />Seller's Signature & Name</p>
+                </div>
+            </div>
+            <h6 style="padding-left: 35px;">សម្គាល់៖ <span>ច្បាប់​ដើម​សម្រាប់​អ្នក​ទិញ ច្បាប់​ចម្លង​សម្រាប់​អ្នក​លក់</span><br /><span style="font-size: 10px"><strong>Note:</strong> Original invoice for customer, copied invoice for seller</span></h6>
+        </div>
+    </div>
+</script>
+
+<script id="account-lineDS-template" type="text/x-kendo-template">
+	<tr>
+		<td><i>#:banhji.invoiceForm.accountLineDS.indexOf(data)+1#</i>&nbsp;</td>
+		<td class="lside">#= description ? description : "" #</td>
+		<td class="rside">#= kendo.toString(amount, "c", locale) #</td>
+	</tr>
 </script>
 <script id="purchaseSampleService" type="text/x-kendo-template">
 	<div class="inv1">
@@ -54726,6 +56610,7 @@
         </div>
     </div>
 </script>
+<!-- Home Decor -->
 <script id="invoiceHDCom" type="text/x-kendo-template">
 	<div class="inv1 pcg">
         <div class="content clear">
@@ -54933,7 +56818,7 @@
 		                </div>
 		            </div>
 		        </div>
-				<div class="title" style="margin-top: -50px;">
+				<div class="title">
 					<h2 class="kh">សក្ខីប័ត្របុរេប្រទាន </h2>
 					<h2 class="en">advance voucher</h2>
 				</div>
@@ -55374,6 +57259,231 @@
         </div>
     </div>
 </script>
+<script id="MAXConcreteCashAdvance" type="text/x-kendo-template">
+	<style >
+		.advance-voucher{
+			width: 100%;
+			margin: 50px auto 0;
+			height: 250px;
+		}
+		.advance-voucher .advoucher-header .title{
+			float: right;
+			padding: 10px 10px 0;
+			margin-bottom: 15px;
+			line-height: 45px;
+			width: 100%;
+		}
+		.advance-voucher .advoucher-header .title .kh{
+			float: none;
+			width: 100%;
+			text-align: center;
+			font-size: 30px;
+			font-weight: 700;
+			line-height: 55px!important;
+			margin-right: 8px;
+		}
+		.advance-voucher .advoucher-header .title .en{
+			float: none;
+			font-size: 20px;
+			font-weight: 700;
+			text-align: center;
+			text-transform: uppercase;
+			line-height: 46px;
+		}
+		.advance-voucher .advoucher-header table{
+			width: 100%;
+			float: left;
+			border: 1px solid #333;
+			border-collapse: collapse;
+		}
+		.advance-voucher .advoucher-header table tr td{
+			padding: 5px;
+			border: 1px solid #333;
+			font-size: 13px;
+		}
+		.advance-voucher .advoucher-content table{
+			width: 100%;
+			float: left;
+			border: 1px solid #333;
+			border-collapse: collapse;
+		}
+		.advance-voucher .advoucher-content table tr th{
+			padding: 5px;
+			font-size: 13px;
+			font-weight: 700;
+			background: #1E4E78;
+			text-transform: uppercase;
+			border: 1px solid #333;
+			color: #fff;
+		}
+		.advance-voucher .advoucher-content table tr td{
+			padding: 5px;
+			border: 1px solid #333;
+			font-size: 13px;
+		}
+		.advance-voucher .advoucher-footer table{
+			width: 100%;
+			float: left;
+			border: 1px solid #333;
+			border-collapse: collapse;
+		}
+		.advance-voucher .advoucher-footer table tr th{
+			padding: 5px;
+			font-size: 13px;
+			font-weight: 700;
+			background: #ccc;
+			text-transform: uppercase;
+			border: 1px solid #333;
+			color: #333;
+		}
+		.advance-voucher .advoucher-footer table tr td{
+			padding: 5px;
+			border: 1px solid #333;
+			font-size: 13px;
+		}
+		.advance-voucher .advoucher-footer table tr td.rotate {
+		    -moz-transform: rotate(-90.0deg);
+		    -o-transform: rotate(-90.0deg);
+		    -webkit-transform: rotate(-90.0deg);
+		    filter:  progid:DXImageTransform.Microsoft.BasicImage(rotation=0.083);
+		    -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=0.083)";
+		}
+		.inv1 td {
+			text-align: left;
+		}
+	</style>
+	<div class="inv1">
+		<div class="advance-voucher" style="width: 90%;">
+			<div class="advoucher-header">
+				<div class="head" style="width: 100%;">
+		        	<div class="logo" style="width: 15%;">
+		            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
+		            </div>
+		            <div class="cover-name-company" style="width: 70%!important;float: left;margin-left: 15px;">
+		            	<h2 ></h2>
+		            	<h3 style="float: none; text-align: center;font-size: 25px;line-height: 37px!important;" data-bind="text: company.name"></h3>
+		                <div class="clear" style="float: none;">
+		                	<p style="font-size: 14px!important;float: none; text-align: center;">អាស័យ​ដ្ឋាន Address: <span data-bind="text: company.address"></span></p>
+		                    <p style="font-size: 14px!important;float: none;width: 100%;text-align: center;">ទូរស័ព្ទលេខ HP <span data-bind="text: company.telephone"></span> | Email: <span data-bind="text: company.email"></span></p>
+		                </div>
+		            </div>
+		        </div>
+				<div class="title">
+					<h2 class="kh">សក្ខីប័ត្របុរេប្រទាន </h2>
+					<h2 class="en">advance voucher</h2>
+				</div>
+				<table>
+					<tr>
+						<td style="width: 22%;"><b>អ្នកស្នើសុំ Name</b></td>
+						<td style="width: 20%;" data-bind="text: contactDS.data()[0].name"></td>
+						<td><b>លេខសក្ខីប័ត្រ AV No.</b></td>
+						<td style="width: 20%;" data-bind="text: obj.number"></td>
+					</tr>
+					<tr>
+						<td><b>តំណែង Position</b></td>
+						<td></td>
+						<td><b>កាលបរិចេ្ឆទ Date</b></td>
+						<td data-bind="text: obj.issued_date"></td>
+					</tr>
+					<tr>
+						<td><b>ផ្នែក Department</b></td>
+						<td></td>
+						<td><b>លេខប័ណ្ណលទ្ធកម្ម PR No.</b></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td><b>ទូទាត់ដោយ Mode of Payment</b></td>
+						<td colspan="3">
+							<b>ទូទាត់ដោយ Mode of Payment</b> : <span data-bind="text: paymentMethodDS.data()[0].name"></span><br>
+							<b>ប្រភេទរូបិយប័ណ្ណ Currency Required : </b> <span data-bind="text: currencyDS.data()[0].code"></span>
+						</td>
+					</tr>
+					<tr>
+						<td><b>គោលបំណងនៃបុរេប្រទាន <br> Purpose of Advance</b></td>
+						<td colspan="3" data-bind="text: accountLineDS.data()[0].description"></td>
+					</tr>
+				</table>
+			</div>
+			<div class="advoucher-content">
+				<table>
+					<tr>
+						<th style="background: #1E4E78!important;color: #fff!important;width: 22%;">Account Code</th>
+						<th style="background: #1E4E78!important;color: #fff!important;">Account Description</th>
+						<th style="background: #1E4E78!important;color: #fff!important;">Debit</th>
+						<th style="background: #1E4E78!important;color: #fff!important;width: 19%;">Credit</th>
+					</tr>
+					<tr>
+						<td data-bind="text: journalLineDS.data()[0].account.number"></td>
+						<td data-bind="text: journalLineDS.data()[0].account.name"></td>
+						<td style="text-align: right;" data-bind="text: journalLineDS.data()[0].dr"></td>
+						<td style="text-align: right;"></td>
+					</tr>
+					<tr>
+						<td data-bind="text: journalLineDS.data()[1].account.number"></td>
+						<td data-bind="text: journalLineDS.data()[1].account.name"></td>
+						<td style="text-align: right;"></td>
+						<td style="text-align: right;" data-bind="text: journalLineDS.data()[1].cr"></td>
+					</tr>
+					<tr>
+						<td colspan="3" style="text-align: right; font-size: 18px; font-weight: 700;"> <span style="font-size: 17px;">សរុប</span> Total</td>
+						<td style="text-align: right; font-weight: bold;" data-bind="text: obj.amount"></td>
+					</tr>
+					<tr>
+						<td colspan="2" style="background: #1E4E78!important; color: #fff!important;">ចំនួនជាអក្សរ Amount in Words</td>
+						<td colspan="2" data-bind="text: numberToString"></td>
+					</tr>
+				</table>
+			</div>
+			<div class="advoucher-footer">
+				<table>
+					<tr>
+						<th style="background: #ccc!important;" colspan="2"></th>
+						<th style="background: #ccc!important;">ហត្ថលេខា SINATURE</th>
+						<th style="background: #ccc!important;">តំណែង POSITION</th>
+						<th style="background: #ccc!important;width: 19%;">កាលបរិចេ្ឆទ DATE</th>
+					</tr>
+					<tr>
+						<td rowspan="6" class="rotate">Finance Department</td>
+						<td style="padding: 10px 5px;">រៀបចំដោយ <br> PREPARED BY</td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>ត្រួតពិនិត្យដោយ <br> REVIEWED BY</td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>សំរេចដោយ <br> APPROVED BY</td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>សំរេចដោយ <br> APPROVED BY</td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>សំរេចដោយ <br> APPROVED BY</td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>ទទួលដោយ <br> RECEIVED BY</td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+</script>
 <!-- Heritage walk -->
 <script id="invoiceHeritageWalk" type="text/x-kendo-template">
 	<div class="inv1" style="page-break-after: always;padding-top: 20px;">
@@ -55494,6 +57604,14 @@
 						</tr>
 					</tbody>
                     <tfoot>
+                    	<tr>
+                        	<td colspan="5" style="text-align:right;padding-right:10px;font-weight:bold;">សរុប​រង Sub Total </td>
+                            <td style="font-size: 16px;background: \\#333; color: \\#fff;" class="rside" data-bind="text: obj.sub_total"></td>
+                        </tr>
+                        <tr>
+                        	<td colspan="5" style="text-align:right;padding-right:10px;font-weight:bold;">បញ្ចុះតម្លៃ Discount</td>
+                            <td style="font-size: 16px;background: \\#333; color: \\#fff;" class="rside" data-bind="text: obj.discount"></td>
+                        </tr>
                         <tr>
                         	<td colspan="5" style="text-align:right;padding-right:10px;font-weight:bold;">សរុប​ (បូកបញ្ជូលទាំងអាករ) GRAND TOTAL (VAT INCLUSIVE) </td>
                             <td style="font-size: 16px;background: \\#333; color: \\#fff;" class="rside" data-bind="text: obj.amount"></td>
@@ -55863,6 +57981,97 @@
         </div>
     </div>
 </script>
+<script id="normalInvoiceHeritageWalk" type="text/x-kendo-template">
+	<div class="inv1">
+        <div class="content">
+        	<div style="overflow: hidden;padding:10px 0;">
+        		<h1>វិក្កយបត្រ</h1>
+            	<h2 data-bind="text: obj.title"></h2>
+        	</div>
+            <div class="clear mid-header" style="padding: 10px;background: #dce6f2;padding-bottom: 10px;">
+            	<div class="cover-customer">
+                	<h5>ព័ត៌មានអតិថិជន​ CUSTOMER INFO:</h5>
+                    <div class="clear">
+                        <div class="left dotted-ruler" style="width: 62%;">
+                        	<p style="font-size: 12px; line-height: 20px;">ឈ្មោះ Name : <span data-bind="text: contactDS.data()[0].name"></span><br>
+                        	<p style="font-size: 12px; line-height: 20px;">គម្រោង Project : <span data-bind="text: jobDS.data()[0].name"></span><br>
+		        			អាស័យ​ដ្ឋាន Address : <span data-bind="text: contactDS.data()[0].address"></span><br>
+		        			លេខទូរស័ព្ទ Tel : <span data-bind="text: contactDS.data()[0].phone"></span>
+		        			</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="cover-inv-number">
+                	<div class="clear">
+                    	<div class="left">
+                    		<p>លេខ No. :</p>
+                        </div>
+                        <div class="left dotted-ruler" style="width: 42%;">
+                        	<p style="font-weight:bold" data-bind="text: obj.number"></p>
+                        </div>
+                    </div>
+                    <div class="clear">
+                    	<div class="left">
+                    		<p>កាល​បរិច្ឆេទ Date:</p>
+                        </div>
+                        <div class="left dotted-ruler" style="width: 57%;">
+                        	<p style="font-weight:bold" data-bind="text: obj.issued_date"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        	<div class="clear">
+            	<table cellpadding="0" cellspacing="0" border="1" class="span12">
+                	<thead>
+                        <tr class="main-color" style="height: 45px;" data-bind="style: {backgroundColor: obj.color}">
+                            <th style="text-align: center;">ល.រ<br />N<sup>0</sup></th>
+                            <th style="text-align: center;">បរិយាយ​មុខ​ទំនិញ<br />Description</th>
+                            <th style="text-align: center;">បរិមាណ<br />Quantity</th>
+                            <th style="text-align: center;">ថ្លៃឯកតា​<br />Unit Price</th>
+                            <th style="text-align: center;">ថ្លៃ​ទំនិញ<br />Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody style="margin-top: 2px" id="formListView" data-role="listview"
+										 data-auto-bind="false"
+						                 data-template="invoiceForm-lineDS-template"
+						                 data-bind="source: lineDS">
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                        	<td colspan="2" rowspan="4" style="text-align: left;padding-left: 10px;" data-bind="html: obj.note">
+                        	</td>
+                        	<td colspan="2" style="text-align:right;padding:5px;font-weight: bold;">បញ្ចុះតម្លៃ Discount</td>
+                            <td class="rside" data-bind="text: obj.discount"></td>
+                        </tr>
+                        <tr>
+                        	<td colspan="2" style="text-align:right;padding:5px;font-weight: bold;">សរុប Total</td>
+                            <td class="rside" data-bind="text: obj.amount"></td>
+                        </tr>
+                        <tr>
+                        	<td colspan="2" style="text-align:right;padding:5px;font-weight: bold;">ប្រាក់កក់ Deposit</td>
+                            <td class="rside" data-bind="text: obj.deposit"></td>
+                        </tr>
+                        <tr>
+                        	<td colspan="2" style="text-align:right;padding:5px;font-weight: bold;">សាច់ប្រាក់ត្រូវទូទាត់ Amount Due</td>
+                            <td class="rside" data-bind="text: obj.amount_due"></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        <div class="foot">
+        	<div class="cover-signature">
+            	<div class="singature" style="float:left">
+                	<p>ហត្ថលេខា និងឈ្មោះ​អ្នក​ទិញ<br />Customer's Signature & Name</p>
+                </div>
+                <div class="singature" style="float:right">
+                	<p>ហត្ថលេខា និងឈ្មោះ​អ្នកលក់<br />Seller's Signature & Name</p>
+                </div>
+            </div>
+            <h6 style="padding-left: 35px;">សម្គាល់៖ <span>ច្បាប់​ដើម​សម្រាប់​អ្នក​ទិញ ច្បាប់​ចម្លង​សម្រាប់​អ្នក​លក់</span><br /><span style="font-size: 10px"><strong>Note:</strong> Original invoice for customer, copied invoice for seller</span></h6>
+        </div>
+    </div>
+</script>
 <!-- REACHS -->
 <script id="normalInvoiceREACHS" type="text/x-kendo-template">
 	<style>
@@ -56109,8 +58318,8 @@
                 </table>
             </div>
             <div class="span12 pcg-list" style="padding-bottom:15px;">
-            	<div class="span12">
-					<div style="border-radius: 5px; width: 100%; padding: 8px; font-size: 11px;" data-bind="html: obj.note">
+            	<div class="span12" style="border: 1px solid #ccc;">
+					<div style="border-radius: 5px; width: 100%; padding: 8px; font-size: 13px;" data-bind="html: obj.note">
 					</div>
 				</div>
 				<div class="span12">
@@ -56261,8 +58470,8 @@
                 </table>
             </div>
             <div class="span12 pcg-list" style="padding-bottom:15px;">
-            	<div class="span12">
-					<div style="border-radius: 5px; width: 100%; padding: 8px; font-size: 11px;" data-bind="html: obj.note">
+            	<div class="span12" style="border: 1px solid #ccc;">
+					<div style="border-radius: 5px; width: 100%; padding: 8px; font-size: 13px;" data-bind="html: obj.note">
 					</div>
 				</div>
 				<div class="span12">
@@ -57492,7 +59701,7 @@
 		<td class="lside">#= description ? description : "" #</td>
 		<td>#= quantity#</td>
 		<td class="rside" width="70">#if(price > 0){# #= kendo.toString(price, "c", locale) # #}#</td>
-		<td class="rside">#= kendo.toString(amount, "c", locale) #</td>
+		<td class="rside">#if(price > 0){# #= kendo.toString(quantity * price, "c", locale) # #}#</td>
 	</tr>
 </script>
 <script id="vatInvoiceKSLM" type="text/x-kendo-template">
@@ -57722,6 +59931,371 @@
         </div>
     </div>
 </script>
+<script id="posInvoiceKSLM" type="text/x-kendo-template">
+	<div style="margin: 0 auto;">		
+		<div class="inv1" style="width: 500px;margin: 0 auto;">
+	        <div class="content">
+	        	<div style="overflow: hidden;padding:10px 0;">
+	        		<h1>វិក្កយបត្រ</h1>
+	            	<h2>Invoice</h2>
+	        	</div>
+	            <div class="clear mid-header" style="padding-bottom: 10px;">
+	            	<div class="cover-customer" style="width: 100%!important;">
+	                	<h5>ព័ត៌មានអតិថិជន​ CUSTOMER INFO:</h5>
+	                    <div class="clear">
+	                        <div class="left dotted-ruler" style="width: 62%;">
+	                        	<p style="font-size: 12px; line-height: 20px;">ឈ្មោះ Name : <span data-bind="text: contactDS.data()[0].name"></span><br>
+			        			អាស័យ​ដ្ឋាន Address : <span data-bind="text: contactDS.data()[0].address"></span><br>
+			        			លេខទូរស័ព្ទ Tel : <span data-bind="text: contactDS.data()[0].phone"></span>
+			        			</p>
+	                        </div>
+	                    </div>
+	                </div>
+	                <div class="cover-inv-number" style="width: 100%!important;margin-top: 10px;">
+	                	<div class="clear">
+	                    	<div class="left">
+	                    		<p>លេខ No. :</p>
+	                        </div>
+	                        <div class="left dotted-ruler" style="width: 42%;">
+	                        	<p style="font-weight:bold" data-bind="text: obj.number"></p>
+	                        </div>
+	                    </div>
+	                    <div class="clear">
+	                    	<div class="left">
+	                    		<p>កាល​បរិច្ឆេទ Date:</p>
+	                        </div>
+	                        <div class="left dotted-ruler" style="width: 57%;">
+	                        	<p style="font-weight:bold" data-bind="text: obj.issued_date"></p>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	        	<div class="clear">
+	            	<table cellpadding="0" cellspacing="0" border="1" class="span12">
+	                	<thead>
+	                        <tr class="main-color" style="height: 45px;" data-bind="style: {backgroundColor: obj.color}">
+	                            <th style="text-align: center;width: 8%;">ល.រ<br />N<sup>0</sup></th>
+	                            <th style="text-align: center;">បរិយាយ​មុខ​ទំនិញ<br />Description</th>
+	                            <th style="text-align: center;">បរិមាណ<br />Quantity</th>
+	                            <th style="text-align: center;">ថ្លៃឯកតា​<br />Unit Price</th>
+	                            <th style="text-align: center;width: 20%;">ថ្លៃ​ទំនិញ<br />Amount</th>
+	                        </tr>
+	                    </thead>
+	                    <tbody style="margin-top: 2px" id="formListView" data-role="listview"
+							data-auto-bind="false"
+			                data-template="invoiceForm-lineDS-template-pos"
+			                data-bind="source: lineDS">
+	                    </tbody>
+	                    <tfoot>
+	                        <tr>
+	                        	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">បញ្ចុះតម្លៃ Discount</td>
+	                            <td class="rside" data-bind="text: obj.discount"></td>
+	                        </tr>
+	                        <tr>
+	                        	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">សរុប Total</td>
+	                            <td class="rside" data-bind="text: obj.amount"></td>
+	                        </tr>
+	                        <tr>
+	                        	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">សាច់ប្រាក់ត្រូវទូទាត់ Amount Due</td>
+	                            <td class="rside" data-bind="text: obj.amount_due"></td>
+	                        </tr>
+	                    </tfoot>
+	                </table>
+	            </div>
+	        </div>
+	        <div class="foot">
+	            <h6 style="padding-left: 35px;">សម្គាល់៖ <span>ច្បាប់​ដើម​សម្រាប់​អ្នក​ទិញ ច្បាប់​ចម្លង​សម្រាប់​អ្នក​លក់</span><br /><span style="font-size: 10px"><strong>Note:</strong> Original invoice for customer, copied invoice for seller</span></h6>
+	        </div>
+	    </div>
+	</div>
+</script>
+<script id="posCashSaleKSLM" type="text/x-kendo-template">
+	<div style="margin: 0 auto;">		
+		<div class="inv1" style="width: 500px;margin: 0 auto;">
+	        <div class="content">
+	        	<div style="overflow: hidden;padding:10px 0;">
+	        		<h1>វិក្កយបត្រ</h1>
+	            	<h2>Invoice</h2>
+	        	</div>
+	            <div class="clear mid-header" style="padding-bottom: 10px;">
+	            	<div class="cover-customer" style="width: 100%!important;">
+	                	<h5>ព័ត៌មានអតិថិជន​ CUSTOMER INFO:</h5>
+	                    <div class="clear">
+	                        <div class="left dotted-ruler" style="width: 62%;">
+	                        	<p style="font-size: 12px; line-height: 20px;">ឈ្មោះ Name : <span data-bind="text: contactDS.data()[0].name"></span><br>
+			        			អាស័យ​ដ្ឋាន Address : <span data-bind="text: contactDS.data()[0].address"></span><br>
+			        			លេខទូរស័ព្ទ Tel : <span data-bind="text: contactDS.data()[0].phone"></span>
+			        			</p>
+	                        </div>
+	                    </div>
+	                </div>
+	                <div class="cover-inv-number" style="width: 100%!important;margin-top: 10px;">
+	                	<div class="clear">
+	                    	<div class="left">
+	                    		<p>លេខ No. :</p>
+	                        </div>
+	                        <div class="left dotted-ruler" style="width: 42%;">
+	                        	<p style="font-weight:bold" data-bind="text: obj.number"></p>
+	                        </div>
+	                    </div>
+	                    <div class="clear">
+	                    	<div class="left">
+	                    		<p>កាល​បរិច្ឆេទ Date:</p>
+	                        </div>
+	                        <div class="left dotted-ruler" style="width: 57%;">
+	                        	<p style="font-weight:bold" data-bind="text: obj.issued_date"></p>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	        	<div class="clear">
+	            	<table cellpadding="0" cellspacing="0" border="1" class="span12">
+	                	<thead>
+	                        <tr class="main-color" style="height: 45px;" data-bind="style: {backgroundColor: obj.color}">
+	                            <th style="text-align: center;width: 8%;">ល.រ<br />N<sup>0</sup></th>
+	                            <th style="text-align: center;">បរិយាយ​មុខ​ទំនិញ<br />Description</th>
+	                            <th style="text-align: center;">បរិមាណ<br />Quantity</th>
+	                            <th style="text-align: center;">ថ្លៃឯកតា​<br />Unit Price</th>
+	                            <th style="text-align: center;width: 20%;">ថ្លៃ​ទំនិញ<br />Amount</th>
+	                        </tr>
+	                    </thead>
+	                    <tbody style="margin-top: 2px" id="formListView" data-role="listview"
+							data-auto-bind="false"
+			                data-template="invoiceForm-lineDS-template-pos"
+			                data-bind="source: lineDS">
+	                    </tbody>
+	                    <tfoot>
+	                        <tr>
+	                        	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">បញ្ចុះតម្លៃ Discount</td>
+	                            <td class="rside" data-bind="text: obj.discount"></td>
+	                        </tr>
+	                        <tr>
+	                        	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">សរុប Total</td>
+	                            <td class="rside" data-bind="text: obj.amount"></td>
+	                        </tr>
+	                        <tr>
+	                        	<td colspan="4" style="text-align:right;padding:5px;font-weight: bold;">សាច់ប្រាក់ត្រូវទូទាត់ Amount Due</td>
+	                            <td class="rside" data-bind="text: obj.amount_due"></td>
+	                        </tr>
+	                    </tfoot>
+	                </table>
+	            </div>
+	        </div>
+	        <div class="foot">
+	            <h6 style="padding-left: 35px;">សម្គាល់៖ <span>ច្បាប់​ដើម​សម្រាប់​អ្នក​ទិញ ច្បាប់​ចម្លង​សម្រាប់​អ្នក​លក់</span><br /><span style="font-size: 10px"><strong>Note:</strong> Original invoice for customer, copied invoice for seller</span></h6>
+	        </div>
+	    </div>
+	</div>
+</script>
+<script id="invoiceForm-lineDS-template-pos" type="text/x-kendo-template">
+	#if(amount){#
+		<tr>
+			<td><i>#:banhji.invoiceForm.lineDS.indexOf(data)+1#</i>&nbsp;</td>
+			<td class="lside">#= description ? description : "" #</td>
+			<td>#= quantity#</td>
+			<td class="rside" width="70">#if(price > 0){# #= kendo.toString(price, "c", locale) # #}#</td>
+			<td class="rside">#if(price > 0){# #= kendo.toString(quantity * price, "c", locale) # #}#</td>
+		</tr>
+	#}#
+</script>
+<!--Hurban Hub-->
+<script id="advanceVoucherHurbanHub" type="text/x-kendo-template">
+	<style >
+		.advance-voucher{
+			width: 100%;
+			margin: 50px auto 0;
+		}
+		.advance-voucher .advoucher-header .title{
+			float: right;
+			padding: 10px 10px 0;
+			margin-bottom: 15px;
+			line-height: 45px;
+			width: 100%;
+		}
+		.advance-voucher .advoucher-header .title .kh{
+			float: none;
+			width: 100%;
+			text-align: center;
+			font-size: 30px;
+			font-weight: 700;
+			line-height: 55px!important;
+			margin-right: 8px;
+		}
+		.advance-voucher .advoucher-header .title .en{
+			float: none;
+			font-size: 20px;
+			font-weight: 700;
+			text-align: center;
+			text-transform: uppercase;
+			line-height: 46px;
+		}
+		.advance-voucher .advoucher-header table{
+			width: 100%;
+			float: left;
+			border: 1px solid #333;
+			border-collapse: collapse;
+		}
+		.advance-voucher .advoucher-header table tr td{
+			padding: 5px;
+			border: 1px solid #333;
+			font-size: 13px;
+		}
+		.advance-voucher .advoucher-content table{
+			width: 100%;
+			float: left;
+			border: 1px solid #333;
+			border-collapse: collapse;
+		}
+		.advance-voucher .advoucher-content table tr th{
+			padding: 5px;
+			font-size: 13px;
+			font-weight: 700;
+			background: #1E4E78;
+			text-transform: uppercase;
+			border: 1px solid #333;
+			color: #fff;
+		}
+		.advance-voucher .advoucher-content table tr td{
+			padding: 5px;
+			border: 1px solid #333;
+			font-size: 13px;
+		}
+		.advance-voucher .advoucher-footer table{
+			width: 100%;
+			float: left;
+			border: 1px solid #333;
+			border-collapse: collapse;
+		}
+		.advance-voucher .advoucher-footer table tr th{
+			padding: 5px;
+			font-size: 13px;
+			font-weight: 700;
+			background: #ccc;
+			text-transform: uppercase;
+			border: 1px solid #333;
+			color: #333;
+		}
+		.advance-voucher .advoucher-footer table tr td{
+			padding: 5px;
+			border: 1px solid #333;
+			font-size: 13px;
+		}
+		.advance-voucher .advoucher-footer table tr td.rotate {
+		    -moz-transform: rotate(-90.0deg);
+		    -o-transform: rotate(-90.0deg);
+		    -webkit-transform: rotate(-90.0deg);
+		    filter:  progid:DXImageTransform.Microsoft.BasicImage(rotation=0.083);
+		    -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=0.083)";
+		}
+		.inv1 td {
+			text-align: left;
+		}
+	</style>
+	<div class="inv1">
+		<div class="advance-voucher" style="width: 90%;">
+			<div class="advoucher-header" style="overflow: hidden;position: relative;clear: both;">
+				<div class="head" style="width: 100%;">
+		        	<div class="logo" style="width: 15%;">
+		            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
+		            </div>
+		            <div class="cover-name-company" style="width: 70%!important;float: left;margin-left: 15px;">
+		            	<h2 ></h2>
+		            	<h3 style="float: none; text-align: center;font-size: 25px;line-height: 37px!important;" data-bind="text: company.name"></h3>
+		                <div class="clear" style="float: none;">
+		                	<p style="font-size: 14px!important;float: none; text-align: center;">អាស័យ​ដ្ឋាន Address: <span data-bind="text: company.address"></span></p>
+		                    <p style="font-size: 14px!important;float: none;width: 100%;text-align: center;">ទូរស័ព្ទលេខ HP <span data-bind="text: company.telephone"></span> | Email: <span data-bind="text: company.email"></span></p>
+		                </div>
+		            </div>
+		        </div>
+				<div class="title">
+					<h2 class="kh">សក្ខីប័ត្របុរេប្រទាន </h2>
+					<h2 class="en">advance voucher</h2>
+				</div>
+				<table>
+					<tr>
+						<td style="width: 22%;"><b>អ្នកស្នើសុំ Name</b></td>
+						<td style="width: 20%;" data-bind="text: contactDS.data()[0].name"></td>
+						<td><b>លេខសក្ខីប័ត្រ AV No.</b></td>
+						<td style="width: 20%;" data-bind="text: obj.number"></td>
+					</tr>
+					<tr>
+						<td><b>តំណែង Position</b></td>
+						<td></td>
+						<td><b>កាលបរិចេ្ឆទ Date</b></td>
+						<td data-bind="text: obj.issued_date"></td>
+					</tr>
+					<tr>
+						<td><b>ផ្នែក Department</b></td>
+						<td></td>
+						<td><b>លេខប័ណ្ណលទ្ធកម្ម PR No.</b></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td><b>ទូទាត់ដោយ Mode of Payment</b></td>
+						<td colspan="3">
+							<b>ទូទាត់ដោយ Mode of Payment</b> : <span data-bind="text: paymentMethodDS.data()[0].name"></span><br>
+							<b>ប្រភេទរូបិយប័ណ្ណ Currency Required : </b> <span data-bind="text: currencyDS.data()[0].code"></span>
+						</td>
+					</tr>
+					<tr>
+						<td><b>គោលបំណងនៃបុរេប្រទាន <br> Purpose of Advance</b></td>
+						<td colspan="3" data-bind="text: accountLineDS.data()[0].description"></td>
+					</tr>
+				</table>
+			</div>
+			<div class="advoucher-content" style="overflow: hidden;position: relative;clear: both;">
+				<table>
+					<tr>
+						<th style="background: #1E4E78!important;color: #fff!important;width: 22%;">Account Code</th>
+						<th style="background: #1E4E78!important;color: #fff!important;">Account Description</th>
+						<th style="background: #1E4E78!important;color: #fff!important;">Debit</th>
+						<th style="background: #1E4E78!important;color: #fff!important;width: 19%;">Credit</th>
+					</tr>
+					<tr>
+						<td data-bind="text: journalLineDS.data()[0].account.number"></td>
+						<td data-bind="text: journalLineDS.data()[0].account.name"></td>
+						<td style="text-align: right;" data-bind="text: journalLineDS.data()[0].dr"></td>
+						<td style="text-align: right;"></td>
+					</tr>
+					<tr>
+						<td data-bind="text: journalLineDS.data()[1].account.number"></td>
+						<td data-bind="text: journalLineDS.data()[1].account.name"></td>
+						<td style="text-align: right;"></td>
+						<td style="text-align: right;" data-bind="text: journalLineDS.data()[1].cr"></td>
+					</tr>
+					<tr>
+						<td colspan="3" style="text-align: right; font-size: 18px; font-weight: 700;"> <span style="font-size: 17px;">សរុប</span> Total</td>
+						<td style="text-align: right; font-weight: bold;" data-bind="text: obj.amount"></td>
+					</tr>
+					<tr>
+						<td colspan="2" style="background: #1E4E78!important; color: #fff!important;">ចំនួនជាអក្សរ Amount in Words</td>
+						<td colspan="2" data-bind="text: numberToString"></td>
+					</tr>
+				</table>
+			</div>
+			<div class="advoucher-footer" style="overflow: hidden;position: relative;clear: both;">
+				<div style="margin-top: 160px;overflow:hidden;">
+					<div class="span3" style="text-align: center;">
+						<div style="padding: 10px 5px;">រៀបចំដោយ <br> PREPARED BY</div>
+						<div style="padding-top: 60px;border-bottom: 1px solid #000;width: 90%;margin: 0 auto;"></div>
+					</div>
+					<div class="span3" style="text-align: center;">
+						<div style="padding: 10px 5px;">ត្រួតពិនិត្យដោយ <br> REVIEWED BY</div>
+						<div style="padding-top: 60px;border-bottom: 1px solid #000;width: 90%;margin: 0 auto;"></div>
+					</div>
+					<div class="span3" style="text-align: center;">
+						<div style="padding: 10px 5px;">សំរេចដោយ <br> APPROVED BY</div>
+						<div style="padding-top: 60px;border-bottom: 1px solid #000;width: 90%;margin: 0 auto;"></div>
+					</div>
+					<div class="span3" style="text-align: center;">
+						<div style="padding: 10px 5px;">ទទួលដោយ <br> RECEIVED BY</div>
+						<div style="padding-top: 60px;border-bottom: 1px solid #000;width: 90%;margin: 0 auto;"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
 <!--Invoice Line-->
 <script id="invoiceCustom-txn-form-template" type="text/x-kendo-template">
 	<a class="span4 #= type #" data-id="#= id #" data-bind="click: selectedForm" style="padding-right: 0; width: 32%;">
@@ -57734,7 +60308,7 @@
 		<td class="lside">#= description ? description : "" #</td>
 		<td>#= quantity#</td>
 		<td class="rside" width="70">#if(price > 0){# #= kendo.toString(price, "c", locale) # #}#</td>
-		<td class="rside">#= kendo.toString(amount, "c", locale) #</td>
+		<td class="rside">#if(price > 0){# #= kendo.toString(quantity * price, "c", locale) # #}#</td>
 	</tr>
 </script>
 <script id="invoiceForm-lineDS-template3" type="text/x-kendo-template">
@@ -57745,7 +60319,7 @@
 		<td>#= item_prices.measurement ? item_prices.measurement : "" #</td>
 		<td>#= quantity#</td>
 		<td style="text-align: right; padding-right: 5px;">#= kendo.toString(price, "c", locale) #</td>
-		<td style="text-align: right; padding-right: 5px;">#= kendo.toString(amount, "c", locale) #</td>
+		<td style="text-align: right; padding-right: 5px;">#if(price > 0){# #= kendo.toString(quantity * price, "c", locale) # #}#</td>
 	</tr>
 </script>
 <script id="invoiceForm-lineDS-template4" type="text/x-kendo-template">
@@ -57757,7 +60331,7 @@
 		<td></td>
 		<td>#= quantity#</td>
 		<td style="text-align: right; padding-right: 5px;">#= kendo.toString(price, "c", locale) #</td>
-		<td style="text-align: right; padding-right: 5px;">#= kendo.toString(amount, "c", locale) #</td>
+		<td style="text-align: right; padding-right: 5px;">#if(price > 0){# #= kendo.toString(quantity * price, "c", locale) # #}#</td>
 	</tr>
 </script>
 <script id="invoiceForm-lineDS-template5" type="text/x-kendo-template">
@@ -57779,7 +60353,7 @@
 		<td style="color: \\#000">#= item_prices.measurement ? item_prices.measurement : "" #</td>
 		<td style="color: \\#000">#= quantity#</td>
 		<td class="rside" width="70" style="color: \\#000">#= kendo.toString(price, "c", locale) #</td>
-		<td class="rside" style="background-color: \\#eee;color: \\#000">#= kendo.toString(amount, "c", locale) #</td>
+		<td class="rside" style="background-color: \\#eee;color: \\#000">#if(price > 0){# #= kendo.toString(quantity * price, "c", locale) # #}#</td>
 	</tr>
 </script>
 <script id="invoiceForm-lineDS-template8" type="text/x-kendo-template">
@@ -57788,7 +60362,7 @@
 		<td style="color: \\#000;">#= item_prices.measurement ? item_prices.measurement : "" #</td>
 		<td style="color: \\#000;">#= quantity#</td>
 		<td class="rside" style="color: \\#000;">#= kendo.toString(price, "c", locale) #</td>
-		<td class="rside" style="background-color: \\#eee;color: \\#000;">#= kendo.toString(amount, "c", locale) #</td>
+		<td class="rside" style="background-color: \\#eee;color: \\#000;">#if(price > 0){# #= kendo.toString(quantity * price, "c", locale) # #}#</td>
 	</tr>
 </script>
 <script id="invoiceForm-lineDS-template10" type="text/x-kendo-template">
@@ -57797,8 +60371,8 @@
 		<td class="lside" style="color:\\#000">#= description ? description : "" #</td>
 		<td style="color:\\#000">#= item_prices.measurement ? item_prices.measurement : "" #</td>
 		<td style="color:\\#000">#= quantity#</td>
-		<td class="rside" width="70" style="color:\\#000">#= kendo.toString(price, "c", locale) #</td>
-		<td class="rside" style="background-color: \\#eee;color: \\#000">#= kendo.toString(amount, "c", locale) #</td>
+		<td class="rside" width="70" style="color:\\#000">#if(price > 0){##= kendo.toString(price, "c", locale) ##}#</td>
+		<td class="rside" style="background-color: \\#eee;color: \\#000">#if(price > 0){# #= kendo.toString(quantity * price, "c", locale) # #}#</td>
 	</tr>
 </script>
 <script id="invoiceForm-lineDS-template12" type="text/x-kendo-template">
@@ -57807,7 +60381,7 @@
 		<td style="color:\\#000">#= item_prices.measurement ? item_prices.measurement : "" #</td>
 		<td style="color:\\#000">#= quantity#</td>
 		<td class="rside" width="70" style="color:\\#000">#= kendo.toString(price, "c", locale) #</td>
-		<td class="rside" style="background-color: \\#eee;color:\\#000">#= kendo.toString(amount, "c", locale) #</td>
+		<td class="rside" style="background-color: \\#eee;color:\\#000">#if(price > 0){# #= kendo.toString(quantity * price, "c", locale) # #}#</td>
 	</tr>
 </script>
 <script id="invoiceForm-lineDS-template14" type="text/x-kendo-template">
@@ -57826,7 +60400,7 @@
 		<td style="text-align: left; padding-left: 5px;">#: reference_no#</td>
 		<td style="text-align: left; padding-left: 5px;">#: contact.name#</td>
 		<td style="text-align: left; padding-left: 5px;">#= description ? description : "" #</td>
-		<td style="text-align: right; padding-right: 5px;">#= kendo.toString(amount, "c", locale) #</td>
+		<td style="text-align: right; padding-right: 5px;">#if(price > 0){# #= kendo.toString(quantity * price, "c", locale) # #}#</td>
 	</tr>
 </script>
 <script id="payment-voucher-journal-line-template" type="text/x-kendo-template">
@@ -57839,7 +60413,7 @@
 </script>
 <script id="invoiceForm-lineDS-template31" type="text/x-kendo-template">
 	<tr>
-		<td style="text-align: left; padding-left: 5px;">&nbsp;</td>
+		<td style="text-align: left; padding-left: 5px;">&nbsp; #: item.number ? item.number : ""#</td>
 		<td style="text-align: left; padding-left: 5px;">#= description ? description : "" #</td>
 		<td>#= item_prices.measurement ? item_prices.measurement : "" #</td>
 		<td>#= quantity#</td>
@@ -58065,7 +60639,7 @@
 							<span style="font-size: 20px; color: #333" data-bind="text: lang.lang.cash_position">Cash Position</span>
 						</div>
 						<div class="span6" style=" text-align: center; font-size: 20px; font-weight: 600; padding: 0;">
-							<span style="float: right; color: #333" data-bind="text: obj.cash_position"></span>
+							<span style="float: right; color: #333" data-format="n" data-bind="text: obj.cash_position"></span>
 						</div>
 						<!-- <div class="span3" style="text-align: center; margin-top: 7px; padding-right: 0; color: #fff; font-size: 35px;">
 							<span data-bind="text: totalUser"></span>
@@ -58561,10 +61135,10 @@
 
 							            		<input data-role="dropdownlist"
 									                   data-value-primitive="true"
-									                   data-text-field="name"
-									                   data-value-field="id"
+									                   data-text-field="text"
+										               data-value-field="value"
 									                   data-bind="value: obj.frequency,
-									                              source: frequencyList,
+									                              source: dateUnitList,
 									                              events: { change: frequencyChanges }"
 									                   style="width: 45%;" />
 							            	</td>
@@ -58993,10 +61567,10 @@
 
 								            		<input data-role="dropdownlist"
 										                   data-value-primitive="true"
-										                   data-text-field="name"
-										                   data-value-field="id"
+										                   data-text-field="text"
+										                   data-value-field="value"
 										                   data-bind="value: obj.frequency,
-										                              source: frequencyList,
+										                              source: dateUnitList,
 										                              events: { change: frequencyChanges }"
 										                   style="width: 45%;" />
 								            	</td>
@@ -63431,14 +66005,14 @@
   				<li><a href='#/cash_advance'><span data-bind="text: lang.lang.make_cash_advance"></span></a></li>
   				<li><a href='#/expense'><span data-bind="text: lang.lang.make_expense"></span></a></li>
   				<li> <span class="li-line"></span></li>
-  				<li><a href='#/txn_item_list'><span >Transaction Item List</span></a></li>
-  				<li><a href='#/fixed_asset_item_list'><span >Fixed Asset Item List</span></a></li>
+  				<li><a href='#/txn_item_list'><span data-bind="text: lang.lang.transaction_item_list">Transaction Item List</span></a></li>
+  				<!-- <li><a href='#/fixed_asset_item_list'><span data-bind="text: lang.lang.transaction_item">Fixed Asset Item List</span></a></li> -->
   				<li><a href='#/currency_rate'><span data-bind="text: lang.lang.set_exchange_rate"></span></a></li>
   				<li><a href='#/accounting_recurring'><span data-bind="text: lang.lang.accounting_recurring_list"></span></a></li>
   				<li><a href='#/chart_of_account'><span data-bind="text: lang.lang.chart_of_account"></span></a></li>
   				<li> <span class="li-line"></span></li>
-  				<li><a href='#/draft_list'>Draft List</a></li>
-  				<li><a href='#/imports'><span ></span>Imports</a></li>
+  				<li><a href='#/draft_list'><span data-bind="text: lang.lang.draft_list">Draft List</span></a></li>
+  				<li><a href='#/imports'><span data-bind="text: lang.lang.imports">Imports</span></a></li>
   			</ul>
 	  	</li>
 	  	<li><a href='#/accounting_report_center' style="color: #fff;">REPORTS</a></li>
@@ -63481,10 +66055,10 @@
   				<li><a href='#/purchase'><span data-bind="text: lang.lang.make_purchase"></span></a></li>
   				<li><a href='#/purchase_return'><span data-bind="text: lang.lang.make_purchase_return"></span></a></li>
   				<li><a href='#/cash_payment'><span data-bind="text: lang.lang.make_cash_payment"></span></a></li>
-  				<li><a href='#/payment_refund'><span >Make Payment Refund</span></a></li>
+  				<li><a href='#/payment_refund'><span data-bind="text: lang.lang.payment_refund">Make Payment Refund</span></a></li>
   				<li> <span class="li-line"></span></li>
   				<li><a href='#/vendor_recurring'><span data-bind="text: lang.lang.supplier_recurring_list"></span></a></li>
-  				<li><a href='#/imports'><span ></span>Imports</a></li>
+  				<li><a href='#/imports'><span data-bind="text: lang.lang.imports">Imports</span></a></li>
   			</ul>
 	  	</li>
 	  	<li><a href='#/vendor_report_center' style="color: #fff;">REPORTS</a></li>
@@ -63511,14 +66085,14 @@
   				<li><a href='#/customer_deposit'><span data-bind="text: lang.lang.create_customer_deposit"></span></a></li>
   				<li><a href='#/cash_sale'><span data-bind="text: lang.lang.create_cash_sale"></span></a></li>
   				<li><a href='#/invoice'><span data-bind="text: lang.lang.create_invoice"></span></span></a></li>
-  				<li><a href='#/invoice_batch'><span>Create Batch Invoices</span></a></li>
+  				<li><a href='#/invoice_batch'><span data-bind="text: lang.lang.create_batch_invoice">Create Batch Invoices</span></a></li>
   				<li><a href='#/cash_receipt'><span data-bind="text: lang.lang.create_cash_receipt"></span></span></a></li>
   				<li><a href='#/sale_return'><span data-bind="text: lang.lang.create_sale_return"></span></a></li>
   				<li><a href='#/statement'><span data-bind="text: lang.lang.create_statement"></span></a></li>
-  				<li><a href='#/cash_refund'><span >Create Cash Refund</span></a></li>
+  				<li><a href='#/cash_refund'><span data-bind="text: lang.lang.cash_refund">Create Cash Refund</span></a></li>
   				<li> <span class="li-line"></span></li>
   				<li><a href='#/customer_recurring'><span data-bind="text: lang.lang.customer_recurring_list"></span></a></li>
-  				<li><a href='#/imports'><span ></span>Imports</a></li>
+  				<li><a href='#/imports'><span data-bind="text: lang.lang.imports">Imports</span></a></li>
   			</ul>
 	  	</li>
 	  	<li><a href="#/customer_report_center" style="color: #fff;">Reports</a></li>
@@ -63528,6 +66102,10 @@
 <script id="membershipMenu" type="text/x-kendo-template">
 	<ul class="topnav">
 	  	<li><a href='#/memberships' class='glyphicons show_big_thumbnails'><i></i></a></li>
+	  	<!-- <li><a href="#/management" style="color: #fff; text-transform: uppercase; !important;"><span style="text-transform: uppercase; !important;" data-bind="text: lang.lang.management">Management</span></a></li>	  	
+	  	<li><a href="#/billing" style="color: #fff; text-transform: uppercase; !important;"><span style="text-transform: uppercase; !important;" data-bind="text: lang.lang.billing">Billing</span></a></li>
+	  	<li><a href="#/engagement" style="color: #fff; text-transform: uppercase; !important;"><span style="text-transform: uppercase; !important;" data-bind="text: lang.lang.engagement">Engagement</span></a></li> -->
+	  	
 	  	<li><a href='#/membership_center'><span data-bind="text: lang.lang.center" style="color: #fff;"></span></a></li>
 	  	<li role='presentation' class='dropdown'>
 	  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><i class="text-t"></i> <span class='caret'></span></a>
@@ -63545,14 +66123,15 @@
   				<li><a href='#/customer_deposit'><span data-bind="text: lang.lang.create_customer_deposit"></span></a></li>
   				<li><a href='#/cash_sale'><span data-bind="text: lang.lang.create_cash_sale"></span></a></li>
   				<li><a href='#/invoice'><span data-bind="text: lang.lang.create_invoice"></span></span></a></li>
-  				<li><a href='#/invoice_batch_membership'><span>Create Batch Invoices</span></a></li>
+  				<li><a href='#/invoice_batch_membership'><span>Create Billing Cycle</span></a></li>
+  				<li><a href='#/invoice_batch'><span>Create Batch Invoices</span></a></li>
   				<li><a href='#/cash_receipt'><span data-bind="text: lang.lang.create_cash_receipt"></span></span></a></li>
   				<li><a href='#/sale_return'><span data-bind="text: lang.lang.create_sale_return"></span></a></li>
   				<li><a href='#/statement'><span data-bind="text: lang.lang.create_statement"></span></a></li>
   				<li><a href='#/cash_refund'><span >Create Cash Refund</span></a></li>
   				<li> <span class="li-line"></span></li>
   				<li><a href='#/customer_recurring'><span data-bind="text: lang.lang.customer_recurring_list"></span></a></li>
-  				<li><a href='#/imports'><span ></span>Imports</a></li>
+  				<li><a href='#/imports'><span data-bind="text: lang.lang.imports">Imports</span></a></li>
   			</ul>
 	  	</li>
 	  	<li><a href="#/customer_report_center" style="color: #fff;">Reports</a></li>
@@ -63576,7 +66155,7 @@
   				<li><a href='#/cash_receipt'>Receive Payment</a></li>
   				<li><a href="#/customerInvoiceSent">Invoice Sent To</a></li>
   				<li><a href='#/customer'>Add <span data-bind="text: lang.new_customer"></span></a></li>
-  				<li><a href='#/imports'><span ></span>Imports</a></li>
+  				<li><a href='#/imports'><span data-bind="text: lang.lang.imports">Imports</span></a></li>
   			</ul>
 	  	</li>
 	  	<li><a href='#/cash_report_center' style="color: #fff;">REPORTS</a></li>
@@ -63602,8 +66181,8 @@
   				<li><a href='#/item_adjustment'><span data-bind="text: lang.lang.create_item_adjustment"></span></a></li>
   				<li><a href='#/internal_usage'><span data-bind="text: lang.lang.create_internal_usage"></span></a></li>
   				<li><span class="li-line"></span></li>
-  				<li><a href='#/item_recurring'>Inventory Recurring List</a></li>
-  				<li><a href='#/imports'><span ></span>Imports</a></li>
+  				<li><a href='#/item_recurring'><span data-bind="text: lang.lang.inventory_recurring_list">Inventory Recurring List</span></a></li>
+  				<li><a href='#/imports'><span data-bind="text: lang.lang.imports">Imports</span></a></li>
   			</ul>
 	  	</li>
 	  	<li><a href='#/item_report_center' style="color: #fff;">REPORTS</a></li>
@@ -63618,7 +66197,7 @@
   			<ul class='dropdown-menu'>
   				<li><a href='#/journal'>Journal</a></li>
   				<li><a href='#/tax'>Tax</a></li>
-  				<li><a href='#/imports'><span ></span>Imports</a></li>
+  				<li><a href='#/imports'><span data-bind="text: lang.lang.imports">Imports</span></a></li>
   			</ul>
 	  	</li>
 	  	<li><a href='#/tax_report_center' style="color: #fff;">REPORTS</a></li>
@@ -63795,7 +66374,7 @@
 </script>
 
 <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/js/libs/localforage.min.js"></script>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/jszip/2.4.0/jszip.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.4.0/jszip.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.js"></script>
 
@@ -64635,6 +67214,18 @@
     function customBoolEditor(container, options) {
         $('<input class="k-checkbox" type="checkbox" name="applyAdditionalCostChk" data-type="boolean" data-bind="checked:additional_applied">').appendTo(container);
         $('<label class="k-checkbox-label">&#8203;</label>').appendTo(container);
+    }
+    function applyAdditionalCostEditor(container, options) {
+        $('<input required name="' + options.field + '"/>')
+        .appendTo(container)
+        .kendoDropDownList({
+            dataTextField: "text",
+            dataValueField: "value",
+            dataSource: [
+                { text: "Not Apply", value: false },
+                { text: "Apply", value: true }
+            ]
+        });
     }
 </script>
 

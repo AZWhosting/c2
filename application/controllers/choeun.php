@@ -34,9 +34,13 @@ class Choeun extends CI_Controller {
 		// echo $now;
 		// $new_time = date("Y-m-d H:i:s", strtotime('+5 hours',strtotime($now)));
 		// echo $new_time;
-		$this->load->view("wellnez/header");
+		// $this->load->view("wellnez/header");
+		// $this->load->view("choeun");
+		// $this->load->view("wellnez/footer");
+		$this->load->view("template/demo-header");
 		$this->load->view("choeun");
-		$this->load->view("wellnez/footer");
+		$this->load->view("template/choeun-script");
+		$this->load->view("template/demo-footer");
 	}
 }
 

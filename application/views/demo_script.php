@@ -28105,7 +28105,7 @@
 		statusList              : banhji.source.statusList,
 		applicationStatusList   : banhji.source.applicationStatusList,
 		confirmMessage          : banhji.source.confirmMessage,
-		dateUnitList           : banhji.source.dateUnitList,
+		dateUnitList            : banhji.source.dateUnitList,
 		monthOptionList         : banhji.source.monthOptionList,
 		monthList               : banhji.source.monthList,
 		weekDayList             : banhji.source.weekDayList,
@@ -28447,9 +28447,9 @@
 				row.set("item", { id:"", name:"" });
 			}
 		},
-		membershipTypeChanges   : function(e){
-			var index = e.sender._old,
-				data = this.membershipTypeDS.get(index);
+		membershipTypeChanges   : function(){
+			var obj = this.get("obj"),
+				data = this.membershipTypeDS.get(obj.membership_type_id);
 
 			this.loadRecurring(data.membership_id);
 		},
@@ -28704,6 +28704,7 @@
 				self.recurringDS.sync();
 				self.lineDS.sync();
 				self.assemblyLineDS.sync();
+				self.fieldValueDS.sync();
 			}
 
 			//Save Obj
@@ -28714,6 +28715,7 @@
 					$.each(self.fieldValueDS.data(), function(index, value) {
 						value.set("reference_id", data[0].id);
 					});
+					self.fieldValueDS.sync();
 
 					//Attachment
 					$.each(self.attachmentDS.data(), function(index, value){
@@ -28724,8 +28726,7 @@
 					objRecurring.set("reference_id", data[0].id);
 					self.saveRecurring();
 				}
-
-				self.fieldValueDS.sync();
+				
 				self.uploadFile();
 
 				return data;
@@ -28852,7 +28853,7 @@
 			// }
 		},
 		loadRecurring           : function(id){
-			var self = this;
+			var self = this, obj = this.get("obj");
 
 			this.recurringDS.query({
 				filter:[
@@ -28863,23 +28864,23 @@
 				pageSize: 100
 			}).then(function(){
 				var view = self.recurringDS.view(),
-					obj = self.get("objRecurring");
+					objRecurring = self.get("objRecurring");
 
 				if(view.length>0){
-					obj.set("contact", view[0].contact);
-					obj.set("contact_id", view[0].contact_id);
-					obj.set("recurring_id", id);
-					obj.set("payment_term_id", view[0].payment_term_id);
-					obj.set("payment_method_id", view[0].payment_method_id);
-					obj.set("employee_id", view[0].employee_id);//Sale Rep
-					obj.set("job_id", view[0].job_id);
-					obj.set("segments", view[0].segments);
-					obj.set("locale", view[0].locale);
-					obj.set("memo", view[0].memo);
-					obj.set("note", view[0].note);
-					obj.set("bill_to", view[0].bill_to);
-					obj.set("ship_to", view[0].ship_to);
-					obj.set("recurring_name", view[0].recurring_name);
+					objRecurring.set("contact", view[0].contact);
+					objRecurring.set("contact_id", view[0].contact_id);
+					objRecurring.set("recurring_id", id);
+					objRecurring.set("payment_term_id", view[0].payment_term_id);
+					objRecurring.set("payment_method_id", view[0].payment_method_id);
+					objRecurring.set("employee_id", view[0].employee_id);//Sale Rep
+					objRecurring.set("job_id", view[0].job_id);
+					objRecurring.set("segments", view[0].segments);
+					objRecurring.set("locale", view[0].locale);
+					objRecurring.set("memo", view[0].memo);
+					objRecurring.set("note", view[0].note);
+					objRecurring.set("bill_to", view[0].bill_to);
+					objRecurring.set("ship_to", view[0].ship_to);
+					objRecurring.set("recurring_name", view[0].recurring_name);
 
 					//Item lines
 					self.recurringLineDS.query({
@@ -28927,15 +28928,13 @@
 
 						$.each(view1, function(index, value){
 							self.fieldValueDS.add({
-								reference_id    : view[0].id,
+								reference_id    : obj.id,
 								custom_field_id : value.custom_field_id,
 								field_value     : value.field_value,
 								type            : "memberships",
 								custom_fields   : value.custom_fields
 							});
 						});
-
-						self.changes();
 					});
 				}
 			});
@@ -29211,7 +29210,7 @@
 		paymentMethodDS     : banhji.source.paymentMethodDS,
 		amtDueColor         : banhji.source.amtDueColor,
 		confirmMessage      : banhji.source.confirmMessage,
-		dateUnitList       : banhji.source.dateUnitList,
+		dateUnitList        : banhji.source.dateUnitList,
 		selectList          : [],
 		obj                 : null,
 		isEdit              : false,
@@ -58632,6 +58631,7 @@
 			});
 			//Asset
 			if(data.asset){
+				var fs = 1;
 				for (var i = 0; i < data.asset.length; i++){
 					self.exArray.push({
 						cells: [
@@ -58640,7 +58640,7 @@
 							{ value: "" }
 						]
 					});
-					var is = 1;
+					var is = 1, tone = 0, ttwo = 0;
 					for(var j = 0; j < data.asset[i].typeLine.length; j++){
 						self.exArray.push({
 							cells: [
@@ -58657,16 +58657,23 @@
 									{ value: "" }
 								]
 							});
-							if(is == 1){
-								totalCurrent += kendo.parseFloat(data.asset[i].typeLine[j].line[k].amount);
-							}else{
-								is = 1;
-								totalCurrent -= kendo.parseFloat(data.asset[i].typeLine[j].line[k].amount);
-							}
+							totalCurrent += kendo.parseFloat(data.asset[i].typeLine[j].line[k].amount);
 							totalAll += kendo.parseFloat(data.asset[i].typeLine[j].line[k].amount);
-							totalAsCu += kendo.parseFloat(data.asset[i].typeLine[j].line[k].amount);
+							if(fs == 1 && is == 2){
+								totalAsCu -= kendo.parseFloat(data.asset[i].typeLine[j].line[k].amount);
+							}else{
+								totalAsCu += kendo.parseFloat(data.asset[i].typeLine[j].line[k].amount);
+							}
 							totalBlock += kendo.parseFloat(data.asset[i].typeLine[j].line[k].amount);
 						}
+						if(fs == 1){
+							if(is == 1){
+								tone = totalBlock;
+							}else if(is == 2){
+								totalCurrent = tone - totalBlock;
+							}
+						}
+						is++;
 						self.exArray.push({
 							cells: [
 								{ value: "Total " + data.asset[i].typeLine[j].type, bold: true },
@@ -58682,7 +58689,6 @@
 								{ value: "" }
 							]
 						});
-						is++;
 					}
 					self.exArray.push({
 						cells: [
@@ -58692,6 +58698,7 @@
 						]
 					});
 					totalCurrent = 0;
+					fs++;
 				}
 				this.exArray.push({
 					cells: [

@@ -1,622 +1,4 @@
-<!--  List Templates -->
-<script>
-    function itemComboBoxEditor(container, options) {
-        $('<input name="' + options.field + '"/>')
-        .appendTo(container)
-        .kendoComboBox({
-            placeholder: "Select Item",
-            dataTextField: "name",
-            dataValueField: "id",
-            autoWidth: true,
-            height: 200,
-            template: kendo.template($("#item-list-tmpl").html()),
-            dataSource: banhji.source.itemList
-        });
-    }
-    function itemEditor(container, options) {
-        $('<input name="' + options.field + '" />')
-        .appendTo(container)
-        .kendoDropDownList({
-            filter: "contains",         
-            dataTextField: "name",
-            dataValueField: "id",
-            autoWidth: true,
-            height: 200,
-            template: kendo.template($("#item-list-tmpl-1").html()),
-            dataSource: {
-                transport: {
-                    read    : {
-                        url: apiUrl + "items",
-                        type: "GET",
-                        headers: banhji.header,
-                        dataType: 'json'
-                    },
-                    parameterMap: function(options, operation) {
-                        if(operation === 'read') {
-                            return {
-                                page: options.page,
-                                limit: options.pageSize,
-                                filter: options.filter,
-                                sort: options.sort
-                            };
-                        } else {
-                            return {models: kendo.stringify(options.models)};
-                        }
-                    }
-                },
-                schema  : {
-                    model: {
-                        id: 'id'
-                    },
-                    data: 'results',
-                    total: 'count'
-                },
-                filter:{ field: "item_type_id <>", value: 3 },
-                sort: [
-                    { field:"item_type_id", dir:"asc" },
-                    { field:"number", dir:"asc" }
-                ],
-                batch: true,
-                serverFiltering: true,
-                serverSorting: true,
-                serverPaging: true,
-                page: 1,
-                pageSize: 50
-            }
-        });
-    }
-    function variantAttributeEditor(container, options) {
-        $('<input name="' + options.field + '" />')
-        .appendTo(container)
-        .kendoDropDownList({
-            valuePrimitive: false,
-            filter: "startswith",           
-            dataTextField: "name",
-            dataValueField: "id",
-            autoWidth: true,
-            height: 200,
-            dataSource: dataStore(apiUrl + "variant_attributes")
-        });
-    }
-    function attributeValueEditor(container, options) {
-        $('<input name="' + options.field + '" />')
-        .appendTo(container)
-        .kendoMultiSelect({
-            valuePrimitive: false,
-            dataTextField: "name",
-            dataValueField: "id",
-            autoBind: false,
-            dataSource: {
-                transport: {
-                    read    : {
-                        url: apiUrl + "attribute_values",
-                        type: "GET",
-                        headers: banhji.header,
-                        dataType: 'json'
-                    },
-                    parameterMap: function(options, operation) {
-                        if(operation === 'read') {
-                            return {
-                                page: options.page,
-                                limit: options.pageSize,
-                                filter: options.filter,
-                                sort: options.sort
-                            };
-                        } else {
-                            return {models: kendo.stringify(options.models)};
-                        }
-                    }
-                },
-                schema  : {
-                    model: {
-                        id: 'id'
-                    },
-                    data: 'results',
-                    total: 'count'
-                },
-                filter:{ field: "variant_attribute_id", value: options.model.variant_attribute.id },
-                sort: { field:"name", dir:"asc" },
-                batch: true,
-                serverFiltering: true,
-                serverSorting: true,
-                serverPaging: true,
-                page: 1,
-                pageSize: 100
-            }
-        });
-    }
-    function locationTypeEditor(container, options) {
-        $('<input name="' + options.field + '" />')
-        .appendTo(container)
-        .kendoDropDownList({
-            dataTextField: "name",
-            dataValueField: "id",
-            autoWidth: true,
-            height: 200,
-            dataSource: {
-                transport: {
-                    read    : {
-                        url: apiUrl + "location_types",
-                        type: "GET",
-                        headers: banhji.header,
-                        dataType: 'json'
-                    },
-                    parameterMap: function(options, operation) {
-                        if(operation === 'read') {
-                            return {
-                                page: options.page,
-                                limit: options.pageSize,
-                                filter: options.filter,
-                                sort: options.sort
-                            };
-                        } else {
-                            return {models: kendo.stringify(options.models)};
-                        }
-                    }
-                },
-                schema  : {
-                    model: {
-                        id: 'id'
-                    },
-                    data: 'results',
-                    total: 'count'
-                },
-                batch: true,
-                serverFiltering: true,
-                serverSorting: true,
-                serverPaging: true,
-                page: 1,
-                pageSize: 100
-            }
-        });
-    }
-    function inventoryForSaleEditor(container, options) {
-        $('<input name="' + options.field + '" />')
-        .appendTo(container)
-        .kendoDropDownList({
-            filter: "contains",         
-            dataTextField: "name",
-            dataValueField: "id",
-            autoWidth: true,
-            height: 200,
-            template: kendo.template($("#item-list-tmpl").html()),
-            dataSource: {
-                transport: {
-                    read    : {
-                        url: apiUrl + "items",
-                        type: "GET",
-                        headers: banhji.header,
-                        dataType: 'json'
-                    },
-                    parameterMap: function(options, operation) {
-                        if(operation === 'read') {
-                            return {
-                                page: options.page,
-                                limit: options.pageSize,
-                                filter: options.filter,
-                                sort: options.sort
-                            };
-                        } else {
-                            return {models: kendo.stringify(options.models)};
-                        }
-                    }
-                },
-                schema  : {
-                    model: {
-                        id: 'id'
-                    },
-                    data: 'results',
-                    total: 'count'
-                },
-                filter:{ field: "item_type_id", value: 1 },
-                sort: { field:"number", dir:"asc" },
-                batch: true,
-                serverFiltering: true,
-                serverSorting: true,
-                serverPaging: true,
-                page: 1,
-                pageSize: 100
-            }
-        });
-    }
-    function accountEditor(container, options) {
-        $('<input name="' + options.field + '" />')
-        .appendTo(container)
-        .kendoDropDownList({
-            filter: "contains",         
-            dataTextField: "name",
-            dataValueField: "id",
-            autoWidth: true,
-            height: 200,
-            template: kendo.template($("#account-list-tmpl").html()),
-            dataSource: {
-                data: banhji.source.accountList,
-                sort: [
-                    { field: "account_type_id", dir: "asc" },
-                    { field: "number", dir: "asc" }
-                ]
-            }
-        });
-    }
-    function toAccountEditor(container, options) {
-        $('<input name="' + options.field + '" />')
-        .appendTo(container)
-        .kendoDropDownList({
-            filter: "contains",         
-            dataTextField: "name",
-            dataValueField: "id",
-            autoWidth: true,
-            height: 200,
-            template: kendo.template($("#account-list-tmpl").html()),
-            dataSource: {
-                data: banhji.source.accountList,
-                filter: [
-                    { field: "account_type_id", operator:"neq", value: 10 },
-                    { field: "account_type_id", operator:"neq", value: 11 },
-                    { field: "account_type_id", operator:"neq", value: 12 }
-                ],
-                sort: [
-                    { field: "account_type_id", dir: "asc" },
-                    { field: "number", dir: "asc" }
-                ]
-            }
-        });
-    }
-    function whtAccountEditor(container, options) {
-        $('<input name="' + options.field + '" />')
-        .appendTo(container)
-        .kendoDropDownList({
-            filter: "contains",         
-            dataTextField: "name",
-            dataValueField: "id",
-            autoWidth: true,
-            height: 200,
-            template: kendo.template($("#account-list-tmpl").html()),
-            dataSource: {
-                data: banhji.source.accountList,
-                filter: {
-                    logic: "or",
-                    filters: [
-                        { field: "account_type_id", value: 13 },//Inventory
-                        { field: "account_type_id", value: 16 },//Fixed Asset
-                        { field: "account_type_id", value: 17 },//Intangible Assets
-                        { field: "account_type_id", value: 36 },//Expense
-                        { field: "account_type_id", value: 37 },
-                        { field: "account_type_id", value: 38 },
-                        { field: "account_type_id", value: 40 },
-                        { field: "account_type_id", value: 41 },
-                        { field: "account_type_id", value: 42 },
-                        { field: "account_type_id", value: 43 }
-                    ]
-                },
-                sort: [
-                    { field: "account_type_id", dir: "asc" },
-                    { field: "number", dir: "asc" }
-                ]
-            }
-        });
-    }
-    function measurementEditor(container, options) {
-        $('<input name="' + options.field + '"/>')
-        .appendTo(container)
-        .kendoDropDownList({        
-            dataTextField: "measurement",
-            dataValueField: "measurement_id",
-            autoWidth: true,
-            height: 200,
-            dataSource: {
-                transport: {
-                    read    : {
-                        url: apiUrl + "item_prices",
-                        type: "GET",
-                        headers: banhji.header,
-                        dataType: 'json'
-                    },
-                    parameterMap: function(options, operation) {
-                        if(operation === 'read') {
-                            return {
-                                page: options.page,
-                                limit: options.pageSize,
-                                filter: options.filter,
-                                sort: options.sort
-                            };
-                        } else {
-                            return {models: kendo.stringify(options.models)};
-                        }
-                    }
-                },
-                schema  : {
-                    model: {
-                        id: 'id'
-                    },
-                    data: 'results',
-                    total: 'count'
-                },
-                filter:[
-                    { field:"item_id", value: options.model.item_id },
-                    { field:"assembly_id", value: 0 }
-                ],
-                batch: true,
-                serverFiltering: true,
-                serverSorting: true,
-                serverPaging: true,
-                page: 1,
-                pageSize: 100
-            }
-        });
-    }
-    function discountEditor(container, options) {
-        $('<input name="' + options.field + '" type="number" class="k-textbox" style="width: 95%;" min="0" max="1" />')
-        .appendTo(container);
-    }
-    function taxForSaleEditor(container, options) {
-        $('<input name="' + options.field + '"/>')
-        .appendTo(container)
-        .kendoDropDownList({
-            dataTextField: "name",
-            dataValueField: "id",
-            autoWidth: true,
-            height: 200,
-            dataSource: {
-                data: banhji.source.taxList,
-                filter:{
-                    logic: "or",
-                    filters: [
-                        { field: "tax_type_id", value: 3 },//Customer Tax
-                        { field: "tax_type_id", value: 9 }
-                    ]
-                },
-                sort: [
-                    { field: "tax_type_id", dir: "asc" },
-                    { field: "name", dir: "asc" }
-                ]
-            }
-        });
-    }
-    function taxForPurchaseEditor(container, options) {
-        $('<input name="' + options.field + '"/>')
-        .appendTo(container)
-        .kendoDropDownList({
-            dataTextField: "name",
-            dataValueField: "id",
-            autoWidth: true,
-            height: 200,
-            dataSource: {
-                data: banhji.source.taxList,
-                filter:{
-                    logic: "or",
-                    filters: [
-                        { field: "tax_type_id", value: 1 },//Supplier Tax
-                        { field: "tax_type_id", value: 2 },
-                        { field: "tax_type_id", value: 3 },
-                        { field: "tax_type_id", value: 9 }
-                    ]
-                },
-                sort: [
-                    { field: "tax_type_id", dir: "asc" },
-                    { field: "name", dir: "asc" }
-                ]
-            }
-        });
-    } 
 
-    function segmentEditor(container, options) {
-        $('<input name="' + options.field + '" />')
-        .appendTo(container)
-        .kendoDropDownList({
-            filter: "startswith",           
-            dataTextField: "name",
-            dataValueField: "id",
-            autoWidth: true,
-            height: 200,
-            dataSource: {
-                transport: {
-                    read    : {
-                        url: apiUrl + "segments",
-                        type: "GET",
-                        headers: banhji.header,
-                        dataType: 'json'
-                    },
-                    parameterMap: function(options, operation) {
-                        if(operation === 'read') {
-                            return {
-                                page: options.page,
-                                limit: options.pageSize,
-                                filter: options.filter,
-                                sort: options.sort
-                            };
-                        } else {
-                            return {models: kendo.stringify(options.models)};
-                        }
-                    }
-                },
-                schema  : {
-                    model: {
-                        id: 'id'
-                    },
-                    data: 'results',
-                    total: 'count'
-                },
-                serverFiltering: true,
-                serverSorting: true,
-                serverPaging: true,
-                page: 1,
-                pageSize: 100
-            }
-        });
-    }
-    function segmentItemEditor(container, options) {
-        $('<input name="' + options.field + '" />')
-        .appendTo(container)
-        .kendoDropDownList({
-            filter: "startswith",           
-            dataTextField: "name",
-            dataValueField: "id",
-            autoWidth: true,
-            height: 200,
-            template: kendo.template($("#segment-list-tmpl").html()),
-            dataSource: {
-                transport: {
-                    read    : {
-                        url: apiUrl + "segments/item",
-                        type: "GET",
-                        headers: banhji.header,
-                        dataType: 'json'
-                    },
-                    parameterMap: function(options, operation) {
-                        if(operation === 'read') {
-                            return {
-                                page: options.page,
-                                limit: options.pageSize,
-                                filter: options.filter,
-                                sort: options.sort
-                            };
-                        } else {
-                            return {models: kendo.stringify(options.models)};
-                        }
-                    }
-                },
-                schema  : {
-                    model: {
-                        id: 'id'
-                    },
-                    data: 'results',
-                    total: 'count'
-                },
-                filter:{ field: "segment_id", value: options.model.segment.id },
-                serverFiltering: true,
-                serverSorting: true,
-                serverPaging: true,
-                page: 1,
-                pageSize: 100
-            }
-        });
-    }
-    function numberTextboxEditor(container, options) {
-        $('<input name="' + options.field + '" type="number" class="k-textbox" style="width: 95%;" />')
-        .appendTo(container);
-    }
-    function dateEditor(container, options) {
-        $('<input name="' + options.field + '" />')
-        .appendTo(container)
-        .kendoDatePicker({
-            format: "dd-MM-yyyy",
-            parseFormats: ["yyyy-MM-dd"]
-        });
-    }
-    function customBoolEditor(container, options) {
-        $('<input class="k-checkbox" type="checkbox" name="applyAdditionalCostChk" data-type="boolean" data-bind="checked:additional_applied">').appendTo(container);
-        $('<label class="k-checkbox-label">&#8203;</label>').appendTo(container);
-    }
-    function supplierEditor(container, options) {
-        $('<input name="' + options.field + '" />')
-        .appendTo(container)
-        .kendoDropDownList({
-            filter: "contains",         
-            dataTextField: "name",
-            dataValueField: "id",
-            autoWidth: true,
-            height: 200,
-            template: kendo.template($("#contact-list-tmpl").html()),
-            dataSource: {
-                transport: {
-                    read    : {
-                        url: apiUrl + "contacts",
-                        type: "GET",
-                        headers: banhji.header,
-                        dataType: 'json'
-                    },
-                    parameterMap: function(options, operation) {
-                        if(operation === 'read') {
-                            return {
-                                page: options.page,
-                                limit: options.pageSize,
-                                filter: options.filter,
-                                sort: options.sort
-                            };
-                        } else {
-                            return {models: kendo.stringify(options.models)};
-                        }
-                    }
-                },
-                schema  : {
-                    model: {
-                        id: 'id'
-                    },
-                    data: 'results',
-                    total: 'count'
-                },
-                filter:{ field: "parent_id", operator:"where_related_contact_type", value: 2 },
-                sort: [
-                    { field:"contact_type_id", dir:"asc" },
-                    { field:"number", dir:"asc" }
-                ],
-                batch: true,
-                serverFiltering: true,
-                serverSorting: true,
-                serverPaging: true,
-                page: 1,
-                pageSize: 100
-            }
-        });
-    }
-
-    function itemPurchaseEditor(container, options) {
-        $('<input name="' + options.field + '" />')
-        .appendTo(container)
-        .kendoDropDownList({
-            filter: "contains",
-            dataTextField: "name",
-            dataValueField: "id",
-            autoWidth: true,
-            height: 200,
-            template: kendo.template($("#item-list-tmpl").html()),
-            dataSource: {
-                transport: {
-                    read    : {
-                        url: apiUrl + "items",
-                        type: "GET",
-                        headers: banhji.header,
-                        dataType: 'json'
-                    },
-                    parameterMap: function(options, operation) {
-                        if(operation === 'read') {
-                            return {
-                                page: options.page,
-                                limit: options.pageSize,
-                                filter: options.filter,
-                                sort: options.sort
-                            };
-                        } else {
-                            return {models: kendo.stringify(options.models)};
-                        }
-                    }
-                },
-                schema  : {
-                    model: {
-                        id: 'id'
-                    },
-                    data: 'results',
-                    total: 'count'
-                },
-                filter:[
-                    { field: "item_type_id <>", value: 3 },
-                    { field: "is_assembly", value: 0 }
-                ],
-                sort: [
-                    { field:"item_type_id", dir:"asc" },
-                    { field:"number", dir:"asc" }
-                ],
-                batch: true,
-                serverFiltering: true,
-                serverSorting: true,
-                serverPaging: true,
-                page: 1,
-                pageSize: 50
-            }
-        });
-    }
-</script>
 <script src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/components/js/libs/localforage.min.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jszip/2.4.0/jszip.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.js"></script>
@@ -3709,10 +3091,69 @@
         attendanDS      : [],
         calculate       : function() {
             var self = this;
-            this.checkInNoCheckOut();
+            // this.checkInNoCheckOut();
             // this.StandByCinLate();
             //Standby with check out late
             // this.StandByDay();
+            $.each(this.dataSource, function(i,v){
+                var TimeIn = 19 * 60;
+                switch (v.Position) {
+                    case 1:
+                        // Meka Neary
+                        TimeIn = 19 * 60;
+                        break;
+                    case 2:
+                        // Room Owner
+                        TimeIn = 18 * 60;
+                        break;
+                    case 3:
+                        // Order
+                        TimeIn = 18 * 60;
+                        break;
+                    case 4:
+                        // Security
+                        TimeIn = 18 * 60;
+                        break;
+                    case 5:
+                        // Cleaner
+                        TimeIn = 18 * 60;
+                        break;
+                    case 6:
+                        // Cook
+                        TimeIn = 17 * 60;
+                        break;
+                    case 7:
+                        // Neary
+                        TimeIn = 19.5 * 60;
+                        break;
+                    default:
+                        // statements_def
+                        break;
+                }
+                var time = new Date(v.Date);
+                var hour = time.getHours() * 60;
+                var second = time.getMinutes();
+                var day = time.getDate();
+                hour += second;
+                if(hour <= TimeIn && v.Check == 'C/In'){
+                    //check chekout
+                    $.each(self.dataSource, function(j,k){
+                        var timecompare = new Date(k.Date);
+                        var hourcompare = timecompare.getHours() * 60;
+                        var secondcompare = timecompare.getMinutes();
+                        var daycompare = timecompare.getDate();
+                        hourcompare += secondcompare;
+                        var daytoc = day + 1;
+                        //Time out 1am
+                        var timeo = (1 * 60);
+                        if(daycompare == daytoc && hourcompare >= 1 * 60){
+                            console.log(daycompare + "__" + daytoc);
+                        }
+                    });
+                }else{
+
+                }
+            });
         },
         checkDayAR          : [],
         checkInNoCheckOut   : function(e){
@@ -3720,84 +3161,84 @@
             var line = [];
             this.checkDayAR.splice(0, this.checkDayAR.length);
             $.each(this.dataSource, function(i,v){
-                // var TimeIn = 19 * 60;
-                // switch (v.Position) {
-                //     case 1:
-                //         // Meka Neary
-                //         TimeIn = 19 * 60;
-                //         break;
-                //     case 2:
-                //         // Room Owner
-                //         TimeIn = 18 * 60;
-                //         break;
-                //     case 3:
-                //         // Order
-                //         TimeIn = 18 * 60;
-                //         break;
-                //     case 4:
-                //         // Security
-                //         TimeIn = 18 * 60;
-                //         break;
-                //     case 5:
-                //         // Cleaner
-                //         TimeIn = 18 * 60;
-                //         break;
-                //     case 6:
-                //         // Cook
-                //         TimeIn = 17 * 60;
-                //         break;
-                //     case 7:
-                //         // Neary
-                //         TimeIn = 19.5 * 60;
-                //         break;
-                //     default:
-                //         // statements_def
-                //         break;
-                // }
+                var TimeIn = 19 * 60;
+                switch (v.Position) {
+                    case 1:
+                        // Meka Neary
+                        TimeIn = 19 * 60;
+                        break;
+                    case 2:
+                        // Room Owner
+                        TimeIn = 18 * 60;
+                        break;
+                    case 3:
+                        // Order
+                        TimeIn = 18 * 60;
+                        break;
+                    case 4:
+                        // Security
+                        TimeIn = 18 * 60;
+                        break;
+                    case 5:
+                        // Cleaner
+                        TimeIn = 18 * 60;
+                        break;
+                    case 6:
+                        // Cook
+                        TimeIn = 17 * 60;
+                        break;
+                    case 7:
+                        // Neary
+                        TimeIn = 19.5 * 60;
+                        break;
+                    default:
+                        // statements_def
+                        break;
+                }
                 var time = new Date(v.Date);
                 var hour = time.getHours() * 60;
                 var second = time.getMinutes();
                 var day = time.getDate();
                 hour += second;
-                if(v.Check == 'C/In'){
-                    //Check only between 5pm to 9pm
-                    if(hour >= 1020 && hour <= 1260){
-                        //no check out
-                        var ch = 0;
-                        $.each(self.dataSource, function(j,k){
-                            var time1 = new Date(k.Date);
-                            var day1 = time1.getDate() - 1;
-                            if(k.Check != 'C/In' && day == day1){
-                            }else{
-                                if(ch == 0){
-                                    var no = self.attendanDS[0].nocheckout + 1;
-                                    console.log(no);
-                                    self.attendanDS[0].set('nocheckout', no);
-                                    self.checkDayAR.push({
-                                        day: day
-                                    });
-                                    ch = 1;
-                                }
-                            }
-                        });
-                    }else{
-                        //no check out
-                        $.each(self.dataSource, function(j,k){
-                            var time2 = new Date(k.Date);
-                            var day2 = time2.getDate();
-                            if(k.Check != 'C/In' && day == day2){
-                                var ds = self.attendanDS[0].standbydays + 1;
-                                self.attendanDS[0].set('standbydays', ds);
-                            }else{
-                                var no = self.attendanDS[0].nocheckout + 1;
-                                self.attendanDS[0].set('nocheckout', no);
-                                self.checkDayAR.push({
-                                    day: day
-                                });
-                            }
-                        });
-                    }
-                }
+                // if(v.Check == 'C/In'){
+                //     //Check only between 5pm to 9pm
+                //     if(hour >= 1020 && hour <= 1260){
+                //         //no check out
+                //         var ch = 0;
+                //         $.each(self.dataSource, function(j,k){
+                //             var time1 = new Date(k.Date);
+                //             var day1 = time1.getDate() - 1;
+                //             if(k.Check != 'C/In' && day == day1){
+                //             }else{
+                //                 if(ch == 0){
+                //                     var no = self.attendanDS[0].nocheckout + 1;
+                //                     console.log(no);
+                //                     self.attendanDS[0].set('nocheckout', no);
+                //                     self.checkDayAR.push({
+                //                         day: day
+                //                     });
+                //                     ch = 1;
+                //                 }
+                //             }
+                //         });
+                //     }else{
+                //         //no check out
+                //         $.each(self.dataSource, function(j,k){
+                //             var time2 = new Date(k.Date);
+                //             var day2 = time2.getDate();
+                //             if(k.Check != 'C/In' && day == day2){
+                //                 var ds = self.attendanDS[0].standbydays + 1;
+                //                 self.attendanDS[0].set('standbydays', ds);
+                //             }else{
+                //                 var no = self.attendanDS[0].nocheckout + 1;
+                //                 self.attendanDS[0].set('nocheckout', no);
+                //                 self.checkDayAR.push({
+                //                     day: day
+                //                 });
+                //             }
+                //         });
+                //     }
+                // }
             });
         },
         StandByCinLate     : function(e){
@@ -3948,11 +3389,8 @@
     });
     /* Login page */
     banhji.router.route('/', function() {
-        var blank = new kendo.View('#blank-tmpl');
-        banhji.view.layout.showIn('#content', banhji.view.DashBoard);
         banhji.view.menu.showIn('#secondary-menu', banhji.view.staffMenu);
-        banhji.index.getLogo();
-        banhji.index.pageLoad();
+        banhji.view.layout.showIn("#content", banhji.view.Attendance);
     });
     banhji.router.route("/attendance", function() {
         banhji.view.menu.showIn('#secondary-menu', banhji.view.staffMenu);
