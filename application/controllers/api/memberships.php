@@ -220,6 +220,14 @@ class Memberships extends REST_Controller {
 		foreach ($models as $key => $value) {
 			$obj = new Membership(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			$obj->where("id", $value->id)->get();
+
+			$txns = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$txns->where("reference_id", $value->id);
+			$txns->where("sub_type", "memberships");
+			$txns->where("is_recurring", 1);
+			$txns->get();
+			$txns->deleted = 1;
+			$txns->save();
 			
 			$data["results"][] = array(
 				"data"   => $value,

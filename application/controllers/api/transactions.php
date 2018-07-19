@@ -1361,6 +1361,7 @@ class Transactions extends REST_Controller {
 		}
 		
 		$memberships->where("status", 1);
+		$memberships->where("is_pattern <>", 1);
 		$memberships->where("deleted <>", 1);
 		$memberships->get_iterated();		
 
@@ -1369,10 +1370,11 @@ class Transactions extends REST_Controller {
 			foreach ($memberships as $value) {
 				array_push($ids, $value->id);
 			}
-
+			$data["ids"] = $ids;
 			$obj->include_related("contact", array("abbr","number","name","payment_term_id","payment_method_id","credit_limit","locale","bill_to","ship_to","deposit_account_id","trade_discount_id","settlement_discount_id","account_id","ra_id"));
 			$obj->where_in("reference_id", $ids);
-			$obj->where("is_recurring <>", 1);
+			$obj->where("sub_type", "memberships");
+			$obj->where("is_recurring", 1);//Select Recurring
 			$obj->where("deleted <>", 1);
 			$obj->get_iterated();
 
@@ -1472,12 +1474,11 @@ class Transactions extends REST_Controller {
 						"company_id" 				=> $value->company_id,
 						"location_id" 				=> $value->location_id,
 						"contact_id" 				=> intval($value->contact_id),
-						"payment_term_id" 			=> $value->payment_term_id,
+						"payment_term_id" 			=> intval($value->payment_term_id),
 						"payment_method_id" 		=> intval($value->payment_method_id),
 						"transaction_template_id" 	=> $value->transaction_template_id,
 						"reference_id" 				=> intval($value->reference_id),
 						"recurring_id" 				=> $value->recurring_id,
-						"return_id" 				=> $value->return_id,
 						"job_id" 					=> $value->job_id,
 						"account_id" 				=> intval($value->account_id),
 						"discount_account_id" 		=> intval($value->discount_account_id),
@@ -1488,6 +1489,7 @@ class Transactions extends REST_Controller {
 						"employee_id" 				=> $value->employee_id,
 					   	"number" 					=> $value->number,
 					   	"type" 						=> $value->type,
+					   	"nature_type" 				=> $value->nature_type,
 					   	"journal_type" 				=> $value->journal_type,
 					   	"sub_total"					=> floatval($value->sub_total),
 					   	"discount" 					=> floatval($value->discount),
@@ -1501,6 +1503,7 @@ class Transactions extends REST_Controller {
 					   	"credit_allowed"			=> floatval($value->credit_allowed),
 					   	"additional_cost" 			=> floatval($value->additional_cost),
 					   	"additional_apply" 			=> $value->additional_apply,
+					   	"movement" 					=> 1,
 					   	"rate" 						=> floatval($value->rate),
 					   	"locale" 					=> $value->locale,
 					   	"month_of"					=> $value->month_of,

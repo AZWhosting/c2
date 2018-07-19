@@ -5463,7 +5463,7 @@
 					</div>
 			    	<span class="glyphicons no-js remove_2 pull-right"
 							data-bind="click: cancel"><i></i></span>
-			        <h2>Batch Invoices</h2>
+			        <h2>Batch Invoices - Item Base</h2>
 				    <br>
 					<div class="row-fluid">
 						<div class="span4">
@@ -16169,8 +16169,8 @@
 						        	<div data-role="grid" class="costom-grid"
 						                 data-editable="true"
 						                 data-columns="[
-			                                { 'field': 'custom_fields', title:'Field Name', editor: customFieldEditor, template:'#=custom_fields.name#' },
-			                                { 'field': 'field_value', title:'Field Value' },
+			                                { field: 'custom_fields', title:'Field Name', editor: customFieldEditor, template:kendo.template($('#membership-fieldValue-template').html()) },
+			                                { field: 'field_value', title:'Field Value' },
 			                                { command: 'destroy', title: '&nbsp;', width: 150 }
 			                             ]"
 			                             data-auto-bind="false"
@@ -16266,6 +16266,11 @@
 			</div>
 		</div>
 	</div>
+</script>
+<script id="membership-fieldValue-template" type="text/x-kendo-tmpl">
+	#if(custom_fields){#
+		#=custom_fields.name#
+	#}#
 </script>
 <script id="cpdRecord" type="text/x-kendo-template">
 	<div id="slide-form">
@@ -16454,7 +16459,7 @@
 			    	<span class="glyphicons no-js remove_2 pull-right"
 							data-bind="click: cancel"><i></i></span>
 
-			        <h2>Billing Cycle</h2>
+			        <h2>Batch Invoices - Customer Base</h2>
 
 				    <br>
 
@@ -16511,20 +16516,21 @@
 								                   data-value-field="id"
 								                   data-bind="value: membership_type_id,
 								                              source: membershipTypeDS,
-								                              events:{change: membershipTypeChanges}"
+								                              events:{change: search}"
 								                   data-option-label="Select Membership..."
 								                   required data-required-msg="required" style="width: 100%;" />
 										</td>
 									</tr>
 									<tr>
-										<td>Frequency</td>
+										<td>Billing Cycle</td>
 										<td>
 											<input data-role="dropdownlist"
 								                   data-value-primitive="true"
 								                   data-text-field="text"
 										           data-value-field="value"
 								                   data-bind="value: frequency,
-								                              source: dateUnitList"
+								                              source: dateUnitList,
+								                              events:{change: search}"
 								                   data-option-label="Select Frequency..." style="width: 100%;" />
 										</td>
 									</tr>
@@ -16698,13 +16704,13 @@
 						<div id="ntf1" data-role="notification"></div>
 						<div class="row-fluid" align="left">
 							<div class="span4">
-								<input data-role="dropdownlist"
+								<!-- <input data-role="dropdownlist"
 					                   data-value-primitive="true"
 					                   data-text-field="name"
 					                   data-value-field="id"
 					                   data-bind="value: txnSelect,
 					                              source: txnTemplateDS"
-					                   data-option-label="Select Template..." />
+					                   data-option-label="Select Template..." /> -->
 							</div>
 							<div class="span8">
 								<span class="btn-btn" onclick="javascript:window.history.back()" data-bind="click: cancel"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>

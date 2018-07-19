@@ -28248,7 +28248,7 @@
 				custom_field_id : 0,
 				field_value     : "",
 				type            : "memberships",
-				custom_fields   : { id: 0, name:"" }
+				custom_fields   : { id:0, name:"" }
 			});
 		},
 		//Contact
@@ -28447,7 +28447,7 @@
 				row.set("item", { id:"", name:"" });
 			}
 		},
-		membershipTypeChanges   : function(){
+		membershipTypeChanges 	: function(){
 			var obj = this.get("obj"),
 				data = this.membershipTypeDS.get(obj.membership_type_id);
 
@@ -28797,6 +28797,7 @@
 				user_id             : this.get("user_id"),
 				employee_id         : "",//Sale Rep
 				type                : "Invoice",//Required
+				sub_type 			: "memberships",
 				number              : "",
 				sub_total           : 0,
 				discount            : 0,
@@ -28820,7 +28821,7 @@
 				segments            : [],
 				is_journal          : 0,//Required
 				//Recurring
-				recurring_name      : "Subcription Recurring",
+				recurring_name      : "Subscription Recurring",
 				start_date          : new Date(),
 				frequency           : "Day",
 				month_option        : "Day",
@@ -28867,8 +28868,7 @@
 					objRecurring = self.get("objRecurring");
 
 				if(view.length>0){
-					objRecurring.set("contact", view[0].contact);
-					objRecurring.set("contact_id", view[0].contact_id);
+					
 					objRecurring.set("recurring_id", id);
 					objRecurring.set("payment_term_id", view[0].payment_term_id);
 					objRecurring.set("payment_method_id", view[0].payment_method_id);
@@ -29024,6 +29024,19 @@
 
 				self.lineDS.sync();
 				self.assemblyLineDS.sync();
+			}, function(reason) { //Error
+				// $("#ntf1").data("kendoNotification").error(reason);
+			}).then(function(data){
+				// $("#ntf1").data("kendoNotification").success(banhji.source.successMessage);
+
+				if(self.get("saveClose")){
+					//Save Close
+					self.set("saveClose", false);
+					self.cancel();
+				}else{
+					//Save New
+					self.addEmpty();
+				}
 			});
 		}
 	});
@@ -29334,7 +29347,7 @@
 			this.generateBatchNumber();
 		},
 		//Membership
-		membershipTypeChanges : function(){
+		search 				: function(){
 			var self = this, para = [],
 				membership_type_id = this.get("membership_type_id"),
 				frequency = this.get("frequency");
@@ -73789,7 +73802,7 @@
 			if(allowed) {
 				banhji.view.layout.showIn("#content", banhji.view.membershipCenter);
 				banhji.view.layout.showIn('#menu', banhji.view.menu);
-				// banhji.view.menu.showIn('#secondary-menu', banhji.view.membershipMenu);
+				banhji.view.menu.showIn('#secondary-menu', banhji.view.membershipMenu);
 
 				var vm = banhji.membershipCenter;
 				banhji.userManagement.addMultiTask("Membership Center","membership_center",null);
