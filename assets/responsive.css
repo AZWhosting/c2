@@ -1439,7 +1439,7 @@ width: 50% !important;
     text-transform: capitalize !important;
 }
 .navbar.main .topnav li a span{
-  text-transform: capitalize !important;
+  text-transform: capitalize ;
 }
 .btn-group.open .btn-inverse.dropdown-toggle, .btn-inverse.disabled, .btn-inverse[disabled], .btn-inverse:hover, .btn-inverse:focus,
 .btn-inverse{

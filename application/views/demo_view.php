@@ -15031,11 +15031,7 @@
 ############################################## -->
 <script id="membershipDashboard" type="text/x-kendo-template">
 	<div class="row-fluid">
-
-		
 		<div class="span4">
-
-			
 			<table width="100%" cellpadding="10">
 				<tr>
 			        <td>
@@ -15147,26 +15143,14 @@
 				</table>
 			</div>
 
-		</div>
-
-		
+		</div>		
 		<div class="span8">
-
-			
-			<div class="row-fluid">
-
-				
-				<div class="span4">
-
-					
-					<div class="widget widget-3 customer-border">
-
-						
+			<div class="row-fluid">				
+				<div class="span4">					
+					<div class="widget widget-3 customer-border">						
 						<div class="widget-head">
 							<h4 class="heading"><span class="glyphicons coins"><i></i></span><span style="color: #203864; font-weight: 600; font-style: normal;" data-bind="text: lang.lang.sale"></span></h4>
 						</div>
-						
-
 						<a href="#/sale_summary_by_customer"><div class="widget-body alert alert-primary" style="min-height: 148px; background: white; color: #203864; box-shadow: 0 2px 0 #d4d7dc, -1px -1px 0 #eceef1, 1px 0 0 #eceef1;">
 
 							<div align="center" class="text-large strong medai-font" data-format="n" data-bind="text: obj.sale"></div>
@@ -15189,22 +15173,12 @@
 									</td>
 								</tr>
 							</table>
-						</div></a>
-						
+						</div></a>			
 
 					</div>
-					
-
 				</div>
-				
-
-				
-				<div class="span4">
-
-					
-					<a href="#/sale_order_list"><div class="widget widget-3 customer-border">
-
-						
+				<div class="span4">				
+					<a href="#/sale_order_list"><div class="widget widget-3 customer-border">						
 						<div class="widget-head">
 							<h4 class="heading"><span class="glyphicons cart_in"><i></i></span><span style="color: #203864; font-weight: 600; font-style: normal;" data-bind="text: lang.lang.sale_order"></span></h4>
 						</div>
@@ -15343,41 +15317,45 @@
             
             </div>
 		</div>
-
 	</div>
 
 	<!-- <div class="row">
 		<div class="span12">
 			<div class="board-chart" style="margin-bottom: 19px; box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19); border-radius: 3px;">
-				<div class="span3"><h2 data-bind="text: lang.lang.management"></h2></div>
-				<div class="span5">
-					<div role='presentation' class='dropdown'>
-				  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><span data-bind="text: lang.lang.reports"></span><span class='caret'></span></a>
-			  			<ul class='dropdown-menu'>
-			  				<li><a href='#/membership_reports'><span data-bind="">Membership Reports</span></a></li>			  				
-			  			</ul>
-				  	</div>
-				  	<div role='presentation' class='dropdown'>
-				  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><span data-bind="">Transaction</span><span class='caret'></span></a>
-			  			<ul class='dropdown-menu'>
-			  				<li><a href='#/membership_reports'><span data-bind="">Add Membership</span></a></li>
-			  				<li><a href='#/membership_reports'><span data-bind="">Add Customer</span></a></li>			  				
-			  			</ul>
-				  	</div>
+				<div class="row" style="margin-bottom: 15px;" >
+					<div class="span3"><h2 data-bind="text: lang.lang.management"></h2></div>
+					<div class="span5 hidden-sm"></div>
+					<div class="span2">
+						<div role='presentation' class='dropdown ' style="background: #0F2C72;">
+					  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><span style="color: #fff; font-size: 16px;" data-bind="text: lang.lang.reports"></span><span style="margin-left: 15px; color: #fff;" class='caret'></span></a>
+				  			<ul class='dropdown-menu' style="left: -15px !important; top: 31px !important; min-width: 180px;">
+				  				<li><a href='#/membership_reports'><span data-bind="">Membership Reports</span></a></li>			  				
+				  			</ul>
+					  	</div>
+					</div>
+					<div class="span2">
+					  	<div role='presentation' class='dropdown' style="background: #0F2C72;">
+					  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><span style="color: #fff; font-size: 16px;" data-bind="text: lang.lang.transaction">Transaction</span><span style="margin-left: 15px; color: #fff;" class='caret'></span></a>
+				  			<ul class='dropdown-menu' style="left: 5px !important; top: 31px !important;">
+				  				<li><a href='#/membership'><span data-bind="text: lang.lang.add_member">Add Membership</span></a></li>
+				  				<li><a href='#/customer'><span data-bind="text: lang.lang.add_customer">Add Customer</span></a></li>			  				
+				  			</ul>
+					  	</div>
+					</div>
 				</div>
 				<div class="row-fluid">
 					<div class="span4" style="padding-left: 15px; background: #0077c5; ">
 						<div style=" padding: 10px 0; text-align: center; color: #fff;">
-                            <h2 style="color: #fff !important; " data-bind="text: lang.lang.sale">Sale</h2>
-                            <p data-format="n" data-bind="">1,000,000,086,950,300.00</p>
+                            <h2 style="color: #fff !important; " data-bind="text: lang.lang.total_member">Sale</h2>
+                            <p data-format="n" data-bind="">Test</p>
                             <div class="row">
                                 <div class="span6">
-                                    <span data-bind="">82</span> <br>
-                                    <span data-bind="text: lang.lang.customer">Customer</span>
+                                    <span data-bind="">Test</span> <br>
+                                    <span data-bind="text: lang.lang.new">New</span>
                                 </div>
                                 <div class="span6">
-                                    <span data-bind="">18</span><br>
-                                    <span data-bind="text: lang.lang.product">Product</span>
+                                    <span data-bind="">Test</span><br>
+                                    <span data-bind="text: lang.lang.renew">Product</span>
                                 </div>
                                 
                             </div>
@@ -15388,6 +15366,94 @@
 					</div>
 					<div class="span4" style="padding-left: 15px;">
 						Line Charts
+					</div>
+				</div>
+			</div>
+		</div>
+	</div> -->
+
+	<!-- <div class="row">
+		<div class="span12">
+			<div class="board-chart" style="margin-top: 0; margin-bottom: 19px; box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19); border-radius: 3px;">
+				<div class="row" style="margin-bottom: 15px;" >
+					<div class="span3"><h2 data-bind="text: lang.lang.billing"></h2></div>
+					<div class="span5 hidden-sm"></div>
+					<div class="span2">
+						<div role='presentation' class='dropdown ' style="background: #0F2C72;">
+					  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><span style="color: #fff; font-size: 16px;" data-bind="text: lang.lang.reports"></span><span style="margin-left: 15px; color: #fff;" class='caret'></span></a>
+				  			<ul class='dropdown-menu' style="left: 5px !important; top: 31px !important;">
+				  				<li><a href='#/membership_reports'><span data-bind="">Billing Cycle (Filter)</span></a></li>
+				  			</ul>
+					  	</div>
+					</div>
+					<div class="span2">
+					  	<div role='presentation' class='dropdown' style="background: #0F2C72;">
+					  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><span style="color: #fff; font-size: 16px;" data-bind="text: lang.lang.transaction">Transaction</span><span style="margin-left: 15px; color: #fff;" class='caret'></span></a>
+				  			<ul class='dropdown-menu' style="left: -14px !important; top: 31px !important; min-width: 180px;">
+				  				<li><a href='#/invoice'><span data-bind="text: lang.lang.create_invoice"></span></a></li>
+				  				<li><a href='#/cash_sale'><span data-bind="text: lang.lang.create_cash_sale"></span></a></li>
+				  				<li><a href='#/cash_receipt'><span data-bind="text: lang.lang.create_cash_receipt"></span></a></li>
+				  				<li><a href='#/invoice_batch'><span data-bind="text: lang.lang.create_batch_invoice"></span></a></li>
+				  			</ul>
+					  	</div>
+					</div>
+				</div>
+				<div class="row-fluid">
+					<div class="span4" style="padding-left: 15px; background: #0077c5; ">
+						<div style=" padding: 20px 0; text-align: center; color: #fff;">
+                            <h2 style="color: #fff !important; " data-bind="text: lang.lang.amount_to_received"></h2>
+                            <p data-format="n" data-bind="">test</p>
+                            <div class="row">
+                                <div class="span4">
+                                    <span data-bind="">test</span> <br>
+                                    <span data-bind="text: lang.lang.open">Customer</span>
+                                </div>
+                                <div class="span4">
+                                    <span data-bind="">test</span><br>
+                                    <span data-bind="">msh</span>
+                                </div>
+                                 <div class="span4">
+                                    <span data-bind="">test</span><br>
+                                    <span data-bind="text: lang.lang.over_due"></span>
+                                </div>
+                                
+                            </div>
+                        </div>
+					</div>
+					<div class="span4" style="padding-left: 15px;">
+						<div class="span12" style="padding-left: 15px; background: #0077c5; ">
+							<div style=" padding: 8px 0; text-align: center; color: #fff;">
+								<span class="badge fix badge-primary" style="color: #fff;  position: absolute; top: -13px; background: #203864; right: 5px; width: 25px; height: 25px; font-size: 15px; line-height: 25px;">0</span>
+	                            <p style="color: #fff !important; font-size: 17px; " data-bind="text: lang.lang.to_bill"></p>
+	                            <p style="margin-bottom: 0;" data-format="n" data-bind="">test</p>
+	                        </div>
+						</div>
+						<div class="span12" style="padding-left: 15px; background: #0077c5; margin-top: 10px;">
+							<div style=" padding: 8px 0; text-align: center; color: #fff;">
+	                            <p style="color: #fff !important; font-size: 17px;" data-bind="">Revenue Reccgmin</p>
+	                            <p style="margin-bottom: 0;" data-format="n" data-bind="">test</p>
+	                        </div>
+						</div>
+					</div>
+					<div class="span4" style="padding-left: 0px;">
+						<div class="span4" style="padding-left: 15px; background: #0077c5; margin-right: 10px; width: 31%;">
+							<div style=" padding: 8px 0; text-align: center; color: #fff;">								
+	                            <p style="color: #fff !important; font-size: 17px; " data-bind="text: lang.lang.to_bill"></p>
+	                            <p style="margin-bottom: 0;" data-format="n" data-bind="">test</p>
+	                        </div>
+						</div>
+						<div class="span4" style="padding-left: 15px; background: #0077c5; margin-right: 10px; width: 31%;">
+							<div style=" padding: 8px 0; text-align: center; color: #fff;">
+	                            <p style="color: #fff !important; font-size: 17px; " data-bind="text: lang.lang.to_bill"></p>
+	                            <p style="margin-bottom: 0;" data-format="n" data-bind="">test</p>
+	                        </div>
+						</div>
+						<div class="span4" style="padding-left: 15px; background: #0077c5; width: 31%;">
+							<div style=" padding: 8px 0; text-align: center; color: #fff;">
+	                            <p style="color: #fff !important; font-size: 17px; " data-bind="text: lang.lang.to_bill"></p>
+	                            <p style="margin-bottom: 0;" data-format="n" data-bind="">test</p>
+	                        </div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -50723,6 +50789,9 @@
 				    <br>
 				    <div class="row" style="margin-left:0;">
 						<div class="span4">
+							<div class="span12" style="margin-bottom: 10px;">
+								<input type="text" id="formName" name="Form Name" class="k-textbox" placeholder="Form Name" required validationMessage="" data-bind="value: obj.name" style="width: 100%;" />
+							</div>
 							<div class="span12">
 								<select class="span12 selectType"
 									data-role="dropdownlist"
@@ -50730,11 +50799,18 @@
 									data-text-field="name"
 									data-value-field="id"
 									data-bind="value: obj.type,
-												source: selectTypeList,
-												events:{change: onChange}" ></select>
-							</div>
-							<div class="span12" style="margin-bottom: 10px;">
-								<input type="text" id="formName" name="Form Name" class="k-textbox" placeholder="Form Name" required validationMessage="" data-bind="value: obj.name" style="width: 100%;" />
+										source: selectTypeList,
+										events:{change: onChange}" >
+								</select>
+								<select class="span12 selectType"
+									data-role="dropdownlist"
+									data-value-primitive="true"
+									data-text-field="name"
+									data-value-field="id"
+									data-bind="value: obj.group,
+										source: groupAR,
+										events:{change: groupChange}" >
+								</select>
 							</div>
 							<div class="span12">
 								<h2 class="btn btn-block btn-primary" style="color: #fff !important;" >Form Style</h2>
@@ -50756,18 +50832,8 @@
                                 	</div>
                                 </div>
 							</div>
-							<div class="span12" style="margin-left:0; margin-top: 10px;padding-bottom: 30px;">
-								<h2 class="btn btn-block btn-primary" style="color: #fff !important;">Form Appearance</h2>
-								<div class="colorPalatte span12">
-									<div class="" style="margin-top: 15px;">
-										<input type="text" id="formtitle" name="Form Title" class="k-textbox" placeholder="Form Title" required validationMessage="" data-bind="value: obj.title" style="width: 100%;" />
-										<textarea data-bind="value: obj.note, text: obj.note" placeholder="Note" class="span12" style="min-height: 100px;margin-top: 15px;padding-left: 10px; resize: none;"></textarea>
-                                	</div>
-                                </div>
-							</div>
 						</div>
 						<div class="span8" id="invFormContent" style="padding-left:0;padding-right: 0;width: 63%;border:1px solid #eee;margin-bottom:20px;">
-
 						</div>
 					</div>
 					<!-- Form actions -->
@@ -50778,10 +50844,8 @@
 
 							</div>
 							<div class="span9" align="right">
-								<span class="btn-btn" id="saveClose" data-bind="click: save"><span data-bind="text: lang.lang.save"></span></span>
-							  	<span class="btn-btn" id="saveDraft" data-bind="click: cancel"><span data-bind="text: lang.lang.close"></span></span><!--
 								<span class="btn btn-icon btn-primary glyphicons ok_2" data-bind="click: save" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.save"></span></span>
-								<span class="btn btn-icon btn-success glyphicons power" data-bind="click: cancel" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.close"></span></span> -->
+								<span class="btn btn-icon btn-success glyphicons power" data-bind="click: cancel" style="width: 80px;"><i></i> <span data-bind="text: lang.lang.cancel"></span></span> 
 							</div>
 						</div>
 					</div>
@@ -56546,6 +56610,7 @@
         </div>
     </div>
 </script>
+<!-- Home Decor -->
 <script id="invoiceHDCom" type="text/x-kendo-template">
 	<div class="inv1 pcg">
         <div class="content clear">
@@ -66037,10 +66102,11 @@
 <script id="membershipMenu" type="text/x-kendo-template">
 	<ul class="topnav">
 	  	<li><a href='#/memberships' class='glyphicons show_big_thumbnails'><i></i></a></li>
-	  	<li><a href="#/management" style="color: #fff;"><span data-bind="text: lang.lang.management">Management</span></a></li>
-	  	<li><a href="#/engagement" style="color: #fff;"><span data-bind="text: lang.lang.engagement">Engagement</span></a></li>
-	  	<li><a href="#/billing" style="color: #fff;"><span data-bind="text: lang.lang.billing">Billing</span></a></li>
-	  	<!-- <li><a href='#/membership_center'><span data-bind="text: lang.lang.center" style="color: #fff;"></span></a></li>
+	  	<!-- <li><a href="#/management" style="color: #fff; text-transform: uppercase; !important;"><span style="text-transform: uppercase; !important;" data-bind="text: lang.lang.management">Management</span></a></li>	  	
+	  	<li><a href="#/billing" style="color: #fff; text-transform: uppercase; !important;"><span style="text-transform: uppercase; !important;" data-bind="text: lang.lang.billing">Billing</span></a></li>
+	  	<li><a href="#/engagement" style="color: #fff; text-transform: uppercase; !important;"><span style="text-transform: uppercase; !important;" data-bind="text: lang.lang.engagement">Engagement</span></a></li> -->
+	  	
+	  	<li><a href='#/membership_center'><span data-bind="text: lang.lang.center" style="color: #fff;"></span></a></li>
 	  	<li role='presentation' class='dropdown'>
 	  		<a class='dropdown-toggle glyphicons text_bigger' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'><i class="text-t"></i> <span class='caret'></span></a>
   			<ul class='dropdown-menu'>
@@ -66068,7 +66134,7 @@
   				<li><a href='#/imports'><span data-bind="text: lang.lang.imports">Imports</span></a></li>
   			</ul>
 	  	</li>
-	  	<li><a href="#/customer_report_center" style="color: #fff;">Reports</a></li> -->
+	  	<li><a href="#/customer_report_center" style="color: #fff;">Reports</a></li>
 	  	<li><a href='#/membership_setting' class='glyphicons settings'><i></i></a></li>
 	</ul>
 </script>

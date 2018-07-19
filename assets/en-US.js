@@ -60,6 +60,12 @@ var	en_US = {
 	"management" : "Management",
 	"engagement" : "Engagement",
 	"billing" : "Billing",
+	"new" : "New",
+	"total_member" : "Total Member",
+	"renew" : "Renew",
+	"add_member" : "Add Member",
+	"amount_to_received" : "Amount to Received",
+	"to_bill" : "To Bill",
 
 	//Main Dustboard
 	"search_contact" : "Search Contact",

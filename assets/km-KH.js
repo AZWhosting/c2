@@ -58,6 +58,13 @@ var	km_KH = {
 	"management" : "ការគ្រប់គ្រង",
 	"engagement" : "ការចូលរួម",
 	"billing" : "ការចេញវិក្កយបត្រ",
+	"new" : "ថ្មី",
+	"total_member" : "ចំនួនសមាជិក",
+	"renew" : "ចុះឈ្មោះម្តងទៀត",
+	"add_member" : "បន្ថែមសមាជិក",
+	"amount_to_received" : "ប្រាក់​ទទួល​បាន​សរុប​",
+	"to_bill" : "ចេញ​វិក្កយបត្រ",
+
 
 
 	//Main Dustboard
