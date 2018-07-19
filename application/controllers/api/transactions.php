@@ -1372,7 +1372,7 @@ class Transactions extends REST_Controller {
 
 			$obj->include_related("contact", array("abbr","number","name","payment_term_id","payment_method_id","credit_limit","locale","bill_to","ship_to","deposit_account_id","trade_discount_id","settlement_discount_id","account_id","ra_id"));
 			$obj->where_in("reference_id", $ids);
-			$obj->where("is_recurring", 1);
+			$obj->where("is_recurring <>", 1);
 			$obj->where("deleted <>", 1);
 			$obj->get_iterated();
 

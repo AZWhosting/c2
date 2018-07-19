@@ -73939,7 +73939,6 @@
 				dataSource: vm.membershipTxnDS,
 				autoBind: false,
 				editable: true,
-				pageable: true,
 				scrollable: false,
 				persistSelection: true,
 				sortable: true,
