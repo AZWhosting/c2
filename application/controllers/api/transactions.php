@@ -1442,7 +1442,7 @@ class Transactions extends REST_Controller {
 							"wht_account_id"	=> $l->wht_account_id,
 							"item_id" 			=> $l->item_id,
 							"assembly_id" 		=> $l->assembly_id,
-						   	"description" 		=> $value->description,
+						   	"description" 		=> $l->description,
 						   	"on_hand" 			=> floatval($l->on_hand),
 							"quantity" 			=> floatval($l->quantity),
 						   	"conversion_ratio" 	=> floatval($l->conversion_ratio),

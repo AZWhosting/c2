@@ -28881,6 +28881,15 @@
 					objRecurring.set("bill_to", view[0].bill_to);
 					objRecurring.set("ship_to", view[0].ship_to);
 					objRecurring.set("recurring_name", view[0].recurring_name);
+					objRecurring.set("start_date", view[0].start_date);
+					objRecurring.set("frequency", view[0].frequency);
+					objRecurring.set("month_option", view[0].month_option);
+					objRecurring.set("interval", view[0].interval);
+					objRecurring.set("day", view[0].day);
+					objRecurring.set("week", view[0].week);
+					objRecurring.set("month", view[0].month);
+
+					self.frequencyChanges();
 
 					//Item lines
 					self.recurringLineDS.query({
