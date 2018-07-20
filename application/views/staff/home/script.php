@@ -3089,227 +3089,263 @@
             });
         },
         attendanDS      : [],
+        rightAttendant  : 0,
+        rightStandBy    : 0,
         calculate       : function() {
             var self = this;
-            // this.checkInNoCheckOut();
-            // this.StandByCinLate();
-            //Standby with check out late
-            // this.StandByDay();
+            var rightAttendant = 0;
+            var rightStandBy = 0;
             $.each(this.dataSource, function(i,v){
                 var TimeIn = 19 * 60;
-                switch (v.Position) {
-                    case 1:
-                        // Meka Neary
-                        TimeIn = 19 * 60;
-                        break;
-                    case 2:
-                        // Room Owner
-                        TimeIn = 18 * 60;
-                        break;
-                    case 3:
-                        // Order
-                        TimeIn = 18 * 60;
-                        break;
-                    case 4:
-                        // Security
-                        TimeIn = 18 * 60;
-                        break;
-                    case 5:
-                        // Cleaner
-                        TimeIn = 18 * 60;
-                        break;
-                    case 6:
-                        // Cook
-                        TimeIn = 17 * 60;
-                        break;
-                    case 7:
-                        // Neary
-                        TimeIn = 19.5 * 60;
-                        break;
-                    default:
-                        // statements_def
-                        break;
+                if(v.Position == 2 || v.Position == 3 || v.Position == 4 || v.Position == 5){
+                    TimeIn = 18 * 60;
+                }else if(v.Position == 7){
+                    TimeIn = 19.5 *60;
                 }
-                var time = new Date(v.Date);
-                var hour = time.getHours() * 60;
-                var second = time.getMinutes();
-                var day = time.getDate();
-                hour += second;
-                if(hour <= TimeIn && v.Check == 'C/In'){
-                    //check chekout
-                    $.each(self.dataSource, function(j,k){
-                        var timecompare = new Date(k.Date);
-                        var hourcompare = timecompare.getHours() * 60;
-                        var secondcompare = timecompare.getMinutes();
-                        var daycompare = timecompare.getDate();
-                        hourcompare += secondcompare;
-                        var daytoc = day + 1;
-                        //Time out 1am
-                        var timeo = (1 * 60);
-                        if(daycompare == daytoc && hourcompare >= 1 * 60){
-                            console.log(daycompare + "__" + daytoc);
-                        }
-                    });
-                }else{
-
-                }
-            });
-        },
-        checkDayAR          : [],
-        checkInNoCheckOut   : function(e){
-            var self = this;
-            var line = [];
-            this.checkDayAR.splice(0, this.checkDayAR.length);
-            $.each(this.dataSource, function(i,v){
-                var TimeIn = 19 * 60;
-                switch (v.Position) {
-                    case 1:
-                        // Meka Neary
-                        TimeIn = 19 * 60;
-                        break;
-                    case 2:
-                        // Room Owner
-                        TimeIn = 18 * 60;
-                        break;
-                    case 3:
-                        // Order
-                        TimeIn = 18 * 60;
-                        break;
-                    case 4:
-                        // Security
-                        TimeIn = 18 * 60;
-                        break;
-                    case 5:
-                        // Cleaner
-                        TimeIn = 18 * 60;
-                        break;
-                    case 6:
-                        // Cook
-                        TimeIn = 17 * 60;
-                        break;
-                    case 7:
-                        // Neary
-                        TimeIn = 19.5 * 60;
-                        break;
-                    default:
-                        // statements_def
-                        break;
-                }
-                var time = new Date(v.Date);
-                var hour = time.getHours() * 60;
-                var second = time.getMinutes();
-                var day = time.getDate();
-                hour += second;
-                // if(v.Check == 'C/In'){
-                //     //Check only between 5pm to 9pm
-                //     if(hour >= 1020 && hour <= 1260){
-                //         //no check out
-                //         var ch = 0;
-                //         $.each(self.dataSource, function(j,k){
-                //             var time1 = new Date(k.Date);
-                //             var day1 = time1.getDate() - 1;
-                //             if(k.Check != 'C/In' && day == day1){
-                //             }else{
-                //                 if(ch == 0){
-                //                     var no = self.attendanDS[0].nocheckout + 1;
-                //                     console.log(no);
-                //                     self.attendanDS[0].set('nocheckout', no);
-                //                     self.checkDayAR.push({
-                //                         day: day
-                //                     });
-                //                     ch = 1;
-                //                 }
-                //             }
-                //         });
-                //     }else{
-                //         //no check out
-                //         $.each(self.dataSource, function(j,k){
-                //             var time2 = new Date(k.Date);
-                //             var day2 = time2.getDate();
-                //             if(k.Check != 'C/In' && day == day2){
-                //                 var ds = self.attendanDS[0].standbydays + 1;
-                //                 self.attendanDS[0].set('standbydays', ds);
-                //             }else{
-                //                 var no = self.attendanDS[0].nocheckout + 1;
-                //                 self.attendanDS[0].set('nocheckout', no);
-                //                 self.checkDayAR.push({
-                //                     day: day
-                //                 });
-                //             }
-                //         });
-                //     }
+                // switch(v.Position) {
+                //     case 1:
+                //         // Meka Neary
+                //         TimeIn = 19 * 60;
+                //         break;
+                //     case 2:
+                //         // Room Owner
+                //         TimeIn = 18 * 60;
+                //         break;
+                //     case 3:
+                //         // Order
+                //         TimeIn = 18 * 60;
+                //         break;
+                //     case 4:
+                //         // Security
+                //         TimeIn = 18 * 60;
+                //         break;
+                //     case 5:
+                //         // Cleaner
+                //         TimeIn = 18 * 60;
+                //         break;
+                //     case 6:
+                //         // Cook
+                //         TimeIn = 17 * 60;
+                //         break;
+                //     case 7:
+                //         // Neary
+                //         TimeIn = 19.5 * 60;
+                //         break;
                 // }
-            });
-        },
-        StandByCinLate     : function(e){
-            var self = this;
-            var line = [];
-            $.each(this.dataSource, function(i,v){
-                if(v.Check == 'C/In'){
+                if(v.Position != 5 && v.Position != 5.5){
                     var time = new Date(v.Date);
                     var hour = time.getHours() * 60;
                     var second = time.getMinutes();
                     var day = time.getDate();
                     hour += second;
-                    //Check only between 9am to 4pm
-                    if(hour > 540 && hour < 960){
-                        //Check late
-                        if(hour > 780){
-                            line.push(i + 2);
-                            var sl = self.attendanDS[0].standbycinlate + 1;
-                            self.attendanDS[0].set('standbycinlate', sl);
-                        }
-                        //no check out
-                        $.each(self.dataSource, function(j,k){
-                            var time1 = new Date(k.Date);
-                            var day1 = time1.getDate();
-                            if(k.Check != 'C/In' && day == day1){}else{
-                                var no = self.attendanDS[0].standbynocheckout + 1;
-                                self.attendanDS[0].set('standbynocheckout', no);
-                            }
-                        });
-                    }
-                }
-            });
-            this.attendanDS[0].set('standbycinlate_l', line);
-        },
-        StandByDay     : function(e){
-            var self = this;
-            var line = [];
-            $.each(this.dataSource, function(i,v){
-                if(v.Check == 'C/In'){
-                    var time = new Date(v.Date);
-                    var hour = time.getHours() * 60;
-                    var second = time.getMinutes();
-                    var day = time.getDate();
-                    hour += second;
-                    //Check only between 9am to 4pm
-                    if(hour > 540 && hour < 960){
-                        //Check checkout
-                        $.each(self.dataSource, function(j,k){
-                            var time1 = new Date(k.Date);
-                            var hour1 = (time1.getHours() * 60) + time1.getMinutes();
-                            var day1 = time1.getDate();
-                            if(k.Check != 'C/In'){
-                                if(day == day1){
-                                    //between 3pm to 7pm
-                                    if(hour1 > 780 && hour1 < 1140){
-                                        var sl = self.attendanDS[0].standbydays + 1;
-                                        self.attendanDS[0].set('standbydays', sl);
-                                        //check out below 5pm
-                                        if(hour1 < 1020){
-                                            line.push(j + 2);
-                                            var ol = self.attendanDS[0].standbycoutlate + 1;
-                                            self.attendanDS[0].set('standbycoutlate', ol);
-                                        }
-                                    }
+                    var timestandby = 17.5 * 60;
+                    //time check in from 5:30pm
+                    if(hour >= timestandby){
+                        if(hour <= TimeIn && v.Check == 'C/In'){
+                            //check chekout
+                            $.each(self.dataSource, function(j,k){
+                                var timecompare = new Date(k.Date);
+                                var hourcompare = timecompare.getHours() * 60;
+                                var secondcompare = timecompare.getMinutes();
+                                var daycompare = timecompare.getDate();
+                                hourcompare += secondcompare;
+                                var daytoc = day + 1;
+                                //Time out 1am
+                                var timeo = (1 * 60);
+                                if(daycompare == daytoc && k.Check != 'C/In' && hourcompare >= 1 * 60 && hourcompare <= 3 * 60){
+                                    rightAttendant += 1;
+                                    // console.log(TimeIn);
+                                    // console.log(v.Date);
                                 }
+                            });
+                        }
+                    }
+                    //time chick in stand by from 1pm
+                    if(hour <= 13 * 60 && v.Check == 'C/In'){
+                        $.each(self.dataSource, function(j,k){
+                            var timecompare = new Date(k.Date);
+                            var hourcompare = timecompare.getHours() * 60;
+                            var secondcompare = timecompare.getMinutes();
+                            var daycompare = timecompare.getDate();
+                            hourcompare += secondcompare;
+                            var daytoc = day;
+                            //Time out over 5pm
+                            var timeo = (17 * 60);
+                            if(daycompare == daytoc && k.Check != 'C/In' && hourcompare >= timeo && hourcompare >= 17 * 60){
+                                rightStandBy += 1;
                             }
                         });
                     }
+                }else{
+                    self.checkCleaner();
                 }
             });
-            this.attendanDS[0].set('standbycoutlate_l', line);
+            this.set("rightAttendant", rightAttendant);
+            this.set("rightStandBy", rightStandBy);
+            this.checkWorkDay();
+            this.checkStandbyDay();
+        },
+        haveDayWork         : false,
+        dayWorkAR           : [],
+        checkWorkDay          : function(){
+            var monthL = new Date(this.dataSource[0].Date);
+            var lastDayOfMonth = new Date(monthL.getFullYear(), monthL.getMonth() + 1, 0);
+            var self = this;
+            this.dayWorkAR.splice(0, this.dayWorkAR.length);
+            for(var i = 4; i <= lastDayOfMonth.getDate(); i++){
+                var haveDay = 0;
+                $.each(self.dataSource, function(j,v){
+                    var time = new Date(v.Date);
+                    var day = time.getDate();
+                    if(day == i){
+                        haveDay = 1;
+                    }
+                });
+                self.dayWorkAR.push({
+                    day: (monthL.getMonth() + 1) + "-"+ i,
+                    work: haveDay,
+                });
+            }
+            var nextMonth = monthL.getMonth() + 1;
+            for(var k = 1; k <= 5; k++){
+                var haveDay = 0;
+                $.each(self.dataSource, function(j,v){
+                    var time = new Date(v.Date);
+                    var month = time.getMonth();
+                    var day = time.getDate();
+                    if(day == k && nextMonth == month){
+                        haveDay = 1;
+                    }
+                });
+                self.dayWorkAR.push({
+                    day: (nextMonth + 1) + "-" + k,
+                    work: haveDay,
+                });
+            }
+            this.set("haveDayWork", true);
+        },
+        haveStandbyDay      : false,
+        standbyDayAR        : [],
+        standbyDayAmoount   : 0,
+        checkStandbyDay     : function(e){
+            var monthL = new Date(this.dataSource[0].Date);
+            var lastDayOfMonth = new Date(monthL.getFullYear(), monthL.getMonth() + 1, 0);
+            var self = this;
+            this.standbyDayAR.splice(0, this.standbyDayAR.length);
+            for(var i = 4; i <= lastDayOfMonth.getDate(); i++){
+                var haveDay = 0;
+                var dateAR = [];
+                $.each(self.dataSource, function(j,v){
+                    var time = new Date(v.Date);
+                    var day = time.getDate();
+                    var hour = time.getHours() * 60;
+                    var second = time.getMinutes();
+                    hour += second;
+                    if(jQuery.inArray(day, dateAR) !== -1){
+                    }else{
+                        if(day == i){
+                            if(hour >= 11 * 60 && hour <=14 * 60){
+                                haveDay = 1;
+                                self.set("standbyDayAmoount", self.get("standbyDayAmoount") + 1);
+                            }
+                        }
+                        dateAR.push(day);
+                    }
+                });
+                self.standbyDayAR.push({
+                    day: (monthL.getMonth() + 1) + "-"+ i,
+                    work: haveDay,
+                });
+            }
+            var nextMonth = monthL.getMonth() + 1;
+            for(var k = 1; k <= 5; k++){
+                var haveDay = 0;
+                $.each(self.dataSource, function(j,v){
+                    var time = new Date(v.Date);
+                    var day = time.getDate();
+                    var hour = time.getHours() * 60;
+                    var month = time.getMonth();
+                    var second = time.getMinutes();
+                    hour += second;
+                    if(jQuery.inArray(day, dateAR) !== -1){
+                    }else{
+                        if(day == k && nextMonth == month){
+                            if(hour >= 11 * 60 && hour <=14 * 60){
+                                haveDay = 1;
+                                self.set("standbyDayAmoount", self.get("standbyDayAmoount") + 1);
+                            }
+                        }
+                        dateAR.push(day);
+                    }
+                });
+                self.standbyDayAR.push({
+                    day: (nextMonth + 1) + "-" + k,
+                    work: haveDay,
+                });
+            }
+            this.set("haveStandbyDay", true);
+        },
+        checkCleaner        : function(){
+            var self = this;
+            var rightAttendant = 0;
+            var rightStandBy = 0;
+            $.each(this.dataSource, function(i,v){
+                var TimeIn = 19 * 60;
+                if(v.Position == 2 || v.Position == 3 || v.Position == 4 || v.Position == 5){
+                    TimeIn = 18 * 60;
+                }else if(v.Position == 7){
+                    TimeIn = 19.5 *60;
+                }
+                if(v.Position == 5){
+                    var time = new Date(v.Date);
+                    var hour = time.getHours() * 60;
+                    var second = time.getMinutes();
+                    var day = time.getDate();
+                    hour += second;
+                    var timestandby = 17.5 * 60;
+                    //time check in from 5:30pm
+                    if(hour >= timestandby){
+                        if(hour <= TimeIn && v.Check == 'C/In'){
+                            //check chekout
+                            $.each(self.dataSource, function(j,k){
+                                var timecompare = new Date(k.Date);
+                                var hourcompare = timecompare.getHours() * 60;
+                                var secondcompare = timecompare.getMinutes();
+                                var daycompare = timecompare.getDate();
+                                hourcompare += secondcompare;
+                                var daytoc = day + 1;
+                                //Time out 1am
+                                var timeo = (1 * 60);
+                                if(daycompare == daytoc && k.Check != 'C/In' && hourcompare >= 1 * 60 && hourcompare <= 3 * 60){
+                                    rightAttendant += 1;
+                                    // console.log(TimeIn);
+                                    // console.log(v.Date);
+                                }
+                            });
+                        }
+                    }
+                    //time chick in stand by from 1pm
+                    if(hour <= 13 * 60 && v.Check == 'C/In'){
+                        $.each(self.dataSource, function(j,k){
+                            var timecompare = new Date(k.Date);
+                            var hourcompare = timecompare.getHours() * 60;
+                            var secondcompare = timecompare.getMinutes();
+                            var daycompare = timecompare.getDate();
+                            hourcompare += secondcompare;
+                            var daytoc = day;
+                            //Time out over 5pm
+                            var timeo = (17 * 60);
+                            if(daycompare == daytoc && k.Check != 'C/In' && hourcompare >= timeo && hourcompare >= 17 * 60){
+                                rightStandBy += 1;
+                            }
+                        });
+                    }
+                }else{
+                    self.checkCleaner();
+                }
+            });
+            console.log(rightAttendant);
+            console.log(rightStandBy);
         },
         cancel          : function() {
             banhji.router.navigate("/");

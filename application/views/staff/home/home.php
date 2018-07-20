@@ -395,7 +395,7 @@
                         <i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
                     </div>
                     <div id="example" class="k-content">
-                        <h2 data-bind="text: lang.lang.reading">Attendance by Finger Print</h2>
+                        <h2>Attendance by Finger Print</h2>
                         <div class="hidden-print pull-right">
                             <span class="glyphicons no-js remove_2" 
                                 data-bind="click: cancel"><i></i></span>
@@ -419,26 +419,32 @@
                                             <div style="margin-top: 20px;" class="fileupload fileupload-new margin-none" data-provides="fileupload">
                                                 <input type="file"  data-role="upload" data-show-file-list="true" data-bind="events: {select: onSelected}" id="myFile"  class="margin-none" />
                                             </div>
-                                            <table data-bind="visible: errorShow" class="table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs">
-                                                <thead>
-                                                    <tr>
-                                                        <th class="center"><span data-bind="text: lang.lang.line">Line</span></th>
-                                                        <th class="center"><span data-bind="text: lang.lang.meter_number">Meter Number</span></th>
-                                                        <th class="center"><span data-bind="text: lang.lang.previous">Previus</span></th>
-                                                        <th class="center"><span data-bind="text: lang.lang.current">Current</span></th>
-                                                        <th class="center"><span data-bind="text: lang.lang.status">Status</span></th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody 
-                                                    data-bind="source: Uploaderror" 
-                                                    data-auto-bind="true" 
-                                                    data-role="listview" 
-                                                    data-template="row-template">
-                                                </tbody>
-                                            </table>
                                             <br>
 
                                             <span data-bind="click: calculate" class="btn btn-icon btn-primary glyphicons ok_2" style="margin-top: 3px;width: 160px!important;"><i></i><span  >Start</span></span>
+                                            <div data-bind="visible: haveDayWork">
+                                                <p>Day Off</p>
+                                                <table>
+                                                    <tbody 
+                                                        data-role="listview" 
+                                                        data-bind="source: dayWorkAR" 
+                                                        data-template="dayTemplate">
+                                                    </tbody>
+                                                </table>
+                                                <p style="font-weight: bold">On Time: <span data-bind="text: rightAttendant"></span></p>
+                                            </div>
+                                            <div data-bind="visible: haveStandbyDay" style="margin-top: 10px;">
+                                                <p>Stand by Day <span data-bind="text: standbyDayAmoount"></span> in <span data-bind="text: standbyDayAR.length"></span></p>
+                                                <table>
+                                                    <tbody 
+                                                        data-role="listview" 
+                                                        data-bind="source: standbyDayAR" 
+                                                        data-template="dayTemplate">
+                                                    </tbody>
+                                                </table>
+                                                <p style="font-weight: bold">On Time: <span data-bind="text: rightStandBy"></span></p>
+                                            </div>
+
                                         </div>
                                         <!-- // Tab content END -->
                                     </div>
@@ -453,24 +459,14 @@
         </div>
     </div>
 </script>
-<script id="row-template" type="text/x-kendo-tmpl">
-    <tr>
-        <td align="center">
-            #= line#
-        </td>
-        <td>
-            #= meter_number#
-        </td>
-        <td align="center">
-            #= previous#
-        </td>
-        <td align="center" style="font-weight: bold;color:red">
-            #= current#
-        </td>
-        <td align="center">
-            <span><i class="icon-remove"></i></span>
-        </td>   
-    </tr>
+<script id="dayTemplate" type="text/x-kendo-template">
+    #var color = 'green'#
+    #if(work == 0){
+        color = 'red'
+    }#
+    <td style="background: #=color#;text-align: center;border: 1px solid \#000;padding: 0px 7px;color: \#fff;font-weight: bold;">
+        #= day#
+    </td>
 </script>
 <!-- ***************************
 *   Menu Section              *
