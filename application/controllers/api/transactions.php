@@ -601,6 +601,22 @@ class Transactions extends REST_Controller {
 				isset($value->driver_id) ? $obj->driver_id 	= $value->driver_id : "";
 			}
 
+			//Cash Receipt update invoice status
+			if(isset($value->type)){
+				if($value->type=="Cash_Receipt"){
+					$invoices = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+					$invoices->get_by_id($value->reference_id);
+
+					if($value->amount >= $value->sub_total){
+						$invoices->status = 1;
+					}else{
+						$invoices->status = 2;
+					}
+
+					$invoices->save();
+				}
+			}
+
 	   		if($obj->save($related)){
 			   	$data["results"][] = array(
 			   		"id" 						=> $obj->id,
@@ -685,7 +701,8 @@ class Transactions extends REST_Controller {
 				   	"total_batch"				=> $obj->total_batch,
 
 				   	"contact" 					=> $contact,
-				   	"driver" 					=> []
+				   	"driver" 					=> [],
+				   	"billing_cycles" 			=> $obj->billing_cycle->get_raw()->result()
 			   	);
 		    }
 		}

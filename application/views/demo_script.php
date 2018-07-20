@@ -28690,6 +28690,10 @@
 			if(obj.expiry_date!==""){
 				obj.set("expiry_date", kendo.toString(new Date(obj.expiry_date), "yyyy-MM-dd"));
 			}
+			
+			if(objRecurring.start_date!==""){
+				objRecurring.set("start_date", kendo.toString(new Date(objRecurring.start_date), "yyyy-MM-dd"));
+			}
 
 			this.removeEmptyRow();
 
@@ -29185,6 +29189,7 @@
 		itemLineDS          : dataStore(apiUrl + "item_lines"),
 		assemblyLineDS      : dataStore(apiUrl + "item_lines"),
 		txnDS               : dataStore(apiUrl + "transactions"),
+		billingCyleDS       : dataStore(apiUrl + "billing_cycles"),
 		numberDS            : dataStore(apiUrl + "transactions/number"),
 		batchNumberDS       : dataStore(apiUrl + "transactions/batch_number"),
 		journalLineDS       : dataStore(apiUrl + "journal_lines"),
@@ -29233,14 +29238,17 @@
 		amtDueColor         : banhji.source.amtDueColor,
 		confirmMessage      : banhji.source.confirmMessage,
 		dateUnitList        : banhji.source.dateUnitList,
+		frequencyList       : banhji.source.frequencyList,
 		selectList          : [],
 		obj                 : null,
+		objBC 				: [],
 		isEdit              : false,
 		saveDraft           : false,
 		saveClose           : false,
 		savePrint           : false,
 		showConfirm         : false,
 		notDuplicateNumber  : true,
+		isProforma 			: false,
 		total               : 0,
 		amount_due          : 0,
 		membership_type_id  : 0,
@@ -29354,6 +29362,21 @@
 			});
 
 			this.generateBatchNumber();
+			this.addBillingCycle();
+		},
+		//Billing cycle
+		addBillingCycle 	: function(){
+			this.set("objBC", null);
+
+			this.set("objBC", {
+				transaction_id 	: 0,
+				start_date      : new Date(),
+				type 			: "Proforma_Invoice",
+				frequency       : "Monthly",
+				date_unit       : "Month",
+				interval        : 1,
+				status        	: 1
+			});
 		},
 		//Membership
 		search 				: function(){
@@ -29374,7 +29397,7 @@
 			}).then(function(){
 				self.generateNumber();
 			});
-		},
+		},		
 		//Item
 		addItem             : function(uid){
 			var self = this,
@@ -29720,6 +29743,13 @@
 		typeChanges         : function(){
 			var obj = this.get("obj");
 
+			//Proforma
+			if(obj.type=="Proforma_Invoice"){
+				this.set("isProforma", true);
+			}else{
+				this.set("isProforma", false);
+			}
+
 			$.each(this.txnTemplateDS.data(), function(index, value){
 				if(value.type==obj.type){
 					obj.set("transaction_template_id", value.id);
@@ -29804,6 +29834,7 @@
 		save                : function(){
 			// $("#loadImport").css("display", "block");
 			var self = this, obj = this.get("obj"),
+				objBC = this.get("objBC"),
 				segments = [], lines = [], ids = [], counter = 0;
 
 			obj.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
@@ -29823,8 +29854,25 @@
 			$.each(this.membershipTxnDS.data(), function(index, value){
 				if(jQuery.inArray( value.id, ids )!==-1 ){
 					var raw = "", entries = {},
+						isJournal = 1;
 						duedate = self.getTerm(value.payment_term_id),
 						transaction_id = counter, contact = value.contacts;
+
+					//Proforma
+					if(obj.type=="Proforma_Invoice"){
+						isJournal = 0;//No Journal
+
+						//Billing Cycle
+						self.billingCyleDS.add({
+							transaction_id 	: transaction_id,
+							start_date      : kendo.toString(new Date(objBC.start_date), "yyyy-MM-dd"),
+							type 			: "Proforma_Invoice",
+							frequency       : objBC.frequency,
+							date_unit       : objBC.date_unit,
+							interval        : objBC.interval,
+							status        	: 1
+						});
+					}
 
 					//Add transactions
 					self.dataSource.add({
@@ -29853,7 +29901,7 @@
 						status              : 0,
 						progress            : "",
 						segments            : segments,
-						is_journal          : 1,//Required
+						is_journal          : isJournal,//Required
 						is_recurring        : 0
 					});
 
@@ -29884,167 +29932,172 @@
 						});
 
 						//Journal
-						var item = val.item;
+						if(isJournal){
+							var item = val.item;
 
-						//COGS on Dr
-						if(item.item_type_id==1){
-							var cogsID = kendo.parseInt(item.expense_account_id);
-							if(cogsID>0){
-								raw = "dr"+cogsID;
+							//COGS on Dr
+							if(item.item_type_id==1){
+								var cogsID = kendo.parseInt(item.expense_account_id);
+								if(cogsID>0){
+									raw = "dr"+cogsID;
 
-								var cogsAmount = val.amount;
+									var cogsAmount = val.amount;
+									if(item.item_type_id==1 || item.item_type_id==4){
+										cogsAmount = (val.quantity*val.conversion_ratio)*val.cost;
+									}
+
+									if(entries[raw]===undefined){
+										entries[raw] = {
+											transaction_id      : transaction_id,
+											account_id          : cogsID,
+											contact_id          : contact.id,
+											description         : val.description,
+											reference_no        : "",
+											segments            : obj.segments,
+											dr                  : cogsAmount * val.rate,
+											cr                  : 0,
+											rate                : val.rate,
+											locale              : item.locale
+										};
+									}else{
+										entries[raw].dr += cogsAmount;
+									}
+								}
+							}
+
+							//Inventory on Cr
+							var inventoryID = kendo.parseInt(item.inventory_account_id);
+							if(inventoryID>0){
+								raw = "cr"+inventoryID;
+
+								var inventoryAmount = val.amount;
 								if(item.item_type_id==1 || item.item_type_id==4){
-									cogsAmount = (val.quantity*val.conversion_ratio)*val.cost;
+									inventoryAmount = (val.quantity*val.conversion_ratio)*val.cost;
 								}
 
 								if(entries[raw]===undefined){
 									entries[raw] = {
 										transaction_id      : transaction_id,
-										account_id          : cogsID,
+										account_id          : inventoryID,
 										contact_id          : contact.id,
 										description         : val.description,
 										reference_no        : "",
 										segments            : obj.segments,
-										dr                  : cogsAmount * val.rate,
-										cr                  : 0,
+										dr                  : 0,
+										cr                  : inventoryAmount * val.rate,
 										rate                : val.rate,
 										locale              : item.locale
 									};
 								}else{
-									entries[raw].dr += cogsAmount;
+									entries[raw].cr += inventoryAmount;
+								}
+							}
+
+							//Sale on Cr
+							var incomeID = kendo.parseInt(item.income_account_id);
+							if(incomeID>0){
+								raw = "cr"+incomeID;
+
+								var saleAmount = val.quantity * val.price;
+								if(entries[raw]===undefined){
+									entries[raw] = {
+										transaction_id      : transaction_id,
+										account_id          : incomeID,
+										contact_id          : contact.id,
+										description         : val.description,
+										reference_no        : "",
+										segments            : obj.segments,
+										dr                  : 0,
+										cr                  : saleAmount,
+										rate                : val.rate,
+										locale              : val.locale
+									};
+								}else{
+									entries[raw].cr += value.amount;
+								}
+							}
+
+							//Tax on Cr
+							if(value.tax_item_id>0){
+								var taxItem = val.tax_item,
+									raw = "cr"+taxItem.account_id;
+
+								if(entries[raw]===undefined){
+									entries[raw] = {
+										transaction_id      : transaction_id,
+										account_id          : taxItem.account_id,
+										contact_id          : contact.id,
+										description         : val.description,
+										reference_no        : "",
+										segments            : obj.segments,
+										dr                  : 0,
+										cr                  : val.tax,
+										rate                : val.rate,
+										locale              : val.locale
+									};
+								}else{
+									entries[raw].cr += taxAmt;
 								}
 							}
 						}
-
-						//Inventory on Cr
-						var inventoryID = kendo.parseInt(item.inventory_account_id);
-						if(inventoryID>0){
-							raw = "cr"+inventoryID;
-
-							var inventoryAmount = val.amount;
-							if(item.item_type_id==1 || item.item_type_id==4){
-								inventoryAmount = (val.quantity*val.conversion_ratio)*val.cost;
-							}
-
-							if(entries[raw]===undefined){
-								entries[raw] = {
-									transaction_id      : transaction_id,
-									account_id          : inventoryID,
-									contact_id          : contact.id,
-									description         : val.description,
-									reference_no        : "",
-									segments            : obj.segments,
-									dr                  : 0,
-									cr                  : inventoryAmount * val.rate,
-									rate                : val.rate,
-									locale              : item.locale
-								};
-							}else{
-								entries[raw].cr += inventoryAmount;
-							}
-						}
-
-						//Sale on Cr
-						var incomeID = kendo.parseInt(item.income_account_id);
-						if(incomeID>0){
-							raw = "cr"+incomeID;
-
-							var saleAmount = val.quantity * val.price;
-							if(entries[raw]===undefined){
-								entries[raw] = {
-									transaction_id      : transaction_id,
-									account_id          : incomeID,
-									contact_id          : contact.id,
-									description         : val.description,
-									reference_no        : "",
-									segments            : obj.segments,
-									dr                  : 0,
-									cr                  : saleAmount,
-									rate                : val.rate,
-									locale              : val.locale
-								};
-							}else{
-								entries[raw].cr += value.amount;
-							}
-						}
-
-						//Tax on Cr
-						if(value.tax_item_id>0){
-							var taxItem = val.tax_item,
-								raw = "cr"+taxItem.account_id;
-
-							if(entries[raw]===undefined){
-								entries[raw] = {
-									transaction_id      : transaction_id,
-									account_id          : taxItem.account_id,
-									contact_id          : contact.id,
-									description         : val.description,
-									reference_no        : "",
-									segments            : obj.segments,
-									dr                  : 0,
-									cr                  : val.tax,
-									rate                : val.rate,
-									locale              : val.locale
-								};
-							}else{
-								entries[raw].cr += taxAmt;
-							}
-						}
 					});
-
-					// A/R on Dr
-					var arID = kendo.parseInt(contact.account_id);
-					if(arID>0){
-						raw = "dr"+arID;
-
-						if(entries[raw]===undefined){
-							entries[raw] = {
-								transaction_id      : transaction_id,
-								account_id          : arID,
-								contact_id          : contact.id,
-								description         : value.memo,
-								reference_no        : value.reference_no,
-								segments            : obj.segments,
-								dr                  : value.amount,
-								cr                  : 0,
-								rate                : value.rate,
-								locale              : value.locale
-							};
-						}else{
-							entries[raw].dr += value.amount;
-						}
-					}
-
-					//Discount on Dr
-					if(value.discount > 0){
-						var discountAccountId = kendo.parseInt(contact.trade_discount_id);
-						if(discountAccountId>0){
-							raw = "dr"+discountAccountId;
+					
+					//Journal
+					if(isJournal){
+						// A/R on Dr
+						var arID = kendo.parseInt(contact.account_id);
+						if(arID>0){
+							raw = "dr"+arID;
 
 							if(entries[raw]===undefined){
 								entries[raw] = {
 									transaction_id      : transaction_id,
-									account_id          : discountAccountId,
+									account_id          : arID,
 									contact_id          : contact.id,
 									description         : value.memo,
 									reference_no        : value.reference_no,
 									segments            : obj.segments,
-									dr                  : value.discount,
+									dr                  : value.amount,
 									cr                  : 0,
 									rate                : value.rate,
 									locale              : value.locale
 								};
 							}else{
-								entries[raw].dr += value.discount;
+								entries[raw].dr += value.amount;
 							}
 						}
-					}
 
-					//Add to journal entry
-					if(!jQuery.isEmptyObject(entries)){
-						$.each(entries, function(index, value){
-							self.journalLineDS.add(value);
-						});
+						//Discount on Dr
+						if(value.discount > 0){
+							var discountAccountId = kendo.parseInt(contact.trade_discount_id);
+							if(discountAccountId>0){
+								raw = "dr"+discountAccountId;
+
+								if(entries[raw]===undefined){
+									entries[raw] = {
+										transaction_id      : transaction_id,
+										account_id          : discountAccountId,
+										contact_id          : contact.id,
+										description         : value.memo,
+										reference_no        : value.reference_no,
+										segments            : obj.segments,
+										dr                  : value.discount,
+										cr                  : 0,
+										rate                : value.rate,
+										locale              : value.locale
+									};
+								}else{
+									entries[raw].dr += value.discount;
+								}
+							}
+						}
+
+						//Add to journal entry
+						if(!jQuery.isEmptyObject(entries)){
+							$.each(entries, function(index, value){
+								self.journalLineDS.add(value);
+							});
+						}
 					}
 
 					counter++;
@@ -30070,10 +30123,18 @@
 							val.set("transaction_id", value.id);
 						}
 					});
+
+					//Billing Cycle
+					$.each(self.billingCyleDS.data(), function(ind, val){
+						if(val.transaction_id==index){
+							val.set("transaction_id", value.id);
+						}
+					});
 				});
 
-				self.lineDS.sync();
+				self.lineDS.sync();				
 				self.journalLineDS.sync();
+				self.billingCyleDS.sync();
 
 				self.lineDS.bind("requestEnd", function(e){
 					self.set("checkA", true);
@@ -30101,7 +30162,6 @@
 					self.clear();
 
 					self.tmpData = result;
-
 				}else{
 					//Save New
 					self.setObj();
@@ -62196,9 +62256,6 @@
 			this.set("contact_id", id);
 			this.search();
 		},
-		contactChanges      : function(){
-			this.search();
-		},
 		getContactName      : function(id){
 			var raw = banhji.source.customerDS.get(id);
 			if(raw){
@@ -62276,8 +62333,7 @@
 				contact_id = this.get("contact_id");
 
 			//Clear
-			// self.dataSource.data([]);
-			// self.dataSource.cancelChanges();
+			this.dataSource.data([]);			
 
 			if(contact_id>0){
 				para.push({ field:"contact_id", value: contact_id });
@@ -62355,7 +62411,8 @@
 								is_recurring        : 0,
 								reference           : [value],
 								contact             : value.contact,
-								isProforma 			: isProforma
+								isProforma 			: isProforma,
+								billing_cycles 		: value.billing_cycles
 							});
 						});
 						self.applyTerm();
@@ -62363,8 +62420,9 @@
 					}
 
 					self.set("searchText", "");
-					self.set("contact_id", "");
 					self.set("invoice_id", 0);
+
+					self.changes();
 				});
 			}
 		},
@@ -62471,9 +62529,6 @@
 		save                : function(){
 			var self = this, obj = this.get("obj");
 
-			//Proforma
-			// this.addProformaJournal();
-
 			//Edit Mode
 			if(this.get("isEdit")){
 				obj.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
@@ -62498,63 +62553,107 @@
 			//Obj
 			this.objSync()
 			.then(function(data){
-				var ids = [];
 				//Save journals
 				$.each(data, function(index, value){
 					var contact = value.contact;
-					ids.push(value.reference_id);
 
-					//Cash on Dr
-					self.journalLineDS.add({
-						transaction_id      : value.id,
-						account_id          : obj.account_id,
-						contact_id          : value.contact_id,
-						description         : "",
-						reference_no        : "",
-						segments            : obj.segments,
-						dr                  : value.amount,
-						cr                  : 0,
-						rate                : value.rate,
-						locale              : value.locale
-					});
-
-					if(value.discount>0){
-						//Discount on Dr
+					//Journal
+					if(value.isProforma){//Proforma
+						var bc = value.billing_cycles,
+							ar = 0,
+							deposit = value.amount - ar;
+						
+						//Cash on Dr
 						self.journalLineDS.add({
 							transaction_id      : value.id,
-							account_id          : contact.settlement_discount_id,
+							account_id          : obj.account_id,
 							contact_id          : value.contact_id,
 							description         : "",
 							reference_no        : "",
 							segments            : obj.segments,
-							dr                  : value.discount,
+							dr                  : value.amount,
 							cr                  : 0,
 							rate                : value.rate,
 							locale              : value.locale
 						});
+
+						//AR on Cr (Proforma)
+						if(ar > 0){
+							self.journalLineDS.add({
+								transaction_id      : value.id,
+								account_id          : contact.deposit_account_id,
+								contact_id          : value.contact_id,
+								description         : "",
+								reference_no        : "",
+								segments            : obj.segments,
+								dr                  : 0,
+								cr                  : ar,
+								rate                : value.rate,
+								locale              : value.locale
+							});
+						}
+
+						//Deposit on Cr (Proforma)
+						self.journalLineDS.add({
+							transaction_id      : value.id,
+							account_id          : contact.deposit_account_id,
+							contact_id          : value.contact_id,
+							description         : "",
+							reference_no        : "",
+							segments            : obj.segments,
+							dr                  : 0,
+							cr                  : deposit,
+							rate                : value.rate,
+							locale              : value.locale
+						});
+					}else{
+						//Cash on Dr
+						self.journalLineDS.add({
+							transaction_id      : value.id,
+							account_id          : obj.account_id,
+							contact_id          : value.contact_id,
+							description         : "",
+							reference_no        : "",
+							segments            : obj.segments,
+							dr                  : value.amount,
+							cr                  : 0,
+							rate                : value.rate,
+							locale              : value.locale
+						});
+
+						if(value.discount>0){
+							//Discount on Dr
+							self.journalLineDS.add({
+								transaction_id      : value.id,
+								account_id          : contact.settlement_discount_id,
+								contact_id          : value.contact_id,
+								description         : "",
+								reference_no        : "",
+								segments            : obj.segments,
+								dr                  : value.discount,
+								cr                  : 0,
+								rate                : value.rate,
+								locale              : value.locale
+							});
+						}
+
+						//AR on Cr
+						self.journalLineDS.add({
+							transaction_id      : value.id,
+							account_id          : contact.account_id,
+							contact_id          : value.contact_id,
+							description         : "",
+							reference_no        : "",
+							segments            : obj.segments,
+							dr                  : 0,
+							cr                  : kendo.parseFloat(value.amount) + kendo.parseFloat(value.discount),
+							rate                : value.rate,
+							locale              : value.locale
+						});
 					}
-
-					//AR on Cr
-					self.journalLineDS.add({
-						transaction_id      : value.id,
-						account_id          : contact.account_id,
-						contact_id          : value.contact_id,
-						description         : "",
-						reference_no        : "",
-						segments            : obj.segments,
-						dr                  : 0,
-						cr                  : kendo.parseFloat(value.amount) + kendo.parseFloat(value.discount),
-						rate                : value.rate,
-						locale              : value.locale
-					});
-
-					$.each(self.journalLineDS.data(), function(ind, val){
-						val.set("transaction_id", value.id);
-					});
 				});
 
 				self.journalLineDS.sync();
-				self.updateTxnStatus(ids);
 
 				return data;
 			}, function(reason) { //Error
@@ -62580,156 +62679,10 @@
 				}
 			});
 		},
-		addProformaJournal  : function(){
-			var self = this, obj = this.get("obj");
-
-			$.each(this.dataSource.data(), function(index, value){
-				if(value.type=="Proforma_Invoice"){
-					// A. At the issue of proforma
-
-					// B. If proforma is paid before recogition
-					//Cash on Dr
-					this.journalLineDS.add({
-						transaction_id      : value.id,
-						account_id          : obj.account_id,
-						contact_id          : value.contact_id,
-						description         : "",
-						reference_no        : "",
-						segments            : obj.segments,
-						dr                  : value.amount,
-						cr                  : 0,
-						rate                : value.rate,
-						locale              : value.locale
-					});
-					//Deposit on Cr
-					self.journalLineDS.add({
-						transaction_id      : value.id,
-						account_id          : contact.account_id,
-						contact_id          : value.contact_id,
-						description         : "",
-						reference_no        : "",
-						segments            : obj.segments,
-						dr                  : 0,
-						cr                  : value.amount,
-						rate                : value.rate,
-						locale              : value.locale
-					});
-
-					//When recognized revenue
-					//Deposit/AR on Dr
-					this.journalLineDS.add({
-						transaction_id      : value.id,
-						account_id          : obj.account_id,
-						contact_id          : value.contact_id,
-						description         : "",
-						reference_no        : "",
-						segments            : obj.segments,
-						dr                  : value.amount,
-						cr                  : 0,
-						rate                : value.rate,
-						locale              : value.locale
-					});
-					//Revenue on Cr
-					self.journalLineDS.add({
-						transaction_id      : value.id,
-						account_id          : contact.account_id,
-						contact_id          : value.contact_id,
-						description         : "",
-						reference_no        : "",
-						segments            : obj.segments,
-						dr                  : 0,
-						cr                  : value.amount,
-						rate                : value.rate,
-						locale              : value.locale
-					});
-
-					// C. No deposit
-					//AR on Dr
-					this.journalLineDS.add({
-						transaction_id      : value.id,
-						account_id          : obj.account_id,
-						contact_id          : value.contact_id,
-						description         : "",
-						reference_no        : "",
-						segments            : obj.segments,
-						dr                  : value.amount,
-						cr                  : 0,
-						rate                : value.rate,
-						locale              : value.locale
-					});
-					//Revenue on Cr
-					self.journalLineDS.add({
-						transaction_id      : value.id,
-						account_id          : contact.account_id,
-						contact_id          : value.contact_id,
-						description         : "",
-						reference_no        : "",
-						segments            : obj.segments,
-						dr                  : 0,
-						cr                  : value.amount,
-						rate                : value.rate,
-						locale              : value.locale
-					});
-
-					// D. Quaterly Recognition
-					//AR on Dr
-					this.journalLineDS.add({
-						transaction_id      : value.id,
-						account_id          : obj.account_id,
-						contact_id          : value.contact_id,
-						description         : "",
-						reference_no        : "",
-						segments            : obj.segments,
-						dr                  : value.amount,
-						cr                  : 0,
-						rate                : value.rate,
-						locale              : value.locale
-					});
-					//Revenue on Cr
-					self.journalLineDS.add({
-						transaction_id      : value.id,
-						account_id          : contact.account_id,
-						contact_id          : value.contact_id,
-						description         : "",
-						reference_no        : "",
-						segments            : obj.segments,
-						dr                  : 0,
-						cr                  : value.amount,
-						rate                : value.rate,
-						locale              : value.locale
-					});
-				}
-			});
-		},
 		cancel              : function(){
 			this.dataSource.cancelChanges();
 
 			banhji.userManagement.removeMultiTask("cash_receipt");
-		},
-		updateTxnStatus     : function(ids){
-			var self = this;
-
-			if(ids.length>0){
-				this.txnDS.query({
-					filter:{ field:"id", operator:"where_in", value:ids }
-				}).then(function(){
-					var view = self.txnDS.view();
-
-					$.each(view, function(index, value){
-						var total = kendo.parseFloat(value.amount) - kendo.parseFloat(value.deposit);
-
-						if(value.amount_paid == 0){
-							value.set("status", 0);
-						}else if(value.amount_paid >= total){
-							value.set("status", 1);
-						}else{
-							value.set("status", 2);
-						}
-					});
-
-					self.txnDS.sync();
-				});
-			}
 		}
 	});
 	banhji.cashPayment =  kendo.observable({

@@ -1091,7 +1091,7 @@
 								            	</tr>
 								            	<tr>
 								            		<td>
-								            			<span class="btn btn-block btn-primary" data-bind="click: goSaleReturn"><span data-bind="text: lang.lang.sale_return1"></span></span>
+								            			<span class="btn btn-block btn-primary" data-bind="click: goSaleReturn"><span data-bind="text: lang.lang.sale_return"></span></span>
 								            		</td>
 								            		<td>
 								            			<span class="btn btn-block btn-primary" data-bind="click: goInvoice"><span data-bind="text: lang.lang.invoice"></span></span>
@@ -15589,7 +15589,7 @@
 								            	</tr>
 								            	<tr>
 								            		<td>
-								            			<span class="btn btn-block btn-primary" data-bind="click: goSaleReturn"><span data-bind="text: lang.lang.sale_return1"></span></span>
+								            			<span class="btn btn-block btn-primary" data-bind="click: goSaleReturn"><span data-bind="text: lang.lang.sale_return"></span></span>
 								            		</td>
 								            		<td>
 								            			<span class="btn btn-block btn-primary" data-bind="click: goInvoice"><span data-bind="text: lang.lang.invoice"></span></span>
@@ -16558,9 +16558,11 @@
 							    <!-- Tabs Heading -->
 							    <div class="tabsbar tabsbar-2">
 							        <ul class="row-fluid row-merge">
-							        	<li class="span1 glyphicons cogwheels active"><a href="#tab1-2" data-toggle="tab"><i></i></a>
+							        	<li class="span1 glyphicons cogwheels active"><a href="#tab1-3" data-toggle="tab"><i></i></a>
 							            </li>
-							            <li class="span1 glyphicons sort"><a href="#tab2-2" data-toggle="tab"><i></i></a>
+							            <li class="span1 glyphicons sort"><a href="#tab2-3" data-toggle="tab"><i></i></a>
+							            </li>
+							            <li class="span1 glyphicons alarm" data-bind="visible: isProforma"><a href="#tab3-3" data-toggle="tab"><i></i></a>
 							            </li>
 							        </ul>
 							    </div>
@@ -16569,7 +16571,7 @@
 							    <div class="tab-content">
 
 							    	<!-- Options -->
-							        <div class="tab-pane active" id="tab1-2">
+							        <div class="tab-pane active" id="tab1-3">
 							            <table style="margin-bottom: 0;" class="table table-borderless table-condensed cart_total">
 											<tr>
 												<td><span data-bind="text: lang.lang.sale_rep"></span></td>
@@ -16637,7 +16639,7 @@
 							        <!-- // Options END -->
 
 							        <!-- Segment -->
-							        <div class="tab-pane" id="tab2-2">
+							        <div class="tab-pane" id="tab2-3">
 
 							        	<input id="cbbSegment" name="cbbSegment"
 							        		   data-role="combobox"
@@ -16687,6 +16689,53 @@
 
 							        </div>
 							        <!-- // Segment END -->
+
+							        <!-- Proforma -->
+							        <div class="tab-pane" id="tab3-3">
+							        	<table class="table borderless">
+							        		<tr>
+							            		<td>Start Date</td>
+							            		<td>
+							            			<input data-role="datepicker"
+															data-format="dd-MM-yyyy"
+															data-parse-formats="yyyy-MM-dd"
+															data-bind="value: objBC.start_date"
+															style="width: 100%; " />
+							            		</td>
+							            	</tr>
+							            	<tr>
+							            		<td>Total Amount is for</td>
+							            		<td>
+							            			<input data-role="numerictextbox"
+									                   data-format="n0"
+									                   data-min="0"
+									                   data-bind="value: objBC.interval"
+									                   style="width: 49%; " />
+
+									                <input data-role="dropdownlist"
+										                   data-value-primitive="true"
+										                   data-text-field="text"
+										                   data-value-field="value"
+										                   data-bind="value: objBC.date_unit,
+										                              source: dateUnitList"
+										                   style="width: 50%;" />
+							            		</td>
+							            	</tr>
+							            	<tr>
+							            		<td>Revenue Recognition</td>
+							            		<td>
+							            			<input data-role="dropdownlist"
+										                   data-value-primitive="true"
+										                   data-text-field="text"
+										                   data-value-field="value"
+										                   data-bind="value: objBC.frequency,
+										                              source: frequencyList"
+										                   style="width: 100%;" />
+							            		</td>
+							            	</tr>							            	
+							            </table>
+							        </div>
+							        <!-- // Proforma END -->
 
 							    </div>
 							</div>
@@ -17037,7 +17086,7 @@
 								            	</tr>
 								            	<tr>
 								            		<td>
-								            			<span class="btn btn-block btn-primary" data-bind="click: goSaleReturn"><span data-bind="text: lang.lang.sale_return1"></span></span>
+								            			<span class="btn btn-block btn-primary" data-bind="click: goSaleReturn"><span data-bind="text: lang.lang.sale_return"></span></span>
 								            		</td>
 								            		<td>
 								            			<span class="btn btn-block btn-primary" data-bind="click: goInvoice"><span data-bind="text: lang.lang.invoice"></span></span>
@@ -46455,8 +46504,7 @@
 										                   data-value-field="id"
 										                   data-bind="value: contact_id,
 										                   			  disabled: isEdit,
-										                              source: contactDS,
-										                              events: {change: contactChanges}"
+										                              source: contactDS"
 										                   data-option-label="Select Customer..."
 										                   style="width: 100%; height: 29px;" />
 
@@ -46700,26 +46748,8 @@
 										<td class="right"><span data-format="n" data-bind="text: obj.discount"></span></td>
 									</tr>
 									<tr>
-										<td class="right"><span data-bind="text: lang.lang.total_tax"></span></td>
-										<td class="right"><span data-format="n" data-bind="text: obj.tax"></span></td>
-									</tr>
-									<tr>
 										<td class="right"><h4 span data-bind="text: lang.lang.total" style="font-weight: 700;"></h4></td>
 										<td class="right"><h4 data-bind="text: total" style="font-weight: 700;"></h4></td>
-									</tr>
-									<tr>
-										<td class="right">
-											<span data-bind="text: lang.lang.deposit"></span>
-											<span data-format="n" data-bind="text: total_deposit"></span>
-										</td>
-										<td class="right">
-											<input 	data-role="numerictextbox"
-								                   	data-format="n"
-								                   	data-spinners="false"
-								                   	data-min="0"
-								                   	data-bind="value: obj.deposit, events: { change: changes }"
-								                   	style="width: 90%; text-align: right;">
-										</td>
 									</tr>
 									<tr>
 										<td class="right strong">
@@ -46778,57 +46808,6 @@
 			</div>
 		</div>
 	</div>
-</script>
-<script id="cashReceipt-template" type="text/x-kendo-tmpl">
-	<tr data-uid="#: uid #">
-		<td>
-			<i class="icon-trash" data-bind="events: { click: removeRow }"></i>
-			#:banhji.cashReceipt.dataSource.indexOf(data)+1#
-		</td>
-		<td>
-			<span data-format="dd-MM-yyyy" data-bind="text: reference[0].issued_date"></span>
-		</td>
-		<td>#=contact.name#</td>
-		<td>
-			#if(reference.length>0){#
-        		<a href="\#/#=reference[0].type.toLowerCase()#/#=reference[0].id#"><i></i> #=reference_no#</a>
-        	#}#
-        </td>
-		<td data-bind="visible: showReceiptNo">
-			<input type="text" class="k-textbox"
-					data-bind="value: number"
-					style="width: 100%; margin-bottom: 0;" />
-		</td>
-		<td data-bind="visible: showCheckNo">
-			<input type="text" class="k-textbox"
-					data-bind="value: check_no"
-					style="width: 100%; margin-bottom: 0;" />
-		</td>
-		<td class="center">
-			<input id="txtSubTotal-#:uid#" name="txtSubTotal-#:uid#"
-				   type="number" class="k-textbox"
-				   min="0"
-			       data-bind="value: sub_total"
-			       style="text-align: right; width: 100%;" disabled="disabled" />
-		</td>
-		<td class="center">
-			<input id="txtDiscount-#:uid#" name="txtDiscount-#:uid#"
-				   type="number" class="k-textbox"
-				   min="0"
-			       data-bind="value: discount, events: {change : changes}"
-			       placeholder="Discount..."
-			       style="text-align: right; width: 100%;" />
-		</td>
-		<td class="center">
-			<input id="txtAmount-#:uid#" name="txtAmount-#:uid#"
-				   type="number" class="k-textbox"
-				   min="0"
-			       data-bind="value: amount, events: {change : changes}"
-			       required data-required-msg="required"
-			       placeholder="Amount..."
-			       style="text-align: right; width: 100%;" />
-		</td>
-    </tr>
 </script>
 <script id="cashPayment" type="text/x-kendo-template">
 	<div id="slide-form">
