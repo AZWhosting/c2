@@ -312,6 +312,7 @@ class Transactions extends REST_Controller {
 					"user_id" 					=> $value->user_id,
 					"employee_id" 				=> $value->employee_id,
 				   	"number" 					=> $value->number,
+				   	"batch_number" 				=> $value->batch_number,
 				   	"type" 						=> $value->type,
 				   	"sub_type" 					=> $value->sub_type,
 				   	"nature_type" 				=> $value->nature_type,
@@ -438,6 +439,7 @@ class Transactions extends REST_Controller {
 			isset($value->user_id) 					? $obj->user_id 					= $value->user_id : "";
 			isset($value->employee_id) 				? $obj->employee_id 				= $value->employee_id : "";
 			$obj->number = $number;
+		   	isset($value->batch_number) 			? $obj->batch_number 				= $value->batch_number : "";
 		   	isset($value->type) 					? $obj->type 						= $value->type : "";
 		   	isset($value->sub_type) 				? $obj->sub_type 					= $value->sub_type : "";
 		   	isset($value->nature_type) 				? $obj->nature_type 				= $value->nature_type : "";
@@ -638,6 +640,7 @@ class Transactions extends REST_Controller {
 					"user_id" 					=> $obj->user_id,
 					"employee_id" 				=> $obj->employee_id,
 					"number" 					=> $obj->number,
+					"batch_number" 				=> $obj->batch_number,
 				   	"type" 						=> $obj->type,
 				   	"sub_type" 					=> $obj->sub_type,
 				   	"nature_type" 				=> $obj->nature_type,
@@ -739,6 +742,7 @@ class Transactions extends REST_Controller {
 			isset($value->user_id) 					? $obj->user_id 					= $value->user_id : "";
 			isset($value->employee_id) 				? $obj->employee_id 				= $value->employee_id : "";
 			isset($value->number) 					? $obj->number 						= $value->number : "";
+		   	isset($value->batch_number) 			? $obj->batch_number 				= $value->batch_number : "";
 		   	isset($value->type) 					? $obj->type 						= $value->type : "";
 		   	isset($value->sub_type) 				? $obj->sub_type 					= $value->sub_type : "";
 		   	isset($value->nature_type) 				? $obj->nature_type 				= $value->nature_type : "";
@@ -881,6 +885,7 @@ class Transactions extends REST_Controller {
 					"user_id" 					=> $obj->user_id,
 					"employee_id" 				=> $obj->employee_id,
 					"number" 					=> $obj->number,
+					"batch_number" 				=> $obj->batch_number,
 				   	"type" 						=> $obj->type,
 				   	"sub_type" 					=> $obj->sub_type,
 				   	"nature_type" 				=> $obj->nature_type,
@@ -1025,7 +1030,7 @@ class Transactions extends REST_Controller {
 		$this->response($data, 200);
 	}	
 
-    //Generate invoice number
+    //GENERATE NUMBER
 	public function _generate_number($type, $date){
 		$YY = date("y");
 		$MM = date("m");

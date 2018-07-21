@@ -5470,10 +5470,10 @@
 							<div class="box-generic well" style="height: 190px;">
 								<table class="table table-borderless table-condensed cart_total">
 									<tr>
-										<td style="width: 50px;">Start No.</td>
+										<td style="width: 50px;">Batch No.</td>
 										<td>
 											<input id="txtNumber" name="txtNumber" class="k-textbox"
-													data-bind="value: obj.number,
+													data-bind="value: obj.batch_number,
 														disabled: obj.is_recurring"
 													placeholder="eg. ABC00001" style="width: 85%; float: left; margin-right: 5px;" />
 											<div style="padding-left: 0; width: 25px; float: left;">
@@ -5549,9 +5549,11 @@
 							    <!-- Tabs Heading -->
 							    <div class="tabsbar tabsbar-2">
 							        <ul class="row-fluid row-merge">
-							        	<li class="span1 glyphicons cogwheels active"><a href="#tab1-2" data-toggle="tab"><i></i></a>
+							        	<li class="span1 glyphicons cogwheels active"><a href="#tab1-3" data-toggle="tab"><i></i></a>
 							            </li>
-							            <li class="span1 glyphicons sort"><a href="#tab2-2" data-toggle="tab"><i></i></a>
+							            <li class="span1 glyphicons sort"><a href="#tab2-3" data-toggle="tab"><i></i></a>
+							            </li>
+							            <li class="span1 glyphicons alarm" data-bind="visible: isProforma"><a href="#tab3-3" data-toggle="tab"><i></i></a>
 							            </li>
 							        </ul>
 							    </div>
@@ -5560,7 +5562,7 @@
 							    <div class="tab-content">
 
 							    	<!-- Options -->
-							        <div class="tab-pane active" id="tab1-2">
+							        <div class="tab-pane active" id="tab1-3">
 							            <table style="margin-bottom: 0;" class="table table-borderless table-condensed cart_total">
 											<tr>
 												<td><span data-bind="text: lang.lang.sale_rep"></span></td>
@@ -5628,7 +5630,7 @@
 							        <!-- // Options END -->
 
 							        <!-- Segment -->
-							        <div class="tab-pane" id="tab2-2">
+							        <div class="tab-pane" id="tab2-3">
 
 							        	<input id="cbbSegment" name="cbbSegment"
 							        		   data-role="combobox"
@@ -5678,6 +5680,53 @@
 
 							        </div>
 							        <!-- // Segment END -->
+
+							        <!-- Proforma -->
+							        <div class="tab-pane" id="tab3-3">
+							        	<table class="table borderless">
+							        		<tr>
+							            		<td>Start Date</td>
+							            		<td>
+							            			<input data-role="datepicker"
+															data-format="dd-MM-yyyy"
+															data-parse-formats="yyyy-MM-dd"
+															data-bind="value: objBC.start_date"
+															style="width: 100%; " />
+							            		</td>
+							            	</tr>
+							            	<tr>
+							            		<td>Total Amount is for</td>
+							            		<td>
+							            			<input data-role="numerictextbox"
+									                   data-format="n0"
+									                   data-min="0"
+									                   data-bind="value: objBC.interval"
+									                   style="width: 49%; " />
+
+									                <input data-role="dropdownlist"
+										                   data-value-primitive="true"
+										                   data-text-field="text"
+										                   data-value-field="value"
+										                   data-bind="value: objBC.date_unit,
+										                              source: dateUnitList"
+										                   style="width: 50%;" />
+							            		</td>
+							            	</tr>
+							            	<tr>
+							            		<td>Revenue Recognition</td>
+							            		<td>
+							            			<input data-role="dropdownlist"
+										                   data-value-primitive="true"
+										                   data-text-field="text"
+										                   data-value-field="value"
+										                   data-bind="value: objBC.frequency,
+										                              source: frequencyList"
+										                   style="width: 100%;" />
+							            		</td>
+							            	</tr>							            	
+							            </table>
+							        </div>
+							        <!-- // Proforma END -->
 
 							    </div>
 							</div>
@@ -16507,7 +16556,7 @@
 										</td>
 									</tr>
 									<tr>
-										<td>Membership</td>
+										<td>Subscription</td>
 										<td>
 											<input id="ddlMembershipType" name="ddlMembershipType"
 												   data-role="dropdownlist"
@@ -16517,7 +16566,7 @@
 								                   data-bind="value: membership_type_id,
 								                              source: membershipTypeDS,
 								                              events:{change: search}"
-								                   data-option-label="Select Membership..."
+								                   data-option-label="Select Subscription..."
 								                   required data-required-msg="required" style="width: 100%;" />
 										</td>
 									</tr>

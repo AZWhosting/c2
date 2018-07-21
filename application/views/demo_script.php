@@ -10675,7 +10675,9 @@
 		itemLineDS          : dataStore(apiUrl + "item_lines"),
 		assemblyLineDS      : dataStore(apiUrl + "item_lines"),
 		txnDS               : dataStore(apiUrl + "transactions"),
+		billingCyleDS       : dataStore(apiUrl + "billing_cycles"),
 		numberDS            : dataStore(apiUrl + "transactions/number"),
+		batchNumberDS       : dataStore(apiUrl + "transactions/batch_number"),
 		journalLineDS       : dataStore(apiUrl + "journal_lines"),
 		recurringDS         : dataStore(apiUrl + "transactions"),
 		recurringLineDS     : dataStore(apiUrl + "item_lines"),
@@ -10692,7 +10694,8 @@
 				filters: [
 					{ field: "type", value: "Commercial_Invoice" },
 					{ field: "type", value: "Vat_Invoice" },
-					{ field: "type", value: "Invoice" }
+					{ field: "type", value: "Invoice" },
+					{ field: "type", value: "Proforma_Invoice" }
 				]
 			}
 		}),
@@ -10718,7 +10721,8 @@
 		paymentMethodDS     : banhji.source.paymentMethodDS,
 		amtDueColor         : banhji.source.amtDueColor,
 		confirmMessage      : banhji.source.confirmMessage,
-		dateUnitList       : banhji.source.dateUnitList,
+		dateUnitList        : banhji.source.dateUnitList,
+		frequencyList       : banhji.source.frequencyList,
 		monthOptionList     : banhji.source.monthOptionList,
 		monthList           : banhji.source.monthList,
 		weekDayList         : banhji.source.weekDayList,
@@ -10728,6 +10732,7 @@
 		showWeek            : false,
 		showDay             : false,
 		obj                 : null,
+		objBC 				: [],
 		isEdit              : false,
 		saveDraft           : false,
 		saveClose           : false,
@@ -10735,6 +10740,7 @@
 		saveRecurring       : false,
 		showConfirm         : false,
 		notDuplicateNumber  : true,
+		isProforma 			: false,
 		recurring           : "",
 		recurring_validate  : false,
 		total               : 0,
@@ -10810,6 +10816,7 @@
 				employee_id         : "",//Sale Rep
 				type                : "Commercial_Invoice",//Required
 				number              : "",
+				batch_number 		: "",
 				sub_total           : 0,
 				discount            : 0,
 				tax                 : 0,
@@ -10844,12 +10851,27 @@
 				contact             : 0
 			});
 
-			this.generateNumber();
+			this.generateBatchNumber();
+			this.setBillingCycle();
 
 			//Default rows
 			for (var i = 0; i < banhji.source.defaultLines; i++) {
 				this.addRow();
 			}
+		},
+		//Billing cycle
+		setBillingCycle 	: function(){
+			this.set("objBC", null);
+
+			this.set("objBC", {
+				transaction_id 	: 0,
+				start_date      : new Date(),
+				type 			: "Proforma_Invoice",
+				frequency       : "Monthly",
+				date_unit       : "Month",
+				interval        : 1,
+				status        	: 1
+			});
 		},
 		//Contact
 		contactChanges      : function(){
@@ -11181,8 +11203,50 @@
 				obj.set("number", str);
 			});
 		},
+		generateBatchNumber : function(){
+			var self = this, obj = this.get("obj"),
+				issueDate = new Date(obj.issued_date),
+				startDate = new Date(obj.issued_date),
+				endDate = new Date(obj.issued_date);
+
+			this.set("notDuplicateNumber", true);
+
+			startDate.setDate(1);
+			startDate.setMonth(0);//Set to January
+			endDate.setDate(31);
+			endDate.setMonth(11);//Set to November
+
+			this.batchNumberDS.query({
+				filter:[
+					{ field:"type", value:obj.type },
+					{ field:"issued_date >=", value:kendo.toString(startDate, "yyyy-MM-dd") },
+					{ field:"issued_date <=", value:kendo.toString(endDate, "yyyy-MM-dd") }
+				]
+			}).then(function(){
+				var view = self.batchNumberDS.view(),
+					number = 0, str = "";
+
+				if(view.length>0){
+					if(view[0].batch_number!==""){
+						number = view[0].batch_number.match(/\d+/g).map(Number);
+					}
+				}
+
+				number++;
+				str = "BATCH" + kendo.toString(issueDate, "yy") + kendo.toString(issueDate, "MM") + kendo.toString(number, "00000");
+
+				obj.set("batch_number", str);
+			});
+		},
 		typeChanges         : function(){
 			var obj = this.get("obj");
+
+			//Proforma
+			if(obj.type=="Proforma_Invoice"){
+				this.set("isProforma", true);
+			}else{
+				this.set("isProforma", false);
+			}
 
 			$.each(this.txnTemplateDS.data(), function(index, value){
 				if(value.type==obj.type){
@@ -11267,7 +11331,10 @@
 		tmpData             : "",
 		save                : function(){
 			$("#loadImport").css("display", "block");
-			var self = this, obj = this.get("obj"), segments = [], lines = [];
+			var self = this, 
+				obj = this.get("obj"),
+				objBC = this.get("objBC"), 
+				segments = [], lines = [];
 
 			if(this.validatingLocale()){
 				obj.set("issued_date", kendo.toString(new Date(obj.issued_date), "s"));
@@ -11297,8 +11364,15 @@
 				}
 
 				$.each(obj.contact.contacts, function(indexC, contact){
+					var isJournal = 1;
+
 					if(obj.number){
 						number = theLetter + kendo.toString(theNumber, "00000");
+					}
+
+					//Proforma
+					if(obj.type=="Proforma_Invoice"){
+						isJournal = 0;
 					}
 
 					self.dataSource.add({
@@ -11311,6 +11385,7 @@
 						employee_id         : obj.employee_id,//Sale Rep
 						type                : obj.type,//Required
 						number              : number,
+						batch_number 		: obj.batch_number,
 						sub_total           : obj.sub_total,
 						discount            : obj.discount,
 						tax                 : obj.tax,
@@ -11326,7 +11401,7 @@
 						status              : 0,
 						progress            : "",
 						segments            : segments,
-						is_journal          : 1,//Required
+						is_journal          : isJournal,//Required
 						is_recurring        : 0,
 						contact             : contact
 					});
@@ -11340,6 +11415,8 @@
 			.then(function(data){ //Success
 				banhji.batchInvoicePreview.line = self.lineDS.data();
 				$.each(data, function(indexT, txn){
+					var isJournal = 1;
+
 					//Item line
 					$.each(self.lineDS.data(), function(index, value){
 						self.itemLineDS.add({
@@ -11393,11 +11470,30 @@
 						});
 					});
 
+					//Proforma
+					if(obj.type=="Proforma_Invoice"){
+						isJournal = 0;
+
+						//Billing Cycle
+						self.billingCyleDS.add({
+							transaction_id 	: txn.id,
+							start_date      : kendo.toString(new Date(objBC.start_date), "yyyy-MM-dd"),
+							type 			: "Proforma_Invoice",
+							frequency       : objBC.frequency,
+							date_unit       : objBC.date_unit,
+							interval        : objBC.interval,
+							status        	: 1
+						});
+					}
+
 					//Journal
-					self.addJournal(txn.id, txn.contact);
+					if(isJournal){
+						self.addJournal(txn.id, txn.contact);
+					}
 				});
 
 				self.itemLineDS.sync();
+				self.billingCyleDS.sync();
 				self.journalLineDS.sync();
 				self.itemLineDS.bind("requestEnd", function(e){
 					self.set("checkA", true);
@@ -29327,6 +29423,7 @@
 				employee_id         : "",//Sale Rep
 				type                : "Commercial_Invoice",//Required
 				number              : "",
+				batch_number 		: "",
 				sub_total           : 0,
 				discount            : 0,
 				tax                 : 0,
@@ -29362,10 +29459,10 @@
 			});
 
 			this.generateBatchNumber();
-			this.addBillingCycle();
+			this.setBillingCycle();
 		},
 		//Billing cycle
-		addBillingCycle 	: function(){
+		setBillingCycle 	: function(){
 			this.set("objBC", null);
 
 			this.set("objBC", {
@@ -29886,6 +29983,7 @@
 						employee_id         : obj.employee_id,//Sale Rep
 						type                : obj.type,//Required
 						number              : value.number,
+						batch_number 		: obj.batch_number,
 						sub_total           : value.sub_total,
 						discount            : value.discount,
 						tax                 : value.tax,
