@@ -1499,7 +1499,7 @@ class Transactions extends REST_Controller {
 						"payment_term_id" 			=> intval($value->payment_term_id),
 						"payment_method_id" 		=> intval($value->payment_method_id),
 						"transaction_template_id" 	=> $value->transaction_template_id,
-						"reference_id" 				=> intval($value->reference_id),
+						"reference_id" 				=> intval($value->reference_id),//membership_id
 						"recurring_id" 				=> $value->recurring_id,
 						"job_id" 					=> $value->job_id,
 						"account_id" 				=> intval($value->account_id),
@@ -1566,6 +1566,223 @@ class Transactions extends REST_Controller {
 				}
 			}
 		}		
+
+		//Response Data
+		$this->response($data, 200);
+	}
+
+	//GET PROFORMA
+	function proforma_get() {
+		$filter 	= $this->get("filter");
+		$page 		= $this->get('page');
+		$limit 		= $this->get('limit');
+		$sort 	 	= $this->get("sort");
+		$data["results"] = [];
+		$data["count"] = 0;
+		$today = date("Y-m-d");
+
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+
+		//Sort
+		if(!empty($sort) && isset($sort)){
+			foreach ($sort as $value) {
+				if(isset($value['operator'])){
+					$obj->{$value['operator']}($value["field"], $value["dir"]);
+				}else{
+					$obj->order_by($value["field"], $value["dir"]);
+				}
+			}
+		}
+
+		//Filter
+		if(!empty($filter["filters"]) && isset($filter["filters"])){
+	    	foreach ($filter["filters"] as $value) {
+	    		if(isset($value['operator'])) {
+					if($value["operator"]=="memberships") {
+						$obj->where_related("billing_cycle/membership", $value["field"], $value["value"]);
+					} else {
+		    			$obj->{$value["operator"]}($value["field"], $value["value"]);
+					}
+				} else {
+					$obj->where($value["field"], $value["value"]);
+				}
+			}
+		}
+
+		$obj->include_related("contact", array("abbr","number","name","payment_term_id","payment_method_id","credit_limit","locale","bill_to","ship_to","deposit_account_id","trade_discount_id","settlement_discount_id","account_id","ra_id"));
+		$obj->include_related("billing_cycle", array("id","start_date","frequency","interval","date_unit","status"));
+		$obj->where("type", "Proforma_Invoice");
+		$obj->where_related("billing_cycle","start_date <=", $today);
+		$obj->where_related("billing_cycle","status", 1);
+		$obj->where("is_recurring <>", 1);
+		$obj->where("deleted <>", 1);
+
+		//Results
+		if($page && $limit){
+			$obj->get_paged_iterated($page, $limit);
+			$data["count"] = $obj->paged->total_rows;
+		}else{
+			$obj->get_iterated();
+			$data["count"] = $obj->result_count();
+		}
+
+		if($obj->exists()){
+			foreach ($obj as $value) {
+				//Contact
+				$contact = array(
+					"id" 						=> $value->contact_id,
+					"abbr"						=> $value->contact_abbr ? $value->contact_abbr : "",
+					"number"					=> $value->contact_number ? $value->contact_number : "",
+					"name"						=> $value->contact_name ? $value->contact_name : "",
+					"payment_term_id"			=> $value->contact_payment_term_id ? $value->contact_payment_term_id : 0,
+					"payment_method_id"			=> $value->contact_payment_method_id ? $value->contact_payment_method_id : 0,
+					"credit_limit"				=> $value->contact_credit_limit ? $value->contact_credit_limit : 0,
+					"locale"					=> $value->contact_locale ? $value->contact_locale : "",
+					"bill_to"					=> $value->contact_bill_to ? $value->contact_bill_to : "",
+					"ship_to"					=> $value->contact_ship_to ? $value->contact_ship_to : "",
+					"deposit_account_id"		=> $value->contact_deposit_account_id ? $value->contact_deposit_account_id : 0,
+					"trade_discount_id"			=> $value->contact_trade_discount_id ? $value->contact_trade_discount_id : 0,
+					"settlement_discount_id"	=> $value->contact_settlement_discount_id ? $value->contact_settlement_discount_id : 0,
+					"account_id"				=> $value->contact_account_id ? $value->contact_account_id : 0,
+					"ra_id"						=> $value->contact_ra_id ? $value->contact_ra_id : 0
+				);
+
+				//Lines
+				$lines = [];
+				$line = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+				$line->include_related("item", array("item_type_id","abbr","number","name","cost","price","locale","income_account_id","expense_account_id","inventory_account_id","nature"));
+				$line->include_related("tax_item", array("tax_type_id","account_id","name","rate"));
+				$line->where("transaction_id", $value->id);
+				$line->where("deleted <>", 1);
+				$line->get_iterated();
+
+				foreach ($line as $l) {
+					//Item
+					$item = array(
+						"id" 					=> $l->item_id,
+						"item_type_id" 			=> $l->item_item_type_id,
+						"abbr"					=> $l->item_abbr, 
+						"number" 				=> $l->item_number, 
+						"name" 					=> $l->item_name,
+						"cost"					=> $l->item_cost,
+						"price"					=> $l->item_price,
+						"locale"				=> $l->item_locale,
+						"income_account_id"		=> $l->item_income_account_id, 
+						"expense_account_id" 	=> $l->item_expense_account_id, 
+						"inventory_account_id" 	=> $l->item_inventory_account_id
+					);
+
+					//Tax Item
+					$tax_item = array(
+						"id" 			=> $l->tax_item_id,
+						"tax_type_id" 	=> $l->tax_item_tax_type_id ? $l->tax_item_tax_type_id : "",
+						"account_id" 	=> $l->tax_item_account_id ? $l->tax_item_account_id : "",
+						"name" 			=> $l->tax_item_name ? $l->tax_item_name : "",
+						"rate" 			=> $l->tax_item_rate ? $l->tax_item_rate : ""
+					);
+
+					$lines[] = array(
+						"id" 				=> $l->id,
+				   		"transaction_id"	=> $l->transaction_id,
+				   		"reference_id"		=> $l->reference_id,
+				   		"measurement_id" 	=> $l->measurement_id,
+						"tax_item_id" 		=> $l->tax_item_id,
+						"wht_account_id"	=> $l->wht_account_id,
+						"item_id" 			=> $l->item_id,
+						"assembly_id" 		=> $l->assembly_id,
+					   	"description" 		=> $l->description,
+					   	"on_hand" 			=> floatval($l->on_hand),
+						"quantity" 			=> floatval($l->quantity),
+					   	"conversion_ratio" 	=> floatval($l->conversion_ratio),
+					   	"cost"				=> floatval($l->cost),
+					   	"price"				=> floatval($l->price),
+					   	"amount" 			=> floatval($l->amount),
+					   	"discount" 			=> floatval($l->discount),
+					   	"fine" 				=> floatval($l->fine),
+					   	"tax" 				=> floatval($l->tax),
+					   	"additional_cost" 	=> floatval($l->additional_cost),
+					   	"additional_applied"=> $l->additional_applied==1?true : false,
+					   	"inventory_quantity"=> floatval($l->inventory_quantity),
+					   	"inventory_value" 	=> floatval($l->inventory_value),
+					   	"rate"				=> floatval($l->rate),
+					   	"locale" 			=> $l->locale,
+					   	"movement" 			=> $l->movement,
+					   	"required_date"		=> $l->required_date,
+					   	"reference_no" 		=> $l->reference_no,
+					   	"deleted"			=> $l->deleted,				   	
+					   	
+					   	"item" 				=> $item,
+					   	"tax_item" 			=> $tax_item,
+					   	"contacts" 			=> $contact
+					);
+				}
+
+				//Billing cycle
+				$billing_cycles = array(
+					"id" 			=> $value->billing_cycle_id,
+					"start_date"	=> $value->billing_cycle_start_date,
+					"frequency"		=> $value->billing_cycle_frequency,
+					"interval"		=> $value->billing_cycle_interval,
+					"date_unit"		=> $value->billing_cycle_date_unit,
+					"status"		=> $value->billing_cycle_status
+				);
+
+				$data["results"][] = array(
+					"id" 						=> $value->id,					
+					"contact_id" 				=> intval($value->contact_id),
+					"payment_term_id" 			=> $value->payment_term_id,
+					"payment_method_id" 		=> intval($value->payment_method_id),
+					"transaction_template_id" 	=> $value->transaction_template_id,
+					"reference_id" 				=> intval($value->reference_id),
+					"recurring_id" 				=> $value->recurring_id,
+					"account_id" 				=> intval($value->account_id),
+					"discount_account_id" 		=> intval($value->discount_account_id),
+					"tax_item_id" 				=> $value->tax_item_id,
+					"wht_account_id"			=> $value->wht_account_id,
+					"user_id" 					=> $value->user_id,
+					"employee_id" 				=> $value->employee_id,
+				   	"number" 					=> $value->number,
+				   	"batch_number" 				=> $value->batch_number,
+				   	"type" 						=> $value->type,
+				   	"sub_type" 					=> $value->sub_type,
+				   	"nature_type" 				=> $value->nature_type,
+				   	"sub_total"					=> floatval($value->sub_total),
+				   	"discount" 					=> floatval($value->discount),
+				   	"tax" 						=> floatval($value->tax),
+				   	"amount" 					=> floatval($value->amount),
+				   	"fine" 						=> floatval($value->fine),
+				   	"deposit"					=> floatval($value->deposit),
+				   	"remaining" 				=> floatval($value->remaining),
+				   	"received" 					=> floatval($value->received),
+				   	"change" 					=> floatval($value->change),
+				   	"credit_allowed"			=> floatval($value->credit_allowed),
+				   	"additional_cost" 			=> floatval($value->additional_cost),
+				   	"additional_apply" 			=> $value->additional_apply,
+				   	"rate" 						=> floatval($value->rate),
+				   	"movement" 					=> floatval($value->movement),
+				   	"locale" 					=> $value->locale,				   	
+				   	"issued_date"				=> $value->issued_date,
+				   	"due_date" 					=> $value->due_date,
+				   	"deposit_date" 				=> $value->deposit_date,
+				   	"check_no" 					=> $value->check_no,
+				   	"reference_no" 				=> $value->reference_no,
+				   	"segments" 					=> $value->segments!="" ? array_map('intval', explode(",", $value->segments)) : [],
+				   	"segmentitems" 				=> $value->segmentitem->include_related("segment", array("name"))->get_raw()->result(),
+				   	"bill_to" 					=> $value->bill_to,
+				   	"ship_to" 					=> $value->ship_to,
+				   	"memo" 						=> $value->memo,
+				   	"memo2" 					=> $value->memo2,
+				   	"note" 						=> $value->note,				   	
+				   	"status" 					=> intval($value->status),
+				   	"progress" 					=> $value->progress,				   	
+				   	"is_journal" 				=> $value->is_journal,
+
+				   	"contacts" 					=> $contact,
+				   	"item_lines" 				=> $lines,
+				   	"billing_cycles" 			=> $billing_cycles
+				);
+			}
+		}
 
 		//Response Data
 		$this->response($data, 200);
@@ -1773,6 +1990,7 @@ class Transactions extends REST_Controller {
 		//Response Data
 		$this->response($data, 200);
 	}
+
 
 	//BY CHOEUN
 	//TXN PRINT GET --> Choeun

@@ -16567,7 +16567,7 @@
 								                              source: membershipTypeDS,
 								                              events:{change: search}"
 								                   data-option-label="Select Subscription..."
-								                   required data-required-msg="required" style="width: 100%;" />
+								                   style="width: 100%;" />
 										</td>
 									</tr>
 									<tr>
@@ -16785,6 +16785,291 @@
 							            </table>
 							        </div>
 							        <!-- // Proforma END -->
+
+							    </div>
+							</div>
+
+					    </div>
+					</div>
+
+					<!-- Item List -->
+					<div id="grid" style="float: left; width: 100%; margin-bottom: 15px;"></div>
+
+				    <div class="console"></div>
+		            
+		            <!-- Buttons -->
+					<div class="box-generic bg-action-button">
+						<div id="ntf1" data-role="notification"></div>
+						<div class="row-fluid" align="left">
+							<div class="span4">
+								<!-- <input data-role="dropdownlist"
+					                   data-value-primitive="true"
+					                   data-text-field="name"
+					                   data-value-field="id"
+					                   data-bind="value: txnSelect,
+					                              source: txnTemplateDS"
+					                   data-option-label="Select Template..." /> -->
+							</div>
+							<div class="span8">
+								<span class="btn-btn" onclick="javascript:window.history.back()" data-bind="click: cancel"><i></i> <span data-bind="text: lang.lang.cancel"></span></span>
+								<span role='presentation' class='dropdown btn-btn' style="padding: 0 0 0 15px; float: right; height: 32px; line-height: 30px;">
+							  		<a style="color: #fff; padding: 0;" class='dropdown-toggle glyphicons' data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false'>
+							  			<span data-bind="text: lang.lang.save_option"></span>
+							  			<span class="small-btn"><i class='caret '></i></span>
+							  		</a>
+							  		<ul class='dropdown-menu'>
+						  				<li id="saveNew" data-bind="invisible: isEdit"><span data-bind="text: lang.lang.save_new"></span></li>
+						  				<li id="savePrint"><span data-bind="text: lang.lang.save_print"></span></li>
+						  			</ul>
+							  	</span>
+							  	<span class="btn-btn" id="saveClose"><span data-bind="text: lang.lang.save_close"></span></span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+<script id="revenueRecognition" type="text/x-kendo-template">
+	<div id="slide-form">
+		<div class="customer-background">
+			<div class="container-960">
+				<div id="example" class="k-content" style="position: relative;">
+					<div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 100%;margin-top: -15px;background: rgba(142, 159, 167, 0.8);z-index: 9999;">
+						<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 35%;left: 45%"></i>
+					</div>
+			    	<span class="glyphicons no-js remove_2 pull-right"
+							data-bind="click: cancel"><i></i></span>
+
+			        <h2>Revenue Recognition</h2>
+
+				    <br>
+
+					<div class="row-fluid">
+						<div class="span4">
+							<div class="box-generic well" style="height: 190px;">
+								<table class="table table-borderless table-condensed cart_total">
+									<tr>
+										<td style="width: 50px;">Batch No.</td>
+										<td>
+											<input id="txtNumber" name="txtNumber" class="k-textbox"
+													data-bind="value: obj.batch_number,
+														disabled: obj.is_recurring"
+													placeholder="eg. ABC00001" style="width: 85%; float: left; margin-right: 5px;" />
+											<div style="padding-left: 0; width: 25px; float: left;">
+												<a class="glyphicons no-js qrcode" data-bind="click: generateBatchNumber" title="Generate Batch Number" style="float: left; margin: 2px 0 0 0 ;"><i></i></a>
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<td><span data-bind="text: lang.lang.date"></span></td>
+										<td class="right">
+											<input id="issuedDate" name="issuedDate"
+													data-role="datepicker"
+													data-format="dd-MM-yyyy"
+													data-parse-formats="yyyy-MM-dd HH:mm:ss"
+													data-bind="value: obj.issued_date,
+																events:{ change : setRate }"
+													required data-required-msg="required"
+													style="width:100%;" />
+										</td>
+									</tr>
+									<tr>
+										<td><span data-bind="text: lang.lang.type"></span></td>
+										<td>
+											<input id="cbbType" name="cbbType"
+												   data-role="dropdownlist"
+								                   data-value-primitive="true"
+								                   data-text-field="name"
+								                   data-value-field="type"
+								                   data-bind="value: obj.type,
+								                              source: typeList,
+								                              events:{ change: typeChanges }"
+								                   required data-required-msg="required" style="width: 100%" />
+										</td>
+									</tr>
+									<tr>
+										<td>Subscription</td>
+										<td>
+											<input id="ddlMembershipType" name="ddlMembershipType"
+												   data-role="dropdownlist"
+								                   data-value-primitive="false"
+								                   data-text-field="name"
+								                   data-value-field="id"
+								                   data-bind="value: membership_type_id,
+								                              source: membershipTypeDS,
+								                              events:{change: search}"
+								                   data-option-label="Select Subscription..."
+								                   required data-required-msg="required" style="width: 100%;" />
+										</td>
+									</tr>
+									<tr>
+										<td>Billing Cycle</td>
+										<td>
+											<input data-role="dropdownlist"
+								                   data-value-primitive="true"
+								                   data-text-field="text"
+										           data-value-field="value"
+								                   data-bind="value: frequency,
+								                              source: frequencyList,
+								                              events:{change: search}"
+								                   data-option-label="Select Frequency..." style="width: 100%;" />
+										</td>
+									</tr>
+									<tr>
+										<td>Form</td>
+										<td>
+											<input data-role="dropdownlist"
+								                   data-value-primitive="true"
+								                   data-text-field="name"
+								                   data-value-field="id"
+								                   data-bind="value: obj.transaction_template_id,
+								                              source: txnTemplateDS"
+								                   data-option-label="Select Template..." style="width: 100%;" />
+										</td>
+									</tr>
+								</table>
+
+							</div>
+						</div>
+
+						<div class="span8">
+
+							<div class="box-generic-noborder" style="min-height: 234px !important">
+
+							    <!-- Tabs Heading -->
+							    <div class="tabsbar tabsbar-2">
+							        <ul class="row-fluid row-merge">
+							        	<li class="span1 glyphicons cogwheels active"><a href="#tab1-2" data-toggle="tab"><i></i></a>
+							            </li>
+							            <li class="span1 glyphicons sort"><a href="#tab2-2" data-toggle="tab"><i></i></a>
+							            </li>
+							        </ul>
+							    </div>
+							    <!-- // Tabs Heading END -->
+
+							    <div class="tab-content">
+
+							    	<!-- Options -->
+							        <div class="tab-pane active" id="tab1-2">
+							            <table style="margin-bottom: 0;" class="table table-borderless table-condensed cart_total">
+											<tr>
+												<td><span data-bind="text: lang.lang.sale_rep"></span></td>
+												<td>
+													<input id="cbbContact" name="cbbContact"
+														   data-role="dropdownlist"
+														   data-header-template="employee-header-tmpl"
+										                   data-template="contact-list-tmpl"
+										                   data-auto-bind="false"
+										                   data-value-primitive="true"
+										                   data-filter="startswith"
+										                   data-text-field="name"
+										                   data-value-field="id"
+										                   data-bind="value: obj.employee_id,
+										                              source: employeeDS"
+										                   data-option-label="Select Sale Rep..."
+										                   style="width: 100%;" />
+												</td>
+											</tr>
+											<!-- <tr>
+								            	<td>
+								            		<span data-bind="text: lang.lang.term"></span>
+								            	</td>
+												<td>
+													<input data-role="dropdownlist"
+								              				data-value-primitive="true"
+															data-text-field="name"
+								              				data-value-field="id"
+								              				data-header-template='customer-term-header-tmpl'
+								              				data-bind="value: obj.payment_term_id,
+								              							source: paymentTermDS,
+								              							events:{ change: setTerm }"
+								              				data-option-label="Select Term..."
+								              				style="width: 100%" />
+												</td>
+											</tr> -->
+								            <tr>
+								            	<td><span data-bind="text: lang.lang.due_date"></span></td>
+								            	<td>
+								            		<input id="txtDueDate" name="txtDueDate"
+															data-role="datepicker"
+															data-format="dd-MM-yyyy"
+															data-parse-formats="yyyy-MM-dd"
+															data-bind="value: obj.due_date"
+															required data-required-msg="required"
+															style="width:100%;" />
+								            	</td>
+								            </tr>
+								            <!-- <tr>
+								            	<td><span data-bind="text: lang.lang.payment_method"></span></td>
+												<td>
+													<input data-role="dropdownlist"
+								              				data-value-primitive="true"
+								              				data-header-template="customer-payment-method-header-tmpl"
+															data-text-field="name"
+								              				data-value-field="id"
+								              				data-bind="value: obj.payment_method_id,
+								              							source: paymentMethodDS"
+								              				data-option-label="Select method..."
+								              				style="width: 100%" />
+												</td>
+											</tr> -->
+							            </table>
+							        </div>
+							        <!-- // Options END -->
+
+							        <!-- Segment -->
+							        <div class="tab-pane" id="tab2-2">
+
+							        	<input id="cbbSegment" name="cbbSegment"
+							        		   data-role="combobox"
+							                   data-value-primitive="true"
+							                   data-filter="startswith"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-bind="value: segment_id,
+							                              source: segmentDS"
+							                   data-placeholder="Select segment..."
+							                   style="width: 46%" />
+
+							            <input id="cbbSegmentItem" name="cbbSegmentItem"
+							            	   data-role="combobox"
+							            	   data-cascade-from="cbbSegment"
+							            	   data-cascade-from-field="segment_id"
+							                   data-value-primitive="true"
+							                   data-text-field="name"
+							                   data-value-field="id"
+							                   data-auto-bind="false"
+							                   data-bind="value: segmentitem_id,
+							                              source: segItemDS"
+							                   data-placeholder="Select segment item..."
+							                   style="width: 46%" />
+
+							            <button class="btn btn-inverse" data-bind="click: addSegmentItem"><i class="icon-plus icon-white"></i></button>
+
+							            <br><br>
+
+							            <div data-role="grid" class="costom-grid"
+							            	 data-editable="true"
+							                 data-columns="[
+							                 	{ field: 'segment',
+							                 		title: 'SEGMENT',
+							                 		editable: 'false',
+							                 		template: '#=segment.name#'
+							                 	},
+							                 	{ field: 'name',
+							                 		title: 'SEGMENT ITEM',
+							                 		editable: 'false',
+							                 		template: '#=code# #=name#'
+							                 	},
+							                 	{ command: 'destroy', title: '&nbsp;', width: 150 }
+					                         ]"
+					                         data-auto-bind="false"
+							                 data-bind="source: segmentItemDS"></div>
+
+							        </div>
+							        <!-- // Segment END -->
 
 							    </div>
 							</div>
@@ -66165,6 +66450,7 @@
   				<li><a href='#/invoice_batch_membership'><span>Create Billing Cycle</span></a></li>
   				<li><a href='#/invoice_batch'><span>Create Batch Invoices</span></a></li>
   				<li><a href='#/cash_receipt'><span data-bind="text: lang.lang.create_cash_receipt"></span></span></a></li>
+  				<li><a href='#/revenue_recognition'><span>Revenue Recognition</span></a></li>
   				<li><a href='#/sale_return'><span data-bind="text: lang.lang.create_sale_return"></span></a></li>
   				<li><a href='#/statement'><span data-bind="text: lang.lang.create_statement"></span></a></li>
   				<li><a href='#/cash_refund'><span >Create Cash Refund</span></a></li>

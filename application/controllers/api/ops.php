@@ -147,7 +147,7 @@ class Ops extends REST_Controller {
 				
 				// Add new fields
 				// $fields = array(
-				// 	"transaction_id" => array(
+				// 	"membership_id" => array(
 				// 		"type" 		=> "INT",
 				// 		"constraint"=> 11,
 				// 		"null" 		=> FALSE,
@@ -160,6 +160,8 @@ class Ops extends REST_Controller {
 				// 	// 	"default" 	=> ""
 				// 	// )
 				// );
+				// $data['results'][] = $this->dbforge->add_column("billing_cycles", $fields);
+
 				// // if (var_dump($this->db->table_exists('cashier_currencies'))){
 				// // 	echo $db;
 				// // }
@@ -192,7 +194,7 @@ class Ops extends REST_Controller {
 				// $data['results'][] = $this->dbforge->modify_column('transactions', $fields);
 				
 				//Remove column, 'table_name', 'column_to_drop'
-				// $data['results'][] = $this->dbforge->drop_column('transactions', 'movement');
+				// $data['results'][] = $this->dbforge->drop_column('billing_cycles', 'membership_type_id');
 
 				//Custom
 				// $dsn = 'mysql://'.$this->db->username.':'.$this->db->password.'@'.$this->db->hostname.'/'.$db;

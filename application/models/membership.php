@@ -19,6 +19,13 @@ class Membership extends DataMapper {
 		)
 	);
 
+	public $has_many = array(
+		'billing_cycle' => array(
+			'class' => 'billing_cycle',
+			'other_field' => 'membership'
+		)
+	);
+
 	public function __construct($id = null, $server_name = null, $db_username = null, $server_password = null, $db = null) {	
 		$this->db_params = array(
 				'dbdriver' => 'mysql',

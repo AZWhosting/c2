@@ -71,6 +71,7 @@ class Billing_cycles extends REST_Controller {
 				$data["results"][] = array(
 					"id" 				=> $value->id,
 					"transaction_id"	=> $value->transaction_id,
+					"membership_id"		=> $value->membership_id,
 					"user_id" 			=> $value->user_id,
 				   	"name" 				=> $value->name,
 				   	"type" 				=> $value->type,
@@ -103,6 +104,7 @@ class Billing_cycles extends REST_Controller {
 		foreach ($models as $value) {
 			$obj = new Billing_cycle(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 			isset($value->transaction_id) 	? $obj->transaction_id 	= $value->transaction_id : "";
+			isset($value->membership_id) 	? $obj->membership_id 	= $value->membership_id : "";
 			isset($value->user_id) 			? $obj->user_id 		= $value->user_id : "";
 			isset($value->name) 			? $obj->name 			= $value->name : "";
 			isset($value->type) 			? $obj->type 			= $value->type : "";
@@ -122,6 +124,7 @@ class Billing_cycles extends REST_Controller {
 			   	$data["results"][] = array(
 			   		"id" 				=> $obj->id,
 					"transaction_id"	=> $obj->transaction_id,
+					"membership_id"		=> $obj->membership_id,
 					"user_id" 			=> $obj->user_id,
 				   	"name" 				=> $obj->name,
 				   	"type" 				=> $obj->type,
@@ -155,6 +158,7 @@ class Billing_cycles extends REST_Controller {
 			$obj->get_by_id($value->id);			
 
 			isset($value->transaction_id) 	? $obj->transaction_id 	= $value->transaction_id : "";
+			isset($value->membership_id) 	? $obj->membership_id 	= $value->membership_id : "";
 			isset($value->user_id) 			? $obj->user_id 		= $value->user_id : "";
 			isset($value->name) 			? $obj->name 			= $value->name : "";
 			isset($value->type) 			? $obj->type 			= $value->type : "";
@@ -175,6 +179,7 @@ class Billing_cycles extends REST_Controller {
 				$data["results"][] = array(
 					"id" 				=> $obj->id,
 					"transaction_id"	=> $obj->transaction_id,
+					"membership_id"		=> $obj->membership_id,
 					"user_id" 			=> $obj->user_id,
 				   	"name" 				=> $obj->name,
 				   	"type" 				=> $obj->type,

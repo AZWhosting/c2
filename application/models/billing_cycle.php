@@ -8,6 +8,10 @@ class Billing_cycle extends DataMapper {
 		'transaction' => array(
 			'class' => 'transaction',
 			'other_field' => 'billing_cycle'
+		),
+		'membership' => array(
+			'class' => 'membership',
+			'other_field' => 'billing_cycle'
 		)
 	);
 
