@@ -255,7 +255,8 @@ class Utibills extends REST_Controller {
 							$meter = "";
 							$meterNum = "";
 							if($relate->meter_id != 0){
-								$meter = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database); //$value->meter->get();
+								$meter = new Meter(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);//$relate->meter->get();
+								$meter->where("id", $relate->meter_id)->limit(1);
 								$meterNum = $meter->get()->number;
 							}
 							isset($relate->payment_term_id) ? $relate->payment_term_id = $relate->payment_term_id : 5;
