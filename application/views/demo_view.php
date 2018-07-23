@@ -15079,7 +15079,7 @@
 ##################################################
 ############################################## -->
 <script id="membershipDashboard" type="text/x-kendo-template">
-	<!-- <div class="row-fluid">
+	<div class="row-fluid">
 		<div class="span4">
 			<table width="100%" cellpadding="10">
 				<tr>
@@ -15366,9 +15366,9 @@
             
             </div>
 		</div>
-	</div> -->
+	</div>
 
-	<div class="row">
+	<!-- <div class="row">
 		<div class="span12">
 			<div class="board-chart" style="margin-bottom: 19px; box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19); border-radius: 3px;">
 				<div class="row" style="margin-bottom: 15px;" >
@@ -15419,9 +15419,9 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</div> -->
 
-	<div class="row">
+	<!-- <div class="row">
 		<div class="span12">
 			<div class="board-chart" style="margin-top: 0; margin-bottom: 19px; box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19); border-radius: 3px;">
 				<div class="row" style="margin-bottom: 15px;" >
@@ -15484,31 +15484,31 @@
 						</div>
 					</div>
 					<div class="span4" style="">
-						<div class="row">
-							<div class="span4" style="width: 33%;">
+						<div class="row-fluid">
+							<div class="span4" style="width: 33%; margin-right: 3px;">
 								<a href="" >
 									<div style=" text-align: center; color: #fff;">
-										<img style="width: 100%;" src="<?php echo base_url();?>assets/membership/bacth_invoice_by_item.png" />
-			                            <!-- <p style="color: #fff !important; font-size: 17px; " data-bind="text: lang.lang.to_bill"></p>
-			                            <p style="margin-bottom: 0;" data-format="n" data-bind="">test</p> -->
+										<img style="height: 136px;" src="<?php echo base_url();?>assets/membership/bacth_invoice_by_item.png" />
+			                            <p style="color: #fff !important; font-size: 17px; " data-bind="text: lang.lang.to_bill"></p>
+			                            <p style="margin-bottom: 0;" data-format="n" data-bind="">test</p>
 			                        </div>
 			                    </a>
 							</div>
 							<div class="span4" style="width: 33%;">
 								<a href="" >
 									<div style="text-align: center; color: #fff;">
-										<img style="width: 100%;" src="<?php echo base_url();?>assets/membership/bacth_invoice_by_item.png" />
-			                            <!-- <p style="color: #fff !important; font-size: 17px; " data-bind="text: lang.lang.to_bill"></p>
-			                            <p style="margin-bottom: 0;" data-format="n" data-bind="">test</p> -->
+										<img style="height: 136px;" src="<?php echo base_url();?>assets/membership/bacth_invoice_by_item.png" />
+			                            <p style="color: #fff !important; font-size: 17px; " data-bind="text: lang.lang.to_bill"></p>
+			                            <p style="margin-bottom: 0;" data-format="n" data-bind="">test</p>
 			                        </div>
 			                    </a>
 							</div>
 							<div class="span4" style="width: 33%;">
 								<a href="" >
 									<div style="text-align: center; color: #fff;">
-										<img style="width: 100%;" src="<?php echo base_url();?>assets/membership/bacth_invoice_by_item.png" />
-			                            <!-- <p style="color: #fff !important; font-size: 17px; " data-bind="text: lang.lang.to_bill"></p>
-			                            <p style="margin-bottom: 0;" data-format="n" data-bind="">test</p> -->
+										<img style="height: 136px;" src="<?php echo base_url();?>assets/membership/bacth_invoice_by_item.png" />
+			                            <p style="color: #fff !important; font-size: 17px; " data-bind="text: lang.lang.to_bill"></p>
+			                            <p style="margin-bottom: 0;" data-format="n" data-bind="">test</p>
 			                        </div>
 			                    </a>
 							</div>
@@ -15517,7 +15517,7 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</div> -->
 </script>
 <script id="membershipCenter" type="text/x-kendo-template">
 	<div class="widget widget-heading-simple widget-body-gray widget-employees">
