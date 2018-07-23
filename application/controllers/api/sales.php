@@ -2693,6 +2693,7 @@ class Sales extends REST_Controller {
 			}
 		}
 		
+		$obj->where_related("contact_type", "parent_id", 1);
 		$obj->where("is_pattern", $is_pattern);
 		$obj->where("deleted <>", 1);
 		$obj->include_related("contact_type", "name");	

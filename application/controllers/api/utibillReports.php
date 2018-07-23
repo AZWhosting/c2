@@ -2037,6 +2037,7 @@ class UtibillReports extends REST_Controller {
 				$user = new User();
 				$user->where("id", $value->user_id)->get();				
 				$amount = floatval($value->amount) / floatval($value->rate);
+				
 				if(isset($objList[$value->user_id])){
 					$objList[$value->user_id]["customer"] 		+= 1;
 					$objList[$value->user_id]["amount"] 		+= $amount;

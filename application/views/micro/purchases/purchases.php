@@ -39,7 +39,7 @@
 						            </div>
 
 						            <div class="btn-group float-right" style="margin-right: 15px;">
-						                <button style="font-size: 17px; background: #0F2C72; border-color: #0F2C72;" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-bind="text: lang.lang.suppiler_report">
+						                <button style="font-size: 17px; background: #0077c5; border-color: #0077c5;" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-bind="text: lang.lang.suppiler_report">
 						                </button>
 						                <div class="dropdown-menu">
 						                    <a class="dropdown-item" href="#/purchase_summary_product_services" data-bind="text: lang.lang.purchase_summary_by_product_services"></a>

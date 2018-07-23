@@ -8994,9 +8994,10 @@
         if(!banhji.userManagement.getLogin()){
             banhji.router.navigate('/manage');
         }else{
-            banhji.view.layout.showIn('#content', banhji.view.Index);
-            banhji.view.Index.showIn('#indexMenu', banhji.view.tapMenu);
-            banhji.view.Index.showIn('#indexContent', banhji.view.cashTransaction);
+            //banhji.view.layout.showIn('#content', banhji.view.Index);
+            //banhji.view.Index.showIn('#indexMenu', banhji.view.tapMenu);
+            //banhji.view.Index.showIn('#indexContent', banhji.view.cashTransaction);
+            banhji.view.layout.showIn("#content", banhji.view.cashTransaction);
 
             var vm = banhji.cashTransaction;
             banhji.userManagement.addMultiTask("Cash Transaction","cash_transaction",vm);
