@@ -239,8 +239,11 @@
 	}
 	.demo-section.span12{
 		padding: 15px;
-		margin-bottom: 1px;
-		background: #0eac00;
+	    background: #e9ebee;
+	    border-radius: 3px;
+	    margin-bottom: 10px;
+	    position: relative;
+	    overflow: hidden;
 	}
 	.product {
 	    float: left;
@@ -250,8 +253,9 @@
 	    padding: 15px;
 	    cursor: pointer;
 	    background: #fff;
-	    margin-right: 2px;
-	    margin-bottom: 1px;
+	    margin-right: -1px;
+	    margin-bottom: -1px;
+	    border: 1px solid #ccc;
 	}
 	.listWrapper{
 		padding-right: 0;
@@ -428,13 +432,11 @@
 	    width: 100%;
 	}
 	.listWrapper{
-		background: #0eac00;
-	    padding: 0 0 15px 0;
+		margin-bottom: 10px;
+	    padding: 0 0 10px 0;
 	    margin-bottom: 1px;
 	    width: 100%;
 	    float: left;
-	    border-radius: 10px 10px 0 0;
-	    box-shadow: 2px 0px 12px 0px rgba(68,68,68,1);
 	}
 	.table.table-white {
 	    background: #fff;
@@ -450,10 +452,20 @@
 	.span6.botton a{
 		color: #fff;
 	}
+	.preloader {
+		position: absolute;
+	    width: 100%;
+	    background: rgba(255, 255, 255, 0.6);
+	    height: 100%;
+	    z-index: 999;
+	}
+	.k-widget.k-dropdown.k-header > .k-dropdown-wrap.k-state-default {
+		height: 35px;
+	    padding-top: 5px;
+	    border: 1px solid #999;
+	}
 </style>
-<!-- ***************************
-*	Water Section      	  *
-**************************** -->
+
 <script id="Index" type="text/x-kendo-template">
 	<div id="ntf1" data-role="notification"></div>
 	<div class="container">
@@ -467,79 +479,81 @@
 						<div style="position: relative;overflow: hidden;">
 							<div class="row" style="padding: 0;">
 								<div class="span12">
-									<div class="listWrapper">
+									<div class="listWrapper" style="background: #e9ebee;border-radius: 3px;margin-bottom: 15px;">
 										<div class="row">
 											<div class="span6" style="padding-right: 1px; width: 50%;">
-												<div class="innerAll" style="height: 45px; padding-bottom: 0; padding: 15px 0 0 15px; float: left; width: 100%;">
+												<div class="innerAll" style="height: 55px; padding-bottom: 0; padding: 15px 0 0 15px; float: left; width: 100%;">
 													<div class="widget-search separator bottom" style="padding: 0;">
-														<a class="btn btn-default pull-right" data-bind="click: search" style="padding: 3px 10px;"><i class="icon-search"></i></a>
 														<div class="overflow-hidden">
-															<input style="height: 28px; padding: 5px; border: 1px solid #ccc; color: #333;" type="search" placeholder="Number or Name..." data-bind="value: searchText, events:{change: search}">
+															<input style="height: 35px; padding: 5px; border: 1px solid #ccc!important; color: #333;" type="search" placeholder="Barcode..." data-bind="value: barcode, events:{change: barcodeChange}">
 														</div>
 													</div>
 												</div>
 											</div>
-											<div class="span3" style="padding-top: 15px; padding-left: 0; padding-right: 1px; width: 22%;">
-												<input 
-													data-role="dropdownlist"
-													data-auto-bind="false" 
-													data-value-primitive="true" 
-													data-filter="startswith" 
-													data-text-field="name" 
-													data-value-field="id"
-													data-bind="
-														value: catSelected,
-						                              	source: categoryDS,
-						                              	events: {change: catChange}" 
-						                            data-option-label="Category ..."
-						                            required="" 
-						                            data-required-msg="required" 
-						                            style="width: 100%; border-radius: 0; "
-						                            aria-invalid="true" 
-						                            class="k-invalid" />
+											<div class="span5" style="padding-right: 1px;">
+												<div class="innerAll" style="height: 55px; padding-bottom: 0; padding: 15px 0 0 15px; float: left; width: 100%;">
+													<div class="widget-search separator bottom" style="padding: 0;">
+														<a class="btn btn-default pull-right" data-bind="click: search" style="padding: 6.5px 10px;border: 1px solid #ccc;"><i class="icon-search"></i></a>
+														<div class="overflow-hidden">
+															<input style="height: 35px; padding: 5px; border: 1px solid #ccc; color: #333;" type="search" placeholder="Number or Name..." data-bind="value: searchText, events:{change: search}">
+														</div>
+													</div>
+												</div>
 											</div>
-											<div class="span3" style="padding-top: 15px; padding-left: 0;">
-												<input 
-													data-role="dropdownlist"
-													data-auto-bind="false" 
-													data-value-primitive="true" 
-													data-filter="startswith" 
-													data-text-field="name" 
-													data-value-field="id"
-													data-bind="
-														value: groupSelected,
-						                              	source: itemGroupDS,
-						                              	events: {change: groupChange}" 
-						                            data-option-label="Group ..."
-						                            required="" 
-						                            data-required-msg="required" 
-						                            style="width: 100%; border-radius: 0; " 
-						                            aria-invalid="true" 
-						                            class="k-invalid"
-						                        />
-											</div>
-										</div>
-
-									</div>
-										
-									<div class="demo-section k-content wide span12" style="box-shadow: 2px 0px 12px 0px rgba(68,68,68,1);">
-										<div class="demo-section k-content wide">
-											<div 
-												id="productListView"
-												data-role="listview"
-												data-template="item-list-view-template"
-												data-auto-bind="true"
-												data-bind="source: itemsDS">
-											</div>
-											<div id="pager" class="k-pager-wrap"
-										    	 data-role="pager"
-										    	 data-auto-bind="true"
-									             data-bind="source: itemsDS">
-									        </div>
 										</div>
 									</div>
 								</div>
-
+								<div class="span12">
+									<div>
+										<div data-bind="invisible: haveItems" class="demo-section k-content wide span12">
+											<div id="loading" class="preloader" style="display: none;position: absolute;background: rgba(255,255,255,.6);margin-top: -15px; margin-left: -15px;">
+										        <div class="loader">
+										            <div class="loader__figure">
+										            	<img style="width: 10%;left: 45%;top: 40%; position: absolute;" src="<?php echo base_url(); ?>assets/spa/loading.gif" />
+										            </div>
+										        </div>
+										    </div>
+											<p style="color: #444; margin-bottom: 10px; float: left; width: 100%;font-size: 16px;" data-bind="text: lang.lang.category">Category</p>
+											<div class="demo-section k-content wide">
+												<div 
+													id="productListView"
+													data-role="listview"
+													data-template="category-list-view-template"
+													data-auto-bind="true"
+													data-bind="source: categoryDS">
+												</div>
+												<div id="pager" class="k-pager-wrap"
+											    	 data-role="pager"
+											    	 data-auto-bind="true"
+										             data-bind="source: categoryDS">
+										        </div>
+											</div>
+										</div>
+										<div data-bind="visible: haveItems" class="demo-section k-content wide span12">
+											<p style="color: #444; margin-bottom: 5px; float: left; width: 100%;font-size: 16px;" >
+												<span style="float: left; width: 50%;" data-bind="text: lang.lang.item">Items</span>
+												<span class="textAlignRight" data-bind="click: backCategory" style="float: right;cursor: pointer;text-align: right;padding: 5px 20px;background: #444;color: #fff;text-transform: uppercase;font-size: 12px;border-radius: 3px;margin-right: 3px;">
+													<i class=" ti-control-backward"></i>
+													<span data-bind="text: lang.lang.micro_trolop">back</span>
+												</span>
+											</p>
+											<div class="demo-section k-content wide">
+												<div 
+													id="productListView"
+													data-role="listview"
+													data-template="item-list-view-template"
+													data-auto-bind="true"
+													data-bind="source: itemsDS">
+												</div>
+												<div id="pager" class="k-pager-wrap"
+											    	 data-role="pager"
+											    	 data-auto-bind="true"
+										             data-bind="source: itemsDS">
+										        </div>
+											</div>
+										</div>
+									</div>
+								</div>
 								<div class="span12">
 									<div class="box-generic" style="background: #0eac00; border: none; box-shadow: 2px 0px 12px 0px rgba(68,68,68,1); margin-bottom: 0; border-radius: 0 0 10px 10px;">
 										<div class="row">
@@ -615,7 +629,7 @@
 						</div>
 					</div>
 					<div class="span6" style="padding-left: 0;">
-						<div class="span12" style="background: #c4c2d2; margin-bottom: 1px; box-shadow: 2px 0px 12px 0px rgba(68,68,68,1); border-radius: 10px 10px 0 0;">
+						<div class="span12" style="background: #c4c2d2; margin-bottom: 15px; border-radius: 3px;">
 							<div class="row" style="margin-top: 15px; ">
 								<div class="span6">
 				                    <div class="box-generic"  style="background: #c4c2d2; margin: 0 !important; padding: 0; border: none;">
@@ -631,10 +645,10 @@
 				                              	source: roomDS,
 				                              	events: {change: addRoom}" 
 				                            data-option-label="Select Room..."
-				                            style="width: 100%;" 
+				                            style="width: 100%;height: 35px;" 
 				                            class="k-invalid"
 				                        />
-				                        <table class="table table-bordered table-primary table-striped table-vertical-center" style="margin-top: 15px; font-size: 12px;">
+				                        <!-- <table class="table table-bordered table-primary table-striped table-vertical-center" style="margin-top: 15px; font-size: 12px;">
 									        <thead>
 									            <tr>
 									            	<th style="vertical-align: top;" data-bind="text: lang.lang.no_"></th>
@@ -645,13 +659,31 @@
 								        		data-template="room-select-list-tmpl" 
 								        		data-auto-bind="false"
 								        		data-bind="source: roomAR"></tbody>
-									    </table>
+									    </table> -->
 				                    </div>		                
 								</div>
 								<div class="span6" style="padding-left: 0;">
-									<div class="box-generic" style="background: #c4c2d2; padding: 0; border: none; margin-bottom: 0; padding-bottom: 15px;">
-										<div data-bind="visible: emSelect">
-											<input id="Emlopyee"
+									<div class="box-generic" style="background: #c4c2d2; padding: 0; border: none; margin-bottom: 0;">
+										<div class="span6" style="padding:0;">
+								        	<p style="float: left;padding: 10.5px; background: #1c3b19;">M</p>
+								        	<input type="text" 
+						                	style="width: 73%;float: left; border: 1px solid darkgreen;padding: 3px;height: 40px;text-align: center;" 
+						                	placeholder="Male" 
+								           	data-bind="
+								           		value: Male
+								           	" />
+								        </div>
+								        <div class="span6" style="padding:0;">
+								        	<p style="float: left;padding: 10.5px; background: #1c3b19;">F</p>
+								        	<input type="text" 
+						                	style="width: 73%;float: left;border: 1px solid darkgreen;padding: 3px;height: 40px;text-align: center;" 
+						                	placeholder="Female" 
+								           	data-bind="
+								           		value: Female
+								           	" />
+								        </div>
+										<!-- <div data-bind="visible: emSelect"> -->
+											<!-- <input id="Emlopyee"
 												data-role="dropdownlist"
 												data-template="contact-list-tmpl" 
 												data-auto-bind="false" 
@@ -669,16 +701,16 @@
 					                            style="width: 60%; float: left;" 
 					                            aria-invalid="true" 
 					                            class="k-invalid"
-					                        />
-					                        <ul class="topnav addNew" style="float: right;" >
+					                        /> -->
+					                        <!-- <ul class="topnav addNew" style="float: right;" >
 												<li role="presentation" class="dropdown ">
 											  		<a class="dropdown-toggle" data-bind="click: selectOutsource" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
 											  			<span>Outsource</span>
 											  		</a>
 											  	</li>
-											</ul>
-					                    </div>
-					                   	<div data-bind="invisible: emSelect">
+											</ul> -->
+					                    <!-- </div> -->
+					                   	<!-- <div data-bind="invisible: emSelect">
 											<input 
 												data-role="dropdownlist"
 												data-template="contact-list-tmpl" 
@@ -717,7 +749,7 @@
 								        		data-template="employee-list-tmpl" 
 								        		data-auto-bind="false"
 								        		data-bind="source: employeeAR"></tbody>
-									    </table>
+									    </table> -->
 				                    </div>
 								</div>
 							</div>
@@ -725,7 +757,7 @@
 
 						<div class="row posProductItems" >
 							<div class="span12" >
-								<div id="posProductList" class="box-generic-noborder" style="min-height: 140px!important; height: 230px; padding-bottom: 0;">
+								<div id="posProductList" class="box-generic-noborder" style="min-height: 140px!important; height: 230px; padding-bottom: 0;border-radius: 3px;">
 									<!-- Item List -->
 								    <div data-role="grid" class="costom-grid"
 								    	data-column-menu="true"
@@ -877,13 +909,41 @@
 	</div>
 </script>
 
+<script id="category-list-view-template" type="text/x-kendo-template">
+	<div class="product" data-bind="click:searchItemByCategory" style="text-align: center;">
+		
+		<div class="cover-img" >
+			<a class="view-details">
+				<img src="https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/no_image.jpg" />
+			</a>
+		</div>
+		<h3>#:name.substring(0, 20)#...</h3>
+		
+	</div>
+</script>
 <script id="item-list-view-template" type="text/x-kendo-template">
+	<div class="product" data-bind="click:addRow" style="text-align: center;">
+		<!-- <a class="view-details"> -->		
+			<!-- <div style="border-bottom: 1px solid \#0eac00;min-height: 130px;max-height: 130px;background: url(#= image_url? image_url: 'https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/no_image.jpg'#) center;">
+			</div> -->
+			<!-- <img src=#:image_url# />
+			<h3>#:name.substring(0, 20)#...</h3>
+		</a> -->
+		<div class="cover-img" >
+			<a class="view-details">
+				<img src=#:image_url# />
+			</a>
+		</div>
+		<h3>#:name.substring(0, 20)#...</h3>		
+	</div>
+</script>
+<!-- <script id="item-list-view-template" type="text/x-kendo-template">
 	<div class="product" data-bind="click:addRow" style="text-align: center;">
 		<img src="#= image_url? image_url: 'https://s3-ap-southeast-1.amazonaws.com/app-data-20160518/no_image.jpg'#" />
 		<h3>#:name#</h3>
 		<p>#=kendo.toString(price, locale=="km-KH"?"c0":"c", locale)#</p>
 	</div>
-</script>
+</script> -->
 <script id="sale-summary-template" type="text/x-kendo-template">
 	<div class="item-row">
 		<div class="item-name">

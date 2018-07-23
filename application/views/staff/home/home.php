@@ -406,6 +406,7 @@
                                 <div class="widget-head" style="background: #203864 !important; color: #fff;">
                                     <ul style="padding-left: 0px;">
                                         <li class="active" style="width: 210px;"><a style="text-transform: capitalize;" href="#tabDownload" data-toggle="tab"><span style="line-height: 23px;"><span>Upload your Excel file</span></b></span></a></li>
+                                        <li style="width: 210px;"><a style="text-transform: capitalize;" href="#tabTest" data-toggle="tab"><span style="line-height: 23px;"><span>Upload your Excel file</span></b></span></a></li>
                                     </ul>
                                 </div>
                                 <div class="widget-body">
@@ -447,6 +448,19 @@
 
                                         </div>
                                         <!-- // Tab content END -->
+
+                                        <div id="tabTest" style="border: 1px solid #ccc; padding: 15px" class="tab-pane widget-body-regular">
+                                            <h4 class="separator bottom" style="margin-top: 10px;" data-bind="text: lang.lang.please_upload_reading_book">Please upload customer number</h4>
+                                            <div class="row clear" style="overflow: hidden; ">
+                                               
+                                            </div>
+                                            <div style="margin-top: 20px;" class="fileupload fileupload-new margin-none" data-provides="fileupload">
+                                                <input type="file"  data-role="upload" data-show-file-list="true" data-bind="events: {select: onSelectedCu}" id="myFile"  class="margin-none" />
+                                            </div>
+                                            <br>
+
+                                            <span data-bind="click: saveCu" class="btn btn-icon btn-primary glyphicons ok_2" style="margin-top: 3px;width: 160px!important;"><i></i><span  >Start</span></span>
+                                        </div>
                                     </div>
                                 </div>
                                 <div id="ntf1" data-role="notification"></div>

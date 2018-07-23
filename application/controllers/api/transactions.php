@@ -326,6 +326,7 @@ class Transactions extends REST_Controller {
 				   	"remaining" 				=> floatval($value->remaining),
 				   	"received" 					=> floatval($value->received),
 				   	"change" 					=> floatval($value->change),
+				   	"balance" 					=> floatval($value->balance),
 				   	"credit_allowed"			=> floatval($value->credit_allowed),
 				   	"additional_cost" 			=> floatval($value->additional_cost),
 				   	"additional_apply" 			=> $value->additional_apply,
@@ -453,6 +454,7 @@ class Transactions extends REST_Controller {
 		   	isset($value->remaining) 				? $obj->remaining 					= $value->remaining : "";
 		   	isset($value->received) 				? $obj->received 					= $value->received : "";
 		   	isset($value->change) 					? $obj->change 						= $value->change : "";
+		   	isset($value->balance) 					? $obj->balance 					= $value->balance : "";
 		   	isset($value->credit_allowed) 			? $obj->credit_allowed 				= $value->credit_allowed : "";
 		   	isset($value->additional_cost) 			? $obj->additional_cost 			= $value->additional_cost : "";
 		   	isset($value->additional_apply) 		? $obj->additional_apply 			= $value->additional_apply : "";
@@ -654,6 +656,7 @@ class Transactions extends REST_Controller {
 				   	"remaining" 				=> floatval($obj->remaining),
 				   	"received" 					=> floatval($obj->received),
 				   	"change" 					=> floatval($obj->change),
+				   	"balance" 					=> floatval($obj->balance),
 				   	"credit_allowed"			=> floatval($obj->credit_allowed),
 				   	"additional_cost" 			=> floatval($obj->additional_cost),
 				   	"additional_apply" 			=> $obj->additional_apply,
@@ -757,6 +760,7 @@ class Transactions extends REST_Controller {
 		   	isset($value->remaining) 				? $obj->remaining 					= $value->remaining : "";
 		   	isset($value->received) 				? $obj->received 					= $value->received : "";
 		   	isset($value->change) 					? $obj->change 						= $value->change : "";
+		   	isset($value->balance) 					? $obj->balance 					= $value->balance : "";
 		   	isset($value->credit_allowed) 			? $obj->credit_allowed 				= $value->credit_allowed : "";
 		   	isset($value->additional_cost) 			? $obj->additional_cost 			= $value->additional_cost : "";
 		   	isset($value->additional_apply) 		? $obj->additional_apply 			= $value->additional_apply : "";
@@ -899,6 +903,7 @@ class Transactions extends REST_Controller {
 				   	"remaining" 				=> floatval($obj->remaining),
 				   	"received" 					=> floatval($obj->received),
 				   	"change" 					=> floatval($obj->change),
+				   	"balance" 					=> floatval($obj->balance),
 				   	"credit_allowed"			=> floatval($obj->credit_allowed),
 				   	"additional_cost" 			=> floatval($obj->additional_cost),
 				   	"additional_apply" 			=> $obj->additional_apply,
@@ -1647,76 +1652,6 @@ class Transactions extends REST_Controller {
 					"ra_id"						=> $value->contact_ra_id ? $value->contact_ra_id : 0
 				);
 
-				//Lines
-				$lines = [];
-				$line = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
-				$line->include_related("item", array("item_type_id","abbr","number","name","cost","price","locale","income_account_id","expense_account_id","inventory_account_id","nature"));
-				$line->include_related("tax_item", array("tax_type_id","account_id","name","rate"));
-				$line->where("transaction_id", $value->id);
-				$line->where("deleted <>", 1);
-				$line->get_iterated();
-
-				foreach ($line as $l) {
-					//Item
-					$item = array(
-						"id" 					=> $l->item_id,
-						"item_type_id" 			=> $l->item_item_type_id,
-						"abbr"					=> $l->item_abbr, 
-						"number" 				=> $l->item_number, 
-						"name" 					=> $l->item_name,
-						"cost"					=> $l->item_cost,
-						"price"					=> $l->item_price,
-						"locale"				=> $l->item_locale,
-						"income_account_id"		=> $l->item_income_account_id, 
-						"expense_account_id" 	=> $l->item_expense_account_id, 
-						"inventory_account_id" 	=> $l->item_inventory_account_id
-					);
-
-					//Tax Item
-					$tax_item = array(
-						"id" 			=> $l->tax_item_id,
-						"tax_type_id" 	=> $l->tax_item_tax_type_id ? $l->tax_item_tax_type_id : "",
-						"account_id" 	=> $l->tax_item_account_id ? $l->tax_item_account_id : "",
-						"name" 			=> $l->tax_item_name ? $l->tax_item_name : "",
-						"rate" 			=> $l->tax_item_rate ? $l->tax_item_rate : ""
-					);
-
-					$lines[] = array(
-						"id" 				=> $l->id,
-				   		"transaction_id"	=> $l->transaction_id,
-				   		"reference_id"		=> $l->reference_id,
-				   		"measurement_id" 	=> $l->measurement_id,
-						"tax_item_id" 		=> $l->tax_item_id,
-						"wht_account_id"	=> $l->wht_account_id,
-						"item_id" 			=> $l->item_id,
-						"assembly_id" 		=> $l->assembly_id,
-					   	"description" 		=> $l->description,
-					   	"on_hand" 			=> floatval($l->on_hand),
-						"quantity" 			=> floatval($l->quantity),
-					   	"conversion_ratio" 	=> floatval($l->conversion_ratio),
-					   	"cost"				=> floatval($l->cost),
-					   	"price"				=> floatval($l->price),
-					   	"amount" 			=> floatval($l->amount),
-					   	"discount" 			=> floatval($l->discount),
-					   	"fine" 				=> floatval($l->fine),
-					   	"tax" 				=> floatval($l->tax),
-					   	"additional_cost" 	=> floatval($l->additional_cost),
-					   	"additional_applied"=> $l->additional_applied==1?true : false,
-					   	"inventory_quantity"=> floatval($l->inventory_quantity),
-					   	"inventory_value" 	=> floatval($l->inventory_value),
-					   	"rate"				=> floatval($l->rate),
-					   	"locale" 			=> $l->locale,
-					   	"movement" 			=> $l->movement,
-					   	"required_date"		=> $l->required_date,
-					   	"reference_no" 		=> $l->reference_no,
-					   	"deleted"			=> $l->deleted,				   	
-					   	
-					   	"item" 				=> $item,
-					   	"tax_item" 			=> $tax_item,
-					   	"contacts" 			=> $contact
-					);
-				}
-
 				//Billing cycle
 				$billing_cycles = array(
 					"id" 			=> $value->billing_cycle_id,
@@ -1778,7 +1713,6 @@ class Transactions extends REST_Controller {
 				   	"is_journal" 				=> $value->is_journal,
 
 				   	"contacts" 					=> $contact,
-				   	"item_lines" 				=> $lines,
 				   	"billing_cycles" 			=> $billing_cycles
 				);
 			}

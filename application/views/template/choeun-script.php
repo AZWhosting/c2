@@ -25167,6 +25167,7 @@
         netAmountDUE        : 0,
         isFalse             : false,
         numberToString      : '',
+        amountToString      : '',
         numToWords          : function(number) {
 
             //Validates the number input and makes it a string
@@ -25248,6 +25249,87 @@
             //Joins all the string into one and returns it
             this.set("numberToString", word.toUpperCase());
         },
+        numToWordofAmount   : function(number) {
+
+            //Validates the number input and makes it a string
+            if (typeof number === 'string') {
+                number = parseInt(number, 10);
+            }
+            if (typeof number === 'number' && isFinite(number)) {
+                number = number.toString(10);
+            } else {
+                return 'This is not a valid number';
+            }
+
+            //Creates an array with the number's digits and
+            //adds the necessary amount of 0 to make it fully
+            //divisible by 3
+            var digits = number.split('');
+            while (digits.length % 3 !== 0) {
+                digits.unshift('0');
+            }
+
+            //Groups the digits in groups of three
+            var digitsGroup = [];
+            var numberOfGroups = digits.length / 3;
+            for (var i = 0; i < numberOfGroups; i++) {
+                digitsGroup[i] = digits.splice(0, 3);
+            }
+            //console.log(digitsGroup); //debug
+
+            //Change the group's numerical values to text
+            var digitsGroupLen = digitsGroup.length;
+            var numTxt = [
+                [null, 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'], //hundreds
+                [null, 'ten', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'], //tens
+                [null, 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'] //ones
+                ];
+            var tenthsDifferent = ['ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'];
+
+            // j maps the groups in the digitsGroup
+            // k maps the element's position in the group to the numTxt equivalent
+            // k values: 0 = hundreds, 1 = tens, 2 = ones
+            for (var j = 0; j < digitsGroupLen; j++) {
+                for (var k = 0; k < 3; k++) {
+                    var currentValue = digitsGroup[j][k];
+                    digitsGroup[j][k] = numTxt[k][currentValue];
+                    if (k === 0 && currentValue !== '0') { // !==0 avoids creating a string "null hundred"
+                        digitsGroup[j][k] += ' hundred ';
+                    } else if (k === 1 && currentValue === '1') { //Changes the value in the tens place and erases the value in the ones place
+                        digitsGroup[j][k] = tenthsDifferent[digitsGroup[j][2]];
+                        digitsGroup[j][2] = 0; //Sets to null. Because it sets the next k to be evaluated, setting this to null doesn't work.
+                    }
+                }
+            }
+
+            //Adds '-' for gramar, cleans all null values, joins the group's elements into a string
+            for (var l = 0; l < digitsGroupLen; l++) {
+                if (digitsGroup[l][1] && digitsGroup[l][2]) {
+                    digitsGroup[l][1] += '-';
+                }
+                digitsGroup[l].filter(function (e) {return e !== null});
+                digitsGroup[l] = digitsGroup[l].join('');
+            }
+
+            //Adds thousand, millions, billion and etc to the respective string.
+            var posfix = [null, 'thousand', 'million', 'billion', 'trillion', 'quadrillion', 'quintillion', 'sextillion'];
+            if (digitsGroupLen > 1) {
+                var posfixRange = posfix.splice(0, digitsGroupLen).reverse();
+                for (var m = 0; m < digitsGroupLen - 1; m++) { //'-1' prevents adding a null posfix to the last group
+                    if (digitsGroup[m]) {
+                        digitsGroup[m] += ' ' + posfixRange[m];
+                    }
+                }
+            }
+            var word = digitsGroup.join(' ');
+            if(this.get("obj").locale == 'en-US'){
+                word = word + " USD only.";
+            }else if(this.get("obj").locale == 'km-KH'){
+                word = word + " Riel only.";
+            }
+            //Joins all the string into one and returns it
+            this.set("amountToString", word.toUpperCase());
+        },
         amountTotal         : "",
         offsetnumber        : "",
         offsetamount        : 0,
@@ -25260,6 +25342,7 @@
                 take: 1
             }).then(function(e){
                 var view = self.dataSource.view();
+                self.numToWordofAmount(view[0].amount);
                 view[0].set("sub_total", kendo.toString(view[0].sub_total, "c", view[0].locale));
                 view[0].set("tax", kendo.toString(view[0].tax, "c", view[0].locale));
                 view[0].set("discount", kendo.toString(view[0].discount, "c", view[0].locale));
@@ -25310,17 +25393,20 @@
                 //give id
                 var d = view[0];
                 self.get("obj").set("qrcodevalue", "inv_num:"+d.number+"\ninv_amount:"+d.amount+"\ninv_date:"+d.issued_date+"\ncus_id:"+d.contact.id+"\ncus_name:"+d.contact.name+"\nstatus:"+d.status);
-                if(self.get("obj").type == 'Direct_Expense'){
-                    self.get("obj").set("title", "PAYMENT VOUCHER");
-                }else if(self.get("obj").type == 'Reimbursement'){
-                    self.get("obj").set("title", "REIMBURSEMENT VOUCHER");
-                }else if(self.get("obj").type == 'Advance_Settlement'){
-                    self.get("obj").set("title", "ADVANCE SETTLEMENT VOUCHER");
-                }
+                // if(self.get("obj").type == 'Direct_Expense'){
+                //     self.get("obj").set("title", "PAYMENT VOUCHER");
+                // }else if(self.get("obj").type == 'Reimbursement'){
+                //     self.get("obj").set("title", "REIMBURSEMENT VOUCHER");
+                // }else if(self.get("obj").type == 'Advance_Settlement'){
+                //     self.get("obj").set("title", "ADVANCE SETTLEMENT VOUCHER");
+                // }
                 //get job
                 if(view[0].job_id){
                     self.jobDS.filter({field: "id", value: view[0].job_id});
                 }
+                //get type
+                var titleobj = view[0].type;
+                    self.get("obj").set("type", titleobj.replace("_"," "));
             });
         },
         old_remain          : 0,
@@ -25506,12 +25592,11 @@
                     Index = parseInt(view[0].transaction_form_id), 
                     Active;
                 obj.set("color", view[0].color);
-                if(obj.type == "Advance_Settlement"){
-                    obj.set("title", "Advance Settlement");
-                }else{
-                    obj.set("title", view[0].title);
-                }
-                // self.activeInvoiceTmp(Index);
+                // if(obj.type == "Advance_Settlement"){
+                //     obj.set("title", "Advance Settlement");
+                // }else{
+                // }
+                self.activeInvoiceTmp(Index);
                 self.lineDS.query({
                     filter: { field:"transaction_id", value: transaction_id }
                 })
@@ -71171,7 +71256,8 @@
         invoiceForm16: new kendo.Layout("#invoiceForm16", {model: banhji.invoiceForm}),
         invoiceForm17: new kendo.Layout("#invoiceForm17", {model: banhji.invoiceForm}),
         invoiceForm18: new kendo.Layout("#invoiceForm18", {model: banhji.invoiceForm}),
-        invoiceForm19: new kendo.Layout("#invoiceForm19", {model: banhji.invoiceForm}),
+        //////////////////??????//////////////////////
+        invoiceForm19: new kendo.Layout("#defaultPaymentVoucher", {model: banhji.invoiceForm}),
         invoiceForm20: new kendo.Layout("#invoiceForm20", {model: banhji.invoiceForm}),
         invoiceForm21: new kendo.Layout("#invoiceForm21", {model: banhji.invoiceForm}),
         invoiceForm22: new kendo.Layout("#invoiceForm22", {model: banhji.invoiceForm}),

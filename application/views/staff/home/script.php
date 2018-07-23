@@ -3349,6 +3349,33 @@
         },
         cancel          : function() {
             banhji.router.navigate("/");
+        },
+        numberCusDS     : dataStore(apiUrl + "utibills/change_number"),
+        onSelectedCu    : function(e) {
+            var files = e.files,
+                self = this;
+            this.numberCusDS.data();
+            var reader = new FileReader();
+            reader.onload = function() {
+                var data = reader.result;
+                var result = {};
+                var workbook = XLSX.read(data, {
+                    type: 'binary'
+                });
+                workbook.SheetNames.forEach(function(sheetName) {
+                    var roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+                    if (roa.length > 0) {
+                        result[sheetName] = roa;
+                        for (var i = 0; i < roa.length; i++) {
+                            self.numberCusDS.add(roa[i]);
+                        }
+                    }
+                });
+               
+            }
+            reader.readAsBinaryString(files[0].rawFile);
+        },
+        saveCu          : function(){
         }
     });
 

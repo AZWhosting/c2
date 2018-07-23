@@ -119,6 +119,13 @@ class Billing_cycles extends REST_Controller {
 		   	isset($value->month) 			? $obj->month 			= $value->month : "";
 		   	isset($value->status) 			? $obj->status 			= $value->status : "";
 		   	isset($value->deleted) 			? $obj->deleted 		= $value->deleted : "";
+
+		   	//Interval
+		   	if(isset($value->interval)){
+		   		if($value->interval==0){
+		   			$obj->interval = 1;
+		   		}
+		   	}
 		   	
 	   		if($obj->save()){
 			   	$data["results"][] = array(

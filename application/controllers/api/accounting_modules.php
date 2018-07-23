@@ -1570,7 +1570,7 @@ class Accounting_modules extends REST_Controller {
 
 		//Add 1 day
 		$asOf = date("Y-m-d", strtotime($asOf . "+1 days"));
-		// $startDate = date("Y-m-d", strtotime($startDate . "+1 days"));
+		$startDate = date("Y-m-d", strtotime($startDate . "+1 days"));
 
 		//BALANCE SHEET (As Of) Dr - Cr
 		$balanceSheets = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
@@ -1645,7 +1645,7 @@ class Accounting_modules extends REST_Controller {
 		$prevPL->where("deleted <>", 1);
 		$prevPL->get();
 
-		$retainEarningAmount += floatval($prevPL->total);
+		// $retainEarningAmount += floatval($prevPL->total);
 		//END PREVIOUSE PROFIT AND LOSS
 
 
@@ -1659,20 +1659,20 @@ class Accounting_modules extends REST_Controller {
 		$retainEarning->where("deleted <>", 1);
 		$retainEarning->get();
 		
-		$retainEarningAmount += floatval($retainEarning->total);
+		// $retainEarningAmount += floatval($retainEarning->total);
+
+		$retainEarningAmount = floatval($prevPL->total) + floatval($retainEarning->total);
 		//END RETAINED EARNING
 
 		//Equity
-		if($retainEarningAmount>0){
-			$objList[] = array(
-				"id" 			=> 70,
-				"number" 		=> "32500",
-				"name" 			=> "Retained Earnings",				
-			   	"type" 			=> "Equity",
-			   	"nature" 		=> "Cr",
-			   	"amount" 		=> $retainEarningAmount
-			);
-		}
+		$objList[] = array(
+			"id" 			=> 70,
+			"number" 		=> "32500",
+			"name" 			=> "Retained Earnings",				
+		   	"type" 			=> "Equity",
+		   	"nature" 		=> "Cr",
+		   	"amount" 		=> $retainEarningAmount
+		);
 
 		foreach ($objList as $value) {
 			$dr = $value["amount"];
@@ -1695,6 +1695,9 @@ class Accounting_modules extends REST_Controller {
 		}	
 				
 		$data["count"] = count($data["results"]);
+
+		$data["asOf"] = $asOf;
+		$data["startDate"] = $startDate;
 
 		//Response Data		
 		$this->response($data, 200);	
@@ -1817,7 +1820,7 @@ class Accounting_modules extends REST_Controller {
 			}			
 		}
 		
-		//RETAINED EARNING = Profit Loss + Retained Earning
+		//RETAINED EARNING = Previouse PL(Begining->Startdate) + Retained Earning(Begining->As Of)
 		//PREVIOUSE PROFIT AND LOSS (From Begining to startFiscalDate) Cr - Dr
 		$prevPL = new Journal_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);				
 		$prevPL->select_sum("(cr - dr) / transactions.rate", "total");

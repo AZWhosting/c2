@@ -5666,6 +5666,23 @@ class Utibills extends REST_Controller {
 		//Response Data
 		$this->response($data, 200);
 	}
+
+	//for customer
+	function change_number_post(){
+		$models = json_decode($this->post('models'));
+		$data["results"] = [];
+		$data["count"] = 0;
+
+		foreach ($models as $value) {
+			$con = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+			$con->where("id", $value->contact_id)->limit(1)->get();
+			$con->number = isset($value->number) ? $value->number : "";
+			$con->save();
+		}
+
+		$data["count"] = count($data["results"]);
+		$this->response($data, 201);
+	}
 }
 /* End of file meters.php */
 /* Location: ./application/controllers/api/utibills.php */

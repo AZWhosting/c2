@@ -56587,6 +56587,8 @@
         </div>
     </div>
 </script>
+<!--//////////////////??????//////////////////////-->
+
 <!-- Home Decor -->
 <script id="invoiceHDCom" type="text/x-kendo-template">
 	<div class="inv1 pcg">
@@ -56685,6 +56687,248 @@
         	</table>
         </div>
     </div>
+</script>
+<script id="defaultPaymentVoucher" type="text/x-kendo-template">
+	<style >
+		.advance-voucher{
+			width: 100%;
+			margin: 50px auto 0;
+			height: 250px;
+		}
+		.advance-voucher .advoucher-header .title{
+			float: right;
+			padding: 10px 10px 0;
+			margin-bottom: 15px;
+			line-height: 45px;
+			width: 100%;
+		}
+		.advance-voucher .advoucher-header .title .kh{
+			float: none;
+			width: 100%;
+			text-align: center;
+			font-size: 30px;
+			font-weight: 700;
+			line-height: 55px!important;
+			margin-right: 8px;
+		}
+		.advance-voucher .advoucher-header .title .en{
+			float: none;
+			font-size: 20px;
+			font-weight: 700;
+			text-align: center;
+			text-transform: uppercase;
+			line-height: 46px;
+		}
+		.advance-voucher .advoucher-header table{
+			width: 100%;
+			float: left;
+			border: 1px solid #333;
+			border-collapse: collapse;
+		}
+		.advance-voucher .advoucher-header table tr td{
+			padding: 5px;
+			border: 1px solid #333;
+			font-size: 13px;
+		}
+		.advance-voucher .advoucher-content table{
+			width: 100%;
+			float: left;
+			border: 1px solid #333;
+			border-collapse: collapse;
+		}
+		.advance-voucher .advoucher-content table tr th{
+			padding: 5px;
+			font-size: 13px;
+			font-weight: 700;
+			background: #1E4E78;
+			text-transform: uppercase;
+			border: 1px solid #333;
+			color: #fff;
+		}
+		.advance-voucher .advoucher-content table tr td{
+			padding: 5px;
+			border: 1px solid #333;
+			font-size: 13px;
+		}
+		.advance-voucher .advoucher-footer table{
+			width: 100%;
+			float: left;
+			border: 1px solid #333;
+			border-collapse: collapse;
+		}
+		.advance-voucher .advoucher-footer table tr th{
+			padding: 5px;
+			font-size: 13px;
+			font-weight: 700;
+			background: #ccc;
+			text-transform: uppercase;
+			border: 1px solid #333;
+			color: #333;
+		}
+		.advance-voucher .advoucher-footer table tr td{
+			padding: 5px;
+			border: 1px solid #333;
+			font-size: 13px;
+		}
+		.advance-voucher .advoucher-footer table tr td.rotate {
+		    -moz-transform: rotate(-90.0deg);
+		    -o-transform: rotate(-90.0deg);
+		    -webkit-transform: rotate(-90.0deg);
+		    filter:  progid:DXImageTransform.Microsoft.BasicImage(rotation=0.083);
+		    -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=0.083)";
+		}
+		.inv1 td {
+			text-align: left;
+			
+		}
+		.inv1 th {
+			border: 1px solid #000!important;
+			line-height: 25px;
+		}
+	</style>
+	<div class="inv1">
+		<div class="advance-voucher" style="width: 90%;">
+			<div class="advoucher-header">
+				<div class="head" style="width: 100%;">
+		        	<div class="logo" style="width: 15%;">
+		            	<img data-bind="attr: { src: company.logo.url, alt: company.name, title: company.name }" />
+		            </div>
+		            <div class="cover-name-company" style="width: 70%!important;float: left;margin-left: 15px;">
+		            	<h2 ></h2>
+		            	<h3 style="float: none; text-align: center;font-size: 25px;line-height: 37px!important;" data-bind="text: company.name"></h3>
+		                <div class="clear" style="float: none;">
+		                	<p style="font-size: 14px!important;float: none; text-align: center;">អាស័យ​ដ្ឋាន Address: <span data-bind="text: company.address"></span></p>
+		                    <p style="font-size: 14px!important;float: none;width: 100%;text-align: center;">ទូរស័ព្ទលេខ HP <span data-bind="text: company.telephone"></span> | Email: <span data-bind="text: company.email"></span></p>
+		                </div>
+		            </div>
+		        </div>
+				<div class="title">
+					<h2 class="kh">សក្ខីប័ត្រចំណាយ </h2>
+					<h2 class="en">payment voucher</h2>
+				</div>
+				<table>
+					<tr>
+						<td style="width: 22%;"><b>ឈ្មោះ Name</b></td>
+						<td style="width: 20%;" data-bind="text: contactDS.data()[0].name"></td>
+						<td><b>លេខសក្ខីប័ត្រ Voucher No.</b></td>
+						<td style="width: 20%;" data-bind="text: obj.number"></td>
+					</tr>
+					<tr>
+						<td><b>Transaction Type</b></td>
+						<td data-bind="text: obj.type" style="font-weight: bold; text-transform: uppercase;"></td>
+						<td><b>កាលបរិចេ្ឆទ Date</b></td>
+						<td data-bind="text: obj.issued_date"></td>
+					</tr>
+					<!-- <tr>
+						<td><b>ផ្នែក Department</b></td>
+						<td></td>
+						<td><b>លេខប័ណ្ណលទ្ធកម្ម PR No.</b></td>
+						<td></td>
+					</tr> -->
+					<tr>
+						<td><b>ទូទាត់ដោយ Mode of Payment</b></td>
+						<td colspan="3">
+							<b>ទូទាត់ដោយ Mode of Payment</b> : <span data-bind="text: paymentMethodDS.data()[0].name"></span><br>
+							<b>ប្រភេទរូបិយប័ណ្ណ Currency : </b> <span data-bind="text: currencyDS.data()[0].code"></span>
+						</td>
+					</tr>
+					<tr>
+						<td><b>គោលបំណង <br> Purpose</b></td>
+						<td colspan="3" data-bind="text: obj.memo"></td>
+					</tr>
+				</table>
+			</div>
+			<table class="span12" rules="rows" style="margin-top: 10px;">
+        		<thead>
+	        		<tr style="background: #c6d9f1;">
+	        			<th style="border-top: 0; text-align: center;" width="60">
+	        				ល.រ<br>No.
+	        			</th>
+	        			<th style="border-top: 0; text-align: center;" width="120">
+	        				វិក្កយបត្រលេខ<br>Invoice No.
+	        			</th>
+	        			<th style="border-top: 0;text-align: left;padding-left: 10px;">
+	        				អ្នកផ្គត់ផ្គង់<br>Supplier
+	        			</th>
+	        			<th style="border-top: 0;text-align: left;padding-left: 10px;">
+	        				បរិយាយ​<br>Description
+	        			</th>
+	        			<th style="border-top: 0; text-align: center;" width="120">
+	        				ចំនួន<br>Amount
+	        			</th>
+	        		</tr>
+        		</thead>
+        		<tbody style="margin-top: 2px" id="formListView"
+        				data-role="listview"
+						data-auto-bind="false"
+						data-template="payment-voucher-line-template"
+						data-bind="source: accountLineDS">
+				</tbody>
+        		<tfoot>
+        			<tr>
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">Advance No.</td>
+        				<td style="background-color: #eee;" class="rside" data-bind="text: obj.reference_no"></td>
+        				<td style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">សរុបរង SUB TOTAL</td>
+        				<td style="background-color: #eee;" class="rside" data-bind="text: obj.sub_total"></td>
+        			</tr>
+        			<tr>
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">Advanced Amount</td>
+        				<td class="rside" style="background-color: #eee;" data-bind="text: obj.deposit"></td>
+        				<td style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">ពន្ធ TAX</td>
+        				<td class="rside" style="background-color: #eee;" data-bind="text: obj.tax"></td>
+        			</tr>
+        			<tr>
+        				<td colspan="2" style="text-align: left;padding-left: 10px;color: #000;font-weight:bold;">Amount Receipt</td>
+        				<td class="rside" style="background-color: #eee;" data-bind="text: obj.cash_receipt"></td>
+        				<td class="main-color lside" data-bind="style: {backgroundColor: obj.color}" style="text-align: center;color: #fff;font-weight:bold;">សរុបរួម GRAND TOTAL</td>
+        				<td class="rside" style="background-color: #dce6f2;" data-bind="text: obj.amount"></td>
+        			</tr>
+        			<tr>
+						<td colspan="2" style="padding-left: 5px; color: #000!important;">ចំនួនជាអក្សរ Amount in Words</td>
+						<td colspan="3" style="padding-left: 5px;" data-bind="text: amountToString"></td>
+        			</tr>
+        		</tfoot>
+        	</table>
+
+			<div class="advoucher-content">
+				<table class="span12 left-tbl" style="margin: 10px 0;">
+	        		<tr class="mid-header">
+	        			<td colspan="4" style="text-align:left; font-weight: bold;">For Accounting Department Only</td>
+	        		</tr>
+	        		<tr style="background: #dce6f2;">
+	        			<td style="width: 15%;">Account Code</td>
+	        			<td >Account Description</td>
+	        			<td style="width: 15%;">Debit</td>
+	        			<td style="width: 15%;">Credit</td>
+	        		</tr>
+	        		<tfoot
+	        			data-role="listview"
+						data-auto-bind="false"
+						data-template="payment-voucher-journal-line-template"
+						data-bind="source: journalLineDS">
+	        		</tfoot>
+	        	</table>
+			</div>
+			<div class="advoucher-footer">
+				<table>
+					<tr>
+						<th style="background: #ccc!important;width: 20%;">រៀបចំដោយ <br> PREPARED BY</th>
+						<th style="background: #ccc!important;width: 20%;">ត្រួតពិនិត្យដោយ <br> REVIEWED BY</th>
+						<th style="background: #ccc!important;width: 20%;">សំរេចដោយ <br> APPROVED BY</th>
+						<th style="background: #ccc!important;width: 20%;">ទូទាត់ដោយ <br> PAID BY</th>
+						<th style="background: #ccc!important;width: 20%;">ទទួលដោយ <br> RECEIVED BY</th>
+					</tr>
+					<tr>
+						<td style="height: 40px;"></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
 </script>
 <script id="defaultCashAdvance" type="text/x-kendo-template">
 	<style >
@@ -56812,12 +57056,12 @@
 						<td><b>កាលបរិចេ្ឆទ Date</b></td>
 						<td data-bind="text: obj.issued_date"></td>
 					</tr>
-					<tr>
+					<!-- <tr>
 						<td><b>ផ្នែក Department</b></td>
 						<td></td>
 						<td><b>លេខប័ណ្ណលទ្ធកម្ម PR No.</b></td>
 						<td></td>
-					</tr>
+					</tr> -->
 					<tr>
 						<td><b>ទូទាត់ដោយ Mode of Payment</b></td>
 						<td colspan="3">
@@ -56856,52 +57100,23 @@
 						<td style="text-align: right; font-weight: bold;" data-bind="text: obj.amount"></td>
 					</tr>
 					<tr>
-						<td colspan="2" style="background: #1E4E78!important; color: #fff!important;">ចំនួនជាអក្សរ Amount in Words</td>
-						<td colspan="2" data-bind="text: numberToString"></td>
+						<td colspan="1" style="background: #1E4E78!important; color: #fff!important;">ចំនួនជាអក្សរ Amount in Words</td>
+						<td colspan="3" data-bind="text: numberToString"></td>
 					</tr>
 				</table>
 			</div>
 			<div class="advoucher-footer">
 				<table>
 					<tr>
-						<th style="background: #ccc!important;" colspan="2"></th>
-						<th style="background: #ccc!important;">ហត្ថលេខា SINATURE</th>
-						<th style="background: #ccc!important;">តំណែង POSITION</th>
-						<th style="background: #ccc!important;width: 19%;">កាលបរិចេ្ឆទ DATE</th>
+						<th style="background: #ccc!important;width: 20%;">រៀបចំដោយ <br> PREPARED BY</th>
+						<th style="background: #ccc!important;width: 20%;">ត្រួតពិនិត្យដោយ <br> REVIEWED BY</th>
+						<th style="background: #ccc!important;width: 20%;">សំរេចដោយ <br> APPROVED BY</th>
+						<th style="background: #ccc!important;width: 20%;">ទូទាត់ដោយ <br> PAID BY</th>
+						<th style="background: #ccc!important;width: 20%;">ទទួលដោយ <br> RECEIVED BY</th>
 					</tr>
 					<tr>
-						<td rowspan="6" class="rotate">Finance Department</td>
-						<td style="padding: 10px 5px;">រៀបចំដោយ <br> PREPARED BY</td>
+						<td style="height: 40px;"></td>
 						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-					<tr>
-						<td>ត្រួតពិនិត្យដោយ <br> REVIEWED BY</td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-					<tr>
-						<td>សំរេចដោយ <br> APPROVED BY</td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-					<tr>
-						<td>ទូទាត់ដោយ <br> PAID BY</td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-					<tr>
-						<td>ទទួលដោយ <br> RECEIVED BY</td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-					<tr>
-						<td>កត់ត្រាដោយ <br> POSTED BY</td>
 						<td></td>
 						<td></td>
 						<td></td>
@@ -60373,19 +60588,19 @@
 </script>
 <script id="payment-voucher-line-template" type="text/x-kendo-template">
 	<tr>
-		<td>#:banhji.invoiceForm.accountLineDS.indexOf(data)+1#</td>
+		<td style="text-align: center;">#:banhji.invoiceForm.accountLineDS.indexOf(data)+1#</td>
 		<td style="text-align: left; padding-left: 5px;">#: reference_no#</td>
 		<td style="text-align: left; padding-left: 5px;">#: contact.name#</td>
 		<td style="text-align: left; padding-left: 5px;">#= description ? description : "" #</td>
-		<td style="text-align: right; padding-right: 5px;">#if(price > 0){# #= kendo.toString(quantity * price, "c", locale) # #}#</td>
+		<td style="text-align: right; padding-right: 5px;">#= kendo.toString(amount, "c", locale) #</td>
 	</tr>
 </script>
 <script id="payment-voucher-journal-line-template" type="text/x-kendo-template">
 	<tr>
 		<td>#: account.number#</td>
 		<td style="text-align: left; padding-left: 5px;">#: account.name#</td>
-		<td style="text-align: left; padding-left: 5px;"># if(dr > 0){# #: dr # #}#</td>
-		<td># if(cr > 0){# #: cr# #}#</td>
+		<td style="text-align: right; padding-left: 5px;"># if(dr > 0){# #: kendo.toString(dr, locale == 'km-KH' ? 'c0' : 'c2', locale) # #}#</td>
+		<td style="text-align: right;"># if(cr > 0){# #: kendo.toString(cr, locale == 'km-KH' ? 'c0' : 'c2', locale)# #}#</td>
 	</tr>
 </script>
 <script id="invoiceForm-lineDS-template31" type="text/x-kendo-template">

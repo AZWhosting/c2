@@ -35,7 +35,7 @@
 		width: 100%;
 		text-align: center;
 		position: relative;
-		box-shadow: 2px 0px 12px 0px rgba(68,68,68,1);
+		/*box-shadow: 2px 0px 12px 0px rgba(68,68,68,1);*/
 	}
 	.height250{
 		height: 200px;

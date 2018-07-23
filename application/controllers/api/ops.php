@@ -2,20 +2,7 @@
 
 require APPPATH.'/libraries/REST_Controller.php';
 
-class Ops extends REST_Controller {
-	public function validateTable($tableName, $db){
-		$dsn = 'mysql://'.$this->db->username.':'.$this->db->password.'@'.$this->db->hostname.'/'.$db;
-		$DB1 = $this->load->database($dsn, TRUE);
-		$this->db = $DB1;
-		$k = 0;
-		$result = $this->db->list_tables();
-        foreach( $result as $row ) {
-            if( $row == $tableName ){
-            	$k = 1;
-            }    
-        }
-        return $k;
-    }
+class Ops extends REST_Controller {	
 	function runs_get() {
 		$this->load->dbutil();
 		$this->load->dbforge();
@@ -76,6 +63,7 @@ class Ops extends REST_Controller {
 			    // $this->dbforge->add_field("created_at date DEFAULT NULL");
 			    // $this->dbforge->add_field("updated_at date DEFAULT NULL");
 			    // $this->dbforge->create_table('tmp_total_sales', TRUE);
+			    			    
 			   
 				//Rename Table 'old_table_name' to 'new_table_name'
 			    // $this->dbforge->rename_table('recurrings', 'billing_cycles');
@@ -147,9 +135,9 @@ class Ops extends REST_Controller {
 				
 				// Add new fields
 				// $fields = array(
-				// 	"membership_id" => array(
-				// 		"type" 		=> "INT",
-				// 		"constraint"=> 11,
+				// 	"movement" => array(
+				// 		"type" 		=> "TINYINT",
+				// 		"constraint"=> 1,
 				// 		"null" 		=> FALSE,
 				// 		"default" 	=> 0
 				// 	),
@@ -160,7 +148,7 @@ class Ops extends REST_Controller {
 				// 	// 	"default" 	=> ""
 				// 	// )
 				// );
-				// $data['results'][] = $this->dbforge->add_column("billing_cycles", $fields);
+				// $data['results'][] = $this->dbforge->add_column("proforma_records", $fields);
 
 				// // if (var_dump($this->db->table_exists('cashier_currencies'))){
 				// // 	echo $db;
@@ -175,7 +163,7 @@ class Ops extends REST_Controller {
 				// }
 				
 			    // Modify fields
-		 		//  $fields = array(
+		 		//$fields = array(
 				// 	// "conversion_ratio" => array(
 				// 	// 	"name" 		=> "conversion_ratio",//New Field Name
 				// 	// 	"type" 		=> "DECIMAL",
@@ -183,12 +171,13 @@ class Ops extends REST_Controller {
 				// 	// 	"null" 		=> FALSE,
 				// 	// 	"default" 	=> 1
 				// 	// ),
-				// 	"frequency" => array(
-				// 		"name" 		=> "frequency",//New Field Name
-				// 		"type" 		=> "VARCHAR",
-				// 		"constraint"=> "255",
+				// 	"interval" => array(
+				// 		"name" 		=> "interval",//New Field Name
+				// 		"type" 		=> "INT",
+				// 		"constraint"=> 11,
+				// 		"unsigned" 	=> TRUE,
 				// 		"null" 		=> FALSE,
-				// 		"default" 	=> ""
+				// 		"default" 	=> 1
 				// 	)
 				// );
 				// $data['results'][] = $this->dbforge->modify_column('transactions', $fields);
@@ -232,6 +221,20 @@ class Ops extends REST_Controller {
 		$this->response($data, 200);
 
 	}//End Function
+
+	public function validateTable($tableName, $db){
+		$dsn = 'mysql://'.$this->db->username.':'.$this->db->password.'@'.$this->db->hostname.'/'.$db;
+		$DB1 = $this->load->database($dsn, TRUE);
+		$this->db = $DB1;
+		$k = 0;
+		$result = $this->db->list_tables();
+        foreach( $result as $row ) {
+            if( $row == $tableName ){
+            	$k = 1;
+            }    
+        }
+        return $k;
+    }
 
 	// function index_get() {
 

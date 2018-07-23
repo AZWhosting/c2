@@ -1096,7 +1096,7 @@ var	en_US = {
 	"weighted" : "Weighted",
 	"equal" : "Equal",
 	"inv_" : "INV.#",
-	"c_expense" : "EXPENSE",
+	"c_expense" : "Expense",
 	"c_direct_expense" : "DIRECT EXPENSE",
 	"c_reimbursement" : "REIMBURSEMENT",
 	"c_advance_settlement" : "ADVANCE SETTLEMENT",
