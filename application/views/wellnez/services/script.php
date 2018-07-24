@@ -5582,6 +5582,10 @@
                     self.workDS.query({});
                 }
             });
+        },
+        addToPOS            : function(e){
+            var data = e.data;
+            window.location.href = '<?php echo base_url(); ?>wellnez/pos/#/room/' + data.room_id;
         }
     });
     //Print

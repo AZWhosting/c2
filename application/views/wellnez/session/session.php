@@ -406,10 +406,11 @@
 		    overflow: hidden;
 		    border: 1px solid #bbb;
 		    border-radius: 10px;
+		    position: relative;
 		}
 	</style>
 	<div id="slide-form">
-		<div class="customer-background" style="width: 90%;border-radius: 3px;background: #e9ebee; margin-top: 15px; overflow: hidden;">
+		<div class="customer-background" style="width: 80%;border-radius: 3px;background: #e9ebee; margin-top: 15px; overflow: hidden;">
 			<div class="row-fluid" style="overflow: hidden;padding: 0 20px;">
 				<div id="example" class="k-content">
 			        <h2 data-bind="text: lang.lang.reconcile" style="float: left;">Reconcile</h2>
@@ -651,6 +652,11 @@
 					<div class="session" data-bind="visible: haveAddSession">
 						<div class="session-content">
 							<h2 style="padding: 0 15px 0 0;font-weight: bold;text-transform: uppercase;font-size: 20px;margin-bottom: 10px;">Add Session</h2>
+							<a style="position: absolute;right: 0;top: 8px;" data-bind="click: closeAddSession">
+								<span 
+									class="glyphicons no-js remove_2"><i></i>
+								</span>
+							</a>
 							<table class="table table-bordered table-primary table-striped table-vertical-center">
 						        <thead>
 						            <tr>

@@ -2784,6 +2784,131 @@ class Sales extends REST_Controller {
 		$this->response($data, 200);			
 	}
 
+	//Customer list
+	function suppplier_get() {		
+		$filters 	= $this->get("filter")["filters"];		
+		$page 		= $this->get('page') !== false ? $this->get('page') : 1;		
+		$limit 		= $this->get('limit') !== false ? $this->get('limit') : 100;								
+		$sort 	 	= $this->get("sort");		
+		$data["results"] = array();
+		$data["count"] = 0;
+		$is_pattern = 0;
+
+		$obj = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);		
+
+		//Sort
+		if(!empty($sort) && isset($sort)){					
+			foreach ($sort as $value) {
+				$obj->order_by($value["field"], $value["dir"]);
+			}
+		}
+
+		//Filter		
+		if(!empty($filters) && isset($filters)){
+	    	foreach ($filters as $value) {
+	    		if(isset($value['operator'])) {
+					$obj->{$value['operator']}($value['field'], $value['value']);
+				} else {
+					if($value["field"]=="is_pattern"){
+	    				$is_pattern = $value["value"];
+	    			}else{
+	    				$obj->where($value["field"], $value["value"]);
+	    			}
+				}
+			}
+		}
+		
+		$obj->where_related("contact_type", "parent_id", 2);
+		$obj->where("is_pattern", $is_pattern);
+		$obj->where("deleted <>", 1);
+		$obj->include_related("contact_type", "name");	
+
+
+		//Results
+		$obj->get_paged_iterated($page, $limit);
+		$data["count"] = $obj->paged->total_rows;		
+		
+		if($obj->result_count()>0){
+			foreach ($obj as $value) {
+
+
+		 		$data["results"][] = array(
+		 			"id" 						=> $value->id,		 			
+					"branch_id" 				=> $value->branch_id,
+					"country_id" 				=> $value->country_id,
+					"ebranch_id" 				=> $value->ebranch_id,
+					"elocation_id" 				=> $value->elocation_id,
+					"wbranch_id" 				=> $value->wbranch_id,
+					"wlocation_id" 				=> $value->wlocation_id,					
+					"user_id"					=> $value->user_id, 	
+					"contact_type_id" 			=> $value->contact_type_id,
+					"eorder" 					=> $value->eorder,
+					"worder" 					=> $value->worder, 						
+					"abbr" 						=> $value->abbr,
+					"number" 					=> $value->number,
+					"eabbr" 					=> $value->eabbr,
+					"enumber" 					=> $value->enumber,
+					"wabbr" 					=> $value->wabbr,
+					"wnumber" 					=> $value->wnumber,		
+					"name" 						=> $value->name,			
+					"gender"					=> $value->gender,			
+					"dob" 						=> $value->dob,				
+					"pob" 						=> $value->pob,
+					"latitute" 					=> $value->latitute,
+					"longtitute" 				=> $value->longtitute,
+					"credit_limit" 				=> $value->credit_limit,
+					"locale" 					=> $value->locale,					
+					"id_number" 				=> $value->id_number,
+					"phone" 					=> $value->phone == null ? "": $value->phone,
+					"email" 					=> $value->email == null ? "": $value->email,
+					"website" 					=> $value->website,					
+					"job" 						=> $value->job,
+					"vat_no" 					=> $value->vat_no,
+					"family_member"				=> $value->family_member,
+					"city" 						=> $value->city,
+					"post_code" 				=> $value->post_code,
+					"address" 					=> $value->address == null ? "": $value->address,
+					"bill_to" 					=> $value->bill_to,
+					"ship_to" 					=> $value->ship_to,
+					"memo" 						=> $value->memo,
+					"image_url" 				=> $value->image_url,				
+					"company" 					=> $value->company,
+					"company_en" 				=> $value->company_en,
+					"bank_name" 				=> $value->bank_name,
+					"bank_address" 				=> $value->bank_address,
+					"bank_account_name" 		=> $value->bank_account_name,
+					"bank_account_number" 		=> $value->bank_account_number,
+					"name_on_cheque" 			=> $value->name_on_cheque,
+					"business_type_id" 			=> $value->business_type_id,					
+					"payment_term_id" 			=> $value->payment_term_id,
+					"payment_method_id" 		=> $value->payment_method_id,
+					"deposit_account_id"		=> $value->deposit_account_id,
+					"trade_discount_id" 		=> $value->trade_discount_id,
+					"settlement_discount_id"	=> $value->settlement_discount_id,
+					"salary_account_id"			=> $value->salary_account_id,
+					"account_id" 				=> $value->account_id,					
+					"ra_id" 					=> $value->ra_id,
+					"tax_item_id" 				=> $value->tax_item_id,					
+					"phase_id" 					=> $value->phase_id,
+					"voltage_id" 				=> $value->voltage_id,
+					"ampere_id" 				=> $value->ampere_id,
+					"registered_date" 			=> $value->registered_date,
+					"use_electricity" 			=> $value->use_electricity,
+					"use_water" 				=> $value->use_water,
+					"is_local" 					=> $value->is_local,
+					"is_pattern" 				=> intval($value->is_pattern),
+					"status" 					=> $value->status,
+					"is_system"					=> $value->is_system,
+								
+					"contact_type"				=> $value->contact_type_name
+		 		);
+			}
+		}
+
+		//Response Data		
+		$this->response($data, 200);			
+	}
+
 	//TRANSACTION BY JOB ENGAGEMENT
 	function transaction_by_job_engagement_get() {
 		$filter 	= $this->get("filter");
@@ -3178,7 +3303,7 @@ class Sales extends REST_Controller {
 		$data["results"] = [];
 		$data["count"] = 0;
 
-		$obj = new Item_line(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
+		$obj = new Transaction(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 
 		//Sort
 		if(!empty($sort) && isset($sort)){
@@ -3204,57 +3329,55 @@ class Sales extends REST_Controller {
 
 		//Results
 		
-		$obj->include_related("transaction/contact", array("abbr", "number", "name"));
-		$obj->include_related("item", array("number", "name"));
-		$obj->where_related("transaction", "type", "Purchase_Order");
-		$obj->include_related("transaction", array("status", "number", "employee_id", "issued_date", "type"));
-		$obj->where_related("transaction", "is_recurring <>", 1);
-		$obj->where_related("transaction", "deleted <>", 1);		
-		$obj->order_by_related("transaction", "issued_date", "asc");
+		$obj->include_related("contact", array("abbr", "number", "name"));
+		$obj->include_related("item_line/item", array("number", "name"));
+		$obj->include_related("item_line", array("quantity", "cost"));
+		$obj->where("type", "Purchase_Order");
+		$obj->where("is_recurring <>", 1);
+		$obj->where( "deleted <>", 1);		
+		$obj->order_by("issued_date", "asc");
 		$obj->get_iterated();
 		
 		if($obj->exists()){
 			$objList = [];
 
-
+			
 			foreach ($obj as $value) {
-
-				
-
-				if(isset($objList[$value->transaction_employee_id])){
-					$objList[$value->transaction_employee_id]["line"][]	= array(
+				$amount =  $value->item_line_quantity * floatval($value->item_line_cost);
+				if(isset($objList[$value->employee_id])){
+					$objList[$value->employee_id]["line"][]	= array(
 						"id" 			=> $value->id,
-						"contact_id" 	=> $value->transaction_contact_id,
-						"customer"		=> $value->transaction_contact_name,	
-						"number" 		=> $value->transaction_number,
-						"type" 			=> $value->transaction_type,
-						"item"			=> $value->item_name,
-						"issued_date" 	=> $value->transaction_issued_date,
-						"status" 		=> $value->transaction_status,
-						"qty"			=> $value->quantity,
-						"price"			=> floatval($value->price),
-						"amount" 		=> $value->quantity * floatval($value->price),
-						"employee" 		=> $objList[$value->transaction_employee_id]["employee"],
+						"contact_id" 	=> $value->contact_id,
+						"customer"		=> $value->contact_name,	
+						"number" 		=> $value->number,
+						"type" 			=> $value->type,
+						"item"			=> $value->item_line_item_name,
+						"issued_date" 	=> $value->issued_date,
+						"status" 		=> $value->status,
+						"qty"			=> $value->item_line_quantity,
+						"cost"			=> floatval($value->item_line_cost),
+						"amount" 		=> $amount,
+						"employee" 		=> $objList[$value->employee_id]["employee"],
 					);
 				}else{
 					$employees = new Contact(null, $this->server_host, $this->server_user, $this->server_pwd, $this->_database);
 					$employees->select("abbr,number,name");
-					$employees->get_by_id($value->transaction_employee_id);
+					$employees->get_by_id($value->employee_id);
 
-					$objList[$value->transaction_employee_id]["employee"] =$employees->abbr . $employees->number ."-". $employees->name;
-					$objList[$value->transaction_employee_id]["line"][]	= array(
+					$objList[$value->employee_id]["employee"] =$employees->abbr . $employees->number ."-". $employees->name;
+					$objList[$value->employee_id]["line"][]	= array(
 						"id" 			=> $value->id,
-						"contact_id" 	=> $value->transaction_contact_id,
-						"number" 		=> $value->transaction_number,
-						"customer"		=> $value->transaction_contact_name,
-						"type" 			=> $value->transaction_type,
-						"issued_date" 	=> $value->transaction_issued_date,
-						"item"			=> $value->item_name,
-						"status" 		=> $value->transaction_status,
-						"qty"			=> $value->quantity,
-						"price"			=> floatval($value->price),
-						"amount" 		=> $value->quantity * floatval($value->price),
-						"employee" 		=> $objList[$value->transaction_employee_id]["employee"]
+						"contact_id" 	=> $value->contact_id,
+						"customer"		=> $value->contact_name,	
+						"number" 		=> $value->number,
+						"type" 			=> $value->type,
+						"item"			=> $value->item_line_item_name,
+						"issued_date" 	=> $value->issued_date,
+						"status" 		=> $value->status,
+						"qty"			=> $value->item_line_quantity,
+						"cost"			=> floatval($value->item_line_cost),
+						"amount" 		=> $amount,
+						"employee" 		=> $objList[$value->employee_id]["employee"]
 					);
 				}
 			}
@@ -3633,7 +3756,8 @@ class Sales extends REST_Controller {
 
 			foreach ($obj as $value) {
 
-				
+				$count = 0;
+				$totalAmount = 0;
 
 				if(isset($objList[$value->transaction_employee_id])){
 					$objList[$value->transaction_employee_id]["line"][]	= array(
@@ -3670,12 +3794,15 @@ class Sales extends REST_Controller {
 						"amount" 		=> $value->quantity * floatval($value->price),
 						"employee" 		=> $objList[$value->transaction_employee_id]["employee"]
 					);
+					
 				}
+				$totalAmount += $value->quantity * floatval($value->price);
 			}
 
 			foreach ($objList as $value) {
 				foreach ($value["line"] as $val) {
 					$data["results"][] = $val;
+					$data["totalAmount"] = $totalAmount;
 				}
 			}
 		}

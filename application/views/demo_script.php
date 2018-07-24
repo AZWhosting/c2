@@ -41235,34 +41235,84 @@
 	banhji.supplierList = kendo.observable({
 		lang                    : langVM,
 		institute               : banhji.institute,
-		contact                 : dataStore(apiUrl + "vendorReports/supplier"),
-		dataSource              : dataStore(apiUrl + "contacts/supplier"),
+		dataSource              : dataStore(apiUrl + "sales/suppplier"),
 		statusList              : banhji.source.statusList,
 		contact_type_id         : null,
 		status                  : null,
+		exArray             : [],
 		pageLoad                : function(){
+			// this.search();
 		},
-		search                  : function(){
-			var para = [],
-			status = this.get("status"),
-			contact_type_id = this.get("contact_type_id");
+		// search                  : function(){
+		// 	// var para = [],
+		// 	// status = this.get("status"),
+		// 	// contact_type_id = this.get("contact_type_id");
 
-			if(status!==null){
-				para.push({ field:"status", value: status });
-			}
+		// 	// if(status!==null){
+		// 	//  para.push({ field:"status", value: status });
+		// 	// }
 
-			if(contact_type_id){
-				para.push({ field:"contact_type_id", value: contact_type_id });
-			}
+		// 	// if(contact_type_id){
+		// 	//  para.push({ field:"contact_type_id", value: contact_type_id });
+		// 	// }
 
-			this.dataSource.filter(para);
-			this.set("status", null);
-			this.set("contact_type_id", null);
-		},
+		// 	// this.dataSource.filter(para);
+		// 	// this.dataSource.query({
+		// //              filter:para
+		// //          });
+
+		// 	// this.set("status", null);
+		// 	// this.set("contact_type_id", null);
+		// 	this.dataSource.bind("requestEnd", function(e){
+		// 		if(e.type=="read"){
+		// 			var response = e.response;
+		// 			self.exArray = [];
+
+		// 			self.exArray.push({
+		// 				cells: [
+		// 					{ value: "Customer List",bold: true, fontSize: 20, textAlign: "center", colSpan: 6 }
+		// 				]
+		// 			});
+		// 			self.exArray.push({
+		// 				cells: [
+		// 					{ value: "", colSpan: 6 }
+		// 				]
+		// 			});
+		// 			self.exArray.push({
+		// 				cells: [
+		// 					{ value: "CusttomerID", background: "#496cad", color: "#ffffff" },
+		// 					{ value: "Customer Name", background: "#496cad", color: "#ffffff" },
+		// 					{ value: "Type", background: "#496cad", color: "#ffffff" },
+		// 					{ value: "Address", background: "#496cad", color: "#ffffff" },
+		// 					{ value: "Phone", background: "#496cad", color: "#ffffff" },
+		// 					{ value: "Email", background: "#496cad", color: "#ffffff" },
+		// 				]
+		// 			});
+		// 			for (var i = 0; i < response.results.length; i++){
+		// 					self.exArray.push({
+		// 						cells: [
+		// 							{ value: response.results[i].number},
+		// 							{ value: response.results[i].name },
+		// 							{ value: response.results[i].contact_type },
+		// 							{ value: response.results[i].address },
+		// 							{ value: response.results[i].phone },
+		// 							{ value: response.results[i].email },
+
+		// 						]
+		// 					});
+		// 				self.exArray.push({
+		// 					cells: [
+		// 						{ value: "", colSpan: 6 }
+		// 					]
+		// 				});
+		// 			}
+		// 		}
+		// 	});
+		// },
 		printGrid           : function() {
 			var gridElement = $('#grid'),
 				printableContent = '',
-				win = window.open('', '', 'width=900, height=700'),
+				win = window.open('', '', 'width=990, height=900'),
 				doc = win.document.open();
 			var htmlStart =
 					'<!DOCTYPE html>' +
@@ -41272,20 +41322,56 @@
 					'<title></title>' +
 					'<link href="http://kendo.cdn.telerik.com/' + kendo.version + '/styles/kendo.common.min.css" rel="stylesheet" />'+
 					'<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap.css">' +
+					'<link rel="stylesheet" href="<?php echo base_url(); ?>assets/responsive.css">' +
+					'<link href="<?php echo base_url(); ?>assets/invoice/invoice.css" rel="stylesheet" />'+
 					'<link href="https://fonts.googleapis.com/css?family=Content:400,700" rel="stylesheet" type="text/css">' +
-					'<link href="<?php echo base_url(); ?>assets/responsive.css" rel="stylesheet" >' +
 					'<link href="https://fonts.googleapis.com/css?family=Moul" rel="stylesheet">' +
 					'<style>' +
-					'*{  } html { font: 11pt sans-serif; }' +
+					'html { font: 11pt sans-serif; }' +
 					'.k-grid { border-top-width: 0; }' +
 					'.k-grid, .k-grid-content { height: auto !important; }' +
 					'.k-grid-content { overflow: visible !important; }' +
 					'div.k-grid table { table-layout: auto; width: 100% !important; }' +
 					'.k-grid .k-grid-header th { border-top: 1px solid; }' +
 					'.k-grid-toolbar, .k-grid-pager > .k-link { display: none; }' +
-					'</style><style type="text/css" media="print"> @page { size: landscape; margin:0mm; } .saleSummaryCustomer .total-customer, .saleSummaryCustomer .total-sale { background-color: #DDEBF7!important; -webkit-print-color-adjust:exact; }.saleSummaryCustomer .table.table-borderless.table-condensed  tr th { background-color: #1E4E78!important;-webkit-print-color-adjust:exact;}.saleSummaryCustomer .table.table-borderless.table-condensed  tr th span{ color: #fff!important; }.saleSummaryCustomer .table.table-borderless.table-condensed tr:nth-child(2n+1) td {  background-color: #fff!important; -webkit-print-color-adjust:exact;} .saleSummaryCustomer .table.table-borderless.table-condensed tr td { background-color: #F2F2F2!important;-webkit-print-color-adjust:exact; } </style>' +
+					'</style><style type="text/css" media="print"> @page { size: portrait; margin:1mm; }'+
+						'.inv1 .main-color {' +
+
+							'-webkit-print-color-adjust:exact; ' +
+						'} ' +
+						'.table.table-borderless.table-condensed  tr th { background-color: #1E4E78!important;' +
+						'-webkit-print-color-adjust:exact; color:#fff!important;}' +
+						'.table.table-borderless.table-condensed  tr th * { color: #fff!important; -webkit-print-color-adjust:exact;}' +
+						'.inv1 .light-blue-td { ' +
+							'background-color: #c6d9f1!important;' +
+							'text-align: left;' +
+							'padding-left: 5px;' +
+							'-webkit-print-color-adjust:exact; ' +
+						'}' +
+						'.saleSummaryCustomer .table.table-borderless.table-condensed tr td { ' +
+							'background-color: #F2F2F2!important; -webkit-print-color-adjust:exact;' +
+						'}'+
+						'.saleSummaryCustomer .table.table-borderless.table-condensed tr:nth-child(2n+1) td { ' +
+							' background-color: #fff!important; -webkit-print-color-adjust:exact;' +
+						'}' +
+						'.journal_block1>.span2 *, .journal_block1>.span5 * {color: #fff!important;}' +
+						'.journal_block1>.span2:first-child { ' +
+							'background-color: #bbbbbb!important; -webkit-print-color-adjust:exact;' +
+						'}' +
+						'.journal_block1>.span5:last-child {' +
+							'background-color: #496cad!important; color: #fff!important; -webkit-print-color-adjust:exact; ' +
+						'}' +
+						'.journal_block1>.span5 {' +
+							'background-color: #5cc7dd!important; color: #fff!important; -webkit-print-color-adjust:exact;' +
+						'}' +
+						'.saleSummaryCustomer .table.table-borderless.table-condensed tfoot .bg-total td {' +
+							'background-color: #1C2633!important;' +
+							'color: #fff!important; ' +
+							'-webkit-print-color-adjust:exact;' +
+						'}' +
+						'</style>' +
 					'</head>' +
-					'<body><div id="example" class="k-content saleSummaryCustomer" style="padding: 30px;">';
+					'<body><div class="saleSummaryCustomer" style="padding: 0 10px;">';
 			var htmlEnd =
 					'</div></body>' +
 					'</html>';
@@ -41298,6 +41384,117 @@
 				win.close();
 			},2000);
 		},
+		dataSourceEX: dataStore(apiUrl + "sales/suppplier"),
+        pageGo  : 1,
+        totalPage: 0,
+        para        : [],
+        totalRow    : 0,
+		ExportExcel: function() {
+            $("#loadImport").css("display", "block");
+            var self = this;
+            this.exArray = [];
+            this.exArray.push({
+                cells: [
+                    { value: banhji.institute.name, textAlign: "center", colSpan: 6 }
+                ]
+            });
+            this.exArray.push({
+                cells: [
+                    { value: "", colSpan: 6 }
+                ]
+            });
+            this.exArray.push({
+                cells: [
+                    { value: this.lang.lang.customer_list, textAlign: "center", colSpan: 6 }
+                ]
+            });
+            this.exArray.push({
+                cells: [
+                    { value: "", colSpan: 6 }
+                ]
+            });
+            this.exArray.push({
+                cells: [
+                    { value: this.lang.lang.code, background: "#496cad", color: "#ffffff" },
+                    { value: this.lang.lang.customer, background: "#496cad", color: "#ffffff" },
+                    { value: this.lang.lang.type, background: "#496cad", color: "#ffffff" },
+                    { value: this.lang.lang.address, background: "#496cad", color: "#ffffff" },
+                    { value: this.lang.lang.phone, background: "#496cad", color: "#ffffff" },
+                    { value: this.lang.lang.email, background: "#496cad", color: "#ffffff" },
+                ]
+            });
+            var limit = 100;
+            var totalPage = parseInt(this.get("totalRow") / limit) + 1;
+            this.set("totalPage", totalPage);
+            this.set("pageGo", 1);
+            if(totalPage > 0){
+                this.getDataExcel(1, 10000);
+            }
+        },
+        getDataExcel        : function(page, limit){
+            //query
+            var self = this;
+
+            var para = [];
+            ///
+            this.dataSourceEX.data([]);
+            this.dataSourceEX.query({
+                filter: para,
+                page: page,
+                pageSize: limit,
+            }).then(function(e){
+                if(self.dataSourceEX.data().length > 0){
+                    $.each(self.dataSourceEX.data(), function(i,v){
+                        self.exArray.push({
+                            cells: [
+                                { value: v.abbr+v.number},
+                                { value: v.name },
+                                { value: v.contact_type },
+                                { value: v.address },
+                                { value: v.phone},
+                                { value: v.email},
+                            ]
+                        });
+                    });
+                }
+                self.set("pageGo", self.get("pageGo") + 1);
+                if(self.get("pageGo") <= self.get("totalPage")){
+                    self.getDataExcel(self.get("pageGo"), 100);
+                }else{
+                    $("#loadImport").css("display", "none");
+                    var workbook = new kendo.ooxml.Workbook({
+                        sheets: [{
+                            columns: [{
+                                    autoWidth: true
+                                },
+                                {
+                                    autoWidth: true
+                                },
+                                {
+                                    autoWidth: true
+                                },
+                                {
+                                    autoWidth: true
+                                },
+                                {
+                                    autoWidth: true
+                                },
+                                {
+                                    autoWidth: true
+                                },
+                            ],
+                            title: "suppplierList",
+                            rows: self.exArray
+                        }]
+                    });
+                    //save the file as Excel file with extension xlsx
+                    kendo.saveAs({
+                        dataURI: workbook.toDataURL(),
+                        fileName: "supplierList.xlsx"
+                    });
+                }
+            });
+        },
 	});
 	banhji.expensesSummarySupplier =  kendo.observable({
 		lang                : langVM,

@@ -2757,9 +2757,9 @@
 
 										<!--End Add New Item -->
 										<div class="well marginTop15">
-											<textarea cols="0" rows="2" class="k-textbox marginBottom" data-bind="value: obj.memo2" placeholder="memo for internal ..."></textarea>
-											<br>
-											<textarea cols="0" rows="2" class="k-textbox" data-bind="value: obj.memo" placeholder="memo for external ..."></textarea>
+											<textarea cols="0" rows="2" class="k-textbox" data-bind="value: obj.memo2" placeholder="memo for internal ..."></textarea>
+											<!-- <br>
+											<textarea cols="0" rows="2" class="k-textbox" data-bind="value: obj.memo" placeholder="memo for external ..."></textarea> -->
 										</div>
 
 									</div>

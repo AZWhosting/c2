@@ -5803,9 +5803,10 @@
                 }
             }
             if(allowed) {
-                banhji.view.layout.showIn('#content', banhji.view.Index);
-                banhji.view.Index.showIn('#indexMenu', banhji.view.tapMenu);
-                banhji.view.Index.showIn('#indexContent', banhji.view.itemAdjustment);
+                //banhji.view.layout.showIn('#content', banhji.view.Index);
+                //banhji.view.Index.showIn('#indexMenu', banhji.view.tapMenu);
+                //banhji.view.Index.showIn('#indexContent', banhji.view.itemAdjustment);
+                banhji.view.layout.showIn("#content", banhji.view.itemAdjustment);
 
                 var vm = banhji.itemAdjustment;
                 banhji.userManagement.addMultiTask("Inventory Adjustment","item_adjustment",vm);

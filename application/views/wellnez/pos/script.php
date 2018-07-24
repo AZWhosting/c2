@@ -54,7 +54,7 @@
     function therapistEditor(container, options) {
         $('<input name="' + options.field + '"/>')
         .appendTo(container)
-        .kendoMultiSelect({
+        .kendoDropDownList({
             placeholder: "Select Staff",
             dataTextField: "name",
             dataValueField: "id",
@@ -6538,14 +6538,14 @@
             ],
             sort: {
                 field: "id",
-                dir: "asc"
+                dir: "desc"
             },
             batch: true,
             serverFiltering: true,
             serverSorting: true,
             serverPaging: true,
             page: 1,
-            pageSize: 8
+            pageSize: 16
         }),        
         discountAccountDS   : new kendo.data.DataSource({
             data: banhji.source.accountList,
@@ -7074,6 +7074,27 @@
                 if(value.item_id>0){
                     itemIds.push(value.item_id);
                 }
+                //Emplayee
+                if(value.therapist.length > 0){
+                    var name = '';
+                    $.each(value.therapist, function(j,k){
+                        name = name + k.name + ",";
+                        var h = 0;
+                        $.each(self.employeeAR, function(l,m){
+                            if(k.id == m.id){
+                                h = 1;
+                            }
+                        });
+                        if(h != 1){
+                            self.employeeAR.push({
+                                id: k.id,
+                                name: k.name
+                            });
+                            h = 0;
+                        }
+                    })
+                }
+                self.lineDS.data()[index].set("therapistname", name);
             });
 
             //Total
@@ -7426,6 +7447,7 @@
             $('#havepay').css({"display": "none"});
             this.set('haveParkSale', false);
             this.makeChoice();
+            this.backCategory();
         },
         addRowLine          : function(){
             var obj = this.get("obj");
@@ -7455,13 +7477,13 @@
             });
         },
         addRow              : function(e){
+            $('#loading').css('display', 'block');
             var self = this, 
                 obj = this.get("obj"), 
                 item = e.data,
                 rate = banhji.source.getRate(item.locale, this.get("dateSelected")),
                 price = item.price / rate,
                 notExist = true;
-            $("#loading").css("display", "block");
             //Check exist item            
             $.each(this.lineDS.data(), function(index, value){
                 if(value.item_id==item.id){
@@ -7470,8 +7492,9 @@
                     value.set("quantity", value.quantity+1);
 
                     self.changes();
-
+                    $('#loading').css('display', 'none');
                     return false;
+
                 }
             });
 
@@ -7512,7 +7535,7 @@
                     });
 
                     self.changes();
-                    $("#loading").css("display", "none");
+                    $('#loading').css('display', 'none');
                 });
             }
         },
@@ -8530,6 +8553,7 @@
             });
         },
         backCategory    : function(){
+            $('#loading').css('display', 'none');
             this.set("haveItems", false);
         },
         barcodItemDS    : dataStore(apiUrl + "items"),

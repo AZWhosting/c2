@@ -14627,7 +14627,20 @@
 							<h2>Sale Order Detail By Item</h2>
 							<p data-bind="text: displayDate"></p>
 						</div>
-
+<!-- 						<div class="row-fluid">
+							<div class="span5">
+								<div class="total-customer">
+										<p data-bind="text: lang.lang.order"></p>
+										<span data-bind="text: orderCount"></span>
+								</div>
+							</div>
+							<div class="span7">
+								<div class="total-customer">
+									<p data-bind="text: lang.lang.amount"></p>
+									<span data-bind="text: totalAmount"></span>
+								</div>
+							</div>
+						</div> -->
 						<div data-role="grid" class="costom-grid"
 					    	 data-column-menu="true"
 					    	 data-groupable="true"
@@ -26927,15 +26940,15 @@
 	                            { 
 	                            	field: 'number', 
 	                            	title:'NUMBER',
-	                            	template: kendo.template($('#saleOrderDetailbyEmployee-number-template').html())
+	                            	template: kendo.template($('#purchaseOrderbyItem-number-template').html())
 	                            },
 	                            { 
 	                            	field: 'qty', 
 	                            	title:'QTY',
 	                            },
 	                            { 
-	                            	field: 'price', 
-	                            	title:'PRICE',
+	                            	field: 'cost', 
+	                            	title:'COST',
 	                            },
 	                            { 
 	                            	field: 'amount', 
@@ -26956,7 +26969,9 @@
 		</div>
 	</div>
 </script>
-
+<script id="purchaseOrderbyItem-number-template" type="text/x-kendo-template">	
+	<a href="\#/#=type.toLowerCase()#/#=id#">#=number#</a>
+</script>
 <script id="productServiceList" type="text/x-kendo-template">
 	<div id="slide-form">
 		<div class="customer-background">
@@ -27180,8 +27195,26 @@
 								<!-- Tabs Heading -->
 								<div class="widget-head">
 									<ul>
-										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab" data-bind="click: printGrid"><i></i><span data-bind="text: lang.lang.print_export"></span></a></li>
+										<li><a class="glyphicons print" href="#tab-3" data-toggle="tab"><i></i><span data-bind="text: lang.lang.print_export">
+
+										</span></a></li>
 									</ul>
+								</div>
+								<div class="widget-body">
+									<div class="tab-content">
+							        <!-- PRINT/EXPORT  -->
+								        <div class="tab-pane active" id="tab-3">
+								        	<span id="savePrint" class="btn btn-icon btn-default glyphicons print print1" data-bind="click: printGrid" style="width: 80px;"><i></i> Print</span>
+								        	<!-- <span id="" class="btn btn-icon btn-default pdf" data-bind="click: cancel" style="width: 80px;">
+								        		<i class="fa fa-file-pdf-o"></i>
+								        		Print as PDF
+								        	</span> -->
+								        	<span id="" class="btn btn-icon btn-default execl" data-bind="click: ExportExcel" style="width: 80px;">
+								        		<i class="fa fa-file-excel-o"></i>
+								        		Export to Excel
+								        	</span>
+							        	</div>
+								    </div>
 								</div>
 							</div>
 						</div>
@@ -27205,21 +27238,22 @@
 								</tr>
 							</thead>
 							<tbody data-role="listview"
-										 data-bind="source: contact"
-										 data-template="SupplierList-temp"
+										 data-bind="source: dataSource"
+										 data-template="supplierList-temp"
 							></tbody>
 						</table>
 						<div id="pager" class="k-pager-wrap"
-			            		 data-role="pager"
+						    	 data-role="pager"
 						    	 data-auto-bind="false"
-					             data-bind="source: contact"></div>
+						    	 style="width: 100%"
+					             data-bind="source: dataSource"></div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </script>
-<script id="SupplierList-temp" type="text/x-kendo-template" >
+<script id="supplierList-temp" type="text/x-kendo-template" >
 	# kendo.culture(banhji.customerSale.locale); #
 	<tr>
 		<td>#=abbr+number#</td>
@@ -27227,10 +27261,9 @@
 		<td>#=contact_type#</td>
 		<td>#=address#</td>
 		<td>#=phone#</td>
-		<td style="text-align: right">#=email#</td>
+		<td style="text-align: right;">#=email#</td>
 	</tr>
 </script>
-
 
 
 

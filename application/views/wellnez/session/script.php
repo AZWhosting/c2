@@ -2352,7 +2352,7 @@
             this.receiveAR.splice(0, this.receiveAR.length);
             this.noteDS.data([]);
             $("#loadING").css("display", "none");
-            banhji.router.navigate("/receipt");
+            banhji.router.navigate("/");
             this.sessionDS.query({});
         },
         addRow              : function(){
@@ -2372,9 +2372,11 @@
             }
         },
         haveAddSession      : false,
-        cashierItemDS: dataStore(apiUrl + "cashier_sessions/item"),
+        addSessionDS        : dataStore(apiUrl + "cashier_sessions"),
+        cashierItemDS       : dataStore(apiUrl + "cashier_sessions/item"),
         addSession          : function(e){
             var self = this;
+            this.set("haveAddSession", true);
             this.currencyDS.query({
                 sort: {
                     field: "created_at",
@@ -2382,6 +2384,15 @@
                 }
             }).then(function(e) {
                 self.setCashierItems();
+            });
+            this.addSessionDS.data([]);
+            this.addSessionDS.add({
+                cashier_id  : banhji.userData.id,
+                start_date  : new Date(),
+                end_date    : "",
+                status      : 0,
+                active      : 1,
+                items       : []
             });
         },
         setCashierItems: function() {
@@ -2394,8 +2405,23 @@
                     amount: 0,
                 });
             });
-            this.set("haveAddSession", true);
         },
+        closeAddSession     : function(){
+            this.cashierItemDS.data([]);
+            this.set("haveAddSession", false);
+        },
+        saveSession         : function(){
+            var self = this;
+            this.addSessionDS.data()[0].set("items", this.cashierItemDS.data());
+            this.addSessionDS.sync();
+            this.addSessionDS.bind("requestEnd", function(e) {
+                if (e.response) {
+                    self.set("haveAddSession", false);
+                    self.pageLoad();
+                    window.location.href = '<?php echo base_url(); ?>wellnez/services';
+                }
+            });
+        }
     });
     /* views and layout */
     banhji.view = {
@@ -2457,7 +2483,6 @@
                     banhji.aws.getImage();
                 }
             });
-
         },
         routeMissing: function(e) {
             // banhji.view.layout.showIn("#layout-view", banhji.view.missing);

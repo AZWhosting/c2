@@ -19810,7 +19810,7 @@
         ExportExcel: function() {
             var self = this;
             $.each(this.dataSource.data(), function(i,v){
-                var balance = v.old_ballance + v.old_amount + v.old_maintenance + v.old_exemption - v.old_cash_receipt;
+                var balance = v.old_ballance + v.old_amount + v.old_maintenance - v.old_exemption - v.old_cash_receipt;
                 var subTotal = v.amount + balance + v.maintenance + v.exemption;
                 var total = subTotal - v.cash_receipt;
                     self.exArray.push({

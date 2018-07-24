@@ -245,24 +245,25 @@
 	    width: 100%;
 	    text-align: center;
 	    position: relative; 
-	    padding: 15px;
+	    padding: 5px;
 	    border-radius: 10px;
 	    float: left;
 	    box-shadow: 2px 0px 12px 0px rgba(68,68,68,1);
-
 	}
 	.block-number{
-		width: 27% !important;
+		width: 24% !important;
 	    float: left;
 	    background: #fff;
 	    color: #333;
 	    text-align: center;
 	    margin-right: 1px;
-	    padding: 15px;
+	    margin: 0.5%;
 	    margin-bottom: 1px;
-	    font-size: 14px;	    
+	    font-size: 14px;
 	    cursor: pointer;
-	    /*box-shadow: 2px 0px 12px 0px rgba(68,68,68,1)*/
+	    border-radius: 5px;
+	    overflow: hidden;
+	    box-shadow: 1px 0px 1px 0px rgba(0,0,0,.3);
 	}
 		
 	.services .example table{
@@ -427,14 +428,14 @@
 **************************** -->
 <script id="Index" type="text/x-kendo-template">
 	<div class="container">
-		<div class="row services">
+		<div class="row services" style="width: 95%;margin: 0 auto; position: relative;">
 			<div class="span12" style="position: relative;overflow: hidden;padding:0;">
-				<div id="loadImport" style="display:none;text-align: center;position: absolute;width: 100%; height: 100%;background: rgba(142, 159, 167, 0.8);z-index: 999999;border-radius: 10px;">
+				<div id="loadImport" style="display:none;text-align: center;position: absolute;width: 80%; height: 100%;background: rgba(142, 159, 167, 0.8);z-index: 999999;border-radius: 10px;">
 					<i class="fa fa-circle-o-notch fa-spin" style="font-size: 50px;color: #fff;position: absolute; top: 40%;left: 40%">Loading...</i>
 				</div>
 				<div class="row ">
 					<div class="span6 ">
-						<div class="example" style="height: 633px; overflow-y: scroll;padding-bottom: 15px;">
+						<div class="example" style="background: #e9ebee;border-radius: 3px;">
 							<div id="formStyle"
 								 data-role="listview"
 								 data-auto-bind="true"
@@ -536,29 +537,6 @@
 									</table>
 								</div>
 								<div class="span6 botton" style="padding-left: 0;">
-									<!-- <div class="row"> -->
-										<!-- <div class="span6 " style="padding-right: 0;">
-											<a href="loyalty">
-												<div class="button-book" style="margin-right: 1px;">
-													<div class="img" style="margin-left: 33px;">
-														<img src="<?php echo base_url();?>assets/spa/icon/loyalty-green.png" >
-													</div>
-													<p class="textSmall">Loyalty</p>
-												</div>
-											</a>
-										</div> -->
-										<!-- <div class="span4 " style="padding: 0;">
-											<div class="button-pay">
-												<div class="img">
-													<img src="<?php echo base_url();?>assets/spa/icon/gift-green.png" >
-												</div>
-												<p class="textSmall">Gift Card</p>
-											</div>
-										</div> -->
-										<!-- <div class="span6" style="padding-left: 0;">
-											<p class="button-cancel" style="margin-left: 0;"><span>/</span> <br> Split</p>
-										</div>
-									</div> -->
 									<div class="">
 										<div class=" ">
 											<div class="button-service" data-bind="click: printBill">
@@ -599,31 +577,22 @@
 	</div>
 </script>
 <script id="work-list-tmpl" type="text/x-kendo-tmpl">
-	<div class="block-number #if(status == 'Serving'){# serving #}#" style="position: relative;width: 27.4%;min-height: 175px;" data-bind="click: selectRow">
-		<h2 style="text-align: center; font-size: 14px;background: \#ccc;"><b>#: roomshow#</b></h2>
-		#if(item.length > 1){#
-		 	#var tt = 0#
-			#$.each(item, function(i,v){#
-				#tt += v.amount#
-			#})#
-			<p style="text-align: left;"><b>Item Name:</b> <span style="text-align: center;font-size: 12px;">--</span></p>
-			<p style="text-align: left;"><b>Amount:</b> <span style="text-align: center;font-size: 12px;">#=kendo.toString(tt, locale=="km-KH"?"c0":"c2", locale)#</span></p>
-		#}else{#
-			#$.each(item, function(i,v){#
-				<p style="text-align: left;"><b>Item Name:</b> <span style="text-align: center;font-size: 12px;">#: v.name#</span></p>
-				<p style="text-align: left;"><b>Amount:</b> <span style="text-align: center;font-size: 12px;">#=kendo.toString(v.amount, v.locale=="km-KH"?"c0":"c2", v.locale)#</span></p>
-			#})#
-		#}#
-		<p style="text-align: left;"><b>Status:</b> <span style="text-align: center;font-size: 12px;">#: status#</span></p>
-		#if(status == 'Available'){#
-		<div class="shadow" style="z-index: 9999;position: absolute;top: 0;left: 0;width: 100%;height: 100%;background: rgba(255,255,255.0.5)">
-			<a style="padding:28px;top: 80px;" href="<?php echo base_url(); ?>wellnez/pos/\#/room/#:room_id#" class="glyphicons no-js circle_plus"><i ></i></a>
+	#if(status == 'Available'){#
+		<div class="block-number #if(status == 'Serving'){# serving #}#" style="position: relative;width: 27.4%;" data-bind="click: addToPOS">
+			<h2 style="text-align: center; font-size: 14px;background: \#0eac00;font-weight: normal; color: \#fff!important;">#: roomshow#</h2>
+			<p style="text-align: center;"><span style="text-align: center;font-size: 12px;">#: status#</span></p>
 		</div>
-		#}else if(status == 'Maintenance'){#
-			<p style="text-align: left;"><b>Time:</b> <span style="text-align: center;font-size: 12px;">#: kendo.toString(new Date(maintenance_date), "F")#</span></p>
-			<a style="background: \#1c3b19;  color: \#fff; padding: 5px 15px;" data-bind="click: availableRoom">Available</a>
-		#}#
-	</div>
+	#}else if(status == 'Maintenance'){#
+		<div class="block-number #if(status == 'Serving'){# serving #}#" style="position: relative;width: 27.4%;" data-bind="click: availableRoom">
+			<h2 style="text-align: center; font-size: 14px;background: \#0eac00;font-weight: normal; color: \#fff!important;">#: roomshow#</h2>
+			<p style="text-align: center;"><span style="text-align: center;font-size: 12px;">#: status#</span></p>
+		</div>
+	#}else{#
+		<div class="block-number #if(status == 'Serving'){# serving #}#" style="position: relative;width: 27.4%;" data-bind="click: selectRow">
+			<h2 style="text-align: center; font-size: 14px;background: \#0eac00;font-weight: normal; color: \#fff!important;">#: roomshow#</h2>
+			<p style="text-align: center;"><span style="text-align: center;font-size: 12px;">#: status#</span></p>
+		</div>
+	#}#
 </script>
 
 <script id="print" type="text/x-kendo-template">

@@ -56,7 +56,8 @@ class Cashier_sessions extends REST_Controller {
 				   	"cashier_id" 		=> $value->cashier_id,
 				   	"start_date" 		=> $value->start_date,
 				   	"end_date" 			=> $value->end_date,
-				   	"status" 			=> $value->status
+				   	"status" 			=> $value->status,
+				   	"active" 			=> $value->active,
 		 		);
 			}
 		}
@@ -72,6 +73,7 @@ class Cashier_sessions extends REST_Controller {
 			$obj->start_date = date('Y-m-d H:i:s');
 			isset($value->end_date) 			? $obj->end_date 			= $value->end_date : "";
 			isset($value->status) 				? $obj->status 				= $value->status : "";
+			$obj->active = isset($value->active) ? $value->active : 0;
 			if($obj->save()){
 				foreach ($value->items as $item) {
 					if($item->amount > 0){
@@ -107,6 +109,7 @@ class Cashier_sessions extends REST_Controller {
 			isset($value->start_date)?		$obj->start_date 		= $value->start_date: "";
 			isset($value->end_date)? 		$obj->end_date 			= $value->end_date: "";
 			isset($value->status)? 			$obj->status 			= $value->status: "";
+			$obj->active = isset($value->active) ? $value->active : 0;
 			if($obj->save()){
 				//Results
 				$data["results"][] = array(
