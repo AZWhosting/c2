@@ -13,10 +13,10 @@ class Transaction extends DataMapper {
             'class' => 'contact',
             'other_field' => 'transaction'
         ),
-        // 'meter' => array(
-        //     'class' => 'meter',
-        //     'other_field' => 'transaction'
-        // ),       
+        'meter' => array(
+            'class' => 'meter',
+            'other_field' => 'transaction'
+        ),       
         'payment_term' => array(
             'class' => 'payment_term',
             'other_field' => 'transaction'
