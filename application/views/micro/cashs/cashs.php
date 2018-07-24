@@ -459,7 +459,7 @@
 														   data-placeholder="Add Segment.."
 										              				 /> -->
 										              				 
-													
+													<textarea cols="0" rows="3" class="k-textbox" data-bind="value: obj.memo2" placeholder="memo for internal ..."></textarea>
 	                                        	</div>
 	                                		</div>
 	                                		
@@ -560,25 +560,20 @@
 			<!-- Bottom part -->
 	        <div class="row">
 				<!-- Column -->
-				<div class="col-md-4">								
+				<!-- <div class="col-md-4">	 -->							
 
 					<!--End Add New Item -->
-					<div class="well marginTop15">
+					<!-- <div class="well marginTop15">
 						<textarea cols="0" rows="2" class="k-textbox" data-bind="value: obj.memo2" placeholder="memo for internal ..."></textarea>
-						<!-- <br>
-						<textarea cols="0" rows="2" class="k-textbox" data-bind="value: obj.memo" placeholder="memo for external ..."></textarea> -->
-					</div>
+						<br>
+						<textarea cols="0" rows="2" class="k-textbox" data-bind="value: obj.memo" placeholder="memo for external ..."></textarea>
+					</div> -->
 
-				</div>
+				<!-- </div> -->
 				<!-- Column END -->
 
 				<!-- Column -->
-				<div class="col-md-4">
-				</div>
-				<!-- Column END -->
-
-				<!-- Column -->
-				<div class="col-md-4 table-responsive">
+				<div class="col-md-6">
 					<table class="table color-table dark-table">
 						<tbody>
 							<tr>
@@ -588,30 +583,20 @@
 							<tr>
 								<td class="textAlignRight"><span data-bind="text: lang.lang.total_discount"></span></td>
 								<td class="textAlignRight"><span data-format="n" data-bind="text: obj.discount"></span></td>
-							</tr>
-							<tr>
-								<td class="textAlignRight"><span data-bind="text: lang.lang.total_tax"></span></td>
-								<td class="textAlignRight"><span data-format="n" data-bind="text: obj.tax"></span></td>
-							</tr>
+							</tr>							
+						</tbody>
+					</table>
+				</div>
+				<!-- Column END -->
+
+				<!-- Column -->
+				<div class="col-md-6 table-responsive">
+					<table class="table color-table dark-table">
+						<tbody>
 							<tr>
 								<td class="textAlignRight"><h4 data-bind="text: lang.lang.total" style="font-weight: 700;"></h4></td>
 								<td class="textAlignRight"><h4 data-bind="text: total" style="font-weight: 700;"></h4></td>
-							</tr>
-							<tr>
-								<td class="textAlignRight">
-									<span data-bind="text: lang.lang.deposit"></span>
-									<span data-format="n" data-bind="text: total_deposit"></span>
-								</td>
-								<td class="textAlignRight">
-									<input data-role="numerictextbox"
-						                   data-format="n"
-						                   data-spinners="false"
-						                   data-min="0"
-						                   data-bind="value: obj.deposit,
-						                              events: { change: changes }"
-						                   style="width: 90%; text-align: right;">
-								</td>
-							</tr>
+							</tr>							
 							<tr>
 								<td class="textAlignRight">
 									<span data-bind="text: lang.lang.remaining" style="font-size: 15px; font-weight: 700;"></span>
@@ -927,7 +912,7 @@
 				<div class="col-md-4">
 
 					<!--End Add New Item -->
-					<div class="well marginTop15">
+					<div class="well ">
 						<textarea cols="0" rows="2" class="k-textbox" data-bind="value: obj.memo2" placeholder="memo for internal ..."></textarea>
 						<!-- <br>
 						<textarea cols="0" rows="2" class="k-textbox" data-bind="value: obj.memo" placeholder="memo for external ..."></textarea>
@@ -938,11 +923,6 @@
 
 				<!-- Column -->
 				<div class="col-md-4">
-				</div>
-				<!-- Column END -->
-
-				<!-- Column -->
-				<div class="col-md-4 table-responsive">
 					<table class="table color-table dark-table">
 						<tbody>
 							<tr>
@@ -952,29 +932,20 @@
 							<tr>
 								<td class="textAlignRight"><span data-bind="text: lang.lang.total_discount"></span></td>
 								<td class="textAlignRight"><span data-format="n" data-bind="text: obj.discount"></span></td>
-							</tr>
-							<tr>
-								<td class="textAlignRight"><span data-bind="text: lang.lang.total_tax"></span></td>
-								<td class="textAlignRight"><span data-format="n" data-bind="text: obj.tax"></span></td>
-							</tr>
+							</tr>							
+						</tbody>
+					</table>
+				</div>
+				<!-- Column END -->
+
+				<!-- Column -->
+				<div class="col-md-4 table-responsive">
+					<table class="table color-table dark-table">
+						<tbody>							
 							<tr>
 								<td class="textAlignRight"><h4 data-bind="text: lang.lang.total" style="font-weight: 700;"></h4></td>
 								<td class="textAlignRight"><h4 data-bind="text: total" style="font-weight: 700;"></h4></td>
-							</tr>
-							<tr>
-								<td class="textAlignRight">
-									<span data-bind="text: lang.lang.deposit"></span>
-									<span data-format="n" data-bind="text: total_deposit"></span>
-								</td>
-								<td class="textAlignRight">
-									<input 	data-role="numerictextbox"
-						                   	data-format="n"
-						                   	data-spinners="false"
-						                   	data-min="0"
-						                   	data-bind="value: obj.deposit, events: { change: changes }"
-						                   	style="width: 90%; text-align: right;">
-								</td>
-							</tr>
+							</tr>							
 							<tr>
 								<td class="textAlignRight ">
 									<span data-bind="text: lang.lang.remaining" style="font-size: 15px; font-weight: 700;"></span>

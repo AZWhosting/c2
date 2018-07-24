@@ -6305,7 +6305,7 @@
             this.receiveAR.splice(0, this.receiveAR.length);
             this.noteDS.data([]);
             $("#loadING").css("display", "none");
-            banhji.router.navigate("/receipt");
+            banhji.router.navigate("/");
             this.sessionDS.query({});
         },
         addRow              : function(){

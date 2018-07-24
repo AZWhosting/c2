@@ -19657,7 +19657,7 @@
             var para = [];
             var monthPara = [];
             var monthOf = new Date(monthOfSearch);
-                 monthOf.setDate(+35);
+                monthOf.setDate(+1);
                 monthOf = kendo.toString(monthOf, "yyyy-MM-dd");
 
                 var monthL = new Date(monthOfSearch);
