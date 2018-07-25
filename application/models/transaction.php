@@ -73,10 +73,6 @@ class Transaction extends DataMapper {
         'billing_cycle' => array(
             'class' => 'billing_cycle',
             'other_field' => 'transaction'
-        ),
-        'proforma_record' => array(
-            'class' => 'proforma_record',
-            'other_field' => 'transaction'
         )
 	);
 

@@ -44,7 +44,7 @@ class Contact extends DataMapper {
 		'branch' => array(
 			"class" => 'branch', 
 			"other_field" => "contact"
-		),
+		)
 	);
 
 	public $has_many = array(
@@ -114,10 +114,6 @@ class Contact extends DataMapper {
 		),
 		'cpd_record' => array(
 			'class' => 'cpd_record',
-			'other_field' => 'contact'
-		),
-		'proforma_record' => array(
-			'class' => 'proforma_record',
 			'other_field' => 'contact'
 		)
 	);

@@ -69,7 +69,7 @@ class Ops extends REST_Controller {
 			    // $this->dbforge->rename_table('recurrings', 'billing_cycles');
 
 				//DROP TABLE IF EXISTS table_name
-			    // $this->dbforge->drop_table('references');
+			    // $this->dbforge->drop_table('proforma_records');
 
 			    //Update single data
 			    // $this->db->where_in('type', array("Vendor_Deposit"));
