@@ -48,10 +48,10 @@
 $active_group = 'default';
 $active_record = TRUE;
 
-$db['default']['hostname'] = 'banhji-db-instance.cwxbgxgq7thx.ap-southeast-1.rds.amazonaws.com';
-$db['default']['username'] = 'mightyadmin';
-$db['default']['password'] = 'banhji2016';
-$db['default']['database'] = 'banhji';
+$db['default']['hostname'] = '******************';
+$db['default']['username'] = '***************';
+$db['default']['password'] = '*************';
+$db['default']['database'] = '***********';
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = '';
 $db['default']['pconnect'] = FALSE;
